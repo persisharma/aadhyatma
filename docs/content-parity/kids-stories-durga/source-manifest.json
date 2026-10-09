@@ -1,0 +1,681 @@
+{
+  "retrievedOn": "2026-10-09",
+  "sources": [
+    {
+      "url": "https://greenmesg.org/stotras/shakambhari/shakambhari_mahatmyam.php",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published source as linked; compare publication identity before treating hosts as independent editions",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shakambhari"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://gurudevsivananda.org/The-Siva-Purana-PART-2-Vol-2.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published source as linked; compare publication identity before treating hosts as independent editions",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini",
+        "durga-shailaputri"
+      ],
+      "htmlSha256": "86bbb5d5b454a8b8a7eea8aac750c01b9f21194111ee4e4ddfe456b007c3b6d3",
+      "bytes": 1844059,
+      "localResearchCopy": "tmp/durga-sources/shiva-part2.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A6%E0%A5%AC",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shailaputri"
+      ],
+      "htmlSha256": "d32506f57f7767623472404cb2a28728896640ace888443e5dada3fb691cb582",
+      "bytes": 86945,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-parvati-6.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A6%E0%A5%AD",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shailaputri"
+      ],
+      "htmlSha256": "b1ae1bd94514fb6cb2335f382ae7cead46e6a8393ea3d750f71a7fc41e109e98",
+      "bytes": 78804,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-parvati-7.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%A8",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini"
+      ],
+      "htmlSha256": "7752f36a37275a31cf294ae9bc5758d4ae35d6fa056ef58dcf021e813b50cce8",
+      "bytes": 91091,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-parvati-22.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%AB",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini"
+      ],
+      "htmlSha256": "cb0e772b2cbe4223ec761b82e8b6facb27882970838d2987ef01331e9998803d",
+      "bytes": 92258,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-parvati-25.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%AE",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini"
+      ],
+      "htmlSha256": "3eb455b224c793b861445797515f8479fa9a6b518fecf9b583cb7620e736949c",
+      "bytes": 85877,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-parvati-28.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%AA%E0%A5%AD",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-chandraghanta"
+      ],
+      "htmlSha256": "12958047f4d82694d7ccf058c540cca70177c807d15b8fe5415ba03ea3ff7742",
+      "bytes": 87118,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-parvati-47.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%AA%E0%A5%AE",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-chandraghanta"
+      ],
+      "htmlSha256": "247522901ae86d7e62006fd22acd6faed478b1af3356026069009a6ce3355b25",
+      "bytes": 87531,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-parvati-48.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%AA%20%28%E0%A4%95%E0%A5%81%E0%A4%AE%E0%A4%BE%E0%A4%B0%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A6%E0%A5%AA",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-skandamata"
+      ],
+      "htmlSha256": "602eecf7fb74acf695ef99e198928238bb20667a78abb5e3a3e0c0e9363dbedf",
+      "bytes": 94585,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-kumara-4.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%AA%20%28%E0%A4%95%E0%A5%81%E0%A4%AE%E0%A4%BE%E0%A4%B0%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A6%E0%A5%AB",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-skandamata"
+      ],
+      "htmlSha256": "5e6fc224ef9cd42151ec288e4c898c99ff58268b2c6d4c261a52728ab287bde4",
+      "bytes": 93071,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-kumara-5.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%AD%20%28%E0%A4%B5%E0%A4%BE%E0%A4%AF%E0%A4%B5%E0%A5%80%E0%A4%AF%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%AA%E0%A5%82%E0%A4%B0%E0%A5%8D%E0%A4%B5%20%E0%A4%AD%E0%A4%BE%E0%A4%97%E0%A4%83/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%AA",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahagauri"
+      ],
+      "htmlSha256": "965e83f6b7045787f07a6c6c6ed96e42bde25238e8b8524999a5b5ed6b8663a7",
+      "bytes": 86370,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-gauri-24.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%AD%20%28%E0%A4%B5%E0%A4%BE%E0%A4%AF%E0%A4%B5%E0%A5%80%E0%A4%AF%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%AA%E0%A5%82%E0%A4%B0%E0%A5%8D%E0%A4%B5%20%E0%A4%AD%E0%A4%BE%E0%A4%97%E0%A4%83/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%AB",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahagauri"
+      ],
+      "htmlSha256": "5144aba925d97183e4c421c91a2511b15fba3d2df5e605df0fe3056fc99f6718",
+      "bytes": 83537,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-gauri-25.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%AD%20%28%E0%A4%B5%E0%A4%BE%E0%A4%AF%E0%A4%B5%E0%A5%80%E0%A4%AF%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%AA%E0%A5%82%E0%A4%B0%E0%A5%8D%E0%A4%B5%20%E0%A4%AD%E0%A4%BE%E0%A4%97%E0%A4%83/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%AC",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahagauri"
+      ],
+      "htmlSha256": "5f5eb7ddf0ba0a410186b8d9635ded1af24b4729e13193c16d44d6643d7e9ca6",
+      "bytes": 78212,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-gauri-26.html"
+    },
+    {
+      "url": "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%AD%20%28%E0%A4%B5%E0%A4%BE%E0%A4%AF%E0%A4%B5%E0%A5%80%E0%A4%AF%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%AA%E0%A5%82%E0%A4%B0%E0%A5%8D%E0%A4%B5%20%E0%A4%AD%E0%A4%BE%E0%A4%97%E0%A4%83/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%AD",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit Shiva Purana chapter transcription; selected narrative verses cross-checked against English edition",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahagauri"
+      ],
+      "htmlSha256": "891aefc7db88b2403bb7bb90395d7561a9067872b4ddf3cf7e7a9803d0090758",
+      "bytes": 80492,
+      "localResearchCopy": "tmp/durga-sources/sanskrit-gauri-27.html"
+    },
+    {
+      "url": "https://sacred-texts.com/hin/db/bk07ch28.htm",
+      "retrievedOn": "2026-10-09",
+      "publication": "Swami Vijnanananda, Devi Bhagavatam (1921), Book 7 Chapter 28",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shakambhari"
+      ],
+      "htmlSha256": "965b2000decf253b31f7b1fa15990264e3486c5ab5ad87c9197b4ebdb3adb467",
+      "bytes": 309770,
+      "localResearchCopy": "tmp/durga-sources/shakambhari-english.html"
+    },
+    {
+      "url": "https://sanskritdocuments.org/doc_devii/durga700.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit transcription: Saptashati / Navadurga dhyana / Devi Bhagavata 7.28 excerpt, as linked",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahishasura",
+        "durga-navaratri",
+        "durga-raktabeej",
+        "durga-shumbha-nishumbha",
+        "durga-suratha-samadhi"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://sanskritdocuments.org/doc_devii/navadurga.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit transcription: Saptashati / Navadurga dhyana / Devi Bhagavata 7.28 excerpt, as linked",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini",
+        "durga-chandraghanta",
+        "durga-kalaratri",
+        "durga-kushmanda",
+        "durga-mahagauri",
+        "durga-navaratri",
+        "durga-shailaputri",
+        "durga-siddhidatri",
+        "durga-skandamata"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://sanskritdocuments.org/doc_devii/shAkambharIshatAkShImAhAtmya.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Published Sanskrit transcription: Saptashati / Navadurga dhyana / Devi Bhagavata 7.28 excerpt, as linked",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shakambhari"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.artofliving.org/in-en/navratri/kushmanda",
+      "retrievedOn": "2026-10-09",
+      "publication": "The Art of Living, Anusha Chellappa, reviewed by Nakul Dhawan; devotional tradition from Gurudev Sri Sri Ravi Shankar",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-kushmanda"
+      ],
+      "htmlSha256": "ae81f8a1bf03967ad986b425bff04ab4db001172949366b8e6cf9658d4c7cd34",
+      "bytes": 94701,
+      "localResearchCopy": "tmp/durga-sources/aol-kushmanda.html"
+    },
+    {
+      "url": "https://www.artofliving.org/in-en/navratri/siddhidhatri",
+      "retrievedOn": "2026-10-09",
+      "publication": "The Art of Living, Anusha Chellappa, reviewed by Nakul Dhawan; devotional tradition from Gurudev Sri Sri Ravi Shankar",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-siddhidatri"
+      ],
+      "htmlSha256": "eed2cd26b6a8da5809d51b04c91b8506e6323fcb5f8fe854fe251437c91e58f3",
+      "bytes": 95294,
+      "localResearchCopy": "tmp/durga-sources/aol-siddhidatri.html"
+    },
+    {
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-brahmacharini.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Traditional Navadurga form guide, modern publication; identity, day, iconography and attributed devotional accounts",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini"
+      ],
+      "htmlSha256": "dfb5180d7728ff8a77bd0d59962a8b795d9c42e9efb2529d90da10509a1ebede",
+      "bytes": 80270,
+      "localResearchCopy": "tmp/durga-sources/brahmacharini.html"
+    },
+    {
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-chandraghanta.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Traditional Navadurga form guide, modern publication; identity, day, iconography and attributed devotional accounts",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-chandraghanta"
+      ],
+      "htmlSha256": "2faf28398452a80ce62cc8007dc83ba597b24238e0a373f453ee2119811e454e",
+      "bytes": 80820,
+      "localResearchCopy": "tmp/durga-sources/chandraghanta.html"
+    },
+    {
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-kalaratri.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Traditional Navadurga form guide, modern publication; identity, day, iconography and attributed devotional accounts",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-kalaratri"
+      ],
+      "htmlSha256": "8b1541dda051472e4fcd642910ee701dc74e40ed61bf99d03bd521432b84de44",
+      "bytes": 78302,
+      "localResearchCopy": "tmp/durga-sources/kalaratri.html"
+    },
+    {
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-katyayani.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Traditional Navadurga form guide, modern publication; identity, day, iconography and attributed devotional accounts",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahishasura"
+      ],
+      "htmlSha256": "8dd2cd98b67c03ccd64209dbee0e51cd7630fd6ee2acd3bac00d5ebc1a86d52e",
+      "bytes": 78651,
+      "localResearchCopy": "tmp/durga-sources/katyayani.html"
+    },
+    {
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-kushmanda.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Traditional Navadurga form guide, modern publication; identity, day, iconography and attributed devotional accounts",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-kushmanda"
+      ],
+      "htmlSha256": "c3d6cdd7cfa5db48c452fcf3d596b4bb62fe9d96d009910ef58c3e4d4a8a6278",
+      "bytes": 80571,
+      "localResearchCopy": "tmp/durga-sources/kushmanda.html"
+    },
+    {
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-mahagauri.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Traditional Navadurga form guide, modern publication; identity, day, iconography and attributed devotional accounts",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahagauri"
+      ],
+      "htmlSha256": "0b3f723884fb1b7326abdb812ad44501597c11c74d7856e6b0e0ac3b401df793",
+      "bytes": 78147,
+      "localResearchCopy": "tmp/durga-sources/mahagauri.html"
+    },
+    {
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-shailputri.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Traditional Navadurga form guide, modern publication; identity, day, iconography and attributed devotional accounts",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shailaputri"
+      ],
+      "htmlSha256": "a74c8ac777202dc29feb52dd0281ca06a5749b3afff7bf63d3fd08b032db2971",
+      "bytes": 79902,
+      "localResearchCopy": "tmp/durga-sources/shailputri.html"
+    },
+    {
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-siddhidatri.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Traditional Navadurga form guide, modern publication; identity, day, iconography and attributed devotional accounts",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-siddhidatri"
+      ],
+      "htmlSha256": "a67a743d16a9746534c9e12c00820f9ccaad20db0564bc4339ac2fcbd0ab9e23",
+      "bytes": 79493,
+      "localResearchCopy": "tmp/durga-sources/siddhidatri.html"
+    },
+    {
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-skandamata.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "Traditional Navadurga form guide, modern publication; identity, day, iconography and attributed devotional accounts",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-skandamata"
+      ],
+      "htmlSha256": "e34e5601da80b242eed9e111fc0d9ee56fd7158d67b8f443cb5f5483cbf0a5d4",
+      "bytes": 83126,
+      "localResearchCopy": "tmp/durga-sources/skandamata.html"
+    },
+    {
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga.html?lang=en",
+      "retrievedOn": "2026-10-09",
+      "publication": "Traditional Navadurga form guide, modern publication; identity, day, iconography and attributed devotional accounts",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-navaratri"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226070.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shailaputri"
+      ],
+      "htmlSha256": "a55c982af58f24fcb387f31d8b447047e3ece379b30a0ba5756fc8d5b0de57e1",
+      "bytes": 35029,
+      "localResearchCopy": "tmp/durga-sources/shaila-birth.html"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226071.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shailaputri"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226085.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226086.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini"
+      ],
+      "htmlSha256": "49635f208bcf2ffedb2c41df4099da96c2eb7b37b118e95c5f547cbb4c8dd3c8",
+      "bytes": 35707,
+      "localResearchCopy": "tmp/durga-sources/parvati-tapas.html"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226088.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226089.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226092.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226093.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-brahmacharini"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226111.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-chandraghanta"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226112.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-chandraghanta"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226124.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-skandamata"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226125.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-skandamata"
+      ],
+      "htmlSha256": "b20590eb7772f723174151b13b3b0b9d7700ae82303ba009198b65c2a0b5041c",
+      "bytes": 47669,
+      "localResearchCopy": "tmp/durga-sources/skanda-home.html"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226660.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahagauri"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226661.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahagauri"
+      ],
+      "htmlSha256": "7f0fefb22c8af278eff121256a2ec802377e7541927f8ded28a08b34c622e687",
+      "bytes": 31671,
+      "localResearchCopy": "tmp/durga-sources/gauri-change.html"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226662.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahagauri"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226663.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "J. L. Shastri edited Shiva Purana English, Motilal Banarsidass; modern translation used for factual comparison only",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahagauri"
+      ],
+      "htmlSha256": "d282bed21950909d3f284e90f6222d340545d07f954c71a68359917b71a0b2df",
+      "bytes": 29630,
+      "localResearchCopy": "tmp/durga-sources/gauri-return.html"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117155.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-suratha-samadhi"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117157.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahishasura"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117158.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahishasura"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117161.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-mahishasura"
+      ],
+      "htmlSha256": "4f117d636b3e09689d30d7596ec1667be7478753b32df0390eb9c19e5807f3aa",
+      "bytes": 43180,
+      "localResearchCopy": "tmp/durga-sources/mahisha-thanks.html"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117163.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shumbha-nishumbha"
+      ],
+      "htmlSha256": "9493bac4be50cff37e374732f022b0606d2d6778de86857162606c15783375ff",
+      "bytes": 51148,
+      "localResearchCopy": "tmp/durga-sources/shumbha-start.html"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117165.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shumbha-nishumbha"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117166.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-raktabeej",
+        "durga-shumbha-nishumbha"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117167.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-raktabeej",
+        "durga-shumbha-nishumbha"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117169.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shumbha-nishumbha"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117170.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-shumbha-nishumbha"
+      ],
+      "htmlSha256": "a4b120afd4788324fc5fa8ec97b8a215ceed44973b1a2e27100446b19c6a76a9",
+      "bytes": 29132,
+      "localResearchCopy": "tmp/durga-sources/shumbha-end.html"
+    },
+    {
+      "url": "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117175.html",
+      "retrievedOn": "2026-10-09",
+      "publication": "F. E. Pargiter, Markandeya Purana (1904)",
+      "use": "Factual/source comparison; original four-language editorial kids prose, no copied translation or new liturgy",
+      "stories": [
+        "durga-suratha-samadhi"
+      ],
+      "accessEvidence": "Read via browser/web or alternate published witness; no matching local HTML hash recorded"
+    }
+  ],
+  "independenceNotes": [
+    "Wisdom Library and Gurudev Sivananda English Shiva Purana are the SAME Shastri translation, not independent recensions. Sanskrit Wikisource supplies a separate-language published witness; Drik supplies traditional roop association, not the Purana plot.",
+    "Devi Mahatmya narratives compared with Sanskrit Documents Sanskrit and Pargiter 1904 English; GRIET PDF is a second host of Pargiter, not a different translation. Anandamayi PDF has selected hymns, not complete narrative corroboration.",
+    "Kushmanda cosmic-smile and Siddhidatri Shiva-Shakti associations are expressly attributed devotional accounts corroborated by Drik Panchang and Art of Living. Dhyana supplies form/name, not independent proof of origin. Art of Living depicts Kushmanda on a tiger; art follows Drik lion variant.",
+    "Shakambhari narrative compared with Sanskrit Documents Devi Bhagavata excerpt and Vijnanananda 1921 Sacred Texts. Greenmesg was browser-read; its 54-byte local denial is excluded from cached-source evidence.",
+    "No claim that a source is a critical edition or that two publication hosts are independent textual recensions. Source notes identify selected tradition and adaptation boundaries.",
+    "Modern translation wording and guide prose are not reproduced. Public-domain older translations are comparison witnesses. All app narration is newly authored."
+  ],
+  "pending": [
+    "Independent Gujarati and Kannada editorial approval",
+    "Physical-device verification",
+    "Live R2/CDN delivery after upload"
+  ]
+}

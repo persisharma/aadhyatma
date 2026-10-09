@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -23,6 +23,8 @@ export type ProseShareCardProps = {
   pageIndex: number;
   pageCount: number;
   lang: Lang;
+  illustrationUri?: string;
+  onIllustrationReady?: (ready: boolean) => void;
 };
 
 function bodyFont(lang: Lang): string {
@@ -59,6 +61,7 @@ const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function Pros
   const latin = props.lang === 'en';
   const series = props.pageCount > 1;
   const isLast = props.pageIndex === props.pageCount - 1;
+  const [titleHeight, setTitleHeight] = useState(96);
 
   return (
     <View
@@ -95,6 +98,7 @@ const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function Pros
       <View style={[styles.body, { height: proseBodyHeight }]}>
         {props.page.title ? (
           <Text
+            onLayout={props.page.illustration ? event => setTitleHeight(event.nativeEvent.layout.height) : undefined}
             style={[
               styles.title,
               {
@@ -107,6 +111,10 @@ const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function Pros
           >
             {props.page.title}
           </Text>
+        ) : null}
+        {props.page.illustration ? (
+          <IllustratedScene illustration={props.page.illustration} uri={props.illustrationUri} onReady={props.onIllustrationReady}
+            availableHeight={proseBodyHeight - (props.page.title ? titleHeight + proseCardMetrics.titleMarginBottom : 0)} />
         ) : null}
         {props.page.blocks.map((block, i) =>
           block.kind === 'heading' ? (
@@ -210,3 +218,18 @@ const styles = StyleSheet.create({
   dot: { width: 5, height: 5, borderRadius: 3 },
   count: { fontSize: 13, letterSpacing: 0.6, includeFontPadding: false },
 });
+
+/** Asset modules load only when a scene card is actually rendered. */
+function IllustratedScene({ illustration, uri, onReady, availableHeight }: {
+  illustration: { art: string; label: string }; uri?: string; onReady?: (ready: boolean) => void; availableHeight: number;
+}) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { default: KidsStoryArt, kidsStoryArtRetainedHeight } = require('./KidsStoryArt') as typeof import('./KidsStoryArt');
+  // Use the measured title height; preserve the entire reviewed scene without a blank title reserve.
+  const width = Math.min(proseCardMetrics.width - 2 * proseCardMetrics.paddingHorizontal - 2,
+    Math.max(0, availableHeight) / (1.25 * kidsStoryArtRetainedHeight(illustration.art)));
+  return <View style={{ alignSelf: 'center', width }}>
+    <KidsStoryArt art={illustration.art} label={illustration.label} resolvedUri={uri}
+      onLoad={() => onReady?.(true)} onError={() => onReady?.(false)} />
+  </View>;
+}

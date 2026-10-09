@@ -1,0 +1,36 @@
+# Illustrated Raktabeej shares keep all scenes and the ending in explicit <=10-card parts.
+# Uses the existing shared picker/preview; does not send or publish to another person.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: "Language,.*"
+- tapOn: "English"
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "home-kids-stories-card" }
+- tapOn: { id: "kids-story-deity-durga" }
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-raktabeej" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-raktabeej" }
+- assertVisible: { id: "story-progress", text: "1 / 7" }
+- tapOn: "Share picture story"
+- assertVisible: "Share all pages"
+- assertVisible: "Share as Instagram carousel"
+- tapOn: "Preview page"
+- takeScreenshot: kids-story-share-illustration
+- tapOn: "Next page"
+- takeScreenshot: kids-story-share-narration
+- tapOn: "Done previewing"
+- assertVisible: "Share all pages"
+- tapOn: "Cancel"
+- assertVisible: { id: "story-progress", text: "1 / 7" }

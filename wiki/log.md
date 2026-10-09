@@ -364,3 +364,25 @@ The user manually inspected the final simulator build, confirmed the appearance 
 ## [2026-10-09] ingest | Story image creation and layout guidance for future sections
 
 Added RULEBOOK §29.1, the design.md §76 contract and a copyable story-image-layout request. Removed the contradictory blank-lower-fifth instruction from the active generation template; marked older exact Krishna prompts as historical. All illustrated story sections must review their own geometry/bounds/hash, diagnose inset/padding/letterboxing separately and preserve complete art/readable text with legitimate overflow. Existing 4:5 assumptions and legacy frame percentages are explicit; no runtime or image assets change in this documentation follow-up. Updated [[kids-stories]].
+
+## [2026-10-09] ingest | Maa Durga and nine Navaratri forms with R2 artwork
+
+Added fourteen sourced Durga readings (ten stories and four introductions), nine ordered Navadurga day links, 87 distinct four-language storybook illustrations and reviewed covers. Home no longer lists Krishna/Ganesha/Hanuman; existing stories remain. The 19-book registry reuses the scrollable reader and hashed R2 cache, preserves all 57 legacy asset entries and pins 143 scene frames. Publication variants, all-page causal review, final prompts and asset hashes are in `docs/content-parity/kids-stories-durga/`. Full 3,010 tests, typecheck, changed-source lint and current-worktree iOS Debug build pass. Complete native rendering review covers all 696 page/language/size visits and 112 endings at Standard/Large; focused Maestro language/paging and library/shelf/reader/back flows pass. The simulator used a seeded local cache, so remote R2/CDN publication is unverified. The exact 87-object upload bundle is prepared because credentials are unavailable; independent Gujarati/Kannada editorial approval, physical iOS/Android checks and product/art sign-off remain release checks. Updated [[kids-stories]] and index; changes remain local, with no commit/PR/OTA/deploy.
+
+## [2026-10-09] ingest | Durga painted-boundary layout and native multi-card sharing after main pull
+
+Fast-forwarded main to 85a957316402f4b3f3c704e5382598d62d079ce0 and restored the authorized local Durga integration. Individually re-reviewed 87 painted boundaries and 14 reused covers; frame/hash records remove only empty lower space. Shared shelves now derive cover height from width/frame, use one bottom padding and leave the bottom safe area to tabs. Browser readers/catalogs use the same canonical frames.
+
+Kids stories share through the existing ShareProvider: complete scene art, full four-language narration/dialogue, takeaway/source, aligned numbered parts of at most ten cards and a current-scene scope. Capture waits for cached R2 bytes and native image decode; failures abort without a placeholder/partial album. Scene cards size art against the measured title. Native inspection caught UIKit multiplying output by screen density; central capture now supplies points divided by PixelRatio on iOS and keeps Android pixel options.
+
+Final npm test: 3,092 passing (2,246 Jest / 234 suites, 37 widgets, 590 engine, 170 data, 49 ask), typecheck and changed-production lint pass. Current isolated iOS evidence covers 696 reader visits / 112 endings / 1,504 screenshots, 112 covers, and 752 real 1080×1350 exports in 100 parts across all four languages. Every captured narrative/source reconstructs completely; no native share text/art overflow. Focused Maestro sharing, OS ten-image handoff, locale/paging and catalog-path checks passed. Browser 348 language/page visits and all 87 frame geometries / 56 covers passed. Exact proofs, image review, remaining scroll and post-change screenshots are in docs/content-parity/kids-stories-durga/.
+
+Standard reader captions still scroll 5–196dp on this phone; Large and ending/source panels need more. No art/type was clipped or shrunk to force fit. R2 credentials remain unavailable: the exact 87-object upload ZIP is prepared, with no upload or fresh-cache CDN proof. Physical iOS/Android, Instagram import, independent Gujarati/Kannada editorial approval and the complete end-to-end gesture flow remain pending. Existing compatible Debug binary was reused with current Metro; no new release build, commit, PR or OTA. Earlier native-evidence.json is historical; layout-native-evidence.json and sharing-native-evidence.json pin the current results.
+
+## [2026-10-09] lint | Scoped kids-stories and share wiki sources
+
+All 57 source paths on the two updated subsystem pages exist; both pages retain current index entries. Source code is canonical. Release/editorial/CDN gaps remain explicit above and in the validation report.
+
+## [2026-10-09] ingest | Align share controls on the right
+
+Kids Stories now places share at the right of its language row. The two prose katha readers move share into the header right slot, preserving read-aloud placement. The existing nine-form shelf remains unchanged; no duplicate collection was added.

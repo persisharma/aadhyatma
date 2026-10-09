@@ -17,14 +17,16 @@ export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreen
   const title = pick(lang, { hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids', gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು' });
   const prompt = pick(lang, { hi: 'किसकी कथा पढ़ेंगे?', en: 'Whose stories shall we read?', gu: 'કોની વાર્તાઓ વાંચશો?', kn: 'ಯಾರ ಕಥೆಗಳನ್ನು ಓದುತ್ತೀರಿ?' });
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right', 'bottom']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
       <ReaderHeader title={title} onBack={() => navigation.goBack()} variant="index" />
-      <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40, gap: spacing.md }}>
+      <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: spacing.md, gap: spacing.md }}>
         <Text style={{ color: colors.inkSoft, fontFamily: titleFontByLang(lang), fontSize: typography.subtitle.fontSize, lineHeight: 23, marginBottom: 6 }}>{prompt}</Text>
         {storyDeities.map(deity => {
           const count = storiesForDeity(deity.id).length;
           const status = count
-            ? pick(lang, { hi: `${count} कथा`, en: `${count} ${count === 1 ? 'story' : 'stories'}`, gu: `${count} વાર્તા`, kn: `${count} ಕಥೆ` })
+            ? deity.id === 'durga'
+              ? pick(lang, { hi: `${count} चित्र-पाठ`, en: `${count} illustrated readings`, gu: `${count} ચિત્રવાંચન`, kn: `${count} ಚಿತ್ರವಾಚನಗಳು` })
+              : pick(lang, { hi: `${count} कथा`, en: `${count} ${count === 1 ? 'story' : 'stories'}`, gu: `${count} વાર્તા`, kn: `${count} ಕಥೆ` })
             : pick(lang, { hi: 'कथाएँ जल्द आएँगी', en: 'Stories coming soon', gu: 'વાર્તાઓ જલ્દી આવશે', kn: 'ಕಥೆಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ' });
           return (
             <DeityCard

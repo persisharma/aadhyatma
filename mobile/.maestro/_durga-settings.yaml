@@ -1,0 +1,20 @@
+appId: com.prashantsharma.vedansh
+---
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "${READING_SIZE}"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "${READING_LANGUAGE}"
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    centerElement: true
+- tapOn: { id: "home-kids-stories-card" }
+- tapOn: { id: "kids-story-deity-durga" }

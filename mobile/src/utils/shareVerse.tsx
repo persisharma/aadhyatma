@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Alert, Clipboard, Platform, Share, View } from 'react-native';
+import { Alert, Clipboard, PixelRatio, Platform, Share, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
@@ -82,6 +82,8 @@ export type ShareableProseScope = {
   titleHi?: string;
   titleEn?: string;
   blocks: ShareableProseBlock[];
+  /** Authored four-language illustrated series, already paginated into complete parts. */
+  prepared?: Record<Lang, { label: string; header: string; firstLine: string; pages: ProsePage[] }>;
 };
 
 /**
@@ -97,6 +99,7 @@ export type ShareableProse = {
   /** Left half of the header band and the caption heading (`व्रत कथा`). */
   sectionNameHi: string;
   sectionNameEn: string;
+  sectionName?: LocalizedStrings;
   /** What the hashtags name (`Chhath Puja Katha`); defaults to the section name. */
   tagNameHi?: string;
   tagNameEn?: string;
@@ -209,11 +212,12 @@ type ProseCardSpec = {
   pageIndex: number;
   pageCount: number;
   lang: Lang;
+  illustrationUri?: string;
 };
 
 type PendingCapture =
   | { kind: 'verse'; verse: ShareableVerse; lang: Lang; format: ShareFormat }
-  | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat };
+  | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat; captureId?: number };
 
 type ProseChooser = {
   content: ShareableProse;
@@ -257,13 +261,14 @@ function resolveScopes(content: ShareableProse, lang: Lang): ResolvedScope[] {
     const firstPara = scope.blocks.find((b) => b.kind === 'para');
     const fallbackHi = firstPara ? (splitSentences(firstPara.hi)[0] ?? '') : '';
     const fallbackEn = firstPara ? (splitSentences(firstPara.en || firstPara.hi)[0] ?? '') : '';
+    const prepared = scope.prepared?.[lang];
     return {
       raw: scope,
-      header: `${section} · ${t(scope.headerHi, scope.headerEn)}`,
-      labelText: t(scope.labelHi, scope.labelEn),
+      header: prepared ? `${(content.sectionName ? pick(lang, content.sectionName) : contentByLang(lang, content.sectionNameHi, content.sectionNameEn))} · ${prepared.header}` : `${section} · ${t(scope.headerHi, scope.headerEn)}`,
+      labelText: prepared?.label ?? t(scope.labelHi, scope.labelEn),
       firstLineHi: scope.titleHi ?? fallbackHi,
       firstLineEn: scope.titleEn?.trim() ? scope.titleEn : (scope.titleHi ?? fallbackEn),
-      pagination: paginateProse({
+      pagination: prepared ? { pages: prepared.pages, truncated: false, budgetDp: 0 } : paginateProse({
         title: scope.titleHi ? t(scope.titleHi, scope.titleEn) : null,
         blocks: scope.blocks.map((b) => ({ kind: b.kind, text: t(b.hi, b.en) })),
         lang,
@@ -285,6 +290,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const [busy, setBusy] = useState(false);
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
+  const imageReady = useRef<{ id: number; resolve: (ready: boolean) => void } | null>(null);
+  const captureSequence = useRef(0);
 
   // A dispatched share is a "good moment" the rating ask may ride on (§54). Read
   // through a ref so `run`'s empty-dep callback identity never churns, and from
@@ -310,20 +317,46 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     async (spec: PendingCapture, mode: ShareMode, screenshotRef?: React.RefObject<View | null> | null) => {
       let captureTarget = screenshotRef ?? null;
       if (mode === 'card') {
+        let painted: Promise<boolean> | null = null;
+        if (spec.kind === 'prose' && spec.card.page.illustration) {
+          // Load the asset cache only for illustrated captures. Verse/prose-only tests and startup stay light.
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          const { kidsStoryArtRequest } = require('@/components/KidsStoryArt') as typeof import('@/components/KidsStoryArt');
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          const { cachedAssetUri } = require('@/utils/assetCache') as typeof import('@/utils/assetCache');
+          const request = kidsStoryArtRequest(spec.card.page.illustration.art);
+          if (!request) return null;
+          try {
+            const uri = await withTimeout(cachedAssetUri(request), 15000);
+            const id = ++captureSequence.current;
+            painted = new Promise<boolean>((resolve) => { imageReady.current = { id, resolve }; });
+            spec = { ...spec, captureId: id, card: { ...spec.card, illustrationUri: uri } };
+          } catch {
+            return null;
+          }
+        }
         setPending(spec);
         await waitForLayout();
+        if (painted) {
+          try { if (!await withTimeout(painted, 15000)) return null; }
+          catch { return null; }
+          finally { imageReady.current = null; }
+          await waitForLayout();
+        }
         captureTarget = cardRef as React.RefObject<View | null>;
       }
       const outWidth = spec.format === 'story' ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH;
       const outHeight = spec.format === 'story' ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
+      // UIKit captures point dimensions at the screen's scale; Android uses pixels.
+      const captureScale = Platform.OS === 'ios' ? PixelRatio.get() : 1;
       if (!captureTarget?.current) return null;
       try {
         return await captureRef(captureTarget.current, {
           format: 'png',
           quality: 1,
           result: 'tmpfile',
-          width: mode === 'card' ? outWidth : undefined,
-          height: mode === 'card' ? outHeight : undefined,
+          width: mode === 'card' ? outWidth / captureScale : undefined,
+          height: mode === 'card' ? outHeight / captureScale : undefined,
         });
       } catch {
         return null;
@@ -504,6 +537,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         firstLineHi: scope.firstLineHi,
         firstLineEn: scope.firstLineEn,
         lang,
+        resolved: raw.prepared?.[lang] ? {
+          sectionName: (content.sectionName ? pick(lang, content.sectionName) : contentByLang(lang, content.sectionNameHi, content.sectionNameEn)),
+          verseLabel: raw.prepared[lang].header + (label ? ` · ${contentByLang(lang, label.hi, label.en)}` : ''),
+          firstLine: raw.prepared[lang].firstLine,
+        } : undefined,
       };
       return target === 'instagram'
         ? buildInstagramCaption({
@@ -529,6 +567,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       try {
         const spec = cardSpec(content, scope, lang, highlighted);
         const fileUri = await capture({ kind: 'prose', card: spec, format }, 'card');
+        if (spec.page.illustration && !fileUri) { alertCouldNotShare(lang); return; }
         const label = spec.pageCount > 1 ? pageWord(highlighted + 1, spec.pageCount) : null;
         const caption = proseCaption(content, scope, lang, target, label);
         await deliver(fileUri, caption, target, format, lang);
@@ -801,10 +840,18 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             {pending.kind === 'prose' ? (
               pending.format === 'story' ? (
                 <ShareStoryFrame background={pending.card.background}>
-                  <ProseShareCard {...pending.card} />
+                  <ProseShareCard key={pending.captureId ?? 'prose'} {...pending.card}
+                    onIllustrationReady={(ready) => {
+                      const current = imageReady.current;
+                      if (current && current.id === pending.captureId) current.resolve(ready);
+                    }} />
                 </ShareStoryFrame>
               ) : (
-                <ProseShareCard {...pending.card} />
+                <ProseShareCard key={pending.captureId ?? 'prose'} {...pending.card}
+                    onIllustrationReady={(ready) => {
+                      const current = imageReady.current;
+                      if (current && current.id === pending.captureId) current.resolve(ready);
+                    }} />
               )
             ) : pending.format === 'story' ? (
               <ShareStoryCanvas
@@ -883,4 +930,14 @@ async function waitForLayout() {
     requestAnimationFrame(() => resolve())
   );
   await new Promise<void>((resolve) => setTimeout(resolve, 60));
+}
+
+/** Bound both asset fetch and native image decode; never capture an illustrated placeholder. */
+async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout>;
+  try {
+    return await Promise.race([promise, new Promise<never>((_, reject) => {
+      timer = setTimeout(() => reject(new Error('Illustration timed out')), ms);
+    })]);
+  } finally { clearTimeout(timer!); }
 }

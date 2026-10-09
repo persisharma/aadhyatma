@@ -1,8 +1,8 @@
 ---
 title: Share Cards (verse, prose, series)
 type: subsystem
-sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareContent.ts, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
-last_verified_date: 2026-09-23
+sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareContent.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
+last_verified_date: 2026-10-09
 confidence: high
 status: current
 ---
@@ -25,6 +25,7 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   `daanPrincipleShareable`, `vidhiMantraShareable`, `observanceShareable`,
   `askAnswerShareable`), tested in `shareContent.test.ts`. Screens only call
   `share(builder(data), lang)` from a `ShareButton`.
+- **Share placement.** Share icons sit at the right side of their content card/header. Kids Stories pins it right of the centred language toggle; Vrat Katha places it after the header counter and Daan Katha in the header right slot, keeping read-aloud in its own language-row slot.
 - **Scopes.** A prose share carries ≥1 scope (katha: *this part* / *whole katha*; temple:
   *significance & story* / *full reading*). The sheet's segment switches scope and
   re-paginates; the first scope is the default.
@@ -36,6 +37,9 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   bitmaps at once). Single-page rows reuse the verse path's `deliver()` exactly.
 - **Multi-file share** (`utils/multiShare.ts`): `react-native-share` `open({ urls })`,
   probed via `TurboModuleRegistry.get('RNShare')` then lazily required.
+
+- **Illustrated kids stories** (`kidsStoryShareable`, exported by `shareContent.ts`): four-language prepared scopes alternate a complete reviewed-frame scene card with ordinary paginated narration. Numbered parts pack whole scene groups using the maximum count across all four locales, never silently truncating the story at ten cards. Ending/source cards are included, plus a visible-scene scope. Native gu/kn prose and caption labels bypass transliteration. Scope pills scroll horizontally below the count.
+- **Illustrated capture readiness.** Only illustrated exports load the cache module, resolve the existing hashed R2 request, then wait for native `Image.onLoad` on a fresh capture mount. Fetch/decode timeout or errors return failure: a series aborts before hand-off and a single scene refuses the text-only fallback. Preview may show loading UI, but exported files never deliberately contain a placeholder. The same provider, paginator, branded card, preview and native multi-share adapter remain in use.
 
 ## Gotchas
 
@@ -80,3 +84,7 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
 - [[pitru-shiksha]] — deliberately excluded.
 - `design.md` §39 (verse card, sheet, hashtags, story) and §39.4–§39.6 (prose, series,
   all-pages); `RULEBOOK.md` §3 (share contract, constrained surfaces).
+
+Illustrated story cards measure the actual title height before sizing the complete framed scene into the remaining body. A conservative initial frame is replaced after native title layout, and export waits for decoded art and layout. Full prose cards keep the existing fixed readable type.
+
+The shared capture pipeline compensates for UIKit point dimensions using `PixelRatio.get()`; Android options remain physical pixels. Native iOS verification caught the old 3x multiplier (3240×4050) and the corrected output is checked at 1080×1350. Story-frame options receive the same correction for 1080×1920.

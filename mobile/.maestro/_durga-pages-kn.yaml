@@ -1,0 +1,1363 @@
+# Full source order; captions and source notes come from canonical JSON.
+appId: com.prashantsharma.vedansh
+---
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-navaratri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-navaratri" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 3"
+- assertVisible: { id: "story-page-nine-nights-of-devotion" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-nv01-art
+- scrollUntilVisible:
+    element: { text: "ನವರಾತ್ರಿ ಎಂದರೆ ಒಂಬತ್ತು ರಾತ್ರಿಗಳು. ಈ ಹಬ್ಬದಲ್ಲಿ ಹಲವು ಕುಟುಂಬಗಳು ದುರ್ಗಾ ಮಾತೆಯನ್ನು ನೆನೆದು ಆಕೆಯ ಕಥೆಗಳನ್ನು ಕೇಳುತ್ತವೆ; ಆಕೆಯ ಶಕ್ತಿ ಮತ್ತು ಕರುಣೆಯನ್ನು ಸಂಭ್ರಮಿಸುತ್ತವೆ. ಪ್ರಸಿದ್ಧ ಸಂಪ್ರದಾಯವೊಂದರಲ್ಲಿ ಮಾತೆಯ ಒಂಬತ್ತು ರೂಪಗಳನ್ನು ಕ್ರಮವಾಗಿ ಆರಾಧಿಸುತ್ತಾರೆ. ಅವುಗಳನ್ನು ನವದುರ್ಗೆ ಎನ್ನುತ್ತಾರೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನವರಾತ್ರಿ ಎಂದರೆ ಒಂಬತ್ತು ರಾತ್ರಿಗಳು. ಈ ಹಬ್ಬದಲ್ಲಿ ಹಲವು ಕುಟುಂಬಗಳು ದುರ್ಗಾ ಮಾತೆಯನ್ನು ನೆನೆದು ಆಕೆಯ ಕಥೆಗಳನ್ನು ಕೇಳುತ್ತವೆ; ಆಕೆಯ ಶಕ್ತಿ ಮತ್ತು ಕರುಣೆಯನ್ನು ಸಂಭ್ರಮಿಸುತ್ತವೆ. ಪ್ರಸಿದ್ಧ ಸಂಪ್ರದಾಯವೊಂದರಲ್ಲಿ ಮಾತೆಯ ಒಂಬತ್ತು ರೂಪಗಳನ್ನು ಕ್ರಮವಾಗಿ ಆರಾಧಿಸುತ್ತಾರೆ. ಅವುಗಳನ್ನು ನವದುರ್ಗೆ ಎನ್ನುತ್ತಾರೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-nv01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 3"
+- assertVisible: { id: "story-page-the-nine-names" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-nv02-art
+- scrollUntilVisible:
+    element: { text: "ಸಾಂಪ್ರದಾಯಿಕ ಕ್ರಮ: ಶೈಲಪುತ್ರಿ, ಬ್ರಹ್ಮಚಾರಿಣಿ, ಚಂದ್ರಘಂಟಾ, ಕೂಷ್ಮಾಂಡಾ, ಸ್ಕಂದಮಾತಾ, ಕಾತ್ಯಾಯನಿ, ಕಾಲರಾತ್ರಿ, ಮಹಾಗೌರಿ ಮತ್ತು ಸಿದ್ಧಿದಾತ್ರಿ. ಕೆಲವು ವಾಚನಗಳು ಸಂಬಂಧಿತ ಪಾರ್ವತಿಯ ಕಥೆಗಳನ್ನು ಹೇಳುತ್ತವೆ; ಇತರವು ರೂಪ ಮತ್ತು ಸಂಕೇತಗಳನ್ನು ಪರಿಚಯಿಸುತ್ತವೆ. ಪ್ರತಿಯೊಂದು ರೂಪವೂ ಅದೇ ದಿವ್ಯ ಮಾತೆಯನ್ನು ನೆನಪಿಸುತ್ತದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಸಾಂಪ್ರದಾಯಿಕ ಕ್ರಮ: ಶೈಲಪುತ್ರಿ, ಬ್ರಹ್ಮಚಾರಿಣಿ, ಚಂದ್ರಘಂಟಾ, ಕೂಷ್ಮಾಂಡಾ, ಸ್ಕಂದಮಾತಾ, ಕಾತ್ಯಾಯನಿ, ಕಾಲರಾತ್ರಿ, ಮಹಾಗೌರಿ ಮತ್ತು ಸಿದ್ಧಿದಾತ್ರಿ. ಕೆಲವು ವಾಚನಗಳು ಸಂಬಂಧಿತ ಪಾರ್ವತಿಯ ಕಥೆಗಳನ್ನು ಹೇಳುತ್ತವೆ; ಇತರವು ರೂಪ ಮತ್ತು ಸಂಕೇತಗಳನ್ನು ಪರಿಚಯಿಸುತ್ತವೆ. ಪ್ರತಿಯೊಂದು ರೂಪವೂ ಅದೇ ದಿವ್ಯ ಮಾತೆಯನ್ನು ನೆನಪಿಸುತ್ತದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-nv02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 3"
+- assertVisible: { id: "story-page-celebrate-and-learn" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-nv03-art
+- scrollUntilVisible:
+    element: { text: "ಕುಟುಂಬಗಳು ಪೂಜೆ, ಸಂಗೀತ, ನೃತ್ಯ ಅಥವಾ ಒಟ್ಟಾಗಿ ಕಥೆ ಕೇಳುವ ಮೂಲಕ ಹಬ್ಬ ಆಚರಿಸುತ್ತವೆ. ಪ್ರೀತಿಪಾತ್ರರ ಜೊತೆ ಕೇಳಿ, ಪ್ರಶ್ನೆ ಕೇಳಿ, ದಯೆ ತೋರಿಸಿ. ದಿನಕ್ಕೊಂದು ವಾಚನ ಆರಂಭಿಸಿ ಮಾತೆಯ ಧೈರ್ಯ, ತಾಳ್ಮೆ ಮತ್ತು ಕಾಳಜಿಯನ್ನು ಅರಿಯಿರಿ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಕುಟುಂಬಗಳು ಪೂಜೆ, ಸಂಗೀತ, ನೃತ್ಯ ಅಥವಾ ಒಟ್ಟಾಗಿ ಕಥೆ ಕೇಳುವ ಮೂಲಕ ಹಬ್ಬ ಆಚರಿಸುತ್ತವೆ. ಪ್ರೀತಿಪಾತ್ರರ ಜೊತೆ ಕೇಳಿ, ಪ್ರಶ್ನೆ ಕೇಳಿ, ದಯೆ ತೋರಿಸಿ. ದಿನಕ್ಕೊಂದು ವಾಚನ ಆರಂಭಿಸಿ ಮಾತೆಯ ಧೈರ್ಯ, ತಾಳ್ಮೆ ಮತ್ತು ಕಾಳಜಿಯನ್ನು ಅರಿಯಿರಿ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-nv03-caption
+- scrollUntilVisible:
+    element: { text: "ಸಾಂಪ್ರದಾಯಿಕ ನವದುರ್ಗಾ ಕ್ರಮವನ್ನು ಆಧರಿಸಿದ ನವರಾತ್ರಿಯ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ. ಕುಟುಂಬ ಮತ್ತು ಪ್ರದೇಶಗಳ ಆಚರಣೆಗಳು ಬೇರೆಯಾಗಿರುತ್ತವೆ. ಇದು ಪೂಜಾ ಅಥವಾ ಉಪವಾಸದ ಮಾರ್ಗದರ್ಶಿಯಲ್ಲ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಸಾಂಪ್ರದಾಯಿಕ ನವದುರ್ಗಾ ಕ್ರಮವನ್ನು ಆಧರಿಸಿದ ನವರಾತ್ರಿಯ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ. ಕುಟುಂಬ ಮತ್ತು ಪ್ರದೇಶಗಳ ಆಚರಣೆಗಳು ಬೇರೆಯಾಗಿರುತ್ತವೆ. ಇದು ಪೂಜಾ ಅಥವಾ ಉಪವಾಸದ ಮಾರ್ಗದರ್ಶಿಯಲ್ಲ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-nv03-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-shailaputri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-shailaputri" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 4"
+- assertVisible: { id: "story-page-menas-wish" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sp01-art
+- scrollUntilVisible:
+    element: { text: "ಪರ್ವತಗಳ ಒಡೆಯ ಹಿಮವಂತ ಮತ್ತು ಅವನ ಪತ್ನಿ ಮೇನೆ ದೇವಿಯ ಭಕ್ತರಾಗಿದ್ದರು. ದಿವ್ಯ ಮಾತೆ ತನ್ನ ಮಗಳಾಗಿ ಹುಟ್ಟಬೇಕೆಂದು ಮೇನೆ ಕೇಳಿದ್ದಳು. ದೇವಿ ಆ ಬಯಕೆಯನ್ನು ಒಪ್ಪಿದ್ದಳು. ಈಗ ಪರ್ವತದ ಕುಟುಂಬ ಆಕೆಯ ಆಗಮನಕ್ಕಾಗಿ ಕಾಯುತ್ತಿತ್ತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಪರ್ವತಗಳ ಒಡೆಯ ಹಿಮವಂತ ಮತ್ತು ಅವನ ಪತ್ನಿ ಮೇನೆ ದೇವಿಯ ಭಕ್ತರಾಗಿದ್ದರು. ದಿವ್ಯ ಮಾತೆ ತನ್ನ ಮಗಳಾಗಿ ಹುಟ್ಟಬೇಕೆಂದು ಮೇನೆ ಕೇಳಿದ್ದಳು. ದೇವಿ ಆ ಬಯಕೆಯನ್ನು ಒಪ್ಪಿದ್ದಳು. ಈಗ ಪರ್ವತದ ಕುಟುಂಬ ಆಕೆಯ ಆಗಮನಕ್ಕಾಗಿ ಕಾಯುತ್ತಿತ್ತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sp01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 4"
+- assertVisible: { id: "story-page-the-goddess-becomes-a-daughter" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sp02-art
+- scrollUntilVisible:
+    element: { text: "ದೇವಿ ಮೇನೆಯ ಮುಂದೆ ದಿವ್ಯ ರೂಪದಲ್ಲಿ ಕಾಣಿಸಿಕೊಂಡಳು. ಮೇನೆ ಸಂತೋಷದಿಂದ ಆಕೆಯನ್ನು ಗುರುತಿಸಿ ತನ್ನ ಪುಟ್ಟ ಮಗಳಾಗಿ ಇರಲು ಕೇಳಿದಳು. ಮಾತೆ ಹಿಂದಿನ ವರವನ್ನು ನೆನಪಿಸಿ, ಅವಳ ಮುಂದೆಯೇ ಶಿಶುವಾದಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವಿ ಮೇನೆಯ ಮುಂದೆ ದಿವ್ಯ ರೂಪದಲ್ಲಿ ಕಾಣಿಸಿಕೊಂಡಳು. ಮೇನೆ ಸಂತೋಷದಿಂದ ಆಕೆಯನ್ನು ಗುರುತಿಸಿ ತನ್ನ ಪುಟ್ಟ ಮಗಳಾಗಿ ಇರಲು ಕೇಳಿದಳು. ಮಾತೆ ಹಿಂದಿನ ವರವನ್ನು ನೆನಪಿಸಿ, ಅವಳ ಮುಂದೆಯೇ ಶಿಶುವಾದಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sp02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 4"
+- assertVisible: { id: "story-page-parvati-grows-and-learns" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sp03-art
+- scrollUntilVisible:
+    element: { text: "ಕುಟುಂಬ ಮತ್ತು ನಗರ ಮಗುವಿನ ಆಗಮನವನ್ನು ಸಂಭ್ರಮಿಸಿದವು. ಪರ್ವತದ ಕುಟುಂಬವನ್ನು ನೆನಪಿಸುವ ಪಾರ್ವತಿ ಎಂಬ ಹೆಸರು ಆಕೆಗೆ ಬಂದಿತು. ಗಂಗೆಯ ಮರಳುತೀರದಲ್ಲಿ ಗೆಳತಿಯರ ಜೊತೆ ಚೆಂಡು ಮತ್ತು ಗೊಂಬೆಗಳಿಂದ ಆಡುತ್ತಿದ್ದಳು. ಕಲಿಯುವ ಸಮಯ ಬಂದಾಗ ಗುರುಗಳ ಬಳಿ ಆಸಕ್ತಿಯಿಂದ ಕಲಿತಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಕುಟುಂಬ ಮತ್ತು ನಗರ ಮಗುವಿನ ಆಗಮನವನ್ನು ಸಂಭ್ರಮಿಸಿದವು. ಪರ್ವತದ ಕುಟುಂಬವನ್ನು ನೆನಪಿಸುವ ಪಾರ್ವತಿ ಎಂಬ ಹೆಸರು ಆಕೆಗೆ ಬಂದಿತು. ಗಂಗೆಯ ಮರಳುತೀರದಲ್ಲಿ ಗೆಳತಿಯರ ಜೊತೆ ಚೆಂಡು ಮತ್ತು ಗೊಂಬೆಗಳಿಂದ ಆಡುತ್ತಿದ್ದಳು. ಕಲಿಯುವ ಸಮಯ ಬಂದಾಗ ಗುರುಗಳ ಬಳಿ ಆಸಕ್ತಿಯಿಂದ ಕಲಿತಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sp03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 4"
+- assertVisible: { id: "story-page-shailaputri-the-first-form" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sp04-art
+- scrollUntilVisible:
+    element: { text: "ಶೈಲಪುತ್ರಿ ಎಂದರೆ ಪರ್ವತದ ಮಗಳು. ನವರಾತ್ರಿಯ ಮೊದಲ ದಿನ ಭಕ್ತರು ಮಾತೆಯ ಈ ರೂಪವನ್ನು ನೆನೆಯುತ್ತಾರೆ. ಸಾಂಪ್ರದಾಯಿಕ ಚಿತ್ರಗಳಲ್ಲಿ ಆಕೆ ಬಿಳಿ ಎತ್ತಿನ ಮೇಲೆ ತ್ರಿಶೂಲ ಮತ್ತು ಕಮಲ ಹಿಡಿದಿರುತ್ತಾಳೆ. ಪಾರ್ವತಿಯ ಪರ್ವತದ ಜನನ ಈ ಹೆಸರನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ನೆರವಾಗುತ್ತದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಶೈಲಪುತ್ರಿ ಎಂದರೆ ಪರ್ವತದ ಮಗಳು. ನವರಾತ್ರಿಯ ಮೊದಲ ದಿನ ಭಕ್ತರು ಮಾತೆಯ ಈ ರೂಪವನ್ನು ನೆನೆಯುತ್ತಾರೆ. ಸಾಂಪ್ರದಾಯಿಕ ಚಿತ್ರಗಳಲ್ಲಿ ಆಕೆ ಬಿಳಿ ಎತ್ತಿನ ಮೇಲೆ ತ್ರಿಶೂಲ ಮತ್ತು ಕಮಲ ಹಿಡಿದಿರುತ್ತಾಳೆ. ಪಾರ್ವತಿಯ ಪರ್ವತದ ಜನನ ಈ ಹೆಸರನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ನೆರವಾಗುತ್ತದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sp04-caption
+- scrollUntilVisible:
+    element: { text: "ಶಿವಪುರಾಣ 2.3.6–7ರ ಸಂಬಂಧಿತ ಪಾರ್ವತಿಯ ಪ್ರಸಂಗದ ಬಳಿಕ ಶೈಲಪುತ್ರಿಯ ಮೊದಲ ದಿನದ ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಚಯ. ಈ ಅಧ್ಯಾಯಗಳು ಸ್ವತಃ ಈ ನವದುರ್ಗಾ ಹೆಸರನ್ನು ಬಳಸುವುದಿಲ್ಲ. ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಶಿವಪುರಾಣ 2.3.6–7ರ ಸಂಬಂಧಿತ ಪಾರ್ವತಿಯ ಪ್ರಸಂಗದ ಬಳಿಕ ಶೈಲಪುತ್ರಿಯ ಮೊದಲ ದಿನದ ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಚಯ. ಈ ಅಧ್ಯಾಯಗಳು ಸ್ವತಃ ಈ ನವದುರ್ಗಾ ಹೆಸರನ್ನು ಬಳಸುವುದಿಲ್ಲ. ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sp04-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-brahmacharini" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-brahmacharini" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-parvati-seeks-permission" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br01-art
+- scrollUntilVisible:
+    element: { text: "ಪಾರ್ವತಿ ಶಿವನೊಡನೆ ಮತ್ತೆ ಸೇರಲು ಬಯಸಿದಳು. ನಾರದ ಭಕ್ತಿಯಿಂದ ತಪಸ್ಸು ಮಾಡಲು ಸಲಹೆ ನೀಡಿದನು. ಕಾಡಿನ ಕಷ್ಟದ ಬದುಕಿನ ಬಗ್ಗೆ ತಂದೆತಾಯಿಗೆ ಚಿಂತೆ ಇತ್ತು. ಆಕೆಯ ಬಯಕೆ ಕೇಳಿ ಕೊನೆಗೆ ಒಪ್ಪಿಗೆ ನೀಡಿದರು. ಈ ಸಂಕಲ್ಪವನ್ನು ನವರಾತ್ರಿಯ ಎರಡನೇ ರೂಪ ಬ್ರಹ್ಮಚಾರಿಣಿಯಲ್ಲಿ ನೆನೆಯುತ್ತಾರೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಪಾರ್ವತಿ ಶಿವನೊಡನೆ ಮತ್ತೆ ಸೇರಲು ಬಯಸಿದಳು. ನಾರದ ಭಕ್ತಿಯಿಂದ ತಪಸ್ಸು ಮಾಡಲು ಸಲಹೆ ನೀಡಿದನು. ಕಾಡಿನ ಕಷ್ಟದ ಬದುಕಿನ ಬಗ್ಗೆ ತಂದೆತಾಯಿಗೆ ಚಿಂತೆ ಇತ್ತು. ಆಕೆಯ ಬಯಕೆ ಕೇಳಿ ಕೊನೆಗೆ ಒಪ್ಪಿಗೆ ನೀಡಿದರು. ಈ ಸಂಕಲ್ಪವನ್ನು ನವರಾತ್ರಿಯ ಎರಡನೇ ರೂಪ ಬ್ರಹ್ಮಚಾರಿಣಿಯಲ್ಲಿ ನೆನೆಯುತ್ತಾರೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-tapas-and-a-garden" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br02-art
+- scrollUntilVisible:
+    element: { text: "ಗೆಳತಿಯರೊಂದಿಗೆ ಪಾರ್ವತಿ ಹಿಮಾಲಯದ ಆಶ್ರಮ ತಲುಪಿದಳು. ಸರಳ ಬಟ್ಟೆ ಧರಿಸಿ ದೀರ್ಘಕಾಲ ಶಿವನ ಧ್ಯಾನ ಮಾಡಿದಳು. ಮರಗಳನ್ನು ನೆಟ್ಟು ನೀರು ಹಾಕಿದಳು; ಅತಿಥಿಗಳನ್ನು ಸ್ವಾಗತಿಸಿದಳು. ಆಕೆಯ ಭಕ್ತಿಯಲ್ಲಿ ಸುತ್ತಲಿನ ಕಾಡಿನ ಕಾಳಜಿಯೂ ಇತ್ತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಗೆಳತಿಯರೊಂದಿಗೆ ಪಾರ್ವತಿ ಹಿಮಾಲಯದ ಆಶ್ರಮ ತಲುಪಿದಳು. ಸರಳ ಬಟ್ಟೆ ಧರಿಸಿ ದೀರ್ಘಕಾಲ ಶಿವನ ಧ್ಯಾನ ಮಾಡಿದಳು. ಮರಗಳನ್ನು ನೆಟ್ಟು ನೀರು ಹಾಕಿದಳು; ಅತಿಥಿಗಳನ್ನು ಸ್ವಾಗತಿಸಿದಳು. ಆಕೆಯ ಭಕ್ತಿಯಲ್ಲಿ ಸುತ್ತಲಿನ ಕಾಡಿನ ಕಾಳಜಿಯೂ ಇತ್ತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-peace-in-the-hermitage" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br03-art
+- scrollUntilVisible:
+    element: { text: "ಆಶ್ರಮದ ಸುತ್ತ ಅದ್ಭುತ ಬದಲಾವಣೆ ಆಯಿತು ಎಂದು ಪುರಾಣ ಹೇಳುತ್ತದೆ. ಸಿಂಹ ಮತ್ತು ಹಸು ಪರಸ್ಪರ ತೊಂದರೆ ಕೊಡಲಿಲ್ಲ; ಬೆಕ್ಕು ಮತ್ತು ಇಲಿಗಳು ವೈರವಿಲ್ಲದೆ ಬದುಕಿದವು. ಮರಗಳು ಫಲಕೊಟ್ಟವು, ಹೂಗಳು ಅರಳಿದವು. ಪಾರ್ವತಿಯ ತಪಸ್ಸು ಸಹಜ ಶತ್ರುಗಳಿಗೂ ಶಾಂತಿ ತಂದಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಆಶ್ರಮದ ಸುತ್ತ ಅದ್ಭುತ ಬದಲಾವಣೆ ಆಯಿತು ಎಂದು ಪುರಾಣ ಹೇಳುತ್ತದೆ. ಸಿಂಹ ಮತ್ತು ಹಸು ಪರಸ್ಪರ ತೊಂದರೆ ಕೊಡಲಿಲ್ಲ; ಬೆಕ್ಕು ಮತ್ತು ಇಲಿಗಳು ವೈರವಿಲ್ಲದೆ ಬದುಕಿದವು. ಮರಗಳು ಫಲಕೊಟ್ಟವು, ಹೂಗಳು ಅರಳಿದವು. ಪಾರ್ವತಿಯ ತಪಸ್ಸು ಸಹಜ ಶತ್ರುಗಳಿಗೂ ಶಾಂತಿ ತಂದಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-the-devas-ask-shiva" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br04-art
+- scrollUntilVisible:
+    element: { text: "ಇತ್ತ ತಾರಕಾಸುರ ದೇವತೆಗಳಿಗೆ ತೊಂದರೆ ಕೊಡುತ್ತಿದ್ದನು. ಶಿವ ಮತ್ತು ಪಾರ್ವತಿಯ ಮಗ ಅವನನ್ನು ತಡೆಯುವನೆಂದು ಅವರು ಆಶಿಸಿದರು. ನಂದಿಯ ನೆರವಿನಿಂದ ಶಿವನಿಗೆ ವಿವಾಹದ ವಿನಂತಿ ಮಾಡಿದರು. ಅವರ ಪುನಃ ಪುನಃ ಪ್ರಾರ್ಥನೆಗೆ ಮರುಗಿ ಶಿವ ನೆರವಾಗಲು ಒಪ್ಪಿದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಇತ್ತ ತಾರಕಾಸುರ ದೇವತೆಗಳಿಗೆ ತೊಂದರೆ ಕೊಡುತ್ತಿದ್ದನು. ಶಿವ ಮತ್ತು ಪಾರ್ವತಿಯ ಮಗ ಅವನನ್ನು ತಡೆಯುವನೆಂದು ಅವರು ಆಶಿಸಿದರು. ನಂದಿಯ ನೆರವಿನಿಂದ ಶಿವನಿಗೆ ವಿವಾಹದ ವಿನಂತಿ ಮಾಡಿದರು. ಅವರ ಪುನಃ ಪುನಃ ಪ್ರಾರ್ಥನೆಗೆ ಮರುಗಿ ಶಿವ ನೆರವಾಗಲು ಒಪ್ಪಿದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-the-seven-sages-test-her" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br05-art
+- scrollUntilVisible:
+    element: { text: "ಪಾರ್ವತಿಯ ಸಂಕಲ್ಪ ಪರೀಕ್ಷಿಸಲು ಶಿವ ಏಳು ಋಷಿಗಳನ್ನು ಕಳುಹಿಸಿದನು. ಅವರು ಬೇರೆ ಮಾರ್ಗ ಆರಿಸಲು ಹೇಳಿ ಶಿವನನ್ನು ಟೀಕಿಸಿದರು. ಪಾರ್ವತಿ ತನ್ನ ಭಕ್ತಿ ಮತ್ತು ನಾರದನ ಮಾರ್ಗದರ್ಶನದಲ್ಲಿ ದೃಢಳಾಗಿದ್ದಳು. ಋಷಿಗಳು ಆಕೆಯ ಸಂಕಲ್ಪ ಅರಿತು ಆಶೀರ್ವದಿಸಿ ಶಿವನ ಬಳಿಗೆ ಮರಳಿದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಪಾರ್ವತಿಯ ಸಂಕಲ್ಪ ಪರೀಕ್ಷಿಸಲು ಶಿವ ಏಳು ಋಷಿಗಳನ್ನು ಕಳುಹಿಸಿದನು. ಅವರು ಬೇರೆ ಮಾರ್ಗ ಆರಿಸಲು ಹೇಳಿ ಶಿವನನ್ನು ಟೀಕಿಸಿದರು. ಪಾರ್ವತಿ ತನ್ನ ಭಕ್ತಿ ಮತ್ತು ನಾರದನ ಮಾರ್ಗದರ್ಶನದಲ್ಲಿ ದೃಢಳಾಗಿದ್ದಳು. ಋಷಿಗಳು ಆಕೆಯ ಸಂಕಲ್ಪ ಅರಿತು ಆಶೀರ್ವದಿಸಿ ಶಿವನ ಬಳಿಗೆ ಮರಳಿದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-the-ascetics-disguise" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br06-art
+- scrollUntilVisible:
+    element: { text: "ಆಗ ಶಿವನೇ ವೃದ್ಧ ತಪಸ್ವಿಯ ವೇಷದಲ್ಲಿ ಕೋಲು ಮತ್ತು ಛತ್ರಿಯೊಂದಿಗೆ ಬಂದನು. ಪಾರ್ವತಿ ಅವನನ್ನು ಸ್ವಾಗತಿಸಿದಳು. ಅವನು ಶಿವನನ್ನು ನಿಂದಿಸಿದಾಗ ಆಕೆ ತನ್ನ ನಂಬಿಕೆ ವಿವರಿಸಿ ಇನ್ನಷ್ಟು ಅವಮಾನ ಕೇಳಲು ಒಪ್ಪಲಿಲ್ಲ. ಗೆಳತಿ ವಿಜಯೆಯೊಂದಿಗೆ ಹೊರಡಲು ಸಿದ್ಧಳಾದಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಆಗ ಶಿವನೇ ವೃದ್ಧ ತಪಸ್ವಿಯ ವೇಷದಲ್ಲಿ ಕೋಲು ಮತ್ತು ಛತ್ರಿಯೊಂದಿಗೆ ಬಂದನು. ಪಾರ್ವತಿ ಅವನನ್ನು ಸ್ವಾಗತಿಸಿದಳು. ಅವನು ಶಿವನನ್ನು ನಿಂದಿಸಿದಾಗ ಆಕೆ ತನ್ನ ನಂಬಿಕೆ ವಿವರಿಸಿ ಇನ್ನಷ್ಟು ಅವಮಾನ ಕೇಳಲು ಒಪ್ಪಲಿಲ್ಲ. ಗೆಳತಿ ವಿಜಯೆಯೊಂದಿಗೆ ಹೊರಡಲು ಸಿದ್ಧಳಾದಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-shiva-reveals-himself" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br07-art
+- scrollUntilVisible:
+    element: { text: "ಆಕೆ ಹೊರಡುವ ಮೊದಲು ಶಿವ ತನ್ನ ನಿಜರೂಪ ತೋರಿಸಿದನು. ಆಕೆಯ ಭಕ್ತಿಯನ್ನು ಮತ್ತು ತಾನು ನಡೆಸಿದ ಪರೀಕ್ಷೆಗಳನ್ನು ಒಪ್ಪಿಕೊಂಡನು. ಪಾರ್ವತಿಯ ದಣಿವು ಸಂತೋಷವಾಯಿತು. ಕುಟುಂಬದೊಂದಿಗೆ ಸರಿಯಾದ ವಿವಾಹ ವಿಧಿ ನಡೆಯಬೇಕೆಂದು ಆಕೆ ಕೇಳಿದಳು; ಶಿವ ಒಪ್ಪಿದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಆಕೆ ಹೊರಡುವ ಮೊದಲು ಶಿವ ತನ್ನ ನಿಜರೂಪ ತೋರಿಸಿದನು. ಆಕೆಯ ಭಕ್ತಿಯನ್ನು ಮತ್ತು ತಾನು ನಡೆಸಿದ ಪರೀಕ್ಷೆಗಳನ್ನು ಒಪ್ಪಿಕೊಂಡನು. ಪಾರ್ವತಿಯ ದಣಿವು ಸಂತೋಷವಾಯಿತು. ಕುಟುಂಬದೊಂದಿಗೆ ಸರಿಯಾದ ವಿವಾಹ ವಿಧಿ ನಡೆಯಬೇಕೆಂದು ಆಕೆ ಕೇಳಿದಳು; ಶಿವ ಒಪ್ಪಿದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br07-caption
+- scrollUntilVisible:
+    element: { text: "ಶಿವಪುರಾಣ 2.3.21–29ರ ಸಂಬಂಧಿತ ಪಾರ್ವತಿಯ ಪ್ರಸಂಗ, ಬ್ರಹ್ಮಚಾರಿಣಿಯ ಎರಡನೇ ದಿನದ ರೂಪದೊಂದಿಗೆ ಸಂಬಂಧಿಸಿದೆ. ಮಕ್ಕಳಿಗಾಗಿ ಕಠಿಣ ಉಪವಾಸ ಮತ್ತು ಅಗ್ನಿಪರೀಕ್ಷೆಯನ್ನು ಬಿಡಲಾಗಿದೆ; ಇದು ಸಾಧನೆಯ ಮಾರ್ಗದರ್ಶಿಯಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಶಿವಪುರಾಣ 2.3.21–29ರ ಸಂಬಂಧಿತ ಪಾರ್ವತಿಯ ಪ್ರಸಂಗ, ಬ್ರಹ್ಮಚಾರಿಣಿಯ ಎರಡನೇ ದಿನದ ರೂಪದೊಂದಿಗೆ ಸಂಬಂಧಿಸಿದೆ. ಮಕ್ಕಳಿಗಾಗಿ ಕಠಿಣ ಉಪವಾಸ ಮತ್ತು ಅಗ್ನಿಪರೀಕ್ಷೆಯನ್ನು ಬಿಡಲಾಗಿದೆ; ಇದು ಸಾಧನೆಯ ಮಾರ್ಗದರ್ಶಿಯಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-br07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-chandraghanta" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-chandraghanta" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 5"
+- assertVisible: { id: "story-page-the-wedding-procession" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg01-art
+- scrollUntilVisible:
+    element: { text: "ವಿವಾಹದ ಸಮಯ ಬಂತು. ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳೊಂದಿಗೆ ಶಿವ ತನ್ನ ಎತ್ತಿನ ಮೇಲೆ ಹಿಮವಂತನ ಮನೆಗೆ ಬಂದನು. ಪರ್ವತ ಅರಮನೆಯಲ್ಲಿ ಸಂಗೀತ ಮೊಳಗಿತು. ಹಿಮವಂತ ಮತ್ತು ಮೇನಾ ವರನನ್ನು ಸ್ವಾಗತಿಸಿದರು. ಪಾರ್ವತಿ ಮದುವೆಯ ಉಡುಗೆಯಲ್ಲಿ ಕಾಯುತ್ತಿದ್ದಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ವಿವಾಹದ ಸಮಯ ಬಂತು. ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳೊಂದಿಗೆ ಶಿವ ತನ್ನ ಎತ್ತಿನ ಮೇಲೆ ಹಿಮವಂತನ ಮನೆಗೆ ಬಂದನು. ಪರ್ವತ ಅರಮನೆಯಲ್ಲಿ ಸಂಗೀತ ಮೊಳಗಿತು. ಹಿಮವಂತ ಮತ್ತು ಮೇನಾ ವರನನ್ನು ಸ್ವಾಗತಿಸಿದರು. ಪಾರ್ವತಿ ಮದುವೆಯ ಉಡುಗೆಯಲ್ಲಿ ಕಾಯುತ್ತಿದ್ದಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 5"
+- assertVisible: { id: "story-page-naradas-explanation" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg02-art
+- scrollUntilVisible:
+    element: { text: "ವಿಧಿಯ ಸಮಯದಲ್ಲಿ ಹಿಮವಂತ ಶಿವನ ವಂಶದ ಕುರಿತು ಕೇಳಿದನು. ಶಿವ ಮೌನವಾಗಿದ್ದನು. ನಾರದ ವೀಣೆ ನುಡಿಸಿ ಶಿವನ ದಿವ್ಯಸ್ವರೂಪ ಸಾಮಾನ್ಯ ವಂಶಪರಿಚಯಕ್ಕೆ ಮೀರಿದ್ದು ಎಂದು ತಿಳಿಸಿದನು. ಹಿಮವಂತ ಕೇಳಿದನು; ಅವನ ಸಂದೇಹ ದೂರವಾಯಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ವಿಧಿಯ ಸಮಯದಲ್ಲಿ ಹಿಮವಂತ ಶಿವನ ವಂಶದ ಕುರಿತು ಕೇಳಿದನು. ಶಿವ ಮೌನವಾಗಿದ್ದನು. ನಾರದ ವೀಣೆ ನುಡಿಸಿ ಶಿವನ ದಿವ್ಯಸ್ವರೂಪ ಸಾಮಾನ್ಯ ವಂಶಪರಿಚಯಕ್ಕೆ ಮೀರಿದ್ದು ಎಂದು ತಿಳಿಸಿದನು. ಹಿಮವಂತ ಕೇಳಿದನು; ಅವನ ಸಂದೇಹ ದೂರವಾಯಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 5"
+- assertVisible: { id: "story-page-hands-joined" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg03-art
+- scrollUntilVisible:
+    element: { text: "ಮೇನಾ ಜೊತೆ ನಿಂತ ಹಿಮವಂತ ಪಾರ್ವತಿಯ ಕೈಯನ್ನು ಶಿವನ ಕೈಯಲ್ಲಿ ಇಟ್ಟನು. ಶಿವ ಆಕೆಯ ಕೈ ಸ್ವೀಕರಿಸಿದನು; ವಿವಾಹ ವಿಧಿ ಮುಂದುವರಿಯಿತು. ಪಾರ್ವತಿ ಬಯಸಿದ್ದ ವಿವಾಹ ಕುಟುಂಬ ಮತ್ತು ದೇವತೆಗಳ ಸಮ್ಮುಖದಲ್ಲಿ ನೆರವೇರಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಮೇನಾ ಜೊತೆ ನಿಂತ ಹಿಮವಂತ ಪಾರ್ವತಿಯ ಕೈಯನ್ನು ಶಿವನ ಕೈಯಲ್ಲಿ ಇಟ್ಟನು. ಶಿವ ಆಕೆಯ ಕೈ ಸ್ವೀಕರಿಸಿದನು; ವಿವಾಹ ವಿಧಿ ಮುಂದುವರಿಯಿತು. ಪಾರ್ವತಿ ಬಯಸಿದ್ದ ವಿವಾಹ ಕುಟುಂಬ ಮತ್ತು ದೇವತೆಗಳ ಸಮ್ಮುಖದಲ್ಲಿ ನೆರವೇರಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 5"
+- assertVisible: { id: "story-page-family-celebrates" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg04-art
+- scrollUntilVisible:
+    element: { text: "ಅರಮನೆಯೆಲ್ಲ ಸಂತೋಷ ತುಂಬಿತು. ದಿವ್ಯ ಸಂಗೀತಗಾರರು ಹಾಡಿದರು; ನರ್ತಕರು ನೃತ್ಯ ಮಾಡಿದರು; ಬಂಧುಗಳು ಕಾಣಿಕೆ ನೀಡಿದರು. ಮಗಳ ಆಶೆ ಈಡೇರಿದ್ದಕ್ಕೆ ಹಿಮವಂತ ಸಂತೋಷಪಟ್ಟನು. ಶಿವ-ಪಾರ್ವತಿಯ ವಿವಾಹ ಕುಟುಂಬ, ಋಷಿಗಳು ಮತ್ತು ದೇವತೆಗಳನ್ನು ಸೇರಿಸಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಅರಮನೆಯೆಲ್ಲ ಸಂತೋಷ ತುಂಬಿತು. ದಿವ್ಯ ಸಂಗೀತಗಾರರು ಹಾಡಿದರು; ನರ್ತಕರು ನೃತ್ಯ ಮಾಡಿದರು; ಬಂಧುಗಳು ಕಾಣಿಕೆ ನೀಡಿದರು. ಮಗಳ ಆಶೆ ಈಡೇರಿದ್ದಕ್ಕೆ ಹಿಮವಂತ ಸಂತೋಷಪಟ್ಟನು. ಶಿವ-ಪಾರ್ವತಿಯ ವಿವಾಹ ಕುಟುಂಬ, ಋಷಿಗಳು ಮತ್ತು ದೇವತೆಗಳನ್ನು ಸೇರಿಸಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 5"
+- assertVisible: { id: "story-page-the-third-form" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg05-art
+- scrollUntilVisible:
+    element: { text: "ನವದುರ್ಗಾ ಸಂಪ್ರದಾಯ ವಿವಾಹಿತ ಪಾರ್ವತಿಯನ್ನು ಮೂರನೇ ದಿನ ಆರಾಧಿಸುವ ಚಂದ್ರಘಂಟಾ ಮಾತೆಯೊಂದಿಗೆ ಸಂಬಂಧಿಸುತ್ತದೆ. ಆಕೆಯ ಹೆಸರು ಹಣೆಯ ಗಂಟೆಯಾಕಾರದ ಅರ್ಧಚಂದ್ರವನ್ನು ನೆನಪಿಸುತ್ತದೆ. ಸಾಂಪ್ರದಾಯಿಕ ಚಿತ್ರದಲ್ಲಿ ಹತ್ತು ಕೈಗಳು, ಹುಲಿಯ ಸವಾರಿ, ಆಯುಧಗಳು ಮತ್ತು ಆಶೀರ್ವಾದದ ಮುದ್ರೆಗಳಿವೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನವದುರ್ಗಾ ಸಂಪ್ರದಾಯ ವಿವಾಹಿತ ಪಾರ್ವತಿಯನ್ನು ಮೂರನೇ ದಿನ ಆರಾಧಿಸುವ ಚಂದ್ರಘಂಟಾ ಮಾತೆಯೊಂದಿಗೆ ಸಂಬಂಧಿಸುತ್ತದೆ. ಆಕೆಯ ಹೆಸರು ಹಣೆಯ ಗಂಟೆಯಾಕಾರದ ಅರ್ಧಚಂದ್ರವನ್ನು ನೆನಪಿಸುತ್ತದೆ. ಸಾಂಪ್ರದಾಯಿಕ ಚಿತ್ರದಲ್ಲಿ ಹತ್ತು ಕೈಗಳು, ಹುಲಿಯ ಸವಾರಿ, ಆಯುಧಗಳು ಮತ್ತು ಆಶೀರ್ವಾದದ ಮುದ್ರೆಗಳಿವೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg05-caption
+- scrollUntilVisible:
+    element: { text: "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-cg05-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-kushmanda" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-kushmanda" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 3"
+- assertVisible: { id: "story-page-the-radiant-fourth-form" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-ku01-art
+- scrollUntilVisible:
+    element: { text: "ನವರಾತ್ರಿಯ ನಾಲ್ಕನೇ ದಿನ ಹಲವು ಭಕ್ತರು ಕೂಷ್ಮಾಂಡಾ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಆಕೆಯನ್ನು ಸೃಷ್ಟಿಯ ಬೆಳಕು ಮತ್ತು ಶಕ್ತಿಗೆ ಸಂಬಂಧಿಸಿದ ಮಾತೆಯ ತೇಜಸ್ವಿ ರೂಪವಾಗಿ ನೆನೆಯುತ್ತಾರೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನವರಾತ್ರಿಯ ನಾಲ್ಕನೇ ದಿನ ಹಲವು ಭಕ್ತರು ಕೂಷ್ಮಾಂಡಾ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಆಕೆಯನ್ನು ಸೃಷ್ಟಿಯ ಬೆಳಕು ಮತ್ತು ಶಕ್ತಿಗೆ ಸಂಬಂಧಿಸಿದ ಮಾತೆಯ ತೇಜಸ್ವಿ ರೂಪವಾಗಿ ನೆನೆಯುತ್ತಾರೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-ku01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 3"
+- assertVisible: { id: "story-page-a-traditional-creation-account" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-ku02-art
+- scrollUntilVisible:
+    element: { text: "ಒಂದು ಭಕ್ತಿ ಸಂಪ್ರದಾಯವು ಆಕೆಯ ಮೃದುವಾದ ನಗುವಿನಿಂದ ಬ್ರಹ್ಮಾಂಡ ಹುಟ್ಟಿತು ಎನ್ನುತ್ತದೆ. ಆಕೆಯನ್ನು ಸೂರ್ಯನ ತೇಜಸ್ಸಿನಲ್ಲಿಯೂ ಚಿತ್ರಿಸುತ್ತಾರೆ. ಇದು ದಿವ್ಯಸೃಷ್ಟಿಯ ಸಾಂಪ್ರದಾಯಿಕ ವಿವರಣೆ; ಸಾಮಾನ್ಯ ವ್ಯಕ್ತಿಯ ಸಾಹಸಕಥೆಯಲ್ಲ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಒಂದು ಭಕ್ತಿ ಸಂಪ್ರದಾಯವು ಆಕೆಯ ಮೃದುವಾದ ನಗುವಿನಿಂದ ಬ್ರಹ್ಮಾಂಡ ಹುಟ್ಟಿತು ಎನ್ನುತ್ತದೆ. ಆಕೆಯನ್ನು ಸೂರ್ಯನ ತೇಜಸ್ಸಿನಲ್ಲಿಯೂ ಚಿತ್ರಿಸುತ್ತಾರೆ. ಇದು ದಿವ್ಯಸೃಷ್ಟಿಯ ಸಾಂಪ್ರದಾಯಿಕ ವಿವರಣೆ; ಸಾಮಾನ್ಯ ವ್ಯಕ್ತಿಯ ಸಾಹಸಕಥೆಯಲ್ಲ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-ku02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 3"
+- assertVisible: { id: "story-page-symbols-of-kushmanda" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-ku03-art
+- scrollUntilVisible:
+    element: { text: "ಪರಿಚಿತ ಭಕ್ತಿಚಿತ್ರಗಳಲ್ಲಿ ಕೂಷ್ಮಾಂಡೆಗೆ ಎಂಟು ಕೈಗಳಿವೆ; ಆಕೆ ಸಿಂಹದ ಮೇಲೆ ಸವಾರಿ ಮಾಡುತ್ತಾಳೆ. ಕೈಗಳಲ್ಲಿ ಕಮಲ, ಜಪಮಾಲೆ, ಬಿಲ್ಲು ಮತ್ತು ಪಾತ್ರೆಯಂತಹ ವಸ್ತುಗಳಿವೆ. ಅನೇಕ ಕೈಗಳು ಜಗತ್ತನ್ನು ಪೋಷಿಸುವ ಮಾತೆಯ ಹಲವು ಶಕ್ತಿಗಳನ್ನು ಭಕ್ತರಿಗೆ ನೆನಪಿಸುತ್ತವೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಪರಿಚಿತ ಭಕ್ತಿಚಿತ್ರಗಳಲ್ಲಿ ಕೂಷ್ಮಾಂಡೆಗೆ ಎಂಟು ಕೈಗಳಿವೆ; ಆಕೆ ಸಿಂಹದ ಮೇಲೆ ಸವಾರಿ ಮಾಡುತ್ತಾಳೆ. ಕೈಗಳಲ್ಲಿ ಕಮಲ, ಜಪಮಾಲೆ, ಬಿಲ್ಲು ಮತ್ತು ಪಾತ್ರೆಯಂತಹ ವಸ್ತುಗಳಿವೆ. ಅನೇಕ ಕೈಗಳು ಜಗತ್ತನ್ನು ಪೋಷಿಸುವ ಮಾತೆಯ ಹಲವು ಶಕ್ತಿಗಳನ್ನು ಭಕ್ತರಿಗೆ ನೆನಪಿಸುತ್ತವೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-ku03-caption
+- scrollUntilVisible:
+    element: { text: "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-ku03-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-skandamata" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-skandamata" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 5"
+- assertVisible: { id: "story-page-a-chariot-arrives" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk01-art
+- scrollUntilVisible:
+    element: { text: "ಆರು ಕೃತ್ತಿಕಾ ತಾಯಂದಿರು ಬಾಲಕ ಕಾರ್ತಿಕೇಯನನ್ನು ಪ್ರೀತಿಯಿಂದ ಬೆಳೆಸಿದ್ದರು. ಕೈಲಾಸದಲ್ಲಿ ಪಾರ್ವತಿ ಮಗನನ್ನು ಮನೆಗೆ ಬರಮಾಡಿಕೊಳ್ಳಲು ಬಯಸಿದಳು. ಅವನಿಗಾಗಿ ಸುಂದರ ರಥ ಕಳುಹಿಸಿದಳು. ಕೃತ್ತಿಕೆಯರು ಸಾಕಿದ ಮನೆಯಿಂದ ಹೊರಡಲು ಕಾರ್ತಿಕೇಯ ಸಿದ್ಧನಾದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಆರು ಕೃತ್ತಿಕಾ ತಾಯಂದಿರು ಬಾಲಕ ಕಾರ್ತಿಕೇಯನನ್ನು ಪ್ರೀತಿಯಿಂದ ಬೆಳೆಸಿದ್ದರು. ಕೈಲಾಸದಲ್ಲಿ ಪಾರ್ವತಿ ಮಗನನ್ನು ಮನೆಗೆ ಬರಮಾಡಿಕೊಳ್ಳಲು ಬಯಸಿದಳು. ಅವನಿಗಾಗಿ ಸುಂದರ ರಥ ಕಳುಹಿಸಿದಳು. ಕೃತ್ತಿಕೆಯರು ಸಾಕಿದ ಮನೆಯಿಂದ ಹೊರಡಲು ಕಾರ್ತಿಕೇಯ ಸಿದ್ಧನಾದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 5"
+- assertVisible: { id: "story-page-the-mothers-come-too" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk02-art
+- scrollUntilVisible:
+    element: { text: "ಅವನಿಂದ ದೂರವಾಗಬೇಕೆಂಬ ಯೋಚನೆಯಿಂದ ಕೃತ್ತಿಕೆಯರು ದುಃಖಿತರಾದರು. ಕಾರ್ತಿಕೇಯ ಪ್ರೀತಿಯಿಂದ ಅವರನ್ನು ಸಮಾಧಾನಪಡಿಸಿದನು. ಅವರನ್ನು ಬಿಟ್ಟುಹೋಗದೆ ತನ್ನೊಂದಿಗೆ ರಥಕ್ಕೆ ಕರೆದುಕೊಂಡನು. ಎಲ್ಲರೂ ಸೇರಿ ಕೈಲಾಸಕ್ಕೆ ಹೊರಟರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಅವನಿಂದ ದೂರವಾಗಬೇಕೆಂಬ ಯೋಚನೆಯಿಂದ ಕೃತ್ತಿಕೆಯರು ದುಃಖಿತರಾದರು. ಕಾರ್ತಿಕೇಯ ಪ್ರೀತಿಯಿಂದ ಅವರನ್ನು ಸಮಾಧಾನಪಡಿಸಿದನು. ಅವರನ್ನು ಬಿಟ್ಟುಹೋಗದೆ ತನ್ನೊಂದಿಗೆ ರಥಕ್ಕೆ ಕರೆದುಕೊಂಡನು. ಎಲ್ಲರೂ ಸೇರಿ ಕೈಲಾಸಕ್ಕೆ ಹೊರಟರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 5"
+- assertVisible: { id: "story-page-arrival-at-kailasa" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk03-art
+- scrollUntilVisible:
+    element: { text: "ನಂದಿನ್ ಜೊತೆಗಿದ್ದನು. ರಥ ಕೈಲಾಸದ ಆಲದ ಮರದ ಬಳಿ ತಲುಪಿತು. ದಾರಿಗಳು ಅಲಂಕೃತವಾಗಿದ್ದವು; ಸಂಗೀತ ಪ್ರಯಾಣಿಕರನ್ನು ಸ್ವಾಗತಿಸಿತು. ಪಾರ್ವತಿ, ಶಿವ ಮತ್ತು ದೇವತೆಗಳು ಕಾರ್ತಿಕೇಯನನ್ನು ನೋಡಲು ಬಂದರು. ಕೃತ್ತಿಕಾ ತಾಯಂದಿರೂ ಅವನ ಜೊತೆಯಲ್ಲಿದ್ದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನಂದಿನ್ ಜೊತೆಗಿದ್ದನು. ರಥ ಕೈಲಾಸದ ಆಲದ ಮರದ ಬಳಿ ತಲುಪಿತು. ದಾರಿಗಳು ಅಲಂಕೃತವಾಗಿದ್ದವು; ಸಂಗೀತ ಪ್ರಯಾಣಿಕರನ್ನು ಸ್ವಾಗತಿಸಿತು. ಪಾರ್ವತಿ, ಶಿವ ಮತ್ತು ದೇವತೆಗಳು ಕಾರ್ತಿಕೇಯನನ್ನು ನೋಡಲು ಬಂದರು. ಕೃತ್ತಿಕಾ ತಾಯಂದಿರೂ ಅವನ ಜೊತೆಯಲ್ಲಿದ್ದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 5"
+- assertVisible: { id: "story-page-parvati-embraces-her-son" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk04-art
+- scrollUntilVisible:
+    element: { text: "ಮಗನನ್ನು ನೋಡಿ ಶಿವ-ಪಾರ್ವತಿಯರು ಸಂತೋಷದಿಂದ ತುಂಬಿದರು. ಪಾರ್ವತಿ ಕಾರ್ತಿಕೇಯನನ್ನು ಅಪ್ಪಿಕೊಂಡು ತನ್ನ ಮಡಿಲಲ್ಲಿ ಕೂರಿಸಿಕೊಂಡಳು. ಬಹುಕಾಲದ ನಿರೀಕ್ಷೆಯ ಈ ಭೇಟಿಯು ಸಂತೋಷದ ಮನೆಬರುವಿಕೆಯಾಯಿತು. ಅವನನ್ನು ಸಾಕಿದ ತಾಯಂದಿರೂ ಅದರಲ್ಲಿ ಭಾಗಿಯಾದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಮಗನನ್ನು ನೋಡಿ ಶಿವ-ಪಾರ್ವತಿಯರು ಸಂತೋಷದಿಂದ ತುಂಬಿದರು. ಪಾರ್ವತಿ ಕಾರ್ತಿಕೇಯನನ್ನು ಅಪ್ಪಿಕೊಂಡು ತನ್ನ ಮಡಿಲಲ್ಲಿ ಕೂರಿಸಿಕೊಂಡಳು. ಬಹುಕಾಲದ ನಿರೀಕ್ಷೆಯ ಈ ಭೇಟಿಯು ಸಂತೋಷದ ಮನೆಬರುವಿಕೆಯಾಯಿತು. ಅವನನ್ನು ಸಾಕಿದ ತಾಯಂದಿರೂ ಅದರಲ್ಲಿ ಭಾಗಿಯಾದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 5"
+- assertVisible: { id: "story-page-the-mother-of-skanda" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk05-art
+- scrollUntilVisible:
+    element: { text: "ದೇವತೆಗಳು ಮತ್ತು ತಾಯಂದಿರು ಕಾರ್ತಿಕೇಯನಿಗೆ ಕಾಣಿಕೆ ನೀಡಿದರು; ಕೃತ್ತಿಕೆಯರೂ ಕಾಣಿಕೆ ನೀಡಿದರು. ನವದುರ್ಗಾ ಸಂಪ್ರದಾಯ ಐದನೇ ದಿನ ಸ್ಕಂದನ ತಾಯಿಯನ್ನು ಸ್ಕಂದಮಾತೆ ಎಂದು ನೆನೆಯುತ್ತದೆ. ನಾಲ್ಕು ಕೈಗಳ ಚಿತ್ರದಲ್ಲಿ ಕಮಲಗಳು, ಮಗ ಮತ್ತು ಆಶೀರ್ವಾದದ ಮುದ್ರೆ ಇರುತ್ತವೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವತೆಗಳು ಮತ್ತು ತಾಯಂದಿರು ಕಾರ್ತಿಕೇಯನಿಗೆ ಕಾಣಿಕೆ ನೀಡಿದರು; ಕೃತ್ತಿಕೆಯರೂ ಕಾಣಿಕೆ ನೀಡಿದರು. ನವದುರ್ಗಾ ಸಂಪ್ರದಾಯ ಐದನೇ ದಿನ ಸ್ಕಂದನ ತಾಯಿಯನ್ನು ಸ್ಕಂದಮಾತೆ ಎಂದು ನೆನೆಯುತ್ತದೆ. ನಾಲ್ಕು ಕೈಗಳ ಚಿತ್ರದಲ್ಲಿ ಕಮಲಗಳು, ಮಗ ಮತ್ತು ಆಶೀರ್ವಾದದ ಮುದ್ರೆ ಇರುತ್ತವೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk05-caption
+- scrollUntilVisible:
+    element: { text: "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sk05-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-mahishasura" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-mahishasura" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 12"
+- assertVisible: { id: "story-page-mahishasura-takes-the-realm" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm01-art
+- scrollUntilVisible:
+    element: { text: "ಎಮ್ಮೆಯ ರೂಪ ತಾಳಬಲ್ಲ ಅಸುರ ಮಹಿಷಾಸುರ ದೇವತೆಗಳನ್ನು ಸೋಲಿಸಿದನು. ಅವರ ಲೋಕವನ್ನೂ ಕರ್ತವ್ಯಗಳನ್ನೂ ತನ್ನ ವಶಕ್ಕೆ ತೆಗೆದುಕೊಂಡನು. ತಮ್ಮ ನೆಲೆಗಳಿಂದ ಹೊರದೂಡಲ್ಪಟ್ಟ ದೇವತೆಗಳಿಗೆ ಅವನ ದೌರ್ಜನ್ಯ ನಿಲ್ಲಿಸಲು ನೆರವು ಬೇಕಾಯಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಎಮ್ಮೆಯ ರೂಪ ತಾಳಬಲ್ಲ ಅಸುರ ಮಹಿಷಾಸುರ ದೇವತೆಗಳನ್ನು ಸೋಲಿಸಿದನು. ಅವರ ಲೋಕವನ್ನೂ ಕರ್ತವ್ಯಗಳನ್ನೂ ತನ್ನ ವಶಕ್ಕೆ ತೆಗೆದುಕೊಂಡನು. ತಮ್ಮ ನೆಲೆಗಳಿಂದ ಹೊರದೂಡಲ್ಪಟ್ಟ ದೇವತೆಗಳಿಗೆ ಅವನ ದೌರ್ಜನ್ಯ ನಿಲ್ಲಿಸಲು ನೆರವು ಬೇಕಾಯಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 12"
+- assertVisible: { id: "story-page-devas-seek-help" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm02-art
+- scrollUntilVisible:
+    element: { text: "ಬ್ರಹ್ಮನ ಜೊತೆ ದೇವತೆಗಳು ಶಿವ ಮತ್ತು ವಿಷ್ಣುವಿನ ಬಳಿಗೆ ಹೋದರು. ಮಹಿಷಾಸುರ ತಮ್ಮ ಸ್ಥಾನಗಳನ್ನು ಕಸಿದುಕೊಂಡಿದ್ದನ್ನು ತಿಳಿಸಿದರು. ಈ ಅನ್ಯಾಯವನ್ನು ಕೇಳಿ ಶಿವ, ವಿಷ್ಣು ಮತ್ತು ಇತರ ದೇವತೆಗಳು ಅದನ್ನು ಎದುರಿಸಲು ನಿರ್ಧರಿಸಿದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಬ್ರಹ್ಮನ ಜೊತೆ ದೇವತೆಗಳು ಶಿವ ಮತ್ತು ವಿಷ್ಣುವಿನ ಬಳಿಗೆ ಹೋದರು. ಮಹಿಷಾಸುರ ತಮ್ಮ ಸ್ಥಾನಗಳನ್ನು ಕಸಿದುಕೊಂಡಿದ್ದನ್ನು ತಿಳಿಸಿದರು. ಈ ಅನ್ಯಾಯವನ್ನು ಕೇಳಿ ಶಿವ, ವಿಷ್ಣು ಮತ್ತು ಇತರ ದೇವತೆಗಳು ಅದನ್ನು ಎದುರಿಸಲು ನಿರ್ಧರಿಸಿದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 12"
+- assertVisible: { id: "story-page-the-goddess-manifests" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm03-art
+- scrollUntilVisible:
+    element: { text: "ಶಿವ, ವಿಷ್ಣು, ಬ್ರಹ್ಮ ಮತ್ತು ದೇವತೆಗಳಿಂದ ಪ್ರಖರ ತೇಜಸ್ಸು ಹೊರಹೊಮ್ಮಿತು. ಅದು ಒಂದಾಗಿ ದೇವಿಯ ರೂಪ ತಾಳಿತು. ಆಕೆಯನ್ನು ನೋಡಿ ದೇವತೆಗಳಿಗೆ ಮತ್ತೆ ಭರವಸೆ ಮೂಡಿತು. ಈ ದಿವ್ಯಶಕ್ತಿಯೇ ಮಹಿಷಾಸುರನನ್ನು ಎದುರಿಸಬೇಕಿತ್ತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಶಿವ, ವಿಷ್ಣು, ಬ್ರಹ್ಮ ಮತ್ತು ದೇವತೆಗಳಿಂದ ಪ್ರಖರ ತೇಜಸ್ಸು ಹೊರಹೊಮ್ಮಿತು. ಅದು ಒಂದಾಗಿ ದೇವಿಯ ರೂಪ ತಾಳಿತು. ಆಕೆಯನ್ನು ನೋಡಿ ದೇವತೆಗಳಿಗೆ ಮತ್ತೆ ಭರವಸೆ ಮೂಡಿತು. ಈ ದಿವ್ಯಶಕ್ತಿಯೇ ಮಹಿಷಾಸುರನನ್ನು ಎದುರಿಸಬೇಕಿತ್ತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 12"
+- assertVisible: { id: "story-page-gifts-and-the-lion" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm04-art
+- scrollUntilVisible:
+    element: { text: "ದೇವತೆಗಳು ದುರ್ಗಾ ಮಾತೆಗೆ ತಮ್ಮ ಆಯುಧಗಳನ್ನೂ ಆಭರಣಗಳನ್ನೂ ಅರ್ಪಿಸಿದರು. ಶಿವ ತ್ರಿಶೂಲ, ವಿಷ್ಣು ಚಕ್ರ ನೀಡಿದರು. ಇತರರು ಶಂಖ, ಬಿಲ್ಲು ಮತ್ತು ಇನ್ನಷ್ಟು ಕಾಣಿಕೆ ತಂದರು. ಹಿಮಾಲಯ ಸಿಂಹವನ್ನು ನೀಡಿದನು. ಈ ಕಾಣಿಕೆಗಳೊಂದಿಗೆ ದೇವಿ ಸಿದ್ಧಳಾದಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವತೆಗಳು ದುರ್ಗಾ ಮಾತೆಗೆ ತಮ್ಮ ಆಯುಧಗಳನ್ನೂ ಆಭರಣಗಳನ್ನೂ ಅರ್ಪಿಸಿದರು. ಶಿವ ತ್ರಿಶೂಲ, ವಿಷ್ಣು ಚಕ್ರ ನೀಡಿದರು. ಇತರರು ಶಂಖ, ಬಿಲ್ಲು ಮತ್ತು ಇನ್ನಷ್ಟು ಕಾಣಿಕೆ ತಂದರು. ಹಿಮಾಲಯ ಸಿಂಹವನ್ನು ನೀಡಿದನು. ಈ ಕಾಣಿಕೆಗಳೊಂದಿಗೆ ದೇವಿ ಸಿದ್ಧಳಾದಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 12"
+- assertVisible: { id: "story-page-the-challenge-is-heard" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm05-art
+- scrollUntilVisible:
+    element: { text: "ದುರ್ಗಾ ಮಾತೆಯ ಪ್ರಬಲ ಗರ್ಜನೆ ಲೋಕಗಳೆಲ್ಲೆಡೆ ಮೊಳಗಿತು. ದೇವತೆಗಳು ಸಂತೋಷದಿಂದ ಆಕೆಯನ್ನು ಸ್ವಾಗತಿಸಿದರು. ಅದನ್ನು ಕೇಳಿದ ಮಹಿಷಾಸುರ ಕೋಪಗೊಂಡನು. ತನ್ನ ಸೇನೆಯನ್ನು ಒಟ್ಟುಗೂಡಿಸಿ ತೇಜಸ್ವಿ ದೇವಿಯತ್ತ ಕಳುಹಿಸಿದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದುರ್ಗಾ ಮಾತೆಯ ಪ್ರಬಲ ಗರ್ಜನೆ ಲೋಕಗಳೆಲ್ಲೆಡೆ ಮೊಳಗಿತು. ದೇವತೆಗಳು ಸಂತೋಷದಿಂದ ಆಕೆಯನ್ನು ಸ್ವಾಗತಿಸಿದರು. ಅದನ್ನು ಕೇಳಿದ ಮಹಿಷಾಸುರ ಕೋಪಗೊಂಡನು. ತನ್ನ ಸೇನೆಯನ್ನು ಒಟ್ಟುಗೂಡಿಸಿ ತೇಜಸ್ವಿ ದೇವಿಯತ್ತ ಕಳುಹಿಸಿದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 12"
+- assertVisible: { id: "story-page-the-army-is-defeated" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm06-art
+- scrollUntilVisible:
+    element: { text: "ಸೇನೆ ದಾಳಿ ಮಾಡಿತು. ದುರ್ಗಾ ಮಾತೆ ದೃಢವಾಗಿ ನಿಂತಳು. ಸಿಂಹ ಆಕೆಯ ಜೊತೆ ಹೋರಾಡಿತು; ಆಕೆಯ ಉಸಿರಿನಿಂದ ಸಹಾಯಕರು ಕಾಣಿಸಿಕೊಂಡರು. ಅಸುರ ಸೇನಾಪತಿಗಳು ಅವರನ್ನು ಸೋಲಿಸಲಿಲ್ಲ. ಸೇನೆ ಸೋತಾಗ ಮಹಿಷಾಸುರ ತಾನೇ ಯುದ್ಧಕ್ಕೆ ಬಂದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಸೇನೆ ದಾಳಿ ಮಾಡಿತು. ದುರ್ಗಾ ಮಾತೆ ದೃಢವಾಗಿ ನಿಂತಳು. ಸಿಂಹ ಆಕೆಯ ಜೊತೆ ಹೋರಾಡಿತು; ಆಕೆಯ ಉಸಿರಿನಿಂದ ಸಹಾಯಕರು ಕಾಣಿಸಿಕೊಂಡರು. ಅಸುರ ಸೇನಾಪತಿಗಳು ಅವರನ್ನು ಸೋಲಿಸಲಿಲ್ಲ. ಸೇನೆ ಸೋತಾಗ ಮಹಿಷಾಸುರ ತಾನೇ ಯುದ್ಧಕ್ಕೆ ಬಂದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 12"
+- assertVisible: { id: "story-page-the-buffalo-charge" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm07-art
+- scrollUntilVisible:
+    element: { text: "ಎಮ್ಮೆಯ ರೂಪದಲ್ಲಿ ಮಹಿಷಾಸುರ ಭೂಮಿಯ ಮೇಲೆ ನುಗ್ಗಿದನು. ಅವನ ಗೊರಸು, ಕೊಂಬು ಮತ್ತು ಬಾಲ ವಿನಾಶ ಉಂಟುಮಾಡಿದವು. ಸಿಂಹದತ್ತ ಧಾವಿಸಿದಾಗ ದುರ್ಗಾ ಮಾತೆ ಪಾಶ ಎಸೆದು ಬಂಧಿಸಿದಳು. ತಪ್ಪಿಸಿಕೊಳ್ಳಲು ಅವನು ರೂಪ ಬದಲಿಸಲಾರಂಭಿಸಿದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಎಮ್ಮೆಯ ರೂಪದಲ್ಲಿ ಮಹಿಷಾಸುರ ಭೂಮಿಯ ಮೇಲೆ ನುಗ್ಗಿದನು. ಅವನ ಗೊರಸು, ಕೊಂಬು ಮತ್ತು ಬಾಲ ವಿನಾಶ ಉಂಟುಮಾಡಿದವು. ಸಿಂಹದತ್ತ ಧಾವಿಸಿದಾಗ ದುರ್ಗಾ ಮಾತೆ ಪಾಶ ಎಸೆದು ಬಂಧಿಸಿದಳು. ತಪ್ಪಿಸಿಕೊಳ್ಳಲು ಅವನು ರೂಪ ಬದಲಿಸಲಾರಂಭಿಸಿದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm07-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 12"
+- assertVisible: { id: "story-page-lion-and-warrior" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm08-art
+- scrollUntilVisible:
+    element: { text: "ಮಹಿಷಾಸುರ ಇದ್ದಕ್ಕಿದ್ದಂತೆ ಸಿಂಹವಾದನು. ದುರ್ಗಾ ಮಾತೆ ಅವನನ್ನು ಎದುರಿಸಿದಾಗ ಕತ್ತಿ ಮತ್ತು ಗುರಾಣಿ ಹಿಡಿದ ಯೋಧನಾದನು. ಆಕೆ ಬಾಣಗಳಿಂದ ಆ ದಾಳಿಯನ್ನು ತಡೆದಳು. ಎರಡೂ ರೂಪಗಳು ಗೆಲುವು ತರಲಿಲ್ಲ; ಅವನು ಮತ್ತೆ ರೂಪ ಬದಲಿಸಿದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಮಹಿಷಾಸುರ ಇದ್ದಕ್ಕಿದ್ದಂತೆ ಸಿಂಹವಾದನು. ದುರ್ಗಾ ಮಾತೆ ಅವನನ್ನು ಎದುರಿಸಿದಾಗ ಕತ್ತಿ ಮತ್ತು ಗುರಾಣಿ ಹಿಡಿದ ಯೋಧನಾದನು. ಆಕೆ ಬಾಣಗಳಿಂದ ಆ ದಾಳಿಯನ್ನು ತಡೆದಳು. ಎರಡೂ ರೂಪಗಳು ಗೆಲುವು ತರಲಿಲ್ಲ; ಅವನು ಮತ್ತೆ ರೂಪ ಬದಲಿಸಿದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm08-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 12"
+- assertVisible: { id: "story-page-the-elephant-form" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm09-art
+- scrollUntilVisible:
+    element: { text: "ಈಗ ಮಹಿಷಾಸುರ ದೊಡ್ಡ ಆನೆಯಾದನು. ಸೊಂಡಿಲಿನಿಂದ ದುರ್ಗಾ ಮಾತೆಯ ಸಿಂಹವನ್ನು ಹಿಡಿದನು. ದಾಳಿ ಮಾಡುತ್ತಿದ್ದ ಸೊಂಡಿಲನ್ನು ಆಕೆ ಕತ್ತರಿಸಿ ಸಿಂಹವನ್ನು ಬಿಡಿಸಿದಳು. ಅವನು ಮತ್ತೆ ಎಮ್ಮೆಯಾದನು; ಇನ್ನೂ ನಿಲ್ಲಲು ಒಪ್ಪಲಿಲ್ಲ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಈಗ ಮಹಿಷಾಸುರ ದೊಡ್ಡ ಆನೆಯಾದನು. ಸೊಂಡಿಲಿನಿಂದ ದುರ್ಗಾ ಮಾತೆಯ ಸಿಂಹವನ್ನು ಹಿಡಿದನು. ದಾಳಿ ಮಾಡುತ್ತಿದ್ದ ಸೊಂಡಿಲನ್ನು ಆಕೆ ಕತ್ತರಿಸಿ ಸಿಂಹವನ್ನು ಬಿಡಿಸಿದಳು. ಅವನು ಮತ್ತೆ ಎಮ್ಮೆಯಾದನು; ಇನ್ನೂ ನಿಲ್ಲಲು ಒಪ್ಪಲಿಲ್ಲ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm09-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 12"
+- assertVisible: { id: "story-page-mountains-and-arrows" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm10-art
+- scrollUntilVisible:
+    element: { text: "ಕೋಪದಿಂದ ಗರ್ಜಿಸುತ್ತಾ ಎಮ್ಮೆಯ ರೂಪದ ಅಸುರ ತನ್ನ ಕೊಂಬುಗಳಿಂದ ಪರ್ವತಗಳನ್ನು ದುರ್ಗಾ ಮಾತೆಯತ್ತ ಎಸೆದನು. ಆಕೆಯ ಬಾಣಗಳು ಅವನ್ನು ಒಡೆದವು. ಅವನ ಬಲ ಲೋಕಗಳಿಗೆ ಅಪಾಯವಾಗಿತ್ತು. ಅವನ ದಾಳಿ ಕೊನೆಗೊಳಿಸಲು ದೇವಿ ಮುಂದೆ ಬಂದಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಕೋಪದಿಂದ ಗರ್ಜಿಸುತ್ತಾ ಎಮ್ಮೆಯ ರೂಪದ ಅಸುರ ತನ್ನ ಕೊಂಬುಗಳಿಂದ ಪರ್ವತಗಳನ್ನು ದುರ್ಗಾ ಮಾತೆಯತ್ತ ಎಸೆದನು. ಆಕೆಯ ಬಾಣಗಳು ಅವನ್ನು ಒಡೆದವು. ಅವನ ಬಲ ಲೋಕಗಳಿಗೆ ಅಪಾಯವಾಗಿತ್ತು. ಅವನ ದಾಳಿ ಕೊನೆಗೊಳಿಸಲು ದೇವಿ ಮುಂದೆ ಬಂದಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm10-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "11 / 12"
+- assertVisible: { id: "story-page-mahishasuras-defeat" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm11-art
+- scrollUntilVisible:
+    element: { text: "ದುರ್ಗಾ ಮಾತೆ ಎಮ್ಮೆಯನ್ನು ಕೆಳಗೆ ಒತ್ತಿ ತ್ರಿಶೂಲದಿಂದ ಹೊಡೆದಳು. ಅದರಿಂದ ಮಹಿಷಾಸುರ ಮಾನವ ರೂಪದಲ್ಲಿ ಹೊರಬರತೊಡಗಿದನು; ಅರ್ಧದಷ್ಟು ಮಾತ್ರ ಬರಲು ಸಾಧ್ಯವಾಯಿತು. ದೇವಿ ಕತ್ತಿಯಿಂದ ಅವನನ್ನು ಸಂಹರಿಸಿದಳು. ಅವನ ಭಯದ ಆಡಳಿತ ಕೊನೆಗೊಂಡಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದುರ್ಗಾ ಮಾತೆ ಎಮ್ಮೆಯನ್ನು ಕೆಳಗೆ ಒತ್ತಿ ತ್ರಿಶೂಲದಿಂದ ಹೊಡೆದಳು. ಅದರಿಂದ ಮಹಿಷಾಸುರ ಮಾನವ ರೂಪದಲ್ಲಿ ಹೊರಬರತೊಡಗಿದನು; ಅರ್ಧದಷ್ಟು ಮಾತ್ರ ಬರಲು ಸಾಧ್ಯವಾಯಿತು. ದೇವಿ ಕತ್ತಿಯಿಂದ ಅವನನ್ನು ಸಂಹರಿಸಿದಳು. ಅವನ ಭಯದ ಆಡಳಿತ ಕೊನೆಗೊಂಡಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm11-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "12 / 12"
+- assertVisible: { id: "story-page-the-devas-give-thanks" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm12-art
+- scrollUntilVisible:
+    element: { text: "ದೇವತೆಗಳು ಹರ್ಷದಿಂದ ದುರ್ಗಾ ಮಾತೆಗೆ ಕೃತಜ್ಞತೆ ಸಲ್ಲಿಸಿದರು. ಆಕೆಯ ರಕ್ಷಣೆಯನ್ನು ಹೊಗಳಿ, ಸಂಕಟದಲ್ಲಿ ನೆನೆದಾಗ ನೆರವಾಗಬೇಕೆಂದು ಕೇಳಿದರು. ದೇವಿ ಅವರ ಪ್ರಾರ್ಥನೆ ಒಪ್ಪಿದಳು. ಮಹಿಷಾಸುರ ಸೋತಾಗ ಶಾಂತಿ ಮತ್ತು ಭರವಸೆ ಮರಳಿದವು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವತೆಗಳು ಹರ್ಷದಿಂದ ದುರ್ಗಾ ಮಾತೆಗೆ ಕೃತಜ್ಞತೆ ಸಲ್ಲಿಸಿದರು. ಆಕೆಯ ರಕ್ಷಣೆಯನ್ನು ಹೊಗಳಿ, ಸಂಕಟದಲ್ಲಿ ನೆನೆದಾಗ ನೆರವಾಗಬೇಕೆಂದು ಕೇಳಿದರು. ದೇವಿ ಅವರ ಪ್ರಾರ್ಥನೆ ಒಪ್ಪಿದಳು. ಮಹಿಷಾಸುರ ಸೋತಾಗ ಶಾಂತಿ ಮತ್ತು ಭರವಸೆ ಮರಳಿದವು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm12-caption
+- scrollUntilVisible:
+    element: { text: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 2–4ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ. ಯುದ್ಧ ಮತ್ತು ಮರಣವನ್ನು ಭೀಕರ ವಿವರಗಳಿಲ್ಲದೆ ಹೇಳಲಾಗಿದೆ. ನವದುರ್ಗಾ ಸಂಪ್ರದಾಯದಲ್ಲಿ ಈ ಜಯವನ್ನು ಕಾತ್ಯಾಯನಿಗೆ ಸಂಬಂಧಿಸಲಾಗುತ್ತದೆ. ಎಂಟು ಕೈಗಳು ಸಾಂಪ್ರದಾಯಿಕ ಕಲಾಚಿತ್ರಣ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 2–4ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ. ಯುದ್ಧ ಮತ್ತು ಮರಣವನ್ನು ಭೀಕರ ವಿವರಗಳಿಲ್ಲದೆ ಹೇಳಲಾಗಿದೆ. ನವದುರ್ಗಾ ಸಂಪ್ರದಾಯದಲ್ಲಿ ಈ ಜಯವನ್ನು ಕಾತ್ಯಾಯನಿಗೆ ಸಂಬಂಧಿಸಲಾಗುತ್ತದೆ. ಎಂಟು ಕೈಗಳು ಸಾಂಪ್ರದಾಯಿಕ ಕಲಾಚಿತ್ರಣ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-dm12-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-kalaratri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-kalaratri" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 2"
+- assertVisible: { id: "story-page-the-seventh-form" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-kr01-art
+- scrollUntilVisible:
+    element: { text: "ನವರಾತ್ರಿಯ ಏಳನೇ ದಿನ ಹಲವು ಭಕ್ತರು ಕಾಲರಾತ್ರಿ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಆಕೆಯ ಮೈಬಣ್ಣ ಗಾಢವಾಗಿದೆ, ಕೂದಲು ಹರಡಿದೆ, ವಾಹನ ಕತ್ತೆ. ಆಕೆಯ ಪ್ರಬಲ ರೂಪ ಭಕ್ತರನ್ನು ಕಾಪಾಡುವ ಮಾತೆಯ ರೂಪವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನವರಾತ್ರಿಯ ಏಳನೇ ದಿನ ಹಲವು ಭಕ್ತರು ಕಾಲರಾತ್ರಿ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಆಕೆಯ ಮೈಬಣ್ಣ ಗಾಢವಾಗಿದೆ, ಕೂದಲು ಹರಡಿದೆ, ವಾಹನ ಕತ್ತೆ. ಆಕೆಯ ಪ್ರಬಲ ರೂಪ ಭಕ್ತರನ್ನು ಕಾಪಾಡುವ ಮಾತೆಯ ರೂಪವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-kr01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 2"
+- assertVisible: { id: "story-page-hands-that-reassure" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-kr02-art
+- scrollUntilVisible:
+    element: { text: "ಆಕೆಯನ್ನು ಸಾಮಾನ್ಯವಾಗಿ ನಾಲ್ಕು ಕೈಗಳೊಂದಿಗೆ ಚಿತ್ರಿಸುತ್ತಾರೆ. ಎರಡು ಕೈಗಳಲ್ಲಿ ರಕ್ಷಣೆಯ ಆಯುಧಗಳು; ಇನ್ನೆರಡು ಆಶೀರ್ವಾದ ಮತ್ತು ಅಭಯ ನೀಡುತ್ತವೆ. ಭಕ್ತರು ಆಕೆಯನ್ನು ಶುಭಂಕರಿ, ಶುಭವನ್ನು ತರುವವಳು ಎಂದೂ ಕರೆಯುತ್ತಾರೆ. ಉಗ್ರ ರೂಪದೊಳಗೆ ಕಾಳಜಿಯ ಉದ್ದೇಶ ಇರಬಹುದು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಆಕೆಯನ್ನು ಸಾಮಾನ್ಯವಾಗಿ ನಾಲ್ಕು ಕೈಗಳೊಂದಿಗೆ ಚಿತ್ರಿಸುತ್ತಾರೆ. ಎರಡು ಕೈಗಳಲ್ಲಿ ರಕ್ಷಣೆಯ ಆಯುಧಗಳು; ಇನ್ನೆರಡು ಆಶೀರ್ವಾದ ಮತ್ತು ಅಭಯ ನೀಡುತ್ತವೆ. ಭಕ್ತರು ಆಕೆಯನ್ನು ಶುಭಂಕರಿ, ಶುಭವನ್ನು ತರುವವಳು ಎಂದೂ ಕರೆಯುತ್ತಾರೆ. ಉಗ್ರ ರೂಪದೊಳಗೆ ಕಾಳಜಿಯ ಉದ್ದೇಶ ಇರಬಹುದು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-kr02-caption
+- scrollUntilVisible:
+    element: { text: "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-kr02-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-mahagauri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-mahagauri" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-parvati-begins-tapas" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg01-art
+- scrollUntilVisible:
+    element: { text: "ಈ ಶಿವಪುರಾಣದ ಪ್ರಸಂಗದಲ್ಲಿ ಶಿವ ಪಾರ್ವತಿಯ ಕಪ್ಪು ಮೈಬಣ್ಣದ ಕುರಿತು ಮಾತಾಡಿದನು. ಆಕೆಗೆ ನೋವಾಗಿ ತಪಸ್ಸಿನಿಂದ ಗೌರಿಯಾಗಲು ಸಂಕಲ್ಪಿಸಿದಳು. ಮಂದರ ಪರ್ವತದಿಂದ ಕಾಡಿನ ಆಶ್ರಮಕ್ಕೆ ಹೋದಳು. ಆಕೆಯ ಸಂಕಲ್ಪ ದೇವತೆಗಳನ್ನು ಕಾಪಾಡುವ ದಿವ್ಯಶಕ್ತಿಯ ಪ್ರತ್ಯಕ್ಷತೆಗೂ ದಾರಿಯಾಯಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಈ ಶಿವಪುರಾಣದ ಪ್ರಸಂಗದಲ್ಲಿ ಶಿವ ಪಾರ್ವತಿಯ ಕಪ್ಪು ಮೈಬಣ್ಣದ ಕುರಿತು ಮಾತಾಡಿದನು. ಆಕೆಗೆ ನೋವಾಗಿ ತಪಸ್ಸಿನಿಂದ ಗೌರಿಯಾಗಲು ಸಂಕಲ್ಪಿಸಿದಳು. ಮಂದರ ಪರ್ವತದಿಂದ ಕಾಡಿನ ಆಶ್ರಮಕ್ಕೆ ಹೋದಳು. ಆಕೆಯ ಸಂಕಲ್ಪ ದೇವತೆಗಳನ್ನು ಕಾಪಾಡುವ ದಿವ್ಯಶಕ್ತಿಯ ಪ್ರತ್ಯಕ್ಷತೆಗೂ ದಾರಿಯಾಯಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-the-tiger-changes" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg02-art
+- scrollUntilVisible:
+    element: { text: "ಪಾರ್ವತಿಯನ್ನು ಆಕ್ರಮಿಸಲು ಹುಲಿಯೊಂದು ಬಂತು. ಆಕೆಯ ದಿವ್ಯಪ್ರಭಾವ ಅದನ್ನು ನಿಶ್ಚಲಗೊಳಿಸಿತು. ಪಾರ್ವತಿ ಕರುಣೆಯಿಂದ ನೋಡಿದಳು. ಅದರ ಹಾನಿಯ ಉದ್ದೇಶ ಭಕ್ತಿಯಾಗಿ ಬದಲಾಯಿತು. ಇತರ ಪ್ರಾಣಿಗಳಿಂದ ಆಕೆಯ ಆಶ್ರಮವನ್ನು ಕಾಪಾಡತೊಡಗಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಪಾರ್ವತಿಯನ್ನು ಆಕ್ರಮಿಸಲು ಹುಲಿಯೊಂದು ಬಂತು. ಆಕೆಯ ದಿವ್ಯಪ್ರಭಾವ ಅದನ್ನು ನಿಶ್ಚಲಗೊಳಿಸಿತು. ಪಾರ್ವತಿ ಕರುಣೆಯಿಂದ ನೋಡಿದಳು. ಅದರ ಹಾನಿಯ ಉದ್ದೇಶ ಭಕ್ತಿಯಾಗಿ ಬದಲಾಯಿತು. ಇತರ ಪ್ರಾಣಿಗಳಿಂದ ಆಕೆಯ ಆಶ್ರಮವನ್ನು ಕಾಪಾಡತೊಡಗಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-gauri-and-kaushiki" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg03-art
+- scrollUntilVisible:
+    element: { text: "ಶುಂಭ-ನಿಶುಂಭರಿಂದ ತೊಂದರೆಗೊಳಗಾದ ದೇವತೆಗಳು ರಕ್ಷಣೆ ಕೇಳಿದರು. ಬ್ರಹ್ಮ ಪಾರ್ವತಿಯ ಬಳಿಗೆ ಬಂದನು. ಆಕೆಯ ಕಪ್ಪು ಹೊರಹೊದಿಕೆಯಿಂದ ಎಂಟು ಕೈಗಳ ಕೌಶಿಕಿ ಪ್ರತ್ಯಕ್ಷಳಾದಳು; ಪಾರ್ವತಿ ಪ್ರಕಾಶಮಾನ ಗೌರಿಯಾದಳು. ಬ್ರಹ್ಮ ಕೌಶಿಕಿಗೆ ಸಿಂಹ ನೀಡಿ ಅಸುರ ಸಹೋದರರನ್ನು ಎದುರಿಸಲು ಕಳುಹಿಸಿದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಶುಂಭ-ನಿಶುಂಭರಿಂದ ತೊಂದರೆಗೊಳಗಾದ ದೇವತೆಗಳು ರಕ್ಷಣೆ ಕೇಳಿದರು. ಬ್ರಹ್ಮ ಪಾರ್ವತಿಯ ಬಳಿಗೆ ಬಂದನು. ಆಕೆಯ ಕಪ್ಪು ಹೊರಹೊದಿಕೆಯಿಂದ ಎಂಟು ಕೈಗಳ ಕೌಶಿಕಿ ಪ್ರತ್ಯಕ್ಷಳಾದಳು; ಪಾರ್ವತಿ ಪ್ರಕಾಶಮಾನ ಗೌರಿಯಾದಳು. ಬ್ರಹ್ಮ ಕೌಶಿಕಿಗೆ ಸಿಂಹ ನೀಡಿ ಅಸುರ ಸಹೋದರರನ್ನು ಎದುರಿಸಲು ಕಳುಹಿಸಿದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-compassion-for-a-refuge-seeker" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg04-art
+- scrollUntilVisible:
+    element: { text: "ಕೌಶಿಕಿ ಸಹೋದರರನ್ನು ಸೋಲಿಸಿದಳು. ಬಳಿಕ ಬ್ರಹ್ಮ ಹುಲಿಯ ಹಾನಿಕಾರಕ ಹಿಂದಿನ ಜೀವನದ ಬಗ್ಗೆ ಗೌರಿಗೆ ತಿಳಿಸಿದನು. ತನ್ನ ಆಶ್ರಯಕ್ಕೆ ಬಂದು ಬದಲಾದ ಜೀವಿಯನ್ನು ಆಕೆ ಬಿಟ್ಟುಬಿಡಲಿಲ್ಲ. ಬ್ರಹ್ಮ ಆಕೆಯ ಕರುಣೆಯನ್ನು ಹೊಗಳಿದನು. ಹುಲಿ ಆಕೆಯ ಕಾಳಜಿಯಲ್ಲೇ ಉಳಿಯಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಕೌಶಿಕಿ ಸಹೋದರರನ್ನು ಸೋಲಿಸಿದಳು. ಬಳಿಕ ಬ್ರಹ್ಮ ಹುಲಿಯ ಹಾನಿಕಾರಕ ಹಿಂದಿನ ಜೀವನದ ಬಗ್ಗೆ ಗೌರಿಗೆ ತಿಳಿಸಿದನು. ತನ್ನ ಆಶ್ರಯಕ್ಕೆ ಬಂದು ಬದಲಾದ ಜೀವಿಯನ್ನು ಆಕೆ ಬಿಟ್ಟುಬಿಡಲಿಲ್ಲ. ಬ್ರಹ್ಮ ಆಕೆಯ ಕರುಣೆಯನ್ನು ಹೊಗಳಿದನು. ಹುಲಿ ಆಕೆಯ ಕಾಳಜಿಯಲ್ಲೇ ಉಳಿಯಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-shiva-welcomes-gauri" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg05-art
+- scrollUntilVisible:
+    element: { text: "ತಂದೆತಾಯಿಯನ್ನು ಭೇಟಿಯಾಗಿ ಗೌರಿ ಗೆಳತಿಯರು ಮತ್ತು ಹುಲಿಯೊಂದಿಗೆ ಶಿವನ ಬಳಿಗೆ ಮರಳಿದಳು. ಶಿವ ಪ್ರೀತಿಯಿಂದ ಸ್ವಾಗತಿಸಿದನು. ಕಪ್ಪು ಅಥವಾ ಬೇರೆ ಯಾವುದೇ ಬಣ್ಣವಿದ್ದರೂ ಆಕೆಯ ಸ್ವಭಾವವೇ ತನ್ನ ಮನಸ್ಸನ್ನು ಗೆದ್ದಿದೆ ಎಂದು ತಿಳಿಸಿದನು. ಅವರ ಪ್ರೀತಿ ಹಾಗೆಯೇ ಉಳಿಯಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ತಂದೆತಾಯಿಯನ್ನು ಭೇಟಿಯಾಗಿ ಗೌರಿ ಗೆಳತಿಯರು ಮತ್ತು ಹುಲಿಯೊಂದಿಗೆ ಶಿವನ ಬಳಿಗೆ ಮರಳಿದಳು. ಶಿವ ಪ್ರೀತಿಯಿಂದ ಸ್ವಾಗತಿಸಿದನು. ಕಪ್ಪು ಅಥವಾ ಬೇರೆ ಯಾವುದೇ ಬಣ್ಣವಿದ್ದರೂ ಆಕೆಯ ಸ್ವಭಾವವೇ ತನ್ನ ಮನಸ್ಸನ್ನು ಗೆದ್ದಿದೆ ಎಂದು ತಿಳಿಸಿದನು. ಅವರ ಪ್ರೀತಿ ಹಾಗೆಯೇ ಉಳಿಯಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-somanandin-the-guardian" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg06-art
+- scrollUntilVisible:
+    element: { text: "ಭಕ್ತ ಹುಲಿ ನಂದಿನ್ ಅಧೀನದಲ್ಲಿ ಅವರ ಬಾಗಿಲಿನ ಸೇವೆ ಮಾಡಲಿ ಎಂದು ಗೌರಿ ಕೇಳಿದಳು. ಶಿವ ಒಪ್ಪಿದನು. ಹುಲಿ ಸುಂದರ ಉಡುಗೆ ಮತ್ತು ಚಿನ್ನದ ದಂಡ ಹಿಡಿದ ಕಾವಲುಗಾರನಾಯಿತು. ಅವನನ್ನು ಸೋಮನಂದಿನ್ ಎಂದರು. ಕರುಣೆ ಅವನಿಗೆ ಹೊಸ ಸ್ಥಾನ ಮತ್ತು ಉದ್ದೇಶ ನೀಡಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಭಕ್ತ ಹುಲಿ ನಂದಿನ್ ಅಧೀನದಲ್ಲಿ ಅವರ ಬಾಗಿಲಿನ ಸೇವೆ ಮಾಡಲಿ ಎಂದು ಗೌರಿ ಕೇಳಿದಳು. ಶಿವ ಒಪ್ಪಿದನು. ಹುಲಿ ಸುಂದರ ಉಡುಗೆ ಮತ್ತು ಚಿನ್ನದ ದಂಡ ಹಿಡಿದ ಕಾವಲುಗಾರನಾಯಿತು. ಅವನನ್ನು ಸೋಮನಂದಿನ್ ಎಂದರು. ಕರುಣೆ ಅವನಿಗೆ ಹೊಸ ಸ್ಥಾನ ಮತ್ತು ಉದ್ದೇಶ ನೀಡಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-the-eighth-form" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg07-art
+- scrollUntilVisible:
+    element: { text: "ನವರಾತ್ರಿಯ ಎಂಟನೇ ದಿನ ಭಕ್ತರು ಮಹಾಗೌರಿ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಸಾಂಪ್ರದಾಯಿಕ ಚಿತ್ರದಲ್ಲಿ ಬಿಳಿ ಉಡುಗೆ, ಬಿಳಿ ಎತ್ತು ಮತ್ತು ನಾಲ್ಕು ಕೈಗಳಿವೆ: ತ್ರಿಶೂಲ, ಡಮರು ಮತ್ತು ಎರಡು ಆಶೀರ್ವಾದ ಮುದ್ರೆಗಳು. ಈ ಗೌರಿಯ ಪ್ರಸಂಗ ಮಾತೆಯ ಕರುಣೆಯ ಸಂಬಂಧಿತ ಕಥೆಯಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನವರಾತ್ರಿಯ ಎಂಟನೇ ದಿನ ಭಕ್ತರು ಮಹಾಗೌರಿ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಸಾಂಪ್ರದಾಯಿಕ ಚಿತ್ರದಲ್ಲಿ ಬಿಳಿ ಉಡುಗೆ, ಬಿಳಿ ಎತ್ತು ಮತ್ತು ನಾಲ್ಕು ಕೈಗಳಿವೆ: ತ್ರಿಶೂಲ, ಡಮರು ಮತ್ತು ಎರಡು ಆಶೀರ್ವಾದ ಮುದ್ರೆಗಳು. ಈ ಗೌರಿಯ ಪ್ರಸಂಗ ಮಾತೆಯ ಕರುಣೆಯ ಸಂಬಂಧಿತ ಕಥೆಯಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg07-caption
+- scrollUntilVisible:
+    element: { text: "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-mg07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-siddhidatri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-siddhidatri" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 3"
+- assertVisible: { id: "story-page-the-ninth-form" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-si01-art
+- scrollUntilVisible:
+    element: { text: "ನವರಾತ್ರಿಯ ಒಂಬತ್ತನೇ ದಿನ ಹಲವು ಭಕ್ತರು ಸಿದ್ಧಿದಾತ್ರಿ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಆಕೆಯ ಹೆಸರು ಸಿದ್ಧಿಗಳನ್ನು, ಅಂದರೆ ದಿವ್ಯ ಸಾಧನೆಗಳನ್ನು ನೀಡುವ ಮಾತೆಯನ್ನು ನೆನಪಿಸುತ್ತದೆ. ಭಕ್ತಿಚಿತ್ರಗಳಲ್ಲಿ ಆಕೆ ಕಮಲದ ಮೇಲೆ ಶಾಂತವಾಗಿ, ತೇಜಸ್ವಿಯಾಗಿ ಕುಳಿತಿರುತ್ತಾಳೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನವರಾತ್ರಿಯ ಒಂಬತ್ತನೇ ದಿನ ಹಲವು ಭಕ್ತರು ಸಿದ್ಧಿದಾತ್ರಿ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಆಕೆಯ ಹೆಸರು ಸಿದ್ಧಿಗಳನ್ನು, ಅಂದರೆ ದಿವ್ಯ ಸಾಧನೆಗಳನ್ನು ನೀಡುವ ಮಾತೆಯನ್ನು ನೆನಪಿಸುತ್ತದೆ. ಭಕ್ತಿಚಿತ್ರಗಳಲ್ಲಿ ಆಕೆ ಕಮಲದ ಮೇಲೆ ಶಾಂತವಾಗಿ, ತೇಜಸ್ವಿಯಾಗಿ ಕುಳಿತಿರುತ್ತಾಳೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-si01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 3"
+- assertVisible: { id: "story-page-shiva-and-shakti" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-si02-art
+- scrollUntilVisible:
+    element: { text: "ಒಂದು ಸಾಂಪ್ರದಾಯಿಕ ವಿವರಣೆಯಲ್ಲಿ ಶಿವ ಸೃಷ್ಟಿಗಾಗಿ ಆದಿ ಪರಾಶಕ್ತಿಯನ್ನು ಆರಾಧಿಸಿ ಸಿದ್ಧಿದಾತ್ರಿಯ ಕೃಪೆಯಿಂದ ಸಿದ್ಧಿಗಳನ್ನು ಪಡೆಯುತ್ತಾನೆ. ಈ ವಿವರಣೆ ಆಕೆಯನ್ನು ಅವನ ಎಡ ಅರ್ಧಭಾಗ ಮತ್ತು ಶಿವ-ಶಕ್ತಿಯ ಒಂದಾದ ರೂಪ ಅರ್ಧನಾರೀಶ್ವರನೊಂದಿಗೆ ಸಂಬಂಧಿಸುತ್ತದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಒಂದು ಸಾಂಪ್ರದಾಯಿಕ ವಿವರಣೆಯಲ್ಲಿ ಶಿವ ಸೃಷ್ಟಿಗಾಗಿ ಆದಿ ಪರಾಶಕ್ತಿಯನ್ನು ಆರಾಧಿಸಿ ಸಿದ್ಧಿದಾತ್ರಿಯ ಕೃಪೆಯಿಂದ ಸಿದ್ಧಿಗಳನ್ನು ಪಡೆಯುತ್ತಾನೆ. ಈ ವಿವರಣೆ ಆಕೆಯನ್ನು ಅವನ ಎಡ ಅರ್ಧಭಾಗ ಮತ್ತು ಶಿವ-ಶಕ್ತಿಯ ಒಂದಾದ ರೂಪ ಅರ್ಧನಾರೀಶ್ವರನೊಂದಿಗೆ ಸಂಬಂಧಿಸುತ್ತದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-si02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 3"
+- assertVisible: { id: "story-page-many-beings-honour-her" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-si03-art
+- scrollUntilVisible:
+    element: { text: "ದೇವತೆಗಳು, ಸಾಧಕರು ಮತ್ತು ಇತರ ಜೀವಿಗಳು ಸಿದ್ಧಿದಾತ್ರಿಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಪರಿಚಿತ ಚಿತ್ರಗಳಲ್ಲಿ ಆಕೆಯ ನಾಲ್ಕು ಕೈಗಳಲ್ಲಿ ಚಕ್ರ, ಶಂಖ, ಕಮಲ ಮತ್ತು ಗದೆ ಇವೆ. ಭಕ್ತರು ಆಕೆಯನ್ನು ಹಲವು ಬಗೆಯ ಜೀವಿಗಳಿಗೆ ಕೃಪೆ ತೋರುವ ಮಾತೆಯಾಗಿ ನೆನೆಯುತ್ತಾರೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವತೆಗಳು, ಸಾಧಕರು ಮತ್ತು ಇತರ ಜೀವಿಗಳು ಸಿದ್ಧಿದಾತ್ರಿಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಪರಿಚಿತ ಚಿತ್ರಗಳಲ್ಲಿ ಆಕೆಯ ನಾಲ್ಕು ಕೈಗಳಲ್ಲಿ ಚಕ್ರ, ಶಂಖ, ಕಮಲ ಮತ್ತು ಗದೆ ಇವೆ. ಭಕ್ತರು ಆಕೆಯನ್ನು ಹಲವು ಬಗೆಯ ಜೀವಿಗಳಿಗೆ ಕೃಪೆ ತೋರುವ ಮಾತೆಯಾಗಿ ನೆನೆಯುತ್ತಾರೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-si03-caption
+- scrollUntilVisible:
+    element: { text: "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-si03-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-raktabeej" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-raktabeej" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-a-new-army-approaches" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb01-art
+- scrollUntilVisible:
+    element: { text: "ಶುಂಭನ ಸೇನಾಪತಿಗಳಾದ ಚಂಡ ಮತ್ತು ಮುಂಡ ಸೋತಿದ್ದರು. ಆ ಜಯದ ಬಳಿಕ ಕಾಳಿಗೆ ಚಾಮುಂಡೆ ಎಂಬ ಹೆಸರು ಬಂದಿತ್ತು. ತನ್ನ ನಷ್ಟದಿಂದ ಕೋಪಗೊಂಡ ಶುಂಭ ದೊಡ್ಡ ಸೇನೆ ಕಳುಹಿಸಿದನು. ದುರ್ಗೆ, ಆಕೆಯ ಸಿಂಹ ಮತ್ತು ಕಾಳಿ/ಚಾಮುಂಡೆ ಸಿದ್ಧರಾಗಿದ್ದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಶುಂಭನ ಸೇನಾಪತಿಗಳಾದ ಚಂಡ ಮತ್ತು ಮುಂಡ ಸೋತಿದ್ದರು. ಆ ಜಯದ ಬಳಿಕ ಕಾಳಿಗೆ ಚಾಮುಂಡೆ ಎಂಬ ಹೆಸರು ಬಂದಿತ್ತು. ತನ್ನ ನಷ್ಟದಿಂದ ಕೋಪಗೊಂಡ ಶುಂಭ ದೊಡ್ಡ ಸೇನೆ ಕಳುಹಿಸಿದನು. ದುರ್ಗೆ, ಆಕೆಯ ಸಿಂಹ ಮತ್ತು ಕಾಳಿ/ಚಾಮುಂಡೆ ಸಿದ್ಧರಾಗಿದ್ದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-helpers-and-a-warning" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb02-art
+- scrollUntilVisible:
+    element: { text: "ಮಾತೃಕೆಯರು ಎನ್ನುವ ದೇವತೆಗಳ ಶಕ್ತಿಗಳು ದುರ್ಗೆಯ ನೆರವಿಗೆ ಬಂದರು. ದೇವಿಯ ಶಕ್ತಿಯಾದ ಶಿವದೂತಿ ಶಿವನ ಮೂಲಕ ಎಚ್ಚರಿಕೆ ಕಳುಹಿಸಿದಳು: ಅಸುರರು ದೇವತೆಗಳ ಲೋಕವನ್ನು ಮರಳಿಸಿ ಹಿಂದೆ ಸರಿಯಬೇಕು. ಅವರು ನಿರಾಕರಿಸಿ ದಾಳಿ ಮಾಡಿದರು. ಮಾತೃಕೆಯರು ಅವರನ್ನು ಎದುರಿಸಿದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಮಾತೃಕೆಯರು ಎನ್ನುವ ದೇವತೆಗಳ ಶಕ್ತಿಗಳು ದುರ್ಗೆಯ ನೆರವಿಗೆ ಬಂದರು. ದೇವಿಯ ಶಕ್ತಿಯಾದ ಶಿವದೂತಿ ಶಿವನ ಮೂಲಕ ಎಚ್ಚರಿಕೆ ಕಳುಹಿಸಿದಳು: ಅಸುರರು ದೇವತೆಗಳ ಲೋಕವನ್ನು ಮರಳಿಸಿ ಹಿಂದೆ ಸರಿಯಬೇಕು. ಅವರು ನಿರಾಕರಿಸಿ ದಾಳಿ ಮಾಡಿದರು. ಮಾತೃಕೆಯರು ಅವರನ್ನು ಎದುರಿಸಿದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-one-drop-another-asura" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb03-art
+- scrollUntilVisible:
+    element: { text: "ಆಗ ರಕ್ತಬೀಜ ತನ್ನ ಗದೆಯೊಂದಿಗೆ ಬಂದನು. ಅವನಿಗೊಂದು ಭಯಂಕರ ಶಕ್ತಿ ಇತ್ತು: ಅವನ ರಕ್ತದ ಹನಿ ನೆಲಕ್ಕೆ ಬಿದ್ದಾಗ ಅವನಂತೆಯೇ ಇನ್ನೊಂದು ಅಸುರ ಹುಟ್ಟುತ್ತಿತ್ತು. ಇಂದ್ರನ ಶಕ್ತಿ ಹೊಡೆದಾಗ ಬಿದ್ದ ಹನಿಗಳಿಂದ ಹೊಸ ಯೋಧರು ಬಂದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಆಗ ರಕ್ತಬೀಜ ತನ್ನ ಗದೆಯೊಂದಿಗೆ ಬಂದನು. ಅವನಿಗೊಂದು ಭಯಂಕರ ಶಕ್ತಿ ಇತ್ತು: ಅವನ ರಕ್ತದ ಹನಿ ನೆಲಕ್ಕೆ ಬಿದ್ದಾಗ ಅವನಂತೆಯೇ ಇನ್ನೊಂದು ಅಸುರ ಹುಟ್ಟುತ್ತಿತ್ತು. ಇಂದ್ರನ ಶಕ್ತಿ ಹೊಡೆದಾಗ ಬಿದ್ದ ಹನಿಗಳಿಂದ ಹೊಸ ಯೋಧರು ಬಂದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-the-army-keeps-growing" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb04-art
+- scrollUntilVisible:
+    element: { text: "ಮಾತೃಕೆಯರು ಧೈರ್ಯದಿಂದ ಹೋರಾಡಿದರು. ಇನ್ನಷ್ಟು ರಕ್ತ ಬಿದ್ದು ಹೊಸ ಅಸುರರು ಕಾಣಿಸಿಕೊಂಡರು. ಅವರು ರಕ್ತಬೀಜನಷ್ಟೇ ಬಲಶಾಲಿಗಳಾಗಿದ್ದರು. ಯುದ್ಧಭೂಮಿ ಅವರಿಂದ ತುಂಬಿತು. ಹೆಚ್ಚುತ್ತಿರುವ ಅಪಾಯವನ್ನು ನೋಡಿ ದೇವತೆಗಳು ಹೆದರಿದರು. ಬೇರೆ ಉಪಾಯ ಬೇಕಾಯಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಮಾತೃಕೆಯರು ಧೈರ್ಯದಿಂದ ಹೋರಾಡಿದರು. ಇನ್ನಷ್ಟು ರಕ್ತ ಬಿದ್ದು ಹೊಸ ಅಸುರರು ಕಾಣಿಸಿಕೊಂಡರು. ಅವರು ರಕ್ತಬೀಜನಷ್ಟೇ ಬಲಶಾಲಿಗಳಾಗಿದ್ದರು. ಯುದ್ಧಭೂಮಿ ಅವರಿಂದ ತುಂಬಿತು. ಹೆಚ್ಚುತ್ತಿರುವ ಅಪಾಯವನ್ನು ನೋಡಿ ದೇವತೆಗಳು ಹೆದರಿದರು. ಬೇರೆ ಉಪಾಯ ಬೇಕಾಯಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-durgas-plan" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb05-art
+- scrollUntilVisible:
+    element: { text: "ಹೆಚ್ಚುವ ಸೇನೆಯನ್ನು ತಡೆಯುವ ಉಪಾಯ ದುರ್ಗೆಗೆ ತಿಳಿಯಿತು. ರಕ್ತ ನೆಲ ತಲುಪುವ ಮೊದಲೇ ಕುಡಿಯಲು ಮತ್ತು ಅದರಿಂದ ಹುಟ್ಟಿದ ಅಸುರರನ್ನು ನುಂಗಲು ಕಾಳಿ/ಚಾಮುಂಡೆಗೆ ತಿಳಿಸಿದಳು. ದುರ್ಗೆ ರಕ್ತಬೀಜನೊಡನೆ ಹೋರಾಡುತ್ತಾಳೆ; ಕಾಳಿ ಹೊಸ ಶತ್ರುಗಳು ಹುಟ್ಟುವುದನ್ನು ತಡೆಯುತ್ತಾಳೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಹೆಚ್ಚುವ ಸೇನೆಯನ್ನು ತಡೆಯುವ ಉಪಾಯ ದುರ್ಗೆಗೆ ತಿಳಿಯಿತು. ರಕ್ತ ನೆಲ ತಲುಪುವ ಮೊದಲೇ ಕುಡಿಯಲು ಮತ್ತು ಅದರಿಂದ ಹುಟ್ಟಿದ ಅಸುರರನ್ನು ನುಂಗಲು ಕಾಳಿ/ಚಾಮುಂಡೆಗೆ ತಿಳಿಸಿದಳು. ದುರ್ಗೆ ರಕ್ತಬೀಜನೊಡನೆ ಹೋರಾಡುತ್ತಾಳೆ; ಕಾಳಿ ಹೊಸ ಶತ್ರುಗಳು ಹುಟ್ಟುವುದನ್ನು ತಡೆಯುತ್ತಾಳೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-the-plan-works" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb06-art
+- scrollUntilVisible:
+    element: { text: "ದುರ್ಗೆ ರಕ್ತಬೀಜನನ್ನು ಹೊಡೆದಾಗ ಕಾಳಿ ಬೀಳುವ ರಕ್ತ ಕುಡಿದು ಅದರಿಂದ ಹುಟ್ಟಿದ ಅಸುರರನ್ನು ನುಂಗಿದಳು. ಈಗ ನೆಲದ ಮೇಲೆ ಹೊಸ ಸೇನೆ ಸೇರಲಿಲ್ಲ. ರಕ್ತಬೀಜ ಮತ್ತೆ ದಾಳಿ ಮಾಡಿದನು. ದುರ್ಗೆಗೆ ಹಾನಿಯಾಗಲಿಲ್ಲ; ಆಕೆ ಹೋರಾಟ ಮುಂದುವರಿಸಿದಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದುರ್ಗೆ ರಕ್ತಬೀಜನನ್ನು ಹೊಡೆದಾಗ ಕಾಳಿ ಬೀಳುವ ರಕ್ತ ಕುಡಿದು ಅದರಿಂದ ಹುಟ್ಟಿದ ಅಸುರರನ್ನು ನುಂಗಿದಳು. ಈಗ ನೆಲದ ಮೇಲೆ ಹೊಸ ಸೇನೆ ಸೇರಲಿಲ್ಲ. ರಕ್ತಬೀಜ ಮತ್ತೆ ದಾಳಿ ಮಾಡಿದನು. ದುರ್ಗೆಗೆ ಹಾನಿಯಾಗಲಿಲ್ಲ; ಆಕೆ ಹೋರಾಟ ಮುಂದುವರಿಸಿದಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-raktabeejs-defeat" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb07-art
+- scrollUntilVisible:
+    element: { text: "ಹೊಸ ಅಸುರರನ್ನು ಹುಟ್ಟಿಸುವ ಶಕ್ತಿ ನಿಂತಿತು. ದುರ್ಗೆಯ ಪ್ರಹಾರಗಳಿಂದ ರಕ್ತಬೀಜ ಬಿದ್ದು ಸತ್ತನು. ದೇವತೆಗಳು ಸಂತೋಷಪಟ್ಟರು; ಮಾತೃಕೆಯರು ಸಂಭ್ರಮಿಸಿದರು. ದುರ್ಗೆಯ ಬಲ ಮತ್ತು ಕಾಳಿ/ಚಾಮುಂಡೆಯ ಕಾರ್ಯ ಒಟ್ಟಾಗಿ ಈ ಭಯಂಕರ ಅಪಾಯವನ್ನು ಕೊನೆಗೊಳಿಸಿದವು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಹೊಸ ಅಸುರರನ್ನು ಹುಟ್ಟಿಸುವ ಶಕ್ತಿ ನಿಂತಿತು. ದುರ್ಗೆಯ ಪ್ರಹಾರಗಳಿಂದ ರಕ್ತಬೀಜ ಬಿದ್ದು ಸತ್ತನು. ದೇವತೆಗಳು ಸಂತೋಷಪಟ್ಟರು; ಮಾತೃಕೆಯರು ಸಂಭ್ರಮಿಸಿದರು. ದುರ್ಗೆಯ ಬಲ ಮತ್ತು ಕಾಳಿ/ಚಾಮುಂಡೆಯ ಕಾರ್ಯ ಒಟ್ಟಾಗಿ ಈ ಭಯಂಕರ ಅಪಾಯವನ್ನು ಕೊನೆಗೊಳಿಸಿದವು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb07-caption
+- scrollUntilVisible:
+    element: { text: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 7.27 ಮತ್ತು 8ರ ಮಕ್ಕಳಿಗಾಗಿ ರೂಪಾಂತರ. ಇಲ್ಲಿ ಕಾಳಿಯನ್ನು ಚಾಮುಂಡೆ ಎಂದು ಕರೆಯಲಾಗಿದೆ; ಕಾಲರಾತ್ರಿ ಎಂದು ಬದಲಿಸಿಲ್ಲ. ರಕ್ತ ಮತ್ತು ಯುದ್ಧದ ಸಂಕ್ಷಿಪ್ತ ನಿರೂಪಣೆ ಇದೆ; ಚಿತ್ರಗಳು ಭೀಕರವಾಗಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 7.27 ಮತ್ತು 8ರ ಮಕ್ಕಳಿಗಾಗಿ ರೂಪಾಂತರ. ಇಲ್ಲಿ ಕಾಳಿಯನ್ನು ಚಾಮುಂಡೆ ಎಂದು ಕರೆಯಲಾಗಿದೆ; ಕಾಲರಾತ್ರಿ ಎಂದು ಬದಲಿಸಿಲ್ಲ. ರಕ್ತ ಮತ್ತು ಯುದ್ಧದ ಸಂಕ್ಷಿಪ್ತ ನಿರೂಪಣೆ ಇದೆ; ಚಿತ್ರಗಳು ಭೀಕರವಾಗಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-rb07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-shumbha-nishumbha" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-shumbha-nishumbha" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 14"
+- assertVisible: { id: "story-page-devas-remember-the-promise" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn01-art
+- scrollUntilVisible:
+    element: { text: "ಅಸುರ ಸಹೋದರರು ಶುಂಭ ಮತ್ತು ನಿಶುಂಭ ದೇವತೆಗಳ ಲೋಕ ಮತ್ತು ಅಧಿಕಾರ ಕಸಿದರು. ಸಂಕಟದಲ್ಲಿ ನೆನೆದರೆ ನೆರವಾಗುವ ದೇವಿಯ ಮಾತು ಅವರಿಗೆ ನೆನಪಾಯಿತು. ಹಿಮಾಲಯಕ್ಕೆ ಹೋಗಿ ಮತ್ತೆ ರಕ್ಷಣೆ ಸಿಗುವ ಭರವಸೆಯಿಂದ ಪ್ರಾರ್ಥಿಸಿದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಅಸುರ ಸಹೋದರರು ಶುಂಭ ಮತ್ತು ನಿಶುಂಭ ದೇವತೆಗಳ ಲೋಕ ಮತ್ತು ಅಧಿಕಾರ ಕಸಿದರು. ಸಂಕಟದಲ್ಲಿ ನೆನೆದರೆ ನೆರವಾಗುವ ದೇವಿಯ ಮಾತು ಅವರಿಗೆ ನೆನಪಾಯಿತು. ಹಿಮಾಲಯಕ್ಕೆ ಹೋಗಿ ಮತ್ತೆ ರಕ್ಷಣೆ ಸಿಗುವ ಭರವಸೆಯಿಂದ ಪ್ರಾರ್ಥಿಸಿದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 14"
+- assertVisible: { id: "story-page-kaushiki-appears" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn02-art
+- scrollUntilVisible:
+    element: { text: "ದೇವತೆಗಳು ಪ್ರಾರ್ಥಿಸುತ್ತಿದ್ದಾಗ ಪಾರ್ವತಿ ಗಂಗೆಯಲ್ಲಿ ಸ್ನಾನ ಮಾಡಲು ಬಂದಳು. ಆಕೆಯ ದೇಹದ ಹೊರಹೊದಿಕೆಯಿಂದ ತೇಜಸ್ವಿ ಕೌಶಿಕಿ ದೇವಿ ಪ್ರತ್ಯಕ್ಷಳಾದಳು. ಬಳಿಕ ಪಾರ್ವತಿ ಕಪ್ಪು ರೂಪದ ಕಾಲಿಕೆಯಾಗಿದಳು. ಸಹೋದರರ ಸೇವಕರಾದ ಚಂಡ-ಮುಂಡ ಕೌಶಿಕಿಯನ್ನು ನೋಡಿ ಶುಂಭನಿಗೆ ತಿಳಿಸಿದರು. ಅವನು ಆಕೆಯನ್ನು ತನ್ನ ವಶಕ್ಕೆ ಪಡೆಯಲು ಬಯಸಿದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವತೆಗಳು ಪ್ರಾರ್ಥಿಸುತ್ತಿದ್ದಾಗ ಪಾರ್ವತಿ ಗಂಗೆಯಲ್ಲಿ ಸ್ನಾನ ಮಾಡಲು ಬಂದಳು. ಆಕೆಯ ದೇಹದ ಹೊರಹೊದಿಕೆಯಿಂದ ತೇಜಸ್ವಿ ಕೌಶಿಕಿ ದೇವಿ ಪ್ರತ್ಯಕ್ಷಳಾದಳು. ಬಳಿಕ ಪಾರ್ವತಿ ಕಪ್ಪು ರೂಪದ ಕಾಲಿಕೆಯಾಗಿದಳು. ಸಹೋದರರ ಸೇವಕರಾದ ಚಂಡ-ಮುಂಡ ಕೌಶಿಕಿಯನ್ನು ನೋಡಿ ಶುಂಭನಿಗೆ ತಿಳಿಸಿದರು. ಅವನು ಆಕೆಯನ್ನು ತನ್ನ ವಶಕ್ಕೆ ಪಡೆಯಲು ಬಯಸಿದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 14"
+- assertVisible: { id: "story-page-the-goddess-refuses" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn03-art
+- scrollUntilVisible:
+    element: { text: "ಶುಂಭ ಅಸುರ ದೂತ ಸುಗ್ರೀವನನ್ನು ಕಳುಹಿಸಿದನು. ಜಗತ್ತಿನ ಸಂಪತ್ತು ತನ್ನದಾದ್ದರಿಂದ ಆಕೆ ತನ್ನ ಬಳಿಗೆ ಬರಬೇಕು ಎಂದು ಬೇಡಿದನು. ಯುದ್ಧದಲ್ಲಿ ತನ್ನನ್ನು ಗೆಲ್ಲುವವನನ್ನು ಮಾತ್ರ ಮದುವೆಯಾಗುವುದಾಗಿ ಹಿಂದೆಯೇ ಸಂಕಲ್ಪಿಸಿದ್ದೇನೆ ಎಂದು ದೇವಿ ಉತ್ತರಿಸಿದಳು. ಬೆದರಿಕೆಗೆ ಮಣಿಯಲಿಲ್ಲ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಶುಂಭ ಅಸುರ ದೂತ ಸುಗ್ರೀವನನ್ನು ಕಳುಹಿಸಿದನು. ಜಗತ್ತಿನ ಸಂಪತ್ತು ತನ್ನದಾದ್ದರಿಂದ ಆಕೆ ತನ್ನ ಬಳಿಗೆ ಬರಬೇಕು ಎಂದು ಬೇಡಿದನು. ಯುದ್ಧದಲ್ಲಿ ತನ್ನನ್ನು ಗೆಲ್ಲುವವನನ್ನು ಮಾತ್ರ ಮದುವೆಯಾಗುವುದಾಗಿ ಹಿಂದೆಯೇ ಸಂಕಲ್ಪಿಸಿದ್ದೇನೆ ಎಂದು ದೇವಿ ಉತ್ತರಿಸಿದಳು. ಬೆದರಿಕೆಗೆ ಮಣಿಯಲಿಲ್ಲ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 14"
+- assertVisible: { id: "story-page-dhumralochanas-attack" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn04-art
+- scrollUntilVisible:
+    element: { text: "ದೇವಿಯನ್ನು ಬಲವಂತವಾಗಿ ಕರೆತರಲು ಶುಂಭ ಧೂಮ್ರಲೋಚನನನ್ನು ಕಳುಹಿಸಿದನು. ಅವನು ದಾಳಿ ಮಾಡಿದಾಗ ದೇವಿಯ ಪ್ರಬಲ ಧ್ವನಿ ಅವನನ್ನು ಸಂಹರಿಸಿತು. ಆಕೆಯ ಸಿಂಹ ಅವನ ಸೇನೆಯನ್ನು ಸೋಲಿಸಿತು. ಮೊದಲ ಬಲವಂತ ವಿಫಲವಾಯಿತು; ಇನ್ನಷ್ಟು ದಾಳಿಗಳು ಬಂದವು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವಿಯನ್ನು ಬಲವಂತವಾಗಿ ಕರೆತರಲು ಶುಂಭ ಧೂಮ್ರಲೋಚನನನ್ನು ಕಳುಹಿಸಿದನು. ಅವನು ದಾಳಿ ಮಾಡಿದಾಗ ದೇವಿಯ ಪ್ರಬಲ ಧ್ವನಿ ಅವನನ್ನು ಸಂಹರಿಸಿತು. ಆಕೆಯ ಸಿಂಹ ಅವನ ಸೇನೆಯನ್ನು ಸೋಲಿಸಿತು. ಮೊದಲ ಬಲವಂತ ವಿಫಲವಾಯಿತು; ಇನ್ನಷ್ಟು ದಾಳಿಗಳು ಬಂದವು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 14"
+- assertVisible: { id: "story-page-kali-becomes-chamunda" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn05-art
+- scrollUntilVisible:
+    element: { text: "ಚಂಡ-ಮುಂಡ ಇನ್ನೊಂದು ಸೇನೆಯೊಂದಿಗೆ ದಾಳಿ ಮಾಡಿದರು. ರಕ್ಷಣೆಗೆ ಉಗ್ರಳಾದ ಕಾಳಿ ದೇವಿಯ ಹಣೆಯಿಂದ ಪ್ರತ್ಯಕ್ಷಳಾದಳು. ಇಬ್ಬರು ಸೇನಾನಾಯಕರನ್ನೂ ಸೋಲಿಸಿ ಸಂಹರಿಸಿದಳು. ಚಂಡ-ಮುಂಡರನ್ನು ಗೆದ್ದದ್ದರಿಂದ ದೇವಿ ಆಕೆಗೆ ಚಾಮುಂಡೆ ಎಂಬ ಹೆಸರು ನೀಡಿದಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಚಂಡ-ಮುಂಡ ಇನ್ನೊಂದು ಸೇನೆಯೊಂದಿಗೆ ದಾಳಿ ಮಾಡಿದರು. ರಕ್ಷಣೆಗೆ ಉಗ್ರಳಾದ ಕಾಳಿ ದೇವಿಯ ಹಣೆಯಿಂದ ಪ್ರತ್ಯಕ್ಷಳಾದಳು. ಇಬ್ಬರು ಸೇನಾನಾಯಕರನ್ನೂ ಸೋಲಿಸಿ ಸಂಹರಿಸಿದಳು. ಚಂಡ-ಮುಂಡರನ್ನು ಗೆದ್ದದ್ದರಿಂದ ದೇವಿ ಆಕೆಗೆ ಚಾಮುಂಡೆ ಎಂಬ ಹೆಸರು ನೀಡಿದಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 14"
+- assertVisible: { id: "story-page-the-last-warning" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn06-art
+- scrollUntilVisible:
+    element: { text: "ದೇವತೆಗಳ ಶಕ್ತಿಗಳನ್ನು ಹೊಂದಿದ ದಿವ್ಯಶಕ್ತಿಗಳು ದೇವಿಯನ್ನು ಸೇರಿದರು. ದೇವಿಯ ಶಕ್ತಿಯಾದ ಶಿವದೂತಿ ಶಿವನ ಮೂಲಕ ಎಚ್ಚರಿಕೆ ಕಳುಹಿಸಿದಳು: ಅಸುರರು ದೇವತೆಗಳ ಲೋಕ ಮರಳಿಸಿ ಹಿಂದೆ ಸರಿಯಲಿ. ಅವರು ನಿರಾಕರಿಸಿ ದಾಳಿ ಮಾಡಿದರು. ದೇವಿ ಮತ್ತು ಸಹಾಯಕರೂ ರಕ್ಷಣೆಗೆ ಸಿದ್ಧರಾದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವತೆಗಳ ಶಕ್ತಿಗಳನ್ನು ಹೊಂದಿದ ದಿವ್ಯಶಕ್ತಿಗಳು ದೇವಿಯನ್ನು ಸೇರಿದರು. ದೇವಿಯ ಶಕ್ತಿಯಾದ ಶಿವದೂತಿ ಶಿವನ ಮೂಲಕ ಎಚ್ಚರಿಕೆ ಕಳುಹಿಸಿದಳು: ಅಸುರರು ದೇವತೆಗಳ ಲೋಕ ಮರಳಿಸಿ ಹಿಂದೆ ಸರಿಯಲಿ. ಅವರು ನಿರಾಕರಿಸಿ ದಾಳಿ ಮಾಡಿದರು. ದೇವಿ ಮತ್ತು ಸಹಾಯಕರೂ ರಕ್ಷಣೆಗೆ ಸಿದ್ಧರಾದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 14"
+- assertVisible: { id: "story-page-raktabeej-multiplies" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn07-art
+- scrollUntilVisible:
+    element: { text: "ರಕ್ತಬೀಜ ಗದೆ ಹಿಡಿದು ಬಂದನು. ಅವನ ರಕ್ತದ ಹನಿ ನೆಲಕ್ಕೆ ತಾಗಿದಾಗ ಅವನಂತೆಯೇ ಮತ್ತೊಬ್ಬ ಅಸುರ ಹುಟ್ಟುತ್ತಿದ್ದನು. ಶಕ್ತಿಗಳ ದಾಳಿಯಿಂದ ಪ್ರತಿರೂಪಗಳು ಹೆಚ್ಚಿದವು. ದೇವತೆಗಳು ಭಯಪಟ್ಟರು. ಸಾಮಾನ್ಯ ದಾಳಿಗಳು ಅಪಾಯವನ್ನು ಹೆಚ್ಚಿಸುತ್ತಿದ್ದವು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ರಕ್ತಬೀಜ ಗದೆ ಹಿಡಿದು ಬಂದನು. ಅವನ ರಕ್ತದ ಹನಿ ನೆಲಕ್ಕೆ ತಾಗಿದಾಗ ಅವನಂತೆಯೇ ಮತ್ತೊಬ್ಬ ಅಸುರ ಹುಟ್ಟುತ್ತಿದ್ದನು. ಶಕ್ತಿಗಳ ದಾಳಿಯಿಂದ ಪ್ರತಿರೂಪಗಳು ಹೆಚ್ಚಿದವು. ದೇವತೆಗಳು ಭಯಪಟ್ಟರು. ಸಾಮಾನ್ಯ ದಾಳಿಗಳು ಅಪಾಯವನ್ನು ಹೆಚ್ಚಿಸುತ್ತಿದ್ದವು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn07-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 14"
+- assertVisible: { id: "story-page-durga-and-kali-work-together" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn08-art
+- scrollUntilVisible:
+    element: { text: "ನೆಲಕ್ಕೆ ತಲುಪುವ ಮೊದಲು ರಕ್ತ ಹಿಡಿದು ಹೊಸ ಅಸುರರನ್ನು ನುಂಗಲು ದುರ್ಗೆ ಕಾಳಿಗೆ ತಿಳಿಸಿದಳು. ದುರ್ಗೆ ಹೋರಾಡುತ್ತಿದ್ದಂತೆ ಕಾಳಿ ಯೋಜನೆ ನೆರವೇರಿಸಿದಳು. ಹೊಸ ಪ್ರತಿರೂಪಗಳು ನಿಂತವು. ರಕ್ತಬೀಜನ ಹೆಚ್ಚುವ ಶಕ್ತಿ ಕೊನೆಗೊಂಡು ಅವನು ಸಂಹಾರವಾದನು. ದೇವತೆಗಳು ಸಂತೋಷಪಟ್ಟರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನೆಲಕ್ಕೆ ತಲುಪುವ ಮೊದಲು ರಕ್ತ ಹಿಡಿದು ಹೊಸ ಅಸುರರನ್ನು ನುಂಗಲು ದುರ್ಗೆ ಕಾಳಿಗೆ ತಿಳಿಸಿದಳು. ದುರ್ಗೆ ಹೋರಾಡುತ್ತಿದ್ದಂತೆ ಕಾಳಿ ಯೋಜನೆ ನೆರವೇರಿಸಿದಳು. ಹೊಸ ಪ್ರತಿರೂಪಗಳು ನಿಂತವು. ರಕ್ತಬೀಜನ ಹೆಚ್ಚುವ ಶಕ್ತಿ ಕೊನೆಗೊಂಡು ಅವನು ಸಂಹಾರವಾದನು. ದೇವತೆಗಳು ಸಂತೋಷಪಟ್ಟರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn08-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 14"
+- assertVisible: { id: "story-page-nishumbha-returns" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn09-art
+- scrollUntilVisible:
+    element: { text: "ನಿಶುಂಭ ದೇವಿಯ ಸಿಂಹದ ಮೇಲೆ ದಾಳಿ ಮಾಡಿದನು. ಆಕೆ ಅವನ ಆಯುಧಗಳನ್ನು ಮುರಿದು ಅವನನ್ನು ಬೀಳಿಸಿದಳು. ಶುಂಭನೂ ಯುದ್ಧಕ್ಕೆ ಬಂದನು; ಅವನ ದಾಳಿಗಳನ್ನೂ ತಡೆಯಲಾಯಿತು. ನಿಶುಂಭ ಚೇತರಿಸಿಕೊಂಡು ಮತ್ತೆ ಬಂದನು. ಹೋರಾಟ ಇನ್ನೂ ಮುಗಿದಿರಲಿಲ್ಲ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನಿಶುಂಭ ದೇವಿಯ ಸಿಂಹದ ಮೇಲೆ ದಾಳಿ ಮಾಡಿದನು. ಆಕೆ ಅವನ ಆಯುಧಗಳನ್ನು ಮುರಿದು ಅವನನ್ನು ಬೀಳಿಸಿದಳು. ಶುಂಭನೂ ಯುದ್ಧಕ್ಕೆ ಬಂದನು; ಅವನ ದಾಳಿಗಳನ್ನೂ ತಡೆಯಲಾಯಿತು. ನಿಶುಂಭ ಚೇತರಿಸಿಕೊಂಡು ಮತ್ತೆ ಬಂದನು. ಹೋರಾಟ ಇನ್ನೂ ಮುಗಿದಿರಲಿಲ್ಲ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn09-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 14"
+- assertVisible: { id: "story-page-nishumbhas-defeat" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn10-art
+- scrollUntilVisible:
+    element: { text: "ನಿಶುಂಭ ಹಲವು ಆಯುಧಗಳಿಂದ ಮತ್ತೆ ದಾಳಿ ಮಾಡಿದನು. ದೇವಿ ಅವನ್ನು ತಡೆದು ಶೂಲದಿಂದ ಅವನನ್ನು ಹೊಡೆದಳು. ಅವನಿಂದ ಮತ್ತೊಬ್ಬ ಬಲಿಷ್ಠ ಯೋಧ ಹೊರಬಂದನು; ಆಕೆ ಅವನನ್ನೂ ಸೋಲಿಸಿದಳು. ನಿಶುಂಭ ಸಂಹಾರವಾದನು; ಅವನ ಸೇನೆ ದೇವಿಯನ್ನು ಗೆಲ್ಲಲಾಗಲಿಲ್ಲ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನಿಶುಂಭ ಹಲವು ಆಯುಧಗಳಿಂದ ಮತ್ತೆ ದಾಳಿ ಮಾಡಿದನು. ದೇವಿ ಅವನ್ನು ತಡೆದು ಶೂಲದಿಂದ ಅವನನ್ನು ಹೊಡೆದಳು. ಅವನಿಂದ ಮತ್ತೊಬ್ಬ ಬಲಿಷ್ಠ ಯೋಧ ಹೊರಬಂದನು; ಆಕೆ ಅವನನ್ನೂ ಸೋಲಿಸಿದಳು. ನಿಶುಂಭ ಸಂಹಾರವಾದನು; ಅವನ ಸೇನೆ ದೇವಿಯನ್ನು ಗೆಲ್ಲಲಾಗಲಿಲ್ಲ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn10-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "11 / 14"
+- assertVisible: { id: "story-page-the-powers-return-to-one" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn11-art
+- scrollUntilVisible:
+    element: { text: "ಇತರರ ಶಕ್ತಿಯನ್ನು ಅವಲಂಬಿಸಿದ್ದಾಳೆ ಎಂದು ಶುಂಭ ದೇವಿಯನ್ನು ಆರೋಪಿಸಿದನು. ಶಕ್ತಿಗಳು ತನ್ನದೇ ರೂಪಗಳು ಎಂದು ಆಕೆ ತಿಳಿಸಿದಳು. ಅವು ಆಕೆಯೊಳಗೆ ಮರಳಿದವು; ದೇವಿ ಒಬ್ಬಳೇ ನಿಂತಳು. ಪ್ರತ್ಯೇಕವೆಂದು ಅವನು ಭಾವಿಸಿದ್ದ ಶಕ್ತಿಗಳ ದಿವ್ಯ ಮಾತೆಯನ್ನೇ ಈಗ ಎದುರಿಸಿದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಇತರರ ಶಕ್ತಿಯನ್ನು ಅವಲಂಬಿಸಿದ್ದಾಳೆ ಎಂದು ಶುಂಭ ದೇವಿಯನ್ನು ಆರೋಪಿಸಿದನು. ಶಕ್ತಿಗಳು ತನ್ನದೇ ರೂಪಗಳು ಎಂದು ಆಕೆ ತಿಳಿಸಿದಳು. ಅವು ಆಕೆಯೊಳಗೆ ಮರಳಿದವು; ದೇವಿ ಒಬ್ಬಳೇ ನಿಂತಳು. ಪ್ರತ್ಯೇಕವೆಂದು ಅವನು ಭಾವಿಸಿದ್ದ ಶಕ್ತಿಗಳ ದಿವ್ಯ ಮಾತೆಯನ್ನೇ ಈಗ ಎದುರಿಸಿದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn11-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "12 / 14"
+- assertVisible: { id: "story-page-battle-in-the-sky" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn12-art
+- scrollUntilVisible:
+    element: { text: "ಶುಂಭ ಉಗ್ರವಾಗಿ ದಾಳಿ ಮಾಡಿದನು. ದೇವಿ ಅವನ ಬಾಣ, ಕತ್ತಿ, ಗುರಾಣಿ ಮತ್ತು ಗದೆಯನ್ನು ಎದುರಿಸಿದಳು. ಬಳಿಕ ಅವನು ಆಕೆಯೊಂದಿಗೆ ಸೆಣಸಿದನು; ಯುದ್ಧ ಆಕಾಶಕ್ಕೆ ಏರಿತು. ಕೊನೆಗೆ ಆಕೆ ಅವನನ್ನು ತಿರುಗಿಸಿ ಭೂಮಿಗೆ ಎಸೆದಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಶುಂಭ ಉಗ್ರವಾಗಿ ದಾಳಿ ಮಾಡಿದನು. ದೇವಿ ಅವನ ಬಾಣ, ಕತ್ತಿ, ಗುರಾಣಿ ಮತ್ತು ಗದೆಯನ್ನು ಎದುರಿಸಿದಳು. ಬಳಿಕ ಅವನು ಆಕೆಯೊಂದಿಗೆ ಸೆಣಸಿದನು; ಯುದ್ಧ ಆಕಾಶಕ್ಕೆ ಏರಿತು. ಕೊನೆಗೆ ಆಕೆ ಅವನನ್ನು ತಿರುಗಿಸಿ ಭೂಮಿಗೆ ಎಸೆದಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn12-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "13 / 14"
+- assertVisible: { id: "story-page-shumbhas-final-attack" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn13-art
+- scrollUntilVisible:
+    element: { text: "ಬಿದ್ದ ಬಳಿಕವೂ ಶುಂಭ ಎದ್ದು ಮತ್ತೆ ದೇವಿಯತ್ತ ಧಾವಿಸಿದನು. ಆಕೆ ಶೂಲದಿಂದ ಅವನ ಕೊನೆಯ ದಾಳಿಯನ್ನು ತಡೆದಳು. ಅವನು ಸಂಹಾರವಾದನು; ಬಿದ್ದಾಗ ಭೂಮಿ ನಡುಗಿತು. ಸಹೋದರರ ಕ್ರೂರ ಆಳ್ವಿಕೆ ಕೊನೆಗೂ ಮುಗಿಯಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಬಿದ್ದ ಬಳಿಕವೂ ಶುಂಭ ಎದ್ದು ಮತ್ತೆ ದೇವಿಯತ್ತ ಧಾವಿಸಿದನು. ಆಕೆ ಶೂಲದಿಂದ ಅವನ ಕೊನೆಯ ದಾಳಿಯನ್ನು ತಡೆದಳು. ಅವನು ಸಂಹಾರವಾದನು; ಬಿದ್ದಾಗ ಭೂಮಿ ನಡುಗಿತು. ಸಹೋದರರ ಕ್ರೂರ ಆಳ್ವಿಕೆ ಕೊನೆಗೂ ಮುಗಿಯಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn13-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "14 / 14"
+- assertVisible: { id: "story-page-peace-is-restored" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn14-art
+- scrollUntilVisible:
+    element: { text: "ಜಗತ್ತು ಮತ್ತೆ ಶಾಂತವಾಯಿತು. ನದಿಗಳು ಸರಿಯಾದ ಹಾದಿಯಲ್ಲಿ ಹರಿದವು; ಆಕಾಶ ಸ್ವಚ್ಛವಾಯಿತು. ದೇವತೆಗಳು ಸಂತೋಷಪಟ್ಟರು; ದಿವ್ಯ ಗಾಯಕರು ಮತ್ತು ನರ್ತಕರು ಸಂಭ್ರಮಿಸಿದರು. ಮಾತೆಯ ಜಯ ಭಯವನ್ನು ದೂರಮಾಡಿ ಸಾಮರಸ್ಯವನ್ನು ಮರಳಿಸಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಜಗತ್ತು ಮತ್ತೆ ಶಾಂತವಾಯಿತು. ನದಿಗಳು ಸರಿಯಾದ ಹಾದಿಯಲ್ಲಿ ಹರಿದವು; ಆಕಾಶ ಸ್ವಚ್ಛವಾಯಿತು. ದೇವತೆಗಳು ಸಂತೋಷಪಟ್ಟರು; ದಿವ್ಯ ಗಾಯಕರು ಮತ್ತು ನರ್ತಕರು ಸಂಭ್ರಮಿಸಿದರು. ಮಾತೆಯ ಜಯ ಭಯವನ್ನು ದೂರಮಾಡಿ ಸಾಮರಸ್ಯವನ್ನು ಮರಳಿಸಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn14-caption
+- scrollUntilVisible:
+    element: { text: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 5–10ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಯುದ್ಧ-ಮರಣದ ಭೀಕರ ವಿವರಗಳಿಲ್ಲ. ಪ್ರತ್ಯೇಕ ರಕ್ತಬೀಜ ಪುಸ್ತಕ ಆ ಭಾಗವನ್ನು ಹೆಚ್ಚು ವಿವರಿಸುತ್ತದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 5–10ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಯುದ್ಧ-ಮರಣದ ಭೀಕರ ವಿವರಗಳಿಲ್ಲ. ಪ್ರತ್ಯೇಕ ರಕ್ತಬೀಜ ಪುಸ್ತಕ ಆ ಭಾಗವನ್ನು ಹೆಚ್ಚು ವಿವರಿಸುತ್ತದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sn14-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-suratha-samadhi" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-suratha-samadhi" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-suratha-reaches-the-hermitage" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su01-art
+- scrollUntilVisible:
+    element: { text: "ರಾಜ ಸುರಥ ಯುದ್ಧದಲ್ಲಿ ಸೋತನು. ನಗರಕ್ಕೆ ಮರಳಿದಾಗ ವಿಶ್ವಾಸವಿಲ್ಲದ ಮಂತ್ರಿಗಳು ಅವನ ಸಂಪತ್ತು ಮತ್ತು ಅಧಿಕಾರ ಕಸಿದರು. ಕಾಡಿಗೆ ತೆರಳಿ ಋಷಿ ಮೇಧಸರ ಶಾಂತ ಆಶ್ರಮ ತಲುಪಿದನು. ಅಲ್ಲಿಯೂ ತನ್ನ ರಾಜ್ಯ ಮತ್ತು ಹಿಂದೆ ಉಳಿದ ಜನರ ಬಗ್ಗೆ ಚಿಂತಿಸಿದನು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ರಾಜ ಸುರಥ ಯುದ್ಧದಲ್ಲಿ ಸೋತನು. ನಗರಕ್ಕೆ ಮರಳಿದಾಗ ವಿಶ್ವಾಸವಿಲ್ಲದ ಮಂತ್ರಿಗಳು ಅವನ ಸಂಪತ್ತು ಮತ್ತು ಅಧಿಕಾರ ಕಸಿದರು. ಕಾಡಿಗೆ ತೆರಳಿ ಋಷಿ ಮೇಧಸರ ಶಾಂತ ಆಶ್ರಮ ತಲುಪಿದನು. ಅಲ್ಲಿಯೂ ತನ್ನ ರಾಜ್ಯ ಮತ್ತು ಹಿಂದೆ ಉಳಿದ ಜನರ ಬಗ್ಗೆ ಚಿಂತಿಸಿದನು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-a-merchant-with-the-same-worry" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su02-art
+- scrollUntilVisible:
+    element: { text: "ಸುರಥ ಸಮಾಧಿ ಎಂಬ ವ್ಯಾಪಾರಿಯನ್ನು ಭೇಟಿಯಾದನು. ಲೋಭದ ಕುಟುಂಬ ಅವನ ಸಂಪತ್ತು ಪಡೆದು ಹೊರಹಾಕಿತ್ತು. ಆದರೂ ಸಮಾಧಿ ಅವರ ಬಗ್ಗೆ ಚಿಂತಿಸುತ್ತಿದ್ದನು. ಸುರಥನಿಗೂ ತನ್ನನ್ನು ಹೊರಹಾಕಿದವರ ಬಗ್ಗೆ ಕಾಳಜಿಯಿತ್ತು. ಇಬ್ಬರಿಗೂ ತಮ್ಮ ಮನಸ್ಸಿನ ಮಮತೆ ಆಶ್ಚರ್ಯವೆನಿಸಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಸುರಥ ಸಮಾಧಿ ಎಂಬ ವ್ಯಾಪಾರಿಯನ್ನು ಭೇಟಿಯಾದನು. ಲೋಭದ ಕುಟುಂಬ ಅವನ ಸಂಪತ್ತು ಪಡೆದು ಹೊರಹಾಕಿತ್ತು. ಆದರೂ ಸಮಾಧಿ ಅವರ ಬಗ್ಗೆ ಚಿಂತಿಸುತ್ತಿದ್ದನು. ಸುರಥನಿಗೂ ತನ್ನನ್ನು ಹೊರಹಾಕಿದವರ ಬಗ್ಗೆ ಕಾಳಜಿಯಿತ್ತು. ಇಬ್ಬರಿಗೂ ತಮ್ಮ ಮನಸ್ಸಿನ ಮಮತೆ ಆಶ್ಚರ್ಯವೆನಿಸಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-a-question-for-medhas" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su03-art
+- scrollUntilVisible:
+    element: { text: "ಇಬ್ಬರೂ ಗೌರವದಿಂದ ಮೇಧಸರ ಬಳಿಗೆ ಹೋದರು. ತಮ್ಮೊಂದಿಗೆ ಅನ್ಯಾಯವಾಗಿದೆ ಎಂದು ತಿಳಿದಿದ್ದರೂ ಮನಸ್ಸು ಮತ್ತೆ ಮನೆಗೆ ಮರಳುತ್ತಿತ್ತು. ಸತ್ಯ ತಿಳಿದ ಮೇಲೂ ಮಮತೆ ಏಕೆ ಬಿಡಲಿಲ್ಲ ಎಂದು ಕೇಳಿದರು. ಋಷಿ ಇಬ್ಬರ ಮಾತನ್ನೂ ಕೇಳಿದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಇಬ್ಬರೂ ಗೌರವದಿಂದ ಮೇಧಸರ ಬಳಿಗೆ ಹೋದರು. ತಮ್ಮೊಂದಿಗೆ ಅನ್ಯಾಯವಾಗಿದೆ ಎಂದು ತಿಳಿದಿದ್ದರೂ ಮನಸ್ಸು ಮತ್ತೆ ಮನೆಗೆ ಮರಳುತ್ತಿತ್ತು. ಸತ್ಯ ತಿಳಿದ ಮೇಲೂ ಮಮತೆ ಏಕೆ ಬಿಡಲಿಲ್ಲ ಎಂದು ಕೇಳಿದರು. ಋಷಿ ಇಬ್ಬರ ಮಾತನ್ನೂ ಕೇಳಿದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-the-sage-explains" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su04-art
+- scrollUntilVisible:
+    element: { text: "ಮೇಧಸರು ಮರಿಗಳಿಗೆ ಆಹಾರ ನೀಡುವ ಹಕ್ಕಿಗಳು ಮತ್ತು ಜೀವಿಗಳ ಮಮತೆಯ ಕುರಿತು ಹೇಳಿದರು. ಜ್ಞಾನಿಗಳನ್ನೂ ಬಂಧಿಸುವ ದೇವಿಯ ಮಾಯಾಶಕ್ತಿಯನ್ನು ವಿವರಿಸಿದರು. ಆಕೆಯ ಮಹಿಮೆಯನ್ನು ಹೇಳಿದಾಗ ಸುರಥ ಮತ್ತು ಸಮಾಧಿ ಆಕೆಯನ್ನು ಆರಾಧಿಸಲು ಬಯಸಿದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಮೇಧಸರು ಮರಿಗಳಿಗೆ ಆಹಾರ ನೀಡುವ ಹಕ್ಕಿಗಳು ಮತ್ತು ಜೀವಿಗಳ ಮಮತೆಯ ಕುರಿತು ಹೇಳಿದರು. ಜ್ಞಾನಿಗಳನ್ನೂ ಬಂಧಿಸುವ ದೇವಿಯ ಮಾಯಾಶಕ್ತಿಯನ್ನು ವಿವರಿಸಿದರು. ಆಕೆಯ ಮಹಿಮೆಯನ್ನು ಹೇಳಿದಾಗ ಸುರಥ ಮತ್ತು ಸಮಾಧಿ ಆಕೆಯನ್ನು ಆರಾಧಿಸಲು ಬಯಸಿದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-three-years-of-devotion" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su05-art
+- scrollUntilVisible:
+    element: { text: "ನದಿಯ ತೀರದಲ್ಲಿ ದೇವಿಯ ಮಣ್ಣಿನ ಪ್ರತಿಮೆ ಮಾಡಿದರು. ಹೂವು, ಧೂಪ ಮತ್ತು ನೀರು ಅರ್ಪಿಸಿ ಭಕ್ತಿಯಿಂದ ನೆನೆದರು. ಅವರ ಆರಾಧನೆ ಮೂರು ವರ್ಷ ಮುಂದುವರಿಯಿತು. ಆಗ ಅವರ ಭಕ್ತಿಗೆ ಮೆಚ್ಚಿದ ಮಾತೆ ಅವರ ಮುಂದೆ ಪ್ರತ್ಯಕ್ಷಳಾದಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ನದಿಯ ತೀರದಲ್ಲಿ ದೇವಿಯ ಮಣ್ಣಿನ ಪ್ರತಿಮೆ ಮಾಡಿದರು. ಹೂವು, ಧೂಪ ಮತ್ತು ನೀರು ಅರ್ಪಿಸಿ ಭಕ್ತಿಯಿಂದ ನೆನೆದರು. ಅವರ ಆರಾಧನೆ ಮೂರು ವರ್ಷ ಮುಂದುವರಿಯಿತು. ಆಗ ಅವರ ಭಕ್ತಿಗೆ ಮೆಚ್ಚಿದ ಮಾತೆ ಅವರ ಮುಂದೆ ಪ್ರತ್ಯಕ್ಷಳಾದಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-two-different-wishes" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su06-art
+- scrollUntilVisible:
+    element: { text: "ದೇವಿ ವರ ಕೇಳಲು ತಿಳಿಸಿದಳು. ಸುರಥ ತನ್ನ ರಾಜ್ಯವನ್ನು ಮರಳಿ ಪಡೆಯಲು ಮತ್ತು ಮುಂದೆ ಸ್ಥಿರ ರಾಜಸ್ಥಾನ ಹೊಂದಲು ಬಯಸಿದನು. ಸಮಾಧಿ “ನಾನು” ಮತ್ತು “ನನ್ನದು” ಎಂಬ ಬಂಧನಗಳಿಂದ ಬಿಡಿಸುವ ಜ್ಞಾನ ಕೇಳಿದನು. ಮಾತೆ ಇಬ್ಬರ ಬೇರೆ ಬೇಡಿಕೆಗಳನ್ನು ಕೇಳಿದಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವಿ ವರ ಕೇಳಲು ತಿಳಿಸಿದಳು. ಸುರಥ ತನ್ನ ರಾಜ್ಯವನ್ನು ಮರಳಿ ಪಡೆಯಲು ಮತ್ತು ಮುಂದೆ ಸ್ಥಿರ ರಾಜಸ್ಥಾನ ಹೊಂದಲು ಬಯಸಿದನು. ಸಮಾಧಿ “ನಾನು” ಮತ್ತು “ನನ್ನದು” ಎಂಬ ಬಂಧನಗಳಿಂದ ಬಿಡಿಸುವ ಜ್ಞಾನ ಕೇಳಿದನು. ಮಾತೆ ಇಬ್ಬರ ಬೇರೆ ಬೇಡಿಕೆಗಳನ್ನು ಕೇಳಿದಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-the-mothers-blessings" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su07-art
+- scrollUntilVisible:
+    element: { text: "ದೇವಿ ಸುರಥನಿಗೆ ರಾಜ್ಯ ಮರಳಿ ಸಿಗುವುದನ್ನೂ ಮುಂದಿನ ಜನ್ಮದಲ್ಲಿ ಸಾವರ್ಣಿ ಮನುವಾಗುವುದನ್ನೂ ವರವಾಗಿ ನೀಡಿದಳು. ಸಮಾಧಿಗೆ ಅವನು ಬಯಸಿದ ಮುಕ್ತಿಯ ಜ್ಞಾನ ನೀಡಿದಳು. ಬಳಿಕ ಅದೃಶ್ಯಳಾದಳು. ಅವರ ಒಟ್ಟಿನ ಪಯಣ ಇಬ್ಬರಿಗೂ ಬೇರೆ ವರ ನೀಡಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವಿ ಸುರಥನಿಗೆ ರಾಜ್ಯ ಮರಳಿ ಸಿಗುವುದನ್ನೂ ಮುಂದಿನ ಜನ್ಮದಲ್ಲಿ ಸಾವರ್ಣಿ ಮನುವಾಗುವುದನ್ನೂ ವರವಾಗಿ ನೀಡಿದಳು. ಸಮಾಧಿಗೆ ಅವನು ಬಯಸಿದ ಮುಕ್ತಿಯ ಜ್ಞಾನ ನೀಡಿದಳು. ಬಳಿಕ ಅದೃಶ್ಯಳಾದಳು. ಅವರ ಒಟ್ಟಿನ ಪಯಣ ಇಬ್ಬರಿಗೂ ಬೇರೆ ವರ ನೀಡಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su07-caption
+- scrollUntilVisible:
+    element: { text: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 1 ಮತ್ತು 13ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಕಠಿಣ ಉಪವಾಸ ಮತ್ತು ಸ್ವರಕ್ತ ಅರ್ಪಣೆಯ ವಿವರಗಳನ್ನು ಕೈಬಿಡಲಾಗಿದೆ. ಅವರ ಆರಾಧನೆ ಮೂರು ವರ್ಷ ನಡೆಯುತ್ತದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 1 ಮತ್ತು 13ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಕಠಿಣ ಉಪವಾಸ ಮತ್ತು ಸ್ವರಕ್ತ ಅರ್ಪಣೆಯ ವಿವರಗಳನ್ನು ಕೈಬಿಡಲಾಗಿದೆ. ಅವರ ಆರಾಧನೆ ಮೂರು ವರ್ಷ ನಡೆಯುತ್ತದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-su07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-shakambhari" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-shakambhari" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 8"
+- assertVisible: { id: "story-page-durgama-seizes-the-vedas" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa01-art
+- scrollUntilVisible:
+    element: { text: "ಅಸುರ ದುರ್ಗಮ ತಪಸ್ಸು ಮಾಡಿ ಬ್ರಹ್ಮನಿಂದ ವೇದಗಳ ಅಧಿಕಾರ ಕೇಳಿದನು. ಬ್ರಹ್ಮ ವರ ನೀಡಿದನು. ಈ ಪುರಾಣದ ನಿರೂಪಣೆಯಲ್ಲಿ ಜನರು ಪವಿತ್ರ ವಿದ್ಯೆಯನ್ನು ಮರೆತರು; ದೇವತೆಗಳನ್ನು ಪೋಷಿಸುವ ವಿಧಿಗಳು ನಿಂತವು. ಜಗತ್ತಿನಲ್ಲಿ ಸಂಕಟ ಹರಡಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಅಸುರ ದುರ್ಗಮ ತಪಸ್ಸು ಮಾಡಿ ಬ್ರಹ್ಮನಿಂದ ವೇದಗಳ ಅಧಿಕಾರ ಕೇಳಿದನು. ಬ್ರಹ್ಮ ವರ ನೀಡಿದನು. ಈ ಪುರಾಣದ ನಿರೂಪಣೆಯಲ್ಲಿ ಜನರು ಪವಿತ್ರ ವಿದ್ಯೆಯನ್ನು ಮರೆತರು; ದೇವತೆಗಳನ್ನು ಪೋಷಿಸುವ ವಿಧಿಗಳು ನಿಂತವು. ಜಗತ್ತಿನಲ್ಲಿ ಸಂಕಟ ಹರಡಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 8"
+- assertVisible: { id: "story-page-a-long-drought" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa02-art
+- scrollUntilVisible:
+    element: { text: "ಕಥೆಯಲ್ಲಿ ಮಳೆ ನಿಂತು ನೂರು ವರ್ಷ ಬರವಿತ್ತು. ನದಿಗಳು ಬತ್ತಿ ಬೆಳೆಗಳು ಹಾಳಾದವು; ಜನರು ಮತ್ತು ಪ್ರಾಣಿಗಳು ಸಂಕಟಕ್ಕೊಳಗಾದವು. ಋಷಿಗಳು ಹಿಮಾಲಯಕ್ಕೆ ಹೋಗಿ ದಿವ್ಯ ಮಾತೆಗೆ ನೆರವು ಕೇಳಿದರು. ಎಲ್ಲರಿಗೂ ತುರ್ತು ನೆರವು ಬೇಕಿತ್ತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಕಥೆಯಲ್ಲಿ ಮಳೆ ನಿಂತು ನೂರು ವರ್ಷ ಬರವಿತ್ತು. ನದಿಗಳು ಬತ್ತಿ ಬೆಳೆಗಳು ಹಾಳಾದವು; ಜನರು ಮತ್ತು ಪ್ರಾಣಿಗಳು ಸಂಕಟಕ್ಕೊಳಗಾದವು. ಋಷಿಗಳು ಹಿಮಾಲಯಕ್ಕೆ ಹೋಗಿ ದಿವ್ಯ ಮಾತೆಗೆ ನೆರವು ಕೇಳಿದರು. ಎಲ್ಲರಿಗೂ ತುರ್ತು ನೆರವು ಬೇಕಿತ್ತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 8"
+- assertVisible: { id: "story-page-shatakshi-appears" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa03-art
+- scrollUntilVisible:
+    element: { text: "ಮಾತೆ ಅನೇಕ ಕಣ್ಣುಗಳಿಂದ ಎಲ್ಲರ ಕಷ್ಟ ನೋಡುತ್ತ ಪ್ರತ್ಯಕ್ಷಳಾದಳು. ನೀಲಿ ರೂಪದ ನಾಲ್ಕು ಕೈಗಳಲ್ಲಿ ಬಿಲ್ಲು, ಬಾಣಗಳು, ಕಮಲ ಮತ್ತು ಪೋಷಕ ಆಹಾರವಿತ್ತು. ಅನೇಕ ಕಣ್ಣುಗಳಿಂದ ಆಕೆಯನ್ನು ಶತಾಕ್ಷಿ ಎಂದರು. ಆಕೆಯ ದೃಷ್ಟಿ ಕರುಣೆಯಿಂದ ತುಂಬಿತ್ತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಮಾತೆ ಅನೇಕ ಕಣ್ಣುಗಳಿಂದ ಎಲ್ಲರ ಕಷ್ಟ ನೋಡುತ್ತ ಪ್ರತ್ಯಕ್ಷಳಾದಳು. ನೀಲಿ ರೂಪದ ನಾಲ್ಕು ಕೈಗಳಲ್ಲಿ ಬಿಲ್ಲು, ಬಾಣಗಳು, ಕಮಲ ಮತ್ತು ಪೋಷಕ ಆಹಾರವಿತ್ತು. ಅನೇಕ ಕಣ್ಣುಗಳಿಂದ ಆಕೆಯನ್ನು ಶತಾಕ್ಷಿ ಎಂದರು. ಆಕೆಯ ದೃಷ್ಟಿ ಕರುಣೆಯಿಂದ ತುಂಬಿತ್ತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 8"
+- assertVisible: { id: "story-page-tears-become-rain" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa04-art
+- scrollUntilVisible:
+    element: { text: "ಜಗತ್ತಿನ ನೋವು ನೋಡಿ ಶತಾಕ್ಷಿ ಒಂಬತ್ತು ರಾತ್ರಿಗಳವರೆಗೆ ಕಣ್ಣೀರು ಸುರಿಸಿದಳು. ಕಥೆಯಲ್ಲಿ ಆಕೆಯ ಕಣ್ಣೀರು ಮಳೆಯಾಗಿ ಹರಿಯಿತು. ನದಿಗಳು ಮತ್ತು ಸರೋವರಗಳು ಮತ್ತೆ ತುಂಬಿದವು. ಒಣನೆಲಕ್ಕೆ ನೀರು ಸಿಕ್ಕಿತು; ಬಾಯಾರಿದ ಜನರು ಮತ್ತು ಪ್ರಾಣಿಗಳು ಚೇತರಿಸತೊಡಗಿದವು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಜಗತ್ತಿನ ನೋವು ನೋಡಿ ಶತಾಕ್ಷಿ ಒಂಬತ್ತು ರಾತ್ರಿಗಳವರೆಗೆ ಕಣ್ಣೀರು ಸುರಿಸಿದಳು. ಕಥೆಯಲ್ಲಿ ಆಕೆಯ ಕಣ್ಣೀರು ಮಳೆಯಾಗಿ ಹರಿಯಿತು. ನದಿಗಳು ಮತ್ತು ಸರೋವರಗಳು ಮತ್ತೆ ತುಂಬಿದವು. ಒಣನೆಲಕ್ಕೆ ನೀರು ಸಿಕ್ಕಿತು; ಬಾಯಾರಿದ ಜನರು ಮತ್ತು ಪ್ರಾಣಿಗಳು ಚೇತರಿಸತೊಡಗಿದವು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 8"
+- assertVisible: { id: "story-page-food-until-the-crops-return" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa05-art
+- scrollUntilVisible:
+    element: { text: "ಬೆಳೆಗಳು ಮತ್ತೆ ಬೆಳೆಯುವವರೆಗೆ ಮಾತೆ ಜನರಿಗೆ ಹಣ್ಣು, ಬೇರು ಮತ್ತು ತರಕಾರಿಗಳನ್ನು ನೀಡಿದಳು. ಪ್ರಾಣಿಗಳಿಗೂ ಹುಲ್ಲು ನೀಡಿದಳು. ಆಕೆಯ ಕಾಳಜಿ ಹಸಿದ ಜಗತ್ತಿಗೆ ಆಹಾರ ಒದಗಿಸಿತು. ಸಸ್ಯಾಹಾರದಿಂದ ಎಲ್ಲರನ್ನು ಪೋಷಿಸಿದ ಆಕೆ ಶಾಕಂಭರಿ ಎಂದು ಕರೆಯಲ್ಪಟ್ಟಳು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಬೆಳೆಗಳು ಮತ್ತೆ ಬೆಳೆಯುವವರೆಗೆ ಮಾತೆ ಜನರಿಗೆ ಹಣ್ಣು, ಬೇರು ಮತ್ತು ತರಕಾರಿಗಳನ್ನು ನೀಡಿದಳು. ಪ್ರಾಣಿಗಳಿಗೂ ಹುಲ್ಲು ನೀಡಿದಳು. ಆಕೆಯ ಕಾಳಜಿ ಹಸಿದ ಜಗತ್ತಿಗೆ ಆಹಾರ ಒದಗಿಸಿತು. ಸಸ್ಯಾಹಾರದಿಂದ ಎಲ್ಲರನ್ನು ಪೋಷಿಸಿದ ಆಕೆ ಶಾಕಂಭರಿ ಎಂದು ಕರೆಯಲ್ಪಟ್ಟಳು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 8"
+- assertVisible: { id: "story-page-a-circle-of-protection" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa06-art
+- scrollUntilVisible:
+    element: { text: "ದುರ್ಗಮ ಇದನ್ನು ಕೇಳಿ ಸೇನೆಯೊಂದಿಗೆ ಆಕ್ರಮಿಸಿದನು. ಮಾತೆ ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳನ್ನು ರಕ್ಷಣೆಯ ಬೆಳಕಿನ ವೃತ್ತದಲ್ಲಿ ಇರಿಸಿ ತಾನು ಹೊರಗೆ ಅವನನ್ನು ಎದುರಿಸಿದಳು. ಅನೇಕ ದಿವ್ಯಶಕ್ತಿಗಳು ನೆರವಿಗೆ ಬಂದವು. ಯುದ್ಧ ಹತ್ತು ದಿನ ಮುಂದುವರಿಯಿತು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದುರ್ಗಮ ಇದನ್ನು ಕೇಳಿ ಸೇನೆಯೊಂದಿಗೆ ಆಕ್ರಮಿಸಿದನು. ಮಾತೆ ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳನ್ನು ರಕ್ಷಣೆಯ ಬೆಳಕಿನ ವೃತ್ತದಲ್ಲಿ ಇರಿಸಿ ತಾನು ಹೊರಗೆ ಅವನನ್ನು ಎದುರಿಸಿದಳು. ಅನೇಕ ದಿವ್ಯಶಕ್ತಿಗಳು ನೆರವಿಗೆ ಬಂದವು. ಯುದ್ಧ ಹತ್ತು ದಿನ ಮುಂದುವರಿಯಿತು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 8"
+- assertVisible: { id: "story-page-durgamas-defeat" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa07-art
+- scrollUntilVisible:
+    element: { text: "ಹನ್ನೊಂದನೇ ದಿನ ದುರ್ಗಮ ರಥದಲ್ಲಿ ಬಂದು ತಾನೇ ಮಾತೆಯೊಂದಿಗೆ ಹೋರಾಡಿದನು. ಆಕೆ ಬಿಲ್ಲಿನಿಂದ ಅವನ ದಾಳಿಯನ್ನು ಎದುರಿಸಿದಳು. ಕೊನೆಗೆ ಅವನನ್ನು ಸೋಲಿಸಿ ಸಂಹರಿಸಿದಳು. ಅಪಾಯ ಕೊನೆಗೊಂಡು ಆಕೆಯ ರಕ್ಷಣೆಯಲ್ಲಿದ್ದವರು ಸುರಕ್ಷಿತರಾದರು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಹನ್ನೊಂದನೇ ದಿನ ದುರ್ಗಮ ರಥದಲ್ಲಿ ಬಂದು ತಾನೇ ಮಾತೆಯೊಂದಿಗೆ ಹೋರಾಡಿದನು. ಆಕೆ ಬಿಲ್ಲಿನಿಂದ ಅವನ ದಾಳಿಯನ್ನು ಎದುರಿಸಿದಳು. ಕೊನೆಗೆ ಅವನನ್ನು ಸೋಲಿಸಿ ಸಂಹರಿಸಿದಳು. ಅಪಾಯ ಕೊನೆಗೊಂಡು ಆಕೆಯ ರಕ್ಷಣೆಯಲ್ಲಿದ್ದವರು ಸುರಕ್ಷಿತರಾದರು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa07-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 8"
+- assertVisible: { id: "story-page-knowledge-and-peace-return" }
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa08-art
+- scrollUntilVisible:
+    element: { text: "ಮಾತೆ ವೇದಗಳನ್ನು ಮರಳಿಸಿ ಈ ಪವಿತ್ರ ಜ್ಞಾನವನ್ನು ಕಾಪಾಡಲು ತಿಳಿಸಿದಳು. ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳು ಕೃತಜ್ಞತೆ ಸಲ್ಲಿಸಿದರು. ನೀರು, ಆಹಾರ ಮತ್ತು ರಕ್ಷಣೆ ಭರವಸೆಯನ್ನು ಮರಳಿಸಿದ್ದವು. ಶತಾಕ್ಷಿ ಮತ್ತು ಶಾಕಂಭರಿ ಕರುಣಾಮಯ ಮಾತೆಯ ಹೆಸರುಗಳಾಗಿ ನೆನಪಿಸಲ್ಪಟ್ಟವು." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ಮಾತೆ ವೇದಗಳನ್ನು ಮರಳಿಸಿ ಈ ಪವಿತ್ರ ಜ್ಞಾನವನ್ನು ಕಾಪಾಡಲು ತಿಳಿಸಿದಳು. ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳು ಕೃತಜ್ಞತೆ ಸಲ್ಲಿಸಿದರು. ನೀರು, ಆಹಾರ ಮತ್ತು ರಕ್ಷಣೆ ಭರವಸೆಯನ್ನು ಮರಳಿಸಿದ್ದವು. ಶತಾಕ್ಷಿ ಮತ್ತು ಶಾಕಂಭರಿ ಕರುಣಾಮಯ ಮಾತೆಯ ಹೆಸರುಗಳಾಗಿ ನೆನಪಿಸಲ್ಪಟ್ಟವು."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa08-caption
+- scrollUntilVisible:
+    element: { text: "ದೇವೀ ಭಾಗವತ 7.28ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಬರದ ಕಾರಣ ಪುರಾಣದ ನಿರೂಪಣೆಯಾಗಿದೆ; ವೈಜ್ಞಾನಿಕ ವಿವರಣೆಯಲ್ಲ. ಯುದ್ಧ-ಮರಣದ ಭೀಕರ ವಿವರಗಳಿಲ್ಲ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ದೇವೀ ಭಾಗವತ 7.28ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಬರದ ಕಾರಣ ಪುರಾಣದ ನಿರೂಪಣೆಯಾಗಿದೆ; ವೈಜ್ಞಾನಿಕ ವಿವರಣೆಯಲ್ಲ. ಯುದ್ಧ-ಮರಣದ ಭೀಕರ ವಿವರಗಳಿಲ್ಲ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+- takeScreenshot: durga-kn-${DURGA_SIZE}-sa08-ending
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Back"

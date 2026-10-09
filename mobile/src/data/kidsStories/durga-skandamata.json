@@ -1,0 +1,131 @@
+{
+  "id": "durga-skandamata",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "story",
+  "coverArt": "sk05",
+  "title": {
+    "en": "Skandamata: Kartikeya Comes Home",
+    "hi": "स्कंदमाता: कार्तिकेय घर लौटे",
+    "gu": "સ્કંદમાતા: કાર્તિકેય ઘરે આવ્યા",
+    "kn": "ಸ್ಕಂದಮಾತಾ: ಕಾರ್ತಿಕೇಯ ಮನೆಗೆ ಬಂದನು"
+  },
+  "description": {
+    "en": "Parvati welcomes Kartikeya and the mothers who cared for him.",
+    "hi": "पार्वती ने कार्तिकेय और उनकी देखभाल करने वाली माताओं का स्वागत किया।",
+    "gu": "પાર્વતીએ કાર્તિકેય અને તેમની સંભાળ રાખનાર માતાઓનું સ્વાગત કર્યું.",
+    "kn": "ಪಾರ್ವತಿ ಕಾರ್ತಿಕೇಯನನ್ನೂ ಅವನನ್ನು ಸಾಕಿದ ತಾಯಂದಿರನ್ನೂ ಸ್ವಾಗತಿಸಿದಳು."
+  },
+  "sourceNote": {
+    "en": "An original child-friendly retelling of a related Shiva Purana episode, followed by its Navadurga connection. The chapter does not itself name this Navadurga form. The takeaway is editorial.",
+    "hi": "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।",
+    "gu": "શિવ પુરાણની સંબંધિત કથાનું બાળકો માટે મૌલિક સરળ રૂપાંતર, પછી નવદુર્ગા રૂપ સાથે તેનો સંબંધ. અધ્યાયમાં આ નવદુર્ગા રૂપનું નામ નથી. શીખ સંપાદકીય છે.",
+    "kn": "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "Love can include everyone who has cared for us. Remember their kindness with gratitude.",
+    "hi": "हमारी देखभाल करने वाले सभी लोग हमारे प्रेम में शामिल हो सकते हैं। उनके स्नेह का आभार मानें।",
+    "gu": "આપણી સંભાળ રાખનાર સૌને આપણા પ્રેમમાં સ્થાન આપી શકાય. તેમના સ્નેહનો આભાર માનો.",
+    "kn": "ನಮ್ಮನ್ನು ಕಾಳಜಿಯಿಂದ ಸಾಕಿದ ಎಲ್ಲರನ್ನೂ ನಮ್ಮ ಪ್ರೀತಿಯಲ್ಲಿ ಸೇರಿಸಬಹುದು. ಅವರ ಮಮತೆಯನ್ನು ಕೃತಜ್ಞತೆಯಿಂದ ನೆನೆಯಿರಿ."
+  },
+  "source": {
+    "baseText": "Shiva Purana 2.4.4–5; Navadurga dhyana; Drik Panchang Skandamata",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226124.html",
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226125.html",
+      "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%AA%20%28%E0%A4%95%E0%A5%81%E0%A4%AE%E0%A4%BE%E0%A4%B0%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A6%E0%A5%AA",
+      "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%AA%20%28%E0%A4%95%E0%A5%81%E0%A4%AE%E0%A4%BE%E0%A4%B0%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A6%E0%A5%AB",
+      "https://sanskritdocuments.org/doc_devii/navadurga.html",
+      "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-skandamata.html"
+    ],
+    "notes": "Homecoming arc preserves six Krittika foster mothers, their distress, Kartikeya’s reassurance, accompanying chariot, Parvati’s embrace and gifts including Krittikas. This episode follows his childhood; it is not an invented infant birth story. The one-faced child is an explicitly simplified conventional illustration. Fourth arm count applies to Skandamata, not to the child."
+  },
+  "pages": [
+    {
+      "id": "a-chariot-arrives",
+      "art": "sk01",
+      "source": "Shiva Purana 2.4.4; 5.1–3",
+      "title": {
+        "en": "A Chariot from Kailasa",
+        "hi": "कैलास से रथ",
+        "gu": "કૈલાસથી રથ",
+        "kn": "ಕೈಲಾಸದಿಂದ ರಥ"
+      },
+      "text": {
+        "en": "Six Krittika mothers had raised young Kartikeya with love. At Kailasa, Parvati wished to welcome her son home. She sent a splendid chariot to bring him. Kartikeya prepared to leave the home where the Krittikas had cared for him.",
+        "hi": "छह कृत्तिका माताओं ने बालक कार्तिकेय को प्रेम से पाला था। कैलास पर पार्वती पुत्र को घर लाना चाहती थीं। उन्होंने उसे लाने के लिए सुंदर रथ भेजा। कार्तिकेय उस घर से चलने को तैयार हुए जहाँ कृत्तिकाओं ने उनकी देखभाल की थी।",
+        "gu": "છ કૃત્તિકા માતાઓએ બાળ કાર્તિકેયને પ્રેમથી ઉછેર્યા હતા. કૈલાસ પર પાર્વતી પુત્રને ઘરે આવકારવા ઇચ્છતાં હતાં. તેમણે તેમને લેવા સુંદર રથ મોકલ્યો. કાર્તિકેય કૃત્તિકાઓએ સંભાળ રાખી હતી તે ઘરેથી જવા તૈયાર થયા.",
+        "kn": "ಆರು ಕೃತ್ತಿಕಾ ತಾಯಂದಿರು ಬಾಲಕ ಕಾರ್ತಿಕೇಯನನ್ನು ಪ್ರೀತಿಯಿಂದ ಬೆಳೆಸಿದ್ದರು. ಕೈಲಾಸದಲ್ಲಿ ಪಾರ್ವತಿ ಮಗನನ್ನು ಮನೆಗೆ ಬರಮಾಡಿಕೊಳ್ಳಲು ಬಯಸಿದಳು. ಅವನಿಗಾಗಿ ಸುಂದರ ರಥ ಕಳುಹಿಸಿದಳು. ಕೃತ್ತಿಕೆಯರು ಸಾಕಿದ ಮನೆಯಿಂದ ಹೊರಡಲು ಕಾರ್ತಿಕೇಯ ಸಿದ್ಧನಾದನು."
+      }
+    },
+    {
+      "id": "the-mothers-come-too",
+      "art": "sk02",
+      "source": "Shiva Purana 2.4.5.4–8",
+      "title": {
+        "en": "No Mother Left Behind",
+        "hi": "माताएँ भी साथ",
+        "gu": "માતાઓ પણ સાથે",
+        "kn": "ತಾಯಂದಿರೂ ಜೊತೆಗೆ"
+      },
+      "text": {
+        "en": "The Krittikas were distressed at the thought of parting from him. Kartikeya reassured them with kindness. Instead of leaving them behind, he brought them into the chariot with him. Together they set out for Kailasa.",
+        "hi": "उनसे बिछुड़ने की सोचकर कृत्तिकाएँ व्याकुल हुईं। कार्तिकेय ने स्नेह से उन्हें सांत्वना दी। उन्हें पीछे छोड़ने के बजाय वे माताओं को अपने साथ रथ में ले आए। सब मिलकर कैलास की ओर चले।",
+        "gu": "તેમનાથી છૂટા પડવાનો વિચાર કરીને કૃત્તિકાઓ વ્યાકુળ થઈ. કાર્તિકેયે સ્નેહથી તેમને સાંત્વના આપી. તેમને પાછળ છોડવાને બદલે તેઓ માતાઓને પોતાની સાથે રથમાં લઈ આવ્યા. સૌ સાથે કૈલાસ તરફ ચાલ્યાં.",
+        "kn": "ಅವನಿಂದ ದೂರವಾಗಬೇಕೆಂಬ ಯೋಚನೆಯಿಂದ ಕೃತ್ತಿಕೆಯರು ದುಃಖಿತರಾದರು. ಕಾರ್ತಿಕೇಯ ಪ್ರೀತಿಯಿಂದ ಅವರನ್ನು ಸಮಾಧಾನಪಡಿಸಿದನು. ಅವರನ್ನು ಬಿಟ್ಟುಹೋಗದೆ ತನ್ನೊಂದಿಗೆ ರಥಕ್ಕೆ ಕರೆದುಕೊಂಡನು. ಎಲ್ಲರೂ ಸೇರಿ ಕೈಲಾಸಕ್ಕೆ ಹೊರಟರು."
+      }
+    },
+    {
+      "id": "arrival-at-kailasa",
+      "art": "sk03",
+      "source": "Shiva Purana 2.4.5.9–24",
+      "title": {
+        "en": "A Welcome at Kailasa",
+        "hi": "कैलास पर स्वागत",
+        "gu": "કૈલાસ પર સ્વાગત",
+        "kn": "ಕೈಲಾಸದಲ್ಲಿ ಸ್ವಾಗತ"
+      },
+      "text": {
+        "en": "With Nandin nearby, the chariot reached a banyan tree at Kailasa. The streets were decorated, and music welcomed the travellers. Parvati, Shiva and the devas came to see Kartikeya. The Krittika mothers were there with him.",
+        "hi": "नंदिन साथ थे। रथ कैलास के वटवृक्ष के पास पहुँचा। मार्ग सजाए गए थे और संगीत से यात्रियों का स्वागत हुआ। पार्वती, शिव और देवता कार्तिकेय से मिलने आए। कृत्तिका माताएँ भी उनके साथ थीं।",
+        "gu": "નંદિન સાથે હતા. રથ કૈલાસના વડ પાસે પહોંચ્યો. માર્ગો સજાવેલા હતા અને સંગીતથી પ્રવાસીઓનું સ્વાગત થયું. પાર્વતી, શિવ અને દેવો કાર્તિકેયને મળવા આવ્યા. કૃત્તિકા માતાઓ પણ તેમની સાથે હતી.",
+        "kn": "ನಂದಿನ್ ಜೊತೆಗಿದ್ದನು. ರಥ ಕೈಲಾಸದ ಆಲದ ಮರದ ಬಳಿ ತಲುಪಿತು. ದಾರಿಗಳು ಅಲಂಕೃತವಾಗಿದ್ದವು; ಸಂಗೀತ ಪ್ರಯಾಣಿಕರನ್ನು ಸ್ವಾಗತಿಸಿತು. ಪಾರ್ವತಿ, ಶಿವ ಮತ್ತು ದೇವತೆಗಳು ಕಾರ್ತಿಕೇಯನನ್ನು ನೋಡಲು ಬಂದರು. ಕೃತ್ತಿಕಾ ತಾಯಂದಿರೂ ಅವನ ಜೊತೆಯಲ್ಲಿದ್ದರು."
+      }
+    },
+    {
+      "id": "parvati-embraces-her-son",
+      "art": "sk04",
+      "source": "Shiva Purana 2.4.5.25–33",
+      "title": {
+        "en": "The Mother’s Embrace",
+        "hi": "माँ का आलिंगन",
+        "gu": "માનું આલિંગન",
+        "kn": "ತಾಯಿಯ ಅಪ್ಪುಗೆ"
+      },
+      "text": {
+        "en": "Shiva and Parvati were filled with joy on seeing their son. Parvati embraced Kartikeya and held him in her lap. The family’s long-awaited meeting became a happy homecoming, shared with the mothers who had raised him.",
+        "hi": "पुत्र को देखकर शिव-पार्वती आनंद से भर गए। पार्वती ने कार्तिकेय को गले लगाया और अपनी गोद में लिया। परिवार का प्रतीक्षित मिलन आनंदमय घर-वापसी बना, जिसमें उन्हें पालने वाली माताएँ भी साथ थीं।",
+        "gu": "પુત્રને જોઈ શિવ-પાર્વતી આનંદથી ભરાઈ ગયાં. પાર્વતીએ કાર્તિકેયને ગળે લગાવ્યા અને ખોળામાં લીધા. પરિવારનું રાહ જોયેલું મિલન આનંદમય ઘરવાપસી બન્યું, જેમાં તેમને ઉછેરનાર માતાઓ પણ સાથે હતી.",
+        "kn": "ಮಗನನ್ನು ನೋಡಿ ಶಿವ-ಪಾರ್ವತಿಯರು ಸಂತೋಷದಿಂದ ತುಂಬಿದರು. ಪಾರ್ವತಿ ಕಾರ್ತಿಕೇಯನನ್ನು ಅಪ್ಪಿಕೊಂಡು ತನ್ನ ಮಡಿಲಲ್ಲಿ ಕೂರಿಸಿಕೊಂಡಳು. ಬಹುಕಾಲದ ನಿರೀಕ್ಷೆಯ ಈ ಭೇಟಿಯು ಸಂತೋಷದ ಮನೆಬರುವಿಕೆಯಾಯಿತು. ಅವನನ್ನು ಸಾಕಿದ ತಾಯಂದಿರೂ ಅದರಲ್ಲಿ ಭಾಗಿಯಾದರು."
+      }
+    },
+    {
+      "id": "the-mother-of-skanda",
+      "art": "sk05",
+      "source": "Shiva Purana 2.4.5.34–53; Navadurga dhyana; Drik Panchang Skandamata",
+      "title": {
+        "en": "Meet Skandamata",
+        "hi": "स्कंदमाता का परिचय",
+        "gu": "સ્કંદમાતાનો પરિચય",
+        "kn": "ಸ್ಕಂದಮಾತೆಯ ಪರಿಚಯ"
+      },
+      "text": {
+        "en": "Devas and mothers offered Kartikeya gifts; the Krittikas joined in giving gifts. Navadurga tradition remembers the Mother of Skanda as Maa Skandamata on the fifth day. She is pictured with four arms, holding lotuses and her son, and offering a blessing.",
+        "hi": "देवताओं और माताओं ने कार्तिकेय को भेंट दी; कृत्तिकाओं ने भी भेंट दी। नवदुर्गा परंपरा पाँचवें दिन स्कंद की माँ को माँ स्कंदमाता के रूप में स्मरण करती है। उनके चार भुजाओं वाले चित्र में कमल, पुत्र और आशीर्वाद की मुद्रा होती है।",
+        "gu": "દેવો અને માતાઓએ કાર્તિકેયને ભેટ આપી; કૃત્તિકાઓએ પણ ભેટ આપી. નવદુર્ગા પરંપરા પાંચમા દિવસે સ્કંદની માને મા સ્કંદમાતા તરીકે યાદ કરે છે. તેમના ચાર ભુજાવાળા ચિત્રમાં કમળ, પુત્ર અને આશીર્વાદની મુદ્રા હોય છે.",
+        "kn": "ದೇವತೆಗಳು ಮತ್ತು ತಾಯಂದಿರು ಕಾರ್ತಿಕೇಯನಿಗೆ ಕಾಣಿಕೆ ನೀಡಿದರು; ಕೃತ್ತಿಕೆಯರೂ ಕಾಣಿಕೆ ನೀಡಿದರು. ನವದುರ್ಗಾ ಸಂಪ್ರದಾಯ ಐದನೇ ದಿನ ಸ್ಕಂದನ ತಾಯಿಯನ್ನು ಸ್ಕಂದಮಾತೆ ಎಂದು ನೆನೆಯುತ್ತದೆ. ನಾಲ್ಕು ಕೈಗಳ ಚಿತ್ರದಲ್ಲಿ ಕಮಲಗಳು, ಮಗ ಮತ್ತು ಆಶೀರ್ವಾದದ ಮುದ್ರೆ ಇರುತ್ತವೆ."
+      }
+    }
+  ]
+}

@@ -100,17 +100,17 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
         title={contentByLang(lang, katha.titleHi, katha.titleEn)}
         variant="index"
         onBack={() => navigation.goBack()}
-      />
-      <View style={styles.toggleRow}>
-        {/* Share pinned left, read-aloud pinned right — the katha reader row (design.md §39.4). */}
-        <View style={styles.shareSlot}>
+        sideWidth={48}
+        right={
           <ShareButton
             onPress={() => void share(daanKathaShareable(katha), lang)}
             busy={shareBusy}
             accessibilityLabel="Share katha"
             accessibilityHint="Opens share options for this katha and its teaching"
           />
-        </View>
+        }
+      />
+      <View style={styles.toggleRow}>
         <LanguageToggle />
         {/* Pinned right so the toggle stays centred (design.md §56.2). */}
         <View style={styles.readAloudSlot}>
@@ -240,7 +240,6 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
-  shareSlot: { position: 'absolute', left: 16, top: 6, bottom: 6, justifyContent: 'center' },
   teaching: { borderWidth: 1, paddingHorizontal: 16, paddingTop: 14, paddingBottom: 16, marginTop: 6 },
   onward: { borderTopWidth: 1, marginTop: 20, paddingTop: 18 },
   labelRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 },

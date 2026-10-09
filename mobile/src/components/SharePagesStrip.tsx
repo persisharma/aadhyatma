@@ -54,7 +54,7 @@ export default function SharePagesStrip(props: Props) {
           {pick(props.lang, { hi: 'पृष्ठ', en: 'PAGES', gu: 'પૃષ્ઠ', kn: 'ಪುಟಗಳು' })} · {props.pageCount}
         </Text>
         {props.scopes.length > 1 ? (
-          <View style={[styles.segment, { borderColor: colors.divider, borderRadius: radii.pill }]}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ maxWidth: '100%', borderWidth: 1, borderColor: colors.divider, borderRadius: radii.pill }} contentContainerStyle={styles.segment}>
             {props.scopes.map((scope, i) => {
               const on = i === props.scopeIndex;
               return (
@@ -78,7 +78,7 @@ export default function SharePagesStrip(props: Props) {
                 </Pressable>
               );
             })}
-          </View>
+          </ScrollView>
         ) : null}
       </View>
 
@@ -181,8 +181,8 @@ export { pagesWord };
 
 const styles = StyleSheet.create({
   wrap: { marginBottom: 4 },
-  head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6, gap: 8 },
-  segment: { flexDirection: 'row', borderWidth: 1, overflow: 'hidden' },
+  head: { alignItems: 'flex-start', marginBottom: 6, gap: 8 },
+  segment: { flexDirection: 'row' },
   segmentItem: { paddingHorizontal: 10, paddingVertical: 5, minHeight: 28, justifyContent: 'center' },
   strip: { gap: 8, paddingVertical: 4, paddingHorizontal: 2 },
   thumb: { borderWidth: 1.5, borderRadius: 6, overflow: 'hidden' },
