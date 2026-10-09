@@ -303,6 +303,7 @@ function ActiveAudioPlayer({
         step={RATE_STEP}
         label={tempoLabel}
         labelFontFamily={labelSubFont}
+        inlineLabel
       />
     </View>
   );
@@ -323,7 +324,7 @@ function UnavailableNotice({ lang }: { lang: Lang }) {
         ? fontFamilies.kannada
         : typography.swipeHint.fontFamily;
   return (
-    <View style={styles.wrap}>
+    <View style={[styles.wrap, styles.wrapCentered]}>
       <Text
         style={[
           styles.unavailable,
@@ -341,14 +342,17 @@ function UnavailableNotice({ lang }: { lang: Lang }) {
 }
 
 const styles = StyleSheet.create({
+  // One line: Play at the start, the inline-labelled tempo stepper at the end.
   wrap: {
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 4,
+  },
+  wrapCentered: {
     justifyContent: 'center',
-    gap: 18,
-    paddingHorizontal: 16,
-    paddingTop: 4,
-    paddingBottom: 6,
   },
   playBtn: {
     flexDirection: 'row',

@@ -29,6 +29,7 @@ import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import { toDateKey, useUserActivity } from '@/contexts/UserActivityContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import AppIcon from '@/components/AppIcon';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -62,17 +63,16 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const verseFontSizeEn = Math.round(20 * factor);
   const verseLineHeightEn = Math.round(34 * factor);
   // The turning mala (§35) takes whatever height the tap surface has left after
-  // the mantra (above) and the tray + hint (below), so the ring never runs past
-  // the audio row. Window-height breakpoints can't do this: the tab bar, mantra
-  // length and M/L size all eat into the same viewport. Below MALA_MIN the
-  // surface scrolls instead of shrinking the beads further.
+  // the mantra above it, so the ring never runs past the stats row. The tray,
+  // today count and reset live in that fixed row and the hint sits inside the
+  // ring, so nothing below the ring can grow mid-japa and make it jump.
+  // Window-height breakpoints can't do this: the tab bar, mantra length and M/L
+  // size all eat into the same viewport. Below MALA_MIN the surface scrolls
+  // instead of shrinking the beads further.
   const [tapViewportH, setTapViewportH] = useState(0);
   const [headH, setHeadH] = useState(0);
-  // Ratchets up: the tray and the listening hint can grow mid-japa (a first
-  // mini mala, a wrapped hint), and the ring must not jump under the thumb.
-  const [footH, setFootH] = useState(0);
-  const measured = tapViewportH > 0 && headH > 0 && footH > 0;
-  const fitH = tapViewportH - headH - footH - TAP_CHROME_H;
+  const measured = tapViewportH > 0 && headH > 0;
+  const fitH = tapViewportH - headH - TAP_CHROME_H;
   const malaSize = Math.round(
     Math.min(windowWidth - 2 * spacing.xxl, MALA_MAX, measured ? Math.max(MALA_MIN, fitH) : MALA_MAX)
   );
@@ -91,7 +91,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   }, [mantra, navigation]);
 
   const entry = getEntry(mantra?.id ?? '__none__');
-  const [confirmKind, setConfirmKind] = useState<'beads' | 'all' | null>(null);
+  const [resetSheetOpen, setResetSheetOpen] = useState(false);
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
   const [audioPlaying, setAudioPlaying] = useState(false);
@@ -187,6 +187,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     : pick(lang, { hi: 'जप के लिए स्पर्श करें', en: 'Tap to chant', gu: 'જપ માટે સ્પર્શ કરો', kn: 'ಜಪಕ್ಕಾಗಿ ಸ್ಪರ್ಶಿಸಿ' });
   const resetBeadsLabel = pick(lang, { hi: 'बीज पुनः ०', en: 'Reset Beads', gu: 'મણકા ફરી ૦', kn: 'ಮಣಿ ಮರು ೦' });
   const clearAllLabel = pick(lang, { hi: 'सब साफ़', en: 'Clear All', gu: 'બધું સાફ', kn: 'ಎಲ್ಲ ತೆರವು' });
+  const nothingToReset = entry.count === 0 && entry.rounds === 0;
   // Script serif for gu/kn (constrained surface keeps its own sizes); null for hi/en.
   const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
   const scriptSerifBold = lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
@@ -238,6 +239,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </View>
 
           <View style={styles.topRightCluster}>
+            <LanguageToggle compact />
             <Pressable
               onPress={() => setAlarmEditorOpen(true)}
               accessibilityRole="button"
@@ -278,10 +280,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               }}
             />
           </View>
-        </View>
-
-        <View style={styles.toggleRow}>
-          <LanguageToggle />
         </View>
 
         <ScrollView
@@ -327,7 +325,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 ))}
               </View>
 
-              <Ornament />
+              <Ornament compact />
             </View>
 
             {/* Held invisible for the first layout pass so the ring doesn't visibly snap to its fitted size. */}
@@ -338,48 +336,55 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 size={malaSize}
                 playing={audioPlaying}
                 notice={sumeruNotice ? sumeruLabel : null}
+                hint={tapHint}
+                labelFontFamily={scriptSerif ?? undefined}
               />
-              <View
-                style={styles.footBlock}
-                onLayout={(e) => {
-                  const h = e.nativeEvent.layout.height;
-                  setFootH((prev) => Math.max(prev, h));
-                }}
-              >
-                <JapamMalaTray
-                  rounds={entry.rounds}
-                  label={malasDoneLabel}
-                  emptyLabel={firstMalaLabel}
-                />
-                <Text
-                  style={[
-                    styles.todayLabel,
-                    {
-                      color: colors.saffronDeep,
-                      fontFamily: isLatinLang(lang)
-                        ? typography.cardLatin.fontFamily
-                        : scriptSerifBold ?? typography.readerTitle.fontFamily,
-                    },
-                  ]}
-                >
-                  {todayLabel}
-                </Text>
-                <Text
-                  style={[
-                    styles.tapHint,
-                    {
-                      color: colors.inkMuted,
-                      fontFamily: typography.swipeHint.fontFamily,
-                      fontSize: typography.swipeHint.fontSize,
-                    },
-                  ]}
-                >
-                  {tapHint}
-                </Text>
-              </View>
             </View>
           </Pressable>
         </ScrollView>
+
+        {/* One fixed line replaces the tray, the today label and the two reset buttons. */}
+        <View style={[styles.statsRow, { borderTopColor: colors.divider }]}>
+          <JapamMalaTray
+            rounds={entry.rounds}
+            label={malasDoneLabel}
+            emptyLabel={firstMalaLabel}
+          />
+          <View style={[styles.statsDivider, { backgroundColor: colors.divider }]} />
+          <Text
+            style={[
+              styles.todayLabel,
+              {
+                color: colors.saffronDeep,
+                fontFamily: isLatinLang(lang)
+                  ? typography.cardLatin.fontFamily
+                  : scriptSerifBold ?? typography.readerTitle.fontFamily,
+              },
+            ]}
+            numberOfLines={1}
+          >
+            {todayLabel}
+          </Text>
+          <Pressable
+            onPress={() => setResetSheetOpen(true)}
+            accessibilityRole="button"
+            accessibilityLabel="Reset or clear the count"
+            accessibilityState={{ disabled: nothingToReset }}
+            disabled={nothingToReset}
+            hitSlop={8}
+            style={({ pressed }) => [
+              styles.resetBtn,
+              {
+                backgroundColor: colors.parchmentSoft,
+                borderColor: colors.cardActiveBorder,
+              },
+              pressed && { opacity: 0.7 },
+              nothingToReset && { opacity: 0.4 },
+            ]}
+          >
+            <AppIcon name="reset" size={18} color={colors.saffronDeep} />
+          </Pressable>
+        </View>
 
         <View
           style={[
@@ -395,182 +400,148 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             autoPlay={route.params.autoPlay === true}
           />
         </View>
-
-        <View
-          style={[
-            styles.actionsRow,
-            { paddingHorizontal: spacing.xxl, borderTopColor: colors.divider },
-          ]}
-        >
-          <Pressable
-            onPress={() => setConfirmKind('beads')}
-            accessibilityRole="button"
-            accessibilityLabel="Reset bead count"
-            accessibilityState={{ disabled: entry.count === 0 }}
-            disabled={entry.count === 0}
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.actionBtn,
-              {
-                borderColor: colors.cardActiveBorder,
-                borderRadius: radii.md,
-              },
-              pressed && { opacity: 0.7 },
-              entry.count === 0 && { opacity: 0.4 },
-            ]}
-          >
-            <Text
-              style={[
-                styles.actionText,
-                {
-                  color: colors.saffronDeep,
-                  fontFamily: typography.readerTitle.fontFamily,
-                },
-              ]}
-            >
-              {resetBeadsLabel}
-            </Text>
-          </Pressable>
-
-          <Pressable
-            onPress={() => setConfirmKind('all')}
-            accessibilityRole="button"
-            accessibilityLabel="Clear bead count and rounds"
-            accessibilityState={{ disabled: entry.count === 0 && entry.rounds === 0 }}
-            disabled={entry.count === 0 && entry.rounds === 0}
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.actionBtn,
-              {
-                borderColor: colors.divider,
-                borderRadius: radii.md,
-              },
-              pressed && { opacity: 0.7 },
-              entry.count === 0 && entry.rounds === 0 && { opacity: 0.4 },
-            ]}
-          >
-            <Text
-              style={[
-                styles.actionText,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.readerTitle.fontFamily,
-                },
-              ]}
-            >
-              {clearAllLabel}
-            </Text>
-          </Pressable>
-        </View>
       </SafeAreaView>
 
+      {/* The ↺ icon opens both choices; picking one is the confirmation. */}
       <Modal
-        visible={confirmKind !== null}
+        visible={resetSheetOpen}
         transparent
         animationType="fade"
-        onRequestClose={() => setConfirmKind(null)}
+        onRequestClose={() => setResetSheetOpen(false)}
       >
         <Pressable
           style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}
-          onPress={() => setConfirmKind(null)}
+          onPress={() => setResetSheetOpen(false)}
+          accessibilityLabel="Close"
         >
           <Pressable
             onPress={(e) => e.stopPropagation()}
             style={[
-              styles.confirmCard,
+              styles.sheet,
               {
                 backgroundColor: colors.parchment,
                 borderColor: colors.cardActiveBorder,
-                borderRadius: radii.lg,
+                borderTopLeftRadius: radii.lg,
+                borderTopRightRadius: radii.lg,
               },
             ]}
           >
-            <Text
-              style={[
-                styles.confirmTitle,
-                {
-                  color: colors.ink,
-                  fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily,
-                },
-              ]}
-            >
-              {confirmKind === 'beads'
-                ? pick(lang, { hi: 'बीज पुनः शून्य करें?', en: 'Reset bead count?', gu: 'મણકા ફરી શૂન્ય કરવા?', kn: 'ಮಣಿ ಎಣಿಕೆ ಮರುಹೊಂದಿಸಬೇಕೆ?' })
-                : pick(lang, { hi: 'सब हटायें?', en: 'Clear everything?', gu: 'બધું હટાવવું?', kn: 'ಎಲ್ಲವನ್ನು ತೆರವುಗೊಳಿಸಬೇಕೆ?' })}
-            </Text>
-            <Text
-              style={[
-                styles.confirmBody,
-                {
-                  color: colors.inkSoft,
-                  fontFamily: scriptSerif ?? typography.cardLatin.fontFamily,
-                },
-              ]}
-            >
-              {confirmKind === 'beads'
-                ? pick(lang, {
+            <SafeAreaView edges={['bottom']}>
+              <View style={[styles.sheetGrip, { backgroundColor: colors.dotRest }]} />
+              <Text
+                style={[
+                  styles.sheetTitle,
+                  {
+                    color: colors.ink,
+                    fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily,
+                  },
+                ]}
+              >
+                {pick(lang, { hi: 'गिनती साफ़ करें?', en: 'Clear the count?', gu: 'ગણતરી સાફ કરવી?', kn: 'ಎಣಿಕೆ ತೆರವುಗೊಳಿಸಬೇಕೆ?' })}
+              </Text>
+
+              <Pressable
+                onPress={() => {
+                  resetBeads(mantra.id);
+                  setResetSheetOpen(false);
+                }}
+                accessibilityRole="button"
+                accessibilityLabel="Reset bead count"
+                accessibilityState={{ disabled: entry.count === 0 }}
+                disabled={entry.count === 0}
+                style={({ pressed }) => [
+                  styles.sheetOption,
+                  {
+                    backgroundColor: colors.parchmentSoft,
+                    borderColor: colors.cardActiveBorder,
+                    borderRadius: radii.md,
+                  },
+                  pressed && { opacity: 0.85 },
+                  entry.count === 0 && { opacity: 0.4 },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.sheetOptionTitle,
+                    { color: colors.saffronDeep, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
+                  ]}
+                >
+                  {resetBeadsLabel}
+                </Text>
+                <Text
+                  style={[
+                    styles.sheetOptionBody,
+                    { color: colors.inkMuted, fontFamily: scriptSerif ?? typography.cardLatin.fontFamily },
+                  ]}
+                >
+                  {pick(lang, {
                     hi: 'चालू आवृत्ति की गिनती शून्य हो जायेगी। पूर्ण आवृत्तियाँ सुरक्षित रहेंगी।',
                     en: 'The current bead count will reset to 0. Completed rounds are kept.',
                     gu: 'ચાલુ આવૃત્તિની ગણતરી શૂન્ય થઈ જશે. પૂર્ણ આવૃત્તિઓ સચવાશે.',
                     kn: 'ಪ್ರಸ್ತುತ ಮಣಿ ಎಣಿಕೆ ೦ ಗೆ ಮರುಹೊಂದಿಸಲಾಗುತ್ತದೆ. ಪೂರ್ಣ ಆವೃತ್ತಿಗಳು ಉಳಿಯುತ್ತವೆ.',
-                  })
-                : pick(lang, {
+                  })}
+                </Text>
+              </Pressable>
+
+              <Pressable
+                onPress={() => {
+                  clear(mantra.id);
+                  lastRoundRef.current = 0;
+                  setResetSheetOpen(false);
+                }}
+                accessibilityRole="button"
+                accessibilityLabel="Clear bead count and rounds"
+                style={({ pressed }) => [
+                  styles.sheetOption,
+                  {
+                    backgroundColor: colors.avoidTint,
+                    borderColor: colors.avoid,
+                    borderRadius: radii.md,
+                  },
+                  pressed && { opacity: 0.85 },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.sheetOptionTitle,
+                    { color: colors.avoidDeep, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
+                  ]}
+                >
+                  {clearAllLabel}
+                </Text>
+                <Text
+                  style={[
+                    styles.sheetOptionBody,
+                    { color: colors.inkMuted, fontFamily: scriptSerif ?? typography.cardLatin.fontFamily },
+                  ]}
+                >
+                  {pick(lang, {
                     hi: 'बीज तथा सभी आवृत्तियाँ मिट जायेंगी। यह क्रिया पूर्ववत् नहीं की जा सकती।',
                     en: 'Beads and all rounds will be erased. This cannot be undone.',
                     gu: 'મણકા તથા બધી આવૃત્તિઓ ભૂંસાઈ જશે. આ ક્રિયા પાછી લઈ શકાતી નથી.',
                     kn: 'ಮಣಿ ಮತ್ತು ಎಲ್ಲಾ ಆವೃತ್ತಿಗಳು ಅಳಿಸಲ್ಪಡುತ್ತವೆ. ಇದನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗದು.',
                   })}
-            </Text>
+                </Text>
+              </Pressable>
 
-            <Pressable
-              onPress={() => {
-                if (confirmKind === 'beads') {
-                  resetBeads(mantra.id);
-                } else if (confirmKind === 'all') {
-                  clear(mantra.id);
-                  lastRoundRef.current = 0;
-                }
-                setConfirmKind(null);
-              }}
-              style={({ pressed }) => [
-                styles.confirmPrimary,
-                {
-                  backgroundColor: colors.saffron,
-                  borderRadius: radii.md,
-                },
-                pressed && { opacity: 0.85 },
-              ]}
-            >
-              <Text
-                style={[
-                  styles.confirmPrimaryText,
-                  {
-                    color: colors.onPrimary,
-                    fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily,
-                  },
-                ]}
+              <Pressable
+                onPress={() => setResetSheetOpen(false)}
+                style={styles.confirmCancel}
+                hitSlop={8}
               >
-                {confirmKind === 'beads' ? resetBeadsLabel : clearAllLabel}
-              </Text>
-            </Pressable>
-
-            <Pressable
-              onPress={() => setConfirmKind(null)}
-              style={styles.confirmCancel}
-              hitSlop={8}
-            >
-              <Text
-                style={[
-                  styles.confirmCancelText,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: scriptSerif ?? typography.cardLatin.fontFamily,
-                  },
-                ]}
-              >
-                {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' })}
-              </Text>
-            </Pressable>
+                <Text
+                  style={[
+                    styles.confirmCancelText,
+                    {
+                      color: colors.inkMuted,
+                      fontFamily: scriptSerif ?? typography.cardLatin.fontFamily,
+                    },
+                  ]}
+                >
+                  {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' })}
+                </Text>
+              </Pressable>
+            </SafeAreaView>
           </Pressable>
         </Pressable>
       </Modal>
@@ -598,7 +569,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
 // Mala box bounds; the fitted size lands between them (and under the width cap).
 // Below ~230 the 108 beads (min radius 2.2) start to overlap on the thread.
-const MALA_MAX = 300;
+const MALA_MAX = 330;
 const MALA_MIN = 230;
 // tapContent paddingVertical (2 × 8) + malaBlock marginTop (4).
 const TAP_CHROME_H = 20;
@@ -612,7 +583,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 8,
   },
   back: {
     width: 44,
@@ -665,11 +636,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 2,
   },
-  toggleRow: {
-    paddingTop: 4,
-    paddingBottom: 8,
-    alignItems: 'center',
-  },
   tapArea: {
     flex: 1,
   },
@@ -714,78 +680,80 @@ const styles = StyleSheet.create({
   unmeasured: {
     opacity: 0,
   },
-  footBlock: {
-    width: '100%',
+  statsRow: {
+    flexDirection: 'row',
     alignItems: 'center',
+    gap: 12,
+    minHeight: 56,
+    paddingLeft: 20,
+    paddingRight: 16,
+    paddingVertical: 6,
+    borderTopWidth: 1,
+  },
+  statsDivider: {
+    width: 1,
+    height: 28,
   },
   todayLabel: {
-    marginTop: 8,
-    fontSize: 15,
-  },
-  tapHint: {
-    marginTop: 14,
-    fontStyle: 'italic',
-    opacity: 0.8,
+    flex: 1,
+    fontSize: 14,
     includeFontPadding: false,
+  },
+  resetBtn: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   audioRow: {
     borderTopWidth: 1,
     paddingVertical: 8,
   },
-  actionsRow: {
-    flexDirection: 'row',
-    gap: 12,
-    paddingVertical: 12,
-    borderTopWidth: 1,
-  },
-  actionBtn: {
-    flex: 1,
-    paddingVertical: 12,
-    alignItems: 'center',
-    borderWidth: 1,
-  },
-  actionText: {
-    fontSize: 14,
-    includeFontPadding: false,
-  },
   backdrop: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 24,
+    justifyContent: 'flex-end',
   },
-  confirmCard: {
-    width: '100%',
-    maxWidth: 360,
+  sheet: {
+    borderTopWidth: 1,
+    paddingTop: 10,
+    paddingHorizontal: 20,
+    paddingBottom: 8,
+  },
+  sheetGrip: {
+    width: 40,
+    height: 4,
+    borderRadius: 2,
+    alignSelf: 'center',
+    marginBottom: 14,
+  },
+  sheetTitle: {
+    fontSize: 17,
+    textAlign: 'center',
+    includeFontPadding: false,
+    marginBottom: 14,
+  },
+  sheetOption: {
     borderWidth: 1,
-    paddingVertical: 22,
-    paddingHorizontal: 22,
-  },
-  confirmTitle: {
-    fontSize: 18,
-    textAlign: 'center',
-    includeFontPadding: false,
-  },
-  confirmBody: {
-    marginTop: 10,
-    fontSize: 13,
-    fontStyle: 'italic',
-    textAlign: 'center',
-    includeFontPadding: false,
-  },
-  confirmPrimary: {
-    marginTop: 18,
-    paddingVertical: 13,
-    minHeight: 44,
-    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginBottom: 10,
+    minHeight: 60,
     justifyContent: 'center',
   },
-  confirmPrimaryText: {
+  sheetOptionTitle: {
     fontSize: 15,
     includeFontPadding: false,
   },
+  sheetOptionBody: {
+    marginTop: 4,
+    fontSize: 13,
+    fontStyle: 'italic',
+    includeFontPadding: false,
+  },
   confirmCancel: {
-    marginTop: 10,
+    marginTop: 2,
     paddingVertical: 12,
     minHeight: 44,
     alignItems: 'center',

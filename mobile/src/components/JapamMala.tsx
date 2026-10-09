@@ -37,6 +37,10 @@ type Props = {
   playing?: boolean;
   /** Short line shown under the count, e.g. the Sumeru-turn notice. */
   notice?: string | null;
+  /** Resting line under the count (the tap / listening hint); a notice replaces it. */
+  hint?: string | null;
+  /** Script face for the notice/hint (gu/kn pass their own serif). */
+  labelFontFamily?: string;
 };
 
 function Gradients({ id }: { id: string }) {
@@ -121,7 +125,7 @@ const MalaRing = memo(function MalaRing({
  * the fixed top marker; chanted beads darken; every completed round flips the
  * direction so the Sumeru is never crossed.
  */
-export default function JapamMala({ count, rounds, size, playing, notice }: Props) {
+export default function JapamMala({ count, rounds, size, playing, notice, hint, labelFontFamily }: Props) {
   const { colors } = useTheme();
   const reduceMotion = useReducedMotion();
   const dir = malaDirection(rounds);
@@ -166,7 +170,9 @@ export default function JapamMala({ count, rounds, size, playing, notice }: Prop
 
   const c = size / 2;
   const r = c - RING_INSET;
-  const omSize = Math.round(size * 0.17);
+  // A faint watermark behind the count, not a second headline.
+  const omSize = Math.round(size * 0.4);
+  const line = notice ?? hint ?? null;
 
   return (
     <View
@@ -198,21 +204,33 @@ export default function JapamMala({ count, rounds, size, playing, notice }: Prop
               color: colors.gold,
               fontFamily: fontFamilies.devanagari,
               fontSize: omSize,
-              lineHeight: Math.round(omSize * 1.5),
+              lineHeight: Math.round(omSize * 1.4),
             },
           ]}
         >
           ॐ
         </Text>
-        <Text style={[styles.count, { color: colors.inkMuted, fontFamily: fontFamilies.inter }]}>
-          {count} / {N}
-        </Text>
-        {notice ? (
+        <View style={styles.countRow}>
+          <Text style={[styles.countValue, { color: colors.ink, fontFamily: fontFamilies.latinSemiBold }]}>
+            {count}
+          </Text>
+          <Text style={[styles.count, { color: colors.inkMuted, fontFamily: fontFamilies.inter }]}>
+            / {N}
+          </Text>
+        </View>
+        {line ? (
           <Text
-            style={[styles.notice, { color: colors.saffronDeep, fontFamily: fontFamilies.devanagari }]}
-            numberOfLines={1}
+            style={[
+              styles.notice,
+              {
+                color: notice ? colors.saffronDeep : colors.inkMuted,
+                fontFamily: labelFontFamily ?? fontFamilies.devanagari,
+                maxWidth: Math.round(2 * r - 32),
+              },
+            ]}
+            numberOfLines={2}
           >
-            {notice}
+            {line}
           </Text>
         ) : null}
       </View>
@@ -220,23 +238,25 @@ export default function JapamMala({ count, rounds, size, playing, notice }: Prop
   );
 }
 
-const MAX_MINIS = 9;
+const MAX_MINIS = 6;
+const MINI_SIZE = 16;
 
-function MiniMala({ size = 26 }: { size?: number }) {
+function MiniMala({ size = MINI_SIZE }: { size?: number }) {
   const c = size / 2;
+  const k = size / 26;
   return (
     <Svg width={size} height={size}>
       <Gradients id="mini" />
       <Circle
         cx={c}
-        cy={c - 1}
-        r={c - 4}
+        cy={c - k}
+        r={c - 4 * k}
         fill="none"
         stroke="url(#mini-wood)"
-        strokeWidth={3}
-        strokeDasharray="1.6 1.1"
+        strokeWidth={3 * k}
+        strokeDasharray={`${(1.6 * k).toFixed(2)} ${(1.1 * k).toFixed(2)}`}
       />
-      <Circle cx={c} cy={size - 3} r={2.4} fill="url(#mini-brass)" />
+      <Circle cx={c} cy={size - 3 * k} r={2.4 * k} fill="url(#mini-brass)" />
     </Svg>
   );
 }
@@ -258,8 +278,9 @@ function DroppingMini({ animate }: { animate: boolean }) {
 }
 
 /**
- * Completed-malas tray under the ring: a large count beside one mini mala per
- * completed round (capped at 9, then "+N").
+ * Completed-malas count for the stats row under the ring: the number beside its
+ * label, with one mini mala per completed round below the label (capped at 6,
+ * then "+N"). One line tall, so a new round never changes the row's height.
  */
 export function JapamMalaTray({
   rounds,
@@ -281,42 +302,46 @@ export function JapamMalaTray({
   const minis = useMemo(() => Array.from({ length: shown }, (_, i) => i), [shown]);
 
   return (
-    <View style={[styles.tray, { borderTopColor: colors.divider }]}>
-      <View style={styles.trayCount}>
+    <View style={styles.tray}>
+      <Text
+        style={[
+          styles.trayNumber,
+          { color: colors.saffronDeep, fontFamily: fontFamilies.latinBold },
+        ]}
+      >
+        {rounds}
+      </Text>
+      <View style={styles.trayMeta}>
         <Text
-          style={[
-            styles.trayNumber,
-            { color: colors.saffronDeep, fontFamily: typography.cardLatin.fontFamily },
-          ]}
+          style={[styles.trayLabel, { color: colors.inkMuted, fontFamily: fontFamilies.devanagari }]}
+          numberOfLines={1}
         >
-          {rounds}
-        </Text>
-        <Text style={[styles.trayLabel, { color: colors.inkMuted, fontFamily: fontFamilies.devanagari }]}>
           {label}
         </Text>
-      </View>
-      <View style={styles.minis}>
-        {rounds === 0 ? (
-          <Text
-            style={[
-              styles.trayEmpty,
-              { color: colors.inkMuted, fontFamily: typography.swipeHint.fontFamily },
-            ]}
-          >
-            {emptyLabel}
-          </Text>
-        ) : (
-          minis.map((i) => (
-            <DroppingMini key={`${rounds}-${i}`} animate={grew && i === shown - 1} />
-          ))
-        )}
-        {rounds > MAX_MINIS ? (
-          <View style={[styles.more, { backgroundColor: colors.saffronTint }]}>
-            <Text style={[styles.moreText, { color: colors.saffronDeep, fontFamily: fontFamilies.inter }]}>
-              +{rounds - MAX_MINIS}
+        <View style={styles.minis}>
+          {rounds === 0 ? (
+            <Text
+              style={[
+                styles.trayEmpty,
+                { color: colors.inkMuted, fontFamily: typography.swipeHint.fontFamily },
+              ]}
+              numberOfLines={1}
+            >
+              {emptyLabel}
             </Text>
-          </View>
-        ) : null}
+          ) : (
+            minis.map((i) => (
+              <DroppingMini key={`${rounds}-${i}`} animate={grew && i === shown - 1} />
+            ))
+          )}
+          {rounds > MAX_MINIS ? (
+            <View style={[styles.more, { backgroundColor: colors.saffronTint }]}>
+              <Text style={[styles.moreText, { color: colors.saffronDeep, fontFamily: fontFamilies.inter }]}>
+                +{rounds - MAX_MINIS}
+              </Text>
+            </View>
+          ) : null}
+        </View>
       </View>
     </View>
   );
@@ -334,51 +359,55 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   om: {
-    opacity: 0.55,
+    position: 'absolute',
+    opacity: 0.14,
     textAlign: 'center',
   },
+  countRow: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    gap: 4,
+  },
+  countValue: {
+    fontSize: 46,
+    lineHeight: 50,
+    includeFontPadding: false,
+  },
   count: {
-    fontSize: 12,
+    fontSize: 13,
     letterSpacing: 0.5,
     includeFontPadding: false,
   },
   notice: {
     marginTop: 6,
     fontSize: 12,
+    textAlign: 'center',
   },
   tray: {
-    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    borderTopWidth: 1,
-    paddingTop: 10,
-    marginTop: 4,
-  },
-  trayCount: {
-    alignItems: 'center',
-    minWidth: 56,
+    gap: 8,
   },
   trayNumber: {
-    fontSize: 34,
-    lineHeight: 38,
-    fontWeight: '700',
+    fontSize: 28,
+    lineHeight: 32,
     includeFontPadding: false,
+  },
+  trayMeta: {
+    gap: 2,
   },
   trayLabel: {
     fontSize: 11,
   },
   minis: {
-    flex: 1,
     flexDirection: 'row',
-    flexWrap: 'wrap',
     alignItems: 'center',
-    gap: 4,
-    minHeight: 30,
+    gap: 3,
+    minHeight: MINI_SIZE,
   },
   trayEmpty: {
     fontStyle: 'italic',
-    fontSize: 14,
+    fontSize: 12,
     opacity: 0.85,
   },
   more: {
