@@ -38,7 +38,7 @@ appId: com.prashantsharma.vedansh
       - assertVisible: "Remove bookmark"
       - tapOn: "Remove bookmark"
 - tapOn: "Back.*"
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - assertVisible: "Reminders.*|Daily verse reminders.*"
 - assertVisible: "Japam alarms.*"
 - assertVisible: "Wishlist.*"

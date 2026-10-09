@@ -18,6 +18,7 @@ import type { ScrollView, View } from 'react-native';
  */
 
 export type TourTargetId =
+  | 'settingsButton'
   | 'routineCard'
   | 'categoriesGrid'
   | 'japaTile'
@@ -130,14 +131,15 @@ export function scrollNodeIntoView(
  * @param reveal  Optional callback the tour invokes (with this target's ref)
  *                right before measuring, to scroll it into view.
  */
-export function useTourTarget(id: TourTargetId, reveal?: RevealFn) {
+export function useTourTarget(id: TourTargetId, reveal?: RevealFn, enabled = true) {
   const ref = useRef<View | null>(null);
   // Keep the latest reveal without re-registering on every render.
   const revealRef = useRef(reveal);
   revealRef.current = reveal;
   useEffect(() => {
+    if (!enabled) return;
     registerTourTarget(id, { ref, reveal: (r) => revealRef.current?.(r) });
     return () => unregisterTourTarget(id, ref);
-  }, [id]);
+  }, [id, enabled]);
   return ref;
 }

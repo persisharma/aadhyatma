@@ -364,3 +364,9 @@ The user manually inspected the final simulator build, confirmed the appearance 
 ## [2026-10-09] ingest | Story image creation and layout guidance for future sections
 
 Added RULEBOOK §29.1, the design.md §76 contract and a copyable story-image-layout request. Removed the contradictory blank-lower-fifth instruction from the active generation template; marked older exact Krishna prompts as historical. All illustrated story sections must review their own geometry/bounds/hash, diagnose inset/padding/letterboxing separately and preserve complete art/readable text with legitimate overflow. Existing 4:5 assumptions and legacy frame percentages are explicit; no runtime or image assets change in this documentation follow-up. Updated [[kids-stories]].
+
+## [2026-10-09] ingest | Home settings entry and Vrat bottom tab
+
+Updated overview and design contracts for Home’s settings gear, hidden compatible More routes, Vrat in the fourth slot, Bhajan in the fifth slot, and tour/VoiceOver/Maestro navigation. Bhajan retains the combined audio library and highlights its selected tab.
+
+Validation: 232 Jest suites / 2,152 tests passed; TypeScript and navigation/launch-graph checks passed. Changed-source lint has zero errors and existing warnings. Final JavaScript bundle passed the focused iOS simulator navigation smoke in an existing native shell: Home gear → Settings → Home, Vrat catalog → My Vrat → Back, Bhajan with its fifth tab highlighted → Home. This is simulator verification, not a new native build or a physical-device check.

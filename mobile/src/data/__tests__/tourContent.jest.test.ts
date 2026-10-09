@@ -3,11 +3,12 @@ import { tourSteps, TAB_ORDER } from '@/data/tour/steps';
 import appJson from '../../../app.json';
 
 // Tab names the tour is allowed to navigate to (mirrors TabParamList).
-const VALID_TABS = new Set(['HomeTab', 'DailyBhaktiTab', 'PanchangTab', 'AudioTab', 'MoreTab']);
+const VALID_TABS = new Set(['HomeTab', 'DailyBhaktiTab', 'PanchangTab', 'VratTab', 'AudioTab', 'MoreTab']);
 
 // Spotlight target ids a step may ring (mirrors TourTargetId). A step without a
 // targetId rings its destination tab instead (design.md §47).
 const VALID_TARGET_IDS = new Set([
+  'settingsButton',
   'routineCard',
   'categoriesGrid',
   'japaTile',
@@ -107,13 +108,14 @@ describe('tourSteps content contract', () => {
     expect(tourSteps.at(-1)?.targetId).toBe('readingSizeRow');
   });
 
-  test('TAB_ORDER covers every valid tab with a unique index and resolves each step', () => {
+  test('tab rings follow the five visible slots; settings steps use element targets', () => {
     // Ring-the-tab fallback needs a defined index for every step's destination.
-    expect(new Set(Object.keys(TAB_ORDER))).toEqual(VALID_TABS);
+    expect(Object.keys(TAB_ORDER)).toEqual(['HomeTab', 'DailyBhaktiTab', 'PanchangTab', 'VratTab', 'AudioTab']);
     const indices = Object.values(TAB_ORDER);
     expect(new Set(indices).size).toBe(indices.length);
     tourSteps.forEach((s) => {
-      expect(TAB_ORDER[s.navigateTo.name]).toBeGreaterThanOrEqual(0);
+      if (s.navigateTo.name === 'MoreTab') expect(s.targetId).toBeDefined();
+      else expect(TAB_ORDER[s.navigateTo.name]).toBeGreaterThanOrEqual(0);
     });
   });
 });
