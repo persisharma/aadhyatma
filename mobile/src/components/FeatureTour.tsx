@@ -197,8 +197,10 @@ export default function FeatureTour() {
   const baseRect = useMemo(
     () =>
       targetRect ??
-      tabItemRect(TAB_ORDER[step.navigateTo.name], TAB_COUNT, screen, insets.bottom, TAB_BAR_CONTENT_HEIGHT),
-    [targetRect, step, screen, insets.bottom]
+      (TAB_ORDER[step.navigateTo.name] == null
+        ? { x: 24, y: insets.top + 16, width: screen.width - 48, height: 44 }
+        : tabItemRect(TAB_ORDER[step.navigateTo.name]!, TAB_COUNT, screen, insets.bottom, TAB_BAR_CONTENT_HEIGHT)),
+    [targetRect, step, screen, insets.top, insets.bottom]
   );
   const ringRect = useMemo(() => inflateRect(baseRect, RING_PAD), [baseRect]);
   const placement = useMemo(

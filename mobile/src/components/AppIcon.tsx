@@ -51,6 +51,7 @@ import { FirstAidKitIcon } from 'phosphor-react-native/src/icons/FirstAidKit';
 import { FlagPennantIcon } from 'phosphor-react-native/src/icons/FlagPennant';
 import { BirdIcon } from 'phosphor-react-native/src/icons/Bird';
 import { SparkleIcon } from 'phosphor-react-native/src/icons/Sparkle';
+import { GearSixIcon } from 'phosphor-react-native/src/icons/GearSix';
 
 // Direct imports keep the full icon catalogue out of the launch bundle.
 const icons = {
@@ -71,6 +72,7 @@ const icons = {
   home: HouseIcon,
   calendar: SunHorizonIcon,
   more: DotsThreeIcon,
+  settings: GearSixIcon,
   bell: BellIcon,
   alarm: AlarmIcon,
   saved: BookmarkSimpleIcon,

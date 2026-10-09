@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import type { PanchangHomeMode } from './types';
 
 /**
  * The Panchang stack is the one tab kept behind a dynamic boundary: it pulls in
@@ -8,9 +9,10 @@ import { lazy } from 'react';
  * ONE shared promise, so a preload and the `React.lazy` render read the same
  * evaluation instead of racing two of them.
  */
-let loading: Promise<{ default: React.ComponentType<object> }> | null = null;
+type StackModule = { default: React.ComponentType<{ initialMode?: PanchangHomeMode }> };
+let loading: Promise<StackModule> | null = null;
 
-const load = () => (loading ??= import('./PanchangStackNavigator') as Promise<{ default: React.ComponentType<object> }>);
+const load = () => (loading ??= import('./PanchangStackNavigator'));
 
 /**
  * Evaluate the Panchang chunk BEFORE `NavigationContainer` mounts.

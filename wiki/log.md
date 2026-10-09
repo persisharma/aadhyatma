@@ -386,3 +386,8 @@ All 57 source paths on the two updated subsystem pages exist; both pages retain 
 ## [2026-10-09] ingest | Align share controls on the right
 
 Kids Stories now places share at the right of its language row. The two prose katha readers move share into the header right slot, preserving read-aloud placement. The existing nine-form shelf remains unchanged; no duplicate collection was added.
+## [2026-10-09] ingest | Home settings entry and Vrat bottom tab
+
+Updated overview and design contracts for Home’s settings gear, hidden compatible More routes, Vrat in the fourth slot, Bhajan in the fifth slot, and tour/VoiceOver/Maestro navigation. Bhajan retains the combined audio library and highlights its selected tab.
+
+Validation: 232 Jest suites / 2,152 tests passed; TypeScript and navigation/launch-graph checks passed. Changed-source lint has zero errors and existing warnings. Final JavaScript bundle passed the focused iOS simulator navigation smoke in an existing native shell: Home gear → Settings → Home, Vrat catalog → My Vrat → Back, Bhajan with its fifth tab highlighted → Home. This is simulator verification, not a new native build or a physical-device check.

@@ -54,6 +54,7 @@ export default function HomeScreen({ navigation }: Props) {
   // The routine banner now lives inline in the scroll (below the Today strip),
   // so it reveals itself into view before the tour measures its spotlight ring.
   const routineCardRef = useTourTarget('routineCard', (ref) => scrollNodeIntoView(homeScrollRef, ref));
+  const settingsRef = useTourTarget('settingsButton', (ref) => scrollNodeIntoView(homeScrollRef, ref));
   const categoriesGridRef = useTourTarget('categoriesGrid', (ref) => scrollNodeIntoView(homeScrollRef, ref));
   const japaTileRef = useTourTarget('japaTile', (ref) => scrollNodeIntoView(homeScrollRef, ref));
   const theerthTileRef = useTourTarget('theerthTile', (ref) => scrollNodeIntoView(homeScrollRef, ref));
@@ -70,6 +71,10 @@ export default function HomeScreen({ navigation }: Props) {
   const tilePress = useTilePressController();
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = tilePress;
   const openSearch = React.useCallback(() => navigation.navigate('Search'), [navigation]);
+  const openSettings = React.useCallback(
+    () => rootNav.navigate('MoreTab', moreTabTarget('MoreHome')),
+    [rootNav]
+  );
 
   // Festive toran (design.md §55): on the 18 catalog festivals Home hangs a
   // garland + greeting chip under the wordmark. Same festival resolution as the
@@ -111,7 +116,7 @@ export default function HomeScreen({ navigation }: Props) {
       status: 'active',
       icon: iconFor('vrat'),
       onPress: () =>
-        rootNav.navigate('PanchangTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
+        rootNav.navigate('VratTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
     };
     const deityTile: TileItem = {
       key: 'deity',
@@ -347,7 +352,20 @@ export default function HomeScreen({ navigation }: Props) {
           onScrollBeginDrag={markTileDrag}
         >
           <View style={styles.hero}>
-            <HomeWordmark />
+            <HomeWordmark compact={contentWidth - gridPadding * 2 < 350} />
+            <View ref={settingsRef} collapsable={false} style={styles.settingsAnchor}>
+              <Pressable
+                testID="home-settings"
+                accessibilityRole="button"
+                accessibilityLabel={contentByLang(lang, 'सेटिंग्स', 'Settings')}
+                onPress={() => activateTile(openSettings)}
+                onPressIn={() => beginTilePress(openSettings)}
+                onPressOut={finishTilePress}
+                style={({ pressed }) => [styles.settingsButton, pressed && { opacity: 0.7 }]}
+              >
+                <AppIcon name="settings" size={24} color={colors.iconInk} />
+              </Pressable>
+            </View>
           </View>
 
           <Pressable
@@ -587,6 +605,8 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 12,
   },
+  settingsAnchor: { position: 'absolute', top: 0, right: 0 },
+  settingsButton: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   search: {
     minHeight: 48,
     flexDirection: 'row',

@@ -19,6 +19,7 @@ import { transliterateDevanagari } from '@/utils/transliterate';
 import type { ObservanceRule } from '@/panchang/types';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { useTourTarget } from '@/components/tour/tourTargets';
+import { useIsFocused } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MyVrat'>;
 
@@ -53,7 +54,8 @@ export default function MyVratScreen({ navigation }: Props) {
   const { lang } = useGitaLanguage();
   // Feature-tour anchor (design.md §47) — the content region in both the empty
   // (first-launch) and populated states.
-  const myVratRef = useTourTarget('myVrat');
+  const isFocused = useIsFocused();
+  const myVratRef = useTourTarget('myVrat', undefined, isFocused);
   const [calendarSystem] = usePanchangCalendarSystem();
   const { follows, followCount, reminderCount, reminderDefault, setReminder, setReminderDefault } =
     useVratFollows();
