@@ -50,9 +50,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const requestRatingAsk = useRatingAsk();
   const { factor } = useFontScale();
   const { activity } = useUserActivity();
-  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
-  const isShortScreen = windowHeight < 720;
-  const isVeryShortScreen = windowHeight < 640;
+  const { width: windowWidth } = useWindowDimensions();
 
   // Mantra is reading text → it scales with the global M/L size on EVERY device
   // (no per-device hardcoding, so M/L always takes effect). The tap surface
@@ -63,11 +61,20 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const verseLineHeight = typography.verse.lineHeight;
   const verseFontSizeEn = Math.round(20 * factor);
   const verseLineHeightEn = Math.round(34 * factor);
-  // The turning mala (§35) replaces the big numeral; it shrinks on short
-  // screens so the tray, hint and audio row still fit without scrolling.
-  const malaSize = Math.min(
-    windowWidth - 2 * spacing.xxl,
-    isVeryShortScreen ? 230 : isShortScreen ? 260 : 300
+  // The turning mala (§35) takes whatever height the tap surface has left after
+  // the mantra (above) and the tray + hint (below), so the ring never runs past
+  // the audio row. Window-height breakpoints can't do this: the tab bar, mantra
+  // length and M/L size all eat into the same viewport. Below MALA_MIN the
+  // surface scrolls instead of shrinking the beads further.
+  const [tapViewportH, setTapViewportH] = useState(0);
+  const [headH, setHeadH] = useState(0);
+  // Ratchets up: the tray and the listening hint can grow mid-japa (a first
+  // mini mala, a wrapped hint), and the ring must not jump under the thumb.
+  const [footH, setFootH] = useState(0);
+  const measured = tapViewportH > 0 && headH > 0 && footH > 0;
+  const fitH = tapViewportH - headH - footH - TAP_CHROME_H;
+  const malaSize = Math.round(
+    Math.min(windowWidth - 2 * spacing.xxl, MALA_MAX, measured ? Math.max(MALA_MIN, fitH) : MALA_MAX)
   );
 
   const mantra: JapamMantra | null = useMemo(
@@ -148,7 +155,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
   const titleEn = mantra.nameEn;
   // The mantra itself is shown once, in the tap surface; the top bar names the screen.
-  const screenTitle = pick(lang, { hi: 'जप', en: 'Japam', gu: 'જપ', kn: 'ಜಪ' });
+  const screenTitle = pick(lang, { hi: 'जपमाला', en: 'JapaMala', gu: 'જપમાળા', kn: 'ಜಪಮಾಲೆ' });
 
   const todayBeads = activity[toDateKey(new Date())]?.japa[mantra.id]?.beads ?? 0;
   const todayLabel = pick(lang, {
@@ -188,7 +195,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <BackgroundLayer source={getSourceBackground(mantra.id)} />
-      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
+      {/* The visible bottom tab bar already owns the bottom safe-area inset. */}
+      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={styles.topBar}>
           <Pressable
             onPress={() => navigation.goBack()}
@@ -279,6 +287,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         <ScrollView
           style={styles.tapArea}
           contentContainerStyle={styles.tapScroll}
+          onLayout={(e) => setTapViewportH(e.nativeEvent.layout.height)}
           showsVerticalScrollIndicator={false}
         >
           <Pressable
@@ -291,35 +300,38 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               pressed && styles.tapAreaPressed,
             ]}
           >
-            <View style={styles.mantraBlock}>
-              {verseLinesByLang(lang, mantra.lines, mantra.linesEn).map((line, i) => (
-                <Text
-                  key={`${lang}-${i}`}
-                  style={[
-                    isLatinLang(lang) ? styles.mantraLineEn : styles.mantraLine,
-                    isLatinLang(lang)
-                      ? {
-                          color: colors.ink,
-                          fontFamily: typography.cardLatin.fontFamily,
-                          fontSize: verseFontSizeEn,
-                          lineHeight: verseLineHeightEn,
-                        }
-                      : {
-                          color: colors.ink,
-                          fontFamily: scriptSerif ?? typography.verse.fontFamily,
-                          fontSize: verseFontSize,
-                          lineHeight: verseLineHeight,
-                        },
-                  ]}
-                >
-                  {line}
-                </Text>
-              ))}
+            <View style={styles.headBlock} onLayout={(e) => setHeadH(e.nativeEvent.layout.height)}>
+              <View style={styles.mantraBlock}>
+                {verseLinesByLang(lang, mantra.lines, mantra.linesEn).map((line, i) => (
+                  <Text
+                    key={`${lang}-${i}`}
+                    style={[
+                      isLatinLang(lang) ? styles.mantraLineEn : styles.mantraLine,
+                      isLatinLang(lang)
+                        ? {
+                            color: colors.ink,
+                            fontFamily: typography.cardLatin.fontFamily,
+                            fontSize: verseFontSizeEn,
+                            lineHeight: verseLineHeightEn,
+                          }
+                        : {
+                            color: colors.ink,
+                            fontFamily: scriptSerif ?? typography.verse.fontFamily,
+                            fontSize: verseFontSize,
+                            lineHeight: verseLineHeight,
+                          },
+                    ]}
+                  >
+                    {line}
+                  </Text>
+                ))}
+              </View>
+
+              <Ornament />
             </View>
 
-            <Ornament />
-
-            <View style={styles.malaBlock}>
+            {/* Held invisible for the first layout pass so the ring doesn't visibly snap to its fitted size. */}
+            <View style={[styles.malaBlock, !measured && styles.unmeasured]}>
               <JapamMala
                 count={entry.count}
                 rounds={entry.rounds}
@@ -327,38 +339,45 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 playing={audioPlaying}
                 notice={sumeruNotice ? sumeruLabel : null}
               />
-              <JapamMalaTray
-                rounds={entry.rounds}
-                label={malasDoneLabel}
-                emptyLabel={firstMalaLabel}
-              />
-              <Text
-                style={[
-                  styles.todayLabel,
-                  {
-                    color: colors.saffronDeep,
-                    fontFamily: isLatinLang(lang)
-                      ? typography.cardLatin.fontFamily
-                      : scriptSerifBold ?? typography.readerTitle.fontFamily,
-                  },
-                ]}
+              <View
+                style={styles.footBlock}
+                onLayout={(e) => {
+                  const h = e.nativeEvent.layout.height;
+                  setFootH((prev) => Math.max(prev, h));
+                }}
               >
-                {todayLabel}
-              </Text>
+                <JapamMalaTray
+                  rounds={entry.rounds}
+                  label={malasDoneLabel}
+                  emptyLabel={firstMalaLabel}
+                />
+                <Text
+                  style={[
+                    styles.todayLabel,
+                    {
+                      color: colors.saffronDeep,
+                      fontFamily: isLatinLang(lang)
+                        ? typography.cardLatin.fontFamily
+                        : scriptSerifBold ?? typography.readerTitle.fontFamily,
+                    },
+                  ]}
+                >
+                  {todayLabel}
+                </Text>
+                <Text
+                  style={[
+                    styles.tapHint,
+                    {
+                      color: colors.inkMuted,
+                      fontFamily: typography.swipeHint.fontFamily,
+                      fontSize: typography.swipeHint.fontSize,
+                    },
+                  ]}
+                >
+                  {tapHint}
+                </Text>
+              </View>
             </View>
-
-            <Text
-              style={[
-                styles.tapHint,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.swipeHint.fontFamily,
-                  fontSize: typography.swipeHint.fontSize,
-                },
-              ]}
-            >
-              {tapHint}
-            </Text>
           </Pressable>
         </ScrollView>
 
@@ -577,6 +596,13 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   );
 }
 
+// Mala box bounds; the fitted size lands between them (and under the width cap).
+// Below ~230 the 108 beads (min radius 2.2) start to overlap on the thread.
+const MALA_MAX = 300;
+const MALA_MIN = 230;
+// tapContent paddingVertical (2 × 8) + malaBlock marginTop (4).
+const TAP_CHROME_H = 20;
+
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
@@ -661,6 +687,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 8,
   },
+  headBlock: {
+    alignSelf: 'stretch',
+    alignItems: 'center',
+  },
   mantraBlock: {
     alignItems: 'center',
   },
@@ -680,6 +710,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     marginTop: 4,
+  },
+  unmeasured: {
+    opacity: 0,
+  },
+  footBlock: {
+    width: '100%',
+    alignItems: 'center',
   },
   todayLabel: {
     marginTop: 8,

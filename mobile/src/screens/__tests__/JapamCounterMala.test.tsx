@@ -101,7 +101,7 @@ describe('JapamCounter turning mala (design.md §35)', () => {
   test('top bar names the screen, so the mantra is not shown twice', async () => {
     const tree = await renderJapam();
     const t = texts(tree);
-    expect(t).toContain('जप');
+    expect(t).toContain('जपमाला');
     expect(t.filter((s) => s === 'ॐ नमः शिवाय').length).toBeLessThanOrEqual(1);
   });
 
