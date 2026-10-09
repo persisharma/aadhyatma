@@ -1,6 +1,6 @@
 appId: com.prashantsharma.vedansh
 ---
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element: { text: "Reading size,.*" }
     centerElement: true

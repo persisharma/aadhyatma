@@ -386,8 +386,13 @@ All 57 source paths on the two updated subsystem pages exist; both pages retain 
 ## [2026-10-09] ingest | Align share controls on the right
 
 Kids Stories now places share at the right of its language row. The two prose katha readers move share into the header right slot, preserving read-aloud placement. The existing nine-form shelf remains unchanged; no duplicate collection was added.
+
 ## [2026-10-09] ingest | Home settings entry and Vrat bottom tab
 
 Updated overview and design contracts for Home’s settings gear, hidden compatible More routes, Vrat in the fourth slot, Bhajan in the fifth slot, and tour/VoiceOver/Maestro navigation. Bhajan retains the combined audio library and highlights its selected tab.
 
 Validation: 232 Jest suites / 2,152 tests passed; TypeScript and navigation/launch-graph checks passed. Changed-source lint has zero errors and existing warnings. Final JavaScript bundle passed the focused iOS simulator navigation smoke in an existing native shell: Home gear → Settings → Home, Vrat catalog → My Vrat → Back, Bhajan with its fifth tab highlighted → Home. This is simulator verification, not a new native build or a physical-device check.
+
+## [2026-10-09] ingest | Durga CDN publication and production bundle asset checks
+
+After the user uploaded the prepared package, all 144 manifest URLs returned HTTP 200, matched expected hashes and fully decoded as WebP. All 144 images, including the Home story-library icon, now use the CDN/cache; iOS/Android production exports contain zero story artwork. Added import and renamed-image regression tests, a reusable full-manifest CDN/export verifier, RULEBOOK §29.2 and CI production-export/CDN checks with retained evidence. Latest main navigation changes are retained, including Home settings entry. Fresh simulator CDN download encountered a TLS trust error on the corporate-intercepted network; native first-download/offline and physical-device checks remain pending. Host CDN checks do not establish native download success.

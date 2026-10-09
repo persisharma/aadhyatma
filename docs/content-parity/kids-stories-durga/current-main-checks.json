@@ -1,0 +1,47 @@
+{
+  "checkedAtUtc": "2026-10-09T18:23:11.286697+00:00",
+  "baseMain": "9573655d0f909f37a88ff9c442be9aeee443b1ac",
+  "conflictResolution": "Retained both append-only wiki log entries; current Home-settings/Vrat navigation retained",
+  "fullTest": {
+    "passed": 3099,
+    "widgets": 37,
+    "jestTests": 2250,
+    "jestSuites": 235,
+    "engine": 590,
+    "data": 173,
+    "ask": 49,
+    "typecheck": "passed",
+    "log": "tmp/durga-native/main-final-test.log",
+    "logSha256": "a92e6edda01f6c8f171a3fa1ac081c680f1fa34f1d50254025b1891b2f7d8358"
+  },
+  "productionSourceLint": {
+    "files": 15,
+    "errors": 0,
+    "warnings": 0,
+    "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "assetGate": {
+    "cdnPassed": 144,
+    "cdnChecked": 144,
+    "fullSourceSha256": true,
+    "allStoryImagesBundledIos": 0,
+    "allStoryImagesBundledAndroid": 0,
+    "evidence": "asset-gate-evidence.json",
+    "sha256": "1c8a13eb8892e603dc925af24533f4618b2c901b32ce6f0ee76d7facb4d7fe04"
+  },
+  "nativeFreshDownload": {
+    "status": "blocked-by-network-TLS-trust",
+    "error": "A TLS error caused the secure connection to fail.",
+    "hostObservedCertificateIssuer": "ca.gokwik.goskope.com, GoKwik, Netskope corporate interception CA",
+    "tlsConfigurationChanged": false,
+    "offlineReuse": "pending",
+    "scope": "Only owned iOS simulator; earlier seeded-cache art review is separate"
+  },
+  "sourceHashes": {
+    ".github/workflows/ci.yml": "4df0d9b009d2eb396f9f95503d73ebbc68ae52608ba86cd592bf855737771453",
+    "scripts/verify-kids-story-assets.mjs": "94dea5ff5df3ad5c73f55b1cf0f88e9397b97eb630e5986e440a909e56089f93",
+    "mobile/src/components/KidsStoriesHomeCard.tsx": "dd7c851f94f8b3cb6d83c3b7b8ce647b2759f8b6edeca1f22546202fa789911a",
+    "mobile/src/components/__tests__/KidsStoriesHomeCard.test.tsx": "547810b95a5be03b524eb545dabcb865e44d38bae4d348a6fb2c9f43ef33406e",
+    "mobile/src/data/__tests__/kidsStories.test.ts": "9ee2bb039d793a5f4f5b8e3dce8d6fd6175de8b4fd66c1f4ccf792cc5ac2fdfd"
+  }
+}

@@ -34,9 +34,11 @@ Katyayani’s day-6 card opens Mahishasura. Kushmanda, Kalaratri and Siddhidatri
 - [Artwork and export screenshots before the share-position adjustment](post-change-preview.jpg)
 - [Current right-side share screenshots](right-share-preview.jpg)
 - [Latest-main tests and share-placement evidence](pr-preparation-evidence.json)
-- [R2 upload package and instructions](upload.md)
+- [R2 upload package, verified delivery and app-size explanation](upload.md)
+- [All 144 live CDN response/hash checks](cdn-evidence.json)
+- [iOS/Android production export asset evidence](bundle-evidence.json)
 - [All 87 R2 object keys, source paths and hashes](r2-assets.csv)
 
-The 87 new R2 objects are ready in `tmp/kids-stories-durga-r2.zip`. The final app manifest has 144 assets, preserving all 57 prior entries; 143 story illustrations have hash-pinned frames and the remaining entry is the bundled Home icon. R2 credentials were unavailable, so no remote upload was performed. New illustrations require that upload on a fresh device. Locally seeded simulator cache evidence is kept separate from CDN publication.
+The 87 new R2 objects are ready in `tmp/kids-stories-durga-r2.zip`. The final app manifest has 144 assets, preserving all 57 prior entries; 143 story illustrations have hash-pinned frames and the remaining entry is the CDN-cached Home icon. The user uploaded the package; all 144 manifest objects (including all 87 new images) now pass production CDN HTTP, hash and WebP-decode checks. Both iOS/Android production exports include zero story images across all 144 manifest entries, including Home art. RULEBOOK §29.2 and regression tests enforce CDN-only delivery. Full-source hash/no-bundle checks are in [asset-gate-evidence.json](asset-gate-evidence.json), with [current-main tests and limitations](current-main-checks.json). Fresh native cache/offline checks remain separate from CDN publication.
 
 Multi-card sharing is integrated through the existing ShareProvider. Scene illustrations alternate with complete, readable narration cards. Longer stories have explicitly numbered parts of at most ten cards, with a separate current-scene option; the final part retains the takeaway and adaptation/source note. Missing R2 art aborts illustrated export instead of capturing a placeholder. Scene art uses the measured title height and the individually reviewed frame, filling the available space without a fixed three-line title reserve.

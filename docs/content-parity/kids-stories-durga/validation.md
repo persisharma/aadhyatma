@@ -1,6 +1,6 @@
 # Maa Durga validation — 2026-10-09
 
-Initial layout/export validation used main commit `85a957316402f4b3f3c704e5382598d62d079ce0`. PR preparation subsequently refreshed main to `91abb204` and moved the three left-side share controls to the right. See the PR-preparation evidence below. No OTA or deployment was performed. Remote R2 upload is pending because upload credentials were unavailable. Regional editorial approval and physical-device checks are distinct from this report.
+Initial layout/export validation used main commit `85a957316402f4b3f3c704e5382598d62d079ce0`. PR preparation subsequently refreshed main to `91abb204` and moved the three left-side share controls to the right. See the PR-preparation evidence below. No OTA or deployment was performed. The user has now uploaded the prepared package; all 144 production CDN objects pass HTTP/hash/decode verification, as recorded below. Regional editorial approval and physical-device checks are distinct from this report.
 
 ## Source, narrative and art
 
@@ -71,7 +71,7 @@ Scene cards use the actual measured title height so short titles do not reserve 
 
 ## Remaining release checks
 
-1. Upload the exact R2 objects and verify fresh-cache download through the configured asset worker/CDN, offline reuse and all covers.
+1. Verify first download on a fresh native device cache, offline reuse and all covers. All exact production CDN objects are now verified; this does not establish native first-download/offline behavior.
 2. Independent Gujarati/Kannada editorial review of the complete narratives and source notes.
 3. Physical iOS and Android reader/gesture checks. The new `.maestro/kids-stories-durga-full-sequence.yaml` and four locale subflows cover all 87 pages, complete captions and source notes at Standard/Large; a passing end-to-end gesture run remains distinct from native screenshot evidence.
 4. Product/editorial sign-off on the children’s adaptation and illustrations before release.
@@ -88,3 +88,23 @@ Main was refreshed to `91abb204` (PR #435). The existing nine-form shelf remains
 - All 87 upload-ready objects were compared byte-for-byte to native source/browser copies and their app manifest hashes. [The complete R2 inventory](r2-assets.csv) pins every object key and source hash. The ZIP hash remains unchanged.
 
 The earlier full-art/layout evidence retains its original source hashes; only the kids reader share-placement source differs. No story text, illustration, frame or export renderer changed during PR preparation, and all sharing-pipeline source hashes still match its 752-export evidence. The full 696-page sequence was not repeated after this shell-only adjustment; current evidence does not establish CDN publication, a fresh native build, physical-device behavior or Instagram import.
+
+
+## Live CDN and production bundle verification after upload
+
+The user's upload was verified at `2026-10-09T18:10:37.240Z`. All **144 manifest objects**, including **87 new Durga illustrations**, return HTTP 200 through the production CDN. All new images match their full expected SHA-256, legacy images match the manifest hash prefix, and all responses fully decode as WebP. Every response has `image/webp` and immutable one-year public cache headers. [Per-object evidence](cdn-evidence.json) records actual URLs, bytes, hashes, dimensions and response headers; 44,964,738 bytes were checked.
+
+Local production `expo export --platform ios --dump-assetmap` and the corresponding Android export both succeeded. Final exports after merging main `9573655d` contain zero of all 144 story images, including the Home library icon. Home now resolves its icon through the existing CDN/cache. [Bundle evidence](bundle-evidence.json) pins the export asset-map and log hashes. This verifies zero story illustration bytes in those exports, not an unchanged total app size or a completed native IPA/AAB build. Text/code/manifests remain bundled, source files enlarge the checkout/build inputs, and downloaded images use device cache storage.
+
+The native first-download/offline and physical-device/editorial gates above remain pending. These requests independently verify the production CDN; they do not convert seeded native cache evidence into fresh-device validation.
+
+
+## Regression gates and current-main reconciliation
+
+Merged main `9573655d` and retained both append-only wiki log entries when resolving the conflict. Updated Durga settings/share Maestro flows to Home’s settings gear. No story narration, illustration or reviewed frame changed.
+
+RULEBOOK §29.2 now requires production exports on both platforms and a full-manifest CDN GET/hash check. CI runs both production exports and the full CDN/export gate and retains JSON evidence. The automated data suite rejects story-art imports and tests the export verifier against a renamed image outside the story folders. The Home component test checks its fixed loading geometry, usable navigation and cached URI. [Full-manifest asset gate](asset-gate-evidence.json) records all 144 full source hash matches and zero bundled story images.
+
+The fresh simulator Home-art fetch failed: “A TLS error caused the secure connection to fail.” Host certificate inspection shows the corporate Netskope issuer `ca.gokwik.goskope.com`; the host trusts this interception CA while the simulator download does not. No TLS relaxation or certificate installation was performed. The Home door remained usable during the failed fetch; native first-download/offline and physical-device validation remain pending. Earlier seeded-cache artwork evidence is still separate.
+
+Current-main checks: **3,099 tests passed** (37 widget, 2,250 Jest in 235 suites, 590 engine, 173 data, 49 ask), typecheck passed and fifteen changed production files lint with zero errors/warnings. [Current-main evidence](current-main-checks.json) pins logs and delivery-check source hashes. Both production export maps have 130 asset groups and zero story images.

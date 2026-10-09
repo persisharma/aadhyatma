@@ -3,7 +3,7 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element: { text: "Language,.*" }
     centerElement: true

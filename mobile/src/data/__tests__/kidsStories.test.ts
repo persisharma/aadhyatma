@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, mkdtempSync, writeFileSync, copyFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { spawnSync } from 'node:child_process';
+import path from 'node:path';
+import ts from 'typescript';
 import { fileURLToPath, URL } from 'node:url';
 import { createHash } from 'node:crypto';
 import reviewedFrames from '../../components/kidsStoryArtFrames.json';
@@ -96,9 +100,9 @@ test('every page and cover resolves to a source illustration (uploaded to the CD
   const assets = new Map([...component.matchAll(/(\w+): '([a-z]{2}-\d+)'/g)].map(match => [match[1], `../../assets/kids-stories/${match[2]}.webp`]));
   for (const story of kidsStories) for (const art of [story.coverArt, ...story.pages.map(page => page.art)]) {
     const asset = assets.get(art);
-    assert.ok(asset, `Missing static Metro import: ${art}`);
+    assert.ok(asset, `Missing CDN art mapping: ${art}`);
     const path = fileURLToPath(new URL(asset, new URL('../../components/KidsStoryArt.tsx', import.meta.url)));
-    assert.ok(existsSync(path), `Missing bundled illustration: ${art}`);
+    assert.ok(existsSync(path), `Missing source illustration: ${art}`);
     const bytes = readFileSync(path);
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
@@ -203,4 +207,54 @@ test('Durga readings carry all four narratives, sourced page arcs, unique art an
     assert.ok(story.pages.some(page => page.art === story.coverArt), `${story.id}: cover is a reviewed complete scene`);
   }
   assert.equal(hashes.size, 87);
+});
+
+
+test('production source never imports bundled kids-story illustrations, including the Home cover', () => {
+  const root = fileURLToPath(new URL('../../', import.meta.url));
+  const violations: string[] = [];
+  for (const entry of readdirSync(root, { recursive: true })) {
+    const name = String(entry);
+    if (!/\.tsx?$/.test(name) || name.includes('__tests__') || /\.test\./.test(name)) continue;
+    const source = ts.createSourceFile(name, readFileSync(path.join(root, name), 'utf8'), ts.ScriptTarget.Latest, true,
+      name.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+    const visit = (node: ts.Node) => {
+      let spec: ts.Expression | undefined;
+      if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) spec = node.moduleSpecifier;
+      if (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword ||
+        (ts.isIdentifier(node.expression) && node.expression.text === 'require'))) spec = node.arguments[0];
+      if (spec && ts.isStringLiteralLike(spec) && /(?:^|\/)(?:kids-stories|krishna-janma)\/.*\.(?:webp|png|jpe?g)$/i.test(spec.text))
+        violations.push(`${name}: ${spec.text}`);
+      ts.forEachChild(node, visit);
+    };
+    visit(source);
+  }
+  assert.deepEqual(violations, [], 'Story images must use the CDN manifest/cache, not a Metro asset import');
+});
+
+
+test('export asset gate rejects a renamed story image outside the story folders', () => {
+  const root = fileURLToPath(new URL('../../../../', import.meta.url));
+  const dir = mkdtempSync(path.join(tmpdir(), 'kids-story-bundle-'));
+  try {
+    const renamed = path.join(dir, 'renamed-art.webp');
+    copyFileSync(path.join(root, 'mobile/assets/kids-stories/story-library.webp'), renamed);
+    const map = path.join(dir, 'assetmap.json');
+    writeFileSync(map, JSON.stringify({ arbitrary: { files: [renamed] } }));
+    const result = spawnSync(process.execPath, ['scripts/verify-kids-story-assets.mjs', '--assetmap', map], { cwd: root, encoding: 'utf8' });
+    assert.equal(result.status, 1, result.stderr);
+    assert.equal(JSON.parse(result.stdout).exports[0].bundledStoryImages, 1);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('export asset gate accepts an export with no story imagery', () => {
+  const root = fileURLToPath(new URL('../../../../', import.meta.url));
+  const dir = mkdtempSync(path.join(tmpdir(), 'kids-story-bundle-'));
+  try {
+    const map = path.join(dir, 'assetmap.json');
+    writeFileSync(map, '{}');
+    const result = spawnSync(process.execPath, ['scripts/verify-kids-story-assets.mjs', '--assetmap', map], { cwd: root, encoding: 'utf8' });
+    assert.equal(result.status, 0, result.stderr);
+    assert.deepEqual(JSON.parse(result.stdout).failures, []);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
