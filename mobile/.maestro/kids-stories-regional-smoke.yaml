@@ -2,7 +2,7 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element: { text: "Reading size,.*" }
     centerElement: true
@@ -541,7 +541,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "kids-story-hanuman-sun" }
 - tapOn: "Back"
 - tapOn: "Back"
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element: { text: "Reading size,.*" }
     centerElement: true

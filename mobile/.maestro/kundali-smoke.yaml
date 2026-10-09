@@ -73,7 +73,7 @@ appId: com.prashantsharma.vedansh
 
 # Use English for stable visible-text assertions; accessibility labels stay
 # English in every language, but the explanatory headings below are localized.
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —

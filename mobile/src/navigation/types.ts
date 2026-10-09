@@ -14,8 +14,10 @@ export type TabParamList = {
   // navigate('PanchangTab', { screen: 'ObservanceList', params: {...}, initial: false })
   // are type-checked instead of hidden behind `useNavigation<any>()`.
   PanchangTab: NavigatorScreenParams<PanchangStackParamList> | undefined;
+  VratTab: NavigatorScreenParams<PanchangStackParamList> | undefined;
   // Dedicated audio library + media player.
   AudioTab: undefined;
+  // Hidden from the bar; Home's settings button opens this existing stack.
   // Nested params typed so the Panchang day chip can deep-link to a Pitru Smaran
   // detail (PRD-17) without an untyped navigator cast.
   MoreTab: NavigatorScreenParams<MoreStackParamList> | undefined;
