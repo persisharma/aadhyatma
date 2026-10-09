@@ -87,10 +87,30 @@
       ],
       "meaningHi": "उस भगवान् वासुदेव को मेरा प्रणाम — जो वसुदेवपुत्र, सबमें वास करने वाले, समस्त ऐश्वर्य के स्वामी हैं।",
       "meaningEn": "Salutations to the Divine Vasudeva — son of Vasudeva, dweller in all beings, possessor of all auspicious qualities. The twelve-syllable Vaishnava mantra of refuge."
+    },
+    {
+      "id": "radha-naam",
+      "nameHi": "राधा नाम जप",
+      "nameEn": "Radha Naam Japa",
+      "sub": "नाम जप · हर नाम एक मनका",
+      "subEn": "Naam japa · one bead per name",
+      "thumb": "रा",
+      "deities": [
+        "radha"
+      ],
+      "naam": true,
+      "lines": [
+        "राधा"
+      ],
+      "linesEn": [
+        "Radha"
+      ],
+      "meaningHi": "श्री राधा रानी का पावन नाम। नाम जप में हर ‘राधा’ पर एक मनका आगे बढ़ता है — 108 नाम, एक माला।",
+      "meaningEn": "The holy name of Shri Radha Rani. In naam japa every ‘Radha’ moves one bead — 108 names, one mala."
     }
   ],
   "source": {
-    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, and Dvadashakshari Vasudeva mantra.",
+    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name).",
     "referenceUrls": [
       "https://sanskritdocuments.org/doc_deities_misc/sArthagAyatrI.html",
       "https://vedabase.io/en/library/kb/90/"

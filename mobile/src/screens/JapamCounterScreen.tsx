@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  Animated,
+  Easing,
   Modal,
   Pressable,
   ScrollView,
@@ -16,7 +18,7 @@ import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
-import { pick, verseLinesByLang } from '@/utils/localize';
+import { contentByLang, pick, verseLinesByLang } from '@/utils/localize';
 import { isLatinLang } from '@/utils/langType';
 import { getSourceBackground } from '@/data/backgrounds';
 import {
@@ -38,6 +40,7 @@ import ShareButton from '@/components/ShareButton';
 import { AlarmEditorSheet } from '@/screens/JapamAlarmsScreen';
 import { useShare } from '@/utils/shareVerse';
 import { useRatingAsk } from '@/contexts/ratingAsk';
+import { useReducedMotion } from '@/utils/useReducedMotion';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'JapamCounter'>;
@@ -95,6 +98,27 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  // Naam japa (a single divine name, e.g. राधा): the name reads large and gives
+  // a small pulse on every bead, so each name visibly lands on the mala.
+  const naam = mantra?.naam === true;
+  const reduceMotion = useReducedMotion();
+  const nameBeat = useRef(new Animated.Value(1)).current;
+  const beatPrimedRef = useRef(false);
+  useEffect(() => {
+    if (!naam || reduceMotion) return;
+    // No pulse for the count restored on open, only for beads chanted here.
+    if (!beatPrimedRef.current) {
+      beatPrimedRef.current = true;
+      return;
+    }
+    nameBeat.setValue(1.14);
+    Animated.timing(nameBeat, {
+      toValue: 1,
+      duration: 460,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: true,
+    }).start();
+  }, [entry.count, entry.rounds, naam, reduceMotion, nameBeat]);
   // Brief "turn the mala" notice when a round completes at the Sumeru.
   const [sumeruNotice, setSumeruNotice] = useState(false);
   const noticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -158,12 +182,19 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const screenTitle = pick(lang, { hi: 'जपमाला', en: 'JapaMala', gu: 'જપમાળા', kn: 'ಜಪಮಾಲೆ' });
 
   const todayBeads = activity[toDateKey(new Date())]?.japa[mantra.id]?.beads ?? 0;
-  const todayLabel = pick(lang, {
-    hi: `आज ${todayBeads} जप`,
-    en: `${todayBeads} japa today`,
-    gu: `આજે ${todayBeads} જપ`,
-    kn: `ಇಂದು ${todayBeads} ಜಪ`,
-  });
+  const todayLabel = naam
+    ? pick(lang, {
+        hi: `आज ${todayBeads} नाम`,
+        en: `${todayBeads} names today`,
+        gu: `આજે ${todayBeads} નામ`,
+        kn: `ಇಂದು ${todayBeads} ನಾಮ`,
+      })
+    : pick(lang, {
+        hi: `आज ${todayBeads} जप`,
+        en: `${todayBeads} japa today`,
+        gu: `આજે ${todayBeads} જપ`,
+        kn: `ಇಂದು ${todayBeads} ಜಪ`,
+      });
   const malasDoneLabel = pick(lang, { hi: 'माला पूर्ण', en: 'Malas done', gu: 'માળા પૂર્ણ', kn: 'ಮಾಲೆ ಪೂರ್ಣ' });
   const firstMalaLabel = pick(lang, {
     hi: 'पहली माला आरम्भ',
@@ -184,7 +215,14 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         gu: 'સાંભળો · મંત્ર સાથે મણકા આગળ વધે છે',
         kn: 'ಆಲಿಸಿ · ಮಂತ್ರದೊಂದಿಗೆ ಮಣಿಗಳು ಮುಂದುವರಿಯುತ್ತವೆ',
       })
-    : pick(lang, { hi: 'जप के लिए स्पर्श करें', en: 'Tap to chant', gu: 'જપ માટે સ્પર્શ કરો', kn: 'ಜಪಕ್ಕಾಗಿ ಸ್ಪರ್ಶಿಸಿ' });
+    : naam
+      ? pick(lang, {
+          hi: 'स्पर्श करें · हर नाम एक मनका',
+          en: 'Tap · one bead per name',
+          gu: 'સ્પર્શ કરો · દરેક નામે એક મણકો',
+          kn: 'ಸ್ಪರ್ಶಿಸಿ · ಪ್ರತಿ ನಾಮಕ್ಕೆ ಒಂದು ಮಣಿ',
+        })
+      : pick(lang, { hi: 'जप के लिए स्पर्श करें', en: 'Tap to chant', gu: 'જપ માટે સ્પર્શ કરો', kn: 'ಜಪಕ್ಕಾಗಿ ಸ್ಪರ್ಶಿಸಿ' });
   const resetBeadsLabel = pick(lang, { hi: 'बीज पुनः ०', en: 'Reset Beads', gu: 'મણકા ફરી ૦', kn: 'ಮಣಿ ಮರು ೦' });
   const clearAllLabel = pick(lang, { hi: 'सब साफ़', en: 'Clear All', gu: 'બધું સાફ', kn: 'ಎಲ್ಲ ತೆರವು' });
   const nothingToReset = entry.count === 0 && entry.rounds === 0;
@@ -299,7 +337,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             ]}
           >
             <View style={styles.headBlock} onLayout={(e) => setHeadH(e.nativeEvent.layout.height)}>
-              <View style={styles.mantraBlock}>
+              <Animated.View style={[styles.mantraBlock, { transform: [{ scale: nameBeat }] }]}>
                 {verseLinesByLang(lang, mantra.lines, mantra.linesEn).map((line, i) => (
                   <Text
                     key={`${lang}-${i}`}
@@ -309,21 +347,36 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                         ? {
                             color: colors.ink,
                             fontFamily: typography.cardLatin.fontFamily,
-                            fontSize: verseFontSizeEn,
-                            lineHeight: verseLineHeightEn,
+                            fontSize: naam ? Math.round(verseFontSizeEn * 1.6) : verseFontSizeEn,
+                            lineHeight: naam ? Math.round(verseLineHeightEn * 1.25) : verseLineHeightEn,
                           }
                         : {
                             color: colors.ink,
                             fontFamily: scriptSerif ?? typography.verse.fontFamily,
-                            fontSize: verseFontSize,
-                            lineHeight: verseLineHeight,
+                            fontSize: naam ? Math.round(verseFontSize * 1.5) : verseFontSize,
+                            lineHeight: naam ? Math.round(verseLineHeight * 1.25) : verseLineHeight,
                           },
                     ]}
                   >
                     {line}
                   </Text>
                 ))}
-              </View>
+              </Animated.View>
+              {naam ? (
+                <Text
+                  style={[
+                    styles.naamCaption,
+                    {
+                      color: colors.inkMuted,
+                      fontFamily: isLatinLang(lang)
+                        ? typography.cardLatin.fontFamily
+                        : scriptSerif ?? typography.verse.fontFamily,
+                    },
+                  ]}
+                >
+                  {contentByLang(lang, mantra.nameHi, mantra.nameEn)}
+                </Text>
+              ) : null}
 
               <Ornament compact />
             </View>
@@ -665,6 +718,11 @@ const styles = StyleSheet.create({
     // No includeFontPadding:false here — this line is Devanagari, and on Android
     // that prop strips the padding reserved for the shirorekha/top-matras and
     // clips them (iOS ignores the prop, so it only shows on Android).
+  },
+  naamCaption: {
+    marginTop: 2,
+    fontSize: 13,
+    textAlign: 'center',
   },
   mantraLineEn: {
     textAlign: 'center',

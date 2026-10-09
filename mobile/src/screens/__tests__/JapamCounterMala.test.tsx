@@ -65,7 +65,7 @@ afterEach(() => {
   mounted = null;
 });
 
-async function renderJapam(): Promise<TestRenderer.ReactTestRenderer> {
+async function renderJapam(mantraId = 'om-namah-shivaya'): Promise<TestRenderer.ReactTestRenderer> {
   let tree: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
@@ -74,7 +74,7 @@ async function renderJapam(): Promise<TestRenderer.ReactTestRenderer> {
           <GitaLanguageProvider initialLang="hi">
             <ShareProvider>
               <JapamCounterProvider>
-                <JapamCounterScreen navigation={nav} route={route} />
+                <JapamCounterScreen navigation={nav} route={{ ...route, params: { mantraId } }} />
               </JapamCounterProvider>
             </ShareProvider>
           </GitaLanguageProvider>
@@ -152,5 +152,18 @@ describe('JapamCounter turning mala (design.md §35)', () => {
       byLabel(tree, 'Reset bead count').props.onPress();
     });
     expect(beadLabel(tree)).toContain('0 of 108');
+  });
+
+  test('Radha naam japa counts one bead per name', async () => {
+    const tree = await renderJapam('radha-naam');
+    const t = texts(tree);
+    expect(t).toContain('राधा');
+    expect(t).toContain('राधा नाम जप');
+    expect(t).toContain('स्पर्श करें · हर नाम एक मनका');
+    expect(t.some((x) => /^आज \d+ नाम$/.test(x))).toBe(true);
+    await act(async () => {
+      tapSurface(tree).props.onPress();
+    });
+    expect(beadLabel(tree)).toContain('1 of 108');
   });
 });

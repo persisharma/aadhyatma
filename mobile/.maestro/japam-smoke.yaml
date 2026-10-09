@@ -1,6 +1,6 @@
 # Japam Category Smoke Test
 #
-# Verifies the Japam category and its 4 active mantras render correctly.
+# Verifies the Japam category and its 5 active mantras (4 mantras + Radha naam) render correctly.
 # Mantras: Om Namah Shivaya, Hare Krishna Mahamantra, Gayatri Mantra,
 #          Om Namo Bhagavate Vasudevaya.
 #
@@ -34,6 +34,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Hare Krishna Mahamantra\\..*Tap to open\\."
 - assertVisible: "Gayatri Mantra\\..*Tap to open\\."
 - assertVisible: "Om Namo Bhagavate Vasudevaya\\..*Tap to open\\."
+- assertVisible: "Radha Naam Japa\\..*Tap to open\\."
 
 # Open Gayatri Mantra counter
 - tapOn: "Gayatri Mantra\\..*Tap to open\\."

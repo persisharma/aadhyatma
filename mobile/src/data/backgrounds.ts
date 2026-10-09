@@ -70,6 +70,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'hare-krishna-mahamantra': backgroundImages.deity_krishna_bansuri,
   'gayatri-mantra': backgroundImages.source_gayatri_savitri_sun,
   'om-namo-bhagavate-vasudevaya': backgroundImages.source_vishnu_narayana,
+  'radha-naam': backgroundImages.deity_radha_krishna,
   ramcharitmanas: backgroundImages.deity_rama_darbar,
   'valmiki-ramayan': backgroundImages.deity_rama_darbar,
   'durga-stotram': backgroundImages.deity_durga_lion,
