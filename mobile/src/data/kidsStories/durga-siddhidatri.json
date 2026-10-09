@@ -1,0 +1,94 @@
+{
+  "id": "durga-siddhidatri",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "introduction",
+  "coverArt": "si01",
+  "title": {
+    "en": "Siddhidatri: The Giver of Attainments",
+    "hi": "सिद्धिदात्री: सिद्धियाँ देने वाली माँ",
+    "gu": "સિદ્ધિદાત્રી: સિદ્ધિઓ આપતી મા",
+    "kn": "ಸಿದ್ಧಿದಾತ್ರಿ: ಸಿದ್ಧಿಗಳನ್ನು ನೀಡುವ ಮಾತೆ"
+  },
+  "description": {
+    "en": "Meet Navadurga’s ninth form and the tradition of Shiva and Shakti.",
+    "hi": "नवदुर्गा के नौवें रूप और शिव-शक्ति की परंपरा का परिचय।",
+    "gu": "નવદુર્ગાના નવમા રૂપ અને શિવ-શક્તિની પરંપરાનો પરિચય.",
+    "kn": "ನವದುರ್ಗೆಯ ಒಂಬತ್ತನೇ ರೂಪ ಮತ್ತು ಶಿವ-ಶಕ್ತಿಯ ಸಂಪ್ರದಾಯದ ಪರಿಚಯ."
+  },
+  "sourceNote": {
+    "en": "A short introduction from Navadurga devotional tradition, not a separate Purana adventure. Traditional origin accounts are attributed; the takeaway is editorial.",
+    "hi": "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।",
+    "gu": "નવદુર્ગાની ભક્તિપરંપરામાંથી ટૂંકો પરિચય; આ અલગ પુરાણકથા નથી. પરંપરાગત ઉત્પત્તિવર્ણનનો સ્રોત જણાવ્યો છે; શીખ સંપાદકીય છે.",
+    "kn": "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "Learn with humility. Use whatever abilities you have to help others.",
+    "hi": "विनम्रता से सीखें। अपनी क्षमताओं से दूसरों की सहायता करें।",
+    "gu": "નમ્રતાથી શીખો. પોતાની ક્ષમતાઓથી બીજાને મદદ કરો.",
+    "kn": "ವಿನಯದಿಂದ ಕಲಿಯಿರಿ. ನಿಮ್ಮ ಸಾಮರ್ಥ್ಯಗಳನ್ನು ಇತರರಿಗೆ ನೆರವಾಗಲು ಬಳಸಿ."
+  },
+  "source": {
+    "baseText": "Navadurga dhyana; Drik Panchang, Siddhidatri traditional guide",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/navadurga.html",
+      "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-siddhidatri.html",
+      "https://www.artofliving.org/in-en/navratri/siddhidhatri"
+    ],
+    "notes": "Introduction, not an invented adventure. Ninth-day identity and worshippers corroborated across the dhyana and traditional guide. Shiva’s worship of Adi Parashakti and Ardhanarishvara association are attributed to the devotional guide, not claimed as quoted Purana verses. Four-armed lotus-seated depiction. No guarantee, siddhi practice or supernatural promise to children."
+  },
+  "pages": [
+    {
+      "id": "the-ninth-form",
+      "art": "si01",
+      "source": "Navadurga dhyana, Siddhidatri; Drik Panchang Siddhidatri, Navratri Worship",
+      "title": {
+        "en": "The Ninth Form",
+        "hi": "नौवाँ रूप",
+        "gu": "નવમું રૂપ",
+        "kn": "ಒಂಬತ್ತನೇ ರೂಪ"
+      },
+      "text": {
+        "en": "On Navaratri’s ninth day, many devotees honour Maa Siddhidatri. Her name remembers her as the giver of siddhis, or divine attainments. In devotional pictures, she sits on a lotus, peaceful and radiant.",
+        "hi": "नवरात्रि के नौवें दिन अनेक भक्त माँ सिद्धिदात्री की आराधना करते हैं। उनका नाम सिद्धियाँ, अर्थात दिव्य उपलब्धियाँ देने वाली माँ का स्मरण कराता है। भक्तिचित्रों में वे कमल पर शांत और तेजस्वी बैठी हैं।",
+        "gu": "નવરાત્રિના નવમા દિવસે ઘણા ભક્તો મા સિદ્ધિદાત્રીની આરાધના કરે છે. તેમનું નામ સિદ્ધિઓ, એટલે દિવ્ય પ્રાપ્તિઓ આપતી માનું સ્મરણ કરાવે છે. ભક્તિચિત્રોમાં તેઓ કમળ પર શાંત અને તેજસ્વી બેઠાં છે.",
+        "kn": "ನವರಾತ್ರಿಯ ಒಂಬತ್ತನೇ ದಿನ ಹಲವು ಭಕ್ತರು ಸಿದ್ಧಿದಾತ್ರಿ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಆಕೆಯ ಹೆಸರು ಸಿದ್ಧಿಗಳನ್ನು, ಅಂದರೆ ದಿವ್ಯ ಸಾಧನೆಗಳನ್ನು ನೀಡುವ ಮಾತೆಯನ್ನು ನೆನಪಿಸುತ್ತದೆ. ಭಕ್ತಿಚಿತ್ರಗಳಲ್ಲಿ ಆಕೆ ಕಮಲದ ಮೇಲೆ ಶಾಂತವಾಗಿ, ತೇಜಸ್ವಿಯಾಗಿ ಕುಳಿತಿರುತ್ತಾಳೆ."
+      }
+    },
+    {
+      "id": "shiva-and-shakti",
+      "art": "si02",
+      "source": "Drik Panchang Siddhidatri, Origin and Details",
+      "title": {
+        "en": "Shiva and Shakti",
+        "hi": "शिव और शक्ति",
+        "gu": "શિવ અને શક્તિ",
+        "kn": "ಶಿವ ಮತ್ತು ಶಕ್ತಿ"
+      },
+      "text": {
+        "en": "A traditional account says that Shiva worshipped Adi Parashakti for creation and received divine attainments through Siddhidatri’s grace. It links her with his left half and with Ardhanarishvara, the united form of Shiva and Shakti.",
+        "hi": "एक पारंपरिक वर्णन में शिव सृष्टि के लिए आदि पराशक्ति की आराधना करते हैं और सिद्धिदात्री की कृपा से सिद्धियाँ प्राप्त करते हैं। यह वर्णन उन्हें शिव के बाएँ अर्धभाग और शिव-शक्ति के संयुक्त रूप अर्धनारीश्वर से जोड़ता है।",
+        "gu": "એક પરંપરાગત વર્ણનમાં શિવ સૃષ્ટિ માટે આદિ પરાશક્તિની આરાધના કરે છે અને સિદ્ધિદાત્રીની કૃપાથી સિદ્ધિઓ મેળવે છે. આ વર્ણન તેમને શિવના ડાબા અર્ધભાગ અને શિવ-શક્તિના સંયુક્ત રૂપ અર્ધનારીશ્વર સાથે જોડે છે.",
+        "kn": "ಒಂದು ಸಾಂಪ್ರದಾಯಿಕ ವಿವರಣೆಯಲ್ಲಿ ಶಿವ ಸೃಷ್ಟಿಗಾಗಿ ಆದಿ ಪರಾಶಕ್ತಿಯನ್ನು ಆರಾಧಿಸಿ ಸಿದ್ಧಿದಾತ್ರಿಯ ಕೃಪೆಯಿಂದ ಸಿದ್ಧಿಗಳನ್ನು ಪಡೆಯುತ್ತಾನೆ. ಈ ವಿವರಣೆ ಆಕೆಯನ್ನು ಅವನ ಎಡ ಅರ್ಧಭಾಗ ಮತ್ತು ಶಿವ-ಶಕ್ತಿಯ ಒಂದಾದ ರೂಪ ಅರ್ಧನಾರೀಶ್ವರನೊಂದಿಗೆ ಸಂಬಂಧಿಸುತ್ತದೆ."
+      }
+    },
+    {
+      "id": "many-beings-honour-her",
+      "art": "si03",
+      "source": "Navadurga dhyana, Siddhidatri; Drik Panchang Siddhidatri, Iconography and Details",
+      "title": {
+        "en": "Honoured by Many",
+        "hi": "सबकी आराध्य माँ",
+        "gu": "સૌનાં આરાધ્ય મા",
+        "kn": "ಹಲವರ ಆರಾಧ್ಯ ಮಾತೆ"
+      },
+      "text": {
+        "en": "Devas, sages and other beings honour Siddhidatri. Her four hands hold a discus, conch, lotus and mace in familiar art. Devotees remember her as the Mother whose grace reaches many kinds of beings.",
+        "hi": "देवता, साधक और अन्य प्राणी सिद्धिदात्री की आराधना करते हैं। परिचित चित्रों में उनके चार हाथों में चक्र, शंख, कमल और गदा हैं। भक्त उन्हें ऐसी माँ के रूप में स्मरण करते हैं जिनकी कृपा अनेक प्रकार के प्राणियों तक पहुँचती है।",
+        "gu": "દેવો, સાધકો અને બીજા જીવો સિદ્ધિદાત્રીની આરાધના કરે છે. પરિચિત ચિત્રોમાં તેમના ચાર હાથમાં ચક્ર, શંખ, કમળ અને ગદા છે. ભક્તો તેમને એવી મા તરીકે યાદ કરે છે જેમની કૃપા અનેક પ્રકારના જીવો સુધી પહોંચે છે.",
+        "kn": "ದೇವತೆಗಳು, ಸಾಧಕರು ಮತ್ತು ಇತರ ಜೀವಿಗಳು ಸಿದ್ಧಿದಾತ್ರಿಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಪರಿಚಿತ ಚಿತ್ರಗಳಲ್ಲಿ ಆಕೆಯ ನಾಲ್ಕು ಕೈಗಳಲ್ಲಿ ಚಕ್ರ, ಶಂಖ, ಕಮಲ ಮತ್ತು ಗದೆ ಇವೆ. ಭಕ್ತರು ಆಕೆಯನ್ನು ಹಲವು ಬಗೆಯ ಜೀವಿಗಳಿಗೆ ಕೃಪೆ ತೋರುವ ಮಾತೆಯಾಗಿ ನೆನೆಯುತ್ತಾರೆ."
+      }
+    }
+  ]
+}

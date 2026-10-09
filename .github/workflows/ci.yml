@@ -7,10 +7,14 @@ on:
   pull_request:
     paths:
       - 'mobile/**'
+      - 'scripts/verify-kids-story-assets.mjs'
+      - '.github/workflows/ci.yml'
   push:
     branches: [main]
     paths:
       - 'mobile/**'
+      - 'scripts/verify-kids-story-assets.mjs'
+      - '.github/workflows/ci.yml'
 
 jobs:
   test:
@@ -44,3 +48,21 @@ jobs:
 
       - name: Data tests
         run: npm run test:data
+
+      - name: Production iOS export asset map
+        run: npx expo export --platform ios --dump-assetmap --output-dir ../tmp/ci-kids-story-ios
+
+      - name: Production Android export asset map
+        run: npx expo export --platform android --dump-assetmap --output-dir ../tmp/ci-kids-story-android
+
+      - name: Kids Stories CDN availability and no bundled artwork
+        working-directory: .
+        run: node scripts/verify-kids-story-assets.mjs --cdn --assetmap tmp/ci-kids-story-ios/assetmap.json --assetmap tmp/ci-kids-story-android/assetmap.json --output tmp/ci-kids-story-asset-gate.json
+
+      - name: Retain Kids Stories asset gate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kids-story-asset-gate
+          path: tmp/ci-kids-story-asset-gate.json
+          if-no-files-found: ignore

@@ -324,3 +324,6 @@ export function askAnswerShareable(answer: {
     ],
   };
 }
+
+/** Illustrated kids stories use the same picker, preview, capture and native multi-file hand-off. */
+export { kidsStoryShareable } from './kidsStoryShare';

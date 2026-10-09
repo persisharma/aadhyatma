@@ -222,5 +222,353 @@
   "hs09": {
     "retainedHeight": 0.82,
     "sha256": "826c8e99cffa3d28ee9c07eb6e5f3ac5bb13842df5482bea8274c2342469b6f0"
+  },
+  "dm01": {
+    "sha256": "b9f6348ede955fa7add88d1bffe4625cf3a75a651627d8615f45f99c26f0ec2c",
+    "retainedHeight": 0.82097
+  },
+  "dm02": {
+    "sha256": "b4eb8cc457b7be0e6bf9d4fd6901e270d33003726e7a77a5841e10a5be536b9d",
+    "retainedHeight": 0.869472
+  },
+  "dm03": {
+    "sha256": "51becfe883c299588d70aee7d9b20923a12c1d0e27415b8857620e3bd6c11909",
+    "retainedHeight": 0.853067
+  },
+  "dm04": {
+    "sha256": "576c7e51be8ddd40f0095f8317f2e5e2628620c2072f4f24a1a0a690585fce74",
+    "retainedHeight": 0.843795
+  },
+  "dm05": {
+    "sha256": "a26c49ac7af67af1b04e0a353221d14472b4681a05f76a6cd71a3c79d02c2bbe",
+    "retainedHeight": 0.835235
+  },
+  "dm06": {
+    "sha256": "e4a862e633c6be37db475c78a33fa5d62794a56ff56d0b3462fcd3a6abe3ab6e",
+    "retainedHeight": 0.830956
+  },
+  "dm07": {
+    "sha256": "8bca7cd6a83d6e31a1ba02dd4bfbad09208cf5041b91a55bd95ab5f0d7d6f753",
+    "retainedHeight": 0.825963
+  },
+  "dm08": {
+    "sha256": "de69135584017f5c607997782c2972ec9e35f89ee9312f0a60ea97f26f6b3381",
+    "retainedHeight": 0.839515
+  },
+  "dm09": {
+    "sha256": "358db0e590feb3175d684209fa5aad1e8846bd58e86134e5aac225a773cc3fb0",
+    "retainedHeight": 0.822397
+  },
+  "dm10": {
+    "sha256": "cfba587ffa26e123c407fe7603f1b0b44b047544107d44e2629bf986a1744909",
+    "retainedHeight": 0.833809
+  },
+  "dm11": {
+    "sha256": "6e0b0cb95fa3e0f60c343346bfc2a9c411fad6ecd3887152ec97be729a439e0b",
+    "retainedHeight": 0.843081
+  },
+  "kr01": {
+    "sha256": "4706acfdcbab8b057f8b6403f881cea6a0cdf1dba1452b2ce2accb459816d6e4",
+    "retainedHeight": 0.882311
+  },
+  "ku01": {
+    "sha256": "cf829526bd3b8988f12d1b78594746b0417d74fa5be87baa7d77aecac4c62feb",
+    "retainedHeight": 0.878745
+  },
+  "ku02": {
+    "sha256": "fef2864491bad9324e2122c0cd5ad44b51bfa173af50d6600587a5566c411a93",
+    "retainedHeight": 0.891583
+  },
+  "ku03": {
+    "sha256": "278692e4c0bb71bc58398e03af0771db36a608a40fa3628619dcdfc0eb114ba6",
+    "retainedHeight": 0.913695
+  },
+  "si01": {
+    "sha256": "f3a8ebd71f943aac04017a8e7a5de4175dbd8f099067fd4e1967a4dcdf9e1f41",
+    "retainedHeight": 0.85378
+  },
+  "si02": {
+    "sha256": "304cfe7d23dc4bd7682aa9686c2a592e964d69566d8f98a71fa82f2fdb07d9de",
+    "retainedHeight": 0.928673
+  },
+  "si03": {
+    "sha256": "4affce61b776533cc2e882ba98622ee3d046f2d4fa5a753b724d9f4d6b969752",
+    "retainedHeight": 0.932953
+  },
+  "nv01": {
+    "sha256": "de0f51aac80f7b048b3337588345789eaa4ca5a06984dd19692f64d7db3cbbc8",
+    "retainedHeight": 0.795292
+  },
+  "nv03": {
+    "sha256": "3275964e48523d2e1b72e3fa3b5dcccc4ff7d11fc2d697c61dbf43b56997adfc",
+    "retainedHeight": 0.805991
+  },
+  "rb02": {
+    "sha256": "b3a9dffcb3560663cb7441c97b2ce12e2e82e9bf306d2e9b86ff959e7ad4a9c6",
+    "retainedHeight": 0.810271
+  },
+  "rb03": {
+    "sha256": "e304c816ebbceaa4b2f5d2f46fea3d2252c0239654b5372e71ed15932b31e2ab",
+    "retainedHeight": 0.829529
+  },
+  "rb05": {
+    "sha256": "9582abe944629dbda0899ce60b9cdafa02b6b055a3d076ae2f9d57e678bea935",
+    "retainedHeight": 0.82525
+  },
+  "rb06": {
+    "sha256": "8885d4c68cc03cfb7873b70aa5060839963392564bd925c7f2311510300fa519",
+    "retainedHeight": 0.826676
+  },
+  "sp04": {
+    "sha256": "e20e50340d46896e4930901f986dec46fee4b97e46a118157792ba1b06439287",
+    "retainedHeight": 0.851641
+  },
+  "br02": {
+    "sha256": "104a1169dc818e7a15993e9e35de3f21f98de0aa8fe2fd140423ad8255ad8ea5",
+    "retainedHeight": 0.833096
+  },
+  "mg07": {
+    "sha256": "14036667dfa11eb0f1d34f81454031767fe281c1664f05c547c3e1d710ccfed8",
+    "retainedHeight": 0.860913
+  },
+  "su01": {
+    "sha256": "84d232892fa582fe4b79e7360c605f46e880c4a2b72bef8d75ad583d242b1459",
+    "retainedHeight": 0.813837
+  },
+  "sa03": {
+    "sha256": "a287fa72c19ed97bdcd5873c121d1ae4e0f8859c613ed4ac3b842e25f0af1d8c",
+    "retainedHeight": 0.840228
+  },
+  "dm12": {
+    "sha256": "2db3262d6f5d7bf469a166bf1ea087b00a8b293a8ed53c9c4b7a9b6d71438851",
+    "retainedHeight": 0.838088
+  },
+  "kr02": {
+    "sha256": "e16041683470d351d761f6aeb29eb2f8894d078192391606902d90b5488123a8",
+    "retainedHeight": 0.864479
+  },
+  "sp01": {
+    "sha256": "3764a74f8dbe1e157c230529a3f7857ebda8c1614e2feac11f26014637dc2990",
+    "retainedHeight": 0.81883
+  },
+  "sp03": {
+    "sha256": "aef480e276677349638c81a96a04eeed10eb8518e61723cb5de5e45cbd64ddab",
+    "retainedHeight": 0.798146
+  },
+  "br01": {
+    "sha256": "a814ea3c382a628a9ef0699defdba2614fe5b0bb4cd889027cf6ea228a710baa",
+    "retainedHeight": 0.82311
+  },
+  "br03": {
+    "sha256": "f80ae551d65fd245ebd09879254e84ce20d74c64768c54ccbb53789f265622f5",
+    "retainedHeight": 0.826676
+  },
+  "br04": {
+    "sha256": "2e25cc5203b4166745c80d9605ae04db71c4b13f00d46ffef53d60be667ded5f",
+    "retainedHeight": 0.796719
+  },
+  "br05": {
+    "sha256": "9398aac40cdb56962b128964fcc7c7ab3798bbd388def26101461fd297b845f4",
+    "retainedHeight": 0.818117
+  },
+  "br06": {
+    "sha256": "8556287754c17cef581f8aa8aea43e78d21a2d917e1565455bc2759dd7f1ac8b",
+    "retainedHeight": 0.850927
+  },
+  "br07": {
+    "sha256": "8380455f9e1a5a2e0b521ba4dcbe6c2f761ea874139c49a2393a3a0b01480e60",
+    "retainedHeight": 0.840942
+  },
+  "cg02": {
+    "sha256": "5470245224e74018a544df341a639dc763b97ead5d7b99952b6236da18ac990c",
+    "retainedHeight": 0.812411
+  },
+  "cg04": {
+    "sha256": "234e55f6ef0c244dbffa5940c59232c0fca5e0daa887e4d7e48985604c4424b1",
+    "retainedHeight": 0.848787
+  },
+  "cg05": {
+    "sha256": "a0d119c03244a97de8515f9945d965b2c394495a1dc32dfa68310a705e426cbb",
+    "retainedHeight": 0.823823
+  },
+  "sk01": {
+    "sha256": "54a416aa5e02d2f84c0a552404c5ef081f095c192a89b7c02671e60b4eb4b5b7",
+    "retainedHeight": 0.82311
+  },
+  "sk02": {
+    "sha256": "d724261018c7d3e9627a38c6b5b16c680fcd7243e866b2c02db2b1623f37c082",
+    "retainedHeight": 0.849501
+  },
+  "sk03": {
+    "sha256": "8ade04f9738b6cb17ea1acbc8313d3f45fea78d42dbe0a60dc60d4ae09359121",
+    "retainedHeight": 0.824536
+  },
+  "sk05": {
+    "sha256": "4e4f75e910e618e989e563897c4bb1f36d004c64bc91047065d7ac7e2ab130bc",
+    "retainedHeight": 0.86234
+  },
+  "mg01": {
+    "sha256": "accf97c09510e4136da2eb31dadae8506b0715cc150e61e5df2f110a8f81344e",
+    "retainedHeight": 0.847361
+  },
+  "mg02": {
+    "sha256": "5933c9e895e436a100fa26338cb3a0d11f108c0e8b9eddba7970a4231039788e",
+    "retainedHeight": 0.810984
+  },
+  "mg04": {
+    "sha256": "ffd22ea1a4ddca0ff3bbe7aee91f6b2f8592cfeb819034bb3d5c9aa7f01d4547",
+    "retainedHeight": 0.815264
+  },
+  "mg05": {
+    "sha256": "f4563514fe959a911837767ec96a173933b37d5a0352f5feac2d854d49482a83",
+    "retainedHeight": 0.856633
+  },
+  "su02": {
+    "sha256": "6eb43e0c185e59d4edb55476bdb2a2734b76caa7bb8af332e2d4057387c847b0",
+    "retainedHeight": 0.811698
+  },
+  "su03": {
+    "sha256": "2385d68fc8d7b563679adac0c05080d6e3a488ce1ac35912814e0033f44d21da",
+    "retainedHeight": 0.809558
+  },
+  "su04": {
+    "sha256": "9bb09ef8458c573ba33940178e45433c127b5e728754efe841b4ea1ed08b4703",
+    "retainedHeight": 0.820257
+  },
+  "sa01": {
+    "sha256": "d3d2669ebac575ef6885e8a6a3cde2cdbc0a95b8911b3f4384933bc7adc454b2",
+    "retainedHeight": 0.855207
+  },
+  "sa04": {
+    "sha256": "6128d1e7ca6c1f7e578ead18dfc4a803d80ec6f4a62212e9b3808179adc2a19e",
+    "retainedHeight": 0.846648
+  },
+  "sa05": {
+    "sha256": "3a99d197a02c6ceb5a4d4e2dc3c1fc8d758da83044963f3f173590eceac6fb8e",
+    "retainedHeight": 0.835949
+  },
+  "sa06": {
+    "sha256": "4f2704c74ee707aafd747b0ff9b07761a5850ff4742580b4ba76cae5a49a1141",
+    "retainedHeight": 0.831669
+  },
+  "sa08": {
+    "sha256": "b813a5c986a826f2288cf0d423c3620706f778d5d1989bfdeadc1a9199852263",
+    "retainedHeight": 0.824536
+  },
+  "cg01": {
+    "sha256": "2b3672dc4af9b8855d2beff4fd101551403d36b399508e0732d8dd367d9d6ccf",
+    "retainedHeight": 0.828816
+  },
+  "cg03": {
+    "sha256": "722c196492c59dfe6ef4f24b08f19967c0ea1762f8c523d5768701a4d2576e88",
+    "retainedHeight": 0.837375
+  },
+  "sp02": {
+    "sha256": "a3a486e7d51a78c8ca72d44534614309e6fdd339f54b6efa5f8e5fd900e99492",
+    "retainedHeight": 0.814551
+  },
+  "sk04": {
+    "sha256": "a4c6d56f7ad21192cf067493d5afb6058837ead5c2a0242b19ec98f45e8cdfc5",
+    "retainedHeight": 0.815977
+  },
+  "mg03": {
+    "sha256": "52d829c8945082ab4ce8e07df7dc12bf8267829d291fed17669a09f7287d42ea",
+    "retainedHeight": 0.838802
+  },
+  "mg06": {
+    "sha256": "5cbafa7e4bb1c0c9cf155de444e9d468ab843ae27aa3e0ec42b8ba67a86d8701",
+    "retainedHeight": 0.780314
+  },
+  "su06": {
+    "sha256": "b74021e9887443c7414892fbbce731dc477e17ccf649f0f9bc4d69049daae562",
+    "retainedHeight": 0.840228
+  },
+  "su07": {
+    "sha256": "335a51f8170520af9a9b43c471cfce309d8ba4d1e557883f3c46537583160604",
+    "retainedHeight": 0.825963
+  },
+  "sa02": {
+    "sha256": "3c5e9a16ed696005b32bdcc5aeff4034013eaee8366b9294b701bbc2bcc9da39",
+    "retainedHeight": 0.817404
+  },
+  "sa07": {
+    "sha256": "8051c24b30038201db8629ef4a0628b7811770dcedaa38f02c72fca011b687e1",
+    "retainedHeight": 0.837375
+  },
+  "sn02": {
+    "sha256": "0c91623f1c5ec091f78725477fdfebbf260e49b37c01eca9386722c8c59b92a9",
+    "retainedHeight": 0.849501
+  },
+  "sn03": {
+    "sha256": "ca2e23ca7acf4274c43d9ed5f5c934042be5ef99a6b715bb740e0b3428d50f49",
+    "retainedHeight": 0.828103
+  },
+  "sn05": {
+    "sha256": "3894c816d24b13ca53c3db2d04cdc7d2183dfeedfdd1d6cb9a28851b5db8d19a",
+    "retainedHeight": 0.834522
+  },
+  "sn06": {
+    "sha256": "5754c46e4b6e60cb7a233685897ed67f2318a262990893b775fc55797fff7483",
+    "retainedHeight": 0.827389
+  },
+  "sn11": {
+    "sha256": "dc57dab27bbce1cf8a1f3972c7137f4e9832b867aca2c5104b6af5392ae67d94",
+    "retainedHeight": 0.830243
+  },
+  "sn14": {
+    "sha256": "49c4388db2197504b3fe92180b65100c2cda63095ca746ad02425e6f4aa49eb0",
+    "retainedHeight": 0.840942
+  },
+  "rb07": {
+    "sha256": "dc8ab536245261bb3d45ad4ea5ed8fed4203a702fc29a4a9faef01322fcbaea9",
+    "retainedHeight": 0.848074
+  },
+  "nv02": {
+    "sha256": "942461738e5146ce9de3adb6f9e0ba35b4ff63e1696a13d129a3622ca34059c2",
+    "retainedHeight": 0.863053
+  },
+  "sn01": {
+    "sha256": "d1825a88b72885f51b509a6f79a21d2a3a9a85f142b7a93e64b5da95e00d94eb",
+    "retainedHeight": 0.854494
+  },
+  "sn04": {
+    "sha256": "409aa3304353321f004bbd6a9f5fb87f066cc3de091c851f612b697f50d59be1",
+    "retainedHeight": 0.85806
+  },
+  "sn12": {
+    "sha256": "a6bdb5ddf30336b5e8d7576517a0448b76bc49105c9a517f0c2ed92901f77e10",
+    "retainedHeight": 0.868759
+  },
+  "su05": {
+    "sha256": "9a2390db3b711bb1841b6567f8451984a7280edce278de675f68e7675030e9f4",
+    "retainedHeight": 0.808131
+  },
+  "sn08": {
+    "sha256": "3f9eaf79303ed2543040390222a5aaf5a5dafbd7f93a80d7888cf6a6dabb9c25",
+    "retainedHeight": 0.819544
+  },
+  "sn10": {
+    "sha256": "5adc63836e31edb242bd4a73d892fbd1046d835cd1ea21c719fec2422d1249d9",
+    "retainedHeight": 0.821683
+  },
+  "sn13": {
+    "sha256": "dd048504f52a14ad441d379e63e059a5237188171579e431198de84f9855b696",
+    "retainedHeight": 0.833096
+  },
+  "rb04": {
+    "sha256": "37898478d014a18531c625fef30730bd4d71a21e4f3aae22292a3c2ab472a668",
+    "retainedHeight": 0.832382
+  },
+  "sn07": {
+    "sha256": "f148dd320f8098658e3eec6e1eb5c346bebaca7064672e617bb9ad121a6fba2c",
+    "retainedHeight": 0.8602
+  },
+  "sn09": {
+    "sha256": "6605f130b3b4189acfbe183d06501b085118c67b19880c3a5d5f647979f70360",
+    "retainedHeight": 0.866619
+  },
+  "rb01": {
+    "sha256": "cd0877494ba816bdd3cd6aed434fafbdfc97808ea253217f32f8afa353077795",
+    "retainedHeight": 0.836662
   }
 }

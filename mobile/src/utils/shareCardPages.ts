@@ -110,6 +110,8 @@ export type ProsePageBlock = {
 };
 
 export type ProsePage = {
+  /** An illustrated scene card; narration follows on ordinary prose cards. */
+  illustration?: { art: string; label: string };
   /** Only page 1 carries the title. */
   title: string | null;
   blocks: ProsePageBlock[];

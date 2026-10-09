@@ -1,0 +1,162 @@
+{
+  "id": "durga-suratha-samadhi",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "story",
+  "coverArt": "su06",
+  "title": {
+    "en": "Suratha and Samadhi Seek the Mother",
+    "hi": "सुरथ और समाधि की माँ से प्रार्थना",
+    "gu": "સુરથ અને સમાધિની માને પ્રાર્થના",
+    "kn": "ಸುರಥ ಮತ್ತು ಸಮಾಧಿಯ ಮಾತೆಗೆ ಪ್ರಾರ್ಥನೆ"
+  },
+  "description": {
+    "en": "A king and a merchant discover why their hearts still care, and ask the Goddess for different blessings.",
+    "hi": "राजा और व्यापारी अपने मन का लगाव समझते हैं और देवी से अलग वर माँगते हैं।",
+    "gu": "રાજા અને વેપારી પોતાના મનનો લગાવ સમજે છે અને દેવી પાસે જુદા વર માગે છે.",
+    "kn": "ರಾಜ ಮತ್ತು ವ್ಯಾಪಾರಿ ಮನದ ಮಮತೆಯನ್ನು ಅರಿತು ದೇವಿಯ ಬಳಿ ಬೇರೆ ವರಗಳನ್ನು ಕೇಳುತ್ತಾರೆ."
+  },
+  "sourceNote": {
+    "en": "An original children’s retelling of Devi Mahatmya 1 and 13. Severe fasting and self-blood offerings are omitted. Their worship lasts three years; the takeaway is editorial.",
+    "hi": "देवी माहात्म्य 1 और 13 का बच्चों के लिए मौलिक रूपांतरण। कठोर उपवास और अपने रक्त की भेंट का विवरण हटाया है। उनकी उपासना तीन वर्ष चलती है; सीख संपादकीय है।",
+    "gu": "દેવી માહાત્મ્ય 1 અને 13નું બાળકો માટે મૌલિક રૂપાંતર. કઠોર ઉપવાસ અને પોતાના રક્તની ભેટનો વર્ણન ટાળ્યો છે. તેમની ઉપાસના ત્રણ વર્ષ ચાલે છે; શીખ સંપાદકીય છે.",
+    "kn": "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 1 ಮತ್ತು 13ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಕಠಿಣ ಉಪವಾಸ ಮತ್ತು ಸ್ವರಕ್ತ ಅರ್ಪಣೆಯ ವಿವರಗಳನ್ನು ಕೈಬಿಡಲಾಗಿದೆ. ಅವರ ಆರಾಧನೆ ಮೂರು ವರ್ಷ ನಡೆಯುತ್ತದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "When feelings puzzle us, asking thoughtful questions can begin a journey of understanding.",
+    "hi": "भावनाएँ उलझाएँ तो विचारपूर्वक प्रश्न पूछना समझ की यात्रा शुरू कर सकता है।",
+    "gu": "લાગણીઓ ગૂંચવે ત્યારે વિચારપૂર્વક પ્રશ્નો પૂછવાથી સમજણની સફર શરૂ થઈ શકે છે.",
+    "kn": "ಭಾವನೆಗಳು ಗೊಂದಲಗೊಳಿಸಿದಾಗ ವಿಚಾರಪೂರ್ಣ ಪ್ರಶ್ನೆಗಳು ಅರಿವಿನ ಪಯಣ ಆರಂಭಿಸಬಲ್ಲವು."
+  },
+  "source": {
+    "baseText": "Devi Mahatmya 1.1–54 and 13; Markandeya Purana, Pargiter (1904), cantos 81 and 93",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/durga700.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117155.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117175.html"
+    ],
+    "notes": "King loses battle and ministers seize wealth; merchant expelled by greedy family. Shared attachment and Medhas explanation retained, followed by three years of worship, separate petitions, and separate boons. Suratha regains kingdom and will become Savarni Manu in another birth; Samadhi receives knowledge, not a returned fortune. Medhas’s other Goddess narratives are acknowledged without reproducing all three episodes here."
+  },
+  "pages": [
+    {
+      "id": "suratha-reaches-the-hermitage",
+      "art": "su01",
+      "source": "Devi Mahatmya 1.1–12",
+      "title": {
+        "en": "A King Loses His Realm",
+        "hi": "राजा ने राज्य खोया",
+        "gu": "રાજાએ રાજ્ય ગુમાવ્યું",
+        "kn": "ರಾಜ ರಾಜ್ಯ ಕಳೆದುಕೊಂಡನು"
+      },
+      "text": {
+        "en": "King Suratha lost a battle. Back in his city, untrustworthy ministers took his wealth and power. He rode into the forest and reached sage Medhas’s peaceful hermitage. Even there, he kept worrying about the kingdom and people he had left.",
+        "hi": "राजा सुरथ युद्ध हार गए। नगर लौटे तो बेईमान मंत्रियों ने धन और अधिकार छीन लिए। वे वन में गए और ऋषि मेधस के शांत आश्रम पहुँचे। वहाँ भी उन्हें अपने राज्य और पीछे रह गए लोगों की चिंता थी।",
+        "gu": "રાજા સુરથ યુદ્ધ હારી ગયા. નગરમાં પાછા આવતાં બેઈમાન મંત્રીઓએ ધન અને સત્તા છીનવી લીધાં. તેઓ વનમાં ગયા અને ઋષિ મેધસના શાંત આશ્રમે પહોંચ્યા. ત્યાં પણ તેમને રાજ્ય અને પાછળ રહેલા લોકોની ચિંતા હતી.",
+        "kn": "ರಾಜ ಸುರಥ ಯುದ್ಧದಲ್ಲಿ ಸೋತನು. ನಗರಕ್ಕೆ ಮರಳಿದಾಗ ವಿಶ್ವಾಸವಿಲ್ಲದ ಮಂತ್ರಿಗಳು ಅವನ ಸಂಪತ್ತು ಮತ್ತು ಅಧಿಕಾರ ಕಸಿದರು. ಕಾಡಿಗೆ ತೆರಳಿ ಋಷಿ ಮೇಧಸರ ಶಾಂತ ಆಶ್ರಮ ತಲುಪಿದನು. ಅಲ್ಲಿಯೂ ತನ್ನ ರಾಜ್ಯ ಮತ್ತು ಹಿಂದೆ ಉಳಿದ ಜನರ ಬಗ್ಗೆ ಚಿಂತಿಸಿದನು."
+      }
+    },
+    {
+      "id": "a-merchant-with-the-same-worry",
+      "art": "su02",
+      "source": "Devi Mahatmya 1.13–26",
+      "title": {
+        "en": "A Merchant’s Sorrow",
+        "hi": "व्यापारी का दुख",
+        "gu": "વેપારીનું દુઃખ",
+        "kn": "ವ್ಯಾಪಾರಿಯ ದುಃಖ"
+      },
+      "text": {
+        "en": "Suratha met a merchant named Samadhi. His greedy family had taken his wealth and sent him away. Yet Samadhi still worried about them. Suratha too cared about those who had driven him out. Both were surprised by their own hearts.",
+        "hi": "सुरथ को समाधि नाम के व्यापारी मिले। लालची परिवार ने उनका धन लेकर उन्हें निकाल दिया था। फिर भी समाधि को उनकी चिंता थी। सुरथ भी निकालने वालों की चिंता करते थे। दोनों अपने मन के लगाव से आश्चर्य में थे।",
+        "gu": "સુરથને સમાધિ નામના વેપારી મળ્યા. લોભી પરિવારે તેમનું ધન લઈને તેમને કાઢી મૂક્યા હતા. છતાં સમાધિને તેમની ચિંતા હતી. સુરથ પણ કાઢી મૂકનારની ચિંતા કરતા હતા. બંને પોતાના મનના લગાવથી આશ્ચર્યમાં હતા.",
+        "kn": "ಸುರಥ ಸಮಾಧಿ ಎಂಬ ವ್ಯಾಪಾರಿಯನ್ನು ಭೇಟಿಯಾದನು. ಲೋಭದ ಕುಟುಂಬ ಅವನ ಸಂಪತ್ತು ಪಡೆದು ಹೊರಹಾಕಿತ್ತು. ಆದರೂ ಸಮಾಧಿ ಅವರ ಬಗ್ಗೆ ಚಿಂತಿಸುತ್ತಿದ್ದನು. ಸುರಥನಿಗೂ ತನ್ನನ್ನು ಹೊರಹಾಕಿದವರ ಬಗ್ಗೆ ಕಾಳಜಿಯಿತ್ತು. ಇಬ್ಬರಿಗೂ ತಮ್ಮ ಮನಸ್ಸಿನ ಮಮತೆ ಆಶ್ಚರ್ಯವೆನಿಸಿತು."
+      }
+    },
+    {
+      "id": "a-question-for-medhas",
+      "art": "su03",
+      "source": "Devi Mahatmya 1.27–40",
+      "title": {
+        "en": "Why Do We Still Care?",
+        "hi": "मन का लगाव क्यों?",
+        "gu": "મનનો લગાવ કેમ?",
+        "kn": "ಮನದ ಮಮತೆ ಏಕೆ?"
+      },
+      "text": {
+        "en": "Together they approached Medhas respectfully. They knew they had been treated unfairly, yet their minds kept returning to their homes. They asked why knowing the truth had not freed them from attachment. The sage listened to both visitors.",
+        "hi": "दोनों आदर से मेधस के पास गए। वे जानते थे कि उनके साथ अन्याय हुआ, फिर भी मन बार-बार घर लौटता था। उन्होंने पूछा कि सच जानकर भी लगाव क्यों नहीं मिटा। ऋषि ने दोनों की बात सुनी।",
+        "gu": "બંને આદરથી મેધસ પાસે ગયા. તેઓ જાણતા હતા કે તેમની સાથે અન્યાય થયો, છતાં મન વારંવાર ઘર તરફ જતું હતું. તેમણે પૂછ્યું કે સત્ય જાણ્યા પછી પણ લગાવ કેમ ન મટ્યો. ઋષિએ બંનેની વાત સાંભળી.",
+        "kn": "ಇಬ್ಬರೂ ಗೌರವದಿಂದ ಮೇಧಸರ ಬಳಿಗೆ ಹೋದರು. ತಮ್ಮೊಂದಿಗೆ ಅನ್ಯಾಯವಾಗಿದೆ ಎಂದು ತಿಳಿದಿದ್ದರೂ ಮನಸ್ಸು ಮತ್ತೆ ಮನೆಗೆ ಮರಳುತ್ತಿತ್ತು. ಸತ್ಯ ತಿಳಿದ ಮೇಲೂ ಮಮತೆ ಏಕೆ ಬಿಡಲಿಲ್ಲ ಎಂದು ಕೇಳಿದರು. ಋಷಿ ಇಬ್ಬರ ಮಾತನ್ನೂ ಕೇಳಿದರು."
+      }
+    },
+    {
+      "id": "the-sage-explains",
+      "art": "su04",
+      "source": "Devi Mahatmya 1.41–54; 13.1–5",
+      "title": {
+        "en": "The Sage Helps Them Understand",
+        "hi": "ऋषि ने समझाया",
+        "gu": "ઋષિએ સમજાવ્યું",
+        "kn": "ಋಷಿಯ ವಿವರಣೆ"
+      },
+      "text": {
+        "en": "Medhas spoke of birds feeding their young and the bonds felt by living beings. He explained the Goddess’s power of maya, which can draw even the wise into attachment. He told them of her greatness. Suratha and Samadhi wished to worship her.",
+        "hi": "मेधस ने बच्चों को खिलाते पक्षियों और जीवों के लगाव की बात कही। उन्होंने देवी की माया समझाई, जो ज्ञानियों को भी मोह में ला सकती है। उन्होंने देवी की महिमा सुनाई। सुरथ और समाधि उनकी उपासना करना चाहते थे।",
+        "gu": "મેધસે બચ્ચાંને ખવડાવતા પક્ષીઓ અને જીવોના લગાવની વાત કરી. તેમણે દેવીની માયા સમજાવી, જે જ્ઞાનીઓને પણ મોહમાં લાવી શકે છે. તેમણે દેવીનો મહિમા સંભળાવ્યો. સુરથ અને સમાધિ તેમની ઉપાસના કરવા ઇચ્છતા હતા.",
+        "kn": "ಮೇಧಸರು ಮರಿಗಳಿಗೆ ಆಹಾರ ನೀಡುವ ಹಕ್ಕಿಗಳು ಮತ್ತು ಜೀವಿಗಳ ಮಮತೆಯ ಕುರಿತು ಹೇಳಿದರು. ಜ್ಞಾನಿಗಳನ್ನೂ ಬಂಧಿಸುವ ದೇವಿಯ ಮಾಯಾಶಕ್ತಿಯನ್ನು ವಿವರಿಸಿದರು. ಆಕೆಯ ಮಹಿಮೆಯನ್ನು ಹೇಳಿದಾಗ ಸುರಥ ಮತ್ತು ಸಮಾಧಿ ಆಕೆಯನ್ನು ಆರಾಧಿಸಲು ಬಯಸಿದರು."
+      }
+    },
+    {
+      "id": "three-years-of-devotion",
+      "art": "su05",
+      "source": "Devi Mahatmya 13.6–11",
+      "title": {
+        "en": "Devotion by the River",
+        "hi": "नदी किनारे उपासना",
+        "gu": "નદીકાંઠે ઉપાસના",
+        "kn": "ನದಿಯ ಬಳಿಯ ಆರಾಧನೆ"
+      },
+      "text": {
+        "en": "At a riverbank, they made an earthen image of the Goddess. They offered flowers, incense and water, and remembered her with devotion. Their worship continued for three years. Then the Mother appeared before them, pleased with their devotion.",
+        "hi": "नदी किनारे उन्होंने मिट्टी की देवी-प्रतिमा बनाई। फूल, धूप और जल अर्पित किए और भक्ति से स्मरण किया। उनकी उपासना तीन वर्ष चलती रही। तब उनकी भक्ति से प्रसन्न माँ उनके सामने प्रकट हुईं।",
+        "gu": "નદીકાંઠે તેમણે માટીની દેવીપ્રતિમા બનાવી. ફૂલ, ધૂપ અને જળ અર્પણ કરીને ભક્તિથી સ્મરણ કર્યું. તેમની ઉપાસના ત્રણ વર્ષ ચાલતી રહી. પછી તેમની ભક્તિથી પ્રસન્ન મા તેમની સામે પ્રગટ થયાં.",
+        "kn": "ನದಿಯ ತೀರದಲ್ಲಿ ದೇವಿಯ ಮಣ್ಣಿನ ಪ್ರತಿಮೆ ಮಾಡಿದರು. ಹೂವು, ಧೂಪ ಮತ್ತು ನೀರು ಅರ್ಪಿಸಿ ಭಕ್ತಿಯಿಂದ ನೆನೆದರು. ಅವರ ಆರಾಧನೆ ಮೂರು ವರ್ಷ ಮುಂದುವರಿಯಿತು. ಆಗ ಅವರ ಭಕ್ತಿಗೆ ಮೆಚ್ಚಿದ ಮಾತೆ ಅವರ ಮುಂದೆ ಪ್ರತ್ಯಕ್ಷಳಾದಳು."
+      }
+    },
+    {
+      "id": "two-different-wishes",
+      "art": "su06",
+      "source": "Devi Mahatmya 13.12–16",
+      "title": {
+        "en": "Two Different Wishes",
+        "hi": "दो अलग इच्छाएँ",
+        "gu": "બે જુદી ઇચ્છાઓ",
+        "kn": "ಎರಡು ಬೇರೆ ಆಶೆಗಳು"
+      },
+      "text": {
+        "en": "The Goddess invited them to ask for blessings. Suratha wished to regain his kingdom and have a steadfast royal future. Samadhi asked for knowledge that would free him from the feelings of “I” and “mine.” The Mother heard each request.",
+        "hi": "देवी ने वर माँगने को कहा। सुरथ ने राज्य वापस पाने और आगे स्थिर राजकीय स्थान की इच्छा की। समाधि ने ऐसा ज्ञान माँगा जो “मैं” और “मेरा” के बंधन से मुक्त करे। माँ ने दोनों की अलग प्रार्थना सुनी।",
+        "gu": "દેવીએ વર માગવા કહ્યું. સુરથે રાજ્ય પાછું મેળવવા અને આગળ સ્થિર રાજકીય સ્થાનની ઇચ્છા કરી. સમાધિએ “હું” અને “મારું”ના બંધનથી મુક્ત કરતું જ્ઞાન માગ્યું. માએ બંનેની જુદી પ્રાર્થના સાંભળી.",
+        "kn": "ದೇವಿ ವರ ಕೇಳಲು ತಿಳಿಸಿದಳು. ಸುರಥ ತನ್ನ ರಾಜ್ಯವನ್ನು ಮರಳಿ ಪಡೆಯಲು ಮತ್ತು ಮುಂದೆ ಸ್ಥಿರ ರಾಜಸ್ಥಾನ ಹೊಂದಲು ಬಯಸಿದನು. ಸಮಾಧಿ “ನಾನು” ಮತ್ತು “ನನ್ನದು” ಎಂಬ ಬಂಧನಗಳಿಂದ ಬಿಡಿಸುವ ಜ್ಞಾನ ಕೇಳಿದನು. ಮಾತೆ ಇಬ್ಬರ ಬೇರೆ ಬೇಡಿಕೆಗಳನ್ನು ಕೇಳಿದಳು."
+      }
+    },
+    {
+      "id": "the-mothers-blessings",
+      "art": "su07",
+      "source": "Devi Mahatmya 13.17–29",
+      "title": {
+        "en": "The Mother’s Blessings",
+        "hi": "माँ के वरदान",
+        "gu": "માનાં વરદાન",
+        "kn": "ಮಾತೆಯ ವರಗಳು"
+      },
+      "text": {
+        "en": "The Goddess promised that Suratha would regain his kingdom and later be born as Savarni Manu. She granted Samadhi the liberating knowledge he sought. Then she vanished. Their shared journey had brought each of them a different blessing.",
+        "hi": "देवी ने सुरथ को राज्य वापस मिलने और अगले जन्म में सावर्णि मनु होने का वर दिया। समाधि को माँगा हुआ मुक्ति देने वाला ज्ञान दिया। फिर वे अदृश्य हुईं। साथ की यात्रा में दोनों को अलग वरदान मिला।",
+        "gu": "દેવીએ સુરથને રાજ્ય પાછું મળવાનું અને પછીના જન્મમાં સાવર્ણિ મનુ થવાનું વર આપ્યું. સમાધિને માગેલું મુક્તિ આપનાર જ્ઞાન આપ્યું. પછી તેઓ અદૃશ્ય થયાં. સાથેની સફરમાં બંનેને જુદું વરદાન મળ્યું.",
+        "kn": "ದೇವಿ ಸುರಥನಿಗೆ ರಾಜ್ಯ ಮರಳಿ ಸಿಗುವುದನ್ನೂ ಮುಂದಿನ ಜನ್ಮದಲ್ಲಿ ಸಾವರ್ಣಿ ಮನುವಾಗುವುದನ್ನೂ ವರವಾಗಿ ನೀಡಿದಳು. ಸಮಾಧಿಗೆ ಅವನು ಬಯಸಿದ ಮುಕ್ತಿಯ ಜ್ಞಾನ ನೀಡಿದಳು. ಬಳಿಕ ಅದೃಶ್ಯಳಾದಳು. ಅವರ ಒಟ್ಟಿನ ಪಯಣ ಇಬ್ಬರಿಗೂ ಬೇರೆ ವರ ನೀಡಿತು."
+      }
+    }
+  ]
+}

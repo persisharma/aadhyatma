@@ -1,0 +1,131 @@
+{
+  "id": "durga-chandraghanta",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "story",
+  "coverArt": "cg05",
+  "title": {
+    "en": "Chandraghanta: Parvati’s Wedding",
+    "hi": "चंद्रघंटा: पार्वती का विवाह",
+    "gu": "ચંદ્રઘંટા: પાર્વતીનાં લગ્ન",
+    "kn": "ಚಂದ್ರಘಂಟಾ: ಪಾರ್ವತಿಯ ವಿವಾಹ"
+  },
+  "description": {
+    "en": "Shiva and Parvati marry, and her family celebrates.",
+    "hi": "शिव-पार्वती का विवाह और परिवार का उत्सव।",
+    "gu": "શિવ-પાર્વતીનાં લગ્ન અને પરિવારનો ઉત્સવ.",
+    "kn": "ಶಿವ-ಪಾರ್ವತಿಯ ವಿವಾಹ ಮತ್ತು ಕುಟುಂಬದ ಸಂಭ್ರಮ."
+  },
+  "sourceNote": {
+    "en": "An original child-friendly retelling of a related Shiva Purana episode, followed by its Navadurga connection. The chapter does not itself name this Navadurga form. The takeaway is editorial.",
+    "hi": "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।",
+    "gu": "શિવ પુરાણની સંબંધિત કથાનું બાળકો માટે મૌલિક સરળ રૂપાંતર, પછી નવદુર્ગા રૂપ સાથે તેનો સંબંધ. અધ્યાયમાં આ નવદુર્ગા રૂપનું નામ નથી. શીખ સંપાદકીય છે.",
+    "kn": "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "Listen with care and welcome the people you love with respect.",
+    "hi": "ध्यान से सुनें और प्रियजनों का सम्मान से स्वागत करें।",
+    "gu": "ધ્યાનથી સાંભળો અને પ્રિયજનોનું આદરથી સ્વાગત કરો.",
+    "kn": "ಗಮನದಿಂದ ಕೇಳಿ; ಪ್ರೀತಿಪಾತ್ರರನ್ನು ಗೌರವದಿಂದ ಸ್ವಾಗತಿಸಿ."
+  },
+  "source": {
+    "baseText": "Shiva Purana 2.3.47–48; Navadurga dhyana; Drik Panchang Chandraghanta",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226111.html",
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226112.html",
+      "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%AA%E0%A5%AD",
+      "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%AA%E0%A5%AE",
+      "https://sanskritdocuments.org/doc_devii/navadurga.html",
+      "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-chandraghanta.html"
+    ],
+    "notes": "Full arrival, lineage question, Narada response, joining of hands and celebrations retained. Divine wedding account, not a ritual guide. Chandraghanta connection and ten-armed tiger depiction are attributed devotional tradition, not a claim that the marriage chapter names the form. No invented bell-ringing battle."
+  },
+  "pages": [
+    {
+      "id": "the-wedding-procession",
+      "art": "cg01",
+      "source": "Shiva Purana 2.3.47.14–45",
+      "title": {
+        "en": "A Joyful Arrival",
+        "hi": "आनंदमय आगमन",
+        "gu": "આનંદમય આગમન",
+        "kn": "ಸಂತೋಷದ ಆಗಮನ"
+      },
+      "text": {
+        "en": "The wedding hour arrived. Shiva rode his bull to Himavat’s home, accompanied by devas and sages. Music filled the mountain palace. Himavat and Mena welcomed the groom, and Parvati waited in her wedding clothes.",
+        "hi": "विवाह का समय आया। शिव अपने वृषभ पर देवताओं और ऋषियों के साथ हिमालय के घर पहुँचे। पर्वत-महल संगीत से भर गया। हिमालय और मेना ने वर का स्वागत किया। पार्वती विवाह के वस्त्रों में प्रतीक्षा कर रही थीं।",
+        "gu": "લગ્નનો સમય આવ્યો. શિવ પોતાના વૃષભ પર દેવો અને ઋષિઓ સાથે હિમાલયના ઘરે પહોંચ્યા. પર્વતમહેલ સંગીતથી ભરાયો. હિમાલય અને મેનાએ વરનું સ્વાગત કર્યું. પાર્વતી લગ્નનાં વસ્ત્રોમાં રાહ જોતાં હતાં.",
+        "kn": "ವಿವಾಹದ ಸಮಯ ಬಂತು. ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳೊಂದಿಗೆ ಶಿವ ತನ್ನ ಎತ್ತಿನ ಮೇಲೆ ಹಿಮವಂತನ ಮನೆಗೆ ಬಂದನು. ಪರ್ವತ ಅರಮನೆಯಲ್ಲಿ ಸಂಗೀತ ಮೊಳಗಿತು. ಹಿಮವಂತ ಮತ್ತು ಮೇನಾ ವರನನ್ನು ಸ್ವಾಗತಿಸಿದರು. ಪಾರ್ವತಿ ಮದುವೆಯ ಉಡುಗೆಯಲ್ಲಿ ಕಾಯುತ್ತಿದ್ದಳು."
+      }
+    },
+    {
+      "id": "naradas-explanation",
+      "art": "cg02",
+      "source": "Shiva Purana 2.3.48.6–34",
+      "title": {
+        "en": "Narada and the Vina",
+        "hi": "नारद और वीणा",
+        "gu": "નારદ અને વીણા",
+        "kn": "ನಾರದ ಮತ್ತು ವೀಣೆ"
+      },
+      "text": {
+        "en": "During the ceremony, Himavat asked about Shiva’s family lineage. Shiva remained silent. Narada played his vina and explained that Shiva’s divine nature was beyond an ordinary family history. Himavat listened, and his uncertainty passed.",
+        "hi": "संस्कार के समय हिमालय ने शिव का कुल पूछा। शिव मौन रहे। नारद ने वीणा बजाई और समझाया कि शिव का दिव्य स्वरूप सामान्य वंश-परिचय से परे है। हिमालय ने सुना और उनका संशय दूर हुआ।",
+        "gu": "વિધિ સમયે હિમાલયે શિવનું કુળ પૂછ્યું. શિવ મૌન રહ્યા. નારદે વીણા વગાડી અને સમજાવ્યું કે શિવનું દિવ્ય સ્વરૂપ સામાન્ય વંશપરિચયથી પર છે. હિમાલયે સાંભળ્યું અને તેમની શંકા દૂર થઈ.",
+        "kn": "ವಿಧಿಯ ಸಮಯದಲ್ಲಿ ಹಿಮವಂತ ಶಿವನ ವಂಶದ ಕುರಿತು ಕೇಳಿದನು. ಶಿವ ಮೌನವಾಗಿದ್ದನು. ನಾರದ ವೀಣೆ ನುಡಿಸಿ ಶಿವನ ದಿವ್ಯಸ್ವರೂಪ ಸಾಮಾನ್ಯ ವಂಶಪರಿಚಯಕ್ಕೆ ಮೀರಿದ್ದು ಎಂದು ತಿಳಿಸಿದನು. ಹಿಮವಂತ ಕೇಳಿದನು; ಅವನ ಸಂದೇಹ ದೂರವಾಯಿತು."
+      }
+    },
+    {
+      "id": "hands-joined",
+      "art": "cg03",
+      "source": "Shiva Purana 2.3.48.37–43",
+      "title": {
+        "en": "Hands Joined in Marriage",
+        "hi": "विवाह में जुड़े हाथ",
+        "gu": "લગ્નમાં જોડાયા હાથ",
+        "kn": "ವಿವಾಹದಲ್ಲಿ ಕೈಗಳು ಸೇರಿದವು"
+      },
+      "text": {
+        "en": "With Mena beside him, Himavat placed Parvati’s hand in Shiva’s hand. Shiva accepted it as the wedding ceremony continued. The marriage that Parvati had wished for was celebrated with both her family and the devas present.",
+        "hi": "मेना के साथ हिमालय ने पार्वती का हाथ शिव के हाथ में रखा। शिव ने उनका हाथ स्वीकार किया और विवाह-संस्कार आगे बढ़ा। पार्वती की इच्छा का विवाह परिवार और देवताओं की उपस्थिति में संपन्न हुआ।",
+        "gu": "મેના સાથે હિમાલયે પાર્વતીનો હાથ શિવના હાથમાં મૂક્યો. શિવે તેમનો હાથ સ્વીકાર્યો અને લગ્નવિધિ આગળ વધી. પાર્વતીની ઇચ્છાનાં લગ્ન પરિવાર અને દેવોની હાજરીમાં થયાં.",
+        "kn": "ಮೇನಾ ಜೊತೆ ನಿಂತ ಹಿಮವಂತ ಪಾರ್ವತಿಯ ಕೈಯನ್ನು ಶಿವನ ಕೈಯಲ್ಲಿ ಇಟ್ಟನು. ಶಿವ ಆಕೆಯ ಕೈ ಸ್ವೀಕರಿಸಿದನು; ವಿವಾಹ ವಿಧಿ ಮುಂದುವರಿಯಿತು. ಪಾರ್ವತಿ ಬಯಸಿದ್ದ ವಿವಾಹ ಕುಟುಂಬ ಮತ್ತು ದೇವತೆಗಳ ಸಮ್ಮುಖದಲ್ಲಿ ನೆರವೇರಿತು."
+      }
+    },
+    {
+      "id": "family-celebrates",
+      "art": "cg04",
+      "source": "Shiva Purana 2.3.48.43–56",
+      "title": {
+        "en": "A Mountain Celebration",
+        "hi": "पर्वत पर उत्सव",
+        "gu": "પર્વત પર ઉત્સવ",
+        "kn": "ಪರ್ವತದಲ್ಲಿ ಸಂಭ್ರಮ"
+      },
+      "text": {
+        "en": "Joy spread through the palace. Celestial musicians sang, dancers danced, and relatives offered gifts. Himavat rejoiced that his daughter’s wish had been fulfilled. Shiva and Parvati’s wedding brought the gathered families, sages and devas together.",
+        "hi": "महल में आनंद फैल गया। दिव्य गायक गाने लगे, नर्तक नाचे और संबंधियों ने भेंट दी। बेटी की इच्छा पूरी होने से हिमालय प्रसन्न थे। शिव-पार्वती के विवाह में परिवार, ऋषि और देवता साथ आए।",
+        "gu": "મહેલમાં આનંદ છવાયો. દિવ્ય ગાયકો ગાવા લાગ્યા, નર્તકો નાચ્યા અને સગાંએ ભેટ આપી. દીકરીની ઇચ્છા પૂરી થતાં હિમાલય પ્રસન્ન હતા. શિવ-પાર્વતીનાં લગ્નમાં પરિવાર, ઋષિઓ અને દેવો સાથે આવ્યા.",
+        "kn": "ಅರಮನೆಯೆಲ್ಲ ಸಂತೋಷ ತುಂಬಿತು. ದಿವ್ಯ ಸಂಗೀತಗಾರರು ಹಾಡಿದರು; ನರ್ತಕರು ನೃತ್ಯ ಮಾಡಿದರು; ಬಂಧುಗಳು ಕಾಣಿಕೆ ನೀಡಿದರು. ಮಗಳ ಆಶೆ ಈಡೇರಿದ್ದಕ್ಕೆ ಹಿಮವಂತ ಸಂತೋಷಪಟ್ಟನು. ಶಿವ-ಪಾರ್ವತಿಯ ವಿವಾಹ ಕುಟುಂಬ, ಋಷಿಗಳು ಮತ್ತು ದೇವತೆಗಳನ್ನು ಸೇರಿಸಿತು."
+      }
+    },
+    {
+      "id": "the-third-form",
+      "art": "cg05",
+      "source": "Navadurga dhyana; Drik Panchang Chandraghanta, Origin and Iconography",
+      "title": {
+        "en": "Meet Chandraghanta",
+        "hi": "चंद्रघंटा का परिचय",
+        "gu": "ચંદ્રઘંટાનો પરિચય",
+        "kn": "ಚಂದ್ರಘಂಟೆಯ ಪರಿಚಯ"
+      },
+      "text": {
+        "en": "Navadurga tradition associates married Parvati with Maa Chandraghanta, honoured on the third day. Her name recalls the bell-shaped crescent on her forehead. She is traditionally pictured with ten arms, riding a tiger, with weapons and hands offering blessings.",
+        "hi": "नवदुर्गा परंपरा विवाहित पार्वती को तीसरे दिन पूजित माँ चंद्रघंटा से जोड़ती है। उनके नाम में मस्तक के घंटाकार अर्धचंद्र का स्मरण है। पारंपरिक चित्रों में दस भुजाएँ, व्याघ्र की सवारी, अस्त्र और आशीर्वाद देती मुद्राएँ हैं।",
+        "gu": "નવદુર્ગા પરંપરા પરિણીત પાર્વતીને ત્રીજા દિવસે પૂજાતાં મા ચંદ્રઘંટા સાથે જોડે છે. તેમનું નામ મસ્તકના ઘંટાકાર અર્ધચંદ્રનું સ્મરણ કરાવે છે. પરંપરાગત ચિત્રોમાં દસ ભુજા, વાઘની સવારી, શસ્ત્રો અને આશીર્વાદ આપતી મુદ્રાઓ છે.",
+        "kn": "ನವದುರ್ಗಾ ಸಂಪ್ರದಾಯ ವಿವಾಹಿತ ಪಾರ್ವತಿಯನ್ನು ಮೂರನೇ ದಿನ ಆರಾಧಿಸುವ ಚಂದ್ರಘಂಟಾ ಮಾತೆಯೊಂದಿಗೆ ಸಂಬಂಧಿಸುತ್ತದೆ. ಆಕೆಯ ಹೆಸರು ಹಣೆಯ ಗಂಟೆಯಾಕಾರದ ಅರ್ಧಚಂದ್ರವನ್ನು ನೆನಪಿಸುತ್ತದೆ. ಸಾಂಪ್ರದಾಯಿಕ ಚಿತ್ರದಲ್ಲಿ ಹತ್ತು ಕೈಗಳು, ಹುಲಿಯ ಸವಾರಿ, ಆಯುಧಗಳು ಮತ್ತು ಆಶೀರ್ವಾದದ ಮುದ್ರೆಗಳಿವೆ."
+      }
+    }
+  ]
+}
