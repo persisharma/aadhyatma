@@ -360,3 +360,7 @@ All 56 story illustrations now have reviewed 78–88% retained-height frames pin
 ## [2026-10-08] ingest | User approves final story spacing for PR update
 
 The user manually inspected the final simulator build, confirmed the appearance and requested commit/PR delivery. Final automated all-page Standard/Large framing coverage remains incomplete and is distinguished from prior native runs in the validation report. Local gates remain 2,973 passing tests and a successful Release build.
+
+## [2026-10-09] ingest | Story image creation and layout guidance for future sections
+
+Added RULEBOOK §29.1, the design.md §76 contract and a copyable story-image-layout request. Removed the contradictory blank-lower-fifth instruction from the active generation template; marked older exact Krishna prompts as historical. All illustrated story sections must review their own geometry/bounds/hash, diagnose inset/padding/letterboxing separately and preserve complete art/readable text with legitimate overflow. Existing 4:5 assumptions and legacy frame percentages are explicit; no runtime or image assets change in this documentation follow-up. Updated [[kids-stories]].

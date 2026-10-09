@@ -13,6 +13,8 @@ For ChatGPT image generation. Current sixteen-scene reader: `docs/kids-stories-p
 
 Reusable guidance for future stories: [`kids-stories-art-style.md`](kids-stories-art-style.md).
 
+**Framing update, 9 October 2026:** the scene prompts below preserve the historical artwork brief. Their blank-lower-fifth and speech-bubble clear-area directions are not the current native story-card contract. For any new/replacement image, use the shared generation template above: compact complete composition, no reserved caption band, and only a narrow natural edge fade. Apply RULEBOOK §29.1 and review that image's actual frame/hash; do not copy a legacy crop percentage.
+
 **Style block (paste at the end of every prompt):**
 
 > Soft Indian devotional storybook illustration with thin warm-grey and brown outlines, graceful expressive almond-shaped eyes, smooth broad pastel fills and minimal gentle cel shading. Muted low-saturation palette: warm ivory parchment, powder-blue divine skin, dusty saffron and terracotta, sage and slate blue-grey water, restrained matte gold. Subtle paper texture, faint washed-out architecture, clear characters and simplified background detail. Devotional, dignified and suitable for children. Convey action through poses and shapes rather than loud colour or theatrical lighting. No heavy black comic outlines, saturated cobalt, vivid orange, photorealism, 3D, ornate borders or dense ornamentation. No text, no letters, no watermark. 4:5 portrait.
