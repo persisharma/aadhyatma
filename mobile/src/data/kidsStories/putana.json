@@ -56,10 +56,10 @@
         "kn": "ಕಂಸನ ಯೋಜನೆ"
       },
       "text": {
-        "hi": "मथुरा का राजा कंस देवकी की आठवीं संतान से डरता था। उसने शिशुओं को हानि पहुँचाने पूतना को भेजा। पूतना खोजते हुए गोकुल पहुँची।",
-        "en": "Mathura's king, Kansa, feared Devaki's eighth child. He sent the demoness Putana to harm babies. Her search brought her to Gokul.",
-        "gu": "મથુરાનો રાજા કંસ દેવકીના આઠમા સંતાનથી ડરતો હતો. તેણે શિશુઓને નુકસાન પહોંચાડવા પૂતનાને મોકલી. શોધ કરતાં પૂતના ગોકુળ પહોંચી.",
-        "kn": "ಮಥುರೆಯ ರಾಜ ಕಂಸ ದೇವಕಿಯ ಎಂಟನೇ ಮಗುವಿಗೆ ಹೆದರಿದ್ದ. ಶಿಶುಗಳಿಗೆ ಹಾನಿಮಾಡಲು ಪೂತನೆಯನ್ನು ಕಳುಹಿಸಿದ. ಹುಡುಕುತ್ತಾ ಅವಳು ಗೋಕುಲಕ್ಕೆ ಬಂದಳು."
+        "hi": "मथुरा के राजा कंस ने सुना था कि देवकी की आठवीं संतान उसका अंत करेगी। डरकर उसने पूतना को शिशुओं को हानि पहुँचाने भेजा। खोजते हुए वह गोकुल पहुँची।",
+        "en": "Kansa, king of Mathura, had heard that Devaki's eighth child would bring his end. Afraid, he sent Putana to harm babies. Her search brought her to Gokul.",
+        "gu": "મથુરાના રાજા કંસે સાંભળ્યું હતું કે દેવકીનું આઠમું સંતાન તેનો અંત લાવશે. ડરીને તેણે પૂતનાને શિશુઓને હાનિ કરવા મોકલી. શોધતાં તે ગોકુળ પહોંચી.",
+        "kn": "ದೇವಕಿಯ ಎಂಟನೇ ಮಗು ತನ್ನ ಅಂತ್ಯಕ್ಕೆ ಕಾರಣವಾಗುತ್ತದೆಂದು ಮಥುರೆಯ ರಾಜ ಕಂಸ ಕೇಳಿದ್ದ. ಭಯದಿಂದ ಶಿಶುಗಳಿಗೆ ಹಾನಿಮಾಡಲು ಪೂತನೆಯನ್ನು ಕಳುಹಿಸಿದ. ಹುಡುಕುತ್ತಾ ಅವಳು ಗೋಕುಲಕ್ಕೆ ಬಂದಳು."
       }
     },
     {
@@ -80,9 +80,26 @@
       }
     },
     {
+      "id": "hidden-danger",
+      "art": "pt07",
+      "source": "Bhagavata Purana 10.6.7–9",
+      "title": {
+        "hi": "छिपा हुआ संकट",
+        "en": "The Hidden Danger",
+        "gu": "છુપાયેલું સંકટ",
+        "kn": "ಅಡಗಿದ್ದ ಅಪಾಯ"
+      },
+      "text": {
+        "hi": "पूतना नन्हे कृष्ण के पास गई और उन्हें उठाया। उसकी मुस्कान के पीछे बुरी इच्छा छिपी थी। सबको वे साधारण शिशु लगते थे, पर कृष्ण उसका उद्देश्य जानते थे।",
+        "en": "Putana approached little Krishna and lifted him. Behind her smile was a harmful purpose. To those around him, Krishna seemed an ordinary baby. But he already knew why she had come.",
+        "gu": "પૂતના નાનકડા કૃષ્ણ પાસે ગઈ અને તેમને ઊંચક્યા. તેના સ્મિત પાછળ ખરાબ ઇરાદો છુપાયો હતો. સૌને તેઓ સામાન્ય શિશુ લાગતા, પણ કૃષ્ણ તેનો હેતુ જાણતા હતા.",
+        "kn": "ಪೂತನೆ ಕೃಷ್ಣನನ್ನು ಎತ್ತಿಕೊಂಡಳು. ನಗುವಿನ ಹಿಂದೆ ಕೆಟ್ಟ ಉದ್ದೇಶವಿತ್ತು. ಕೃಷ್ಣ ಸಾಮಾನ್ಯ ಶಿಶುವಂತೆ ಕಂಡರೂ, ಅವನಿಗೆ ಅವಳ ಉದ್ದೇಶ ತಿಳಿದಿತ್ತು."
+      }
+    },
+    {
       "id": "krishnas-power",
       "art": "pt03",
-      "source": "Bhagavata Purana 10.6.8–12",
+      "source": "Bhagavata Purana 10.6.10",
       "title": {
         "hi": "नन्हे कृष्ण की शक्ति",
         "en": "Krishna's Hidden Power",
@@ -90,27 +107,61 @@
         "kn": "ಪುಟ್ಟ ಕೃಷ್ಣನ ಶಕ್ತಿ"
       },
       "text": {
-        "hi": "पूतना कृष्ण को गोद में लेकर अपने स्तन पर विष लगाकर दूध पिलाने लगी। कृष्ण उसकी इच्छा जानते थे। विष उन्हें हानि नहीं पहुँचा सका; उन्होंने पूतना की प्राणशक्ति खींच ली।",
-        "en": "Putana held Krishna and nursed him with poison smeared on her breast. Krishna knew her purpose. The poison could not harm him; he drew away her life-force.",
-        "gu": "પૂતનાએ કૃષ્ણને ખોળામાં લીધા અને સ્તન પર ઝેર લગાવીને દૂધ પિવડાવવા લાગી. કૃષ્ણ તેનો ઇરાદો જાણતા હતા. ઝેર તેમને હાનિ કરી શક્યું નહીં; તેમણે પૂતનાની પ્રાણશક્તિ ખેંચી લીધી.",
-        "kn": "ಪೂತನೆ ಕೃಷ್ಣನನ್ನು ಮಡಿಲಲ್ಲಿ ಹಿಡಿದು ಸ್ತನಕ್ಕೆ ವಿಷ ಹಚ್ಚಿ ಹಾಲುಣಿಸಿದಳು. ಕೃಷ್ಣನಿಗೆ ಅವಳ ಉದ್ದೇಶ ತಿಳಿದಿತ್ತು. ವಿಷ ಅವನಿಗೆ ಹಾನಿಮಾಡಲಿಲ್ಲ; ಅವನು ಪೂತನೆಯ ಪ್ರಾಣಶಕ್ತಿಯನ್ನು ಸೆಳೆದನು."
+        "hi": "पूतना ने अपने स्तन पर विष लगाया था और कृष्ण को दूध पिलाने लगी। पर नन्हे कृष्ण असहाय नहीं थे। दूध के साथ वे उसकी प्राणशक्ति भी खींचने लगे।",
+        "en": "Putana had smeared poison on her breast and began to nurse Krishna. But little Krishna was not helpless. As he drank, he began drawing away her life-force too.",
+        "gu": "પૂતનાએ પોતાના સ્તન પર ઝેર લગાવ્યું હતું અને કૃષ્ણને દૂધ પિવડાવવા લાગી. પણ નાનકડા કૃષ્ણ અસહાય નહોતા. દૂધ સાથે તેઓ તેની પ્રાણશક્તિ પણ ખેંચવા લાગ્યા.",
+        "kn": "ಪೂತನೆ ತನ್ನ ಸ್ತನಕ್ಕೆ ವಿಷ ಹಚ್ಚಿಕೊಂಡು ಕೃಷ್ಣನಿಗೆ ಹಾಲುಣಿಸಲು ಆರಂಭಿಸಿದಳು. ಆದರೆ ಪುಟ್ಟ ಕೃಷ್ಣ ಅಸಹಾಯಕನಾಗಿರಲಿಲ್ಲ. ಹಾಲಿನ ಜೊತೆಗೆ ಅವಳ ಪ್ರಾಣಶಕ್ತಿಯನ್ನೂ ಸೆಳೆಯತೊಡಗಿದನು."
+      }
+    },
+    {
+      "id": "putanas-cry",
+      "art": "pt08",
+      "source": "Bhagavata Purana 10.6.11–12",
+      "title": {
+        "hi": "पूतना की पुकार",
+        "en": "Putana Cries Out",
+        "gu": "પૂતનાની બૂમ",
+        "kn": "ಪೂತನೆಯ ಕೂಗು"
+      },
+      "text": {
+        "hi": "पूतना घबरा गई। उसने कृष्ण से छोड़ देने की पुकार की और छूटने की कोशिश की। पर उनकी पकड़ नहीं छूटी। उसकी शक्ति घटती गई और उसकी पुकार दूर तक गूँजी।",
+        "en": "Putana became frightened. She cried out for Krishna to let go and tried to pull away. But his hold did not loosen. Her strength faded, and her cry rang far and wide.",
+        "gu": "પૂતના ગભરાઈ ગઈ. તેણે કૃષ્ણને છોડી દેવા બૂમ પાડી અને છૂટવાનો પ્રયત્ન કર્યો. પણ તેમની પકડ છૂટી નહીં. તેની શક્તિ ઘટતી ગઈ અને બૂમ દૂર સુધી ગુંજી.",
+        "kn": "ಪೂತನೆ ಹೆದರಿದಳು. ಕೃಷ್ಣನಿಗೆ ಬಿಡುವಂತೆ ಕೂಗಿ ಬಿಡಿಸಿಕೊಳ್ಳಲು ಪ್ರಯತ್ನಿಸಿದಳು. ಆದರೆ ಅವನ ಹಿಡಿತ ಸಡಿಲವಾಗಲಿಲ್ಲ. ಅವಳ ಶಕ್ತಿ ಕುಗ್ಗುತ್ತಾ ಹೋಯಿತು; ಅವಳ ಕೂಗು ದೂರದವರೆಗೂ ಕೇಳಿಸಿತು."
+      }
+    },
+    {
+      "id": "disguise-falls",
+      "art": "pt09",
+      "source": "Bhagavata Purana 10.6.13–17",
+      "title": {
+        "hi": "वेश मिट गया",
+        "en": "The Disguise Falls Away",
+        "gu": "વેશ દૂર થયો",
+        "kn": "ವೇಷ ಮಾಯವಾಯಿತು"
+      },
+      "text": {
+        "hi": "आखिर पूतना अपने विशाल राक्षसी रूप में आ गई। वह धरती पर गिरी और उसके प्राण चले गए। इतने बड़े संकट के बीच भी नन्हे कृष्ण उसके शरीर पर सुरक्षित खेल रहे थे।",
+        "en": "At last, Putana returned to her enormous demoness form. She fell to the earth and died. Amid this great danger, little Krishna remained unharmed, playing on her body.",
+        "gu": "અંતે પૂતના પોતાના વિશાળ રાક્ષસી રૂપમાં આવી ગઈ. તે ધરતી પર પડી અને તેના પ્રાણ ગયા. આટલા મોટા સંકટ વચ્ચે પણ નાનકડા કૃષ્ણ તેના શરીર પર સુરક્ષિત રમતા હતા.",
+        "kn": "ಕೊನೆಗೆ ಪೂತನೆ ತನ್ನ ದೊಡ್ಡ ರಾಕ್ಷಸಿಯ ರೂಪಕ್ಕೆ ಮರಳಿದಳು. ನೆಲಕ್ಕೆ ಬಿದ್ದು ಪ್ರಾಣಬಿಟ್ಟಳು. ಇಷ್ಟು ದೊಡ್ಡ ಅಪಾಯದ ನಡುವೆಯೂ ಪುಟ್ಟ ಕೃಷ್ಣ ಅವಳ ದೇಹದ ಮೇಲೆ ಸುರಕ್ಷಿತವಾಗಿ ಆಟವಾಡುತ್ತಿದ್ದನು."
       }
     },
     {
       "id": "danger-ends",
       "art": "pt04",
-      "source": "Bhagavata Purana 10.6.13–18",
+      "source": "Bhagavata Purana 10.6.18–19",
       "title": {
-        "hi": "संकट का अंत",
-        "en": "The Danger Ends",
-        "gu": "સંકટનો અંત",
-        "kn": "ಅಪಾಯದ ಅಂತ್ಯ"
+        "hi": "कृष्ण सुरक्षित हैं",
+        "en": "Krishna Is Safe",
+        "gu": "કૃષ્ણ સુરક્ષિત છે",
+        "kn": "ಕೃಷ್ಣ ಸುರಕ್ಷಿತನಾಗಿದ್ದಾನೆ"
       },
       "text": {
-        "hi": "पूतना का छिपा रूप मिट गया। वह विशाल राक्षसी के रूप में धरती पर गिरी और उसके प्राण चले गए। कृष्ण सुरक्षित थे। गोपियाँ दौड़कर आईं और उन्हें उठा लिया।",
-        "en": "Putana's disguise vanished. In her enormous demoness form she fell to the ground and died. Krishna remained unharmed. The village women hurried over and lifted him into their arms.",
-        "gu": "પૂતનાનો છુપો વેશ દૂર થયો. વિશાળ રાક્ષસીના રૂપમાં તે ધરતી પર પડી અને તેના પ્રાણ ગયા. કૃષ્ણ સુરક્ષિત હતા. ગોપીઓ દોડી આવી અને તેમને ઊંચકી લીધા.",
-        "kn": "ಪೂತನೆಯ ವೇಷ ಮಾಯವಾಯಿತು. ದೊಡ್ಡ ರಾಕ್ಷಸಿಯ ರೂಪದಲ್ಲಿ ಅವಳು ನೆಲಕ್ಕೆ ಬಿದ್ದು ಪ್ರಾಣಬಿಟ್ಟಳು. ಕೃಷ್ಣ ಸುರಕ್ಷಿತವಾಗಿದ್ದ. ಗೋಪಿಯರು ಓಡಿಬಂದು ಅವನನ್ನು ಎತ್ತಿಕೊಂಡರು."
+        "hi": "गोपियाँ कृष्ण को देखकर दौड़ीं। यशोदा और रोहिणी ने भी राहत की साँस ली। उन्होंने नन्हे कृष्ण को पूतना के शरीर से उठाया और अपनी गोद में सुरक्षित ले लिया।",
+        "en": "The village women saw Krishna and hurried to him. Yashoda and Rohini were relieved too. They lifted him from Putana’s body and took him safely into their arms.",
+        "gu": "ગોપીઓ કૃષ્ણને જોઈને દોડી આવી. યશોદા અને રોહિણીએ પણ રાહતનો શ્વાસ લીધો. તેમણે નાનકડા કૃષ્ણને પૂતનાના શરીર પરથી ઊંચકીને સુરક્ષિત ખોળામાં લીધા.",
+        "kn": "ಗೋಪಿಯರು ಕೃಷ್ಣನನ್ನು ಕಂಡು ಓಡಿಬಂದರು. ಯಶೋದೆ ಮತ್ತು ರೋಹಿಣಿಗೂ ನೆಮ್ಮದಿಯಾಯಿತು. ಅವನನ್ನು ಪೂತನೆಯ ದೇಹದಿಂದ ಎತ್ತಿ ಸುರಕ್ಷಿತವಾಗಿ ತಮ್ಮ ಮಡಿಲಲ್ಲಿ ಹಿಡಿದರು."
       }
     },
     {
@@ -159,6 +210,6 @@
       "https://vedabase.io/en/library/sb/10/1/34/",
       "https://bhagavata.org/canto10/chapter1.html"
     ],
-    "notes": "BBT and Aadhar translation checked for the narrative arc. Original child adaptation; no translation or liturgical verses reproduced. Opening setup introduces the characters and setting before the existing story events."
+    "notes": "BBT and Aadhar translation checked for the narrative arc. Original child adaptation; no translation or liturgical verses reproduced. Opening setup introduces the characters and setting before the existing story events. Pacing revision separates the causal transitions into illustrated scenes; dialogue is paraphrased, not quoted scripture."
   }
 }

@@ -1,0 +1,233 @@
+{
+  "prefix": "kids-stories",
+  "assets": {
+    "gb-00": {
+      "hash": "f57a7e3e98b311f6",
+      "ext": "webp"
+    },
+    "gb-01": {
+      "hash": "e9493ac5906f5ad2",
+      "ext": "webp"
+    },
+    "gb-02": {
+      "hash": "97e7c625f4e8a909",
+      "ext": "webp"
+    },
+    "gb-03": {
+      "hash": "c77f0a4fa8790f99",
+      "ext": "webp"
+    },
+    "gb-04": {
+      "hash": "3af1508903fe1167",
+      "ext": "webp"
+    },
+    "gb-05": {
+      "hash": "f8a13d79c4ed80c4",
+      "ext": "webp"
+    },
+    "gb-06": {
+      "hash": "1e2d7f3d5891f8ce",
+      "ext": "webp"
+    },
+    "gb-07": {
+      "hash": "0defd043ab3ddf1a",
+      "ext": "webp"
+    },
+    "gb-08": {
+      "hash": "e31c224c09698c72",
+      "ext": "webp"
+    },
+    "gb-09": {
+      "hash": "1199c6b9e62adb9b",
+      "ext": "webp"
+    },
+    "gb-10": {
+      "hash": "52acabc7628c53dc",
+      "ext": "webp"
+    },
+    "hs-00": {
+      "hash": "099cc99df102a906",
+      "ext": "webp"
+    },
+    "hs-01": {
+      "hash": "792038b2284fe717",
+      "ext": "webp"
+    },
+    "hs-02": {
+      "hash": "c01b90a95edfb176",
+      "ext": "webp"
+    },
+    "hs-03": {
+      "hash": "3d8c67ae84f989e2",
+      "ext": "webp"
+    },
+    "hs-04": {
+      "hash": "111ebb515e7caba1",
+      "ext": "webp"
+    },
+    "hs-05": {
+      "hash": "1a054319047d31e6",
+      "ext": "webp"
+    },
+    "hs-06": {
+      "hash": "b10d6b34fb6e823a",
+      "ext": "webp"
+    },
+    "hs-07": {
+      "hash": "322f9a1a5b7ed159",
+      "ext": "webp"
+    },
+    "hs-08": {
+      "hash": "fe65f743b0f6b235",
+      "ext": "webp"
+    },
+    "hs-09": {
+      "hash": "826c8e99cffa3d28",
+      "ext": "webp"
+    },
+    "ka-00": {
+      "hash": "a631008c2e56855f",
+      "ext": "webp"
+    },
+    "ka-01": {
+      "hash": "63ccebeb86ac3b01",
+      "ext": "webp"
+    },
+    "ka-02": {
+      "hash": "19bf512c1c010317",
+      "ext": "webp"
+    },
+    "ka-03": {
+      "hash": "4b9db58c83a70918",
+      "ext": "webp"
+    },
+    "ka-04": {
+      "hash": "4ac8f5c6b934d82f",
+      "ext": "webp"
+    },
+    "ka-05": {
+      "hash": "45f45aacc0cbe80d",
+      "ext": "webp"
+    },
+    "ka-06": {
+      "hash": "17e5d1b5b0a2fe02",
+      "ext": "webp"
+    },
+    "ka-07": {
+      "hash": "1869e86bd65aa515",
+      "ext": "webp"
+    },
+    "kj-01": {
+      "hash": "ccafcaf71dc62ea2",
+      "ext": "webp"
+    },
+    "kj-02": {
+      "hash": "39d59012d8b00b34",
+      "ext": "webp"
+    },
+    "kj-03": {
+      "hash": "7cbe36f9769e93c0",
+      "ext": "webp"
+    },
+    "kj-04": {
+      "hash": "eb7f4f13afe959cc",
+      "ext": "webp"
+    },
+    "kj-05": {
+      "hash": "da9a146e8a72d389",
+      "ext": "webp"
+    },
+    "kj-06": {
+      "hash": "7d4532cdc76e722a",
+      "ext": "webp"
+    },
+    "kj-07": {
+      "hash": "431fd69c063ae1eb",
+      "ext": "webp"
+    },
+    "kj-08": {
+      "hash": "2f67cf972fb9a6d2",
+      "ext": "webp"
+    },
+    "kj-09": {
+      "hash": "35ffe97d2dc422c6",
+      "ext": "webp"
+    },
+    "kj-10": {
+      "hash": "5868e6266c62c9ab",
+      "ext": "webp"
+    },
+    "kj-11": {
+      "hash": "13904e59ad174cc8",
+      "ext": "webp"
+    },
+    "kj-12": {
+      "hash": "65c6c26ce3c8b4be",
+      "ext": "webp"
+    },
+    "kj-13": {
+      "hash": "7c352447ac1d9a7b",
+      "ext": "webp"
+    },
+    "kj-14": {
+      "hash": "ac7c36ba70a64dd7",
+      "ext": "webp"
+    },
+    "kj-15": {
+      "hash": "3abdc43114f86564",
+      "ext": "webp"
+    },
+    "kj-16": {
+      "hash": "f0d80681727d5feb",
+      "ext": "webp"
+    },
+    "kj-17": {
+      "hash": "d50e2bd9b90d9c22",
+      "ext": "webp"
+    },
+    "pt-00": {
+      "hash": "f5f83b36e72e66d0",
+      "ext": "webp"
+    },
+    "pt-01": {
+      "hash": "30499ce550762581",
+      "ext": "webp"
+    },
+    "pt-02": {
+      "hash": "f9dc218bad7f7ff7",
+      "ext": "webp"
+    },
+    "pt-03": {
+      "hash": "47cb2abe55d646b6",
+      "ext": "webp"
+    },
+    "pt-04": {
+      "hash": "92cd53fb6b1cda70",
+      "ext": "webp"
+    },
+    "pt-05": {
+      "hash": "b655425398f20676",
+      "ext": "webp"
+    },
+    "pt-06": {
+      "hash": "3ce79d2cc97aa87a",
+      "ext": "webp"
+    },
+    "pt-07": {
+      "hash": "872b436e7d117f78",
+      "ext": "webp"
+    },
+    "pt-08": {
+      "hash": "e0d601b74a906ba4",
+      "ext": "webp"
+    },
+    "pt-09": {
+      "hash": "fccd03d9acd57db7",
+      "ext": "webp"
+    },
+    "story-library": {
+      "hash": "82d89a66b88f2fea",
+      "ext": "webp"
+    }
+  }
+}

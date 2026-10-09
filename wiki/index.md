@@ -37,7 +37,7 @@
 _(none yet — add per-model pages as they warrant)_
 
 ## Integrations
-_(none yet — extract from source as needed)_
+- [[integrations/meta-app-events]] — build-gated Android/iOS Meta activation measurement, ATT/privacy guards, native release requirements and verification limits.
 
 ## Runbooks
 - [[e2e-verification]] — Maestro e2e: authoring rules, the isolated-simulator verification recipe (multi-worktree machines), gotchas, and the "every change ships with e2e" policy.

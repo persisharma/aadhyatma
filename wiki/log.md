@@ -206,7 +206,6 @@ The launch budget passes without increasing its ceiling.
 
 ## [2026-09-21] ingest | Prashna bilingual native UI audit and user correction: improved typography, selection, targets and evidence wrapping; 465 engine and 10 focused screen tests passed. User rejected generic checklists: the required next layer is natal graha plus running dasha plus current gochar synthesized into current-phase guidance. Current purpose-level insights and question-selected editorial actions do not meet that scope. See the new UI audit and [[panchang]].
 
-
 ## [2026-09-21] ingest | Career/business current-phase pilot
 
 Updated [[panchang]] from `prashnaPhase.ts`, the screen/Ask/export integrations and dated refresh hook. Recorded the combined natal–dasha–gochar contract, node interpretation limit, retained legacy topics, exact-edge refresh, source gate and actual comparison evidence. Design §72, RULEBOOK §14.3 and PRD-43 follow-up now describe the pilot rather than calling the generic checklist the accepted endpoint.
@@ -342,6 +341,24 @@ Added Putana and Kaliya Nag to Krishna, Ganesha Birth to Ganesha, and Hanuman an
 ## [2026-10-07] ingest | Gentler openings for the four kids stories
 
 Updated `subsystems/kids-stories.md` from canonical story records and native evidence: one distinct sourced introduction per story, hi/en/gu/kn narration, Putana motivation context, 30 total scenes, synchronized assets/prototypes, and scoped Standard/Large simulator validation. Follow-up remains local on `codex/kids-story-openings`; the original delivery PR #422 has merged. Evidence: `docs/content-parity/kids-story-openings/README.md`.
+
+## [2026-10-07] ingest | Meta app-install measurement for Android and iOS
+
+Added [[integrations/meta-app-events]] for the local Expo Core SDK bridge, verified app/platform/owner mapping, build flag and native-only client configuration, ATT lifecycle handling, and explicit privacy guards. iOS simulator build/startup and focused source checks pass; no event receipt or paid attribution has been established. Android toolchain is unavailable, simulator SDK transport has TLS -1200, and production privacy disclosures/new store binaries are still required. Runbook and unpublished disclosure draft are in docs; no campaign/store/OTA publication or Git push occurred.
+
+## [2026-10-07] ingest | Graha cards signed off: `GRAHA_READING_REVIEW` approved 7 Oct 2026 (approval relayed by the product owner; review page holds partial marks, no on-page sign-off), so store builds show the section. New `reviewedSheetSha256` + `reviewedSheetContent` pin the reviewed content — a later content edit fails the engine test until reset to draft or re-signed. RULEBOOK §14.7.7, design.md §68/§78, convention updated. Updated [[panchang]].
+
+## [2026-10-08] ingest | Complete story pacing and preserve illustrated content
+
+Expanded Putana, Ganesha Birth and Hanuman to 10/11/10 scenes with nine sourced illustrations and four-language causal transitions. Added the discoverable AGENTS.md instruction and RULEBOOK §29’s mandatory full-arc review, reusable authoring checklist and page-by-page review. User’s crop correction changes every native scene to vertical overflow with art independent of caption length; only the reviewed empty bottom band of hs09 is trimmed. Full 2,971 tests, final Release build, all 39 current English Standard story pages and unchanged Krishna’s 16-page paging flow pass; scoped Large simulator results and remaining editorial/device checks are recorded in docs/content-parity/kids-story-pacing/. Updated [[kids-stories]].
+
+## [2026-10-08] ingest | Reviewed image bounds and remove duplicate reader bottom inset
+
+All 56 story illustrations now have reviewed 78–88% retained-height frames pinned to image SHA-256, removing blank parchment without scaling or caption-driven crops. The tab-hosted reader leaves the bottom safe-area inset to the visible tab bar and tightens scene/caption spacing; future artwork replacement requires a new framing review. Full 2,973 tests, changed-source lint and final iOS Release build pass. Full final Standard/Large native walkthrough and user visual review remain pending; this follow-up is local, not pushed to PR #429. Updated [[kids-stories]] and the authoring guidance.
+
+## [2026-10-08] ingest | User approves final story spacing for PR update
+
+The user manually inspected the final simulator build, confirmed the appearance and requested commit/PR delivery. Final automated all-page Standard/Large framing coverage remains incomplete and is distinguished from prior native runs in the validation report. Local gates remain 2,973 passing tests and a successful Release build.
 
 ## [2026-10-07] ingest | Share series: 5-page cap, scope segment always reachable
 

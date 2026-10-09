@@ -3,9 +3,11 @@ import type { KundaliGrahaTone, KundaliReportPracticeId } from './kundaliReportM
 import { DAAN_VAAR_ENTRIES } from '../data/daan/vaar';
 
 /**
- * Graha-by-graha reading content — RULEBOOK §14.7. DRAFT: every table in this
- * file waits on a jyotishi's review (`GRAHA_READING_REVIEW`), and until it is
- * approved the report screen shows the cards in development builds only.
+ * Graha-by-graha reading content — RULEBOOK §14.7. Signed off on 7 Oct 2026
+ * (`GRAHA_READING_REVIEW`), so the report screen shows the cards in every build.
+ * The sign-off covers this content as reviewed: any later edit fails the
+ * engine test until the record goes back to draft or a new sign-off is
+ * recorded (RULEBOOK §14.7.7).
  *
  * The register is a family pandit speaking plainly: the life meaning first,
  * the classical term after it in brackets, behavioural care lines, and one
@@ -30,13 +32,22 @@ export type GrahaReadingReview = {
   signOffRef: string | null;
   /** India civil date of the sign-off (YYYY-MM-DD). */
   reviewedOn: string | null;
+  /**
+   * SHA-256 of the review sheet as signed off, without its status line
+   * (`reviewedSheetContent`). The engine test recomputes it, so an approval
+   * can never silently cover content the jyotishi has not seen.
+   */
+  reviewedSheetSha256: string | null;
   scope: string;
 };
 
 export const GRAHA_READING_REVIEW: GrahaReadingReview = {
-  status: 'draft',
-  signOffRef: null,
-  reviewedOn: null,
+  status: 'approved',
+  // Approval relayed by the product owner on 7 Oct 2026. The review page holds
+  // partial marks and no on-page sign-off (docs/roadmap/conventions/graha-reading-v1.md).
+  signOffRef: 'relayed-by-product-owner-2026-10-07',
+  reviewedOn: '2026-10-07',
+  reviewedSheetSha256: '0bf42e0edf72d5251e34edec7e0862f9c24165906b7b93fea2f9b623abe67d08',
   scope:
     'GRAHA_PLAIN, BHAVA_PLAIN, GRAHA_BHAVA_READINGS (9 × 12), the strength, reason and tone phrases, the empty-houses copy, GRAHA_UPAY (9 rows), and the tone convention in docs/roadmap/conventions/graha-reading-v1.md',
 };

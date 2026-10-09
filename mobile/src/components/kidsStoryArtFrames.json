@@ -1,0 +1,226 @@
+{
+  "cover": {
+    "retainedHeight": 0.78,
+    "sha256": "ccafcaf71dc62ea2e13c78ec2ac7127368f5fbe0746b21528948385f2a0d82b4"
+  },
+  "chariot": {
+    "retainedHeight": 0.8,
+    "sha256": "39d59012d8b00b344cbee16f00e98d93c9bf2bc437ae9eddcc3bc7bb60505185"
+  },
+  "sword": {
+    "retainedHeight": 0.78,
+    "sha256": "7cbe36f9769e93c0cd53686c852b14fccdb06aa1898d09ee14d59d7dcfe2d939"
+  },
+  "prison": {
+    "retainedHeight": 0.78,
+    "sha256": "eb7f4f13afe959cc2e0923aba38604593c51e612eb97ea8f6cc78119aac5cec9"
+  },
+  "midnight": {
+    "retainedHeight": 0.78,
+    "sha256": "da9a146e8a72d3895725231862045c7f79cbac658e8dc416a95d3e643d168c75"
+  },
+  "vishnu": {
+    "retainedHeight": 0.8,
+    "sha256": "7d4532cdc76e722a55382e4f2133fe0afc61088611b4db704fef536c8db040ad"
+  },
+  "escape": {
+    "retainedHeight": 0.83,
+    "sha256": "431fd69c063ae1eb4e6c2512f12c9965b33260e1c946e33e59d907053945ae0a"
+  },
+  "yamuna": {
+    "retainedHeight": 0.78,
+    "sha256": "2f67cf972fb9a6d25cd8c9e0af96dfa797ae9e9c25b92e9d6be064b9ffb1c733"
+  },
+  "gokul": {
+    "retainedHeight": 0.81,
+    "sha256": "35ffe97d2dc422c6272c940c8ce934cba227349f835dace0dd5475df5dadcf47"
+  },
+  "devi": {
+    "retainedHeight": 0.8,
+    "sha256": "5868e6266c62c9abd9ad14a3c0bc51549b568d0ccba0dbc96bcc95c3fd2127fc"
+  },
+  "safe": {
+    "retainedHeight": 0.8,
+    "sha256": "13904e59ad174cc8da6ace47210efec98c349d7944901514c9fc976129002052"
+  },
+  "wedding": {
+    "retainedHeight": 0.8,
+    "sha256": "65c6c26ce3c8b4be8467706ecba79f904fa41b70b3e5958e28fc69fb3c92e631"
+  },
+  "threat": {
+    "retainedHeight": 0.8,
+    "sha256": "7c352447ac1d9a7b32709b40b9f94a4c11dcd87ceb7faad89d1c90f66158f8ec"
+  },
+  "imprisoned": {
+    "retainedHeight": 0.81,
+    "sha256": "ac7c36ba70a64dd7f45568b50db1005e49291a22b9518973afb82eddb11b728a"
+  },
+  "balarama": {
+    "retainedHeight": 0.8,
+    "sha256": "3abdc43114f86564a8f90a8e69e896cae4456fdaaec8c3176d0705411094fc22"
+  },
+  "prayer": {
+    "retainedHeight": 0.78,
+    "sha256": "f0d80681727d5febe310578a5a70c833d5a20fb94ec4221193d6cf446c31876a"
+  },
+  "return": {
+    "retainedHeight": 0.81,
+    "sha256": "d50e2bd9b90d9c225c0a65e1345886a180c08151c6170abddbb4146bc0a7cf68"
+  },
+  "pt00": {
+    "retainedHeight": 0.78,
+    "sha256": "f5f83b36e72e66d0f34936cacff567587abffe5a19b6302ba4b076fa0e36b537"
+  },
+  "pt01": {
+    "retainedHeight": 0.78,
+    "sha256": "30499ce550762581ffa22e41630dafa6ea8568ab2afc5be2fff4e745cd2ed0e0"
+  },
+  "pt02": {
+    "retainedHeight": 0.8,
+    "sha256": "f9dc218bad7f7ff7496e31247820a130dab212d83f6967e18a17fd7dfc7bb1e7"
+  },
+  "pt03": {
+    "retainedHeight": 0.8,
+    "sha256": "47cb2abe55d646b60b9bbdfb536149724244405e3e22d40123ac406ca876c755"
+  },
+  "pt04": {
+    "retainedHeight": 0.8,
+    "sha256": "92cd53fb6b1cda70e64cec30470785756c7134b591fe2683f8c22b2adbe47fb5"
+  },
+  "pt05": {
+    "retainedHeight": 0.8,
+    "sha256": "b655425398f2067688ee1e61fd7f44374c4b97739129ca03d6f8124ec46d02be"
+  },
+  "pt06": {
+    "retainedHeight": 0.8,
+    "sha256": "3ce79d2cc97aa87acacf61c700acb70b1cb8366bbe8d7a1640ec3398792e9c7e"
+  },
+  "pt07": {
+    "retainedHeight": 0.83,
+    "sha256": "872b436e7d117f78fecefab52e43e3e55c57f9189aaa9564bb6d6a7d6ca2a8d0"
+  },
+  "pt08": {
+    "retainedHeight": 0.84,
+    "sha256": "e0d601b74a906ba40946478dc88a2ef62d78a00d2be57b6738765434dd1893bd"
+  },
+  "pt09": {
+    "retainedHeight": 0.83,
+    "sha256": "fccd03d9acd57db704f75e9b5085c0c10de6d0625fa018981940e944a5509023"
+  },
+  "ka00": {
+    "retainedHeight": 0.8,
+    "sha256": "a631008c2e56855f421b057b4993a9fc58abecaf9718d25f249a05897a53b040"
+  },
+  "ka01": {
+    "retainedHeight": 0.8,
+    "sha256": "63ccebeb86ac3b017e0a7e3ccff79c2454e650b23e62b3a0c59939fb13c32adf"
+  },
+  "ka02": {
+    "retainedHeight": 0.88,
+    "sha256": "19bf512c1c01031724955f22d98299d6b7460fd7dabb8ccb98676960a9db4628"
+  },
+  "ka03": {
+    "retainedHeight": 0.8,
+    "sha256": "4b9db58c83a709189cd15fca7c0e8844430b311fc60b2574f9f528a0e24d6a43"
+  },
+  "ka04": {
+    "retainedHeight": 0.8,
+    "sha256": "4ac8f5c6b934d82f4646a51a4012f7cdaad7d43a41390e7b1beeb9ee545e6a1a"
+  },
+  "ka05": {
+    "retainedHeight": 0.8,
+    "sha256": "45f45aacc0cbe80d3713d4340694f2e4afce32f02f09563aacf3a00ca2d726b1"
+  },
+  "ka06": {
+    "retainedHeight": 0.8,
+    "sha256": "17e5d1b5b0a2fe02197c4e9fcddc9a30162dd76603e8120880605872461a94ea"
+  },
+  "ka07": {
+    "retainedHeight": 0.8,
+    "sha256": "1869e86bd65aa5159d8c9126f71f253a0130d64b28ff1722004d5dc9fe8b2a61"
+  },
+  "gb00": {
+    "retainedHeight": 0.8,
+    "sha256": "f57a7e3e98b311f6e0a2d5cf920616cc182750e5da59b2676ba428f7c6282db4"
+  },
+  "gb01": {
+    "retainedHeight": 0.78,
+    "sha256": "e9493ac5906f5ad288fbada5bb42fad446f0a4a937ba3dbe30fc987434ac375d"
+  },
+  "gb02": {
+    "retainedHeight": 0.8,
+    "sha256": "97e7c625f4e8a90998cd987f956447cb926c7932fdc9f6aba617907e88790717"
+  },
+  "gb03": {
+    "retainedHeight": 0.8,
+    "sha256": "c77f0a4fa8790f99b6f7c5d0aea1ccc6533f710a6cf618fb5aae1c09ecac9823"
+  },
+  "gb04": {
+    "retainedHeight": 0.82,
+    "sha256": "3af1508903fe1167f771f566dd6fcac851b11612275b229df356ea718024ff95"
+  },
+  "gb05": {
+    "retainedHeight": 0.82,
+    "sha256": "f8a13d79c4ed80c47cd8c0e08b5d1a67d3c29d87da117e4af95d3f06351f2822"
+  },
+  "gb06": {
+    "retainedHeight": 0.82,
+    "sha256": "1e2d7f3d5891f8ced24d4474920d655ef6b882913e1b5c49ca248e19a4f41ef0"
+  },
+  "gb07": {
+    "retainedHeight": 0.82,
+    "sha256": "0defd043ab3ddf1a9aaa0d294cdf2569aa9e993d685dbf72025cb3aa55440425"
+  },
+  "gb08": {
+    "retainedHeight": 0.86,
+    "sha256": "e31c224c09698c726f9c85c9474cb6364718e5bf07e07f33409db3bb3209c09c"
+  },
+  "gb09": {
+    "retainedHeight": 0.82,
+    "sha256": "1199c6b9e62adb9b3d74ba84b146b524b433a469d46781f3a9c36fcb5968636c"
+  },
+  "gb10": {
+    "retainedHeight": 0.82,
+    "sha256": "52acabc7628c53dc9c723861c3b17e9d5b4c34fcf61f8892c0bdd18b7f655051"
+  },
+  "hs00": {
+    "retainedHeight": 0.8,
+    "sha256": "099cc99df102a9063cde604a6884a3d11799c30f4eff3fee53d9098ad347b207"
+  },
+  "hs01": {
+    "retainedHeight": 0.8,
+    "sha256": "792038b2284fe717cae59aab9bdd9203f2f02fa37f83483c4a33fac34b740ae4"
+  },
+  "hs02": {
+    "retainedHeight": 0.8,
+    "sha256": "c01b90a95edfb176bb524a05c14f6bc4d074c9a535afb935e073866f7b8c9b66"
+  },
+  "hs03": {
+    "retainedHeight": 0.8,
+    "sha256": "3d8c67ae84f989e24a18097aea7567f137fb38c0809539eb855af27d313910a7"
+  },
+  "hs04": {
+    "retainedHeight": 0.8,
+    "sha256": "111ebb515e7caba150c2666995bf3956a26d1fce24a1d768ba43b7501392319c"
+  },
+  "hs05": {
+    "retainedHeight": 0.82,
+    "sha256": "1a054319047d31e619922e2b91485a2e5a5fce7ab7cef028b3141f3fdea8293e"
+  },
+  "hs06": {
+    "retainedHeight": 0.8,
+    "sha256": "b10d6b34fb6e823af067d04ebdfc5d9e849a63f2bc3233c20be990aefbc1e17c"
+  },
+  "hs07": {
+    "retainedHeight": 0.8,
+    "sha256": "322f9a1a5b7ed159d8a1d0359db0334b96d23a74248c3e499bfdbae57a3683c6"
+  },
+  "hs08": {
+    "retainedHeight": 0.84,
+    "sha256": "fe65f743b0f6b235b93cf7961c91dd3ba5c7d7ceedc12292492814da797668a7"
+  },
+  "hs09": {
+    "retainedHeight": 0.82,
+    "sha256": "826c8e99cffa3d28ee9c07eb6e5f3ac5bb13842df5482bea8274c2342469b6f0"
+  }
+}

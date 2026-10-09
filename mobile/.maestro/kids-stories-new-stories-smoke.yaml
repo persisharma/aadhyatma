@@ -1,4 +1,4 @@
-# Every new story: all scenes, locale stability, ending and shelf return.
+# All 39 scenes: complete English captions, Hindi opening switches and source endings.
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
@@ -12,70 +12,136 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "kids-story-putana" }
 - tapOn: { id: "lang-toggle-en" }
-- assertVisible: "1 / 7"
+- assertVisible: "1 / 10"
 - assertVisible: { id: "story-page-little-krishna-in-gokul" }
-- assertVisible: "Long ago, little Krishna lived in the village of Gokul. Yashoda and Nanda cared for him with love. His arrival had brought joy to their home and the village."
-- takeScreenshot: kids-putana-00
-- tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "1 / 7"
-- assertVisible: "बहुत समय पहले, गोकुल नाम के गाँव में नन्हे कृष्ण रहते थे। यशोदा और नंद उन्हें प्यार से पालते थे। उनके आने से घर और गाँव में खुशियाँ थीं।"
-- takeScreenshot: kids-putana-hi-00
-- tapOn: { id: "lang-toggle-en" }
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "2 / 7"
-- assertVisible: { id: "story-page-kansas-plan" }
-- takeScreenshot: kids-putana-01
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "3 / 7"
-- assertVisible: { id: "story-page-beautiful-disguise" }
-- takeScreenshot: kids-putana-02
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "4 / 7"
-- assertVisible: { id: "story-page-krishnas-power" }
-- takeScreenshot: kids-putana-03
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "5 / 7"
-- assertVisible: { id: "story-page-danger-ends" }
-- takeScreenshot: kids-putana-04
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "6 / 7"
-- assertVisible: { id: "story-page-mothers-care" }
-- takeScreenshot: kids-putana-05
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "7 / 7"
-- assertVisible: { id: "story-page-mercy-and-home" }
-- takeScreenshot: kids-putana-06
-- tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "7 / 7"
-- tapOn: { id: "lang-toggle-en" }
+- takeScreenshot: kids-putana-en-pt00-art
 - scrollUntilVisible:
-    element: { text: "What we learn" }
-    direction: DOWN
-- assertVisible: "What we learn"
-- scrollUntilVisible:
-    element: { text: ".*takeaway is editorial.*" }
+    element: { text: "Long ago, little Krishna lived in the village of Gokul. Yashoda and Nanda cared for him with love. His arrival had brought joy to their home and the village." }
     direction: DOWN
     centerElement: true
-- assertVisible: ".*takeaway is editorial.*"
-- takeScreenshot: kids-putana-source
+- assertVisible: "Long ago, little Krishna lived in the village of Gokul. Yashoda and Nanda cared for him with love. His arrival had brought joy to their home and the village."
+- takeScreenshot: kids-putana-en-pt00
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 10"
+- assertVisible: "बहुत समय पहले, गोकुल नाम के गाँव में नन्हे कृष्ण रहते थे। यशोदा और नंद उन्हें प्यार से पालते थे। उनके आने से घर और गाँव में खुशियाँ थीं।"
+- takeScreenshot: kids-putana-hi-pt00
+- tapOn: { id: "lang-toggle-en" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 10"
+- assertVisible: { id: "story-page-kansas-plan" }
+- takeScreenshot: kids-putana-en-pt01-art
+- scrollUntilVisible:
+    element: { text: "Kansa, king of Mathura, had heard that Devaki's eighth child would bring his end. Afraid, he sent Putana to harm babies. Her search brought her to Gokul." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Kansa, king of Mathura, had heard that Devaki's eighth child would bring his end. Afraid, he sent Putana to harm babies. Her search brought her to Gokul."
+- takeScreenshot: kids-putana-en-pt01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 10"
+- assertVisible: { id: "story-page-beautiful-disguise" }
+- takeScreenshot: kids-putana-en-pt02-art
+- scrollUntilVisible:
+    element: { text: "Putana appeared as a beautiful woman and entered Nanda's home. She seemed affectionate. Yashoda and Rohini did not recognize the harmful intention hidden behind her disguise." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Putana appeared as a beautiful woman and entered Nanda's home. She seemed affectionate. Yashoda and Rohini did not recognize the harmful intention hidden behind her disguise."
+- takeScreenshot: kids-putana-en-pt02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 10"
+- assertVisible: { id: "story-page-hidden-danger" }
+- takeScreenshot: kids-putana-en-pt07-art
+- scrollUntilVisible:
+    element: { text: "Putana approached little Krishna and lifted him. Behind her smile was a harmful purpose. To those around him, Krishna seemed an ordinary baby. But he already knew why she had come." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Putana approached little Krishna and lifted him. Behind her smile was a harmful purpose. To those around him, Krishna seemed an ordinary baby. But he already knew why she had come."
+- takeScreenshot: kids-putana-en-pt07
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 10"
+- assertVisible: { id: "story-page-krishnas-power" }
+- takeScreenshot: kids-putana-en-pt03-art
+- scrollUntilVisible:
+    element: { text: "Putana had smeared poison on her breast and began to nurse Krishna. But little Krishna was not helpless. As he drank, he began drawing away her life-force too." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Putana had smeared poison on her breast and began to nurse Krishna. But little Krishna was not helpless. As he drank, he began drawing away her life-force too."
+- takeScreenshot: kids-putana-en-pt03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 10"
+- assertVisible: { id: "story-page-putanas-cry" }
+- takeScreenshot: kids-putana-en-pt08-art
+- scrollUntilVisible:
+    element: { text: "Putana became frightened. She cried out for Krishna to let go and tried to pull away. But his hold did not loosen. Her strength faded, and her cry rang far and wide." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Putana became frightened. She cried out for Krishna to let go and tried to pull away. But his hold did not loosen. Her strength faded, and her cry rang far and wide."
+- takeScreenshot: kids-putana-en-pt08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 10"
+- assertVisible: { id: "story-page-disguise-falls" }
+- takeScreenshot: kids-putana-en-pt09-art
+- scrollUntilVisible:
+    element: { text: "At last, Putana returned to her enormous demoness form. She fell to the earth and died. Amid this great danger, little Krishna remained unharmed, playing on her body." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "At last, Putana returned to her enormous demoness form. She fell to the earth and died. Amid this great danger, little Krishna remained unharmed, playing on her body."
+- takeScreenshot: kids-putana-en-pt09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 10"
+- assertVisible: { id: "story-page-danger-ends" }
+- takeScreenshot: kids-putana-en-pt04-art
+- scrollUntilVisible:
+    element: { text: "The village women saw Krishna and hurried to him. Yashoda and Rohini were relieved too. They lifted him from Putana’s body and took him safely into their arms." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "The village women saw Krishna and hurried to him. Yashoda and Rohini were relieved too. They lifted him from Putana’s body and took him safely into their arms."
+- takeScreenshot: kids-putana-en-pt04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 10"
+- assertVisible: { id: "story-page-mothers-care" }
+- takeScreenshot: kids-putana-en-pt05-art
+- scrollUntilVisible:
+    element: { text: "Yashoda, Rohini and the village women prayed for Krishna's protection, calling on the Lord's names. Yashoda fed him and settled him in bed. Quiet returned to the house." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Yashoda, Rohini and the village women prayed for Krishna's protection, calling on the Lord's names. Yashoda fed him and settled him in bed. Quiet returned to the house."
+- takeScreenshot: kids-putana-en-pt05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 10"
+- assertVisible: { id: "story-page-mercy-and-home" }
+- takeScreenshot: kids-putana-en-pt06
+- scrollUntilVisible:
+    element: { text: "A children's retelling of Bhagavata Purana 10.5–6. Frightening details are shortened; the takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-putana-en-source
 - tapOn: "Back"
 - assertVisible: { id: "kids-story-putana" }
 - scrollUntilVisible:
@@ -85,12 +151,17 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "lang-toggle-en" }
 - assertVisible: "1 / 8"
 - assertVisible: { id: "story-page-a-cowherds-day" }
+- takeScreenshot: kids-kaliya-nag-en-ka00-art
+- scrollUntilVisible:
+    element: { text: "Krishna now tended cows in Vrindavana with his friends. Among trees, birds and flowers, they played and sang together. They also took their cows to graze along the Yamuna." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "Krishna now tended cows in Vrindavana with his friends. Among trees, birds and flowers, they played and sang together. They also took their cows to graze along the Yamuna."
-- takeScreenshot: kids-kaliya-nag-00
+- takeScreenshot: kids-kaliya-nag-en-ka00
 - tapOn: { id: "lang-toggle-hi" }
 - assertVisible: "1 / 8"
 - assertVisible: "कृष्ण अब वृंदावन में गायें चराने जाते थे। उनके सखा भी साथ होते थे। पेड़ों, पक्षियों और फूलों के बीच वे खेलते और गाते थे। यमुना के किनारे भी उनकी गायें चरती थीं।"
-- takeScreenshot: kids-kaliya-nag-hi-00
+- takeScreenshot: kids-kaliya-nag-hi-ka00
 - tapOn: { id: "lang-toggle-en" }
 - swipe:
     start: 85%, 42%
@@ -98,62 +169,90 @@ appId: com.prashantsharma.vedansh
     duration: 600
 - assertVisible: "2 / 8"
 - assertVisible: { id: "story-page-poisoned-yamuna" }
-- takeScreenshot: kids-kaliya-nag-01
+- takeScreenshot: kids-kaliya-nag-en-ka01-art
+- scrollUntilVisible:
+    element: { text: "Kaliya lived in a deep pool of the Yamuna. His poison harmed the water and life along the bank. Krishna resolved to make the river clean again." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Kaliya lived in a deep pool of the Yamuna. His poison harmed the water and life along the bank. Krishna resolved to make the river clean again."
+- takeScreenshot: kids-kaliya-nag-en-ka01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "3 / 8"
 - assertVisible: { id: "story-page-kadamba-leap" }
-- takeScreenshot: kids-kaliya-nag-02
+- takeScreenshot: kids-kaliya-nag-en-ka02-art
+- scrollUntilVisible:
+    element: { text: "Krishna climbed a tall kadamba tree and leapt into the pool. Waves rose all around. Hearing the splash, an angry Kaliya came towards him." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Krishna climbed a tall kadamba tree and leapt into the pool. Waves rose all around. Hearing the splash, an angry Kaliya came towards him."
+- takeScreenshot: kids-kaliya-nag-en-ka02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "4 / 8"
 - assertVisible: { id: "story-page-friends-worry" }
-- takeScreenshot: kids-kaliya-nag-03
+- takeScreenshot: kids-kaliya-nag-en-ka03-art
+- scrollUntilVisible:
+    element: { text: "Kaliya wrapped Krishna in his coils. Family and friends were frightened. Balarama held people back from the water. Then Krishna expanded his body and slipped free of the coils." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Kaliya wrapped Krishna in his coils. Family and friends were frightened. Balarama held people back from the water. Then Krishna expanded his body and slipped free of the coils."
+- takeScreenshot: kids-kaliya-nag-en-ka03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "5 / 8"
 - assertVisible: { id: "story-page-dance-on-hoods" }
-- takeScreenshot: kids-kaliya-nag-04
+- takeScreenshot: kids-kaliya-nag-en-ka04-art
+- scrollUntilVisible:
+    element: { text: "Krishna climbed onto Kaliya's hoods and danced. Flowers showered from above. Kaliya's strength and pride gave way. He understood that Krishna was no ordinary child." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Krishna climbed onto Kaliya's hoods and danced. Flowers showered from above. Kaliya's strength and pride gave way. He understood that Krishna was no ordinary child."
+- takeScreenshot: kids-kaliya-nag-en-ka04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "6 / 8"
 - assertVisible: { id: "story-page-family-prays" }
-- takeScreenshot: kids-kaliya-nag-05
+- takeScreenshot: kids-kaliya-nag-en-ka05-art
+- scrollUntilVisible:
+    element: { text: "Kaliya's wives approached Krishna with their children. With folded hands they asked him to spare Kaliya's life. Krishna heard their prayer and released the serpent." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Kaliya's wives approached Krishna with their children. With folded hands they asked him to spare Kaliya's life. Krishna heard their prayer and released the serpent."
+- takeScreenshot: kids-kaliya-nag-en-ka05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "7 / 8"
 - assertVisible: { id: "story-page-leave-in-peace" }
-- takeScreenshot: kids-kaliya-nag-06
+- takeScreenshot: kids-kaliya-nag-en-ka06-art
+- scrollUntilVisible:
+    element: { text: "Kaliya admitted his wrongdoing. Krishna told him to return with his family to Ramanaka Island in the sea, leaving the Yamuna for cows and people. Kaliya obeyed and departed." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Kaliya admitted his wrongdoing. Krishna told him to return with his family to Ramanaka Island in the sea, leaving the Yamuna for cows and people. Kaliya obeyed and departed."
+- takeScreenshot: kids-kaliya-nag-en-ka06
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "8 / 8"
 - assertVisible: { id: "story-page-river-restored" }
-- takeScreenshot: kids-kaliya-nag-07
-- tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "8 / 8"
-- tapOn: { id: "lang-toggle-en" }
+- takeScreenshot: kids-kaliya-nag-en-ka07
 - scrollUntilVisible:
-    element: { text: "What we learn" }
-    direction: DOWN
-- assertVisible: "What we learn"
-- scrollUntilVisible:
-    element: { text: ".*takeaway is editorial.*" }
+    element: { text: "A simple retelling of Bhagavata Purana 10.15–16. Illustrations represent the many hoods with a smaller visible group. The takeaway is editorial." }
     direction: DOWN
     centerElement: true
-- assertVisible: ".*takeaway is editorial.*"
-- takeScreenshot: kids-kaliya-nag-source
+- takeScreenshot: kids-kaliya-nag-en-source
 - tapOn: "Back"
 - assertVisible: { id: "kids-story-kaliya-nag" }
 - tapOn: "Back"
@@ -163,77 +262,149 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "kids-story-ganesha-birth" }
 - tapOn: { id: "lang-toggle-en" }
-- assertVisible: "1 / 8"
+- assertVisible: "1 / 11"
 - assertVisible: { id: "story-page-a-wish-on-kailasa" }
-- assertVisible: "Parvati lived with Shiva on Mount Kailasa. His attendants guarded the door. Speaking with her friends, she wished for someone of her own who would listen carefully to her instructions."
-- takeScreenshot: kids-ganesha-birth-00
-- tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "1 / 8"
-- assertVisible: "कैलास पर पार्वती शिव के साथ रहती थीं। शिव के गण द्वार की रखवाली करते थे। अपनी सखियों से बात करते हुए पार्वती ने चाहा कि कोई उनका अपना भी हो, जो उनके निर्देश माने।"
-- takeScreenshot: kids-ganesha-birth-hi-00
-- tapOn: { id: "lang-toggle-en" }
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "2 / 8"
-- assertVisible: { id: "story-page-parvatis-son" }
-- takeScreenshot: kids-ganesha-birth-01
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "3 / 8"
-- assertVisible: { id: "story-page-guard-the-door" }
-- takeScreenshot: kids-ganesha-birth-02
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "4 / 8"
-- assertVisible: { id: "story-page-shiva-returns" }
-- takeScreenshot: kids-ganesha-birth-03
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "5 / 8"
-- assertVisible: { id: "story-page-parvatis-sorrow" }
-- takeScreenshot: kids-ganesha-birth-04
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "6 / 8"
-- assertVisible: { id: "story-page-new-life" }
-- takeScreenshot: kids-ganesha-birth-05
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "7 / 8"
-- assertVisible: { id: "story-page-mothers-embrace" }
-- takeScreenshot: kids-ganesha-birth-06
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "8 / 8"
-- assertVisible: { id: "story-page-ganapati-blessing" }
-- takeScreenshot: kids-ganesha-birth-07
-- tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "8 / 8"
-- tapOn: { id: "lang-toggle-en" }
+- takeScreenshot: kids-ganesha-birth-en-gb00-art
 - scrollUntilVisible:
-    element: { text: "What we learn" }
-    direction: DOWN
-- assertVisible: "What we learn"
-- scrollUntilVisible:
-    element: { text: ".*takeaway is editorial.*" }
+    element: { text: "Parvati lived with Shiva on Mount Kailasa. One day, her friends Jaya and Vijaya raised a question. Shiva’s attendants followed his commands. Who would be Parvati’s own guardian?" }
     direction: DOWN
     centerElement: true
-- assertVisible: ".*takeaway is editorial.*"
-- takeScreenshot: kids-ganesha-birth-source
+- assertVisible: "Parvati lived with Shiva on Mount Kailasa. One day, her friends Jaya and Vijaya raised a question. Shiva’s attendants followed his commands. Who would be Parvati’s own guardian?"
+- takeScreenshot: kids-ganesha-birth-en-gb00
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 11"
+- assertVisible: "कैलास पर्वत पर पार्वती शिव के साथ रहती थीं। एक दिन उनकी सखियों जया और विजया ने बात छेड़ी। शिव के गण उनकी आज्ञा मानते थे; पार्वती का अपना रक्षक कौन होता?"
+- takeScreenshot: kids-ganesha-birth-hi-gb00
+- tapOn: { id: "lang-toggle-en" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 11"
+- assertVisible: { id: "story-page-parvatis-decision" }
+- takeScreenshot: kids-ganesha-birth-en-gb08-art
+- scrollUntilVisible:
+    element: { text: "Once, Shiva entered while Parvati was bathing. Nandi had not stopped him. Parvati then decided to create a guardian of her own, someone who would follow her instructions at the door." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Once, Shiva entered while Parvati was bathing. Nandi had not stopped him. Parvati then decided to create a guardian of her own, someone who would follow her instructions at the door."
+- takeScreenshot: kids-ganesha-birth-en-gb08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 11"
+- assertVisible: { id: "story-page-parvatis-son" }
+- takeScreenshot: kids-ganesha-birth-en-gb01-art
+- scrollUntilVisible:
+    element: { text: "On Kailasa, Parvati shaped a boy from the paste on her body and gave him life. She dressed him in clothes and ornaments. He was her own beloved son." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "On Kailasa, Parvati shaped a boy from the paste on her body and gave him life. She dressed him in clothes and ornaments. He was her own beloved son."
+- takeScreenshot: kids-ganesha-birth-en-gb01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 11"
+- assertVisible: { id: "story-page-guard-the-door" }
+- takeScreenshot: kids-ganesha-birth-en-gb02-art
+- scrollUntilVisible:
+    element: { text: "Before bathing, Parvati asked her son to guard the doorway. Nobody was to enter without her permission. Holding his staff, the boy took his place at the door." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Before bathing, Parvati asked her son to guard the doorway. Nobody was to enter without her permission. Holding his staff, the boy took his place at the door."
+- takeScreenshot: kids-ganesha-birth-en-gb02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 11"
+- assertVisible: { id: "story-page-shiva-returns" }
+- takeScreenshot: kids-ganesha-birth-en-gb03-art
+- scrollUntilVisible:
+    element: { text: "Shiva returned home, but the boy did not recognize him. Remembering his mother’s instruction, he barred the way. Shiva wanted to enter, yet the boy would not leave his post." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Shiva returned home, but the boy did not recognize him. Remembering his mother’s instruction, he barred the way. Shiva wanted to enter, yet the boy would not leave his post."
+- takeScreenshot: kids-ganesha-birth-en-gb03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 11"
+- assertVisible: { id: "story-page-guardian-stands-firm" }
+- takeScreenshot: kids-ganesha-birth-en-gb09-art
+- scrollUntilVisible:
+    element: { text: "Shiva sent his attendants to the boy. They tried to move him aside, but he held to his mother’s command. The quarrel became a battle. The boy defended himself with extraordinary strength." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Shiva sent his attendants to the boy. They tried to move him aside, but he held to his mother’s command. The quarrel became a battle. The boy defended himself with extraordinary strength."
+- takeScreenshot: kids-ganesha-birth-en-gb09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 11"
+- assertVisible: { id: "story-page-parvatis-sorrow" }
+- takeScreenshot: kids-ganesha-birth-en-gb04-art
+- scrollUntilVisible:
+    element: { text: "During the battle, Shiva severed the boy’s head, and he died. When Parvati heard what had happened, she was overwhelmed with grief. Losing her beloved son filled her with anger too." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "During the battle, Shiva severed the boy’s head, and he died. When Parvati heard what had happened, she was overwhelmed with grief. Losing her beloved son filled her with anger too."
+- takeScreenshot: kids-ganesha-birth-en-gb04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 11"
+- assertVisible: { id: "story-page-a-plea-for-peace" }
+- takeScreenshot: kids-ganesha-birth-en-gb10-art
+- scrollUntilVisible:
+    element: { text: "The gods and sages asked Parvati’s forgiveness. She said peace could return only if her son regained life and received honor. Hearing her request, Shiva ordered that it be fulfilled." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "The gods and sages asked Parvati’s forgiveness. She said peace could return only if her son regained life and received honor. Hearing her request, Shiva ordered that it be fulfilled."
+- takeScreenshot: kids-ganesha-birth-en-gb10
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 11"
+- assertVisible: { id: "story-page-new-life" }
+- takeScreenshot: kids-ganesha-birth-en-gb05-art
+- scrollUntilVisible:
+    element: { text: "At Shiva's command, attendants went north and brought an elephant's head to join to the boy's body. With sacred water and prayers, the boy returned to life, now with an elephant face." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "At Shiva's command, attendants went north and brought an elephant's head to join to the boy's body. With sacred water and prayers, the boy returned to life, now with an elephant face."
+- takeScreenshot: kids-ganesha-birth-en-gb05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 11"
+- assertVisible: { id: "story-page-mothers-embrace" }
+- takeScreenshot: kids-ganesha-birth-en-gb06-art
+- scrollUntilVisible:
+    element: { text: "Seeing her son alive, Parvati embraced him with joy. Shiva rested his hand on the boy's head and acknowledged him as his son. Peace and happiness returned to Kailasa." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Seeing her son alive, Parvati embraced him with joy. Shiva rested his hand on the boy's head and acknowledged him as his son. Peace and happiness returned to Kailasa."
+- takeScreenshot: kids-ganesha-birth-en-gb06
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "11 / 11"
+- assertVisible: { id: "story-page-ganapati-blessing" }
+- takeScreenshot: kids-ganesha-birth-en-gb07
+- scrollUntilVisible:
+    element: { text: "A children's retelling of the Shvetakalpa account in Shiva Purana, Rudra-samhita, Kumara-khanda 13–18. Other birth traditions exist. Violent details are shortened; the takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-ganesha-birth-en-source
 - tapOn: "Back"
 - assertVisible: { id: "kids-story-ganesha-birth" }
 - tapOn: "Back"
@@ -243,71 +414,137 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "kids-story-hanuman-sun" }
 - tapOn: { id: "lang-toggle-en" }
-- assertVisible: "1 / 7"
+- assertVisible: "1 / 10"
 - assertVisible: { id: "story-page-meet-little-hanuman" }
-- assertVisible: "Near Mount Sumeru lived Anjana and her little son, Hanuman. He is also known as the son of Vayu, the wind god. Our story begins when he was still very young."
-- takeScreenshot: kids-hanuman-sun-00
-- tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "1 / 7"
-- assertVisible: "सुमेरु पर्वत के पास अंजना अपने नन्हे पुत्र हनुमान के साथ रहती थीं। हनुमान वायुदेव के पुत्र भी कहलाते हैं। यह उनके बचपन की कहानी है, जब वे बहुत छोटे थे।"
-- takeScreenshot: kids-hanuman-sun-hi-00
-- tapOn: { id: "lang-toggle-en" }
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "2 / 7"
-- assertVisible: { id: "story-page-hungry-at-dawn" }
-- takeScreenshot: kids-hanuman-sun-01
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "3 / 7"
-- assertVisible: { id: "story-page-towards-the-sun" }
-- takeScreenshot: kids-hanuman-sun-02
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "4 / 7"
-- assertVisible: { id: "story-page-indra-arrives" }
-- takeScreenshot: kids-hanuman-sun-03
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "5 / 7"
-- assertVisible: { id: "story-page-vayus-sorrow" }
-- takeScreenshot: kids-hanuman-sun-04
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "6 / 7"
-- assertVisible: { id: "story-page-brahma-restores" }
-- takeScreenshot: kids-hanuman-sun-05
-- swipe:
-    start: 85%, 42%
-    end: 15%, 42%
-    duration: 600
-- assertVisible: "7 / 7"
-- assertVisible: { id: "story-page-gods-blessings" }
-- takeScreenshot: kids-hanuman-sun-06
-- tapOn: { id: "lang-toggle-hi" }
-- assertVisible: "7 / 7"
-- tapOn: { id: "lang-toggle-en" }
+- takeScreenshot: kids-hanuman-sun-en-hs00-art
 - scrollUntilVisible:
-    element: { text: "What we learn" }
-    direction: DOWN
-- assertVisible: "What we learn"
-- scrollUntilVisible:
-    element: { text: ".*takeaway is editorial.*" }
+    element: { text: "Near Mount Sumeru lived Anjana and her little son, Hanuman. He is also known as the son of Vayu, the wind god. Our story begins when he was still very young." }
     direction: DOWN
     centerElement: true
-- assertVisible: ".*takeaway is editorial.*"
-- takeScreenshot: kids-hanuman-sun-source
+- assertVisible: "Near Mount Sumeru lived Anjana and her little son, Hanuman. He is also known as the son of Vayu, the wind god. Our story begins when he was still very young."
+- takeScreenshot: kids-hanuman-sun-en-hs00
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 10"
+- assertVisible: "सुमेरु पर्वत के पास अंजना अपने नन्हे पुत्र हनुमान के साथ रहती थीं। हनुमान वायुदेव के पुत्र भी कहलाते हैं। यह उनके बचपन की कहानी है, जब वे बहुत छोटे थे।"
+- takeScreenshot: kids-hanuman-sun-hi-hs00
+- tapOn: { id: "lang-toggle-en" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 10"
+- assertVisible: { id: "story-page-anjana-gathers-fruit" }
+- takeScreenshot: kids-hanuman-sun-en-hs07-art
+- scrollUntilVisible:
+    element: { text: "One day, Anjana went into the forest to gather fruit. Away from his mother, little Hanuman grew restless with hunger. He wanted something to eat. Then he looked up at the sky." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "One day, Anjana went into the forest to gather fruit. Away from his mother, little Hanuman grew restless with hunger. He wanted something to eat. Then he looked up at the sky."
+- takeScreenshot: kids-hanuman-sun-en-hs07
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 10"
+- assertVisible: { id: "story-page-hungry-at-dawn" }
+- takeScreenshot: kids-hanuman-sun-en-hs01-art
+- scrollUntilVisible:
+    element: { text: "The red morning sun was rising. To Hanuman, it looked like a large, ripe fruit. He was still too young to know the difference. Eager to reach it, he sprang into the sky." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "The red morning sun was rising. To Hanuman, it looked like a large, ripe fruit. He was still too young to know the difference. Eager to reach it, he sprang into the sky."
+- takeScreenshot: kids-hanuman-sun-en-hs01
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 10"
+- assertVisible: { id: "story-page-towards-the-sun" }
+- takeScreenshot: kids-hanuman-sun-en-hs02-art
+- scrollUntilVisible:
+    element: { text: "Hanuman leapt into the sky, astonishing the gods with his speed. Vayu followed with cooling air to protect him. The sun also held back his heat from the innocent child." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Hanuman leapt into the sky, astonishing the gods with his speed. Vayu followed with cooling air to protect him. The sun also held back his heat from the innocent child."
+- takeScreenshot: kids-hanuman-sun-en-hs02
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 10"
+- assertVisible: { id: "story-page-rahu-seeks-help" }
+- takeScreenshot: kids-hanuman-sun-en-hs08-art
+- scrollUntilVisible:
+    element: { text: "Rahu had come to eclipse the sun. Frightened by Hanuman, he sought help from Indra, king of the gods. Indra listened and set out on Airavata, his elephant." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Rahu had come to eclipse the sun. Frightened by Hanuman, he sought help from Indra, king of the gods. Indra listened and set out on Airavata, his elephant."
+- takeScreenshot: kids-hanuman-sun-en-hs08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 10"
+- assertVisible: { id: "story-page-indra-arrives" }
+- takeScreenshot: kids-hanuman-sun-en-hs03-art
+- scrollUntilVisible:
+    element: { text: "Hanuman chased Rahu, then mistook Airavata for fruit too and rushed towards him. Indra used his thunderbolt to stop the child. Struck by it, Hanuman fell injured onto a mountain." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Hanuman chased Rahu, then mistook Airavata for fruit too and rushed towards him. Indra used his thunderbolt to stop the child. Struck by it, Hanuman fell injured onto a mountain."
+- takeScreenshot: kids-hanuman-sun-en-hs03
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 10"
+- assertVisible: { id: "story-page-vayus-sorrow" }
+- takeScreenshot: kids-hanuman-sun-en-hs04-art
+- scrollUntilVisible:
+    element: { text: "Seeing his injured son, Vayu felt grief and anger. He carried Hanuman into a cave and stopped the flow of air through the world. Without Vayu, living beings struggled to breathe." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Seeing his injured son, Vayu felt grief and anger. He carried Hanuman into a cave and stopped the flow of air through the world. Without Vayu, living beings struggled to breathe."
+- takeScreenshot: kids-hanuman-sun-en-hs04
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 10"
+- assertVisible: { id: "story-page-the-world-needs-air" }
+- takeScreenshot: kids-hanuman-sun-en-hs09-art
+- scrollUntilVisible:
+    element: { text: "The whole world was in distress. The gods and other beings turned to Brahma, the creator, for help. Brahma explained Vayu’s sorrow. Then they went with him to find Vayu and Hanuman." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "The whole world was in distress. The gods and other beings turned to Brahma, the creator, for help. Brahma explained Vayu’s sorrow. Then they went with him to find Vayu and Hanuman."
+- takeScreenshot: kids-hanuman-sun-en-hs09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 10"
+- assertVisible: { id: "story-page-brahma-restores" }
+- takeScreenshot: kids-hanuman-sun-en-hs05-art
+- scrollUntilVisible:
+    element: { text: "Brahma came to the cave with the gods and gently touched the child. Hanuman revived. Vayu rejoiced, and air flowed again. Living beings could breathe freely once more." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Brahma came to the cave with the gods and gently touched the child. Hanuman revived. Vayu rejoiced, and air flowed again. Living beings could breathe freely once more."
+- takeScreenshot: kids-hanuman-sun-en-hs05
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 10"
+- assertVisible: { id: "story-page-gods-blessings" }
+- takeScreenshot: kids-hanuman-sun-en-hs06
+- scrollUntilVisible:
+    element: { text: "A children's retelling of Valmiki Ramayana, Uttara-kanda 35–36. This account follows his flight towards the sun; swallowing the sun belongs to other popular retellings. The takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: kids-hanuman-sun-en-source
 - tapOn: "Back"
 - assertVisible: { id: "kids-story-hanuman-sun" }
 - tapOn: "Back"
-- assertVisible: { id: "kids-story-deity-hanuman" }
+- tapOn: "Back"

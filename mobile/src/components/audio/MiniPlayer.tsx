@@ -1,6 +1,6 @@
 import AppIcon from '@/components/AppIcon';
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
@@ -27,6 +27,7 @@ export default function MiniPlayer() {
   const {
     currentTrack,
     isPlaying,
+    isBuffering,
     positionSec,
     durationSec,
     togglePlay,
@@ -95,12 +96,18 @@ export default function MiniPlayer() {
 
         <Pressable
           onPress={togglePlay}
+          disabled={isBuffering}
           accessibilityRole="button"
-          accessibilityLabel={isPlaying ? 'Pause' : 'Play'}
+          accessibilityState={{ busy: isBuffering }}
+          accessibilityLabel={isBuffering ? 'Loading' : isPlaying ? 'Pause' : 'Play'}
           hitSlop={8}
           style={({ pressed }) => [styles.iconBtn, pressed && { opacity: 0.6 }]}
         >
-          <AppIcon name={isPlaying ? "pause" : "play"} size={21} color={colors.iconInk} weight="fill" />
+          {isBuffering ? (
+            <ActivityIndicator size="small" color={colors.iconInk} />
+          ) : (
+            <AppIcon name={isPlaying ? "pause" : "play"} size={21} color={colors.iconInk} weight="fill" />
+          )}
         </Pressable>
 
         <Pressable

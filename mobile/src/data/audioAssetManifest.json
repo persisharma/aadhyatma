@@ -1,0 +1,45 @@
+{
+  "prefix": "audio-library",
+  "assets": {
+    "gayatri-mantra": {
+      "hash": "35646b444c9320a4",
+      "ext": "mp3"
+    },
+    "govind-bolo": {
+      "hash": "c4f335e0301bfb2e",
+      "ext": "mp3"
+    },
+    "govinda-hari-govinda": {
+      "hash": "b610eba081f04168",
+      "ext": "mp3"
+    },
+    "har-har-bhole": {
+      "hash": "5a7e9d4a992206fa",
+      "ext": "mp3"
+    },
+    "hare-rama": {
+      "hash": "d95c16e079427578",
+      "ext": "mp3"
+    },
+    "jai-nandlal-ki": {
+      "hash": "91a7813dc78c4183",
+      "ext": "mp3"
+    },
+    "krishnaya-vasudevaya": {
+      "hash": "8749f334123869b2",
+      "ext": "mp3"
+    },
+    "mahamrityunjay-mantra": {
+      "hash": "3f12c5bc7c6a3c08",
+      "ext": "mp3"
+    },
+    "narayan-hari-hari": {
+      "hash": "5f6ba2e7d845d83c",
+      "ext": "mp3"
+    },
+    "om-gam-ganapataye-namah": {
+      "hash": "b090d9ec41aedfe1",
+      "ext": "mp3"
+    }
+  }
+}
