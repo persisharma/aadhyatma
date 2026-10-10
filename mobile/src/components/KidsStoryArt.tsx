@@ -1,78 +1,65 @@
 import React, { useState } from 'react';
-import { Image, View, Text, type ImageSourcePropType } from 'react-native';
+import { Image, View, Text } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { assetBaseUrl, remoteAssetRequest, type RemoteAssetManifest } from '@/data/assetManifest';
+import kidsStoryManifestJson from '@/data/kidsStoryAssetManifest.json';
+import { useCachedAsset } from '@/utils/useCachedAsset';
+import { kidsStoryArtRetainedHeight } from '@/utils/kidsStoryArtFrame';
 
-// Static Metro imports keep shared illustrations bundled and available offline.
-const images: Record<string, ImageSourcePropType> = {
-  cover: require('../../assets/kids-stories/kj-01.webp'),
-  chariot: require('../../assets/kids-stories/kj-02.webp'),
-  sword: require('../../assets/kids-stories/kj-03.webp'),
-  prison: require('../../assets/kids-stories/kj-04.webp'),
-  midnight: require('../../assets/kids-stories/kj-05.webp'),
-  vishnu: require('../../assets/kids-stories/kj-06.webp'),
-  escape: require('../../assets/kids-stories/kj-07.webp'),
-  yamuna: require('../../assets/kids-stories/kj-08.webp'),
-  gokul: require('../../assets/kids-stories/kj-09.webp'),
-  devi: require('../../assets/kids-stories/kj-10.webp'),
-  safe: require('../../assets/kids-stories/kj-11.webp'),
-  wedding: require('../../assets/kids-stories/kj-12.webp'),
-  threat: require('../../assets/kids-stories/kj-13.webp'),
-  imprisoned: require('../../assets/kids-stories/kj-14.webp'),
-  balarama: require('../../assets/kids-stories/kj-15.webp'),
-  prayer: require('../../assets/kids-stories/kj-16.webp'),
-  return: require('../../assets/kids-stories/kj-17.webp'),
-  pt00: require('../../assets/kids-stories/pt-00.webp'),
-  pt01: require('../../assets/kids-stories/pt-01.webp'),
-  pt02: require('../../assets/kids-stories/pt-02.webp'),
-  pt03: require('../../assets/kids-stories/pt-03.webp'),
-  pt04: require('../../assets/kids-stories/pt-04.webp'),
-  pt05: require('../../assets/kids-stories/pt-05.webp'),
-  pt06: require('../../assets/kids-stories/pt-06.webp'),
-  ka00: require('../../assets/kids-stories/ka-00.webp'),
-  ka01: require('../../assets/kids-stories/ka-01.webp'),
-  ka02: require('../../assets/kids-stories/ka-02.webp'),
-  ka03: require('../../assets/kids-stories/ka-03.webp'),
-  ka04: require('../../assets/kids-stories/ka-04.webp'),
-  ka05: require('../../assets/kids-stories/ka-05.webp'),
-  ka06: require('../../assets/kids-stories/ka-06.webp'),
-  ka07: require('../../assets/kids-stories/ka-07.webp'),
-  gb00: require('../../assets/kids-stories/gb-00.webp'),
-  gb01: require('../../assets/kids-stories/gb-01.webp'),
-  gb02: require('../../assets/kids-stories/gb-02.webp'),
-  gb03: require('../../assets/kids-stories/gb-03.webp'),
-  gb04: require('../../assets/kids-stories/gb-04.webp'),
-  gb05: require('../../assets/kids-stories/gb-05.webp'),
-  gb06: require('../../assets/kids-stories/gb-06.webp'),
-  gb07: require('../../assets/kids-stories/gb-07.webp'),
-  hs00: require('../../assets/kids-stories/hs-00.webp'),
-  hs01: require('../../assets/kids-stories/hs-01.webp'),
-  hs02: require('../../assets/kids-stories/hs-02.webp'),
-  hs03: require('../../assets/kids-stories/hs-03.webp'),
-  hs04: require('../../assets/kids-stories/hs-04.webp'),
-  hs05: require('../../assets/kids-stories/hs-05.webp'),
-  hs06: require('../../assets/kids-stories/hs-06.webp'),
+export { kidsStoryArtRetainedHeight };
+
+const kidsStoryManifest = kidsStoryManifestJson as RemoteAssetManifest;
+
+// The art is served from the CDN (R2) and cached on-device after the first view
+// — see `assetCache`. This map is the only app-side knowledge of the bundle: it
+// turns a story's `art` label into the manifest stem the uploaded file carries.
+const ART_STEMS: Record<string, string> = {
+  cover: 'kj-01', chariot: 'kj-02', sword: 'kj-03', prison: 'kj-04', midnight: 'kj-05',
+  vishnu: 'kj-06', escape: 'kj-07', yamuna: 'kj-08', gokul: 'kj-09', devi: 'kj-10',
+  safe: 'kj-11', wedding: 'kj-12', threat: 'kj-13', imprisoned: 'kj-14', balarama: 'kj-15',
+  prayer: 'kj-16', return: 'kj-17',
+  pt00: 'pt-00', pt01: 'pt-01', pt02: 'pt-02', pt03: 'pt-03', pt04: 'pt-04', pt05: 'pt-05', pt06: 'pt-06',
+  pt07: 'pt-07', pt08: 'pt-08', pt09: 'pt-09',
+  ka00: 'ka-00', ka01: 'ka-01', ka02: 'ka-02', ka03: 'ka-03', ka04: 'ka-04', ka05: 'ka-05', ka06: 'ka-06', ka07: 'ka-07',
+  gb00: 'gb-00', gb01: 'gb-01', gb02: 'gb-02', gb03: 'gb-03', gb04: 'gb-04', gb05: 'gb-05', gb06: 'gb-06', gb07: 'gb-07',
+  gb08: 'gb-08', gb09: 'gb-09', gb10: 'gb-10',
+  hs00: 'hs-00', hs01: 'hs-01', hs02: 'hs-02', hs03: 'hs-03', hs04: 'hs-04', hs05: 'hs-05', hs06: 'hs-06',
+  hs07: 'hs-07', hs08: 'hs-08', hs09: 'hs-09',
+  br01: 'br-01', br02: 'br-02', br03: 'br-03', br04: 'br-04', br05: 'br-05', br06: 'br-06', br07: 'br-07',
+  cg01: 'cg-01', cg02: 'cg-02', cg03: 'cg-03', cg04: 'cg-04', cg05: 'cg-05', dm01: 'dm-01', dm02: 'dm-02',
+  dm03: 'dm-03', dm04: 'dm-04', dm05: 'dm-05', dm06: 'dm-06', dm07: 'dm-07', dm08: 'dm-08', dm09: 'dm-09',
+  dm10: 'dm-10', dm11: 'dm-11', dm12: 'dm-12', kr01: 'kr-01', kr02: 'kr-02', ku01: 'ku-01', ku02: 'ku-02',
+  ku03: 'ku-03', mg01: 'mg-01', mg02: 'mg-02', mg03: 'mg-03', mg04: 'mg-04', mg05: 'mg-05', mg06: 'mg-06',
+  mg07: 'mg-07', nv01: 'nv-01', nv02: 'nv-02', nv03: 'nv-03', rb01: 'rb-01', rb02: 'rb-02', rb03: 'rb-03',
+  rb04: 'rb-04', rb05: 'rb-05', rb06: 'rb-06', rb07: 'rb-07', sa01: 'sa-01', sa02: 'sa-02', sa03: 'sa-03',
+  sa04: 'sa-04', sa05: 'sa-05', sa06: 'sa-06', sa07: 'sa-07', sa08: 'sa-08', si01: 'si-01', si02: 'si-02',
+  si03: 'si-03', sk01: 'sk-01', sk02: 'sk-02', sk03: 'sk-03', sk04: 'sk-04', sk05: 'sk-05', sn01: 'sn-01',
+  sn02: 'sn-02', sn03: 'sn-03', sn04: 'sn-04', sn05: 'sn-05', sn06: 'sn-06', sn07: 'sn-07', sn08: 'sn-08',
+  sn09: 'sn-09', sn10: 'sn-10', sn11: 'sn-11', sn12: 'sn-12', sn13: 'sn-13', sn14: 'sn-14', sp01: 'sp-01',
+  sp02: 'sp-02', sp03: 'sp-03', sp04: 'sp-04', su01: 'su-01', su02: 'su-02', su03: 'su-03', su04: 'su-04',
+  su05: 'su-05', su06: 'su-06', su07: 'su-07',
 };
-// The art fills whatever vertical space the page layout leaves for it (`flex: 1`
-// from the parent), so the caption below always stays on screen. The image is
-// pinned to the TOP of that frame at its natural 4:5 height (measured from the
-// frame width); when the frame is shorter than the image, the empty parchment/
-// ground band at the FOOT overflows and is clipped — only the bottom is cropped,
-// never the top. `Math.max` guards the rare case where the frame is taller than
-// the image (short caption / big screen) so no empty band appears below it.
-export default function KidsStoryArt({ art, label }: { art: string; label: string }) {
+export function kidsStoryArtRequest(art: string) {
+  const stem = ART_STEMS[art];
+  return stem ? remoteAssetRequest(kidsStoryManifest, stem, assetBaseUrl()) : null;
+}
+export default function KidsStoryArt({ art, label, resolvedUri, onLoad, onError }: {
+  art: string; label: string; resolvedUri?: string; onLoad?: () => void; onError?: () => void;
+}) {
   const { colors } = useTheme();
-  const [frame, setFrame] = useState({ w: 0, h: 0 });
-  const naturalHeight = frame.w * (5 / 4);
-  const imageHeight = Math.max(naturalHeight, frame.h);
+  const [width, setWidth] = useState(0);
+  const retainedHeight = kidsStoryArtRetainedHeight(art);
+  const cachedUri = useCachedAsset(resolvedUri ? null : kidsStoryArtRequest(art));
+  const uri = resolvedUri ?? cachedUri;
   return (
     <View
       accessibilityRole="image"
       accessibilityLabel={label}
-      onLayout={event => setFrame({ w: event.nativeEvent.layout.width, h: event.nativeEvent.layout.height })}
-      style={{ flex: 1, width: '100%', minHeight: 150, overflow: 'hidden', borderRadius: 12, backgroundColor: colors.parchmentSoft }}
+      onLayout={event => setWidth(event.nativeEvent.layout.width)}
+      style={{ width: '100%', aspectRatio: 4 / (5 * retainedHeight), flexShrink: 0, overflow: 'hidden', borderRadius: 12, backgroundColor: colors.parchmentSoft }}
     >
-      {images[art] ? (
-        <Image accessible={false} source={images[art]} resizeMode="cover" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: frame.w ? imageHeight : '100%' }} />
+      {uri ? (
+        <Image onLoad={onLoad} onError={onError} accessible={false} source={{ uri }} resizeMode="contain" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: width ? width * (5 / 4) : '100%' }} />
       ) : (
         <Text style={{ color: colors.ink, padding: 20 }}>{label}</Text>
       )}

@@ -4,6 +4,9 @@ import type { KidsStory } from '@/data/kidsStories';
 
 let mockLang = 'hi';
 const mockScroll = jest.fn();
+const mockShare = jest.fn();
+jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, busy: false }) }));
+jest.mock('@/components/ShareButton', () => ({ __esModule: true, default: 'ShareButton' }));
 jest.mock('react-native', () => {
   const React = require('react');
   return {
@@ -72,12 +75,24 @@ test('first scene mounts with a horizontal pager, a counter and no page buttons'
   expect(pager.props.horizontal).toBe(true);
   expect(pager.props.pagingEnabled).toBe(true);
   expect(pager.props.initialNumToRender).toBe(1);
+  for (const page of story.pages) {
+    const scene = find(`story-page-${page.id}`);
+    expect(scene.type).toBe('ScrollView');
+    expect(scene.props.horizontal).not.toBe(true);
+    expect(scene.findByType('KidsStoryArt' as any).props.art).toBe(page.art);
+  }
   expect(pager.props.getItemLayout(null, 2)).toEqual({ length: 390, offset: 780, index: 2 });
   expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === story.pages[0].text.hi)).toBe(true);
   // Gita-style swipe-only navigation: a header counter, no Previous/Next buttons.
   expect(find('story-progress').props.children[0]).toBe(1);
   expect(tree.root.findAllByProps({ testID: 'story-prev' })).toHaveLength(0);
   expect(tree.root.findAllByProps({ testID: 'story-next' })).toHaveLength(0);
+  act(() => tree.unmount());
+});
+
+test('the tab-hosted reader leaves the bottom safe-area inset to its navigator', () => {
+  const { tree, find } = mount();
+  expect(find('kids-story-reader').props.edges).toEqual(['top', 'left', 'right']);
   act(() => tree.unmount());
 });
 
@@ -106,5 +121,17 @@ test('unknown story renders a graceful message without a pager', () => {
   const { tree } = mount(undefined, 'missing');
   expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === 'Story not found.')).toBe(true);
   expect(tree.root.findAllByProps({ testID: 'story-pager' })).toHaveLength(0);
+  act(() => tree.unmount());
+});
+
+test('share follows the visible scene and authored reading language', () => {
+  mockLang = 'gu';
+  const { tree, find } = mount(undefined, 'durga-raktabeej');
+  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * 3 } } }));
+  act(() => tree.root.findByType('ShareButton' as any).props.onPress());
+  const [content, language] = mockShare.mock.calls[mockShare.mock.calls.length - 1];
+  expect(language).toBe('gu');
+  expect(content.scopes[content.scopes.length - 1].id).toBe('scene-4');
+  expect(content.scopes[0].prepared.gu.firstLine).toBe('દુર્ગા, કાલી અને રક્તબીજ');
   act(() => tree.unmount());
 });

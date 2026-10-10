@@ -62,8 +62,9 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
 );
 const MoreScreen = jest.requireActual<typeof import('../MoreScreen')>('../MoreScreen').default;
 
-function makeNav(): { navigate: jest.Mock; goBack: jest.Mock } {
-  return { navigate: jest.fn(), goBack: jest.fn() };
+function makeNav() {
+  const parentNavigate = jest.fn();
+  return { navigate: jest.fn(), goBack: jest.fn(), parentNavigate, getParent: () => ({ navigate: parentNavigate }) };
 }
 
 async function renderMore(nav: ReturnType<typeof makeNav>) {
@@ -89,6 +90,12 @@ function byLabel(tree: TestRenderer.ReactTestRenderer, label: string) {
 }
 
 describe('MoreScreen (redesign)', () => {
+  test('the settings hub returns to Home from its back button', async () => {
+    const nav = makeNav();
+    const tree = await renderMore(nav);
+    act(() => tree.root.findByProps({ testID: 'settings-back' }).props.onPress());
+    expect(nav.parentNavigate).toHaveBeenCalledWith('HomeTab', { screen: 'Home' });
+  });
   beforeEach(() => {
     mockGetItem.mockReset().mockResolvedValue(null);
     mockSetItem.mockReset().mockResolvedValue(undefined);

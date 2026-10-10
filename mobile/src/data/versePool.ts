@@ -261,6 +261,8 @@ function buildPoolSegments(): PoolSegment[] {
   // Japam entries and Sanskar projections are already small launch-path data.
   for (const mantra of japamMantras) {
     if (!isActive(mantra.id)) continue;
+    // A naam-japa line is a single name, not a verse to surface on its own.
+    if (mantra.naam) continue;
     const getAt = (offset: number): UniformVerse | null =>
       offset === 0
         ? {

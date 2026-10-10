@@ -20,7 +20,7 @@ import {
   BhaktiIcon,
   PanchangIcon,
   MusicIcon,
-  MoreIcon,
+  VratIcon,
 } from './tabBarIcons';
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -75,6 +75,10 @@ export default function TabNavigator() {
         </Text>
       );
     };
+  // More remains a hidden route for existing deep links, so override the
+  // navigator's default "of 6" announcement with the five visible positions.
+  const tabAccessibilityLabel = (hi: string, en: string, position: number) =>
+    contentByLang(lang, `${hi}, टैब, ${position} / 5`, `${en}, tab, ${position} of 5`);
   return (
     <Tab.Navigator
       initialRouteName="HomeTab"
@@ -96,6 +100,7 @@ export default function TabNavigator() {
             title: contentByLang(lang, 'होम', 'Home'),
             tabBarLabel: tabLabel('होम', 'Home'),
             tabBarButtonTestID: 'tab-home',
+            tabBarAccessibilityLabel: tabAccessibilityLabel('होम', 'Home', 1),
             tabBarIcon: ({ focused, size }) => (
               <HomeIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
             ),
@@ -112,6 +117,7 @@ export default function TabNavigator() {
           title: contentByLang(lang, 'भक्ति', 'Bhakti'),
           tabBarLabel: tabLabel('भक्ति', 'Bhakti'),
           tabBarButtonTestID: 'tab-bhakti',
+          tabBarAccessibilityLabel: tabAccessibilityLabel('भक्ति', 'Bhakti', 2),
           tabBarIcon: ({ focused, size }) => (
             <BhaktiIcon color={focused ? colors.iconAccent : colors.iconInk} accentColor={colors.saffron} size={size} />
           ),
@@ -124,8 +130,22 @@ export default function TabNavigator() {
           title: contentByLang(lang, 'पंचांग', 'Panchang'),
           tabBarLabel: tabLabel('पंचांग', 'Panchang'),
           tabBarButtonTestID: 'tab-panchang',
+          tabBarAccessibilityLabel: tabAccessibilityLabel('पंचांग', 'Panchang', 3),
           tabBarIcon: ({ focused, size }) => (
             <PanchangIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="VratTab"
+        component={VratTabRoot}
+        options={{
+          title: contentByLang(lang, 'व्रत', 'Vrat'),
+          tabBarLabel: tabLabel('व्रत', 'Vrat'),
+          tabBarButtonTestID: 'tab-vrat',
+          tabBarAccessibilityLabel: tabAccessibilityLabel('व्रत', 'Vrat', 4),
+          tabBarIcon: ({ focused, size }) => (
+            <VratIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
           ),
         }}
       />
@@ -136,6 +156,7 @@ export default function TabNavigator() {
           title: contentByLang(lang, 'भजन', 'Bhajan'),
           tabBarLabel: tabLabel('भजन', 'Bhajan'),
           tabBarButtonTestID: 'tab-bhajan',
+          tabBarAccessibilityLabel: tabAccessibilityLabel('भजन', 'Bhajan', 5),
           tabBarIcon: ({ focused, size }) => (
             <MusicIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
           ),
@@ -145,12 +166,11 @@ export default function TabNavigator() {
         name="MoreTab"
         component={MoreStackNavigator}
         options={{
-          title: contentByLang(lang, 'अन्य', 'More'),
-          tabBarLabel: tabLabel('अन्य', 'More'),
-          tabBarButtonTestID: 'tab-more',
-          tabBarIcon: ({ focused, size }) => (
-            <MoreIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
-          ),
+          // Preserve existing cross-stack and notification destinations while
+          // exposing the hub through Home's gear instead of a sixth tab slot.
+          title: contentByLang(lang, 'सेटिंग्स', 'Settings'),
+          tabBarButton: () => null,
+          tabBarItemStyle: { display: 'none' },
         }}
       />
     </Tab.Navigator>
@@ -165,6 +185,14 @@ export default function TabNavigator() {
  * lightweight surface while that stack loads.
  */
 function PanchangTabRoot() {
+  return <CalendarStackRoot initialMode="calendar" />;
+}
+
+function VratTabRoot() {
+  return <CalendarStackRoot initialMode="catalog" />;
+}
+
+function CalendarStackRoot({ initialMode }: { initialMode: 'calendar' | 'catalog' }) {
   const { colors } = useTheme();
   return (
     // Boundary OUTSIDE Suspense: a chunk that fails to evaluate must be caught
@@ -184,7 +212,7 @@ function PanchangTabRoot() {
           </View>
         }
       >
-        <LazyPanchangStackNavigator />
+        <LazyPanchangStackNavigator initialMode={initialMode} />
       </Suspense>
     </StackLoadBoundary>
   );

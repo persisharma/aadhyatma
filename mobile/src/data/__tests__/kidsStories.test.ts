@@ -1,12 +1,17 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, mkdtempSync, writeFileSync, copyFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { spawnSync } from 'node:child_process';
+import path from 'node:path';
+import ts from 'typescript';
 import { fileURLToPath, URL } from 'node:url';
 import { createHash } from 'node:crypto';
-import { kidsStories, getKidsStory, storyDeities, storiesForDeity, plannedStories, storyPageIndex, storyText } from '../kidsStories';
+import reviewedFrames from '../../components/kidsStoryArtFrames.json';
+import { kidsStories, getKidsStory, storyDeities, storiesForDeity, plannedStories, storyPageIndex, storyText, navadurgaReadings } from '../kidsStories';
 
 test('deity shelves contain only published stories, with future titles kept separate', () => {
-  assert.deepEqual(storyDeities.map(deity => deity.id), ['krishna', 'ganesha', 'hanuman']);
+  assert.deepEqual(storyDeities.map(deity => deity.id), ['krishna', 'ganesha', 'hanuman', 'durga']);
   for (const story of kidsStories) {
     assert.ok(storyDeities.some(deity => deity.id === story.deityId), `${story.id}: unknown deity`);
   }
@@ -46,10 +51,10 @@ test('locale selection changes narration while keeping the shared illustration a
 });
 
 test('the four new stories carry complete sourced arcs, regional text and distinct matching artwork', () => {
-  const expected = { putana: 7, 'kaliya-nag': 8, 'ganesha-birth': 8, 'hanuman-sun': 7 };
+  const expected = { putana: 10, 'kaliya-nag': 8, 'ganesha-birth': 11, 'hanuman-sun': 10 };
   const componentUrl = new URL('../../components/KidsStoryArt.tsx', import.meta.url);
   const component = readFileSync(componentUrl, 'utf8');
-  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  const assets = new Map([...component.matchAll(/(\w+): '([a-z]{2}-\d+)'/g)].map(match => [match[1], `../../assets/kids-stories/${match[2]}.webp`]));
   const hashes = new Set<string>();
   for (const [id, pageCount] of Object.entries(expected)) {
     const story = getKidsStory(id)!;
@@ -87,20 +92,33 @@ test('the four new stories carry complete sourced arcs, regional text and distin
       hashes.add(hash);
     }
   }
-  assert.equal(hashes.size, 30);
+  assert.equal(hashes.size, 39);
 });
 
-test('every page and cover resolves to a bundled final illustration', () => {
+test('every page and cover resolves to a source illustration (uploaded to the CDN, cached on-device)', () => {
   const component = readFileSync(fileURLToPath(new URL('../../components/KidsStoryArt.tsx', import.meta.url)), 'utf8');
-  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  const assets = new Map([...component.matchAll(/(\w+): '([a-z]{2}-\d+)'/g)].map(match => [match[1], `../../assets/kids-stories/${match[2]}.webp`]));
   for (const story of kidsStories) for (const art of [story.coverArt, ...story.pages.map(page => page.art)]) {
     const asset = assets.get(art);
-    assert.ok(asset, `Missing static Metro import: ${art}`);
+    assert.ok(asset, `Missing CDN art mapping: ${art}`);
     const path = fileURLToPath(new URL(asset, new URL('../../components/KidsStoryArt.tsx', import.meta.url)));
-    assert.ok(existsSync(path), `Missing bundled illustration: ${art}`);
+    assert.ok(existsSync(path), `Missing source illustration: ${art}`);
     const bytes = readFileSync(path);
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
+  }
+});
+
+test('every source illustration has a bottom-band review tied to its actual image bytes', () => {
+  const componentUrl = new URL('../../components/KidsStoryArt.tsx', import.meta.url);
+  const component = readFileSync(componentUrl, 'utf8');
+  const assets = new Map([...component.matchAll(/(\w+): '([a-z]{2}-\d+)'/g)].map(match => [match[1], `../../assets/kids-stories/${match[2]}.webp`]));
+  assert.deepEqual(Object.keys(reviewedFrames).sort(), [...assets.keys()].sort(), 'Review every image, including covers');
+  for (const [art, frame] of Object.entries(reviewedFrames)) {
+    assert.ok(frame.retainedHeight > 0 && frame.retainedHeight <= 1, `${art}: invalid retained image height`);
+    const bytes = readFileSync(new URL(assets.get(art)!, componentUrl));
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), frame.sha256,
+      `${art}: illustration changed; visually review and update its bottom-band frame before shipping`);
   }
 });
 
@@ -119,7 +137,7 @@ test('Krishna Janma keeps distinct scene art and matching browser assets', () =>
   const repoRoot = new URL('../../../../', import.meta.url);
   const componentUrl = new URL('../../components/KidsStoryArt.tsx', import.meta.url);
   const component = readFileSync(componentUrl, 'utf8');
-  const assets = new Map([...component.matchAll(/(\w+): require\('(.+?)'\)/g)].map(match => [match[1], match[2]]));
+  const assets = new Map([...component.matchAll(/(\w+): '([a-z]{2}-\d+)'/g)].map(match => [match[1], `../../assets/kids-stories/${match[2]}.webp`]));
   const prototype = readFileSync(new URL('docs/kids-stories-prototype.html', repoRoot), 'utf8');
   const prototypeStory = prototype.match(/const story = (\{.*?\});/);
   const prototypeArtwork = prototype.match(/const artwork = (\{.*?\});/);
@@ -134,4 +152,109 @@ test('Krishna Janma keeps distinct scene art and matching browser assets', () =>
     const browserUrl = new URL(`docs/${browserAssets[art]}`, repoRoot);
     assert.deepEqual(readFileSync(nativeUrl), readFileSync(browserUrl), `App/browser mismatch: ${art}`);
   }
+});
+
+test('Navaratri resolves all nine days once, with honest introduction labels and the shared Katyayani story', () => {
+  assert.deepEqual(navadurgaReadings.map(form => form.day), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  assert.equal(new Set(navadurgaReadings.map(form => form.storyId)).size, 9);
+  assert.equal(navadurgaReadings.find(form => form.id === 'katyayani')!.storyId, 'durga-mahishasura');
+  for (const form of navadurgaReadings) assert.equal(getKidsStory(form.storyId)?.deityId, 'durga');
+  assert.deepEqual(storiesForDeity('durga').filter(story => story.kind === 'introduction').map(story => story.id).sort(),
+    ['durga-kalaratri', 'durga-kushmanda', 'durga-navaratri', 'durga-siddhidatri']);
+  assert.notEqual(navadurgaReadings.find(form => form.id === 'kalaratri')!.storyId, 'durga-raktabeej');
+});
+
+test('Durga readings carry all four narratives, sourced page arcs, unique art and matching browser/CDN bytes', () => {
+  const expected: Record<string, number> = {
+    'durga-navaratri': 3, 'durga-shailaputri': 4, 'durga-brahmacharini': 7,
+    'durga-chandraghanta': 5, 'durga-kushmanda': 3, 'durga-skandamata': 5,
+    'durga-mahishasura': 12, 'durga-kalaratri': 2, 'durga-mahagauri': 7,
+    'durga-siddhidatri': 3, 'durga-raktabeej': 7, 'durga-shumbha-nishumbha': 14,
+    'durga-suratha-samadhi': 7, 'durga-shakambhari': 8,
+  };
+  assert.deepEqual(storiesForDeity('durga').map(story => story.id).sort(), Object.keys(expected).sort());
+  const root = new URL('../../../../', import.meta.url);
+  const component = readFileSync(new URL('mobile/src/components/KidsStoryArt.tsx', root), 'utf8');
+  const stems = new Map([...component.matchAll(/(\w+): '([a-z]{2}-\d+)'/g)].map(match => [match[1], match[2]]));
+  const manifest = JSON.parse(readFileSync(new URL('mobile/src/data/kidsStoryAssetManifest.json', root), 'utf8'));
+  const hashes = new Set<string>();
+  for (const story of storiesForDeity('durga')) {
+    assert.equal(story.pages.length, expected[story.id]);
+    assert.equal(story.source?.retrievedOn, '2026-10-09');
+    assert.ok(story.source?.baseText && story.source.notes);
+    assert.ok(new Set(story.source.referenceUrls.map(url => new URL(url).hostname)).size >= 2);
+    const html = readFileSync(new URL(`docs/kids-stories-${story.id}-prototype.html`, root), 'utf8');
+    assert.deepEqual(JSON.parse(html.match(/const story = (\{.*?\});/)![1]), story);
+    const art = JSON.parse(html.match(/const artwork = (\{.*?\});/)![1]);
+    for (const page of story.pages) {
+      assert.ok(page.source.trim());
+      for (const field of [page.title, page.text]) {
+        assert.match(field.hi, /[\u0900-\u097F]/);
+        assert.match(field.gu, /[\u0A80-\u0AFF]/);
+        assert.match(field.kn, /[\u0C80-\u0CFF]/);
+        assert.doesNotMatch(field.en, /[\u0900-\u097F\u0A80-\u0AFF\u0C80-\u0CFF]/);
+      }
+      const stem = stems.get(page.art);
+      assert.ok(stem, `${story.id}/${page.id}: unmapped scene`);
+      const native = readFileSync(new URL(`mobile/assets/kids-stories/${stem}.webp`, root));
+      assert.deepEqual(native, readFileSync(new URL(`docs/${art[page.art]}`, root)));
+      const hash = createHash('sha256').update(native).digest('hex');
+      assert.equal(hashes.has(hash), false, `${story.id}/${page.id}: duplicate scene`);
+      hashes.add(hash);
+      assert.equal(manifest.prefix, 'kids-stories');
+      assert.deepEqual(manifest.assets[stem], { hash: hash.slice(0, 16), ext: 'webp' });
+    }
+    assert.ok(story.pages.some(page => page.art === story.coverArt), `${story.id}: cover is a reviewed complete scene`);
+  }
+  assert.equal(hashes.size, 87);
+});
+
+
+test('production source never imports bundled kids-story illustrations, including the Home cover', () => {
+  const root = fileURLToPath(new URL('../../', import.meta.url));
+  const violations: string[] = [];
+  for (const entry of readdirSync(root, { recursive: true })) {
+    const name = String(entry);
+    if (!/\.tsx?$/.test(name) || name.includes('__tests__') || /\.test\./.test(name)) continue;
+    const source = ts.createSourceFile(name, readFileSync(path.join(root, name), 'utf8'), ts.ScriptTarget.Latest, true,
+      name.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+    const visit = (node: ts.Node) => {
+      let spec: ts.Expression | undefined;
+      if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) spec = node.moduleSpecifier;
+      if (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword ||
+        (ts.isIdentifier(node.expression) && node.expression.text === 'require'))) spec = node.arguments[0];
+      if (spec && ts.isStringLiteralLike(spec) && /(?:^|\/)(?:kids-stories|krishna-janma)\/.*\.(?:webp|png|jpe?g)$/i.test(spec.text))
+        violations.push(`${name}: ${spec.text}`);
+      ts.forEachChild(node, visit);
+    };
+    visit(source);
+  }
+  assert.deepEqual(violations, [], 'Story images must use the CDN manifest/cache, not a Metro asset import');
+});
+
+
+test('export asset gate rejects a renamed story image outside the story folders', () => {
+  const root = fileURLToPath(new URL('../../../../', import.meta.url));
+  const dir = mkdtempSync(path.join(tmpdir(), 'kids-story-bundle-'));
+  try {
+    const renamed = path.join(dir, 'renamed-art.webp');
+    copyFileSync(path.join(root, 'mobile/assets/kids-stories/story-library.webp'), renamed);
+    const map = path.join(dir, 'assetmap.json');
+    writeFileSync(map, JSON.stringify({ arbitrary: { files: [renamed] } }));
+    const result = spawnSync(process.execPath, ['scripts/verify-kids-story-assets.mjs', '--assetmap', map], { cwd: root, encoding: 'utf8' });
+    assert.equal(result.status, 1, result.stderr);
+    assert.equal(JSON.parse(result.stdout).exports[0].bundledStoryImages, 1);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('export asset gate accepts an export with no story imagery', () => {
+  const root = fileURLToPath(new URL('../../../../', import.meta.url));
+  const dir = mkdtempSync(path.join(tmpdir(), 'kids-story-bundle-'));
+  try {
+    const map = path.join(dir, 'assetmap.json');
+    writeFileSync(map, '{}');
+    const result = spawnSync(process.execPath, ['scripts/verify-kids-story-assets.mjs', '--assetmap', map], { cwd: root, encoding: 'utf8' });
+    assert.equal(result.status, 0, result.stderr);
+    assert.deepEqual(JSON.parse(result.stdout).failures, []);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });

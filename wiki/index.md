@@ -13,7 +13,7 @@
 
 ## Subsystems
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.
-- [[kids-stories]] — Home → deity → five illustrated stories, four-language narration, source provenance, native reader and art review workflow.
+- [[kids-stories]] — lazy four-deity library, nineteen readings including Durga/Navaratri, 143 reviewed illustrations, four-language causal review, reviewed frames, multi-card sharing and hashed R2 delivery; native/editorial/CDN evidence remains explicit.
 - [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, per-routine reminders, home banner + celebration.
 - [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, **festival arcs (पर्व-अर्क: sthapana → family-chosen visarjan)**, Daily Muhurat, shubh-yoga annotations (annotate-only), Kundali (incl. the draft **graha-by-graha cards with counted labels and upay**, jyotishi-gated), deterministic Daily Rashifal, private IST-only Guna Milan, newborn-private Namkaran, and dated one-shot muhurat follows.
 - [[japam-alarms]] — Japam Alarms: repeat-days, one-time, and skip-next; native AlarmKit/AlarmManager tier with expo fallback.
@@ -26,7 +26,7 @@
 - [[vastu-disha]] — live 8-dik compass (fused→magnetometer source ladder, true-north grid correction, tilt/Hold honesty) + गृह वास्तु: mandala-grid home capture, five-class weighted readings, private roster + compare, text handoff, Ask `vastu.myhome`; Phase 1 store-gated (expo-sensors), Phase 2 OTA.
 - [[pitru-shiksha]] — पितृ पक्ष परिचय (PRD-44): the education layer beside the Pitru reminder and the tila-tarpana vidhi — verified-only registry (lessons · tithis · glossary · verse spine with reader refs · kathas · प्रश्नोत्तर), the reading-order screen, the gated overview door, the stance guard.
 - [[gita-saar]] — गीता सार: themed readings over the bundled Gita (a chapter is a theme, a page is one shloka + its plain-language सार), refs never re-typed scripture, three-file theme additions, first theme सच्चा प्रेम.
-- [[share]] — share cards: the one `ShareProvider`, verse card + prose card, the measured paginator that splits long prose into a series, the pages strip / preview, all-pages share via the native-gated `react-native-share`, and the no-share Pitru surfaces.
+- [[share]] — share cards: the one `ShareProvider`, verse/prose/illustrated story cards, density-correct PNG export, the measured paginator that splits long prose into a series, the pages strip / preview, all-pages share via the native-gated `react-native-share`, and the no-share Pitru surfaces.
 - [[daan-punya]] — the education-led giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and a verified directory available from both the giving home and the journey's terminal actions.
 
 ## Concepts
@@ -37,7 +37,7 @@
 _(none yet — add per-model pages as they warrant)_
 
 ## Integrations
-_(none yet — extract from source as needed)_
+- [[integrations/meta-app-events]] — build-gated Android/iOS Meta activation measurement, ATT/privacy guards, native release requirements and verification limits.
 
 ## Runbooks
 - [[e2e-verification]] — Maestro e2e: authoring rules, the isolated-simulator verification recipe (multi-worktree machines), gotchas, and the "every change ships with e2e" policy.

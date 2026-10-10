@@ -84,13 +84,21 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
           title={title}
           onBack={() => navigation.goBack()}
           right={
-            total > 0 ? (
-              <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily }]}>
-                {currentIndex + 1} / {total}
-              </Text>
+            katha && total > 0 ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily }]}>
+                  {currentIndex + 1} / {total}
+                </Text>
+                <ShareButton
+                  onPress={() => void share(vratKathaShareable(katha, currentIndex), lang)}
+                  busy={shareBusy}
+                  accessibilityLabel="Share katha"
+                  accessibilityHint="Opens share options for this part or the whole katha"
+                />
+              </View>
             ) : null
           }
-          sideWidth={80}
+          sideWidth={96}
         />
 
         {!katha ? (
@@ -103,16 +111,6 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
           <>
             <ReadingProgressBar current={currentIndex + 1} total={total} />
             <View style={styles.toggleRow}>
-              {/* Share pinned left, read-aloud pinned right, so the toggle stays
-                  centred (design.md §56.2, §39.4). */}
-              <View style={styles.shareSlot}>
-                <ShareButton
-                  onPress={() => void share(vratKathaShareable(katha, currentIndex), lang)}
-                  busy={shareBusy}
-                  accessibilityLabel="Share katha"
-                  accessibilityHint="Opens share options for this part or the whole katha"
-                />
-              </View>
               <LanguageToggle />
               {/* Pinned right so the toggle stays centred (design.md §56.2). */}
               <View style={styles.readAloudSlot}>
@@ -170,7 +168,6 @@ const styles = StyleSheet.create({
   counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
   toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
-  shareSlot: { position: 'absolute', left: 16, top: 6, bottom: 6, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },

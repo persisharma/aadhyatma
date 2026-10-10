@@ -8,7 +8,7 @@
  * the user to tap them. Copy is bilingual since the user has not yet picked a
  * reading language at first launch (design.md §1, §47).
  *
- * Shape of the walkthrough: the five bottom tabs → the Home routine card &
+ * Shape of the walkthrough: the five bottom tabs → Home’s settings gear → the Home routine card &
  * categories (Japa and Theerth split out with their inside views) → what's
  * inside each section (Bhakti, a Panchang vrat drill, Bhajan, and a More
  * reminder/alarm drill) → the More Language and Reading Size rows, which the
@@ -39,6 +39,7 @@ export type TourNavTarget =
       params?: { screen: keyof PanchangStackParamList; params?: object; initial?: false };
     }
   | { name: 'DailyBhaktiTab' }
+  | { name: 'VratTab' }
   | { name: 'AudioTab' };
 
 /** Where the tooltip card sits relative to the screen. */
@@ -71,12 +72,12 @@ export type TourStep = {
  * Tab order in `TabNavigator` — used to ring the destination tab when a step
  * has no measurable element target. Must mirror the `Tab.Screen` order.
  */
-export const TAB_ORDER: Record<TourNavTarget['name'], number> = {
+export const TAB_ORDER: Partial<Record<TourNavTarget['name'], number>> = {
   HomeTab: 0,
   DailyBhaktiTab: 1,
   PanchangTab: 2,
-  AudioTab: 3,
-  MoreTab: 4,
+  VratTab: 3,
+  AudioTab: 4,
 };
 
 export const tourSteps: readonly TourStep[] = [
@@ -112,6 +113,16 @@ export const tourSteps: readonly TourStep[] = [
     bodyEn: "Today's tithi, nakshatra, muhurat, and vrats & festivals.",
   },
   {
+    id: 'tab-vrat',
+    navigateTo: { name: 'VratTab' },
+    anchor: 'bottom',
+    pointer: 'up',
+    titleHi: 'व्रत',
+    titleEn: 'Vrat',
+    bodyHi: 'व्रत-पर्व, कथाएँ और आपके चुने हुए व्रत — सीधे यहाँ खोलें।',
+    bodyEn: 'Open vrats, festivals, kathas, and your followed vrats directly here.',
+  },
+  {
     id: 'tab-bhajan',
     navigateTo: { name: 'AudioTab' },
     anchor: 'bottom',
@@ -122,14 +133,15 @@ export const tourSteps: readonly TourStep[] = [
     bodyEn: 'A library of bhajans & mantras — a mini-player follows you around.',
   },
   {
-    id: 'tab-more',
-    navigateTo: { name: 'MoreTab' },
-    anchor: 'bottom',
-    pointer: 'up',
-    titleHi: 'अधिक',
-    titleEn: 'More',
+    id: 'settings',
+    navigateTo: { name: 'HomeTab', params: { screen: 'Home' } },
+    targetId: 'settingsButton',
+    anchor: 'top',
+    pointer: 'down',
+    titleHi: 'सेटिंग्स',
+    titleEn: 'Settings',
     bodyHi: 'प्रोफ़ाइल, दैनिक स्मरण, जप-अलार्म और भाषा — सब यहाँ।',
-    bodyEn: 'Profile, daily reminders, japam alarms, and language — all here.',
+    bodyEn: 'The gear at the top right of Home opens your profile, reminders, japam alarms, and language.',
   },
 
   // ── Home: routine card + categories (Japa & Theerth drilled in) ─────────────

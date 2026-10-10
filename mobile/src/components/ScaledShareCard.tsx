@@ -7,15 +7,20 @@ import { proseCardMetrics } from '@/utils/shareCardPages';
  * strip, page preview — design.md §39.5). The transform is fine here because this view
  * is never handed to `captureRef`; the exported card is always mounted unscaled.
  */
-export default function ScaledShareCard({ width, children }: { width: number; children: React.ReactNode }) {
-  const scale = width / proseCardMetrics.width;
+export default function ScaledShareCard({ width, metrics = proseCardMetrics, children }: {
+  width: number;
+  /** The card's native size; defaults to the 540×675 prose card (the picture card is 540×960). */
+  metrics?: { width: number; height: number };
+  children: React.ReactNode;
+}) {
+  const scale = width / metrics.width;
   return (
-    <View style={[styles.clip, { width, height: Math.round(proseCardMetrics.height * scale) }]}>
+    <View style={[styles.clip, { width, height: Math.round(metrics.height * scale) }]}>
       <View
         pointerEvents="none"
         style={{
-          width: proseCardMetrics.width,
-          height: proseCardMetrics.height,
+          width: metrics.width,
+          height: metrics.height,
           transform: [{ scale }],
           transformOrigin: 'top left',
         }}

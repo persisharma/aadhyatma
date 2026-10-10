@@ -1,0 +1,94 @@
+{
+  "id": "durga-navaratri",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "introduction",
+  "coverArt": "nv01",
+  "title": {
+    "en": "Navaratri: Nine Forms of Maa Durga",
+    "hi": "नवरात्रि: माँ दुर्गा के नौ रूप",
+    "gu": "નવરાત્રિ: મા દુર્ગાનાં નવ રૂપ",
+    "kn": "ನವರಾತ್ರಿ: ದುರ್ಗಾ ಮಾತೆಯ ಒಂಬತ್ತು ರೂಪಗಳು"
+  },
+  "description": {
+    "en": "Meet Navadurga and begin nine days of illustrated readings.",
+    "hi": "नवदुर्गा से परिचय और नौ दिनों के चित्र-पाठ।",
+    "gu": "નવદુર્ગાનો પરિચય અને નવ દિવસનાં ચિત્રવાંચન.",
+    "kn": "ನವದುರ್ಗೆಯ ಪರಿಚಯ ಮತ್ತು ಒಂಬತ್ತು ದಿನಗಳ ಚಿತ್ರವಾಚನ."
+  },
+  "sourceNote": {
+    "en": "A short Navaratri introduction based on the traditional Navadurga sequence. Customs differ among families and regions. This is not a ritual or fasting guide; the takeaway is editorial.",
+    "hi": "पारंपरिक नवदुर्गा क्रम पर आधारित नवरात्रि का संक्षिप्त परिचय। परिवारों और क्षेत्रों के रीति-रिवाज अलग होते हैं। यह पूजा-विधि या उपवास निर्देश नहीं है; सीख संपादकीय है।",
+    "gu": "પરંપરાગત નવદુર્ગા ક્રમ આધારિત નવરાત્રિનો ટૂંકો પરિચય. પરિવારો અને પ્રદેશોના રિવાજો અલગ હોય છે. આ પૂજાવિધિ કે ઉપવાસ માર્ગદર્શન નથી; શીખ સંપાદકીય છે.",
+    "kn": "ಸಾಂಪ್ರದಾಯಿಕ ನವದುರ್ಗಾ ಕ್ರಮವನ್ನು ಆಧರಿಸಿದ ನವರಾತ್ರಿಯ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ. ಕುಟುಂಬ ಮತ್ತು ಪ್ರದೇಶಗಳ ಆಚರಣೆಗಳು ಬೇರೆಯಾಗಿರುತ್ತವೆ. ಇದು ಪೂಜಾ ಅಥವಾ ಉಪವಾಸದ ಮಾರ್ಗದರ್ಶಿಯಲ್ಲ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "Celebrate devotion with attention, kindness and care for others. Each reading is a chance to learn together.",
+    "hi": "ध्यान, दया और दूसरों की देखभाल से भक्ति का उत्सव मनाएँ। हर पाठ साथ सीखने का अवसर है।",
+    "gu": "ધ્યાન, દયા અને બીજાની કાળજીથી ભક્તિનો ઉત્સવ મનાવો. દરેક વાંચન સાથે શીખવાની તક છે.",
+    "kn": "ಗಮನ, ದಯೆ ಮತ್ತು ಇತರರ ಕಾಳಜಿಯೊಂದಿಗೆ ಭಕ್ತಿಯ ಹಬ್ಬ ಆಚರಿಸಿ. ಪ್ರತಿಯೊಂದು ವಾಚನವೂ ಒಟ್ಟಾಗಿ ಕಲಿಯುವ ಅವಕಾಶ."
+  },
+  "source": {
+    "baseText": "Devi Kavacha, Navadurga names; Navadurga dhyana; Drik Panchang Navadurga guide",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/durga700.html",
+      "https://sanskritdocuments.org/doc_devii/navadurga.html",
+      "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga.html?lang=en"
+    ],
+    "notes": "Original festival introduction; traditional nine-name order corroborated by Devi Kavacha and Navadurga publications. No date/muhurat claims, mandatory ritual, fasting advice or fabricated legend. Festival customs are described as varying. Nine forms link to eight individual readings and the existing shared Mahishasura retelling for Katyayani."
+  },
+  "pages": [
+    {
+      "id": "nine-nights-of-devotion",
+      "art": "nv01",
+      "source": "Devi Kavacha, Navadurga sequence; Drik Panchang Navadurga guide",
+      "title": {
+        "en": "Nine Nights of Devotion",
+        "hi": "भक्ति की नौ रातें",
+        "gu": "ભક્તિની નવ રાતો",
+        "kn": "ಭಕ್ತಿಯ ಒಂಬತ್ತು ರಾತ್ರಿಗಳು"
+      },
+      "text": {
+        "en": "Navaratri means nine nights. During this festival, many families remember Maa Durga, listen to her stories and celebrate her strength and compassion. In a well-known tradition, nine forms of the Mother are honoured in order. Together they are called Navadurga.",
+        "hi": "नवरात्रि का अर्थ है नौ रातें। इस उत्सव में अनेक परिवार माँ दुर्गा का स्मरण करते हैं, उनकी कथाएँ सुनते हैं और उनकी शक्ति व करुणा का उत्सव मनाते हैं। एक प्रसिद्ध परंपरा में माँ के नौ रूपों की क्रम से आराधना होती है। इन्हें नवदुर्गा कहते हैं।",
+        "gu": "નવરાત્રિનો અર્થ નવ રાતો થાય છે. આ ઉત્સવમાં ઘણાં પરિવારો મા દુર્ગાનું સ્મરણ કરે છે, તેમની વાર્તાઓ સાંભળે છે અને તેમની શક્તિ તથા કરુણાનો ઉત્સવ મનાવે છે. એક જાણીતી પરંપરામાં માનાં નવ રૂપની ક્રમથી આરાધના થાય છે. તેમને નવદુર્ગા કહે છે.",
+        "kn": "ನವರಾತ್ರಿ ಎಂದರೆ ಒಂಬತ್ತು ರಾತ್ರಿಗಳು. ಈ ಹಬ್ಬದಲ್ಲಿ ಹಲವು ಕುಟುಂಬಗಳು ದುರ್ಗಾ ಮಾತೆಯನ್ನು ನೆನೆದು ಆಕೆಯ ಕಥೆಗಳನ್ನು ಕೇಳುತ್ತವೆ; ಆಕೆಯ ಶಕ್ತಿ ಮತ್ತು ಕರುಣೆಯನ್ನು ಸಂಭ್ರಮಿಸುತ್ತವೆ. ಪ್ರಸಿದ್ಧ ಸಂಪ್ರದಾಯವೊಂದರಲ್ಲಿ ಮಾತೆಯ ಒಂಬತ್ತು ರೂಪಗಳನ್ನು ಕ್ರಮವಾಗಿ ಆರಾಧಿಸುತ್ತಾರೆ. ಅವುಗಳನ್ನು ನವದುರ್ಗೆ ಎನ್ನುತ್ತಾರೆ."
+      }
+    },
+    {
+      "id": "the-nine-names",
+      "art": "nv02",
+      "source": "Devi Kavacha 3–5, nine names; Navadurga dhyana",
+      "title": {
+        "en": "The Nine Names",
+        "hi": "नौ नाम",
+        "gu": "નવ નામ",
+        "kn": "ಒಂಬತ್ತು ಹೆಸರುಗಳು"
+      },
+      "text": {
+        "en": "The traditional order is Shailaputri, Brahmacharini, Chandraghanta, Kushmanda, Skandamata, Katyayani, Kalaratri, Mahagauri and Siddhidatri. Some readings tell related Parvati stories; others introduce a form and its symbols. Every form helps us remember the same divine Mother.",
+        "hi": "पारंपरिक क्रम है: शैलपुत्री, ब्रह्मचारिणी, चंद्रघंटा, कूष्मांडा, स्कंदमाता, कात्यायनी, कालरात्रि, महागौरी और सिद्धिदात्री। कुछ पाठों में पार्वती की संबंधित कथाएँ हैं; कुछ में रूप और उसके चिह्नों का परिचय। हर रूप उसी दिव्य माँ का स्मरण कराता है।",
+        "gu": "પરંપરાગત ક્રમ છે: શૈલપુત્રી, બ્રહ્મચારિણી, ચંદ્રઘંટા, કૂષ્માંડા, સ્કંદમાતા, કાત્યાયની, કાલરાત્રિ, મહાગૌરી અને સિદ્ધિદાત્રી. કેટલાક વાંચનમાં પાર્વતીની સંબંધિત વાર્તાઓ છે; કેટલાકમાં રૂપ અને તેનાં પ્રતીકોનો પરિચય છે. દરેક રૂપ એ જ દિવ્ય માનું સ્મરણ કરાવે છે.",
+        "kn": "ಸಾಂಪ್ರದಾಯಿಕ ಕ್ರಮ: ಶೈಲಪುತ್ರಿ, ಬ್ರಹ್ಮಚಾರಿಣಿ, ಚಂದ್ರಘಂಟಾ, ಕೂಷ್ಮಾಂಡಾ, ಸ್ಕಂದಮಾತಾ, ಕಾತ್ಯಾಯನಿ, ಕಾಲರಾತ್ರಿ, ಮಹಾಗೌರಿ ಮತ್ತು ಸಿದ್ಧಿದಾತ್ರಿ. ಕೆಲವು ವಾಚನಗಳು ಸಂಬಂಧಿತ ಪಾರ್ವತಿಯ ಕಥೆಗಳನ್ನು ಹೇಳುತ್ತವೆ; ಇತರವು ರೂಪ ಮತ್ತು ಸಂಕೇತಗಳನ್ನು ಪರಿಚಯಿಸುತ್ತವೆ. ಪ್ರತಿಯೊಂದು ರೂಪವೂ ಅದೇ ದಿವ್ಯ ಮಾತೆಯನ್ನು ನೆನಪಿಸುತ್ತದೆ."
+      }
+    },
+    {
+      "id": "celebrate-and-learn",
+      "art": "nv03",
+      "source": "Drik Panchang Navadurga guide; editorial child participation",
+      "title": {
+        "en": "Learn and Celebrate Together",
+        "hi": "साथ सीखें, साथ मनाएँ",
+        "gu": "સાથે શીખો, સાથે મનાવો",
+        "kn": "ಒಟ್ಟಾಗಿ ಕಲಿತು ಸಂಭ್ರಮಿಸಿ"
+      },
+      "text": {
+        "en": "Families celebrate in different ways: with worship, music, dance or shared stories. You can listen with someone you love, ask questions and show kindness. Begin a reading each day, and discover the Mother’s courage, patience and care.",
+        "hi": "परिवार अलग-अलग ढंग से उत्सव मनाते हैं: पूजा, संगीत, नृत्य या साथ कथा सुनकर। आप किसी प्रियजन के साथ सुनें, प्रश्न पूछें और दया दिखाएँ। हर दिन एक पाठ शुरू करें और माँ का साहस, धैर्य और स्नेह जानें।",
+        "gu": "પરિવારો જુદી જુદી રીતે ઉત્સવ મનાવે છે: પૂજા, સંગીત, નૃત્ય કે સાથે વાર્તા સાંભળીને. તમે પ્રિયજન સાથે સાંભળો, પ્રશ્નો પૂછો અને દયા બતાવો. દરરોજ એક વાંચન શરૂ કરો અને માનું સાહસ, ધીરજ તથા સ્નેહ જાણો.",
+        "kn": "ಕುಟುಂಬಗಳು ಪೂಜೆ, ಸಂಗೀತ, ನೃತ್ಯ ಅಥವಾ ಒಟ್ಟಾಗಿ ಕಥೆ ಕೇಳುವ ಮೂಲಕ ಹಬ್ಬ ಆಚರಿಸುತ್ತವೆ. ಪ್ರೀತಿಪಾತ್ರರ ಜೊತೆ ಕೇಳಿ, ಪ್ರಶ್ನೆ ಕೇಳಿ, ದಯೆ ತೋರಿಸಿ. ದಿನಕ್ಕೊಂದು ವಾಚನ ಆರಂಭಿಸಿ ಮಾತೆಯ ಧೈರ್ಯ, ತಾಳ್ಮೆ ಮತ್ತು ಕಾಳಜಿಯನ್ನು ಅರಿಯಿರಿ."
+      }
+    }
+  ]
+}

@@ -90,6 +90,7 @@ import RootNavigator from '@/navigation/RootNavigator';
 import WidgetCoordinator from '@/widgets/WidgetCoordinator';
 import { handleWidgetDeepLink, parseWidgetDeepLink, widgetStartTarget } from '@/widgets/deepLink';
 import { launchMark, launchMarkOnce } from '@/utils/launchTrace';
+import { startMetaAppEvents } from '@/utils/metaAppEvents';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* noop — already prevented */
@@ -197,7 +198,7 @@ export default function App() {
     // throwing past every boundary into a dead screen. Bounded by the same
     // timeout as the reads above.
     const ready = async (target: StartTarget | null) => {
-      if (target?.tab !== 'PanchangTab') return target;
+      if (target?.tab !== 'PanchangTab' && target?.tab !== 'VratTab') return target;
       try {
         await preloadPanchangStack();
         return target;
@@ -229,6 +230,12 @@ export default function App() {
    */
   const handleRouteChange = useCallback(() => {
     prioritise(childRoutes(navigationRef.getCurrentRoute()?.name));
+  }, []);
+
+  const handleNavigationReady = useCallback(() => {
+    startScreenPrefetch();
+    // Show the app before asking ATT; don't add tracking to the splash gate.
+    InteractionManager.runAfterInteractions(startMetaAppEvents);
   }, []);
 
   // The handler is a no-op until `navigationRef.isReady()` so we don't lose
@@ -358,7 +365,7 @@ export default function App() {
                                  rest breadth-first from Home. Everything it touches
                                  waits on InteractionManager, so this can only use
                                  time the UI is not using (navigation/screenPrefetch). */
-                              onReady={startScreenPrefetch}
+                              onReady={handleNavigationReady}
                               /* ...and then follow the user. Breadth-first from Home
                                  is the right guess only until they move; after that,
                                  what is worth warming is whatever THIS screen opens.

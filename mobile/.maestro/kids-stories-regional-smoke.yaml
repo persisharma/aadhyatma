@@ -1,14 +1,14 @@
-# All added scenes in Gujarati/Kannada at Large reading size.
+# All 39 scenes in Gujarati and Kannada at Large size.
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element: { text: "Reading size,.*" }
     centerElement: true
 - tapOn: "Reading size,.*"
 - tapOn: "Large"
-- tapOn: "हो गया|Done"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
 - scrollUntilVisible:
     element: { text: "Language,.*" }
     centerElement: true
@@ -24,275 +24,530 @@ appId: com.prashantsharma.vedansh
     element: { id: "kids-story-putana" }
     centerElement: true
 - tapOn: { id: "kids-story-putana" }
-- assertVisible: { id: "lang-toggle-gu" }
-- assertVisible: "1 / 7"
+- tapOn: { id: "lang-toggle-gu" }
+- assertVisible: "1 / 10"
 - assertVisible: { id: "story-page-little-krishna-in-gokul" }
+- takeScreenshot: kids-putana-gu-large-pt00-art
+- scrollUntilVisible:
+    element: { text: "ઘણા સમય પહેલાં, ગોકુળ ગામમાં નાનકડા કૃષ્ણ રહેતા હતા. યશોદા અને નંદ તેમને પ્રેમથી ઉછેરતા હતા. તેમના આવવાથી ઘર અને ગામમાં આનંદ છવાયો હતો." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ઘણા સમય પહેલાં, ગોકુળ ગામમાં નાનકડા કૃષ્ણ રહેતા હતા. યશોદા અને નંદ તેમને પ્રેમથી ઉછેરતા હતા. તેમના આવવાથી ઘર અને ગામમાં આનંદ છવાયો હતો."
-- takeScreenshot: kids-putana-gu-large-00
+- takeScreenshot: kids-putana-gu-large-pt00
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "2 / 7"
+- assertVisible: "2 / 10"
 - assertVisible: { id: "story-page-kansas-plan" }
-- assertVisible: "મથુરાનો રાજા કંસ દેવકીના આઠમા સંતાનથી ડરતો હતો. તેણે શિશુઓને નુકસાન પહોંચાડવા પૂતનાને મોકલી. શોધ કરતાં પૂતના ગોકુળ પહોંચી."
-- takeScreenshot: kids-putana-gu-large-01
+- takeScreenshot: kids-putana-gu-large-pt01-art
+- scrollUntilVisible:
+    element: { text: "મથુરાના રાજા કંસે સાંભળ્યું હતું કે દેવકીનું આઠમું સંતાન તેનો અંત લાવશે. ડરીને તેણે પૂતનાને શિશુઓને હાનિ કરવા મોકલી. શોધતાં તે ગોકુળ પહોંચી." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "મથુરાના રાજા કંસે સાંભળ્યું હતું કે દેવકીનું આઠમું સંતાન તેનો અંત લાવશે. ડરીને તેણે પૂતનાને શિશુઓને હાનિ કરવા મોકલી. શોધતાં તે ગોકુળ પહોંચી."
+- takeScreenshot: kids-putana-gu-large-pt01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "3 / 7"
+- assertVisible: "3 / 10"
 - assertVisible: { id: "story-page-beautiful-disguise" }
+- takeScreenshot: kids-putana-gu-large-pt02-art
+- scrollUntilVisible:
+    element: { text: "પૂતનાએ સુંદર સ્ત્રીનું રૂપ લીધું અને નંદના ઘરમાં પ્રવેશ કર્યો. તેનો વ્યવહાર પ્રેમાળ લાગતો હતો. યશોદા અને રોહિણી તેના મનનો ખરાબ ઇરાદો ઓળખી શક્યાં નહીં." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "પૂતનાએ સુંદર સ્ત્રીનું રૂપ લીધું અને નંદના ઘરમાં પ્રવેશ કર્યો. તેનો વ્યવહાર પ્રેમાળ લાગતો હતો. યશોદા અને રોહિણી તેના મનનો ખરાબ ઇરાદો ઓળખી શક્યાં નહીં."
-- takeScreenshot: kids-putana-gu-large-02
+- takeScreenshot: kids-putana-gu-large-pt02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "4 / 7"
+- assertVisible: "4 / 10"
+- assertVisible: { id: "story-page-hidden-danger" }
+- takeScreenshot: kids-putana-gu-large-pt07-art
+- scrollUntilVisible:
+    element: { text: "પૂતના નાનકડા કૃષ્ણ પાસે ગઈ અને તેમને ઊંચક્યા. તેના સ્મિત પાછળ ખરાબ ઇરાદો છુપાયો હતો. સૌને તેઓ સામાન્ય શિશુ લાગતા, પણ કૃષ્ણ તેનો હેતુ જાણતા હતા." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "પૂતના નાનકડા કૃષ્ણ પાસે ગઈ અને તેમને ઊંચક્યા. તેના સ્મિત પાછળ ખરાબ ઇરાદો છુપાયો હતો. સૌને તેઓ સામાન્ય શિશુ લાગતા, પણ કૃષ્ણ તેનો હેતુ જાણતા હતા."
+- takeScreenshot: kids-putana-gu-large-pt07
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 10"
 - assertVisible: { id: "story-page-krishnas-power" }
-- assertVisible: "પૂતનાએ કૃષ્ણને ખોળામાં લીધા અને સ્તન પર ઝેર લગાવીને દૂધ પિવડાવવા લાગી. કૃષ્ણ તેનો ઇરાદો જાણતા હતા. ઝેર તેમને હાનિ કરી શક્યું નહીં; તેમણે પૂતનાની પ્રાણશક્તિ ખેંચી લીધી."
-- takeScreenshot: kids-putana-gu-large-03
+- takeScreenshot: kids-putana-gu-large-pt03-art
+- scrollUntilVisible:
+    element: { text: "પૂતનાએ પોતાના સ્તન પર ઝેર લગાવ્યું હતું અને કૃષ્ણને દૂધ પિવડાવવા લાગી. પણ નાનકડા કૃષ્ણ અસહાય નહોતા. દૂધ સાથે તેઓ તેની પ્રાણશક્તિ પણ ખેંચવા લાગ્યા." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "પૂતનાએ પોતાના સ્તન પર ઝેર લગાવ્યું હતું અને કૃષ્ણને દૂધ પિવડાવવા લાગી. પણ નાનકડા કૃષ્ણ અસહાય નહોતા. દૂધ સાથે તેઓ તેની પ્રાણશક્તિ પણ ખેંચવા લાગ્યા."
+- takeScreenshot: kids-putana-gu-large-pt03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "5 / 7"
+- assertVisible: "6 / 10"
+- assertVisible: { id: "story-page-putanas-cry" }
+- takeScreenshot: kids-putana-gu-large-pt08-art
+- scrollUntilVisible:
+    element: { text: "પૂતના ગભરાઈ ગઈ. તેણે કૃષ્ણને છોડી દેવા બૂમ પાડી અને છૂટવાનો પ્રયત્ન કર્યો. પણ તેમની પકડ છૂટી નહીં. તેની શક્તિ ઘટતી ગઈ અને બૂમ દૂર સુધી ગુંજી." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "પૂતના ગભરાઈ ગઈ. તેણે કૃષ્ણને છોડી દેવા બૂમ પાડી અને છૂટવાનો પ્રયત્ન કર્યો. પણ તેમની પકડ છૂટી નહીં. તેની શક્તિ ઘટતી ગઈ અને બૂમ દૂર સુધી ગુંજી."
+- takeScreenshot: kids-putana-gu-large-pt08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 10"
+- assertVisible: { id: "story-page-disguise-falls" }
+- takeScreenshot: kids-putana-gu-large-pt09-art
+- scrollUntilVisible:
+    element: { text: "અંતે પૂતના પોતાના વિશાળ રાક્ષસી રૂપમાં આવી ગઈ. તે ધરતી પર પડી અને તેના પ્રાણ ગયા. આટલા મોટા સંકટ વચ્ચે પણ નાનકડા કૃષ્ણ તેના શરીર પર સુરક્ષિત રમતા હતા." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "અંતે પૂતના પોતાના વિશાળ રાક્ષસી રૂપમાં આવી ગઈ. તે ધરતી પર પડી અને તેના પ્રાણ ગયા. આટલા મોટા સંકટ વચ્ચે પણ નાનકડા કૃષ્ણ તેના શરીર પર સુરક્ષિત રમતા હતા."
+- takeScreenshot: kids-putana-gu-large-pt09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 10"
 - assertVisible: { id: "story-page-danger-ends" }
-- assertVisible: "પૂતનાનો છુપો વેશ દૂર થયો. વિશાળ રાક્ષસીના રૂપમાં તે ધરતી પર પડી અને તેના પ્રાણ ગયા. કૃષ્ણ સુરક્ષિત હતા. ગોપીઓ દોડી આવી અને તેમને ઊંચકી લીધા."
-- takeScreenshot: kids-putana-gu-large-04
+- takeScreenshot: kids-putana-gu-large-pt04-art
+- scrollUntilVisible:
+    element: { text: "ગોપીઓ કૃષ્ણને જોઈને દોડી આવી. યશોદા અને રોહિણીએ પણ રાહતનો શ્વાસ લીધો. તેમણે નાનકડા કૃષ્ણને પૂતનાના શરીર પરથી ઊંચકીને સુરક્ષિત ખોળામાં લીધા." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ગોપીઓ કૃષ્ણને જોઈને દોડી આવી. યશોદા અને રોહિણીએ પણ રાહતનો શ્વાસ લીધો. તેમણે નાનકડા કૃષ્ણને પૂતનાના શરીર પરથી ઊંચકીને સુરક્ષિત ખોળામાં લીધા."
+- takeScreenshot: kids-putana-gu-large-pt04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "6 / 7"
+- assertVisible: "9 / 10"
 - assertVisible: { id: "story-page-mothers-care" }
+- takeScreenshot: kids-putana-gu-large-pt05-art
+- scrollUntilVisible:
+    element: { text: "યશોદા, રોહિણી અને ગોપીઓએ પ્રભુનાં નામ લઈને કૃષ્ણની રક્ષા માટે પ્રાર્થના કરી. યશોદાએ તેમને દૂધ પિવડાવ્યું અને આરામથી સુવડાવ્યા. ઘરમાં ફરી શાંતિ છવાઈ." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "યશોદા, રોહિણી અને ગોપીઓએ પ્રભુનાં નામ લઈને કૃષ્ણની રક્ષા માટે પ્રાર્થના કરી. યશોદાએ તેમને દૂધ પિવડાવ્યું અને આરામથી સુવડાવ્યા. ઘરમાં ફરી શાંતિ છવાઈ."
-- takeScreenshot: kids-putana-gu-large-05
+- takeScreenshot: kids-putana-gu-large-pt05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "7 / 7"
+- assertVisible: "10 / 10"
 - assertVisible: { id: "story-page-mercy-and-home" }
-- takeScreenshot: kids-putana-gu-large-06
+- takeScreenshot: kids-putana-gu-large-pt06
 - scrollUntilVisible:
     element: { text: "શ્રીમદ્ ભાગવત 10.5–6નું બાળકો માટે સરળ રૂપાંતર. ભયાનક વિગતો ટૂંકાવી છે; શીખ સંપાદકીય છે." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-putana-gu-source
 - tapOn: "Back"
-- tapOn: "Back"
-- tapOn: { id: "kids-story-deity-krishna" }
+- assertVisible: { id: "kids-story-putana" }
 - scrollUntilVisible:
     element: { id: "kids-story-kaliya-nag" }
     centerElement: true
 - tapOn: { id: "kids-story-kaliya-nag" }
-- assertVisible: { id: "lang-toggle-gu" }
+- tapOn: { id: "lang-toggle-gu" }
 - assertVisible: "1 / 8"
 - assertVisible: { id: "story-page-a-cowherds-day" }
+- takeScreenshot: kids-kaliya-nag-gu-large-ka00-art
+- scrollUntilVisible:
+    element: { text: "કૃષ્ણ હવે વૃંદાવનમાં ગાયો ચરાવવા જતા હતા. તેમના મિત્રો પણ સાથે રહેતા. વૃક્ષો, પક્ષીઓ અને ફૂલો વચ્ચે તેઓ રમતા અને ગાતા. યમુનાના કાંઠે પણ તેમની ગાયો ચરતી." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "કૃષ્ણ હવે વૃંદાવનમાં ગાયો ચરાવવા જતા હતા. તેમના મિત્રો પણ સાથે રહેતા. વૃક્ષો, પક્ષીઓ અને ફૂલો વચ્ચે તેઓ રમતા અને ગાતા. યમુનાના કાંઠે પણ તેમની ગાયો ચરતી."
-- takeScreenshot: kids-kaliya-nag-gu-large-00
+- takeScreenshot: kids-kaliya-nag-gu-large-ka00
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "2 / 8"
 - assertVisible: { id: "story-page-poisoned-yamuna" }
+- takeScreenshot: kids-kaliya-nag-gu-large-ka01-art
+- scrollUntilVisible:
+    element: { text: "યમુનાના એક ઊંડા જળાશયમાં કાલિય નાગ રહેતો હતો. તેના ઝેરથી પાણી અને કાંઠાના જીવોને હાનિ થતી હતી. કૃષ્ણે નદીને ફરી નિર્મળ કરવાનો નિશ્ચય કર્યો." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "યમુનાના એક ઊંડા જળાશયમાં કાલિય નાગ રહેતો હતો. તેના ઝેરથી પાણી અને કાંઠાના જીવોને હાનિ થતી હતી. કૃષ્ણે નદીને ફરી નિર્મળ કરવાનો નિશ્ચય કર્યો."
-- takeScreenshot: kids-kaliya-nag-gu-large-01
+- takeScreenshot: kids-kaliya-nag-gu-large-ka01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "3 / 8"
 - assertVisible: { id: "story-page-kadamba-leap" }
+- takeScreenshot: kids-kaliya-nag-gu-large-ka02-art
+- scrollUntilVisible:
+    element: { text: "કૃષ્ણ કાંઠાના ઊંચા કદંબ પર ચઢ્યા અને પાણીમાં કૂદી પડ્યા. ચારે તરફ મોજાં ઊઠ્યાં. અવાજ સાંભળીને કાલિય ગુસ્સે થયો અને કૃષ્ણ તરફ વધ્યો." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "કૃષ્ણ કાંઠાના ઊંચા કદંબ પર ચઢ્યા અને પાણીમાં કૂદી પડ્યા. ચારે તરફ મોજાં ઊઠ્યાં. અવાજ સાંભળીને કાલિય ગુસ્સે થયો અને કૃષ્ણ તરફ વધ્યો."
-- takeScreenshot: kids-kaliya-nag-gu-large-02
+- takeScreenshot: kids-kaliya-nag-gu-large-ka02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "4 / 8"
 - assertVisible: { id: "story-page-friends-worry" }
+- takeScreenshot: kids-kaliya-nag-gu-large-ka03-art
+- scrollUntilVisible:
+    element: { text: "કાલિયે કૃષ્ણને પોતાની કુંડળીમાં જકડી લીધા. પરિવાર અને મિત્રો ગભરાયા. બલરામે લોકોને પાણીમાં જતા અટકાવ્યા. પછી કૃષ્ણે પોતાનું શરીર મોટું કર્યું અને બંધનમાંથી નીકળી આવ્યા." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "કાલિયે કૃષ્ણને પોતાની કુંડળીમાં જકડી લીધા. પરિવાર અને મિત્રો ગભરાયા. બલરામે લોકોને પાણીમાં જતા અટકાવ્યા. પછી કૃષ્ણે પોતાનું શરીર મોટું કર્યું અને બંધનમાંથી નીકળી આવ્યા."
-- takeScreenshot: kids-kaliya-nag-gu-large-03
+- takeScreenshot: kids-kaliya-nag-gu-large-ka03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "5 / 8"
 - assertVisible: { id: "story-page-dance-on-hoods" }
+- takeScreenshot: kids-kaliya-nag-gu-large-ka04-art
+- scrollUntilVisible:
+    element: { text: "કૃષ્ણ કાલિયના ફણ પર ચઢીને નૃત્ય કરવા લાગ્યા. આકાશમાંથી ફૂલો વરસવા લાગ્યાં. કાલિયની શક્તિ અને ઘમંડ તૂટી ગયાં. તેને સમજાયું કે કૃષ્ણ સામાન્ય બાળક નહોતા." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "કૃષ્ણ કાલિયના ફણ પર ચઢીને નૃત્ય કરવા લાગ્યા. આકાશમાંથી ફૂલો વરસવા લાગ્યાં. કાલિયની શક્તિ અને ઘમંડ તૂટી ગયાં. તેને સમજાયું કે કૃષ્ણ સામાન્ય બાળક નહોતા."
-- takeScreenshot: kids-kaliya-nag-gu-large-04
+- takeScreenshot: kids-kaliya-nag-gu-large-ka04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "6 / 8"
 - assertVisible: { id: "story-page-family-prays" }
+- takeScreenshot: kids-kaliya-nag-gu-large-ka05-art
+- scrollUntilVisible:
+    element: { text: "કાલિયની પત્નીઓ બાળકો સાથે કૃષ્ણ પાસે આવી. હાથ જોડીને તેમણે કાલિયના જીવન માટે પ્રાર્થના કરી. કૃષ્ણે તેમની વિનંતી સાંભળી અને તેને છોડી દીધો." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "કાલિયની પત્નીઓ બાળકો સાથે કૃષ્ણ પાસે આવી. હાથ જોડીને તેમણે કાલિયના જીવન માટે પ્રાર્થના કરી. કૃષ્ણે તેમની વિનંતી સાંભળી અને તેને છોડી દીધો."
-- takeScreenshot: kids-kaliya-nag-gu-large-05
+- takeScreenshot: kids-kaliya-nag-gu-large-ka05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "7 / 8"
 - assertVisible: { id: "story-page-leave-in-peace" }
+- takeScreenshot: kids-kaliya-nag-gu-large-ka06-art
+- scrollUntilVisible:
+    element: { text: "કાલિયે પોતાની ભૂલ સ્વીકારી. કૃષ્ણે તેને પરિવાર સાથે સમુદ્રના રમણક ટાપુ પર પાછા જવા કહ્યું, જેથી ગાયો અને લોકો યમુનાનું પાણી પી શકે. કાલિયે આજ્ઞા માની અને વિદાય લીધી." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "કાલિયે પોતાની ભૂલ સ્વીકારી. કૃષ્ણે તેને પરિવાર સાથે સમુદ્રના રમણક ટાપુ પર પાછા જવા કહ્યું, જેથી ગાયો અને લોકો યમુનાનું પાણી પી શકે. કાલિયે આજ્ઞા માની અને વિદાય લીધી."
-- takeScreenshot: kids-kaliya-nag-gu-large-06
+- takeScreenshot: kids-kaliya-nag-gu-large-ka06
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "8 / 8"
 - assertVisible: { id: "story-page-river-restored" }
-- takeScreenshot: kids-kaliya-nag-gu-large-07
+- takeScreenshot: kids-kaliya-nag-gu-large-ka07
 - scrollUntilVisible:
     element: { text: "શ્રીમદ્ ભાગવત 10.15–16નું સરળ રૂપાંતર. અનેક ફણને ચિત્રોમાં નાના સમૂહથી દર્શાવ્યા છે. શીખ સંપાદકીય છે." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-kaliya-nag-gu-source
 - tapOn: "Back"
+- assertVisible: { id: "kids-story-kaliya-nag" }
 - tapOn: "Back"
 - tapOn: { id: "kids-story-deity-ganesha" }
 - scrollUntilVisible:
     element: { id: "kids-story-ganesha-birth" }
     centerElement: true
 - tapOn: { id: "kids-story-ganesha-birth" }
-- assertVisible: { id: "lang-toggle-gu" }
-- assertVisible: "1 / 8"
+- tapOn: { id: "lang-toggle-gu" }
+- assertVisible: "1 / 11"
 - assertVisible: { id: "story-page-a-wish-on-kailasa" }
-- assertVisible: "કૈલાસ પર પાર્વતી શિવ સાથે રહેતાં હતાં. શિવના ગણ દ્વારની રખેવાળી કરતા. સખીઓ સાથે વાત કરતાં પાર્વતીએ વિચાર્યું કે કોઈ તેમનું પોતાનું પણ હોય, જે તેમની સૂચના માને."
-- takeScreenshot: kids-ganesha-birth-gu-large-00
+- takeScreenshot: kids-ganesha-birth-gu-large-gb00-art
+- scrollUntilVisible:
+    element: { text: "કૈલાસ પર્વત પર પાર્વતી શિવ સાથે રહેતાં હતાં. એક દિવસ તેમની સખીઓ જયા અને વિજયાએ વાત કરી. શિવના ગણ તેમની આજ્ઞા માનતા હતા; પાર્વતીના પોતાના રક્ષક કોણ હોય?" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "કૈલાસ પર્વત પર પાર્વતી શિવ સાથે રહેતાં હતાં. એક દિવસ તેમની સખીઓ જયા અને વિજયાએ વાત કરી. શિવના ગણ તેમની આજ્ઞા માનતા હતા; પાર્વતીના પોતાના રક્ષક કોણ હોય?"
+- takeScreenshot: kids-ganesha-birth-gu-large-gb00
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "2 / 8"
+- assertVisible: "2 / 11"
+- assertVisible: { id: "story-page-parvatis-decision" }
+- takeScreenshot: kids-ganesha-birth-gu-large-gb08-art
+- scrollUntilVisible:
+    element: { text: "એક વાર પાર્વતી સ્નાન કરતાં હતાં ત્યારે શિવ અંદર આવ્યા. નંદી તેમને રોકી શક્યા નહોતા. ત્યારે પાર્વતીએ નક્કી કર્યું કે તેમનો પોતાનો રક્ષક હશે, જે તેમની આજ્ઞા પાળે." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "એક વાર પાર્વતી સ્નાન કરતાં હતાં ત્યારે શિવ અંદર આવ્યા. નંદી તેમને રોકી શક્યા નહોતા. ત્યારે પાર્વતીએ નક્કી કર્યું કે તેમનો પોતાનો રક્ષક હશે, જે તેમની આજ્ઞા પાળે."
+- takeScreenshot: kids-ganesha-birth-gu-large-gb08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 11"
 - assertVisible: { id: "story-page-parvatis-son" }
+- takeScreenshot: kids-ganesha-birth-gu-large-gb01-art
+- scrollUntilVisible:
+    element: { text: "કૈલાસ પર પાર્વતીએ પોતાના શરીરના લેપથી એક બાળક બનાવ્યું અને તેને જીવન આપ્યું. તેમણે તેને વસ્ત્રો અને આભૂષણો પહેરાવ્યાં. તે તેમનો પોતાનો વહાલો પુત્ર હતો." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "કૈલાસ પર પાર્વતીએ પોતાના શરીરના લેપથી એક બાળક બનાવ્યું અને તેને જીવન આપ્યું. તેમણે તેને વસ્ત્રો અને આભૂષણો પહેરાવ્યાં. તે તેમનો પોતાનો વહાલો પુત્ર હતો."
-- takeScreenshot: kids-ganesha-birth-gu-large-01
+- takeScreenshot: kids-ganesha-birth-gu-large-gb01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "3 / 8"
+- assertVisible: "4 / 11"
 - assertVisible: { id: "story-page-guard-the-door" }
+- takeScreenshot: kids-ganesha-birth-gu-large-gb02-art
+- scrollUntilVisible:
+    element: { text: "સ્નાન પહેલાં પાર્વતીએ પુત્રને દ્વારની રખેવાળી કરવા કહ્યું. તેમની પરવાનગી વિના કોઈને અંદર આવવા દેવાનું નહોતું. બાળક પોતાનો દંડ લઈને દ્વાર પર ઊભો રહ્યો." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "સ્નાન પહેલાં પાર્વતીએ પુત્રને દ્વારની રખેવાળી કરવા કહ્યું. તેમની પરવાનગી વિના કોઈને અંદર આવવા દેવાનું નહોતું. બાળક પોતાનો દંડ લઈને દ્વાર પર ઊભો રહ્યો."
-- takeScreenshot: kids-ganesha-birth-gu-large-02
+- takeScreenshot: kids-ganesha-birth-gu-large-gb02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "4 / 8"
+- assertVisible: "5 / 11"
 - assertVisible: { id: "story-page-shiva-returns" }
-- assertVisible: "શિવ ઘરે પાછા આવ્યા, પરંતુ બાળક તેમને ઓળખતો નહોતો. માની આજ્ઞા પાળતાં તેણે રસ્તો રોક્યો. શિવના ગણો પણ તેને હટાવી શક્યા નહીં. વાત વધીને સંઘર્ષ બની."
-- takeScreenshot: kids-ganesha-birth-gu-large-03
+- takeScreenshot: kids-ganesha-birth-gu-large-gb03-art
+- scrollUntilVisible:
+    element: { text: "શિવ ઘરે પાછા આવ્યા, પણ બાળક તેમને ઓળખતો નહોતો. માની આજ્ઞા યાદ રાખીને તેણે રસ્તો રોક્યો. શિવ અંદર જવા માગતા હતા, પણ બાળક દ્વારેથી હટ્યો નહીં." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "શિવ ઘરે પાછા આવ્યા, પણ બાળક તેમને ઓળખતો નહોતો. માની આજ્ઞા યાદ રાખીને તેણે રસ્તો રોક્યો. શિવ અંદર જવા માગતા હતા, પણ બાળક દ્વારેથી હટ્યો નહીં."
+- takeScreenshot: kids-ganesha-birth-gu-large-gb03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "5 / 8"
+- assertVisible: "6 / 11"
+- assertVisible: { id: "story-page-guardian-stands-firm" }
+- takeScreenshot: kids-ganesha-birth-gu-large-gb09-art
+- scrollUntilVisible:
+    element: { text: "શિવે પોતાના ગણોને બાળક પાસે મોકલ્યા. તેઓ તેને હટાવવા લાગ્યા, પણ તે માની આજ્ઞા પર અડગ રહ્યો. ઝઘડો યુદ્ધમાં ફેરવાયો. બાળકે પોતાની અસાધારણ શક્તિથી સામનો કર્યો." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "શિવે પોતાના ગણોને બાળક પાસે મોકલ્યા. તેઓ તેને હટાવવા લાગ્યા, પણ તે માની આજ્ઞા પર અડગ રહ્યો. ઝઘડો યુદ્ધમાં ફેરવાયો. બાળકે પોતાની અસાધારણ શક્તિથી સામનો કર્યો."
+- takeScreenshot: kids-ganesha-birth-gu-large-gb09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 11"
 - assertVisible: { id: "story-page-parvatis-sorrow" }
-- assertVisible: "સંઘર્ષમાં શિવે બાળકનું માથું અલગ કર્યું અને તેના પ્રાણ ગયા. પાર્વતી દુઃખ અને ક્રોધથી ભરાઈ ગયાં. દેવતાઓએ ક્ષમા માગી. પાર્વતીએ પોતાના પુત્રને ફરી જીવન આપવા કહ્યું."
-- takeScreenshot: kids-ganesha-birth-gu-large-04
+- takeScreenshot: kids-ganesha-birth-gu-large-gb04-art
+- scrollUntilVisible:
+    element: { text: "યુદ્ધ દરમિયાન શિવે બાળકનું માથું અલગ કર્યું અને તેનું મૃત્યુ થયું. આ સમાચાર સાંભળીને પાર્વતીનું હૃદય દુઃખથી ભરાયું. પોતાના પ્રિય પુત્રને ગુમાવીને તેઓ ખૂબ ક્રોધિત પણ થયાં." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "યુદ્ધ દરમિયાન શિવે બાળકનું માથું અલગ કર્યું અને તેનું મૃત્યુ થયું. આ સમાચાર સાંભળીને પાર્વતીનું હૃદય દુઃખથી ભરાયું. પોતાના પ્રિય પુત્રને ગુમાવીને તેઓ ખૂબ ક્રોધિત પણ થયાં."
+- takeScreenshot: kids-ganesha-birth-gu-large-gb04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "6 / 8"
+- assertVisible: "8 / 11"
+- assertVisible: { id: "story-page-a-plea-for-peace" }
+- takeScreenshot: kids-ganesha-birth-gu-large-gb10-art
+- scrollUntilVisible:
+    element: { text: "દેવતાઓ અને ઋષિઓએ પાર્વતીની ક્ષમા માગી. પાર્વતીએ કહ્યું કે તેમના પુત્રને ફરી જીવન અને સન્માન મળે, ત્યારે જ શાંતિ પાછી આવશે. શિવે તેમની માગણી પૂરી કરવાની આજ્ઞા આપી." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "દેવતાઓ અને ઋષિઓએ પાર્વતીની ક્ષમા માગી. પાર્વતીએ કહ્યું કે તેમના પુત્રને ફરી જીવન અને સન્માન મળે, ત્યારે જ શાંતિ પાછી આવશે. શિવે તેમની માગણી પૂરી કરવાની આજ્ઞા આપી."
+- takeScreenshot: kids-ganesha-birth-gu-large-gb10
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 11"
 - assertVisible: { id: "story-page-new-life" }
+- takeScreenshot: kids-ganesha-birth-gu-large-gb05-art
+- scrollUntilVisible:
+    element: { text: "શિવની આજ્ઞાથી ગણો ઉત્તર દિશામાં ગયા. ત્યાં મળેલા હાથીનું માથું લાવી બાળકના શરીર સાથે જોડ્યું. મંત્રો અને પવિત્ર જળથી બાળક ફરી જીવંત થયો, હવે હાથીના મુખ સાથે." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "શિવની આજ્ઞાથી ગણો ઉત્તર દિશામાં ગયા. ત્યાં મળેલા હાથીનું માથું લાવી બાળકના શરીર સાથે જોડ્યું. મંત્રો અને પવિત્ર જળથી બાળક ફરી જીવંત થયો, હવે હાથીના મુખ સાથે."
-- takeScreenshot: kids-ganesha-birth-gu-large-05
+- takeScreenshot: kids-ganesha-birth-gu-large-gb05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "7 / 8"
+- assertVisible: "10 / 11"
 - assertVisible: { id: "story-page-mothers-embrace" }
+- takeScreenshot: kids-ganesha-birth-gu-large-gb06-art
+- scrollUntilVisible:
+    element: { text: "પોતાના પુત્રને જીવંત જોઈ પાર્વતીએ આનંદથી ગળે લગાવ્યો. શિવે તેના માથા પર હાથ મૂકીને તેને પોતાનો પુત્ર કહ્યો. કૈલાસમાં ફરી શાંતિ અને ખુશી છવાઈ." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "પોતાના પુત્રને જીવંત જોઈ પાર્વતીએ આનંદથી ગળે લગાવ્યો. શિવે તેના માથા પર હાથ મૂકીને તેને પોતાનો પુત્ર કહ્યો. કૈલાસમાં ફરી શાંતિ અને ખુશી છવાઈ."
-- takeScreenshot: kids-ganesha-birth-gu-large-06
+- takeScreenshot: kids-ganesha-birth-gu-large-gb06
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "8 / 8"
+- assertVisible: "11 / 11"
 - assertVisible: { id: "story-page-ganapati-blessing" }
-- takeScreenshot: kids-ganesha-birth-gu-large-07
+- takeScreenshot: kids-ganesha-birth-gu-large-gb07
 - scrollUntilVisible:
     element: { text: "શિવપુરાણ, રુદ્રસંહિતા, કુમારખંડ 13–18ની શ્વેતકલ્પ કથાનું સરળ રૂપાંતર. અન્ય જન્મકથાઓ પણ પ્રચલિત છે. હિંસાની વિગતો ટૂંકાવી છે; શીખ સંપાદકીય છે." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-ganesha-birth-gu-source
 - tapOn: "Back"
+- assertVisible: { id: "kids-story-ganesha-birth" }
 - tapOn: "Back"
 - tapOn: { id: "kids-story-deity-hanuman" }
 - scrollUntilVisible:
     element: { id: "kids-story-hanuman-sun" }
     centerElement: true
 - tapOn: { id: "kids-story-hanuman-sun" }
-- assertVisible: { id: "lang-toggle-gu" }
-- assertVisible: "1 / 7"
+- tapOn: { id: "lang-toggle-gu" }
+- assertVisible: "1 / 10"
 - assertVisible: { id: "story-page-meet-little-hanuman" }
+- takeScreenshot: kids-hanuman-sun-gu-large-hs00-art
+- scrollUntilVisible:
+    element: { text: "સુમેરુ પર્વત પાસે અંજના પોતાના નાનકડા પુત્ર હનુમાન સાથે રહેતાં હતાં. હનુમાન વાયુદેવના પુત્ર પણ કહેવાય છે. આ તેમના બાળપણની કથા છે, જ્યારે તેઓ બહુ નાના હતા." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "સુમેરુ પર્વત પાસે અંજના પોતાના નાનકડા પુત્ર હનુમાન સાથે રહેતાં હતાં. હનુમાન વાયુદેવના પુત્ર પણ કહેવાય છે. આ તેમના બાળપણની કથા છે, જ્યારે તેઓ બહુ નાના હતા."
-- takeScreenshot: kids-hanuman-sun-gu-large-00
+- takeScreenshot: kids-hanuman-sun-gu-large-hs00
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "2 / 7"
+- assertVisible: "2 / 10"
+- assertVisible: { id: "story-page-anjana-gathers-fruit" }
+- takeScreenshot: kids-hanuman-sun-gu-large-hs07-art
+- scrollUntilVisible:
+    element: { text: "એક દિવસ અંજના વનમાં ફળ લેવા ગયાં. મા દૂર જતાં નાનકડા હનુમાન ભૂખથી વ્યાકુળ થયા. તેમને ખાવા માટે કંઈક જોઈતું હતું. હવે તેમની નજર આકાશ તરફ ગઈ." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "એક દિવસ અંજના વનમાં ફળ લેવા ગયાં. મા દૂર જતાં નાનકડા હનુમાન ભૂખથી વ્યાકુળ થયા. તેમને ખાવા માટે કંઈક જોઈતું હતું. હવે તેમની નજર આકાશ તરફ ગઈ."
+- takeScreenshot: kids-hanuman-sun-gu-large-hs07
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 10"
 - assertVisible: { id: "story-page-hungry-at-dawn" }
-- assertVisible: "અંજના ફળ લેવા વનમાં ગયાં હતાં. નાનકડા હનુમાનને ભૂખ લાગી. તેમણે ઊગતો લાલ સૂર્ય જોયો અને વિચાર્યું કે તે મોટું, સ્વાદિષ્ટ ફળ છે."
-- takeScreenshot: kids-hanuman-sun-gu-large-01
+- takeScreenshot: kids-hanuman-sun-gu-large-hs01-art
+- scrollUntilVisible:
+    element: { text: "સવારનો લાલ સૂરજ ઊગી રહ્યો હતો. હનુમાનને તે મોટું, પાકેલું ફળ લાગ્યું. તેઓ હજી ખૂબ નાના હતા અને તફાવત જાણતા નહોતા. તેને મેળવવા તેઓ આકાશમાં કૂદી પડ્યા." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "સવારનો લાલ સૂરજ ઊગી રહ્યો હતો. હનુમાનને તે મોટું, પાકેલું ફળ લાગ્યું. તેઓ હજી ખૂબ નાના હતા અને તફાવત જાણતા નહોતા. તેને મેળવવા તેઓ આકાશમાં કૂદી પડ્યા."
+- takeScreenshot: kids-hanuman-sun-gu-large-hs01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "3 / 7"
+- assertVisible: "4 / 10"
 - assertVisible: { id: "story-page-towards-the-sun" }
+- takeScreenshot: kids-hanuman-sun-gu-large-hs02-art
+- scrollUntilVisible:
+    element: { text: "હનુમાન આકાશમાં કૂદ્યા. તેમની ઝડપ જોઈને દેવતાઓ આશ્ચર્ય પામ્યા. વાયુદેવ ઠંડી હવાથી તેમની રક્ષા કરતાં સાથે ગયા. સૂર્યે પણ નાનકડા બાળકને બળવા દીધો નહીં." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "હનુમાન આકાશમાં કૂદ્યા. તેમની ઝડપ જોઈને દેવતાઓ આશ્ચર્ય પામ્યા. વાયુદેવ ઠંડી હવાથી તેમની રક્ષા કરતાં સાથે ગયા. સૂર્યે પણ નાનકડા બાળકને બળવા દીધો નહીં."
-- takeScreenshot: kids-hanuman-sun-gu-large-02
+- takeScreenshot: kids-hanuman-sun-gu-large-hs02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "4 / 7"
+- assertVisible: "5 / 10"
+- assertVisible: { id: "story-page-rahu-seeks-help" }
+- takeScreenshot: kids-hanuman-sun-gu-large-hs08-art
+- scrollUntilVisible:
+    element: { text: "તે દિવસે રાહુ સૂર્યને ગ્રહણ લગાવવા આવ્યો હતો. હનુમાનને જોઈને તે ડરી ગયો અને દેવતાઓના રાજા ઇન્દ્ર પાસે મદદ માગી. ઇન્દ્ર તેની વાત સાંભળીને ઐરાવત હાથી પર નીકળ્યા." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "તે દિવસે રાહુ સૂર્યને ગ્રહણ લગાવવા આવ્યો હતો. હનુમાનને જોઈને તે ડરી ગયો અને દેવતાઓના રાજા ઇન્દ્ર પાસે મદદ માગી. ઇન્દ્ર તેની વાત સાંભળીને ઐરાવત હાથી પર નીકળ્યા."
+- takeScreenshot: kids-hanuman-sun-gu-large-hs08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 10"
 - assertVisible: { id: "story-page-indra-arrives" }
-- assertVisible: "રાહુ સૂર્ય પાસે આવ્યો, પણ હનુમાનને જોઈ ડરી ગયો અને ઇન્દ્રની મદદ માગી. ઇન્દ્ર ઐરાવત હાથી પર આવ્યા. હનુમાન ઉત્સાહમાં તેની તરફ પણ વધ્યા. ઇન્દ્રના વજ્રથી ઘાયલ થઈને તેઓ પડી ગયા."
-- takeScreenshot: kids-hanuman-sun-gu-large-03
+- takeScreenshot: kids-hanuman-sun-gu-large-hs03-art
+- scrollUntilVisible:
+    element: { text: "હનુમાન રાહુની પાછળ ગયા, પછી ઐરાવતને પણ ફળ સમજી તેની તરફ વધ્યા. તેમને રોકવા ઇન્દ્રે વજ્ર ચલાવ્યું. તેની ઇજા થતાં હનુમાન પર્વત પર પડી ગયા." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "હનુમાન રાહુની પાછળ ગયા, પછી ઐરાવતને પણ ફળ સમજી તેની તરફ વધ્યા. તેમને રોકવા ઇન્દ્રે વજ્ર ચલાવ્યું. તેની ઇજા થતાં હનુમાન પર્વત પર પડી ગયા."
+- takeScreenshot: kids-hanuman-sun-gu-large-hs03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "5 / 7"
+- assertVisible: "7 / 10"
 - assertVisible: { id: "story-page-vayus-sorrow" }
-- assertVisible: "વાયુદેવ પોતાના ઘાયલ પુત્રને ગુફામાં લઈ ગયા. દુઃખ અને ક્રોધમાં તેમણે હવાનો પ્રવાહ રોકી દીધો. જીવોને શ્વાસ લેવામાં મુશ્કેલી થવા લાગી. સૌએ બ્રહ્માની મદદ માગી."
-- takeScreenshot: kids-hanuman-sun-gu-large-04
+- takeScreenshot: kids-hanuman-sun-gu-large-hs04-art
+- scrollUntilVisible:
+    element: { text: "પોતાના પુત્રને ઘાયલ જોઈને વાયુદેવ દુઃખી અને ક્રોધિત થયા. તેઓ તેને ખોળામાં લઈને ગુફામાં ગયા અને સંસારમાં હવાનો પ્રવાહ રોક્યો. તેમના વિના જીવોને શ્વાસ લેવામાં મુશ્કેલી થવા લાગી." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "પોતાના પુત્રને ઘાયલ જોઈને વાયુદેવ દુઃખી અને ક્રોધિત થયા. તેઓ તેને ખોળામાં લઈને ગુફામાં ગયા અને સંસારમાં હવાનો પ્રવાહ રોક્યો. તેમના વિના જીવોને શ્વાસ લેવામાં મુશ્કેલી થવા લાગી."
+- takeScreenshot: kids-hanuman-sun-gu-large-hs04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "6 / 7"
+- assertVisible: "8 / 10"
+- assertVisible: { id: "story-page-the-world-needs-air" }
+- takeScreenshot: kids-hanuman-sun-gu-large-hs09-art
+- scrollUntilVisible:
+    element: { text: "આખો સંસાર સંકટમાં હતો. દેવતાઓ અને બીજા જીવો સૃષ્ટિકર્તા બ્રહ્મા પાસે મદદ માગવા પહોંચ્યા. બ્રહ્માએ વાયુદેવનું દુઃખ સમજાવ્યું. પછી સૌ તેમની સાથે હનુમાન અને વાયુ પાસે ગયા." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "આખો સંસાર સંકટમાં હતો. દેવતાઓ અને બીજા જીવો સૃષ્ટિકર્તા બ્રહ્મા પાસે મદદ માગવા પહોંચ્યા. બ્રહ્માએ વાયુદેવનું દુઃખ સમજાવ્યું. પછી સૌ તેમની સાથે હનુમાન અને વાયુ પાસે ગયા."
+- takeScreenshot: kids-hanuman-sun-gu-large-hs09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 10"
 - assertVisible: { id: "story-page-brahma-restores" }
+- takeScreenshot: kids-hanuman-sun-gu-large-hs05-art
+- scrollUntilVisible:
+    element: { text: "બ્રહ્મા દેવતાઓ સાથે ગુફામાં આવ્યા અને બાળકને પ્રેમથી સ્પર્શ કર્યો. હનુમાન ફરી બેઠા થયા. વાયુદેવ ખુશ થયા અને હવા ફરી વહેવા લાગી. જીવોને રાહત મળી." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "બ્રહ્મા દેવતાઓ સાથે ગુફામાં આવ્યા અને બાળકને પ્રેમથી સ્પર્શ કર્યો. હનુમાન ફરી બેઠા થયા. વાયુદેવ ખુશ થયા અને હવા ફરી વહેવા લાગી. જીવોને રાહત મળી."
-- takeScreenshot: kids-hanuman-sun-gu-large-05
+- takeScreenshot: kids-hanuman-sun-gu-large-hs05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "7 / 7"
+- assertVisible: "10 / 10"
 - assertVisible: { id: "story-page-gods-blessings" }
-- takeScreenshot: kids-hanuman-sun-gu-large-06
+- takeScreenshot: kids-hanuman-sun-gu-large-hs06
 - scrollUntilVisible:
     element: { text: "વાલ્મીકિ રામાયણ, ઉત્તરકાંડ 35–36નું સરળ રૂપાંતર. અહીં સૂર્ય તરફ ઉડવાની કથા છે; સૂર્ય ગળી જવાની લોકકથા અલગ છે. શીખ સંપાદકીય છે." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-hanuman-sun-gu-source
 - tapOn: "Back"
+- assertVisible: { id: "kids-story-hanuman-sun" }
 - tapOn: "Back"
 - tapOn: "Back"
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Large"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
 - scrollUntilVisible:
     element: { text: "Language,.*" }
     centerElement: true
@@ -308,271 +563,520 @@ appId: com.prashantsharma.vedansh
     element: { id: "kids-story-putana" }
     centerElement: true
 - tapOn: { id: "kids-story-putana" }
-- assertVisible: { id: "lang-toggle-kn" }
-- assertVisible: "1 / 7"
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 10"
 - assertVisible: { id: "story-page-little-krishna-in-gokul" }
+- takeScreenshot: kids-putana-kn-large-pt00-art
+- scrollUntilVisible:
+    element: { text: "ಬಹಳ ಹಿಂದೆ, ಗೋಕುಲದಲ್ಲಿ ಪುಟ್ಟ ಕೃಷ್ಣನಿದ್ದ. ಯಶೋದೆ ಮತ್ತು ನಂದ ಅವನನ್ನು ಪ್ರೀತಿಯಿಂದ ಸಾಕುತ್ತಿದ್ದರು. ಅವನ ಆಗಮನ ಮನೆಗೂ ಊರಿಗೂ ಸಂತೋಷ ತಂದಿತ್ತು." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಬಹಳ ಹಿಂದೆ, ಗೋಕುಲದಲ್ಲಿ ಪುಟ್ಟ ಕೃಷ್ಣನಿದ್ದ. ಯಶೋದೆ ಮತ್ತು ನಂದ ಅವನನ್ನು ಪ್ರೀತಿಯಿಂದ ಸಾಕುತ್ತಿದ್ದರು. ಅವನ ಆಗಮನ ಮನೆಗೂ ಊರಿಗೂ ಸಂತೋಷ ತಂದಿತ್ತು."
-- takeScreenshot: kids-putana-kn-large-00
+- takeScreenshot: kids-putana-kn-large-pt00
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "2 / 7"
+- assertVisible: "2 / 10"
 - assertVisible: { id: "story-page-kansas-plan" }
-- assertVisible: "ಮಥುರೆಯ ರಾಜ ಕಂಸ ದೇವಕಿಯ ಎಂಟನೇ ಮಗುವಿಗೆ ಹೆದರಿದ್ದ. ಶಿಶುಗಳಿಗೆ ಹಾನಿಮಾಡಲು ಪೂತನೆಯನ್ನು ಕಳುಹಿಸಿದ. ಹುಡುಕುತ್ತಾ ಅವಳು ಗೋಕುಲಕ್ಕೆ ಬಂದಳು."
-- takeScreenshot: kids-putana-kn-large-01
+- takeScreenshot: kids-putana-kn-large-pt01-art
+- scrollUntilVisible:
+    element: { text: "ದೇವಕಿಯ ಎಂಟನೇ ಮಗು ತನ್ನ ಅಂತ್ಯಕ್ಕೆ ಕಾರಣವಾಗುತ್ತದೆಂದು ಮಥುರೆಯ ರಾಜ ಕಂಸ ಕೇಳಿದ್ದ. ಭಯದಿಂದ ಶಿಶುಗಳಿಗೆ ಹಾನಿಮಾಡಲು ಪೂತನೆಯನ್ನು ಕಳುಹಿಸಿದ. ಹುಡುಕುತ್ತಾ ಅವಳು ಗೋಕುಲಕ್ಕೆ ಬಂದಳು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ದೇವಕಿಯ ಎಂಟನೇ ಮಗು ತನ್ನ ಅಂತ್ಯಕ್ಕೆ ಕಾರಣವಾಗುತ್ತದೆಂದು ಮಥುರೆಯ ರಾಜ ಕಂಸ ಕೇಳಿದ್ದ. ಭಯದಿಂದ ಶಿಶುಗಳಿಗೆ ಹಾನಿಮಾಡಲು ಪೂತನೆಯನ್ನು ಕಳುಹಿಸಿದ. ಹುಡುಕುತ್ತಾ ಅವಳು ಗೋಕುಲಕ್ಕೆ ಬಂದಳು."
+- takeScreenshot: kids-putana-kn-large-pt01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "3 / 7"
+- assertVisible: "3 / 10"
 - assertVisible: { id: "story-page-beautiful-disguise" }
+- takeScreenshot: kids-putana-kn-large-pt02-art
+- scrollUntilVisible:
+    element: { text: "ಪೂತನೆ ಸುಂದರ ಮಹಿಳೆಯ ರೂಪದಲ್ಲಿ ನಂದನ ಮನೆಗೆ ಬಂದಳು. ಅವಳು ಪ್ರೀತಿಯಿಂದ ವರ್ತಿಸುವಂತೆ ಕಂಡಳು. ಯಶೋದೆ ಮತ್ತು ರೋಹಿಣಿಗೆ ಅವಳ ಕೆಟ್ಟ ಉದ್ದೇಶ ತಿಳಿಯಲಿಲ್ಲ." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಪೂತನೆ ಸುಂದರ ಮಹಿಳೆಯ ರೂಪದಲ್ಲಿ ನಂದನ ಮನೆಗೆ ಬಂದಳು. ಅವಳು ಪ್ರೀತಿಯಿಂದ ವರ್ತಿಸುವಂತೆ ಕಂಡಳು. ಯಶೋದೆ ಮತ್ತು ರೋಹಿಣಿಗೆ ಅವಳ ಕೆಟ್ಟ ಉದ್ದೇಶ ತಿಳಿಯಲಿಲ್ಲ."
-- takeScreenshot: kids-putana-kn-large-02
+- takeScreenshot: kids-putana-kn-large-pt02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "4 / 7"
+- assertVisible: "4 / 10"
+- assertVisible: { id: "story-page-hidden-danger" }
+- takeScreenshot: kids-putana-kn-large-pt07-art
+- scrollUntilVisible:
+    element: { text: "ಪೂತನೆ ಕೃಷ್ಣನನ್ನು ಎತ್ತಿಕೊಂಡಳು. ನಗುವಿನ ಹಿಂದೆ ಕೆಟ್ಟ ಉದ್ದೇಶವಿತ್ತು. ಕೃಷ್ಣ ಸಾಮಾನ್ಯ ಶಿಶುವಂತೆ ಕಂಡರೂ, ಅವನಿಗೆ ಅವಳ ಉದ್ದೇಶ ತಿಳಿದಿತ್ತು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಪೂತನೆ ಕೃಷ್ಣನನ್ನು ಎತ್ತಿಕೊಂಡಳು. ನಗುವಿನ ಹಿಂದೆ ಕೆಟ್ಟ ಉದ್ದೇಶವಿತ್ತು. ಕೃಷ್ಣ ಸಾಮಾನ್ಯ ಶಿಶುವಂತೆ ಕಂಡರೂ, ಅವನಿಗೆ ಅವಳ ಉದ್ದೇಶ ತಿಳಿದಿತ್ತು."
+- takeScreenshot: kids-putana-kn-large-pt07
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 10"
 - assertVisible: { id: "story-page-krishnas-power" }
-- assertVisible: "ಪೂತನೆ ಕೃಷ್ಣನನ್ನು ಮಡಿಲಲ್ಲಿ ಹಿಡಿದು ಸ್ತನಕ್ಕೆ ವಿಷ ಹಚ್ಚಿ ಹಾಲುಣಿಸಿದಳು. ಕೃಷ್ಣನಿಗೆ ಅವಳ ಉದ್ದೇಶ ತಿಳಿದಿತ್ತು. ವಿಷ ಅವನಿಗೆ ಹಾನಿಮಾಡಲಿಲ್ಲ; ಅವನು ಪೂತನೆಯ ಪ್ರಾಣಶಕ್ತಿಯನ್ನು ಸೆಳೆದನು."
-- takeScreenshot: kids-putana-kn-large-03
+- takeScreenshot: kids-putana-kn-large-pt03-art
+- scrollUntilVisible:
+    element: { text: "ಪೂತನೆ ತನ್ನ ಸ್ತನಕ್ಕೆ ವಿಷ ಹಚ್ಚಿಕೊಂಡು ಕೃಷ್ಣನಿಗೆ ಹಾಲುಣಿಸಲು ಆರಂಭಿಸಿದಳು. ಆದರೆ ಪುಟ್ಟ ಕೃಷ್ಣ ಅಸಹಾಯಕನಾಗಿರಲಿಲ್ಲ. ಹಾಲಿನ ಜೊತೆಗೆ ಅವಳ ಪ್ರಾಣಶಕ್ತಿಯನ್ನೂ ಸೆಳೆಯತೊಡಗಿದನು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಪೂತನೆ ತನ್ನ ಸ್ತನಕ್ಕೆ ವಿಷ ಹಚ್ಚಿಕೊಂಡು ಕೃಷ್ಣನಿಗೆ ಹಾಲುಣಿಸಲು ಆರಂಭಿಸಿದಳು. ಆದರೆ ಪುಟ್ಟ ಕೃಷ್ಣ ಅಸಹಾಯಕನಾಗಿರಲಿಲ್ಲ. ಹಾಲಿನ ಜೊತೆಗೆ ಅವಳ ಪ್ರಾಣಶಕ್ತಿಯನ್ನೂ ಸೆಳೆಯತೊಡಗಿದನು."
+- takeScreenshot: kids-putana-kn-large-pt03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "5 / 7"
+- assertVisible: "6 / 10"
+- assertVisible: { id: "story-page-putanas-cry" }
+- takeScreenshot: kids-putana-kn-large-pt08-art
+- scrollUntilVisible:
+    element: { text: "ಪೂತನೆ ಹೆದರಿದಳು. ಕೃಷ್ಣನಿಗೆ ಬಿಡುವಂತೆ ಕೂಗಿ ಬಿಡಿಸಿಕೊಳ್ಳಲು ಪ್ರಯತ್ನಿಸಿದಳು. ಆದರೆ ಅವನ ಹಿಡಿತ ಸಡಿಲವಾಗಲಿಲ್ಲ. ಅವಳ ಶಕ್ತಿ ಕುಗ್ಗುತ್ತಾ ಹೋಯಿತು; ಅವಳ ಕೂಗು ದೂರದವರೆಗೂ ಕೇಳಿಸಿತು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಪೂತನೆ ಹೆದರಿದಳು. ಕೃಷ್ಣನಿಗೆ ಬಿಡುವಂತೆ ಕೂಗಿ ಬಿಡಿಸಿಕೊಳ್ಳಲು ಪ್ರಯತ್ನಿಸಿದಳು. ಆದರೆ ಅವನ ಹಿಡಿತ ಸಡಿಲವಾಗಲಿಲ್ಲ. ಅವಳ ಶಕ್ತಿ ಕುಗ್ಗುತ್ತಾ ಹೋಯಿತು; ಅವಳ ಕೂಗು ದೂರದವರೆಗೂ ಕೇಳಿಸಿತು."
+- takeScreenshot: kids-putana-kn-large-pt08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 10"
+- assertVisible: { id: "story-page-disguise-falls" }
+- takeScreenshot: kids-putana-kn-large-pt09-art
+- scrollUntilVisible:
+    element: { text: "ಕೊನೆಗೆ ಪೂತನೆ ತನ್ನ ದೊಡ್ಡ ರಾಕ್ಷಸಿಯ ರೂಪಕ್ಕೆ ಮರಳಿದಳು. ನೆಲಕ್ಕೆ ಬಿದ್ದು ಪ್ರಾಣಬಿಟ್ಟಳು. ಇಷ್ಟು ದೊಡ್ಡ ಅಪಾಯದ ನಡುವೆಯೂ ಪುಟ್ಟ ಕೃಷ್ಣ ಅವಳ ದೇಹದ ಮೇಲೆ ಸುರಕ್ಷಿತವಾಗಿ ಆಟವಾಡುತ್ತಿದ್ದನು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಕೊನೆಗೆ ಪೂತನೆ ತನ್ನ ದೊಡ್ಡ ರಾಕ್ಷಸಿಯ ರೂಪಕ್ಕೆ ಮರಳಿದಳು. ನೆಲಕ್ಕೆ ಬಿದ್ದು ಪ್ರಾಣಬಿಟ್ಟಳು. ಇಷ್ಟು ದೊಡ್ಡ ಅಪಾಯದ ನಡುವೆಯೂ ಪುಟ್ಟ ಕೃಷ್ಣ ಅವಳ ದೇಹದ ಮೇಲೆ ಸುರಕ್ಷಿತವಾಗಿ ಆಟವಾಡುತ್ತಿದ್ದನು."
+- takeScreenshot: kids-putana-kn-large-pt09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 10"
 - assertVisible: { id: "story-page-danger-ends" }
-- assertVisible: "ಪೂತನೆಯ ವೇಷ ಮಾಯವಾಯಿತು. ದೊಡ್ಡ ರಾಕ್ಷಸಿಯ ರೂಪದಲ್ಲಿ ಅವಳು ನೆಲಕ್ಕೆ ಬಿದ್ದು ಪ್ರಾಣಬಿಟ್ಟಳು. ಕೃಷ್ಣ ಸುರಕ್ಷಿತವಾಗಿದ್ದ. ಗೋಪಿಯರು ಓಡಿಬಂದು ಅವನನ್ನು ಎತ್ತಿಕೊಂಡರು."
-- takeScreenshot: kids-putana-kn-large-04
+- takeScreenshot: kids-putana-kn-large-pt04-art
+- scrollUntilVisible:
+    element: { text: "ಗೋಪಿಯರು ಕೃಷ್ಣನನ್ನು ಕಂಡು ಓಡಿಬಂದರು. ಯಶೋದೆ ಮತ್ತು ರೋಹಿಣಿಗೂ ನೆಮ್ಮದಿಯಾಯಿತು. ಅವನನ್ನು ಪೂತನೆಯ ದೇಹದಿಂದ ಎತ್ತಿ ಸುರಕ್ಷಿತವಾಗಿ ತಮ್ಮ ಮಡಿಲಲ್ಲಿ ಹಿಡಿದರು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಗೋಪಿಯರು ಕೃಷ್ಣನನ್ನು ಕಂಡು ಓಡಿಬಂದರು. ಯಶೋದೆ ಮತ್ತು ರೋಹಿಣಿಗೂ ನೆಮ್ಮದಿಯಾಯಿತು. ಅವನನ್ನು ಪೂತನೆಯ ದೇಹದಿಂದ ಎತ್ತಿ ಸುರಕ್ಷಿತವಾಗಿ ತಮ್ಮ ಮಡಿಲಲ್ಲಿ ಹಿಡಿದರು."
+- takeScreenshot: kids-putana-kn-large-pt04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "6 / 7"
+- assertVisible: "9 / 10"
 - assertVisible: { id: "story-page-mothers-care" }
+- takeScreenshot: kids-putana-kn-large-pt05-art
+- scrollUntilVisible:
+    element: { text: "ಯಶೋದೆ, ರೋಹಿಣಿ ಮತ್ತು ಗೋಪಿಯರು ಭಗವಂತನ ಹೆಸರುಗಳನ್ನು ಹೇಳಿ ಕೃಷ್ಣನ ರಕ್ಷಣೆಗಾಗಿ ಪ್ರಾರ್ಥಿಸಿದರು. ಯಶೋದೆ ಅವನಿಗೆ ಹಾಲುಣಿಸಿ ಹಾಸಿಗೆಯಲ್ಲಿ ಮಲಗಿಸಿದಳು. ಮನೆಯಲ್ಲಿ ಮತ್ತೆ ನೆಮ್ಮದಿ ನೆಲೆಸಿತು." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಯಶೋದೆ, ರೋಹಿಣಿ ಮತ್ತು ಗೋಪಿಯರು ಭಗವಂತನ ಹೆಸರುಗಳನ್ನು ಹೇಳಿ ಕೃಷ್ಣನ ರಕ್ಷಣೆಗಾಗಿ ಪ್ರಾರ್ಥಿಸಿದರು. ಯಶೋದೆ ಅವನಿಗೆ ಹಾಲುಣಿಸಿ ಹಾಸಿಗೆಯಲ್ಲಿ ಮಲಗಿಸಿದಳು. ಮನೆಯಲ್ಲಿ ಮತ್ತೆ ನೆಮ್ಮದಿ ನೆಲೆಸಿತು."
-- takeScreenshot: kids-putana-kn-large-05
+- takeScreenshot: kids-putana-kn-large-pt05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "7 / 7"
+- assertVisible: "10 / 10"
 - assertVisible: { id: "story-page-mercy-and-home" }
-- takeScreenshot: kids-putana-kn-large-06
+- takeScreenshot: kids-putana-kn-large-pt06
 - scrollUntilVisible:
     element: { text: "ಶ್ರೀಮದ್ಭಾಗವತ 10.5–6ರ ಮಕ್ಕಳಿಗಾಗಿ ಸರಳ ರೂಪಾಂತರ. ಭಯಾನಕ ವಿವರಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತಗೊಳಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-putana-kn-source
 - tapOn: "Back"
-- tapOn: "Back"
-- tapOn: { id: "kids-story-deity-krishna" }
+- assertVisible: { id: "kids-story-putana" }
 - scrollUntilVisible:
     element: { id: "kids-story-kaliya-nag" }
     centerElement: true
 - tapOn: { id: "kids-story-kaliya-nag" }
-- assertVisible: { id: "lang-toggle-kn" }
+- tapOn: { id: "lang-toggle-kn" }
 - assertVisible: "1 / 8"
 - assertVisible: { id: "story-page-a-cowherds-day" }
+- takeScreenshot: kids-kaliya-nag-kn-large-ka00-art
+- scrollUntilVisible:
+    element: { text: "ಕೃಷ್ಣ ವೃಂದಾವನದಲ್ಲಿ ಗೆಳೆಯರೊಂದಿಗೆ ಹಸು ಮೇಯಿಸುತ್ತಿದ್ದ. ಮರ, ಹಕ್ಕಿ, ಹೂಗಳ ನಡುವೆ ಅವರು ಆಡುತ್ತಾ ಹಾಡುತ್ತಿದ್ದರು. ಯಮುನೆಯ ದಡದಲ್ಲೂ ಹಸುಗಳನ್ನು ಮೇಯಿಸುತ್ತಿದ್ದರು." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಕೃಷ್ಣ ವೃಂದಾವನದಲ್ಲಿ ಗೆಳೆಯರೊಂದಿಗೆ ಹಸು ಮೇಯಿಸುತ್ತಿದ್ದ. ಮರ, ಹಕ್ಕಿ, ಹೂಗಳ ನಡುವೆ ಅವರು ಆಡುತ್ತಾ ಹಾಡುತ್ತಿದ್ದರು. ಯಮುನೆಯ ದಡದಲ್ಲೂ ಹಸುಗಳನ್ನು ಮೇಯಿಸುತ್ತಿದ್ದರು."
-- takeScreenshot: kids-kaliya-nag-kn-large-00
+- takeScreenshot: kids-kaliya-nag-kn-large-ka00
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "2 / 8"
 - assertVisible: { id: "story-page-poisoned-yamuna" }
+- takeScreenshot: kids-kaliya-nag-kn-large-ka01-art
+- scrollUntilVisible:
+    element: { text: "ಯಮುನೆಯ ಆಳವಾದ ಕೊಳದಲ್ಲಿ ಕಾಳಿಯ ನಾಗ ವಾಸಿಸುತ್ತಿದ್ದ. ಅವನ ವಿಷ ನೀರನ್ನೂ ದಡದ ಜೀವಿಗಳನ್ನೂ ಹಾನಿಗೊಳಿಸುತ್ತಿತ್ತು. ನದಿಯನ್ನು ಮತ್ತೆ ನಿರ್ಮಲಗೊಳಿಸಲು ಕೃಷ್ಣ ನಿರ್ಧರಿಸಿದ." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಯಮುನೆಯ ಆಳವಾದ ಕೊಳದಲ್ಲಿ ಕಾಳಿಯ ನಾಗ ವಾಸಿಸುತ್ತಿದ್ದ. ಅವನ ವಿಷ ನೀರನ್ನೂ ದಡದ ಜೀವಿಗಳನ್ನೂ ಹಾನಿಗೊಳಿಸುತ್ತಿತ್ತು. ನದಿಯನ್ನು ಮತ್ತೆ ನಿರ್ಮಲಗೊಳಿಸಲು ಕೃಷ್ಣ ನಿರ್ಧರಿಸಿದ."
-- takeScreenshot: kids-kaliya-nag-kn-large-01
+- takeScreenshot: kids-kaliya-nag-kn-large-ka01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "3 / 8"
 - assertVisible: { id: "story-page-kadamba-leap" }
+- takeScreenshot: kids-kaliya-nag-kn-large-ka02-art
+- scrollUntilVisible:
+    element: { text: "ಕೃಷ್ಣ ದಡದ ಎತ್ತರದ ಕದಂಬ ಮರವನ್ನು ಹತ್ತಿ ನೀರಿಗೆ ಜಿಗಿದ. ಸುತ್ತಲೂ ಅಲೆಗಳು ಎದ್ದವು. ಸದ್ದು ಕೇಳಿ ಕೋಪಗೊಂಡ ಕಾಳಿಯ ಅವನತ್ತ ಬಂದನು." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಕೃಷ್ಣ ದಡದ ಎತ್ತರದ ಕದಂಬ ಮರವನ್ನು ಹತ್ತಿ ನೀರಿಗೆ ಜಿಗಿದ. ಸುತ್ತಲೂ ಅಲೆಗಳು ಎದ್ದವು. ಸದ್ದು ಕೇಳಿ ಕೋಪಗೊಂಡ ಕಾಳಿಯ ಅವನತ್ತ ಬಂದನು."
-- takeScreenshot: kids-kaliya-nag-kn-large-02
+- takeScreenshot: kids-kaliya-nag-kn-large-ka02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "4 / 8"
 - assertVisible: { id: "story-page-friends-worry" }
+- takeScreenshot: kids-kaliya-nag-kn-large-ka03-art
+- scrollUntilVisible:
+    element: { text: "ಕಾಳಿಯ ಕೃಷ್ಣನನ್ನು ಸುತ್ತಿಕೊಂಡ. ಎಲ್ಲರೂ ಹೆದರಿದರು; ಬಲರಾಮ ಅವರನ್ನು ನೀರಿಗೆ ಇಳಿಯದಂತೆ ತಡೆದ. ಕೃಷ್ಣ ತನ್ನ ದೇಹವನ್ನು ಹಿಗ್ಗಿಸಿ ಹೊರಬಂದ." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಕಾಳಿಯ ಕೃಷ್ಣನನ್ನು ಸುತ್ತಿಕೊಂಡ. ಎಲ್ಲರೂ ಹೆದರಿದರು; ಬಲರಾಮ ಅವರನ್ನು ನೀರಿಗೆ ಇಳಿಯದಂತೆ ತಡೆದ. ಕೃಷ್ಣ ತನ್ನ ದೇಹವನ್ನು ಹಿಗ್ಗಿಸಿ ಹೊರಬಂದ."
-- takeScreenshot: kids-kaliya-nag-kn-large-03
+- takeScreenshot: kids-kaliya-nag-kn-large-ka03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "5 / 8"
 - assertVisible: { id: "story-page-dance-on-hoods" }
+- takeScreenshot: kids-kaliya-nag-kn-large-ka04-art
+- scrollUntilVisible:
+    element: { text: "ಕೃಷ್ಣ ಕಾಳಿಯನ ಹೆಡೆಗಳ ಮೇಲೆ ಹತ್ತಿ ನೃತ್ಯಮಾಡಿದ. ಮೇಲಿನಿಂದ ಹೂಗಳು ಸುರಿದವು. ಕಾಳಿಯನ ಶಕ್ತಿಯೂ ಅಹಂಕಾರವೂ ಕರಗಿದವು. ಕೃಷ್ಣ ಸಾಮಾನ್ಯ ಬಾಲಕನಲ್ಲ ಎಂದು ಅವನಿಗೆ ತಿಳಿಯಿತು." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಕೃಷ್ಣ ಕಾಳಿಯನ ಹೆಡೆಗಳ ಮೇಲೆ ಹತ್ತಿ ನೃತ್ಯಮಾಡಿದ. ಮೇಲಿನಿಂದ ಹೂಗಳು ಸುರಿದವು. ಕಾಳಿಯನ ಶಕ್ತಿಯೂ ಅಹಂಕಾರವೂ ಕರಗಿದವು. ಕೃಷ್ಣ ಸಾಮಾನ್ಯ ಬಾಲಕನಲ್ಲ ಎಂದು ಅವನಿಗೆ ತಿಳಿಯಿತು."
-- takeScreenshot: kids-kaliya-nag-kn-large-04
+- takeScreenshot: kids-kaliya-nag-kn-large-ka04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "6 / 8"
 - assertVisible: { id: "story-page-family-prays" }
+- takeScreenshot: kids-kaliya-nag-kn-large-ka05-art
+- scrollUntilVisible:
+    element: { text: "ಕಾಳಿಯನ ಪತ್ನಿಯರು ಮಕ್ಕಳೊಂದಿಗೆ ಕೃಷ್ಣನ ಬಳಿಗೆ ಬಂದರು. ಕೈಜೋಡಿಸಿ ಕಾಳಿಯನ ಪ್ರಾಣ ಉಳಿಸಲು ಬೇಡಿದರು. ಕೃಷ್ಣ ಅವರ ಪ್ರಾರ್ಥನೆ ಕೇಳಿ ನಾಗನನ್ನು ಬಿಡುಗಡೆಮಾಡಿದ." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಕಾಳಿಯನ ಪತ್ನಿಯರು ಮಕ್ಕಳೊಂದಿಗೆ ಕೃಷ್ಣನ ಬಳಿಗೆ ಬಂದರು. ಕೈಜೋಡಿಸಿ ಕಾಳಿಯನ ಪ್ರಾಣ ಉಳಿಸಲು ಬೇಡಿದರು. ಕೃಷ್ಣ ಅವರ ಪ್ರಾರ್ಥನೆ ಕೇಳಿ ನಾಗನನ್ನು ಬಿಡುಗಡೆಮಾಡಿದ."
-- takeScreenshot: kids-kaliya-nag-kn-large-05
+- takeScreenshot: kids-kaliya-nag-kn-large-ka05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "7 / 8"
 - assertVisible: { id: "story-page-leave-in-peace" }
+- takeScreenshot: kids-kaliya-nag-kn-large-ka06-art
+- scrollUntilVisible:
+    element: { text: "ಕಾಳಿಯ ತನ್ನ ತಪ್ಪನ್ನು ಒಪ್ಪಿಕೊಂಡನು. ಹಸುಗಳೂ ಜನರೂ ಯಮುನೆಯ ನೀರು ಕುಡಿಯುವಂತೆ, ಕುಟುಂಬದೊಂದಿಗೆ ಸಮುದ್ರದ ರಮಣಕ ದ್ವೀಪಕ್ಕೆ ಮರಳಲು ಕೃಷ್ಣ ಹೇಳಿದ. ಕಾಳಿಯ ಆಜ್ಞೆ ಪಾಲಿಸಿ ಹೊರಟನು." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಕಾಳಿಯ ತನ್ನ ತಪ್ಪನ್ನು ಒಪ್ಪಿಕೊಂಡನು. ಹಸುಗಳೂ ಜನರೂ ಯಮುನೆಯ ನೀರು ಕುಡಿಯುವಂತೆ, ಕುಟುಂಬದೊಂದಿಗೆ ಸಮುದ್ರದ ರಮಣಕ ದ್ವೀಪಕ್ಕೆ ಮರಳಲು ಕೃಷ್ಣ ಹೇಳಿದ. ಕಾಳಿಯ ಆಜ್ಞೆ ಪಾಲಿಸಿ ಹೊರಟನು."
-- takeScreenshot: kids-kaliya-nag-kn-large-06
+- takeScreenshot: kids-kaliya-nag-kn-large-ka06
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
 - assertVisible: "8 / 8"
 - assertVisible: { id: "story-page-river-restored" }
-- takeScreenshot: kids-kaliya-nag-kn-large-07
+- takeScreenshot: kids-kaliya-nag-kn-large-ka07
 - scrollUntilVisible:
     element: { text: "ಶ್ರೀಮದ್ಭಾಗವತ 10.15–16ರ ಸರಳ ರೂಪಾಂತರ. ಚಿತ್ರಗಳಲ್ಲಿ ಅನೇಕ ಹೆಡೆಗಳನ್ನು ಚಿಕ್ಕ ಗುಂಪಿನಿಂದ ಸೂಚಿಸಲಾಗಿದೆ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-kaliya-nag-kn-source
 - tapOn: "Back"
+- assertVisible: { id: "kids-story-kaliya-nag" }
 - tapOn: "Back"
 - tapOn: { id: "kids-story-deity-ganesha" }
 - scrollUntilVisible:
     element: { id: "kids-story-ganesha-birth" }
     centerElement: true
 - tapOn: { id: "kids-story-ganesha-birth" }
-- assertVisible: { id: "lang-toggle-kn" }
-- assertVisible: "1 / 8"
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 11"
 - assertVisible: { id: "story-page-a-wish-on-kailasa" }
-- assertVisible: "ಕೈಲಾಸದಲ್ಲಿ ಪಾರ್ವತಿ ಶಿವನೊಂದಿಗೆ ವಾಸಿಸುತ್ತಿದ್ದಳು. ಶಿವನ ಗಣಗಳು ಬಾಗಿಲು ಕಾಯುತ್ತಿದ್ದರು. ತನ್ನ ಮಾತನ್ನು ಕೇಳುವ ಒಬ್ಬರು ಬೇಕೆಂದು ಗೆಳತಿಯರೊಂದಿಗೆ ಮಾತನಾಡಿದಳು."
-- takeScreenshot: kids-ganesha-birth-kn-large-00
+- takeScreenshot: kids-ganesha-birth-kn-large-gb00-art
+- scrollUntilVisible:
+    element: { text: "ಕೈಲಾಸ ಪರ್ವತದಲ್ಲಿ ಪಾರ್ವತಿ ಶಿವನೊಂದಿಗೆ ವಾಸಿಸುತ್ತಿದ್ದಳು. ಒಂದು ದಿನ ಅವಳ ಸಖಿಯರಾದ ಜಯಾ ಮತ್ತು ವಿಜಯಾ ಒಂದು ಪ್ರಶ್ನೆ ಕೇಳಿದರು. ಶಿವನ ಗಣಗಳು ಅವನ ಆಜ್ಞೆಯನ್ನು ಪಾಲಿಸುತ್ತಿದ್ದರು; ಪಾರ್ವತಿಯ ಸ್ವಂತ ಕಾವಲುಗಾರ ಯಾರು?" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಕೈಲಾಸ ಪರ್ವತದಲ್ಲಿ ಪಾರ್ವತಿ ಶಿವನೊಂದಿಗೆ ವಾಸಿಸುತ್ತಿದ್ದಳು. ಒಂದು ದಿನ ಅವಳ ಸಖಿಯರಾದ ಜಯಾ ಮತ್ತು ವಿಜಯಾ ಒಂದು ಪ್ರಶ್ನೆ ಕೇಳಿದರು. ಶಿವನ ಗಣಗಳು ಅವನ ಆಜ್ಞೆಯನ್ನು ಪಾಲಿಸುತ್ತಿದ್ದರು; ಪಾರ್ವತಿಯ ಸ್ವಂತ ಕಾವಲುಗಾರ ಯಾರು?"
+- takeScreenshot: kids-ganesha-birth-kn-large-gb00
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "2 / 8"
+- assertVisible: "2 / 11"
+- assertVisible: { id: "story-page-parvatis-decision" }
+- takeScreenshot: kids-ganesha-birth-kn-large-gb08-art
+- scrollUntilVisible:
+    element: { text: "ಒಮ್ಮೆ ಪಾರ್ವತಿ ಸ್ನಾನ ಮಾಡುತ್ತಿದ್ದಾಗ ಶಿವ ಒಳಗೆ ಬಂದನು. ನಂದಿ ಅವನನ್ನು ತಡೆದಿರಲಿಲ್ಲ. ಆಗ ಪಾರ್ವತಿ ತನ್ನ ಆಜ್ಞೆಯನ್ನು ಪಾಲಿಸುವ ಸ್ವಂತ ಕಾವಲುಗಾರನನ್ನು ಸೃಷ್ಟಿಸಲು ನಿರ್ಧರಿಸಿದಳು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಒಮ್ಮೆ ಪಾರ್ವತಿ ಸ್ನಾನ ಮಾಡುತ್ತಿದ್ದಾಗ ಶಿವ ಒಳಗೆ ಬಂದನು. ನಂದಿ ಅವನನ್ನು ತಡೆದಿರಲಿಲ್ಲ. ಆಗ ಪಾರ್ವತಿ ತನ್ನ ಆಜ್ಞೆಯನ್ನು ಪಾಲಿಸುವ ಸ್ವಂತ ಕಾವಲುಗಾರನನ್ನು ಸೃಷ್ಟಿಸಲು ನಿರ್ಧರಿಸಿದಳು."
+- takeScreenshot: kids-ganesha-birth-kn-large-gb08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 11"
 - assertVisible: { id: "story-page-parvatis-son" }
+- takeScreenshot: kids-ganesha-birth-kn-large-gb01-art
+- scrollUntilVisible:
+    element: { text: "ಕೈಲಾಸದಲ್ಲಿ ಪಾರ್ವತಿ ತನ್ನ ಮೈಯ ಮೇಲಿನ ಲೇಪದಿಂದ ಬಾಲಕನನ್ನು ರೂಪಿಸಿ ಜೀವಕೊಟ್ಟಳು. ಅವನಿಗೆ ಬಟ್ಟೆ ಮತ್ತು ಆಭರಣಗಳನ್ನು ತೊಡಿಸಿದಳು. ಅವನು ಅವಳ ಪ್ರೀತಿಯ ಮಗನಾದನು." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಕೈಲಾಸದಲ್ಲಿ ಪಾರ್ವತಿ ತನ್ನ ಮೈಯ ಮೇಲಿನ ಲೇಪದಿಂದ ಬಾಲಕನನ್ನು ರೂಪಿಸಿ ಜೀವಕೊಟ್ಟಳು. ಅವನಿಗೆ ಬಟ್ಟೆ ಮತ್ತು ಆಭರಣಗಳನ್ನು ತೊಡಿಸಿದಳು. ಅವನು ಅವಳ ಪ್ರೀತಿಯ ಮಗನಾದನು."
-- takeScreenshot: kids-ganesha-birth-kn-large-01
+- takeScreenshot: kids-ganesha-birth-kn-large-gb01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "3 / 8"
+- assertVisible: "4 / 11"
 - assertVisible: { id: "story-page-guard-the-door" }
+- takeScreenshot: kids-ganesha-birth-kn-large-gb02-art
+- scrollUntilVisible:
+    element: { text: "ಸ್ನಾನಕ್ಕೆ ಹೋಗುವ ಮೊದಲು ಪಾರ್ವತಿ ಮಗನಿಗೆ ಬಾಗಿಲು ಕಾಯಲು ಹೇಳಿದಳು. ಅವಳ ಅನುಮತಿಯಿಲ್ಲದೆ ಯಾರೂ ಒಳಬರಬಾರದು. ಬಾಲಕ ದಂಡ ಹಿಡಿದು ಬಾಗಿಲಲ್ಲಿ ನಿಂತನು." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಸ್ನಾನಕ್ಕೆ ಹೋಗುವ ಮೊದಲು ಪಾರ್ವತಿ ಮಗನಿಗೆ ಬಾಗಿಲು ಕಾಯಲು ಹೇಳಿದಳು. ಅವಳ ಅನುಮತಿಯಿಲ್ಲದೆ ಯಾರೂ ಒಳಬರಬಾರದು. ಬಾಲಕ ದಂಡ ಹಿಡಿದು ಬಾಗಿಲಲ್ಲಿ ನಿಂತನು."
-- takeScreenshot: kids-ganesha-birth-kn-large-02
+- takeScreenshot: kids-ganesha-birth-kn-large-gb02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "4 / 8"
+- assertVisible: "5 / 11"
 - assertVisible: { id: "story-page-shiva-returns" }
-- assertVisible: "ಶಿವ ಮನೆಗೆ ಮರಳಿದ, ಆದರೆ ಬಾಲಕನಿಗೆ ಅವನ ಪರಿಚಯ ಇರಲಿಲ್ಲ. ತಾಯಿಯ ಮಾತಿನಂತೆ ಅವನು ದಾರಿ ತಡೆದ. ಶಿವನ ಗಣಗಳೂ ಅವನನ್ನು ಸರಿಸಲಾರದೆ ಹೋದರು. ಭಿನ್ನಾಭಿಪ್ರಾಯ ಯುದ್ಧವಾಗಿ ಬೆಳೆಯಿತು."
-- takeScreenshot: kids-ganesha-birth-kn-large-03
+- takeScreenshot: kids-ganesha-birth-kn-large-gb03-art
+- scrollUntilVisible:
+    element: { text: "ಶಿವ ಮನೆಗೆ ಮರಳಿದನು, ಆದರೆ ಬಾಲಕ ಅವನನ್ನು ಗುರುತಿಸಲಿಲ್ಲ. ತಾಯಿಯ ಆಜ್ಞೆಯನ್ನು ನೆನಪಿಸಿಕೊಂಡು ದಾರಿ ತಡೆದನು. ಶಿವ ಒಳಗೆ ಹೋಗಲು ಬಯಸಿದರೂ ಬಾಲಕ ಬಾಗಿಲಿನಿಂದ ಸರಿಯಲಿಲ್ಲ." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಶಿವ ಮನೆಗೆ ಮರಳಿದನು, ಆದರೆ ಬಾಲಕ ಅವನನ್ನು ಗುರುತಿಸಲಿಲ್ಲ. ತಾಯಿಯ ಆಜ್ಞೆಯನ್ನು ನೆನಪಿಸಿಕೊಂಡು ದಾರಿ ತಡೆದನು. ಶಿವ ಒಳಗೆ ಹೋಗಲು ಬಯಸಿದರೂ ಬಾಲಕ ಬಾಗಿಲಿನಿಂದ ಸರಿಯಲಿಲ್ಲ."
+- takeScreenshot: kids-ganesha-birth-kn-large-gb03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "5 / 8"
+- assertVisible: "6 / 11"
+- assertVisible: { id: "story-page-guardian-stands-firm" }
+- takeScreenshot: kids-ganesha-birth-kn-large-gb09-art
+- scrollUntilVisible:
+    element: { text: "ಶಿವ ತನ್ನ ಗಣಗಳನ್ನು ಬಾಲಕನ ಬಳಿಗೆ ಕಳುಹಿಸಿದನು. ಅವರು ಅವನನ್ನು ಸರಿಸಲು ಪ್ರಯತ್ನಿಸಿದರೂ ಅವನು ತಾಯಿಯ ಆಜ್ಞೆಗೆ ಬದ್ಧನಾಗಿದ್ದ. ಜಗಳ ಯುದ್ಧವಾಯಿತು. ಬಾಲಕ ತನ್ನ ಅಪಾರ ಶಕ್ತಿಯಿಂದ ಎದುರಿಸಿದನು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಶಿವ ತನ್ನ ಗಣಗಳನ್ನು ಬಾಲಕನ ಬಳಿಗೆ ಕಳುಹಿಸಿದನು. ಅವರು ಅವನನ್ನು ಸರಿಸಲು ಪ್ರಯತ್ನಿಸಿದರೂ ಅವನು ತಾಯಿಯ ಆಜ್ಞೆಗೆ ಬದ್ಧನಾಗಿದ್ದ. ಜಗಳ ಯುದ್ಧವಾಯಿತು. ಬಾಲಕ ತನ್ನ ಅಪಾರ ಶಕ್ತಿಯಿಂದ ಎದುರಿಸಿದನು."
+- takeScreenshot: kids-ganesha-birth-kn-large-gb09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 11"
 - assertVisible: { id: "story-page-parvatis-sorrow" }
-- assertVisible: "ಯುದ್ಧದಲ್ಲಿ ಶಿವ ಬಾಲಕನ ತಲೆಯನ್ನು ಬೇರ್ಪಡಿಸಿದ; ಬಾಲಕ ಪ್ರಾಣಬಿಟ್ಟ. ಪಾರ್ವತಿ ದುಃಖ ಮತ್ತು ಕೋಪದಿಂದ ತುಂಬಿದಳು. ದೇವತೆಗಳು ಕ್ಷಮೆ ಕೇಳಿದರು. ತನ್ನ ಮಗನಿಗೆ ಮತ್ತೆ ಜೀವಕೊಡಬೇಕೆಂದು ಅವಳು ಕೇಳಿದಳು."
-- takeScreenshot: kids-ganesha-birth-kn-large-04
+- takeScreenshot: kids-ganesha-birth-kn-large-gb04-art
+- scrollUntilVisible:
+    element: { text: "ಯುದ್ಧದಲ್ಲಿ ಶಿವ ಬಾಲಕನ ತಲೆಯನ್ನು ಬೇರ್ಪಡಿಸಿದನು; ಬಾಲಕ ಪ್ರಾಣಬಿಟ್ಟನು. ಈ ಸುದ್ದಿ ಕೇಳಿದ ಪಾರ್ವತಿಯ ಹೃದಯ ದುಃಖದಿಂದ ತುಂಬಿತು. ಪ್ರಿಯ ಮಗನನ್ನು ಕಳೆದುಕೊಂಡು ಅವಳು ತುಂಬ ಕೋಪಗೊಂಡಳು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಯುದ್ಧದಲ್ಲಿ ಶಿವ ಬಾಲಕನ ತಲೆಯನ್ನು ಬೇರ್ಪಡಿಸಿದನು; ಬಾಲಕ ಪ್ರಾಣಬಿಟ್ಟನು. ಈ ಸುದ್ದಿ ಕೇಳಿದ ಪಾರ್ವತಿಯ ಹೃದಯ ದುಃಖದಿಂದ ತುಂಬಿತು. ಪ್ರಿಯ ಮಗನನ್ನು ಕಳೆದುಕೊಂಡು ಅವಳು ತುಂಬ ಕೋಪಗೊಂಡಳು."
+- takeScreenshot: kids-ganesha-birth-kn-large-gb04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "6 / 8"
+- assertVisible: "8 / 11"
+- assertVisible: { id: "story-page-a-plea-for-peace" }
+- takeScreenshot: kids-ganesha-birth-kn-large-gb10-art
+- scrollUntilVisible:
+    element: { text: "ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳು ಪಾರ್ವತಿಯ ಕ್ಷಮೆ ಕೇಳಿದರು. ಮಗನಿಗೆ ಜೀವ ಮತ್ತು ಗೌರವ ದೊರೆತರೆ ಶಾಂತಿ ಮರಳುವುದೆಂದು ಅವಳು ಹೇಳಿದಳು. ಶಿವ ಅವಳ ಬೇಡಿಕೆ ಈಡೇರಿಸಲು ಆಜ್ಞಾಪಿಸಿದ." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳು ಪಾರ್ವತಿಯ ಕ್ಷಮೆ ಕೇಳಿದರು. ಮಗನಿಗೆ ಜೀವ ಮತ್ತು ಗೌರವ ದೊರೆತರೆ ಶಾಂತಿ ಮರಳುವುದೆಂದು ಅವಳು ಹೇಳಿದಳು. ಶಿವ ಅವಳ ಬೇಡಿಕೆ ಈಡೇರಿಸಲು ಆಜ್ಞಾಪಿಸಿದ."
+- takeScreenshot: kids-ganesha-birth-kn-large-gb10
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 11"
 - assertVisible: { id: "story-page-new-life" }
-- assertVisible: "ಶಿವನ ಆಜ್ಞೆಯಂತೆ ಗಣಗಳು ಉತ್ತರಕ್ಕೆ ಹೋಗಿ ಆನೆಯ ತಲೆಯನ್ನು ತಂದು ಬಾಲಕನ ದೇಹಕ್ಕೆ ಜೋಡಿಸಿದರು. ಮಂತ್ರಗಳೂ ಪವಿತ್ರ ನೀರೂ ಅವನಿಗೆ ಮತ್ತೆ ಜೀವಕೊಟ್ಟವು. ಈಗ ಅವನಿಗೆ ಆನೆಯ ಮುಖವಿತ್ತು."
-- takeScreenshot: kids-ganesha-birth-kn-large-05
+- takeScreenshot: kids-ganesha-birth-kn-large-gb05-art
+- scrollUntilVisible:
+    element: { text: "ಶಿವನ ಆಜ್ಞೆಯಂತೆ ಗಣಗಳು ಉತ್ತರಕ್ಕೆ ಹೋಗಿ ಆನೆಯ ತಲೆ ತಂದರು. ಅದನ್ನು ಬಾಲಕನ ದೇಹಕ್ಕೆ ಜೋಡಿಸಿದರು. ಮಂತ್ರ ಮತ್ತು ಪವಿತ್ರ ನೀರಿನಿಂದ ಅವನು ಮತ್ತೆ ಜೀವಂತನಾದ. ಈಗ ಅವನಿಗೆ ಆನೆಯ ಮುಖವಿತ್ತು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಶಿವನ ಆಜ್ಞೆಯಂತೆ ಗಣಗಳು ಉತ್ತರಕ್ಕೆ ಹೋಗಿ ಆನೆಯ ತಲೆ ತಂದರು. ಅದನ್ನು ಬಾಲಕನ ದೇಹಕ್ಕೆ ಜೋಡಿಸಿದರು. ಮಂತ್ರ ಮತ್ತು ಪವಿತ್ರ ನೀರಿನಿಂದ ಅವನು ಮತ್ತೆ ಜೀವಂತನಾದ. ಈಗ ಅವನಿಗೆ ಆನೆಯ ಮುಖವಿತ್ತು."
+- takeScreenshot: kids-ganesha-birth-kn-large-gb05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "7 / 8"
+- assertVisible: "10 / 11"
 - assertVisible: { id: "story-page-mothers-embrace" }
+- takeScreenshot: kids-ganesha-birth-kn-large-gb06-art
+- scrollUntilVisible:
+    element: { text: "ಮಗ ಜೀವಂತವಾಗಿರುವುದನ್ನು ಕಂಡ ಪಾರ್ವತಿ ಸಂತೋಷದಿಂದ ಅವನನ್ನು ಅಪ್ಪಿಕೊಂಡಳು. ಶಿವ ಅವನ ತಲೆಯ ಮೇಲೆ ಕೈಯಿಟ್ಟು ತನ್ನ ಮಗನೆಂದು ಒಪ್ಪಿಕೊಂಡ. ಕೈಲಾಸದಲ್ಲಿ ಮತ್ತೆ ಶಾಂತಿ ಮತ್ತು ಸಂತೋಷ ನೆಲೆಸಿತು." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಮಗ ಜೀವಂತವಾಗಿರುವುದನ್ನು ಕಂಡ ಪಾರ್ವತಿ ಸಂತೋಷದಿಂದ ಅವನನ್ನು ಅಪ್ಪಿಕೊಂಡಳು. ಶಿವ ಅವನ ತಲೆಯ ಮೇಲೆ ಕೈಯಿಟ್ಟು ತನ್ನ ಮಗನೆಂದು ಒಪ್ಪಿಕೊಂಡ. ಕೈಲಾಸದಲ್ಲಿ ಮತ್ತೆ ಶಾಂತಿ ಮತ್ತು ಸಂತೋಷ ನೆಲೆಸಿತು."
-- takeScreenshot: kids-ganesha-birth-kn-large-06
+- takeScreenshot: kids-ganesha-birth-kn-large-gb06
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "8 / 8"
+- assertVisible: "11 / 11"
 - assertVisible: { id: "story-page-ganapati-blessing" }
-- takeScreenshot: kids-ganesha-birth-kn-large-07
+- takeScreenshot: kids-ganesha-birth-kn-large-gb07
 - scrollUntilVisible:
     element: { text: "ಶಿವಪುರಾಣದ ರುದ್ರಸಂಹಿತೆ, ಕುಮಾರಖಂಡ 13–18ರ ಶ್ವೇತಕಲ್ಪ ಕಥೆಯ ಸರಳ ರೂಪಾಂತರ. ಬೇರೆ ಜನ್ಮಕಥೆಗಳೂ ಇವೆ. ಹಿಂಸೆಯ ವಿವರಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತಗೊಳಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-ganesha-birth-kn-source
 - tapOn: "Back"
+- assertVisible: { id: "kids-story-ganesha-birth" }
 - tapOn: "Back"
 - tapOn: { id: "kids-story-deity-hanuman" }
 - scrollUntilVisible:
     element: { id: "kids-story-hanuman-sun" }
     centerElement: true
 - tapOn: { id: "kids-story-hanuman-sun" }
-- assertVisible: { id: "lang-toggle-kn" }
-- assertVisible: "1 / 7"
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 10"
 - assertVisible: { id: "story-page-meet-little-hanuman" }
+- takeScreenshot: kids-hanuman-sun-kn-large-hs00-art
+- scrollUntilVisible:
+    element: { text: "ಸುಮೇರು ಪರ್ವತದ ಬಳಿ ಅಂಜನೆ ಪುಟ್ಟ ಮಗ ಹನುಮಂತನೊಂದಿಗೆ ವಾಸಿಸುತ್ತಿದ್ದಳು. ಅವನು ವಾಯುದೇವನ ಮಗನೂ ಹೌದು. ಇದು ಅವನ ಚಿಕ್ಕಂದಿನ ಕಥೆ." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಸುಮೇರು ಪರ್ವತದ ಬಳಿ ಅಂಜನೆ ಪುಟ್ಟ ಮಗ ಹನುಮಂತನೊಂದಿಗೆ ವಾಸಿಸುತ್ತಿದ್ದಳು. ಅವನು ವಾಯುದೇವನ ಮಗನೂ ಹೌದು. ಇದು ಅವನ ಚಿಕ್ಕಂದಿನ ಕಥೆ."
-- takeScreenshot: kids-hanuman-sun-kn-large-00
+- takeScreenshot: kids-hanuman-sun-kn-large-hs00
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "2 / 7"
+- assertVisible: "2 / 10"
+- assertVisible: { id: "story-page-anjana-gathers-fruit" }
+- takeScreenshot: kids-hanuman-sun-kn-large-hs07-art
+- scrollUntilVisible:
+    element: { text: "ಒಂದು ದಿನ ಅಂಜನೆ ಹಣ್ಣು ತರಲು ಕಾಡಿಗೆ ಹೋದಳು. ತಾಯಿ ದೂರ ಹೋದಾಗ ಪುಟ್ಟ ಹನುಮಂತ ಹಸಿವಿನಿಂದ ಚಡಪಡಿಸಿದನು. ಅವನಿಗೆ ತಿನ್ನಲು ಏನಾದರೂ ಬೇಕಿತ್ತು. ಆಗ ಅವನು ಆಕಾಶದತ್ತ ನೋಡಿದನು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಒಂದು ದಿನ ಅಂಜನೆ ಹಣ್ಣು ತರಲು ಕಾಡಿಗೆ ಹೋದಳು. ತಾಯಿ ದೂರ ಹೋದಾಗ ಪುಟ್ಟ ಹನುಮಂತ ಹಸಿವಿನಿಂದ ಚಡಪಡಿಸಿದನು. ಅವನಿಗೆ ತಿನ್ನಲು ಏನಾದರೂ ಬೇಕಿತ್ತು. ಆಗ ಅವನು ಆಕಾಶದತ್ತ ನೋಡಿದನು."
+- takeScreenshot: kids-hanuman-sun-kn-large-hs07
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 10"
 - assertVisible: { id: "story-page-hungry-at-dawn" }
-- assertVisible: "ಅಂಜನೆ ಹಣ್ಣು ತರಲು ಕಾಡಿಗೆ ಹೋಗಿದ್ದಳು. ಪುಟ್ಟ ಹನುಮಂತನಿಗೆ ಹಸಿವಾಯಿತು. ಕೆಂಪಾಗಿ ಉದಯಿಸುತ್ತಿದ್ದ ಸೂರ್ಯನನ್ನು ಕಂಡು ಅದು ದೊಡ್ಡ ರುಚಿಯಾದ ಹಣ್ಣೆಂದು ಭಾವಿಸಿದ."
-- takeScreenshot: kids-hanuman-sun-kn-large-01
+- takeScreenshot: kids-hanuman-sun-kn-large-hs01-art
+- scrollUntilVisible:
+    element: { text: "ಬೆಳಗಿನ ಕೆಂಪು ಸೂರ್ಯ ಉದಯಿಸುತ್ತಿದ್ದ. ಹನುಮಂತನಿಗೆ ಅದು ದೊಡ್ಡ ಮಾಗಿದ ಹಣ್ಣಿನಂತೆ ಕಂಡಿತು. ಅವನು ಇನ್ನೂ ಚಿಕ್ಕವನಾಗಿದ್ದುದರಿಂದ ವ್ಯತ್ಯಾಸ ತಿಳಿಯಲಿಲ್ಲ. ಅದನ್ನು ಪಡೆಯಲು ಆಕಾಶಕ್ಕೆ ಹಾರಿದನು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಬೆಳಗಿನ ಕೆಂಪು ಸೂರ್ಯ ಉದಯಿಸುತ್ತಿದ್ದ. ಹನುಮಂತನಿಗೆ ಅದು ದೊಡ್ಡ ಮಾಗಿದ ಹಣ್ಣಿನಂತೆ ಕಂಡಿತು. ಅವನು ಇನ್ನೂ ಚಿಕ್ಕವನಾಗಿದ್ದುದರಿಂದ ವ್ಯತ್ಯಾಸ ತಿಳಿಯಲಿಲ್ಲ. ಅದನ್ನು ಪಡೆಯಲು ಆಕಾಶಕ್ಕೆ ಹಾರಿದನು."
+- takeScreenshot: kids-hanuman-sun-kn-large-hs01
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "3 / 7"
+- assertVisible: "4 / 10"
 - assertVisible: { id: "story-page-towards-the-sun" }
+- takeScreenshot: kids-hanuman-sun-kn-large-hs02-art
+- scrollUntilVisible:
+    element: { text: "ಹನುಮಂತ ಆಕಾಶಕ್ಕೆ ಜಿಗಿದ. ಅವನ ವೇಗ ದೇವತೆಗಳಿಗೆ ಅಚ್ಚರಿ ತಂದಿತು. ವಾಯುದೇವ ತಂಪಾದ ಗಾಳಿಯಿಂದ ರಕ್ಷಿಸುತ್ತಾ ಹಿಂಬಾಲಿಸಿದ. ಸೂರ್ಯನೂ ಮುಗ್ಧ ಬಾಲಕನನ್ನು ಸುಡದಂತೆ ತನ್ನ ಶಾಖವನ್ನು ತಡೆದ." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಹನುಮಂತ ಆಕಾಶಕ್ಕೆ ಜಿಗಿದ. ಅವನ ವೇಗ ದೇವತೆಗಳಿಗೆ ಅಚ್ಚರಿ ತಂದಿತು. ವಾಯುದೇವ ತಂಪಾದ ಗಾಳಿಯಿಂದ ರಕ್ಷಿಸುತ್ತಾ ಹಿಂಬಾಲಿಸಿದ. ಸೂರ್ಯನೂ ಮುಗ್ಧ ಬಾಲಕನನ್ನು ಸುಡದಂತೆ ತನ್ನ ಶಾಖವನ್ನು ತಡೆದ."
-- takeScreenshot: kids-hanuman-sun-kn-large-02
+- takeScreenshot: kids-hanuman-sun-kn-large-hs02
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "4 / 7"
+- assertVisible: "5 / 10"
+- assertVisible: { id: "story-page-rahu-seeks-help" }
+- takeScreenshot: kids-hanuman-sun-kn-large-hs08-art
+- scrollUntilVisible:
+    element: { text: "ಆ ದಿನ ರಾಹು ಸೂರ್ಯನಿಗೆ ಗ್ರಹಣ ಹಿಡಿಸಲು ಬಂದಿದ್ದನು. ಹನುಮಂತನನ್ನು ಕಂಡು ಹೆದರಿ ದೇವತೆಗಳ ರಾಜ ಇಂದ್ರನ ಸಹಾಯ ಕೇಳಿದನು. ಇಂದ್ರ ಅವನ ಮಾತು ಕೇಳಿ ತನ್ನ ಆನೆ ಐರಾವತದ ಮೇಲೆ ಹೊರಟನು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಆ ದಿನ ರಾಹು ಸೂರ್ಯನಿಗೆ ಗ್ರಹಣ ಹಿಡಿಸಲು ಬಂದಿದ್ದನು. ಹನುಮಂತನನ್ನು ಕಂಡು ಹೆದರಿ ದೇವತೆಗಳ ರಾಜ ಇಂದ್ರನ ಸಹಾಯ ಕೇಳಿದನು. ಇಂದ್ರ ಅವನ ಮಾತು ಕೇಳಿ ತನ್ನ ಆನೆ ಐರಾವತದ ಮೇಲೆ ಹೊರಟನು."
+- takeScreenshot: kids-hanuman-sun-kn-large-hs08
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 10"
 - assertVisible: { id: "story-page-indra-arrives" }
-- assertVisible: "ರಾಹು ಸೂರ್ಯನ ಬಳಿಗೆ ಬಂದು ಹನುಮಂತನನ್ನು ಕಂಡು ಹೆದರಿ ಇಂದ್ರನ ಸಹಾಯ ಕೇಳಿದ. ಇಂದ್ರ ಐರಾವತ ಆನೆಯ ಮೇಲೆ ಬಂದ. ಹನುಮಂತ ಆನೆಯತ್ತಲೂ ಧಾವಿಸಿದ. ಇಂದ್ರನ ವಜ್ರ ತಾಗಿ ಅವನು ಗಾಯಗೊಂಡು ಬಿದ್ದ."
-- takeScreenshot: kids-hanuman-sun-kn-large-03
+- takeScreenshot: kids-hanuman-sun-kn-large-hs03-art
+- scrollUntilVisible:
+    element: { text: "ಹನುಮಂತ ರಾಹುವನ್ನು ಬೆನ್ನಟ್ಟಿದನು; ನಂತರ ಐರಾವತವನ್ನೂ ಹಣ್ಣೆಂದು ತಿಳಿದು ಅದರತ್ತ ಧಾವಿಸಿದನು. ಅವನನ್ನು ತಡೆಯಲು ಇಂದ್ರ ವಜ್ರವನ್ನು ಬಳಸಿದನು. ಗಾಯಗೊಂಡ ಹನುಮಂತ ಪರ್ವತದ ಮೇಲೆ ಬಿದ್ದನು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಹನುಮಂತ ರಾಹುವನ್ನು ಬೆನ್ನಟ್ಟಿದನು; ನಂತರ ಐರಾವತವನ್ನೂ ಹಣ್ಣೆಂದು ತಿಳಿದು ಅದರತ್ತ ಧಾವಿಸಿದನು. ಅವನನ್ನು ತಡೆಯಲು ಇಂದ್ರ ವಜ್ರವನ್ನು ಬಳಸಿದನು. ಗಾಯಗೊಂಡ ಹನುಮಂತ ಪರ್ವತದ ಮೇಲೆ ಬಿದ್ದನು."
+- takeScreenshot: kids-hanuman-sun-kn-large-hs03
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "5 / 7"
+- assertVisible: "7 / 10"
 - assertVisible: { id: "story-page-vayus-sorrow" }
-- assertVisible: "ವಾಯುದೇವ ಗಾಯಗೊಂಡ ಮಗನನ್ನು ಗುಹೆಗೆ ಕರೆದೊಯ್ದ. ದುಃಖ ಮತ್ತು ಕೋಪದಲ್ಲಿ ಗಾಳಿಯ ಹರಿವನ್ನು ನಿಲ್ಲಿಸಿದ. ಜೀವಿಗಳಿಗೆ ಉಸಿರಾಡಲು ಕಷ್ಟವಾಯಿತು. ಎಲ್ಲರೂ ಬ್ರಹ್ಮನ ಸಹಾಯ ಕೇಳಿದರು."
-- takeScreenshot: kids-hanuman-sun-kn-large-04
+- takeScreenshot: kids-hanuman-sun-kn-large-hs04-art
+- scrollUntilVisible:
+    element: { text: "ಗಾಯಗೊಂಡ ಮಗನನ್ನು ಕಂಡು ವಾಯುದೇವ ದುಃಖದಿಂದ ಕೋಪಗೊಂಡನು. ಹನುಮಂತನನ್ನು ಮಡಿಲಲ್ಲಿ ಹಿಡಿದು ಗುಹೆಗೆ ಹೋದನು; ಜಗತ್ತಿನಲ್ಲಿ ಗಾಳಿಯ ಹರಿವನ್ನು ನಿಲ್ಲಿಸಿದನು. ಜೀವಿಗಳು ಉಸಿರಾಡಲು ಕಷ್ಟಪಡತೊಡಗಿದವು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಗಾಯಗೊಂಡ ಮಗನನ್ನು ಕಂಡು ವಾಯುದೇವ ದುಃಖದಿಂದ ಕೋಪಗೊಂಡನು. ಹನುಮಂತನನ್ನು ಮಡಿಲಲ್ಲಿ ಹಿಡಿದು ಗುಹೆಗೆ ಹೋದನು; ಜಗತ್ತಿನಲ್ಲಿ ಗಾಳಿಯ ಹರಿವನ್ನು ನಿಲ್ಲಿಸಿದನು. ಜೀವಿಗಳು ಉಸಿರಾಡಲು ಕಷ್ಟಪಡತೊಡಗಿದವು."
+- takeScreenshot: kids-hanuman-sun-kn-large-hs04
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "6 / 7"
+- assertVisible: "8 / 10"
+- assertVisible: { id: "story-page-the-world-needs-air" }
+- takeScreenshot: kids-hanuman-sun-kn-large-hs09-art
+- scrollUntilVisible:
+    element: { text: "ಇಡೀ ಜಗತ್ತು ಸಂಕಟದಲ್ಲಿತ್ತು. ದೇವತೆಗಳು ಮತ್ತು ಇತರ ಜೀವಿಗಳು ಸೃಷ್ಟಿಕರ್ತ ಬ್ರಹ್ಮನ ಬಳಿ ಸಹಾಯ ಕೇಳಿದರು. ಬ್ರಹ್ಮ ವಾಯುದೇವನ ದುಃಖವನ್ನು ವಿವರಿಸಿದನು. ನಂತರ ಎಲ್ಲರೂ ಅವನೊಂದಿಗೆ ವಾಯು ಮತ್ತು ಹನುಮಂತನ ಬಳಿಗೆ ಹೋದರು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಇಡೀ ಜಗತ್ತು ಸಂಕಟದಲ್ಲಿತ್ತು. ದೇವತೆಗಳು ಮತ್ತು ಇತರ ಜೀವಿಗಳು ಸೃಷ್ಟಿಕರ್ತ ಬ್ರಹ್ಮನ ಬಳಿ ಸಹಾಯ ಕೇಳಿದರು. ಬ್ರಹ್ಮ ವಾಯುದೇವನ ದುಃಖವನ್ನು ವಿವರಿಸಿದನು. ನಂತರ ಎಲ್ಲರೂ ಅವನೊಂದಿಗೆ ವಾಯು ಮತ್ತು ಹನುಮಂತನ ಬಳಿಗೆ ಹೋದರು."
+- takeScreenshot: kids-hanuman-sun-kn-large-hs09
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 10"
 - assertVisible: { id: "story-page-brahma-restores" }
+- takeScreenshot: kids-hanuman-sun-kn-large-hs05-art
+- scrollUntilVisible:
+    element: { text: "ಬ್ರಹ್ಮ ದೇವತೆಗಳೊಂದಿಗೆ ಗುಹೆಗೆ ಬಂದು ಬಾಲಕನನ್ನು ಪ್ರೀತಿಯಿಂದ ಮುಟ್ಟಿದ. ಹನುಮಂತ ಮತ್ತೆ ಚೇತರಿಸಿಕೊಂಡ. ವಾಯುದೇವ ಸಂತೋಷಗೊಂಡು ಗಾಳಿ ಮತ್ತೆ ಹರಿಯಿತು. ಜೀವಿಗಳು ನೆಮ್ಮದಿಯಿಂದ ಉಸಿರಾಡಿದವು." }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "ಬ್ರಹ್ಮ ದೇವತೆಗಳೊಂದಿಗೆ ಗುಹೆಗೆ ಬಂದು ಬಾಲಕನನ್ನು ಪ್ರೀತಿಯಿಂದ ಮುಟ್ಟಿದ. ಹನುಮಂತ ಮತ್ತೆ ಚೇತರಿಸಿಕೊಂಡ. ವಾಯುದೇವ ಸಂತೋಷಗೊಂಡು ಗಾಳಿ ಮತ್ತೆ ಹರಿಯಿತು. ಜೀವಿಗಳು ನೆಮ್ಮದಿಯಿಂದ ಉಸಿರಾಡಿದವು."
-- takeScreenshot: kids-hanuman-sun-kn-large-05
+- takeScreenshot: kids-hanuman-sun-kn-large-hs05
 - swipe:
     start: 85%, 42%
     end: 15%, 42%
     duration: 600
-- assertVisible: "7 / 7"
+- assertVisible: "10 / 10"
 - assertVisible: { id: "story-page-gods-blessings" }
-- takeScreenshot: kids-hanuman-sun-kn-large-06
+- takeScreenshot: kids-hanuman-sun-kn-large-hs06
 - scrollUntilVisible:
     element: { text: "ವಾಲ್ಮೀಕಿ ರಾಮಾಯಣದ ಉತ್ತರಕಾಂಡ 35–36ರ ಸರಳ ರೂಪಾಂತರ. ಇದು ಸೂರ್ಯನ ಕಡೆಗೆ ಹಾರಿದ ಕಥೆ; ಸೂರ್ಯನನ್ನು ನುಂಗಿದ ಜನಪದ ಕಥೆ ಬೇರೆ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-hanuman-sun-kn-source
 - tapOn: "Back"
+- assertVisible: { id: "kids-story-hanuman-sun" }
 - tapOn: "Back"
 - tapOn: "Back"

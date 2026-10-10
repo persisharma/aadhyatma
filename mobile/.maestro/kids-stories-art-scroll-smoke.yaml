@@ -1,0 +1,197 @@
+# Full art and reachable captions in Kannada/English Large, with horizontal paging.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Large"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "Kannada"
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    centerElement: true
+- tapOn: { id: "home-kids-stories-card" }
+- tapOn: { id: "kids-story-deity-krishna" }
+- scrollUntilVisible:
+    element: { id: "kids-story-putana" }
+    centerElement: true
+- tapOn: { id: "kids-story-putana" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 10"
+- assertVisible: { id: "story-page-little-krishna-in-gokul" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 10"
+- assertVisible: { id: "story-page-kansas-plan" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 10"
+- assertVisible: { id: "story-page-beautiful-disguise" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 10"
+- assertVisible: { id: "story-page-hidden-danger" }
+- takeScreenshot: scroll-scene-art-124
+- scrollUntilVisible:
+    element: { text: "ಪೂತನೆ ಕೃಷ್ಣನನ್ನು ಎತ್ತಿಕೊಂಡಳು. ನಗುವಿನ ಹಿಂದೆ ಕೆಟ್ಟ ಉದ್ದೇಶವಿತ್ತು. ಕೃಷ್ಣ ಸಾಮಾನ್ಯ ಶಿಶುವಂತೆ ಕಂಡರೂ, ಅವನಿಗೆ ಅವಳ ಉದ್ದೇಶ ತಿಳಿದಿತ್ತು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಪೂತನೆ ಕೃಷ್ಣನನ್ನು ಎತ್ತಿಕೊಂಡಳು. ನಗುವಿನ ಹಿಂದೆ ಕೆಟ್ಟ ಉದ್ದೇಶವಿತ್ತು. ಕೃಷ್ಣ ಸಾಮಾನ್ಯ ಶಿಶುವಂತೆ ಕಂಡರೂ, ಅವನಿಗೆ ಅವಳ ಉದ್ದೇಶ ತಿಳಿದಿತ್ತು."
+- takeScreenshot: kids-putana-kn-large-pt07
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: { id: "kids-story-deity-ganesha" }
+- scrollUntilVisible:
+    element: { id: "kids-story-ganesha-birth" }
+    centerElement: true
+- tapOn: { id: "kids-story-ganesha-birth" }
+- tapOn: { id: "lang-toggle-kn" }
+- assertVisible: "1 / 11"
+- assertVisible: { id: "story-page-a-wish-on-kailasa" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 11"
+- assertVisible: { id: "story-page-parvatis-decision" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 11"
+- assertVisible: { id: "story-page-parvatis-son" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 11"
+- assertVisible: { id: "story-page-guard-the-door" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 11"
+- assertVisible: { id: "story-page-shiva-returns" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 11"
+- assertVisible: { id: "story-page-guardian-stands-firm" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 11"
+- assertVisible: { id: "story-page-parvatis-sorrow" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 11"
+- assertVisible: { id: "story-page-a-plea-for-peace" }
+- takeScreenshot: scroll-scene-art-145
+- scrollUntilVisible:
+    element: { text: "ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳು ಪಾರ್ವತಿಯ ಕ್ಷಮೆ ಕೇಳಿದರು. ಮಗನಿಗೆ ಜೀವ ಮತ್ತು ಗೌರವ ದೊರೆತರೆ ಶಾಂತಿ ಮರಳುವುದೆಂದು ಅವಳು ಹೇಳಿದಳು. ಶಿವ ಅವಳ ಬೇಡಿಕೆ ಈಡೇರಿಸಲು ಆಜ್ಞಾಪಿಸಿದ." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳು ಪಾರ್ವತಿಯ ಕ್ಷಮೆ ಕೇಳಿದರು. ಮಗನಿಗೆ ಜೀವ ಮತ್ತು ಗೌರವ ದೊರೆತರೆ ಶಾಂತಿ ಮರಳುವುದೆಂದು ಅವಳು ಹೇಳಿದಳು. ಶಿವ ಅವಳ ಬೇಡಿಕೆ ಈಡೇರಿಸಲು ಆಜ್ಞಾಪಿಸಿದ."
+- takeScreenshot: kids-ganesha-birth-kn-large-gb10
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 11"
+- assertVisible: { id: "story-page-new-life" }
+- takeScreenshot: scroll-scene-art-160
+- scrollUntilVisible:
+    element: { text: "ಶಿವನ ಆಜ್ಞೆಯಂತೆ ಗಣಗಳು ಉತ್ತರಕ್ಕೆ ಹೋಗಿ ಆನೆಯ ತಲೆ ತಂದರು. ಅದನ್ನು ಬಾಲಕನ ದೇಹಕ್ಕೆ ಜೋಡಿಸಿದರು. ಮಂತ್ರ ಮತ್ತು ಪವಿತ್ರ ನೀರಿನಿಂದ ಅವನು ಮತ್ತೆ ಜೀವಂತನಾದ. ಈಗ ಅವನಿಗೆ ಆನೆಯ ಮುಖವಿತ್ತು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಶಿವನ ಆಜ್ಞೆಯಂತೆ ಗಣಗಳು ಉತ್ತರಕ್ಕೆ ಹೋಗಿ ಆನೆಯ ತಲೆ ತಂದರು. ಅದನ್ನು ಬಾಲಕನ ದೇಹಕ್ಕೆ ಜೋಡಿಸಿದರು. ಮಂತ್ರ ಮತ್ತು ಪವಿತ್ರ ನೀರಿನಿಂದ ಅವನು ಮತ್ತೆ ಜೀವಂತನಾದ. ಈಗ ಅವನಿಗೆ ಆನೆಯ ಮುಖವಿತ್ತು."
+- takeScreenshot: kids-ganesha-birth-kn-large-gb05
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    centerElement: true
+- tapOn: { id: "home-kids-stories-card" }
+- tapOn: { id: "kids-story-deity-hanuman" }
+- tapOn: { id: "kids-story-hanuman-sun" }
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 10"
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 10"
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 10"
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 10"
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 10"
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 10"
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 10"
+- tapOn: { id: "lang-toggle-kn" }
+- scrollUntilVisible:
+    element: { text: "ಜಗತ್ತಿಗೆ ಗಾಳಿ ಬೇಕು" }
+    direction: UP
+    centerElement: true
+- takeScreenshot: kids-hanuman-sun-kn-large-hs09-art
+- scrollUntilVisible:
+    element: { text: "ಇಡೀ ಜಗತ್ತು ಸಂಕಟದಲ್ಲಿತ್ತು. ದೇವತೆಗಳು ಮತ್ತು ಇತರ ಜೀವಿಗಳು ಸೃಷ್ಟಿಕರ್ತ ಬ್ರಹ್ಮನ ಬಳಿ ಸಹಾಯ ಕೇಳಿದರು. ಬ್ರಹ್ಮ ವಾಯುದೇವನ ದುಃಖವನ್ನು ವಿವರಿಸಿದನು. ನಂತರ ಎಲ್ಲರೂ ಅವನೊಂದಿಗೆ ವಾಯು ಮತ್ತು ಹನುಮಂತನ ಬಳಿಗೆ ಹೋದರು." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "ಇಡೀ ಜಗತ್ತು ಸಂಕಟದಲ್ಲಿತ್ತು. ದೇವತೆಗಳು ಮತ್ತು ಇತರ ಜೀವಿಗಳು ಸೃಷ್ಟಿಕರ್ತ ಬ್ರಹ್ಮನ ಬಳಿ ಸಹಾಯ ಕೇಳಿದರು. ಬ್ರಹ್ಮ ವಾಯುದೇವನ ದುಃಖವನ್ನು ವಿವರಿಸಿದನು. ನಂತರ ಎಲ್ಲರೂ ಅವನೊಂದಿಗೆ ವಾಯು ಮತ್ತು ಹನುಮಂತನ ಬಳಿಗೆ ಹೋದರು."
+- takeScreenshot: kids-hanuman-sun-kn-large-hs09-caption
+- tapOn: { id: "lang-toggle-en" }
+- scrollUntilVisible:
+    element: { text: "The World Needs Air" }
+    direction: UP
+    centerElement: true
+- takeScreenshot: kids-hanuman-sun-en-large-hs09-art
+- scrollUntilVisible:
+    element: { text: "The whole world was in distress. The gods and other beings turned to Brahma, the creator, for help. Brahma explained Vayu’s sorrow. Then they went with him to find Vayu and Hanuman." }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "The whole world was in distress. The gods and other beings turned to Brahma, the creator, for help. Brahma explained Vayu’s sorrow. Then they went with him to find Vayu and Hanuman."
+- takeScreenshot: kids-hanuman-sun-en-large-hs09-caption
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Back"

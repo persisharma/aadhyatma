@@ -343,7 +343,67 @@ Added Putana and Kaliya Nag to Krishna, Ganesha Birth to Ganesha, and Hanuman an
 
 Updated `subsystems/kids-stories.md` from canonical story records and native evidence: one distinct sourced introduction per story, hi/en/gu/kn narration, Putana motivation context, 30 total scenes, synchronized assets/prototypes, and scoped Standard/Large simulator validation. Follow-up remains local on `codex/kids-story-openings`; the original delivery PR #422 has merged. Evidence: `docs/content-parity/kids-story-openings/README.md`.
 
+## [2026-10-07] ingest | Meta app-install measurement for Android and iOS
+
+Added [[integrations/meta-app-events]] for the local Expo Core SDK bridge, verified app/platform/owner mapping, build flag and native-only client configuration, ATT lifecycle handling, and explicit privacy guards. iOS simulator build/startup and focused source checks pass; no event receipt or paid attribution has been established. Android toolchain is unavailable, simulator SDK transport has TLS -1200, and production privacy disclosures/new store binaries are still required. Runbook and unpublished disclosure draft are in docs; no campaign/store/OTA publication or Git push occurred.
+
 ## [2026-10-07] ingest | Graha cards signed off: `GRAHA_READING_REVIEW` approved 7 Oct 2026 (approval relayed by the product owner; review page holds partial marks, no on-page sign-off), so store builds show the section. New `reviewedSheetSha256` + `reviewedSheetContent` pin the reviewed content — a later content edit fails the engine test until reset to draft or re-signed. RULEBOOK §14.7.7, design.md §68/§78, convention updated. Updated [[panchang]].
+
+## [2026-10-08] ingest | Complete story pacing and preserve illustrated content
+
+Expanded Putana, Ganesha Birth and Hanuman to 10/11/10 scenes with nine sourced illustrations and four-language causal transitions. Added the discoverable AGENTS.md instruction and RULEBOOK §29’s mandatory full-arc review, reusable authoring checklist and page-by-page review. User’s crop correction changes every native scene to vertical overflow with art independent of caption length; only the reviewed empty bottom band of hs09 is trimmed. Full 2,971 tests, final Release build, all 39 current English Standard story pages and unchanged Krishna’s 16-page paging flow pass; scoped Large simulator results and remaining editorial/device checks are recorded in docs/content-parity/kids-story-pacing/. Updated [[kids-stories]].
+
+## [2026-10-08] ingest | Reviewed image bounds and remove duplicate reader bottom inset
+
+All 56 story illustrations now have reviewed 78–88% retained-height frames pinned to image SHA-256, removing blank parchment without scaling or caption-driven crops. The tab-hosted reader leaves the bottom safe-area inset to the visible tab bar and tightens scene/caption spacing; future artwork replacement requires a new framing review. Full 2,973 tests, changed-source lint and final iOS Release build pass. Full final Standard/Large native walkthrough and user visual review remain pending; this follow-up is local, not pushed to PR #429. Updated [[kids-stories]] and the authoring guidance.
+
+## [2026-10-08] ingest | User approves final story spacing for PR update
+
+The user manually inspected the final simulator build, confirmed the appearance and requested commit/PR delivery. Final automated all-page Standard/Large framing coverage remains incomplete and is distinguished from prior native runs in the validation report. Local gates remain 2,973 passing tests and a successful Release build.
+
+## [2026-10-09] ingest | Story image creation and layout guidance for future sections
+
+Added RULEBOOK §29.1, the design.md §76 contract and a copyable story-image-layout request. Removed the contradictory blank-lower-fifth instruction from the active generation template; marked older exact Krishna prompts as historical. All illustrated story sections must review their own geometry/bounds/hash, diagnose inset/padding/letterboxing separately and preserve complete art/readable text with legitimate overflow. Existing 4:5 assumptions and legacy frame percentages are explicit; no runtime or image assets change in this documentation follow-up. Updated [[kids-stories]].
+
+## [2026-10-09] ingest | Maa Durga and nine Navaratri forms with R2 artwork
+
+Added fourteen sourced Durga readings (ten stories and four introductions), nine ordered Navadurga day links, 87 distinct four-language storybook illustrations and reviewed covers. Home no longer lists Krishna/Ganesha/Hanuman; existing stories remain. The 19-book registry reuses the scrollable reader and hashed R2 cache, preserves all 57 legacy asset entries and pins 143 scene frames. Publication variants, all-page causal review, final prompts and asset hashes are in `docs/content-parity/kids-stories-durga/`. Full 3,010 tests, typecheck, changed-source lint and current-worktree iOS Debug build pass. Complete native rendering review covers all 696 page/language/size visits and 112 endings at Standard/Large; focused Maestro language/paging and library/shelf/reader/back flows pass. The simulator used a seeded local cache, so remote R2/CDN publication is unverified. The exact 87-object upload bundle is prepared because credentials are unavailable; independent Gujarati/Kannada editorial approval, physical iOS/Android checks and product/art sign-off remain release checks. Updated [[kids-stories]] and index; changes remain local, with no commit/PR/OTA/deploy.
+
+## [2026-10-09] ingest | Durga painted-boundary layout and native multi-card sharing after main pull
+
+Fast-forwarded main to 85a957316402f4b3f3c704e5382598d62d079ce0 and restored the authorized local Durga integration. Individually re-reviewed 87 painted boundaries and 14 reused covers; frame/hash records remove only empty lower space. Shared shelves now derive cover height from width/frame, use one bottom padding and leave the bottom safe area to tabs. Browser readers/catalogs use the same canonical frames.
+
+Kids stories share through the existing ShareProvider: complete scene art, full four-language narration/dialogue, takeaway/source, aligned numbered parts of at most ten cards and a current-scene scope. Capture waits for cached R2 bytes and native image decode; failures abort without a placeholder/partial album. Scene cards size art against the measured title. Native inspection caught UIKit multiplying output by screen density; central capture now supplies points divided by PixelRatio on iOS and keeps Android pixel options.
+
+Final npm test: 3,092 passing (2,246 Jest / 234 suites, 37 widgets, 590 engine, 170 data, 49 ask), typecheck and changed-production lint pass. Current isolated iOS evidence covers 696 reader visits / 112 endings / 1,504 screenshots, 112 covers, and 752 real 1080×1350 exports in 100 parts across all four languages. Every captured narrative/source reconstructs completely; no native share text/art overflow. Focused Maestro sharing, OS ten-image handoff, locale/paging and catalog-path checks passed. Browser 348 language/page visits and all 87 frame geometries / 56 covers passed. Exact proofs, image review, remaining scroll and post-change screenshots are in docs/content-parity/kids-stories-durga/.
+
+Standard reader captions still scroll 5–196dp on this phone; Large and ending/source panels need more. No art/type was clipped or shrunk to force fit. R2 credentials remain unavailable: the exact 87-object upload ZIP is prepared, with no upload or fresh-cache CDN proof. Physical iOS/Android, Instagram import, independent Gujarati/Kannada editorial approval and the complete end-to-end gesture flow remain pending. Existing compatible Debug binary was reused with current Metro; no new release build, commit, PR or OTA. Earlier native-evidence.json is historical; layout-native-evidence.json and sharing-native-evidence.json pin the current results.
+
+## [2026-10-09] lint | Scoped kids-stories and share wiki sources
+
+All 57 source paths on the two updated subsystem pages exist; both pages retain current index entries. Source code is canonical. Release/editorial/CDN gaps remain explicit above and in the validation report.
+
+## [2026-10-09] ingest | Align share controls on the right
+
+Kids Stories now places share at the right of its language row. The two prose katha readers move share into the header right slot, preserving read-aloud placement. The existing nine-form shelf remains unchanged; no duplicate collection was added.
+
+## [2026-10-09] ingest | Home settings entry and Vrat bottom tab
+
+Updated overview and design contracts for Home’s settings gear, hidden compatible More routes, Vrat in the fourth slot, Bhajan in the fifth slot, and tour/VoiceOver/Maestro navigation. Bhajan retains the combined audio library and highlights its selected tab.
+
+Validation: 232 Jest suites / 2,152 tests passed; TypeScript and navigation/launch-graph checks passed. Changed-source lint has zero errors and existing warnings. Final JavaScript bundle passed the focused iOS simulator navigation smoke in an existing native shell: Home gear → Settings → Home, Vrat catalog → My Vrat → Back, Bhajan with its fifth tab highlighted → Home. This is simulator verification, not a new native build or a physical-device check.
+
+## [2026-10-09] ingest | Durga CDN publication and production bundle asset checks
+
+After the user uploaded the prepared package, all 144 manifest URLs returned HTTP 200, matched expected hashes and fully decoded as WebP. All 144 images, including the Home story-library icon, now use the CDN/cache; iOS/Android production exports contain zero story artwork. Added import and renamed-image regression tests, a reusable full-manifest CDN/export verifier, RULEBOOK §29.2 and CI production-export/CDN checks with retained evidence. Latest main navigation changes are retained, including Home settings entry. Fresh simulator CDN download encountered a TLS trust error on the corporate-intercepted network; native first-download/offline and physical-device checks remain pending. Host CDN checks do not establish native download success.
+
+## [2026-10-10] ingest | Kids-story share: one card per scene (art + caption)
+
+The illustrated share had been alternating an image-only scene card with text-only prose cards, so WhatsApp recipients received a story page as two pictures. `paginateProse` gained `firstPageReservedDp`; `kidsStoryShareable` reserves `illustrationMinHeight` (160 dp) + `illustrationGap` (12 dp) on each scene's first page and sets `illustration.heightDp` to the body the title and caption leave. `ProseShareCard` renders art → title → caption inside that fixed box instead of measuring the title at render. Every published caption fits its scene card in all four languages (art 210–294 dp); a longer caption would continue on a plain card. Share-related Jest suites and TypeScript pass; design.md §76 and the share/kids-stories wiki pages are updated. No native capture was re-verified in this session.
+
+## [2026-10-10] ingest | Kids-story share: 9:16 picture card as in the reader, app link on the last card
+
+Follow-up to the one-card-per-scene change: the user wanted the share to look like the reader page, and the 4:5 card could only hold the art at roughly half width. `ShareableProse.layout: 'picture'` lays every page on a 540×960 card (`pictureCardMetrics`, body 744 dp) captured at 1080×1920 for every target; the provider skips `ShareStoryFrame` for it and the sheet hides the 4:5 Instagram-post row. The paginator gained `layout`, `quote` (speaker + dialogue, drawn in the reader's tinted box) and `link` (label over URL, never split) blocks. Scenes: art full-width for 416 of 644 cards, never under 400 dp, caption box below; none spills. Closing card: cover art (≥260 dp), takeaway, source note, printed `vedansh.app/get`; the share message still carries the tappable link. `kidsStoryArtRetainedHeight` moved to the pure `utils/kidsStoryArtFrame.ts`. Not verified on a device: WhatsApp's handling of the album message on iOS, and Instagram story chrome over the unframed header/footer.
 
 ## [2026-10-09] ingest | नवग्रह voice rebuild — Saturn narrative pilot + "Know the nine grahas" reference
 

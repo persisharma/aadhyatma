@@ -42,7 +42,7 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 
 # English for stable visible-text assertions.
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: { text: "Language,.*" }

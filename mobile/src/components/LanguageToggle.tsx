@@ -9,6 +9,7 @@ import { fontFamilies } from '@/theme/typography';
  * Left segment: user's chosen regional language (hi/gu/kn — set in More).
  * Right segment: always English.
  * Tapping updates the global lang context.
+ * `compact` renders short labels (हिं / En) in a 32 px pill for a top bar.
  */
 
 const EN_META = LANGUAGES.find((l) => l.value === 'en') as LanguageMeta;
@@ -26,7 +27,7 @@ function segmentFont(meta: LanguageMeta): { fontFamily: string; fontSize: number
   }
 }
 
-export default function LanguageToggle() {
+export default function LanguageToggle({ compact = false }: { compact?: boolean } = {}) {
   const { colors, radii } = useTheme();
   const { lang, regionalLang, setLang } = useGitaLanguage();
 
@@ -37,6 +38,7 @@ export default function LanguageToggle() {
     <View
       style={[
         styles.group,
+        compact && styles.groupCompact,
         {
           backgroundColor: colors.parchmentSoft,
           borderColor: colors.divider,
@@ -60,6 +62,7 @@ export default function LanguageToggle() {
             hitSlop={8}
             style={({ pressed }) => [
               styles.segment,
+              compact && styles.segmentCompact,
               { borderRadius: radii.pill },
               selected && { backgroundColor: colors.saffronTint },
               pressed && !selected && { opacity: 0.7 },
@@ -71,12 +74,12 @@ export default function LanguageToggle() {
                 {
                   color: selected ? colors.saffronDeep : colors.inkMuted,
                   fontFamily: font.fontFamily,
-                  fontSize: font.fontSize,
+                  fontSize: compact ? font.fontSize - 1 : font.fontSize,
                   fontStyle: opt.script === 'latin' ? 'italic' : 'normal',
                 },
               ]}
             >
-              {opt.nativeLabel}
+              {compact ? opt.shortLabel : opt.nativeLabel}
             </Text>
           </Pressable>
         );
@@ -92,6 +95,9 @@ const styles = StyleSheet.create({
     padding: 3,
     borderWidth: 1,
   },
+  groupCompact: {
+    padding: 2,
+  },
   segment: {
     paddingVertical: 11,
     paddingHorizontal: 10,
@@ -99,6 +105,13 @@ const styles = StyleSheet.create({
     minHeight: 44,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  // 28 px tall; hitSlop (8) keeps the effective target at 44.
+  segmentCompact: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    minWidth: 36,
+    minHeight: 28,
   },
   label: {
     includeFontPadding: false,

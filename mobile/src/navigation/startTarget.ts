@@ -9,6 +9,7 @@ import type { TabParamList } from './types';
 const STACK_ROOTS: Partial<Record<keyof TabParamList, string>> = {
   HomeTab: 'Home',
   PanchangTab: 'PanchangHome',
+  VratTab: 'PanchangHome',
   MoreTab: 'MoreHome',
 };
 

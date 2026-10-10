@@ -1,0 +1,29 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- assertVisible: { id: "home-settings" }
+- assertVisible: { id: "tab-vrat" }
+- assertVisible: { id: "tab-bhajan" }
+- assertNotVisible: { id: "tab-more" }
+- tapOn: { id: "home-settings" }
+- assertVisible: { id: "settings-back" }
+- assertVisible: "Open Sadhak profile"
+- takeScreenshot: /tmp/vedansh-navigation-qa/settings
+- tapOn: { id: "settings-back" }
+- assertVisible: { id: "home-settings" }
+- tapOn: { id: "tab-vrat" }
+- extendedWaitUntil:
+    visible: "मेरा व्रत.*|My Vrat.*"
+    timeout: 15000
+- takeScreenshot: /tmp/vedansh-navigation-qa/vrat
+- tapOn: "मेरा व्रत.*|My Vrat.*"
+- waitForAnimationToEnd
+- tapOn: "Back|वापस"
+- tapOn: { id: "tab-bhajan" }
+- extendedWaitUntil:
+    visible: "भजन.*|Bhajan.*"
+    timeout: 15000
+- takeScreenshot: /tmp/vedansh-navigation-qa/bhajan
+- tapOn: { id: "tab-home" }
+- assertVisible: { id: "home-settings" }
+- takeScreenshot: /tmp/vedansh-navigation-qa/home

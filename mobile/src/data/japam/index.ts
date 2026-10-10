@@ -13,6 +13,8 @@ export type JapamMantra = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  /** Naam japa: the line is a single divine name, chanted and counted one name per bead. */
+  naam?: boolean;
 };
 
 const validDeities: ReadonlySet<Deity> = new Set([
@@ -24,6 +26,7 @@ const validDeities: ReadonlySet<Deity> = new Set([
   'durga',
   'ganesha',
   'savitr',
+  'radha',
 ]);
 
 function assertMantra(m: unknown, i: number): asserts m is JapamMantra {
@@ -54,6 +57,9 @@ function assertMantra(m: unknown, i: number): asserts m is JapamMantra {
     if (!val.every((line) => typeof line === 'string' && line.trim() !== '')) {
       throw new Error(`japam[${i}].${key}: contains empty or non-string entries`);
     }
+  }
+  if (obj.naam !== undefined && typeof obj.naam !== 'boolean') {
+    throw new Error(`japam[${i}].naam: must be a boolean when present`);
   }
   const deities = obj.deities;
   if (!Array.isArray(deities) || deities.length === 0) {

@@ -19,7 +19,7 @@ import { useTourTarget } from '@/components/tour/tourTargets';
 export default function AudioLibraryScreen() {
   const { colors, spacing, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { currentTrack, isPlaying, playTrack, openNowPlaying } = useAudioPlayerContext();
+  const { currentTrack, isPlaying, playTrack, prefetchTrack, openNowPlaying } = useAudioPlayerContext();
   const [filter, setFilter] = useState<Deity | null>(null);
   // Feature-tour anchor for the Bhajan "inside" step (design.md §47).
   const bhajanInsideRef = useTourTarget('bhajanInside');
@@ -97,6 +97,7 @@ export default function AudioLibraryScreen() {
                     key={t.id}
                     track={t}
                     playing={currentTrack?.id === t.id && isPlaying}
+                    onPressIn={() => prefetchTrack(t)}
                     onPress={() => play(t)}
                   />
                 ))}
@@ -111,6 +112,7 @@ export default function AudioLibraryScreen() {
                     key={t.id}
                     track={t}
                     playing={currentTrack?.id === t.id && isPlaying}
+                    onPressIn={() => prefetchTrack(t)}
                     onPress={() => play(t)}
                   />
                 ))}

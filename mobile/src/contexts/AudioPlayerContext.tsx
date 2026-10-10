@@ -11,7 +11,8 @@ import { createAudioPlayer, type AudioStatus } from 'expo-audio';
 import { ensureBackgroundAudioMode } from '@/audio/audioSession';
 import { claimPlayback, registerStopper } from '@/audio/playbackArbiter';
 import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
-import { getAudioSource, hasRealAudio } from '@assets/audio-library';
+import { audioRemoteRequest, hasRealAudio } from '@assets/audio-library';
+import { cachedAssetUri, cachedFileUri } from '@/utils/assetCache';
 
 // Only tracks with a real recording participate in playback / skip.
 const PLAYABLE_TRACKS = AUDIO_TRACKS.filter((t) => hasRealAudio(t.id));
@@ -38,6 +39,8 @@ type AudioPlayerContextValue = {
   currentTrack: AudioTrack | null;
   isPlaying: boolean;
   isLoaded: boolean;
+  /** True while a tapped track is downloading/decrypting before it can play. */
+  isBuffering: boolean;
   /** Current position in seconds. */
   positionSec: number;
   /** Track duration in seconds (falls back to the catalog's nominal length). */
@@ -47,6 +50,8 @@ type AudioPlayerContextValue = {
   nowPlayingOpen: boolean;
   /** Load (if needed) and play a track, surfacing the mini-player. */
   playTrack: (track: AudioTrack) => void;
+  /** Warm a track's on-device cache ahead of a tap, so playback starts instantly. */
+  prefetchTrack: (track: AudioTrack) => void;
   togglePlay: () => void;
   seekTo: (seconds: number) => void;
   skipBy: (seconds: number) => void;
@@ -68,6 +73,9 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   const [currentTrack, setCurrentTrack] = useState<AudioTrack | null>(null);
   const [rate, setRateState] = useState(1.0);
   const [nowPlayingOpen, setNowPlayingOpen] = useState(false);
+  // True between a new-track tap and the moment it actually starts (download +
+  // decrypt), so the play controls can show a spinner instead of looking stuck.
+  const [isBuffering, setIsBuffering] = useState(false);
 
   // Keep the live rate available to playTrack without re-creating the callback.
   const rateRef = useRef(rate);
@@ -96,6 +104,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   useEffect(() => {
     if (wantPlayRef.current && status?.isLoaded) {
       wantPlayRef.current = false;
+      setIsBuffering(false);
       player.play();
     }
   }, [status, player]);
@@ -122,18 +131,23 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
         player.play();
         return;
       }
-      const source = getAudioSource(track.id);
-      if (source == null) {
+      const request = audioRemoteRequest(track.id);
+      if (request == null) {
         // No audio for this track yet — surface it without crashing.
         setCurrentTrack(track);
         return;
       }
-      player.replace(source);
-      player.shouldCorrectPitch = true;
-      player.setPlaybackRate(rateRef.current, 'high');
-      // Defer play() to the loaded-gate effect — the source isn't ready yet.
-      wantPlayRef.current = true;
+      // Stop the outgoing track at once so it doesn't keep playing through the
+      // new one's download/decrypt (which can take a beat on first use).
+      try {
+        player.pause();
+      } catch {
+        /* player released */
+      }
+      // Show the track immediately. The spinner stays until the loaded-gate
+      // effect fires play (the brief initial buffer).
       setCurrentTrack(track);
+      setIsBuffering(true);
       try {
         player.setActiveForLockScreen(true, {
           title: track.titleEn,
@@ -142,9 +156,29 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       } catch {
         /* lock-screen controls unavailable on this platform */
       }
+      // Start at once — no waiting on a full download. If the file is already
+      // cached, play the local copy (instant, offline); otherwise hand the
+      // player the CDN url so it STREAMS while buffering (like any music app),
+      // and download the file in the background so the next play is local.
+      const local = cachedFileUri(request);
+      if (!local) void cachedAssetUri(request).catch(() => undefined);
+      player.replace({ uri: local ?? request.remoteUrl });
+      player.shouldCorrectPitch = true;
+      player.setPlaybackRate(rateRef.current, 'high');
+      // Defer play() to the loaded-gate effect — the source buffers first.
+      wantPlayRef.current = true;
     },
     [player, currentTrack?.id]
   );
+
+  // Warm a track's on-device cache before the user taps it (e.g. on press-in),
+  // so a later play is local + offline. Fire-and-forget; `cachedAssetUri` dedups
+  // a concurrent play's background download, so no work is duplicated.
+  const prefetchTrack = useCallback((track: AudioTrack) => {
+    const request = audioRemoteRequest(track.id);
+    if (request == null) return;
+    void cachedAssetUri(request).catch(() => undefined);
+  }, []);
 
   const togglePlay = useCallback(() => {
     if (status?.playing) player.pause();
@@ -254,6 +288,10 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   }, [player]);
 
   const stop = useCallback(() => {
+    // Disarm a pending play so a still-buffering source can't start after Stop —
+    // or after read-aloud / japam has claimed the session (the 'recorded' stopper).
+    wantPlayRef.current = false;
+    setIsBuffering(false);
     try {
       player.pause();
       player.seekTo(0).catch(() => undefined);
@@ -276,12 +314,14 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       currentTrack,
       isPlaying: status?.playing ?? false,
       isLoaded: status?.isLoaded ?? false,
+      isBuffering,
       positionSec: status?.currentTime ?? 0,
       durationSec: status?.duration || currentTrack?.durationSec || 0,
       rate,
       isLooping: status?.loop ?? false,
       nowPlayingOpen,
       playTrack,
+      prefetchTrack,
       togglePlay,
       seekTo,
       skipBy,
@@ -297,12 +337,14 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       currentTrack,
       status?.playing,
       status?.isLoaded,
+      isBuffering,
       status?.currentTime,
       status?.duration,
       status?.loop,
       rate,
       nowPlayingOpen,
       playTrack,
+      prefetchTrack,
       togglePlay,
       seekTo,
       skipBy,
