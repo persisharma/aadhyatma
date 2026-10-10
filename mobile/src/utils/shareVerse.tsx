@@ -28,10 +28,12 @@ import {
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
 import {
   MAX_SHARE_PAGES,
+  cardMetricsFor,
   paginateProse,
   splitSentences,
   type ProsePage,
   type ProsePagination,
+  type ShareCardLayout,
 } from '@/utils/shareCardPages';
 import { isMultiShareAvailable, shareFiles } from '@/utils/multiShare';
 import { useRatingAsk } from '@/contexts/ratingAsk';
@@ -96,6 +98,11 @@ export type ShareableProse = {
   sourceId: string;
   /** Resolved plate behind the card; null → the plain parchment gradient. */
   background: number | null;
+  /**
+   * `picture` lays every page out on the 540×960 picture card and exports 1080×1920 for
+   * every target (kids stories, design.md §76); absent, the 540×675 prose card.
+   */
+  layout?: ShareCardLayout;
   /** Left half of the header band and the caption heading (`व्रत कथा`). */
   sectionNameHi: string;
   sectionNameEn: string;
@@ -213,7 +220,11 @@ type ProseCardSpec = {
   pageCount: number;
   lang: Lang;
   illustrationUri?: string;
+  layout?: ShareCardLayout;
 };
+
+/** The picture card is already 9:16: it is captured at the story size and never framed. */
+const isPictureCapture = (spec: PendingCapture) => spec.kind === 'prose' && spec.card.layout === 'picture';
 
 type PendingCapture =
   | { kind: 'verse'; verse: ShareableVerse; lang: Lang; format: ShareFormat }
@@ -345,8 +356,9 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         }
         captureTarget = cardRef as React.RefObject<View | null>;
       }
-      const outWidth = spec.format === 'story' ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH;
-      const outHeight = spec.format === 'story' ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
+      const tall = spec.format === 'story' || isPictureCapture(spec);
+      const outWidth = tall ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH;
+      const outHeight = tall ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
       // UIKit captures point dimensions at the screen's scale; Android uses pixels.
       const captureScale = Platform.OS === 'ios' ? PixelRatio.get() : 1;
       if (!captureTarget?.current) return null;
@@ -515,6 +527,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       pageIndex: index,
       pageCount: scope.pagination.pages.length,
       lang,
+      layout: content.layout,
     }),
     []
   );
@@ -786,10 +799,13 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         }
       : undefined;
 
-  const pendingSize = (format: ShareFormat) => ({
-    width: format === 'story' ? storyCanvas.width : CARD_WIDTH,
-    height: format === 'story' ? storyCanvas.height : CARD_HEIGHT,
-  });
+  const pendingSize = (spec: PendingCapture) =>
+    isPictureCapture(spec)
+      ? { width: cardMetricsFor('picture').width, height: cardMetricsFor('picture').height }
+      : {
+          width: spec.format === 'story' ? storyCanvas.width : CARD_WIDTH,
+          height: spec.format === 'story' ? storyCanvas.height : CARD_HEIGHT,
+        };
 
   return (
     <ShareContext.Provider value={value}>
@@ -829,16 +845,17 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             if (!inFlightRef.current) setProse(null);
           }}
           series={series}
+          cardLayout={prose.content.layout}
         />
       ) : null}
       {pending ? (
         <View
           pointerEvents="none"
-          style={{ position: 'absolute', left: -10000, top: -10000, ...pendingSize(pending.format) }}
+          style={{ position: 'absolute', left: -10000, top: -10000, ...pendingSize(pending) }}
         >
-          <View ref={cardRef} collapsable={false} style={pendingSize(pending.format)}>
+          <View ref={cardRef} collapsable={false} style={pendingSize(pending)}>
             {pending.kind === 'prose' ? (
-              pending.format === 'story' ? (
+              pending.format === 'story' && !isPictureCapture(pending) ? (
                 <ShareStoryFrame background={pending.card.background}>
                   <ProseShareCard key={pending.captureId ?? 'prose'} {...pending.card}
                     onIllustrationReady={(ready) => {

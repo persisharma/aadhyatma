@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Alert, Pressable, Share } from 'react-native';
+import { Alert, PixelRatio, Pressable, Share } from 'react-native';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { ShareProvider, useShare } from '@/utils/shareVerse';
 import { kidsStoryShareable } from '@/utils/shareContent';
@@ -31,6 +31,7 @@ async function open() {
   await act(async () => { tree.root.findAll(n => n.props.accessibilityLabel === 'trigger' && typeof n.props.onPress === 'function')[0].props.onPress(); });
 }
 const sheet = () => tree.root.findByType('ShareTargetSheet' as any);
+let sheetLayoutSeen: string | undefined;
 const pendingArt = () => tree.root.findAllByType('ProseShareCard' as any).find(n => n.props.illustrationUri);
 beforeEach(() => { jest.clearAllMocks(); mockAsset.mockResolvedValue('file:///cache/art.webp'); });
 afterEach(() => { act(() => tree.unmount()); });
@@ -38,14 +39,19 @@ afterEach(() => { act(() => tree.unmount()); });
 test('capture waits for native image decode, then hands the complete selected part off in card order', async () => {
   await open();
   const expected = content.scopes[0].prepared!.gu.pages;
+  sheetLayoutSeen = sheet().props.cardLayout;
   act(() => sheet().props.series.onShareAll());
   await settle();
   expect(pendingArt()).toBeDefined();
   expect(mockCapture).not.toHaveBeenCalled();
+  // Every card of a picture story carries art, and the closing card's cover repeats a scene's
+  // art — so decodes are counted per mounted page, not per art key.
+  const decodedPages: unknown[] = [];
   const decoded: string[] = [];
-  for (let i = 0; i < 50 && !mockFiles.mock.calls.length; i++) {
+  for (let i = 0; i < 80 && !mockFiles.mock.calls.length; i++) {
     const card = pendingArt();
-    if (card && !decoded.includes(card.props.page.illustration.art)) {
+    if (card && !decodedPages.includes(card.props.page)) {
+      decodedPages.push(card.props.page);
       decoded.push(card.props.page.illustration.art);
       act(() => card.props.onIllustrationReady(true));
     }
@@ -53,6 +59,13 @@ test('capture waits for native image decode, then hands the complete selected pa
   }
   expect(decoded).toEqual(expected.flatMap(p => p.illustration ? [p.illustration.art] : []));
   expect(mockCapture).toHaveBeenCalledTimes(expected.length);
+  // The picture card is 9:16: every capture is the 1080×1920 story size (iOS options are in points), unframed.
+  const scale = PixelRatio.get();
+  for (const call of mockCapture.mock.calls as unknown as [unknown, { width: number; height: number }][]) {
+    expect(call[1]).toMatchObject({ width: 1080 / scale, height: 1920 / scale });
+  }
+  expect(tree.root.findAllByType('ShareStoryFrame' as any)).toHaveLength(0);
+  expect(sheetLayoutSeen).toBe('picture');
   expect(mockFiles).toHaveBeenCalledTimes(1);
   expect((mockFiles.mock.calls[0] as unknown[])[0]).toHaveLength(expected.length);
 });

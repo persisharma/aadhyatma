@@ -4,7 +4,9 @@ import { useTheme } from '@/theme/ThemeContext';
 import { assetBaseUrl, remoteAssetRequest, type RemoteAssetManifest } from '@/data/assetManifest';
 import kidsStoryManifestJson from '@/data/kidsStoryAssetManifest.json';
 import { useCachedAsset } from '@/utils/useCachedAsset';
-import reviewedFrames from './kidsStoryArtFrames.json';
+import { kidsStoryArtRetainedHeight } from '@/utils/kidsStoryArtFrame';
+
+export { kidsStoryArtRetainedHeight };
 
 const kidsStoryManifest = kidsStoryManifestJson as RemoteAssetManifest;
 
@@ -37,15 +39,9 @@ const ART_STEMS: Record<string, string> = {
   sp02: 'sp-02', sp03: 'sp-03', sp04: 'sp-04', su01: 'su-01', su02: 'su-02', su03: 'su-03', su04: 'su-04',
   su05: 'su-05', su06: 'su-06', su07: 'su-07',
 };
-// These frames remove only visually reviewed blank parchment below the scene.
-// New artwork stays full-height until reviewed; caption length never sets a crop.
-const artFrames: Record<string, { retainedHeight: number }> = reviewedFrames;
 export function kidsStoryArtRequest(art: string) {
   const stem = ART_STEMS[art];
   return stem ? remoteAssetRequest(kidsStoryManifest, stem, assetBaseUrl()) : null;
-}
-export function kidsStoryArtRetainedHeight(art: string) {
-  return artFrames[art]?.retainedHeight ?? 1;
 }
 export default function KidsStoryArt({ art, label, resolvedUri, onLoad, onError }: {
   art: string; label: string; resolvedUri?: string; onLoad?: () => void; onError?: () => void;
