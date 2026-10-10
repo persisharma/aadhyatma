@@ -42,6 +42,14 @@ export const proseCardMetrics = {
   titleMarginBottom: 10,
   headingMarginTop: 6,
   headingMarginBottom: 4,
+  /** Gap between an illustrated scene and the title/caption beneath it. */
+  illustrationGap: 12,
+  /**
+   * Smallest illustration a scene card may carry. The art takes whatever the title and
+   * caption leave of the body; a caption that would push it lower continues on a plain
+   * prose card instead of shrinking the scene further.
+   */
+  illustrationMinHeight: 160,
   /** Lines held back per page against estimate error. */
   slackLines: 1,
 } as const;
@@ -110,8 +118,12 @@ export type ProsePageBlock = {
 };
 
 export type ProsePage = {
-  /** An illustrated scene card; narration follows on ordinary prose cards. */
-  illustration?: { art: string; label: string };
+  /**
+   * An illustrated scene above this page's title and caption. `heightDp` is the box the
+   * art fills: the body left after `usedDp` and `illustrationGap`, never below
+   * `illustrationMinHeight` (the paginator reserved that much on the first page).
+   */
+  illustration?: { art: string; label: string; heightDp: number };
   /** Only page 1 carries the title. */
   title: string | null;
   blocks: ProsePageBlock[];
@@ -183,6 +195,8 @@ export function paginateProse(params: {
   blocks: readonly ProseBlockInput[];
   lang: Lang;
   maxPages?: number;
+  /** Body height the first page gives up (an illustration and its gap); later pages keep the full budget. */
+  firstPageReservedDp?: number;
 }): ProsePagination {
   const m = proseCardMetrics;
   const faces = proseType[proseScript(params.lang)];
@@ -192,6 +206,7 @@ export function paginateProse(params: {
   const headingCpl = charsPerLine(proseBodyWidth, faces.heading.fontSize, adv * BOLD_FACTOR);
   const budget = proseBodyHeight - m.slackLines * faces.body.lineHeight;
   const maxPages = params.maxPages ?? MAX_SHARE_PAGES;
+  const reserved = Math.max(0, params.firstPageReservedDp ?? 0);
 
   const itemHeight = (item: Item, first: boolean): number => {
     const text = item.sentences.join(' ');
@@ -221,6 +236,8 @@ export function paginateProse(params: {
   const title = params.title?.trim() ? params.title.trim() : null;
   const pages: Page[] = [];
   let page: Page = { title, items: [] };
+  /** The page being filled: the first one shares its body with the reserved block. */
+  const pageBudget = () => (pages.length === 0 ? budget - reserved : budget);
 
   const closePage = () => {
     // A heading never ends a page: carry it over with its body.
@@ -243,7 +260,7 @@ export function paginateProse(params: {
         page.items.push(last);
       }
       last.sentences.push(remaining);
-      if (pageHeight(page) <= budget) return;
+      if (pageHeight(page) <= pageBudget()) return;
       last.sentences.pop();
 
       const pageHadText = hasContent(page);
@@ -256,7 +273,7 @@ export function paginateProse(params: {
       let taken = 0;
       for (let n = 1; n <= words.length; n++) {
         last.sentences.push(words.slice(0, n).join(' '));
-        const fits = pageHeight(page) <= budget;
+        const fits = pageHeight(page) <= pageBudget();
         last.sentences.pop();
         if (!fits) break;
         taken = n;
@@ -276,7 +293,7 @@ export function paginateProse(params: {
       page.items.push(item);
       // Keep with next: the heading plus two body lines must fit, else start a page.
       const need = pageHeight(page) + m.paraGap + 2 * faces.body.lineHeight;
-      if (need > budget && hasContent({ ...page, items: page.items.slice(0, -1) })) {
+      if (need > pageBudget() && hasContent({ ...page, items: page.items.slice(0, -1) })) {
         page.items.pop();
         closePage();
         page.items.push(item);

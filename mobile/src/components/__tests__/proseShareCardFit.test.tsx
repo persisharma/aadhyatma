@@ -5,6 +5,8 @@ import { ThemeProvider } from '@/theme/ThemeContext';
 import ProseShareCard from '../ProseShareCard';
 import { paginateProse, proseBodyHeight, proseCardMetrics } from '@/utils/shareCardPages';
 import { getKathaContent } from '@/panchang/kathaContent';
+import { kidsStoryShareable } from '@/utils/kidsStoryShare';
+import { getKidsStory } from '@/data/kidsStories';
 import type { Lang } from '@/data/gita/language';
 
 /**
@@ -14,6 +16,13 @@ import type { Lang } from '@/data/gita/language';
  */
 
 jest.mock('../BackgroundLayer', () => 'BackgroundLayer');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const MockView = require('react-native').View as typeof View;
+jest.mock('../KidsStoryArt', () => ({
+  __esModule: true,
+  default: ({ label }: { label: string }) => <MockView testID="kids-story-art" accessibilityLabel={label} />,
+  kidsStoryArtRetainedHeight: () => 0.8,
+}));
 
 const katha = getKathaContent('chhath-puja-katha')!;
 
@@ -111,5 +120,35 @@ describe('ProseShareCard', () => {
     expect(all1).toContain(katha.sections[0].titleEn);
     const two = await render('en', 1);
     expect(texts(two.tree).map((t) => t.props.children)).not.toContain(katha.sections[0].titleEn);
+  });
+
+  test('an illustrated scene puts the complete art above the title and caption in the paginator box', async () => {
+    const story = getKidsStory('krishna-janma')!;
+    const page = kidsStoryShareable(story).scopes[0].prepared!.hi.pages[0];
+    expect(page.illustration).toBeDefined();
+    expect(page.title).toBe(story.pages[0].title.hi);
+    expect(page.blocks[0].text).toBe(story.pages[0].text.hi);
+    let tree: TestRenderer.ReactTestRenderer;
+    await act(async () => {
+      tree = TestRenderer.create(
+        <ThemeProvider>
+          <ProseShareCard background={null} header="1/16 · कृष्ण जन्म" page={page} pageIndex={0} pageCount={10} lang="hi" illustrationUri="file:///cache/art.webp" />
+        </ThemeProvider>
+      );
+    });
+    const box = tree!.root.findByProps({ testID: 'share-scene-art' });
+    const boxStyle = StyleSheet.flatten(box.props.style);
+    expect(boxStyle.height).toBe(page.illustration!.heightDp);
+    expect(boxStyle.marginBottom).toBe(proseCardMetrics.illustrationGap);
+    expect(page.illustration!.heightDp).toBeGreaterThanOrEqual(proseCardMetrics.illustrationMinHeight);
+    const frame = StyleSheet.flatten(box.findAllByType(View)[1].props.style);
+    expect(frame.width).toBeCloseTo(page.illustration!.heightDp / (1.25 * 0.8), 5);
+    expect(tree!.root.findByProps({ testID: 'kids-story-art' }).props.accessibilityLabel).toBe(page.title);
+    // Art, then title, then caption: the body's children keep the reader's order.
+    const body = tree!.root.find((n) => n.type === 'View' && StyleSheet.flatten(n.props.style).height === proseBodyHeight);
+    const [first, second] = body.children as TestRenderer.ReactTestInstance[];
+    expect(first.findByProps({ testID: 'share-scene-art' })).toBeDefined();
+    expect(second.props.children).toBe(page.title);
+    expect(allText(tree!)).toContain(page.blocks[0].text);
   });
 });

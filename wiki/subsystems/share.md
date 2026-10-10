@@ -38,7 +38,7 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
 - **Multi-file share** (`utils/multiShare.ts`): `react-native-share` `open({ urls })`,
   probed via `TurboModuleRegistry.get('RNShare')` then lazily required.
 
-- **Illustrated kids stories** (`kidsStoryShareable`, exported by `shareContent.ts`): four-language prepared scopes alternate a complete reviewed-frame scene card with ordinary paginated narration. Numbered parts pack whole scene groups using the maximum count across all four locales, never silently truncating the story at ten cards. Ending/source cards are included, plus a visible-scene scope. Native gu/kn prose and caption labels bypass transliteration. Scope pills scroll horizontally below the count.
+- **Illustrated kids stories** (`kidsStoryShareable`, exported by `shareContent.ts`): one card per scene — the complete reviewed-frame art above the scene title and its caption/dialogue, like the reader page. `paginateProse({ firstPageReservedDp })` reserves `illustrationMinHeight + illustrationGap` on the scene's first page; the art then fills the body the caption leaves (`illustration.heightDp`, ≥160 dp). Every published caption fits its scene card in all four languages; a longer one would continue on a plain prose card. Numbered parts pack whole scene groups using the maximum count across all four locales, never silently truncating the story at ten cards. Ending/source cards are included, plus a visible-scene scope. Native gu/kn prose and caption labels bypass transliteration. Scope pills scroll horizontally below the count.
 - **Illustrated capture readiness.** Only illustrated exports load the cache module, resolve the existing hashed R2 request, then wait for native `Image.onLoad` on a fresh capture mount. Fetch/decode timeout or errors return failure: a series aborts before hand-off and a single scene refuses the text-only fallback. Preview may show loading UI, but exported files never deliberately contain a placeholder. The same provider, paginator, branded card, preview and native multi-share adapter remain in use.
 
 ## Gotchas
@@ -85,6 +85,6 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
 - `design.md` §39 (verse card, sheet, hashtags, story) and §39.4–§39.6 (prose, series,
   all-pages); `RULEBOOK.md` §3 (share contract, constrained surfaces).
 
-Illustrated story cards measure the actual title height before sizing the complete framed scene into the remaining body. A conservative initial frame is replaced after native title layout, and export waits for decoded art and layout. Full prose cards keep the existing fixed readable type.
+Illustrated story cards no longer measure the title at render: the paginator fixes the art box (`illustration.heightDp`) from the estimated title + caption height, and `ProseShareCard` renders art → title → caption inside that geometry. Export still waits for decoded art and layout. Prose type stays at the existing fixed readable size; only the art box varies (210–294 dp today, never under 160 dp).
 
 The shared capture pipeline compensates for UIKit point dimensions using `PixelRatio.get()`; Android options remain physical pixels. Native iOS verification caught the old 3x multiplier (3240×4050) and the corrected output is checked at 1080×1350. Story-frame options receive the same correction for 1080×1920.

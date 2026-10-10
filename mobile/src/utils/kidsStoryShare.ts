@@ -1,7 +1,7 @@
 import type { Lang } from '@/data/gita/language';
 import { storyText, type KidsStory } from '@/data/kidsStories';
 import { pick } from '@/utils/localize';
-import { MAX_SHARE_PAGES, paginateProse, type ProsePage } from '@/utils/shareCardPages';
+import { MAX_SHARE_PAGES, paginateProse, proseCardMetrics, type ProsePage } from '@/utils/shareCardPages';
 import type { ShareableProse, ShareableProseScope } from '@/utils/shareVerse';
 
 const languages: Lang[] = ['hi', 'en', 'gu', 'kn'];
@@ -9,21 +9,28 @@ const shelf = { hi: 'बच्चों की चित्र-कथाएँ',
 type Unit = { scene: number | null; pages: Record<Lang, ProsePage[]> };
 const translated = <T,>(fn: (lang: Lang) => T): Record<Lang, T> => Object.fromEntries(languages.map(lang => [lang, fn(lang)])) as Record<Lang, T>;
 
-/** Complete artwork and fixed-size narration alternate; no scene, ending or source is dropped. */
+/**
+ * One card per scene: the complete artwork above its title and fixed-size caption, like
+ * the reader page. The art takes the body the caption leaves (never under
+ * `illustrationMinHeight`); a rare longer caption continues on a plain prose card. No
+ * scene, ending or source is dropped.
+ */
 export function kidsStoryShareable(story: KidsStory, pageIndex = 0): ShareableProse {
+  const { illustrationGap, illustrationMinHeight } = proseCardMetrics;
   const units: Unit[] = story.pages.map((page, i) => ({
     scene: i + 1,
-    pages: translated(lang => [
-      { title: storyText(page.title, lang), blocks: [], usedDp: 0,
-        illustration: { art: page.art, label: storyText(page.title, lang) } },
-      ...paginateProse({
-        title: storyText(page.title, lang), lang,
+    pages: translated(lang => {
+      const { pages, budgetDp } = paginateProse({
+        title: storyText(page.title, lang), lang, firstPageReservedDp: illustrationMinHeight + illustrationGap,
         blocks: [
           { kind: 'para', text: storyText(page.text, lang) },
           ...(page.dialogue ? [{ kind: 'para' as const, text: `${storyText(page.dialogue.speaker, lang)}: ${storyText(page.dialogue.text, lang)}` }] : []),
         ],
-      }).pages,
-    ]),
+      });
+      const [first, ...rest] = pages;
+      const heightDp = Math.max(illustrationMinHeight, budgetDp - illustrationGap - first.usedDp);
+      return [{ ...first, illustration: { art: page.art, label: storyText(page.title, lang), heightDp } }, ...rest];
+    }),
   }));
   const ending: Unit = { scene: null, pages: translated(lang => paginateProse({
     title: pick(lang, { hi: 'कथा की सीख और स्रोत', en: 'Takeaway & source', gu: 'વાર્તાની શીખ અને સ્રોત', kn: 'ಕಥೆಯ ಪಾಠ ಮತ್ತು ಮೂಲ' }), lang,

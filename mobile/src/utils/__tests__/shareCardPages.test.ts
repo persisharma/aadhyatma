@@ -135,6 +135,19 @@ describe('paginateProse', () => {
     expect(a).toEqual(b);
   });
 
+  test('a reserved block shortens only the first page', () => {
+    const blocks = [para(long), para(long)];
+    const reserved = 220;
+    const res = paginateProse({ title: 'शीर्षक', blocks, lang: 'hi', firstPageReservedDp: reserved });
+    const plain = paginateProse({ title: 'शीर्षक', blocks, lang: 'hi' });
+    expect(res.budgetDp).toBe(plain.budgetDp);
+    expect(res.pages[0].usedDp).toBeLessThanOrEqual(res.budgetDp - reserved);
+    expect(res.pages.length).toBeGreaterThanOrEqual(plain.pages.length);
+    expect(res.pages.slice(1).some((p) => p.usedDp > res.budgetDp - reserved)).toBe(true);
+    expect(res.pages.every((p) => p.usedDp <= res.budgetDp)).toBe(true);
+    expect(pagedWords(res)).toEqual(allWords(blocks));
+  });
+
   test('flags truncation past MAX_SHARE_PAGES', () => {
     const blocks = Array.from({ length: 30 }, () => para(long));
     const res = paginateProse({ blocks, lang: 'hi' });

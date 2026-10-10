@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -51,6 +51,10 @@ function boldFont(lang: Lang): string {
  * A series (`pageCount > 1`) adds the page row: a continuation cue on the left
  * (`आगे →` / `॥ इति ॥` on the last page) and dots + `n / m` on the right. The row's
  * height is reserved on a single page too, so the geometry never changes.
+ *
+ * An illustrated page (a kids-story scene) puts the complete artwork above the title
+ * and caption in the box the paginator left for it (`illustration.heightDp`), so art,
+ * title and caption share one card the way the reader page does.
  */
 const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function ProseShareCard(
   props,
@@ -61,7 +65,6 @@ const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function Pros
   const latin = props.lang === 'en';
   const series = props.pageCount > 1;
   const isLast = props.pageIndex === props.pageCount - 1;
-  const [titleHeight, setTitleHeight] = useState(96);
 
   return (
     <View
@@ -96,9 +99,11 @@ const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function Pros
       </View>
 
       <View style={[styles.body, { height: proseBodyHeight }]}>
+        {props.page.illustration ? (
+          <IllustratedScene illustration={props.page.illustration} uri={props.illustrationUri} onReady={props.onIllustrationReady} />
+        ) : null}
         {props.page.title ? (
           <Text
-            onLayout={props.page.illustration ? event => setTitleHeight(event.nativeEvent.layout.height) : undefined}
             style={[
               styles.title,
               {
@@ -111,10 +116,6 @@ const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function Pros
           >
             {props.page.title}
           </Text>
-        ) : null}
-        {props.page.illustration ? (
-          <IllustratedScene illustration={props.page.illustration} uri={props.illustrationUri} onReady={props.onIllustrationReady}
-            availableHeight={proseBodyHeight - (props.page.title ? titleHeight + proseCardMetrics.titleMarginBottom : 0)} />
         ) : null}
         {props.page.blocks.map((block, i) =>
           block.kind === 'heading' ? (
@@ -220,16 +221,18 @@ const styles = StyleSheet.create({
 });
 
 /** Asset modules load only when a scene card is actually rendered. */
-function IllustratedScene({ illustration, uri, onReady, availableHeight }: {
-  illustration: { art: string; label: string }; uri?: string; onReady?: (ready: boolean) => void; availableHeight: number;
+function IllustratedScene({ illustration, uri, onReady }: {
+  illustration: { art: string; label: string; heightDp: number }; uri?: string; onReady?: (ready: boolean) => void;
 }) {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { default: KidsStoryArt, kidsStoryArtRetainedHeight } = require('./KidsStoryArt') as typeof import('./KidsStoryArt');
-  // Use the measured title height; preserve the entire reviewed scene without a blank title reserve.
+  // The paginator fixed the box height; the width keeps the complete reviewed 4:5 scene inside it.
   const width = Math.min(proseCardMetrics.width - 2 * proseCardMetrics.paddingHorizontal - 2,
-    Math.max(0, availableHeight) / (1.25 * kidsStoryArtRetainedHeight(illustration.art)));
-  return <View style={{ alignSelf: 'center', width }}>
-    <KidsStoryArt art={illustration.art} label={illustration.label} resolvedUri={uri}
-      onLoad={() => onReady?.(true)} onError={() => onReady?.(false)} />
+    illustration.heightDp / (1.25 * kidsStoryArtRetainedHeight(illustration.art)));
+  return <View testID="share-scene-art" style={{ height: illustration.heightDp, marginBottom: proseCardMetrics.illustrationGap, alignItems: 'center', justifyContent: 'flex-end' }}>
+    <View style={{ width }}>
+      <KidsStoryArt art={illustration.art} label={illustration.label} resolvedUri={uri}
+        onLoad={() => onReady?.(true)} onError={() => onReady?.(false)} />
+    </View>
   </View>;
 }
