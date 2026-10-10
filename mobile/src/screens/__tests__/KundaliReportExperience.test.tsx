@@ -244,7 +244,7 @@ test('sharing the summary goes through the warned Kundali path', () => {
   act(() => tree.unmount());
 });
 
-test('graha cards open one at a time into gives, care, upay and an on-demand basis (RULEBOOK §14.7)', () => {
+test('graha cards open one at a time into the narrative reading, upay and an on-demand basis (RULEBOOK §14.7)', () => {
   mockKundaliState = {
     profile: { name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
     chart: savedChart,
@@ -277,7 +277,12 @@ test('graha cards open one at a time into gives, care, upay and an on-demand bas
     tree.root.findAll((node) => node.props.testID === 'graha-row-jupiter' && typeof node.props.onPress === 'function')[0].props.onPress();
   });
   const open = textOf(tree);
-  for (const heading of ['About this graha', 'Friends and enemies', 'This house’s karaka (guardian)', 'Why “', 'What it gives', 'Where to take care', 'Upay · ', 'Day', 'Daan', 'Seva', 'Mantra']) {
+  // In a dev build the narrative voice renders (design.md §78): a written lead
+  // reading + one line to tend, in place of the legacy About/Friends/gives/care
+  // bullets; the upay panel and the आधार toggle are unchanged.
+  assert.ok(open.includes('One thing to tend'), 'the narrative tend line shows');
+  assert.doesNotMatch(open, /What it gives/, 'the legacy bullets are replaced by the narrative');
+  for (const heading of ['Upay · ', 'Day', 'Daan', 'Seva', 'Mantra']) {
     assert.ok(open.includes(heading), `card shows ${heading}`);
   }
   assert.ok(open.includes('Thursday'));

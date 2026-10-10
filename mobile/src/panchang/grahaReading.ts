@@ -34,6 +34,7 @@ import {
   type GrahaFactorId,
 } from './grahaReadingContent';
 import type { KundaliEmptyHouse, KundaliEmptyHouses, KundaliGrahaCard, KundaliGrahaMaitri, KundaliGrahaTone } from './kundaliReportModel';
+import { NARRATIVE_GRAHAS, composeNarrative } from './grahaReadingNarrative';
 import { BHAVA_ORDINAL_HI, bhavaLabelHi, ordinalEn } from './reportFormat';
 
 /**
@@ -262,6 +263,20 @@ function grahaCard(chart: KundaliChart, position: GrahaPosition, sun: GrahaPosit
     ...ruled.map((ofHouse): BasisNode => ({ kind: 'lord', graha, ofHouse, inHouse: house })),
   ];
 
+  // The narrative-voice reading (nav-voice pilot): present only for piloted
+  // grahas. The screen chooses narrative-vs-legacy by the review flag.
+  const narrative = NARRATIVE_GRAHAS.has(graha)
+    ? composeNarrative({
+      graha,
+      house,
+      dignity,
+      relation,
+      ruledHouses: ruled,
+      combust: separation !== null,
+      retrograde: position.retrograde && !node,
+    })
+    : null;
+
   return {
     id: `graha-${graha}`,
     graha,
@@ -308,6 +323,7 @@ function grahaCard(chart: KundaliChart, position: GrahaPosition, sun: GrahaPosit
       practiceSourceId: upay.practiceSourceId,
     },
     basis,
+    ...(narrative ? { narrative } : {}),
   };
 }
 

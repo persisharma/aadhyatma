@@ -115,6 +115,18 @@ export type KundaliGrahaCard = {
   reasons: readonly KundaliGrahaReason[];
   upay: KundaliGrahaUpay;
   basis: readonly BasisNode[];
+  /**
+   * The narrative-voice reading for this placement (nav-voice pilot, design.md
+   * §78): a written lead synthesised for THIS chart, plus one line to tend.
+   * Present only for grahas in the narrative pilot; the screen shows it in place
+   * of the legacy bullets when the narrative review is approved (or in dev).
+   */
+  narrative?: {
+    leadHi: string;
+    leadEn: string;
+    tendHi: string;
+    tendEn: string;
+  };
 };
 
 /** A house no graha occupies, read through its lord (RULEBOOK §14.7.9). */
