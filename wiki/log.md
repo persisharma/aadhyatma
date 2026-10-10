@@ -396,3 +396,12 @@ Validation: 232 Jest suites / 2,152 tests passed; TypeScript and navigation/laun
 ## [2026-10-09] ingest | Durga CDN publication and production bundle asset checks
 
 After the user uploaded the prepared package, all 144 manifest URLs returned HTTP 200, matched expected hashes and fully decoded as WebP. All 144 images, including the Home story-library icon, now use the CDN/cache; iOS/Android production exports contain zero story artwork. Added import and renamed-image regression tests, a reusable full-manifest CDN/export verifier, RULEBOOK §29.2 and CI production-export/CDN checks with retained evidence. Latest main navigation changes are retained, including Home settings entry. Fresh simulator CDN download encountered a TLS trust error on the corporate-intercepted network; native first-download/offline and physical-device checks remain pending. Host CDN checks do not establish native download success.
+
+
+## [2026-10-11] ingest | Ramayan comic character continuity references
+
+Added a decision page for the approved richer-colour comic direction and the six-sheet principal-cast authoring package. Records event-based age/dress/disguise selection, flashbacks, publication evidence levels, edition numbering differences, exact prompt/hash provenance and pending cast/forms. Newly generated models await user acceptance; no app reader, production story text, CDN publication, commit or PR was added.
+
+## [2026-10-11] ingest | Ramayan character model refinement
+
+Updated the existing continuity decision for distinct Rama/Lakshmana facial geometry and Hanuman’s refined model with user-requested gold mukut and gada. Revised sheets were visually reviewed, browser comparison checked in colour/greyscale, exact edit prompts and hashes retained. Authoring references remain proposed; no production app integration.

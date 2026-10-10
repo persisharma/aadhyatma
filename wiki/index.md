@@ -43,4 +43,4 @@ _(none yet — add per-model pages as they warrant)_
 - [[e2e-verification]] — Maestro e2e: authoring rules, the isolated-simulator verification recipe (multi-worktree machines), gotchas, and the "every change ships with e2e" policy.
 
 ## Decisions
-_(none yet)_
+- [[decisions/ramayan-comic-character-continuity]] — six proposed comic character sheets, event-based age/dress/form continuity, source evidence and authoring-to-production boundaries.
