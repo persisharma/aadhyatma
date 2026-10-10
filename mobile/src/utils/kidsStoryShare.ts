@@ -1,41 +1,53 @@
 import type { Lang } from '@/data/gita/language';
 import { storyText, type KidsStory } from '@/data/kidsStories';
+import { SMART_LINK } from '@/data/shareLinks';
+import { kidsStoryArtRetainedHeight } from '@/utils/kidsStoryArtFrame';
 import { pick } from '@/utils/localize';
-import { MAX_SHARE_PAGES, paginateProse, proseCardMetrics, type ProsePage } from '@/utils/shareCardPages';
+import { MAX_SHARE_PAGES, bodyWidthFor, paginateProse, pictureCardMetrics, type ProseBlockInput, type ProsePage } from '@/utils/shareCardPages';
 import type { ShareableProse, ShareableProseScope } from '@/utils/shareVerse';
 
 const languages: Lang[] = ['hi', 'en', 'gu', 'kn'];
 const shelf = { hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids', gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು' };
 type Unit = { scene: number | null; pages: Record<Lang, ProsePage[]> };
 const translated = <T,>(fn: (lang: Lang) => T): Record<Lang, T> => Object.fromEntries(languages.map(lang => [lang, fn(lang)])) as Record<Lang, T>;
+const layout = 'picture' as const;
+const endingTitle = { hi: 'कथा की सीख और स्रोत', en: 'Takeaway & source', gu: 'વાર્તાની શીખ અને સ્રોત', kn: 'ಕಥೆಯ ಪಾಠ ಮತ್ತು ಮೂಲ' };
+/** The app link on the last card: a PNG cannot be tapped, so the URL is printed and the share message carries it too. */
+const appLink = { hi: 'पूरी चित्र-कथा Vedansh ऐप में पढ़ें', en: 'Read the whole picture story in the Vedansh app', gu: 'આખી ચિત્રવાર્તા Vedansh ઍપમાં વાંચો', kn: 'ಸಂಪೂರ್ಣ ಚಿತ್ರಕಥೆ Vedansh ಆ್ಯಪ್‌ನಲ್ಲಿ ಓದಿ' };
 
 /**
- * One card per scene: the complete artwork above its title and fixed-size caption, like
- * the reader page. The art takes the body the caption leaves (never under
- * `illustrationMinHeight`); a rare longer caption continues on a plain prose card. No
- * scene, ending or source is dropped.
+ * One picture card: the complete art at the body's full width when the caption leaves
+ * room for it, narrower (never under `illustrationMinHeight`) when it does not; the
+ * title and caption sit in the reader's box below. A caption longer than that
+ * continues on a plain card.
+ */
+function illustrated(art: string, label: string, title: string, lang: Lang, blocks: ProseBlockInput[], minHeight: number): ProsePage[] {
+  const { illustrationGap } = pictureCardMetrics;
+  const { pages, budgetDp } = paginateProse({ title, lang, blocks, layout, firstPageReservedDp: minHeight + illustrationGap });
+  const [first, ...rest] = pages;
+  const fullWidth = bodyWidthFor(layout) * 1.25 * kidsStoryArtRetainedHeight(art);
+  const heightDp = Math.max(minHeight, Math.min(fullWidth, budgetDp - illustrationGap - first.usedDp));
+  return [{ ...first, illustration: { art, label, heightDp } }, ...rest];
+}
+
+/**
+ * The series looks like the reader: one 9:16 picture card per scene (art, title,
+ * narration, dialogue in its tinted box), then a closing card with the cover art, the
+ * takeaway, the source note and the app link. No scene, ending or source is dropped.
  */
 export function kidsStoryShareable(story: KidsStory, pageIndex = 0): ShareableProse {
-  const { illustrationGap, illustrationMinHeight } = proseCardMetrics;
   const units: Unit[] = story.pages.map((page, i) => ({
     scene: i + 1,
-    pages: translated(lang => {
-      const { pages, budgetDp } = paginateProse({
-        title: storyText(page.title, lang), lang, firstPageReservedDp: illustrationMinHeight + illustrationGap,
-        blocks: [
-          { kind: 'para', text: storyText(page.text, lang) },
-          ...(page.dialogue ? [{ kind: 'para' as const, text: `${storyText(page.dialogue.speaker, lang)}: ${storyText(page.dialogue.text, lang)}` }] : []),
-        ],
-      });
-      const [first, ...rest] = pages;
-      const heightDp = Math.max(illustrationMinHeight, budgetDp - illustrationGap - first.usedDp);
-      return [{ ...first, illustration: { art: page.art, label: storyText(page.title, lang), heightDp } }, ...rest];
-    }),
+    pages: translated(lang => illustrated(page.art, storyText(page.title, lang), storyText(page.title, lang), lang, [
+      { kind: 'para', text: storyText(page.text, lang) },
+      ...(page.dialogue ? [{ kind: 'quote' as const, speaker: storyText(page.dialogue.speaker, lang), text: storyText(page.dialogue.text, lang) }] : []),
+    ], pictureCardMetrics.illustrationMinHeight)),
   }));
-  const ending: Unit = { scene: null, pages: translated(lang => paginateProse({
-    title: pick(lang, { hi: 'कथा की सीख और स्रोत', en: 'Takeaway & source', gu: 'વાર્તાની શીખ અને સ્રોત', kn: 'ಕಥೆಯ ಪಾಠ ಮತ್ತು ಮೂಲ' }), lang,
-    blocks: [{ kind: 'para', text: storyText(story.takeaway, lang) }, { kind: 'para', text: storyText(story.sourceNote, lang) }],
-  }).pages) };
+  const ending: Unit = { scene: null, pages: translated(lang => illustrated(story.coverArt, storyText(story.title, lang), pick(lang, endingTitle), lang, [
+    { kind: 'para', text: storyText(story.takeaway, lang) },
+    { kind: 'para', text: storyText(story.sourceNote, lang) },
+    { kind: 'link', text: pick(lang, appLink), url: SMART_LINK },
+  ], pictureCardMetrics.coverMinHeight)) };
   const parts: Unit[][] = [];
   for (const unit of [...units, ending]) {
     const last = parts[parts.length - 1];
@@ -61,7 +73,7 @@ export function kidsStoryShareable(story: KidsStory, pageIndex = 0): ShareablePr
   });
   const current = Math.max(0, Math.min(units.length - 1, pageIndex));
   return {
-    kind: 'prose', sourceId: `kids-story-${story.id}`, background: null,
+    kind: 'prose', layout, sourceId: `kids-story-${story.id}`, background: null,
     sectionNameHi: shelf.hi, sectionNameEn: shelf.en, sectionName: shelf,
     tagNameHi: story.title.hi, tagNameEn: story.title.en,
     sheetTitle: { hi: 'चित्र-कथा साझा करें', en: 'Share picture story', gu: 'ચિત્રવાર્તા શેર કરો', kn: 'ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ' },

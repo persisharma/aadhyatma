@@ -190,4 +190,14 @@ describe('ShareTargetSheet · series (design.md §39.5)', () => {
     await act(async () => byLabel(tree, 'Continue to Instagram').props.onPress());
     expect(s.onContinueCarousel).toHaveBeenCalledTimes(1);
   });
+
+  test('the picture layout drops the 4:5 Instagram-post row: both Instagram routes would export the same 9:16 card', async () => {
+    const plain = await renderSheet();
+    expect(byLabel(plain, 'Share on Instagram')).toBeDefined();
+    expect(byLabel(plain, 'Share as Instagram story or reel')).toBeDefined();
+    const picture = await renderSheet({ cardLayout: 'picture' });
+    expect(byLabel(picture, 'Share on Instagram')).toBeUndefined();
+    expect(byLabel(picture, 'Share as Instagram story or reel')).toBeDefined();
+    expect(byLabel(picture, 'Share to other apps')).toBeDefined();
+  });
 });

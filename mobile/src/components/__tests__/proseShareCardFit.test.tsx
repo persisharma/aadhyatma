@@ -3,10 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import ProseShareCard from '../ProseShareCard';
-import { paginateProse, proseBodyHeight, proseCardMetrics } from '@/utils/shareCardPages';
+import { bodyHeightFor, bodyWidthFor, paginateProse, pictureCardMetrics, proseBodyHeight, proseCardMetrics } from '@/utils/shareCardPages';
+import { kidsStoryArtRetainedHeight } from '@/utils/kidsStoryArtFrame';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { kidsStoryShareable } from '@/utils/kidsStoryShare';
-import { getKidsStory } from '@/data/kidsStories';
+import { getKidsStory, kidsStories } from '@/data/kidsStories';
 import type { Lang } from '@/data/gita/language';
 
 /**
@@ -21,7 +22,6 @@ const MockView = require('react-native').View as typeof View;
 jest.mock('../KidsStoryArt', () => ({
   __esModule: true,
   default: ({ label }: { label: string }) => <MockView testID="kids-story-art" accessibilityLabel={label} />,
-  kidsStoryArtRetainedHeight: () => 0.8,
 }));
 
 const katha = getKathaContent('chhath-puja-katha')!;
@@ -122,12 +122,81 @@ describe('ProseShareCard', () => {
     expect(texts(two.tree).map((t) => t.props.children)).not.toContain(katha.sections[0].titleEn);
   });
 
-  test('an illustrated scene puts the complete art above the title and caption in the paginator box', async () => {
-    const story = getKidsStory('krishna-janma')!;
-    const page = kidsStoryShareable(story).scopes[0].prepared!.hi.pages[0];
+  test('a picture-story scene: 540×960 card, full-width art above the reader caption box, dialogue in its box', async () => {
+    // No published story carries dialogue yet; a quote is added to a real scene page so the box renders.
+    const story = kidsStories.find((s) => s.pages.some((p) => p.dialogue)) ?? getKidsStory('krishna-janma')!;
+    const share = kidsStoryShareable(story);
+    const pages = share.scopes.filter((s) => s.id.startsWith('part-')).flatMap((s) => s.prepared!.hi.pages);
+    const base = pages.find((p) => p.illustration && p.blocks.some((b) => b.kind === 'quote')) ?? pages[0];
+    const page = base.blocks.some((b) => b.kind === 'quote') ? base
+      : { ...base, blocks: [...base.blocks, { kind: 'quote' as const, speaker: 'कंस', text: 'यह मेरा राज्य है।', continued: false, continues: false }] };
     expect(page.illustration).toBeDefined();
-    expect(page.title).toBe(story.pages[0].title.hi);
-    expect(page.blocks[0].text).toBe(story.pages[0].text.hi);
+    let tree: TestRenderer.ReactTestRenderer;
+    await act(async () => {
+      tree = TestRenderer.create(
+        <ThemeProvider>
+          <ProseShareCard background={null} header={`1/${story.pages.length} · ${story.title.hi}`} page={page} pageIndex={0} pageCount={10} lang="hi" layout="picture" illustrationUri="file:///cache/art.webp" />
+        </ThemeProvider>
+      );
+    });
+    const card = StyleSheet.flatten(tree!.root.findAllByType(View)[0].props.style);
+    expect(card.width).toBe(pictureCardMetrics.width);
+    expect(card.height).toBe(pictureCardMetrics.height);
+    expect([card.width, card.height]).toEqual([540, 960]);
+
+    const body = tree!.root.find((n) => (n.type as unknown) === 'View' && StyleSheet.flatten(n.props.style).height === bodyHeightFor('picture'));
+    const [art, caption] = body.children as TestRenderer.ReactTestInstance[];
+    const box = art.findByProps({ testID: 'share-scene-art' });
+    const boxStyle = StyleSheet.flatten(box.props.style);
+    expect(boxStyle.height).toBe(page.illustration!.heightDp);
+    expect(boxStyle.marginBottom).toBe(pictureCardMetrics.illustrationGap);
+    const frame = StyleSheet.flatten(box.findAllByType(View)[1].props.style);
+    const expectedWidth = Math.min(bodyWidthFor('picture'), page.illustration!.heightDp / (1.25 * kidsStoryArtRetainedHeight(page.illustration!.art)));
+    expect(frame.width).toBeCloseTo(expectedWidth, 5);
+    expect(page.illustration!.heightDp).toBeGreaterThanOrEqual(pictureCardMetrics.illustrationMinHeight);
+    expect(tree!.root.findByProps({ testID: 'kids-story-art' }).props.accessibilityLabel).toBe(page.title);
+
+    // The caption box, as the reader draws it: tinted, padded, title first, then narration, then the dialogue box.
+    expect(caption.props.testID).toBe('share-caption');
+    const captionStyle = StyleSheet.flatten(caption.props.style);
+    expect(captionStyle.paddingHorizontal).toBe(pictureCardMetrics.captionPaddingHorizontal);
+    expect(captionStyle.paddingVertical).toBe(pictureCardMetrics.captionPaddingVertical);
+    expect(captionStyle.backgroundColor).toBeDefined();
+    const titleText = caption.findAllByType(Text)[0];
+    expect(titleText.props.children).toBe(page.title);
+    const quote = tree!.root.findByProps({ testID: 'share-quote' });
+    const quoteTexts = quote.findAllByType(Text).map((t) => t.props.children);
+    const block = page.blocks.find((b) => b.kind === 'quote')!;
+    expect(quoteTexts).toEqual([block.speaker, block.text]);
+    expect(StyleSheet.flatten(quote.props.style).padding).toBe(pictureCardMetrics.quotePadding);
+    expect(allText(tree!)).toContain(page.blocks[0].text);
+  });
+
+  test('the closing picture card prints the app link under its label', async () => {
+    const story = getKidsStory('krishna-janma')!;
+    const share = kidsStoryShareable(story, story.pages.length - 1);
+    const scene = share.scopes[share.scopes.length - 1].prepared!.en.pages;
+    const page = scene[scene.length - 1];
+    const link = page.blocks[page.blocks.length - 1];
+    expect(link.kind).toBe('link');
+    let tree: TestRenderer.ReactTestRenderer;
+    await act(async () => {
+      tree = TestRenderer.create(
+        <ThemeProvider>
+          <ProseShareCard background={null} header="16/16 · Krishna Janma" page={page} pageIndex={scene.length - 1} pageCount={scene.length} lang="en" layout="picture" illustrationUri="file:///cache/art.webp" />
+        </ThemeProvider>
+      );
+    });
+    const row = tree!.root.findByProps({ testID: 'share-app-link' });
+    const texts = row.findAllByType(Text).map((t) => t.props.children);
+    expect(texts).toEqual([link.text, 'vedansh.app/get']);
+    expect(allText(tree!)).toContain('॥ इति ॥');
+  });
+
+  test('a prose-layout illustrated page keeps art, then title, then caption, in the paginator box', async () => {
+    const story = getKidsStory('krishna-janma')!;
+    const scene = kidsStoryShareable(story).scopes[0].prepared!.hi.pages[0];
+    const page = { ...scene, illustration: { ...scene.illustration!, heightDp: 240 } };
     let tree: TestRenderer.ReactTestRenderer;
     await act(async () => {
       tree = TestRenderer.create(
@@ -136,19 +205,10 @@ describe('ProseShareCard', () => {
         </ThemeProvider>
       );
     });
-    const box = tree!.root.findByProps({ testID: 'share-scene-art' });
-    const boxStyle = StyleSheet.flatten(box.props.style);
-    expect(boxStyle.height).toBe(page.illustration!.heightDp);
-    expect(boxStyle.marginBottom).toBe(proseCardMetrics.illustrationGap);
-    expect(page.illustration!.heightDp).toBeGreaterThanOrEqual(proseCardMetrics.illustrationMinHeight);
-    const frame = StyleSheet.flatten(box.findAllByType(View)[1].props.style);
-    expect(frame.width).toBeCloseTo(page.illustration!.heightDp / (1.25 * 0.8), 5);
-    expect(tree!.root.findByProps({ testID: 'kids-story-art' }).props.accessibilityLabel).toBe(page.title);
-    // Art, then title, then caption: the body's children keep the reader's order.
-    const body = tree!.root.find((n) => n.type === 'View' && StyleSheet.flatten(n.props.style).height === proseBodyHeight);
-    const [first, second] = body.children as TestRenderer.ReactTestInstance[];
-    expect(first.findByProps({ testID: 'share-scene-art' })).toBeDefined();
-    expect(second.props.children).toBe(page.title);
-    expect(allText(tree!)).toContain(page.blocks[0].text);
+    const body = tree!.root.find((n) => (n.type as unknown) === 'View' && StyleSheet.flatten(n.props.style).height === proseBodyHeight);
+    const [art, caption] = body.children as TestRenderer.ReactTestInstance[];
+    expect(StyleSheet.flatten(art.findByProps({ testID: 'share-scene-art' }).props.style).height).toBe(240);
+    expect(caption.props.style).toBeUndefined();
+    expect(caption.findAllByType(Text)[0].props.children).toBe(page.title);
   });
 });

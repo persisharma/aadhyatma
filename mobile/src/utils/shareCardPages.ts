@@ -54,6 +54,39 @@ export const proseCardMetrics = {
   slackLines: 1,
 } as const;
 
+/**
+ * Which card a page is laid out for.
+ *
+ * - `prose` — the 540×675 (4:5) card above.
+ * - `picture` — the 540×960 (9:16) picture-story card (design.md §76): the complete
+ *   illustration at the body's full width, then the reader's caption box (title, narration,
+ *   dialogue in its tinted box). Captured at 1080×1920 whatever the target, so a
+ *   WhatsApp album of scenes looks like the reader pages do.
+ */
+export type ShareCardLayout = 'prose' | 'picture';
+
+/** Geometry of the picture-story card, in dp. Same chrome as the prose card, taller body. */
+export const pictureCardMetrics = {
+  ...proseCardMetrics,
+  height: 960,
+  /** Full-width 4:5 art is 472–564 dp tall after the reviewed frame; below this a scene narrows. */
+  illustrationMinHeight: 400,
+  /** The closing card's cover is a recap over the takeaway, source and app link: it may go smaller. */
+  coverMinHeight: 260,
+  /** The reader's caption box (`parchmentSoft`, radius 12) around title + narration. */
+  captionPaddingHorizontal: 16,
+  captionPaddingVertical: 12,
+  /** The dialogue box (`goldTint`, radius 10) inside the caption. */
+  quotePadding: 12,
+  /** The app-link block on the last card. */
+  linkPadding: 10,
+  linkLineHeight: 24,
+} as const;
+
+export function cardMetricsFor(layout: ShareCardLayout = 'prose'): typeof proseCardMetrics | typeof pictureCardMetrics {
+  return layout === 'picture' ? pictureCardMetrics : proseCardMetrics;
+}
+
 type Face = { fontSize: number; lineHeight: number };
 
 /** Body / title / heading faces by script family. */
@@ -106,11 +139,44 @@ export const proseBodyHeight =
   proseCardMetrics.pageRowBlock -
   proseCardMetrics.footerBlock;
 
-export type ProseBlockInput = { kind: 'heading' | 'para'; text: string };
+/** The body box of a card: the card height minus its chrome. */
+export function bodyHeightFor(layout: ShareCardLayout = 'prose'): number {
+  const m = cardMetricsFor(layout);
+  return m.height - m.paddingTop - m.paddingBottom - m.headerBlock - m.pageRowBlock - m.footerBlock;
+}
+
+/** Width the body's content spans (the picture caption box insets its text further). */
+export function bodyWidthFor(layout: ShareCardLayout = 'prose'): number {
+  const m = cardMetricsFor(layout);
+  return m.width - 2 * m.paddingHorizontal;
+}
+
+/** Width a line of text wraps at: the body, less the picture layout's caption-box padding. */
+export function textWidthFor(layout: ShareCardLayout = 'prose'): number {
+  return bodyWidthFor(layout) - (layout === 'picture' ? 2 * pictureCardMetrics.captionPaddingHorizontal : 0);
+}
+
+/**
+ * Prose comes as headings and paragraphs; a picture story adds a `quote` (one line of
+ * dialogue with its speaker, drawn in the reader's tinted box) and a `link` (the app
+ * link on the last card: a label line over the URL, never split across pages).
+ */
+export type ProseBlockInput = {
+  kind: 'heading' | 'para' | 'quote' | 'link';
+  text: string;
+  /** `quote` only: who speaks; drawn on its own line above the words. */
+  speaker?: string;
+  /** `link` only: the URL under the label. */
+  url?: string;
+};
 
 export type ProsePageBlock = {
-  kind: 'heading' | 'para';
+  kind: 'heading' | 'para' | 'quote' | 'link';
   text: string;
+  /** `quote`: the speaker, on the first part of a quote only. */
+  speaker?: string;
+  /** `link`: the URL under the label. */
+  url?: string;
   /** This paragraph began on the previous page (the card draws a leading `…`). */
   continued: boolean;
   /** This paragraph carries on onto the next page. */
@@ -120,14 +186,15 @@ export type ProsePageBlock = {
 export type ProsePage = {
   /**
    * An illustrated scene above this page's title and caption. `heightDp` is the box the
-   * art fills: the body left after `usedDp` and `illustrationGap`, never below
-   * `illustrationMinHeight` (the paginator reserved that much on the first page).
+   * art fills: the body left after `usedDp` and `illustrationGap`, never below the
+   * layout's `illustrationMinHeight` (the paginator reserved that much on the first page)
+   * and, on the picture card, never taller than the art at the body's full width.
    */
   illustration?: { art: string; label: string; heightDp: number };
   /** Only page 1 carries the title. */
   title: string | null;
   blocks: ProsePageBlock[];
-  /** Estimated body height this page uses, in dp. */
+  /** Estimated body height this page uses, in dp (the caption box's padding included). */
   usedDp: number;
 };
 
@@ -187,7 +254,7 @@ export function wrapLineCount(text: string, perLine: number): number {
   return lines;
 }
 
-type Item = { kind: 'heading' | 'para'; blockIndex: number; sentences: string[] };
+type Item = { kind: ProseBlockInput['kind']; blockIndex: number; sentences: string[]; speaker?: string; url?: string };
 type Page = { title: string | null; items: Item[] };
 
 export function paginateProse(params: {
@@ -197,16 +264,24 @@ export function paginateProse(params: {
   maxPages?: number;
   /** Body height the first page gives up (an illustration and its gap); later pages keep the full budget. */
   firstPageReservedDp?: number;
+  /** The card these pages are laid out for; defaults to the prose card. */
+  layout?: ShareCardLayout;
 }): ProsePagination {
+  const layout = params.layout ?? 'prose';
   const m = proseCardMetrics;
+  const pm = pictureCardMetrics;
   const faces = proseType[proseScript(params.lang)];
   const adv = ADVANCE[params.lang];
-  const bodyCpl = charsPerLine(proseBodyWidth, faces.body.fontSize, adv);
-  const titleCpl = charsPerLine(proseBodyWidth, faces.title.fontSize, adv * BOLD_FACTOR);
-  const headingCpl = charsPerLine(proseBodyWidth, faces.heading.fontSize, adv * BOLD_FACTOR);
-  const budget = proseBodyHeight - m.slackLines * faces.body.lineHeight;
+  const textWidth = textWidthFor(layout);
+  const bodyCpl = charsPerLine(textWidth, faces.body.fontSize, adv);
+  const titleCpl = charsPerLine(textWidth, faces.title.fontSize, adv * BOLD_FACTOR);
+  const headingCpl = charsPerLine(textWidth, faces.heading.fontSize, adv * BOLD_FACTOR);
+  const quoteCpl = charsPerLine(textWidth - 2 * pm.quotePadding, faces.body.fontSize, adv);
+  const budget = bodyHeightFor(layout) - m.slackLines * faces.body.lineHeight;
   const maxPages = params.maxPages ?? MAX_SHARE_PAGES;
   const reserved = Math.max(0, params.firstPageReservedDp ?? 0);
+  /** The picture card draws every page's text inside the reader's padded caption box. */
+  const boxPadding = layout === 'picture' ? 2 * pm.captionPaddingVertical : 0;
 
   const itemHeight = (item: Item, first: boolean): number => {
     const text = item.sentences.join(' ');
@@ -217,13 +292,22 @@ export function paginateProse(params: {
         m.headingMarginBottom
       );
     }
+    if (item.kind === 'link') {
+      return (first ? 0 : m.paraGap) + 2 * pm.linkPadding +
+        wrapLineCount(text, headingCpl) * faces.heading.lineHeight + pm.linkLineHeight;
+    }
     if (!text) return 0;
+    if (item.kind === 'quote') {
+      return (first ? 0 : m.paraGap) + 2 * pm.quotePadding +
+        (item.speaker ? faces.heading.lineHeight : 0) +
+        wrapLineCount(text, quoteCpl) * faces.body.lineHeight;
+    }
     return (first ? 0 : m.paraGap) + wrapLineCount(text, bodyCpl) * faces.body.lineHeight;
   };
   const pageHeight = (page: Page): number => {
-    let h = page.title
+    let h = boxPadding + (page.title
       ? wrapLineCount(page.title, titleCpl) * faces.title.lineHeight + m.titleMarginBottom
-      : 0;
+      : 0);
     page.items.forEach((it, i) => {
       h += itemHeight(it, i === 0);
     });
@@ -231,7 +315,7 @@ export function paginateProse(params: {
   };
   // Body text only: a page holding just a carried-over heading is not yet a page.
   const hasContent = (page: Page) =>
-    page.items.some((it) => it.kind === 'para' && it.sentences.length > 0);
+    page.items.some((it) => (it.kind === 'para' || it.kind === 'quote' || it.kind === 'link') && it.sentences.length > 0);
 
   const title = params.title?.trim() ? params.title.trim() : null;
   const pages: Page[] = [];
@@ -250,13 +334,16 @@ export function paginateProse(params: {
     page = { title: null, items: carried };
   };
 
+  /** Block `bi` already has words on a page: a quote's speaker is drawn on its first part only. */
+  const begun = (bi: number) =>
+    [...pages, page].some((pg) => pg.items.some((it) => it.blockIndex === bi && it.sentences.length > 0));
   /** Place one sentence of block `bi`, splitting at words only if it cannot fit an empty page. */
-  const placeSentence = (bi: number, sentence: string) => {
+  const placeSentence = (bi: number, sentence: string, kind: 'para' | 'quote', speaker?: string) => {
     let remaining = sentence;
     while (remaining) {
       let last = page.items[page.items.length - 1];
-      if (!last || last.kind !== 'para' || last.blockIndex !== bi) {
-        last = { kind: 'para', blockIndex: bi, sentences: [] };
+      if (!last || last.kind !== kind || last.blockIndex !== bi) {
+        last = { kind, blockIndex: bi, sentences: [], ...(kind === 'quote' && speaker && !begun(bi) ? { speaker } : {}) };
         page.items.push(last);
       }
       last.sentences.push(remaining);
@@ -300,7 +387,18 @@ export function paginateProse(params: {
       }
       return;
     }
-    for (const s of splitSentences(text)) placeSentence(bi, s);
+    if (block.kind === 'link') {
+      // Never split: a label over its URL moves to the next page whole.
+      const item: Item = { kind: 'link', blockIndex: bi, sentences: [text], url: block.url };
+      page.items.push(item);
+      if (pageHeight(page) > pageBudget() && hasContent({ ...page, items: page.items.slice(0, -1) })) {
+        page.items.pop();
+        closePage();
+        page.items.push(item);
+      }
+      return;
+    }
+    for (const s of splitSentences(text)) placeSentence(bi, s, block.kind, block.speaker);
   });
   closePage();
 
@@ -337,15 +435,18 @@ export function paginateProse(params: {
       const nextPage = pages[pi + 1];
       const prevTail = prevPage?.items[prevPage.items.length - 1];
       const nextHead = nextPage?.items[0];
+      const flows = it.kind === 'para' || it.kind === 'quote';
       return {
         kind: it.kind,
         text: it.sentences.join(' '),
+        ...(it.speaker ? { speaker: it.speaker } : {}),
+        ...(it.url ? { url: it.url } : {}),
         continued:
-          it.kind === 'para' && ii === 0 && prevTail?.kind === 'para' && prevTail.blockIndex === it.blockIndex,
+          flows && ii === 0 && prevTail?.kind === it.kind && prevTail.blockIndex === it.blockIndex,
         continues:
-          it.kind === 'para' &&
+          flows &&
           ii === p.items.length - 1 &&
-          nextHead?.kind === 'para' &&
+          nextHead?.kind === it.kind &&
           nextHead.blockIndex === it.blockIndex,
       };
     }),
