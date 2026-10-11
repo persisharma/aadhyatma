@@ -488,6 +488,39 @@ assert.ok(
   `Gayatri Mata Aarti refrain should be "जयति जय गायत्री माता", got: "${gayatriAartiRefrain.lines[0]}"`
 );
 
+// ─── 10d. Khatu Shyam Aarti canonical structure & refrain ───────────────────
+// Opening refrain is the identity anchor from
+// docs/content-parity/chalisa-aarti-existing-deities.md. Tagged krishna: no
+// separate Shyam deity id exists or should be introduced for it.
+
+const khatuShyamAarti = readJson('aarti/khatu-shyam-aarti.json');
+assert.equal(
+  khatuShyamAarti.verses.length,
+  8,
+  'Khatu Shyam Aarti should have 8 verses (opening refrain + 6 stanzas + closing refrain)'
+);
+assert.equal(
+  khatuShyamAarti.verses.filter((v: any) => v.type === 'stanza').length,
+  6,
+  'Khatu Shyam Aarti should have exactly 6 stanzas'
+);
+assert.equal(khatuShyamAarti.deity, 'krishna', 'Khatu Shyam Aarti deity should be krishna');
+assert.ok(
+  khatuShyamAarti.verses[0].type === 'refrain' &&
+    khatuShyamAarti.verses[0].lines[0].startsWith('ॐ जय श्री श्याम हरे'),
+  `Khatu Shyam Aarti should open with the refrain "ॐ जय श्री श्याम हरे", got: "${khatuShyamAarti.verses[0].lines[0]}"`
+);
+assert.ok(
+  khatuShyamAarti.verses.at(-1).type === 'refrain' &&
+    khatuShyamAarti.verses.at(-1).lines.join(' ').includes('निज भक्तों के तुमने'),
+  'Khatu Shyam Aarti should close with its closing refrain'
+);
+assert.deepEqual(
+  library.find((e) => e.id === 'khatu-shyam-aarti')?.deities,
+  ['krishna'],
+  'khatu-shyam-aarti must be tagged under the Krishna deity only'
+);
+
 // ─── 11. Library labels are precise about excerpts and verse types ───────────
 
 const libraryById = new Map(library.map((entry) => [entry.id, entry]));
@@ -803,6 +836,7 @@ for (const file of [
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',
   'aarti/gayatri-aarti.json',
+  'aarti/khatu-shyam-aarti.json',
 ]) {
   const meaningsEn: string[] = readJson(file)
     .verses.map((v: any) => v.meaningEn)

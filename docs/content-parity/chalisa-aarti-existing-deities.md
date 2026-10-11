@@ -21,7 +21,7 @@ Status legend:
 - **HOLD** — identity, variant, provenance, or copyright requires a human
   editorial decision before transcription.
 
-No row below is `active`. RULEBOOK §10 still requires a complete two-source
+Only `khatu-shyam-aarti` is wired into the reader (October 2026), and its second-source collation is still pending. No other row is `active`. RULEBOOK §10 still requires a complete two-source
 comparison, source metadata, clean romanization, and per-verse Hindi and English
 meanings before reader integration.
 
@@ -62,7 +62,7 @@ Chalisa acquisition result: **14 `2C`, 6 `HOLD`, 0 `1C`**.
 | `dwarkadhish-aarti` | द्वारकाधीश आरती · Dwarkadhish Aarti | `krishna` | `जय द्वारकाधीश हरे, प्रभु जय द्वारकाधीश हरे` | No acceptable source outside the parity site found | **HOLD** — do not transcribe the competitor's unattributed composition. |
 | `ganga-aarti` | गंगा आरती · Ganga Aarti | `ganga` | `ॐ जय गंगे माता, मैया जय गंगे माता` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/ganga-mata/ganga-mata-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/deities/ganga/) | **2C** |
 | `kali-aarti` | काली आरती · Kali Aarti | `kali` | `मंगल की सेवा, सुन मेरी देवा` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/kali-mata/mahakali-mata-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/shri-kali-mata-ki-aarti-hindi/) | **2C** — HinduNidhi also labels it a bhajan; retain the Aarti identity used by Drik. |
-| `khatu-shyam-aarti` | खाटू श्याम आरती · Khatu Shyam Aarti | `krishna` | `ॐ जय श्री श्याम हरे, बाबा जय श्री श्याम हरे` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/shyam-baba/shyam-baba-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/khatu-shyam-ji-aarti-hindi/) | **2C** — tag `krishna`; no new Shyam deity. |
+| `khatu-shyam-aarti` | खाटू श्याम आरती · Khatu Shyam Aarti | `krishna` | `ॐ जय श्री श्याम हरे, बाबा जय श्री श्याम हरे` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/shyam-baba/shyam-baba-aarti.html?lang=hi) · [BhaktiBharat](https://www.bhaktibharat.com/aarti/shri-khatu-shyam-ji-ki-aarti) | **WIRED · collation pending** — shipped as `khatu-shyam-aarti` (8 verses) from maintainer-supplied text on 2026-10-11; tag `krishna`, no new Shyam deity. Clear the JSON's `canonicalEditionStatus` by collating against both pages. |
 | `lakshmi-aarti` | लक्ष्मी आरती · Lakshmi Aarti | `lakshmi` | `ॐ जय लक्ष्मी माता, मैया जय लक्ष्मी माता` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/lakshmi-mata/lakshmi-mata-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/lakshmi-ji-ki-aarti-hindi/) | **2C** — strongest first-batch candidate. |
 | `mehandipur-balaji-aarti` | मेहन्दीपुर बालाजी आरती · Mehandipur Balaji Aarti | `hanuman` | `ॐ जय हनुमत वीरा, स्वामी जय हनुमत वीरा` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/shri-balaji/shri-balaji-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/mehandipur-balaji-aarti-hindi/) | **2C** — tag `hanuman`; do not confuse with Tirupati Balaji. |
 | `narasimha-aarti` | नरसिंह आरती · Narasimha Aarti | `narasimha` | `ॐ जय नरसिंह हरे, प्रभु जय नरसिंह हरे` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/lord-narasimha/om-jai-narsingh-hare.html?lang=hi) | **1C** — obtain a second source; do not switch to the distinct Narsingh Kunwar Aarti. |

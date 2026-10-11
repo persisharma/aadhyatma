@@ -593,6 +593,22 @@ export const library: readonly LibraryEntry[] = [
     addedInVersion: '1.4.5',
   },
   {
+    // Khatu Shyam (Barbarika, worshipped as Shri Shyam at Khatu, Rajasthan) is
+    // tagged under the existing Krishna deity per
+    // docs/content-parity/chalisa-aarti-existing-deities.md; no new deity id.
+    id: 'khatu-shyam-aarti',
+    nameHi: 'श्री खाटू श्याम जी की आरती',
+    nameEn: 'Shri Khatu Shyam Ji Ki Aarti',
+    sub: '8 पद · व्याख्या सहित',
+    subEn: '8 verses · with commentary',
+    thumb: 'श्या',
+    status: 'active',
+    category: 'aarti',
+    deities: ['krishna'],
+    verseCount: 8,
+    addedInVersion: '1.5.0',
+  },
+  {
     id: 'prabhati-shloka',
     nameHi: 'प्रभाती श्लोक',
     nameEn: 'Morning Slokas',

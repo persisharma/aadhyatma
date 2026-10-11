@@ -80,3 +80,31 @@ test('renders the first Aarti verse without throwing', () => {
 
   assert.ok(renderedText.includes(firstVerse.lines[0]));
 });
+
+test('dispatches aartiIndex to the Khatu Shyam Aarti, not the first aarti', () => {
+  const index = getActualData.aartiIndexById['khatu-shyam-aarti'];
+  const khatu = getActualData.getAarti(index);
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <ShareProvider>
+          <AartiReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { aartiIndex: index, initialIndex: 0 } } as ReaderProps['route']}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+
+  const renderedText = tree!
+    .root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+
+  assert.ok(renderedText.includes(khatu.verses[0].lines[0]));
+  assert.ok(!renderedText.includes(firstVerse.lines[0]));
+});

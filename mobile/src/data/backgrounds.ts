@@ -105,6 +105,9 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'saraswati-stotram': backgroundImages.deity_saraswati_veena,
   'saraswati-aarti': backgroundImages.deity_saraswati_veena,
   'gayatri-aarti': backgroundImages.source_gayatri_savitri_sun,
+  // The commissioned Khatu Shyam temple plate, so the aarti does not borrow
+  // Krishna's bansuri art (precedent: subrahmanya-ashtakam → Vetrimalai plate).
+  'khatu-shyam-aarti': backgroundImages.theerth_khatu_shyam,
   'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
   'matribhumi-vandana': backgroundImages.category_stotram_hymn_scroll,
   lingashtakam: shivaStrotamImages.shiva,
