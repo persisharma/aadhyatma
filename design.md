@@ -54,11 +54,19 @@ The palette is warm manuscript — **never green/red** — and signal colours st
 §12). This rule governs **theme colour and UI chrome**, i.e. everything in
 `mobile/src/theme/colors.ts`.
 
-**One sanctioned exception:** the bundled Storybook illustrations
+**Illustration exception:** the bundled Storybook illustrations
 (`mobile/assets/icons/storybook/`, §42) carry muted peacock and water hues.
 They are **painted attributes of the art, never signals**: Krishna's feather,
 Kartikeya's plume, Ganga's waves. These colors stay inside the illustration assets;
 badges, chips, borders, states and utility icon tints take their color from `colors.ts`.
+
+### 2.1 App icon and native launch identity
+
+The approved app icon uses enlarged copper relief geometry on warm ivory with a distinct vermilion bindu. The red is part of this approved brand artwork, never a UI status color. Keep the complete approved composition: no new lotus surround, recoloring, baked-in rounded mask, or regenerated geometry during export.
+
+`mobile/assets/branding/app-icon-master.png` is the approved source. Its generation prompt and SHA-256 export manifest live beside it. Run `node mobile/scripts/export-app-icons.mjs` to derive `icon.png` (1024px, opaque iOS/legacy launcher), `splash-icon.png` (512px), `favicon.png` (64px), and `adaptive-icon.png` (1024px with the artwork centered in the Android 72/108 viewport). The essential central symbol stays inside Android's 66dp safe circle; peripheral decoration can be masked by launchers. Android adaptive and splash backgrounds use ivory `#FFF1D5`.
+
+`mobile/app.json` owns all four references. The explicit `expo-splash-screen` plugin uses a 200pt iOS image and a 160dp Android image to keep the square artwork inside the Android splash mask. Home's Om-flanked wordmark and text-only share footer remain separate brand treatments; `AppIcon.tsx` is the navigation/control glyph registry, not the app logo. Launcher/splash changes require a new native binary; OTA and Expo Go are not native-launch verification. Review generated iOS assets, Android circle/squircle masks, and launch screens before release.
 
 ---
 
