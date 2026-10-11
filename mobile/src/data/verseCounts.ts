@@ -23,6 +23,7 @@ export const gayatriChalisaCounts = {"openingDohas":2,"chaupais":40,"closingDoha
 export const hanumanAshtakTotal = 9 as const;
 export const hanumanChalisaTotal = 43 as const;
 export const kalikaAshtakamTotal = 10 as const;
+export const khatuShyamChalisaCounts = {"openingDohas":1,"chaupais":40,"closingDohas":1,"totalVerses":42} as const;
 export const krishnaChalisaCounts = {"openingDohas":2,"chaupais":40,"closingDohas":1,"totalVerses":43} as const;
 export const krishnaStotramTotal = 12 as const;
 export const krishnaStutiTotal = 12 as const;
