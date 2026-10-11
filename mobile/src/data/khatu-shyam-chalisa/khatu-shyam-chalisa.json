@@ -1,0 +1,783 @@
+{
+  "titleHi": "श्री खाटू श्याम चालीसा",
+  "titleEn": "Shri Khatu Shyam Chalisa",
+  "subtitleHi": "40 चौपाई + 2 दोहा · अर्थ सहित",
+  "subtitleEn": "40 Chaupai + 2 Doha · with meaning",
+  "language": "hi",
+  "script": "devanagari",
+  "source": {
+    "baseText": "Shri Shyam (Khatu Shyam) Chalisa, the composition opening श्री गुरु चरण ध्यान धर, सुमिरि सच्चिदानन्द. Devanagari supplied by the maintainer on 2026-10-11, copied from a published chalisa page; only the space before each danda was dropped. A web-search summary on 2026-10-11 (not a page read) reported Drik Panchang printing दीन दयालु at chaupai 2 where HinduNidhi prints दिन दयालु, and the BhaktiBharat 'Khatu Dham Sikar' chalisa as a different, longer composition; that one is not merged here. Confirm both during collation. Meanings and romanization are Aadhyatma editorial.",
+    "referenceUrls": [],
+    "canonicalEdition": "Drik Panchang Shri Shyam Chalisa; HinduNidhi Shri Khatu Shyam Chalisa",
+    "canonicalEditionUrls": [
+      "https://www.drikpanchang.com/lyrics/chalisa/shri-shyam/shri-shyam-chalisa.html?lang=hi",
+      "https://hindunidhi.com/khatu-shyam-chalisa-hindi/"
+    ],
+    "canonicalEditionStatus": "Pending (2026-10-11): the RULEBOOK §11.1 two-source line collation is not done. The authoring session's network policy refused both hosts, so neither page was opened. To clear: confirm which page the supplied text came from, collate every line against the other page, record any variant here, move both URLs into referenceUrls, and replace this status with a dated verified line.",
+    "retrievedOn": "2026-10-11"
+  },
+  "counts": {
+    "openingDohas": 1,
+    "chaupais": 40,
+    "closingDohas": 1,
+    "totalVerses": 42
+  },
+  "verses": [
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "श्री गुरु चरण ध्यान धर, सुमिरि सच्चिदानन्द।",
+        "श्याम चालीसा भणत हूँ, रच चौपाई छंद॥"
+      ],
+      "linesEn": [
+        "Shri guru charan dhyaan dhar, sumiri Sachchidanand.",
+        "Shyam chalisa bhanat hoon, rach chaupai chhand."
+      ],
+      "meaningHi": "श्री गुरु के चरणों का ध्यान धरकर और सच्चिदानन्द (परमात्मा) का स्मरण करके, मैं चौपाई छन्द में रचकर श्याम चालीसा कहता हूँ।",
+      "meaningEn": "Meditating on the feet of my revered Guru and remembering Sachchidananda (the Supreme, being-consciousness-bliss), I recite the Shyam Chalisa, composed in the chaupai metre."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "श्याम-श्याम भजि बारंबारा।",
+        "सहज ही हो भवसागर पारा॥"
+      ],
+      "linesEn": [
+        "Shyam-Shyam bhaji baarambaara.",
+        "Sahaj hi ho bhavsaagar paara."
+      ],
+      "meaningHi": "बार-बार 'श्याम-श्याम' भजने से सहज ही संसार-सागर पार हो जाता है।",
+      "meaningEn": "By chanting 'Shyam, Shyam' again and again, one crosses the ocean of worldly existence with ease."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "इन सम देव न दूजा कोई।",
+        "दीन दयालु न दाता होई॥"
+      ],
+      "linesEn": [
+        "In sam dev na dooja koi.",
+        "Deen dayaalu na daata hoi."
+      ],
+      "meaningHi": "इनके समान दूसरा कोई देवता नहीं है; न इनके समान दीनों पर दया करने वाला कोई दाता है।",
+      "meaningEn": "There is no other god equal to him, nor any giver so compassionate to the humble."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "भीमसुपुत्र अहिलवती जाया।",
+        "कहीं भीम का पौत्र कहाया॥"
+      ],
+      "linesEn": [
+        "Bheem suputra Ahilavati jaaya.",
+        "Kaheen Bheem ka pautra kahaaya."
+      ],
+      "meaningHi": "उन्हें कहीं भीम का सुपुत्र और अहिलवती से जन्मा कहा गया है, तो कहीं भीम का पौत्र।",
+      "meaningEn": "In one telling he is Bhima's son, born of Ahilavati; in another he is called Bhima's grandson."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "यह सब कथा सही कल्पान्तर।",
+        "तनिक न मानों इसमें अन्तर॥"
+      ],
+      "linesEn": [
+        "Yah sab katha sahi kalpaantar.",
+        "Tanik na maanon ismen antar."
+      ],
+      "meaningHi": "ये सब कथाएँ अलग-अलग कल्पों में सत्य हैं; इनमें तनिक भी अन्तर (विरोध) न मानें।",
+      "meaningEn": "All these accounts are true, each in a different kalpa (cosmic age); do not see the least contradiction in them."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "बर्बरीक विष्णु अवतारा।",
+        "भक्तन हेतु मनुज तनु धारा॥"
+      ],
+      "linesEn": [
+        "Barbareek Vishnu avataara.",
+        "Bhaktan hetu manuj tanu dhaara."
+      ],
+      "meaningHi": "बर्बरीक विष्णु के अवतार हैं, जिन्होंने भक्तों के लिए मनुष्य का शरीर धारण किया।",
+      "meaningEn": "Barbarika is an incarnation of Vishnu, who took a human body for the sake of his devotees."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "वसुदेव देवकी प्यारे।",
+        "यशुमति मैया नन्द दुलारे॥"
+      ],
+      "linesEn": [
+        "Vasudev Devaki pyaare.",
+        "Yashumati maiya Nand dulaare."
+      ],
+      "meaningHi": "आप वसुदेव और देवकी के प्यारे हैं, और यशोदा मैया व नन्द बाबा के दुलारे हैं।",
+      "meaningEn": "You are beloved of Vasudeva and Devaki, and the darling of Mother Yashoda and Nanda."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "मधुसूदन गोपाल मुरारी।",
+        "बृजकिशोर गोवर्धन धारी॥"
+      ],
+      "linesEn": [
+        "Madhusoodan Gopal Muraari.",
+        "Brijkishor Govardhan dhaari."
+      ],
+      "meaningHi": "आप मधुसूदन, गोपाल, मुरारी, ब्रजकिशोर और गोवर्धन पर्वत को धारण करने वाले हैं।",
+      "meaningEn": "You are Madhusudana, Gopala, Murari, the youth of Braj, and the one who held up Mount Govardhan."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "सियाराम श्री हरि गोविन्दा।",
+        "दीनपाल श्री बाल मुकुन्दा॥"
+      ],
+      "linesEn": [
+        "Siyaram Shri Hari Govinda.",
+        "Deenpaal Shri Baal Mukunda."
+      ],
+      "meaningHi": "आप ही सियाराम, श्री हरि और गोविन्द हैं; दीनों के पालक श्री बाल मुकुन्द हैं।",
+      "meaningEn": "You are Siya-Rama, Shri Hari and Govinda; protector of the humble, Shri Bala Mukunda."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "दामोदर रणछोड़ बिहारी।",
+        "नाथ द्वारिकाधीश खरारी॥"
+      ],
+      "linesEn": [
+        "Daamodar Ranchhod Bihaari.",
+        "Naath Dwaarikaadheesh Kharaari."
+      ],
+      "meaningHi": "आप दामोदर, रणछोड़ और बिहारी हैं; द्वारिका के स्वामी नाथ और खर राक्षस के शत्रु (खरारी) हैं।",
+      "meaningEn": "You are Damodara, Ranchhod and Bihari; the Lord, master of Dwarka, and Kharari, slayer of the demon Khara."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "नरहरि रूप प्रहलद प्यारा।",
+        "खम्भ फारि हिरनाकुश मारा॥"
+      ],
+      "linesEn": [
+        "Narhari roop Prahlad pyaara.",
+        "Khambh phaari Hiranakush maara."
+      ],
+      "meaningHi": "नरहरि (नरसिंह) रूप में, जिन्हें प्रह्लाद प्यारे थे, आपने खम्भा फाड़कर हिरण्यकशिपु को मारा।",
+      "meaningEn": "As Narahari (Narasimha), to whom Prahlada was dear, you burst through the pillar and slew Hiranyakashipu."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "राधा वल्लभ रुक्मिणी कंता।",
+        "गोपी बल्लभ कंस हनंता॥"
+      ],
+      "linesEn": [
+        "Radha vallabh Rukmini kanta.",
+        "Gopi ballabh Kans hananta."
+      ],
+      "meaningHi": "आप राधा के वल्लभ, रुक्मिणी के पति, गोपियों के प्रिय और कंस का वध करने वाले हैं।",
+      "meaningEn": "You are the beloved of Radha, husband of Rukmini, darling of the gopis and slayer of Kamsa."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "मनमोहन चित्तचोर कहाये।",
+        "माखन चोरि चोरि कर खाये॥"
+      ],
+      "linesEn": [
+        "Manmohan chittchor kahaaye.",
+        "Maakhan chori chori kar khaaye."
+      ],
+      "meaningHi": "आप मनमोहन और चित्तचोर कहलाए, जिन्होंने चुरा-चुराकर माखन खाया।",
+      "meaningEn": "You are called the enchanter of hearts and the stealer of minds, who stole butter again and again and ate it."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "मुरलीधर यदुपति घनश्यामा।",
+        "कृष्ण पतितपावन अभिरामा॥"
+      ],
+      "linesEn": [
+        "Murlidhar Yadupati Ghanshyaama.",
+        "Krishna patitpaavan abhiraama."
+      ],
+      "meaningHi": "आप मुरलीधर, यदुपति और घनश्याम हैं; पतितों को पावन करने वाले मनोहर कृष्ण हैं।",
+      "meaningEn": "You are the flute-bearer, lord of the Yadus, dark as a rain cloud; Krishna, the charming purifier of the fallen."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "मायापति लक्ष्मीपति ईसा।",
+        "पुरुषोत्तम केशव जगदीसा॥"
+      ],
+      "linesEn": [
+        "Maayaapati Lakshmipati eesa.",
+        "Purushottam Keshav Jagdeesa."
+      ],
+      "meaningHi": "आप माया के स्वामी, लक्ष्मीपति, ईश्वर, पुरुषोत्तम, केशव और जगदीश हैं।",
+      "meaningEn": "You are the master of Maya, consort of Lakshmi, the Lord, Purushottama, Keshava and Lord of the world."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "विश्वपति त्रिभुवन उजियारा।",
+        "दीनबन्धु भक्तन रखवारा॥"
+      ],
+      "linesEn": [
+        "Vishvapati tribhuvan ujiyaara.",
+        "Deenbandhu bhaktan rakhvaara."
+      ],
+      "meaningHi": "आप विश्व के स्वामी, तीनों लोकों को प्रकाशित करने वाले, दीनबन्धु और भक्तों के रक्षक हैं।",
+      "meaningEn": "You are lord of the universe, the light of the three worlds, friend of the humble and guardian of devotees."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "प्रभु का भेद कोई न पाया।",
+        "शेष महेश थके मुनिराया॥"
+      ],
+      "linesEn": [
+        "Prabhu ka bhed koi na paaya.",
+        "Shesh Mahesh thake muniraaya."
+      ],
+      "meaningHi": "प्रभु का रहस्य कोई नहीं पा सका; शेषनाग, महेश और श्रेष्ठ मुनि भी (खोजते-खोजते) थक गए।",
+      "meaningEn": "No one has fathomed the Lord's mystery; Shesha, Mahesha and the greatest sages have grown weary trying."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "नारद शारद ऋषि योगिन्दर।",
+        "श्याम-श्याम सब रटत निरन्तर॥"
+      ],
+      "linesEn": [
+        "Naarad Shaarad rishi yogindar.",
+        "Shyam-Shyam sab ratat nirantar."
+      ],
+      "meaningHi": "नारद, शारदा, ऋषि और योगीश्वर सब निरन्तर 'श्याम-श्याम' रटते रहते हैं।",
+      "meaningEn": "Narada, Sharada (Saraswati), the rishis and the foremost yogis all chant 'Shyam, Shyam' without ceasing."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "कवि कोविद करि सके न गिनन्ता।",
+        "नाम अपार अथाह अनन्ता॥"
+      ],
+      "linesEn": [
+        "Kavi kovid kari sake na ginanta.",
+        "Naam apaar athaah ananta."
+      ],
+      "meaningHi": "कवि और विद्वान भी (आपके नामों की) गिनती नहीं कर सके; आपके नाम अपार, अथाह और अनन्त हैं।",
+      "meaningEn": "Poets and scholars could not count them; your names are boundless, fathomless and endless."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "हर सृष्टि हर युग में भाई।",
+        "ले अवतार भक्त सुखदाई॥"
+      ],
+      "linesEn": [
+        "Har srishti har yug mein bhaai.",
+        "Le avataar bhakt sukhdaai."
+      ],
+      "meaningHi": "हे भाई, हर सृष्टि और हर युग में भक्तों को सुख देने वाले प्रभु अवतार लेते हैं।",
+      "meaningEn": "O brother, in every creation and every age, the giver of joy to devotees takes an incarnation."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "हृदय माँहि करि देखु विचारा।",
+        "श्याम भजे तो हो निस्तारा॥"
+      ],
+      "linesEn": [
+        "Hriday maanhi kari dekhu vichaara.",
+        "Shyam bhaje to ho nistaara."
+      ],
+      "meaningHi": "हृदय में विचार करके देखो — श्याम को भजने से ही उद्धार होता है।",
+      "meaningEn": "Reflect within your heart and see: worship Shyam, and you are delivered."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "कीर पढ़ावत गणिका तारी।",
+        "भीलनी की भक्ति बलिहारी॥"
+      ],
+      "linesEn": [
+        "Keer padhaavat ganika taari.",
+        "Bheelni ki bhakti balihaari."
+      ],
+      "meaningHi": "तोते को (प्रभु का नाम) पढ़ाते-पढ़ाते गणिका तर गई; भीलनी (शबरी) की भक्ति पर बलिहारी है।",
+      "meaningEn": "The courtesan was saved while teaching her parrot (to repeat the Lord's name); glory be to the devotion of the Bhil woman (Shabari)."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "सती अहिल्या गौतम नारी।",
+        "भई श्राप वश शिला दुखारी॥"
+      ],
+      "linesEn": [
+        "Sati Ahilya Gautam naari.",
+        "Bhai shraap vash shila dukhaari."
+      ],
+      "meaningHi": "गौतम ऋषि की पत्नी सती अहिल्या शाप के कारण दुखी होकर शिला बन गई थीं।",
+      "meaningEn": "Chaste Ahalya, wife of the sage Gautama, was turned by a curse into a grieving stone."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "श्याम चरण रज चित लाई।",
+        "पहुँची पति लोक में जाई॥"
+      ],
+      "linesEn": [
+        "Shyam charan raj chit laai.",
+        "Pahunchi pati lok mein jaai."
+      ],
+      "meaningHi": "श्याम के चरणों की धूल में चित्त लगाते ही वे अपने पति के लोक में जा पहुँचीं।",
+      "meaningEn": "Turning her heart to the dust of Shyam's feet, she went on to reach her husband's realm."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "अजामिल अरु सदन कसाई।",
+        "नाम प्रताप परम गति पाई॥"
+      ],
+      "linesEn": [
+        "Ajaamil aru Sadan kasaai.",
+        "Naam prataap param gati paai."
+      ],
+      "meaningHi": "अजामिल और सदन कसाई ने नाम के प्रताप से परम गति पाई।",
+      "meaningEn": "Ajamila and Sadan the butcher attained the supreme state through the power of the Name."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "जाके श्याम नाम अधारा।",
+        "सुख लहहि दुःख दूर हो सारा॥"
+      ],
+      "linesEn": [
+        "Jaake Shyam naam adhaara.",
+        "Sukh lahahi dukh door ho saara."
+      ],
+      "meaningHi": "जिसका आधार श्याम का नाम है, वह सुख पाता है और उसके सारे दुःख दूर हो जाते हैं।",
+      "meaningEn": "Whoever rests on the name of Shyam finds happiness, and all their sorrow departs."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "श्याम सलोना है अति सुन्दर।",
+        "मोर मुकुट सिर तन पीताम्बर॥"
+      ],
+      "linesEn": [
+        "Shyam salona hai ati sundar.",
+        "Mor mukut sir tan peetaambar."
+      ],
+      "meaningHi": "साँवले-सलोने श्याम अत्यन्त सुन्दर हैं; सिर पर मोर-मुकुट और तन पर पीताम्बर है।",
+      "meaningEn": "Charming dark Shyam is exceedingly beautiful, with a peacock-feather crown on his head and yellow silk on his body."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "गल वैजयन्तिमाल सुहाई।",
+        "छवि अनूप भक्तन मन भाई॥"
+      ],
+      "linesEn": [
+        "Gal Vaijayantimaal suhaai.",
+        "Chhavi anoop bhaktan man bhaai."
+      ],
+      "meaningHi": "गले में वैजयन्ती माला शोभा देती है; यह अनुपम छवि भक्तों के मन को भाती है।",
+      "meaningEn": "A Vaijayanti garland graces his neck; this matchless image delights the hearts of devotees."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "श्याम-श्याम सुमिरहुं दिनराती।",
+        "शाम दुपहरि अरु परभाती॥"
+      ],
+      "linesEn": [
+        "Shyam-Shyam sumirahun dinraati.",
+        "Shaam dupahari aru parbhaati."
+      ],
+      "meaningHi": "दिन-रात, शाम, दोपहर और प्रभात में 'श्याम-श्याम' का स्मरण करो।",
+      "meaningEn": "Remember 'Shyam, Shyam' day and night, at dusk, at noon and at dawn."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "श्याम सारथी जिसके रथ के।",
+        "रोड़े दूर होय उस पथ के॥"
+      ],
+      "linesEn": [
+        "Shyam saarathi jiske rath ke.",
+        "Rode door hoy us path ke."
+      ],
+      "meaningHi": "श्याम जिसके रथ के सारथी हैं, उसके मार्ग की सारी बाधाएँ (रोड़े) दूर हो जाती हैं।",
+      "meaningEn": "For one whose chariot Shyam drives, every obstacle on the road is cleared away."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "श्याम भक्त न कहीं पर हारा।",
+        "भीर परि तब श्याम पुकारा॥"
+      ],
+      "linesEn": [
+        "Shyam bhakt na kaheen par haara.",
+        "Bheer pari tab Shyam pukaara."
+      ],
+      "meaningHi": "श्याम का भक्त कहीं भी नहीं हारा; जब भी संकट पड़ा, उसने श्याम को पुकारा।",
+      "meaningEn": "A devotee of Shyam has never been defeated anywhere; whenever trouble came, they called out to Shyam."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "रसना श्याम नाम रस पी ले।",
+        "जी ले श्याम नाम के ही ले॥"
+      ],
+      "linesEn": [
+        "Rasna Shyam naam ras pee le.",
+        "Jee le Shyam naam ke hi le."
+      ],
+      "meaningHi": "हे जिह्वा, श्याम-नाम का रस पी ले; श्याम का नाम लेते हुए ही जी ले।",
+      "meaningEn": "O tongue, drink the nectar of Shyam's name; live your life taking Shyam's name alone."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "संसारी सुख भोग मिलेगा।",
+        "अन्त श्याम सुख योग मिलेगा॥"
+      ],
+      "linesEn": [
+        "Sansaari sukh bhog milega.",
+        "Ant Shyam sukh yog milega."
+      ],
+      "meaningHi": "(ऐसा करने से) संसार के सुख-भोग मिलेंगे और अन्त में श्याम के सुख का योग प्राप्त होगा।",
+      "meaningEn": "You will enjoy the pleasures of this world, and in the end you will find union with the bliss of Shyam."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "श्याम प्रभु हैं तन के काले।",
+        "मन के गोरे भोले-भाले॥"
+      ],
+      "linesEn": [
+        "Shyam prabhu hain tan ke kaale.",
+        "Man ke gore bhole-bhaale."
+      ],
+      "meaningHi": "प्रभु श्याम तन से साँवले हैं, पर मन के उजले और भोले-भाले हैं।",
+      "meaningEn": "Lord Shyam is dark of body, but fair of heart, simple and guileless."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "श्याम संत भक्तन हितकारी।",
+        "रोग-दोष अघ नाशै भारी॥"
+      ],
+      "linesEn": [
+        "Shyam sant bhaktan hitkaari.",
+        "Rog-dosh agh naashai bhaari."
+      ],
+      "meaningHi": "श्याम संतों और भक्तों का हित करने वाले हैं; वे भारी रोग, दोष और पापों का नाश करते हैं।",
+      "meaningEn": "Shyam is the benefactor of saints and devotees; he destroys even grave illness, faults and sins."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "प्रेम सहित जब नाम पुकारा।",
+        "भक्त लगत श्याम को प्यारा॥"
+      ],
+      "linesEn": [
+        "Prem sahit jab naam pukaara.",
+        "Bhakt lagat Shyam ko pyaara."
+      ],
+      "meaningHi": "जब भक्त प्रेम सहित नाम पुकारता है, तब वह श्याम को प्यारा लगता है।",
+      "meaningEn": "When a devotee calls the Name with love, that devotee becomes dear to Shyam."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "खाटू में हैं मथुरावासी।",
+        "पारब्रह्म पूरण अविनासी॥"
+      ],
+      "linesEn": [
+        "Khatu mein hain Mathuraavaasi.",
+        "Paarabrahm pooran avinaasi."
+      ],
+      "meaningHi": "मथुरावासी (श्रीकृष्ण) खाटू में विराजमान हैं; वे पूर्ण और अविनाशी परब्रह्म हैं।",
+      "meaningEn": "The dweller of Mathura abides in Khatu; he is the complete, imperishable Supreme Brahman."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "सुधा तान भरि मुरली बजाई।",
+        "चहुं दिशि जहाँ सुनी पाई॥"
+      ],
+      "linesEn": [
+        "Sudha taan bhari murli bajaai.",
+        "Chahun dishi jahaan suni paai."
+      ],
+      "meaningHi": "उन्होंने अमृत-सी तान भरकर मुरली बजाई, जो चारों दिशाओं में जहाँ-तहाँ सुनाई दी।",
+      "meaningEn": "He played the flute, filling it with a nectar-sweet melody that was heard everywhere in all four directions."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "वृद्ध-बाल जेते नारी नर।",
+        "मुग्ध भये सुनि वंशी के स्वर॥"
+      ],
+      "linesEn": [
+        "Vriddh-baal jete naari nar.",
+        "Mugdh bhaye suni vanshi ke svar."
+      ],
+      "meaningHi": "जितने भी बूढ़े, बालक, स्त्री और पुरुष थे, सब बाँसुरी के स्वर सुनकर मुग्ध हो गए।",
+      "meaningEn": "Old and young, women and men, all who were there were enchanted on hearing the flute's notes."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "दौड़-दौड़ पहुँचे सब जाई।",
+        "खाटू में जहाँ श्याम कन्हाई॥"
+      ],
+      "linesEn": [
+        "Daud-daud pahunche sab jaai.",
+        "Khatu mein jahaan Shyam Kanhaai."
+      ],
+      "meaningHi": "सब दौड़-दौड़कर खाटू जा पहुँचे, जहाँ श्याम कन्हाई विराजते हैं।",
+      "meaningEn": "All came running and reached Khatu, where Shyam Kanhai dwells."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "जिसने श्याम स्वरूप निहारा।",
+        "भव भय से पाया छुटकारा॥"
+      ],
+      "linesEn": [
+        "Jisne Shyam svaroop nihaara.",
+        "Bhav bhay se paaya chhutkaara."
+      ],
+      "meaningHi": "जिसने श्याम के स्वरूप के दर्शन किए, उसने संसार के भय से छुटकारा पा लिया।",
+      "meaningEn": "Whoever beheld Shyam's form was freed from the fear of worldly existence."
+    },
+    {
+      "id": "closing-doha-1",
+      "type": "doha",
+      "section": "closing",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "श्याम सलोने साँवरे, बर्बरीक तनु धार।",
+        "इच्छा पूर्ण भक्त की, करो न लाओ बार॥"
+      ],
+      "linesEn": [
+        "Shyam salone saanvare, Barbareek tanu dhaar.",
+        "Ichchha poorn bhakt ki, karo na laao baar."
+      ],
+      "meaningHi": "हे बर्बरीक का शरीर धारण करने वाले सलोने साँवरे श्याम, भक्त की इच्छा पूरी करो, देर न लगाओ।",
+      "meaningEn": "O charming dark Shyam, who took the form of Barbarika, fulfil your devotee's wish and do not delay."
+    }
+  ]
+}

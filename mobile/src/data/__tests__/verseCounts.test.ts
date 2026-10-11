@@ -11,6 +11,7 @@ import { gayatriChalisaCounts } from '../gayatri-chalisa';
 import { hanumanAshtakTotal } from '../hanuman-ashtak';
 import { hanumanChalisaTotal } from '../hanuman-chalisa';
 import { durgaKavachTotal, ganeshaKavachamTotal, ramaRakshaStotraTotal, shivaKavachamTotal } from '../kavacham';
+import { khatuShyamChalisaCounts } from '../khatu-shyam-chalisa';
 import { krishnaChalisaCounts } from '../krishna-chalisa';
 import { krishnaStotramTotal } from '../krishna-stotram';
 import { ramChalisaCounts } from '../ram-chalisa';
@@ -59,6 +60,7 @@ test('every generated verse count still matches its corpus', () => {
   ['hanumanAshtakTotal', hanumanAshtakTotal, generated.hanumanAshtakTotal],
   ['hanumanChalisaTotal', hanumanChalisaTotal, generated.hanumanChalisaTotal],
   ['kalikaAshtakamTotal', kalikaAshtakamTotal, generated.kalikaAshtakamTotal],
+  ['khatuShyamChalisaCounts', khatuShyamChalisaCounts, generated.khatuShyamChalisaCounts],
   ['krishnaChalisaCounts', krishnaChalisaCounts, generated.krishnaChalisaCounts],
   ['krishnaStotramTotal', krishnaStotramTotal, generated.krishnaStotramTotal],
   ['krishnaStutiTotal', krishnaStutiTotal, generated.krishnaStutiTotal],
@@ -120,6 +122,7 @@ test('verseCounts exports exactly what texts.ts needs, and nothing stale', () =>
   ['hanumanAshtakTotal', hanumanAshtakTotal, generated.hanumanAshtakTotal],
   ['hanumanChalisaTotal', hanumanChalisaTotal, generated.hanumanChalisaTotal],
   ['kalikaAshtakamTotal', kalikaAshtakamTotal, generated.kalikaAshtakamTotal],
+  ['khatuShyamChalisaCounts', khatuShyamChalisaCounts, generated.khatuShyamChalisaCounts],
   ['krishnaChalisaCounts', krishnaChalisaCounts, generated.krishnaChalisaCounts],
   ['krishnaStotramTotal', krishnaStotramTotal, generated.krishnaStotramTotal],
   ['krishnaStutiTotal', krishnaStutiTotal, generated.krishnaStutiTotal],

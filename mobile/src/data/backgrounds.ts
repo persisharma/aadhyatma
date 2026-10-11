@@ -84,6 +84,8 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'krishna-chalisa': backgroundImages.deity_krishna_bansuri,
   'vishnu-chalisa': backgroundImages.source_vishnu_narayana,
   'saraswati-chalisa': backgroundImages.deity_saraswati_veena,
+  // Commissioned Khatu Shyam temple plate (shared with khatu-shyam-aarti).
+  'khatu-shyam-chalisa': backgroundImages.theerth_khatu_shyam,
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,

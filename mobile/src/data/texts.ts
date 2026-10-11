@@ -27,6 +27,7 @@ import {
   hanumanAshtakTotal,
   hanumanChalisaTotal,
   kalikaAshtakamTotal,
+  khatuShyamChalisaCounts,
   krishnaChalisaCounts,
   krishnaStotramTotal,
   krishnaStutiTotal,
@@ -379,6 +380,22 @@ export const library: readonly LibraryEntry[] = [
     deities: ['saraswati'],
     verseCount: saraswatiChalisaCounts.totalVerses,
     addedInVersion: '1.4.5',
+  },
+  {
+    // Khatu Shyam (Barbarika, worshipped as Shri Shyam at Khatu) is tagged under
+    // the existing Krishna deity per
+    // docs/content-parity/chalisa-aarti-existing-deities.md; no new deity id.
+    id: 'khatu-shyam-chalisa',
+    nameHi: 'श्री खाटू श्याम चालीसा',
+    nameEn: 'Shri Khatu Shyam Chalisa',
+    sub: '40 चौपाई + 2 दोहा · अर्थ सहित',
+    subEn: '40 Chaupai + 2 Doha · with meaning',
+    thumb: 'श्या',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['krishna'],
+    verseCount: khatuShyamChalisaCounts.totalVerses,
+    addedInVersion: '1.5.0',
   },
   {
     id: 'hanuman-ashtak',

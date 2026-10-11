@@ -107,4 +107,5 @@ test('dispatches aartiIndex to the Khatu Shyam Aarti, not the first aarti', () =
 
   assert.ok(renderedText.includes(khatu.verses[0].lines[0]));
   assert.ok(!renderedText.includes(firstVerse.lines[0]));
+  act(() => tree!.unmount());
 });

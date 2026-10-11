@@ -488,6 +488,44 @@ assert.ok(
   `Gayatri Mata Aarti refrain should be "जयति जय गायत्री माता", got: "${gayatriAartiRefrain.lines[0]}"`
 );
 
+// ─── 10e. Khatu Shyam Chalisa canonical structure & opening ──────────────────
+// The "श्री गुरु चरण ध्यान धर" composition (1 doha + 40 chaupais + 1 doha). The
+// longer "Khatu Dham Sikar" chalisa is a different text and must not be merged in.
+
+const khatuShyamChalisa = readJson('khatu-shyam-chalisa/khatu-shyam-chalisa.json');
+assert.equal(khatuShyamChalisa.verses.length, 42, 'Khatu Shyam Chalisa should have 42 verses');
+assert.equal(
+  khatuShyamChalisa.verses.length,
+  khatuShyamChalisa.counts.totalVerses,
+  'Khatu Shyam Chalisa verses.length must match counts.totalVerses'
+);
+assert.equal(
+  khatuShyamChalisa.verses.filter((v: any) => v.type === 'chaupai').length,
+  40,
+  'Khatu Shyam Chalisa should have exactly 40 chaupais'
+);
+assert.ok(
+  khatuShyamChalisa.verses[0].section === 'opening' &&
+    khatuShyamChalisa.verses[0].lines[0].startsWith('श्री गुरु चरण ध्यान धर'),
+  `Khatu Shyam Chalisa should open with "श्री गुरु चरण ध्यान धर", got: "${khatuShyamChalisa.verses[0].lines[0]}"`
+);
+assert.ok(
+  khatuShyamChalisa.verses
+    .find((v: any) => v.type === 'chaupai' && v.number === 1)
+    ?.lines[0].startsWith('श्याम-श्याम भजि बारंबारा'),
+  'Khatu Shyam Chalisa chaupai 1 should be "श्याम-श्याम भजि बारंबारा"'
+);
+assert.ok(
+  khatuShyamChalisa.verses.at(-1).section === 'closing' &&
+    khatuShyamChalisa.verses.at(-1).lines[0].startsWith('श्याम सलोने साँवरे'),
+  'Khatu Shyam Chalisa should close with the "श्याम सलोने साँवरे" doha'
+);
+assert.deepEqual(
+  library.find((e) => e.id === 'khatu-shyam-chalisa')?.deities,
+  ['krishna'],
+  'khatu-shyam-chalisa must be tagged under the Krishna deity only'
+);
+
 // ─── 10d. Khatu Shyam Aarti canonical structure & refrain ───────────────────
 // Opening refrain is the identity anchor from
 // docs/content-parity/chalisa-aarti-existing-deities.md. Tagged krishna: no
@@ -530,6 +568,7 @@ assert.equal(libraryById.get('shiv-chalisa')?.sub, '40 चौपाई + 3 द�
 assert.equal(libraryById.get('ganesh-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('gayatri-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('durga-chalisa')?.sub, '40 चौपाई + 1 दोहा · अर्थ सहित');
+assert.equal(libraryById.get('khatu-shyam-chalisa')?.sub, '40 चौपाई + 2 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('sundarkand')?.sub, '16 अनुभाग · 354 पद');
 assert.match(libraryById.get('ramcharitmanas')?.nameHi || '', /मंगलाचरण/);
 assert.doesNotMatch(libraryById.get('ramcharitmanas')?.sub || '', /अंश|Excerpt/i);
@@ -832,6 +871,7 @@ for (const file of [
   'krishna-chalisa/krishna-chalisa.json',
   'vishnu-chalisa/vishnu-chalisa.json',
   'saraswati-chalisa/saraswati-chalisa.json',
+  'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',

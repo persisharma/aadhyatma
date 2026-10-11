@@ -134,3 +134,33 @@ test('renders When to Recite panel only on the first verse page', () => {
   assert.ok(!secondText.includes('When to Recite'));
   assert.ok(!secondText.includes('Best Days'));
 });
+
+test('dispatches chalisaId to the Khatu Shyam Chalisa, not Hanuman Chalisa', () => {
+  const khatu = getChalisa('khatu-shyam-chalisa');
+  assert.equal(khatu.id, 'khatu-shyam-chalisa');
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <ShareProvider>
+          <ChalisaReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { chalisaId: 'khatu-shyam-chalisa', initialIndex: 0 } }}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+
+  const renderedText = tree!
+    .root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+
+  assert.ok(renderedText.includes(khatu.titleHi));
+  assert.ok(renderedText.includes(khatu.verses[0].lines[0]));
+  assert.ok(!renderedText.includes(firstVerse.lines[0]));
+  act(() => tree!.unmount());
+});
