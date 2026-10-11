@@ -80,3 +80,30 @@ test('renders the first Aarti verse without throwing', () => {
 
   assert.ok(renderedText.includes(firstVerse.lines[0]));
 });
+
+// Multi-instance dispatch (RULEBOOK §4 step 13): the appended aarti index opens
+// its own payload.
+test('opens Om Jai Lakshmi Mata by its appended aartiIndex', () => {
+  const index = getActualData.aartiIndexById['om-jai-lakshmi-mata'];
+  assert.equal(index, 8, 'Lakshmi aarti is appended after the eight legacy-indexed aartis');
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <ShareProvider>
+          <AartiReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { aartiIndex: index, initialIndex: 0 } }}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  const renderedText = tree!
+    .root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+  assert.ok(renderedText.includes('ॐ जय लक्ष्मी माता'), 'Lakshmi aarti refrain');
+  assert.ok(!renderedText.includes(firstVerse.lines[0]), 'no Om Jai Jagdish verse leaks in');
+});

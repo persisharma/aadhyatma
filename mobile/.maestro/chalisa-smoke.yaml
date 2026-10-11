@@ -1,9 +1,9 @@
 # Chalisa Category Smoke Test
 #
-# Verifies the Chalisa category and its 9 active sections render correctly.
+# Verifies the Chalisa category and its 10 active sections render correctly.
 # Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa,
 # Gayatri Chalisa, Ram Chalisa, Krishna Chalisa, Vishnu Chalisa,
-# Saraswati Chalisa.
+# Saraswati Chalisa, Lakshmi Chalisa.
 #
 # Chalisas share ChalisaReaderScreen (multi-instance pattern, dispatched by
 # route.params.chalisaId). Opening Hanuman Chalisa verifies the dispatch
@@ -21,7 +21,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 9 sections appear in CategoryList
+# Verify all 10 sections appear in CategoryList
 - extendedWaitUntil:
     visible: "Hanuman Chalisa\\..*Tap to open\\."
     timeout: 15000
@@ -30,7 +30,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Ganesh Chalisa\\..*Tap to open\\."
 - assertVisible: "Gayatri Chalisa\\..*Tap to open\\."
 - assertVisible: "Ram Chalisa\\..*Tap to open\\."
-# Krishna, Vishnu & Saraswati are below the fold on the 9-section list — scroll
+# Krishna, Vishnu, Saraswati & Lakshmi are below the fold on the 10-section list — scroll
 # to each. Android's shorter viewport folds earlier than iOS (Krishna, the 7th
 # row, is off-screen here), so use scrollUntilVisible rather than a plain
 # assertVisible that only sees the top rows. scrollUntilVisible is a no-op when
@@ -50,6 +50,22 @@ appId: com.prashantsharma.vedansh
       text: "Saraswati Chalisa\\..*Tap to open\\."
     direction: DOWN
     timeout: 15000
+# Lakshmi Chalisa is the last card (addedInVersion 1.5.0 — NEW badge absorbed by `.*`).
+- scrollUntilVisible:
+    element:
+      text: "Lakshmi Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+# Open it to prove the multi-instance reader dispatches the newest registry id.
+- tapOn: "Lakshmi Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+- tapOn: "Back"
+- waitForAnimationToEnd
 # Scroll back up so the reader opens from Hanuman Chalisa at the top.
 - scrollUntilVisible:
     element:
