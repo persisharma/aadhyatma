@@ -404,3 +404,34 @@ The illustrated share had been alternating an image-only scene card with text-on
 ## [2026-10-10] ingest | Kids-story share: 9:16 picture card as in the reader, app link on the last card
 
 Follow-up to the one-card-per-scene change: the user wanted the share to look like the reader page, and the 4:5 card could only hold the art at roughly half width. `ShareableProse.layout: 'picture'` lays every page on a 540×960 card (`pictureCardMetrics`, body 744 dp) captured at 1080×1920 for every target; the provider skips `ShareStoryFrame` for it and the sheet hides the 4:5 Instagram-post row. The paginator gained `layout`, `quote` (speaker + dialogue, drawn in the reader's tinted box) and `link` (label over URL, never split) blocks. Scenes: art full-width for 416 of 644 cards, never under 400 dp, caption box below; none spills. Closing card: cover art (≥260 dp), takeaway, source note, printed `vedansh.app/get`; the share message still carries the tappable link. `kidsStoryArtRetainedHeight` moved to the pure `utils/kidsStoryArtFrame.ts`. Not verified on a device: WhatsApp's handling of the album message on iOS, and Instagram story chrome over the unframed header/footer.
+
+## [2026-10-10] ingest | Store listing preparation runbook
+
+Filed `runbooks/store-submission.md` with current official device sections, intact-UI capture rules, caption localization limits, prior Sankalp/Widgets preference and release evidence boundaries. The 1.5.0 materials live under output; privacy declarations, fresh CDN delivery and exact signed-native checks remain open. No build, upload or submission was performed.
+
+## [2026-10-11] ingest | Store draft assets, build evidence and website privacy reference
+Updated [[runbooks/store-submission]] with real Hindi capture/source validation, iOS build 72 attachment, Android versionCode 12 production AAB evidence, draft-only console state and the user-selected 11 October website policy. Public privacy deployment, store declarations and signed-device behavior remain separate verification layers.
+
+## [2026-10-11] ingest | Store review submissions and SDK declarations
+
+Updated [[runbooks/store-submission]] with Apple Waiting for Review, Google Changes in review with quick checks pending, manual publishing, accepted Android vc12, user-approved website deployment and SDK disclosure mappings. Exact-device/network checks remain explicitly unverified.
+
+## [2026-10-11] ingest | Submitted Android AAB sideload smoke test
+
+Updated [[runbooks/store-submission]] with exact-AAB universal APK conversion, clean Android16 emulator smoke passes, count persistence, empty crash buffer, and fresh story-art delivery failure. Host CDN403 is supporting evidence, not physical-device diagnosis. Submission remains unchanged.
+
+## [2026-10-11] ingest | Android release regression and R2 evidence correction
+
+Updated [[runbooks/store-submission]] with release APK regression evidence, historical 144-image production CDN validation, 154-object local integrity, native seeded-cache/audio/failure recovery, ordinary story gesture checks and Android widget contract. Corrected earlier artwork-failure interpretation: emulator corporate TLS inspection blocks fresh delivery; no production-wide CDN defect established. Full UI assertions retain unresolved coverage. No app source, R2 or store changes.
+
+## [2026-10-11] ingest | Bilingual latest-feature showcase and release PR
+
+Recorded reproducible Hindi/English 39-second app-screen showcases for illustrated stories, Sankalp choices, Kundali and Naam Japa, with preset synthetic voices and full narration SRTs. Compact release copy and Android/R2 evidence live in `docs/releases/1.5.0`; raw output remains local. Screen provenance and unresolved native/network checks remain explicit.
+
+## [2026-10-11] ingest | Separate feature carousels from listing assets
+
+Added the user-requested reuse workflow: 20 separate Hindi/English carousels across 10 features, each with three 1080×1350 cards. Existing listing art remains intact; use-case and CTA text sit outside it. Source hashes, bounds checks and reviewed contact sheets are retained; local PNG/ZIP delivery remains unposted.
+
+## [2026-10-11] ingest | Instagram marketing redesign of feature carousels
+
+Replaced repeated listing-image layouts with feature-specific hooks, numbered walkthroughs and distinct dark CTA cards, plus Hindi/English Instagram captions and hashtags. Reused approved locale-matched phone captures without changing app pixels or store metadata. All 60 cards pass dimension/hash/bounds checks and contact sheets were reviewed; local ZIP/gallery updated.
