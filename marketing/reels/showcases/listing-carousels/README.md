@@ -1,15 +1,17 @@
-# Separate feature carousels from listing assets
+# Vedansh Instagram feature carousels
 
-The user requested separate carousels for every feature, reusing the existing listing assets. This creates 10 feature sets in both Hindi and English: Panchang, Kundali, illustrated stories, Gita, Naam Japa, Vrat, Sankalp, Guna Milan, Bhajans and daily practice.
+10 features in Hindi and English, three distinct 1080×1350 slides per carousel. These are Instagram marketing posts with feature-specific hooks, concise benefits, calls to action and accompanying captions/hashtags. The flow is **hook → feature walkthrough → typographic CTA**. A cream/copper treatment and the existing brand fonts/icon preserve Vedansh’s identity; the CTA uses a darker copper background.
 
-Each set contains three 1080×1350 cards: the existing listing visual, a simple use case, and an invitation to explore the feature. The complete listing art remains visible on every card without cropping, invented UI or replacing baked-in captions. Hindi uses Hindi listing assets, and English uses English assets. A caption file accompanies each set.
+Real phone-screen pixels from the original listing kit appear on the first two slides. Screens remain whole, with captions outside the UI; the third slide is a distinct text-and-brand composition. Listing image layouts are not repeatedly resized. Hindi uses actual Hindi app screens and English uses English screens. No app UI is invented, no new scripture/story text is authored, and store metadata is unchanged.
 
-The source is the completed listing kit's `assets/ios/ipad-13/{hi,en}`: its 3:4 composition fits the carousel canvas while preserving UI and caption visibility. This is a promotional carousel built from iPad listing visuals, not a claim that it depicts a phone. Capture provenance remains as documented in the 1.5.0 release record. No fresh capture, AI image generation, religious text, video or voiceover is created by this workflow.
+## Reproduce
 
-Run from the repository root, with the existing mobile font dependencies and Playwright/Chromium available:
+Provide the existing mobile font dependencies and Playwright/Chromium, then run from the repository root:
 
 ```sh
 node marketing/reels/showcases/listing-carousels/build.mjs
 ```
 
-Set `NODE_PATH` if Playwright is installed outside the repo. The local 11 October listing kit must exist at the `source` path in `content.json`; override with `VEDANSH_LISTING_ASSETS` pointing to a directory containing `hi` and `en` folders. An optional first command argument chooses another output directory. Generated cards, captions, gallery and hashes are under the git-ignored `marketing/reels/out/listing-carousels/`. ZIP packaging is a delivery step outside this renderer.
+Set `NODE_PATH` if Playwright is installed externally. The local listing kit’s `raw/android-phone-{hi,en}` directories must exist under the source in `content.json`; override their parent with `VEDANSH_CAPTURE_ROOT`. An optional first argument chooses another output directory. Outputs, captions, gallery and hashes are git-ignored under `marketing/reels/out/listing-carousels/`. ZIP packaging is a separate delivery step.
+
+The captures show the current UI in the compatible listing capture shell; they are separate from exact-release APK validation. The Kundali/Guna Milan captures use fictional demo inputs. No new device capture, AI-generated app screen, publishing, app change or store-listing change occurs. Reviewed contact sheets and validation are committed; PNGs and ZIPs stay local. Earlier simple listing-layout ZIP retained locally as `marketing/reels/out/listing-carousels-v1.zip`.

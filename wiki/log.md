@@ -431,3 +431,7 @@ Recorded reproducible Hindi/English 39-second app-screen showcases for illustrat
 ## [2026-10-11] ingest | Separate feature carousels from listing assets
 
 Added the user-requested reuse workflow: 20 separate Hindi/English carousels across 10 features, each with three 1080×1350 cards. Existing listing art remains intact; use-case and CTA text sit outside it. Source hashes, bounds checks and reviewed contact sheets are retained; local PNG/ZIP delivery remains unposted.
+
+## [2026-10-11] ingest | Instagram marketing redesign of feature carousels
+
+Replaced repeated listing-image layouts with feature-specific hooks, numbered walkthroughs and distinct dark CTA cards, plus Hindi/English Instagram captions and hashtags. Reused approved locale-matched phone captures without changing app pixels or store metadata. All 60 cards pass dimension/hash/bounds checks and contact sheets were reviewed; local ZIP/gallery updated.

@@ -1,123 +1,147 @@
 {
+  "design": "Instagram: feature-specific hook, product walkthrough, distinct dark CTA",
   "features": 10,
+  "carousels": 20,
+  "slidesPerCarousel": 3,
+  "totalSlides": 60,
   "locales": [
     "hi",
     "en"
   ],
-  "carousels": 20,
-  "slidesPerCarousel": 3,
-  "totalSlides": 60,
   "dimensions": [
     1080,
     1350
   ],
-  "source": "Existing finished iPad 13-inch listing visuals, Hindi and English",
+  "captionFiles": 20,
+  "source": "Real Android phone captures from the existing listing kit; no new capture or app-pixel edits",
   "checks": {
     "allImagesDecoded": true,
+    "allOutputHashesMatched": true,
     "layoutBoundsPass": true,
-    "allSourceVisualsRenderedWhole": true,
-    "allContactSheetsVisuallyReviewed": true
+    "allContactSheetsVisuallyReviewed": true,
+    "hindiScreensMatchHindiCopy": true,
+    "storeListingCopyUnchanged": true
   },
   "sourceHashes": [
     {
       "feature": "panchang",
       "lang": "hi",
-      "sourceSha256": "2c91bb4cbacc4afa8b88683246c843d06dd01c42e1c02b64b2f874b446038fd3"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-hi/02-panchang.png",
+      "sourceSha256": "c9ca4646a47aa3d788388da5db2df74882f647004fdd7162f7940b958523d841"
     },
     {
       "feature": "panchang",
       "lang": "en",
-      "sourceSha256": "67699dadea9610629bcba50506a0c47a53d736007309af8fdf73149f49ea9513"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/02-panchang.png",
+      "sourceSha256": "482cc85d3e04a0538182dae025eb38c4f9285d502a80b9945d13ed478765d913"
     },
     {
       "feature": "kundali",
       "lang": "hi",
-      "sourceSha256": "035e1580a55192d26d7d32ab7def1d36c12900a169293bdfe524293e6e9c7ed6"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-hi/03-kundali.png",
+      "sourceSha256": "650678e44d58f16e2cb85edd09798439dd9faec9a2b2fcc15eda9b331b87cabd"
     },
     {
       "feature": "kundali",
       "lang": "en",
-      "sourceSha256": "39ca94a05fd419b21c4a08c0e6495dafd0be620a0cd1698c96c0c99979cb59f5"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/03-kundali.png",
+      "sourceSha256": "35b1c433630491ec1134d7a9a2c387f3723323fa0fba74aed5e530346d029e09"
     },
     {
       "feature": "kids-stories",
       "lang": "hi",
-      "sourceSha256": "926706cc75353040910725e2c00386be9be4e0ff6ca98a48c28085facd9d4994"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-hi/04-kids-stories.png",
+      "sourceSha256": "71a6ad3c68d87c54f59ae3e9f50a32e58ea3d14dbb42bd0ac4035bb7de510d37"
     },
     {
       "feature": "kids-stories",
       "lang": "en",
-      "sourceSha256": "5948b9117bcc84523436171ca2a894e5bb28bed5c645a75c7f89d6923c97e792"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/04-kids-stories.png",
+      "sourceSha256": "0e732d3771f3e69487884b04634a9b2b900a577bfa619b2958240ccbe9da69f0"
     },
     {
       "feature": "gita",
       "lang": "hi",
-      "sourceSha256": "bbc64e10f453a1c023eae6dfb92e81660b81211808012ef1b69ad8e7d6539a50"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-hi/05-gita.png",
+      "sourceSha256": "77ce666b919b3a3bf8cdf29eac782bc00b300cd616d5507a9b0367f0fcb65ecd"
     },
     {
       "feature": "gita",
       "lang": "en",
-      "sourceSha256": "2086bb2b3e0fee7769eb751e9e74f061f31bb4bfbc05e5157e96e4b9d01a6870"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/05-gita.png",
+      "sourceSha256": "b2a3b0477dfb410abf5e12a68de7f8fa751b566dc16dff544a51db881069e059"
     },
     {
       "feature": "japam",
       "lang": "hi",
-      "sourceSha256": "1495300b247353c847bd34fbc02980bc27d15a98bd305890e8c86ea39b9c1e76"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-hi/07-japam.png",
+      "sourceSha256": "ee1c03838eb10f5666ff55e34b178810cee080b3257eabd33a991a0f25df8e2d"
     },
     {
       "feature": "japam",
       "lang": "en",
-      "sourceSha256": "ebca30a288a5a008240af9c16b82158aca94c3c4a6bb5a5d396f49d277b37f28"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/07-japam.png",
+      "sourceSha256": "0816c373852920b28b563390ba47da0fd3c9d18cf9096a8f7149e6dace7dd19a"
     },
     {
       "feature": "vrat",
       "lang": "hi",
-      "sourceSha256": "159306cab40eaafc24e4149d2ea20dd53395e7d85aefd64ab16235b2f7e35f7b"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-hi/06-vrat.png",
+      "sourceSha256": "3e51f0c57a8479cd086e879853b86b2f0d531f2d95d5e075b384ce15a521e07f"
     },
     {
       "feature": "vrat",
       "lang": "en",
-      "sourceSha256": "8545efd7c2dd3b9d2cfbc0e22d0f94a6da5da30a36e8fbcf6d3249c194133bc6"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/06-vrat.png",
+      "sourceSha256": "91d73e0cf61100ec57983e60f58547080e8872560a8845b0757adaa0f197fc68"
     },
     {
       "feature": "sankalp",
       "lang": "hi",
-      "sourceSha256": "376855a6cf17d4ba01be7edc4feb46662f649d9e43fbc64fc870bc297b46aa1c"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-hi/08-sankalp.png",
+      "sourceSha256": "62c0d1e233334db3457bd0a014e63de36483cb36d453eeaa4fd84d6d234f5b04"
     },
     {
       "feature": "sankalp",
       "lang": "en",
-      "sourceSha256": "6d572b2d216bd5e0ebba263cd52b41112a0312961eafc26bb9929b1bbd7f5244"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/08-sankalp.png",
+      "sourceSha256": "859912fde32cc1c95cef0208479439ff8e753024c3e8cb8c460620fb1fff7e94"
     },
     {
       "feature": "guna-milan",
       "lang": "hi",
-      "sourceSha256": "7c7f8946798b1ca3816a74455d27be0ed2c919fd7db571785b45a477eea40b20"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-hi/13-guna-milan.png",
+      "sourceSha256": "83572f5e33d70bad3e024ca68b1f9f3ec382f6caca42400fa8eb87a95338fa29"
     },
     {
       "feature": "guna-milan",
       "lang": "en",
-      "sourceSha256": "b7c73b9e3bb589dba07c05d19e8655dac4ef9b25642c337cf32ea1077e858495"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/13-guna-milan.png",
+      "sourceSha256": "aeb3bb924de4bdd9d54ab449edeb38ac40707be372641a457f44dcfba5e64524"
     },
     {
       "feature": "bhajans",
       "lang": "hi",
-      "sourceSha256": "f4c3bd3f65ea3bf62c567434a6f0b4b45f674ccfb04b4c5445e8e302060208d1"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-hi/09-bhajans.png",
+      "sourceSha256": "334cb9cd647702667589ab2c4a0c8f4449bab57cd75ab01c3dbd97e93fc2a6a5"
     },
     {
       "feature": "bhajans",
       "lang": "en",
-      "sourceSha256": "cf415d96222af5be1a17202bd9873753639bbdad5143cb78b5207cbbdb9912d8"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/09-bhajans.png",
+      "sourceSha256": "f996158b3e4b7bf98e1a2ed0fb4e71f6d9fb5ac0ba25438ced7240f35b61f58c"
     },
     {
       "feature": "daily-practice",
       "lang": "hi",
-      "sourceSha256": "55360352a4b7155bbc72cd63997a7c7e3cc346fbf20307ca092854f08ba243f5"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-hi/01-home.png",
+      "sourceSha256": "ae2fab0fa86dbcd21c04ef194e31a46bf01d9f8d05d476de6c033239979f3901"
     },
     {
       "feature": "daily-practice",
       "lang": "en",
-      "sourceSha256": "e0c6cadf9d353905ad54cf6e5d4d9f4ebcca242338f176dd2dbc3e5a3c10f7ad"
+      "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/01-home.png",
+      "sourceSha256": "85443e486a081603197b0e0145f393068490ed02399fef6bab39a03794aa263d"
     }
   ]
 }

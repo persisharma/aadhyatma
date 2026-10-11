@@ -20,4 +20,4 @@ Full local diagnostic paths appear in `android-regression.md`; files under the o
 
 ## Separate feature carousels
 
-The user requested separate feature carousels using finished listing assets. `marketing/reels/showcases/listing-carousels/` provides 10 features in both languages, three 1080×1350 cards per set, with intact existing listing art, simple use-case copy and an exploration CTA. Generated gallery, 60 PNGs, captions, individual ZIPs and combined ZIP stay local under `marketing/reels/out/listing-carousels/`. No publication or additional capture.
+The user requested separate feature carousels using finished listing assets. `marketing/reels/showcases/listing-carousels/` provides 10 features in both languages, three 1080×1350 cards per set, redesigned as Instagram marketing posts: feature-specific hook, phone-screen walkthrough, distinct dark CTA, captions and hashtags. Real listing-kit screen pixels remain intact, and store metadata is unchanged. Generated gallery, 60 PNGs, captions, individual ZIPs and combined ZIP stay local under `marketing/reels/out/listing-carousels/`. No publication or additional capture.
