@@ -1,0 +1,400 @@
+{
+  "size": [
+    1080,
+    1350
+  ],
+  "source": "output/store-draft-1.5.0-2026-10-11/raw",
+  "features": [
+    {
+      "id": "panchang",
+      "asset": "01-panchang.png",
+      "hi": {
+        "name": "पंचांग",
+        "hook": "आज की तिथि?\nएक नज़र में.",
+        "intro": "पूजा या दिन की तैयारी—\nपंचांग से शुरुआत करें।",
+        "how": "दिन की जानकारी,\nएक जगह।",
+        "bullets": [
+          "तिथि और नक्षत्र",
+          "राहु काल और अभिजीत",
+          "दिन के समय"
+        ],
+        "cta": "आज का पंचांग\nखोलकर देखें।",
+        "close": "अपनी दिनचर्या में पंचांग के लिए एक पल निकालें।",
+        "engagement": "आज की तिथि जानने के लिए यह पोस्ट सहेजें।"
+      },
+      "en": {
+        "name": "Panchang",
+        "hook": "Your day.\nYour Panchang.",
+        "intro": "A little context before\nyou plan your day.",
+        "how": "Start with today’s\nPanchang.",
+        "bullets": [
+          "Tithi & nakshatra",
+          "Rahu Kaal & Abhijit",
+          "Daily timings"
+        ],
+        "cta": "Know your day.\nBegin with Vedansh.",
+        "close": "Open the Panchang and explore today’s details.",
+        "engagement": "Save this for your daily Panchang check."
+      },
+      "screen": "02-panchang.png",
+      "hashtags": [
+        "Vedansh",
+        "Panchang",
+        "DailyPanchang",
+        "HinduCalendar"
+      ]
+    },
+    {
+      "id": "kundali",
+      "asset": "02-kundali.png",
+      "hi": {
+        "name": "जन्म कुंडली",
+        "hook": "अपनी कुंडली.\nथोड़ा और जानें.",
+        "intro": "ग्रहों और भावों को\nएक-एक करके समझें।",
+        "how": "जन्म विवरण से\nकुंडली तक।",
+        "bullets": [
+          "जन्म विवरण भरें",
+          "अपना चार्ट देखें",
+          "ग्रह और भाव जानें"
+        ],
+        "cta": "अपनी कुंडली\nसे शुरुआत करें।",
+        "close": "वेदांश में जन्म कुंडली खोलें और जानकारी देखें।",
+        "engagement": "कुंडली में आप पहले क्या देखना चाहते हैं?"
+      },
+      "en": {
+        "name": "Birth Kundali",
+        "hook": "Your Kundali.\nA closer look.",
+        "intro": "Meet the planets and houses\nin your birth chart.",
+        "how": "From birth details\nto your chart.",
+        "bullets": [
+          "Enter birth details",
+          "Explore your chart",
+          "See planets & houses"
+        ],
+        "cta": "Get to know\nyour Kundali.",
+        "close": "Explore your birth chart in Vedansh.",
+        "engagement": "What would you like to explore in your Kundali?"
+      },
+      "screen": "03-kundali.png",
+      "hashtags": [
+        "Vedansh",
+        "Kundali",
+        "BirthChart",
+        "Jyotish"
+      ]
+    },
+    {
+      "id": "kids-stories",
+      "asset": "03-kids-stories.png",
+      "hi": {
+        "name": "चित्र-कथाएँ",
+        "hook": "एक कथा.\nसाथ बिताया समय.",
+        "intro": "माँ दुर्गा की चित्र-कथाएँ।\nपरिवार के साथ पढ़ें।",
+        "how": "चित्र देखें.\nकथा पर बात करें.",
+        "bullets": [
+          "चित्रों के साथ पढ़ें",
+          "कथा का क्रम जानें",
+          "साथ मिलकर बात करें"
+        ],
+        "cta": "आज एक कथा\nसाथ पढ़ें।",
+        "close": "वेदांश की चित्र-कथाओं से शुरुआत करें।",
+        "engagement": "आपके घर में कौन-सी कथा सबसे ज़्यादा सुनाई जाती है?"
+      },
+      "en": {
+        "name": "Illustrated stories",
+        "hook": "A story.\nA moment together.",
+        "intro": "Illustrated stories of Maa Durga,\nmade for reading together.",
+        "how": "Read the story.\nStart a conversation.",
+        "bullets": [
+          "Explore the pictures",
+          "Follow the story",
+          "Talk about it together"
+        ],
+        "cta": "Read a story\ntogether today.",
+        "close": "Explore illustrated stories in Vedansh.",
+        "engagement": "Which story does your family love to share?"
+      },
+      "screen": "04-kids-stories.png",
+      "hashtags": [
+        "Vedansh",
+        "MaaDurga",
+        "IndianStories",
+        "FamilyReading"
+      ]
+    },
+    {
+      "id": "gita",
+      "asset": "04-gita.png",
+      "hi": {
+        "name": "भगवद्गीता",
+        "hook": "एक श्लोक.\nहर दिन थोड़ा चिंतन.",
+        "intro": "पढ़ें, अर्थ जानें,\nफिर कुछ पल ठहरें।",
+        "how": "पाठ से आगे,\nअर्थ तक।",
+        "bullets": [
+          "श्लोक पढ़ें",
+          "अर्थ जानें",
+          "अगला श्लोक पढ़ें"
+        ],
+        "cta": "आज के लिए\nएक श्लोक चुनें।",
+        "close": "वेदांश में भगवद्गीता पढ़ें, अर्थ के साथ।",
+        "engagement": "रोज़ के गीता पाठ के लिए यह पोस्ट सहेजें।"
+      },
+      "en": {
+        "name": "Bhagavad Gita",
+        "hook": "One verse.\nA moment to reflect.",
+        "intro": "Read the words. Explore the meaning.\nTake a moment for yourself.",
+        "how": "Go from the verse\nto its meaning.",
+        "bullets": [
+          "Read a verse",
+          "Explore its meaning",
+          "Continue your reading"
+        ],
+        "cta": "Begin with\none verse today.",
+        "close": "Read the Bhagavad Gita with meaning in Vedansh.",
+        "engagement": "Save this as a reminder for your daily Gita reading."
+      },
+      "screen": "05-gita.png",
+      "hashtags": [
+        "Vedansh",
+        "BhagavadGita",
+        "Gita",
+        "DailyReading"
+      ]
+    },
+    {
+      "id": "japam",
+      "asset": "05-japam.png",
+      "hi": {
+        "name": "नाम जप",
+        "hook": "एक नाम.\nएक मनका.",
+        "intro": "अपनी माला खोलें।\nनाम जप पर मन लगाएँ।",
+        "how": "हर नाम के साथ\nएक छोटा कदम।",
+        "bullets": [
+          "नाम जप की माला",
+          "हर नाम पर एक मनका",
+          "अपनी माला की गिनती"
+        ],
+        "cta": "जप के लिए\nएक पल निकालें।",
+        "close": "वेदांश में नाम जप की माला खोलें।",
+        "engagement": "अपने नाम जप के समय के लिए यह पोस्ट सहेजें।"
+      },
+      "en": {
+        "name": "Naam Japa",
+        "hook": "One name.\nOne bead.",
+        "intro": "Open your mala.\nMake a moment for Naam Japa.",
+        "how": "Keep your focus\non the name.",
+        "bullets": [
+          "A mala for Naam Japa",
+          "One tap per bead",
+          "Follow your mala count"
+        ],
+        "cta": "Make time\nfor Naam Japa.",
+        "close": "Open the Naam Japa mala in Vedansh.",
+        "engagement": "Save this for your next Naam Japa session."
+      },
+      "screen": "07-japam.png",
+      "hashtags": [
+        "Vedansh",
+        "NaamJapa",
+        "JapMala",
+        "Bhakti"
+      ]
+    },
+    {
+      "id": "vrat",
+      "asset": "06-vrat.png",
+      "hi": {
+        "name": "व्रत और पर्व",
+        "hook": "अगला व्रत\nकब है?",
+        "intro": "व्रत की तारीख और कथा।\nतैयारी की शुरुआत यहीं से।",
+        "how": "पर्व की तारीख से\nउसकी कथा तक।",
+        "bullets": [
+          "आने वाले व्रत देखें",
+          "पर्व की जानकारी जानें",
+          "जुड़ी कथा पढ़ें"
+        ],
+        "cta": "आने वाले पर्व\nकी तैयारी करें।",
+        "close": "वेदांश में व्रत और पर्व देखें।",
+        "engagement": "अगले व्रत की तैयारी के लिए यह पोस्ट सहेजें।"
+      },
+      "en": {
+        "name": "Vrat and festivals",
+        "hook": "When is the\nnext Vrat?",
+        "intro": "Find the date and the story.\nStart preparing here.",
+        "how": "From the date\nto the story.",
+        "bullets": [
+          "Browse upcoming Vrats",
+          "Explore festival details",
+          "Read the related katha"
+        ],
+        "cta": "Prepare for\nthe next observance.",
+        "close": "Explore Vrat and festivals in Vedansh.",
+        "engagement": "Save this for your next observance."
+      },
+      "screen": "06-vrat.png",
+      "hashtags": [
+        "Vedansh",
+        "Vrat",
+        "HinduFestivals",
+        "VratKatha"
+      ]
+    },
+    {
+      "id": "sankalp",
+      "asset": "07-sankalp.png",
+      "hi": {
+        "name": "संकल्प",
+        "hook": "मन में संकल्प?\nआज से शुरू करें.",
+        "intro": "चालीसा, गीता या नवरात्रि।\nअपना पाठ चुनें।",
+        "how": "अपना संकल्प.\nहर दिन का पाठ.",
+        "bullets": [
+          "हनुमान चालीसा · ४१ दिन",
+          "भगवद्गीता · १८ दिन",
+          "नवरात्रि · ९ दिन"
+        ],
+        "cta": "आज अपना\nसंकल्प चुनें।",
+        "close": "एक पाठ से शुरुआत करें। वेदांश में संकल्प खोजें।",
+        "engagement": "आप कौन-सा संकल्प चुनेंगे—चालीसा, गीता या नवरात्रि?"
+      },
+      "en": {
+        "name": "Sankalp",
+        "hook": "A Sankalp in mind?\nStart today.",
+        "intro": "Chalisa, Gita or Navaratri.\nChoose a reading to follow.",
+        "how": "Your Sankalp.\nOne reading at a time.",
+        "bullets": [
+          "Hanuman Chalisa · 41 days",
+          "Bhagavad Gita · 18 days",
+          "Navaratri · 9 days"
+        ],
+        "cta": "Choose your\nSankalp today.",
+        "close": "Start with one reading. Explore Sankalp in Vedansh.",
+        "engagement": "Which Sankalp would you choose: Chalisa, Gita or Navaratri?"
+      },
+      "screen": "08-sankalp.png",
+      "hashtags": [
+        "Vedansh",
+        "Sankalp",
+        "HanumanChalisa",
+        "DailyBhakti"
+      ]
+    },
+    {
+      "id": "guna-milan",
+      "asset": "08-guna-milan.png",
+      "hi": {
+        "name": "गुण मिलान",
+        "hook": "गुण मिलान के अंक.\nविवरण भी जानें.",
+        "intro": "पारंपरिक मिलान में\nहर गुण की जानकारी देखें।",
+        "how": "जन्म विवरण से\nमिलान के विवरण तक।",
+        "bullets": [
+          "दोनों के जन्म विवरण",
+          "पारंपरिक गुण मिलान",
+          "हर गुण का विवरण"
+        ],
+        "cta": "मिलान को\nथोड़ा और समझें।",
+        "close": "वेदांश में गुण मिलान और उसका विवरण देखें।",
+        "engagement": "गुण मिलान की जानकारी के लिए यह पोस्ट सहेजें।"
+      },
+      "en": {
+        "name": "Guna Milan",
+        "hook": "Beyond the score.\nSee the details.",
+        "intro": "Explore the parts\nof traditional Guna Milan.",
+        "how": "From birth details\nto a closer look.",
+        "bullets": [
+          "Enter both birth details",
+          "See traditional matching",
+          "Explore the breakdown"
+        ],
+        "cta": "Explore the\nmatch in detail.",
+        "close": "Find traditional Guna Milan in Vedansh.",
+        "engagement": "Save this to explore traditional Guna Milan."
+      },
+      "screen": "13-guna-milan.png",
+      "hashtags": [
+        "Vedansh",
+        "GunaMilan",
+        "KundaliMatching",
+        "Jyotish"
+      ]
+    },
+    {
+      "id": "bhajans",
+      "asset": "09-bhajans.png",
+      "hi": {
+        "name": "भजन",
+        "hook": "थोड़ा ठहरें.\nएक भजन सुनें.",
+        "intro": "अपने दिन में\nभजन के लिए समय निकालें।",
+        "how": "अपना भजन चुनें.\nसुनना शुरू करें.",
+        "bullets": [
+          "पसंद का भजन चुनें",
+          "सूची में भजन खोजें",
+          "सुनने के लिए समय दें"
+        ],
+        "cta": "आज कौन-सा\nभजन सुनेंगे?",
+        "close": "वेदांश में भजनों की सूची खोलें।",
+        "engagement": "आपका पसंदीदा भजन कौन-सा है?"
+      },
+      "en": {
+        "name": "Bhajans",
+        "hook": "Pause for\na bhajan.",
+        "intro": "Make a little space\nfor devotional music.",
+        "how": "Choose a bhajan.\nPress play.",
+        "bullets": [
+          "Browse the collection",
+          "Choose your bhajan",
+          "Make time to listen"
+        ],
+        "cta": "What will you\nlisten to today?",
+        "close": "Explore the bhajan collection in Vedansh.",
+        "engagement": "Which bhajan do you love listening to?"
+      },
+      "screen": "09-bhajans.png",
+      "hashtags": [
+        "Vedansh",
+        "Bhajan",
+        "DevotionalMusic",
+        "Bhakti"
+      ]
+    },
+    {
+      "id": "daily-practice",
+      "asset": "10-home.png",
+      "hi": {
+        "name": "दैनिक भक्ति",
+        "hook": "भक्ति के लिए\nअपना समय चुनें.",
+        "intro": "एक कथा, एक पाठ, एक जप।\nआज की शुरुआत कैसे करेंगे?",
+        "how": "आपका दिन.\nआपकी भक्ति.",
+        "bullets": [
+          "आज का पंचांग",
+          "कथाएँ और पाठ",
+          "जप के लिए माला"
+        ],
+        "cta": "आज एक छोटा\nअभ्यास चुनें।",
+        "close": "अपनी दैनिक भक्ति के लिए वेदांश खोलें।",
+        "engagement": "आपके दिन में भक्ति का समय कब आता है?"
+      },
+      "en": {
+        "name": "Daily practice",
+        "hook": "Make a little room\nfor devotion.",
+        "intro": "A story, a reading, a japa.\nHow will you begin today?",
+        "how": "Your day.\nYour practice.",
+        "bullets": [
+          "Today’s Panchang",
+          "Stories & readings",
+          "A mala for japa"
+        ],
+        "cta": "Choose one\npractice today.",
+        "close": "Find your daily practice in Vedansh.",
+        "engagement": "When do you make time for devotion?"
+      },
+      "screen": "01-home.png",
+      "hashtags": [
+        "Vedansh",
+        "DailyBhakti",
+        "SpiritualPractice",
+        "Bhakti"
+      ]
+    }
+  ],
+  "design": "Instagram editorial: hook + screen, feature walkthrough, typographic CTA"
+}

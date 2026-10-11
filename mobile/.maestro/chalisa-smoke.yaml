@@ -1,9 +1,9 @@
 # Chalisa Category Smoke Test
 #
-# Verifies the Chalisa category and its 9 active sections render correctly.
+# Verifies the Chalisa category and its 10 active sections render correctly.
 # Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa,
 # Gayatri Chalisa, Ram Chalisa, Krishna Chalisa, Vishnu Chalisa,
-# Saraswati Chalisa.
+# Saraswati Chalisa, Shri Khatu Shyam Chalisa.
 #
 # Chalisas share ChalisaReaderScreen (multi-instance pattern, dispatched by
 # route.params.chalisaId). Opening Hanuman Chalisa verifies the dispatch
@@ -21,7 +21,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 9 sections appear in CategoryList
+# Verify all 10 sections appear in CategoryList
 - extendedWaitUntil:
     visible: "Hanuman Chalisa\\..*Tap to open\\."
     timeout: 15000
@@ -50,6 +50,24 @@ appId: com.prashantsharma.vedansh
       text: "Saraswati Chalisa\\..*Tap to open\\."
     direction: DOWN
     timeout: 15000
+# Khatu Shyam Chalisa (addedInVersion 1.5.0) follows Saraswati; its NEW badge is
+# absorbed by `.*`. Open it to prove the chalisaId dispatch reaches the 10th entry.
+- scrollUntilVisible:
+    element:
+      text: "Shri Khatu Shyam Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Shri Khatu Shyam Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "श्री गुरु चरण ध्यान धर.*"
+# ChalisaReader labels its back control "Back to home"; it calls goBack(), so
+# this returns to the Chalisa list.
+- tapOn: "Back to home"
+- waitForAnimationToEnd
 # Scroll back up so the reader opens from Hanuman Chalisa at the top.
 - scrollUntilVisible:
     element:

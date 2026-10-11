@@ -1,0 +1,70 @@
+[
+  {
+    "language": "hi",
+    "durationSeconds": 39.233333333333334,
+    "sha256": "8d3d9012b85c7a9e48bfeec40a277339efe3180a2ba11be1d293064cd2af8dd2",
+    "audio": "aac",
+    "video": "h264",
+    "syntheticVoice": true,
+    "sourceHashes": [
+      {
+        "scene": "stories",
+        "sha256": "71a6ad3c68d87c54f59ae3e9f50a32e58ea3d14dbb42bd0ac4035bb7de510d37"
+      },
+      {
+        "scene": "sankalp",
+        "sha256": "62c0d1e233334db3457bd0a014e63de36483cb36d453eeaa4fd84d6d234f5b04"
+      },
+      {
+        "scene": "kundali",
+        "sha256": "650678e44d58f16e2cb85edd09798439dd9faec9a2b2fcc15eda9b331b87cabd"
+      },
+      {
+        "scene": "japa",
+        "sha256": "ee1c03838eb10f5666ff55e34b178810cee080b3257eabd33a991a0f25df8e2d"
+      },
+      {
+        "scene": "cta",
+        "sha256": "62c0d1e233334db3457bd0a014e63de36483cb36d453eeaa4fd84d6d234f5b04"
+      }
+    ],
+    "visualContactSheetReviewed": true,
+    "checks": "1080x1920, 30 fps, AAC 48 kHz, non-silent audio, safe text bounds; full listening review remains for user",
+    "meanVolumeDb": -20.2,
+    "peakVolumeDb": -1.7
+  },
+  {
+    "language": "en",
+    "durationSeconds": 39.1,
+    "sha256": "1faea51bcc46af93867d770191a709411ecfba2fd6eb88c6bedcdebec075fb73",
+    "audio": "aac",
+    "video": "h264",
+    "syntheticVoice": true,
+    "sourceHashes": [
+      {
+        "scene": "stories",
+        "sha256": "0e732d3771f3e69487884b04634a9b2b900a577bfa619b2958240ccbe9da69f0"
+      },
+      {
+        "scene": "sankalp",
+        "sha256": "859912fde32cc1c95cef0208479439ff8e753024c3e8cb8c460620fb1fff7e94"
+      },
+      {
+        "scene": "kundali",
+        "sha256": "35b1c433630491ec1134d7a9a2c387f3723323fa0fba74aed5e530346d029e09"
+      },
+      {
+        "scene": "japa",
+        "sha256": "0816c373852920b28b563390ba47da0fd3c9d18cf9096a8f7149e6dace7dd19a"
+      },
+      {
+        "scene": "cta",
+        "sha256": "859912fde32cc1c95cef0208479439ff8e753024c3e8cb8c460620fb1fff7e94"
+      }
+    ],
+    "visualContactSheetReviewed": true,
+    "checks": "1080x1920, 30 fps, AAC 48 kHz, non-silent audio, safe text bounds; full listening review remains for user",
+    "meanVolumeDb": -20.1,
+    "peakVolumeDb": -2.7
+  }
+]

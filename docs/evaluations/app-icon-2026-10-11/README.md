@@ -14,7 +14,7 @@ Android's 108dp adaptive layer contains the artwork in its 72dp viewport. The es
 
 - Exact approved-master identity, four exported hashes/dimensions, opaque RGB launcher/splash/favicon, Expo references and splash configuration checked.
 - Re-running the exporter produced the identical manifest and image hashes.
-- `npm test`: exit 0; TypeScript plus 3,109 passing tests (2,260 Jest tests across 235 suites; 37 widget, 590 engine, 173 data and 49 Ask tests).
+- `npm test` after reconciling with `origin/main` at `59d2282d`: exit 0; TypeScript plus 3,113 passing tests (2,264 Jest tests across 235 suites; 37 widget, 590 engine, 173 data and 49 Ask tests).
 - `npx expo prebuild --no-install`: exit 0 for iOS and Android. Existing warning: Android `userInterfaceStyle` needs `expo-system-ui`; unrelated to this icon change.
 - Generated iOS app icon is byte-identical to the 1024px export. `xcrun actool` compiled the generated asset catalog and `xcrun ibtool` compiled the splash storyboard, both exit 0.
 - Generated native icon and splash assets inspected in browser previews with iOS-like rounded corners and Android circle/rounded-square masks. The preview below is not a simulator capture.
