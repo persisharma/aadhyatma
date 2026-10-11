@@ -1,0 +1,189 @@
+{
+  "size": [
+    1080,
+    1350
+  ],
+  "source": "output/store-draft-1.5.0-2026-10-11/assets/ios/ipad-13",
+  "features": [
+    {
+      "id": "panchang",
+      "asset": "01-panchang.png",
+      "hi": {
+        "name": "पंचांग",
+        "headline": "दिन की तिथि और समय जानें",
+        "body": "तिथि, नक्षत्र और दिन के समय देखें। अपने दिन की तैयारी एक जगह से करें।",
+        "cta": "वेदांश ऐप में खोजें",
+        "ctaBody": "वेदांश में पंचांग खोलें और शुरुआत करें।"
+      },
+      "en": {
+        "name": "Panchang",
+        "headline": "Plan your day with the Panchang",
+        "body": "Check the tithi, nakshatra and daily timings together as you prepare for your day.",
+        "cta": "Explore in the Vedansh app",
+        "ctaBody": "Open Panchang in Vedansh and get started."
+      }
+    },
+    {
+      "id": "kundali",
+      "asset": "02-kundali.png",
+      "hi": {
+        "name": "जन्म कुंडली",
+        "headline": "अपनी कुंडली को जानें",
+        "body": "जन्म विवरण भरें और अपनी कुंडली के ग्रहों और भावों की जानकारी देखें।",
+        "cta": "वेदांश ऐप में खोजें",
+        "ctaBody": "वेदांश में जन्म कुंडली खोलें और शुरुआत करें।"
+      },
+      "en": {
+        "name": "Birth Kundali",
+        "headline": "Get to know your Kundali",
+        "body": "Enter your birth details and explore the planets and houses in your chart.",
+        "cta": "Explore in the Vedansh app",
+        "ctaBody": "Open Birth Kundali in Vedansh and get started."
+      }
+    },
+    {
+      "id": "kids-stories",
+      "asset": "03-kids-stories.png",
+      "hi": {
+        "name": "चित्र-कथाएँ",
+        "headline": "साथ बैठें, एक कथा पढ़ें",
+        "body": "माँ दुर्गा की कथाएँ चित्रों के साथ पढ़ें। परिवार के साथ कथा पर बात करें।",
+        "cta": "वेदांश ऐप में खोजें",
+        "ctaBody": "वेदांश में चित्र-कथाएँ खोलें और शुरुआत करें।"
+      },
+      "en": {
+        "name": "Illustrated stories",
+        "headline": "Make time for a story together",
+        "body": "Read illustrated stories of Maa Durga, then talk about the story with your family.",
+        "cta": "Explore in the Vedansh app",
+        "ctaBody": "Open Illustrated stories in Vedansh and get started."
+      }
+    },
+    {
+      "id": "gita",
+      "asset": "04-gita.png",
+      "hi": {
+        "name": "भगवद्गीता",
+        "headline": "आज एक श्लोक से शुरुआत करें",
+        "body": "भगवद्गीता के श्लोक अर्थ के साथ पढ़ें। रोज़ के पाठ के लिए थोड़ा समय निकालें।",
+        "cta": "वेदांश ऐप में खोजें",
+        "ctaBody": "वेदांश में भगवद्गीता खोलें और शुरुआत करें।"
+      },
+      "en": {
+        "name": "Bhagavad Gita",
+        "headline": "Begin with one verse today",
+        "body": "Read Bhagavad Gita verses with their meaning. Set aside a little time for daily reading.",
+        "cta": "Explore in the Vedansh app",
+        "ctaBody": "Open Bhagavad Gita in Vedansh and get started."
+      }
+    },
+    {
+      "id": "japam",
+      "asset": "05-japam.png",
+      "hi": {
+        "name": "नाम जप",
+        "headline": "हर नाम के साथ एक मनका",
+        "body": "माला खोलें और हर नाम के साथ एक मनका गिनें। अपने जप पर ध्यान दें।",
+        "cta": "वेदांश ऐप में खोजें",
+        "ctaBody": "वेदांश में नाम जप खोलें और शुरुआत करें।"
+      },
+      "en": {
+        "name": "Naam Japa",
+        "headline": "One bead for every name",
+        "body": "Open the mala and count one bead with each name. Give your japa a moment of focus.",
+        "cta": "Explore in the Vedansh app",
+        "ctaBody": "Open Naam Japa in Vedansh and get started."
+      }
+    },
+    {
+      "id": "vrat",
+      "asset": "06-vrat.png",
+      "hi": {
+        "name": "व्रत और पर्व",
+        "headline": "आने वाले पर्व की तैयारी करें",
+        "body": "व्रत, पर्व और उनसे जुड़ी कथाएँ देखें। तारीख और पाठ एक जगह पाएँ।",
+        "cta": "वेदांश ऐप में खोजें",
+        "ctaBody": "वेदांश में व्रत और पर्व खोलें और शुरुआत करें।"
+      },
+      "en": {
+        "name": "Vrat and festivals",
+        "headline": "Prepare for the next observance",
+        "body": "Explore observances, festivals and their stories. Find the date and reading together.",
+        "cta": "Explore in the Vedansh app",
+        "ctaBody": "Open Vrat and festivals in Vedansh and get started."
+      }
+    },
+    {
+      "id": "sankalp",
+      "asset": "07-sankalp.png",
+      "hi": {
+        "name": "संकल्प",
+        "headline": "अपने लिए एक संकल्प चुनें",
+        "body": "हनुमान चालीसा, भगवद्गीता या नवरात्रि का संकल्प चुनें और हर दिन का पाठ करें।",
+        "cta": "वेदांश ऐप में खोजें",
+        "ctaBody": "वेदांश में संकल्प खोलें और शुरुआत करें।"
+      },
+      "en": {
+        "name": "Sankalp",
+        "headline": "Choose a practice to follow",
+        "body": "Choose a Sankalp for Hanuman Chalisa, the Bhagavad Gita or Navaratri, then follow its daily reading.",
+        "cta": "Explore in the Vedansh app",
+        "ctaBody": "Open Sankalp in Vedansh and get started."
+      }
+    },
+    {
+      "id": "guna-milan",
+      "asset": "08-guna-milan.png",
+      "hi": {
+        "name": "गुण मिलान",
+        "headline": "मिलान के हर गुण को समझें",
+        "body": "दोनों के जन्म विवरण भरें। पारंपरिक गुण मिलान का परिणाम और उसका विवरण देखें।",
+        "cta": "वेदांश ऐप में खोजें",
+        "ctaBody": "वेदांश में गुण मिलान खोलें और शुरुआत करें।"
+      },
+      "en": {
+        "name": "Guna Milan",
+        "headline": "Explore each part of the match",
+        "body": "Enter both sets of birth details. Explore the traditional Guna Milan score and its breakdown.",
+        "cta": "Explore in the Vedansh app",
+        "ctaBody": "Open Guna Milan in Vedansh and get started."
+      }
+    },
+    {
+      "id": "bhajans",
+      "asset": "09-bhajans.png",
+      "hi": {
+        "name": "भजन",
+        "headline": "अपने दिन में भजन जोड़ें",
+        "body": "अपनी पसंद का भजन चुनें और सुनने के लिए समय निकालें।",
+        "cta": "वेदांश ऐप में खोजें",
+        "ctaBody": "वेदांश में भजन खोलें और शुरुआत करें।"
+      },
+      "en": {
+        "name": "Bhajans",
+        "headline": "Bring bhajans into your day",
+        "body": "Choose a bhajan you enjoy and make a little time to listen.",
+        "cta": "Explore in the Vedansh app",
+        "ctaBody": "Open Bhajans in Vedansh and get started."
+      }
+    },
+    {
+      "id": "daily-practice",
+      "asset": "10-home.png",
+      "hi": {
+        "name": "दैनिक भक्ति",
+        "headline": "आज की भक्ति यहीं से शुरू करें",
+        "body": "पंचांग, कथाएँ और पाठ खोजें। अपने दिन के लिए एक छोटा अभ्यास चुनें।",
+        "cta": "वेदांश ऐप में खोजें",
+        "ctaBody": "वेदांश में दैनिक भक्ति खोलें और शुरुआत करें।"
+      },
+      "en": {
+        "name": "Daily practice",
+        "headline": "Start your daily practice here",
+        "body": "Find the Panchang, stories and readings. Choose a small practice for your day.",
+        "cta": "Explore in the Vedansh app",
+        "ctaBody": "Open Daily practice in Vedansh and get started."
+      }
+    }
+  ]
+}

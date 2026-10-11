@@ -427,3 +427,7 @@ Updated [[runbooks/store-submission]] with release APK regression evidence, hist
 ## [2026-10-11] ingest | Bilingual latest-feature showcase and release PR
 
 Recorded reproducible Hindi/English 39-second app-screen showcases for illustrated stories, Sankalp choices, Kundali and Naam Japa, with preset synthetic voices and full narration SRTs. Compact release copy and Android/R2 evidence live in `docs/releases/1.5.0`; raw output remains local. Screen provenance and unresolved native/network checks remain explicit.
+
+## [2026-10-11] ingest | Separate feature carousels from listing assets
+
+Added the user-requested reuse workflow: 20 separate Hindi/English carousels across 10 features, each with three 1080×1350 cards. Existing listing art remains intact; use-case and CTA text sit outside it. Source hashes, bounds checks and reviewed contact sheets are retained; local PNG/ZIP delivery remains unposted.

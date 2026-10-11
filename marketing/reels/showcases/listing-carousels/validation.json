@@ -1,0 +1,123 @@
+{
+  "features": 10,
+  "locales": [
+    "hi",
+    "en"
+  ],
+  "carousels": 20,
+  "slidesPerCarousel": 3,
+  "totalSlides": 60,
+  "dimensions": [
+    1080,
+    1350
+  ],
+  "source": "Existing finished iPad 13-inch listing visuals, Hindi and English",
+  "checks": {
+    "allImagesDecoded": true,
+    "layoutBoundsPass": true,
+    "allSourceVisualsRenderedWhole": true,
+    "allContactSheetsVisuallyReviewed": true
+  },
+  "sourceHashes": [
+    {
+      "feature": "panchang",
+      "lang": "hi",
+      "sourceSha256": "2c91bb4cbacc4afa8b88683246c843d06dd01c42e1c02b64b2f874b446038fd3"
+    },
+    {
+      "feature": "panchang",
+      "lang": "en",
+      "sourceSha256": "67699dadea9610629bcba50506a0c47a53d736007309af8fdf73149f49ea9513"
+    },
+    {
+      "feature": "kundali",
+      "lang": "hi",
+      "sourceSha256": "035e1580a55192d26d7d32ab7def1d36c12900a169293bdfe524293e6e9c7ed6"
+    },
+    {
+      "feature": "kundali",
+      "lang": "en",
+      "sourceSha256": "39ca94a05fd419b21c4a08c0e6495dafd0be620a0cd1698c96c0c99979cb59f5"
+    },
+    {
+      "feature": "kids-stories",
+      "lang": "hi",
+      "sourceSha256": "926706cc75353040910725e2c00386be9be4e0ff6ca98a48c28085facd9d4994"
+    },
+    {
+      "feature": "kids-stories",
+      "lang": "en",
+      "sourceSha256": "5948b9117bcc84523436171ca2a894e5bb28bed5c645a75c7f89d6923c97e792"
+    },
+    {
+      "feature": "gita",
+      "lang": "hi",
+      "sourceSha256": "bbc64e10f453a1c023eae6dfb92e81660b81211808012ef1b69ad8e7d6539a50"
+    },
+    {
+      "feature": "gita",
+      "lang": "en",
+      "sourceSha256": "2086bb2b3e0fee7769eb751e9e74f061f31bb4bfbc05e5157e96e4b9d01a6870"
+    },
+    {
+      "feature": "japam",
+      "lang": "hi",
+      "sourceSha256": "1495300b247353c847bd34fbc02980bc27d15a98bd305890e8c86ea39b9c1e76"
+    },
+    {
+      "feature": "japam",
+      "lang": "en",
+      "sourceSha256": "ebca30a288a5a008240af9c16b82158aca94c3c4a6bb5a5d396f49d277b37f28"
+    },
+    {
+      "feature": "vrat",
+      "lang": "hi",
+      "sourceSha256": "159306cab40eaafc24e4149d2ea20dd53395e7d85aefd64ab16235b2f7e35f7b"
+    },
+    {
+      "feature": "vrat",
+      "lang": "en",
+      "sourceSha256": "8545efd7c2dd3b9d2cfbc0e22d0f94a6da5da30a36e8fbcf6d3249c194133bc6"
+    },
+    {
+      "feature": "sankalp",
+      "lang": "hi",
+      "sourceSha256": "376855a6cf17d4ba01be7edc4feb46662f649d9e43fbc64fc870bc297b46aa1c"
+    },
+    {
+      "feature": "sankalp",
+      "lang": "en",
+      "sourceSha256": "6d572b2d216bd5e0ebba263cd52b41112a0312961eafc26bb9929b1bbd7f5244"
+    },
+    {
+      "feature": "guna-milan",
+      "lang": "hi",
+      "sourceSha256": "7c7f8946798b1ca3816a74455d27be0ed2c919fd7db571785b45a477eea40b20"
+    },
+    {
+      "feature": "guna-milan",
+      "lang": "en",
+      "sourceSha256": "b7c73b9e3bb589dba07c05d19e8655dac4ef9b25642c337cf32ea1077e858495"
+    },
+    {
+      "feature": "bhajans",
+      "lang": "hi",
+      "sourceSha256": "f4c3bd3f65ea3bf62c567434a6f0b4b45f674ccfb04b4c5445e8e302060208d1"
+    },
+    {
+      "feature": "bhajans",
+      "lang": "en",
+      "sourceSha256": "cf415d96222af5be1a17202bd9873753639bbdad5143cb78b5207cbbdb9912d8"
+    },
+    {
+      "feature": "daily-practice",
+      "lang": "hi",
+      "sourceSha256": "55360352a4b7155bbc72cd63997a7c7e3cc346fbf20307ca092854f08ba243f5"
+    },
+    {
+      "feature": "daily-practice",
+      "lang": "en",
+      "sourceSha256": "e0c6cadf9d353905ad54cf6e5d4d9f4ebcca242338f176dd2dbc3e5a3c10f7ad"
+    }
+  ]
+}

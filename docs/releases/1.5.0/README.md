@@ -17,3 +17,7 @@ On 11 October 2026, Apple 1.5.0 (72) was observed Waiting for Review with manual
 - Historical 9 October production CDN evidence covers all 144 images with HTTP200, matching hashes and decode; its image manifest is unchanged. Current native fresh artwork/audio delivery and new-cache population remain unverified because the emulator rejects corporate Netskope inspection certificates. No security bypass or R2 object changes. See `evidence/r2-results.json`.
 
 Full local diagnostic paths appear in `android-regression.md`; files under the original output tree are not portable with this PR. The compact JSON/CSV evidence alongside this page is committed and portable. No release-readiness or all-tests-green claim is made.
+
+## Separate feature carousels
+
+The user requested separate feature carousels using finished listing assets. `marketing/reels/showcases/listing-carousels/` provides 10 features in both languages, three 1080×1350 cards per set, with intact existing listing art, simple use-case copy and an exploration CTA. Generated gallery, 60 PNGs, captions, individual ZIPs and combined ZIP stay local under `marketing/reels/out/listing-carousels/`. No publication or additional capture.

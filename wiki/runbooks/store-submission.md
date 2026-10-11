@@ -54,3 +54,5 @@ Generated universal APK directly from the submitted vc12 AAB using bundletool 1.
 ## Bilingual showcase materials
 
 The 1.5.0 release record and compact test evidence are committed under `docs/releases/1.5.0/`. `marketing/reels/showcases/latest-1.5.0/` holds locale-matched screen sources, benefit-focused narration, preset neural TTS generation and a reproducible 1080×1920 renderer. Hindi and English local MP4s run about 39 seconds, with SRT narration files and media/hash/volume validation; they have not been posted. The captures show current UI in a compatible capture shell, distinct from exact-release native test evidence.
+
+The user subsequently requested separate carousels reusing finished listing assets. `marketing/reels/showcases/listing-carousels/` contains the copy, renderer, source hashes and reviewed contact sheets for 10 features × Hindi/English × 3 slides (60 PNGs, 1080×1350). Each set uses the intact existing iPad listing visual, a use case and an exploration CTA. Local output includes individual ZIPs, combined ZIP and gallery under `marketing/reels/out/listing-carousels/`; nothing was posted.
