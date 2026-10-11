@@ -265,3 +265,95 @@ test('renders the temple deity background (Somnath → Shiva)', () => {
     'Somnath (Shiva temple) uses the Shiva deity background',
   );
 });
+
+// ─── आरती व चालीसा (design.md §27 item 10) ──────────────────────────────────
+
+function renderTree(templeId: string, lang: 'hi' | 'en') {
+  const route = { key: 'd', name: 'TheerthDetail', params: { templeId } } as Props['route'];
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang={lang}><ShareProvider>
+        <TheerthDetailScreen navigation={navigation} route={route} />
+      </ShareProvider></GitaLanguageProvider>,
+    );
+  });
+  return tree;
+}
+
+function cardByLabel(tree: TestRenderer.ReactTestRenderer, prefix: string) {
+  const cards = tree.root.findAll(
+    (n) => typeof n.props.accessibilityLabel === 'string' && n.props.accessibilityLabel.startsWith(prefix) && typeof n.props.onPress === 'function',
+  );
+  assert.equal(cards.length, 1, `exactly one card labelled "${prefix}…"`);
+  return cards[0];
+}
+
+test('lists the presiding deity\'s chalisa and aarti between the reading and the sources (Dwarkadhish → Krishna, English)', () => {
+  const text = render('dwarkadhish', 'en');
+  assert.match(text, /Aarti & Chalisa\s+·\s+आरती व चालीसा/, 'section label, reading language first');
+  assert.match(text, /Krishna Chalisa/, 'Krishna Chalisa card');
+  assert.match(text, /Aarti Kunj Bihari Ki/, 'Kunj Bihari aarti card');
+  assert.doesNotMatch(text, /Hanuman Chalisa/, 'other deities\' readings stay off a Krishna shrine');
+  assert.ok(text.indexOf('Origin Story') < text.indexOf('Krishna Chalisa'), 'readings follow the temple\'s own reading');
+  assert.ok(text.indexOf('Krishna Chalisa') < text.indexOf('Aarti Kunj Bihari Ki'), 'chalisa before aarti');
+  assert.ok(text.indexOf('Aarti Kunj Bihari Ki') < text.indexOf('Sources'), 'sources footer stays last');
+});
+
+test('lists the presiding deity\'s chalisa and aarti in Hindi (Somnath → Shiva)', () => {
+  const text = render('somnath', 'hi');
+  assert.match(text, /आरती व चालीसा\s+·\s+Aarti & Chalisa/, 'section label, Hindi first');
+  assert.match(text, /शिव चालीसा/, 'Shiv Chalisa card');
+  assert.match(text, /ॐ जय शिव ओमकारा/, 'Shiv aarti card');
+  assert.doesNotMatch(text, /दुर्गा चालीसा/, 'Durga readings stay off a Shiva shrine');
+});
+
+test('tapping a chalisa card opens its reader from the start and marks it seen', () => {
+  navigation.navigate = jest.fn();
+  const tree = renderTree('dwarkadhish', 'en');
+  act(() => { cardByLabel(tree, 'Krishna Chalisa.').props.onPress(); });
+  expect(navigation.navigate).toHaveBeenCalledTimes(1);
+  expect(navigation.navigate).toHaveBeenCalledWith('ChalisaReader', { initialIndex: 0, chalisaId: 'krishna-chalisa' });
+});
+
+test('tapping an aarti card opens the index-based aarti reader', () => {
+  navigation.navigate = jest.fn();
+  const tree = renderTree('dwarkadhish', 'en');
+  act(() => { cardByLabel(tree, 'Aarti Kunj Bihari Ki.').props.onPress(); });
+  expect(navigation.navigate).toHaveBeenCalledTimes(1);
+  expect(navigation.navigate).toHaveBeenCalledWith('AartiReader', { aartiIndex: 5 });
+});
+
+test('a Rama shrine leads with Ram Chalisa, then the rama-tagged Hanuman Chalisa, then the Ram aarti', () => {
+  const ramaTemple = temples.find((t) => t.deity === 'rama');
+  assert.ok(ramaTemple, 'a Rama temple exists in the catalog');
+  const text = render(ramaTemple!.id, 'en');
+  const ram = text.indexOf('Ram Chalisa');
+  const hanuman = text.indexOf('Hanuman Chalisa');
+  const aarti = text.indexOf('Shri Ram Chandra Ji Ki Aarti');
+  assert.ok(ram >= 0 && hanuman >= 0 && aarti >= 0, 'all three cards render');
+  assert.ok(ram < hanuman && hanuman < aarti, `order: ram=${ram} hanuman=${hanuman} aarti=${aarti}`);
+});
+
+test('a temple whose deity has no shipped chalisa or aarti renders no readings block at all (Konark → Surya)', () => {
+  const tree = renderTree('konark-sun', 'en');
+  assert.equal(
+    tree.root.findAll((n) => typeof n.type === 'string' && n.props.testID === 'theerth-related-readings').length,
+    0,
+    'no block, not an empty heading',
+  );
+  const text = tree.root.findAllByType(Text).map((n) => n.props.children).flat(Number.POSITIVE_INFINITY).join(' ');
+  assert.doesNotMatch(text, /Aarti & Chalisa/);
+  assert.match(text, /Sources/, 'the rest of the screen is unaffected');
+});
+
+test('every temple with a mapped reading renders at least one openable card', () => {
+  for (const temple of temples) {
+    if (temple.id === 'konark-sun') continue;
+    const tree = renderTree(temple.id, 'en');
+    const cards = tree.root.findAll(
+      (n) => typeof n.props.accessibilityLabel === 'string' && / Tap to open\.$/.test(n.props.accessibilityLabel) && typeof n.props.onPress === 'function',
+    );
+    assert.ok(cards.length >= 1, `${temple.id} shows no reading card`);
+  }
+});
