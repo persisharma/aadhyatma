@@ -21,7 +21,7 @@ Status legend:
 - **HOLD** — identity, variant, provenance, or copyright requires a human
   editorial decision before transcription.
 
-Only the two Khatu Shyam rows (`khatu-shyam-chalisa`, `khatu-shyam-aarti`) are wired into the reader (October 2026), and their second-source collation is still pending. No other row is `active`. RULEBOOK §10 still requires a complete two-source
+Only the two Khatu Shyam rows (`khatu-shyam-chalisa`, `khatu-shyam-aarti`) are wired into the reader (October 2026). The maintainer accepted each on one supplied source (RULEBOOK §11.1 exception), so their second-source collation is still pending. No other row is `active`. RULEBOOK §10 still requires a complete two-source
 comparison, source metadata, clean romanization, and per-verse Hindi and English
 meanings before reader integration.
 

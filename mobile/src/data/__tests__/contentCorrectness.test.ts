@@ -844,9 +844,38 @@ function collectJsonFiles(dirRel = ''): string[] {
   return files;
 }
 
+// RULEBOOK §11.1 maintainer-attested exception: texts the maintainer accepted on
+// one supplied source because the second could not be reached. Each must keep an
+// honest pending block (no unread page in referenceUrls). This list may only
+// shrink: once a file is collated against two sources, remove it here.
+const MAINTAINER_ATTESTED_SINGLE_SOURCE = new Set([
+  'aarti/khatu-shyam-aarti.json',
+  'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
+]);
+
 for (const file of collectJsonFiles()) {
   const data = readJson(file);
   assert.ok(data.source, `${file} should declare source provenance`);
+  if (MAINTAINER_ATTESTED_SINGLE_SOURCE.has(file)) {
+    assert.ok(
+      data.source.maintainerAttestation?.trim(),
+      `${file}: a single-source exception needs source.maintainerAttestation`
+    );
+    assert.match(
+      data.source.canonicalEditionStatus ?? '',
+      /^Pending/,
+      `${file}: a single-source exception must keep a Pending canonicalEditionStatus`
+    );
+    assert.ok(
+      (data.source.canonicalEditionUrls?.length ?? 0) >= 2,
+      `${file}: a single-source exception must name the pages still to collate`
+    );
+    assert.ok(
+      (data.source.referenceUrls?.length ?? 0) < 2,
+      `${file} now cites 2 referenceUrls; remove it from MAINTAINER_ATTESTED_SINGLE_SOURCE`
+    );
+    continue;
+  }
   assert.ok(
     Array.isArray(data.source.referenceUrls) && data.source.referenceUrls.length >= 2,
     `${file} should declare at least 2 source referenceUrls`

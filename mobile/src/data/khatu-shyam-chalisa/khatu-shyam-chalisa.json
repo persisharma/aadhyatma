@@ -14,6 +14,7 @@
       "https://hindunidhi.com/khatu-shyam-chalisa-hindi/"
     ],
     "canonicalEditionStatus": "Pending (2026-10-11): the RULEBOOK §11.1 two-source line collation is not done. The authoring session's network policy refused both hosts, so neither page was opened. To clear: confirm which page the supplied text came from, collate every line against the other page, record any variant here, move both URLs into referenceUrls, and replace this status with a dated verified line.",
+    "maintainerAttestation": "On 2026-10-11 the maintainer accepted this single supplied text for release without the second-source collation. The pending status stays until that collation is done (RULEBOOK §11.1, maintainer-attested exception).",
     "retrievedOn": "2026-10-11"
   },
   "counts": {
