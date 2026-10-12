@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reader spacing — before and after</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f9f1df;color:#4a3327;font:16px/1.6 system-ui,sans-serif}main{max-width:1000px;margin:auto;padding:36px 20px}h1{font:600 clamp(28px,5vw,40px)/1.15 Georgia,serif;margin:0 0 16px}h2{font:600 24px Georgia,serif;margin:40px 0 12px}p{max-width:760px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}figure{margin:0;background:#fffaf0;border:1px solid #dccba8;border-radius:18px;padding:18px;display:flex;flex-direction:column;align-items:center}figcaption{margin-bottom:14px;font-weight:600;text-align:center}img{display:block;width:100%;max-width:368px;height:auto;border-radius:10px}small{display:block;color:#755d4c}a{color:#964b21}.note{border-left:3px solid #b9884c;padding-left:16px}@media(max-width:620px){main{padding:24px 12px}.grid{gap:8px}figure{padding:8px;border-radius:12px}figcaption{font-size:13px}}
+</style>
+<main>
+<h1>More room for reading</h1>
+<p>One illustration on the opening card of each reading or chapter. Later cards begin with the text, without an image or an empty image frame. The parchment and gold divider stay.</p>
+<h2>The same verse, before and after</h2>
+<p>Durga Chalisa, card 2 of 41 · Hindi · Standard text size · same iPhone simulator. These are actual native screenshots.</p>
+<div class="grid">
+<figure><figcaption>Before<small>A repeated image pushes the meaning below the fold.</small></figcaption><img src="durga-card-2-before.jpg" alt="Durga Chalisa card two before correction, with repeated painting"></figure>
+<figure><figcaption>After<small>The full verse and meaning fit on screen.</small></figcaption><img src="durga-card-2-after.jpg" alt="Durga Chalisa card two after correction, with verse and meaning visible"></figure>
+</div>
+<h2>Opening cards keep their artwork</h2>
+<div class="grid">
+<figure><figcaption>Durga Chalisa · card 1<small>The complete banner is still shown once.</small></figcaption><img src="durga-card-1-after.jpg" alt="Opening Durga Chalisa card with banner"></figure>
+<figure><figcaption>Navratri Katha · section 1<small>The story opens with its illustration.</small></figcaption><img src="katha-card-1-after.jpg" alt="Opening Navratri Katha section with banner"></figure>
+</div>
+<h2>Katha continuation</h2>
+<p>Later sections start reading immediately. Long prose still scrolls normally to its final paragraph.</p>
+<div class="grid">
+<figure><figcaption>Section 2 · beginning</figcaption><img src="katha-card-2-after.jpg" alt="Second Katha section starting with text without repeated illustration"></figure>
+<figure><figcaption>Section 2 · scrolled to the end</figcaption><img src="katha-card-2-scrolled-after.jpg" alt="Second Katha section scrolled to its complete final paragraph"></figure>
+</div>
+<p class="note">Applied across 21 paginated verse readers and both section-based Katha readers. R2 assets, quiet reading backgrounds and the persistent cache are unchanged. Release simulator build, TypeScript, lint and 2,201 tests passed. Native visual inspection here covers Chalisa and Katha; it is not a physical-device or frame-rate benchmark.</p>
+<p><a href="review.md">Implementation and validation record</a></p>
+</main></html>

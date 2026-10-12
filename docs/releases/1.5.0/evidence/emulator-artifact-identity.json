@@ -1,0 +1,38 @@
+[
+  {
+    "device": "emulator-5582",
+    "bootComplete": "",
+    "version": [
+      "versionCode=12 minSdk=24 targetSdk=36",
+      "versionName=1.5.0"
+    ],
+    "apkSha256": "2da16eac04a19d68bfb68c1e52d575ddc4c2323a62c9985c61dbbbac3b7b0b92"
+  },
+  {
+    "device": "emulator-5584",
+    "bootComplete": "",
+    "version": [
+      "versionCode=12 minSdk=24 targetSdk=36",
+      "versionName=1.5.0"
+    ],
+    "apkSha256": "2da16eac04a19d68bfb68c1e52d575ddc4c2323a62c9985c61dbbbac3b7b0b92"
+  },
+  {
+    "device": "emulator-5586",
+    "bootComplete": "1",
+    "version": [
+      "versionCode=12 minSdk=24 targetSdk=36",
+      "versionName=1.5.0"
+    ],
+    "apkSha256": "2da16eac04a19d68bfb68c1e52d575ddc4c2323a62c9985c61dbbbac3b7b0b92"
+  },
+  {
+    "device": "emulator-5588",
+    "bootComplete": "1",
+    "version": [
+      "versionCode=12 minSdk=24 targetSdk=36",
+      "versionName=1.5.0"
+    ],
+    "apkSha256": "2da16eac04a19d68bfb68c1e52d575ddc4c2323a62c9985c61dbbbac3b7b0b92"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "backgroundManifestSha256": "81f9bc292b4bef8c631228aee126fa9891241a4800c8798e2ce8b1ab03ae022f",
+  "backgroundSourceSha256": "f4ae2027b2e82b3f4f1956e98be572631f271deaf0469366d5cf0600c4e879ca",
+  "sharedCacheSha256": "ba114dc0f23e75a14aac39aefd8a1569aceef8392c00d2f4650c62cb79b791eb",
+  "approvedPilotIds": [
+    "daan-annapurna-bhiksha",
+    "hanuman-sita",
+    "krishna-arjuna-vishvarupa"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "ram-hanuman-gada-v2",
+  "title": "Rama and Hanuman",
+  "base": "ram-hanuman",
+  "prompt": "Use case: precise-object-edit.\nAsset type: Vedansh devotional reader banner, opaque EXACT 2:1 horizontal landscape.\nInput image 1 is the authoritative edit target. Make one targeted correction: add Hanuman's traditional gold gada (mace) resting naturally on the ground immediately beside the kneeling Hanuman, with a complete clearly readable decorated rounded/fluted head and long connected handle. Place it in the available lower-left foreground near his knees, with the entire gada inside comfortable canvas margins. It should be visibly associated with Hanuman, laid down respectfully while he bows with both hands joined in namaste. Do not put the gada in his praying hands.\nPreserve all other scene content and the current detailed Style 3 hand-painted rendering: Rama standing blue-skinned with topknot, exactly two connected arms, one hand blessing Hanuman's head and the other holding the full bow, quiver and yellow robes; Hanuman kneeling with exactly two connected arms, both palms joined, monkey face, crown, jewellery, full curling tail and complete knees/feet; the flowering forest, hills, waterfall, river, distant temple, rocks and flowers. Keep exact 2:1 landscape composition, subject scale and whole-subject framing. No extra hand, arm, figure, weapon, text, caption, border or watermark. Do not crop or enlarge subjects. The only intended new object is the gada.",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-3379cfb8-d9ed-4929-a776-f7b7f4834757.png",
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-detail-v2",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/selected/ram-hanuman.webp"
+  ],
+  "transparent_background": false,
+  "userCorrection": "Hanuman should have gada",
+  "approved": false
+}

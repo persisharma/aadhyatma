@@ -20,6 +20,8 @@ import type { UniformVerse } from '@/data/versePool';
 import { getReaderBackground } from '@/data/backgrounds';
 import type { TabParamList } from '@/navigation/types';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingArtwork from '@/components/ReadingArtwork';
+import { readingParchment } from '@/data/backgroundAsset';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -152,13 +154,9 @@ export default function DailyBhaktiScreen() {
             </Text>
           </View>
 
-          {/* Verse Card — carries the same faded source sketch as the verse's own
-              reader page (getReaderBackground). `chapter` doubles as the stanza/kāṇḍa
-              key for the sources whose plate varies per subsection. */}
+          {/* The daily card shares the reader's paper and compact thematic painting. */}
           <View ref={dailyVerseRef} collapsable={false} style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
-            <BackgroundLayer
-              source={getReaderBackground(verse.sourceId, { stanza: verse.chapter })}
-            />
+            <BackgroundLayer source={readingParchment} />
             {/* Top row: source pill + action icons */}
             <View style={styles.cardHeader}>
               <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
@@ -209,6 +207,8 @@ export default function DailyBhaktiScreen() {
                 </View>
               </View>
             </View>
+
+            <ReadingArtwork source={getReaderBackground(verse.sourceId, { stanza: verse.chapter })} />
 
             {/* Verse text — script follows the reading language (gu/kn re-script the Devanagari) */}
             <Text

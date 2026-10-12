@@ -1,0 +1,23 @@
+{
+  "id": "daan-annapurna",
+  "title": "Daan \u00b7 Annapurna offering bhiksha to Shiva",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-0125d4ce-3bfa-470d-8949-d5e2117d0e9e.png",
+  "prompt": "Use case: illustration-story. Asset type: a new devotional painting for a compact reading banner in the Vedansh mobile app. Output one finished standalone landscape bitmap with EXACT 2:1 aspect ratio (for example 2048 by 1024), not a collage or UI mockup. Compose specifically for this short horizontal canvas; this is newly drawn banner art, not a cropped portrait. Style: refined traditional Indian devotional book illustration in softly luminous watercolor and delicate ink, warm ivory handmade paper, restrained saffron gold, coral red, blue and leafy green; calm expressive faces, clear readable silhouettes, tasteful painted detail and gentle atmosphere, cohesive with an ivory parchment reading interface. The whole scene fills the landscape canvas while every important subject is fully visible with a generous 10 percent safe margin around crowns, heads, hands, feet, halo and meaningful props. Never cut a figure or important prop at any edge. Avoid huge blank margins, tall vertical staging, oversized central portraits, ornate border frames, fake text, lettering, logos, signatures, watermark, UI. Do not distort anatomy to fit; scale complete subjects down and spread the environment sideways. No photorealism, no 3D, no sepia monochrome. Scene: Annapurna, in a red and gold sari with a traditional crown, sits serenely on a low stone seat. A humble, ash-marked Shiva kneels before her, holding an alms bowl while she offers food with a ladle. Both complete figures, all hands, bowl, ladle, seat and feet are visible. A quiet old Kashi riverside temple courtyard extends horizontally behind them. Peaceful devotional moment; no extra people.",
+  "status": "superseded-style",
+  "rawPath": "docs/evaluations/reading-visuals-2026-10-10/new-banners/raw/daan-annapurna.png",
+  "previewPath": "docs/evaluations/reading-visuals-2026-10-10/new-banners/daan-annapurna.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 105466,
+  "sha256": "603cf8bbcbe900727083b979761f83f25105e1e3b0507278b0c436c4fa8fa484",
+  "tool": "built-in image_gen",
+  "approved": false,
+  "priorStatus": "draft",
+  "supersededBy": "krishna-storybook-v1"
+}

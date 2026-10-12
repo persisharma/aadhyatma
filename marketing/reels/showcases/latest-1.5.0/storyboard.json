@@ -1,0 +1,37 @@
+{
+  "release": "1.5.0",
+  "format": "1080x1920, 30fps, H.264/AAC",
+  "voiceType": "Synthetic neural narration",
+  "scenes": [
+    {
+      "id": "stories",
+      "screen": "04-kids-stories.png",
+      "hi": {"title": "कथाओं से जुड़ें", "subtitle": "चित्रों के साथ पढ़ें", "narration": "वेदांश में भक्ति से जुड़ने के नए तरीके खोजें। सुंदर चित्रों के साथ माँ दुर्गा की कथाएँ पढ़ें।"},
+      "en": {"title": "Stories to share", "subtitle": "Read with beautiful illustrations", "narration": "Discover more ways to connect with devotion in Vedansh. Explore illustrated stories of Maa Durga."}
+    },
+    {
+      "id": "sankalp",
+      "screen": "08-sankalp.png",
+      "hi": {"title": "अपना संकल्प चुनें", "subtitle": "हर दिन पाठ का एक छोटा कदम", "narration": "हनुमान चालीसा, भगवद्गीता या नवरात्रि का संकल्प चुनें। हर दिन के पाठ को अपनी दिनचर्या का हिस्सा बनाएँ।"},
+      "en": {"title": "Choose your Sankalp", "subtitle": "Build a daily reading practice", "narration": "Choose a Sankalp for Hanuman Chalisa, the Bhagavad Gita, or Navaratri. Make daily reading part of your routine."}
+    },
+    {
+      "id": "kundali",
+      "screen": "03-kundali.png",
+      "hi": {"title": "अपनी कुंडली समझें", "subtitle": "ग्रहों और भावों को जानें", "narration": "अपनी जन्म कुंडली देखें। ग्रहों और भावों की जानकारी समझें, एक साफ़ और सरल अनुभव के साथ।"},
+      "en": {"title": "Explore your Kundali", "subtitle": "Understand planets and houses", "narration": "Explore your birth Kundali. Understand its planets and houses through a clear, simple experience."}
+    },
+    {
+      "id": "japa",
+      "screen": "07-japam.png",
+      "hi": {"title": "नाम जप में मन लगाएँ", "subtitle": "हर नाम के साथ एक मनका", "narration": "नाम जप के लिए माला खोलें। हर नाम के साथ एक मनका गिनें और अपने अभ्यास पर ध्यान दें।"},
+      "en": {"title": "Make time for Naam Japa", "subtitle": "One bead for every name", "narration": "Open the mala for Naam Japa. Count one bead with each name, and give your practice a moment of focus."}
+    },
+    {
+      "id": "cta",
+      "screen": "08-sankalp.png",
+      "hi": {"title": "आपकी भक्ति, आपका वेदांश", "subtitle": "वेदांश ऐप में खोजें", "narration": "कथाएँ, संकल्प, कुंडली और नाम जप। वेदांश ऐप में खोजें।"},
+      "en": {"title": "Your practice. Your Vedansh.", "subtitle": "Explore the Vedansh app", "narration": "Stories, Sankalp, Kundali and Naam Japa. Explore the Vedansh app."}
+    }
+  ]
+}

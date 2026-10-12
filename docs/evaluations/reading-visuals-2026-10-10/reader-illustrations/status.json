@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-10",
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-v1",
+  "generationService": "restored; built-in generation succeeded",
+  "scope": "Three scenes, three styles; wider generation and adoption wait for user choice.",
+  "comparisonScenes": 3,
+  "comparisonStyles": 3,
+  "readyForVisualReview": 3,
+  "remainingUniqueIllustrationsHeld": 40,
+  "imageSlotsPlanned": 44,
+  "adoptedInApp": false,
+  "uploadedToR2": false,
+  "newReviewBytes": 218756,
+  "previousDetailedDraftBytes": 326850,
+  "categoryInfrastructure": "Implemented locally; distinct source folder, manifest and R2 prefix; shared nonblocking lifetime cache.",
+  "records": [
+    {
+      "id": "daan-annapurna-bhiksha",
+      "title": "Daan \u00b7 Annapurna offering bhiksha to Shiva",
+      "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/reader-illustrations/daan-annapurna-bhiksha.webp",
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 62724,
+      "sha256": "9fe7439500b953656249f99780171c0a5a0c82b72402558dc6c76b0910059fb7",
+      "tool": "built-in image_gen",
+      "approved": false
+    },
+    {
+      "id": "hanuman-sita",
+      "title": "Sundarkand \u00b7 Hanuman and Sita",
+      "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/reader-illustrations/hanuman-sita.webp",
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 76818,
+      "sha256": "c05dad392839bda3024461c5b54b1debfb530cb0b60d2c4f4393600c84ddcf7b",
+      "tool": "built-in image_gen",
+      "approved": false
+    },
+    {
+      "id": "krishna-arjuna-vishvarupa",
+      "title": "Gita \u00b7 Vishvarupa",
+      "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/reader-illustrations/krishna-arjuna-vishvarupa.webp",
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 79214,
+      "sha256": "94c0f38f6cebdd690e3711bc5bcc8224a84a6543af90abbdfa009ca245e0acd9",
+      "tool": "built-in image_gen",
+      "approved": false
+    }
+  ]
+}

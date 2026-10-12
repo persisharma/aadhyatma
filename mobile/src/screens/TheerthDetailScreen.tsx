@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -8,6 +8,7 @@ import { contentByLang, pick } from '@/utils/localize';
 import { meaningToken, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getTheerthBackground, getTheerthIllustration } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingBanner from '@/components/ReadingBanner';
 import LanguageToggle from '@/components/LanguageToggle';
 import LibraryCard from '@/components/LibraryCard';
 import { useNewContent } from '@/contexts/NewContentContext';
@@ -171,7 +172,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
               testID="theerth-illustration"
               accessible
               accessibilityRole="image"
-              accessibilityLabel={name}
+              accessibilityLabel={contentByLang(lang, 'पठन चित्र', 'Reading illustration')}
               style={[
                 styles.illustrationFrame,
                 {
@@ -182,16 +183,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
                 },
               ]}
             >
-              {/* The plates are square with the artwork in the upper part; a
-                  5:4 window anchored to the top keeps the murti and mandap in
-                  view without a centred crop lopping off the canopy. The square
-                  is sized by a View, not the Image: RN injects a static
-                  require's intrinsic size (1024 pt) as the Image's default
-                  height, which defeats aspectRatio and zooms the frame into
-                  the top-centre of the plate. */}
-              <View style={styles.illustrationSquare}>
-                <Image source={illustration} style={styles.illustrationImage} resizeMode="cover" />
-              </View>
+              <ReadingBanner source={illustration} />
             </View>
           ) : null}
 
@@ -404,18 +396,9 @@ const styles = StyleSheet.create({
   },
   illustrationFrame: {
     width: 'auto',
-    aspectRatio: 5 / 4,
     borderWidth: 1,
     overflow: 'hidden',
     marginTop: 4,
-  },
-  illustrationSquare: {
-    width: '100%',
-    aspectRatio: 1,
-  },
-  illustrationImage: {
-    width: '100%',
-    height: '100%',
   },
   relatedList: {
     gap: 10,

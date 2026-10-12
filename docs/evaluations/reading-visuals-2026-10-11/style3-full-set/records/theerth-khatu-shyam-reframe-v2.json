@@ -1,0 +1,24 @@
+{
+  "id": "theerth-khatu-shyam-reframe-v2",
+  "replaces": "theerth-khatu-shyam",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/theerth-khatu-shyam.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Correct the framing of image 1, preserving its fine detailed storybook rendering and exact 2:1 landscape. Issue to fix: whole central scalloped SHRINE ARCH and parasol finial above. Remove both added peacocks entirely (not present in original approved motif) and fill their areas with matching courtyard stone and flowers. Keep Shyam head icon, crown/feather, garlands, carved shrine, offerings and detailed temple backdrop. Scale the entire principal subject/shrine/animal/prop group together down by about 20 percent within the SAME 2:1 canvas, adding naturally painted matching sky, ground or courtyard around it. Required: every meaningful subject and key prop completely inside a 6 percent safe margin, particularly the specified clipped points. A camera that is farther back, not a taller canvas. Do not crop, distort, fade away or omit the clipped part. Background tree canopy and distant setting may extend edge to edge. Retain all other details and coherent anatomy; no new people, text, captions, border or UI.",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-8bf29b7b-9003-46b2-bab3-1e585867fa9d.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/theerth-khatu-shyam-reframe-v2.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/theerth-khatu-shyam-reframe-v2.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 126926,
+  "sha256": "5f49eb1520adcb3912a4169f13da6c09b23a67ff1b4a63a51623e927caed994c",
+  "tool": "built-in image_gen",
+  "status": "draft",
+  "approved": false
+}

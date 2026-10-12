@@ -1,0 +1,18 @@
+{
+  "capturedAt": "2026-10-09T19:27:31.603493+00:00",
+  "simulator": "Vedansh-Reading-Art-QA",
+  "udid": "BD91E840-482E-4816-838A-9C5247E401DA",
+  "nativeProcessBefore": 96618,
+  "nativeProcessAfter": 20162,
+  "terminationVerified": true,
+  "cacheFiles": 44,
+  "allBytesHashesMtimeAndInodesUnchanged": true,
+  "paintingScreenshot": "17-native-cache-after-restart.jpg",
+  "vishnuFixture": {
+    "bytes": 94904,
+    "mtimeNs": 1791527809931447198,
+    "inode": 95319186,
+    "sha256": "82e26647302706372c4211649b14fedd1a59d57bbda155180e1357caea48b4bb"
+  },
+  "limits": "Native seeded fixture persistence and decoding only. Network request absence is not established by file metadata; successful native R2 and physical performance remain separate."
+}

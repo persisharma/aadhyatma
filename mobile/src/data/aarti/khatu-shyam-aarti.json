@@ -1,0 +1,169 @@
+{
+  "titleHi": "श्री खाटू श्याम जी की आरती",
+  "titleEn": "Shri Khatu Shyam Ji Ki Aarti",
+  "subtitleHi": "ॐ जय श्री श्याम हरे, बाबा जय श्री श्याम हरे",
+  "subtitleEn": "Om Jai Shri Shyam Hare, Baba Jai Shri Shyam Hare",
+  "deity": "krishna",
+  "language": "hi",
+  "source": {
+    "baseText": "Shri Khatu Shyam Ji Ki Aarti (ॐ जय श्री श्याम हरे). Devanagari supplied by the maintainer on 2026-10-11, copied from a published aarti page. Only two things were changed: the space before each danda was dropped, and the refrain cue printed after every stanza was removed, because the reader shows the refrain as its own opening and closing page (as om-jai-jagdish.json does). The opening refrain matches the identity anchor in docs/content-parity/chalisa-aarti-existing-deities.md. Meanings and romanization are Aadhyatma editorial.",
+    "referenceUrls": [],
+    "canonicalEdition": "Drik Panchang Shyam Baba Aarti; BhaktiBharat Shri Khatu Shyam Ji Ki Aarti",
+    "canonicalEditionUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/shyam-baba/shyam-baba-aarti.html?lang=hi",
+      "https://www.bhaktibharat.com/aarti/shri-khatu-shyam-ji-ki-aarti"
+    ],
+    "canonicalEditionStatus": "Pending (2026-10-11): the RULEBOOK §11.1 two-source line collation is not done. The authoring session's network policy refused both hosts, so neither page was opened. To clear: confirm which page the supplied text came from, collate every line against the other page, record any variant here, move both URLs into referenceUrls, and replace this status with a dated verified line.",
+    "maintainerAttestation": "On 2026-10-11 the maintainer accepted this single supplied text for release without the second-source collation. The pending status stays until that collation is done (RULEBOOK §11.1, maintainer-attested exception).",
+    "retrievedOn": "2026-10-11"
+  },
+  "counts": {
+    "totalVerses": 8
+  },
+  "verses": [
+    {
+      "id": "ksa-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "ॐ जय श्री श्याम हरे, बाबा जय श्री श्याम हरे।",
+        "खाटू धाम विराजत, अनुपम रूप धरे॥"
+      ],
+      "linesEn": [
+        "Om jai Shri Shyam Hare, Baba jai Shri Shyam Hare.",
+        "Khatu Dham virajat, anupam roop dhare."
+      ],
+      "meaningHi": "हे श्री श्याम हरे, आपकी जय हो; हे बाबा श्री श्याम हरे, आपकी जय हो। आप खाटू धाम में विराजमान हैं और आपने अनुपम (अतुलनीय) रूप धारण किया है। यह आरती की टेक है, जो प्रत्येक पद के पश्चात् दोहराई जाती है।",
+      "meaningEn": "Om, victory to you, Shri Shyam Hare; victory to you, Baba Shri Shyam Hare. You are enthroned at Khatu Dham, having taken a form beyond compare. This is the refrain, repeated after each stanza."
+    },
+    {
+      "id": "ksa-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "रतन जड़ित सिंहासन, सिर पर चंवर ढुरे।",
+        "तन केसरिया बागो, कुण्डल श्रवण पड़े॥"
+      ],
+      "linesEn": [
+        "Ratan jadit singhasan, sir par chanvar dhure.",
+        "Tan kesariya bago, kundal shravan pade."
+      ],
+      "meaningHi": "आप रत्नों से जड़े सिंहासन पर विराजमान हैं और आपके सिर के ऊपर चँवर डुलाया जा रहा है। आपके तन पर केसरिया बागा (लंबा अंगरखा) है और कानों में कुण्डल शोभित हैं।",
+      "meaningEn": "You sit on a jewel-studded throne while a chanwar (ceremonial whisk) is waved above your head. A saffron robe adorns your body, and earrings hang from your ears."
+    },
+    {
+      "id": "ksa-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "गल पुष्पों की माला, सिर पर मुकुट धरे।",
+        "खेवत धूप अग्नि पर, दीपक ज्योति जले॥"
+      ],
+      "linesEn": [
+        "Gal pushpon ki mala, sir par mukut dhare.",
+        "Khevat dhoop agni par, deepak jyoti jale."
+      ],
+      "meaningHi": "आपके गले में फूलों की माला है और सिर पर मुकुट सुशोभित है। अग्नि पर सुगंधित धूप खेई जा रही है और दीपक की ज्योति जल रही है।",
+      "meaningEn": "A garland of flowers hangs at your neck and a crown rests upon your head. Fragrant incense is offered on the fire, and the flame of the lamp burns bright."
+    },
+    {
+      "id": "ksa-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "मोदक खीर चूरमा, सुवरण थाल भरे।",
+        "सेवक भोग लगावत, सेवा नित्य करे॥"
+      ],
+      "linesEn": [
+        "Modak kheer choorma, suvaran thaal bhare.",
+        "Sevak bhog lagavat, seva nitya kare."
+      ],
+      "meaningHi": "सोने के थालों में मोदक, खीर और चूरमा भरे हुए हैं। सेवक आपको भोग लगाते हैं और नित्य आपकी सेवा करते हैं।",
+      "meaningEn": "Golden platters are filled with modak, kheer and churma. Your servants offer this food to you and serve you every day."
+    },
+    {
+      "id": "ksa-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "झांझ कटोरा और घड़ियावल, शंख मृदंग घुरे।",
+        "भक्त आरती गावे, जय-जयकार करे॥"
+      ],
+      "linesEn": [
+        "Jhanjh katora aur ghadiyaval, shankh mridang ghure.",
+        "Bhakt aarti gaave, jai-jaikaar kare."
+      ],
+      "meaningHi": "झाँझ, कटोरा, घड़ियाल, शंख और मृदंग गूँज रहे हैं। भक्त आरती गाते हैं और आपकी जय-जयकार करते हैं।",
+      "meaningEn": "Cymbals, the katora bell, the gong, the conch and the mridang drum all resound. Devotees sing the aarti and raise cries of victory to you."
+    },
+    {
+      "id": "ksa-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "जो ध्यावे फल पावे, सब दुःख से उबरे।",
+        "सेवक जन निज मुख से, श्री श्याम-श्याम उचरे॥"
+      ],
+      "linesEn": [
+        "Jo dhyaave phal paave, sab dukh se ubare.",
+        "Sevak jan nij mukh se, Shri Shyam-Shyam uchare."
+      ],
+      "meaningHi": "जो आपका ध्यान करता है, वह फल पाता है और सब दुःखों से उबर जाता है। सेवक जन अपने मुख से 'श्री श्याम, श्याम' का उच्चारण करते हैं।",
+      "meaningEn": "Whoever meditates on you receives the fruit and rises above every sorrow. Your servants utter 'Shri Shyam, Shyam' with their own lips."
+    },
+    {
+      "id": "ksa-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · ६",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "श्री श्याम बिहारी जी की आरती, जो कोई नर गावे।",
+        "कहत भक्त-जन, मनवांछित फल पावे॥"
+      ],
+      "linesEn": [
+        "Shri Shyam Bihari ji ki aarti, jo koi nar gaave.",
+        "Kahat bhakt-jan, manvanchhit phal paave."
+      ],
+      "meaningHi": "भक्तजन कहते हैं कि जो कोई मनुष्य श्री श्याम बिहारी जी की यह आरती गाता है, वह मनचाहा फल पाता है।",
+      "meaningEn": "The devotees say that whoever sings this aarti of Shri Shyam Bihari Ji receives the fruit their heart desires."
+    },
+    {
+      "id": "ksa-08",
+      "type": "refrain",
+      "section": "body",
+      "number": 8,
+      "labelHi": "टेक",
+      "labelEn": "Closing Refrain",
+      "lines": [
+        "जय श्री श्याम हरे, बाबा जी श्री श्याम हरे।",
+        "निज भक्तों के तुमने, पूरण काज करे॥"
+      ],
+      "linesEn": [
+        "Jai Shri Shyam Hare, Baba ji Shri Shyam Hare.",
+        "Nij bhakton ke tumne, pooran kaaj kare."
+      ],
+      "meaningHi": "हे श्री श्याम हरे, आपकी जय हो; हे बाबा जी श्री श्याम हरे, आपकी जय हो। आपने अपने भक्तों के सब कार्य पूर्ण किए हैं। (समापन टेक।)",
+      "meaningEn": "Victory to you, Shri Shyam Hare; victory to you, Baba Ji Shri Shyam Hare. You have fulfilled every task of your own devotees. (Closing refrain.)"
+    }
+  ]
+}

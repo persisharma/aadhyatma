@@ -1,3 +1,370 @@
+# Reader illustrations — 11 October 2026, approved integration
+
+Integrated: all 43 detailed Style 3 banners cover 44 reading slots. The user accepted the set
+and requested two Hanuman gada corrections, then authorized integration. Both corrected
+paintings are selected. All 43 R2 responses return HTTP 200 with exact approved SHA-256 bytes;
+the active app manifest matches. Current backgrounds and the persistent cache are unchanged.
+Files are 960×480, total 4.45 MiB and range from 61–132 KiB. Eight focused suites/205 tests and
+TypeScript pass. Production iOS/Android exports contain none of the new banner files;
+the existing paper fallback is 3,102 bytes. The gallery provides before/after controls.
+See `docs/evaluations/reading-visuals-2026-10-11/style3-full-set/review.md` for selected repair
+notes, hash/dimension checks, browser captures and the remaining native/device gates.
+Browser framing evidence is separate from native/device performance evidence.
+
+Standalone Release QA verifies the compact full canvas in Durga and Daan Katha, scrolling
+through the Katha teaching/source/actions, and persistence of all 43 controlled cached files
+across relaunch. The native R2 request fails TLS certificate validation (-1200); immediate
+fallback, text and navigation work. Native art captures use exact approved files seeded into
+the QA cache. Successful native CDN delivery and physical-device performance remain open.
+See the full-set `native-integration-checks.json` and review for evidence.
+
+---
+
+# Reader illustrations — 11 October 2026, historical sample review
+
+final result: three detailed Style 3 revisions ready for visual choice
+
+The user clarified that the Krishna rendering should retain the detailed scene information.
+Revised the same three scenes using the detailed paintings as edit targets and kj-08/kj-11
+as style-only references. Main characters, actions, setting, props and layered backgrounds
+remain. These are generative redraws with fine-mark variation, not pixel-identical copies.
+
+See `docs/evaluations/reading-visuals-2026-10-11/style3-detail/review.md` for scene checks,
+prompts, hashes and a fresh nine-image browser capture. All 9 images loaded with contain,
+no horizontal overflow or browser warnings/errors at 1280px. Three uncropped 960×480 WebPs
+total 303,698 bytes (297 KiB), about 7% smaller than detailed sources at equal settings.
+No performance claim follows from that size result. No app code or cache contract changed;
+no replacements are approved, adopted or uploaded. Wider generation awaits visual choice.
+
+---
+
+# Krishna-style reader illustrations — 10 October 2026, historical comparison
+
+final result: category implemented locally; three-scene, three-style comparison ready
+
+The user specified the Krishna kids-story rendering and separate image purposes. Reading
+backgrounds remain quiet surfaces behind text; Reader illustrations are thematic short 2:1
+banners above text. The four earlier detailed paintings are superseded. Actual unchanged
+kj-08/kj-11 style references guided three new 2:1 storybook drafts. all-image-fit.html compares
+Daan, Hanuman–Sita and Vishvarupa in the existing muted, detailed painting and Krishna storybook
+styles. The fresh browser capture is reader-illustrations/three-scenes-three-styles.png.
+All 11 image elements loaded, all nine comparisons use contain, and no horizontal overflow or
+browser warning/error was observed at the normal 847px viewport. This is an artwork gallery,
+not a native app capture.
+
+Implemented separate asset folder, typed descriptor, alias map, manifest and configured R2
+prefix reader-illustrations. CachedArtwork shares the existing loader/cache with the background
+wrapper, retaining interaction/focus deferral, native-decode fallback and one bounded queue.
+ReaderBanner uses the complete dedicated illustration canvas with contain. All 44 legacy slots
+map to 43 IDs; the empty new manifest preserves current app art pending publication. The
+publisher verifies approved WebP hashes and exact 2:1 dimensions; dry staging leaves the app
+manifest unchanged and publication updates it only after uploads succeed.
+
+TypeScript, focused ESLint and eight focused suites/205 tests pass after updating the Theerth
+loader assertion. Empty-category verification/staging pass. The two local style references
+match their source SHA-256 bytes and all preview image/texture URLs return HTTP 200. No bitmap
+was added to the app asset graph and the lifetime cache implementation/directory is unchanged.
+These checks do not establish native or physical performance.
+
+43 complete reference-based prompts are saved in reader-illustrations/prompts.json. Built-in
+generation is working again. The three selected storybook drafts total 218,756 bytes (214 KiB),
+versus 326,850 bytes (319 KiB) for the same three detailed drafts at identical 960×480 dimensions
+and WebP settings: 33.1% smaller. This is file-size evidence, not device performance. The user
+requested comparing these three scenes before deciding the wider direction; the remaining 40
+briefs are held. Style 3 is recommended for app cohesion and clearer short-banner figures.
+No replacement is approved, adopted or uploaded to R2. Native/device gates remain open.
+
+---
+
+# Superseded detailed-painting drafts — 10 October 2026, historical review
+
+final result: incomplete — image generation blocked
+
+The user rejected the focal crops below and requested new paintings composed for the short
+rectangle. Three new full-canvas 2:1 drafts are ready for visual review: Daan/Annapurna,
+Hanuman–Sita and Gita/Vishvarupa. The fourth Vishnu draft is held for an incorrect fifth arm;
+39 further paintings await generation after built-in image generation returned 401
+`token_revoked`. These are artwork drafts, not adopted app assets or native UI sign-off.
+
+The localhost preview server was stopped. It has been restarted as a detached process on
+127.0.0.1:8095. `all-image-fit.html` now shows new before/after pairs using only local images,
+with the rejected gallery preserved as `clipped-banners-rejected.html`. Browser verification
+shows 6/6 comparison images loaded and all three after images displayed at exactly 360×180px
+from 960×480px files, preserving the whole canvas without cropping or stretching. The new
+review WebPs are 103, 113 and 103 KiB (326,850 bytes combined); dimensions, byte counts and
+SHA-256 values are recorded in `new-banners/status.json`. The browser capture is
+`docs/evaluations/reading-visuals-2026-10-10/new-banner-before-after.png`.
+
+Existing app sources, R2 object mappings and lifetime-cache behavior were not changed by this
+drafting pass. Visual approval, completion of the remaining art, R2 publication, manifest
+adoption and native/device visual/performance verification remain open. No extra native test
+run is claimed for this preview-only pass. The earlier crop geometry/test evidence below is
+historical and does not establish visual acceptance.
+
+---
+
+# Rejected compact focal-crop proposal — 10 October 2026, historical review
+
+final result: blocked
+
+Asset-layout review passes for all 44 paintings. Fresh native banner capture, scrolling and
+transport/performance verification remain pending. The source correction is implemented locally;
+this is not release or all-screen native sign-off. The user explicitly rejected the natural-height
+proposal below because it creates excess scrolling.
+
+**Findings and comparison history**
+
+- [P2, implementation fixed; native recheck pending] Natural-height portraits add roughly a
+  full portrait image to every section. `ReadingBanner` now reserves a 2:1 landscape rectangle,
+  up to 360pt wide and 180pt tall, including later prose sections and Theerth content art.
+- [P2, fixed in gallery; native recheck pending] Default centre crops cut several faces. Reviewed
+  per-image focal positions preserve key subjects; Gita Vishvarupa, Ram/Hanuman and Navagraha
+  stay complete with `contain` on neutral paper inside the same compact rectangle.
+- Geometry is static before loading. No layout callback, size probe, new bitmap, R2 hash change
+  or cache-key change. Bundled manuscript/paper fallback and deferred async loading remain.
+
+**Target, normalization and evidence**
+
+The latest explicit user instruction requests a rectangle banner to avoid tall scrolling and
+supersedes the inferred natural-height interpretation of the supplied Vishnu card crop. Same
+Daan bitmap and equal card widths are shown before/after in the live browser comparison.
+`docs/evaluations/reading-visuals-2026-10-10/compact-banner-before-after.png` is a 1280×890 crop
+of the browser's full-page capture, retaining the heading and complete first comparison. It is
+an asset-layout preview, not native app UI. Normal browser viewport is 1280×720, without an override.
+
+`compact-banner-gallery.png` (1280×4246) and its three detail crops record all 44 paintings;
+44/44 image elements loaded, with 41 focal crops and three contained compositions. At the gallery
+card width, every frame is 312.66×156.33px. Both previews use the same native frame registry.
+Original muted paintings and paper borders remain visible. The complete Gita/other exceptions
+are intentionally smaller inside the short rectangle; no essential figure is cropped there.
+
+**Five fidelity surfaces**
+
+- Fonts/typography: native reading tokens and text strings are unchanged; new native check pending.
+- Spacing/layout: common compact frame reduces art height and leaves text unrestricted. Wider
+  screens retain the same 2:1 composition by limiting banner width to 360pt. Native endpoints pending.
+- Colors/tokens: existing Option 2 paper, gold divider and original asset colors remain.
+- Image quality: all 44 assets load; focal crops preserve faces and source proportions. Three
+  compositions remain complete on paper. No new compression or religious artwork was adopted.
+- Copy/content: source/teaching/control strings are unchanged. Evaluation labels are not app copy.
+
+**Checks and remaining work**
+
+TypeScript, focused ESLint, six suites/183 tests and source verification of all 45 manifest
+hashes/dimensions pass. Geometry tests verify no stretching/uncovered crop edges across all
+manifest paintings and stable compact bounds across phone/tablet available widths. Current
+production Hermes exports succeed for iOS and Android in `/tmp/vedansh-reading-compact-banner`;
+only the same 3,102-byte paper is bundled from the 45-image set on each platform. The preceding
+full Jest run (236 suites/2,183 tests) predates this banner correction; current focused checks
+include its four new regressions.
+
+An isolated simulator check exposed the old Daily Gita 5.26 layout; menu/key actions did not
+produce a verified current bundle reload. No fresh native banner capture is claimed. Finish
+same-state native comparisons, long-reading endpoints, remaining sizes/languages, successful
+in-app R2 download/reuse and physical performance/touch checks before broad sign-off. Prior
+host/CDN success and seeded native cache decoding are separate evidence layers.
+
+---
+
+# Rejected natural-height proposal — 10 October 2026, historical review
+
+final result: blocked
+
+The code correction and asset-gallery checks are complete; the latest native app capture and
+scroll verification are blocked because the Mac is locked. The unlock request is pending.
+The earlier scoped native passes below apply to the previous 220pt frames, not this correction.
+
+**Findings and comparison history**
+
+- [P2, implementation fixed; native recheck pending] Fixed 220pt frames make square/portrait
+  paintings narrow beside the user's full-width Vishnu reference. Later Katha parts also shrink
+  art to 80pt. ReadingArtwork now uses full available width and source-verified manifest aspect
+  ratio; the compact prop is removed. Theerth preserves the complete painting instead of its
+  prior top-anchored 5:4 window.
+- Layout is reserved before fetching. Image content, R2 object hashes, cache keys and fallback
+  assets are unchanged. Taller portrait paintings are intentional to preserve complete figures;
+  existing reader ScrollViews must receive a fresh native endpoint check before visual sign-off.
+
+**Target, state and evidence**
+
+Source visual: docs/evaluations/reading-visuals-2026-10-10/user-wide-artwork-reference.png
+(710×606 crop: Vishnu painting, source/action row and divider). The source is a card-region
+reference, not a whole-device screenshot. The exact same Gita bitmap is compared before/after
+at equal 353.5px card-content width in the browser gallery. Its own 1054×1492 aspect ratio
+produces a 500.4px after image, instead of the prior 220px frame. Vishnu remains 3:2. This is
+an intentional proportional adaptation to a different painting, not identical-state fidelity.
+
+Browser-rendered comparison: docs/evaluations/reading-visuals-2026-10-10/natural-fit-before-after.png
+(847×926, full-page, normal browser viewport/density; no override). All-image gallery loaded
+89 image elements (reference plus two copies of 44 paintings), with zero failed or pending
+images and zero console errors/warnings. All 45 manifest dimensions match local source bytes.
+The gallery shows asset fitting, not native typography, touch, R2 transport or performance.
+
+**Five fidelity surfaces**
+
+- Fonts/typography: app tokens unchanged; fresh native wrapping/truncation check pending.
+- Spacing/layout rhythm: full available width and proportional height match the reference's
+  edge-to-edge painting treatment; native text endpoints and persistent controls pending.
+- Colors/tokens: original artwork and theme tokens retained. Muted legacy paintings remain
+  muted; no new image generation, recoloring or religious-content changes were adopted.
+- Image quality: complete Gita frame/figures visible in the browser comparison; all original
+  assets load. No crop, stretch, substitution or new compressed bitmap is introduced.
+- Copy/content: original scripture/teaching/control strings untouched. Gallery labels describe
+  evaluation only and do not enter product flows.
+
+**Checks**
+
+Full Jest: 236 suites/2,183 tests. TypeScript and focused ESLint pass. Both final Hermes exports
+succeed in /tmp/vedansh-reading-natural-fit. Only the existing 3,102-byte paper from these 45
+assets is bundled on each platform. Tests and exports do not close native visual checks.
+
+**Implementation checklist**
+
+- Completed: common full-width geometry, later-section parity, Theerth uncropped content plate,
+  generated/verified dimensions, unchanged R2/cache hashes, browser comparison and build checks.
+- Pending: unlock Mac; reload isolated QA app; compare same native states and text endpoints;
+  continue the separately recorded physical-device/native-CDN/performance checks.
+
+---
+
+# Reading artwork rollout — scoped native design QA, 10 October 2026
+
+previous scoped result: passed
+
+This pass covers the inspected native layouts and the image-size correction. Release/device
+and remaining size/language checks stay open; it is not an all-screen visual sign-off.
+
+**Findings and comparison history**
+
+- [P2, fixed] Opening paintings appeared as tiny stamps. The initial rollout reused the 80pt
+  continuation frame. Gita 1.42 English/Standard before/after, compared together in
+  `docs/evaluations/reading-visuals-2026-10-10/artwork-size-before-after.png`, shows the complete
+  portrait in the restored responsive opening frame (maximum 220pt/28% window). The same
+  correction is verified in native Daily, Puja, Daan and Pitru education captures 13–16.
+- [P2, fixed] Pitru overview/education exposed a white root beneath the paper. Added the theme
+  parchment base; current captures 09 and 16 show the continuous ivory surface.
+- No remaining actionable P0/P1/P2 finding in these inspected Standard states. Legacy portrait
+  art remains muted and visibly framed; this is preserved asset content, not a new edge-blending
+  claim. Further artwork replacement requires a separate concrete visual iteration.
+
+**Target, normalization and evidence**
+
+Source: `docs/evaluations/reading-visuals-2026-10-09/proposals/option-2.png` (853×1844).
+Implementation: actual iOS 26.5 Expo Go native captures in the October 10 directory. Native
+window raster: 782×1732; device content rectangle x47/y203, 688×1498, approximately 1.71px/pt
+for the 402×874pt device. The HTML board declaratively frames the original capture; no bitmap
+art or text is recreated. This is not a raw 3x device capture.
+
+Full-view combined inputs opened and reviewed:
+`artwork-size-before-after.png` (847×937), equal-scale Gita 1.42 English/Standard at 42/47;
+`reference-native-comparison.png` (847×911), selected Option 2 and actual native Puja step 1.
+The latter compares visual direction across different content and controls, not exact-state
+Katha fidelity. The original exact Katha source/native comparison is retained below.
+Preview anchors were exercised in the in-app browser, all image/file references resolve, and
+console inspection returned no warnings or errors. The preview remains open.
+Complete subjects, typography and divider were readable in these two-column inputs; separate
+focused crops were unnecessary. Original native images were also inspected at full size.
+
+**Required fidelity surfaces**
+
+| Surface | Assessment |
+| --- | --- |
+| Fonts/typography | Existing native script-aware tokens retained; same Gita lines wrap identically before/after. Puja heading/body and Daily source remain readable. Generated reference typography is not shipped. |
+| Spacing/layout | Art reserves a stable responsive opening frame, gold divider follows it, text scrolls vertically and persistent tabs remain visible. Later Puja steps keep a quieter divider. Small-stamp regression fixed. |
+| Colours/tokens | Approved quiet ivory paper and gold/ink tokens remain; Pitru uncovered white root fixed. Semantic control colours retained. |
+| Image fidelity | Complete subjects preserved with `contain`; approved Vishnu/Narayana appears in Daily/Puja. Existing Gita/Daan portrait borders and muted rendering are accepted legacy asset differences. No new drawing or placeholder replaces the approved painting. |
+| Copy/content | Same Gita 1.42 text before/after; Daily source, Puja instructions, Daan shastra and Pitru education retain existing content. No religious narrative or kids art changes. |
+
+**Implementation checklist and limits**
+
+Corrected opening frame and Pitru base, captured revised native states, reviewed equal-scale
+combined comparisons, verified final builds/assets, and preserved the live preview. Full Jest
+passed 2,181 tests before the final frame-only correction; final proportional rechecks passed
+86 tests, TypeScript, focused lint and both Hermes exports. Public R2 verified 45/45 byte hashes.
+Native cached screenshots use explicitly recorded fixtures; successful native R2 downloading,
+physical performance/touch, Android runtime and remaining Large/language combinations remain
+unverified. Details: `docs/evaluations/reading-visuals-2026-10-10/review.md`.
+
+---
+
+## Cache verification follow-up
+
+The loader now lets persistent cache hits bypass the bounded network queue. This changes no
+artwork or layout. Fresh native captures 17–19 verify process-restart decoding, genuine R2
+TLS-failure fallback and restored cache decoding. The same step-1 layout reserves unchanged
+space in fallback and painted states. Full Jest now passes 236 suites / 2,183 tests; final
+TypeScript, focused lint and both Hermes exports pass. Native CDN success and physical-device
+performance remain open. Evidence: October 10 `cache-follow-up.md`.
+
+## Previous scoped QA records
+
+# Option 2 reading visuals — design QA
+
+**Final result: passed for the scoped visual implementation.** Release/device checks below remain open.
+
+## Reference and evidence
+
+The user selected `proposals/option-2.png` with "ok option 2" on 9 October 2026.
+Compared the selected reference and actual native English Standard implementation together in
+`docs/evaluations/reading-visuals-2026-10-09/design-comparison.html`; the complete paired screenshot
+is `option2-reference-native-comparison.jpg`. The native before/after board is
+`approval-preview.html`, captured in `option2-native-before-after.jpg`.
+
+Native evidence comes from the isolated iOS 26.5 Expo Go simulator, not HTML UI replicas.
+Original PNGs preserve simulator context; the board uses declarative framing only.
+
+## Matching and intentional differences
+
+| Dimension | Result |
+| --- | --- |
+| Surface | Continuous ivory parchment, faint botanical corners, dark prose; provisional card border/elevation removed. One paper layer per screen. |
+| Hierarchy | Chapter pill, full heading, complete thematic painting, gold divider, prose, separate bottom pager. |
+| Artwork | Separate optimized painting and paper assets. No generated full-screen mockup is shipped. `contain` preserves all figures. |
+| Density | The opening plate is capped at 220pt/28% of window height; later parts use 80pt, following the recommendation the user approved. Existing native typography, status/header/control rows are retained rather than scaling a screenshot. |
+| Loading | Stable reserved image area. Existing neutral manuscript icon and paper remain while remote art loads/fails. Text/controls are independently available. |
+| Native states | English Standard Katha; Hindi Standard/Large Katha; compact section 2; section 1 prose endpoint; Hindi Large Daan and both Pitru readers with prose/teaching/source endpoints. Follow-up Gujarati Standard/Large opening and Large endpoint; Kannada Standard complete endpoint and Large opening/prose; Daan Kannada Large teaching/source. |
+| Navigation | Native accessibility targeting reaches later sections and long prose/source lines. Physical touch gestures are not established by these checks. |
+| Accessibility | Real script-aware text, adjustable reading size, individually accessible paragraphs, decorative art hidden from accessibility/touch, existing controls preserved. |
+
+The concept image excludes status-bar/device framing and uses generated typography. Those are
+accounted for in the comparison; they are not replaced in the real app. Existing portrait
+Daan/Pitru paintings retain their full frame and thematic identity. Follow-up Kannada QA found
+clipped last lines in prose and a teaching panel. The shared `ProseParagraph` guard gives iOS
+one point of drawing room after its first natural measurement, without changing source text,
+font or line spacing. Captures 31→33 and 37→38 show the resolved clipping. Android retains its
+natural layout without the additional callback. No remaining actionable P0/P1/P2 mismatch was
+found in these inspected states. This is not a claim that all 113 screens or every
+language/device received a native visual walkthrough.
+
+## Checks and remaining limits
+
+Initial approved-direction reader checks passed 185 tests; cache/image/share passed 22. The supplied
+fallback's decode recovery passed six image tests. After removing duplicate paper views,
+three Vrat and 17 Pitru reader tests and focused lint passed again. TypeScript passed, and both final
+production Hermes exports succeeded. Both graphs contain only the 3,102-byte paper out of the
+45 reading assets; the new painting is 94,904 bytes on R2. Final follow-up passed 74 tests in six
+prose/cache/image/reader suites, including cache failure paths and paragraph remeasurement.
+TypeScript and focused lint passed after the teaching/source changes; both final Hermes exports
+and their asset membership were verified again.
+
+The simulator's proxy rejects CDN TLS (`NSURLErrorDomain -1200`); certificate validation remains
+enabled. Genuine fallback is captured. Native cached decoding uses explicitly recorded,
+hash-identical fixtures, so it does not prove a successful native R2 download. The registered
+iPhone is currently unavailable. Physical frame/memory measurements, physical touch gestures,
+Android runtime, the complete Kannada Large endpoint, remaining language/family combinations
+and a full native screen walkthrough remain open.
+A development launch trace includes existing JS stalls; no zero-thread-work or measured device
+performance claim is made. App code remains local and unreleased.
+
+Full source inventory, check records, generation prompts and publication/fixture evidence:
+`docs/evaluations/reading-visuals-2026-10-09/review.md`.
+
+---
+
+## Prior Storybook icon and sizing QA record
+
+The earlier record is preserved below; it concerns the separate Storybook icon/sizing work.
+
 # Native Storybook icon and sizing QA
 
 **Findings**
@@ -114,3 +481,12 @@ The two PNGs total 274,392 bytes; a controlled final iOS Hermes export adds 274,
 - [x] Record provenance, installed hashes, passing unit/native gates and measured size.
 
 final result: passed
+
+
+## 10 October enlarged-reading evidence addendum
+
+The final loader/layout was also inspected with Large text: Puja opening and complete
+instruction endpoint are captured in October 10 images 20–21. Kannada Large Katha opening
+(image 22) retains the full painting. The complete Kannada endpoint and horizontal gesture
+coverage remain unverified. This extends scoped evidence without changing the Standard
+visual pass above. English/Standard QA preferences were restored.

@@ -1,0 +1,34 @@
+{
+  "export": "Final production Hermes, ios and android, after prose clipping guard",
+  "baselineBundledReadingBytes": 7450232,
+  "platforms": {
+    "ios": {
+      "manifestAssetCount": 45,
+      "includedCount": 1,
+      "excludedCount": 44,
+      "allSourceBytes": 7548238,
+      "bundledBytes": 3102,
+      "included": [
+        {
+          "stem": "backgrounds--reading-parchment-option2",
+          "bytes": 3102
+        }
+      ],
+      "bundle": "_expo/static/js/ios/index-ea3054226f9b47a5079d178c4e609790.hbc"
+    },
+    "android": {
+      "manifestAssetCount": 45,
+      "includedCount": 1,
+      "excludedCount": 44,
+      "allSourceBytes": 7548238,
+      "bundledBytes": 3102,
+      "included": [
+        {
+          "stem": "backgrounds--reading-parchment-option2",
+          "bytes": 3102
+        }
+      ],
+      "bundle": "_expo/static/js/android/index-c5d99f7f87076a183dd8fe78d010b2aa.hbc"
+    }
+  }
+}

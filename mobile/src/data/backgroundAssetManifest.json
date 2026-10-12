@@ -1,0 +1,275 @@
+{
+  "prefix": "reading-backgrounds",
+  "assets": {
+    "backgrounds--category-aarti-diya": {
+      "hash": "d3de7414c5da06f8",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--category-chalisa-booklet-mala": {
+      "hash": "e6ed2939cd1259ef",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--category-granth-open-scripture": {
+      "hash": "e6134b2facb37bf7",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--category-japam-mala": {
+      "hash": "ef36f2df65db008c",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--category-kavacham-protection": {
+      "hash": "2da00d9b082406ac",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--category-stotram-hymn-scroll": {
+      "hash": "2faf0876cf2c38e0",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--daan-annapurna-bhiksha": {
+      "hash": "326e0b71c153f529",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1536
+    },
+    "backgrounds--deity-dattatreya": {
+      "hash": "b1933c59c4a7fb72",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-durga-lion": {
+      "hash": "3b31f1a08043f0d8",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-ganesha-modak": {
+      "hash": "eee03ccaf09bf536",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-ganga": {
+      "hash": "f94d685db3be5cbe",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-kali": {
+      "hash": "a15d7d622779369a",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-krishna-bansuri": {
+      "hash": "5efcdaf367a863c8",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-kubera": {
+      "hash": "ed98f047da4689a6",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-lakshmi": {
+      "hash": "17c655e8f8d1d920",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-narasimha-prahlad": {
+      "hash": "c93d3ab1e7ea3a43",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-navagraha-icons": {
+      "hash": "8789ca4359833466",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-parvati-bhavani": {
+      "hash": "3f0cf8f7fc02b683",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-radha-krishna": {
+      "hash": "95952ac4091dd128",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-rama-darbar": {
+      "hash": "16f1dedc12993d65",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-saraswati-veena": {
+      "hash": "b105b8a731bbdf8f",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-shani": {
+      "hash": "baaf2e2a55838c45",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--deity-surya": {
+      "hash": "5ef5830e2adf97f5",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--panchang-celestial-almanac": {
+      "hash": "71117410f10e78c9",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--reading-parchment-option2": {
+      "hash": "acee66cee8bef750",
+      "ext": "webp",
+      "width": 600,
+      "height": 1200
+    },
+    "backgrounds--source-gayatri-savitri-sun": {
+      "hash": "ecf0428db9c31954",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--source-vishnu-narayana-option2": {
+      "hash": "82e2664730270637",
+      "ext": "webp",
+      "width": 900,
+      "height": 600
+    },
+    "backgrounds--source-vishnu-narayana": {
+      "hash": "f4f3dac4da62ac1b",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--theerth-gogaji-gogamedi": {
+      "hash": "d2ed3e935c7c604e",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--theerth-jeen-mata": {
+      "hash": "39571bde2a1f2363",
+      "ext": "webp",
+      "width": 1254,
+      "height": 1254
+    },
+    "backgrounds--theerth-karni-mata": {
+      "hash": "ed4d478e8538ea3c",
+      "ext": "webp",
+      "width": 1254,
+      "height": 1254
+    },
+    "backgrounds--theerth-khandoba-jejuri": {
+      "hash": "5ea88742414d2e0d",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--theerth-khatu-shyam": {
+      "hash": "3fc029b71fa62e4b",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--theerth-mahasu-devta-hanol": {
+      "hash": "9695ded31efcd5ed",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--theerth-ramdevra": {
+      "hash": "33866e38244e8a4b",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--theerth-sabarimala": {
+      "hash": "4f444e559532e9ad",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--theerth-salasar-balaji": {
+      "hash": "ea8096a41b506701",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--theerth-tejaji-kharnal": {
+      "hash": "882b4b5d508f0cf4",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "backgrounds--theerth-vetrimalai-murugan": {
+      "hash": "5cb45ba8bfc06d43",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "chalisa--Hanuman_sea": {
+      "hash": "48a2be2604a55b2f",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "chalisa--Hanuman_sita": {
+      "hash": "c8504accc316a850",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "chalisa--Ram_hanuman": {
+      "hash": "e6a01cec98734304",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "chalisa--hanuman_lankadahan": {
+      "hash": "46b632c2de75bc74",
+      "ext": "webp",
+      "width": 1024,
+      "height": 1024
+    },
+    "gita--krishna_arjuna_vishvarupa": {
+      "hash": "18c31076600bfba8",
+      "ext": "webp",
+      "width": 1054,
+      "height": 1492
+    },
+    "shiva-strotam--shiva": {
+      "hash": "dcf32ad6672162fd",
+      "ext": "jpeg",
+      "width": 1254,
+      "height": 1254
+    }
+  }
+}

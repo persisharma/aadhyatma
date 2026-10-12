@@ -1,0 +1,1356 @@
+{
+  "planned": 87,
+  "counts": {
+    "passed": 50,
+    "stopped": 37,
+    "pending": 0
+  },
+  "validAttempts": 105,
+  "scope": "Release APK derived from submitted AAB; local test signing; copied harness. Passing retests supersede earlier assertion stops for coverage only; all attempts retained.",
+  "flows": [
+    {
+      "flow": "aarti-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "aarti-smoke",
+          "run": "device-5582",
+          "seconds": 109.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "ashtakam-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "ashtakam-smoke",
+          "run": "device-5584",
+          "seconds": 125.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "ask-abstain-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "ask-abstain-smoke",
+          "run": "device-5586",
+          "seconds": 123.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "ask-answer-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "ask-answer-smoke",
+          "run": "device-5588",
+          "seconds": 130.0,
+          "status": "stopped",
+          "detail": "No visible element found: \"Show the working\""
+        },
+        {
+          "flow": "ask-answer-smoke",
+          "run": "retest-5590",
+          "seconds": 119.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "ask-briefing-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "ask-briefing-smoke",
+          "run": "device-5582",
+          "seconds": 100.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "background-art-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "background-art-smoke",
+          "run": "device-5584",
+          "seconds": 108.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "bhajan-audio-smoke",
+      "status": "stopped",
+      "assessment": "Fresh audio delivery blocked by emulator TLS inspection trust; seeded-cache media-session checks passed",
+      "attempts": [
+        {
+          "flow": "bhajan-audio-smoke",
+          "run": "device-5586",
+          "seconds": 53.0,
+          "status": "stopped",
+          "detail": "Element not found: Text matching regex: Pause"
+        }
+      ]
+    },
+    {
+      "flow": "celestial-chakra-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "celestial-chakra-smoke",
+          "run": "device-5588",
+          "seconds": 76.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Open Daily Rashifal\" is visible"
+        },
+        {
+          "flow": "celestial-chakra-smoke",
+          "run": "retest-5590",
+          "seconds": 71.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "chalisa-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "chalisa-smoke",
+          "run": "device-5582",
+          "seconds": 98.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "daan-punya-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "daan-punya-smoke",
+          "run": "device-5584",
+          "seconds": 60.0,
+          "status": "stopped",
+          "detail": "Element not found: Text matching regex: Language,.*"
+        },
+        {
+          "flow": "daan-punya-smoke",
+          "run": "retest-5590",
+          "seconds": 67.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "daily-bhakti-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "daily-bhakti-smoke",
+          "run": "device-5586",
+          "seconds": 93.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Daily Verse\" is visible"
+        },
+        {
+          "flow": "daily-bhakti-smoke",
+          "run": "retest-5590",
+          "seconds": 88.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "deity-browse-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "deity-browse-smoke",
+          "run": "device-5588",
+          "seconds": 85.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "deity-expansion-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "deity-expansion-smoke",
+          "run": "device-5582",
+          "seconds": 140.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "discover-icons-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "discover-icons-smoke",
+          "run": "device-5584",
+          "seconds": 170.0,
+          "status": "stopped",
+          "detail": "Assertion is false: id: home-discover-home-widgets is visible"
+        }
+      ]
+    },
+    {
+      "flow": "discovery-purpose-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "discovery-purpose-smoke",
+          "run": "device-5586",
+          "seconds": 119.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "feature-tour-e2e",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "feature-tour-e2e",
+          "run": "device-5588",
+          "seconds": 197.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "ghar-vastu-compare-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "ghar-vastu-compare-smoke",
+          "run": "device-5582",
+          "seconds": 172.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \".*decision is yours.*\" is visible"
+        },
+        {
+          "flow": "ghar-vastu-compare-smoke",
+          "run": "retest-5590-round2",
+          "seconds": 134.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "ghar-vastu-setup-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "ghar-vastu-setup-smoke",
+          "run": "device-5584",
+          "seconds": 91.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Place on the mandala\" is visible"
+        },
+        {
+          "flow": "ghar-vastu-setup-smoke",
+          "run": "retest-5590",
+          "seconds": 109.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "gita-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "gita-smoke",
+          "run": "device-5586",
+          "seconds": 161.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "gochar-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "gochar-smoke",
+          "run": "device-5588",
+          "seconds": 91.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \".*Today.s Panchang.*|.*\u0906\u091c \u0915\u093e \u092a\u0902\u091a\u093e\u0902\u0917.*\" is visible"
+        },
+        {
+          "flow": "gochar-smoke",
+          "run": "retest-5584-birth",
+          "seconds": 240.0,
+          "status": "passed",
+          "detail": ""
+        },
+        {
+          "flow": "gochar-smoke",
+          "run": "retest-5590",
+          "seconds": 135.0,
+          "status": "stopped",
+          "detail": "Element not found: Text matching regex: .*tap to change year"
+        },
+        {
+          "flow": "gochar-smoke",
+          "run": "retest-5590-round2",
+          "seconds": 138.0,
+          "status": "stopped",
+          "detail": "No visible element found: id: calendar-year-1992"
+        }
+      ]
+    },
+    {
+      "flow": "granth-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "granth-smoke",
+          "run": "device-5582",
+          "seconds": 92.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "guna-milan-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "guna-milan-smoke",
+          "run": "device-5584",
+          "seconds": 60.0,
+          "status": "stopped",
+          "detail": "No visible element found: \"Language,.*\""
+        },
+        {
+          "flow": "guna-milan-smoke",
+          "run": "retest-5584-birth",
+          "seconds": 208.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Bride birth details, time in IST\" is visible"
+        },
+        {
+          "flow": "guna-milan-smoke",
+          "run": "retest-5590",
+          "seconds": 67.0,
+          "status": "stopped",
+          "detail": "Element not found: Text matching regex: .*tap to change year"
+        },
+        {
+          "flow": "guna-milan-smoke",
+          "run": "retest-5590-round2",
+          "seconds": 77.0,
+          "status": "stopped",
+          "detail": "No visible element found: id: calendar-year-1992"
+        }
+      ]
+    },
+    {
+      "flow": "home-gutter-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "home-gutter-smoke",
+          "run": "device-5586",
+          "seconds": 62.0,
+          "status": "stopped",
+          "detail": "No visible element found: \"Kundali\\..*Tap to open\\.\""
+        },
+        {
+          "flow": "home-gutter-smoke",
+          "run": "retest-5590-round2",
+          "seconds": 59.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "home-navigation-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "home-navigation-smoke",
+          "run": "device-5588",
+          "seconds": 35.0,
+          "status": "stopped",
+          "detail": "Assertion is false: id: home-settings is visible"
+        },
+        {
+          "flow": "home-navigation-smoke",
+          "run": "retest-5590",
+          "seconds": 54.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "home-today-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "home-today-smoke",
+          "run": "device-5582",
+          "seconds": 126.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Next month\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "home-widgets-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "home-widgets-smoke",
+          "run": "device-5584",
+          "seconds": 60.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Japam widget preview\" is visible"
+        },
+        {
+          "flow": "home-widgets-smoke",
+          "run": "retest-5582-widgets-final",
+          "seconds": 73.0,
+          "status": "passed",
+          "detail": ""
+        },
+        {
+          "flow": "home-widgets-smoke",
+          "run": "retest-5590-round2",
+          "seconds": 52.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Add Vedansh japam widget\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "japam-alarms-e2e",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "japam-alarms-e2e",
+          "run": "device-5586",
+          "seconds": 86.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "japam-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "japam-smoke",
+          "run": "device-5588",
+          "seconds": 75.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "kavacham-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "kavacham-smoke",
+          "run": "device-5582",
+          "seconds": 78.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "kids-stories-art-framing-smoke",
+      "status": "stopped",
+      "assessment": "Automation page/content mismatch; separate ordinary swipe sequences pass 22 pages; full accessibility sequence unresolved",
+      "attempts": [
+        {
+          "flow": "kids-stories-art-framing-smoke",
+          "run": "device-5584",
+          "seconds": 265.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"4 / 10\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "kids-stories-art-scroll-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "kids-stories-art-scroll-smoke",
+          "run": "device-5586",
+          "seconds": 165.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "kids-stories-durga-full-sequence",
+      "status": "stopped",
+      "assessment": "Automation page/content mismatch; separate ordinary swipe sequences pass 22 pages; full accessibility sequence unresolved",
+      "attempts": [
+        {
+          "flow": "kids-stories-durga-full-sequence",
+          "run": "device-5588",
+          "seconds": 501.0,
+          "status": "stopped",
+          "detail": "Assertion is false: id: story-page-lion-and-warrior is visible"
+        }
+      ]
+    },
+    {
+      "flow": "kids-stories-new-stories-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "kids-stories-new-stories-smoke",
+          "run": "device-5582",
+          "seconds": 480.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "kids-stories-pacing-hindi-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "kids-stories-pacing-hindi-smoke",
+          "run": "device-5584",
+          "seconds": 422.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "kids-stories-regional-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "kids-stories-regional-smoke",
+          "run": "device-5586",
+          "seconds": 821.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "kids-stories-share-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "kids-stories-share-smoke",
+          "run": "device-5588",
+          "seconds": 89.0,
+          "status": "stopped",
+          "detail": "No visible element found: id: kids-story-durga-raktabeej"
+        }
+      ]
+    },
+    {
+      "flow": "kids-stories-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "kids-stories-smoke",
+          "run": "device-5582",
+          "seconds": 68.0,
+          "status": "stopped",
+          "detail": "Assertion is false: id: story-page-promise is visible"
+        }
+      ]
+    },
+    {
+      "flow": "kul-parampara-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "kul-parampara-smoke",
+          "run": "device-5584",
+          "seconds": 77.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "kundali-report-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "kundali-report-smoke",
+          "run": "device-5586",
+          "seconds": 323.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Open Vishnu Sahasranama Excerpt practice\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "kundali-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "kundali-smoke",
+          "run": "device-5588",
+          "seconds": 115.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Open Daily Rashifal\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "language-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "language-smoke",
+          "run": "device-5582",
+          "seconds": 124.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"\u0cb9\u0ca8\u0cc1\u0cae\u0cbe\u0ca8 \u0c9a\u0cbe\u0cb2\u0cc0\u0cb8\u0cbe\" is visible"
+        },
+        {
+          "flow": "language-smoke",
+          "run": "retest-5590-round2",
+          "seconds": 146.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "more-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "more-smoke",
+          "run": "device-5584",
+          "seconds": 106.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "muhurat-finder-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "muhurat-finder-smoke",
+          "run": "device-5586",
+          "seconds": 142.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "muhurat-follow-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "muhurat-follow-smoke",
+          "run": "device-5588",
+          "seconds": 179.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "muhurat-phase2-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "muhurat-phase2-smoke",
+          "run": "device-5582",
+          "seconds": 152.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Karana\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "muhurat-phase3-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "muhurat-phase3-smoke",
+          "run": "device-5584",
+          "seconds": 128.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "muhurat-phase4-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "muhurat-phase4-smoke",
+          "run": "device-5586",
+          "seconds": 153.0,
+          "status": "stopped",
+          "detail": "No visible element found: id: calendar-year-1992"
+        }
+      ]
+    },
+    {
+      "flow": "multi-profile-jyotish-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "multi-profile-jyotish-smoke",
+          "run": "device-5588",
+          "seconds": 328.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Kumbha Moon \u00b7 Aquarius. Learn more in grahas.\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "namkaran-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "namkaran-smoke",
+          "run": "device-5582",
+          "seconds": 60.0,
+          "status": "stopped",
+          "detail": "No visible element found: \"Language,.*\""
+        },
+        {
+          "flow": "namkaran-smoke",
+          "run": "retest-5590-round2",
+          "seconds": 63.0,
+          "status": "stopped",
+          "detail": "Element not found: Text matching regex: Add Keshav to shortlist"
+        }
+      ]
+    },
+    {
+      "flow": "new-content-badge-deity-smoke",
+      "status": "stopped",
+      "assessment": "Not applicable to release: developer reset control absent",
+      "attempts": [
+        {
+          "flow": "new-content-badge-deity-smoke",
+          "run": "device-5584",
+          "seconds": 54.0,
+          "status": "stopped",
+          "detail": "No visible element found: id: dev-reset-new-content"
+        }
+      ]
+    },
+    {
+      "flow": "new-content-badge-home-smoke",
+      "status": "stopped",
+      "assessment": "Not applicable to release: developer reset control absent",
+      "attempts": [
+        {
+          "flow": "new-content-badge-home-smoke",
+          "run": "device-5586",
+          "seconds": 46.0,
+          "status": "stopped",
+          "detail": "No visible element found: id: dev-reset-new-content"
+        }
+      ]
+    },
+    {
+      "flow": "new-content-badge-smoke",
+      "status": "stopped",
+      "assessment": "Not applicable to release: developer reset control absent",
+      "attempts": [
+        {
+          "flow": "new-content-badge-smoke",
+          "run": "device-5588",
+          "seconds": 51.0,
+          "status": "stopped",
+          "detail": "No visible element found: id: dev-reset-new-content"
+        }
+      ]
+    },
+    {
+      "flow": "panchang-day-cache-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "panchang-day-cache-smoke",
+          "run": "device-5582",
+          "seconds": 185.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "panchang-location-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "panchang-location-smoke",
+          "run": "device-5584",
+          "seconds": 91.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "panchang-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "panchang-smoke",
+          "run": "device-5586",
+          "seconds": 61.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"TITHI\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "parv-arc-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "parv-arc-smoke",
+          "run": "device-5588",
+          "seconds": 79.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Browse by type\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "pitru-paksha-smoke",
+      "status": "stopped",
+      "assessment": "Observed locale or old screen-label assumption; full flow not verified",
+      "attempts": [
+        {
+          "flow": "pitru-paksha-smoke",
+          "run": "device-5582",
+          "seconds": 44.0,
+          "status": "stopped",
+          "detail": "Element not found: Text matching regex: Language,.*"
+        }
+      ]
+    },
+    {
+      "flow": "pitru-smaran",
+      "status": "stopped",
+      "assessment": "Observed locale or old screen-label assumption; full flow not verified",
+      "attempts": [
+        {
+          "flow": "pitru-smaran",
+          "run": "device-5584",
+          "seconds": 75.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"\u0905\u092a\u0928\u0947 \u092a\u093f\u0924\u0930\u094b\u0902 \u0915\u0940 \u0924\u093f\u0925\u093f\u092f\u093e\u0901 \u091c\u094b\u0921\u093c\u0947\u0902\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "prashna-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "prashna-smoke",
+          "run": "device-5586",
+          "seconds": 123.0,
+          "status": "stopped",
+          "detail": "Element not found: Text matching regex: .*tap to change year"
+        }
+      ]
+    },
+    {
+      "flow": "rating-prompt-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "rating-prompt-smoke",
+          "run": "device-5588",
+          "seconds": 61.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Language,.*\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "read-aloud-smoke",
+      "status": "stopped",
+      "assessment": "Observed locale or old screen-label assumption; full flow not verified",
+      "attempts": [
+        {
+          "flow": "read-aloud-smoke",
+          "run": "device-5582",
+          "seconds": 69.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"\u092a\u093e\u0920 \u0938\u0941\u0928\u0947\u0902\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "regional-lens-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "regional-lens-smoke",
+          "run": "device-5584",
+          "seconds": 77.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Browse by type\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "regional-parv-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "regional-parv-smoke",
+          "run": "device-5586",
+          "seconds": 67.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Browse by type\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "reminders-smoke",
+      "status": "stopped",
+      "assessment": "Observed locale or old screen-label assumption; full flow not verified",
+      "attempts": [
+        {
+          "flow": "reminders-smoke",
+          "run": "device-5588",
+          "seconds": 81.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"More\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "resume-reading-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "resume-reading-smoke",
+          "run": "device-5582",
+          "seconds": 125.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "routine-reminder-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "routine-reminder-smoke",
+          "run": "device-5584",
+          "seconds": 136.0,
+          "status": "stopped",
+          "detail": "No visible element found: \"Done\""
+        }
+      ]
+    },
+    {
+      "flow": "routine-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "routine-smoke",
+          "run": "device-5586",
+          "seconds": 134.0,
+          "status": "stopped",
+          "detail": "No visible element found: \"Done\""
+        }
+      ]
+    },
+    {
+      "flow": "routine-weekday-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "routine-weekday-smoke",
+          "run": "device-5588",
+          "seconds": 178.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "sadhana-calendar-preview-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "sadhana-calendar-preview-smoke",
+          "run": "device-5582",
+          "seconds": 74.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \".*Your sankalp begins.*\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "sadhana-sankalp-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "sadhana-sankalp-smoke",
+          "run": "device-5584",
+          "seconds": 87.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "sanskar-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "sanskar-smoke",
+          "run": "device-5586",
+          "seconds": 153.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "search-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "search-smoke",
+          "run": "device-5588",
+          "seconds": 82.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "share-katha-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "share-katha-smoke",
+          "run": "device-5582",
+          "seconds": 70.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Katha library,.*\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "share-target-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "share-target-smoke",
+          "run": "device-5584",
+          "seconds": 59.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "shubh-yoga-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "shubh-yoga-smoke",
+          "run": "device-5586",
+          "seconds": 102.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "single-chapter-open-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "single-chapter-open-smoke",
+          "run": "device-5588",
+          "seconds": 73.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Hymns & Praise\\..*Tap to open\\.\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "storybook-icons-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "storybook-icons-smoke",
+          "run": "device-5582",
+          "seconds": 154.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "stotram-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "stotram-smoke",
+          "run": "device-5584",
+          "seconds": 80.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "stuti-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "stuti-smoke",
+          "run": "device-5586",
+          "seconds": 57.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "suktam-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "suktam-smoke",
+          "run": "device-5588",
+          "seconds": 59.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "theerth-enrichment-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "theerth-enrichment-smoke",
+          "run": "device-5582",
+          "seconds": 138.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \".*Pilgrimage.*Tap to open.*\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "theerth-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "theerth-smoke",
+          "run": "device-5584",
+          "seconds": 135.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \".*Pilgrimage.*Tap to open.*\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "vastu-disha-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "vastu-disha-smoke",
+          "run": "device-5586",
+          "seconds": 67.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Room by room\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "vidhi-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "vidhi-smoke",
+          "run": "device-5588",
+          "seconds": 145.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "flow": "vrat-catalog-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "vrat-catalog-smoke",
+          "run": "device-5582",
+          "seconds": 81.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Browse by type\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "vrat-follow-smoke",
+      "status": "stopped",
+      "assessment": "Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",
+      "attempts": [
+        {
+          "flow": "vrat-follow-smoke",
+          "run": "device-5584",
+          "seconds": 76.0,
+          "status": "stopped",
+          "detail": "Assertion is false: \"Browse by type\" is visible"
+        }
+      ]
+    },
+    {
+      "flow": "wishlist-smoke",
+      "status": "passed",
+      "assessment": "",
+      "attempts": [
+        {
+          "flow": "wishlist-smoke",
+          "run": "device-5586",
+          "seconds": 96.0,
+          "status": "passed",
+          "detail": ""
+        }
+      ]
+    }
+  ]
+}

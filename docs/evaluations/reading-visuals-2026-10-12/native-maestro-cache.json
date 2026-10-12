@@ -1,0 +1,26 @@
+[
+  {
+    "file": "ea3ebd005c439ef4.webp",
+    "bytes": 101452,
+    "sha256": "ea3ebd005c439ef456fe757e8b63d8eabb2c700ce58f3026d7de6ee15a3a2a1a",
+    "matchesApprovedR2Bytes": true
+  },
+  {
+    "file": "82e2664730270637.webp",
+    "bytes": 94904,
+    "sha256": "82e26647302706372c4211649b14fedd1a59d57bbda155180e1357caea48b4bb",
+    "matchesApprovedR2Bytes": true
+  },
+  {
+    "file": "e6134b2facb37bf7.webp",
+    "bytes": 145802,
+    "sha256": "e6134b2facb37bf7c2826b0661475d47b248e8e254ea7e79a1b1c286b7bc3629",
+    "matchesApprovedR2Bytes": true
+  },
+  {
+    "file": "71117410f10e78c9.webp",
+    "bytes": 10768,
+    "sha256": "71117410f10e78c90e17d44c928d0d044d870a5c7b25ecbacceb22c2fcecd9e5",
+    "matchesApprovedR2Bytes": true
+  }
+]

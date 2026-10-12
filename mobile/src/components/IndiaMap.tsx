@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import Svg, { Path, G } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeContext';
 import TheerthPin from './TheerthPin';
+import type { DeityIconKey } from '@/data/deities';
 import {
   INDIA_PROJECTION,
   INDIA_OUTLINE,
@@ -36,6 +37,8 @@ export type IndiaMapPin = {
   lat: number;
   lng: number;
   label: string;
+  /** Presiding deity's icon key — the pin renders that deity's glyph. */
+  deityKey: DeityIconKey;
 };
 
 type Props = {
@@ -126,6 +129,7 @@ export default function IndiaMap({
               x={x}
               y={y}
               label={pin.label}
+              deityKey={pin.deityKey}
               onPress={() => onPinPress(pin.id)}
             />
           );

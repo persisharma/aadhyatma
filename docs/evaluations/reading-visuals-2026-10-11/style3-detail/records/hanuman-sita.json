@@ -1,0 +1,31 @@
+{
+  "id": "hanuman-sita",
+  "target": "hanuman-sita",
+  "title": "Sundarkand \u00b7 Hanuman and Sita",
+  "details": "Retain Hanuman kneeling left with palms joined facing Sita right, his expressive monkey face, crown, jewellery, red shawl, entire curling tail and feet. Retain Sita's seated pose on stone, downward gaze, two hands resting on her lap, cream sari with fine gold border, veil, ornaments and full feet. Keep the large Ashoka trunk/right canopy and red-orange hanging blossoms, basket of white flowers, red seat cloth, lotus pond with lily pads/flowers, stone garden wall, left pavilion, tall trees, distant hills, layered flowering shrubs and individual foreground flowers, stone/sand garden path and fallen petals. Keep both figures' exact original poses/proportions and the original richly detailed garden.",
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-detail-v2",
+  "prompt": "Use case: style-transfer.\nAsset type: compact devotional reader illustration, opaque 2:1 horizontal banner.\nPrimary request: EDIT IMAGE 1. Retain its complete detailed scene and composition; apply only the painted rendering language of images 2 and 3 (the app's Krishna storybook illustrations).\nInput roles: image 1 is the edit target and authoritative composition/detail reference. Images 2 and 3 are STYLE ONLY, never sources of characters, props, setting, framing or portrait dimensions.\nRendering: precise fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered hand-painted shading, matte gold, subtle warm paper grain. Keep all objects and fine craftsmanship readable. Storybook painting can be richly detailed. Do not flatten or simplify the architecture, vegetation, cloth/jewellery patterns or narrative information. Preserve tonal separation, clarity and depth, without a heavy sepia wash.\nInvariants: preserve image 1's exact 2:1 horizontal framing, view angle, relative placement, scale, poses, gestures, facial directions, relationships, foreground/middle-ground/background, complete figures and all significant scene details. Transfer colour/brushwork/shading only. No zoom, recomposition, crop, added blank band, UI, caption, border or watermark. No new characters or iconography. Do not copy the portrait blank parchment bands of the style references.\n\nScene-specific preservation checklist: Retain Hanuman kneeling left with palms joined facing Sita right, his expressive monkey face, crown, jewellery, red shawl, entire curling tail and feet. Retain Sita's seated pose on stone, downward gaze, two hands resting on her lap, cream sari with fine gold border, veil, ornaments and full feet. Keep the large Ashoka trunk/right canopy and red-orange hanging blossoms, basket of white flowers, red seat cloth, lotus pond with lily pads/flowers, stone garden wall, left pavilion, tall trees, distant hills, layered flowering shrubs and individual foreground flowers, stone/sand garden path and fallen petals. Keep both figures' exact original poses/proportions and the original richly detailed garden.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/new-banners/hanuman-sita.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp"
+  ],
+  "transparent_background": false,
+  "approved": false,
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-b3c49e7e-b4b1-4903-8d10-43d50ea144f6.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/raw/hanuman-sita.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 103596,
+  "sha256": "0acd6590e27d86c1b4e4e3642e536851789344ed2465c43e922d82f5d59da813",
+  "tool": "built-in image_gen",
+  "status": "draft"
+}

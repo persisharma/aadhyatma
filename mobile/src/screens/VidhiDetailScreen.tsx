@@ -21,6 +21,10 @@ import {
   saveSamagriChecked,
   vidhiDateKey,
 } from '@/data/vidhi/checklistStore';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingArtwork from '@/components/ReadingArtwork';
+import { readingParchment } from '@/data/backgroundAsset';
+import { getVidhiReadingBackground } from '@/data/backgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import BhogGuidancePanel from '@/components/BhogGuidancePanel';
@@ -159,6 +163,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+      <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ReaderHeader
           variant="index"
@@ -241,6 +246,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.screenGutter }]}
           showsVerticalScrollIndicator={false}
         >
+          <ReadingArtwork source={getVidhiReadingBackground(vidhi)} />
           {isPersonalTithi && smaranEntries.length === 0 && (
             <Pressable
               onPress={() => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList'))}

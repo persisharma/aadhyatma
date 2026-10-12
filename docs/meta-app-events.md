@@ -15,7 +15,11 @@ prebuild. Native directories are ignored/generated; do not hand-edit them.
   uses the SDK 18 `FacebookSdk.publishInstallAsync` helper and its persisted install
   deduplication; this exported, testing-annotated compatibility binding is version-pinned.
 - iOS: after navigation is ready, the JavaScript controller requests ATT only when
-  undetermined/askable and the app is active. The native module independently reads
+  undetermined/askable and the app is active. iOS can return `undetermined` without
+  showing the prompt (launch, iPad scene changes); the controller re-asks up to four
+  times, 750 ms apart, in the same foreground and never activates Meta while ATT is
+  unanswered (App Review 2.1, 1.5.0 build 72). The purpose line is "So we know how you
+  found Vedansh." (design.md §79). The native module independently reads
   ATT, enables advertiser-ID collection only when authorized, initializes once,
   and calls `AppEvents.shared.activateApp()` on foreground returns. On iOS 17+
   SDK 18 reads ATT directly; the older OS path also sets advertiser tracking enabled.
@@ -28,6 +32,11 @@ prebuild. Native directories are ignored/generated; do not hand-edit them.
 - Both: automatic event inference/purchase logging and automatic initialization
   are disabled. No route observer, arbitrary event logger, user-ID/advanced-matching
   setter, birth details, scripture selection or practice-progress payload is exposed.
+- The JS gate reads the module's native `enabled` constant (Info.plist /
+  manifest meta-data), not `Constants.expoConfig.extra`: an `eas update` manifest
+  does not get eas.json build-profile `env`, so its `extra` said disabled. 1.5.0 (72)
+  predates the constant and still reads `extra`; `push.sh` therefore mirrors the
+  channel's profile `META_TRACKING_ENABLED` into every OTA.
 - Web, Expo Go and older binaries without the native module skip the JS integration.
   Permission/activation failures do not block the app opening.
 

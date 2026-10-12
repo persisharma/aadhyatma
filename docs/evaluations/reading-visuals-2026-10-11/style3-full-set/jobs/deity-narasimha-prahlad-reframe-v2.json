@@ -1,0 +1,9 @@
+{
+  "id": "deity-narasimha-prahlad-reframe-v2",
+  "replaces": "deity-narasimha-prahlad",
+  "prompt": "Use case: precise-object-edit. Reframe image 1 as a complete 2:1 painting with extra painted architecture above the deity. The crown finial currently touches/cuts at the top edge. Scale the ENTIRE unchanged central deity/throne/child group down slightly within the scene so every crown and halo point is visible with at least 6 percent image height above. Preserve four Narasimha arms, two child arms, all poses, clothing, props, throne, excellent detailed storybook style and complete feet below. Fill added space naturally with matching ornate temple architecture. No cropping any subject, no added figures or text.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/deity-narasimha-prahlad.png"
+  ],
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-d93a9e73-f4ac-4740-a6ae-e3caac0b3baa.png"
+}

@@ -1,0 +1,41 @@
+{
+  "export": "/tmp/vedansh-reading-compact-banner",
+  "verifiedAt": "2026-10-10T09:09:31.036726+00:00",
+  "baselineBundledReadingBytes": 7450232,
+  "platforms": {
+    "android": {
+      "manifestAssetCount": 45,
+      "includedCount": 1,
+      "excludedCount": 44,
+      "allSourceBytes": 7548238,
+      "bundledReadingBytes": 3102,
+      "included": [
+        {
+          "stem": "backgrounds--reading-parchment-option2",
+          "md5": "1ccf4d4d91cd17c98ee46f09c87450f4",
+          "bytes": 3102,
+          "ext": "webp"
+        }
+      ],
+      "bundle": "_expo/static/js/android/index-2b13b114725421a5cd9f07d0f9a36dac.hbc",
+      "bundleBytes": 44434880
+    },
+    "ios": {
+      "manifestAssetCount": 45,
+      "includedCount": 1,
+      "excludedCount": 44,
+      "allSourceBytes": 7548238,
+      "bundledReadingBytes": 3102,
+      "included": [
+        {
+          "stem": "backgrounds--reading-parchment-option2",
+          "md5": "1ccf4d4d91cd17c98ee46f09c87450f4",
+          "bytes": 3102,
+          "ext": "webp"
+        }
+      ],
+      "bundle": "_expo/static/js/ios/index-f251c8c499bb42d5d403fd8418447a20.hbc",
+      "bundleBytes": 44414556
+    }
+  }
+}

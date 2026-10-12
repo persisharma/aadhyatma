@@ -1,0 +1,54 @@
+{
+  "phase": "katha-online",
+  "audit": {
+    "scope": "QA-only native FileSystem boundary observer",
+    "events": [
+      {
+        "atMs": 0.018250003457069397,
+        "kind": "qaBootstrap"
+      },
+      {
+        "atMs": 157.83462500572205,
+        "kind": "jsStall",
+        "delayMs": 107.82587499916553
+      },
+      {
+        "atMs": 44990.55187500268,
+        "kind": "createDownload",
+        "id": 2,
+        "identity": "3ababd2172739822.webp",
+        "url": "https://cdn.vedansh.app/reader-illustrations/3ababd2172739822.webp"
+      },
+      {
+        "atMs": 44990.6895410046,
+        "kind": "nativeStart",
+        "id": 2,
+        "identity": "3ababd2172739822.webp",
+        "actualUrl": "https://cdn.vedansh.app/reader-illustrations/3ababd2172739822.webp"
+      },
+      {
+        "atMs": 45302.930500000715,
+        "kind": "nativeComplete",
+        "id": 2,
+        "identity": "3ababd2172739822.webp",
+        "status": 200
+      }
+    ]
+  },
+  "files": [
+    {
+      "name": "324b157dc73b990e.webp",
+      "bytes": 103118,
+      "sha256": "324b157dc73b990ec996dfd687e08e3a861c77067cfe6d0a0f28237f25855253",
+      "mtimeNs": 1791740583095247178,
+      "inode": 97864161
+    },
+    {
+      "name": "3ababd2172739822.webp",
+      "bytes": 99228,
+      "sha256": "3ababd21727398228a0fde44ab198cd6bf183d834053de6815c667bc139c0b06",
+      "mtimeNs": 1791740672923491585,
+      "inode": 97869075
+    }
+  ]
+}

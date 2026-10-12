@@ -195,6 +195,7 @@ export default function SuktamReaderScreen({ navigation, route }: Props) {
             keyExtractor={(v) => v.id}
             renderItem={({ item, index }) => (
               <VersePage
+                showIllustration={index === 0}
                 verse={item}
                 sourceId={suktamId}
                 width={width}

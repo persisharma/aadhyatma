@@ -5,12 +5,19 @@ import AppTrackingTransparency
 public class MetaAppEventsModule: Module {
   private var initialized = false
 
+  private static var trackingEnabled: Bool {
+    Bundle.main.object(forInfoDictionaryKey: "VedanshMetaTrackingEnabled") as? Bool == true
+  }
+
   public func definition() -> ModuleDefinition {
     Name("VedanshMetaAppEvents")
 
+    // The binary's flag, not the OTA manifest's: JS gates the ATT prompt on it.
+    Constants(["enabled": MetaAppEventsModule.trackingEnabled])
+
     // No arbitrary event names, parameters, user IDs or user-data API is exposed.
     AsyncFunction("activate") { () -> Bool in
-      guard Bundle.main.object(forInfoDictionaryKey: "VedanshMetaTrackingEnabled") as? Bool == true else { return false }
+      guard MetaAppEventsModule.trackingEnabled else { return false }
       let authorized = ATTrackingManager.trackingAuthorizationStatus == .authorized
       Settings.shared.isAutoLogAppEventsEnabled = false
       Settings.shared.isAdvertiserIDCollectionEnabled = authorized

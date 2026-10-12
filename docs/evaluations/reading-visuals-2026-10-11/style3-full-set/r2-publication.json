@@ -1,0 +1,309 @@
+{
+  "verifiedAt": "2026-10-11T17:15:28.667Z",
+  "source": "macOS host HTTPS GET with default certificate validation",
+  "verifiedCount": 43,
+  "assets": {
+    "krishna-arjuna-vishvarupa": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/8672408d273556b8.webp",
+      "status": 200,
+      "sha256": "8672408d273556b8f991ffba3d0f852fd39332b660414152a7935784e3ed3b4b",
+      "bytes": 100874,
+      "contentType": "image/webp"
+    },
+    "category-aarti-diya": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/95c197d8fd463718.webp",
+      "status": 200,
+      "sha256": "95c197d8fd4637189443a22765d43fd852bcdb8f284b6ff0baf004c90466ca5c",
+      "bytes": 84704,
+      "contentType": "image/webp"
+    },
+    "hanuman-sita": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/0acd6590e27d86c1.webp",
+      "status": 200,
+      "sha256": "0acd6590e27d86c1b4e4e3642e536851789344ed2465c43e922d82f5d59da813",
+      "bytes": 103596,
+      "contentType": "image/webp"
+    },
+    "daan-annapurna-bhiksha": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/3ababd2172739822.webp",
+      "status": 200,
+      "sha256": "3ababd21727398228a0fde44ab198cd6bf183d834053de6815c667bc139c0b06",
+      "bytes": 99228,
+      "contentType": "image/webp"
+    },
+    "category-japam-mala": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/bf78f947dab0184f.webp",
+      "status": 200,
+      "sha256": "bf78f947dab0184ff9e4b2c42b0bdd6ff41537ff95f83fa5ff36cc24e944f76b",
+      "bytes": 112280,
+      "contentType": "image/webp"
+    },
+    "category-kavacham-protection": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/f60645881b7fcbd2.webp",
+      "status": 200,
+      "sha256": "f60645881b7fcbd205e8bc3515630a7c9d7e54086243ce3871ed60ad944cea55",
+      "bytes": 115820,
+      "contentType": "image/webp"
+    },
+    "category-stotram-hymn-scroll": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/c77568b989ad905c.webp",
+      "status": 200,
+      "sha256": "c77568b989ad905cbc4845ebc9618455c8455c9fccccf0f25b3052023a9b8c9e",
+      "bytes": 89030,
+      "contentType": "image/webp"
+    },
+    "category-granth-open-scripture": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/c54f7e15a8cabdc4.webp",
+      "status": 200,
+      "sha256": "c54f7e15a8cabdc44125f85cd3a9bcb2ad040708b7a0eb70765a10389e3df208",
+      "bytes": 92400,
+      "contentType": "image/webp"
+    },
+    "deity-dattatreya": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/3c7883121f519d08.webp",
+      "status": 200,
+      "sha256": "3c7883121f519d08e526734103ca345e0950254f4a17a6f207e0822fa5dc2a54",
+      "bytes": 124082,
+      "contentType": "image/webp"
+    },
+    "category-chalisa-booklet-mala": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/6f05357f0c41efad.webp",
+      "status": 200,
+      "sha256": "6f05357f0c41efade650a99c49378d7895f6a934422c1f2b1d188042c4b86f5f",
+      "bytes": 92500,
+      "contentType": "image/webp"
+    },
+    "deity-ganesha-modak": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/d25b9255ffa1b3f3.webp",
+      "status": 200,
+      "sha256": "d25b9255ffa1b3f3805b8349f39933d51c09c230e7bd260da5546912e6a8bc69",
+      "bytes": 116908,
+      "contentType": "image/webp"
+    },
+    "deity-durga-lion": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/324b157dc73b990e.webp",
+      "status": 200,
+      "sha256": "324b157dc73b990ec996dfd687e08e3a861c77067cfe6d0a0f28237f25855253",
+      "bytes": 103118,
+      "contentType": "image/webp"
+    },
+    "deity-ganga": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/25367a33becc7421.webp",
+      "status": 200,
+      "sha256": "25367a33becc7421405561d8af10c76c5587e7ce6ea6190b18d516faf53b33f1",
+      "bytes": 115768,
+      "contentType": "image/webp"
+    },
+    "deity-lakshmi": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/7b70b090e5eceb11.webp",
+      "status": 200,
+      "sha256": "7b70b090e5eceb11284909e3a7d14d4f724df64ea395ef1f97ada845b2108450",
+      "bytes": 102884,
+      "contentType": "image/webp"
+    },
+    "deity-kali": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/ca0d868eb7db9b21.webp",
+      "status": 200,
+      "sha256": "ca0d868eb7db9b21cf7a3d3ce3a3385b0ab22962bd7ba32630c9684423fb4346",
+      "bytes": 109858,
+      "contentType": "image/webp"
+    },
+    "deity-narasimha-prahlad": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/5b4a63956b520203.webp",
+      "status": 200,
+      "sha256": "5b4a63956b5202039bfb8b2f8ac171eec684b6bd601ea7fa367c4ffe3d74a051",
+      "bytes": 130748,
+      "contentType": "image/webp"
+    },
+    "deity-parvati-bhavani": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/f489354a2564eaf9.webp",
+      "status": 200,
+      "sha256": "f489354a2564eaf97d0cf65812db3424fe2a8a48709af9edf1907e7e33a45d62",
+      "bytes": 120658,
+      "contentType": "image/webp"
+    },
+    "deity-navagraha-icons": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/a55e2a59a26f43cd.webp",
+      "status": 200,
+      "sha256": "a55e2a59a26f43cd4a0545be816842efcb95723a8022bb53575830e4e48d7224",
+      "bytes": 114868,
+      "contentType": "image/webp"
+    },
+    "deity-krishna-bansuri": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/f38054b6023adf22.webp",
+      "status": 200,
+      "sha256": "f38054b6023adf221b4de2cf30281dff54fba7a5bd4b007e17277f1cef17b8ae",
+      "bytes": 127520,
+      "contentType": "image/webp"
+    },
+    "deity-radha-krishna": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/28a425c6391e95f0.webp",
+      "status": 200,
+      "sha256": "28a425c6391e95f063604f806e5742ce4ccce2ba2b7732a8283f854abed25d4f",
+      "bytes": 135112,
+      "contentType": "image/webp"
+    },
+    "deity-rama-darbar": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/934c7e58e18e4c5d.webp",
+      "status": 200,
+      "sha256": "934c7e58e18e4c5df2932c0b9f923db76afec7d786002115e80f17004cd04976",
+      "bytes": 121604,
+      "contentType": "image/webp"
+    },
+    "deity-saraswati-veena": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/0bfd51fab0c76639.webp",
+      "status": 200,
+      "sha256": "0bfd51fab0c76639ced8675d2ffdbcfd0bfe1e19929109ab760afd8e61b74ddb",
+      "bytes": 110674,
+      "contentType": "image/webp"
+    },
+    "panchang-celestial-almanac": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/3476f2fc731e40a2.webp",
+      "status": 200,
+      "sha256": "3476f2fc731e40a215257674245b2b8c29f4c897f444c98857b06719a3be5f67",
+      "bytes": 93848,
+      "contentType": "image/webp"
+    },
+    "deity-shani": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/0dc16111235285d3.webp",
+      "status": 200,
+      "sha256": "0dc16111235285d390eb05d9e619644235e34454f2f50fd0a5fe58cbc3036f9f",
+      "bytes": 102682,
+      "contentType": "image/webp"
+    },
+    "deity-surya": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/c7d38e9b8588d376.webp",
+      "status": 200,
+      "sha256": "c7d38e9b8588d3766c0a95e38f93a9eb59ccf8fa9d1517f190468ac81b420101",
+      "bytes": 108110,
+      "contentType": "image/webp"
+    },
+    "source-gayatri-savitri-sun": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/b62d16c427cc7aa0.webp",
+      "status": 200,
+      "sha256": "b62d16c427cc7aa0496f059967598891406ab7fd1b11b7b8a7bbcd0f130ca51a",
+      "bytes": 115070,
+      "contentType": "image/webp"
+    },
+    "theerth-gogaji-gogamedi": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/54128d157693059d.webp",
+      "status": 200,
+      "sha256": "54128d157693059df9aa85fb6b909b9fa12f2022418962ee2219264ad0fda54d",
+      "bytes": 106542,
+      "contentType": "image/webp"
+    },
+    "theerth-jeen-mata": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/755512f9b8089fe7.webp",
+      "status": 200,
+      "sha256": "755512f9b8089fe799e5d6a5e55074929f6ad869336c9835dab5a1c39acc4de9",
+      "bytes": 133966,
+      "contentType": "image/webp"
+    },
+    "deity-kubera": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/a4334d1f68f446c7.webp",
+      "status": 200,
+      "sha256": "a4334d1f68f446c7ce214c716266f7895e3c469cab45bf74d48f2f2b58579116",
+      "bytes": 115106,
+      "contentType": "image/webp"
+    },
+    "theerth-karni-mata": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/f6157610fe009fd1.webp",
+      "status": 200,
+      "sha256": "f6157610fe009fd170918a1525b2823f9a107646469eeda7e2f5e96892bec3e2",
+      "bytes": 109146,
+      "contentType": "image/webp"
+    },
+    "theerth-khandoba-jejuri": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/e036fbf06d13d127.webp",
+      "status": 200,
+      "sha256": "e036fbf06d13d127b538919962a65ede571d1bafdc77ae4c7938e613416e7633",
+      "bytes": 125436,
+      "contentType": "image/webp"
+    },
+    "theerth-mahasu-devta-hanol": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/6968c0fc82e6aef6.webp",
+      "status": 200,
+      "sha256": "6968c0fc82e6aef696548bae0d9117fd7312b35fa14862a160e53e5610c6e662",
+      "bytes": 109404,
+      "contentType": "image/webp"
+    },
+    "theerth-khatu-shyam": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/5f49eb1520adcb39.webp",
+      "status": 200,
+      "sha256": "5f49eb1520adcb3912a4169f13da6c09b23a67ff1b4a63a51623e927caed994c",
+      "bytes": 126926,
+      "contentType": "image/webp"
+    },
+    "theerth-salasar-balaji": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/204e4d3d15602de9.webp",
+      "status": 200,
+      "sha256": "204e4d3d15602de924957c5f19a2d272e8756b1c6cb0f53bf2fd2d495ceeeb08",
+      "bytes": 122130,
+      "contentType": "image/webp"
+    },
+    "theerth-sabarimala": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/e72b4b1d92cbc2e4.webp",
+      "status": 200,
+      "sha256": "e72b4b1d92cbc2e423bbfd6d5c9e97a8f700cd621dabc37d5bf500894c243728",
+      "bytes": 115146,
+      "contentType": "image/webp"
+    },
+    "theerth-ramdevra": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/86de15db64abaf07.webp",
+      "status": 200,
+      "sha256": "86de15db64abaf07bbcb2c3db001080ddb9397beab0bf234a749d0b42594efa7",
+      "bytes": 99154,
+      "contentType": "image/webp"
+    },
+    "hanuman-sea": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/47df1919b9ee3f38.webp",
+      "status": 200,
+      "sha256": "47df1919b9ee3f38f7592163faf815e1c8ced5545054025efdf0c188ef57f7b6",
+      "bytes": 62452,
+      "contentType": "image/webp"
+    },
+    "theerth-vetrimalai-murugan": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/4c61af521ee50ee8.webp",
+      "status": 200,
+      "sha256": "4c61af521ee50ee8743163c9d783f22cfcc1c43c421845c665e3918a769062bf",
+      "bytes": 112994,
+      "contentType": "image/webp"
+    },
+    "ram-hanuman": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/85bbc10d3b9545e1.webp",
+      "status": 200,
+      "sha256": "85bbc10d3b9545e1eb7abf38023e7b6922ea6948bea8da6950e4e52470f28250",
+      "bytes": 95516,
+      "contentType": "image/webp"
+    },
+    "theerth-tejaji-kharnal": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/7f202702907f142b.webp",
+      "status": 200,
+      "sha256": "7f202702907f142ba3702913d378d1ceecab53581d9c105410424603e5442f1f",
+      "bytes": 98798,
+      "contentType": "image/webp"
+    },
+    "hanuman-lankadahan": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/c243ec97b25c3916.webp",
+      "status": 200,
+      "sha256": "c243ec97b25c3916ef4332881d44d9802223b74954713cfdc45d56b47dddc83c",
+      "bytes": 95020,
+      "contentType": "image/webp"
+    },
+    "shiva": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/7cb9287b40c1bbe0.webp",
+      "status": 200,
+      "sha256": "7cb9287b40c1bbe01c909389d648fc356a9ee9ad499c09924c024a32de36dfda",
+      "bytes": 97660,
+      "contentType": "image/webp"
+    },
+    "source-vishnu-narayana": {
+      "url": "https://cdn.vedansh.app/reader-illustrations/ea3ebd005c439ef4.webp",
+      "status": 200,
+      "sha256": "ea3ebd005c439ef456fe757e8b63d8eabb2c700ce58f3026d7de6ee15a3a2a1a",
+      "bytes": 101452,
+      "contentType": "image/webp"
+    }
+  },
+  "nativeDownloadEvidence": false
+}

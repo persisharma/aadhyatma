@@ -1,0 +1,14 @@
+{
+  "id": "deity-durga-lion-eight-arms-v2",
+  "replaces": "deity-durga-lion",
+  "title": "Durga · eight connected arms",
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-detail-v2",
+  "approved": false,
+  "transparent_background": false,
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/deity-durga-lion.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Correct the supplied detailed 2:1 Durga banner while preserving this exact rendering and rich scene. The image incorrectly has NINE arms. Remove ONLY the extra viewer-right intermediate forearm/hand that touches the underside of the pink lotus flower. Keep the lowest viewer-right hand gripping the long lotus stem; the lotus blossom remains attached naturally to that stem. Final arm count EXACTLY EIGHT: viewer-left sword, trishul, discus, blessing palm; viewer-right conch, mace, bow, lotus stem. No extra hand touching the flower, no duplicate/disconnected limbs. Retain connected anatomy and all other crown, sari, jewellery, lion, landscape and shrine details. Also bring the entire ornamental halo down/smaller enough to leave 6 percent painted sky above its highest point; its top currently touches the canvas edge. Keep all sword/trishul tips, halo, feet and entire lion body/paws/tail inside the unchanged 2:1 frame. No crop, no distortion, no blank band or text.",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-cc29195c-5094-46a1-89dd-b4ff702d0021.png"
+}

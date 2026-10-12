@@ -1,3 +1,4 @@
+import type { BackgroundImage } from '@/data/backgroundAsset';
 import React, {
   createContext,
   useCallback,
@@ -12,6 +13,7 @@ import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
 import ShareStoryCanvas from '@/components/ShareStoryCanvas';
 import ShareStoryFrame from '@/components/ShareStoryFrame';
+import { ArtworkCaptureContext, createArtworkPaintBarrier, type ArtworkPaintBarrier } from '@/components/ArtworkCaptureContext';
 import ProseShareCard from '@/components/ProseShareCard';
 import ShareTargetSheet, { type ShareSeriesView } from '@/components/ShareTargetSheet';
 import { buildInstagramCaption, buildShareCaption } from '@/data/shareLinks';
@@ -97,7 +99,7 @@ export type ShareableProse = {
   /** Hashtag / registry key (a `LibraryEntry.id` when one exists, else a namespaced id). */
   sourceId: string;
   /** Resolved plate behind the card; null → the plain parchment gradient. */
-  background: number | null;
+  background: BackgroundImage | null;
   /**
    * `picture` lays every page out on the 540×960 picture card and exports 1080×1920 for
    * every target (kids stories, design.md §76); absent, the 540×675 prose card.
@@ -213,7 +215,7 @@ function TimelyTagsResolver(props: TimelyResolverProps) {
 
 /** One prose page, resolved for capture: everything `ProseShareCard` needs. */
 type ProseCardSpec = {
-  background: number | null;
+  background: BackgroundImage | null;
   header: string;
   page: ProsePage;
   pageIndex: number;
@@ -226,9 +228,10 @@ type ProseCardSpec = {
 /** The picture card is already 9:16: it is captured at the story size and never framed. */
 const isPictureCapture = (spec: PendingCapture) => spec.kind === 'prose' && spec.card.layout === 'picture';
 
-type PendingCapture =
+type PendingCapture = (
   | { kind: 'verse'; verse: ShareableVerse; lang: Lang; format: ShareFormat }
-  | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat; captureId?: number };
+  | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat; captureId?: number }
+) & { backgroundPaint?: ArtworkPaintBarrier };
 
 type ProseChooser = {
   content: ShareableProse;
@@ -346,6 +349,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             return null;
           }
         }
+        const backgroundPaint = createArtworkPaintBarrier();
+        spec = { ...spec, backgroundPaint };
         setPending(spec);
         await waitForLayout();
         if (painted) {
@@ -354,6 +359,9 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           finally { imageReady.current = null; }
           await waitForLayout();
         }
+        // Every captured backdrop must finish its native paint (or offline
+        // fallback). This includes both the story frame and its inner card.
+        if (await backgroundPaint.wait()) await waitForLayout();
         captureTarget = cardRef as React.RefObject<View | null>;
       }
       const tall = spec.format === 'story' || isPictureCapture(spec);
@@ -849,6 +857,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         />
       ) : null}
       {pending ? (
+        <ArtworkCaptureContext.Provider value={pending.backgroundPaint ?? null}>
         <View
           pointerEvents="none"
           style={{ position: 'absolute', left: -10000, top: -10000, ...pendingSize(pending) }}
@@ -911,6 +920,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             )}
           </View>
         </View>
+        </ArtworkCaptureContext.Provider>
       ) : null}
     </ShareContext.Provider>
   );

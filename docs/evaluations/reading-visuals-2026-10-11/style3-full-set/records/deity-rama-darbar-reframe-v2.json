@@ -1,0 +1,24 @@
+{
+  "id": "deity-rama-darbar-reframe-v2",
+  "replaces": "deity-rama-darbar",
+  "prompt": "Use case: precise-object-edit. Preserve image 1's complete Rama Darbar four figures, all two-arm anatomy, poses, faces, bows, embroidered fabric, jewellery, throne, Hanuman tail and rich storybook finish. The royal parasol's top is clipped. Recompose the SAME full group including parasol at 15 percent smaller scale in the same exact 2:1 horizontal canvas, add matching carved palace architecture/sky around it. Show the ENTIRE parasol and its upper finial with at least 6 percent image height above, plus all crowns, bows and whole Hanuman feet/tail inside the frame. No removal/change of scene details, no new figures or text.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/deity-rama-darbar.png"
+  ],
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-4c3bdc75-1f4a-413e-9026-6fd67fcf3194.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/deity-rama-darbar-reframe-v2.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/deity-rama-darbar-reframe-v2.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 121604,
+  "sha256": "934c7e58e18e4c5df2932c0b9f923db76afec7d786002115e80f17004cd04976",
+  "tool": "built-in image_gen",
+  "status": "draft",
+  "approved": false
+}
