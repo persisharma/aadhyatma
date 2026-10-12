@@ -49,8 +49,8 @@ type Phase = 'loading' | 'ready' | 'error';
 export type DockedYouTubePlayerProps = {
   mapping: VideoMapping;
   uiLang: Lang;
-  /** Playback position in seconds, for the reader's cue-sheet auto-scroll. Fires ~2×/sec while playing. */
-  onProgress?: (seconds: number) => void;
+  /** Playback position and duration in seconds, for the reader's auto-scroll. Fires ~2×/sec while playing. */
+  onProgress?: (seconds: number, duration: number) => void;
   onClose: () => void;
 };
 
@@ -161,7 +161,7 @@ export default function DockedYouTubePlayer({
           const dur = Number.isFinite(d) ? d : 0;
           setElapsed(cur);
           setDuration(dur);
-          onProgress?.(cur);
+          onProgress?.(cur, dur);
         })
         .catch(() => undefined);
     }, PROGRESS_POLL_MS);

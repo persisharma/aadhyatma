@@ -1,4 +1,5 @@
-import { isValidCueSheet, pageAtTime } from '../videoSync';
+import { estimateCues, isValidCueSheet, pageAtTime, syllableWeight } from '../videoSync';
+import { getChalisa } from '@/data/chalisaRegistry';
 
 describe('pageAtTime', () => {
   // Intro music to 30s, then uneven verse lengths — the case proportional mapping got wrong.
@@ -53,5 +54,38 @@ describe('isValidCueSheet', () => {
     sparse[0] = 0;
     sparse[2] = 52;
     expect(isValidCueSheet(sparse, 3)).toBe(false);
+  });
+});
+
+describe('syllableWeight', () => {
+  it('counts a conjunct once and ignores verse numbers and dandas', () => {
+    // श्री = श + ् + र + ी → one syllable; ॥1॥ adds nothing.
+    expect(syllableWeight(['श्री'])).toBe(1);
+    expect(syllableWeight(['राम ॥1॥'])).toBe(2);
+  });
+
+  it('weighs a Hanuman Chalisa doha well above a chaupai', () => {
+    const verses = getChalisa('hanuman-chalisa').verses;
+    const doha = syllableWeight(verses[0].lines);
+    const chaupai = syllableWeight(verses[2].lines);
+    expect(doha / chaupai).toBeGreaterThan(1.4);
+  });
+
+  it('floors at 1 for a page with no Devanagari', () => {
+    expect(syllableWeight(['…'])).toBe(1);
+  });
+});
+
+describe('estimateCues', () => {
+  it('spreads the duration over pages by weight, starting at 0', () => {
+    expect(estimateCues([2, 1, 1], 100)).toEqual([0, 50, 75]);
+  });
+
+  it('produces a valid sheet for the whole Hanuman Chalisa', () => {
+    const verses = getChalisa('hanuman-chalisa').verses;
+    const cues = estimateCues(verses.map((v) => syllableWeight(v.lines)), 582);
+    expect(isValidCueSheet(cues, verses.length)).toBe(true);
+    // The closing doha starts before the end, and the last page holds through it.
+    expect(pageAtTime(cues, 581)).toBe(verses.length - 1);
   });
 });

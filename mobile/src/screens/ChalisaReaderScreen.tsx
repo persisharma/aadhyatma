@@ -37,7 +37,7 @@ import { getTrackForText } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
 import { getVideoMapping } from '@/data/video/videoMappings';
 import DockedYouTubePlayer from '@/components/video/DockedYouTubePlayer';
-import { isValidCueSheet, pageAtTime } from '@/video/videoSync';
+import { estimateCues, isValidCueSheet, pageAtTime, syllableWeight } from '@/video/videoSync';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
@@ -74,11 +74,14 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const chalisa = useMemo(() => getChalisa(chalisaId), [chalisaId]);
   const verses = chalisa.verses;
   const total = verses.length;
-  // Auto-advance only with a cue sheet timed for exactly these pages.
+  // A human-timed cue sheet syncs exactly; without one, pages split the video by
+  // syllable weight (see videoSync).
   const cues = useMemo(
     () => (isValidCueSheet(videoMapping?.cues, total) ? videoMapping?.cues : undefined),
     [videoMapping, total]
   );
+  const weights = useMemo(() => verses.map((v) => syllableWeight(v.lines)), [verses]);
+  const estimateRef = useRef<{ duration: number; cues: number[] } | null>(null);
   const listRef = useRef<FlatList<ChalisaVerse>>(null);
   const initialIndex = clampIndex(route.params?.initialIndex, total);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
@@ -161,18 +164,26 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     [lang, bookmarks, shareBusy]
   );
 
-  // Map video playback position → the page being sung, via the cue sheet. Only
-  // scrolls on a page change so a 2×/sec tick never re-fires the same animation.
-  // Skipped while the user has taken manual control.
+  // Map video playback position → the page being sung, via the timed cue sheet or
+  // the estimate. Only scrolls on a page change so a 2×/sec tick never re-fires the
+  // same animation. Skipped while the user has taken manual control.
   const onVideoProgress = useCallback(
-    (seconds: number) => {
+    (seconds: number, duration: number) => {
       videoTimeRef.current = seconds;
-      if (!cues || !autoScrollRef.current) return;
-      const target = pageAtTime(cues, seconds);
+      if (!autoScrollRef.current) return;
+      let sheet = cues;
+      if (!sheet) {
+        if (duration <= 0) return;
+        if (estimateRef.current?.duration !== duration) {
+          estimateRef.current = { duration, cues: estimateCues(weights, duration) };
+        }
+        sheet = estimateRef.current.cues;
+      }
+      const target = pageAtTime(sheet, seconds);
       if (target === currentIndexRef.current) return;
       listRef.current?.scrollToIndex({ index: target, animated: true });
     },
-    [cues]
+    [cues, weights]
   );
 
   // Dev-only cue capture for a mapping with no sheet yet: play the video and swipe
@@ -291,7 +302,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
               </Text>
             </Pressable>
           )}
-          {videoOpen && cues && !autoScroll && (
+          {videoOpen && !autoScroll && (
             <Pressable
               onPress={() => setAutoScroll(true)}
               accessibilityRole="button"
@@ -386,7 +397,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             onScroll={handleScroll}
             onScrollBeginDrag={() => {
               // A hand swipe takes over from the video's auto-advance.
-              if (videoOpen && cues) setAutoScroll(false);
+              if (videoOpen) setAutoScroll(false);
             }}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}

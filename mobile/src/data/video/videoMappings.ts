@@ -52,8 +52,9 @@ export type VideoMapping = {
   /**
    * Verse-sync cue sheet: the second each reader page starts being sung, one per
    * page, strictly increasing (`@/video/videoSync`). Timed by a human against this
-   * exact upload — never estimated. Without it the reader plays the video but does
-   * not auto-advance. Capture it with the dev swipe-along in `ChalisaReaderScreen`.
+   * exact upload — never estimated. Without it the reader auto-advances on a
+   * syllable-weighted estimate, which drifts with intro music and interludes.
+   * Capture it with the dev swipe-along in `ChalisaReaderScreen`.
    */
   cues?: readonly number[];
 };
