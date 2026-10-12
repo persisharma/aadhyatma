@@ -1,5 +1,6 @@
 import { backgroundImages } from '@assets/backgrounds';
 import { chalisaImages } from '@assets/chalisa';
+import { garudPuranImages } from '@assets/garud-puran';
 import { gitaImages } from '@assets/gita';
 import { shivaStrotamImages } from '@assets/shiva-strotam';
 import { aartiIdByIndex } from './aarti';
@@ -63,6 +64,7 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
 const sourceBackgrounds: Record<string, BackgroundImage> = {
   'hanuman-chalisa': chalisaImages.ram_hanuman,
   'bhagavad-gita': gitaImages.krishna_arjuna_vishvarupa,
+  'garud-puran': garudPuranImages.cover,
   'gita-saar': gitaImages.krishna_arjuna_vishvarupa,
   sundarkand: chalisaImages.hanuman_sea,
   'shiva-strotam': shivaStrotamImages.shiva,

@@ -1,0 +1,125 @@
+{
+  "chapter": 10,
+  "id": "mourning-rites",
+  "titleHi": "मृत्यु के बाद के संस्कार",
+  "titleEn": "Rites after death",
+  "kind": "tradition",
+  "artId": "ancestors",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/483",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/484",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/485",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/486",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/487",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/488",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/489",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/490",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/491",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/492",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/493"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "2.5.1",
+      "2.5.2",
+      "2.5.3",
+      "2.5.4",
+      "2.5.5",
+      "2.5.6",
+      "2.5.19",
+      "2.5.20",
+      "2.5.21",
+      "2.5.22",
+      "2.5.23",
+      "2.5.24",
+      "2.5.25",
+      "2.5.26",
+      "2.5.27",
+      "2.5.28",
+      "2.5.29",
+      "2.5.30",
+      "2.5.31",
+      "2.5.32",
+      "2.5.33",
+      "2.5.34",
+      "2.5.35",
+      "2.5.36",
+      "2.5.37",
+      "2.5.44",
+      "2.5.45",
+      "2.5.46",
+      "2.5.47",
+      "2.5.48",
+      "2.5.49",
+      "2.5.50",
+      "2.5.51"
+    ],
+    "sanskritFileSha256": "fca306acd45928387117061ae066ec6a7e8d2c1bc419394f58cc2544a72c1919",
+    "hindiSourcePages": [
+      483,
+      484,
+      485,
+      486,
+      487,
+      488,
+      489,
+      490,
+      491,
+      492,
+      493
+    ],
+    "hindiFragmentSha256": "f09beaa9846a0c3d0e4505c39e792a23e4f0f3e173f6e606490c4c76db6cffab",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Selected introduction, not the complete chapter or a thirteen-day timetable. The chapter’s ten-day rites and later observances are distinct; their sequence is not imposed on all families. Grief support is explicitly editorial.",
+    "citeHi": "गरुडपुराण · प्रेतकल्प 5 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Preta chapter 5 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "mourning-rites-1",
+      "chapter": 10,
+      "number": 1,
+      "titleHi": "संस्कारों का क्रम",
+      "titleEn": "A sequence of observances",
+      "bodyHi": [
+        "प्रेतकल्प का यह अध्याय दाह-संस्कार के बाद के कृत्यों, शोककाल और पिण्डदान की चर्चा करता है। दस दिनों के कुछ अर्पणों और आगे होने वाले श्राद्धों का वर्णन भी आता है। ये पुराण की एक विशिष्ट धार्मिक व्यवस्था के अंग हैं।",
+        "पाठ में अर्पणों को दिवंगत की आगे की यात्रा से जोड़ा गया है। यह उस परम्परा की धार्मिक मान्यता है। अलग संस्कारों का अपना प्रयोजन और क्रम है; उन्हें मिलाकर एक साधारण “सबके लिए तेरह दिन” की सूची बनाना सही नहीं होगा।"
+      ],
+      "bodyEn": [
+        "This Preta chapter discusses observances after cremation, the mourning period and pinda offerings. It describes offerings during ten days as well as subsequent shraddha observances. These belong to a particular religious account in the Purana.",
+        "The text relates the offerings to the onward journey of the departed. That is the tradition’s religious belief. Distinct observances have their own purposes and sequences; they should not be compressed into a single universal “thirteen-day checklist.”"
+      ],
+      "meaningHi": "प्रेतकल्प का यह अध्याय दाह-संस्कार के बाद के कृत्यों, शोककाल और पिण्डदान की चर्चा करता है। दस दिनों के कुछ अर्पणों और आगे होने वाले श्राद्धों का वर्णन भी आता है। ये पुराण की एक विशिष्ट धार्मिक व्यवस्था के अंग हैं।\n\nपाठ में अर्पणों को दिवंगत की आगे की यात्रा से जोड़ा गया है। यह उस परम्परा की धार्मिक मान्यता है। अलग संस्कारों का अपना प्रयोजन और क्रम है; उन्हें मिलाकर एक साधारण “सबके लिए तेरह दिन” की सूची बनाना सही नहीं होगा।",
+      "meaningEn": "This Preta chapter discusses observances after cremation, the mourning period and pinda offerings. It describes offerings during ten days as well as subsequent shraddha observances. These belong to a particular religious account in the Purana.\n\nThe text relates the offerings to the onward journey of the departed. That is the tradition’s religious belief. Distinct observances have their own purposes and sequences; they should not be compressed into a single universal “thirteen-day checklist.”",
+      "artId": "ancestors"
+    },
+    {
+      "id": "mourning-rites-2",
+      "chapter": 10,
+      "number": 2,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "इस परिचय में संस्कारों को दिवंगत के लिए आदर और परिवार के लिए स्मरण के क्रम के रूप में समझ सकते हैं। व्यवहार की विधि अलग से सीखी जाती है। शोक में किसी से सभी बातें तुरंत याद रखने की अपेक्षा करना सहायक नहीं है।",
+        "साथ बैठना, आवश्यक कामों में हाथ बँटाना और बिना दबाव के सुनना शोकग्रस्त परिवार की सहायता के आज के उदाहरण हैं। ये हमारी संपादकीय बातें हैं। किसी छूटी हुई क्रिया के कारण अनिष्ट की निश्चित घोषणा या परिवार को दोष देना इस पाठ का उद्देश्य नहीं है।"
+      ],
+      "bodyEn": [
+        "For this introduction, the observances can be approached as a pattern of respect for the departed and remembrance for the family. Their practical procedure is learned separately. Expecting someone in grief to remember every detail at once is not helpful.",
+        "Sitting with a family, helping with necessary tasks and listening without pressure are examples of support today. These are editorial suggestions. This reading does not declare that a missed observance guarantees harm, or assign blame to a grieving family."
+      ],
+      "meaningHi": "इस परिचय में संस्कारों को दिवंगत के लिए आदर और परिवार के लिए स्मरण के क्रम के रूप में समझ सकते हैं। व्यवहार की विधि अलग से सीखी जाती है। शोक में किसी से सभी बातें तुरंत याद रखने की अपेक्षा करना सहायक नहीं है।\n\nसाथ बैठना, आवश्यक कामों में हाथ बँटाना और बिना दबाव के सुनना शोकग्रस्त परिवार की सहायता के आज के उदाहरण हैं। ये हमारी संपादकीय बातें हैं। किसी छूटी हुई क्रिया के कारण अनिष्ट की निश्चित घोषणा या परिवार को दोष देना इस पाठ का उद्देश्य नहीं है।",
+      "meaningEn": "For this introduction, the observances can be approached as a pattern of respect for the departed and remembrance for the family. Their practical procedure is learned separately. Expecting someone in grief to remember every detail at once is not helpful.\n\nSitting with a family, helping with necessary tasks and listening without pressure are examples of support today. These are editorial suggestions. This reading does not declare that a missed observance guarantees harm, or assign blame to a grieving family.",
+      "artId": "ancestors"
+    }
+  ]
+}

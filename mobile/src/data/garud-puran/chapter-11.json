@@ -1,0 +1,90 @@
+{
+  "chapter": 11,
+  "id": "yama",
+  "titleHi": "यमराज और कर्मफल",
+  "titleEn": "Yama and the fruits of action",
+  "kind": "tradition",
+  "artId": "yama",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/534",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/535"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "2.19.1",
+      "2.19.2",
+      "2.19.3",
+      "2.19.4",
+      "2.19.5",
+      "2.19.6",
+      "2.19.7",
+      "2.19.8",
+      "2.19.9",
+      "2.19.10",
+      "2.19.14",
+      "2.19.15",
+      "2.19.16",
+      "2.19.17",
+      "2.19.18",
+      "2.19.19"
+    ],
+    "sanskritFileSha256": "cd58dd178520ab4f818def4ebaa3bad6680e963a963d0a32643ebe76ee650f16",
+    "hindiSourcePages": [
+      534,
+      535
+    ],
+    "hindiFragmentSha256": "00791d78f5f5e89af2fd30b629ce5ee44ca6da3b8534bc550154ca4b6603868f",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Yama as Dharmaraja in a religious narrative. No graphic punishment details, literal geography claims or guaranteed reward from giving. The modern accountability example is editorial.",
+    "citeHi": "गरुडपुराण · प्रेतकल्प 19 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Preta chapter 19 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "yama-1",
+      "chapter": 11,
+      "number": 1,
+      "titleHi": "धर्मराज का रूप",
+      "titleEn": "The figure of Dharmaraja",
+      "bodyHi": [
+        "प्रेतकल्प में यम को धर्मराज भी कहा गया है। उनके लोक में जीव के शुभ और अशुभ कर्मों की चर्चा होती है। चित्रगुप्त का नाम भी इसी प्रसंग में आता है। यह दृश्य मनुष्य के आचरण और उसके फल को कथा के रूप में सामने रखता है।",
+        "पाठ में धर्मराज का अनुभव सभी के लिए एक जैसा नहीं बताया गया है। सत्कर्म करने वाले और दुष्कर्म करने वाले उन्हें अलग रूप में देखते हैं। आगे का अंश मनुष्य जीवन मिलने पर धर्माचरण की ओर लौटता है।"
+      ],
+      "bodyEn": [
+        "In the Preta section, Yama is also called Dharmaraja, the king associated with dharma. The account concerns the good and harmful actions of a living being, and Chitragupta appears in this setting. The scene gives narrative form to conduct and its consequences.",
+        "The text describes different experiences of Dharmaraja for those whose actions differ. It then returns to the opportunity for right conduct in human life. The account is being presented here as religious narrative, not as an observed description of a physical place."
+      ],
+      "meaningHi": "प्रेतकल्प में यम को धर्मराज भी कहा गया है। उनके लोक में जीव के शुभ और अशुभ कर्मों की चर्चा होती है। चित्रगुप्त का नाम भी इसी प्रसंग में आता है। यह दृश्य मनुष्य के आचरण और उसके फल को कथा के रूप में सामने रखता है।\n\nपाठ में धर्मराज का अनुभव सभी के लिए एक जैसा नहीं बताया गया है। सत्कर्म करने वाले और दुष्कर्म करने वाले उन्हें अलग रूप में देखते हैं। आगे का अंश मनुष्य जीवन मिलने पर धर्माचरण की ओर लौटता है।",
+      "meaningEn": "In the Preta section, Yama is also called Dharmaraja, the king associated with dharma. The account concerns the good and harmful actions of a living being, and Chitragupta appears in this setting. The scene gives narrative form to conduct and its consequences.\n\nThe text describes different experiences of Dharmaraja for those whose actions differ. It then returns to the opportunity for right conduct in human life. The account is being presented here as religious narrative, not as an observed description of a physical place.",
+      "artId": "yama"
+    },
+    {
+      "id": "yama-2",
+      "chapter": 11,
+      "number": 2,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "इस वर्णन से निकाला गया सरल विचार है कि कर्म का महत्त्व केवल इस पर निर्भर नहीं कि उसे किसी ने देखा या नहीं। बाहर की प्रशंसा और भीतर की ईमानदारी में अन्तर हो सकता है। अपने काम की जिम्मेदारी लेना इस पर विचार करने का एक रास्ता है।",
+        "इसे आज के जीवन में समझें तो अपने वचन निभाना और बिना निगरानी के भी ईमानदार रहना उदाहरण हो सकते हैं। ये संपादकीय उदाहरण हैं। पाठक को डराने के लिए दण्डों की सूची देना इस चयन का उद्देश्य नहीं है।"
+      ],
+      "bodyEn": [
+        "A simple reflection is that an action matters even when nobody happens to see it. Public approval and inward honesty can be different things. Accepting responsibility for what we do offers one way to consider the passage.",
+        "Keeping a promise and acting honestly without supervision are present-day examples. They are editorial applications, not additional claims from the source. This selection focuses on accountability rather than presenting a catalogue of punishments to frighten the reader."
+      ],
+      "meaningHi": "इस वर्णन से निकाला गया सरल विचार है कि कर्म का महत्त्व केवल इस पर निर्भर नहीं कि उसे किसी ने देखा या नहीं। बाहर की प्रशंसा और भीतर की ईमानदारी में अन्तर हो सकता है। अपने काम की जिम्मेदारी लेना इस पर विचार करने का एक रास्ता है।\n\nइसे आज के जीवन में समझें तो अपने वचन निभाना और बिना निगरानी के भी ईमानदार रहना उदाहरण हो सकते हैं। ये संपादकीय उदाहरण हैं। पाठक को डराने के लिए दण्डों की सूची देना इस चयन का उद्देश्य नहीं है।",
+      "meaningEn": "A simple reflection is that an action matters even when nobody happens to see it. Public approval and inward honesty can be different things. Accepting responsibility for what we do offers one way to consider the passage.\n\nKeeping a promise and acting honestly without supervision are present-day examples. They are editorial applications, not additional claims from the source. This selection focuses on accountability rather than presenting a catalogue of punishments to frighten the reader.",
+      "artId": "yama"
+    }
+  ]
+}

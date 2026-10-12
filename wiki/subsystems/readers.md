@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
-last_verified_date: 2026-09-04
+last_verified_date: 2026-10-12
 confidence: high
 status: current
 ---
@@ -84,6 +84,28 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
 (velocity-scrolled, ~47 swipes). Each reader also has a chapter-1 smoke test (RULEBOOK §3
 *Reader smoke test*).
 
+## Garud Puran source research (not integrated)
+
+As of 2026-10-01, `docs/content/garud-puran/README.md` inventories the separate
+research collection under Git-ignored `tmp/garud-puran/`.
+`scripts/gather-garud-puran.py` fetches and extracts it without touching the app.
+SanskritDocuments/GRETIL share a source lineage, and both omit Achara 62; a
+Wikisource candidate is kept separately. Hindi scans, a distinctly labelled
+Hindi abridgement, and English OCR/scans are collected but not aligned to verses.
+All research records remain ineligible for release. Read the inventory's edition,
+OCR, numbering and rights gaps before implementing a reader; these files do not
+mean Garud Puran is registered in the library or its bilingual content is verified.
+
+Selection update verified 2026-10-12: the user requested a smaller collection of
+important sections and stories. `docs/content/garud-puran/curated-selection.json`
+now describes 12 Hindi research extracts (four stories) built by
+`scripts/select-garud-puran.py` from the cached abridgement. Heading boundaries,
+not contents-list page numbers, select the passages; those numbering systems
+disagree. `tmp/garud-puran/garud-puran-selected-sources.zip` is the separate local
+handoff. The proposed 3–5-minute bilingual readings are not authored yet. English
+Saroddhara links are related-topic pointers, not aligned translations; there is no
+measured popularity ranking, and every item remains ineligible for release.
+
 ## Dependencies
 
 - [[overview]] — app stack and module map.
@@ -125,3 +147,11 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
   months after v1). `src/screens/__tests__/readerReadAloud.test.tsx` tables all 21 readers and
   presses the pill on each; a new reader must be added to it (same rule as
   `readerAutoAdvance.test.tsx`). See [[audio]] for the platform traps.
+
+### Garud Puran selected readings (2026-10-12)
+
+The user subsequently authorised bilingual preparation, source verification, integration and artwork preview. `mobile/src/data/garud-puran/` now holds twelve editorial selections / 28 prose pages, using a manifest plus per-reading lazy loaders. It is a selected explanation format (RULEBOOK §31, design §77), not the complete acquired corpus or an invented Sanskrit translation. SanskritDocuments/GRETIL form one source family; the Gita Press Hindi abridgement forms the second. Detailed references, hashes and edition notes are in `docs/content/garud-puran/selected-readings-review.json`.
+
+`GarudPuranChapters` groups teachings/stories/traditions using the existing chapter cards with optional art thumbnails. `GarudPuranReader` reuses the Gita navigation/progress/bookmark/share/routine/narration shell with `GarudPuranPage` for prose and source disclosure. Compatibility fields `verses`/`verseIndex` identify prose pages; labels are readings/pages. Search and routine manifests route through the ordinary chaptered-source maps. Nine static bundled 2:1 WebP paintings add about 1.30 MB plus 3 KB of paper texture; no R2 dependency. `scripts/preview-garud-puran.py` regenerates the bilingual HTML content/art gallery. The earlier research collection's release-ineligible status is unchanged.
+
+User review corrected the initial portrait layout against current-main PR #449 (after the older checkout base). Garud uses its landscape paintings at max 360×180pt, approved screen-level paper, a Phosphor leaf divider and separate page dots; continuation pages have no image slot. `ProseParagraph` and Phosphor typings were copied from current main. Current preview evidence is `docs/content/garud-puran/design-review/`; earlier portrait screenshots are historical.

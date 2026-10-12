@@ -1,0 +1,64 @@
+# Subflow: begins at the selected-readings index. APP_ID and SHOT_PREFIX supplied by caller.
+appId: ${APP_ID}
+---
+- assertVisible:
+    id: garud-puran-index
+- tapOn: Hindi
+- takeScreenshot: ${SHOT_PREFIX}-index-hi
+- tapOn: English
+- assertVisible: 'Reading 1\. Karma and its consequences\. 2 pages\. Tap to open\.'
+- takeScreenshot: ${SHOT_PREFIX}-index-en
+- scrollUntilVisible:
+    element:
+      text: 'Reading 5\. Babhruvahana and Sudeva\. 3 pages\. Tap to open\.'
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn: 'Reading 5\. Babhruvahana and Sudeva\. 3 pages\. Tap to open\.'
+- assertVisible: An encounter in the forest
+- assertVisible: 1 / 3
+- tapOn: Add bookmark
+- assertVisible: Remove bookmark
+- tapOn: Remove bookmark
+- assertVisible: Add bookmark
+- takeScreenshot: ${SHOT_PREFIX}-story-en
+- tapOn: Hindi
+- assertVisible: वन में हुई भेंट
+- takeScreenshot: ${SHOT_PREFIX}-story-hi
+- tapOn: English
+- swipe:
+    direction: LEFT
+- assertVisible: Someone without family to help
+- assertVisible: 2 / 3
+- scrollUntilVisible:
+    element:
+      id: garud-sources-babhruvahana-2
+    direction: DOWN
+    timeout: 15000
+- tapOn:
+    id: garud-sources-babhruvahana-2
+- scrollUntilVisible:
+    element:
+      text: Open Sanskrit source
+    direction: DOWN
+    timeout: 15000
+- assertVisible: Open Hindi source
+- takeScreenshot: ${SHOT_PREFIX}-sources
+- tapOn: Back to readings
+- scrollUntilVisible:
+    element:
+      text: 'Reading 5\. Babhruvahana and Sudeva\. 3 pages\. Tap to open\.'
+    direction: DOWN
+    timeout: 15000
+- tapOn: 'Reading 5\. Babhruvahana and Sudeva\. 3 pages\. Tap to open\.'
+- assertVisible: 2 / 3
+- swipe:
+    direction: LEFT
+- assertVisible: Simple meaning
+- swipe:
+    direction: LEFT
+- extendedWaitUntil:
+    visible: From fear to conversation
+    timeout: 15000
+- assertVisible: 1 / 3
+- tapOn: Back to readings

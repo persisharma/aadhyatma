@@ -1,0 +1,36 @@
+{
+  "reviewedOn": "2026-10-01",
+  "reviewType": "Sample visual inspection only, not full textual collation",
+  "files": [
+    {
+      "file": "raw/hindi-dli-vol1.pdf",
+      "sha256": "76dd58293fc50fcda091bb2fcc9f314dc2e18f0cbba54d72e5402a1e26e79b53",
+      "pdfPages": 479,
+      "inspectedScanPagesOneBased": [
+        31
+      ],
+      "observations": "Sanskrit verse text with Hindi translation visible; OCR has substantial recognition errors."
+    },
+    {
+      "file": "raw/hindi-dli-vol2.pdf",
+      "sha256": "38f0ae646cdeaf508ee0d004850b9a689ff9e34eac7c6a35551db5f437661a19",
+      "pdfPages": 477,
+      "inspectedScanPagesOneBased": [
+        31
+      ],
+      "observations": "Sanskrit verse text with Hindi translation visible; OCR has substantial recognition errors."
+    },
+    {
+      "file": "raw/dutt-vol2.pdf",
+      "sha256": "f563a79951f98649f39e2358ee935854d8238c39a01180be2765894affe4eb22",
+      "pdfPages": 494,
+      "inspectedScanPagesOneBased": [
+        7,
+        61,
+        331,
+        481
+      ],
+      "observations": "Page 7: first edition 2007, all rights reserved. Page 61: Sanskrit/English, Preta chapter 7. Page 331: Sanskrit/English, Brahma (Moksha) chapter 25. Page 481: index. Existing OCR badly corrupts English."
+    }
+  ]
+}

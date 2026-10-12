@@ -1,0 +1,127 @@
+{
+  "chapter": 7,
+  "id": "viravahana",
+  "titleHi": "राजा वीरवाहन की कथा",
+  "titleEn": "The story of King Viravahana",
+  "kind": "story",
+  "artId": "viravahana",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/493",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/494",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/495",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/496",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/497",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/498",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/499",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/500"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "2.6.4",
+      "2.6.5",
+      "2.6.6",
+      "2.6.7",
+      "2.6.8",
+      "2.6.9",
+      "2.6.10",
+      "2.6.11",
+      "2.6.130",
+      "2.6.131",
+      "2.6.132",
+      "2.6.133",
+      "2.6.134",
+      "2.6.135",
+      "2.6.136",
+      "2.6.137",
+      "2.6.138",
+      "2.6.139",
+      "2.6.140",
+      "2.6.141",
+      "2.6.142",
+      "2.6.143",
+      "2.6.144"
+    ],
+    "sanskritFileSha256": "00dc13bf199e0ec3c33502212eff3fdf935355c7fefbf44c3fb0a32ad09c4ec1",
+    "hindiSourcePages": [
+      493,
+      494,
+      495,
+      496,
+      497,
+      498,
+      499,
+      500
+    ],
+    "hindiFragmentSha256": "1c401781342fd858c961c67b1b1659b3c1b4e513e84f2b22fd82e01212761a68",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Keeps the ritual-specific narrative: Vasishtha, Mathura and vrishotsarga. Omits the chapter’s embedded Narada narrative and procedural details. Does not replace the named rite with a generic donation or recommend releasing animals without care.",
+    "citeHi": "गरुडपुराण · प्रेतकल्प 6 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Preta chapter 6 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "viravahana-1",
+      "chapter": 7,
+      "number": 1,
+      "titleHi": "राजा की चिंता",
+      "titleEn": "The king’s concern",
+      "bodyHi": [
+        "राजा वीरवाहन धर्म और दान में रुचि रखते थे। फिर भी यम और मृत्यु के बाद की गति की बातें सुनकर उनके मन में भय था। एक दिन वन में वे ऋषि वसिष्ठ के आश्रम पहुँचे और विनम्र होकर अपनी चिंता कही।",
+        "राजा ने पूछा कि सही मार्ग क्या है। वसिष्ठ ने धर्म के अनेक रूपों का उल्लेख किया और इस प्रसंग में वृषोत्सर्ग का महत्त्व समझाया। यह एक विशेष धार्मिक संस्कार है; कथा इसे सामान्य दान का दूसरा नाम नहीं कहती।"
+      ],
+      "bodyEn": [
+        "King Viravahana practised giving and religious duties, but accounts of Yama and the journey after death still troubled him. While in the forest, he visited the hermitage of the sage Vasishtha and respectfully explained his concern.",
+        "The king asked for guidance. Vasishtha spoke of several forms of religious practice and, in this particular account, emphasised vrishotsarga. This is a specific rite involving the release of a bull; the story does not simply use the word as another name for ordinary charity."
+      ],
+      "meaningHi": "राजा वीरवाहन धर्म और दान में रुचि रखते थे। फिर भी यम और मृत्यु के बाद की गति की बातें सुनकर उनके मन में भय था। एक दिन वन में वे ऋषि वसिष्ठ के आश्रम पहुँचे और विनम्र होकर अपनी चिंता कही।\n\nराजा ने पूछा कि सही मार्ग क्या है। वसिष्ठ ने धर्म के अनेक रूपों का उल्लेख किया और इस प्रसंग में वृषोत्सर्ग का महत्त्व समझाया। यह एक विशेष धार्मिक संस्कार है; कथा इसे सामान्य दान का दूसरा नाम नहीं कहती।",
+      "meaningEn": "King Viravahana practised giving and religious duties, but accounts of Yama and the journey after death still troubled him. While in the forest, he visited the hermitage of the sage Vasishtha and respectfully explained his concern.\n\nThe king asked for guidance. Vasishtha spoke of several forms of religious practice and, in this particular account, emphasised vrishotsarga. This is a specific rite involving the release of a bull; the story does not simply use the word as another name for ordinary charity.",
+      "artId": "viravahana"
+    },
+    {
+      "id": "viravahana-2",
+      "chapter": 7,
+      "number": 2,
+      "titleHi": "मार्गदर्शन और आचरण",
+      "titleEn": "Guidance followed by action",
+      "bodyHi": [
+        "वसिष्ठ की बात सुनकर राजा मथुरा गए और बताए गए संस्कार का अनुष्ठान किया। कथा आगे उनके जीवन के अंत का वर्णन करती है। धर्मराज उन्हें सम्मान देते हैं और उनके दान, यज्ञ तथा वृषोत्सर्ग का उल्लेख करते हैं।",
+        "कथा का समापन राजा की शुभ गति के वर्णन से होता है। यह उस धार्मिक परम्परा का कथन है। इस संक्षिप्त पाठ में अनुष्ठान का महत्त्व सुरक्षित रखा गया है, लेकिन उसकी पूरी विधि और अध्याय की दूसरी कथाएँ सम्मिलित नहीं हैं।"
+      ],
+      "bodyEn": [
+        "After hearing Vasishtha, the king went to Mathura and performed the rite. The narrative then moves to the end of his life. Dharmaraja receives him honourably and mentions his giving, sacrifices and vrishotsarga.",
+        "The story closes with an account of the king reaching a blessed destination. This is the claim made within the religious narrative. Our short reading preserves the rite’s place in that account, while leaving out its detailed procedure and the chapter’s other embedded stories."
+      ],
+      "meaningHi": "वसिष्ठ की बात सुनकर राजा मथुरा गए और बताए गए संस्कार का अनुष्ठान किया। कथा आगे उनके जीवन के अंत का वर्णन करती है। धर्मराज उन्हें सम्मान देते हैं और उनके दान, यज्ञ तथा वृषोत्सर्ग का उल्लेख करते हैं।\n\nकथा का समापन राजा की शुभ गति के वर्णन से होता है। यह उस धार्मिक परम्परा का कथन है। इस संक्षिप्त पाठ में अनुष्ठान का महत्त्व सुरक्षित रखा गया है, लेकिन उसकी पूरी विधि और अध्याय की दूसरी कथाएँ सम्मिलित नहीं हैं।",
+      "meaningEn": "After hearing Vasishtha, the king went to Mathura and performed the rite. The narrative then moves to the end of his life. Dharmaraja receives him honourably and mentions his giving, sacrifices and vrishotsarga.\n\nThe story closes with an account of the king reaching a blessed destination. This is the claim made within the religious narrative. Our short reading preserves the rite’s place in that account, while leaving out its detailed procedure and the chapter’s other embedded stories.",
+      "artId": "viravahana"
+    },
+    {
+      "id": "viravahana-3",
+      "chapter": 7,
+      "number": 3,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "वीरवाहन केवल भय में उलझे नहीं रहते। वे प्रश्न पूछते हैं, किसी जानकार का मार्गदर्शन सुनते हैं और विचार को आचरण से जोड़ते हैं। समझ की ओर बढ़ना इस कथा से निकाली गई हमारी सरल सीख है।",
+        "वृषोत्सर्ग का उल्लेख स्वयं पशु छोड़ देने का निर्देश नहीं है। यह पाठ विधि-संग्रह नहीं है। किसी संस्कार का अभ्यास परिवार की परम्परा, योग्य मार्गदर्शन और पशु की देखभाल जैसी वास्तविक जिम्मेदारियों के साथ अलग विषय है।"
+      ],
+      "bodyEn": [
+        "Viravahana does not remain caught in fear alone. He asks questions, listens to someone he regards as knowledgeable and connects guidance with conduct. Moving from anxiety towards understanding is our simple editorial takeaway.",
+        "Mentioning vrishotsarga is not an instruction to abandon an animal. This reading is not a ritual manual. Any actual observance belongs in the context of a family’s tradition, qualified guidance and practical responsibilities, including the animal’s care."
+      ],
+      "meaningHi": "वीरवाहन केवल भय में उलझे नहीं रहते। वे प्रश्न पूछते हैं, किसी जानकार का मार्गदर्शन सुनते हैं और विचार को आचरण से जोड़ते हैं। समझ की ओर बढ़ना इस कथा से निकाली गई हमारी सरल सीख है।\n\nवृषोत्सर्ग का उल्लेख स्वयं पशु छोड़ देने का निर्देश नहीं है। यह पाठ विधि-संग्रह नहीं है। किसी संस्कार का अभ्यास परिवार की परम्परा, योग्य मार्गदर्शन और पशु की देखभाल जैसी वास्तविक जिम्मेदारियों के साथ अलग विषय है।",
+      "meaningEn": "Viravahana does not remain caught in fear alone. He asks questions, listens to someone he regards as knowledgeable and connects guidance with conduct. Moving from anxiety towards understanding is our simple editorial takeaway.\n\nMentioning vrishotsarga is not an instruction to abandon an animal. This reading is not a ritual manual. Any actual observance belongs in the context of a family’s tradition, qualified guidance and practical responsibilities, including the animal’s care.",
+      "artId": "viravahana"
+    }
+  ]
+}

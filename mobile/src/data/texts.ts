@@ -19,6 +19,7 @@ import { ramStutiTotal } from './ram-stuti';
 import { krishnaStotramTotal } from './krishna-stotram';
 import { ramcharitmanasTotal } from './ramcharitmanas';
 import { valmikiRamayanTotal } from './valmiki-ramayan';
+import { garudPuranTotal, garudPuranChaptersManifest } from './garud-puran';
 import { gitaSaarTotal, gitaSaarChaptersManifest } from './gita-saar';
 import { aartiCollection } from './aarti';
 import { japamMantras } from './japam';
@@ -149,6 +150,18 @@ export const library: readonly LibraryEntry[] = [
     deities: ['krishna'],
     verseCount: gitaSaarTotal,
     addedInVersion: '1.4.9',
+  },
+  {
+    id: 'garud-puran',
+    nameHi: 'गरुड़ पुराण',
+    nameEn: 'Garud Puran',
+    sub: `${garudPuranChaptersManifest.length} चयनित पाठ · सरल व्याख्या`,
+    subEn: `${garudPuranChaptersManifest.length} selected readings · simple explanations`,
+    thumb: 'ग',
+    status: 'active',
+    category: 'granth',
+    deities: ['vishnu'],
+    verseCount: garudPuranTotal,
   },
   {
     id: 'sundarkand',

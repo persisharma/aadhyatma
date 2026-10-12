@@ -286,3 +286,19 @@ Prototype option B chosen: the four small vaas tiles became two cards (compass t
 ## [2026-09-29] ingest | Day-rule audit: 7 new ObservanceDayRule conventions, 25 rules retagged (Dussehra/Diwali/Shivaratri/Holi + monthly vrats), verifier fails on any 1-day shift, KNOWN_DIVERGENCES holi:2026, observance CACHE_VERSION 9. Updated [[panchang]] gotchas.
 ## [2026-09-29] gap | Bhadra (vishti karana) is not modelled — Holika Dahan/Holi 2026 diverge; no Holika Dahan rule exists at all.
 ## [2026-09-29] ingest | Added `maha-navami` (madhyahna; Drik 2024–2029 pinned). Durga Ashtami stays the Ashvin `masik-durgashtami` day.
+
+## [2026-10-01] ingest | Garud Puran source acquisition only
+
+Recorded the collector and source inventory in `subsystems/readers.md`. Research data remains in ignored `tmp/garud-puran/`; no mobile integration. Edition boundaries, missing/duplicate source references, noisy OCR, translation alignment and reuse-review gaps remain explicit.
+
+## [2026-10-12] ingest | Garud Puran selected-source handoff
+
+User narrowed reading scope to important sections and stories. Gathered 12 heading-bounded Hindi research extracts, including four stories, with source page hashes and explicit draft status. Added curated-selection.json and select-garud-puran.py; local selected-source ZIP is separate from the full collection. Contents page numbers disagree with actual body headings. English Saroddhara references are topic pointers only; concise bilingual readings and independent verification remain pending. No app integration.
+
+## [2026-10-12] ingest | Garud Puran selected-reading integration
+
+Added twelve source-compared Hindi/English editorial readings, 28 pages and nine interpretive illustrations under the user's subsequent integration authorisation. Registered the chapter index and reader across library, search, routine and entry routes; preserved common bookmark/share/progress/narration behaviour. Documented RULEBOOK §31 and design §77, source comparison hashes, artwork mapping and a regenerable preview. Full-corpus acquisition remains separate and unverified. See docs/content/garud-puran/INTEGRATION.md for test/device evidence and limitations.
+
+## [2026-10-12] ingest | Align Garud Puran with current reader art
+
+Compared PR #253 and current-main #429/#434/#449 after user rejected the older checkout’s portrait layout. Re-composed nine complete landscape scenes with approved style references; adopted quiet paper, compact leaf divider, contained 2:1 images and non-overlapping page markers. Content and source verification unchanged. Scoped current-main dependency/paragraph compatibility copied; no whole-branch merge or publication. See Garud design-review evidence.

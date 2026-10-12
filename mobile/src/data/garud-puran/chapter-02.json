@@ -1,0 +1,81 @@
+{
+  "chapter": 2,
+  "id": "daan",
+  "titleHi": "दान का महत्त्व",
+  "titleEn": "The importance of giving",
+  "kind": "teaching",
+  "artId": "daan",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/180",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/181"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "1.98.2",
+      "1.98.3",
+      "1.98.4",
+      "1.98.11",
+      "1.98.12",
+      "1.98.13",
+      "1.98.14"
+    ],
+    "sanskritFileSha256": "b781d4f2a5b7c4d140bc04c25eb16c42fb622d5365eda93421beb994391ac7f3",
+    "hindiSourcePages": [
+      180,
+      181
+    ],
+    "hindiFragmentSha256": "fd9c5d1bdf9e83819ba90446c9f0eb761b112140ff50a45de6e6f4ec417aa0b5",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Selected giving passages only. The historical text has recipient hierarchies and ritual rewards; this reading does not present those as a modern ranking of human worth or promise a reward. Examples of everyday service are labelled editorial.",
+    "citeHi": "गरुडपुराण · आचारकाण्ड 98 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Achara chapter 98 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "daan-1",
+      "chapter": 2,
+      "number": 1,
+      "titleHi": "सामर्थ्य के अनुसार देना",
+      "titleEn": "Giving within our means",
+      "bodyHi": [
+        "आचारकाण्ड का यह अंश श्रद्धा और अपनी शक्ति के अनुसार दान की बात करता है। इसमें अन्न, वस्त्र, जल और अन्य उपयोगी वस्तुओं का उल्लेख है। दान को केवल बड़ी सम्पत्ति देने तक सीमित नहीं रखा गया है।",
+        "इसी प्रसंग में थके हुए की सहायता और रोगी की सेवा का भी सम्मान किया गया है। इस तरह किसी की आवश्यकता पर ध्यान देना महत्त्वपूर्ण बनता है। वस्तु के साथ उसे देने वाले का भाव और जिस काम में वह सहायक हो, वे भी विचार के विषय हैं।"
+      ],
+      "bodyEn": [
+        "This Achara passage speaks of giving with sincerity and according to one’s means. It names food, clothing, water and other useful things. Its account of generosity reaches beyond the gift of a large amount of property.",
+        "The passage also honours attending to a tired person and caring for someone who is ill. Attention to another person’s need therefore matters alongside the material gift. Giving can involve resources, but it can also involve personal effort and service."
+      ],
+      "meaningHi": "आचारकाण्ड का यह अंश श्रद्धा और अपनी शक्ति के अनुसार दान की बात करता है। इसमें अन्न, वस्त्र, जल और अन्य उपयोगी वस्तुओं का उल्लेख है। दान को केवल बड़ी सम्पत्ति देने तक सीमित नहीं रखा गया है।\n\nइसी प्रसंग में थके हुए की सहायता और रोगी की सेवा का भी सम्मान किया गया है। इस तरह किसी की आवश्यकता पर ध्यान देना महत्त्वपूर्ण बनता है। वस्तु के साथ उसे देने वाले का भाव और जिस काम में वह सहायक हो, वे भी विचार के विषय हैं।",
+      "meaningEn": "This Achara passage speaks of giving with sincerity and according to one’s means. It names food, clothing, water and other useful things. Its account of generosity reaches beyond the gift of a large amount of property.\n\nThe passage also honours attending to a tired person and caring for someone who is ill. Attention to another person’s need therefore matters alongside the material gift. Giving can involve resources, but it can also involve personal effort and service.",
+      "artId": "daan"
+    },
+    {
+      "id": "daan-2",
+      "chapter": 2,
+      "number": 2,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "सरल रूप में, दान अपनी क्षमता पहचानकर किसी की सहायता में उसका उपयोग करना है। किसी की देखभाल के लिए समय देना या जरूरत का भोजन पहुँचाना इस शिक्षा से जुड़ने के आज के उदाहरण हो सकते हैं।",
+        "यहाँ दान किसी निश्चित फल को खरीदने का सौदा नहीं है। अपनी सीमाओं का सम्मान करते हुए, सामने वाले की गरिमा बनाए रखते हुए सहायता करना हमारी संपादकीय सीख है। छोटी सहायता भी ध्यान और ईमानदारी से दी जा सकती है।"
+      ],
+      "bodyEn": [
+        "In simple terms, generosity begins by noticing what we can responsibly offer and where it can help. Giving time to someone who needs care or arranging a useful meal are examples of how a reader might apply this teaching today.",
+        "This reading does not offer a transaction in which a donation buys a guaranteed spiritual result. Our editorial takeaway is to help within our limits and preserve the dignity of the person receiving help. Thoughtfulness matters even when the gift is small."
+      ],
+      "meaningHi": "सरल रूप में, दान अपनी क्षमता पहचानकर किसी की सहायता में उसका उपयोग करना है। किसी की देखभाल के लिए समय देना या जरूरत का भोजन पहुँचाना इस शिक्षा से जुड़ने के आज के उदाहरण हो सकते हैं।\n\nयहाँ दान किसी निश्चित फल को खरीदने का सौदा नहीं है। अपनी सीमाओं का सम्मान करते हुए, सामने वाले की गरिमा बनाए रखते हुए सहायता करना हमारी संपादकीय सीख है। छोटी सहायता भी ध्यान और ईमानदारी से दी जा सकती है।",
+      "meaningEn": "In simple terms, generosity begins by noticing what we can responsibly offer and where it can help. Giving time to someone who needs care or arranging a useful meal are examples of how a reader might apply this teaching today.\n\nThis reading does not offer a transaction in which a donation buys a guaranteed spiritual result. Our editorial takeaway is to help within our limits and preserve the dignity of the person receiving help. Thoughtfulness matters even when the gift is small.",
+      "artId": "daan"
+    }
+  ]
+}

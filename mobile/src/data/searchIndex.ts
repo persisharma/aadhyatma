@@ -36,6 +36,7 @@ import {
   gitaChaptersManifest,
   type GitaVerse,
 } from './gita';
+import { getGarudPuranChapter, garudPuranChaptersManifest } from './garud-puran';
 import { getGitaSaarChapter, gitaSaarChaptersManifest, type GitaSaarVerse } from './gita-saar';
 import {
   getSundarkandChapter,
@@ -327,6 +328,10 @@ function buildVerseEntries(): readonly SearchVerseEntry[] {
       continue;
     }
 
+    if (entry.id === 'garud-puran') {
+      pushChapteredGarudPuran(verses, entry);
+      continue;
+    }
     if (entry.id === 'gita-saar') {
       pushChapteredGitaSaar(verses, entry);
       continue;
@@ -586,6 +591,21 @@ function pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
 
 // गीता सार: the corpus Sanskrit/IAST (so a Gita query also surfaces the
 // theme page) plus the theme's own saar as the meaning fields.
+function pushChapteredGarudPuran(out: SearchVerseEntry[], entry: LibraryEntry) {
+  for (const ch of garudPuranChaptersManifest) {
+    getGarudPuranChapter(ch.chapter).verses.forEach((page, idx) => out.push(makeVerseEntry({
+      sourceId: entry.id,
+      sectionNameHi: `${entry.nameHi} · ${ch.titleHi}`,
+      sectionNameEn: `${entry.nameEn} · ${ch.titleEn}`,
+      chapter: ch.chapter, verseIndex: idx,
+      labelHi: `पाठ ${ch.chapter} · पृष्ठ ${idx + 1}`,
+      labelEn: `Reading ${ch.chapter} · Page ${idx + 1}`,
+      linesHi: [page.titleHi], linesEn: [page.titleEn],
+      meaningHi: page.meaningHi, meaningEn: page.meaningEn,
+    })));
+  }
+}
+
 function pushChapteredGitaSaar(out: SearchVerseEntry[], entry: LibraryEntry) {
   for (const ch of gitaSaarChaptersManifest) {
     const chapter = getGitaSaarChapter(ch.chapter);

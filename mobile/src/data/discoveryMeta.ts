@@ -124,6 +124,11 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'any',
     source: `${SOURCE_BUNDLED} Bhagavad Gita source references in gita/*.json.`,
   },
+  'garud-puran': {
+    purposes: ['knowledge', 'peace', 'devotion', 'moksha'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} Selected editorial readings cross-checked against Sanskrit and the Gita Press Hindi abridgement; garud-puran/chapter-*.json.`,
+  },
   'gita-saar': {
     purposes: ['knowledge', 'devotion', 'peace'],
     bestDays: [4],

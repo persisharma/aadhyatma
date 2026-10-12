@@ -19,6 +19,8 @@ import KavachamReaderScreen from '@/screens/KavachamReaderScreen';
 import StutiReaderScreen from '@/screens/StutiReaderScreen';
 import GitaChaptersIndexScreen from '@/screens/GitaChaptersIndexScreen';
 import GitaReaderScreen from '@/screens/GitaReaderScreen';
+import GarudPuranChaptersScreen from '@/screens/GarudPuranChaptersScreen';
+import GarudPuranReaderScreen from '@/screens/GarudPuranReaderScreen';
 import GitaSaarThemesScreen from '@/screens/GitaSaarThemesScreen';
 import GitaSaarReaderScreen from '@/screens/GitaSaarReaderScreen';
 // दान-पुण्य (PRD-26) — registered here too so the §5.1 purpose door (विद्या /
@@ -162,6 +164,8 @@ export default function HomeStackNavigator() {
         component={GitaReaderScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
+      <Stack.Screen name="GarudPuranChapters" component={GarudPuranChaptersScreen} />
+      <Stack.Screen name="GarudPuranReader" component={GarudPuranReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
       <Stack.Screen name="GitaSaarChapters" component={GitaSaarThemesScreen} />
       <Stack.Screen
         name="GitaSaarReader"
