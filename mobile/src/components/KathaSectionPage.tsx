@@ -5,7 +5,10 @@ import { useGitaLanguage } from '@/data/gita/language';
 import type { KathaContentSection } from '@/panchang/types';
 import { contentByLang, commentaryByLang } from '@/utils/localize';
 import { scriptTitleFont, meaningToken, pillTextStyle } from '@/utils/langType';
-import Ornament from './Ornament';
+import ProseReadingCard from './ProseReadingCard';
+import ProseParagraph from './ProseParagraph';
+import { backgroundImages } from '@assets/backgrounds';
+import type { BackgroundImage } from '@/data/backgroundAsset';
 
 type Props = {
   section: KathaContentSection;
@@ -19,13 +22,14 @@ type Props = {
    */
   pillHi?: string;
   pillEn?: string;
+  background?: BackgroundImage;
 };
 
-// One katha section as a swipeable reader card (pill, heading, ornament, body).
-// Body text stays at its normal reading size; the card scrolls vertically when a
-// section is longer than the screen, and you swipe right to the next section.
+// One katha section as a continuous folio; only the opening section has a painting.
+// Body text stays at its normal reading size; the page scrolls vertically when a
+// section is longer than the screen, and you swipe left to the next section.
 // Top chrome is kept tight so content sits high and most sections fit without scrolling.
-export default function KathaSectionPage({ section, index, total, width, pillHi = 'प्रसंग', pillEn = 'Part' }: Props) {
+export default function KathaSectionPage({ section, index, total, width, pillHi = 'प्रसंग', pillEn = 'Part', background = backgroundImages.category_granth_open_scripture }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
@@ -42,41 +46,36 @@ export default function KathaSectionPage({ section, index, total, width, pillHi 
   };
 
   return (
-    <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
+    <View style={[styles.page, { width }]}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={[styles.scrollContent, { paddingHorizontal: spacing.screenGutter }]}
         showsVerticalScrollIndicator={false}
-        accessible
-        accessibilityLabel={[title, ...body].join('. ')}
       >
-        <View style={[styles.pill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
-          <Text
-            style={[
-              styles.pillText,
-              pillTextStyle(lang, typography.versePill),
-              { color: colors.saffronDeep },
-            ]}
-          >
-            {pillText}
+        <ProseReadingCard illustration={index === 0 ? background : undefined} heading={<>
+          <View style={[styles.pill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
+            <Text
+              style={[
+                styles.pillText,
+                pillTextStyle(lang, typography.versePill),
+                { color: colors.saffronDeep },
+              ]}
+            >
+              {pillText}
+            </Text>
+          </View>
+
+          <Text style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
+            {title}
           </Text>
-        </View>
 
-        <Text style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
-          {title}
-        </Text>
-
-        {/* Compress the shared Ornament's large vertical margin within the katha
-            card so the body has more room to fit on one screen. */}
-        <View style={styles.ornamentWrap}>
-          <Ornament />
-        </View>
-
-        {body.map((paragraph, i) => (
-          <Text key={i} style={[styles.para, bodyStyle]}>
-            {paragraph}
-          </Text>
-        ))}
+        </>}>
+          {body.map((paragraph, i) => (
+            <ProseParagraph key={i} style={[styles.para, bodyStyle]}>
+              {paragraph}
+            </ProseParagraph>
+          ))}
+        </ProseReadingCard>
       </ScrollView>
     </View>
   );
@@ -85,11 +84,10 @@ export default function KathaSectionPage({ section, index, total, width, pillHi 
 const styles = StyleSheet.create({
   page: { flex: 1, overflow: 'hidden' },
   scroll: { flex: 1 },
-  scrollContent: { paddingTop: 4, paddingBottom: 40 },
+  scrollContent: { paddingTop: 12, paddingBottom: 40 },
   pill: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 4, marginBottom: 10 },
   pillText: { textTransform: 'uppercase', includeFontPadding: false },
   // Devanagari title + prose — keep Android's font padding (no matra clip).
   title: { fontSize: 20, marginBottom: 4 },
-  ornamentWrap: { marginVertical: -14 },
-  para: { marginTop: 14 },
+  para: { marginBottom: 14 },
 });

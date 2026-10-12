@@ -2,7 +2,7 @@
 title: Meta app-install measurement
 type: integration
 sources: [mobile/app.config.js, mobile/plugins/metaTrackingConfig.js, mobile/plugins/withMetaAppEvents.js, mobile/modules/meta-app-events/, mobile/src/utils/metaAppEvents.ts, mobile/src/utils/metaActivationController.ts, mobile/App.tsx, docs/meta-app-events.md, docs/meta-app-events-privacy-draft.md]
-last_verified_date: 2026-10-07
+last_verified_date: 2026-10-12
 confidence: high
 status: current
 ---
@@ -26,7 +26,9 @@ compilation, real-device event receipt and paid attribution remain unverified.
 - Navigation readiness defers JS initialization until the app is usable. The shared
   controller serializes permission and foreground changes; web, Expo Go and old
   binaries without the module skip the integration.
-- iOS requests ATT only when undetermined/askable and active. Native code reads
+- iOS requests ATT only when undetermined/askable and active, re-asking up to four
+  times in one foreground when iOS silently returns undetermined; Meta is never
+  activated while ATT is unanswered. Native code reads
   actual ATT independently, allows advertiser-ID collection only when authorized,
   and uses `AppEvents.activateApp`. Denial/restriction does not block app usage.
 - Android manually logs Meta's standard activation constant without custom
@@ -54,6 +56,12 @@ iPhone Store ID `6766086529`. These external settings can drift; reverify at rel
 `docs/meta-app-events.md` is the detailed configuration/release/device-test runbook.
 
 ## Gotchas
+
+- App Review rejected 1.5.0 (72) under 2.1 on 12 October 2026: no ATT prompt found
+  on iPadOS 27.0.1. Two code causes: one silent `undetermined` result was never
+  re-asked until an app-state change (and Meta activated anyway), and the JS gate
+  read OTA-overridable `extra`, which `eas update` builds without eas.json profile
+  `env`. Gate on the native `enabled` constant; `push.sh` mirrors the flag for 72.
 
 - A native SDK needs new store binaries and a new compatible app-version runtime;
   an OTA cannot install it. No store release, OTA or campaign publication was

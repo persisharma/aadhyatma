@@ -12,6 +12,9 @@ import {
 import { verseToken, meaningToken, scriptTitleFont, pillTextStyle } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
+import ReadingArtwork from './ReadingArtwork';
+import ProseParagraph from './ProseParagraph';
 import Ornament from './Ornament';
 
 export type LinesVersePageVerse = {
@@ -30,11 +33,13 @@ type Props = {
   verse: LinesVersePageVerse;
   sourceId: string;
   width: number;
+  /** One opening banner per chapter; continuation pages have no image frame. */
+  showIllustration?: boolean;
   /** Per-verse actions (bookmark/share) rendered in the page header beside the pill. */
   topActions?: React.ReactNode;
 };
 
-export default function SundarkandVersePage({ verse, sourceId, width, topActions }: Props) {
+export default function SundarkandVersePage({ verse, sourceId, width, topActions, showIllustration = false }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
@@ -60,7 +65,7 @@ export default function SundarkandVersePage({ verse, sourceId, width, topActions
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <BackgroundLayer source={bg} />
+      <BackgroundLayer source={readingParchment} />
 
       <ScrollView
         style={styles.scroll}
@@ -92,6 +97,8 @@ export default function SundarkandVersePage({ verse, sourceId, width, topActions
           </View>
           {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
         </View>
+
+        <ReadingArtwork source={showIllustration ? bg : undefined} />
 
         <View style={styles.verseBlock}>
           {verseLines.map((line, idx) => (
@@ -128,7 +135,7 @@ export default function SundarkandVersePage({ verse, sourceId, width, topActions
         >
           {meaningLabel}
         </Text>
-        <Text style={[styles.body, bodyStyle]}>{meaning}</Text>
+        <ProseParagraph style={[styles.body, bodyStyle]}>{meaning}</ProseParagraph>
       </ScrollView>
     </View>
   );

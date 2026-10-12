@@ -137,6 +137,7 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
             keyExtractor={(v) => v.id}
             renderItem={({ item, index }) => (
               <RamcharitmanasVersePage
+                showIllustration={index === 0}
                 verse={item}
                 sourceId="ramcharitmanas"
                 width={width}

@@ -1,0 +1,78 @@
+WARNING: Final field parent in class maestro.cli.command.TestCommand has been mutated reflectively by class picocli.CommandLine$Model$FieldBinding in unnamed module @41e68d87 (file:/Users/prashant/.maestro/lib/picocli-4.6.3.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/prashant/.maestro/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Running on Vedansh-R2-Native-QA - iOS 26.5 - 5AD7B853-9A21-4247-98C6-47BAE046E16E
+ > Flow reading-visuals-smoke
+Run _launch.yaml...
+  Launch app "com.prashantsharma.vedansh" with clear state (launch arguments: {RCT_jsLocation=127.0.0.1:8084})... COMPLETED
+  Wait for animation to end within 30000 ms... COMPLETED
+  Assert that "Allow|Skip tour|Begin|Close|Got it|.*Today.s Panchang.*|.*आज का पंचांग.*" is visible... COMPLETED
+  Tap on (Optional) "Allow"... WARNED
+  Tap on (Optional) "Don't Allow"... WARNED
+  Tap on (Optional) "Skip tour"... COMPLETED
+  Wait for animation to end... COMPLETED
+  Tap on (Optional) "Begin"... COMPLETED
+  Tap on (Optional) "Close"... WARNED
+  Tap on (Optional) "Got it"... WARNED
+  Tap on (Optional) "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"... WARNED
+  Wait for animation to end... COMPLETED
+  Tap on (Optional) "Allow"... WARNED
+  Tap on (Optional) "Don.t Allow"... WARNED
+  Wait for animation to end... COMPLETED
+  Tap on (Optional) "SKIP|Skip|Skip tour"... WARNED
+  Tap on (Optional) "Begin"... WARNED
+  Wait for animation to end... COMPLETED
+  Assert that ".*Today.s Panchang.*|.*आज का पंचांग.*" is visible... COMPLETED
+  Assert that "आज के लिए|FOR TODAY" is visible... COMPLETED
+  Tap on (Optional) "Skip tour"... WARNED
+  Tap on (Optional) "Begin"... WARNED
+  Swiping in DOWN direction in 400 ms... COMPLETED
+  Wait for animation to end... COMPLETED
+Run _launch.yaml... COMPLETED
+Run _open-settings.yaml...
+  Tap on id: tab-home... COMPLETED
+  Tap on id: tab-home... COMPLETED
+  Wait for animation to end... COMPLETED
+  Scrolling UP until id: home-settings is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+  Tap on id: home-settings... COMPLETED
+  Wait for animation to end... COMPLETED
+Run _open-settings.yaml... COMPLETED
+Scrolling DOWN until "Language,.*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Tap on "Language,.*"... COMPLETED
+Tap on "English"... COMPLETED
+Wait for animation to end... COMPLETED
+Scrolling DOWN until "Reading size,.*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Tap on "Reading size,.*"... COMPLETED
+Tap on "Large"... COMPLETED
+Tap on "Done"... COMPLETED
+Tap on id: tab-vrat... COMPLETED
+Assert that "Katha library,.*" is visible... COMPLETED
+Tap on "Katha library,.*"... COMPLETED
+Tap on "Search stories…"... COMPLETED
+Input text Satyanarayana... COMPLETED
+Hide Keyboard... COMPLETED
+Assert that "Read katha Shri Satyanarayana Vrat Katha" is visible... COMPLETED
+Tap on "Read katha Shri Satyanarayana Vrat Katha"... COMPLETED
+Assert that "Share katha" is visible... COMPLETED
+Assert that "1 / 5" is visible... COMPLETED
+Take screenshot e2e-shots/reading-katha-large... COMPLETED
+Swipe from (85%, 55%) to (15%, 55%) in 600 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "2 / 5" is visible... COMPLETED
+Swipe from (50%, 80%) to (50%, 40%) in 700 ms... COMPLETED
+Take screenshot e2e-shots/reading-katha-scrolled... COMPLETED
+Assert that "Share katha" is visible... COMPLETED
+Tap on "Share katha"... COMPLETED
+Assert that "Preview page" is visible... COMPLETED
+Tap on "Preview page"... COMPLETED
+Assert that "Done previewing" is visible... COMPLETED
+Take screenshot e2e-shots/reading-katha-share-background... COMPLETED
+Tap on "Done previewing"... COMPLETED
+Tap on "Cancel"... COMPLETED
+Assert that "2 / 5" is visible... COMPLETED
+Stop com.prashantsharma.vedansh... COMPLETED

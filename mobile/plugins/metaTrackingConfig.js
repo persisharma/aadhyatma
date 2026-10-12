@@ -1,5 +1,8 @@
 const META_APP_ID = '1128589089734962';
-const TRACKING_PERMISSION = 'Allow Vedansh to measure which ads lead to app installs.';
+// iOS titles the dialog "Allow “Vedansh” to track…" itself; this line answers
+// "why?" in the reader's words. It must stay true to install attribution
+// (App Review 5.1.1): if the use changes, change this line (design.md §79).
+const TRACKING_PERMISSION = 'So we know how you found Vedansh.';
 
 function configureMetaTracking(config, env) {
   const enabled = env.META_TRACKING_ENABLED === 'true';

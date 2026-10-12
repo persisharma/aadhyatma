@@ -100,7 +100,7 @@ assert.deepEqual(
 
 // Newly-added discoverable content must carry addedInVersion, or NewContentContext
 // seeds it as already-known for upgrading users and the NEW badge never shows.
-for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana']) {
+for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata']) {
   const entry = library.find((e) => e.id === id);
   assert.ok(entry, `${id} should exist in library`);
   assert.ok(entry.addedInVersion, `${id} must set addedInVersion so upgraders see its NEW badge`);
@@ -467,6 +467,34 @@ for (const c of NEW_CHALISAS) {
   }
 }
 
+// ─── 10d. Lakshmi Chalisa + Om Jai Lakshmi Mata (1.5.0) ──────────────────────
+// Recovered verbatim from the 2026-06-23 two-source collation. The Ramdas
+// recension carries 39 chaupais; it must never be padded to 40 (§11.5), so it
+// stays out of NEW_CHALISAS above, which pins exactly 40.
+{
+  const data = readJson('lakshmi-chalisa/lakshmi-chalisa.json');
+  const entry = library.find((e) => e.id === 'lakshmi-chalisa');
+  assert.ok(entry, 'lakshmi-chalisa should be in library');
+  assert.deepEqual(entry.deities, ['lakshmi'], 'lakshmi-chalisa must be tagged under the Lakshmi deity (Rule 11.4)');
+  assert.equal(data.verses.length, 43, 'Lakshmi Chalisa: doha + sortha + 39 chaupais + 2 closing dohas');
+  assert.equal(data.verses.length, data.counts.totalVerses, 'Lakshmi Chalisa verses.length must match counts.totalVerses');
+  assert.equal(data.verses.filter((v: any) => v.type === 'chaupai').length, 39, 'Lakshmi Chalisa keeps its 39 verified chaupais');
+  assert.ok(data.verses[0].lines[0].includes('मातु लक्ष्मी करि कृपा'), 'Lakshmi Chalisa opens with its canonical doha');
+  const closing = data.verses.filter((v: any) => v.section === 'closing').flatMap((v: any) => v.lines).join(' ');
+  assert.ok(closing.includes('रामदास'), 'Lakshmi Chalisa closes with the Ramdas signature doha');
+  assert.ok(data.source.referenceUrls.length >= 2, 'Lakshmi Chalisa cites ≥ 2 sources');
+
+  const aarti = readJson('aarti/om-jai-lakshmi-mata.json');
+  const aartiEntry = library.find((e) => e.id === 'om-jai-lakshmi-mata');
+  assert.ok(aartiEntry, 'om-jai-lakshmi-mata should be in library');
+  assert.equal(aarti.deity, 'lakshmi', 'Om Jai Lakshmi Mata aarti deity should be lakshmi');
+  assert.deepEqual(aartiEntry.deities, ['lakshmi'], 'om-jai-lakshmi-mata must be tagged under the Lakshmi deity');
+  assert.equal(aarti.verses.length, 8, 'Om Jai Lakshmi Mata: refrain + 7 stanzas');
+  assert.equal(aartiEntry.verseCount, aarti.verses.length, 'library verseCount matches the aarti payload');
+  assert.ok(aarti.verses[0].lines[0].startsWith('ॐ जय लक्ष्मी माता'), 'Om Jai Lakshmi Mata opens with its refrain');
+  assert.ok(aarti.source.referenceUrls.length >= 2, 'Om Jai Lakshmi Mata cites ≥ 2 sources');
+}
+
 // ─── 10b. Gayatri Mata Aarti canonical structure & refrain ───────────────────
 
 const gayatriAarti = readJson('aarti/gayatri-aarti.json');
@@ -488,6 +516,77 @@ assert.ok(
   `Gayatri Mata Aarti refrain should be "जयति जय गायत्री माता", got: "${gayatriAartiRefrain.lines[0]}"`
 );
 
+// ─── 10e. Khatu Shyam Chalisa canonical structure & opening ──────────────────
+// The "श्री गुरु चरण ध्यान धर" composition (1 doha + 40 chaupais + 1 doha). The
+// longer "Khatu Dham Sikar" chalisa is a different text and must not be merged in.
+
+const khatuShyamChalisa = readJson('khatu-shyam-chalisa/khatu-shyam-chalisa.json');
+assert.equal(khatuShyamChalisa.verses.length, 42, 'Khatu Shyam Chalisa should have 42 verses');
+assert.equal(
+  khatuShyamChalisa.verses.length,
+  khatuShyamChalisa.counts.totalVerses,
+  'Khatu Shyam Chalisa verses.length must match counts.totalVerses'
+);
+assert.equal(
+  khatuShyamChalisa.verses.filter((v: any) => v.type === 'chaupai').length,
+  40,
+  'Khatu Shyam Chalisa should have exactly 40 chaupais'
+);
+assert.ok(
+  khatuShyamChalisa.verses[0].section === 'opening' &&
+    khatuShyamChalisa.verses[0].lines[0].startsWith('श्री गुरु चरण ध्यान धर'),
+  `Khatu Shyam Chalisa should open with "श्री गुरु चरण ध्यान धर", got: "${khatuShyamChalisa.verses[0].lines[0]}"`
+);
+assert.ok(
+  khatuShyamChalisa.verses
+    .find((v: any) => v.type === 'chaupai' && v.number === 1)
+    ?.lines[0].startsWith('श्याम-श्याम भजि बारंबारा'),
+  'Khatu Shyam Chalisa chaupai 1 should be "श्याम-श्याम भजि बारंबारा"'
+);
+assert.ok(
+  khatuShyamChalisa.verses.at(-1).section === 'closing' &&
+    khatuShyamChalisa.verses.at(-1).lines[0].startsWith('श्याम सलोने साँवरे'),
+  'Khatu Shyam Chalisa should close with the "श्याम सलोने साँवरे" doha'
+);
+assert.deepEqual(
+  library.find((e) => e.id === 'khatu-shyam-chalisa')?.deities,
+  ['krishna'],
+  'khatu-shyam-chalisa must be tagged under the Krishna deity only'
+);
+
+// ─── 10d. Khatu Shyam Aarti canonical structure & refrain ───────────────────
+// Opening refrain is the identity anchor from
+// docs/content-parity/chalisa-aarti-existing-deities.md. Tagged krishna: no
+// separate Shyam deity id exists or should be introduced for it.
+
+const khatuShyamAarti = readJson('aarti/khatu-shyam-aarti.json');
+assert.equal(
+  khatuShyamAarti.verses.length,
+  8,
+  'Khatu Shyam Aarti should have 8 verses (opening refrain + 6 stanzas + closing refrain)'
+);
+assert.equal(
+  khatuShyamAarti.verses.filter((v: any) => v.type === 'stanza').length,
+  6,
+  'Khatu Shyam Aarti should have exactly 6 stanzas'
+);
+assert.equal(khatuShyamAarti.deity, 'krishna', 'Khatu Shyam Aarti deity should be krishna');
+assert.ok(
+  khatuShyamAarti.verses[0].type === 'refrain' &&
+    khatuShyamAarti.verses[0].lines[0].startsWith('ॐ जय श्री श्याम हरे'),
+  `Khatu Shyam Aarti should open with the refrain "ॐ जय श्री श्याम हरे", got: "${khatuShyamAarti.verses[0].lines[0]}"`
+);
+assert.ok(
+  khatuShyamAarti.verses.at(-1).type === 'refrain' &&
+    khatuShyamAarti.verses.at(-1).lines.join(' ').includes('निज भक्तों के तुमने'),
+  'Khatu Shyam Aarti should close with its closing refrain'
+);
+assert.deepEqual(
+  library.find((e) => e.id === 'khatu-shyam-aarti')?.deities,
+  ['krishna'],
+  'khatu-shyam-aarti must be tagged under the Krishna deity only'
+);
+
 // ─── 11. Library labels are precise about excerpts and verse types ───────────
 
 const libraryById = new Map(library.map((entry) => [entry.id, entry]));
@@ -497,6 +596,7 @@ assert.equal(libraryById.get('shiv-chalisa')?.sub, '40 चौपाई + 3 द�
 assert.equal(libraryById.get('ganesh-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('gayatri-chalisa')?.sub, '40 चौपाई + 3 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('durga-chalisa')?.sub, '40 चौपाई + 1 दोहा · अर्थ सहित');
+assert.equal(libraryById.get('khatu-shyam-chalisa')?.sub, '40 चौपाई + 2 दोहा · अर्थ सहित');
 assert.equal(libraryById.get('sundarkand')?.sub, '16 अनुभाग · 354 पद');
 assert.match(libraryById.get('ramcharitmanas')?.nameHi || '', /मंगलाचरण/);
 assert.doesNotMatch(libraryById.get('ramcharitmanas')?.sub || '', /अंश|Excerpt/i);
@@ -764,6 +864,11 @@ function collectJsonFiles(dirRel = ''): string[] {
       // `source` — the heavy art/audio they point to is served from R2, not here.
       entry.name !== 'audioAssetManifest.json' &&
       entry.name !== 'kidsStoryAssetManifest.json' &&
+      entry.name !== 'backgroundAssetManifest.json' &&
+      entry.name !== 'readerIllustrationManifest.json' &&
+      // Art aliases are semantic asset mappings, not scripture. Their manifest
+      // coverage and approved bytes are checked by readerIllustrationAsset tests.
+      entry.name !== 'readerIllustrationAliases.json' &&
       rel !== 'valmiki-ramayan/daily-selection.json'
     ) {
       files.push(rel);
@@ -772,9 +877,38 @@ function collectJsonFiles(dirRel = ''): string[] {
   return files;
 }
 
+// RULEBOOK §11.1 maintainer-attested exception: texts the maintainer accepted on
+// one supplied source because the second could not be reached. Each must keep an
+// honest pending block (no unread page in referenceUrls). This list may only
+// shrink: once a file is collated against two sources, remove it here.
+const MAINTAINER_ATTESTED_SINGLE_SOURCE = new Set([
+  'aarti/khatu-shyam-aarti.json',
+  'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
+]);
+
 for (const file of collectJsonFiles()) {
   const data = readJson(file);
   assert.ok(data.source, `${file} should declare source provenance`);
+  if (MAINTAINER_ATTESTED_SINGLE_SOURCE.has(file)) {
+    assert.ok(
+      data.source.maintainerAttestation?.trim(),
+      `${file}: a single-source exception needs source.maintainerAttestation`
+    );
+    assert.match(
+      data.source.canonicalEditionStatus ?? '',
+      /^Pending/,
+      `${file}: a single-source exception must keep a Pending canonicalEditionStatus`
+    );
+    assert.ok(
+      (data.source.canonicalEditionUrls?.length ?? 0) >= 2,
+      `${file}: a single-source exception must name the pages still to collate`
+    );
+    assert.ok(
+      (data.source.referenceUrls?.length ?? 0) < 2,
+      `${file} now cites 2 referenceUrls; remove it from MAINTAINER_ATTESTED_SINGLE_SOURCE`
+    );
+    continue;
+  }
   assert.ok(
     Array.isArray(data.source.referenceUrls) && data.source.referenceUrls.length >= 2,
     `${file} should declare at least 2 source referenceUrls`
@@ -799,10 +933,14 @@ for (const file of [
   'krishna-chalisa/krishna-chalisa.json',
   'vishnu-chalisa/vishnu-chalisa.json',
   'saraswati-chalisa/saraswati-chalisa.json',
+  'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
+  'lakshmi-chalisa/lakshmi-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',
   'aarti/gayatri-aarti.json',
+  'aarti/khatu-shyam-aarti.json',
+  'aarti/om-jai-lakshmi-mata.json',
 ]) {
   const meaningsEn: string[] = readJson(file)
     .verses.map((v: any) => v.meaningEn)

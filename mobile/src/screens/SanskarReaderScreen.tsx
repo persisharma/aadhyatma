@@ -166,6 +166,7 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
             keyExtractor={(v) => v.id}
             renderItem={({ item, index }) => (
               <SanskarVersePage
+                showIllustration={index === 0}
                 verse={item}
                 sourceId={sanskarId}
                 width={width}

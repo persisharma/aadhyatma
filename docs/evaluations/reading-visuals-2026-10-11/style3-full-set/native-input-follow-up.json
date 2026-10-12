@@ -1,0 +1,15 @@
+{
+  "simulator": "BD91E840-482E-4816-838A-9C5247E401DA",
+  "bundleId": "host.exp.Exponent",
+  "metroPort": 8096,
+  "currentSourceLoaded": true,
+  "nativeReadersVerified": false,
+  "observations": [
+    "Current worktree Metro bundle loaded and Home rendered",
+    "Runtime tap on on-screen enabled Durga card did not change screen hash",
+    "Runtime swipe did not change screen hash",
+    "Simulator window mouse click did not open reader"
+  ],
+  "nativeTransportVerified": false,
+  "performanceVerified": false
+}

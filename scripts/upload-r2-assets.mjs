@@ -32,6 +32,7 @@ import { createHash, createHmac } from 'node:crypto';
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -43,13 +44,15 @@ const DIR = path.resolve(ROOT, opt('--dir', 'mobile/assets/kids-stories'));
 const PREFIX = opt('--prefix', path.basename(DIR));
 const MANIFEST = path.resolve(ROOT, opt('--manifest', 'mobile/src/data/kidsStoryAssetManifest.json'));
 const DRY = flag('--dry-run');
+// Optional existing Wrangler OAuth login; never copy credentials into this repo.
+const WRANGLER = flag('--wrangler');
 
 // ── env / auth ──
 const ACCOUNT = process.env.R2_ACCOUNT_ID;
 const AKID = process.env.R2_ACCESS_KEY_ID;
 const SECRET = process.env.R2_SECRET_ACCESS_KEY;
 const BUCKET = process.env.R2_BUCKET || 'vedansh';
-if (!DRY && (!ACCOUNT || !AKID || !SECRET)) {
+if (!DRY && !WRANGLER && (!ACCOUNT || !AKID || !SECRET)) {
   console.error('Missing R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY env.');
   process.exit(1);
 }
@@ -115,6 +118,13 @@ for (const name of files.sort()) {
   const key = `${PREFIX}/${hash}.${ext}`;
   manifest[stem] = { hash, ext };
   if (DRY) { console.log(`would upload ${name} → ${key} (${body.length} B)`); continue; }
+  if (WRANGLER) {
+    const result = spawnSync('npx', ['--yes', 'wrangler', 'r2', 'object', 'put', `${BUCKET}/${key}`,
+      '--file', path.join(DIR, name), '--content-type', CONTENT_TYPES[ext], '--remote'], { stdio: 'inherit' });
+    if (result.status !== 0) throw new Error(`Wrangler upload failed: ${key}`);
+    uploaded++;
+    continue;
+  }
   if (await objectExists(key)) { skipped++; console.log(`skip  ${name} → ${key} (exists)`); continue; }
   await putObject(key, body, CONTENT_TYPES[ext]);
   uploaded++; console.log(`put   ${name} → ${key}`);

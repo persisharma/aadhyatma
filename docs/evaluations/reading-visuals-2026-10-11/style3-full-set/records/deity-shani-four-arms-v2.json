@@ -1,0 +1,24 @@
+{
+  "id": "deity-shani-four-arms-v2",
+  "replaces": "deity-shani",
+  "prompt": "Use case: precise-object-edit. Edit image 1 minimally to correct Shani's currently THREE arms. Preserve all current three hands: viewer-left spear hand, viewer-left blessing hand, viewer-right sword hand. Add ONLY ONE new connected viewer-right upper arm emerging from the right shoulder behind the existing sword arm, bent outward with a relaxed hand resting visibly on the seat to the right, in the open space between shoulder and stone pillar. Exactly FOUR connected arms total, two each side. Preserve face, spear, sword, crow, clothing, rich setting and full 2:1 canvas. Also give the complete crown 6 percent painted sky above by scaling the whole deity/seat group slightly smaller. No other new objects, text or figures.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/deity-shani.png"
+  ],
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-41c69445-a86c-4d69-ad5d-adcd244f583f.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/deity-shani-four-arms-v2.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/deity-shani-four-arms-v2.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 102682,
+  "sha256": "0dc16111235285d390eb05d9e619644235e34454f2f50fd0a5fe58cbc3036f9f",
+  "tool": "built-in image_gen",
+  "status": "draft",
+  "approved": false
+}

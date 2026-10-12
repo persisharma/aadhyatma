@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-10-09T19:36:48.899781+00:00",
+  "simulator": "Vedansh-Reading-Art-QA",
+  "vidhiLarge": {
+    "opening": "20-vidhi-opening-large.jpg",
+    "completeInstructionEndpoint": "21-vidhi-large-instruction-end.jpg",
+    "method": "Native accessibility-targeted scroll; full last line visible above pager"
+  },
+  "kathaKannadaLarge": {
+    "opening": "22-katha-kannada-large-opening.jpg",
+    "lastParagraphReachable": true,
+    "completeEndpoint": "unverified; remaining final lines were not exposed by attempted wheel/coordinate scrolling"
+  },
+  "horizontalPaging": "unverified; attempted rightward scroll did not change 1/16",
+  "preferencesRestored": {
+    "language": "English",
+    "readingSize": "Standard"
+  },
+  "physicalDevice": "registered iPhone 14 unavailable",
+  "android": "adb absent"
+}

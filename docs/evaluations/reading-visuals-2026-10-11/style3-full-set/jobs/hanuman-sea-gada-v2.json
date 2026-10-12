@@ -1,0 +1,15 @@
+{
+  "id": "hanuman-sea-gada-v2",
+  "title": "Hanuman \u00b7 crossing the ocean",
+  "base": "hanuman-sea",
+  "prompt": "Use case: precise-object-edit.\nAsset type: Vedansh devotional reader banner, opaque EXACT 2:1 horizontal landscape.\nInput image 1 is the authoritative edit target. Make one targeted correction: add Hanuman's traditional gold gada (mace), securely held by his existing trailing clenched hand at the left of the image. Give it a clearly readable decorated rounded/fluted gold head and a single connected shaft gripped naturally by that hand. Arrange the complete mace in the available sky beside/behind him, entirely inside the canvas, without concealing his face, limbs, complete tail or the flying action.\nPreserve all other scene content and the current detailed Style 3 hand-painted rendering: same Hanuman identity, exactly two connected arms and two legs, face, crown, jewellery, red/gold clothing, flowing cloth, flying pose toward the right, full curling tail, feet, ocean waves, sunset, distant island/temple, rocks and vegetation. Keep the exact landscape composition and whole-subject framing. No extra hand, arm, figure, weapon, floating mountain, text, caption, border or watermark. Do not crop or enlarge the subjects. The only intended new object is the gada.",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-be77e876-773e-47c2-8b61-5c48227ab87b.png",
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-detail-v2",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/selected/hanuman-sea.webp"
+  ],
+  "transparent_background": false,
+  "userCorrection": "Hanuman should have gada",
+  "approved": false
+}

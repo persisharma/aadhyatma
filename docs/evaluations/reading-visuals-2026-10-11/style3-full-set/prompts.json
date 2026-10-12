@@ -1,0 +1,808 @@
+{
+  "date": "2026-10-11",
+  "style": "krishna-storybook-detail-v2",
+  "scope": "40 new illustrations plus 3 already approved scene-preserving samples",
+  "jobs": [
+    {
+      "id": "category-aarti-diya",
+      "title": "Aarti",
+      "legacyStems": [
+        "backgrounds--category-aarti-diya"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A complete traditional five-flame brass aarti lamp with its ornate upright handle, beside a separate shallow flower-and-offering tray, small brass bell and patterned woven puja cloth. Retain these motifs from image 1. Richly detailed tranquil temple veranda, all lamp flames/handle/base, tray and bell comfortably inside the wide frame. No people or lettering.",
+      "scene": "A complete traditional five-flame brass aarti lamp with its ornate upright handle, beside a separate shallow flower-and-offering tray, small brass bell and patterned woven puja cloth. Retain these motifs from image 1. Richly detailed tranquil temple veranda, all lamp flames/handle/base, tray and bell comfortably inside the wide frame. No people or lettering.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/d3de7414c5da06f8.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "category-chalisa-booklet-mala",
+      "title": "Chalisa",
+      "legacyStems": [
+        "backgrounds--category-chalisa-booklet-mala"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A complete closed devotional book with a fine embossed picture of kneeling Hanuman with joined palms on its cover, a patterned bookmark, a complete rudraksha mala loop with its full tassel, flowers and a patterned folded cloth. Retain the recognizable Hanuman cover motif from image 1 rather than substituting an unrelated motif. Detailed quiet temple-study setting. All objects fully visible; no lettering or pseudo-script.",
+      "scene": "A complete closed devotional book with a fine embossed picture of kneeling Hanuman with joined palms on its cover, a patterned bookmark, a complete rudraksha mala loop with its full tassel, flowers and a patterned folded cloth. Retain the recognizable Hanuman cover motif from image 1 rather than substituting an unrelated motif. Detailed quiet temple-study setting. All objects fully visible; no lettering or pseudo-script.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/e6ed2939cd1259ef.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "category-granth-open-scripture",
+      "title": "Granth",
+      "legacyStems": [
+        "backgrounds--category-granth-open-scripture"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: An entire open traditional manuscript on a carved wooden rehal stand, flanked by two complete brass lamps, with a complete mala and tassel, a small tied palm-leaf manuscript and unmarked writing stylus in front. Preserve image 1's book/stand/lamps/manuscript motifs in a richly detailed quiet study alcove. All edges of book/stand/lamps visible. No readable words or fake script on pages.",
+      "scene": "An entire open traditional manuscript on a carved wooden rehal stand, flanked by two complete brass lamps, with a complete mala and tassel, a small tied palm-leaf manuscript and unmarked writing stylus in front. Preserve image 1's book/stand/lamps/manuscript motifs in a richly detailed quiet study alcove. All edges of book/stand/lamps visible. No readable words or fake script on pages.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/e6134b2facb37bf7.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "category-japam-mala",
+      "title": "Japam",
+      "legacyStems": [
+        "backgrounds--category-japam-mala"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A complete loop of smooth traditional prayer beads with its full tassel lying on a patterned prayer mat, beside a small engraved brass bowl containing a few beads and a small tool, a lotus and patterned cylindrical bolster. Preserve the detailed motifs of image 1 and arrange them horizontally in a serene garden pavilion. All objects entirely visible, no people or text.",
+      "scene": "A complete loop of smooth traditional prayer beads with its full tassel lying on a patterned prayer mat, beside a small engraved brass bowl containing a few beads and a small tool, a lotus and patterned cylindrical bolster. Preserve the detailed motifs of image 1 and arrange them horizontally in a serene garden pavilion. All objects entirely visible, no people or text.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/ef36f2df65db008c.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "category-kavacham-protection",
+      "title": "Kavacham",
+      "legacyStems": [
+        "backgrounds--category-kavacham-protection"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A complete ornate antique protective breastplate and round floral ornamental shield, a full rudraksha mala with tassel, an unlettered palm-leaf manuscript and a small complete brass bell, arranged horizontally before a carved stone temple alcove. Retain image 1's detailed floral engraving and devotional still-life motifs. No people, battle, text or additional weapons.",
+      "scene": "A complete ornate antique protective breastplate and round floral ornamental shield, a full rudraksha mala with tassel, an unlettered palm-leaf manuscript and a small complete brass bell, arranged horizontally before a carved stone temple alcove. Retain image 1's detailed floral engraving and devotional still-life motifs. No people, battle, text or additional weapons.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/2da00d9b082406ac.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "category-stotram-hymn-scroll",
+      "title": "Stotram",
+      "legacyStems": [
+        "backgrounds--category-stotram-hymn-scroll"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: An entire unfurled unlettered traditional manuscript scroll beside a complete ornate plucked string instrument with curved neck and a complete brass bell. Retain image 1's instrument and floral manuscript motifs without replacing the instrument by unrelated objects. Detailed low wooden reading platform and temple-study setting, all instrument/scroll/finial/bell edges visible. No words or fake script.",
+      "scene": "An entire unfurled unlettered traditional manuscript scroll beside a complete ornate plucked string instrument with curved neck and a complete brass bell. Retain image 1's instrument and floral manuscript motifs without replacing the instrument by unrelated objects. Detailed low wooden reading platform and temple-study setting, all instrument/scroll/finial/bell edges visible. No words or fake script.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/2faf0876cf2c38e0.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-dattatreya",
+      "title": "Dattatreya",
+      "legacyStems": [
+        "backgrounds--deity-dattatreya"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: Dattatreya in his traditional three-headed, six-armed form stands serenely under a broad sacred tree. Show his complete figure, the cow behind him and four small dogs gathered around his feet. Entire crowns, heads, hands, attributes, feet and animals visible. The animals form a horizontal arrangement in a peaceful pastoral landscape.",
+      "scene": "Dattatreya in his traditional three-headed, six-armed form stands serenely under a broad sacred tree. Show his complete figure, the cow behind him and four small dogs gathered around his feet. Entire crowns, heads, hands, attributes, feet and animals visible. The animals form a horizontal arrangement in a peaceful pastoral landscape.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/b1933c59c4a7fb72.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-durga-lion",
+      "title": "Durga",
+      "legacyStems": [
+        "backgrounds--deity-durga-lion"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A peaceful eight-armed Durga in a red sari sits on a complete resting lion in a flowering grove. Her recognizable traditional attributes, crown, all eight hands and the entire lion including paws and tail are inside the frame. Dignified and protective, no battle or injured figures.",
+      "scene": "A peaceful eight-armed Durga in a red sari sits on a complete resting lion in a flowering grove. Her recognizable traditional attributes, crown, all eight hands and the entire lion including paws and tail are inside the frame. Dignified and protective, no battle or injured figures.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/3b31f1a08043f0d8.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-ganesha-modak",
+      "title": "Ganesha",
+      "legacyStems": [
+        "backgrounds--deity-ganesha-modak"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: Ganesha in a serene traditional four-armed form sits on a low lotus seat, with a bowl of modak, one blessing hand, a lotus and an ankusha in his other hands. Show complete crown, ears, trunk, all four arms, feet and seat, with a small mouse beside the seat. All are fully inside the frame in a quiet garden shrine.",
+      "scene": "Ganesha in a serene traditional four-armed form sits on a low lotus seat, with a bowl of modak, one blessing hand, a lotus and an ankusha in his other hands. Show complete crown, ears, trunk, all four arms, feet and seat, with a small mouse beside the seat. All are fully inside the frame in a quiet garden shrine.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/eee03ccaf09bf536.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-ganga",
+      "title": "Ganga",
+      "legacyStems": [
+        "backgrounds--deity-ganga"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: Goddess Ganga in a serene traditional form sits upon her complete makara vahana on the river. A water pot and lotus are clearly visible in her hands. Show full crown, figure, hands, feet and makara, within the frame, with the river and distant hills spreading sideways. No other people.",
+      "scene": "Goddess Ganga in a serene traditional form sits upon her complete makara vahana on the river. A water pot and lotus are clearly visible in her hands. Show full crown, figure, hands, feet and makara, within the frame, with the river and distant hills spreading sideways. No other people.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/f94d685db3be5cbe.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-kali",
+      "title": "Kali",
+      "legacyStems": [
+        "backgrounds--deity-kali"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A dignified peaceful devotional depiction of four-armed Kali with dark blue skin, flowing black hair, a traditional crown and a small red tongue. A floral garland, blessing/protection gestures and traditional sword are visible. Complete figure and all hands, crown and feet in the frame, in a moonlit temple garden. Non-graphic, no blood, severed heads, bodies or battle.",
+      "scene": "A dignified peaceful devotional depiction of four-armed Kali with dark blue skin, flowing black hair, a traditional crown and a small red tongue. A floral garland, blessing/protection gestures and traditional sword are visible. Complete figure and all hands, crown and feet in the frame, in a moonlit temple garden. Non-graphic, no blood, severed heads, bodies or battle.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/a15d7d622779369a.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-krishna-bansuri",
+      "title": "Krishna",
+      "legacyStems": [
+        "backgrounds--deity-krishna-bansuri"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A complete standing blue-skinned Krishna wearing a peacock-feather crown and yellow dhoti, playing a flute held naturally in his two hands. His entire crown, flute, hands, feet and robe are visible. A peacock and riverbank grove extend horizontally around him. No other people.",
+      "scene": "A complete standing blue-skinned Krishna wearing a peacock-feather crown and yellow dhoti, playing a flute held naturally in his two hands. His entire crown, flute, hands, feet and robe are visible. A peacock and riverbank grove extend horizontally around him. No other people.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/5efcdaf367a863c8.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-kubera",
+      "title": "Kubera",
+      "legacyStems": [
+        "backgrounds--deity-kubera"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A dignified two-armed Kubera sits on a low ornate throne beside a pot of gold coins, holding a traditional mace and a small treasure pouch. His entire crowned figure, throne, both hands, feet and treasure pot fit comfortably in the frame. Quiet warm palace garden, no other people.",
+      "scene": "A dignified two-armed Kubera sits on a low ornate throne beside a pot of gold coins, holding a traditional mace and a small treasure pouch. His entire crowned figure, throne, both hands, feet and treasure pot fit comfortably in the frame. Quiet warm palace garden, no other people.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/ed98f047da4689a6.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-lakshmi",
+      "title": "Lakshmi",
+      "legacyStems": [
+        "backgrounds--deity-lakshmi"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: Four-armed Lakshmi in a red-gold sari sits fully on a pink lotus. Her two upper hands hold lotuses; one lower hand offers a blessing and the other pours a small stream of gold coins into a bowl. Show exactly four arms, full crown, entire figure, full lotus and coin bowl inside the frame. A calm lotus lake and two small distant elephants form a wide backdrop.",
+      "scene": "Four-armed Lakshmi in a red-gold sari sits fully on a pink lotus. Her two upper hands hold lotuses; one lower hand offers a blessing and the other pours a small stream of gold coins into a bowl. Show exactly four arms, full crown, entire figure, full lotus and coin bowl inside the frame. A calm lotus lake and two small distant elephants form a wide backdrop.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/17c655e8f8d1d920.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-narasimha-prahlad",
+      "title": "Narasimha and Prahlad",
+      "legacyStems": [
+        "backgrounds--deity-narasimha-prahlad"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A peaceful four-armed lion-faced Narasimha sits on a low ornate throne with the young devotee Prahlad safe beside him, hands joined. Narasimha holds conch and discus in the upper hands and offers a gentle blessing with a lower hand. Complete figures, full lion crown, all four arms, feet and throne are visible. A quiet temple courtyard. No Hiranyakashipu, blood or violence.",
+      "scene": "A peaceful four-armed lion-faced Narasimha sits on a low ornate throne with the young devotee Prahlad safe beside him, hands joined. Narasimha holds conch and discus in the upper hands and offers a gentle blessing with a lower hand. Complete figures, full lion crown, all four arms, feet and throne are visible. A quiet temple courtyard. No Hiranyakashipu, blood or violence.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/c93d3ab1e7ea3a43.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-navagraha-icons",
+      "title": "Navagraha",
+      "legacyStems": [
+        "backgrounds--deity-navagraha-icons"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A devotional symbolic Navagraha composition of exactly nine distinct circular medallions arranged in a broad horizontal oval, every medallion completely visible. The central medallion is a warm radiant Sun; the other eight show Moon crescent, red Mars symbolized by a small mace, Mercury by a manuscript, Jupiter by a mala, Venus by a lotus, Saturn by a crow, Rahu by an eclipse and Ketu by a small flag. Flowing subtle celestial lines on ivory paper. No labels, words, digits, additional circles or people.",
+      "scene": "A devotional symbolic Navagraha composition of exactly nine distinct circular medallions arranged in a broad horizontal oval, every medallion completely visible. The central medallion is a warm radiant Sun; the other eight show Moon crescent, red Mars symbolized by a small mace, Mercury by a manuscript, Jupiter by a mala, Venus by a lotus, Saturn by a crow, Rahu by an eclipse and Ketu by a small flag. Flowing subtle celestial lines on ivory paper. No labels, words, digits, additional circles or people.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/8789ca4359833466.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-parvati-bhavani",
+      "title": "Parvati",
+      "legacyStems": [
+        "backgrounds--deity-parvati-bhavani"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A peaceful two-armed Parvati in a red-green sari sits upon a low lotus seat, holding a lotus and giving a gentle blessing. Her full crowned figure, both hands, feet and entire seat are visible. Snowy mountains and flowering Himalayan trees create a wide quiet backdrop. No other people.",
+      "scene": "A peaceful two-armed Parvati in a red-green sari sits upon a low lotus seat, holding a lotus and giving a gentle blessing. Her full crowned figure, both hands, feet and entire seat are visible. Snowy mountains and flowering Himalayan trees create a wide quiet backdrop. No other people.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/3f0cf8f7fc02b683.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-radha-krishna",
+      "title": "Radha and Krishna",
+      "legacyStems": [
+        "backgrounds--deity-radha-krishna"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: Radha and blue-skinned Krishna stand together in a gentle riverbank grove. Krishna plays a flute in two hands and wears a peacock-feather crown; Radha wears a traditional red-green sari. Both complete figures, crowns, all hands, flute, robes and feet are visible with comfortable space around them. No extra figures.",
+      "scene": "Radha and blue-skinned Krishna stand together in a gentle riverbank grove. Krishna plays a flute in two hands and wears a peacock-feather crown; Radha wears a traditional red-green sari. Both complete figures, crowns, all hands, flute, robes and feet are visible with comfortable space around them. No extra figures.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/95952ac4091dd128.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-rama-darbar",
+      "title": "Rama Darbar",
+      "legacyStems": [
+        "backgrounds--deity-rama-darbar"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A traditional Rama Darbar of exactly four complete figures: Rama and Sita seated together on a low ornate throne, Lakshmana standing beside them with a bow, and Hanuman kneeling with joined palms before them. Full crowns, all hands, bows, feet and throne fit inside the horizontal frame. Soft palace garden backdrop. No additional people or modern objects.",
+      "scene": "A traditional Rama Darbar of exactly four complete figures: Rama and Sita seated together on a low ornate throne, Lakshmana standing beside them with a bow, and Hanuman kneeling with joined palms before them. Full crowns, all hands, bows, feet and throne fit inside the horizontal frame. Soft palace garden backdrop. No additional people or modern objects.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/16f1dedc12993d65.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-saraswati-veena",
+      "title": "Saraswati",
+      "legacyStems": [
+        "backgrounds--deity-saraswati-veena"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: Four-armed Saraswati in white and gold sits on a low white lotus seat, playing a complete veena with her two lower hands while the upper hands hold a book and mala. Her entire crown, four arms, veena, feet and lotus fit within the frame, with one complete swan nearby. A calm river and flowering trees extend sideways. No writing on the book.",
+      "scene": "Four-armed Saraswati in white and gold sits on a low white lotus seat, playing a complete veena with her two lower hands while the upper hands hold a book and mala. Her entire crown, four arms, veena, feet and lotus fit within the frame, with one complete swan nearby. A calm river and flowering trees extend sideways. No writing on the book.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/b105b8a731bbdf8f.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-shani",
+      "title": "Shani",
+      "legacyStems": [
+        "backgrounds--deity-shani"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A dignified two-armed Shani in deep blue traditional clothing and a crown, seated upon a complete dark crow vahana, holds a staff and gives a blessing. All of Shani, both hands, staff, feet, crow body, wings and tail visible within the frame. A quiet twilight sky and distant temple, no additional figures.",
+      "scene": "A dignified two-armed Shani in deep blue traditional clothing and a crown, seated upon a complete dark crow vahana, holds a staff and gives a blessing. All of Shani, both hands, staff, feet, crow body, wings and tail visible within the frame. A quiet twilight sky and distant temple, no additional figures.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/baaf2e2a55838c45.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "deity-surya",
+      "title": "Surya",
+      "legacyStems": [
+        "backgrounds--deity-surya"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A radiant Surya with a crown and two arms holding lotuses sits in a complete low golden chariot drawn by exactly seven distinct white horses spread horizontally in a readable fan. All seven horse heads and bodies, Surya crown and hands, and chariot fit fully inside the frame. A warm dawn sky. No text, no additional horses, no clipped chariot wheels.",
+      "scene": "A radiant Surya with a crown and two arms holding lotuses sits in a complete low golden chariot drawn by exactly seven distinct white horses spread horizontally in a readable fan. All seven horse heads and bodies, Surya crown and hands, and chariot fit fully inside the frame. A warm dawn sky. No text, no additional horses, no clipped chariot wheels.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/5ef5830e2adf97f5.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "panchang-celestial-almanac",
+      "title": "Panchang",
+      "legacyStems": [
+        "backgrounds--panchang-celestial-almanac"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A complete finely painted circular celestial almanac wheel with a small radiant Sun and crescent Moon, delicate constellation dots and floral astronomical ornaments across a horizontal ivory manuscript. All circles and ornaments fully visible, balanced contemplative composition, no labels, numbers, zodiac names, dates, written text or people.",
+      "scene": "A complete finely painted circular celestial almanac wheel with a small radiant Sun and crescent Moon, delicate constellation dots and floral astronomical ornaments across a horizontal ivory manuscript. All circles and ornaments fully visible, balanced contemplative composition, no labels, numbers, zodiac names, dates, written text or people.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/71117410f10e78c9.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "source-gayatri-savitri-sun",
+      "title": "Gayatri · Savitri",
+      "legacyStems": [
+        "backgrounds--source-gayatri-savitri-sun"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A serene symbolic devotional dawn: a complete radiant golden Sun rising over a calm river, with pink lotuses and a softly luminous halo, framed by low riverbank trees and subtle temple silhouettes. No anthropomorphic goddess, no people, no written mantras or lettering. The full Sun and foreground lotuses are inside the wide frame.",
+      "scene": "A serene symbolic devotional dawn: a complete radiant golden Sun rising over a calm river, with pink lotuses and a softly luminous halo, framed by low riverbank trees and subtle temple silhouettes. No anthropomorphic goddess, no people, no written mantras or lettering. The full Sun and foreground lotuses are inside the wide frame.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/ecf0428db9c31954.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-gogaji-gogamedi",
+      "title": "Gogaji · Gogamedi",
+      "legacyStems": [
+        "backgrounds--theerth-gogaji-gogamedi"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic devotional illustration, not a documentary temple view: Gogaji, a turbaned Rajasthani warrior-saint with a long spear, rides a complete calm horse. One small serpent rests safely on the earth nearby. Show whole horse, hooves, tail, rider, turban, hands and full spear inside the frame. A low domed shrine in a wide sandy Rajasthan landscape. No battle or additional people.",
+      "scene": "A respectful thematic devotional illustration, not a documentary temple view: Gogaji, a turbaned Rajasthani warrior-saint with a long spear, rides a complete calm horse. One small serpent rests safely on the earth nearby. Show whole horse, hooves, tail, rider, turban, hands and full spear inside the frame. A low domed shrine in a wide sandy Rajasthan landscape. No battle or additional people.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/d2ed3e935c7c604e.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-jeen-mata",
+      "title": "Jeen Mata",
+      "legacyStems": [
+        "backgrounds--theerth-jeen-mata"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic shrine illustration, not a documentary architectural reconstruction: a small richly dressed crowned goddess icon in a carved stone shrine niche, with a fully visible arch and low pavilion, flowers, gentle hills and trees extending horizontally. The complete icon, crown, hands, pedestal and entire shrine arch fit inside the frame. No people or readable inscriptions.",
+      "scene": "A respectful thematic shrine illustration, not a documentary architectural reconstruction: a small richly dressed crowned goddess icon in a carved stone shrine niche, with a fully visible arch and low pavilion, flowers, gentle hills and trees extending horizontally. The complete icon, crown, hands, pedestal and entire shrine arch fit inside the frame. No people or readable inscriptions.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/39571bde2a1f2363.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-karni-mata",
+      "title": "Karni Mata",
+      "legacyStems": [
+        "backgrounds--theerth-karni-mata"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic devotional shrine illustration: a complete small crowned Karni Mata icon wearing a red sari in a warm ornate stone niche, garlands and a softly glowing lamp, with two tiny non-threatening mice near the floor. Full deity icon, pedestal and surrounding arch inside the frame. A calm Rajasthan courtyard extends sideways. No writing or people; illustrative, not an exact architectural reconstruction.",
+      "scene": "A respectful thematic devotional shrine illustration: a complete small crowned Karni Mata icon wearing a red sari in a warm ornate stone niche, garlands and a softly glowing lamp, with two tiny non-threatening mice near the floor. Full deity icon, pedestal and surrounding arch inside the frame. A calm Rajasthan courtyard extends sideways. No writing or people; illustrative, not an exact architectural reconstruction.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/ed4d478e8538ea3c.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-khandoba-jejuri",
+      "title": "Khandoba · Jejuri",
+      "legacyStems": [
+        "backgrounds--theerth-khandoba-jejuri"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic devotional Khandoba illustration: a traditionally crowned four-armed Khandoba seated on a complete calm horse, with sword and other traditional attributes, all hands visible. Whole horse, hooves, tail, crown and all attributes fit fully inside the frame. A soft ochre hillside shrine and turmeric-colored atmosphere extend horizontally. No battle or extra people; not a documentary shrine view.",
+      "scene": "A respectful thematic devotional Khandoba illustration: a traditionally crowned four-armed Khandoba seated on a complete calm horse, with sword and other traditional attributes, all hands visible. Whole horse, hooves, tail, crown and all attributes fit fully inside the frame. A soft ochre hillside shrine and turmeric-colored atmosphere extend horizontally. No battle or extra people; not a documentary shrine view.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/5ea88742414d2e0d.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-khatu-shyam",
+      "title": "Khatu Shyam",
+      "legacyStems": [
+        "backgrounds--theerth-khatu-shyam"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic devotional shrine: a small ornate crowned Shyam head icon, with dignified moustache and large expressive eyes, surrounded by full flower garlands within a complete carved stone shrine arch. The entire crown, icon, garlands and shrine arch are fully inside the horizontal canvas. Low Rajasthan temple courtyard on either side, warm ivory and red-gold palette, no inscriptions or people. Not an exact architectural reconstruction.",
+      "scene": "A respectful thematic devotional shrine: a small ornate crowned Shyam head icon, with dignified moustache and large expressive eyes, surrounded by full flower garlands within a complete carved stone shrine arch. The entire crown, icon, garlands and shrine arch are fully inside the horizontal canvas. Low Rajasthan temple courtyard on either side, warm ivory and red-gold palette, no inscriptions or people. Not an exact architectural reconstruction.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/3fc029b71fa62e4b.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-mahasu-devta-hanol",
+      "title": "Mahasu Devta · Hanol",
+      "legacyStems": [
+        "backgrounds--theerth-mahasu-devta-hanol"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic pilgrimage landscape inspired by the existing illustration: a complete traditional Himalayan timber-and-stone shrine with tiered slate roof, carved porch and closed sanctum, a trishul nearby, among tall deodar trees and gentle hills. The entire roof, base, porch and trishul fit inside the frame. No invented deity portrait, no people or writing. Illustrative landscape, not a documentary reconstruction of the temple.",
+      "scene": "A respectful thematic pilgrimage landscape inspired by the existing illustration: a complete traditional Himalayan timber-and-stone shrine with tiered slate roof, carved porch and closed sanctum, a trishul nearby, among tall deodar trees and gentle hills. The entire roof, base, porch and trishul fit inside the frame. No invented deity portrait, no people or writing. Illustrative landscape, not a documentary reconstruction of the temple.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/9695ded31efcd5ed.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-ramdevra",
+      "title": "Ramdevra",
+      "legacyStems": [
+        "backgrounds--theerth-ramdevra"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic illustration of Baba Ramdevji, a turbaned Rajasthani saint seated on a complete calm horse, holding a staff or spear. Full turban, figure, hands, staff, horse hooves and tail visible. A soft low domed shrine and sandy landscape extend sideways. No battle or extra people. Illustrative devotional art, not a documentary temple reconstruction.",
+      "scene": "A respectful thematic illustration of Baba Ramdevji, a turbaned Rajasthani saint seated on a complete calm horse, holding a staff or spear. Full turban, figure, hands, staff, horse hooves and tail visible. A soft low domed shrine and sandy landscape extend sideways. No battle or extra people. Illustrative devotional art, not a documentary temple reconstruction.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/33866e38244e8a4b.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-sabarimala",
+      "title": "Sabarimala · Ayyappa",
+      "legacyStems": [
+        "backgrounds--theerth-sabarimala"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic devotional Ayyappa seated in the traditional yogapattasana pose with the yoga band around the knees, wearing a simple crown and ornaments. Full figure, crown, hands, knees, feet and low seat visible. A small Kerala-style shrine roof and lush forested hills extend horizontally in the backdrop. No extra people, lettering or architectural-accuracy claim.",
+      "scene": "A respectful thematic devotional Ayyappa seated in the traditional yogapattasana pose with the yoga band around the knees, wearing a simple crown and ornaments. Full figure, crown, hands, knees, feet and low seat visible. A small Kerala-style shrine roof and lush forested hills extend horizontally in the backdrop. No extra people, lettering or architectural-accuracy claim.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/4f444e559532e9ad.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-salasar-balaji",
+      "title": "Salasar Balaji",
+      "legacyStems": [
+        "backgrounds--theerth-salasar-balaji"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic devotional shrine with a small vermilion Hanuman Balaji icon, recognizably moustached, adorned with a complete crown, flower garlands and decorative cloth, within an entire carved stone niche. Full icon and arch with low lamp offerings visible inside the horizontal frame. Warm Rajasthan courtyard extends sideways. No readable writing or extra people; not a documentary architectural reconstruction.",
+      "scene": "A respectful thematic devotional shrine with a small vermilion Hanuman Balaji icon, recognizably moustached, adorned with a complete crown, flower garlands and decorative cloth, within an entire carved stone niche. Full icon and arch with low lamp offerings visible inside the horizontal frame. Warm Rajasthan courtyard extends sideways. No readable writing or extra people; not a documentary architectural reconstruction.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/ea8096a41b506701.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-tejaji-kharnal",
+      "title": "Tejaji · Kharnal",
+      "legacyStems": [
+        "backgrounds--theerth-tejaji-kharnal"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic Tejaji devotional illustration: a turbaned Rajasthani warrior-saint seated on a complete calm horse, carrying a long spear, with one small serpent safely resting nearby. Full figure, turban, hands, spear, horse hooves and tail fit inside the frame. A low rural shrine and sparse trees in a wide ochre landscape. No battle or additional people; not a documentary temple view.",
+      "scene": "A respectful thematic Tejaji devotional illustration: a turbaned Rajasthani warrior-saint seated on a complete calm horse, carrying a long spear, with one small serpent safely resting nearby. Full figure, turban, hands, spear, horse hooves and tail fit inside the frame. A low rural shrine and sparse trees in a wide ochre landscape. No battle or additional people; not a documentary temple view.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/882b4b5d508f0cf4.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "theerth-vetrimalai-murugan",
+      "title": "Vetrimalai · Murugan",
+      "legacyStems": [
+        "backgrounds--theerth-vetrimalai-murugan"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful thematic devotional Murugan with a crown, holding a complete vel spear, standing with a whole peacock beside him. Full figure, crown, hands, spear, feet and peacock tail are inside the frame. A softly detailed South Indian temple gopuram and tropical trees spread horizontally in the backdrop. No extra people or lettering; not an exact architectural reconstruction.",
+      "scene": "A respectful thematic devotional Murugan with a crown, holding a complete vel spear, standing with a whole peacock beside him. Full figure, crown, hands, spear, feet and peacock tail are inside the frame. A softly detailed South Indian temple gopuram and tropical trees spread horizontally in the backdrop. No extra people or lettering; not an exact architectural reconstruction.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/5cb45ba8bfc06d43.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "hanuman-sea",
+      "title": "Hanuman · crossing the ocean",
+      "legacyStems": [
+        "chalisa--Hanuman_sea"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: Hanuman flies horizontally across a calm blue ocean toward a distant island, his full monkey-faced figure, both arms, both legs, feet, crown and complete gracefully curved tail contained inside the frame. Low waves and soft dawn clouds. No extra figures, no floating mountain, no text.",
+      "scene": "Hanuman flies horizontally across a calm blue ocean toward a distant island, his full monkey-faced figure, both arms, both legs, feet, crown and complete gracefully curved tail contained inside the frame. Low waves and soft dawn clouds. No extra figures, no floating mountain, no text.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/48a2be2604a55b2f.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "ram-hanuman",
+      "title": "Rama and Hanuman",
+      "legacyStems": [
+        "chalisa--Ram_hanuman"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A complete seated Rama in yellow robes and a simple crown gently blesses Hanuman kneeling before him with joined hands. Rama has two arms; Hanuman has a clear monkey face and complete curved tail. Full figures, all hands, feet, crown, seat and a complete bow resting nearby are visible. A quiet riverbank grove stretches sideways. No additional figures or lettering.",
+      "scene": "A complete seated Rama in yellow robes and a simple crown gently blesses Hanuman kneeling before him with joined hands. Rama has two arms; Hanuman has a clear monkey face and complete curved tail. Full figures, all hands, feet, crown, seat and a complete bow resting nearby are visible. A quiet riverbank grove stretches sideways. No additional figures or lettering.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/e6a01cec98734304.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "hanuman-lankadahan",
+      "title": "Hanuman · Lanka dahan",
+      "legacyStems": [
+        "chalisa--hanuman_lankadahan"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A respectful non-graphic devotional depiction of Hanuman flying above a distant stylized Lanka city. The flame at the tip of his tail is small and clearly contained. Show his complete face, crown, arms, legs, feet and whole tail, entirely inside the frame. A gentle ochre dusk sky and distant rooftops fill the horizontal backdrop. No injured people, violence, gore or additional figures.",
+      "scene": "A respectful non-graphic devotional depiction of Hanuman flying above a distant stylized Lanka city. The flame at the tip of his tail is small and clearly contained. Show his complete face, crown, arms, legs, feet and whole tail, entirely inside the frame. A gentle ochre dusk sky and distant rooftops fill the horizontal backdrop. No injured people, violence, gore or additional figures.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/46b632c2de75bc74.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "shiva",
+      "title": "Shiva",
+      "legacyStems": [
+        "shiva-strotam--shiva"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A complete serene two-armed Shiva sits in meditation on a low rocky seat, with a crescent moon in his hair, a blue throat and a small snake at his neck. A whole trishul and damaru rest nearby. Full head, hair, both arms, hands, crossed legs, feet, seat and trishul are inside the frame. Snowy Kailash-like mountains and a calm lake extend horizontally. No additional figures or lettering.",
+      "scene": "A complete serene two-armed Shiva sits in meditation on a low rocky seat, with a crescent moon in his hair, a blue throat and a small snake at his neck. A whole trishul and damaru rest nearby. Full head, hair, both arms, hands, crossed legs, feet, seat and trishul are inside the frame. Snowy Kailash-like mountains and a calm lake extend horizontally. No additional figures or lettering.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/dcf32ad6672162fd.jpeg",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    },
+    {
+      "id": "source-vishnu-narayana",
+      "title": "Vishnu · Narayana",
+      "legacyStems": [
+        "backgrounds--source-vishnu-narayana-option2",
+        "backgrounds--source-vishnu-narayana"
+      ],
+      "category": "reader-illustrations",
+      "style": "krishna-storybook-detail-v2",
+      "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: Vishnu with blue skin and four arms reclines upon the complete coiled body of Shesha on the cosmic ocean. His conch and discus are visible. Lakshmi sits at his feet in a red-gold sari. A lotus stalk from his navel rises to a small seated Brahma on its blossom. Show the entire reclining Vishnu, all of Lakshmi, entire serpent canopy, complete Brahma and lotus, crowns, hands and feet. Place the subjects across the wide horizontal composition, keeping Brahma low enough to fit naturally. Soft ocean clouds, subtle pink lotuses.",
+      "scene": "Vishnu with blue skin and four arms reclines upon the complete coiled body of Shesha on the cosmic ocean. His conch and discus are visible. Lakshmi sits at his feet in a red-gold sari. A lotus stalk from his navel rises to a small seated Brahma on its blossom. Show the entire reclining Vishnu, all of Lakshmi, entire serpent canopy, complete Brahma and lotus, crowns, hands and feet. Place the subjects across the wide horizontal composition, keeping Brahma low enough to fit naturally. Soft ocean clouds, subtle pink lotuses.",
+      "referenced_image_paths": [
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/82e2664730270637.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+        "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+      ],
+      "transparent_background": false,
+      "approved": false,
+      "status": "planned"
+    }
+  ]
+}

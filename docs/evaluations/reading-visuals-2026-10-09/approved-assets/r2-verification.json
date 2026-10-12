@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-10-09T06:27:41.703Z",
+  "results": [
+    {
+      "stem": "backgrounds--reading-parchment-option2",
+      "url": "https://cdn.vedansh.app/reading-backgrounds/acee66cee8bef750.webp",
+      "status": 200,
+      "bytes": 3102,
+      "sha256": "acee66cee8bef750df58cf2deda8fe98bbc9e86e1bcc6ffa75683f201ccd7b9c",
+      "hashMatches": true
+    },
+    {
+      "stem": "backgrounds--source-vishnu-narayana-option2",
+      "url": "https://cdn.vedansh.app/reading-backgrounds/82e2664730270637.webp",
+      "status": 200,
+      "bytes": 94904,
+      "sha256": "82e26647302706372c4211649b14fedd1a59d57bbda155180e1357caea48b4bb",
+      "hashMatches": true
+    }
+  ]
+}

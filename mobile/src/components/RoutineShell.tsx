@@ -1,3 +1,4 @@
+import type { BackgroundImage } from '@/data/backgroundAsset';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,10 +24,10 @@ export function RoutineShell({
   titleEn: string;
   onBack: () => void;
   right?: React.ReactNode;
-  background?: number | null;
+  background?: BackgroundImage | null;
   children: React.ReactNode;
 }) {
-  const { colors, typography, spacing } = useTheme();
+  const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   return (
     <View style={styles.root}>

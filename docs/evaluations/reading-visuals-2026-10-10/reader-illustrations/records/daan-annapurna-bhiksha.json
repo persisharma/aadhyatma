@@ -1,0 +1,31 @@
+{
+  "id": "daan-annapurna-bhiksha",
+  "title": "Daan \u00b7 Annapurna offering bhiksha to Shiva",
+  "legacyStems": [
+    "backgrounds--daan-annapurna-bhiksha"
+  ],
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-v1",
+  "status": "draft",
+  "approved": false,
+  "prompt": "Use case: illustration-story. Generate ONE new text-free standalone devotional READER ILLUSTRATION for the Vedansh app, a short landscape banner with EXACT 2:1 aspect ratio (e.g. 1920x960). The attached kj-08 and kj-11 images are STYLE references only. Match their soft Indian devotional storybook rendering: fine warm-grey and brown outlines, graceful expressive almond-shaped eyes, broad smooth pastel colour fills, gentle restrained shading, subtle paper grain. Use muted low-saturation warm ivory parchment, powder-blue divine skin, dusty saffron/terracotta, sage, slate blue-grey and restrained matte gold. Simplify background details and ornament while keeping clear poses and meaningful actions. Dignified subjects suitable for the whole app; not chibi or caricature. Create a NEW horizontal composition, do not crop or stretch any portrait or reference. Scale complete subjects to fit; arrange the scene sideways. Keep all crowns, faces, arms, hands, feet, vahanas and meaningful props fully inside a comfortable 7 percent safe margin. Every limb must be connected and the specified arm/character counts exact. Allow only a subtle narrow parchment edge fade; do not copy the portrait references' large empty lower caption band. No tall blank area, UI, text, lettering including Om, captions, labels, watermark, border, photorealism, 3D, dense jewellery, theatrical glow, saturated cobalt, vivid orange or heavy black outlines. Do not copy the references' river/cottage/people onto unrelated scenes. Scene: Annapurna, in a red and gold sari with a traditional crown, sits serenely on a low stone seat. A humble, ash-marked Shiva kneels before her, holding an alms bowl while she offers food with a ladle. Both complete figures, all hands, bowl, ladle, seat and feet are visible. A quiet old Kashi riverside temple courtyard extends horizontally behind them. Peaceful devotional moment; no extra people.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp"
+  ],
+  "transparent_background": false,
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-cdd96ca3-a036-47cf-b5da-0b4a2da25042.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/reader-illustrations/raw/daan-annapurna-bhiksha.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/reader-illustrations/daan-annapurna-bhiksha.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 62724,
+  "sha256": "9fe7439500b953656249f99780171c0a5a0c82b72402558dc6c76b0910059fb7",
+  "tool": "built-in image_gen"
+}

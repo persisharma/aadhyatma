@@ -1,0 +1,59 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 49 (0x31)
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: emailAddress=certadmin@netskope.com, CN=*.fra2.goskope.com, OU=certadmin, O=Netskope Inc., L=Frankfurt, ST=DE, C=DE
+        Validity
+            Not Before: Oct 27 07:06:33 2022 GMT
+            Not After : Oct 24 07:06:33 2032 GMT
+        Subject: emailAddress=certadmin@netskope.com, CN=*.fra2.goskope.com, OU=certadmin, O=Netskope Inc., L=Frankfurt, ST=DE, C=DE
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:9a:ab:f4:37:3e:e3:46:dc:7f:d1:b0:08:b7:f3:
+                    e6:36:be:40:e8:d5:04:5a:66:8a:16:28:d0:33:2c:
+                    79:17:e0:cf:d5:59:04:92:07:ba:e5:27:12:af:6a:
+                    f0:b8:ab:26:d8:e3:5a:3f:36:8a:ed:2d:97:25:19:
+                    e9:f8:44:fd:b7:5f:d3:a6:21:d2:33:27:74:37:b1:
+                    ad:dd:f9:3b:42:44:93:b6:55:52:15:2d:c6:35:ea:
+                    38:a2:5a:a8:2f:26:8a:65:cb:05:70:53:3d:53:74:
+                    fa:b5:03:0f:c7:dd:0d:0b:02:4a:00:e5:42:b8:a4:
+                    3b:39:e1:48:7d:7d:b8:37:7d:09:7d:19:a6:e7:01:
+                    01:f6:ef:29:79:33:6e:1b:3a:c1:81:4f:1d:73:a4:
+                    76:49:c4:b0:6b:ae:a1:0f:da:f2:13:73:48:35:6a:
+                    e9:a6:ca:b2:99:59:7e:c2:6b:71:37:f7:e1:35:0d:
+                    fd:87:85:c1:11:58:1a:8b:00:23:c8:91:ba:d1:33:
+                    b2:b6:92:d9:88:db:4b:82:e1:8e:91:84:cf:0a:3e:
+                    79:35:51:50:58:9b:6d:9a:b8:93:bf:e7:8e:69:49:
+                    5e:90:f5:87:fd:8e:3b:48:92:ae:74:ba:23:b1:f4:
+                    09:a4:6b:91:24:f7:cd:f9:df:47:1b:df:21:9e:58:
+                    a2:b3
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: critical
+                CA:TRUE
+            X509v3 Subject Key Identifier:
+                B0:2E:EB:05:60:B1:23:55:92:91:9D:3F:1B:79:2F:3F:5F:71:03:AC
+            X509v3 Authority Key Identifier:
+                B0:2E:EB:05:60:B1:23:55:92:91:9D:3F:1B:79:2F:3F:5F:71:03:AC
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        64:86:30:1f:19:4c:21:04:c4:92:3b:a6:51:db:81:2a:ed:60:
+        b2:34:6f:82:ab:aa:7c:c1:2c:1b:50:e9:1e:36:a3:67:1d:5e:
+        ef:de:e0:48:e1:d4:43:6b:5c:48:a9:b9:48:b5:66:eb:72:d2:
+        38:3e:72:4a:21:b0:02:0f:dc:c4:6c:68:01:92:20:a9:34:77:
+        7a:1b:e7:5d:14:c3:0d:09:07:85:fa:bf:94:cb:43:d3:bd:75:
+        4d:a3:cf:a2:a8:38:11:32:1b:92:5b:d2:51:85:87:43:89:03:
+        fb:5f:9e:06:a5:16:52:9e:22:0c:b0:a1:b1:15:5c:e7:da:56:
+        92:e3:eb:73:ff:9c:c9:43:2f:fc:cb:7f:00:75:58:6b:10:39:
+        08:21:d1:62:3b:5b:63:c8:04:cc:d3:2b:24:90:73:ca:61:b4:
+        78:9d:d5:83:d9:86:cf:3b:0c:c0:3b:53:a1:cc:56:5e:f6:65:
+        28:24:f3:e2:d8:c8:81:16:7f:3f:9b:c7:d1:0d:67:99:40:c7:
+        1d:fd:19:09:11:ea:38:5e:41:d7:8c:4f:2e:84:8c:68:f4:9e:
+        b2:b7:ef:92:9e:fc:ef:73:12:8a:96:17:83:82:29:9e:0c:1a:
+        8a:d7:40:20:2f:e7:0a:22:95:37:e9:b1:53:63:cd:53:b4:d7:
+        da:1b:7a:27
+
+scripts/.cache/r2-loading-followup/mac-trusted-inspection-root.pem: OK

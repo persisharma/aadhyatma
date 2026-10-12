@@ -1,0 +1,109 @@
+{
+  "verifiedAt": "2026-10-11T17:22:49.188Z",
+  "approvedBanners": 43,
+  "semanticAliases": 44,
+  "verseReaderScreens": 21,
+  "additionalReadingScreens": 11,
+  "activeBackgrounds": 45,
+  "publicObjectsVerified": 88,
+  "uploadPackageFilesVerified": 88,
+  "finalHanumanSeaHash": "47df1919b9ee3f38f7592163faf815e1c8ced5545054025efdf0c188ef57f7b6",
+  "checks": {
+    "approvedSourceManifests": "43 illustrations and 45 backgrounds verified",
+    "publicR2": "All 88 HTTP 200, exact complete SHA-256, bytes, image content types; host default TLS validation",
+    "manualUploadPackage": "All 88 source, copied and ZIP assets match; both copied manifests equal active manifests",
+    "readerRouting": "Seven canonical layouts cover 21 verse readers; 11 further prose/daily/guide/temple screens use shared artwork",
+    "fullJest": {
+      "suites": 238,
+      "tests": 2192,
+      "failedSuites": 0,
+      "failedTests": 0
+    },
+    "typescript": "pass",
+    "focusedLint": {
+      "files": 51,
+      "errors": 0,
+      "warnings": 5
+    },
+    "diffCheck": "pass",
+    "exports": {
+      "ios": "pass",
+      "android": "pass",
+      "bannerBitmapsInBundle": 0,
+      "bundledReadingFallbackBytes": 3102,
+      "finalHanumanHashInBothBundles": true
+    },
+    "nativeRelease": {
+      "status": "SUCCEEDED",
+      "durationMs": 82922,
+      "target": "simulator",
+      "artifacts": {
+        "appPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/scripts/.cache/reading-art-native/Build/Products/Release-iphonesimulator/Vedansh.app",
+        "bundleId": "com.prashantsharma.vedansh",
+        "processId": 76815,
+        "simulatorId": "BD91E840-482E-4816-838A-9C5247E401DA",
+        "buildLogPath": "/Users/prashant/Library/Developer/XcodeBuildMCP/workspaces/Aadhyatma-f9bbaa494f95/logs/build_run_sim_2026-10-11T17-15-59-309Z_pid69110_d3dc57dc.log",
+        "runtimeLogPath": "/Users/prashant/Library/Developer/XcodeBuildMCP/workspaces/Aadhyatma-f9bbaa494f95/logs/com.prashantsharma.vedansh_2026-10-11T17-17-20-414Z_helperpid76770_ownerpid69110_6e7f61a6.log",
+        "osLogPath": "/Users/prashant/Library/Developer/XcodeBuildMCP/workspaces/Aadhyatma-f9bbaa494f95/logs/com.prashantsharma.vedansh_oslog_2026-10-11T17-17-22-224Z_helperpid76839_ownerpid69110_f97b3955.log"
+      },
+      "errors": 0,
+      "warnings": 62,
+      "containsFinalHanumanHash": true
+    },
+    "nativeFraming": {
+      "finalOceanCrossing": "whole 2:1 canvas with right hand gripping shoulder gada",
+      "ramaHanuman": "whole 2:1 canvas with gada beside kneeling Hanuman",
+      "source": "controlled approved hash-verified local cache fixtures"
+    },
+    "nativeFailure": {
+      "code": -1200,
+      "underlyingCode": -9802,
+      "finalSeaFileNotDownloaded": true,
+      "fallbackVisible": true,
+      "textScrollingNavigationWork": true,
+      "transportLog": "integration-audit-native-r2.log"
+    },
+    "persistence": {
+      "controlledFilesUnchangedAcrossProcessRestart": 44,
+      "partialFiles": 0
+    }
+  },
+  "runtimeReview": {
+    "banner": {
+      "aspectRatio": 2,
+      "maximumWidthPt": 360,
+      "maximumHeightPt": 180,
+      "resizeMode": "contain",
+      "stableFrame": true
+    },
+    "loading": {
+      "diskIO": "async",
+      "downloadConcurrency": 2,
+      "timeoutMs": 8000,
+      "deferredUntil": "navigation focus and interactions complete",
+      "readyTextAndControlsIndependent": true,
+      "queuedWorkCancelledWhenLastViewerLeaves": true
+    },
+    "cache": {
+      "directory": "Documents/reading-backgrounds",
+      "identity": "content hash and extension",
+      "ttl": false,
+      "headRequests": false,
+      "revalidation": false,
+      "automaticValidFileEviction": false,
+      "newDownloadConditions": [
+        "new content hash",
+        "deleted app files/storage or uninstall",
+        "interrupted download retry",
+        "native decode failure recovery"
+      ]
+    },
+    "backgrounds": "Original background category preserved; approved Option 2 paper remains the reader surface"
+  },
+  "remaining": [
+    "Successful native CDN download in a trusted network/device environment",
+    "Full screen/language/font-size native matrix",
+    "Physical-device frame-time, launch and memory performance"
+  ],
+  "changesThisAudit": "Evidence records only; no runtime, manifest, image, trust settings, OTA or store release changes"
+}

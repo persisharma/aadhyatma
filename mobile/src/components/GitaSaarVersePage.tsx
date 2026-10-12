@@ -22,12 +22,17 @@ import {
 import type { GitaSaarVerse } from '@/data/gita-saar';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
+import ReadingArtwork from './ReadingArtwork';
+import ProseParagraph from './ProseParagraph';
 import Ornament from './Ornament';
 
 type Props = {
   verse: GitaSaarVerse;
   sourceId: string;
   width: number;
+  /** One opening banner per theme; continuation pages have no image frame. */
+  showIllustration?: boolean;
   topActions?: React.ReactNode;
   /** Rendered under the saar on the theme's last page — the one-line essence. */
   closing?: { hi: string; en: string };
@@ -45,6 +50,7 @@ export default function GitaSaarVersePage({
   verse,
   sourceId,
   width,
+  showIllustration = false,
   topActions,
   closing,
   onOpenInGita,
@@ -108,7 +114,7 @@ export default function GitaSaarVersePage({
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <BackgroundLayer source={bg} />
+      <BackgroundLayer source={readingParchment} />
 
       <ScrollView
         style={styles.scroll}
@@ -159,6 +165,8 @@ export default function GitaSaarVersePage({
           </Text>
         ) : null}
 
+        <ReadingArtwork source={showIllustration ? bg : undefined} />
+
         <View style={styles.verseBlock}>
           {verseLinesByLang(lang, verse.sanskrit, verse.transliteration).map((line, idx) => {
             const tok = verseToken(lang, typography);
@@ -193,7 +201,7 @@ export default function GitaSaarVersePage({
         >
           {themeLine}
         </Text>
-        <Text style={[styles.body, bodyStyle]}>{saar}</Text>
+        <ProseParagraph style={[styles.body, bodyStyle]}>{saar}</ProseParagraph>
 
         {onOpenInGita ? (
           <Pressable

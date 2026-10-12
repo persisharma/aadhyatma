@@ -54,11 +54,19 @@ The palette is warm manuscript — **never green/red** — and signal colours st
 §12). This rule governs **theme colour and UI chrome**, i.e. everything in
 `mobile/src/theme/colors.ts`.
 
-**One sanctioned exception:** the bundled Storybook illustrations
+**Illustration exception:** the bundled Storybook illustrations
 (`mobile/assets/icons/storybook/`, §42) carry muted peacock and water hues.
 They are **painted attributes of the art, never signals**: Krishna's feather,
 Kartikeya's plume, Ganga's waves. These colors stay inside the illustration assets;
 badges, chips, borders, states and utility icon tints take their color from `colors.ts`.
+
+### 2.1 App icon and native launch identity
+
+The approved app icon uses enlarged copper relief geometry on warm ivory with a distinct vermilion bindu. The red is part of this approved brand artwork, never a UI status color. Keep the complete approved composition: no new lotus surround, recoloring, baked-in rounded mask, or regenerated geometry during export.
+
+`mobile/assets/branding/app-icon-master.png` is the approved source. Its generation prompt and SHA-256 export manifest live beside it. Run `node mobile/scripts/export-app-icons.mjs` to derive `icon.png` (1024px, opaque iOS/legacy launcher), `splash-icon.png` (512px), `favicon.png` (64px), and `adaptive-icon.png` (1024px with the artwork centered in the Android 72/108 viewport). The essential central symbol stays inside Android's 66dp safe circle; peripheral decoration can be masked by launchers. Android adaptive and splash backgrounds use ivory `#FFF1D5`.
+
+`mobile/app.json` owns all four references. The explicit `expo-splash-screen` plugin uses a 200pt iOS image and a 160dp Android image to keep the square artwork inside the Android splash mask. Home's Om-flanked wordmark and text-only share footer remain separate brand treatments; `AppIcon.tsx` is the navigation/control glyph registry, not the app logo. Launcher/splash changes require a new native binary; OTA and Expo Go are not native-launch verification. Review generated iOS assets, Android circle/squircle masks, and launch screens before release.
 
 ---
 
@@ -290,7 +298,7 @@ This table is the **single source of truth** for reading-content sizing, impleme
 
 ## 6. Background Image System
 
-Four faded vintage sketches serve the Hanuman texts, bundled at `mobile/assets/chalisa/` (source art in `/images/`):
+Four faded vintage sketches serve the Hanuman texts, published from `mobile/assets/chalisa/` to R2 (source art in `/images/`):
 
 1. `Hanuman_sita.webp`
 2. `Ram_hanuman.webp`
@@ -304,14 +312,117 @@ Four faded vintage sketches serve the Hanuman texts, bundled at `mobile/assets/c
   - **Sundarkand:** stanza-range buckets — stanzas 1–4 sea, 5–11 Sita, 12–18 Lanka-dahan, remainder Ram-Hanuman.
   - **Every other source:** one pinned image per source id (`sourceBackgrounds`), plus category/deity fallback maps for browse screens.
 - A given verse therefore always shows the same image — stable as the user swipes back and forth — but the mapping is curated to match the verse's story beat, never re-rolled per render.
-- Apply the image as a `cover`-sized background. Then stack the parchment overlay (Section 2) on top. Then the content.
+- Browse/background surfaces apply the image as a `cover`-sized background with the parchment overlay (Section 2). Reader folios reserve a compact landscape banner above text. The first focal-crop proposal was rejected; new complete 2:1 compositions are being staged for approval below.
 - `cover` keeps only the middle of a plate on a portrait phone (~46% of a square's width, ~69% of a 2:3's). Multi-figure plates are therefore commissioned **2:3 portrait** with every figure inside the central ~60% (दान-पुण्य, §73).
 
 **Exception — Theerth.** Theerth detail screens resolve their background by **presiding deity**, with per-temple overrides for shrines whose deity plate is too generic (`getTheerthBackground(templeId, deityId)` in `backgrounds.ts`). The browse/map surface uses no background image — only the flat parchment gradient behind the stylised India SVG outline.
 
+### Delivery and prose folios
+
+Reading plates use `backgroundAssetManifest.json` and content-hashed R2 URLs under
+`reading-backgrounds/`. `BackgroundArtwork` paints bundled paper immediately, then requests
+persistent cached artwork after navigation focus and interactions. Deduplicated disk lookups
+bypass the network queue, so unrelated slow downloads do not delay cached paintings. Only
+misses enter the bounded download queue. All file operations are async;
+downloads deduplicate by hash/extension, limit concurrency to two, time out after eight seconds
+and cancel when the final viewer leaves. Completed valid artwork has no expiry, revalidation or
+automatic eviction. Text and controls never await artwork; native decode errors preserve the
+fallback and evict damaged files for recovery.
+
+Paged sections share a single screen-level paper image instead of duplicating it per list cell.
+
+**Approved Option 2 (9 Oct 2026):** Vrat Katha, Pitru introduction/story and Daan Katha use
+`ProseReadingCard` as a continuous folio, without a separate bordered/elevated text card. The
+3,102-byte ivory paper texture has a quiet centre and faint botanical corners. Chapter pills
+and headings precede thematic art; gold lines and the existing leaf icon separate art
+from prose. The latest 10 October correction uses `ReadingBanner`: a 2:1 rectangle, width
+up to 360pt and height up to 180pt, centred on wider cards. The opening section uses this
+compact frame. The existing bundled manuscript icon appears in that opening plate while
+remote art loads or fails, preserving layout and providing a neutral offline visual.
+
+`kathaBackgrounds.ts` selects appropriate thematic deity plates; unsupported traditions use
+neutral manuscript art. The new 900×600 Vishnu/Narayana plate is 94,904 bytes and replaces its
+semantic source mapping. These are thematic illustrations, not newly authored story scenes.
+Normal reading tokens and unrestricted vertical text scrolling remain. Katha and Pitru
+introduction markers sit below the text viewport; the tab bar owns the bottom safe-area inset
+for the Pitru introduction. Utility forms, charts, ledgers and kids stories retain their layouts.
+
+**Approved rollout (10 Oct 2026):** The same paper and `ReadingArtwork` painting/divider
+are shared by all seven canonical verse layouts, covering Chalisa, Aarti, Gita/Gita Saar,
+Stotram/Stuti, Kavacham, Ashtakam, Suktam, Sanskar and the Ramayan readers. Verse pages use
+the thematic banner above the verse instead of placing the painting behind text;
+existing source, verse and kāṇḍa mappings remain. Daily Bhakti uses the same opening plate
+inside its shareable card. Daan's landing page has one Annapurna plate; its journey's Why
+section uses the prose folio. Pitru's education opening uses neutral manuscript art
+and its overview shares the paper. Vidhi preparation and the first conduct step have one
+painting selected from the guide's declared deities; personal-tithi remembrance uses
+neutral manuscript art. Later conduct steps keep the divider without repeating the painting.
+All plates use the same R2 loader and persistent cache. No additional bitmap is bundled for
+this expansion. Native prose measurement protection also covers verse meanings/commentary.
+
+**Reading-space correction (11 Oct 2026):** The user reported that repeating artwork on every
+card pushes the reading content down and forces unnecessary scrolling. Paged readers now
+show one banner on the **first reading card only** (first verse of each chapter/theme for
+chaptered readers, first section of a Katha/Pitru introduction). Later cards keep the existing
+paper and small gold divider, with no banner, manuscript placeholder, reserved image height
+or image subscription. Jumping directly to a later verse does not turn it into a cover card.
+Chapter transition cards are excluded when finding the first verse. Single continuous prose,
+daily verse and detail/guide screens keep their existing one opening image. Illustration
+assets, semantic mappings, R2 manifests and the lifetime cache remain available and unchanged.
+
+**Share background readiness (12 Oct 2026):** Offscreen verse/prose/story captures wait for
+every remote background layer to finish native painting, including both a Story frame and its
+inner card. The capture-only barrier allows up to ten seconds; terminal download/decode failures
+use the painted bundled fallback. Normal reading/navigation never waits on this barrier. Existing
+illustrated kids-story capture still requires its scene artwork and refuses partial albums.
+
+The initial 80pt/220pt frames were followed by a natural-height proposal. The user rejected
+that proposal because tall portrait art increases scrolling, explicitly requesting rectangular
+banners. An intermediate `ReadingBanner` implementation applied focal positions from
+`readingBannerFrames.json`, with three contained compositions. The user rejected these
+crops as clipping the paintings and requested new artwork made to fit. Approved dedicated
+illustrations now replace all mapped crops with complete 2:1 canvases. Theerth shares the same
+short frame. Dimensions are read synchronously from the publication manifest; no network size
+probe, extra image fetch, layout callback or post-load layout shift is needed.
+
+The replacement uses newly composed 2:1 artwork showing the complete meaningful scene
+within the existing 360×180pt maximum. The user specified the approved Krishna kids-story
+rendering: fine warm outlines, expressive faces, broad pastel fills, subtle paper grain, muted
+terracotta/saffron, sage/slate blue-grey and matte gold. Match `kj-08.webp` and `kj-11.webp` as
+style references, composing new short horizontal scenes rather than copying the portrait
+format or its large empty bottom band. The four detailed painting drafts are superseded.
+The user accepted the detailed Style 3 set on 11 October, requested gadas in the ocean-crossing
+and Rama–Hanuman scenes, and authorized integration while retaining current backgrounds.
+All 43 unique 960×480 banners are published and active for 44 aliases, including both checked
+gada corrections. The before/after gallery, exact selected hashes, approval decision and
+43-object public SHA-256 verification are in
+`docs/evaluations/reading-visuals-2026-10-11/style3-full-set/`. Files total 4.45 MiB and range
+from 61–132 KiB; file sizes do not establish device performance. Production iOS/Android exports
+include none of these new banner files. Eight focused suites/205 tests and TypeScript pass.
+
+**Separate asset purposes.** Reading backgrounds remain quiet textures/subdued surfaces behind
+text. Reader illustrations are standalone thematic banners above text, with their own asset
+folder, typed descriptor, `readerIllustrationManifest.json` and R2 prefix `reader-illustrations`.
+This is an asset category, not a new navigation tab. `CachedArtwork` shares the existing deferred
+loader and lifetime cache; `BackgroundArtwork` stays background-only. Legacy semantic aliases
+activate only published illustration manifest entries in `ReadingBanner`, using the whole canvas
+with `contain`. The published manifest contains all 43 approved illustrations. Staging future
+changes leaves the app manifest unchanged; publish approved optimized files before activating
+new hashes. Only changed content should download again. The lifetime cache and immediate
+neutral fallback contract are unchanged.
+Scoped standalone native banner, fallback, Katha scrolling and cache relaunch checks pass.
+The initial simulator certificate failure was resolved in an isolated QA simulator by installing
+the exact corporate CA already trusted by this Mac; default TLS validation remains enabled.
+Real native downloads now verify one transfer per missing hash and offline reuse after restart.
+See the October 11 `r2-loading-followup/review.md`. The complete reader matrix and
+physical-device/frame-time performance remain pending.
+See `docs/content-parity/reader-illustrations-art-style.md` for the category/style contract.
+
 ### Adding more modules
 
-When Ramcharitmanas / Gita modules are added, new faded sketches should follow the same treatment: warm parchment tone, ~50% opacity after sepia, subject centered or top-anchored so the bottom third of the image stays clean for the meaning block.
+New reader artwork should be composed for the compact 2:1 banner with complete subjects and
+meaningful props inside the frame, then visually approved before publication. Keep text on the
+separate parchment surface and preserve the immediate neutral fallback and static layout.
 
 ---
 
@@ -954,7 +1065,11 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 4. **View toggle** (segmented control, parchment-soft fill, divider border, pill radius):
    - Two halves: `राज्य · By State` and `श्रेणी · By Category` (lang-swapped labels; category is the default).
    - Active half tinted `saffron-tint` with `saffron-deep` text; inactive transparent with `ink-muted`. Halves are minWidth 100 × minHeight 44, `radiogroup`/`radio` roles.
-5. **Browse card list** — one gradient LibraryCard-style row per **category** or **state**: `[ thumb glyph ॥ (category) / ॐ (state) ]  [ name · meta "N तीर्थ / N temples" ]  [ › ]`, with a NEW badge when any temple inside is still unseen. The meta line follows the §46 meta convention: `cardMeta` size, Inter + tracking for English only; Indic meta takes the script serif with **no** tracking (tracking splits the shirorekha). Category rows follow the curated `groupOrder` — the `TheerthGroup` buckets द्वादश ज्योतिर्लिङ्ग, चार धाम, छोटा चार धाम, शक्ति पीठ, plus an "अन्य प्रसिद्ध तीर्थ · Other Famous Temples" bucket for ungrouped temples; state rows sort alphabetically by `stateEn`.
+5. **Browse card list** — one gradient LibraryCard-style row per **category** or **state**: `[ thumb icon ]  [ name · meta "N तीर्थ / N temples" ]  [ › ]`, with a NEW badge when any temple inside is still unseen. The thumb icon depends on what the row represents, both on the `cardThumbActive` gradient square:
+   - **Grouping rows (category / state)** span many presiding deities, so they carry the shared illustrated **theerth** temple miniature (`<StoryIcon name="theerth" size={34} />`, `assets/icons/storybook/theerth.png`) — the same new-style art Home's category tile and the Discover card use.
+   - **Temple rows** (drill-in) carry their **presiding deity's** glyph via `<DeityIcon iconKey={deityIconKey(temple.deity)} size={34} />` — trishul for Shiva, chakra for Vishnu, lotus for Durga, bansuri for Krishna, and so on — matching how `LibraryCard` thumbs a text's deity.
+
+   Both replaced the earlier flat `॥` (category) / `ॐ` (state) text glyphs. The deity glyph also drives the map pins (§29). The meta line follows the §46 meta convention: `cardMeta` size, Inter + tracking for English only; Indic meta takes the script serif with **no** tracking (tracking splits the shirorekha). Category rows follow the curated `groupOrder` — the `TheerthGroup` buckets द्वादश ज्योतिर्लिङ्ग, चार धाम, छोटा चार धाम, शक्ति पीठ, plus an "अन्य प्रसिद्ध तीर्थ · Other Famous Temples" bucket for ungrouped temples; state rows sort alphabetically by `stateEn`.
 
 **Structure — drill-in** (the same screen pushed again with a `group` or `stateEn` param):
 
@@ -1007,7 +1122,8 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
    - Label: `उद्भव कथा · Origin Story` (`Origin Story · उद्भव कथा` when lang = en). Same style as Significance label.
    - Body: a single prose string — `originStoryHi` / `originStoryEn`, same typography rules.
 9. **Extended sections** (optional, per temple — `TempleEntry.sections`): zero or more further blocks, each rendered exactly like Significance/Origin — ornament divider → bilingual stacked label (`titleHi · titleEn`, lang-swapped) → single prose body (`bodyHi` / `bodyEn`). Rendered in data order, after Origin Story and before Sources; a temple without `sections` shows nothing extra. First shipped on सालासर बालाजी (`salasar-balaji`): `मंदिर स्थापना कथा · Sthapana Katha` → `बालाजी का स्वरूप · The Form of Balaji` → `सवामणी और मनौती · Savamani and Vows` → `मेले और उत्सव · Melas and Festivals` → `यात्रा और आसपास · Journey and Around`. The Rajasthan wave ships the same five ids on खाटू श्याम, करणी माता, जीण माता, गोगाजी, तेजाजी and रामदेवरा, each with its own signature-tradition title (`निशान यात्रा और एकादशी`, `काबा और कुलदेवी परम्परा`, `कुलदेवी की धोक और जात`, `छड़ी और सर्प-रक्षा`, `तांती और गौ-रक्षा`, `कपड़े का घोड़ा और बाबा री बीज`); खंडोबा जेजुरी (`khandoba-jejuri`) follows with `भंडारा और येळकोट`, महासू देवता हणोल (`mahasu-devta-hanol`) with `महासू का न्याय-दरबार`, सबरीमला (`sabarimala`) with `व्रत, इरुमुडि और अठारह सीढ़ियाँ · Vratham, Irumudi and the Eighteen Steps`, and वेत्रिमलै मुरुगन (`vetrimalai-murugan`) with `कावडि और मुरुगन-व्रत · Kavadi and Murugan Vows`. Extended sections are indexed by Search alongside the two core prose blocks (`searchIndex.ts` → `pushTheerth`).
-10. **Sources footer**:
+10. **आरती व चालीसा · Aarti & Chalisa** (`testID="theerth-related-readings"`): the way from a shrine to the readings sung there. Ornament divider → the same bilingual stacked label as every section (`आरती व चालीसा · Aarti & Chalisa`, lang-swapped) → a 10 pt-gapped column of the library's own `LibraryCard`s (default variant, so NEW badges, the ＋ add-to-routine button and the `<nameEn>. <subEn>. Tap to open.` a11y label behave exactly as on Home and the deity hub). The list is **derived, not authored**: `relatedReadingsForDeity(temple.deity)` (`mobile/src/data/theerth/relatedReadings.ts`) takes every `active`, non-hidden `chalisa` then `aarti` entry whose `deities` includes the presiding deity, primary-deity texts ahead of secondary tags (a Rama temple leads with Ram Chalisa, not the `rama`-tagged Hanuman Chalisa). Tapping a card marks it seen and opens its reader from the start via `navigateToEntryStart` — no resume sheet here; the deity hub keeps that. A temple whose deity has no shipped chalisa/aarti (Konark → `surya`) renders **nothing** — no divider, no empty heading. There is no per-temple text list on the model (§12.1); a temple-specific aarti (Khatu Shyam, Badrinath, Vaishno Devi…) reaches this block only by shipping as a library entry tagged with that temple's deity.
+11. **Sources footer**:
    - One-line attribution: `स्रोत — <label 1>, <label 2>` (`Sources — …` in en) — 12 italic, `ink-muted`, centred, 70% opacity.
    - URLs are NOT links in v1 (rendered as plain text). v2 may make them tappable.
 
@@ -1054,8 +1170,8 @@ type IndiaMapProps = {
 
 **Visual:**
 
-- Glyph: `॥` in `saffron-deep`, Noto Serif Devanagari, 18 px (slightly larger than ornament dividers to read as an interactive element).
-- No background circle / no shape underlay — the glyph itself is the pin. This keeps the map quiet.
+- Marker: the temple's **presiding-deity** glyph (`<DeityIcon iconKey={pin.deityKey} size={22} />`) — trishul, chakra, lotus… — so a cluster of pins reads as *which* deities sit where, and each pin matches its own temple row (§26) and detail-screen deity badge. The pin carries the deity via a required `deityKey: DeityIconKey` field on `IndiaMapPin`. This replaced the earlier flat `॥` Devanagari glyph (18 px `saffron-deep`). The anchor footprint is 22 px (`PIN_GLYPH_SIZE`).
+- No background circle / no shape underlay — the glyph itself is the pin. This keeps the map quiet; the illustration's transparent bg sits directly on the parchment outline.
 - Tap-hold tooltip: small parchment-soft rectangle, `divider` border, 8 px padding, label in Noto Serif Devanagari 13 600 / Cormorant Garamond 13 400 italic (lang-swapped). Tooltip appears above the pin (or below if too close to top edge).
 
 **Interaction:**
@@ -1308,7 +1424,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
 
 ## 35. Japam (जप)
 
-**Purpose.** A mantra-counting practice surface: tap (or let the audio loop count for you) through 108-bead rounds of a chosen mantra. Mantras are first-class library entries (`category: 'japam'` in `texts.ts`, sourced from `data/japam/japam.json` — 5 today: ॐ नमः शिवाय, हरे कृष्ण महामंत्र, गायत्री मंत्र, ॐ नमो भगवते वासुदेवाय, and the **राधा नाम जप** naam japa tagged to Radha Rani), so they surface through the normal catalog/deity/search flows; `buildEntryStartTarget` routes a japam entry straight to `JapamCounter` (Home stack, lazy-loaded).
+**Purpose.** A mantra-counting practice surface: tap (or let the audio loop count for you) through 108-bead rounds of a chosen mantra. Mantras are first-class library entries (`category: 'japam'` in `texts.ts`, sourced from `data/japam/japam.json` — 6 today: ॐ नमः शिवाय, हरे कृष्ण महामंत्र, गायत्री मंत्र, ॐ नमो भगवते वासुदेवाय, the **राधा नाम जप** naam japa tagged to Radha Rani, and the **जय श्री राम जप** naam japa tagged to Shri Rama), so they surface through the normal catalog/deity/search flows; `buildEntryStartTarget` routes a japam entry straight to `JapamCounter` (Home stack, lazy-loaded).
 
 **Counter screen** (`JapamCounterScreen.tsx`). Layer stack: parchment · per-mantra sketch (`getSourceBackground`) · content.
 
@@ -1319,7 +1435,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
    - Mantra lines, centred, at the shared `verse` token (23/39; Latin languages use Cormorant italic scaled by the reading-size factor, §44).
    - `॥` Ornament, **compact** (6 px vertical margins instead of 26).
    - **Turning mala** (`components/JapamMala.tsx`, pure geometry in `components/japamMalaGeometry.ts`) replaces the old big numeral + progress track. 108 wooden beads on a gold thread with a gap at the bottom for the brass Sumeru + tassel; a fixed `saffron` marker sits at the top. Each bead turns the ring (Animated rotate, 260 ms ease-out) so the bead under the fingers is always under the marker: it is brass with a `saffron-deep` stroke, chanted beads darken, beads ahead stay light wood. Every completed round **flips the direction** (`malaDirection(rounds)`) — the Sumeru is never crossed, the mala is turned — and a `सुमेरु · माला पलटें` notice (`saffron-deep`) replaces the hint under the count for 2.2 s. The centre holds a faint `gold` ॐ watermark (40 % of the box, 0.14 opacity) behind the count — the bead number in Cormorant SemiBold 46 (`ink`) beside a small `/ 108` (Inter 13, `ink-muted`) — and under it the resting hint (12, `ink-muted`, up to 2 lines within the ring): `जप के लिए स्पर्श करें · Tap to chant`, or while the audio loop plays `सुनें · मंत्र के साथ मनके आगे बढ़ते हैं / Listening · beads advance with the chant` with the top marker pulsing (0.35↔1 opacity, 1.4 s). All motion drops to instant under reduced motion. Box size is **fitted to the tap surface**: the ScrollView viewport minus the measured head (mantra + ornament), clamped to 230–330 and capped by width (below 230 the 108 beads overlap, so the surface scrolls instead). The ring is held at opacity 0 until that first measurement so it never visibly snaps. The screen sits above the visible tab bar, so its `SafeAreaView` omits the `bottom` edge (the tab bar owns that inset — the double inset was the ~34 px dead band that pushed the ring past the audio row). Bead wood/brass colours are material constants, not theme roles. The ring is hidden from screen readers; the tap surface's label carries the count.
-   - **Naam japa** (`naam: true` in `japam.json`; today `radha-naam`, line `राधा`): the line is a single divine name, so it reads larger (1.5× the verse size, Latin 1.6×), the entry's name (`राधा नाम जप / Radha Naam Japa`) sits under it as a 13 `ink-muted` caption, and every bead chanted on the screen gives the name a small pulse (scale 1.14 → 1, 460 ms ease-out; none for the count restored on open, none under reduced motion). The hint reads `स्पर्श करें · हर नाम एक मनका / Tap · one bead per name` and the stats row counts `आज N नाम / N names today`. Naam lines are left out of the daily-verse pool (`versePool.ts`) — a single name is not a verse. Radha naam has no recording yet, so the audio row shows the "Audio not available" notice; when one is bundled, a single clean `राधा` of ≥ ~1 s looped (one bead per loop) keeps each bead on a spoken name exactly, whereas a kirtan rendition's `repetitions` estimate drifts.
+   - **Naam japa** (`naam: true` in `japam.json`; today `radha-naam`, line `राधा`, and `jai-shri-ram`, line `जय श्री राम`): the line is a single divine name (or a short naam jaikara), so it reads larger (1.5× the verse size, Latin 1.6×), the entry's name (`राधा नाम जप / Radha Naam Japa`) sits under it as a 13 `ink-muted` caption, and every bead chanted on the screen gives the name a small pulse (scale 1.14 → 1, 460 ms ease-out; none for the count restored on open, none under reduced motion). The hint reads `स्पर्श करें · हर नाम एक मनका / Tap · one bead per name` and the stats row counts `आज N नाम / N names today`. Naam lines are left out of the daily-verse pool (`versePool.ts`) — a single name is not a verse. Radha naam has no recording yet, so the audio row shows the "Audio not available" notice; when one is bundled, a single clean `राधा` of ≥ ~1 s looped (one bead per loop) keeps each bead on a spoken name exactly, whereas a kirtan rendition's `repetitions` estimate drifts.
    - Each tap = one bead with a light haptic; completing a round (bead 108 rolls the counter) fires a success haptic. Counts persist per mantra in `JapamCounterContext` (`@vedansh/japam-counter`). `JAPAM_BEADS_PER_ROUND = 108` (`data/japam/index.ts`).
 3. **Stats row** (fixed, outside the scroll, ≥56 tall, above a `divider` hairline; nothing in it can change height, so the ring never jumps mid-japa):
    - **Completed malas** (`JapamMalaTray`): the completed-round count as a Cormorant Bold numeral (28, `saffron-deep`) beside `माला पूर्ण / Malas done` (11, `ink-muted`) with one mini mala (16 px dashed wooden ring + brass Sumeru) per completed round below the label — capped at 6, then a `+N` pill on `saffron-tint`. A round completed while the screen is open drops its mini in (spring). Zero rounds shows italic `पहली माला आरम्भ / First mala on its way` in the minis' place.
@@ -1335,7 +1451,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
 - **AlarmEditorSheet** (exported and reused by the counter's ⏰) in a fade modal, internally scrollable (`maxHeight` 88 %): `TimeStepper` at **1-minute** steps (a chevron steps once per tap on press-release; the auto-repeat starts from **long-press** — 350 ms, then every 90 ms — so a scroll drag that begins on a chevron never mutates the time), a **Repeat** row of seven 38 px circular day chips (S M T W T F S; all on = Daily, none = Once — the summary line then warns "turns off after ringing"), the mantra picker (locked when opened from a counter), a **Label** `TextInput` (40 chars, optional), an edit-mode-only **Skip next** toggle chip showing the date it would skip, and a live "Rings in …" preview line above the filled confirm button (a11y label `Confirm alarm`).
 - **Model** (`notifications/japamAlarms.ts`): `repeatDays?: number[]` (getDay() indices; absent = daily, `[]` = one-time, subset = weekly) and `skipNextDate?: 'YYYY-MM-DD'`. Pure helpers: `nextAlarmFireTimestamp(s)` (honours days + skip), the shared skip plan (`isSkipPending` / `skipOneshotPlan` — one pendency predicate and `:occN` id scheme for every tier), `repeatSummary`, `describeUntilFire`, `formatTimeLabel`, `prefers12HourClock`. The context clears `skipNextDate` whenever time/repeat change, prunes past skip dates on load/foreground, and **auto-disables fired one-time alarms** via the scheduler's once-armed bookkeeping (`firedOnceAlarmIds`; merge semantics — a past armed timestamp is evidence the alarm rang and is never overwritten, and a fired one-time alarm is never re-armed).
 - Scheduling (`notifications/japamAlarmScheduler.ts`) is tiered: Android uses the native module (`AlarmManager.setAlarmClock` + a high-importance lock-screen notification with the mantra sound on the **alarm stream** — `USAGE_ALARM` audio attributes, so it rings through vibrate/silent and follows the alarm volume slider like the Clock app, matching AlarmKit's override-silent semantics on iOS — and **Stop / Snooze 5 m** actions — survives Doze and reboot; the user-controlled `SCHEDULE_EXACT_ALARM` access is requested through the screen's explanatory **Alarms & reminders** banner, otherwise Android falls back to an inexact Doze-tolerant alarm; the app deliberately does not declare Play-restricted `USE_EXACT_ALARM` or `USE_FULL_SCREEN_INTENT`; the Kotlin receiver re-arms the next *repeat day* after each fire, never for one-shots, dismisses by the exact posted notification key, and suppresses a snooze fire whose base alarm is no longer armed); iOS 26+ uses AlarmKit (weekly recurrence on the selected days, `.fixed` one-shots for Once, native **Snooze** countdown button; reconcile leaves a mid-countdown alarm untouched so opening the app never swallows a snoozed re-ring; a bare `repeatDays: []` means one-shot on both platforms); older iOS / Expo Go falls back to `expo-notifications` — DAILY trigger for daily, one WEEKLY trigger per selected day, DATE one-shots for Once, all under a `JAPAM_EXPO_SLOT_CAP = 24` pending-slot budget (whole-alarm granularity, soonest-first) so japam can't crowd the daily-verse window out of iOS's 64-pending cap, plus a `japam-alarm` notification category carrying a **Snooze 5 min** action (`maybeHandleJapamSnoozeResponse`, wired in App.tsx on the **live listener only** — the cold-start "last response" is ignored so a stale snooze tap can't schedule a phantom ring). A pending skip-next on recurrence-owning tiers is armed as discrete one-shots — `ALARMKIT_SKIP_ONESHOT_COUNT = 7` / `EXPO_SKIP_ONESHOT_COUNT = 4` — and reverts to plain recurrence on the next foreground reconcile. `scheduleJapamAlarms` is idempotent and **serialized** (concurrent reconciles chain, last caller wins) — cancel-then-reschedule on any change; in-flight `:snooze` one-shots for live alarms are spared while orphaned ones (alarm deleted/disabled) are cancelled. Tapping the alarm deep-links into the counter with `autoPlay` (§38).
-- **Ring tune** (`assets/japam-alarm-sounds/index.ts`): the alarm rings the chosen mantra's own bundled clip — a ≤30 s mono 22.05 kHz PCM WAV resolved by `getJapamAlarmSoundName(mantraId)` on every tier (AlarmKit `.named()`, the Android receiver's `res/raw` lookup by underscored mantra id, and a per-mantra expo notification channel, since Android 8+ pins a channel's sound at creation). Android channels use **`-v2`/`:v2` ids** on both tiers: the v1 channels rang on the notification stream (muted by vibrate/silent and the notification-volume slider — the "no alarm volume on Android" bug) and a pinned channel can't be re-attributed, so the alarm-stream fix ships as fresh channels while the v1 ones are deleted on ensure. The Kotlin receiver's channel sound is a **name-based** `android.resource://<pkg>/raw/<name>` URI, never the int resource id (raw ids renumber across app updates and silently kill a pinned sound). Bundled today: `om-namah-shivaya` (single recitation, ~5.6 s) plus `hare-krishna-mahamantra` and `gayatri-mantra` (28 s loudness-normalised, faded excerpts cut from the Audio-library takes). A mantra without a clip (`om-namo-bhagavate-vasudevaya`, `radha-naam`) falls back to the system tone. A new clip must **also** be listed in `app.json` → `expo-notifications.sounds[]` — without that it isn't copied into the native bundles and the alarm silently falls back to the default chime. The bundled clip **filenames use underscores** (`om_namah_shivaya.wav`), not the hyphenated mantra id: `expo-notifications` copies each file into Android `res/raw/` verbatim and rejects hyphens at prebuild, so a hyphenated filename fails the Android build. The receiver bridges the two with `mantraId.replace('-','_')`.
+- **Ring tune** (`assets/japam-alarm-sounds/index.ts`): the alarm rings the chosen mantra's own bundled clip — a ≤30 s mono 22.05 kHz PCM WAV resolved by `getJapamAlarmSoundName(mantraId)` on every tier (AlarmKit `.named()`, the Android receiver's `res/raw` lookup by underscored mantra id, and a per-mantra expo notification channel, since Android 8+ pins a channel's sound at creation). Android channels use **`-v2`/`:v2` ids** on both tiers: the v1 channels rang on the notification stream (muted by vibrate/silent and the notification-volume slider — the "no alarm volume on Android" bug) and a pinned channel can't be re-attributed, so the alarm-stream fix ships as fresh channels while the v1 ones are deleted on ensure. The Kotlin receiver's channel sound is a **name-based** `android.resource://<pkg>/raw/<name>` URI, never the int resource id (raw ids renumber across app updates and silently kill a pinned sound). Bundled today: `om-namah-shivaya` (single recitation, ~5.6 s) plus `hare-krishna-mahamantra` and `gayatri-mantra` (28 s loudness-normalised, faded excerpts cut from the Audio-library takes). A mantra without a clip (`om-namo-bhagavate-vasudevaya`, `radha-naam`, `jai-shri-ram`) falls back to the system tone. A new clip must **also** be listed in `app.json` → `expo-notifications.sounds[]` — without that it isn't copied into the native bundles and the alarm silently falls back to the default chime. The bundled clip **filenames use underscores** (`om_namah_shivaya.wav`), not the hyphenated mantra id: `expo-notifications` copies each file into Android `res/raw/` verbatim and rejects hyphens at prebuild, so a hyphenated filename fails the Android build. The receiver bridges the two with `mantraId.replace('-','_')`.
 
 ---
 
@@ -1357,7 +1473,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under two group 
 4. **Zero state**: dimmed `॥`, "कोई परिणाम नहीं / No matches found", and a hint to try a Devanagari word or section name.
 5. **Preparing state** — only when a query is typed before the index has finished building (a search within seconds of a cold launch): a `saffron` `ActivityIndicator` over "खोज तैयार हो रही है… / Preparing search…" in the zero state's `ink-muted` meaning face, in the zero state's slot. It must never read "no matches" — nothing has been searched yet — and the Ask abstain card likewise does not claim the library is empty while it shows. Announced as a polite live-region progress bar. Replaced by results (or the zero state) the moment the index lands.
 
-**Index coverage.** Sections (every active library entry **plus one row per published vidhi** — vidhis are procedures, so they contribute no verse entries), deities, and verses from every text module — the nine chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, Valmiki Ramayan, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §7).
+**Index coverage.** Sections (every active library entry **plus one row per published vidhi** — vidhis are procedures, so they contribute no verse entries), deities, and verses from every text module — the eleven chalisas, aartis, japam mantras, Gita, Sundarkand, all stotram modules, Ramcharitmanas, Valmiki Ramayan, sanskar items, and the Theerth temples. Standard `lines`/`linesEn` shapes are picked up automatically when a section is added (RULEBOOK §7).
 
 **Normalization** (`data/searchNormalize.ts`) — one pure fold applied to both index and query, so Devanagari and Latin queries meet in the middle: Unicode NFD with the combining nukta stripped (क़ ⇄ क), lowercase, IAST diacritics folded to ASCII (`kṛṣṇa` → `krsna`, so a plain-ASCII query matches the romanized corpus), punctuation dropped **including daṇḍa `।`/`॥`**, whitespace collapsed. Ranking is exact > prefix > substring per field (`MatchRank`), idempotent and unit-tested.
 
@@ -1464,7 +1580,7 @@ Routing by payload type:
 - `sadhana-reminder` and `routine-reminder` → **`HomeTab → RoutineToday`** (Today's Practice) — the surface where all of today's practice lives, never a reader (same resume-position rule as above). Home sits beneath both on a cold start (and `initial: false` on the warm dispatch does the same), so back reaches it — the `tabTargets` rule, pinned per family in `deepLink.jest.test.tsx`. The routine payload `{ type, routineId, dateKey }` gates on `type` alone: `routineId` rides along as a record, so a stale notice for a since-deleted routine still lands safely — RoutineToday simply doesn't show it.
 - japam alarm → `HomeTab → JapamCounter` with `autoPlay: true`, so a lock-screen tap drops straight into chanting (mantra id validated against the catalog first; a stale alarm falls back to Home rather than crashing).
 
-**Route mapping — `navigation/entryRoutes.ts`.** The single source of truth for "open this content": `buildEntryStartTarget(entry)` maps any library entry to its start route (japam → `JapamCounter`; theerth entries → `TheerthMap` with a group filter; the nine chalisas → `ChalisaReader`; sanskar → `SanskarReader`; aartis → `AartiReader`; a **multi**-chapter text → its Chapters screen — including the `ram-aarti` alias, which maps to the `ram-stuti` reader routes), with `navigateToRoutineItem`, `buildProgressTarget` (resume / search verse hits), and `buildBookmarkTarget` (Wishlist rows, §24) layered on top. Panchang's "Read: <section>" links, search results, routine items, wishlist, and the Home spotlight all route through this one module, so adding a section's route once wires every surface.
+**Route mapping — `navigation/entryRoutes.ts`.** The single source of truth for "open this content": `buildEntryStartTarget(entry)` maps any library entry to its start route (japam → `JapamCounter`; theerth entries → `TheerthMap` with a group filter; the ten chalisas → `ChalisaReader`; sanskar → `SanskarReader`; aartis → `AartiReader`; a **multi**-chapter text → its Chapters screen — including the `ram-aarti` alias, which maps to the `ram-stuti` reader routes), with `navigateToRoutineItem`, `buildProgressTarget` (resume / search verse hits), and `buildBookmarkTarget` (Wishlist rows, §24) layered on top. Panchang's "Read: <section>" links, search results, routine items, wishlist, and the Home spotlight all route through this one module, so adding a section's route once wires every surface.
 
 **Single-chapter texts skip the index (July 2026).** A "chaptered" text that ships exactly **one** chapter — `hanuman-ashtak`, `bajrang-baan`, `ram-stuti` (and its `ram-aarti` alias), `ramcharitmanas` — used to open a Chapters screen listing that single row, so reaching the verses took **two taps** from every entry surface (the Home आज के लिए row, By-Purpose discovery lists, search, category/deity lists, Rashifal). `buildEntryStartTarget` now sends those straight to their reader at `{ chapter: 1, initialIndex: 0 }`; a text with 2+ chapters keeps its index, because there is a real choice to make. Chapter counts are read off each text's shipped `*ChaptersManifest` (`chapterCountBySourceId` in `entryRoutes.ts`) — never mirrored by hand — so a text that gains a second chapter regains its index with no code change, and one that loses chapters stops showing a one-row list. `navigateToProgress()` follows the same rule: it normally pushes the chapters index *under* the reader so back reaches sibling chapters, and now skips that push for single-chapter texts, which have no siblings and would otherwise strand the user on the one-row list. `isChapteredEntry()` is unchanged: it still reports the **progress-key** shape (`<sourceId>::<chapter>`), which single-chapter texts keep. Pinned by `mobile/src/navigation/entryRoutes.test.ts` and `.maestro/single-chapter-open-smoke.yaml`.
 
@@ -1682,7 +1798,7 @@ Twenty-one deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · k
 
 ### Data-shape families (one directory per module under `mobile/src/data/`)
 
-- **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati chalisa dirs — nine total), **aartis** (`aarti/index.ts` `aartiCollection`, 8 aartis, `refrain`/`stanza` verse types; the Aarti *category* also lists a 9th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (9 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana, matribhumi-vandana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
+- **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati/khatu-shyam/lakshmi chalisa dirs — eleven total; `khatu-shyam-chalisa` (Oct 2026, 1 doha + 40 chaupais + 1 doha) is tagged `krishna` and shares the Khatu Shyam temple plate with the aarti below; `lakshmi-chalisa` (1.5.0) is the Ramdas recension with 39 verified chaupais, deliberately not padded to 40), **aartis** (`aarti/index.ts` `aartiCollection`, 10 aartis, appended only because the index is persisted in legacy `aarti-N` ids, `refrain`/`stanza` verse types; the 9th, `khatu-shyam-aarti` (श्री खाटू श्याम जी की आरती, Oct 2026), is tagged `krishna` rather than a new deity and reads on the commissioned Khatu Shyam temple plate (`theerth_khatu_shyam`) instead of Krishna's bansuri art; the 10th, `om-jai-lakshmi-mata` (1.5.0), is tagged `lakshmi`; the Aarti *category* also lists an 11th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (9 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana, matribhumi-vandana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
 - **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas / 648 sargas / 23,289 verified verse records, §53), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants; the large Valmiki payload is the exception that validates lazily per loaded kāṇḍa.
 - **Themed readings over a bundled corpus (`gita-saar/`, §75)** — a chapter is a *theme*, a verse is a `{chapter, verse}` **ref** into `gita/` plus the theme's own plain-language सार. The loader pulls the Sanskrit/IAST from the corpus at open time; the theme files carry no scripture (RULEBOOK §29). Routes, bookmarks, progress, search and the routine picker treat it as one more chaptered text.
 - **Japam** (`japam/japam.json`) — mantras with round targets; routes to the counter, not a verse pager.
@@ -3437,7 +3553,7 @@ Checks: `screens/__tests__/KidsStoryReaderScreen.test.tsx`, `screens/__tests__/K
 
 **Purpose.** Read each of the nine grahas the way a family pandit does — where it sits, how strong it is there, what it gives, where to take care, and one practice for it — in words a reader with no Jyotish can follow. It is the `grahas` section of the compiled report (§68), between `moon` and `combinations` (placement before combination). Adults only. **Signed off 7 Oct 2026:** the report screen passes `includeGrahaReadings: __DEV__ || grahaReadingsApproved()`, and `GRAHA_READING_REVIEW` now carries a dated sign-off, so store builds show the section. The sign-off pins a hash of the reviewed content, so a later content edit goes back to draft (development builds only) until it is re-reviewed (RULEBOOK §14.7.7); review state never appears in customer copy.
 
-**Narrative-voice rebuild (all nine grahas, Oct 2026).** The bullet register below is replaced by a written **lead reading that re-synthesises for the specific chart** — the fix for "the card reads like a machine". `grahaReadingNarrative.ts` assembles **one module per graha under `panchang/narrative/`** (so each can be reviewed and signed off on its own): a hand-written core per **house × dignity bucket** (`strong`/`friendly`/`neutral`/`weak`, from `dignityBucket(dignity, relation)` in `narrative/types.ts`) plus a deterministic modifier layer that weaves in **lordship, combustion and retrograde**. The seven taras carry all 12 × 4 cells; the **nodes have no dignity**, so Rahu/Ketu share one reading per house across the four buckets (`nodeCell`) and take no modifiers (they rule nothing, never combust, and the retrograde modifier is excluded for nodes). `composeNarrative` returns `{leadHi/En, tendHi/En}` and `grahaCard()` attaches it as `KundaliGrahaCard.narrative` for every graha in `NARRATIVE_GRAHAS` (now **all nine**, derived from the table keys). In the open card `GrahaReadingList` renders the lead paragraph + a single **एक बात का ध्यान · One thing to tend** line in place of the About/Friends/Why/gives/care/rules bullets; the **upay panel and आधार toggle are unchanged**, and a **`<graha> के बारे में जानें · Know <graha> →`** link opens the generic reference (§79). It has its OWN gate — `GRAHA_NARRATIVE_REVIEW` + `narrativeReadingsApproved()`, **separate** from the legacy `GRAHA_READING_REVIEW` — so `showNarrative = __DEV__ || narrativeReadingsApproved()`: development previews the narrative, store builds keep the approved legacy card until the narrative is signed off (ships `draft`, so the OTA'd card is undisturbed). The generic facts the bullets carried (nature, मित्र-शत्रु, karaka) move to §79; §78's bullet spec below is what still ships in store builds until sign-off.
+**Narrative-voice rebuild (all nine grahas, Oct 2026).** The bullet register below is replaced by a written **lead reading that re-synthesises for the specific chart** — the fix for "the card reads like a machine". `grahaReadingNarrative.ts` assembles **one module per graha under `panchang/narrative/`** (so each can be reviewed and signed off on its own): a hand-written core per **house × dignity bucket** (`strong`/`friendly`/`neutral`/`weak`, from `dignityBucket(dignity, relation)` in `narrative/types.ts`) plus a deterministic modifier layer that weaves in **lordship, combustion and retrograde**. The seven taras carry all 12 × 4 cells; the **nodes have no dignity**, so Rahu/Ketu share one reading per house across the four buckets (`nodeCell`) and take no modifiers (they rule nothing, never combust, and the retrograde modifier is excluded for nodes). `composeNarrative` returns `{leadHi/En, tendHi/En}` and `grahaCard()` attaches it as `KundaliGrahaCard.narrative` for every graha in `NARRATIVE_GRAHAS` (now **all nine**, derived from the table keys). In the open card `GrahaReadingList` renders the lead paragraph + a single **एक बात का ध्यान · One thing to tend** line in place of the About/Friends/Why/gives/care/rules bullets; the **upay panel and आधार toggle are unchanged**, and a **`<graha> के बारे में जानें · Know <graha> →`** link opens the generic reference (§80). It has its OWN gate — `GRAHA_NARRATIVE_REVIEW` + `narrativeReadingsApproved()`, **separate** from the legacy `GRAHA_READING_REVIEW` — so `showNarrative = __DEV__ || narrativeReadingsApproved()`: development previews the narrative, store builds keep the approved legacy card until the narrative is signed off (ships `draft`, so the OTA'd card is undisturbed). The generic facts the bullets carried (nature, मित्र-शत्रु, karaka) move to §80; §78's bullet spec below is what still ships in store builds until sign-off.
 
 **Register.** Bullets, not paragraphs (review note, 3 Oct 2026): every block is a short list, one idea per bullet, no full stop at the end. Meaning first, term second, in brackets: *In Karka (Cancer) — its strongest sign (exalted, uchcha)* / *कर्क में — सबसे मज़बूत स्थिति (उच्च)*. English names pair the planet with its Indian name (`Jupiter (Guru)`, `Mars (Mangal)`); English houses read `4th house — home, mother, vehicles, property and peace of mind`, never a bare `bhava`. No repeated "tradition links…" hedge — the report's single foot disclaimer frames everything.
 
@@ -3470,7 +3586,23 @@ FOR TODAY compact cards retain their normal 196dp width. Above fontScale 1.2 the
 
 ---
 
-## 79. नवग्रह परिचय — Know the nine grahas (the generic reference, Oct 2026)
+## 79. App tracking permission (iOS, October 2026)
+
+**Purpose.** Ask iOS App Tracking Transparency (ATT) once, before Meta install measurement starts, so App Review (2.1) can see the request on a fresh install. Android has no equivalent dialog.
+
+**Structure.** A system alert drawn by iOS over Home. Only the second line is ours:
+
+1. Title (iOS, fixed): *Allow “Vedansh” to track your activity across other companies’ apps and websites?*
+2. Purpose line (`NSUserTrackingUsageDescription`): **So we know how you found Vedansh.** Plain words that answer the title's "why?": it names install attribution (the only use) without ad-industry terms, does not repeat the title's "Allow Vedansh", and carries no privacy reassurance (RULEBOOK §3 copy rule). It must stay true to the actual use (App Review 5.1.1); a new use means new copy. English only; the app ships no iOS `locales`.
+3. Buttons (iOS, fixed): *Ask App Not to Track* · *Allow*.
+
+**Interaction.** Requested after navigation is ready and the UI is idle, only while undetermined and askable. If iOS drops the request without showing it, the app asks again up to four times, 750 ms apart, in the same foreground. Meta stays inactive until the user answers. **Allow** lets Meta use the device's advertising ID for exact install attribution; **Ask App Not to Track** keeps the ID off and Meta falls back to Apple's aggregate install reports. Either answer leaves the app fully usable. Changing the purpose line needs a new store binary (Info.plist), not an OTA.
+
+**Files.** `mobile/plugins/metaTrackingConfig.js` (`TRACKING_PERMISSION`), `mobile/src/utils/metaActivationController.ts` (ask/retry/activation order), `mobile/src/utils/metaAppEvents.ts` (native-flag gate), `docs/meta-app-events.md`.
+
+---
+
+## 80. नवग्रह परिचय — Know the nine grahas (the generic reference, Oct 2026)
 
 **Purpose.** The teaching surface that lets the personal graha card (§78) stay a *reading* and not a datasheet. It answers "what each graha **is**, for anyone" — nature/role, what it governs, its naisargika **मित्र/शत्रु**, its weekday — independent of any chart, open to everyone (no birth data). This is the "Know **THE** nine grahas" half that pairs with the chart card's "Know **YOUR** nine grahas"; the generic facts the §78 bullets used to carry move here so the chart card can read like a person wrote it.
 

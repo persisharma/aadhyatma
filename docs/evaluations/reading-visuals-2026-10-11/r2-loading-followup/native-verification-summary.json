@@ -1,0 +1,40 @@
+{
+  "simulatorId": "5AD7B853-9A21-4247-98C6-47BAE046E16E",
+  "simulator": "iPhone 17 Pro iOS 26.5",
+  "trustFix": "Only isolated QA simulator: import exact existing Mac-trusted corporate CA after chain fingerprint comparison. No app TLS exception.",
+  "rootCertificateSHA256": "5dee1b47c5dd97886586e1cb1669a6c5df31393323109b7eae020c0d0fcd6234",
+  "nativeDownloads": [
+    {
+      "file": "324b157dc73b990e.webp",
+      "nativeTransferMs": 271.25,
+      "timerLatenessOver50MsDuringTransfer": 0
+    },
+    {
+      "file": "3ababd2172739822.webp",
+      "nativeTransferMs": 312.24,
+      "timerLatenessOver50MsDuringTransfer": 0
+    },
+    {
+      "file": "e6ed2939cd1259ef.webp",
+      "nativeTransferMs": 330.18,
+      "timerLatenessOver50MsDuringTransfer": 0
+    },
+    {
+      "file": "85bbc10d3b9545e1.webp",
+      "nativeTransferMs": 259.55,
+      "timerLatenessOver50MsDuringTransfer": 0
+    }
+  ],
+  "revisitAdditionalDownloads": 0,
+  "restartDownloads": 0,
+  "assetOriginUnavailableRestartDownloads": 0,
+  "filesUnchangedAcrossRestartAndQaBuildRestoration": true,
+  "allFourFilesFullHashAndBytesMatchApprovedSources": true,
+  "partials": 0,
+  "outageMethod": "QA-only preload keeps production identity and cache logic, sends misses to unreachable HTTPS loopback port 9; native requests time out/cancel. Cached hits never enter wrapper. Not physical airplane mode.",
+  "testSuites": 3,
+  "passedTests": 35,
+  "performanceEvidence": "Native transfers measured; 50 ms JS heartbeat observer. No physical-device or iOS frame/main-thread benchmark. Instruments did not yield a usable trace.",
+  "productionCodeOrConfigChangedThisFollowup": false,
+  "qaInstrumentationRemoved": true
+}

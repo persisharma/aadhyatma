@@ -1,0 +1,67 @@
+{
+  "phase": "unavailable-uncached",
+  "audit": {
+    "scope": "QA-only native FileSystem boundary observer",
+    "events": [
+      {
+        "atMs": 0.01850000023841858,
+        "kind": "qaBootstrap"
+      },
+      {
+        "atMs": 164.0335840061307,
+        "kind": "jsStall",
+        "delayMs": 58.81641599535942
+      },
+      {
+        "atMs": 36141.463959001005,
+        "kind": "createDownload",
+        "id": 2,
+        "identity": "e6ed2939cd1259ef.webp",
+        "url": "https://cdn.vedansh.app/reading-backgrounds/e6ed2939cd1259ef.webp"
+      },
+      {
+        "atMs": 36142.09666700661,
+        "kind": "nativeStart",
+        "id": 2,
+        "identity": "e6ed2939cd1259ef.webp",
+        "actualUrl": "https://127.0.0.1:9/e6ed2939cd1259ef.webp"
+      },
+      {
+        "atMs": 44159.60625000298,
+        "kind": "nativeComplete",
+        "id": 2,
+        "identity": "e6ed2939cd1259ef.webp"
+      },
+      {
+        "atMs": 44303.70795900375,
+        "kind": "createDownload",
+        "id": 5,
+        "identity": "85bbc10d3b9545e1.webp",
+        "url": "https://cdn.vedansh.app/reader-illustrations/85bbc10d3b9545e1.webp"
+      },
+      {
+        "atMs": 44304.186625003815,
+        "kind": "nativeStart",
+        "id": 5,
+        "identity": "85bbc10d3b9545e1.webp",
+        "actualUrl": "https://127.0.0.1:9/85bbc10d3b9545e1.webp"
+      }
+    ]
+  },
+  "files": [
+    {
+      "name": "324b157dc73b990e.webp",
+      "bytes": 103118,
+      "sha256": "324b157dc73b990ec996dfd687e08e3a861c77067cfe6d0a0f28237f25855253",
+      "mtimeNs": 1791740583095247178,
+      "inode": 97864161
+    },
+    {
+      "name": "3ababd2172739822.webp",
+      "bytes": 99228,
+      "sha256": "3ababd21727398228a0fde44ab198cd6bf183d834053de6815c667bc139c0b06",
+      "mtimeNs": 1791740672923491585,
+      "inode": 97869075
+    }
+  ]
+}

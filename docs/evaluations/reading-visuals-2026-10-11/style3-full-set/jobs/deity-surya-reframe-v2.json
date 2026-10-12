@@ -1,0 +1,9 @@
+{
+  "id": "deity-surya-reframe-v2",
+  "replaces": "deity-surya",
+  "prompt": "Use case: precise-object-edit. Edit image 1 only to fit the full radiant solar halo whose upper flames currently run out of the top. Preserve this exact seven-horse chariot, Surya's four arms, charioteer's two arms, all faces/poses/details and rich storybook style. Scale down the ENTIRE main group together by about 15 percent within the same exact 2:1 canvas, recompose the surrounding sky/ground to fill. All tips of the complete sun halo must be inside with at least 6 percent painted sky above the highest ray; all seven horse heads and hooves and chariot wheels remain visible with at least 6 percent ground below. Do not remove a horse, alter counts or cut/fade halo. No other added figures or text.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/deity-surya.png"
+  ],
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-df11b2cc-d897-4021-a59d-26023058c9b8.png"
+}
