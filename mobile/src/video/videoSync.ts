@@ -5,10 +5,10 @@
  *
  * Exact sync needs a human-timed sheet on the mapping. Until one exists the reader
  * estimates a sheet from the text itself: each page gets a share of the video
- * proportional to its syllable count, so a doha (~40 syllables) holds the screen
- * longer than a chaupai (~23). The estimate cannot know a recording's intro music
- * or interludes, so it stays approximate — the swipe latch and Auto-scroll chip let
- * the reader take over when it drifts.
+ * proportional to its sung weight — syllables, with dohas counted at a slower
+ * tempo because they are drawn out where chaupais are sung briskly. The estimate
+ * cannot know a recording's intro music or interludes, so it stays approximate —
+ * the swipe latch and Auto-scroll chip let the reader take over when it drifts.
  */
 
 /**
@@ -56,6 +56,17 @@ export function syllableWeight(lines: readonly string[]): number {
   const text = lines.join('');
   const count = (re: RegExp) => text.match(re)?.length ?? 0;
   return Math.max(1, count(CONSONANT_RE) + count(VOWEL_RE) - count(VIRAMA_RE));
+}
+
+/**
+ * Dohas are sung at roughly half the chaupai tempo (users saw the pager run ahead
+ * through the opening dohas). Tuned by ear, not measured — a timed sheet wins.
+ */
+export const DOHA_TEMPO = 2;
+
+/** A page's share of the recording: its syllables, slowed for a doha. */
+export function sungWeight(page: { type?: string; lines: readonly string[] }): number {
+  return syllableWeight(page.lines) * (page.type === 'doha' ? DOHA_TEMPO : 1);
 }
 
 /** Estimated cue sheet: `duration` seconds spread over the pages by weight. */

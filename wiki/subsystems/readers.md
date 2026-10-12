@@ -166,7 +166,7 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
   chapter list, not the previous chapter.
 - **Exact video sync needs a human-timed cue sheet.** `ChalisaReaderScreen` turns pages with the
   docked YouTube video from `VideoMapping.cues` (one start-second per page, `video/videoSync.ts`);
-  without one it falls back to a syllable-weighted estimate. The first cut split the video equally
+  without one it falls back to an estimate (syllables, dohas at half tempo — `DOHA_TEMPO`). The first cut split the video equally
   per page and drifted several verses (intro music, slow dohas). YouTube is unreachable from the
   cloud container, so sheets are captured on device with the dev swipe-along (design.md §81).
 - **A reader missing read-aloud is invisible at runtime.** `useReadAloud()` is a lenient hook whose

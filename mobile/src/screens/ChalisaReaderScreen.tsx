@@ -37,7 +37,7 @@ import { getTrackForText } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
 import { getVideoMapping } from '@/data/video/videoMappings';
 import DockedYouTubePlayer from '@/components/video/DockedYouTubePlayer';
-import { estimateCues, isValidCueSheet, pageAtTime, syllableWeight } from '@/video/videoSync';
+import { estimateCues, isValidCueSheet, pageAtTime, sungWeight } from '@/video/videoSync';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
@@ -75,12 +75,12 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
   const verses = chalisa.verses;
   const total = verses.length;
   // A human-timed cue sheet syncs exactly; without one, pages split the video by
-  // syllable weight (see videoSync).
+  // sung weight (see videoSync).
   const cues = useMemo(
     () => (isValidCueSheet(videoMapping?.cues, total) ? videoMapping?.cues : undefined),
     [videoMapping, total]
   );
-  const weights = useMemo(() => verses.map((v) => syllableWeight(v.lines)), [verses]);
+  const weights = useMemo(() => verses.map(sungWeight), [verses]);
   const estimateRef = useRef<{ duration: number; cues: number[] } | null>(null);
   const listRef = useRef<FlatList<ChalisaVerse>>(null);
   const initialIndex = clampIndex(route.params?.initialIndex, total);

@@ -1,4 +1,4 @@
-import { estimateCues, isValidCueSheet, pageAtTime, syllableWeight } from '../videoSync';
+import { DOHA_TEMPO, estimateCues, isValidCueSheet, pageAtTime, sungWeight, syllableWeight } from '../videoSync';
 import { getChalisa } from '@/data/chalisaRegistry';
 
 describe('pageAtTime', () => {
@@ -76,6 +76,22 @@ describe('syllableWeight', () => {
   });
 });
 
+describe('sungWeight', () => {
+  it('slows a doha by DOHA_TEMPO and leaves a chaupai at its syllable count', () => {
+    const lines = ['राम'];
+    expect(sungWeight({ type: 'doha', lines })).toBe(2 * DOHA_TEMPO);
+    expect(sungWeight({ type: 'chaupai', lines })).toBe(2);
+  });
+
+  it('holds the Hanuman Chalisa opening dohas well past an equal split', () => {
+    const verses = getChalisa('hanuman-chalisa').verses;
+    const cues = estimateCues(verses.map(sungWeight), 582);
+    const firstChaupai = verses.findIndex((v) => v.type === 'chaupai');
+    // An equal split would reach the first chaupai at 2/43 of the video (~27s).
+    expect(cues[firstChaupai]).toBeGreaterThan(60);
+  });
+});
+
 describe('estimateCues', () => {
   it('spreads the duration over pages by weight, starting at 0', () => {
     expect(estimateCues([2, 1, 1], 100)).toEqual([0, 50, 75]);
@@ -83,7 +99,7 @@ describe('estimateCues', () => {
 
   it('produces a valid sheet for the whole Hanuman Chalisa', () => {
     const verses = getChalisa('hanuman-chalisa').verses;
-    const cues = estimateCues(verses.map((v) => syllableWeight(v.lines)), 582);
+    const cues = estimateCues(verses.map(sungWeight), 582);
     expect(isValidCueSheet(cues, verses.length)).toBe(true);
     // The closing doha starts before the end, and the last page holds through it.
     expect(pageAtTime(cues, 581)).toBe(verses.length - 1);
