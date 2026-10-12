@@ -413,3 +413,19 @@ User accepted the revised character look; generated and visually reviewed three 
 ## [2026-10-11] ingest | Complete local Hindi Bala Kanda comic authoring draft
 
 Updated [[decisions/ramayan-comic-character-continuity]] from `docs/content-parity/ramayan-comic/balakanda-v1/`: 29 episodes, 137 panels, 55 reader pages and all 77 sarga arcs; original source-based Hindi, every causal transition, text-free generated artwork, final hashes/revisions and measured ink boundaries. Final browser sequence passed at 390 × 844 in standard/large text, including full scroll reach and loaded images. Independent editorial/language/native/CDN/rights gates remain open; mobile story/art registration was not changed.
+
+## [2026-10-12] ingest | Ramayan pilot and continuity correction
+
+Corrected the earlier blanket continuity claim: the 1.28 → 1.29 motivating question and Tataka's visible defeat are missing. The one-episode bk-05 lettering experiment remains unaccepted; enlarged backgrounds undermine scene focus and compact art has not passed bilingual text-fit review. No production story, art manifest or CDN changes. Source findings and review boundaries are in `docs/content-parity/ramayan-comic/lettering-pilot-v1/`.
+
+## [2026-10-12] ingest | Ramayan compact panels tested with actual text
+
+Reviewed all three bk-05 scenes in Hindi and English at 390px / 18px using native text over the compact art. Captions obscure faces and the court balloon obscures its speaker; rejected the layout despite loaded images and no horizontal overflow. Saved bilingual screenshots and a scene-by-scene report in the authoring pilot. No production activation or claim of corrected-episode completion.
+
+## [2026-10-12] ingest | Fitted bilingual Ramayan episode preview
+
+Added `lettering-pilot-v1/fitted.html`: in-frame flowing narration, unchanged full-bounds art, and a new Dasharatha close-up for the existing spoken question. Both languages pass 16 browser text-fit states across normal/Large and four phone widths. Narrow Large balloons reflow inside the panel above art. Complete visual captures and pacing/art provenance are recorded; user/editorial/native acceptance and other-episode continuity corrections remain pending. No production activation.
+
+## [2026-10-12] ingest | Accepted lettering expanded to bilingual Bālakāṇḍa
+
+User accepted the fitted episode and continuous balloon outline, then requested the whole build with both languages verified. Added `balakanda-bilingual-v2/`: 29 episodes / 140 panels, full Hindi/English copy, shared artwork, local reader and paired comparison. Corrected Tataka's visible outcome/night rest, the 1.28→1.29 hermitage-question bridge, river-roar answer and explicit English Subahu outcome; repaired Trishanku frame leakage from measured gutters. All 29 paired sequences visually reviewed and all 1,120 browser panel states pass text/art geometry checks. Panel-by-panel causal notes, text hashes, asset hashes and new-art prompts retained. Independent editorial, Gujarati/Kannada, native, rights and publication gates remain open; no mobile/CDN changes.
