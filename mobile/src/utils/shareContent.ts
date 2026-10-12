@@ -335,6 +335,7 @@ export { kidsStoryShareable } from './kidsStoryShare';
 export function garudPuranShareable(chapter: GarudPuranChapter, page: GarudPuranPage): ShareableProse {
   return {
     kind: 'prose', sourceId: 'garud-puran', background: garudPuranImages[page.artId],
+    sheetTitle: { hi: 'यह पाठ साझा करें', en: 'Share this reading', gu: 'આ પાઠ શેર કરો', kn: 'ಈ ಪಾಠವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ' },
     sectionNameHi: 'गरुड़ पुराण — चयनित व्याख्या',
     sectionNameEn: 'Garud Puran — selected editorial reading',
     scopes: [{

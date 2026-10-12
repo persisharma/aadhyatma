@@ -168,6 +168,7 @@ test('all Garud pages share as complete bilingual prose with their source and ed
     for (const page of chapter.verses) {
       const share = garudPuranShareable(chapter, page);
       expect(share.sectionNameEn).toContain('editorial');
+      expect(share.sheetTitle?.en).toBe('Share this reading');
       expect(share.scopes[0].headerEn).toContain(chapter.source.citeEn);
       for (const lang of ['hi', 'en'] as const) {
         const result = defaultPages(share, lang);

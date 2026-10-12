@@ -317,6 +317,8 @@ export default function GarudPuranReaderScreen({ navigation, route }: Props) {
                         }}
                       />
                       <ShareButton
+                        accessibilityLabel="Share reading"
+                        accessibilityHint="Opens share options for this page"
                         busy={shareBusy}
                         onPress={() => {
                           void share(garudPuranShareable(chapter, item), lang);

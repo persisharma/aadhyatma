@@ -1,8 +1,9 @@
 # Subflow: begins at the selected-readings index. APP_ID and SHOT_PREFIX supplied by caller.
 appId: ${APP_ID}
 ---
-- assertVisible:
-    id: garud-puran-index
+- extendedWaitUntil:
+    visible: English
+    timeout: 30000
 - tapOn: Hindi
 - takeScreenshot: ${SHOT_PREFIX}-index-hi
 - tapOn: English

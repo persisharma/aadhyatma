@@ -1,5 +1,7 @@
 # Garud Puran source collection
 
+**Current app integration:** 12 selected bilingual readings and nine user-approved Style 3 banners; see [INTEGRATION.md](INTEGRATION.md). The full-corpus research inventory below remains separate from that verified selection.
+
 Collected 2026-10-01 for a future Vedansh reader. **Data acquisition only: no app
 integration, no generated scripture, and no publication-ready bilingual corpus.**
 

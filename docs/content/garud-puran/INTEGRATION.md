@@ -53,7 +53,7 @@ Open <http://127.0.0.1:8108/docs/content/garud-puran/preview.html>. The interact
 
 Native build and device-preview evidence follows below. Automated source comparison and simulator/emulator evidence do not substitute for physical-device or scholarly review.
 
-## Native build evidence
+## Earlier native build evidence
 
 Both native projects were freshly generated and compiled from this checkout. Android `app:assembleDebug` passed (402 tasks, arm64, JDK 17); iOS `expo run:ios` passed with zero errors and two warnings. The artifacts were installed on the dedicated Garud Puran iOS simulator (iPhone 17 Pro / iOS 26.5) and Android QA emulator, both loading this checkout's Metro on port 8107. Earlier Expo Go/copied-binary attempts were rejected as evidence.
 
@@ -65,7 +65,7 @@ Native reader smoke passed on iOS and Android: library entry, Hindi/English inde
 
 Local detailed logs are under ignored `tmp/garud-puran/`: `native-ios-reader.log`, `native-android-reader.log`, `native-final-preview.log`, `ios-build.log`, `android-build.log`, `final-focused-tests.log`, `post-fix-tests.log`, `final-typecheck.log` and `final-lint.log`.
 
-## Visual correction after user review
+## Visual correction after user review (earlier revision)
 
 The initial portrait design was rejected as inconsistent with the recently merged reader improvements. The revised layout and nine landscape scenes follow PR #449 / current-main storybook references; no full-main merge is implied. See [design-review/README.md](design-review/README.md) for the cause, exact design contract and fresh native evidence. The earlier screenshots under `screenshots/` record the first version and are superseded for design approval.
 
@@ -73,4 +73,22 @@ The initial portrait design was rejected as inconsistent with the recently merge
 
 Merged current `origin/main`, preserving the lazy screen registry, cooperative search indexing, generated navigation graph, source-count optimization and all existing reader features. Garud adds two lazy routes and yields after each indexed reading. The current shared artwork and parchment components render the approved banners. Continuation pages contain no reserved artwork area. Saved progress says Reading / Page, and the shared prose export keeps the full bilingual explanation with source context.
 
-Final checks and native evidence are recorded below after verification. Historical screenshots above remain evidence of earlier revisions; the current asset hashes are in `artwork/manifest.json` and match `design-review/style3-final/manifest.json`.
+Final checks:
+
+- Clean `npm ci` and full `npm test`: **passed**, exit 0. TypeScript; 248 Jest suites / 2,385 tests; 37 widget, 602 engine, 173 data and 49 question-answer tests.
+- Main advanced to `64ec00e3` during verification. Its eight video-related files were merged without conflicts; fresh TypeScript plus 51 focused video, Chalisa-reader and theme tests passed. No current-main files were deleted.
+- Focused ESLint: zero errors (two existing require-import warnings in the shared type-scale test). Python collector tests: 7 passed. Tests pin every approved bundled image’s SHA-256/byte count against the Style 3 review set and all 28 prose exports against their bilingual source paragraphs.
+- The first full run exposed the new count-registry requirement and main’s existing app-version/What's-New mismatch. Garud now uses generated catalogue counts and supplies the 1.5.2 announcement without changing the app version. An existing timed share test failed once under build load, passed unchanged in isolation, then passed in the final full run.
+- Fresh iOS prebuild and native build: succeeded, zero errors, five warnings, including an existing widget extension build-number mismatch (63 vs 74). This is simulator verification, not a store-submission certification.
+
+Native flow evidence follows. Historical screenshots above remain evidence of earlier revisions; the current asset hashes are in `artwork/manifest.json` and match `design-review/style3-final/manifest.json`.
+
+### Final native verification
+
+Dedicated iPhone 17 Pro / iOS 26.5 simulator `Vedansh-Garud-Puran-QA`, current native build and this worktree’s Metro pinned to port 8107. Home → Sacred Books → Garud Puran navigation passed. The final `_garud-puran-reader.yaml` subflow then passed (exit 0): Hindi/English index and Babhruvahana story, add/remove bookmark, horizontal paging, Sanskrit/Hindi source links, persisted page-2 resume and automatic advance into reading 6. The opening and index were visually inspected with the approved artwork loaded.
+
+The first dev-server attempt exhausted Node 26’s default 4 GB heap while prefetching the whole app. Restarting with Node 22, two Metro workers and an 8 GB heap resolved it; this was a local verification setting, not an app change. The index’s initial test selector was corrected to wait for the language control, because iOS omits the ScrollView test ID and chapter accessibility labels follow the selected language. The checked-in top-level smoke uses the corrected subflow.
+
+Current native captures: [Hindi story](screenshots/final-ios-story-hi.png), [English story](screenshots/final-ios-story-en.png), [Hindi index](screenshots/final-ios-index-hi.png), [English index](screenshots/final-ios-index-en.png), [sources](screenshots/final-ios-sources.png). These screenshots precede only the final accessibility/share-sheet label correction from verse/katha to reading; artwork, prose and layout are unchanged. The label correction has separate typecheck/component coverage.
+
+Final Android artwork, physical-device audio, increased accessibility text sizes, live R2 and store-release behavior were not re-certified. Logs remain local under `tmp/garud-puran/`; the previous Android smoke relates to the earlier artwork revision.

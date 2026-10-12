@@ -1191,4 +1191,3 @@ This collection contains twelve selected teachings, stories and introductions to
 - `data/garud-puran/chapters-manifest.json` is the eager index; twelve chapter payloads load lazily. Stable chapter/page IDs support search, bookmark, resume, sharing, routine and read-aloud. Internal `verses`/`verseIndex` names are compatibility fields; display units are readings and pages.
 - Follow the existing chapter index and horizontal reader shell. Use a prose page component with shared meaning typography, first-page art and expandable source links. Hindi/English content is authored; other locale behaviour follows the existing Hindi fallback helpers.
 - Verification: data/source/asset tests, Hindi/English rendering, source disclosure, resume clamping, the cross-reader narration/transition suites, search/routing checks, and `.maestro/garud-puran-smoke.yaml`. Design §81 and `docs/content/garud-puran/INTEGRATION.md` describe the preview and evidence.
-
