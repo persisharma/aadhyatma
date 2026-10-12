@@ -1,7 +1,8 @@
 /**
- * One-speaker-at-a-time arbitration across the app's three independent audio sources:
+ * One-speaker-at-a-time arbitration across the app's independent audio/video sources:
  * the global recorded-audio player (`AudioPlayerContext`), the component-scoped japam
- * loop (`JapamAudioPlayer`), and read-aloud TTS (`ReadAloudContext`).
+ * loop (`JapamAudioPlayer`), read-aloud TTS (`ReadAloudContext`), and the docked
+ * YouTube fallback player (`DockedYouTubePlayer`).
  *
  * This is a plain module singleton rather than a context field on purpose. Routing
  * exclusion through `AudioPlayerContext`'s value would force every screen test that
@@ -13,7 +14,7 @@
  * each other rather than one interrupting the other.
  */
 
-export type PlaybackKind = 'recorded' | 'tts' | 'japam';
+export type PlaybackKind = 'recorded' | 'tts' | 'japam' | 'youtube';
 
 const stoppers = new Map<PlaybackKind, () => void>();
 

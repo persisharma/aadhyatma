@@ -49,17 +49,35 @@ describe('claimPlayback', () => {
       recorded: jest.fn(),
       tts: jest.fn(),
       japam: jest.fn(),
+      youtube: jest.fn(),
     };
     for (const kind of Object.keys(stops) as PlaybackKind[]) registerStopper(kind, stops[kind]);
 
     claimPlayback('recorded');
     expect(stops.tts).toHaveBeenCalledTimes(1);
     expect(stops.japam).toHaveBeenCalledTimes(1);
+    expect(stops.youtube).toHaveBeenCalledTimes(1);
     expect(stops.recorded).not.toHaveBeenCalled();
 
     claimPlayback('japam');
     expect(stops.recorded).toHaveBeenCalledTimes(1);
     expect(stops.tts).toHaveBeenCalledTimes(2);
+    expect(stops.youtube).toHaveBeenCalledTimes(2);
+  });
+
+  it('a starting YouTube video silences recorded audio, tts and japam', () => {
+    const recorded = jest.fn();
+    const tts = jest.fn();
+    const japam = jest.fn();
+    registerStopper('recorded', recorded);
+    registerStopper('tts', tts);
+    registerStopper('japam', japam);
+
+    claimPlayback('youtube');
+
+    expect(recorded).toHaveBeenCalledTimes(1);
+    expect(tts).toHaveBeenCalledTimes(1);
+    expect(japam).toHaveBeenCalledTimes(1);
   });
 
   it('keeps stopping the others when one stopper throws', () => {

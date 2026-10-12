@@ -8,6 +8,10 @@ const ROOTS = ['src/screens', 'src/components'];
 const ACTIONABLE_PLATFORM_EXCEPTIONS = new Set([
   'src/components/ReadAloudSettingsSheet.tsx',
   'src/components/readAloud/ReadAloudButton.tsx',
+  // The YouTube video fallback streams from the network and cannot be bundled, so
+  // telling the user it needs an internet connection is an actionable limitation,
+  // not privacy marketing (RULEBOOK §3).
+  'src/components/video/DockedYouTubePlayer.tsx',
 ]);
 
 // This hardware limitation tells the user how to continue without a compass.
