@@ -6,7 +6,7 @@
   "baseText": "Valmiki Ramayana, Bala Kanda, 77 sargas",
   "scope": "Complete chapter-arc comic retelling; not a verse-by-verse edition. Dialogues are original source-based paraphrases, not verbatim quotations.",
   "otherLocales": {
-    "en": "pending",
+    "en": "ready",
     "gu": "pending",
     "kn": "pending"
   },
@@ -37,7 +37,10 @@
             "width": 0.5025380710659898,
             "height": 0.3030075187969925,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Valmiki asked Narada who lives the ideal of virtue, courage, and truth. Narada told him the story of Rama.",
+          "speakerEn": "Valmiki",
+          "dialogueEn": "Who is the man with such virtues?"
         },
         {
           "id": "bk-01-02",
@@ -59,7 +62,10 @@
             "width": 0.49746192893401014,
             "height": 0.3030075187969925,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Narada gave a brief account of Rama's birth, his exile, the search for Sita, the war with Ravana, and the return to Ayodhya.",
+          "speakerEn": "Narada",
+          "dialogueEn": "Let me tell you the story of Rama."
         },
         {
           "id": "bk-01-03",
@@ -81,7 +87,10 @@
             "width": 0.5025380710659898,
             "height": 0.3406015037593985,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "On the bank of the Tamasa, a hunter killed a krauncha bird. Hearing the mate's lament, Valmiki's grief turned into verse.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-01-04",
@@ -104,7 +113,10 @@
             "width": 0.49746192893401014,
             "height": 0.3406015037593985,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Brahma inspired Valmiki to compose the story of Rama. In meditation, the episodes of the tale became clear to him, and he outlined the poem.",
+          "speakerEn": "Brahma",
+          "dialogueEn": "Tell the character of Rama in verse."
         },
         {
           "id": "bk-01-05",
@@ -127,7 +139,10 @@
             "width": 1,
             "height": 0.35639097744360904,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Valmiki taught the poem to Lava and Kusha. Later, the two boys recited the story of Rama to King Rama's court in Ayodhya.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-01-v2.png",
@@ -139,7 +154,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "The Birth of the Story",
+      "framingEn": "Prologue: Valmiki's story; the court scene belongs to a later time."
     },
     {
       "id": "bk-02",
@@ -167,7 +184,10 @@
             "width": 0.501953125,
             "height": 1.0,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Ayodhya stood on the bank of the Sarayu. Under King Dasharatha's rule, its streets, markets, and homes flourished.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-02-02",
@@ -190,7 +210,10 @@
             "width": 0.498046875,
             "height": 1.0,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Dasharatha consulted his ministers and his guru Vashishtha. In the governance of the kingdom, deliberation, discipline, and the welfare of the people mattered most.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-02-v1.png",
@@ -202,7 +225,9 @@
         "columns": 2,
         "rows": 1,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Ayodhya and Its King",
+      "framingEn": "Now the story begins with Dasharatha's kingdom."
     },
     {
       "id": "bk-03",
@@ -232,7 +257,10 @@
             "width": 0.4949238578680203,
             "height": 0.324812030075188,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Dasharatha was troubled by the future of his lineage. He resolved to perform a yajna. Sumantra advised him to summon Rishyasringa.",
+          "speakerEn": "Sumantra",
+          "dialogueEn": "Invite Rishyasringa."
         },
         {
           "id": "bk-03-02",
@@ -254,7 +282,10 @@
             "width": 0.5050761421319797,
             "height": 0.324812030075188,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "A crisis had struck Anga for lack of rain. King Romapada planned to summon Rishyasringa, who had grown up in the forest.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-03-03",
@@ -276,7 +307,10 @@
             "width": 0.4949238578680203,
             "height": 0.32857142857142857,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "As the king's emissaries, women of the city went into the forest. They made friends with Rishyasringa and gave him fruits and sweets.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-03-04",
@@ -298,7 +332,10 @@
             "width": 0.5050761421319797,
             "height": 0.32857142857142857,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "After they left, Rishyasringa set out to find them again. The women met him once more and brought him with them to Anga.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-03-05",
@@ -321,7 +358,10 @@
             "width": 0.4949238578680203,
             "height": 0.34661654135338343,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "When Rishyasringa arrived in Anga, rain fell. Romapada honored him, and Shanta was married to him.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-03-06",
@@ -344,7 +384,10 @@
             "width": 0.5050761421319797,
             "height": 0.34661654135338343,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Dasharatha himself went to Anga. With Romapada's consent, Rishyasringa and Shanta came with him to Ayodhya, where they were received with honor.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-03-v2.png",
@@ -356,7 +399,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "The Wish for a Son",
+      "framingEn": "Sumantra first recounts the episode from Anga."
     },
     {
       "id": "bk-04",
@@ -390,7 +435,10 @@
             "width": 0.49746192893401014,
             "height": 0.3323308270676692,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Under the direction of Rishyasringa and Vashishtha, preparations were made for the Ashvamedha. The rite was completed on the northern bank of the Sarayu; arrangements were also made for guests and attendants.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-04-02",
@@ -413,7 +461,10 @@
             "width": 0.5025380710659898,
             "height": 0.3323308270676692,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Rishyasringa began the Putreshti rite. Meanwhile, the gods complained of Ravana's tyranny; in his boon, he had not asked for protection from humans.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-04-03",
@@ -437,7 +488,10 @@
             "width": 0.49746192893401014,
             "height": 0.324812030075188,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vishnu resolved to take human form, be born in Dasharatha's house, and end Ravana's terror.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-04-04",
@@ -462,7 +516,10 @@
             "width": 0.5025380710659898,
             "height": 0.324812030075188,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "A divine being appeared from the sacrificial fire and gave Dasharatha a vessel of payasa. The king divided it among his three queens; Sumitra received a share twice.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-04-05",
@@ -484,7 +541,10 @@
             "width": 1,
             "height": 0.34285714285714286,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "At Brahma's prompting, the gods begot the vanara heroes. In time, these would come to aid Rama's cause.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-04-v3.png",
@@ -496,7 +556,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "The Yajna and the Gods' Resolve",
+      "framingEn": "The episodes in the capital and in the realm of the gods now proceed together."
     },
     {
       "id": "bk-05",
@@ -530,7 +592,10 @@
             "width": 0.5041436464088398,
             "height": 0.496316758747698,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Rama was born to Kaushalya, Bharata to Kaikeyi, and Lakshmana and Shatrughna to Sumitra. The palace celebrated the birth of all four boys.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-05-02",
@@ -555,7 +620,10 @@
             "width": 0.4958563535911602,
             "height": 0.496316758747698,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The four brothers grew up learning scholarship and the art of arms. Rama and Lakshmana, and Bharata and Shatrughna, shared a special bond.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-05-03",
@@ -579,7 +647,10 @@
             "width": 1,
             "height": 0.503683241252302,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "When the princes reached adolescence, the sage Vishvamitra came to Dasharatha's court. The king honored him and asked the purpose of his visit.",
+          "speakerEn": "Dasharatha",
+          "dialogueEn": "Great sage, how may I serve you?"
         }
       ],
       "asset": "assets/bk-05-v1.png",
@@ -591,7 +662,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "The Four Princes",
+      "framingEn": "Time passes from infancy to adolescence."
     },
     {
       "id": "bk-06",
@@ -620,7 +693,10 @@
             "width": 0.5,
             "height": 0.4990791896869245,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Maricha and Subahu kept disrupting Vishvamitra's yajna. The sage asked that Rama be sent with him for its protection.",
+          "speakerEn": "Vishvamitra",
+          "dialogueEn": "Send Rama to protect the yajna."
         },
         {
           "id": "bk-06-02",
@@ -643,7 +719,10 @@
             "width": 0.5,
             "height": 0.4990791896869245,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Dasharatha was afraid, both of his son's young age and the demons' strength. He offered to go himself with an army instead of Rama.",
+          "speakerEn": "Dasharatha",
+          "dialogueEn": "Rama is not even sixteen years old yet."
         },
         {
           "id": "bk-06-03",
@@ -666,7 +745,10 @@
             "width": 0.5,
             "height": 0.5009208103130756,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vishvamitra was displeased by the king's hesitation. Vashishtha explained that he must keep his word; Vishvamitra could protect and teach Rama.",
+          "speakerEn": "Vashishtha",
+          "dialogueEn": "O king, keep the word you have given."
         },
         {
           "id": "bk-06-04",
@@ -691,7 +773,10 @@
             "width": 0.5,
             "height": 0.5009208103130756,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Hearing Vashishtha, Dasharatha agreed. He gave his blessing and sent Rama and Lakshmana with Vishvamitra.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-06-v1.png",
@@ -703,7 +788,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "The Father's Hard Decision",
+      "framingEn": "Rama is said to be not yet sixteen years old."
     },
     {
       "id": "bk-07",
@@ -732,7 +819,10 @@
             "width": 0.4972375690607735,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "On the bank of the Sarayu, Vishvamitra taught Rama the knowledge of Bala and Atibala. These arts protected against hunger, fatigue, and weakness.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-07-02",
@@ -756,7 +846,10 @@
             "width": 0.5027624309392266,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Near the confluence, the sages welcomed them. Vishvamitra told them: here Kamadeva had tried to break Shiva's meditation. In Shiva's wrath he was burned to ash; because his body fell apart here, this region came to be called Anga.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-07-03",
@@ -780,7 +873,10 @@
             "width": 1,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "While crossing the Ganga, Rama asked about the roar of the confluence. Further on, in the desolate land of Malada-Karusha, the sage described Tataka's terror.",
+          "speakerEn": "Rama",
+          "dialogueEn": "What is this roar, great sage?"
         }
       ],
       "asset": "assets/bk-07-v1.png",
@@ -792,7 +888,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "The First Journey into the Forest",
+      "framingEn": "The present journey: from Ayodhya toward the forest."
     },
     {
       "id": "bk-08",
@@ -822,7 +920,10 @@
             "width": 0.5034530386740331,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vishvamitra explained that the yaksha maiden Tataka was Sunda's wife and Maricha's mother. After being cursed, she had spread violence through this forest.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-08-02",
@@ -846,7 +947,10 @@
             "width": 0.4965469613259669,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Rama wanted first to check Tataka's power rather than kill her outright. Vishvamitra explained that protecting the people was a prince's duty.",
+          "speakerEn": "Rama",
+          "dialogueEn": "First I will check her power."
         },
         {
           "id": "bk-08-03",
@@ -869,7 +973,10 @@
             "width": 0.5034530386740331,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Hearing the twang of the bow, Tataka charged. She attacked with dust and stones; the two brothers stood against her.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-08-04",
@@ -892,7 +999,10 @@
             "width": 0.4965469613259669,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The sage told them to end the threat before dusk. Rama's arrow killed Tataka, and the forest's fear lifted.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-08-v1.png",
@@ -904,7 +1014,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Tataka's Forest",
+      "framingEn": "The first hard encounter."
     },
     {
       "id": "bk-09",
@@ -933,7 +1045,10 @@
             "width": 0.4972375690607735,
             "height": 0.4843462246777164,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Pleased, Vishvamitra gave Rama knowledge of the divine weapons. Rama accepted them with humility.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-09-02",
@@ -956,7 +1071,10 @@
             "width": 0.5027624309392266,
             "height": 0.4843462246777164,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Rama asked not only how to release the weapons but how to recall them. The sage taught him the method of withdrawing them.",
+          "speakerEn": "Rama",
+          "dialogueEn": "How are these recalled?"
         },
         {
           "id": "bk-09-03",
@@ -978,7 +1096,10 @@
             "width": 0.4972375690607735,
             "height": 0.5156537753222836,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "In the story of the hermitage, Vishvamitra described Vamana: Vishnu asked King Bali for three paces of land, then measured the worlds with his cosmic form.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-09-04",
@@ -1002,7 +1123,10 @@
             "width": 0.5027624309392266,
             "height": 0.5156537753222836,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "This was Siddhashrama itself. Rama and Lakshmana received the greetings of the resident sages and prepared to guard the yajna.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-09-v1.png",
@@ -1014,7 +1138,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Weapons and Siddhashrama",
+      "framingEn": "A lesson in restraint alongside strength."
     },
     {
       "id": "bk-10",
@@ -1044,7 +1170,10 @@
             "width": 0.5048342541436464,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "When the yajna began, Vishvamitra observed a vow of silence. Rama and Lakshmana kept careful watch for six days and nights.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-10-02",
@@ -1067,7 +1196,10 @@
             "width": 0.4951657458563536,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "On the last day, Maricha and Subahu attacked. Rama's Manavastra hurled Maricha far off toward the sea; he survived.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-10-03",
@@ -1091,7 +1223,10 @@
             "width": 0.5048342541436464,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Subahu's assault continued. Rama struck him down and drove off the remaining attackers.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-10-04",
@@ -1115,7 +1250,10 @@
             "width": 0.4951657458563536,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The yajna was completed without hindrance. The sages praised the two brothers, and Vishvamitra expressed his satisfaction with their valor.",
+          "speakerEn": "Vishvamitra",
+          "dialogueEn": "You have protected the yajna."
         }
       ],
       "asset": "assets/bk-10-v2.png",
@@ -1127,7 +1265,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Guarding the Yajna",
+      "framingEn": "Six days and nights of vigil."
     },
     {
       "id": "bk-11",
@@ -1157,7 +1297,10 @@
             "width": 0.4966159052453469,
             "height": 0.3330827067669173,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The sage was going to Mithila for King Janaka's yajna. Rama and Lakshmana went along with him, wishing to see the bow of Shiva.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-11-02",
@@ -1181,7 +1324,10 @@
             "width": 0.5033840947546532,
             "height": 0.3330827067669173,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "While resting by the river Shona, Vishvamitra told the story of Kusha and his four sons. Among them was King Kushanabha.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-11-03",
@@ -1203,7 +1349,10 @@
             "width": 0.4966159052453469,
             "height": 0.3323308270676692,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Kushanabha's hundred daughters said they would not accept the wind-god's marriage proposal without their father's consent. The enraged Vayu twisted their bodies. This was an injustice done to them.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-11-04",
@@ -1225,7 +1374,10 @@
             "width": 0.5033840947546532,
             "height": 0.3323308270676692,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The daughters told their father what had happened. Kushanabha praised their patience and gave them love and support.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-11-05",
@@ -1247,7 +1399,10 @@
             "width": 0.4966159052453469,
             "height": 0.33458646616541354,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The daughters were married to the righteous Brahmadatta. According to the story, at the time of the marriage their bodies were restored to health.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-11-06",
@@ -1270,7 +1425,10 @@
             "width": 0.5033840947546532,
             "height": 0.33458646616541354,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Kushanabha's son Gadhi was Vishvamitra's father. The sage also told of his sister Satyavati and her form as the river Kaushiki.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-11-v1.png",
@@ -1282,7 +1440,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "The Road to Mithila and Old Tales",
+      "framingEn": "On the journey, Vishvamitra recounts the history of his lineage."
     },
     {
       "id": "bk-12",
@@ -1311,7 +1471,10 @@
             "width": 0.4993093922651934,
             "height": 0.4990791896869245,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "On the bank of the Ganga, Rama asked why she flows through the three worlds. The sage began the story of Himavan's daughters, Ganga and Uma.",
+          "speakerEn": "Rama",
+          "dialogueEn": "How does the Ganga flow through all three worlds?"
         },
         {
           "id": "bk-12-02",
@@ -1336,7 +1499,10 @@
             "width": 0.5006906077348067,
             "height": 0.4990791896869245,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Ganga went to the realm of the gods, and Uma was married to Shiva. The gods' intervention distressed Uma; Agni took on the divine seed.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-12-03",
@@ -1359,7 +1525,10 @@
             "width": 0.4993093922651934,
             "height": 0.5009208103130756,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Through Agni and Ganga, that fiery seed reached the reed grove of Sharavana. There Kumara was born, and the six Krittikas raised him.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-12-04",
@@ -1382,7 +1551,10 @@
             "width": 0.5006906077348067,
             "height": 0.5009208103130756,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Raised by the six Krittikas, Kumara came to be called Shanmukha and Kartikeya. The gods made him their commander.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-12-v3.png",
@@ -1394,7 +1566,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Ganga and Kartikeya",
+      "framingEn": "A tale of the gods told on the bank of the Ganga."
     },
     {
       "id": "bk-13",
@@ -1424,7 +1598,10 @@
             "width": 0.5,
             "height": 0.3323308270676692,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "King Sagara had children by two queens: Asamanjasa from Keshini, and sixty thousand sons from Sumati. Because of his cruel conduct, Asamanjasa was exiled.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-13-02",
@@ -1447,7 +1624,10 @@
             "width": 0.5,
             "height": 0.3323308270676692,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Indra carried off the horse of Sagara's sacrifice. To complete the yajna, the king sent his sons to search for it.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-13-03",
@@ -1470,7 +1650,10 @@
             "width": 0.5,
             "height": 0.33458646616541354,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Unable to find the horse, the sons began digging into the earth. Many creatures were thrown into distress; searching on, they reached Kapila's hermitage.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-13-04",
@@ -1492,7 +1675,10 @@
             "width": 0.5,
             "height": 0.33458646616541354,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Taking Kapila himself for the thief, the sons moved to attack him. By the fire of his anger, they were burned to ashes.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-13-05",
@@ -1513,7 +1699,10 @@
             "width": 0.5,
             "height": 0.3330827067669173,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "After much time had passed, Sagara sent his grandson Anshuman. He found the horse and the ashes of his uncles, and sought water to offer them libations.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-13-06",
@@ -1535,7 +1724,10 @@
             "width": 0.5,
             "height": 0.3330827067669173,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Garuda told him that only the waters of the Ganga could redeem them. Anshuman returned with the horse, and Sagara completed the yajna.",
+          "speakerEn": "Garuda",
+          "dialogueEn": "The waters of the Ganga are needed for them."
         }
       ],
       "asset": "assets/bk-13-v2.png",
@@ -1547,7 +1739,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Sagara's Sons and the Lost Horse",
+      "framingEn": "Vishvamitra tells the story of Rama's ancestors."
     },
     {
       "id": "bk-14",
@@ -1574,7 +1768,10 @@
             "width": 0.498046875,
             "height": 0.24609375,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "After Sagara, neither Anshuman nor Dilipa could bring down the Ganga. Dilipa's son Bhagiratha resolved to accomplish the task.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-14-02",
@@ -1596,7 +1793,10 @@
             "width": 0.501953125,
             "height": 0.24609375,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Brahma was pleased by Bhagiratha's penance. He said the earth could not bear the Ganga's mighty force; Shiva's help was needed.",
+          "speakerEn": "Brahma",
+          "dialogueEn": "Only Shiva can bear the force of the Ganga."
         },
         {
           "id": "bk-14-03",
@@ -1619,7 +1819,10 @@
             "width": 0.498046875,
             "height": 0.25390625,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Bhagiratha won Shiva's favor. When the Ganga descended, Shiva caught her force in his matted locks.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-14-04",
@@ -1641,7 +1844,10 @@
             "width": 0.501953125,
             "height": 0.25390625,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "At Bhagiratha's prayer, Shiva released the Ganga. The stream divided into seven courses, and one followed behind Bhagiratha.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-14-05",
@@ -1662,7 +1868,10 @@
             "width": 0.498046875,
             "height": 0.2421875,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The swift Ganga flooded the sage Jahnu's sacrificial ground. The enraged sage drank up the river, and its flow stopped.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-14-06",
@@ -1685,7 +1894,10 @@
             "width": 0.501953125,
             "height": 0.2421875,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "At the gods' prayer, Jahnu let the Ganga flow again. Through this bond she also came to be called Jahnavi, and continued on her way.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-14-07",
@@ -1707,7 +1919,10 @@
             "width": 0.498046875,
             "height": 0.2578125,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The waters of the Ganga reached the ashes of Sagara's sons. Their redemption was accomplished, and Bhagiratha offered libations to his ancestors.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-14-08",
@@ -1730,7 +1945,10 @@
             "width": 0.501953125,
             "height": 0.2578125,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Brahma praised Bhagiratha's effort. Vishvamitra finished the story; Rama and Lakshmana made ready to continue the journey.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-14-v1.png",
@@ -1742,7 +1960,9 @@
         "columns": 2,
         "rows": 4,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Bhagiratha and the Descent of the Ganga",
+      "framingEn": "Several generations pass; the story of Bhagiratha."
     },
     {
       "id": "bk-15",
@@ -1771,7 +1991,10 @@
             "width": 0.49746192893401014,
             "height": 0.3398496240601504,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Near Vishala, Vishvamitra told the story of the gods and demons churning the ocean. They had come together to obtain the nectar of immortality.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-15-02",
@@ -1795,7 +2018,10 @@
             "width": 0.5025380710659898,
             "height": 0.3398496240601504,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Mount Mandara became the churning rod and Vasuki the rope. When the mountain began to sink, Vishnu, in the form of a tortoise, held it up.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-15-03",
@@ -1817,7 +2043,10 @@
             "width": 0.49746192893401014,
             "height": 0.33533834586466166,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The churning produced the lethal poison Halahala. Seeing the worlds in peril, Shiva drank the poison, and disaster was averted.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-15-04",
@@ -1841,7 +2070,10 @@
             "width": 0.5025380710659898,
             "height": 0.33533834586466166,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The churning brought forth Dhanvantari, the apsaras, Varuni, and the nectar of immortality. A dispute arose between the gods and the demons over the nectar.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-15-05",
@@ -1864,7 +2096,10 @@
             "width": 1,
             "height": 0.324812030075188,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "With Vishnu's help, the gods obtained the nectar. After the struggle, the gods were victorious; the story then turned to Diti's sorrow.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-15-v2.png",
@@ -1876,7 +2111,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "The Churning of the Ocean and Vishalapuri",
+      "framingEn": "Another old tale, told on the road to Vishala."
     },
     {
       "id": "bk-16",
@@ -1904,7 +2141,10 @@
             "width": 0.5013812154696132,
             "height": 0.498158379373849,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Grieving the loss of her sons, Diti wished for a son who could defeat Indra. Kashyapa told her the discipline of a strict vow.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-16-02",
@@ -1926,7 +2166,10 @@
             "width": 0.4986187845303867,
             "height": 0.498158379373849,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Fearing his own death, Indra served Diti while watching for an opportunity. When she faltered in her vow, he split the womb into seven parts.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-16-03",
@@ -1949,7 +2192,10 @@
             "width": 0.5013812154696132,
             "height": 0.501841620626151,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Diti asked that the seven fragments be given the status of the Marut gods. Indra agreed, and a reconciliation took place between them.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-16-04",
@@ -1974,7 +2220,10 @@
             "width": 0.4986187845303867,
             "height": 0.501841620626151,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "In this same region stood the city of a king named Vishala. His descendant Sumati welcomed Vishvamitra and the two princes.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-16-v2.png",
@@ -1986,7 +2235,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Diti and the Maruts",
+      "framingEn": "From the wish for revenge to reconciliation."
     },
     {
       "id": "bk-17",
@@ -2015,7 +2266,10 @@
             "width": 0.4957698815566836,
             "height": 0.33157894736842103,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Beyond Vishala they came upon a deserted hermitage. Vishvamitra told them that Gautama and Ahalya had once lived there.",
+          "speakerEn": "Rama",
+          "dialogueEn": "Why is this hermitage so deserted?"
         },
         {
           "id": "bk-17-02",
@@ -2038,7 +2292,10 @@
             "width": 0.5042301184433164,
             "height": 0.33157894736842103,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Indra took Gautama's form and came to Ahalya. Ahalya recognized him, yet still accepted him. When Gautama returned, he cursed them both in his anger.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-17-03",
@@ -2060,7 +2317,10 @@
             "width": 0.4957698815566836,
             "height": 0.3225563909774436,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Ahalya was to remain invisible and perform penance; the curse was to end with Rama's arrival.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-17-04",
@@ -2084,7 +2344,10 @@
             "width": 0.5042301184433164,
             "height": 0.3225563909774436,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Rama and Lakshmana entered the hermitage, and Ahalya appeared. Both honored her; Ahalya welcomed her guests.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-17-05",
@@ -2109,7 +2372,10 @@
             "width": 1,
             "height": 0.3458646616541353,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Gautama too returned and was reunited with Ahalya. Taking their blessing, Vishvamitra and the two brothers went on toward Mithila.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-17-v1.png",
@@ -2121,7 +2387,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "Ahalya's Hermitage",
+      "framingEn": "On the present journey, the old story of Gautama and Ahalya is introduced."
     },
     {
       "id": "bk-18",
@@ -2151,7 +2419,10 @@
             "width": 0.5027624309392266,
             "height": 0.4990791896869245,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "In Mithila, King Janaka welcomed Vishvamitra. The sage introduced Rama and Lakshmana and told of their defense of the yajna.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-18-02",
@@ -2176,7 +2447,10 @@
             "width": 0.4972375690607735,
             "height": 0.4990791896869245,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Shatananda, Janaka's priest, was the son of Gautama and Ahalya. He was overjoyed to hear that his mother was freed from her curse.",
+          "speakerEn": "Shatananda",
+          "dialogueEn": "Was my mother received with honor?"
         },
         {
           "id": "bk-18-03",
@@ -2199,7 +2473,10 @@
             "width": 1,
             "height": 0.5009208103130756,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Shatananda began telling Rama the earlier life of his teacher. Vishvamitra had once been a king; through penance and self-discipline he became a great sage.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-18-v2.png",
@@ -2211,7 +2488,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "Mithila and Shatananda",
+      "framingEn": "Shatananda tells the story of Vishvamitra's earlier life."
     },
     {
       "id": "bk-19",
@@ -2241,7 +2520,10 @@
             "width": 0.4990234375,
             "height": 0.24869791666666666,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "King Vishvamitra arrived at Vashishtha's hermitage with his army. With Shabala's help, Vashishtha arranged food for everyone.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-19-02",
@@ -2264,7 +2546,10 @@
             "width": 0.5009765625,
             "height": 0.24869791666666666,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Seeing Shabala's power, the king wanted to take her. He offered wealth, but Vashishtha said the cow was the foundation of his hermitage's work.",
+          "speakerEn": "Vashishtha",
+          "dialogueEn": "I cannot give you Shabala."
         },
         {
           "id": "bk-19-03",
@@ -2288,7 +2573,10 @@
             "width": 0.4990234375,
             "height": 0.24544270833333334,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The king tried to take Shabala by force. She returned to Vashishtha and asked for help; the sage gave her leave to defend herself.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-19-04",
@@ -2312,7 +2600,10 @@
             "width": 0.5009765625,
             "height": 0.24544270833333334,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Armies born from Shabala defeated the king's forces. Many of his sons were also killed; Vishvamitra sank into deep grief and anger.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-19-05",
@@ -2334,7 +2625,10 @@
             "width": 0.4990234375,
             "height": 0.23372395833333334,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Through penance, Vishvamitra obtained divine weapons from Shiva. Then he returned to Vashishtha's hermitage for revenge and attacked him.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-19-06",
@@ -2356,7 +2650,10 @@
             "width": 0.5009765625,
             "height": 0.23372395833333334,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vashishtha's Brahmadanda rendered all the weapons powerless. The king understood that there was greater strength in penance and discipline than in physical might.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-19-07",
@@ -2377,7 +2674,10 @@
             "width": 1,
             "height": 0.2721354166666667,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "After his defeat, Vishvamitra turned away from the pride of royal power and chose the path of hard penance. His goal was to become a Brahmarshi.",
+          "speakerEn": "Vishvamitra",
+          "dialogueEn": "Now I will take the path of penance and discipline."
         }
       ],
       "asset": "assets/bk-19-v1.png",
@@ -2389,7 +2689,9 @@
         "columns": 2,
         "rows": 4,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "King Kaushika and Shabala",
+      "framingEn": "Shatananda's tale: Vishvamitra's earlier life."
     },
     {
       "id": "bk-20",
@@ -2417,7 +2719,10 @@
             "width": 0.5042301184433164,
             "height": 0.3308270676691729,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "After his penance, Vishvamitra was called a Rajarshi, but he wished to advance further still. At this time, King Trishanku desired to go to heaven in his own body.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-20-02",
@@ -2440,7 +2745,10 @@
             "width": 0.4957698815566836,
             "height": 0.3308270676691729,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vashishtha refused to perform this rite. Trishanku went to his sons; their curse changed the king's form.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-20-03",
@@ -2462,7 +2770,10 @@
             "width": 0.5042301184433164,
             "height": 0.3406015037593985,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Having lost all support, Trishanku came to Vishvamitra. The sage heard his plight and promised to help.",
+          "speakerEn": "Trishanku",
+          "dialogueEn": "Now I have come to seek refuge with you."
         },
         {
           "id": "bk-20-04",
@@ -2485,7 +2796,10 @@
             "width": 0.4957698815566836,
             "height": 0.3406015037593985,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vishvamitra invited the sages to the yajna. Some mocked him and refused to come; in anger, the sage cursed them too.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-20-05",
@@ -2507,7 +2821,10 @@
             "width": 0.5042301184433164,
             "height": 0.32857142857142857,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "By the power of the yajna, Trishanku rose upward, but Indra sent him back down. He began falling head-first and cried out to Vishvamitra.",
+          "speakerEn": "Trishanku",
+          "dialogueEn": "Great sage, save me!"
         },
         {
           "id": "bk-20-06",
@@ -2530,7 +2847,10 @@
             "width": 0.4957698815566836,
             "height": 0.32857142857142857,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vishvamitra halted his fall and began creating new constellations. By agreement with the gods, Trishanku remained in that same position in the sky.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-20-v2.png",
@@ -2542,7 +2862,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "The Story of Trishanku",
+      "framingEn": "Shatananda's telling of the old story continues."
     },
     {
       "id": "bk-21",
@@ -2570,7 +2892,10 @@
             "width": 0.4957698815566836,
             "height": 0.3157894736842105,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Indra carried off King Ambarisha's sacrificial animal. The priests demanded a substitute, which put a boy's life in danger.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-21-02",
@@ -2594,7 +2919,10 @@
             "width": 0.5042301184433164,
             "height": 0.3157894736842105,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "After speaking with Richika and his family, Ambarisha took the middle son, Shunahshepa, with him. The boy feared being sacrificed in the ritual.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-21-03",
@@ -2617,7 +2945,10 @@
             "width": 0.4957698815566836,
             "height": 0.3172932330827068,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "At Pushkara, Shunahshepa sought refuge with his kinsman Vishvamitra. He explained his helplessness, caught between his parents' and the king's decision.",
+          "speakerEn": "Shunahshepa",
+          "dialogueEn": "Great sage, save my life."
         },
         {
           "id": "bk-21-04",
@@ -2640,7 +2971,10 @@
             "width": 0.5042301184433164,
             "height": 0.3172932330827068,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vishvamitra's own sons refused to go in his place. In anger, the sage cursed them, then taught the boy prayers for protection.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-21-05",
@@ -2663,7 +2997,10 @@
             "width": 1,
             "height": 0.3669172932330827,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "At the yajna, Shunahshepa recited the prayers he had been taught. Pleased, Indra granted him long life; Ambarisha's rite was also completed, and the boy was saved.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-21-v2.png",
@@ -2675,7 +3012,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "The Saving of Shunahshepa",
+      "framingEn": "A boy's prayer and the saving of his life."
     },
     {
       "id": "bk-22",
@@ -2703,7 +3042,10 @@
             "width": 0.5033840947546532,
             "height": 0.3157894736842105,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The apsara Menaka came to Lake Pushkara. Vishvamitra turned away from his penance and lived with her for years. Then he realized he had strayed from his goal.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-22-02",
@@ -2725,7 +3067,10 @@
             "width": 0.4966159052453469,
             "height": 0.3157894736842105,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vishvamitra parted from Menaka peacefully and resumed his penance. Even after attaining the rank of Maharshi, he wished to master complete control over the senses.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-22-03",
@@ -2747,7 +3092,10 @@
             "width": 0.5033840947546532,
             "height": 0.3157894736842105,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Indra sent Rambha to break his penance. Vishvamitra recognized her and cursed her, but his anger also diminished his penance.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-22-04",
@@ -2768,7 +3116,10 @@
             "width": 0.4966159052453469,
             "height": 0.3157894736842105,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vishvamitra realized that victory over anger still remained. He took up a strict vow of silence and patience.",
+          "speakerEn": "Vishvamitra",
+          "dialogueEn": "I must conquer my anger too."
         },
         {
           "id": "bk-22-05",
@@ -2790,7 +3141,10 @@
             "width": 0.5033840947546532,
             "height": 0.3684210526315789,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Indra came in the form of a brahmin to beg for food. Vishvamitra gave away all his food and continued his penance without anger.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-22-06",
@@ -2813,7 +3167,10 @@
             "width": 0.4966159052453469,
             "height": 0.3684210526315789,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "At last Brahma proclaimed him a Brahmarshi, and Vashishtha too accepted it. Shatananda ended the story; now Rama was to see the bow of Shiva.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-22-v2.png",
@@ -2825,7 +3182,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "The Victory over the Mind",
+      "framingEn": "Vishvamitra's penance moves from outward power toward self-mastery."
     },
     {
       "id": "bk-23",
@@ -2855,7 +3214,10 @@
             "width": 0.5033840947546532,
             "height": 0.31278195488721805,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Janaka told the history of the bow of Shiva, kept safe in his lineage. It had come to his ancestor Devarata as a trust from the gods.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-23-02",
@@ -2877,7 +3239,10 @@
             "width": 0.4966159052453469,
             "height": 0.31278195488721805,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Janaka told how he had found Sita while ploughing the sacrificial ground. He raised her as his own daughter and named her Sita.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-23-03",
@@ -2902,7 +3267,10 @@
             "width": 0.5033840947546532,
             "height": 0.33383458646616543,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Janaka had decided to marry Sita to whoever could string the bow. The kings who had come before failed, and even their assault proved fruitless.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-23-04",
@@ -2926,7 +3294,10 @@
             "width": 0.4966159052453469,
             "height": 0.33383458646616543,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Attendants brought the heavy bow. With Vishvamitra's permission, Rama reached out to look at it, lift it, and string it.",
+          "speakerEn": "Vishvamitra",
+          "dialogueEn": "Child Rama, look at this bow."
         },
         {
           "id": "bk-23-05",
@@ -2951,7 +3322,10 @@
             "width": 0.5033840947546532,
             "height": 0.3533834586466165,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Rama lifted the bow with ease and strung it. As he drew it, it broke; its resounding crash left the assembly stunned.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-23-06",
@@ -2977,7 +3351,10 @@
             "width": 0.4966159052453469,
             "height": 0.3533834586466165,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Janaka proposed Sita's marriage to Rama. With Vishvamitra's consent, he sent messengers to summon Dasharatha.",
+          "speakerEn": "Janaka",
+          "dialogueEn": "I shall give Sita in marriage to Rama."
         }
       ],
       "asset": "assets/bk-23-v1.png",
@@ -2989,7 +3366,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "The Bow of Shiva and Sita",
+      "framingEn": "We return to the present in Mithila."
     },
     {
       "id": "bk-24",
@@ -3020,7 +3399,10 @@
             "width": 0.4972375690607735,
             "height": 0.4990791896869245,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The messengers reached Ayodhya. They reported the breaking of the bow, the well-being of both princes, and Janaka's proposal of marriage.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-24-02",
@@ -3045,7 +3427,10 @@
             "width": 0.5027624309392266,
             "height": 0.4990791896869245,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Dasharatha consulted his gurus and ministers. Once agreement was reached, he set out for Mithila with Bharata, Shatrughna, and the royal family.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-24-03",
@@ -3071,7 +3456,10 @@
             "width": 1,
             "height": 0.5009208103130756,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "In Mithila, Janaka welcomed Dasharatha. The king was reunited with his two sons, and preparations for the wedding went forward.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-24-v1.png",
@@ -3083,7 +3471,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "The Marriage Message",
+      "framingEn": "The families of Ayodhya and Mithila come together."
     },
     {
       "id": "bk-25",
@@ -3113,7 +3503,10 @@
             "width": 0.4972375690607735,
             "height": 0.498158379373849,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Janaka summoned his brother Kushadhvaja. Vashishtha recounted Rama's lineage from Ikshvaku down to Dasharatha.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-25-02",
@@ -3138,7 +3531,10 @@
             "width": 0.5027624309392266,
             "height": 0.498158379373849,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Janaka recounted his own lineage from Nimi. He proposed Sita for Rama and his second daughter, Urmila, for Lakshmana.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-25-03",
@@ -3165,7 +3561,10 @@
             "width": 0.4972375690607735,
             "height": 0.501841620626151,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Vishvamitra and Vashishtha proposed that Kushadhvaja's daughters, Mandavi and Shrutakirti, be married to Bharata and Shatrughna. The families agreed.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-25-04",
@@ -3192,7 +3591,10 @@
             "width": 0.5027624309392266,
             "height": 0.501841620626151,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "An auspicious time for the weddings was fixed. Dasharatha had the rites performed for his sons and gave gifts of cows, cloth, and wealth.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-25-v2.png",
@@ -3204,7 +3606,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Two Families and Four Unions",
+      "framingEn": "The families are introduced, and the marriages are agreed upon."
     },
     {
       "id": "bk-26",
@@ -3234,7 +3638,10 @@
             "width": 0.49915397631133673,
             "height": 0.3330827067669173,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Bharata's maternal uncle Yudhajit also arrived in Mithila. Hearing in Ayodhya about his nephews, he had come for the wedding ceremony.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-26-02",
@@ -3258,7 +3665,10 @@
             "width": 0.5008460236886633,
             "height": 0.3330827067669173,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Before the sacred fire, Janaka placed Sita's hand in Rama's. The two performed the marriage rites according to custom.",
+          "speakerEn": "Janaka",
+          "dialogueEn": "This is Sita, your partner in dharma."
         },
         {
           "id": "bk-26-03",
@@ -3281,7 +3691,10 @@
             "width": 0.49915397631133673,
             "height": 0.3330827067669173,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Lakshmana took Urmila's hand. The two circled the sacred fire and received the blessings of their elders.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-26-04",
@@ -3304,7 +3717,10 @@
             "width": 0.5008460236886633,
             "height": 0.3330827067669173,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Bharata was married to Mandavi. The families of Janaka and Kushadhvaja were joined by these new bonds.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-26-05",
@@ -3327,7 +3743,10 @@
             "width": 0.49915397631133673,
             "height": 0.33383458646616543,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Shatrughna was married to Shrutakirti. With the weddings of all four brothers complete, joy filled the assembly.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-26-06",
@@ -3355,7 +3774,10 @@
             "width": 0.5008460236886633,
             "height": 0.33383458646616543,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "All four couples circled the fire and their elders to receive blessings. Amid auspicious music, both families celebrated.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-26-v2.png",
@@ -3367,7 +3789,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Four Weddings",
+      "framingEn": "Each of the four couples remains distinct."
     },
     {
       "id": "bk-27",
@@ -3400,7 +3824,10 @@
             "width": 0.5025380710659898,
             "height": 0.3293233082706767,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "The next morning, Vishvamitra blessed both kings and the princes and set off toward the Himalayas. Dasharatha's party began its journey back to Ayodhya.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-27-02",
@@ -3424,7 +3851,10 @@
             "width": 0.49746192893401014,
             "height": 0.3293233082706767,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Along the way, ill omens appeared and a fierce storm arose. Amid it, Jamadagni's son Parashurama appeared before them, carrying a bow and an axe.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-27-03",
@@ -3446,7 +3876,10 @@
             "width": 0.5025380710659898,
             "height": 0.32781954887218046,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Parashurama told the old history of the two bows of Shiva and Vishnu. The Vaishnava bow in his hand was different from the bow of Shiva that had broken in Mithila.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-27-04",
@@ -3469,7 +3902,10 @@
             "width": 0.49746192893401014,
             "height": 0.32781954887218046,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Dasharatha pleaded for his sons' safety. Parashurama spoke directly to Rama and laid down his challenge.",
+          "speakerEn": "Dasharatha",
+          "dialogueEn": "Grant my sons safety."
         },
         {
           "id": "bk-27-05",
@@ -3491,7 +3927,10 @@
             "width": 1,
             "height": 0.34285714285714286,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Parashurama said that Rama should prove his ability by fitting an arrow to this bow. After that, he wished to duel with him.",
+          "speakerEn": "Parashurama",
+          "dialogueEn": "Show me by fitting an arrow to this bow."
         }
       ],
       "asset": "assets/bk-27-v3.png",
@@ -3503,7 +3942,9 @@
         "columns": 2,
         "rows": 3,
         "lastSpansRow": true
-      }
+      },
+      "titleEn": "Parashurama's Challenge",
+      "framingEn": "A new encounter on the return journey after the weddings."
     },
     {
       "id": "bk-28",
@@ -3532,7 +3973,10 @@
             "width": 0.5027624309392266,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Out of respect for his father, Rama had remained silent until now. Honoring Parashurama, he said he should not be thought incapable.",
+          "speakerEn": "Rama",
+          "dialogueEn": "Now witness my strength."
         },
         {
           "id": "bk-28-02",
@@ -3554,7 +3998,10 @@
             "width": 0.4972375690607735,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Rama took up the Vaishnava bow, strung it, and fitted an arrow. Recognizing his splendor, Parashurama began to grow calm.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-28-03",
@@ -3576,7 +4023,10 @@
             "width": 0.5027624309392266,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Because Parashurama was a brahmin and connected to Vishvamitra, Rama did him no harm. He gave him a choice for the arrow: his swiftness of movement, or the worlds he had earned through penance. Parashurama chose to give up the worlds he had earned.",
+          "speakerEn": "Parashurama",
+          "dialogueEn": "Let the arrow take the worlds I have earned."
         },
         {
           "id": "bk-28-04",
@@ -3598,7 +4048,10 @@
             "width": 0.4972375690607735,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Rama released the arrow. Parashurama acknowledged his greatness, circled him in reverence, and departed for Mount Mahendra.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-28-v1.png",
@@ -3610,7 +4063,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "The Bow's Answer",
+      "framingEn": "Valor joined with propriety."
     },
     {
       "id": "bk-29",
@@ -3639,7 +4094,10 @@
             "width": 0.5027624309392266,
             "height": 0.4990791896869245,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Rama handed the Vaishnava bow to Varuna. Dasharatha embraced him warmly, and the journey continued once more toward Ayodhya.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-29-02",
@@ -3666,7 +4124,10 @@
             "width": 0.4972375690607735,
             "height": 0.4990791896869245,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Ayodhya was decked for celebration. Kaushalya, Sumitra, and Kaikeyi welcomed Sita, Urmila, Mandavi, and Shrutakirti.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-29-03",
@@ -3690,7 +4151,10 @@
             "width": 0.5027624309392266,
             "height": 0.5009208103130756,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Some time later, Bharata and Shatrughna, with their father's and mothers' permission, went with their uncle Yudhajit to their maternal grandfather's home.",
+          "speakerEn": "",
+          "dialogueEn": ""
         },
         {
           "id": "bk-29-04",
@@ -3712,7 +4176,10 @@
             "width": 0.4972375690607735,
             "height": 0.5009208103130756,
             "status": "visually-reviewed-authoring-draft"
-          }
+          },
+          "narrationEn": "Rama and Lakshmana, under their father's guidance, engaged themselves in the affairs of the people. The mutual love between Rama and Sita grew. Here the story of Balakanda comes to its end.",
+          "speakerEn": "",
+          "dialogueEn": ""
         }
       ],
       "asset": "assets/bk-29-v2.png",
@@ -3724,7 +4191,9 @@
         "columns": 2,
         "rows": 2,
         "lastSpansRow": false
-      }
+      },
+      "titleEn": "Return to Ayodhya",
+      "framingEn": "The conclusion of Balakanda; the exile has not yet begun."
     }
   ],
   "pages": [
