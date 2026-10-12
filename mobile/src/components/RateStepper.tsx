@@ -26,6 +26,7 @@ export default function RateStepper({
   step,
   label,
   labelFontFamily,
+  inlineLabel = false,
   style,
 }: {
   value: number;
@@ -36,6 +37,8 @@ export default function RateStepper({
   /** Optional caption above the row (already localized). */
   label?: string;
   labelFontFamily?: string;
+  /** Put the caption left of the row instead of above it (saves a line). */
+  inlineLabel?: boolean;
   style?: StyleProp<ViewStyle>;
 }) {
   const { colors, typography } = useTheme();
@@ -53,9 +56,15 @@ export default function RateStepper({
   );
 
   return (
-    <View style={[styles.block, style]}>
+    <View style={[styles.block, inlineLabel && styles.blockInline, style]}>
       {label ? (
-        <Text style={[styles.label, { color: colors.inkMuted, fontFamily: labelFontFamily }]}>
+        <Text
+          style={[
+            styles.label,
+            inlineLabel && styles.labelInline,
+            { color: colors.inkMuted, fontFamily: labelFontFamily },
+          ]}
+        >
           {label}
         </Text>
       ) : null}
@@ -109,12 +118,14 @@ export default function RateStepper({
 
 const styles = StyleSheet.create({
   block: { alignItems: 'center' },
+  blockInline: { flexDirection: 'row', gap: 10 },
   label: {
     fontSize: 11,
     fontStyle: 'italic',
     includeFontPadding: false,
     marginBottom: 4,
   },
+  labelInline: { fontSize: 12, marginBottom: 0 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   btn: {
     width: 32,

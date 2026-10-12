@@ -8,7 +8,8 @@ import { deities } from './deities';
 import { japamMantras } from './japam';
 import { library, type ContentCategory, type Deity } from './texts';
 
-type BackgroundImage = number;
+import type { BackgroundImage } from './backgroundAsset';
+export type { BackgroundImage } from './backgroundAsset';
 
 type ReaderBackgroundVerse = {
   id?: string;
@@ -70,6 +71,8 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'hare-krishna-mahamantra': backgroundImages.deity_krishna_bansuri,
   'gayatri-mantra': backgroundImages.source_gayatri_savitri_sun,
   'om-namo-bhagavate-vasudevaya': backgroundImages.source_vishnu_narayana,
+  'radha-naam': backgroundImages.deity_radha_krishna,
+  'jai-shri-ram': backgroundImages.deity_rama_darbar,
   ramcharitmanas: backgroundImages.deity_rama_darbar,
   'valmiki-ramayan': backgroundImages.deity_rama_darbar,
   'durga-stotram': backgroundImages.deity_durga_lion,
@@ -83,6 +86,9 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'krishna-chalisa': backgroundImages.deity_krishna_bansuri,
   'vishnu-chalisa': backgroundImages.source_vishnu_narayana,
   'saraswati-chalisa': backgroundImages.deity_saraswati_veena,
+  // Commissioned Khatu Shyam temple plate (shared with khatu-shyam-aarti).
+  'khatu-shyam-chalisa': backgroundImages.theerth_khatu_shyam,
+  'lakshmi-chalisa': backgroundImages.deity_lakshmi,
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,
@@ -104,6 +110,10 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'saraswati-stotram': backgroundImages.deity_saraswati_veena,
   'saraswati-aarti': backgroundImages.deity_saraswati_veena,
   'gayatri-aarti': backgroundImages.source_gayatri_savitri_sun,
+  // The commissioned Khatu Shyam temple plate, so the aarti does not borrow
+  // Krishna's bansuri art (precedent: subrahmanya-ashtakam → Vetrimalai plate).
+  'khatu-shyam-aarti': backgroundImages.theerth_khatu_shyam,
+  'om-jai-lakshmi-mata': backgroundImages.deity_lakshmi,
   'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
   'matribhumi-vandana': backgroundImages.category_stotram_hymn_scroll,
   lingashtakam: shivaStrotamImages.shiva,
@@ -149,6 +159,17 @@ export function getCategoryBackground(categoryId: ContentCategory): BackgroundIm
 export function getDeityBackground(deityId: Deity): BackgroundImage {
   return deityBackgrounds[deityId];
 }
+
+/** Match the guide's declared deity; remembrance guides retain neutral manuscript art. */
+export function getVidhiReadingBackground(vidhi: { deities: readonly string[]; anchor?: string }): BackgroundImage {
+  if (vidhi.anchor !== 'personal-tithi') {
+    for (const deity of vidhi.deities) {
+      if (Object.prototype.hasOwnProperty.call(deityBackgrounds, deity)) return deityBackgrounds[deity as Deity];
+    }
+  }
+  return backgroundImages.category_granth_open_scripture;
+}
+
 
 /**
  * Per-temple Theerth background overrides, keyed by temple id. Used for

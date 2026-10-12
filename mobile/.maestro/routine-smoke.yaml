@@ -55,7 +55,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: e2e-shots/vedansh-home-wordmark
 
 # ── Step 2: Set global reading language to English (More tab) ──
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - waitForAnimationToEnd
 # The ऐप section (Language/Reading size) sits below the fold on standard-height
 # iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —

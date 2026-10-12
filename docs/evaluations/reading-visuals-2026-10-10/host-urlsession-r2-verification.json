@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-10T03:58:33Z",
+  "client": "macOS URLSession with default certificate validation",
+  "scope": "host transport diagnostic; not simulator/app proof",
+  "url": "https://cdn.vedansh.app/reading-backgrounds/82e2664730270637.webp",
+  "status": 200,
+  "bytes": 94904,
+  "sha256": "82e26647302706372c4211649b14fedd1a59d57bbda155180e1357caea48b4bb",
+  "elapsedSeconds": 0.44317102432250977,
+  "sourceHashMatches": true,
+  "securityOverrides": false
+}

@@ -1,0 +1,19 @@
+{
+  "suitesPassed": 8,
+  "testsPassed": 205,
+  "exitCode": 0,
+  "jestEvidence": "jest-results.json",
+  "typecheck": "pass",
+  "focusedLint": {
+    "errors": 0,
+    "existingWarnings": 4
+  },
+  "publisherVerify": "43 approved reader illustrations verified",
+  "publicR2Verification": "43 HTTP 200 responses with exact approved SHA-256 and byte length",
+  "productionExports": [
+    "ios",
+    "android"
+  ],
+  "bundleEvidence": "bundle-assets.json",
+  "nativeOrPhysicalEvidence": "Native fallback, selected cached-file framing, Katha scrolling and controlled-fixture relaunch verified; native R2 delivery and physical performance unverified"
+}

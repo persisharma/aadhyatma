@@ -5,7 +5,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import type { Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import { cardFontByLang, eyebrowTextStyle, indicSafeTag } from '@/utils/langType';
-import { MAX_SHARE_PAGES } from '@/utils/shareCardPages';
+import { MAX_SHARE_PAGES, cardMetricsFor, type ShareCardLayout } from '@/utils/shareCardPages';
 import SharePagesStrip, { type ShareScopeOption } from './SharePagesStrip';
 import SharePagePreview from './SharePagePreview';
 
@@ -75,6 +75,11 @@ type Props = {
   busy?: boolean;
   /** Present for multi-page content. Ignored when `pageCount` is 1. */
   series?: ShareSeriesProps;
+  /**
+   * The card the pages are laid out for. The picture card (kids stories, §76) is 9:16
+   * whatever the target, so the 4:5 Instagram-post row is not offered for it.
+   */
+  cardLayout?: ShareCardLayout;
 };
 
 type RowProps = {
@@ -140,8 +145,10 @@ export default function ShareTargetSheet({
   onClose,
   busy,
   series,
+  cardLayout,
 }: Props) {
   const { colors, spacing, radii } = useTheme();
+  const cardSize = cardMetricsFor(cardLayout);
   const subLabel = eyebrowTextStyle(lang, 12);
   const titleFont = cardFontByLang(lang);
   const multi = series && series.pageCount > 1 ? series : null;
@@ -171,6 +178,7 @@ export default function ShareTargetSheet({
         count={multi.pageCount}
         included={multi.selected[multi.highlighted]}
         renderPage={multi.renderPage}
+        cardSize={cardSize}
         onStep={multi.onPreviewStep}
         onToggle={() => multi.onToggle(multi.highlighted)}
         onDone={() => multi.onView('targets')}
@@ -258,6 +266,7 @@ export default function ShareTargetSheet({
               selected={multi.selected}
               highlighted={multi.highlighted}
               renderPage={multi.renderPage}
+        cardSize={cardSize}
               onHighlight={multi.onHighlight}
               onToggle={multi.onToggle}
               onPreview={() => multi.onView('preview')}
@@ -309,17 +318,19 @@ export default function ShareTargetSheet({
           disabled={busy}
           accessibilityLabel="Share to other apps"
         />
-        <TargetRow
-          lang={lang}
-          icon="instagram"
-          title={pick(lang, { hi: 'Instagram पोस्ट', en: 'Instagram post', gu: 'Instagram પોસ્ટ', kn: 'Instagram ಪೋಸ್ಟ್' })}
-          sub={pick(lang, { hi: 'फ़ीड के लिए 4:5 कार्ड', en: '4:5 card — for the feed', gu: 'ફીડ માટે 4:5 કાર્ડ', kn: 'ಫೀಡ್‌ಗಾಗಿ 4:5 ಕಾರ್ಡ್' })}
-          chips={[...pageChip, '4:5']}
-          onPress={onShareInstagramPost}
-          disabled={busy}
-          accessibilityLabel="Share on Instagram"
-          accessibilityHint="Instagram post, 4 by 5. Copies the caption and hashtags, then opens the share sheet"
-        />
+        {cardLayout === 'picture' ? null : (
+          <TargetRow
+            lang={lang}
+            icon="instagram"
+            title={pick(lang, { hi: 'Instagram पोस्ट', en: 'Instagram post', gu: 'Instagram પોસ્ટ', kn: 'Instagram ಪೋಸ್ಟ್' })}
+            sub={pick(lang, { hi: 'फ़ीड के लिए 4:5 कार्ड', en: '4:5 card — for the feed', gu: 'ફીડ માટે 4:5 કાર્ડ', kn: 'ಫೀಡ್‌ಗಾಗಿ 4:5 ಕಾರ್ಡ್' })}
+            chips={[...pageChip, '4:5']}
+            onPress={onShareInstagramPost}
+            disabled={busy}
+            accessibilityLabel="Share on Instagram"
+            accessibilityHint="Instagram post, 4 by 5. Copies the caption and hashtags, then opens the share sheet"
+          />
+        )}
         <TargetRow
           lang={lang}
           icon="instagram"

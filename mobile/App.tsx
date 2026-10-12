@@ -198,7 +198,7 @@ export default function App() {
     // throwing past every boundary into a dead screen. Bounded by the same
     // timeout as the reads above.
     const ready = async (target: StartTarget | null) => {
-      if (target?.tab !== 'PanchangTab') return target;
+      if (target?.tab !== 'PanchangTab' && target?.tab !== 'VratTab') return target;
       try {
         await preloadPanchangStack();
         return target;

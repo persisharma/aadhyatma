@@ -65,7 +65,7 @@ afterEach(() => {
   mounted = null;
 });
 
-async function renderJapam(): Promise<TestRenderer.ReactTestRenderer> {
+async function renderJapam(mantraId = 'om-namah-shivaya'): Promise<TestRenderer.ReactTestRenderer> {
   let tree: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
@@ -74,7 +74,7 @@ async function renderJapam(): Promise<TestRenderer.ReactTestRenderer> {
           <GitaLanguageProvider initialLang="hi">
             <ShareProvider>
               <JapamCounterProvider>
-                <JapamCounterScreen navigation={nav} route={route} />
+                <JapamCounterScreen navigation={nav} route={{ ...route, params: { mantraId } }} />
               </JapamCounterProvider>
             </ShareProvider>
           </GitaLanguageProvider>
@@ -89,6 +89,15 @@ async function renderJapam(): Promise<TestRenderer.ReactTestRenderer> {
 const texts = (tree: TestRenderer.ReactTestRenderer) =>
   tree.root.findAllByType(Text).map((n) => [n.props.children].flat().join(''));
 
+function byLabel(tree: TestRenderer.ReactTestRenderer, label: string) {
+  return tree.root.findAll(
+    (n) => typeof n.props.onPress === 'function' && n.props.accessibilityLabel === label
+  )[0];
+}
+
+const beadLabel = (tree: TestRenderer.ReactTestRenderer) =>
+  String(tapSurface(tree).props.accessibilityLabel);
+
 function tapSurface(tree: TestRenderer.ReactTestRenderer) {
   return tree.root.findAll(
     (n) =>
@@ -101,25 +110,60 @@ describe('JapamCounter turning mala (design.md §35)', () => {
   test('top bar names the screen, so the mantra is not shown twice', async () => {
     const tree = await renderJapam();
     const t = texts(tree);
-    expect(t).toContain('जप');
+    expect(t).toContain('जपमाला');
     expect(t.filter((s) => s === 'ॐ नमः शिवाय').length).toBeLessThanOrEqual(1);
   });
 
   test('a tap turns one bead and a full mala lands in the tray', async () => {
     const tree = await renderJapam();
-    expect(texts(tree)).toContain('0 / 108');
+    expect(beadLabel(tree)).toContain('0 of 108');
     expect(texts(tree)).toContain('पहली माला आरम्भ');
     await act(async () => {
       tapSurface(tree).props.onPress();
     });
-    expect(texts(tree)).toContain('1 / 108');
+    expect(beadLabel(tree)).toContain('1 of 108');
+    expect(texts(tree)).toContain('/ 108');
     await act(async () => {
       for (let i = 0; i < 107; i++) tapSurface(tree).props.onPress();
     });
     const t = texts(tree);
-    expect(t).toContain('0 / 108');
+    expect(beadLabel(tree)).toContain('0 of 108');
     expect(t).toContain('1'); // tray count
     expect(t).toContain('सुमेरु · माला पलटें');
     expect(t).not.toContain('पहली माला आरम्भ');
+  });
+
+  test('the two reset buttons live behind one ↺ icon', async () => {
+    const tree = await renderJapam();
+    const resetIcon = () => byLabel(tree, 'Reset or clear the count');
+    // Nothing to reset yet: the icon is disabled and no reset copy is on screen.
+    expect(resetIcon().props.disabled).toBe(true);
+    expect(texts(tree)).not.toContain('बीज पुनः ०');
+    await act(async () => {
+      for (let i = 0; i < 5; i++) tapSurface(tree).props.onPress();
+    });
+    expect(resetIcon().props.disabled).toBe(false);
+    await act(async () => {
+      resetIcon().props.onPress();
+    });
+    expect(texts(tree)).toContain('बीज पुनः ०');
+    expect(texts(tree)).toContain('सब साफ़');
+    await act(async () => {
+      byLabel(tree, 'Reset bead count').props.onPress();
+    });
+    expect(beadLabel(tree)).toContain('0 of 108');
+  });
+
+  test('Radha naam japa counts one bead per name', async () => {
+    const tree = await renderJapam('radha-naam');
+    const t = texts(tree);
+    expect(t).toContain('राधा');
+    expect(t).toContain('राधा नाम जप');
+    expect(t).toContain('स्पर्श करें · हर नाम एक मनका');
+    expect(t.some((x) => /^आज \d+ नाम$/.test(x))).toBe(true);
+    await act(async () => {
+      tapSurface(tree).props.onPress();
+    });
+    expect(beadLabel(tree)).toContain('1 of 108');
   });
 });

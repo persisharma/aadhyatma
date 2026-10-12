@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-10",
+  "fullJestBeforeFinalFrameCorrection": {
+    "suites": 236,
+    "tests": 2181,
+    "result": "passed"
+  },
+  "finalFocusedJest": {
+    "suites": 6,
+    "tests": 86,
+    "result": "passed"
+  },
+  "typescript": "passed",
+  "focusedEslint": {
+    "files": 18,
+    "result": "passed",
+    "warnings": 0
+  },
+  "sourceManifest": {
+    "assets": 45,
+    "result": "passed"
+  },
+  "publicR2": {
+    "assets": 45,
+    "http200": 45,
+    "fullSha256Matches": 45,
+    "tlsVerification": "default enabled"
+  },
+  "finalHermesExport": {
+    "ios": "passed",
+    "android": "passed",
+    "assetRecord": "bundle-assets.json"
+  },
+  "nativeEvidence": {
+    "platform": "iOS 26.5 Expo Go",
+    "device": "Vedansh-Reading-Art-QA",
+    "artworkTransport": "hash-identical seeded QA fixtures",
+    "successfulNativeR2Download": "unverified - proxy TLS -1200",
+    "physicalDevicePerformance": "unverified",
+    "remainingLargeAndLanguageCoverage": "pending",
+    "latestNativeR2Attempt": "2026-10-10 simulator local 00:59; TLS -1200"
+  },
+  "release": "local unreleased",
+  "preview": {
+    "browser": "Codex in-app browser",
+    "combinedComparisonsReviewed": 2,
+    "nativeExamplesAnchor": "passed",
+    "artworkCorrectionAnchor": "passed",
+    "consoleWarningsAndErrors": 0,
+    "allFileAndImageReferences": "passed",
+    "leftOpen": true
+  },
+  "finalFullJest": {
+    "suites": 236,
+    "tests": 2183,
+    "result": "passed",
+    "after": "independent warm-cache lookup fix"
+  },
+  "cacheFollowUp": {
+    "regressionFailedBeforeFix": true,
+    "cacheTests": 23,
+    "result": "passed",
+    "typescript": "passed",
+    "focusedEslint": "passed",
+    "nativeRestartRecord": "native-cache-restart-verification.json",
+    "nativeR2RetryRecord": "native-r2-retry-fixture.json",
+    "nativeTransportResult": "TLS -1200; bundled fallback and navigation verified; fixture restored"
+  }
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PanchangScreen from '@/screens/PanchangScreen';
 import { lazyScreen } from './lazyScreen';
-import type { PanchangStackParamList } from './types';
+import type { PanchangHomeMode, PanchangStackParamList } from './types';
 
 /**
  * The Panchang stack is itself already behind a dynamic boundary
@@ -50,10 +50,10 @@ const Stack = createNativeStackNavigator<PanchangStackParamList>();
 // The Panchang tab is a stack so the "Vrat & Parv" catalog journey
 // (list → detail) pushes within the tab instead of jumping to Home. The
 // katha reader itself still lives in HomeStack; "Read Katha" routes there.
-export default function PanchangStackNavigator() {
+export default function PanchangStackNavigator({ initialMode = 'calendar' }: { initialMode?: PanchangHomeMode }) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="PanchangHome" component={PanchangScreen} />
+      <Stack.Screen name="PanchangHome" component={PanchangScreen} initialParams={{ initialTab: initialMode }} />
       <Stack.Screen
         name="ObservanceList"
         component={ObservanceListScreen}

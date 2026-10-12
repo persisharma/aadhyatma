@@ -134,6 +134,7 @@ export default function HanumanAshtakReaderScreen({ navigation, route }: Props) 
             keyExtractor={(v) => v.id}
             renderItem={({ item, index }) => (
               <ShivaStrotamVersePage
+                showIllustration={index === 0}
                 verse={item}
                 sourceId="hanuman-ashtak"
                 width={width}

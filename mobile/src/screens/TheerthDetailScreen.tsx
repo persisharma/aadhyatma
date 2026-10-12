@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -8,7 +8,12 @@ import { contentByLang, pick } from '@/utils/localize';
 import { meaningToken, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getTheerthBackground, getTheerthIllustration } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingBanner from '@/components/ReadingBanner';
 import LanguageToggle from '@/components/LanguageToggle';
+import LibraryCard from '@/components/LibraryCard';
+import { useNewContent } from '@/contexts/NewContentContext';
+import { navigateToEntryStart } from '@/navigation/entryRoutes';
+import { relatedReadingsForDeity } from '@/data/theerth/relatedReadings';
 import { getTempleDetailById } from '@/data/theerth/temples';
 import type { Deity } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -52,6 +57,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { share, busy: shareBusy } = useShare();
+  const { markSeen } = useNewContent();
 
   // The reading loads here, on the screen the user opened — see
   // `loadDetails()` in temples.ts for why it is not on the launch path.
@@ -72,6 +78,8 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   const name = contentByLang(lang, temple.nameHi, temple.nameEn);
   const cityState = `${contentByLang(lang, temple.cityHi, temple.cityEn)}, ${contentByLang(lang, temple.stateHi, temple.stateEn)}`;
   const illustration = getTheerthIllustration(temple.id);
+  // The presiding deity's shipped aarti + chalisa (design.md §27 item 10).
+  const relatedReadings = relatedReadingsForDeity(temple.deity);
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -164,7 +172,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
               testID="theerth-illustration"
               accessible
               accessibilityRole="image"
-              accessibilityLabel={name}
+              accessibilityLabel={contentByLang(lang, 'पठन चित्र', 'Reading illustration')}
               style={[
                 styles.illustrationFrame,
                 {
@@ -175,16 +183,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
                 },
               ]}
             >
-              {/* The plates are square with the artwork in the upper part; a
-                  5:4 window anchored to the top keeps the murti and mandap in
-                  view without a centred crop lopping off the canopy. The square
-                  is sized by a View, not the Image: RN injects a static
-                  require's intrinsic size (1024 pt) as the Image's default
-                  height, which defeats aspectRatio and zooms the frame into
-                  the top-centre of the plate. */}
-              <View style={styles.illustrationSquare}>
-                <Image source={illustration} style={styles.illustrationImage} resizeMode="cover" />
-              </View>
+              <ReadingBanner source={illustration} />
             </View>
           ) : null}
 
@@ -240,6 +239,37 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
               />
             </View>
           ))}
+
+          {/* आरती व चालीसा (design.md §27 item 10): the way from a shrine to the
+              readings sung there. Derived from the presiding deity, so a temple
+              whose deity has no shipped chalisa/aarti renders nothing here
+              rather than an empty heading. Cards are the library's own
+              LibraryCard, so NEW badges and ＋ add-to-routine behave exactly as
+              on Home and the deity hub. */}
+          {relatedReadings.length > 0 ? (
+            <View testID="theerth-related-readings">
+              <Ornament colors={colors} />
+              <SectionBlock
+                labelHi="आरती व चालीसा"
+                labelEn="Aarti & Chalisa"
+                lang={lang}
+                colors={colors}
+                typography={typography}
+              />
+              <View style={styles.relatedList}>
+                {relatedReadings.map((entry) => (
+                  <LibraryCard
+                    key={entry.id}
+                    entry={entry}
+                    onPress={() => {
+                      markSeen(entry.id);
+                      navigateToEntryStart(navigation, entry);
+                    }}
+                  />
+                ))}
+              </View>
+            </View>
+          ) : null}
 
           <Text
             style={{
@@ -366,18 +396,13 @@ const styles = StyleSheet.create({
   },
   illustrationFrame: {
     width: 'auto',
-    aspectRatio: 5 / 4,
     borderWidth: 1,
     overflow: 'hidden',
     marginTop: 4,
   },
-  illustrationSquare: {
-    width: '100%',
-    aspectRatio: 1,
-  },
-  illustrationImage: {
-    width: '100%',
-    height: '100%',
+  relatedList: {
+    gap: 10,
+    marginTop: 4,
   },
   ornamentRow: {
     flexDirection: 'row',

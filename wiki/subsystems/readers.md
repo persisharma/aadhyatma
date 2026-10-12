@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
-last_verified_date: 2026-09-04
+sources: [mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
+last_verified_date: 2026-10-11
 confidence: high
 status: current
 ---
@@ -68,6 +68,47 @@ for the पितृ पक्ष परिचय lessons — `KathaSectionPage`
 `परिचय · n/m` instead of `प्रसंग`. Its closing `NextChapterCard` leaves for another screen
 (`popTo('PitruPakshaOverview')`), so it is in the read-aloud table but not the auto-advance one.
 See [[pitru-shiksha]].
+
+**Prose artwork and delivery (Oct 2026).** The user approved Option 2 on 9 October:
+`KathaSectionPage` uses `ProseReadingCard` as a continuous parchment folio with headings above
+themed art, a gold divider and unrestricted prose. All sections now use a compact 2:1 banner
+up to 360pt wide and 180pt tall. Daan/Pitru teaching-kathas share the folio while retaining
+teaching, sources and reader hand-offs. Katha/Pitru introduction dots sit below the prose viewport;
+the tab-hosted introduction no longer duplicates its bottom safe-area inset.
+`kathaBackgrounds.ts` selects thematic deity art. The shared loader immediately paints 3 KB
+bundled paper; prose plates use an existing neutral manuscript icon until remote art decodes.
+R2 artwork persists by content hash without expiry or revalidation. See [[integrations/reading-artwork]].
+The Oct 10 rollout extracts `ReadingArtwork` for the same painting/divider across seven canonical
+verse layouts (21 reader screens), Daily Verse, Daan landing/journey, Pitru education and Vidhi
+preparation/first conduct step. Verse paintings move above the text onto neutral paper while their
+curated source/verse/kāṇḍa mappings stay intact. `ReadingBanner` replaced the rejected tall
+natural-height proposal with a short rectangle. The user also rejected its focal-crop proposal
+because paintings are clipped. Newly composed complete 2:1 paintings now replace those crops.
+The user specified the Krishna kids-story rendering and separate Reader
+illustrations category; the four detailed painting drafts are superseded. New descriptors,
+aliases, manifest and R2 prefix distinguish standalone 2:1 banners from reading backgrounds.
+`CachedArtwork` shares the existing deferred loader/lifetime cache with the background wrapper.
+Only approved published manifest entries activate banner replacements; background selections
+are independent. The user accepted all 43 detailed Style 3 illustrations for 44 slots, requested
+gadas in the ocean-crossing and Rama–Hanuman scenes, and authorized integration. Both
+corrections are selected. The complete gallery, approval and public hash verification are in
+`docs/evaluations/reading-visuals-2026-10-11/style3-full-set/`. All files are 960×480 and total
+4.45 MiB (61–132 KiB each). All 43 are published to R2 and active in the illustration manifest.
+Background sources, manifest and the shared cache are unchanged. Eight focused suites/205
+tests and TypeScript pass; production iOS/Android exports include none of the new banners.
+These checks do not establish native transport or physical-device performance.
+Dedicated illustrations use `contain` throughout the mapped slots. Manifest dimensions reserve
+geometry without a size probe or layout callback. The frame never waits for downloads or
+changes height on decode. Theerth shares it. Standalone Durga/Daan Katha framing, Katha
+endpoints and controlled-cache relaunch are verified. Native CDN delivery fails simulator TLS
+validation (-1200), while fallback/text/navigation work; the full reader matrix and physical
+performance remain open. Later Vidhi
+steps show the divider without repeating art. Semantic guide art follows declared deities and
+personal-tithi guides remain neutral. Individual reader paging/scroll logic is still separate.
+`ProseParagraph` preserves complete source strings while giving iOS Fabric one extra point of
+drawing height after natural layout, avoiding observed Kannada final-line clipping. Measurement
+resets on source/font/window changes; Android uses natural layout without the extra callback.
+It also protects verse meanings, Gita commentary and Sanskar instruction prose.
 
 **Multi-instance readers** (`ChalisaReaderScreen`, `AartiReaderScreen`, `AshtakamReaderScreen`,
 `SanskarReaderScreen`) dispatch on a `route.params` discriminator through a registry — they do

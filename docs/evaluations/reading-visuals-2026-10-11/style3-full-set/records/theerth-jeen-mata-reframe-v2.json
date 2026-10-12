@@ -1,0 +1,24 @@
+{
+  "id": "theerth-jeen-mata-reframe-v2",
+  "replaces": "theerth-jeen-mata",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/theerth-jeen-mata.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Correct the framing of image 1, preserving its fine detailed storybook rendering and exact 2:1 landscape. Issue to fix: complete highest shrine dome finial at the top. Keep the three bee carvings, exact icon, garlands, bells and whole pavilion. Scale the entire principal subject/shrine/animal/prop group together down by about 20 percent within the SAME 2:1 canvas, adding naturally painted matching sky, ground or courtyard around it. Required: every meaningful subject and key prop completely inside a 6 percent safe margin, particularly the specified clipped points. A camera that is farther back, not a taller canvas. Do not crop, distort, fade away or omit the clipped part. Background tree canopy and distant setting may extend edge to edge. Retain all other details and coherent anatomy; no new people, text, captions, border or UI.",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-f8b174a3-7849-45b0-b646-b2e63f9f6dcd.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/theerth-jeen-mata-reframe-v2.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/theerth-jeen-mata-reframe-v2.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 133966,
+  "sha256": "755512f9b8089fe799e5d6a5e55074929f6ad869336c9835dab5a1c39acc4de9",
+  "tool": "built-in image_gen",
+  "status": "draft",
+  "approved": false
+}

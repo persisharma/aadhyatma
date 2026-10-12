@@ -196,6 +196,7 @@ export default function AshtakamReaderScreen({ navigation, route }: Props) {
             keyExtractor={(v) => v.id}
             renderItem={({ item, index }) => (
               <VersePage
+                showIllustration={index === 0}
                 verse={item}
                 sourceId={ashtakamId}
                 width={width}

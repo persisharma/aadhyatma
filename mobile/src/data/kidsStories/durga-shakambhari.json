@@ -1,0 +1,179 @@
+{
+  "id": "durga-shakambhari",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "story",
+  "coverArt": "sa05",
+  "title": {
+    "en": "Shakambhari: The Mother Who Nourishes",
+    "hi": "शाकंभरी: अन्न देने वाली माँ",
+    "gu": "શાકંભરી: અન્ન આપનાર મા",
+    "kn": "ಶಾಕಂಭರಿ: ಪೋಷಿಸುವ ಮಾತೆ"
+  },
+  "description": {
+    "en": "The Mother brings water and food, protects those in danger, and restores sacred knowledge.",
+    "hi": "माँ जल-अन्न देती हैं, संकट में रक्षा करती हैं और पवित्र ज्ञान लौटाती हैं।",
+    "gu": "મા જળ-અન્ન આપે છે, સંકટમાં રક્ષા કરે છે અને પવિત્ર જ્ઞાન પાછું આપે છે.",
+    "kn": "ಮಾತೆ ನೀರು-ಆಹಾರ ನೀಡಿ ಅಪಾಯದಲ್ಲಿರುವವರನ್ನು ಕಾಪಾಡಿ ಪವಿತ್ರ ಜ್ಞಾನವನ್ನು ಮರಳಿಸುತ್ತಾಳೆ."
+  },
+  "sourceNote": {
+    "en": "An original children’s retelling of Devi Bhagavata 7.28. Drought’s cause is the Purana’s account, not a scientific explanation. War and death have no graphic detail; the takeaway is editorial.",
+    "hi": "देवी भागवत 7.28 का बच्चों के लिए मौलिक रूपांतरण। सूखे का कारण पुराण के वर्णन के अनुसार है, वैज्ञानिक व्याख्या नहीं। युद्ध-मृत्यु का भयावह विवरण नहीं है; सीख संपादकीय है।",
+    "gu": "દેવી ભાગવત 7.28નું બાળકો માટે મૌલિક રૂપાંતર. દુકાળનું કારણ પુરાણના વર્ણન પ્રમાણે છે, વૈજ્ઞાનિક સમજૂતી નથી. યુદ્ધ-મૃત્યુની ભયાનક વિગતો નથી; શીખ સંપાદકીય છે.",
+    "kn": "ದೇವೀ ಭಾಗವತ 7.28ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಬರದ ಕಾರಣ ಪುರಾಣದ ನಿರೂಪಣೆಯಾಗಿದೆ; ವೈಜ್ಞಾನಿಕ ವಿವರಣೆಯಲ್ಲ. ಯುದ್ಧ-ಮರಣದ ಭೀಕರ ವಿವರಗಳಿಲ್ಲ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "Care includes water, food and protection. Notice what others need and help with kindness.",
+    "hi": "देखभाल में जल, भोजन और सुरक्षा आते हैं। दूसरों की आवश्यकता समझें और दया से सहायता करें।",
+    "gu": "કાળજીમાં જળ, ભોજન અને રક્ષણ આવે છે. બીજાની જરૂરિયાત સમજો અને દયાથી મદદ કરો.",
+    "kn": "ಕಾಳಜಿಯಲ್ಲಿ ನೀರು, ಆಹಾರ ಮತ್ತು ರಕ್ಷಣೆ ಸೇರಿವೆ. ಇತರರ ಅಗತ್ಯ ಗಮನಿಸಿ ದಯೆಯಿಂದ ನೆರವಾಗಿ."
+  },
+  "source": {
+    "baseText": "Devi Bhagavata 7.28, Shatakshi/Shakambhari; Swami Vijnanananda (1921)",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/shAkambharIshatAkShImAhAtmya.html",
+      "https://sacred-texts.com/hin/db/bk07ch28.htm",
+      "https://greenmesg.org/stotras/shakambhari/shakambhari_mahatmyam.php"
+    ],
+    "notes": "Full Durgama/Vedas, century-long drought, sages’ prayer, Shatakshi manifestation, nine nights of tears, food and grass provision, protective circle, ten-day campaign and eleventh-day final duel, returned Vedas and gratitude retained. Durgama is distinct from Mahishasura. Many eyes are symbolized in an aura for gentle art; the blue four-armed figure and nourishing produce follow this chapter. Religious drought causality explicitly attributed. No mandatory ritual, invented chant or gore."
+  },
+  "pages": [
+    {
+      "id": "durgama-seizes-the-vedas",
+      "art": "sa01",
+      "source": "Devi Bhagavata 7.28.5–24",
+      "title": {
+        "en": "Knowledge Taken Away",
+        "hi": "ज्ञान छिन गया",
+        "gu": "જ્ઞાન છીનવાયું",
+        "kn": "ಜ್ಞಾನ ಕಸಿಯಲ್ಪಟ್ಟಿತು"
+      },
+      "text": {
+        "en": "The asura Durgama performed tapas and asked Brahma for control of the Vedas. Brahma granted his request. In this Purana account, people then forgot their sacred learning, and the rites that had sustained the devas stopped. Trouble spread across the world.",
+        "hi": "असुर दुर्गम ने तप करके ब्रह्मा से वेदों पर अधिकार माँगा। ब्रह्मा ने वर दिया। पुराण के इस वर्णन में लोग पवित्र विद्या भूल गए और देवताओं को पोषण देने वाले अनुष्ठान रुक गए। संसार में संकट फैल गया।",
+        "gu": "અસુર દુર્ગમે તપ કરીને બ્રહ્મા પાસે વેદોનો અધિકાર માગ્યો. બ્રહ્માએ વર આપ્યો. પુરાણના આ વર્ણનમાં લોકો પવિત્ર વિદ્યા ભૂલી ગયા અને દેવોને પોષણ આપતી વિધિઓ અટકી ગઈ. દુનિયામાં સંકટ ફેલાયું.",
+        "kn": "ಅಸುರ ದುರ್ಗಮ ತಪಸ್ಸು ಮಾಡಿ ಬ್ರಹ್ಮನಿಂದ ವೇದಗಳ ಅಧಿಕಾರ ಕೇಳಿದನು. ಬ್ರಹ್ಮ ವರ ನೀಡಿದನು. ಈ ಪುರಾಣದ ನಿರೂಪಣೆಯಲ್ಲಿ ಜನರು ಪವಿತ್ರ ವಿದ್ಯೆಯನ್ನು ಮರೆತರು; ದೇವತೆಗಳನ್ನು ಪೋಷಿಸುವ ವಿಧಿಗಳು ನಿಂತವು. ಜಗತ್ತಿನಲ್ಲಿ ಸಂಕಟ ಹರಡಿತು."
+      }
+    },
+    {
+      "id": "a-long-drought",
+      "art": "sa02",
+      "source": "Devi Bhagavata 7.28.25–32",
+      "title": {
+        "en": "The Earth Needs Water",
+        "hi": "धरती को जल चाहिए",
+        "gu": "ધરતીને જળ જોઈએ",
+        "kn": "ನೆಲಕ್ಕೆ ನೀರು ಬೇಕು"
+      },
+      "text": {
+        "en": "The story tells that rain ceased and drought lasted a hundred years. Rivers dried, crops failed, and people and animals suffered. The sages went to the Himalayas and prayed to the divine Mother for help. Their need was urgent.",
+        "hi": "कथा में वर्षा रुक गई और सौ वर्ष सूखा पड़ा। नदियाँ सूखीं, फसलें न हुईं और लोग-पशु संकट में थे। ऋषि हिमालय गए और दिव्य माँ से सहायता की प्रार्थना की। सबको तुरंत मदद चाहिए थी।",
+        "gu": "કથામાં વરસાદ અટક્યો અને સો વર્ષ દુકાળ પડ્યો. નદીઓ સૂકાઈ, પાક ન થયા અને લોકો-પશુઓ સંકટમાં હતાં. ઋષિઓ હિમાલય ગયા અને દિવ્ય માને મદદ માટે પ્રાર્થના કરી. સૌને તાત્કાલિક મદદ જોઈતી હતી.",
+        "kn": "ಕಥೆಯಲ್ಲಿ ಮಳೆ ನಿಂತು ನೂರು ವರ್ಷ ಬರವಿತ್ತು. ನದಿಗಳು ಬತ್ತಿ ಬೆಳೆಗಳು ಹಾಳಾದವು; ಜನರು ಮತ್ತು ಪ್ರಾಣಿಗಳು ಸಂಕಟಕ್ಕೊಳಗಾದವು. ಋಷಿಗಳು ಹಿಮಾಲಯಕ್ಕೆ ಹೋಗಿ ದಿವ್ಯ ಮಾತೆಗೆ ನೆರವು ಕೇಳಿದರು. ಎಲ್ಲರಿಗೂ ತುರ್ತು ನೆರವು ಬೇಕಿತ್ತು."
+      }
+    },
+    {
+      "id": "shatakshi-appears",
+      "art": "sa03",
+      "source": "Devi Bhagavata 7.28.33–45",
+      "title": {
+        "en": "Shatakshi Sees Their Sorrow",
+        "hi": "शताक्षी ने दुख देखा",
+        "gu": "શતાક્ષીએ દુઃખ જોયું",
+        "kn": "ಶತಾಕ್ಷಿ ದುಃಖವನ್ನು ಕಂಡಳು"
+      },
+      "text": {
+        "en": "The Mother appeared with many eyes, seeing their suffering. She was blue, with four arms holding a bow, arrows, a lotus and nourishing produce. Because of her many eyes she was called Shatakshi. Compassion filled her gaze.",
+        "hi": "माँ अनेक नेत्रों से सबका दुख देखते हुए प्रकट हुईं। उनका नीला रूप चार भुजाओं में धनुष, बाण, कमल और पोषण देने वाली उपज लिए था। अनेक नेत्रों के कारण उन्हें शताक्षी कहा गया। उनकी दृष्टि करुणा से भरी थी।",
+        "gu": "મા અનેક નેત્રોથી સૌનું દુઃખ જોતાં પ્રગટ થયાં. તેમનું નીલ રૂપ ચાર ભુજામાં ધનુષ, બાણ, કમળ અને પોષણ આપનાર ઉપજ ધારણ કરતું હતું. અનેક નેત્રોને કારણે તેઓ શતાક્ષી કહેવાયાં. તેમની દૃષ્ટિ કરુણાથી ભરેલી હતી.",
+        "kn": "ಮಾತೆ ಅನೇಕ ಕಣ್ಣುಗಳಿಂದ ಎಲ್ಲರ ಕಷ್ಟ ನೋಡುತ್ತ ಪ್ರತ್ಯಕ್ಷಳಾದಳು. ನೀಲಿ ರೂಪದ ನಾಲ್ಕು ಕೈಗಳಲ್ಲಿ ಬಿಲ್ಲು, ಬಾಣಗಳು, ಕಮಲ ಮತ್ತು ಪೋಷಕ ಆಹಾರವಿತ್ತು. ಅನೇಕ ಕಣ್ಣುಗಳಿಂದ ಆಕೆಯನ್ನು ಶತಾಕ್ಷಿ ಎಂದರು. ಆಕೆಯ ದೃಷ್ಟಿ ಕರುಣೆಯಿಂದ ತುಂಬಿತ್ತು."
+      }
+    },
+    {
+      "id": "tears-become-rain",
+      "art": "sa04",
+      "source": "Devi Bhagavata 7.28.38–45",
+      "title": {
+        "en": "Nine Nights of Rain",
+        "hi": "नौ रातों की वर्षा",
+        "gu": "નવ રાતોનો વરસાદ",
+        "kn": "ಒಂಬತ್ತು ರಾತ್ರಿಗಳ ಮಳೆ"
+      },
+      "text": {
+        "en": "Seeing the world’s pain, Shatakshi shed tears for nine nights. In the story, her tears flowed as rain. Rivers and lakes filled again. The long-dry earth received water, and the thirsty people and animals began to recover.",
+        "hi": "संसार का दुख देखकर शताक्षी ने नौ रातों तक आँसू बहाए। कथा में उनके आँसू वर्षा बनकर बहे। नदियाँ और सरोवर फिर भरे। सूखी धरती को जल मिला और प्यासे लोगों-पशुओं को राहत मिलने लगी।",
+        "gu": "દુનિયાનું દુઃખ જોઈ શતાક્ષીએ નવ રાતો સુધી આંસુ વહાવ્યાં. કથામાં તેમનાં આંસુ વરસાદ બની વહ્યાં. નદીઓ અને સરોવરો ફરી ભરાયાં. સૂકી ધરતીને જળ મળ્યું અને તરસ્યા લોકો-પશુઓને રાહત મળવા લાગી.",
+        "kn": "ಜಗತ್ತಿನ ನೋವು ನೋಡಿ ಶತಾಕ್ಷಿ ಒಂಬತ್ತು ರಾತ್ರಿಗಳವರೆಗೆ ಕಣ್ಣೀರು ಸುರಿಸಿದಳು. ಕಥೆಯಲ್ಲಿ ಆಕೆಯ ಕಣ್ಣೀರು ಮಳೆಯಾಗಿ ಹರಿಯಿತು. ನದಿಗಳು ಮತ್ತು ಸರೋವರಗಳು ಮತ್ತೆ ತುಂಬಿದವು. ಒಣನೆಲಕ್ಕೆ ನೀರು ಸಿಕ್ಕಿತು; ಬಾಯಾರಿದ ಜನರು ಮತ್ತು ಪ್ರಾಣಿಗಳು ಚೇತರಿಸತೊಡಗಿದವು."
+      }
+    },
+    {
+      "id": "food-until-the-crops-return",
+      "art": "sa05",
+      "source": "Devi Bhagavata 7.28.46–48",
+      "title": {
+        "en": "The Mother Who Nourishes",
+        "hi": "अन्न देने वाली माँ",
+        "gu": "અન્ન આપનાર મા",
+        "kn": "ಪೋಷಿಸುವ ಮಾತೆ"
+      },
+      "text": {
+        "en": "Until crops could grow again, the Mother gave people fruits, roots and vegetables. She provided grass for the animals too. Her care fed the hungry world. Because she nourished everyone with plant food, she was known as Shakambhari.",
+        "hi": "फसलें लौटने तक माँ ने लोगों को फल, मूल और सब्जियाँ दीं। पशुओं के लिए घास भी दी। उनकी देखभाल से भूखे संसार को भोजन मिला। शाक से सबका पोषण करने के कारण उनका नाम शाकंभरी हुआ।",
+        "gu": "પાક પાછા થાય ત્યાં સુધી માએ લોકોને ફળ, મૂળ અને શાકભાજી આપ્યાં. પશુઓ માટે ઘાસ પણ આપી. તેમની કાળજીથી ભૂખી દુનિયાને ભોજન મળ્યું. શાકથી સૌનું પોષણ કરવાથી તેમનું નામ શાકંભરી પડ્યું.",
+        "kn": "ಬೆಳೆಗಳು ಮತ್ತೆ ಬೆಳೆಯುವವರೆಗೆ ಮಾತೆ ಜನರಿಗೆ ಹಣ್ಣು, ಬೇರು ಮತ್ತು ತರಕಾರಿಗಳನ್ನು ನೀಡಿದಳು. ಪ್ರಾಣಿಗಳಿಗೂ ಹುಲ್ಲು ನೀಡಿದಳು. ಆಕೆಯ ಕಾಳಜಿ ಹಸಿದ ಜಗತ್ತಿಗೆ ಆಹಾರ ಒದಗಿಸಿತು. ಸಸ್ಯಾಹಾರದಿಂದ ಎಲ್ಲರನ್ನು ಪೋಷಿಸಿದ ಆಕೆ ಶಾಕಂಭರಿ ಎಂದು ಕರೆಯಲ್ಪಟ್ಟಳು."
+      }
+    },
+    {
+      "id": "a-circle-of-protection",
+      "art": "sa06",
+      "source": "Devi Bhagavata 7.28.49–60",
+      "title": {
+        "en": "A Circle of Protection",
+        "hi": "रक्षा का प्रकाश-वृत्त",
+        "gu": "રક્ષણનું પ્રકાશવર્તુળ",
+        "kn": "ರಕ್ಷಣೆಯ ಬೆಳಕಿನ ವೃತ್ತ"
+      },
+      "text": {
+        "en": "Durgama heard what had happened and attacked with his army. The Mother surrounded the devas and sages with protective light and stood outside to face him. Many divine shaktis came to help her. The battle continued for ten days.",
+        "hi": "दुर्गम ने यह सुनकर सेना के साथ आक्रमण किया। माँ ने देवताओं और ऋषियों को रक्षा के प्रकाश-वृत्त में रखा और स्वयं बाहर उसका सामना किया। अनेक दिव्य शक्तियाँ सहायता को आईं। युद्ध दस दिन चलता रहा।",
+        "gu": "દુર્ગમે આ સાંભળીને સેના સાથે હુમલો કર્યો. માએ દેવો અને ઋષિઓને રક્ષણના પ્રકાશવર્તુળમાં રાખ્યા અને પોતે બહાર તેનો સામનો કર્યો. અનેક દિવ્ય શક્તિઓ મદદે આવી. યુદ્ધ દસ દિવસ ચાલ્યું.",
+        "kn": "ದುರ್ಗಮ ಇದನ್ನು ಕೇಳಿ ಸೇನೆಯೊಂದಿಗೆ ಆಕ್ರಮಿಸಿದನು. ಮಾತೆ ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳನ್ನು ರಕ್ಷಣೆಯ ಬೆಳಕಿನ ವೃತ್ತದಲ್ಲಿ ಇರಿಸಿ ತಾನು ಹೊರಗೆ ಅವನನ್ನು ಎದುರಿಸಿದಳು. ಅನೇಕ ದಿವ್ಯಶಕ್ತಿಗಳು ನೆರವಿಗೆ ಬಂದವು. ಯುದ್ಧ ಹತ್ತು ದಿನ ಮುಂದುವರಿಯಿತು."
+      }
+    },
+    {
+      "id": "durgamas-defeat",
+      "art": "sa07",
+      "source": "Devi Bhagavata 7.28.61–68",
+      "title": {
+        "en": "The Attack Ends",
+        "hi": "आक्रमण समाप्त हुआ",
+        "gu": "હુમલો સમાપ્ત થયો",
+        "kn": "ಆಕ್ರಮಣ ಕೊನೆಗೊಂಡಿತು"
+      },
+      "text": {
+        "en": "On the eleventh day, Durgama came in his chariot to fight the Mother himself. She countered his attack with her bow. At last she defeated and killed him. The threat ended, and those she protected were safe.",
+        "hi": "ग्यारहवें दिन दुर्गम रथ में स्वयं माँ से लड़ने आया। माँ ने धनुष से उसका आक्रमण रोका। अंत में उन्होंने उसे पराजित कर मार दिया। संकट समाप्त हुआ और उनकी शरण में आए लोग सुरक्षित हुए।",
+        "gu": "અગિયારમા દિવસે દુર્ગમ રથમાં પોતે મા સાથે લડવા આવ્યો. માએ ધનુષથી તેનો હુમલો રોક્યો. અંતે તેમણે તેને હરાવીને મારી નાખ્યો. સંકટ સમાપ્ત થયું અને તેમની શરણમાં આવેલા લોકો સુરક્ષિત થયા.",
+        "kn": "ಹನ್ನೊಂದನೇ ದಿನ ದುರ್ಗಮ ರಥದಲ್ಲಿ ಬಂದು ತಾನೇ ಮಾತೆಯೊಂದಿಗೆ ಹೋರಾಡಿದನು. ಆಕೆ ಬಿಲ್ಲಿನಿಂದ ಅವನ ದಾಳಿಯನ್ನು ಎದುರಿಸಿದಳು. ಕೊನೆಗೆ ಅವನನ್ನು ಸೋಲಿಸಿ ಸಂಹರಿಸಿದಳು. ಅಪಾಯ ಕೊನೆಗೊಂಡು ಆಕೆಯ ರಕ್ಷಣೆಯಲ್ಲಿದ್ದವರು ಸುರಕ್ಷಿತರಾದರು."
+      }
+    },
+    {
+      "id": "knowledge-and-peace-return",
+      "art": "sa08",
+      "source": "Devi Bhagavata 7.28.69–83",
+      "title": {
+        "en": "Knowledge and Peace Return",
+        "hi": "ज्ञान और शांति लौटे",
+        "gu": "જ્ઞાન અને શાંતિ પાછાં આવ્યાં",
+        "kn": "ಜ್ಞಾನ ಮತ್ತು ಶಾಂತಿ ಮರಳಿದವು"
+      },
+      "text": {
+        "en": "The Mother returned the Vedas and asked that this sacred knowledge be cared for. The devas and sages thanked her. Water, food and protection had restored hope. Shatakshi and Shakambhari were remembered as names of the compassionate Mother.",
+        "hi": "माँ ने वेद लौटाए और पवित्र ज्ञान की रक्षा करने को कहा। देवताओं और ऋषियों ने आभार व्यक्त किया। जल, भोजन और सुरक्षा से आशा लौटी। शताक्षी और शाकंभरी करुणामयी माँ के नामों के रूप में स्मरण किए गए।",
+        "gu": "માએ વેદો પાછા આપ્યા અને પવિત્ર જ્ઞાનની કાળજી રાખવા કહ્યું. દેવો અને ઋષિઓએ આભાર માન્યો. જળ, ભોજન અને રક્ષણથી આશા પાછી આવી. શતાક્ષી અને શાકંભરી કરુણામયી માનાં નામ તરીકે યાદ કરાયાં.",
+        "kn": "ಮಾತೆ ವೇದಗಳನ್ನು ಮರಳಿಸಿ ಈ ಪವಿತ್ರ ಜ್ಞಾನವನ್ನು ಕಾಪಾಡಲು ತಿಳಿಸಿದಳು. ದೇವತೆಗಳು ಮತ್ತು ಋಷಿಗಳು ಕೃತಜ್ಞತೆ ಸಲ್ಲಿಸಿದರು. ನೀರು, ಆಹಾರ ಮತ್ತು ರಕ್ಷಣೆ ಭರವಸೆಯನ್ನು ಮರಳಿಸಿದ್ದವು. ಶತಾಕ್ಷಿ ಮತ್ತು ಶಾಕಂಭರಿ ಕರುಣಾಮಯ ಮಾತೆಯ ಹೆಸರುಗಳಾಗಿ ನೆನಪಿಸಲ್ಪಟ್ಟವು."
+      }
+    }
+  ]
+}

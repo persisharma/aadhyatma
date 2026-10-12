@@ -6,6 +6,9 @@ import ReaderHeader from '@/components/ReaderHeader';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import LanguageToggle from '@/components/LanguageToggle';
 import KidsStoryArt from '@/components/KidsStoryArt';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { kidsStoryShareable } from '@/utils/shareContent';
 import { getKidsStory, storyPageIndex, storyText, type StoryPage } from '@/data/kidsStories';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
@@ -15,6 +18,7 @@ import type { HomeStackParamList } from '@/navigation/types';
 
 export default function KidsStoryReaderScreen({ navigation, route }: NativeStackScreenProps<HomeStackParamList, 'KidsStoryReader'>) {
   const { lang } = useGitaLanguage();
+  const { share, busy } = useShare();
   const { colors, typography, spacing } = useTheme();
   const story = getKidsStory(route.params.storyId);
   const [index, setIndex] = useState(() => story ? storyPageIndex(story, route.params.pageId) : 0);
@@ -43,6 +47,11 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
       } />
       <ReadingProgressBar current={index + 1} total={story.pages.length} />
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingTop: 6, paddingBottom: 12 }}>
+        <View style={{ position: 'absolute', right: spacing.readingGutter }}>
+          <ShareButton busy={busy} accessibilityLabel={pick(lang, { hi: 'चित्र-कथा साझा करें', en: 'Share picture story', gu: 'ચિત્રવાર્તા શેર કરો', kn: 'ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ' })}
+            accessibilityHint={pick(lang, { hi: 'चित्र और कथा के कार्ड चुनें', en: 'Choose illustrated story cards', gu: 'ચિત્ર અને વાર્તાનાં કાર્ડ પસંદ કરો', kn: 'ಚಿತ್ರ ಮತ್ತು ಕಥೆಯ ಕಾರ್ಡ್‌ಗಳನ್ನು ಆರಿಸಿ' })}
+            onPress={() => void share(kidsStoryShareable(story, index), lang)} />
+        </View>
         <LanguageToggle />
       </View>
       <View style={{ flex: 1 }} onLayout={event => { if (event.nativeEvent.layout.width > 0) setPageWidth(event.nativeEvent.layout.width); }}>

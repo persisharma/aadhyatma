@@ -364,3 +364,374 @@ The user manually inspected the final simulator build, confirmed the appearance 
 ## [2026-10-09] ingest | Story image creation and layout guidance for future sections
 
 Added RULEBOOK §29.1, the design.md §76 contract and a copyable story-image-layout request. Removed the contradictory blank-lower-fifth instruction from the active generation template; marked older exact Krishna prompts as historical. All illustrated story sections must review their own geometry/bounds/hash, diagnose inset/padding/letterboxing separately and preserve complete art/readable text with legitimate overflow. Existing 4:5 assumptions and legacy frame percentages are explicit; no runtime or image assets change in this documentation follow-up. Updated [[kids-stories]].
+
+## [2026-10-09] ingest | Maa Durga and nine Navaratri forms with R2 artwork
+
+Added fourteen sourced Durga readings (ten stories and four introductions), nine ordered Navadurga day links, 87 distinct four-language storybook illustrations and reviewed covers. Home no longer lists Krishna/Ganesha/Hanuman; existing stories remain. The 19-book registry reuses the scrollable reader and hashed R2 cache, preserves all 57 legacy asset entries and pins 143 scene frames. Publication variants, all-page causal review, final prompts and asset hashes are in `docs/content-parity/kids-stories-durga/`. Full 3,010 tests, typecheck, changed-source lint and current-worktree iOS Debug build pass. Complete native rendering review covers all 696 page/language/size visits and 112 endings at Standard/Large; focused Maestro language/paging and library/shelf/reader/back flows pass. The simulator used a seeded local cache, so remote R2/CDN publication is unverified. The exact 87-object upload bundle is prepared because credentials are unavailable; independent Gujarati/Kannada editorial approval, physical iOS/Android checks and product/art sign-off remain release checks. Updated [[kids-stories]] and index; changes remain local, with no commit/PR/OTA/deploy.
+
+## [2026-10-09] ingest | Durga painted-boundary layout and native multi-card sharing after main pull
+
+Fast-forwarded main to 85a957316402f4b3f3c704e5382598d62d079ce0 and restored the authorized local Durga integration. Individually re-reviewed 87 painted boundaries and 14 reused covers; frame/hash records remove only empty lower space. Shared shelves now derive cover height from width/frame, use one bottom padding and leave the bottom safe area to tabs. Browser readers/catalogs use the same canonical frames.
+
+Kids stories share through the existing ShareProvider: complete scene art, full four-language narration/dialogue, takeaway/source, aligned numbered parts of at most ten cards and a current-scene scope. Capture waits for cached R2 bytes and native image decode; failures abort without a placeholder/partial album. Scene cards size art against the measured title. Native inspection caught UIKit multiplying output by screen density; central capture now supplies points divided by PixelRatio on iOS and keeps Android pixel options.
+
+Final npm test: 3,092 passing (2,246 Jest / 234 suites, 37 widgets, 590 engine, 170 data, 49 ask), typecheck and changed-production lint pass. Current isolated iOS evidence covers 696 reader visits / 112 endings / 1,504 screenshots, 112 covers, and 752 real 1080×1350 exports in 100 parts across all four languages. Every captured narrative/source reconstructs completely; no native share text/art overflow. Focused Maestro sharing, OS ten-image handoff, locale/paging and catalog-path checks passed. Browser 348 language/page visits and all 87 frame geometries / 56 covers passed. Exact proofs, image review, remaining scroll and post-change screenshots are in docs/content-parity/kids-stories-durga/.
+
+Standard reader captions still scroll 5–196dp on this phone; Large and ending/source panels need more. No art/type was clipped or shrunk to force fit. R2 credentials remain unavailable: the exact 87-object upload ZIP is prepared, with no upload or fresh-cache CDN proof. Physical iOS/Android, Instagram import, independent Gujarati/Kannada editorial approval and the complete end-to-end gesture flow remain pending. Existing compatible Debug binary was reused with current Metro; no new release build, commit, PR or OTA. Earlier native-evidence.json is historical; layout-native-evidence.json and sharing-native-evidence.json pin the current results.
+
+## [2026-10-09] lint | Scoped kids-stories and share wiki sources
+
+All 57 source paths on the two updated subsystem pages exist; both pages retain current index entries. Source code is canonical. Release/editorial/CDN gaps remain explicit above and in the validation report.
+
+## [2026-10-09] ingest | Align share controls on the right
+
+Kids Stories now places share at the right of its language row. The two prose katha readers move share into the header right slot, preserving read-aloud placement. The existing nine-form shelf remains unchanged; no duplicate collection was added.
+
+## [2026-10-09] ingest | Home settings entry and Vrat bottom tab
+
+Updated overview and design contracts for Home’s settings gear, hidden compatible More routes, Vrat in the fourth slot, Bhajan in the fifth slot, and tour/VoiceOver/Maestro navigation. Bhajan retains the combined audio library and highlights its selected tab.
+
+Validation: 232 Jest suites / 2,152 tests passed; TypeScript and navigation/launch-graph checks passed. Changed-source lint has zero errors and existing warnings. Final JavaScript bundle passed the focused iOS simulator navigation smoke in an existing native shell: Home gear → Settings → Home, Vrat catalog → My Vrat → Back, Bhajan with its fifth tab highlighted → Home. This is simulator verification, not a new native build or a physical-device check.
+
+## [2026-10-09] ingest | Durga CDN publication and production bundle asset checks
+
+After the user uploaded the prepared package, all 144 manifest URLs returned HTTP 200, matched expected hashes and fully decoded as WebP. All 144 images, including the Home story-library icon, now use the CDN/cache; iOS/Android production exports contain zero story artwork. Added import and renamed-image regression tests, a reusable full-manifest CDN/export verifier, RULEBOOK §29.2 and CI production-export/CDN checks with retained evidence. Latest main navigation changes are retained, including Home settings entry. Fresh simulator CDN download encountered a TLS trust error on the corporate-intercepted network; native first-download/offline and physical-device checks remain pending. Host CDN checks do not establish native download success.
+
+## [2026-10-10] ingest | Kids-story share: one card per scene (art + caption)
+
+The illustrated share had been alternating an image-only scene card with text-only prose cards, so WhatsApp recipients received a story page as two pictures. `paginateProse` gained `firstPageReservedDp`; `kidsStoryShareable` reserves `illustrationMinHeight` (160 dp) + `illustrationGap` (12 dp) on each scene's first page and sets `illustration.heightDp` to the body the title and caption leave. `ProseShareCard` renders art → title → caption inside that fixed box instead of measuring the title at render. Every published caption fits its scene card in all four languages (art 210–294 dp); a longer caption would continue on a plain card. Share-related Jest suites and TypeScript pass; design.md §76 and the share/kids-stories wiki pages are updated. No native capture was re-verified in this session.
+
+## [2026-10-10] ingest | Kids-story share: 9:16 picture card as in the reader, app link on the last card
+
+Follow-up to the one-card-per-scene change: the user wanted the share to look like the reader page, and the 4:5 card could only hold the art at roughly half width. `ShareableProse.layout: 'picture'` lays every page on a 540×960 card (`pictureCardMetrics`, body 744 dp) captured at 1080×1920 for every target; the provider skips `ShareStoryFrame` for it and the sheet hides the 4:5 Instagram-post row. The paginator gained `layout`, `quote` (speaker + dialogue, drawn in the reader's tinted box) and `link` (label over URL, never split) blocks. Scenes: art full-width for 416 of 644 cards, never under 400 dp, caption box below; none spills. Closing card: cover art (≥260 dp), takeaway, source note, printed `vedansh.app/get`; the share message still carries the tappable link. `kidsStoryArtRetainedHeight` moved to the pure `utils/kidsStoryArtFrame.ts`. Not verified on a device: WhatsApp's handling of the album message on iOS, and Instagram story chrome over the unframed header/footer.
+
+## [2026-10-10] ingest | Store listing preparation runbook
+
+Filed `runbooks/store-submission.md` with current official device sections, intact-UI capture rules, caption localization limits, prior Sankalp/Widgets preference and release evidence boundaries. The 1.5.0 materials live under output; privacy declarations, fresh CDN delivery and exact signed-native checks remain open. No build, upload or submission was performed.
+
+## [2026-10-11] ingest | Store draft assets, build evidence and website privacy reference
+Updated [[runbooks/store-submission]] with real Hindi capture/source validation, iOS build 72 attachment, Android versionCode 12 production AAB evidence, draft-only console state and the user-selected 11 October website policy. Public privacy deployment, store declarations and signed-device behavior remain separate verification layers.
+
+## [2026-10-11] ingest | Store review submissions and SDK declarations
+
+Updated [[runbooks/store-submission]] with Apple Waiting for Review, Google Changes in review with quick checks pending, manual publishing, accepted Android vc12, user-approved website deployment and SDK disclosure mappings. Exact-device/network checks remain explicitly unverified.
+
+## [2026-10-11] ingest | Submitted Android AAB sideload smoke test
+
+Updated [[runbooks/store-submission]] with exact-AAB universal APK conversion, clean Android16 emulator smoke passes, count persistence, empty crash buffer, and fresh story-art delivery failure. Host CDN403 is supporting evidence, not physical-device diagnosis. Submission remains unchanged.
+
+## [2026-10-11] ingest | Android release regression and R2 evidence correction
+
+Updated [[runbooks/store-submission]] with release APK regression evidence, historical 144-image production CDN validation, 154-object local integrity, native seeded-cache/audio/failure recovery, ordinary story gesture checks and Android widget contract. Corrected earlier artwork-failure interpretation: emulator corporate TLS inspection blocks fresh delivery; no production-wide CDN defect established. Full UI assertions retain unresolved coverage. No app source, R2 or store changes.
+
+## [2026-10-11] ingest | Bilingual latest-feature showcase and release PR
+
+Recorded reproducible Hindi/English 39-second app-screen showcases for illustrated stories, Sankalp choices, Kundali and Naam Japa, with preset synthetic voices and full narration SRTs. Compact release copy and Android/R2 evidence live in `docs/releases/1.5.0`; raw output remains local. Screen provenance and unresolved native/network checks remain explicit.
+
+## [2026-10-11] ingest | Separate feature carousels from listing assets
+
+Added the user-requested reuse workflow: 20 separate Hindi/English carousels across 10 features, each with three 1080×1350 cards. Existing listing art remains intact; use-case and CTA text sit outside it. Source hashes, bounds checks and reviewed contact sheets are retained; local PNG/ZIP delivery remains unposted.
+
+## [2026-10-11] ingest | Instagram marketing redesign of feature carousels
+
+Replaced repeated listing-image layouts with feature-specific hooks, numbered walkthroughs and distinct dark CTA cards, plus Hindi/English Instagram captions and hashtags. Reused approved locale-matched phone captures without changing app pixels or store metadata. All 60 cards pass dimension/hash/bounds checks and contact sheets were reviewed; local ZIP/gallery updated.
+
+## [2026-10-11] ingest | Approved app-icon master and native exports
+
+Recorded the approved copper-relief icon, vermilion bindu, deterministic four-asset export workflow, Android adaptive padding, explicit splash sizing and native-build requirement in `overview.md` and design.md §2.1. The full test suite (3,109 tests), Expo prebuild, iOS asset-catalog compiler and splash-storyboard compiler passed. Generated asset previews are recorded in `docs/evaluations/app-icon-2026-10-11/`; installed native app and Maestro checks remain pending.
+
+## [2026-10-12] ingest | ATT prompt fix after App Review 2.1 rejection of 1.5.0 (72)
+
+Controller now re-asks ATT within the same foreground when iOS silently returns undetermined and never activates Meta before an answer. JS gate reads the native module's `enabled` constant instead of OTA-overridable `extra`; `push.sh` mirrors the channel profile's `META_TRACKING_ENABLED` for binaries that predate the constant. Tests updated, not run; physical-device recording still required for the App Review reply.
+
+## [2026-10-12] ingest | Instagram carousel V3 journeys
+
+Updated store-submission runbook for light choose/action/result cards, real screen detail crops and local V3 review outputs. Source: `marketing/reels/showcases/listing-carousels/`. No app behavior, store metadata or publication changes.
+
+## [2026-10-09] ingest | Consistent prose cards and asynchronous R2 reading artwork
+
+Reviewed the source structures of all 113 screens and corrected the plain Vrat/Pitru/Daan prose families with shared paper cards, full opening thematic illustrations and page markers outside the text viewport. Published and HTTP/hash-verified all 43 existing paintings on R2; both platform export graphs retain only the 145,802-byte neutral fallback. Downloads use async disk/native APIs, deduplication, concurrency two, cancellation, temporary promotion, timeout/decode fallbacks and stale callback guards. Updated [[overview]], [[readers]] and [[integrations/reading-artwork]]. Evidence: 235 Jest suites / 2,162 tests, final 12 lifecycle tests, TypeScript, both Hermes exports and the launch budget pass; lint has zero errors and five existing warnings. Scoped native screenshots show Katha/Daan fallback and seeded cached-art decoding.
+
+## [2026-10-09] gap | Reading artwork native completion checks
+
+Direct native CDN downloading remains unverified because the isolated simulator rejects the network proxy certificate with TLS -1200. Native full-prose scroll/paging gestures, Gujarati/Kannada visual checks, Android runtime and physical-device frame/memory checks remain pending; the new Maestro flow parses but has not run. These limits are recorded in docs/evaluations/reading-visuals-2026-10-09/review.md. App code remains local; R2 artwork is published.
+
+## [2026-10-09] ingest | Persistent artwork contract and visual proposals awaiting approval
+
+The user requested an active goal, before/after approval and artwork fetched once per content version. Reading downloads now deduplicate by content hash and extension across CDN URLs. Completed valid files remain in Documents without expiry, HEAD/network revalidation or automatic eviction; restarts reuse them, new hashes fetch separately and explicit storage removal permits a new download. Cache/image checks pass 18 tests including fresh-process module state, a year between visits, host changes and file deletion; TypeScript and focused lint pass. Three independent built-in Image Gen concepts and an inspected before/after board are saved in docs/evaluations/reading-visuals-2026-10-09/. The proposals are preview-only and await the user's choice; no new artwork/layout was adopted or published. Updated [[integrations/reading-artwork]].
+
+## [2026-10-09] ingest | Reuse bundled neutral artwork and extend scoped native evidence
+
+Neutral manuscript descriptors now skip remote resolution because their identical bytes are already bundled; no duplicate R2 download or disk lookup is scheduled. A regression failed before the fix; 22 focused cache/image/share tests, TypeScript and lint pass afterwards. Native follow-up captured Katha section 2 and Pitru introduction/story at English Large, including the story teaching/source scroll endpoint. Paged-prose drag/swipe coverage remains inconclusive. The Pitru introduction duplicates the tab bar's bottom inset; its spacing refinement awaits the selected visual direction. The registered iPhone is unavailable and Android tooling is absent, so physical-device measurements remain pending. Proposed layouts/artwork remain unapproved and unadopted. Updated [[integrations/reading-artwork]].
+
+## [2026-10-09] ingest | User approves Option 2 continuous parchment readers
+
+The user selected Option 2. Replaced the provisional prose cards with continuous ivory folios across Vrat Katha, Pitru introduction/story and Daan Katha, complete opening paintings (220pt maximum), compact later sections (80pt), gold dividers and the existing bundled manuscript icon on failure. Paged sections share one screen-level paper image, and the Pitru introduction's duplicate bottom safe inset is removed. Generated, inspected, optimized and R2-published separate 3,102-byte paper and 94,904-byte Vishnu/Narayana assets; all 45 manifest hashes verify and final iOS/Android Hermes graphs include only the 3 KB paper from that set. Current focused reader checks pass 185 tests; final cache/image/share checks pass 22, TypeScript/lint pass, and native English Standard/Hindi Standard-Large captures reach section 2 and long-prose/teaching/source endpoints in all four prose families. Updated [[overview]], [[readers]], [[integrations/reading-artwork]] and design.md; the actual native before/after board is in docs/evaluations/reading-visuals-2026-10-09/. App changes remain local. Native successful CDN downloading is still blocked by proxy TLS -1200; new painting decoding uses an explicitly recorded fixture. Physical gesture/device frame-memory, Android runtime and full native walkthrough checks remain pending.
+
+## [2026-10-09] ingest | Native Indic prose follow-up and cache failure coverage
+
+Scoped Gujarati/Kannada checks found iOS Fabric clipping at a prose final line and Daan teaching. Added the shared ProseParagraph guard: natural height plus one point, one bounded iOS re-layout, reset for source/font/window changes and stale-event rejection; source and line spacing are unchanged, and Android has no added callback. Native Standard Kannada endpoint and Daan teaching/source now render completely; Gujarati Large endpoint and Kannada Large opening/prose are also recorded. Final six suites pass 74 tests, including 21 cache tests and four paragraph regressions. TypeScript, focused lint, both Hermes exports and all 45 source hashes pass; export membership remains one 3,102-byte paper asset. Updated [[readers]] and [[integrations/reading-artwork]]. Full Kannada Large endpoint/remaining native language-family combinations, physical-device performance/touch, Android runtime and direct native R2 downloading outside the proxy remain open. App changes remain local.
+
+## [2026-10-10] ingest | Expand approved reading visuals and correct opening image frames
+
+Extracted shared ReadingArtwork for seven verse layouts covering 21 reader screens, Daily Verse,
+Daan landing/journey, Pitru education and Vidhi preparation/first conduct step. Existing semantic
+mappings remain; later conduct steps use the divider alone. The user's image-placement feedback
+restores the approved responsive opening frame instead of the 80pt continuation frame, verified
+in equal-scale Gita before/after plus native Daily/Puja/Daan/Pitru captures. Pitru roots now use
+the theme parchment base. Full Jest passed 236 suites/2,181 tests before the final frame-only
+correction; final six-suite/86-test rechecks, TypeScript, focused lint, both final Hermes exports
+and source hashes pass. Fresh default-TLS public downloads verify all 45 R2 objects; final bundle
+membership remains one 3,102-byte paper asset. Updated [[readers]] and
+[[integrations/reading-artwork]] plus design documentation. Evidence and live comparison sources:
+docs/evaluations/reading-visuals-2026-10-10/. Native successful CDN transport, physical-device
+performance/touch, Android runtime and full size/language coverage remain open; fixtures prove
+cached decoding and layout only. App changes remain local and unreleased.
+
+
+## [2026-10-10] ingest | Cached paintings bypass slow network work
+
+A new regression demonstrated that the shared two-slot queue delayed already persisted art
+behind unrelated slow downloads. Moved deduplicated asynchronous cache lookup ahead of the
+network queue; only misses queue, with a second disk check before fetching and cancellation
+during lookup covered. Full Jest passes 236 suites/2,183 tests, including 23 cache regressions;
+final TypeScript, focused lint and both Hermes exports pass, with unchanged 3,102-byte paper
+membership. Native process termination/relaunch retains all 44 seeded fixtures and decodes
+the painting. A fresh native R2 attempt still fails TLS -1200; fallback/navigation and restored
+cached decoding are captured with fixture provenance. Registered iPhone remains unavailable
+and adb is absent. Updated [[integrations/reading-artwork]]; detailed evidence is
+docs/evaluations/reading-visuals-2026-10-10/cache-follow-up.md. Changes remain local/unreleased.
+
+## [2026-10-10] ingest | Full-width reading artwork fitting
+
+The user's wide Vishnu reference exposed the remaining fixed-height mismatch: 220pt still
+shrunk portrait paintings and later Katha parts used 80pt. ReadingArtwork now reserves full
+available width at each painting's manifest aspect ratio; compact shrinking is removed.
+Theerth content plates preserve their complete square images rather than a 5:4 window.
+The preparation wrapper generates/verifies all 45 dimensions at build time. Original content
+hashes, R2 URLs and persistent cache keys remain unchanged. All 44 paintings load in the browser
+asset-fit comparison, with no errors; full Jest (236 suites/2,183 tests), TypeScript, focused lint
+and both Hermes exports pass. Only 3,102-byte paper from the reading set remains bundled. New
+native screenshot/scroll verification is pending because the Mac is locked; the browser gallery
+is explicitly asset-layout evidence. Updated [[integrations/reading-artwork]] and [[readers]].
+
+## [2026-10-10] ingest | Apple host transport diagnostic
+
+With native UI still blocked by the locked Mac, checked the public painting through macOS
+URLSession using normal certificate validation. HTTP 200, 94,904 bytes and complete matching
+SHA-256 distinguish this host success from the earlier simulator -1200 failure. No trust,
+certificate or app-security setting changed. The simulator failure's precise cause remains
+unconfirmed; a fresh in-app attempt and physical-device checks are still pending. Updated
+[[integrations/reading-artwork]]; reproducible Swift probe and JSON result are saved in the
+October 10 evaluation directory. Registered iPhone remains unavailable and adb absent.
+
+## [2026-10-10] ingest | Compact reading banners replace rejected natural-height proposal
+
+The user explicitly requested rectangular banners to avoid tall portrait scrolling. ReadingBanner now reserves a 2:1 frame up to 360 by 180pt across shared reading art and Theerth, with curated focal crops and three complete-composition exceptions on bundled paper. No image bytes, R2 hashes or lifetime cache keys changed. All 44 gallery assets load; 183 focused tests, TypeScript and lint pass. Fresh native banner verification remains pending. Updated design.md, readers and reading-artwork; prior natural-height evidence is historical.
+
+
+## [2026-10-10] ingest | Focal crops rejected; new complete banner art staged
+
+The user rejected the compact crops and requested newly composed short banner artwork. Three
+new full-canvas 2:1 drafts are staged for review (Daan/Annapurna, Hanuman–Sita, Gita/Vishvarupa).
+A Vishnu draft is held for a fifth-arm error; its edit and 39 further paintings are blocked by
+built-in image generation returning HTTP 401 token_revoked. Prompts, dimensions, file sizes and
+hashes are saved under docs/evaluations/reading-visuals-2026-10-10/new-banners/. The stopped
+localhost preview server is restored; all-image-fit.html now shows the three new comparisons
+using local files, and the rejected crop gallery is archived. Six comparison images load; all
+after images show their full 960×480 canvases at 360×180px. No replacements are adopted or
+uploaded, and app R2/cache behavior is unchanged. Updated reading-artwork/readers to distinguish
+the intermediate crop implementation from visual approval. Native/device gates remain open.
+
+
+## [2026-10-10] ingest | Separate Krishna-style reader illustration category
+
+The user specified the Krishna kids-story rendering and distinguished decorative reading
+banners from reading backgrounds. Added reader-illustrations source folder, typed descriptor,
+manifest, 44-to-43 semantic aliases and publication script, with its own configured R2 prefix.
+CachedArtwork shares the existing deferred loader and unchanged lifetime cache/queue with the
+background-only wrapper. Dedicated illustrations use their complete canvas; unpublished entries
+retain legacy art. The publisher checks exact reviewed WebP hashes and 2:1 dimensions; local
+staging cannot activate assets. The new manifest remains empty, with no replacement uploads.
+Four detailed painting drafts are superseded. Saved 43 new reference-based briefs using actual
+unchanged kj-08/kj-11 art and updated the local preview to show category purposes/style. The
+previous image-service 401 token_revoked blocker remains. TypeScript, focused lint and eight
+suites/205 tests pass; native/device and new-art approval/publication remain open. Updated
+reading-artwork, readers, overview and design contract. Kids-story content/frames are untouched.
+
+
+## [2026-10-10] ingest | Three-scene, three-style reader illustration review
+
+Built-in generation is restored. Three Krishna-storybook drafts for Daan, Hanuman–Sita and
+Vishvarupa use unchanged kj-08/kj-11 style references and complete 2:1 canvases. The user
+requested comparing these three scenes in all three styles before proceeding; the remaining
+40 briefs are held. all-image-fit.html compares existing muted originals, detailed painting
+drafts and the storybook drafts. A fresh browser capture shows all nine comparisons; all 11
+images loaded at 847px with no horizontal overflow or console warning/error. Storybook WebPs
+are 33.1% smaller than the detailed set at equal dimensions/settings, which is file-size
+evidence only. Updated current design/review/wiki status to remove the resolved generation
+blocker. New manifest/approved set remain empty; no replacements uploaded or adopted. Native
+and physical-device gates remain open. Prior log entries retain their historical state.
+
+
+## [2026-10-11] ingest | Preserve scene detail independently of reader artwork style
+
+The user clarified that Style 3 should keep detailed scene information. Three new built-in
+style-transfer edits use detailed Daan, Hanuman–Sita and Vishvarupa paintings as composition
+targets and unchanged kj-08/kj-11 as style-only refs. Main characters/actions/props and layered
+backgrounds remain, with generative fine-mark variation. Saved separate originals/WebPs, full
+prompts and metadata under the October 11 style3-detail review. All nine comparison images
+loaded whole at 1280px with no horizontal overflow or console warning/error; hashes/2:1 sizes
+pass. Revised files total 297 KiB versus 319 KiB detailed sources, about 7% smaller. This is
+file-size evidence only. Updated the style contract/design and reading-artwork/readers wiki
+to separate detail density from rendering. Approved set/app manifest remain empty, no R2
+upload/adoption, and wider generation stays held for visual choice. No app/cache code changed.
+
+
+## [2026-10-11] ingest | Detailed Style 3 full set ready for visual approval
+
+The user accepted the three detailed samples and requested matching art for other reading
+slots, preserving current backgrounds. Generated 40 further paintings with unchanged Krishna
+style references, inspected originals and selected repairs, and built a 43-banner/44-alias
+before/after gallery with exact selected variants/hashes and an inactive R2 candidate.
+All selected canvases are 960×480, totaling 4.49 MiB (75–132 KiB each). Browser checks cover
+comparison controls, all images, compact contain framing and phone-width overflow. Saved
+browser screenshots and review notes. Background source/manifest and shared cache hashes are
+unchanged. No new illustration is uploaded or active; the 40 new paintings still need visual
+approval. Native R2 delivery, offline/relaunch behavior and physical performance remain gates.
+Updated reader/artwork pages and the style contract; prior log entries remain historical.
+
+
+## [2026-10-11] ingest | Verify detailed Style 3 publisher readiness without activation
+
+The publisher accepts the selected detail-v2 approval style. An isolated temporary fixture
+passed all 43 exact selected WebPs through real dry staging, verified all manifest
+hashes/dimensions and confirmed stale-hash rejection. Actual approval/app manifests remain
+empty and byte-identical, with no upload/network call. Saved publisher readiness and staged
+manifest evidence in the full-set review. Visual approval still gates publication/adoption.
+The dedicated reader-QA simulator is shut down and this checkout has no generated iOS
+project; the two booted store-listing simulators were not altered. Native checks remain open.
+
+## [2026-10-11] ingest | Approved detailed Style 3 integration and R2 publication
+
+The user accepted the rest of the full set, requested gadas for Hanuman crossing the ocean
+and bowing to Rama, then explicitly authorized integration. Generated and visually checked
+both corrections, preserved their previous drafts and recorded exact selected hashes and
+authorization. Published all 43 approved 960×480 WebPs to R2 before activating the app manifest
+for 44 semantic reading slots. Independent default-validation HTTPS GETs verify HTTP 200,
+image/webp, full SHA-256 and byte length for all 43 objects. Backgrounds and the shared cache
+remain byte-identical. Files total 4.46 MiB (65–132 KiB each). Eight focused suites/205 tests
+and TypeScript pass. Production iOS/Android exports contain none of the new banners and
+retain the 3,102-byte paper fallback. Fresh gallery review loads all 86 comparison images
+without horizontal overflow; a screenshot shows both gada corrections. Expo Go loads this
+checkout but reader taps/swipes do not navigate, so that check is inconclusive. An ignored
+iOS project and Pods were prepared for standalone Release verification on the reader-QA
+simulator; store-listing simulators were untouched. Native download/relaunch and physical
+performance remain separate gates. No commit, OTA or store release was performed.
+
+
+### Native follow-up for the approved integration
+
+The Release build/run tool timed out at 300 seconds, but the signed app was built, installed
+and running. Subsequent stop/launch tools succeed, and standalone reader gestures work.
+The Durga R2 request fails native certificate validation (-1200/-9802); text, navigation
+and immediate manuscript fallback remain usable. To verify native framing separately,
+seeded exact approved/public-hash-matched files into the dedicated QA cache. Complete Durga
+and Daan Katha canvases render; the Katha scrolls through its teaching/source/onward actions.
+All 43 controlled files preserve SHA-256/size/mtime/inode across process restart, with no
+partial files, and Durga decodes after relaunch. This is cached-fixture proof; successful
+native CDN delivery, the full reader matrix and physical performance remain unverified.
+Saved fresh native screenshots, transport log and structured evidence in the full-set review.
+
+
+## [2026-10-11] ingest | Ocean-crossing Hanuman shoulder-carry refinement
+
+The user requested the gada in Hanuman’s right hand resting on his shoulder. Edited and
+visually checked the complete 2:1 scene, two arms, gripping fist and full gada/tail/feet.
+Published and publicly hash-verified only this 62,452-byte replacement before activating its
+new content hash; all 42 other illustration manifest entries are unchanged. Refreshed the
+comparison gallery and retained the prior extended-arm version. Background/cache sources
+remain unchanged. Earlier native captures predate this targeted asset revision; existing
+native transport/device limits remain explicit. Prompt, exact hashes and publication/scope
+verification are in the full-set `sea-shoulder-revision.md` and associated records.
+
+
+## [2026-10-11] ingest | Approved complete integration and manual R2 upload package
+
+The user accepted the final Hanuman right-hand shoulder carry and asked to integrate all
+art and provide every asset path for manual R2 upload. Reverified all 43 approved banner
+source/manifest hashes and all 45 background source/manifest hashes. Prepared separate
+hash-named `reader-illustrations` and `reading-backgrounds` upload folders, current manifest
+copies, an 88-row absolute-path/object-key/SHA-256/content-type index, and a ZIP preserving
+both prefixes. Verified every copied and archived image against source SHA-256. Eight focused
+suites/205 tests pass. The package is under
+`docs/evaluations/reading-visuals-2026-10-11/r2-upload-ready/`, with sibling
+`reading-art-r2-upload.zip`. All 43 banner manifests are already active and published;
+no additional runtime/cache change or release was needed for this handoff.
+
+
+## [2026-10-11] ingest | Native R2 certificate cause and pending physical-device verification
+
+Identical normal-validation URLSession probes on Mac/iOS receive the corporate inspection
+chain through ca.gokwik.goskope.com to *.fra2.goskope.com. Mac accepts it and returns exact
+approved R2 bytes; iOS system trust explicitly rejects the root (-67843), then transport
+fails -1200/-9802. Foreground sessions reproduce this outside Expo, ruling out a downloader
+session switch as the fix. No trust/ATS/app/CDN change was applied. The actual app cache
+module, exercised with real host R2 and async filesystem adapters in separate processes,
+downloads once for three subscribers and makes zero attempts after restart with downloads
+prohibited, preserving SHA-256/size/mtime/inode. Three focused suites/35 tests pass. The paired
+iPhone 14 remains unavailable and reports Developer Mode disabled; physical download/offline
+and performance checks remain pending connection. Evidence and required device checks are
+in `docs/evaluations/reading-visuals-2026-10-11/r2-loading-followup/`.
+
+
+## [2026-10-11] ingest | Simulator R2 repair and native download-once/outage verification
+
+The user selected simulator testing. Created isolated Vedansh-R2-Native-QA (iOS 26.5) and
+provisioned the exact corporate CA already trusted by the Mac after matching full native
+chain fingerprints. Default TLS and real Expo native R2 downloads now succeed; no production
+TLS/ATS/CDN/app change. Four downloaded files match full approved source hashes/bytes. A
+QA-only boundary observer verifies one successful transfer per missing hash, no additional
+calls on revisit, zero after restart, and zero after restart with the asset origin unavailable.
+Uncached native attempts show the bundled fallback, time out at eight seconds, and cancel
+when paging leaves the viewer. All files retain hash/size/mtime/inode across restart and QA
+build restoration, with no partials. Restored the original Release bundle and removed the
+observer/outage flag. Fresh 35 focused tests and both 43-banner/45-background verifiers pass.
+Transfer timings are 260–330 ms with no observed >50 ms JS heartbeat lateness during the
+transfer windows; unusable Instruments captures do not establish CPU/frame/main-thread or
+physical performance. Evidence: docs/evaluations/reading-visuals-2026-10-11/r2-loading-followup/.
+
+
+## [2026-10-11] ingest | Opening-only reader artwork restores reading space
+
+The user reported that repeating banners on every card pushes text down and adds scrolling.
+Seven verse layouts and all 21 paginated verse screens now show art on the first actual verse
+only, accounting for the nine chaptered screens' navigation offsets. KathaSectionPage limits
+Vrat Katha and Pitru introduction art to section zero. Later cards retain the paper/divider
+without a banner frame, fallback or banner cache subscription; direct links to later text do
+not add artwork. Continuous prose/detail/daily/guide screens keep their one opening image.
+The actual Release simulator comparison shows Durga Chalisa card 2's entire verse/meaning
+visible without vertical scrolling, with the opening banner retained. Navratri Katha section 2
+starts immediately with prose and scrolls to its complete final paragraph. Fresh verification:
+239 suites/2,201 tests, TypeScript, lint and Release simulator build pass. Cache and both asset
+manifest hashes are unchanged. No upload/release or physical/frame-rate benchmark claimed.
+Screenshots, before/after gallery and scoped evidence:
+docs/evaluations/reading-visuals-2026-10-11/reader-art-placement/.
+
+
+## [2026-10-12] ingest | Reader artwork PR verification and share-paint readiness
+
+Reconciled the reader artwork/R2/opening-only work with current main, preserving append-only
+wiki history and picture sharing. Offscreen exports wait for every native background layer or
+its painted fallback, bounded at ten seconds; consecutive offline pages reuse terminal state
+without a repeated wait. Regression tests reproduce both capture timing and repeated-offline
+failures before their fixes. Added the current-main Jai Shri Ram background mapping and kept
+asset metadata outside scripture provenance traversal. Full npm test passes: TypeScript and
+3,174 tests (242 Jest suites / 2,325 tests); focused independent review passes 56 tests with no
+blocking finding. Lint has zero errors and five existing test warnings. All 88 public R2 objects
+match full source hashes; both 43/45 asset verifiers pass. Fresh production JS embedded in an
+existing Release shell passes the updated native Maestro Katha route, Large text, paging,
+scrolling and painted share preview. Restarted opening shows the full cached Vishnu banner;
+four native cache files match approved R2 bytes. No native compile/cloud build/release/OTA;
+physical-device, Android runtime and frame/CPU/memory measurements remain pending. Evidence:
+docs/evaluations/reading-visuals-2026-10-12/pr-verification.md.

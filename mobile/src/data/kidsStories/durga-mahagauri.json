@@ -1,0 +1,169 @@
+{
+  "id": "durga-mahagauri",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "story",
+  "coverArt": "mg07",
+  "title": {
+    "en": "Mahagauri: Gauri and the Tiger",
+    "hi": "महागौरी: गौरी और व्याघ्र",
+    "gu": "મહાગૌરી: ગૌરી અને વાઘ",
+    "kn": "ಮಹಾಗೌರಿ: ಗೌರಿ ಮತ್ತು ಹುಲಿ"
+  },
+  "description": {
+    "en": "A related Gauri story of compassion, transformation and a new guardian.",
+    "hi": "करुणा, परिवर्तन और नए रक्षक की संबंधित गौरी-कथा।",
+    "gu": "કરુણા, પરિવર્તન અને નવા રક્ષકની સંબંધિત ગૌરીકથા.",
+    "kn": "ಕರುಣೆ, ರೂಪಾಂತರ ಮತ್ತು ಹೊಸ ಕಾವಲುಗಾರನ ಸಂಬಂಧಿತ ಗೌರಿಯ ಕಥೆ."
+  },
+  "sourceNote": {
+    "en": "An original child-friendly retelling of a related Shiva Purana episode, followed by its Navadurga connection. The chapter does not itself name this Navadurga form. The takeaway is editorial.",
+    "hi": "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।",
+    "gu": "શિવ પુરાણની સંબંધિત કથાનું બાળકો માટે મૌલિક સરળ રૂપાંતર, પછી નવદુર્ગા રૂપ સાથે તેનો સંબંધ. અધ્યાયમાં આ નવદુર્ગા રૂપનું નામ નથી. શીખ સંપાદકીય છે.",
+    "kn": "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "Compassion can help someone change. A person’s worth does not depend on skin colour.",
+    "hi": "करुणा किसी को बदलने में सहायता कर सकती है। व्यक्ति का मूल्य त्वचा के रंग से नहीं होता।",
+    "gu": "કરુણા કોઈને બદલવામાં મદદ કરી શકે છે. વ્યક્તિનું મૂલ્ય ચામડીના રંગથી નક્કી થતું નથી.",
+    "kn": "ಕರುಣೆ ಯಾರಿಗಾದರೂ ಬದಲಾಗಲು ನೆರವಾಗಬಲ್ಲದು. ವ್ಯಕ್ತಿಯ ಮೌಲ್ಯ ಚರ್ಮದ ಬಣ್ಣವನ್ನು ಅವಲಂಬಿಸುವುದಿಲ್ಲ."
+  },
+  "source": {
+    "baseText": "Shiva Purana 7.1.24–27; Navadurga dhyana; Drik Panchang Mahagauri",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226660.html",
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226661.html",
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226662.html",
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226663.html",
+      "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%AD%20%28%E0%A4%B5%E0%A4%BE%E0%A4%AF%E0%A4%B5%E0%A5%80%E0%A4%AF%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%AA%E0%A5%82%E0%A4%B0%E0%A5%8D%E0%A4%B5%20%E0%A4%AD%E0%A4%BE%E0%A4%97%E0%A4%83/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%AA",
+      "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%AD%20%28%E0%A4%B5%E0%A4%BE%E0%A4%AF%E0%A4%B5%E0%A5%80%E0%A4%AF%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%AA%E0%A5%82%E0%A4%B0%E0%A5%8D%E0%A4%B5%20%E0%A4%AD%E0%A4%BE%E0%A4%97%E0%A4%83/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%AB",
+      "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%AD%20%28%E0%A4%B5%E0%A4%BE%E0%A4%AF%E0%A4%B5%E0%A5%80%E0%A4%AF%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%AA%E0%A5%82%E0%A4%B0%E0%A5%8D%E0%A4%B5%20%E0%A4%AD%E0%A4%BE%E0%A4%97%E0%A4%83/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%AC",
+      "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%AD%20%28%E0%A4%B5%E0%A4%BE%E0%A4%AF%E0%A4%B5%E0%A5%80%E0%A4%AF%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%AA%E0%A5%82%E0%A4%B0%E0%A5%8D%E0%A4%B5%20%E0%A4%AD%E0%A4%BE%E0%A4%97%E0%A4%83/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A8%E0%A5%AD",
+      "https://sanskritdocuments.org/doc_devii/navadurga.html",
+      "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-mahagauri.html"
+    ],
+    "notes": "Complete Gauri/tiger arc from Vayaviya-samhita retained, with spiritual motive and Shiva’s colour-independent affection in 7.1.27.10–11. This differs from Devi Mahatmya 5; accounts not merged. Colour transformation is this divine textual episode, not a hierarchy of human skin tones. Tiger’s violent past summarized without disturbing details. Somanandin is a transformed gana guardian, not elephant-headed Ganesha. Mahagauri connection attributed to Navadurga tradition."
+  },
+  "pages": [
+    {
+      "id": "parvati-begins-tapas",
+      "art": "mg01",
+      "source": "Shiva Purana 7.1.24.24–58",
+      "title": {
+        "en": "Parvati’s Resolve",
+        "hi": "पार्वती का संकल्प",
+        "gu": "પાર્વતીનો સંકલ્પ",
+        "kn": "ಪಾರ್ವತಿಯ ಸಂಕಲ್ಪ"
+      },
+      "text": {
+        "en": "In this Shiva Purana account, Shiva made a remark about Parvati’s dark complexion. She was upset and resolved to become Gauri through tapas. She left Mount Mandara for a forest hermitage. Her resolve also led to a divine power that would protect the devas.",
+        "hi": "शिव पुराण के इस वर्णन में शिव ने पार्वती के श्याम रंग पर टिप्पणी की। वे दुखी हुईं और तप से गौरी बनने का संकल्प किया। वे मंदर पर्वत से वन-आश्रम गईं। उनके संकल्प से देवताओं की रक्षा करने वाली दिव्य शक्ति भी प्रकट होनी थी।",
+        "gu": "શિવ પુરાણના આ વર્ણનમાં શિવે પાર્વતીના શ્યામ રંગ વિશે ટિપ્પણી કરી. તેઓ દુઃખી થયાં અને તપથી ગૌરી બનવાનો સંકલ્પ કર્યો. તેઓ મંદર પર્વતથી વનઆશ્રમ ગયાં. તેમના સંકલ્પથી દેવોની રક્ષા કરનાર દિવ્ય શક્તિ પણ પ્રગટ થવાની હતી.",
+        "kn": "ಈ ಶಿವಪುರಾಣದ ಪ್ರಸಂಗದಲ್ಲಿ ಶಿವ ಪಾರ್ವತಿಯ ಕಪ್ಪು ಮೈಬಣ್ಣದ ಕುರಿತು ಮಾತಾಡಿದನು. ಆಕೆಗೆ ನೋವಾಗಿ ತಪಸ್ಸಿನಿಂದ ಗೌರಿಯಾಗಲು ಸಂಕಲ್ಪಿಸಿದಳು. ಮಂದರ ಪರ್ವತದಿಂದ ಕಾಡಿನ ಆಶ್ರಮಕ್ಕೆ ಹೋದಳು. ಆಕೆಯ ಸಂಕಲ್ಪ ದೇವತೆಗಳನ್ನು ಕಾಪಾಡುವ ದಿವ್ಯಶಕ್ತಿಯ ಪ್ರತ್ಯಕ್ಷತೆಗೂ ದಾರಿಯಾಯಿತು."
+      }
+    },
+    {
+      "id": "the-tiger-changes",
+      "art": "mg02",
+      "source": "Shiva Purana 7.1.25.8–17",
+      "title": {
+        "en": "The Tiger Becomes a Guardian",
+        "hi": "व्याघ्र बना रक्षक",
+        "gu": "વાઘ બન્યો રક્ષક",
+        "kn": "ಹುಲಿ ಕಾವಲುಗಾರನಾಯಿತು"
+      },
+      "text": {
+        "en": "A tiger approached Parvati, intending to attack. Her divine presence stilled it. Parvati looked on it with compassion. The tiger’s harmful intent changed into devotion, and it began guarding her hermitage from other animals.",
+        "hi": "एक व्याघ्र पार्वती पर आक्रमण करने आया। उनके दिव्य प्रभाव से वह स्थिर हो गया। पार्वती ने करुणा से उसे देखा। उसकी हिंसा भक्ति में बदल गई और वह दूसरे पशुओं से उनके आश्रम की रक्षा करने लगा।",
+        "gu": "એક વાઘ પાર્વતી પર હુમલો કરવા આવ્યો. તેમના દિવ્ય પ્રભાવથી તે સ્થિર થઈ ગયો. પાર્વતીએ કરુણાથી તેને જોયો. તેનો હિંસક ભાવ ભક્તિમાં બદલાયો અને તે બીજા પશુઓથી તેમના આશ્રમની રક્ષા કરવા લાગ્યો.",
+        "kn": "ಪಾರ್ವತಿಯನ್ನು ಆಕ್ರಮಿಸಲು ಹುಲಿಯೊಂದು ಬಂತು. ಆಕೆಯ ದಿವ್ಯಪ್ರಭಾವ ಅದನ್ನು ನಿಶ್ಚಲಗೊಳಿಸಿತು. ಪಾರ್ವತಿ ಕರುಣೆಯಿಂದ ನೋಡಿದಳು. ಅದರ ಹಾನಿಯ ಉದ್ದೇಶ ಭಕ್ತಿಯಾಗಿ ಬದಲಾಯಿತು. ಇತರ ಪ್ರಾಣಿಗಳಿಂದ ಆಕೆಯ ಆಶ್ರಮವನ್ನು ಕಾಪಾಡತೊಡಗಿತು."
+      }
+    },
+    {
+      "id": "gauri-and-kaushiki",
+      "art": "mg03",
+      "source": "Shiva Purana 7.1.25.18–46",
+      "title": {
+        "en": "A Divine Transformation",
+        "hi": "दिव्य परिवर्तन",
+        "gu": "દિવ્ય પરિવર્તન",
+        "kn": "ದಿವ್ಯ ರೂಪಾಂತರ"
+      },
+      "text": {
+        "en": "Troubled by Shumbha and Nishumbha, the devas sought protection. Brahma visited Parvati. From her dark outer sheath, the eight-armed Kaushiki appeared, while Parvati became radiant Gauri. Brahma gave Kaushiki a lion and sent her to face the asura brothers.",
+        "hi": "शुंभ-निशुंभ से पीड़ित देवताओं ने रक्षा माँगी। ब्रह्मा पार्वती के पास आए। उनके श्याम बाहरी आवरण से आठ भुजाओं वाली कौशिकी प्रकट हुईं और पार्वती तेजस्वी गौरी बनीं। ब्रह्मा ने कौशिकी को सिंह दिया और असुर भाइयों का सामना करने भेजा।",
+        "gu": "શુંભ-નિશુંભથી પીડિત દેવોએ રક્ષણ માગ્યું. બ્રહ્મા પાર્વતી પાસે આવ્યા. તેમના શ્યામ બાહ્ય આવરણમાંથી આઠ ભુજાવાળાં કૌશિકી પ્રગટ થયાં અને પાર્વતી તેજસ્વી ગૌરી બન્યાં. બ્રહ્માએ કૌશિકીને સિંહ આપ્યો અને અસુર ભાઈઓનો સામનો કરવા મોકલ્યાં.",
+        "kn": "ಶುಂಭ-ನಿಶುಂಭರಿಂದ ತೊಂದರೆಗೊಳಗಾದ ದೇವತೆಗಳು ರಕ್ಷಣೆ ಕೇಳಿದರು. ಬ್ರಹ್ಮ ಪಾರ್ವತಿಯ ಬಳಿಗೆ ಬಂದನು. ಆಕೆಯ ಕಪ್ಪು ಹೊರಹೊದಿಕೆಯಿಂದ ಎಂಟು ಕೈಗಳ ಕೌಶಿಕಿ ಪ್ರತ್ಯಕ್ಷಳಾದಳು; ಪಾರ್ವತಿ ಪ್ರಕಾಶಮಾನ ಗೌರಿಯಾದಳು. ಬ್ರಹ್ಮ ಕೌಶಿಕಿಗೆ ಸಿಂಹ ನೀಡಿ ಅಸುರ ಸಹೋದರರನ್ನು ಎದುರಿಸಲು ಕಳುಹಿಸಿದನು."
+      }
+    },
+    {
+      "id": "compassion-for-a-refuge-seeker",
+      "art": "mg04",
+      "source": "Shiva Purana 7.1.25.47–48; 26.1–23",
+      "title": {
+        "en": "Gauri Keeps Her Promise of Care",
+        "hi": "गौरी की करुणा",
+        "gu": "ગૌરીની કરુણા",
+        "kn": "ಗೌರಿಯ ಕರುಣೆ"
+      },
+      "text": {
+        "en": "Kaushiki defeated the brothers. Brahma then warned Gauri that her tiger had a harmful past. She would not abandon one who had sought her refuge and changed. Brahma praised her compassion. The tiger remained under her care.",
+        "hi": "कौशिकी ने भाइयों को पराजित किया। फिर ब्रह्मा ने गौरी को व्याघ्र के हानिकारक अतीत के बारे में बताया। गौरी शरण में आए और बदल चुके प्राणी को छोड़ना नहीं चाहती थीं। ब्रह्मा ने उनकी करुणा की प्रशंसा की। व्याघ्र उनकी देखभाल में रहा।",
+        "gu": "કૌશિકીએ ભાઈઓને હરાવ્યા. પછી બ્રહ્માએ ગૌરીને વાઘના હાનિકારક ભૂતકાળ વિશે જણાવ્યું. ગૌરી શરણમાં આવેલા અને બદલાયેલા પ્રાણીને છોડવા ઇચ્છતાં ન હતાં. બ્રહ્માએ તેમની કરુણાની પ્રશંસા કરી. વાઘ તેમની સંભાળમાં રહ્યો.",
+        "kn": "ಕೌಶಿಕಿ ಸಹೋದರರನ್ನು ಸೋಲಿಸಿದಳು. ಬಳಿಕ ಬ್ರಹ್ಮ ಹುಲಿಯ ಹಾನಿಕಾರಕ ಹಿಂದಿನ ಜೀವನದ ಬಗ್ಗೆ ಗೌರಿಗೆ ತಿಳಿಸಿದನು. ತನ್ನ ಆಶ್ರಯಕ್ಕೆ ಬಂದು ಬದಲಾದ ಜೀವಿಯನ್ನು ಆಕೆ ಬಿಟ್ಟುಬಿಡಲಿಲ್ಲ. ಬ್ರಹ್ಮ ಆಕೆಯ ಕರುಣೆಯನ್ನು ಹೊಗಳಿದನು. ಹುಲಿ ಆಕೆಯ ಕಾಳಜಿಯಲ್ಲೇ ಉಳಿಯಿತು."
+      }
+    },
+    {
+      "id": "shiva-welcomes-gauri",
+      "art": "mg05",
+      "source": "Shiva Purana 7.1.26.24–29; 27.4–24",
+      "title": {
+        "en": "Welcomed with Love",
+        "hi": "प्रेम से स्वागत",
+        "gu": "પ્રેમથી સ્વાગત",
+        "kn": "ಪ್ರೀತಿಯ ಸ್ವಾಗತ"
+      },
+      "text": {
+        "en": "After visiting her parents, Gauri returned to Shiva with her companions and the tiger. Shiva welcomed her warmly. He explained that her nature had won his heart, whether her complexion was dark or any other colour. Their affection remained the same.",
+        "hi": "माता-पिता से मिलकर गौरी सखियों और व्याघ्र के साथ शिव के पास लौटीं। शिव ने प्रेम से उनका स्वागत किया। उन्होंने बताया कि गौरी के स्वभाव ने उनका हृदय जीता था, चाहे रंग श्याम हो या कोई और। उनका प्रेम वही रहा।",
+        "gu": "માતા-પિતાને મળીને ગૌરી સખીઓ અને વાઘ સાથે શિવ પાસે પાછાં આવ્યાં. શિવે પ્રેમથી તેમનું સ્વાગત કર્યું. તેમણે જણાવ્યું કે ગૌરીના સ્વભાવે તેમનું હૃદય જીત્યું હતું, રંગ શ્યામ હોય કે બીજો. તેમનો પ્રેમ એ જ રહ્યો.",
+        "kn": "ತಂದೆತಾಯಿಯನ್ನು ಭೇಟಿಯಾಗಿ ಗೌರಿ ಗೆಳತಿಯರು ಮತ್ತು ಹುಲಿಯೊಂದಿಗೆ ಶಿವನ ಬಳಿಗೆ ಮರಳಿದಳು. ಶಿವ ಪ್ರೀತಿಯಿಂದ ಸ್ವಾಗತಿಸಿದನು. ಕಪ್ಪು ಅಥವಾ ಬೇರೆ ಯಾವುದೇ ಬಣ್ಣವಿದ್ದರೂ ಆಕೆಯ ಸ್ವಭಾವವೇ ತನ್ನ ಮನಸ್ಸನ್ನು ಗೆದ್ದಿದೆ ಎಂದು ತಿಳಿಸಿದನು. ಅವರ ಪ್ರೀತಿ ಹಾಗೆಯೇ ಉಳಿಯಿತು."
+      }
+    },
+    {
+      "id": "somanandin-the-guardian",
+      "art": "mg06",
+      "source": "Shiva Purana 7.1.27.28–37",
+      "title": {
+        "en": "A New Guardian",
+        "hi": "नया रक्षक",
+        "gu": "નવો રક્ષક",
+        "kn": "ಹೊಸ ಕಾವಲುಗಾರ"
+      },
+      "text": {
+        "en": "Gauri asked that the devoted tiger serve at their doorway under Nandin. Shiva agreed. The tiger became a guardian in splendid clothes, carrying a golden staff. He was called Somanandin. Compassion had given him a new place and purpose.",
+        "hi": "गौरी ने भक्त व्याघ्र को नंदिन के अधीन द्वार पर सेवा देने का स्थान माँगा। शिव सहमत हुए। व्याघ्र सुंदर वस्त्रों और स्वर्ण दंड वाला रक्षक बन गया। उसका नाम सोमनंदिन हुआ। करुणा से उसे नया स्थान और उद्देश्य मिला।",
+        "gu": "ગૌરીએ ભક્ત વાઘને નંદિન હેઠળ દ્વારે સેવા આપવાનું સ્થાન માગ્યું. શિવ સંમત થયા. વાઘ સુંદર વસ્ત્રો અને સુવર્ણ દંડવાળો રક્ષક બન્યો. તેનું નામ સોમનંદિન થયું. કરુણાથી તેને નવું સ્થાન અને હેતુ મળ્યાં.",
+        "kn": "ಭಕ್ತ ಹುಲಿ ನಂದಿನ್ ಅಧೀನದಲ್ಲಿ ಅವರ ಬಾಗಿಲಿನ ಸೇವೆ ಮಾಡಲಿ ಎಂದು ಗೌರಿ ಕೇಳಿದಳು. ಶಿವ ಒಪ್ಪಿದನು. ಹುಲಿ ಸುಂದರ ಉಡುಗೆ ಮತ್ತು ಚಿನ್ನದ ದಂಡ ಹಿಡಿದ ಕಾವಲುಗಾರನಾಯಿತು. ಅವನನ್ನು ಸೋಮನಂದಿನ್ ಎಂದರು. ಕರುಣೆ ಅವನಿಗೆ ಹೊಸ ಸ್ಥಾನ ಮತ್ತು ಉದ್ದೇಶ ನೀಡಿತು."
+      }
+    },
+    {
+      "id": "the-eighth-form",
+      "art": "mg07",
+      "source": "Navadurga dhyana; Drik Panchang Mahagauri",
+      "title": {
+        "en": "Meet Mahagauri",
+        "hi": "महागौरी का परिचय",
+        "gu": "મહાગૌરીનો પરિચય",
+        "kn": "ಮಹಾಗೌರಿಯ ಪರಿಚಯ"
+      },
+      "text": {
+        "en": "On Navaratri’s eighth day, devotees honour Maa Mahagauri. Her traditional image wears white, rides a white bull and has four arms: a trident, a small drum and two blessing gestures. This Gauri episode is a related story of the Mother’s compassion.",
+        "hi": "नवरात्रि के आठवें दिन भक्त माँ महागौरी की आराधना करते हैं। पारंपरिक रूप में श्वेत वस्त्र, श्वेत वृषभ और चार भुजाएँ हैं: त्रिशूल, डमरू और दो आशीर्वाद मुद्राएँ। गौरी का यह प्रसंग माँ की करुणा की संबंधित कथा है।",
+        "gu": "નવરાત્રિના આઠમા દિવસે ભક્તો મા મહાગૌરીની આરાધના કરે છે. પરંપરાગત રૂપમાં શ્વેત વસ્ત્રો, શ્વેત વૃષભ અને ચાર ભુજા છે: ત્રિશૂળ, ડમરુ અને બે આશીર્વાદમુદ્રા. ગૌરીનો આ પ્રસંગ માની કરુણાની સંબંધિત કથા છે.",
+        "kn": "ನವರಾತ್ರಿಯ ಎಂಟನೇ ದಿನ ಭಕ್ತರು ಮಹಾಗೌರಿ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಸಾಂಪ್ರದಾಯಿಕ ಚಿತ್ರದಲ್ಲಿ ಬಿಳಿ ಉಡುಗೆ, ಬಿಳಿ ಎತ್ತು ಮತ್ತು ನಾಲ್ಕು ಕೈಗಳಿವೆ: ತ್ರಿಶೂಲ, ಡಮರು ಮತ್ತು ಎರಡು ಆಶೀರ್ವಾದ ಮುದ್ರೆಗಳು. ಈ ಗೌರಿಯ ಪ್ರಸಂಗ ಮಾತೆಯ ಕರುಣೆಯ ಸಂಬಂಧಿತ ಕಥೆಯಾಗಿದೆ."
+      }
+    }
+  ]
+}

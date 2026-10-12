@@ -285,6 +285,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
               const isIntro = item.number === 0;
               return (
                 <ShivaStrotamVersePage
+                  showIllustration={verseIndex === 0}
                   verse={item}
                   sourceId="shiva-strotam"
                   width={width}

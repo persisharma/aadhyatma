@@ -220,6 +220,7 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
               const verseIdx = index - offset;
               return (
                 <ShivaStrotamVersePage
+                  showIllustration={verseIdx === 0}
                   verse={item}
                   sourceId="vishnu-sahasranama"
                   width={width}

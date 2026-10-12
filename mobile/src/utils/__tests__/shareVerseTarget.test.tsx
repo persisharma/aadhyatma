@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clipboard, Pressable, Share } from 'react-native';
+import { Clipboard, PixelRatio, Platform, Pressable, Share } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { ShareProvider, useShare, type ShareableVerse } from '@/utils/shareVerse';
@@ -156,23 +156,38 @@ describe('share target flow', () => {
   });
 
   test('the post row exports 4:5 and the story row exports a full 9:16 frame', async () => {
-    const post = await openPicker();
-    await act(async () => byLabel(post, 'Share on Instagram').props.onPress());
-    await settle();
-    expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080, height: 1350 });
+    const density = jest.spyOn(PixelRatio, 'get').mockReturnValue(3);
+    try {
+      const post = await openPicker();
+      await act(async () => byLabel(post, 'Share on Instagram').props.onPress());
+      await settle();
+      expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 360, height: 450 });
 
-    mockCaptureRef.mockClear();
-    const story = await openPicker();
-    await act(async () =>
-      byLabel(story, 'Share as Instagram story or reel').props.onPress()
-    );
-    await settle();
-    // A 4:5 export here is the bug: Instagram fills the 9:16 frame from it and
-    // crops the card's header band and branding footer away.
-    expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({
-      width: STORY_OUTPUT_WIDTH,
-      height: STORY_OUTPUT_HEIGHT,
-    });
+      mockCaptureRef.mockClear();
+      const story = await openPicker();
+      await act(async () =>
+        byLabel(story, 'Share as Instagram story or reel').props.onPress()
+      );
+      await settle();
+      // A 4:5 export here is the bug: Instagram fills the 9:16 frame from it and
+      // crops the card's header band and branding footer away.
+      expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({
+        width: STORY_OUTPUT_WIDTH / 3,
+        height: STORY_OUTPUT_HEIGHT / 3,
+      });
+    } finally { density.mockRestore(); }
+  });
+
+  test('Android export dimensions stay in physical pixels at high density', async () => {
+    const descriptor = Object.getOwnPropertyDescriptor(Platform, 'OS')!;
+    const density = jest.spyOn(PixelRatio, 'get').mockReturnValue(3);
+    Object.defineProperty(Platform, 'OS', { configurable: true, value: 'android' });
+    try {
+      const post = await openPicker();
+      await act(async () => byLabel(post, 'Share on Instagram').props.onPress());
+      await settle();
+      expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080, height: 1350 });
+    } finally { Object.defineProperty(Platform, 'OS', descriptor); density.mockRestore(); }
   });
 
   test('the story row mounts the 9:16 canvas, the post row the bare card', async () => {

@@ -1,0 +1,94 @@
+{
+  "id": "durga-kushmanda",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "introduction",
+  "coverArt": "ku01",
+  "title": {
+    "en": "Kushmanda: Light and Creation",
+    "hi": "कूष्मांडा: प्रकाश और सृष्टि",
+    "gu": "કૂષ્માંડા: પ્રકાશ અને સૃષ્ટિ",
+    "kn": "ಕೂಷ್ಮಾಂಡಾ: ಬೆಳಕು ಮತ್ತು ಸೃಷ್ಟಿ"
+  },
+  "description": {
+    "en": "Meet the radiant form honoured on Navaratri’s fourth day.",
+    "hi": "नवरात्रि के चौथे दिन पूजित तेजस्वी रूप का परिचय।",
+    "gu": "નવરાત્રિના ચોથા દિવસે પૂજાતા તેજસ્વી રૂપનો પરિચય.",
+    "kn": "ನವರಾತ್ರಿಯ ನಾಲ್ಕನೇ ದಿನ ಆರಾಧಿಸುವ ತೇಜಸ್ವಿ ರೂಪದ ಪರಿಚಯ."
+  },
+  "sourceNote": {
+    "en": "A short introduction from Navadurga devotional tradition, not a separate Purana adventure. Traditional origin accounts are attributed; the takeaway is editorial.",
+    "hi": "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।",
+    "gu": "નવદુર્ગાની ભક્તિપરંપરામાંથી ટૂંકો પરિચય; આ અલગ પુરાણકથા નથી. પરંપરાગત ઉત્પત્તિવર્ણનનો સ્રોત જણાવ્યો છે; શીખ સંપાદકીય છે.",
+    "kn": "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "A small act of warmth can brighten someone’s day. Share hope and kindness.",
+    "hi": "स्नेह का छोटा कार्य किसी का दिन उजला कर सकता है। आशा और दया बाँटें।",
+    "gu": "સ્નેહનું નાનું કાર્ય કોઈનો દિવસ ઉજ્જવળ કરી શકે છે. આશા અને દયા વહેંચો.",
+    "kn": "ಒಂದು ಚಿಕ್ಕ ಪ್ರೀತಿಯ ಕೆಲಸ ಯಾರದೋ ದಿನವನ್ನು ಬೆಳಗಿಸಬಲ್ಲದು. ಭರವಸೆ ಮತ್ತು ದಯೆಯನ್ನು ಹಂಚಿ."
+  },
+  "source": {
+    "baseText": "Navadurga dhyana; Drik Panchang, Kushmanda traditional guide",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/navadurga.html",
+      "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-kushmanda.html",
+      "https://www.artofliving.org/in-en/navratri/kushmanda"
+    ],
+    "notes": "Introduction, not a standalone scriptural adventure. Fourth-day identity, name and traditional depiction compared across two publications. Smile/cosmic creation and solar abode are specifically attributed to Drik Panchang’s traditional guide; the dhyana is not claimed as a second origin-story witness. Eight-armed solar/lion depiction uses conventional devotional iconography. No copied hymn or invented dialogue."
+  },
+  "pages": [
+    {
+      "id": "the-radiant-fourth-form",
+      "art": "ku01",
+      "source": "Navadurga dhyana, Kushmanda; Drik Panchang Kushmanda, Navratri Worship",
+      "title": {
+        "en": "The Radiant Mother",
+        "hi": "तेजस्वी माँ",
+        "gu": "તેજસ્વી મા",
+        "kn": "ತೇಜಸ್ವಿ ಮಾತೆ"
+      },
+      "text": {
+        "en": "On Navaratri’s fourth day, many devotees honour Maa Kushmanda. She is remembered as a radiant form of the Mother, associated with the light and energy of creation.",
+        "hi": "नवरात्रि के चौथे दिन अनेक भक्त माँ कूष्मांडा की आराधना करते हैं। उन्हें सृष्टि के प्रकाश और ऊर्जा से जुड़ा माँ का तेजस्वी रूप माना जाता है।",
+        "gu": "નવરાત્રિના ચોથા દિવસે ઘણા ભક્તો મા કૂષ્માંડાની આરાધના કરે છે. તેમને સૃષ્ટિના પ્રકાશ અને ઊર્જા સાથે જોડાયેલું માનું તેજસ્વી રૂપ માનવામાં આવે છે.",
+        "kn": "ನವರಾತ್ರಿಯ ನಾಲ್ಕನೇ ದಿನ ಹಲವು ಭಕ್ತರು ಕೂಷ್ಮಾಂಡಾ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಆಕೆಯನ್ನು ಸೃಷ್ಟಿಯ ಬೆಳಕು ಮತ್ತು ಶಕ್ತಿಗೆ ಸಂಬಂಧಿಸಿದ ಮಾತೆಯ ತೇಜಸ್ವಿ ರೂಪವಾಗಿ ನೆನೆಯುತ್ತಾರೆ."
+      }
+    },
+    {
+      "id": "a-traditional-creation-account",
+      "art": "ku02",
+      "source": "Drik Panchang Kushmanda, Details and Origin",
+      "title": {
+        "en": "A Smile and Cosmic Light",
+        "hi": "मुस्कान और सृष्टि का प्रकाश",
+        "gu": "સ્મિત અને સૃષ્ટિનો પ્રકાશ",
+        "kn": "ನಗು ಮತ್ತು ಸೃಷ್ಟಿಯ ಬೆಳಕು"
+      },
+      "text": {
+        "en": "One devotional account says that her gentle smile brought forth the universe, called Brahmanda. She is also pictured within the Sun’s radiance. This is a traditional account of divine creation, not an ordinary person’s adventure.",
+        "hi": "एक भक्ति-परंपरा में कहा जाता है कि उनकी कोमल मुस्कान से ब्रह्मांड प्रकट हुआ। उन्हें सूर्य के तेज में भी चित्रित किया जाता है। यह दिव्य सृष्टि का पारंपरिक वर्णन है, किसी साधारण व्यक्ति का साहसिक प्रसंग नहीं।",
+        "gu": "એક ભક્તિપરંપરામાં કહેવાય છે કે તેમના કોમળ સ્મિતથી બ્રહ્માંડ પ્રગટ થયું. તેમને સૂર્યના તેજમાં પણ ચિત્રિત કરવામાં આવે છે. આ દિવ્ય સૃષ્ટિનું પરંપરાગત વર્ણન છે, કોઈ સામાન્ય વ્યક્તિનું સાહસિક પ્રસંગ નહીં.",
+        "kn": "ಒಂದು ಭಕ್ತಿ ಸಂಪ್ರದಾಯವು ಆಕೆಯ ಮೃದುವಾದ ನಗುವಿನಿಂದ ಬ್ರಹ್ಮಾಂಡ ಹುಟ್ಟಿತು ಎನ್ನುತ್ತದೆ. ಆಕೆಯನ್ನು ಸೂರ್ಯನ ತೇಜಸ್ಸಿನಲ್ಲಿಯೂ ಚಿತ್ರಿಸುತ್ತಾರೆ. ಇದು ದಿವ್ಯಸೃಷ್ಟಿಯ ಸಾಂಪ್ರದಾಯಿಕ ವಿವರಣೆ; ಸಾಮಾನ್ಯ ವ್ಯಕ್ತಿಯ ಸಾಹಸಕಥೆಯಲ್ಲ."
+      }
+    },
+    {
+      "id": "symbols-of-kushmanda",
+      "art": "ku03",
+      "source": "Navadurga dhyana, Kushmanda; Drik Panchang Kushmanda, Iconography",
+      "title": {
+        "en": "Her Familiar Symbols",
+        "hi": "परिचित चिह्न",
+        "gu": "પરિચિત પ્રતીકો",
+        "kn": "ಆಕೆಯ ಪರಿಚಿತ ಸಂಕೇತಗಳು"
+      },
+      "text": {
+        "en": "In familiar devotional art, Kushmanda has eight hands and rides a lion. Her hands hold objects such as a lotus, rosary, bow and vessel. Her many hands remind devotees of the Mother’s many powers to sustain the world.",
+        "hi": "परिचित भक्तिचित्रों में कूष्मांडा की आठ भुजाएँ हैं और वे सिंह पर सवार हैं। उनके हाथों में कमल, माला, धनुष और पात्र जैसे चिह्न हैं। अनेक भुजाएँ भक्तों को जगत का पालन करने वाली माँ की अनेक शक्तियाँ याद दिलाती हैं।",
+        "gu": "પરિચિત ભક્તિચિત્રોમાં કૂષ્માંડાને આઠ ભુજાઓ છે અને તેઓ સિંહ પર સવાર છે. તેમના હાથોમાં કમળ, માળા, ધનુષ અને પાત્ર જેવાં પ્રતીકો છે. ઘણી ભુજાઓ ભક્તોને જગતનું પાલન કરતી માની અનેક શક્તિઓ યાદ અપાવે છે.",
+        "kn": "ಪರಿಚಿತ ಭಕ್ತಿಚಿತ್ರಗಳಲ್ಲಿ ಕೂಷ್ಮಾಂಡೆಗೆ ಎಂಟು ಕೈಗಳಿವೆ; ಆಕೆ ಸಿಂಹದ ಮೇಲೆ ಸವಾರಿ ಮಾಡುತ್ತಾಳೆ. ಕೈಗಳಲ್ಲಿ ಕಮಲ, ಜಪಮಾಲೆ, ಬಿಲ್ಲು ಮತ್ತು ಪಾತ್ರೆಯಂತಹ ವಸ್ತುಗಳಿವೆ. ಅನೇಕ ಕೈಗಳು ಜಗತ್ತನ್ನು ಪೋಷಿಸುವ ಮಾತೆಯ ಹಲವು ಶಕ್ತಿಗಳನ್ನು ಭಕ್ತರಿಗೆ ನೆನಪಿಸುತ್ತವೆ."
+      }
+    }
+  ]
+}

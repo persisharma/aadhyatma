@@ -2,7 +2,7 @@ import AppIcon from '@/components/AppIcon';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { backgroundImages } from '@assets/backgrounds';
@@ -148,8 +148,11 @@ export default function PanchangScreen({ route }: Props) {
   const { lang } = useGitaLanguage();
   // Feature-tour spotlight anchors (design.md §47): the Choghadiya/Muhurat glance
   // card and the [Calendar | Vrat & Parv] segment.
-  const muhuratCardRef = useTourTarget('muhuratCard');
-  const panchangSegmentRef = useTourTarget('panchangSegment');
+  // Panchang and Vrat mount independent instances; only the focused screen
+  // may own these shared tour anchors.
+  const isFocused = useIsFocused();
+  const muhuratCardRef = useTourTarget('muhuratCard', undefined, isFocused);
+  const panchangSegmentRef = useTourTarget('panchangSegment', undefined, isFocused);
   const rootNav = useNavigation<any>();
   const { followCount } = useVratFollows();
   const todayKey = new Date().toDateString();

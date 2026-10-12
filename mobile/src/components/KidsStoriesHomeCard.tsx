@@ -3,11 +3,14 @@ import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
-import { pillTextStyle, titleFontByLang } from '@/utils/langType';
+import { titleFontByLang } from '@/utils/langType';
 import { pick } from '@/utils/localize';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import { assetBaseUrl, remoteAssetRequest } from '@/data/assetManifest';
+import kidsStoryManifest from '@/data/kidsStoryAssetManifest.json';
+import { useCachedAsset } from '@/utils/useCachedAsset';
 
-const storyLibraryArt = require('../../assets/kids-stories/story-library.webp');
+const storyLibraryRequest = remoteAssetRequest(kidsStoryManifest, 'story-library', assetBaseUrl());
 
 type Props = {
   onPress: () => void;
@@ -17,15 +20,12 @@ type Props = {
 
 /** A deity-neutral picture-book door to the story library. */
 export default function KidsStoriesHomeCard({ onPress, onPressIn, onPressOut }: Props) {
-  const { colors, radii, elevation, typography } = useTheme();
+  const { colors, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const storyLibraryUri = useCachedAsset(storyLibraryRequest);
   const title = pick(lang, {
     hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids',
     gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರકಥೆಗಳು',
-  });
-  const meta = pick(lang, {
-    hi: 'कृष्ण · गणेश · हनुमान', en: 'KRISHNA · GANESHA · HANUMAN',
-    gu: 'કૃષ્ણ · ગણેશ · હનુમાન', kn: 'ಕೃಷ್ಣ · ಗಣೇಶ · ಹನುಮಾನ್',
   });
   const action = pick(lang, {
     hi: 'पात्र चुनें', en: 'Choose a deity',
@@ -41,7 +41,7 @@ export default function KidsStoriesHomeCard({ onPress, onPressIn, onPressOut }: 
     <Pressable
       testID="home-kids-stories-card"
       accessibilityRole="button"
-      accessibilityLabel={`${title}. ${meta}. ${action}.`}
+      accessibilityLabel={`${title}. ${action}.`}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
@@ -53,11 +53,10 @@ export default function KidsStoriesHomeCard({ onPress, onPressIn, onPressOut }: 
         end={{ x: 1, y: 1 }}
         style={[StyleSheet.absoluteFill, { borderRadius: radii.lg }]}
       />
-      <Image source={storyLibraryArt} resizeMode="cover" accessible={false} style={styles.cover} />
+      {storyLibraryUri
+        ? <Image source={{ uri: storyLibraryUri }} resizeMode="cover" accessible={false} style={styles.cover} />
+        : <View accessible={false} style={[styles.cover, { backgroundColor: colors.parchmentSoft }]} />}
       <View style={styles.content}>
-        <Text style={{ ...pillTextStyle(lang, typography.sectionLabel), color: colors.inkMuted, fontSize: lang === 'en' ? 10 : 12 }} numberOfLines={1}>
-          {meta}
-        </Text>
         <Text style={{ color: colors.ink, fontFamily: primary.fontFamily, fontSize: primary.fontSize, fontStyle: primary.fontStyle, letterSpacing: primary.letterSpacing, lineHeight: 28 }} numberOfLines={2}>
           {primary.text}
         </Text>

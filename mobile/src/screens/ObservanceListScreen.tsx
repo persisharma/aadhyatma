@@ -20,6 +20,7 @@ import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { useTourTarget } from '@/components/tour/tourTargets';
+import { useIsFocused } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'ObservanceList'>;
 
@@ -53,8 +54,9 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   // Feature-tour anchors (design.md §47): the first row (list) and its ★ follow.
-  const vratListRef = useTourTarget('vratList');
-  const vratFollowRef = useTourTarget('vratFollow');
+  const isFocused = useIsFocused();
+  const vratListRef = useTourTarget('vratList', undefined, isFocused);
+  const vratFollowRef = useTourTarget('vratFollow', undefined, isFocused);
   const [calendarSystem] = usePanchangCalendarSystem();
   const [query, setQuery] = useState('');
   const [area, setArea] = useState<AreaFilter>('all');

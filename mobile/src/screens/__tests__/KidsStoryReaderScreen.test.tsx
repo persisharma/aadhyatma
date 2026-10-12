@@ -4,6 +4,9 @@ import type { KidsStory } from '@/data/kidsStories';
 
 let mockLang = 'hi';
 const mockScroll = jest.fn();
+const mockShare = jest.fn();
+jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, busy: false }) }));
+jest.mock('@/components/ShareButton', () => ({ __esModule: true, default: 'ShareButton' }));
 jest.mock('react-native', () => {
   const React = require('react');
   return {
@@ -118,5 +121,17 @@ test('unknown story renders a graceful message without a pager', () => {
   const { tree } = mount(undefined, 'missing');
   expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === 'Story not found.')).toBe(true);
   expect(tree.root.findAllByProps({ testID: 'story-pager' })).toHaveLength(0);
+  act(() => tree.unmount());
+});
+
+test('share follows the visible scene and authored reading language', () => {
+  mockLang = 'gu';
+  const { tree, find } = mount(undefined, 'durga-raktabeej');
+  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * 3 } } }));
+  act(() => tree.root.findByType('ShareButton' as any).props.onPress());
+  const [content, language] = mockShare.mock.calls[mockShare.mock.calls.length - 1];
+  expect(language).toBe('gu');
+  expect(content.scopes[content.scopes.length - 1].id).toBe('scene-4');
+  expect(content.scopes[0].prepared.gu.firstLine).toBe('દુર્ગા, કાલી અને રક્તબીજ');
   act(() => tree.unmount());
 });

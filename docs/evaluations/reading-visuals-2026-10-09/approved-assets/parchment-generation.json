@@ -1,0 +1,40 @@
+{
+  "approvedReference": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-09/proposals/option-2.png",
+  "mode": "built-in image_gen, opaque reference-based style generation",
+  "prompt": "Use case: stylized-concept\nAsset type: background parchment texture for a devotional mobile prose reader, portrait 1:2 page, requested size 1024x2048.\nInput images: Image 1 is an approved UI mockup, STYLE REFERENCE ONLY. Generate one standalone background asset based on its pale handmade-paper surface; do not reproduce the UI, painting, or typography.\nPrimary request: A quiet, warm ivory and cream handmade paper background with delicate, almost invisible golden botanical marks in the extreme corners. The central 85 percent of the canvas must be a uniform very pale cream reading area with smooth tonal values, excellent contrast for dark prose, and only the faintest finely blended paper texture. Botanical corners occupy the outermost 4 percent and are very low contrast, a whisper of soft pale gold linework. No surrounding frame.\nStyle/medium: pale watercolor paper, flat and softly lit, elegant devotional manuscript tone, no aged brown staining.\nColor palette: main paper approximately #FFF8E8 to #FCF4E2, extreme corner accents approximately #EEE0BC, gentle and bright.\nComposition: exact flat top-down full bleed portrait page with no depicted object; all edges retain similarly light paper; extremely subtle corner details and no visible ornament entering the central reading area.\nConstraints: Entire central 85 percent remains light and uncluttered. No text, UI, book drawing, deities, illustration scene, divider, border, frame, watermark, letterforms, logo, dark vignette, coffee stain, dirty edge, strong gradient, crease, fold, or noisy grain. Opaque background, no alpha.",
+  "generatedSource": "/Users/prashant/.codex/generated_images/01a11f53-8652-7461-aaaa-6870fa97e0b6/exec-8695639d-6577-49e2-987e-fda2c22f78f6.png",
+  "original": {
+    "path": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-09/approved-assets/reading-parchment-option2.png",
+    "dimensions": [
+      887,
+      1774
+    ],
+    "bytes": 1680553,
+    "sha256": "8146d606726418e1a01ce5c132029ed9db38aeb41fc2041e16f90af19d991fb7"
+  },
+  "appAsset": {
+    "path": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/backgrounds/reading-parchment-option2.webp",
+    "dimensions": [
+      600,
+      1200
+    ],
+    "bytes": 3102,
+    "sha256": "acee66cee8bef750df58cf2deda8fe98bbc9e86e1bcc6ffa75683f201ccd7b9c",
+    "format": "WebP",
+    "quality": 60,
+    "method": 6,
+    "alpha": false
+  },
+  "visualValidation": [
+    "Full generated PNG visually inspected",
+    "Compressed WebP visually inspected after format conversion and proportional downsampling",
+    "Warm pale ivory paper, unobstructed light center, faint gold botanical corner details",
+    "No UI, text, book drawing, deities, divider, frame, watermark, dark vignette, or stains"
+  ],
+  "center85PercentLuminance8bit": {
+    "p01": 243,
+    "p50": 244,
+    "p99": 245
+  },
+  "publication": "not published; asset-only handoff to parent for approved implementation"
+}

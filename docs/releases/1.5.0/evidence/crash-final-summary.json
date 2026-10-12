@@ -1,0 +1,35 @@
+[
+  {
+    "device": "emulator-5582",
+    "crashBufferProcesses": {
+      "com.google.android.gms.persistent": 5
+    },
+    "vedanshCrashCount": 0
+  },
+  {
+    "device": "emulator-5584",
+    "crashBufferProcesses": {
+      "com.google.android.gms.persistent": 294
+    },
+    "vedanshCrashCount": 0
+  },
+  {
+    "device": "emulator-5586",
+    "crashBufferProcesses": {
+      "com.google.android.gms.persistent": 281
+    },
+    "vedanshCrashCount": 0
+  },
+  {
+    "device": "emulator-5588",
+    "crashBufferProcesses": {
+      "com.google.android.gms.persistent": 276
+    },
+    "vedanshCrashCount": 0
+  },
+  {
+    "device": "emulator-5590",
+    "crashBufferProcesses": {},
+    "vedanshCrashCount": 0
+  }
+]

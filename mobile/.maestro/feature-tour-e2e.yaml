@@ -36,7 +36,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Open More and replay the tour ──
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -57,7 +57,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Home"
 
 # ── Walk forward through every step, asserting each card's English subtitle ──
-# Tabs 2–5
+# Tabs 2–5, followed by the Home settings gear
 - tapOn: "Next step"
 - waitForAnimationToEnd
 - assertVisible: "Daily Bhakti"
@@ -68,11 +68,15 @@ appId: com.prashantsharma.vedansh
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
+- assertVisible: "Vrat"
+
+- tapOn: "Next step"
+- waitForAnimationToEnd
 - assertVisible: "Bhajan"
 
 - tapOn: "Next step"
 - waitForAnimationToEnd
-- assertVisible: "More"
+- assertVisible: "Settings"
 
 # Home: routine card, categories, Japa (+ mantra list), Theerth (+ map)
 - tapOn: "Next step"

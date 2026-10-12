@@ -15,7 +15,8 @@
 import type { DaanKathaEntry, DaanPrincipleEntry } from '@/data/daan/types';
 import type { KathaContentEntry } from '@/panchang/types';
 import type { TempleEntry } from '@/data/theerth/temples';
-import { getTheerthBackground } from '@/data/backgrounds';
+import { getTheerthBackground, getDaanBackground } from '@/data/backgrounds';
+import { getKathaBackground } from '@/data/kathaBackgrounds';
 import type {
   ShareableProse,
   ShareableProseBlock,
@@ -128,7 +129,7 @@ export function vratKathaShareable(katha: KathaContentEntry, sectionIndex: numbe
   return {
     kind: 'prose',
     sourceId: `katha-${katha.id}`,
-    background: null,
+    background: getKathaBackground(katha.id),
     sectionNameHi: 'व्रत कथा',
     sectionNameEn: 'Vrat Katha',
     tagNameHi: katha.titleHi,
@@ -142,7 +143,7 @@ export function daanKathaShareable(katha: DaanKathaEntry): ShareableProse {
   return {
     kind: 'prose',
     sourceId: 'daan-punya',
-    background: null,
+    background: getDaanBackground(),
     sectionNameHi: 'दान-पुण्य',
     sectionNameEn: 'Daan Punya',
     tagNameHi: katha.titleHi,
@@ -324,3 +325,6 @@ export function askAnswerShareable(answer: {
     ],
   };
 }
+
+/** Illustrated kids stories use the same picker, preview, capture and native multi-file hand-off. */
+export { kidsStoryShareable } from './kidsStoryShare';

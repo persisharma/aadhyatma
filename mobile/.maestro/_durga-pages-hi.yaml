@@ -1,0 +1,1363 @@
+# Full source order; captions and source notes come from canonical JSON.
+appId: com.prashantsharma.vedansh
+---
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-navaratri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-navaratri" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 3"
+- assertVisible: { id: "story-page-nine-nights-of-devotion" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-nv01-art
+- scrollUntilVisible:
+    element: { text: "नवरात्रि का अर्थ है नौ रातें। इस उत्सव में अनेक परिवार माँ दुर्गा का स्मरण करते हैं, उनकी कथाएँ सुनते हैं और उनकी शक्ति व करुणा का उत्सव मनाते हैं। एक प्रसिद्ध परंपरा में माँ के नौ रूपों की क्रम से आराधना होती है। इन्हें नवदुर्गा कहते हैं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नवरात्रि का अर्थ है नौ रातें। इस उत्सव में अनेक परिवार माँ दुर्गा का स्मरण करते हैं, उनकी कथाएँ सुनते हैं और उनकी शक्ति व करुणा का उत्सव मनाते हैं। एक प्रसिद्ध परंपरा में माँ के नौ रूपों की क्रम से आराधना होती है। इन्हें नवदुर्गा कहते हैं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-nv01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 3"
+- assertVisible: { id: "story-page-the-nine-names" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-nv02-art
+- scrollUntilVisible:
+    element: { text: "पारंपरिक क्रम है: शैलपुत्री, ब्रह्मचारिणी, चंद्रघंटा, कूष्मांडा, स्कंदमाता, कात्यायनी, कालरात्रि, महागौरी और सिद्धिदात्री। कुछ पाठों में पार्वती की संबंधित कथाएँ हैं; कुछ में रूप और उसके चिह्नों का परिचय। हर रूप उसी दिव्य माँ का स्मरण कराता है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "पारंपरिक क्रम है: शैलपुत्री, ब्रह्मचारिणी, चंद्रघंटा, कूष्मांडा, स्कंदमाता, कात्यायनी, कालरात्रि, महागौरी और सिद्धिदात्री। कुछ पाठों में पार्वती की संबंधित कथाएँ हैं; कुछ में रूप और उसके चिह्नों का परिचय। हर रूप उसी दिव्य माँ का स्मरण कराता है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-nv02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 3"
+- assertVisible: { id: "story-page-celebrate-and-learn" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-nv03-art
+- scrollUntilVisible:
+    element: { text: "परिवार अलग-अलग ढंग से उत्सव मनाते हैं: पूजा, संगीत, नृत्य या साथ कथा सुनकर। आप किसी प्रियजन के साथ सुनें, प्रश्न पूछें और दया दिखाएँ। हर दिन एक पाठ शुरू करें और माँ का साहस, धैर्य और स्नेह जानें।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "परिवार अलग-अलग ढंग से उत्सव मनाते हैं: पूजा, संगीत, नृत्य या साथ कथा सुनकर। आप किसी प्रियजन के साथ सुनें, प्रश्न पूछें और दया दिखाएँ। हर दिन एक पाठ शुरू करें और माँ का साहस, धैर्य और स्नेह जानें।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-nv03-caption
+- scrollUntilVisible:
+    element: { text: "पारंपरिक नवदुर्गा क्रम पर आधारित नवरात्रि का संक्षिप्त परिचय। परिवारों और क्षेत्रों के रीति-रिवाज अलग होते हैं। यह पूजा-विधि या उपवास निर्देश नहीं है; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "पारंपरिक नवदुर्गा क्रम पर आधारित नवरात्रि का संक्षिप्त परिचय। परिवारों और क्षेत्रों के रीति-रिवाज अलग होते हैं। यह पूजा-विधि या उपवास निर्देश नहीं है; सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-nv03-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-shailaputri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-shailaputri" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 4"
+- assertVisible: { id: "story-page-menas-wish" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sp01-art
+- scrollUntilVisible:
+    element: { text: "पर्वतों के स्वामी हिमवान और उनकी पत्नी मेना देवी के भक्त थे। मेना ने दिव्य माँ को अपनी पुत्री के रूप में माँगा था। देवी ने वह इच्छा स्वीकार की थी। अब पर्वत का परिवार उनके आने की प्रतीक्षा कर रहा था।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "पर्वतों के स्वामी हिमवान और उनकी पत्नी मेना देवी के भक्त थे। मेना ने दिव्य माँ को अपनी पुत्री के रूप में माँगा था। देवी ने वह इच्छा स्वीकार की थी। अब पर्वत का परिवार उनके आने की प्रतीक्षा कर रहा था।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sp01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 4"
+- assertVisible: { id: "story-page-the-goddess-becomes-a-daughter" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sp02-art
+- scrollUntilVisible:
+    element: { text: "देवी मेना के सामने अपने दिव्य रूप में प्रकट हुईं। मेना ने आनंद से उन्हें पहचाना और अपनी नन्ही पुत्री बनकर रहने का अनुरोध किया। माँ ने उन्हें पहले दिए वरदान का स्मरण कराया और उनके सामने शिशु बन गईं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवी मेना के सामने अपने दिव्य रूप में प्रकट हुईं। मेना ने आनंद से उन्हें पहचाना और अपनी नन्ही पुत्री बनकर रहने का अनुरोध किया। माँ ने उन्हें पहले दिए वरदान का स्मरण कराया और उनके सामने शिशु बन गईं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sp02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 4"
+- assertVisible: { id: "story-page-parvati-grows-and-learns" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sp03-art
+- scrollUntilVisible:
+    element: { text: "परिवार और नगर ने बच्ची के आने का उत्सव मनाया। पर्वत के परिवार से जुड़ा उसका नाम पार्वती पड़ा। वह गंगा के रेतीले तट पर सखियों के साथ गेंद और गुड़ियों से खेलती थी। शिक्षा का समय आया तो गुरु से आनंद और ध्यान के साथ सीखने लगी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "परिवार और नगर ने बच्ची के आने का उत्सव मनाया। पर्वत के परिवार से जुड़ा उसका नाम पार्वती पड़ा। वह गंगा के रेतीले तट पर सखियों के साथ गेंद और गुड़ियों से खेलती थी। शिक्षा का समय आया तो गुरु से आनंद और ध्यान के साथ सीखने लगी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sp03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 4"
+- assertVisible: { id: "story-page-shailaputri-the-first-form" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sp04-art
+- scrollUntilVisible:
+    element: { text: "शैलपुत्री का अर्थ है पर्वत की पुत्री। नवरात्रि के पहले दिन भक्त माँ के इस रूप का स्मरण करते हैं। पारंपरिक चित्रों में वे सफेद बैल पर सवार हैं और त्रिशूल व कमल धारण करती हैं। पार्वती का पर्वत में जन्म इस नाम को समझने में सहायता करता है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शैलपुत्री का अर्थ है पर्वत की पुत्री। नवरात्रि के पहले दिन भक्त माँ के इस रूप का स्मरण करते हैं। पारंपरिक चित्रों में वे सफेद बैल पर सवार हैं और त्रिशूल व कमल धारण करती हैं। पार्वती का पर्वत में जन्म इस नाम को समझने में सहायता करता है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sp04-caption
+- scrollUntilVisible:
+    element: { text: "शिवपुराण 2.3.6–7 से पार्वती का संबंधित प्रसंग, फिर शैलपुत्री के प्रथम-दिन रूप का पारंपरिक परिचय। इन अध्यायों में यह नवदुर्गा नाम स्वयं नहीं है। बच्चों के लिए मौलिक रूपांतरण; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शिवपुराण 2.3.6–7 से पार्वती का संबंधित प्रसंग, फिर शैलपुत्री के प्रथम-दिन रूप का पारंपरिक परिचय। इन अध्यायों में यह नवदुर्गा नाम स्वयं नहीं है। बच्चों के लिए मौलिक रूपांतरण; सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sp04-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-brahmacharini" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-brahmacharini" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-parvati-seeks-permission" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br01-art
+- scrollUntilVisible:
+    element: { text: "पार्वती शिव से फिर मिलना चाहती थीं। नारद ने भक्ति से तप करने की सलाह दी। उनके माता-पिता वन के कठिन जीवन को लेकर चिंतित थे। उनकी इच्छा सुनकर अंततः अनुमति दी। यह संकल्प नवरात्रि के दूसरे रूप ब्रह्मचारिणी में याद किया जाता है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "पार्वती शिव से फिर मिलना चाहती थीं। नारद ने भक्ति से तप करने की सलाह दी। उनके माता-पिता वन के कठिन जीवन को लेकर चिंतित थे। उनकी इच्छा सुनकर अंततः अनुमति दी। यह संकल्प नवरात्रि के दूसरे रूप ब्रह्मचारिणी में याद किया जाता है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-tapas-and-a-garden" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br02-art
+- scrollUntilVisible:
+    element: { text: "सखियों के साथ पार्वती हिमालय के तपोवन पहुँचीं। सरल वस्त्र पहनकर लंबे समय तक शिव का ध्यान किया। वे वृक्ष लगातीं, उन्हें सींचतीं और अतिथियों का स्वागत करतीं। उनकी भक्ति में आसपास के वन की देखभाल भी थी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "सखियों के साथ पार्वती हिमालय के तपोवन पहुँचीं। सरल वस्त्र पहनकर लंबे समय तक शिव का ध्यान किया। वे वृक्ष लगातीं, उन्हें सींचतीं और अतिथियों का स्वागत करतीं। उनकी भक्ति में आसपास के वन की देखभाल भी थी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-peace-in-the-hermitage" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br03-art
+- scrollUntilVisible:
+    element: { text: "पुराण तपोवन में अद्भुत परिवर्तन बताता है। सिंह और गाय एक-दूसरे को सताते नहीं थे; बिल्ली और चूहे बिना बैर रहते थे। पेड़ों पर फल आए और फूल खिले। पार्वती के तप से स्वाभाविक शत्रुओं के बीच भी शांति थी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "पुराण तपोवन में अद्भुत परिवर्तन बताता है। सिंह और गाय एक-दूसरे को सताते नहीं थे; बिल्ली और चूहे बिना बैर रहते थे। पेड़ों पर फल आए और फूल खिले। पार्वती के तप से स्वाभाविक शत्रुओं के बीच भी शांति थी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-the-devas-ask-shiva" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br04-art
+- scrollUntilVisible:
+    element: { text: "उधर तारक असुर देवताओं को कष्ट दे रहा था। उन्हें आशा थी कि शिव और पार्वती का पुत्र उसे रोकेगा। नंदी की सहायता से उन्होंने शिव से विवाह का अनुरोध किया। बार-बार की प्रार्थना से प्रसन्न होकर शिव सहायता करने को तैयार हुए।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "उधर तारक असुर देवताओं को कष्ट दे रहा था। उन्हें आशा थी कि शिव और पार्वती का पुत्र उसे रोकेगा। नंदी की सहायता से उन्होंने शिव से विवाह का अनुरोध किया। बार-बार की प्रार्थना से प्रसन्न होकर शिव सहायता करने को तैयार हुए।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-the-seven-sages-test-her" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br05-art
+- scrollUntilVisible:
+    element: { text: "शिव ने पार्वती का संकल्प जाँचने सात ऋषि भेजे। उन्होंने दूसरी राह चुनने को समझाया और शिव की आलोचना की। पार्वती अपनी भक्ति और नारद के मार्गदर्शन पर अडिग रहीं। ऋषियों ने उनका संकल्प पहचाना, आशीर्वाद दिया और शिव के पास लौट गए।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शिव ने पार्वती का संकल्प जाँचने सात ऋषि भेजे। उन्होंने दूसरी राह चुनने को समझाया और शिव की आलोचना की। पार्वती अपनी भक्ति और नारद के मार्गदर्शन पर अडिग रहीं। ऋषियों ने उनका संकल्प पहचाना, आशीर्वाद दिया और शिव के पास लौट गए।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-the-ascetics-disguise" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br06-art
+- scrollUntilVisible:
+    element: { text: "फिर शिव स्वयं वृद्ध तपस्वी का वेश लेकर दंड और छाते के साथ आए। पार्वती ने उनका स्वागत किया। उन्होंने शिव की निंदा की तो पार्वती ने अपना विश्वास समझाया और आगे अपमान सुनना स्वीकार नहीं किया। वे सखी विजया के साथ जाने लगीं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "फिर शिव स्वयं वृद्ध तपस्वी का वेश लेकर दंड और छाते के साथ आए। पार्वती ने उनका स्वागत किया। उन्होंने शिव की निंदा की तो पार्वती ने अपना विश्वास समझाया और आगे अपमान सुनना स्वीकार नहीं किया। वे सखी विजया के साथ जाने लगीं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-shiva-reveals-himself" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br07-art
+- scrollUntilVisible:
+    element: { text: "उनके जाने से पहले शिव ने अपना सच्चा रूप प्रकट किया। उन्होंने पार्वती की भक्ति और ली गई परीक्षाओं को स्वीकार किया। पार्वती की थकान आनंद में बदल गई। उन्होंने परिवार के साथ उचित विवाह-संस्कार चाहा; शिव सहमत हुए।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "उनके जाने से पहले शिव ने अपना सच्चा रूप प्रकट किया। उन्होंने पार्वती की भक्ति और ली गई परीक्षाओं को स्वीकार किया। पार्वती की थकान आनंद में बदल गई। उन्होंने परिवार के साथ उचित विवाह-संस्कार चाहा; शिव सहमत हुए।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br07-caption
+- scrollUntilVisible:
+    element: { text: "शिवपुराण 2.3.21–29 का पार्वती संबंधी प्रसंग, ब्रह्मचारिणी के दूसरे-दिन रूप से जुड़ा। बच्चों के लिए कठोर उपवास और अग्नि-परीक्षा का प्रसंग छोड़ा गया है; यह साधना निर्देश नहीं है। सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शिवपुराण 2.3.21–29 का पार्वती संबंधी प्रसंग, ब्रह्मचारिणी के दूसरे-दिन रूप से जुड़ा। बच्चों के लिए कठोर उपवास और अग्नि-परीक्षा का प्रसंग छोड़ा गया है; यह साधना निर्देश नहीं है। सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-br07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-chandraghanta" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-chandraghanta" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 5"
+- assertVisible: { id: "story-page-the-wedding-procession" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg01-art
+- scrollUntilVisible:
+    element: { text: "विवाह का समय आया। शिव अपने वृषभ पर देवताओं और ऋषियों के साथ हिमालय के घर पहुँचे। पर्वत-महल संगीत से भर गया। हिमालय और मेना ने वर का स्वागत किया। पार्वती विवाह के वस्त्रों में प्रतीक्षा कर रही थीं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "विवाह का समय आया। शिव अपने वृषभ पर देवताओं और ऋषियों के साथ हिमालय के घर पहुँचे। पर्वत-महल संगीत से भर गया। हिमालय और मेना ने वर का स्वागत किया। पार्वती विवाह के वस्त्रों में प्रतीक्षा कर रही थीं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 5"
+- assertVisible: { id: "story-page-naradas-explanation" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg02-art
+- scrollUntilVisible:
+    element: { text: "संस्कार के समय हिमालय ने शिव का कुल पूछा। शिव मौन रहे। नारद ने वीणा बजाई और समझाया कि शिव का दिव्य स्वरूप सामान्य वंश-परिचय से परे है। हिमालय ने सुना और उनका संशय दूर हुआ।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "संस्कार के समय हिमालय ने शिव का कुल पूछा। शिव मौन रहे। नारद ने वीणा बजाई और समझाया कि शिव का दिव्य स्वरूप सामान्य वंश-परिचय से परे है। हिमालय ने सुना और उनका संशय दूर हुआ।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 5"
+- assertVisible: { id: "story-page-hands-joined" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg03-art
+- scrollUntilVisible:
+    element: { text: "मेना के साथ हिमालय ने पार्वती का हाथ शिव के हाथ में रखा। शिव ने उनका हाथ स्वीकार किया और विवाह-संस्कार आगे बढ़ा। पार्वती की इच्छा का विवाह परिवार और देवताओं की उपस्थिति में संपन्न हुआ।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "मेना के साथ हिमालय ने पार्वती का हाथ शिव के हाथ में रखा। शिव ने उनका हाथ स्वीकार किया और विवाह-संस्कार आगे बढ़ा। पार्वती की इच्छा का विवाह परिवार और देवताओं की उपस्थिति में संपन्न हुआ।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 5"
+- assertVisible: { id: "story-page-family-celebrates" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg04-art
+- scrollUntilVisible:
+    element: { text: "महल में आनंद फैल गया। दिव्य गायक गाने लगे, नर्तक नाचे और संबंधियों ने भेंट दी। बेटी की इच्छा पूरी होने से हिमालय प्रसन्न थे। शिव-पार्वती के विवाह में परिवार, ऋषि और देवता साथ आए।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "महल में आनंद फैल गया। दिव्य गायक गाने लगे, नर्तक नाचे और संबंधियों ने भेंट दी। बेटी की इच्छा पूरी होने से हिमालय प्रसन्न थे। शिव-पार्वती के विवाह में परिवार, ऋषि और देवता साथ आए।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 5"
+- assertVisible: { id: "story-page-the-third-form" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg05-art
+- scrollUntilVisible:
+    element: { text: "नवदुर्गा परंपरा विवाहित पार्वती को तीसरे दिन पूजित माँ चंद्रघंटा से जोड़ती है। उनके नाम में मस्तक के घंटाकार अर्धचंद्र का स्मरण है। पारंपरिक चित्रों में दस भुजाएँ, व्याघ्र की सवारी, अस्त्र और आशीर्वाद देती मुद्राएँ हैं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नवदुर्गा परंपरा विवाहित पार्वती को तीसरे दिन पूजित माँ चंद्रघंटा से जोड़ती है। उनके नाम में मस्तक के घंटाकार अर्धचंद्र का स्मरण है। पारंपरिक चित्रों में दस भुजाएँ, व्याघ्र की सवारी, अस्त्र और आशीर्वाद देती मुद्राएँ हैं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg05-caption
+- scrollUntilVisible:
+    element: { text: "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-cg05-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-kushmanda" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-kushmanda" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 3"
+- assertVisible: { id: "story-page-the-radiant-fourth-form" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-ku01-art
+- scrollUntilVisible:
+    element: { text: "नवरात्रि के चौथे दिन अनेक भक्त माँ कूष्मांडा की आराधना करते हैं। उन्हें सृष्टि के प्रकाश और ऊर्जा से जुड़ा माँ का तेजस्वी रूप माना जाता है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नवरात्रि के चौथे दिन अनेक भक्त माँ कूष्मांडा की आराधना करते हैं। उन्हें सृष्टि के प्रकाश और ऊर्जा से जुड़ा माँ का तेजस्वी रूप माना जाता है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-ku01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 3"
+- assertVisible: { id: "story-page-a-traditional-creation-account" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-ku02-art
+- scrollUntilVisible:
+    element: { text: "एक भक्ति-परंपरा में कहा जाता है कि उनकी कोमल मुस्कान से ब्रह्मांड प्रकट हुआ। उन्हें सूर्य के तेज में भी चित्रित किया जाता है। यह दिव्य सृष्टि का पारंपरिक वर्णन है, किसी साधारण व्यक्ति का साहसिक प्रसंग नहीं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "एक भक्ति-परंपरा में कहा जाता है कि उनकी कोमल मुस्कान से ब्रह्मांड प्रकट हुआ। उन्हें सूर्य के तेज में भी चित्रित किया जाता है। यह दिव्य सृष्टि का पारंपरिक वर्णन है, किसी साधारण व्यक्ति का साहसिक प्रसंग नहीं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-ku02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 3"
+- assertVisible: { id: "story-page-symbols-of-kushmanda" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-ku03-art
+- scrollUntilVisible:
+    element: { text: "परिचित भक्तिचित्रों में कूष्मांडा की आठ भुजाएँ हैं और वे सिंह पर सवार हैं। उनके हाथों में कमल, माला, धनुष और पात्र जैसे चिह्न हैं। अनेक भुजाएँ भक्तों को जगत का पालन करने वाली माँ की अनेक शक्तियाँ याद दिलाती हैं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "परिचित भक्तिचित्रों में कूष्मांडा की आठ भुजाएँ हैं और वे सिंह पर सवार हैं। उनके हाथों में कमल, माला, धनुष और पात्र जैसे चिह्न हैं। अनेक भुजाएँ भक्तों को जगत का पालन करने वाली माँ की अनेक शक्तियाँ याद दिलाती हैं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-ku03-caption
+- scrollUntilVisible:
+    element: { text: "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-ku03-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-skandamata" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-skandamata" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 5"
+- assertVisible: { id: "story-page-a-chariot-arrives" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk01-art
+- scrollUntilVisible:
+    element: { text: "छह कृत्तिका माताओं ने बालक कार्तिकेय को प्रेम से पाला था। कैलास पर पार्वती पुत्र को घर लाना चाहती थीं। उन्होंने उसे लाने के लिए सुंदर रथ भेजा। कार्तिकेय उस घर से चलने को तैयार हुए जहाँ कृत्तिकाओं ने उनकी देखभाल की थी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "छह कृत्तिका माताओं ने बालक कार्तिकेय को प्रेम से पाला था। कैलास पर पार्वती पुत्र को घर लाना चाहती थीं। उन्होंने उसे लाने के लिए सुंदर रथ भेजा। कार्तिकेय उस घर से चलने को तैयार हुए जहाँ कृत्तिकाओं ने उनकी देखभाल की थी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 5"
+- assertVisible: { id: "story-page-the-mothers-come-too" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk02-art
+- scrollUntilVisible:
+    element: { text: "उनसे बिछुड़ने की सोचकर कृत्तिकाएँ व्याकुल हुईं। कार्तिकेय ने स्नेह से उन्हें सांत्वना दी। उन्हें पीछे छोड़ने के बजाय वे माताओं को अपने साथ रथ में ले आए। सब मिलकर कैलास की ओर चले।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "उनसे बिछुड़ने की सोचकर कृत्तिकाएँ व्याकुल हुईं। कार्तिकेय ने स्नेह से उन्हें सांत्वना दी। उन्हें पीछे छोड़ने के बजाय वे माताओं को अपने साथ रथ में ले आए। सब मिलकर कैलास की ओर चले।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 5"
+- assertVisible: { id: "story-page-arrival-at-kailasa" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk03-art
+- scrollUntilVisible:
+    element: { text: "नंदिन साथ थे। रथ कैलास के वटवृक्ष के पास पहुँचा। मार्ग सजाए गए थे और संगीत से यात्रियों का स्वागत हुआ। पार्वती, शिव और देवता कार्तिकेय से मिलने आए। कृत्तिका माताएँ भी उनके साथ थीं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नंदिन साथ थे। रथ कैलास के वटवृक्ष के पास पहुँचा। मार्ग सजाए गए थे और संगीत से यात्रियों का स्वागत हुआ। पार्वती, शिव और देवता कार्तिकेय से मिलने आए। कृत्तिका माताएँ भी उनके साथ थीं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 5"
+- assertVisible: { id: "story-page-parvati-embraces-her-son" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk04-art
+- scrollUntilVisible:
+    element: { text: "पुत्र को देखकर शिव-पार्वती आनंद से भर गए। पार्वती ने कार्तिकेय को गले लगाया और अपनी गोद में लिया। परिवार का प्रतीक्षित मिलन आनंदमय घर-वापसी बना, जिसमें उन्हें पालने वाली माताएँ भी साथ थीं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "पुत्र को देखकर शिव-पार्वती आनंद से भर गए। पार्वती ने कार्तिकेय को गले लगाया और अपनी गोद में लिया। परिवार का प्रतीक्षित मिलन आनंदमय घर-वापसी बना, जिसमें उन्हें पालने वाली माताएँ भी साथ थीं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 5"
+- assertVisible: { id: "story-page-the-mother-of-skanda" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk05-art
+- scrollUntilVisible:
+    element: { text: "देवताओं और माताओं ने कार्तिकेय को भेंट दी; कृत्तिकाओं ने भी भेंट दी। नवदुर्गा परंपरा पाँचवें दिन स्कंद की माँ को माँ स्कंदमाता के रूप में स्मरण करती है। उनके चार भुजाओं वाले चित्र में कमल, पुत्र और आशीर्वाद की मुद्रा होती है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवताओं और माताओं ने कार्तिकेय को भेंट दी; कृत्तिकाओं ने भी भेंट दी। नवदुर्गा परंपरा पाँचवें दिन स्कंद की माँ को माँ स्कंदमाता के रूप में स्मरण करती है। उनके चार भुजाओं वाले चित्र में कमल, पुत्र और आशीर्वाद की मुद्रा होती है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk05-caption
+- scrollUntilVisible:
+    element: { text: "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sk05-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-mahishasura" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-mahishasura" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 12"
+- assertVisible: { id: "story-page-mahishasura-takes-the-realm" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm01-art
+- scrollUntilVisible:
+    element: { text: "भैंसे का रूप लेने वाला असुर महिषासुर देवताओं को पराजित कर चुका था। उसने उनका लोक और उनके कार्य अपने अधिकार में ले लिए। अपने स्थानों से निकाले गए देवताओं को उसका अत्याचार रोकने के लिए सहायता चाहिए थी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "भैंसे का रूप लेने वाला असुर महिषासुर देवताओं को पराजित कर चुका था। उसने उनका लोक और उनके कार्य अपने अधिकार में ले लिए। अपने स्थानों से निकाले गए देवताओं को उसका अत्याचार रोकने के लिए सहायता चाहिए थी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 12"
+- assertVisible: { id: "story-page-devas-seek-help" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm02-art
+- scrollUntilVisible:
+    element: { text: "ब्रह्मा के साथ देवता शिव और विष्णु के पास पहुँचे। उन्होंने बताया कि महिषासुर ने उनके स्थान कैसे छीन लिए थे। यह अन्याय सुनकर शिव, विष्णु और दूसरे देवताओं ने उसका सामना करने का संकल्प किया।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ब्रह्मा के साथ देवता शिव और विष्णु के पास पहुँचे। उन्होंने बताया कि महिषासुर ने उनके स्थान कैसे छीन लिए थे। यह अन्याय सुनकर शिव, विष्णु और दूसरे देवताओं ने उसका सामना करने का संकल्प किया।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 12"
+- assertVisible: { id: "story-page-the-goddess-manifests" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm03-art
+- scrollUntilVisible:
+    element: { text: "शिव, विष्णु, ब्रह्मा और देवताओं से तेज निकला। वह तेज एक होकर देवी के रूप में प्रकट हुआ। उन्हें देखकर देवताओं की आशा लौट आई। यही दिव्य शक्ति महिषासुर का सामना करने वाली थी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शिव, विष्णु, ब्रह्मा और देवताओं से तेज निकला। वह तेज एक होकर देवी के रूप में प्रकट हुआ। उन्हें देखकर देवताओं की आशा लौट आई। यही दिव्य शक्ति महिषासुर का सामना करने वाली थी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 12"
+- assertVisible: { id: "story-page-gifts-and-the-lion" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm04-art
+- scrollUntilVisible:
+    element: { text: "देवताओं ने माँ दुर्गा को अपने अस्त्र और आभूषण भेंट किए। शिव ने त्रिशूल दिया और विष्णु ने चक्र। अन्य देवता शंख, धनुष और दूसरी भेंट लाए। हिमालय ने सिंह दिया। इन भेंटों के साथ देवी तैयार थीं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवताओं ने माँ दुर्गा को अपने अस्त्र और आभूषण भेंट किए। शिव ने त्रिशूल दिया और विष्णु ने चक्र। अन्य देवता शंख, धनुष और दूसरी भेंट लाए। हिमालय ने सिंह दिया। इन भेंटों के साथ देवी तैयार थीं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 12"
+- assertVisible: { id: "story-page-the-challenge-is-heard" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm05-art
+- scrollUntilVisible:
+    element: { text: "माँ दुर्गा की प्रबल गर्जना लोकों में गूँज उठी। देवताओं ने आनंद से उनका स्वागत किया। महिषासुर ने भी उसे सुना और क्रोधित हुआ। उसने अपनी सेना इकट्ठी की और तेजस्वी देवी की ओर भेज दी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "माँ दुर्गा की प्रबल गर्जना लोकों में गूँज उठी। देवताओं ने आनंद से उनका स्वागत किया। महिषासुर ने भी उसे सुना और क्रोधित हुआ। उसने अपनी सेना इकट्ठी की और तेजस्वी देवी की ओर भेज दी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 12"
+- assertVisible: { id: "story-page-the-army-is-defeated" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm06-art
+- scrollUntilVisible:
+    element: { text: "सेना ने आक्रमण किया, पर माँ दुर्गा अडिग रहीं। उनका सिंह साथ लड़ा और उनकी श्वास से सहायक प्रकट हुए। असुर सेनापति उन्हें हरा नहीं सके। सेना की हार के बाद महिषासुर स्वयं युद्ध में आया।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "सेना ने आक्रमण किया, पर माँ दुर्गा अडिग रहीं। उनका सिंह साथ लड़ा और उनकी श्वास से सहायक प्रकट हुए। असुर सेनापति उन्हें हरा नहीं सके। सेना की हार के बाद महिषासुर स्वयं युद्ध में आया।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 12"
+- assertVisible: { id: "story-page-the-buffalo-charge" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm07-art
+- scrollUntilVisible:
+    element: { text: "भैंसे के रूप में महिषासुर धरती पर झपटा। उसके खुर, सींग और पूँछ विनाश कर रहे थे। वह सिंह की ओर दौड़ा। माँ दुर्गा ने पाश फेंककर उसे बाँध लिया। बचने के लिए वह रूप बदलने लगा।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "भैंसे के रूप में महिषासुर धरती पर झपटा। उसके खुर, सींग और पूँछ विनाश कर रहे थे। वह सिंह की ओर दौड़ा। माँ दुर्गा ने पाश फेंककर उसे बाँध लिया। बचने के लिए वह रूप बदलने लगा।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm07-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 12"
+- assertVisible: { id: "story-page-lion-and-warrior" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm08-art
+- scrollUntilVisible:
+    element: { text: "महिषासुर अचानक सिंह बन गया। माँ दुर्गा ने उसका सामना किया तो वह तलवार और ढाल वाला योद्धा बन गया। देवी ने बाणों से उसका आक्रमण रोक दिया। दोनों रूप उसे जिता न सके, इसलिए उसने फिर रूप बदला।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "महिषासुर अचानक सिंह बन गया। माँ दुर्गा ने उसका सामना किया तो वह तलवार और ढाल वाला योद्धा बन गया। देवी ने बाणों से उसका आक्रमण रोक दिया। दोनों रूप उसे जिता न सके, इसलिए उसने फिर रूप बदला।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm08-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 12"
+- assertVisible: { id: "story-page-the-elephant-form" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm09-art
+- scrollUntilVisible:
+    element: { text: "अब महिषासुर विशाल हाथी बन गया। उसने सूँड़ से माँ दुर्गा के सिंह को पकड़ लिया। देवी ने आक्रमण करती सूँड़ काटकर सिंह को छुड़ाया। महिषासुर फिर भैंसा बन गया; वह अब भी रुकने को तैयार नहीं था।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "अब महिषासुर विशाल हाथी बन गया। उसने सूँड़ से माँ दुर्गा के सिंह को पकड़ लिया। देवी ने आक्रमण करती सूँड़ काटकर सिंह को छुड़ाया। महिषासुर फिर भैंसा बन गया; वह अब भी रुकने को तैयार नहीं था।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm09-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 12"
+- assertVisible: { id: "story-page-mountains-and-arrows" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm10-art
+- scrollUntilVisible:
+    element: { text: "क्रोधित होकर भैंसे के रूप वाले असुर ने सींगों से पर्वत माँ दुर्गा की ओर उछाले। देवी के बाणों ने उन्हें तोड़ दिया। उसकी शक्ति लोकों के लिए संकट बन गई थी। अब देवी उसका आक्रमण समाप्त करने आगे बढ़ीं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "क्रोधित होकर भैंसे के रूप वाले असुर ने सींगों से पर्वत माँ दुर्गा की ओर उछाले। देवी के बाणों ने उन्हें तोड़ दिया। उसकी शक्ति लोकों के लिए संकट बन गई थी। अब देवी उसका आक्रमण समाप्त करने आगे बढ़ीं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm10-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "11 / 12"
+- assertVisible: { id: "story-page-mahishasuras-defeat" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm11-art
+- scrollUntilVisible:
+    element: { text: "माँ दुर्गा ने भैंसे को दबाकर त्रिशूल से प्रहार किया। महिषासुर उससे मनुष्य रूप में निकलने लगा, पर आधा ही निकल सका। देवी ने तलवार से उसका वध किया। उसके भय और अत्याचार का शासन समाप्त हुआ।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "माँ दुर्गा ने भैंसे को दबाकर त्रिशूल से प्रहार किया। महिषासुर उससे मनुष्य रूप में निकलने लगा, पर आधा ही निकल सका। देवी ने तलवार से उसका वध किया। उसके भय और अत्याचार का शासन समाप्त हुआ।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm11-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "12 / 12"
+- assertVisible: { id: "story-page-the-devas-give-thanks" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm12-art
+- scrollUntilVisible:
+    element: { text: "देवताओं ने आनंद से माँ दुर्गा को धन्यवाद दिया। उन्होंने देवी की रक्षा का गुणगान किया और संकट में स्मरण करने पर सहायता माँगी। देवी ने उनकी प्रार्थना स्वीकार की। महिषासुर की हार के साथ शांति और आशा लौट आई।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवताओं ने आनंद से माँ दुर्गा को धन्यवाद दिया। उन्होंने देवी की रक्षा का गुणगान किया और संकट में स्मरण करने पर सहायता माँगी। देवी ने उनकी प्रार्थना स्वीकार की। महिषासुर की हार के साथ शांति और आशा लौट आई।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm12-caption
+- scrollUntilVisible:
+    element: { text: "देवी माहात्म्य 2–4 का बच्चों के लिए मौलिक सरल रूपांतरण। युद्ध और मृत्यु का वर्णन बिना भयावह विवरण के है। नवदुर्गा परंपरा में यह विजय कात्यायनी से जुड़ी है। चित्रों में आठ भुजाएँ पारंपरिक कलात्मक रूप हैं; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवी माहात्म्य 2–4 का बच्चों के लिए मौलिक सरल रूपांतरण। युद्ध और मृत्यु का वर्णन बिना भयावह विवरण के है। नवदुर्गा परंपरा में यह विजय कात्यायनी से जुड़ी है। चित्रों में आठ भुजाएँ पारंपरिक कलात्मक रूप हैं; सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-dm12-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-kalaratri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-kalaratri" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 2"
+- assertVisible: { id: "story-page-the-seventh-form" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-kr01-art
+- scrollUntilVisible:
+    element: { text: "नवरात्रि के सातवें दिन अनेक भक्त माँ कालरात्रि की आराधना करते हैं। उनका वर्ण श्याम है, केश खुले हैं और वाहन गधा है। उनका शक्तिशाली रूप अपने भक्तों की रक्षा करने वाली माँ का है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नवरात्रि के सातवें दिन अनेक भक्त माँ कालरात्रि की आराधना करते हैं। उनका वर्ण श्याम है, केश खुले हैं और वाहन गधा है। उनका शक्तिशाली रूप अपने भक्तों की रक्षा करने वाली माँ का है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-kr01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 2"
+- assertVisible: { id: "story-page-hands-that-reassure" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-kr02-art
+- scrollUntilVisible:
+    element: { text: "उन्हें प्रायः चार भुजाओं के साथ दिखाया जाता है। दो हाथों में रक्षा के अस्त्र हैं; दो आशीर्वाद और अभय देते हैं। भक्त उन्हें शुभंकरी भी कहते हैं, अर्थात शुभ करने वाली। उग्र रूप के भीतर करुणामय उद्देश्य हो सकता है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "उन्हें प्रायः चार भुजाओं के साथ दिखाया जाता है। दो हाथों में रक्षा के अस्त्र हैं; दो आशीर्वाद और अभय देते हैं। भक्त उन्हें शुभंकरी भी कहते हैं, अर्थात शुभ करने वाली। उग्र रूप के भीतर करुणामय उद्देश्य हो सकता है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-kr02-caption
+- scrollUntilVisible:
+    element: { text: "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-kr02-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-mahagauri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-mahagauri" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-parvati-begins-tapas" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg01-art
+- scrollUntilVisible:
+    element: { text: "शिव पुराण के इस वर्णन में शिव ने पार्वती के श्याम रंग पर टिप्पणी की। वे दुखी हुईं और तप से गौरी बनने का संकल्प किया। वे मंदर पर्वत से वन-आश्रम गईं। उनके संकल्प से देवताओं की रक्षा करने वाली दिव्य शक्ति भी प्रकट होनी थी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शिव पुराण के इस वर्णन में शिव ने पार्वती के श्याम रंग पर टिप्पणी की। वे दुखी हुईं और तप से गौरी बनने का संकल्प किया। वे मंदर पर्वत से वन-आश्रम गईं। उनके संकल्प से देवताओं की रक्षा करने वाली दिव्य शक्ति भी प्रकट होनी थी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-the-tiger-changes" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg02-art
+- scrollUntilVisible:
+    element: { text: "एक व्याघ्र पार्वती पर आक्रमण करने आया। उनके दिव्य प्रभाव से वह स्थिर हो गया। पार्वती ने करुणा से उसे देखा। उसकी हिंसा भक्ति में बदल गई और वह दूसरे पशुओं से उनके आश्रम की रक्षा करने लगा।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "एक व्याघ्र पार्वती पर आक्रमण करने आया। उनके दिव्य प्रभाव से वह स्थिर हो गया। पार्वती ने करुणा से उसे देखा। उसकी हिंसा भक्ति में बदल गई और वह दूसरे पशुओं से उनके आश्रम की रक्षा करने लगा।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-gauri-and-kaushiki" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg03-art
+- scrollUntilVisible:
+    element: { text: "शुंभ-निशुंभ से पीड़ित देवताओं ने रक्षा माँगी। ब्रह्मा पार्वती के पास आए। उनके श्याम बाहरी आवरण से आठ भुजाओं वाली कौशिकी प्रकट हुईं और पार्वती तेजस्वी गौरी बनीं। ब्रह्मा ने कौशिकी को सिंह दिया और असुर भाइयों का सामना करने भेजा।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शुंभ-निशुंभ से पीड़ित देवताओं ने रक्षा माँगी। ब्रह्मा पार्वती के पास आए। उनके श्याम बाहरी आवरण से आठ भुजाओं वाली कौशिकी प्रकट हुईं और पार्वती तेजस्वी गौरी बनीं। ब्रह्मा ने कौशिकी को सिंह दिया और असुर भाइयों का सामना करने भेजा।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-compassion-for-a-refuge-seeker" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg04-art
+- scrollUntilVisible:
+    element: { text: "कौशिकी ने भाइयों को पराजित किया। फिर ब्रह्मा ने गौरी को व्याघ्र के हानिकारक अतीत के बारे में बताया। गौरी शरण में आए और बदल चुके प्राणी को छोड़ना नहीं चाहती थीं। ब्रह्मा ने उनकी करुणा की प्रशंसा की। व्याघ्र उनकी देखभाल में रहा।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "कौशिकी ने भाइयों को पराजित किया। फिर ब्रह्मा ने गौरी को व्याघ्र के हानिकारक अतीत के बारे में बताया। गौरी शरण में आए और बदल चुके प्राणी को छोड़ना नहीं चाहती थीं। ब्रह्मा ने उनकी करुणा की प्रशंसा की। व्याघ्र उनकी देखभाल में रहा।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-shiva-welcomes-gauri" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg05-art
+- scrollUntilVisible:
+    element: { text: "माता-पिता से मिलकर गौरी सखियों और व्याघ्र के साथ शिव के पास लौटीं। शिव ने प्रेम से उनका स्वागत किया। उन्होंने बताया कि गौरी के स्वभाव ने उनका हृदय जीता था, चाहे रंग श्याम हो या कोई और। उनका प्रेम वही रहा।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "माता-पिता से मिलकर गौरी सखियों और व्याघ्र के साथ शिव के पास लौटीं। शिव ने प्रेम से उनका स्वागत किया। उन्होंने बताया कि गौरी के स्वभाव ने उनका हृदय जीता था, चाहे रंग श्याम हो या कोई और। उनका प्रेम वही रहा।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-somanandin-the-guardian" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg06-art
+- scrollUntilVisible:
+    element: { text: "गौरी ने भक्त व्याघ्र को नंदिन के अधीन द्वार पर सेवा देने का स्थान माँगा। शिव सहमत हुए। व्याघ्र सुंदर वस्त्रों और स्वर्ण दंड वाला रक्षक बन गया। उसका नाम सोमनंदिन हुआ। करुणा से उसे नया स्थान और उद्देश्य मिला।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "गौरी ने भक्त व्याघ्र को नंदिन के अधीन द्वार पर सेवा देने का स्थान माँगा। शिव सहमत हुए। व्याघ्र सुंदर वस्त्रों और स्वर्ण दंड वाला रक्षक बन गया। उसका नाम सोमनंदिन हुआ। करुणा से उसे नया स्थान और उद्देश्य मिला।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-the-eighth-form" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg07-art
+- scrollUntilVisible:
+    element: { text: "नवरात्रि के आठवें दिन भक्त माँ महागौरी की आराधना करते हैं। पारंपरिक रूप में श्वेत वस्त्र, श्वेत वृषभ और चार भुजाएँ हैं: त्रिशूल, डमरू और दो आशीर्वाद मुद्राएँ। गौरी का यह प्रसंग माँ की करुणा की संबंधित कथा है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नवरात्रि के आठवें दिन भक्त माँ महागौरी की आराधना करते हैं। पारंपरिक रूप में श्वेत वस्त्र, श्वेत वृषभ और चार भुजाएँ हैं: त्रिशूल, डमरू और दो आशीर्वाद मुद्राएँ। गौरी का यह प्रसंग माँ की करुणा की संबंधित कथा है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg07-caption
+- scrollUntilVisible:
+    element: { text: "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-mg07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-siddhidatri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-siddhidatri" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 3"
+- assertVisible: { id: "story-page-the-ninth-form" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-si01-art
+- scrollUntilVisible:
+    element: { text: "नवरात्रि के नौवें दिन अनेक भक्त माँ सिद्धिदात्री की आराधना करते हैं। उनका नाम सिद्धियाँ, अर्थात दिव्य उपलब्धियाँ देने वाली माँ का स्मरण कराता है। भक्तिचित्रों में वे कमल पर शांत और तेजस्वी बैठी हैं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नवरात्रि के नौवें दिन अनेक भक्त माँ सिद्धिदात्री की आराधना करते हैं। उनका नाम सिद्धियाँ, अर्थात दिव्य उपलब्धियाँ देने वाली माँ का स्मरण कराता है। भक्तिचित्रों में वे कमल पर शांत और तेजस्वी बैठी हैं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-si01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 3"
+- assertVisible: { id: "story-page-shiva-and-shakti" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-si02-art
+- scrollUntilVisible:
+    element: { text: "एक पारंपरिक वर्णन में शिव सृष्टि के लिए आदि पराशक्ति की आराधना करते हैं और सिद्धिदात्री की कृपा से सिद्धियाँ प्राप्त करते हैं। यह वर्णन उन्हें शिव के बाएँ अर्धभाग और शिव-शक्ति के संयुक्त रूप अर्धनारीश्वर से जोड़ता है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "एक पारंपरिक वर्णन में शिव सृष्टि के लिए आदि पराशक्ति की आराधना करते हैं और सिद्धिदात्री की कृपा से सिद्धियाँ प्राप्त करते हैं। यह वर्णन उन्हें शिव के बाएँ अर्धभाग और शिव-शक्ति के संयुक्त रूप अर्धनारीश्वर से जोड़ता है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-si02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 3"
+- assertVisible: { id: "story-page-many-beings-honour-her" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-si03-art
+- scrollUntilVisible:
+    element: { text: "देवता, साधक और अन्य प्राणी सिद्धिदात्री की आराधना करते हैं। परिचित चित्रों में उनके चार हाथों में चक्र, शंख, कमल और गदा हैं। भक्त उन्हें ऐसी माँ के रूप में स्मरण करते हैं जिनकी कृपा अनेक प्रकार के प्राणियों तक पहुँचती है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवता, साधक और अन्य प्राणी सिद्धिदात्री की आराधना करते हैं। परिचित चित्रों में उनके चार हाथों में चक्र, शंख, कमल और गदा हैं। भक्त उन्हें ऐसी माँ के रूप में स्मरण करते हैं जिनकी कृपा अनेक प्रकार के प्राणियों तक पहुँचती है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-si03-caption
+- scrollUntilVisible:
+    element: { text: "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-si03-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-raktabeej" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-raktabeej" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-a-new-army-approaches" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb01-art
+- scrollUntilVisible:
+    element: { text: "शुंभ के सेनापति चंड और मुंड पराजित हो चुके थे। उस विजय के बाद काली को चामुंडा नाम मिला था। अपनी हार से क्रोधित शुंभ ने बड़ी सेना भेजी। दुर्गा, उनका सिंह और काली/चामुंडा उसका सामना करने तैयार थे।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शुंभ के सेनापति चंड और मुंड पराजित हो चुके थे। उस विजय के बाद काली को चामुंडा नाम मिला था। अपनी हार से क्रोधित शुंभ ने बड़ी सेना भेजी। दुर्गा, उनका सिंह और काली/चामुंडा उसका सामना करने तैयार थे।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-helpers-and-a-warning" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb02-art
+- scrollUntilVisible:
+    element: { text: "देवताओं की शक्तियाँ, जिन्हें मातृकाएँ कहा जाता है, दुर्गा की सहायता करने आईं। देवी की शक्ति शिवदूती ने शिव से चेतावनी भिजवाई: असुर देवताओं का लोक लौटाकर पीछे हटें। उन्होंने मना किया और आक्रमण किया। मातृकाओं ने उनका सामना किया।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवताओं की शक्तियाँ, जिन्हें मातृकाएँ कहा जाता है, दुर्गा की सहायता करने आईं। देवी की शक्ति शिवदूती ने शिव से चेतावनी भिजवाई: असुर देवताओं का लोक लौटाकर पीछे हटें। उन्होंने मना किया और आक्रमण किया। मातृकाओं ने उनका सामना किया।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-one-drop-another-asura" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb03-art
+- scrollUntilVisible:
+    element: { text: "तब रक्तबीज अपनी गदा लेकर आया। उसके पास भयानक शक्ति थी: उसके रक्त की बूँद धरती पर गिरते ही वैसा ही दूसरा असुर प्रकट होता था। इंद्र की शक्ति ने प्रहार किया तो गिरती बूँदों से नए योद्धा उत्पन्न हुए।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "तब रक्तबीज अपनी गदा लेकर आया। उसके पास भयानक शक्ति थी: उसके रक्त की बूँद धरती पर गिरते ही वैसा ही दूसरा असुर प्रकट होता था। इंद्र की शक्ति ने प्रहार किया तो गिरती बूँदों से नए योद्धा उत्पन्न हुए।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-the-army-keeps-growing" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb04-art
+- scrollUntilVisible:
+    element: { text: "मातृकाएँ साहस से लड़ीं, पर और रक्त गिरा और नए असुर प्रकट हुए। वे रक्तबीज जितने शक्तिशाली थे। जल्द ही युद्धभूमि उनसे भर गई। बढ़ता संकट देखकर देवता डर गए। अब अलग उपाय चाहिए था।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "मातृकाएँ साहस से लड़ीं, पर और रक्त गिरा और नए असुर प्रकट हुए। वे रक्तबीज जितने शक्तिशाली थे। जल्द ही युद्धभूमि उनसे भर गई। बढ़ता संकट देखकर देवता डर गए। अब अलग उपाय चाहिए था।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-durgas-plan" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb05-art
+- scrollUntilVisible:
+    element: { text: "दुर्गा ने बढ़ती सेना को रोकने का उपाय समझ लिया। उन्होंने काली/चामुंडा से कहा कि रक्त धरती पर पहुँचने से पहले पी लें और उससे बने असुरों को निगल लें। दुर्गा रक्तबीज से लड़ेंगी और काली नए शत्रुओं का बनना रोकेंगी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "दुर्गा ने बढ़ती सेना को रोकने का उपाय समझ लिया। उन्होंने काली/चामुंडा से कहा कि रक्त धरती पर पहुँचने से पहले पी लें और उससे बने असुरों को निगल लें। दुर्गा रक्तबीज से लड़ेंगी और काली नए शत्रुओं का बनना रोकेंगी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-the-plan-works" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb06-art
+- scrollUntilVisible:
+    element: { text: "दुर्गा ने रक्तबीज पर प्रहार किया तो काली ने गिरता रक्त पी लिया और उससे उत्पन्न असुरों को निगल लिया। अब धरती पर नई सेना इकट्ठी नहीं हो सकी। रक्तबीज ने फिर आक्रमण किया, पर दुर्गा को हानि नहीं हुई और वे लड़ती रहीं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "दुर्गा ने रक्तबीज पर प्रहार किया तो काली ने गिरता रक्त पी लिया और उससे उत्पन्न असुरों को निगल लिया। अब धरती पर नई सेना इकट्ठी नहीं हो सकी। रक्तबीज ने फिर आक्रमण किया, पर दुर्गा को हानि नहीं हुई और वे लड़ती रहीं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-raktabeejs-defeat" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb07-art
+- scrollUntilVisible:
+    element: { text: "नए असुर उत्पन्न करने की शक्ति रुक गई। दुर्गा के प्रहारों से रक्तबीज गिरा और मारा गया। देवता आनंदित हुए और मातृकाओं ने उत्सव मनाया। दुर्गा की शक्ति और काली/चामुंडा के कार्य ने साथ मिलकर यह भयानक संकट समाप्त किया।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नए असुर उत्पन्न करने की शक्ति रुक गई। दुर्गा के प्रहारों से रक्तबीज गिरा और मारा गया। देवता आनंदित हुए और मातृकाओं ने उत्सव मनाया। दुर्गा की शक्ति और काली/चामुंडा के कार्य ने साथ मिलकर यह भयानक संकट समाप्त किया।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb07-caption
+- scrollUntilVisible:
+    element: { text: "देवी माहात्म्य 7.27 और 8 का बच्चों के लिए रूपांतरण। यहाँ काली का नाम चामुंडा है; उन्हें कालरात्रि नहीं कहा गया है। रक्त और युद्ध का संक्षिप्त वर्णन है; चित्र भयावह नहीं हैं। सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवी माहात्म्य 7.27 और 8 का बच्चों के लिए रूपांतरण। यहाँ काली का नाम चामुंडा है; उन्हें कालरात्रि नहीं कहा गया है। रक्त और युद्ध का संक्षिप्त वर्णन है; चित्र भयावह नहीं हैं। सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-rb07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-shumbha-nishumbha" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-shumbha-nishumbha" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 14"
+- assertVisible: { id: "story-page-devas-remember-the-promise" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn01-art
+- scrollUntilVisible:
+    element: { text: "असुर भाई शुंभ और निशुंभ ने देवताओं का लोक और अधिकार छीन लिए। देवताओं को संकट में स्मरण करने पर सहायता देने का देवी का वचन याद आया। वे हिमालय गए और फिर रक्षा की आशा से प्रार्थना की।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "असुर भाई शुंभ और निशुंभ ने देवताओं का लोक और अधिकार छीन लिए। देवताओं को संकट में स्मरण करने पर सहायता देने का देवी का वचन याद आया। वे हिमालय गए और फिर रक्षा की आशा से प्रार्थना की।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 14"
+- assertVisible: { id: "story-page-kaushiki-appears" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn02-art
+- scrollUntilVisible:
+    element: { text: "देवताओं की प्रार्थना के समय पार्वती गंगा में स्नान करने आईं। उनके शरीर के आवरण से तेजस्वी देवी कौशिकी प्रकट हुईं। तब पार्वती श्याम रूप वाली कालिका बनीं। भाइयों के सेवक चंड-मुंड ने कौशिकी को देखा और शुंभ को बताया। वह उन्हें अपने अधिकार में लेना चाहता था।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवताओं की प्रार्थना के समय पार्वती गंगा में स्नान करने आईं। उनके शरीर के आवरण से तेजस्वी देवी कौशिकी प्रकट हुईं। तब पार्वती श्याम रूप वाली कालिका बनीं। भाइयों के सेवक चंड-मुंड ने कौशिकी को देखा और शुंभ को बताया। वह उन्हें अपने अधिकार में लेना चाहता था।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 14"
+- assertVisible: { id: "story-page-the-goddess-refuses" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn03-art
+- scrollUntilVisible:
+    element: { text: "शुंभ ने असुर दूत सुग्रीव को भेजा। संसार के रत्नों का स्वामी होने के कारण उसने देवी से अपने पास आने की माँग की। देवी ने बताया कि वे युद्ध में जीतने वाले से ही विवाह करने का व्रत ले चुकी हैं। वे धमकी से नहीं झुकीं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शुंभ ने असुर दूत सुग्रीव को भेजा। संसार के रत्नों का स्वामी होने के कारण उसने देवी से अपने पास आने की माँग की। देवी ने बताया कि वे युद्ध में जीतने वाले से ही विवाह करने का व्रत ले चुकी हैं। वे धमकी से नहीं झुकीं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 14"
+- assertVisible: { id: "story-page-dhumralochanas-attack" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn04-art
+- scrollUntilVisible:
+    element: { text: "शुंभ ने धूम्रलोचन को देवी को बलपूर्वक लाने भेजा। आक्रमण पर देवी के शक्तिशाली हुंकार से उसका अंत हुआ। उनके सिंह ने साथ आई सेना पर विजय पाई। पहला बल प्रयोग विफल हुआ, पर आगे और आक्रमण आए।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शुंभ ने धूम्रलोचन को देवी को बलपूर्वक लाने भेजा। आक्रमण पर देवी के शक्तिशाली हुंकार से उसका अंत हुआ। उनके सिंह ने साथ आई सेना पर विजय पाई। पहला बल प्रयोग विफल हुआ, पर आगे और आक्रमण आए।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 14"
+- assertVisible: { id: "story-page-kali-becomes-chamunda" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn05-art
+- scrollUntilVisible:
+    element: { text: "चंड-मुंड दूसरी सेना लेकर आए। रक्षा के लिए उग्र रूप वाली काली देवी के मस्तक से प्रकट हुईं। उन्होंने दोनों सेनानायकों को पराजित कर मार दिया। चंड-मुंड पर विजय के कारण देवी ने उनका नाम चामुंडा रखा।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "चंड-मुंड दूसरी सेना लेकर आए। रक्षा के लिए उग्र रूप वाली काली देवी के मस्तक से प्रकट हुईं। उन्होंने दोनों सेनानायकों को पराजित कर मार दिया। चंड-मुंड पर विजय के कारण देवी ने उनका नाम चामुंडा रखा।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 14"
+- assertVisible: { id: "story-page-the-last-warning" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn06-art
+- scrollUntilVisible:
+    element: { text: "देवताओं की शक्तियाँ देवी के साथ आईं। देवी की शक्ति शिवदूती ने शिव के द्वारा चेतावनी भेजी: असुर देवताओं का लोक लौटाएँ और हट जाएँ। उन्होंने न मानकर आक्रमण किया। देवी और सहयोगी रक्षा के लिए तैयार थीं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवताओं की शक्तियाँ देवी के साथ आईं। देवी की शक्ति शिवदूती ने शिव के द्वारा चेतावनी भेजी: असुर देवताओं का लोक लौटाएँ और हट जाएँ। उन्होंने न मानकर आक्रमण किया। देवी और सहयोगी रक्षा के लिए तैयार थीं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 14"
+- assertVisible: { id: "story-page-raktabeej-multiplies" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn07-art
+- scrollUntilVisible:
+    element: { text: "रक्तबीज गदा लेकर आया। उसके रक्त की बूँद धरती छूती तो उसके जैसा असुर प्रकट होता। शक्तियों के प्रहार से प्रतिरूप बढ़ते गए। देवता भयभीत हुए। सामान्य प्रहार संकट को और बढ़ा रहे थे।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "रक्तबीज गदा लेकर आया। उसके रक्त की बूँद धरती छूती तो उसके जैसा असुर प्रकट होता। शक्तियों के प्रहार से प्रतिरूप बढ़ते गए। देवता भयभीत हुए। सामान्य प्रहार संकट को और बढ़ा रहे थे।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn07-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 14"
+- assertVisible: { id: "story-page-durga-and-kali-work-together" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn08-art
+- scrollUntilVisible:
+    element: { text: "दुर्गा ने काली से धरती पर गिरने से पहले रक्त ग्रहण करने और नए असुरों को निगलने को कहा। दुर्गा के युद्ध करते समय काली ने योजना पूरी की। नए प्रतिरूप रुक गए। रक्तबीज की बढ़ने की शक्ति समाप्त हुई और उसका अंत हुआ। देवता प्रसन्न हुए।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "दुर्गा ने काली से धरती पर गिरने से पहले रक्त ग्रहण करने और नए असुरों को निगलने को कहा। दुर्गा के युद्ध करते समय काली ने योजना पूरी की। नए प्रतिरूप रुक गए। रक्तबीज की बढ़ने की शक्ति समाप्त हुई और उसका अंत हुआ। देवता प्रसन्न हुए।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn08-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 14"
+- assertVisible: { id: "story-page-nishumbha-returns" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn09-art
+- scrollUntilVisible:
+    element: { text: "निशुंभ ने देवी के सिंह पर प्रहार किया। देवी ने उसके अस्त्र तोड़े और उसे गिरा दिया। शुंभ भी युद्ध में आया, पर उसके प्रहार रोके गए। निशुंभ सँभलकर फिर जोर से लौटा। संघर्ष अभी समाप्त नहीं हुआ था।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "निशुंभ ने देवी के सिंह पर प्रहार किया। देवी ने उसके अस्त्र तोड़े और उसे गिरा दिया। शुंभ भी युद्ध में आया, पर उसके प्रहार रोके गए। निशुंभ सँभलकर फिर जोर से लौटा। संघर्ष अभी समाप्त नहीं हुआ था।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn09-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 14"
+- assertVisible: { id: "story-page-nishumbhas-defeat" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn10-art
+- scrollUntilVisible:
+    element: { text: "निशुंभ ने अनेक अस्त्रों से फिर आक्रमण किया। देवी ने उन्हें रोका और शूल से प्रहार किया। उसके भीतर से दूसरा बलवान योद्धा निकला, पर देवी ने उसे भी हराया। निशुंभ का अंत हुआ और उसकी सेना देवी पर विजय न पा सकी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "निशुंभ ने अनेक अस्त्रों से फिर आक्रमण किया। देवी ने उन्हें रोका और शूल से प्रहार किया। उसके भीतर से दूसरा बलवान योद्धा निकला, पर देवी ने उसे भी हराया। निशुंभ का अंत हुआ और उसकी सेना देवी पर विजय न पा सकी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn10-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "11 / 14"
+- assertVisible: { id: "story-page-the-powers-return-to-one" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn11-art
+- scrollUntilVisible:
+    element: { text: "शुंभ ने देवी पर दूसरों की शक्ति का सहारा लेने का आरोप लगाया। देवी ने बताया कि शक्तियाँ उनके ही रूप हैं। वे सब देवी में लौट गईं और देवी अकेली खड़ी हुईं। शुंभ उसी दिव्य माँ के सामने था जिसके रूपों को उसने अलग समझा था।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शुंभ ने देवी पर दूसरों की शक्ति का सहारा लेने का आरोप लगाया। देवी ने बताया कि शक्तियाँ उनके ही रूप हैं। वे सब देवी में लौट गईं और देवी अकेली खड़ी हुईं। शुंभ उसी दिव्य माँ के सामने था जिसके रूपों को उसने अलग समझा था।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn11-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "12 / 14"
+- assertVisible: { id: "story-page-battle-in-the-sky" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn12-art
+- scrollUntilVisible:
+    element: { text: "शुंभ ने उग्र आक्रमण किया। देवी ने उसके बाण, तलवार, ढाल और गदा रोके। फिर वह उनसे भिड़ा और युद्ध आकाश में पहुँचा। अंत में देवी ने उसे घुमाकर धरती पर नीचे गिरा दिया।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "शुंभ ने उग्र आक्रमण किया। देवी ने उसके बाण, तलवार, ढाल और गदा रोके। फिर वह उनसे भिड़ा और युद्ध आकाश में पहुँचा। अंत में देवी ने उसे घुमाकर धरती पर नीचे गिरा दिया।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn12-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "13 / 14"
+- assertVisible: { id: "story-page-shumbhas-final-attack" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn13-art
+- scrollUntilVisible:
+    element: { text: "गिरने के बाद भी शुंभ उठकर फिर देवी की ओर दौड़ा। देवी ने शूल से उसका अंतिम आक्रमण रोका। उसका अंत हुआ और गिरने से धरती काँपी। भाइयों का अत्याचारी शासन आखिर समाप्त हुआ।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "गिरने के बाद भी शुंभ उठकर फिर देवी की ओर दौड़ा। देवी ने शूल से उसका अंतिम आक्रमण रोका। उसका अंत हुआ और गिरने से धरती काँपी। भाइयों का अत्याचारी शासन आखिर समाप्त हुआ।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn13-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "14 / 14"
+- assertVisible: { id: "story-page-peace-is-restored" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn14-art
+- scrollUntilVisible:
+    element: { text: "संसार फिर शांत हुआ। नदियाँ अपने मार्ग में बहीं और आकाश निर्मल हुआ। देवता आनंदित हुए; दिव्य गायकों और नर्तकों ने उत्सव मनाया। माँ की विजय से भय दूर हुआ और संतुलन लौटा।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "संसार फिर शांत हुआ। नदियाँ अपने मार्ग में बहीं और आकाश निर्मल हुआ। देवता आनंदित हुए; दिव्य गायकों और नर्तकों ने उत्सव मनाया। माँ की विजय से भय दूर हुआ और संतुलन लौटा।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn14-caption
+- scrollUntilVisible:
+    element: { text: "देवी माहात्म्य 5–10 का बच्चों के लिए मौलिक रूपांतरण। युद्ध-मृत्यु का भयावह विवरण नहीं है। अलग रक्तबीज पुस्तक उस प्रसंग को विस्तार से बताती है; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवी माहात्म्य 5–10 का बच्चों के लिए मौलिक रूपांतरण। युद्ध-मृत्यु का भयावह विवरण नहीं है। अलग रक्तबीज पुस्तक उस प्रसंग को विस्तार से बताती है; सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sn14-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-suratha-samadhi" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-suratha-samadhi" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-suratha-reaches-the-hermitage" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su01-art
+- scrollUntilVisible:
+    element: { text: "राजा सुरथ युद्ध हार गए। नगर लौटे तो बेईमान मंत्रियों ने धन और अधिकार छीन लिए। वे वन में गए और ऋषि मेधस के शांत आश्रम पहुँचे। वहाँ भी उन्हें अपने राज्य और पीछे रह गए लोगों की चिंता थी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "राजा सुरथ युद्ध हार गए। नगर लौटे तो बेईमान मंत्रियों ने धन और अधिकार छीन लिए। वे वन में गए और ऋषि मेधस के शांत आश्रम पहुँचे। वहाँ भी उन्हें अपने राज्य और पीछे रह गए लोगों की चिंता थी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-a-merchant-with-the-same-worry" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su02-art
+- scrollUntilVisible:
+    element: { text: "सुरथ को समाधि नाम के व्यापारी मिले। लालची परिवार ने उनका धन लेकर उन्हें निकाल दिया था। फिर भी समाधि को उनकी चिंता थी। सुरथ भी निकालने वालों की चिंता करते थे। दोनों अपने मन के लगाव से आश्चर्य में थे।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "सुरथ को समाधि नाम के व्यापारी मिले। लालची परिवार ने उनका धन लेकर उन्हें निकाल दिया था। फिर भी समाधि को उनकी चिंता थी। सुरथ भी निकालने वालों की चिंता करते थे। दोनों अपने मन के लगाव से आश्चर्य में थे।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-a-question-for-medhas" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su03-art
+- scrollUntilVisible:
+    element: { text: "दोनों आदर से मेधस के पास गए। वे जानते थे कि उनके साथ अन्याय हुआ, फिर भी मन बार-बार घर लौटता था। उन्होंने पूछा कि सच जानकर भी लगाव क्यों नहीं मिटा। ऋषि ने दोनों की बात सुनी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "दोनों आदर से मेधस के पास गए। वे जानते थे कि उनके साथ अन्याय हुआ, फिर भी मन बार-बार घर लौटता था। उन्होंने पूछा कि सच जानकर भी लगाव क्यों नहीं मिटा। ऋषि ने दोनों की बात सुनी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-the-sage-explains" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su04-art
+- scrollUntilVisible:
+    element: { text: "मेधस ने बच्चों को खिलाते पक्षियों और जीवों के लगाव की बात कही। उन्होंने देवी की माया समझाई, जो ज्ञानियों को भी मोह में ला सकती है। उन्होंने देवी की महिमा सुनाई। सुरथ और समाधि उनकी उपासना करना चाहते थे।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "मेधस ने बच्चों को खिलाते पक्षियों और जीवों के लगाव की बात कही। उन्होंने देवी की माया समझाई, जो ज्ञानियों को भी मोह में ला सकती है। उन्होंने देवी की महिमा सुनाई। सुरथ और समाधि उनकी उपासना करना चाहते थे।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-three-years-of-devotion" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su05-art
+- scrollUntilVisible:
+    element: { text: "नदी किनारे उन्होंने मिट्टी की देवी-प्रतिमा बनाई। फूल, धूप और जल अर्पित किए और भक्ति से स्मरण किया। उनकी उपासना तीन वर्ष चलती रही। तब उनकी भक्ति से प्रसन्न माँ उनके सामने प्रकट हुईं।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "नदी किनारे उन्होंने मिट्टी की देवी-प्रतिमा बनाई। फूल, धूप और जल अर्पित किए और भक्ति से स्मरण किया। उनकी उपासना तीन वर्ष चलती रही। तब उनकी भक्ति से प्रसन्न माँ उनके सामने प्रकट हुईं।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-two-different-wishes" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su06-art
+- scrollUntilVisible:
+    element: { text: "देवी ने वर माँगने को कहा। सुरथ ने राज्य वापस पाने और आगे स्थिर राजकीय स्थान की इच्छा की। समाधि ने ऐसा ज्ञान माँगा जो “मैं” और “मेरा” के बंधन से मुक्त करे। माँ ने दोनों की अलग प्रार्थना सुनी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवी ने वर माँगने को कहा। सुरथ ने राज्य वापस पाने और आगे स्थिर राजकीय स्थान की इच्छा की। समाधि ने ऐसा ज्ञान माँगा जो “मैं” और “मेरा” के बंधन से मुक्त करे। माँ ने दोनों की अलग प्रार्थना सुनी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-the-mothers-blessings" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su07-art
+- scrollUntilVisible:
+    element: { text: "देवी ने सुरथ को राज्य वापस मिलने और अगले जन्म में सावर्णि मनु होने का वर दिया। समाधि को माँगा हुआ मुक्ति देने वाला ज्ञान दिया। फिर वे अदृश्य हुईं। साथ की यात्रा में दोनों को अलग वरदान मिला।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवी ने सुरथ को राज्य वापस मिलने और अगले जन्म में सावर्णि मनु होने का वर दिया। समाधि को माँगा हुआ मुक्ति देने वाला ज्ञान दिया। फिर वे अदृश्य हुईं। साथ की यात्रा में दोनों को अलग वरदान मिला।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su07-caption
+- scrollUntilVisible:
+    element: { text: "देवी माहात्म्य 1 और 13 का बच्चों के लिए मौलिक रूपांतरण। कठोर उपवास और अपने रक्त की भेंट का विवरण हटाया है। उनकी उपासना तीन वर्ष चलती है; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवी माहात्म्य 1 और 13 का बच्चों के लिए मौलिक रूपांतरण। कठोर उपवास और अपने रक्त की भेंट का विवरण हटाया है। उनकी उपासना तीन वर्ष चलती है; सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-su07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-shakambhari" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-shakambhari" }
+- tapOn: { id: "lang-toggle-hi" }
+- assertVisible: "1 / 8"
+- assertVisible: { id: "story-page-durgama-seizes-the-vedas" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa01-art
+- scrollUntilVisible:
+    element: { text: "असुर दुर्गम ने तप करके ब्रह्मा से वेदों पर अधिकार माँगा। ब्रह्मा ने वर दिया। पुराण के इस वर्णन में लोग पवित्र विद्या भूल गए और देवताओं को पोषण देने वाले अनुष्ठान रुक गए। संसार में संकट फैल गया।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "असुर दुर्गम ने तप करके ब्रह्मा से वेदों पर अधिकार माँगा। ब्रह्मा ने वर दिया। पुराण के इस वर्णन में लोग पवित्र विद्या भूल गए और देवताओं को पोषण देने वाले अनुष्ठान रुक गए। संसार में संकट फैल गया।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 8"
+- assertVisible: { id: "story-page-a-long-drought" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa02-art
+- scrollUntilVisible:
+    element: { text: "कथा में वर्षा रुक गई और सौ वर्ष सूखा पड़ा। नदियाँ सूखीं, फसलें न हुईं और लोग-पशु संकट में थे। ऋषि हिमालय गए और दिव्य माँ से सहायता की प्रार्थना की। सबको तुरंत मदद चाहिए थी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "कथा में वर्षा रुक गई और सौ वर्ष सूखा पड़ा। नदियाँ सूखीं, फसलें न हुईं और लोग-पशु संकट में थे। ऋषि हिमालय गए और दिव्य माँ से सहायता की प्रार्थना की। सबको तुरंत मदद चाहिए थी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 8"
+- assertVisible: { id: "story-page-shatakshi-appears" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa03-art
+- scrollUntilVisible:
+    element: { text: "माँ अनेक नेत्रों से सबका दुख देखते हुए प्रकट हुईं। उनका नीला रूप चार भुजाओं में धनुष, बाण, कमल और पोषण देने वाली उपज लिए था। अनेक नेत्रों के कारण उन्हें शताक्षी कहा गया। उनकी दृष्टि करुणा से भरी थी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "माँ अनेक नेत्रों से सबका दुख देखते हुए प्रकट हुईं। उनका नीला रूप चार भुजाओं में धनुष, बाण, कमल और पोषण देने वाली उपज लिए था। अनेक नेत्रों के कारण उन्हें शताक्षी कहा गया। उनकी दृष्टि करुणा से भरी थी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 8"
+- assertVisible: { id: "story-page-tears-become-rain" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa04-art
+- scrollUntilVisible:
+    element: { text: "संसार का दुख देखकर शताक्षी ने नौ रातों तक आँसू बहाए। कथा में उनके आँसू वर्षा बनकर बहे। नदियाँ और सरोवर फिर भरे। सूखी धरती को जल मिला और प्यासे लोगों-पशुओं को राहत मिलने लगी।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "संसार का दुख देखकर शताक्षी ने नौ रातों तक आँसू बहाए। कथा में उनके आँसू वर्षा बनकर बहे। नदियाँ और सरोवर फिर भरे। सूखी धरती को जल मिला और प्यासे लोगों-पशुओं को राहत मिलने लगी।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 8"
+- assertVisible: { id: "story-page-food-until-the-crops-return" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa05-art
+- scrollUntilVisible:
+    element: { text: "फसलें लौटने तक माँ ने लोगों को फल, मूल और सब्जियाँ दीं। पशुओं के लिए घास भी दी। उनकी देखभाल से भूखे संसार को भोजन मिला। शाक से सबका पोषण करने के कारण उनका नाम शाकंभरी हुआ।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "फसलें लौटने तक माँ ने लोगों को फल, मूल और सब्जियाँ दीं। पशुओं के लिए घास भी दी। उनकी देखभाल से भूखे संसार को भोजन मिला। शाक से सबका पोषण करने के कारण उनका नाम शाकंभरी हुआ।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 8"
+- assertVisible: { id: "story-page-a-circle-of-protection" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa06-art
+- scrollUntilVisible:
+    element: { text: "दुर्गम ने यह सुनकर सेना के साथ आक्रमण किया। माँ ने देवताओं और ऋषियों को रक्षा के प्रकाश-वृत्त में रखा और स्वयं बाहर उसका सामना किया। अनेक दिव्य शक्तियाँ सहायता को आईं। युद्ध दस दिन चलता रहा।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "दुर्गम ने यह सुनकर सेना के साथ आक्रमण किया। माँ ने देवताओं और ऋषियों को रक्षा के प्रकाश-वृत्त में रखा और स्वयं बाहर उसका सामना किया। अनेक दिव्य शक्तियाँ सहायता को आईं। युद्ध दस दिन चलता रहा।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 8"
+- assertVisible: { id: "story-page-durgamas-defeat" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa07-art
+- scrollUntilVisible:
+    element: { text: "ग्यारहवें दिन दुर्गम रथ में स्वयं माँ से लड़ने आया। माँ ने धनुष से उसका आक्रमण रोका। अंत में उन्होंने उसे पराजित कर मार दिया। संकट समाप्त हुआ और उनकी शरण में आए लोग सुरक्षित हुए।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "ग्यारहवें दिन दुर्गम रथ में स्वयं माँ से लड़ने आया। माँ ने धनुष से उसका आक्रमण रोका। अंत में उन्होंने उसे पराजित कर मार दिया। संकट समाप्त हुआ और उनकी शरण में आए लोग सुरक्षित हुए।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa07-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 8"
+- assertVisible: { id: "story-page-knowledge-and-peace-return" }
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa08-art
+- scrollUntilVisible:
+    element: { text: "माँ ने वेद लौटाए और पवित्र ज्ञान की रक्षा करने को कहा। देवताओं और ऋषियों ने आभार व्यक्त किया। जल, भोजन और सुरक्षा से आशा लौटी। शताक्षी और शाकंभरी करुणामयी माँ के नामों के रूप में स्मरण किए गए।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "माँ ने वेद लौटाए और पवित्र ज्ञान की रक्षा करने को कहा। देवताओं और ऋषियों ने आभार व्यक्त किया। जल, भोजन और सुरक्षा से आशा लौटी। शताक्षी और शाकंभरी करुणामयी माँ के नामों के रूप में स्मरण किए गए।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa08-caption
+- scrollUntilVisible:
+    element: { text: "देवी भागवत 7.28 का बच्चों के लिए मौलिक रूपांतरण। सूखे का कारण पुराण के वर्णन के अनुसार है, वैज्ञानिक व्याख्या नहीं। युद्ध-मृत्यु का भयावह विवरण नहीं है; सीख संपादकीय है।" }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "देवी भागवत 7.28 का बच्चों के लिए मौलिक रूपांतरण। सूखे का कारण पुराण के वर्णन के अनुसार है, वैज्ञानिक व्याख्या नहीं। युद्ध-मृत्यु का भयावह विवरण नहीं है; सीख संपादकीय है।"
+- takeScreenshot: durga-hi-${DURGA_SIZE}-sa08-ending
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Back"

@@ -27,6 +27,9 @@ import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
 import { vratKathaShareable } from '@/utils/shareContent';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
+import { getKathaBackground } from '@/data/kathaBackgrounds';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'VratKathaReader'>;
 
@@ -36,6 +39,7 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
   const { width } = useWindowDimensions();
 
   const katha = getKathaContent(route.params.kathaId);
+  const background = getKathaBackground(route.params.kathaId);
   const sections = katha?.sections ?? [];
   const total = sections.length;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -79,18 +83,27 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+      <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
         <ReaderHeader
           title={title}
           onBack={() => navigation.goBack()}
           right={
-            total > 0 ? (
-              <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily }]}>
-                {currentIndex + 1} / {total}
-              </Text>
+            katha && total > 0 ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily }]}>
+                  {currentIndex + 1} / {total}
+                </Text>
+                <ShareButton
+                  onPress={() => void share(vratKathaShareable(katha, currentIndex), lang)}
+                  busy={shareBusy}
+                  accessibilityLabel="Share katha"
+                  accessibilityHint="Opens share options for this part or the whole katha"
+                />
+              </View>
             ) : null
           }
-          sideWidth={80}
+          sideWidth={96}
         />
 
         {!katha ? (
@@ -103,16 +116,6 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
           <>
             <ReadingProgressBar current={currentIndex + 1} total={total} />
             <View style={styles.toggleRow}>
-              {/* Share pinned left, read-aloud pinned right, so the toggle stays
-                  centred (design.md §56.2, §39.4). */}
-              <View style={styles.shareSlot}>
-                <ShareButton
-                  onPress={() => void share(vratKathaShareable(katha, currentIndex), lang)}
-                  busy={shareBusy}
-                  accessibilityLabel="Share katha"
-                  accessibilityHint="Opens share options for this part or the whole katha"
-                />
-              </View>
               <LanguageToggle />
               {/* Pinned right so the toggle stays centred (design.md §56.2). */}
               <View style={styles.readAloudSlot}>
@@ -125,7 +128,7 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
                 data={sections}
                 keyExtractor={(s) => s.id}
                 renderItem={({ item, index }) => (
-                  <KathaSectionPage section={item} index={index} total={total} width={width} />
+                  <KathaSectionPage section={item} index={index} total={total} width={width} background={background} />
                 )}
                 extraData={lang}
                 horizontal
@@ -141,7 +144,7 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
                 style={styles.list}
               />
               {total > 1 && (
-                <View style={styles.dotsOverlay}>
+                <View style={styles.dotsRail} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
                   <View style={styles.dots}>
                     {sections.map((s, i) => (
                       <View
@@ -170,11 +173,11 @@ const styles = StyleSheet.create({
   counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
   toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
-  shareSlot: { position: 'absolute', left: 16, top: 6, bottom: 6, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
-  dotsOverlay: { position: 'absolute', bottom: 6, left: 0, right: 0, alignItems: 'center' },
+  // Keep page markers outside the scrolling text, including at Large size.
+  dotsRail: { paddingVertical: 8, alignItems: 'center' },
   dots: { flexDirection: 'row', gap: 6, flexWrap: 'wrap', justifyContent: 'center', maxWidth: '80%' },
   dot: { width: 6, height: 6, borderRadius: 3 },
   dotCurrent: { width: 18, height: 6, borderRadius: 999 },

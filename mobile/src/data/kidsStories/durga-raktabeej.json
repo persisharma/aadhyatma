@@ -1,0 +1,162 @@
+{
+  "id": "durga-raktabeej",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "story",
+  "coverArt": "rb05",
+  "title": {
+    "en": "Durga, Kali and Raktabeej",
+    "hi": "दुर्गा, काली और रक्तबीज",
+    "gu": "દુર્ગા, કાલી અને રક્તબીજ",
+    "kn": "ದುರ್ಗೆ, ಕಾಳಿ ಮತ್ತು ರಕ್ತಬೀಜ"
+  },
+  "description": {
+    "en": "Durga and Kali/Chamunda work together to stop an army that keeps growing.",
+    "hi": "बार-बार बढ़ती सेना को रोकने के लिए दुर्गा और काली/चामुंडा साथ कार्य करती हैं।",
+    "gu": "વારંવાર વધતી સેનાને રોકવા દુર્ગા અને કાલી/ચામુંડા સાથે કામ કરે છે.",
+    "kn": "ಮತ್ತೆ ಮತ್ತೆ ಹೆಚ್ಚುವ ಸೇನೆಯನ್ನು ತಡೆಯಲು ದುರ್ಗೆ ಮತ್ತು ಕಾಳಿ/ಚಾಮುಂಡೆ ಒಟ್ಟಾಗಿ ಕಾರ್ಯಮಾಡುತ್ತಾರೆ."
+  },
+  "sourceNote": {
+    "en": "A children’s retelling of Devi Mahatmya 7.27 and 8. Kali is called Chamunda here; she is not renamed Kalaratri. Blood and battle are narrated briefly, with non-graphic illustrations. The takeaway is editorial.",
+    "hi": "देवी माहात्म्य 7.27 और 8 का बच्चों के लिए रूपांतरण। यहाँ काली का नाम चामुंडा है; उन्हें कालरात्रि नहीं कहा गया है। रक्त और युद्ध का संक्षिप्त वर्णन है; चित्र भयावह नहीं हैं। सीख संपादकीय है।",
+    "gu": "દેવી માહાત્મ્ય 7.27 અને 8નું બાળકો માટે રૂપાંતર. અહીં કાલીનું નામ ચામુંડા છે; તેમને કાલરાત્રિ કહ્યાં નથી. રક્ત અને યુદ્ધનું ટૂંકું વર્ણન છે; ચિત્રો ભયાનક નથી. શીખ સંપાદકીય છે.",
+    "kn": "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 7.27 ಮತ್ತು 8ರ ಮಕ್ಕಳಿಗಾಗಿ ರೂಪಾಂತರ. ಇಲ್ಲಿ ಕಾಳಿಯನ್ನು ಚಾಮುಂಡೆ ಎಂದು ಕರೆಯಲಾಗಿದೆ; ಕಾಲರಾತ್ರಿ ಎಂದು ಬದಲಿಸಿಲ್ಲ. ರಕ್ತ ಮತ್ತು ಯುದ್ಧದ ಸಂಕ್ಷಿಪ್ತ ನಿರೂಪಣೆ ಇದೆ; ಚಿತ್ರಗಳು ಭೀಕರವಾಗಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "When one way does not work, pause and understand the problem. Thoughtful action and cooperation can stop harm.",
+    "hi": "एक उपाय सफल न हो तो रुककर समस्या समझें। समझदारी और सहयोग हानि को रोक सकते हैं।",
+    "gu": "એક ઉપાય સફળ ન થાય તો થોભીને સમસ્યા સમજો. સમજદારી અને સહકાર હાનિ રોકી શકે છે.",
+    "kn": "ಒಂದು ಉಪಾಯ ಫಲಿಸದಿದ್ದರೆ ನಿಂತು ಸಮಸ್ಯೆಯನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ. ವಿವೇಕ ಮತ್ತು ಸಹಕಾರ ಹಾನಿಯನ್ನು ತಡೆಯಬಲ್ಲವು."
+  },
+  "source": {
+    "baseText": "Devi Mahatmya 7.27; 8.1–63; Pargiter (1904), cantos 87–88",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/durga700.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117166.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117167.html"
+    ],
+    "notes": "Complete chapter-8 arc, including Matrikas, Shivaduti’s warning, Raktabeej’s blood-born copies, Durga’s instruction, Kali/Chamunda consuming blood and new asuras, death and rejoicing. Original prose, no invented dialogue. Conventional modest four-armed Kali art omits severed heads and grisly ornaments. No automatic identification with Navadurga Kalaratri. Editorial takeaway, not a verse translation."
+  },
+  "pages": [
+    {
+      "id": "a-new-army-approaches",
+      "art": "rb01",
+      "source": "Devi Mahatmya 7.27; 8.1–8",
+      "title": {
+        "en": "A New Army",
+        "hi": "नई सेना",
+        "gu": "નવી સેના",
+        "kn": "ಹೊಸ ಸೇನೆ"
+      },
+      "text": {
+        "en": "Shumbha’s commanders Chanda and Munda had been defeated. Kali had received the name Chamunda after that victory. Angry at his losses, Shumbha sent a larger army. Durga, her lion and Kali/Chamunda stood ready to face it.",
+        "hi": "शुंभ के सेनापति चंड और मुंड पराजित हो चुके थे। उस विजय के बाद काली को चामुंडा नाम मिला था। अपनी हार से क्रोधित शुंभ ने बड़ी सेना भेजी। दुर्गा, उनका सिंह और काली/चामुंडा उसका सामना करने तैयार थे।",
+        "gu": "શુંભના સેનાપતિ ચંડ અને મુંડ હારી ચૂક્યા હતા. તે વિજય પછી કાલીને ચામુંડા નામ મળ્યું હતું. પોતાની હારથી ગુસ્સે થયેલા શુંભે મોટી સેના મોકલી. દુર્ગા, તેમનો સિંહ અને કાલી/ચામુંડા તેનો સામનો કરવા તૈયાર હતાં.",
+        "kn": "ಶುಂಭನ ಸೇನಾಪತಿಗಳಾದ ಚಂಡ ಮತ್ತು ಮುಂಡ ಸೋತಿದ್ದರು. ಆ ಜಯದ ಬಳಿಕ ಕಾಳಿಗೆ ಚಾಮುಂಡೆ ಎಂಬ ಹೆಸರು ಬಂದಿತ್ತು. ತನ್ನ ನಷ್ಟದಿಂದ ಕೋಪಗೊಂಡ ಶುಂಭ ದೊಡ್ಡ ಸೇನೆ ಕಳುಹಿಸಿದನು. ದುರ್ಗೆ, ಆಕೆಯ ಸಿಂಹ ಮತ್ತು ಕಾಳಿ/ಚಾಮುಂಡೆ ಸಿದ್ಧರಾಗಿದ್ದರು."
+      }
+    },
+    {
+      "id": "helpers-and-a-warning",
+      "art": "rb02",
+      "source": "Devi Mahatmya 8.9–28",
+      "title": {
+        "en": "Help and a Warning",
+        "hi": "सहयोग और चेतावनी",
+        "gu": "સહાય અને ચેતવણી",
+        "kn": "ನೆರವು ಮತ್ತು ಎಚ್ಚರಿಕೆ"
+      },
+      "text": {
+        "en": "The devas’ shaktis, called the Mothers, came to help Durga. The Goddess’s power Shivaduti sent Shiva with a warning: the asuras should return the devas’ realm and withdraw. They refused and attacked. The Mothers defended against them.",
+        "hi": "देवताओं की शक्तियाँ, जिन्हें मातृकाएँ कहा जाता है, दुर्गा की सहायता करने आईं। देवी की शक्ति शिवदूती ने शिव से चेतावनी भिजवाई: असुर देवताओं का लोक लौटाकर पीछे हटें। उन्होंने मना किया और आक्रमण किया। मातृकाओं ने उनका सामना किया।",
+        "gu": "દેવોની શક્તિઓ, જેમને માતૃકાઓ કહે છે, દુર્ગાની મદદે આવી. દેવીની શક્તિ શિવદૂતીએ શિવ દ્વારા ચેતવણી મોકલી: અસુરો દેવોનો લોક પાછો આપી પાછળ હટે. તેમણે ઇનકાર કરીને હુમલો કર્યો. માતૃકાઓએ તેમનો સામનો કર્યો.",
+        "kn": "ಮಾತೃಕೆಯರು ಎನ್ನುವ ದೇವತೆಗಳ ಶಕ್ತಿಗಳು ದುರ್ಗೆಯ ನೆರವಿಗೆ ಬಂದರು. ದೇವಿಯ ಶಕ್ತಿಯಾದ ಶಿವದೂತಿ ಶಿವನ ಮೂಲಕ ಎಚ್ಚರಿಕೆ ಕಳುಹಿಸಿದಳು: ಅಸುರರು ದೇವತೆಗಳ ಲೋಕವನ್ನು ಮರಳಿಸಿ ಹಿಂದೆ ಸರಿಯಬೇಕು. ಅವರು ನಿರಾಕರಿಸಿ ದಾಳಿ ಮಾಡಿದರು. ಮಾತೃಕೆಯರು ಅವರನ್ನು ಎದುರಿಸಿದರು."
+      }
+    },
+    {
+      "id": "one-drop-another-asura",
+      "art": "rb03",
+      "source": "Devi Mahatmya 8.40–44",
+      "title": {
+        "en": "One Drop, Another Asura",
+        "hi": "एक बूँद, नया असुर",
+        "gu": "એક ટીપું, નવો અસુર",
+        "kn": "ಒಂದು ಹನಿ, ಇನ್ನೊಂದು ಅಸುರ"
+      },
+      "text": {
+        "en": "Then Raktabeej entered with his club. He had a terrible power: whenever a drop of his blood reached the ground, another asura like him appeared. When Indra’s shakti struck him, falling drops produced new fighters.",
+        "hi": "तब रक्तबीज अपनी गदा लेकर आया। उसके पास भयानक शक्ति थी: उसके रक्त की बूँद धरती पर गिरते ही वैसा ही दूसरा असुर प्रकट होता था। इंद्र की शक्ति ने प्रहार किया तो गिरती बूँदों से नए योद्धा उत्पन्न हुए।",
+        "gu": "ત્યારે રક્તબીજ પોતાની ગદા લઈને આવ્યો. તેની પાસે ભયાનક શક્તિ હતી: તેના રક્તનું ટીપું ધરતી પર પડતાં જ તેના જેવો બીજો અસુર પ્રગટ થતો. ઇન્દ્રની શક્તિએ પ્રહાર કર્યો તો પડતાં ટીપાંમાંથી નવા યોદ્ધાઓ ઉત્પન્ન થયા.",
+        "kn": "ಆಗ ರಕ್ತಬೀಜ ತನ್ನ ಗದೆಯೊಂದಿಗೆ ಬಂದನು. ಅವನಿಗೊಂದು ಭಯಂಕರ ಶಕ್ತಿ ಇತ್ತು: ಅವನ ರಕ್ತದ ಹನಿ ನೆಲಕ್ಕೆ ಬಿದ್ದಾಗ ಅವನಂತೆಯೇ ಇನ್ನೊಂದು ಅಸುರ ಹುಟ್ಟುತ್ತಿತ್ತು. ಇಂದ್ರನ ಶಕ್ತಿ ಹೊಡೆದಾಗ ಬಿದ್ದ ಹನಿಗಳಿಂದ ಹೊಸ ಯೋಧರು ಬಂದರು."
+      }
+    },
+    {
+      "id": "the-army-keeps-growing",
+      "art": "rb04",
+      "source": "Devi Mahatmya 8.45–53",
+      "title": {
+        "en": "More and More Copies",
+        "hi": "बढ़ते गए असुर",
+        "gu": "વધતા ગયા અસુરો",
+        "kn": "ಹೆಚ್ಚಾಗುವ ಅಸುರರು"
+      },
+      "text": {
+        "en": "The Mothers fought bravely, but more blood fell and more asuras appeared. The new fighters were as strong as Raktabeej. Soon they crowded the battlefield. Seeing the danger grow, the devas became afraid. A different plan was needed.",
+        "hi": "मातृकाएँ साहस से लड़ीं, पर और रक्त गिरा और नए असुर प्रकट हुए। वे रक्तबीज जितने शक्तिशाली थे। जल्द ही युद्धभूमि उनसे भर गई। बढ़ता संकट देखकर देवता डर गए। अब अलग उपाय चाहिए था।",
+        "gu": "માતૃકાઓ બહાદુરીથી લડી, પણ વધુ રક્ત પડ્યું અને નવા અસુરો પ્રગટ થયા. તેઓ રક્તબીજ જેટલા શક્તિશાળી હતા. જલ્દી જ યુદ્ધભૂમિ તેમનાથી ભરાઈ ગઈ. વધતું સંકટ જોઈ દેવો ડરી ગયા. હવે જુદો ઉપાય જરૂરી હતો.",
+        "kn": "ಮಾತೃಕೆಯರು ಧೈರ್ಯದಿಂದ ಹೋರಾಡಿದರು. ಇನ್ನಷ್ಟು ರಕ್ತ ಬಿದ್ದು ಹೊಸ ಅಸುರರು ಕಾಣಿಸಿಕೊಂಡರು. ಅವರು ರಕ್ತಬೀಜನಷ್ಟೇ ಬಲಶಾಲಿಗಳಾಗಿದ್ದರು. ಯುದ್ಧಭೂಮಿ ಅವರಿಂದ ತುಂಬಿತು. ಹೆಚ್ಚುತ್ತಿರುವ ಅಪಾಯವನ್ನು ನೋಡಿ ದೇವತೆಗಳು ಹೆದರಿದರು. ಬೇರೆ ಉಪಾಯ ಬೇಕಾಯಿತು."
+      }
+    },
+    {
+      "id": "durgas-plan",
+      "art": "rb05",
+      "source": "Devi Mahatmya 8.54–57",
+      "title": {
+        "en": "Durga’s Plan",
+        "hi": "दुर्गा का उपाय",
+        "gu": "દુર્ગાનો ઉપાય",
+        "kn": "ದುರ್ಗೆಯ ಉಪಾಯ"
+      },
+      "text": {
+        "en": "Durga understood how to stop the growing army. She told Kali/Chamunda to drink the blood before it reached the ground and consume the new asuras. Durga would fight Raktabeej while Kali stopped his power from producing more enemies.",
+        "hi": "दुर्गा ने बढ़ती सेना को रोकने का उपाय समझ लिया। उन्होंने काली/चामुंडा से कहा कि रक्त धरती पर पहुँचने से पहले पी लें और उससे बने असुरों को निगल लें। दुर्गा रक्तबीज से लड़ेंगी और काली नए शत्रुओं का बनना रोकेंगी।",
+        "gu": "દુર્ગા વધતી સેનાને રોકવાનો ઉપાય સમજી ગયાં. તેમણે કાલી/ચામુંડાને કહ્યું કે રક્ત ધરતી પર પહોંચે તે પહેલાં પી લે અને તેમાંથી બનેલા અસુરોને ગળી લે. દુર્ગા રક્તબીજ સામે લડશે અને કાલી નવા શત્રુઓ બનતા રોકશે.",
+        "kn": "ಹೆಚ್ಚುವ ಸೇನೆಯನ್ನು ತಡೆಯುವ ಉಪಾಯ ದುರ್ಗೆಗೆ ತಿಳಿಯಿತು. ರಕ್ತ ನೆಲ ತಲುಪುವ ಮೊದಲೇ ಕುಡಿಯಲು ಮತ್ತು ಅದರಿಂದ ಹುಟ್ಟಿದ ಅಸುರರನ್ನು ನುಂಗಲು ಕಾಳಿ/ಚಾಮುಂಡೆಗೆ ತಿಳಿಸಿದಳು. ದುರ್ಗೆ ರಕ್ತಬೀಜನೊಡನೆ ಹೋರಾಡುತ್ತಾಳೆ; ಕಾಳಿ ಹೊಸ ಶತ್ರುಗಳು ಹುಟ್ಟುವುದನ್ನು ತಡೆಯುತ್ತಾಳೆ."
+      }
+    },
+    {
+      "id": "the-plan-works",
+      "art": "rb06",
+      "source": "Devi Mahatmya 8.58–61",
+      "title": {
+        "en": "Together They Act",
+        "hi": "दोनों ने साथ कार्य किया",
+        "gu": "બંનેએ સાથે કાર્ય કર્યું",
+        "kn": "ಇಬ್ಬರೂ ಒಟ್ಟಾಗಿ ಕಾರ್ಯಮಾಡಿದರು"
+      },
+      "text": {
+        "en": "As Durga struck Raktabeej, Kali drank the falling blood and consumed the asuras born from it. Now no fresh army could gather on the ground. Raktabeej attacked again, but Durga stood unharmed and continued the fight.",
+        "hi": "दुर्गा ने रक्तबीज पर प्रहार किया तो काली ने गिरता रक्त पी लिया और उससे उत्पन्न असुरों को निगल लिया। अब धरती पर नई सेना इकट्ठी नहीं हो सकी। रक्तबीज ने फिर आक्रमण किया, पर दुर्गा को हानि नहीं हुई और वे लड़ती रहीं।",
+        "gu": "દુર્ગાએ રક્તબીજ પર પ્રહાર કર્યો ત્યારે કાલીએ પડતું રક્ત પી લીધું અને તેમાંથી ઉત્પન્ન અસુરોને ગળી લીધાં. હવે ધરતી પર નવી સેના ભેગી થઈ શકી નહીં. રક્તબીજે ફરી હુમલો કર્યો, પણ દુર્ગાને હાનિ ન થઈ અને તેઓ લડતાં રહ્યાં.",
+        "kn": "ದುರ್ಗೆ ರಕ್ತಬೀಜನನ್ನು ಹೊಡೆದಾಗ ಕಾಳಿ ಬೀಳುವ ರಕ್ತ ಕುಡಿದು ಅದರಿಂದ ಹುಟ್ಟಿದ ಅಸುರರನ್ನು ನುಂಗಿದಳು. ಈಗ ನೆಲದ ಮೇಲೆ ಹೊಸ ಸೇನೆ ಸೇರಲಿಲ್ಲ. ರಕ್ತಬೀಜ ಮತ್ತೆ ದಾಳಿ ಮಾಡಿದನು. ದುರ್ಗೆಗೆ ಹಾನಿಯಾಗಲಿಲ್ಲ; ಆಕೆ ಹೋರಾಟ ಮುಂದುವರಿಸಿದಳು."
+      }
+    },
+    {
+      "id": "raktabeejs-defeat",
+      "art": "rb07",
+      "source": "Devi Mahatmya 8.62–63",
+      "title": {
+        "en": "The Threat Ends",
+        "hi": "संकट समाप्त हुआ",
+        "gu": "સંકટ સમાપ્ત થયું",
+        "kn": "ಅಪಾಯ ಕೊನೆಗೊಂಡಿತು"
+      },
+      "text": {
+        "en": "With his multiplying power stopped, Raktabeej fell and died under Durga’s attacks. The devas rejoiced, and the Mothers celebrated. Durga’s strength and Kali/Chamunda’s action together had ended this terrible threat.",
+        "hi": "नए असुर उत्पन्न करने की शक्ति रुक गई। दुर्गा के प्रहारों से रक्तबीज गिरा और मारा गया। देवता आनंदित हुए और मातृकाओं ने उत्सव मनाया। दुर्गा की शक्ति और काली/चामुंडा के कार्य ने साथ मिलकर यह भयानक संकट समाप्त किया।",
+        "gu": "નવા અસુરો ઉત્પન્ન કરવાની શક્તિ અટકી ગઈ. દુર્ગાના પ્રહારોથી રક્તબીજ પડ્યો અને માર્યો ગયો. દેવો આનંદિત થયા અને માતૃકાઓએ ઉત્સવ મનાવ્યો. દુર્ગાની શક્તિ અને કાલી/ચામુંડાના કાર્યે સાથે મળીને આ ભયાનક સંકટ સમાપ્ત કર્યું.",
+        "kn": "ಹೊಸ ಅಸುರರನ್ನು ಹುಟ್ಟಿಸುವ ಶಕ್ತಿ ನಿಂತಿತು. ದುರ್ಗೆಯ ಪ್ರಹಾರಗಳಿಂದ ರಕ್ತಬೀಜ ಬಿದ್ದು ಸತ್ತನು. ದೇವತೆಗಳು ಸಂತೋಷಪಟ್ಟರು; ಮಾತೃಕೆಯರು ಸಂಭ್ರಮಿಸಿದರು. ದುರ್ಗೆಯ ಬಲ ಮತ್ತು ಕಾಳಿ/ಚಾಮುಂಡೆಯ ಕಾರ್ಯ ಒಟ್ಟಾಗಿ ಈ ಭಯಂಕರ ಅಪಾಯವನ್ನು ಕೊನೆಗೊಳಿಸಿದವು."
+      }
+    }
+  ]
+}

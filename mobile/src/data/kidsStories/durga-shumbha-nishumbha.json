@@ -1,0 +1,285 @@
+{
+  "id": "durga-shumbha-nishumbha",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "story",
+  "coverArt": "sn11",
+  "title": {
+    "en": "Durga, Shumbha and Nishumbha",
+    "hi": "दुर्गा, शुंभ और निशुंभ",
+    "gu": "દુર્ગા, શુંભ અને નિશુંભ",
+    "kn": "ದುರ್ಗೆ, ಶುಂಭ ಮತ್ತು ನಿಶುಂಭ"
+  },
+  "description": {
+    "en": "The Goddess refuses force, gathers her powers and restores peace.",
+    "hi": "देवी बलपूर्वक दबाव नहीं मानतीं, अपनी शक्तियों के साथ शांति लौटाती हैं।",
+    "gu": "દેવી બળજબરી સ્વીકારતાં નથી, પોતાની શક્તિઓ સાથે શાંતિ પાછી લાવે છે.",
+    "kn": "ದೇವಿ ಬಲವಂತವನ್ನು ಒಪ್ಪದೆ ತನ್ನ ಶಕ್ತಿಗಳೊಂದಿಗೆ ಶಾಂತಿಯನ್ನು ಮರಳಿಸುತ್ತಾಳೆ."
+  },
+  "sourceNote": {
+    "en": "An original children’s retelling of Devi Mahatmya 5–10. Battles and deaths are described without graphic detail. The separate Raktabeej book tells that part more fully; the takeaway is editorial.",
+    "hi": "देवी माहात्म्य 5–10 का बच्चों के लिए मौलिक रूपांतरण। युद्ध-मृत्यु का भयावह विवरण नहीं है। अलग रक्तबीज पुस्तक उस प्रसंग को विस्तार से बताती है; सीख संपादकीय है।",
+    "gu": "દેવી માહાત્મ્ય 5–10નું બાળકો માટે મૌલિક રૂપાંતર. યુદ્ધ-મૃત્યુની ભયાનક વિગતો નથી. અલગ રક્તબીજ પુસ્તક તે પ્રસંગને વધુ વિગતે કહે છે; શીખ સંપાદકીય છે.",
+    "kn": "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 5–10ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಯುದ್ಧ-ಮರಣದ ಭೀಕರ ವಿವರಗಳಿಲ್ಲ. ಪ್ರತ್ಯೇಕ ರಕ್ತಬೀಜ ಪುಸ್ತಕ ಆ ಭಾಗವನ್ನು ಹೆಚ್ಚು ವಿವರಿಸುತ್ತದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "Courage can mean refusing unfair demands and protecting others. Stand together with care.",
+    "hi": "साहस में अनुचित माँग न मानना और दूसरों की रक्षा करना भी है। स्नेह से साथ खड़े हों।",
+    "gu": "સાહસમાં અયોગ્ય માગણી ન સ્વીકારવી અને બીજાનું રક્ષણ કરવું પણ છે. સ્નેહથી સાથે ઊભાં રહો.",
+    "kn": "ಅನ್ಯಾಯದ ಬೇಡಿಕೆ ನಿರಾಕರಿಸುವುದು ಮತ್ತು ಇತರರನ್ನು ಕಾಪಾಡುವುದೂ ಧೈರ್ಯ. ಕಾಳಜಿಯಿಂದ ಒಟ್ಟಾಗಿ ನಿಲ್ಲಿ."
+  },
+  "source": {
+    "baseText": "Devi Mahatmya 5–10; Markandeya Purana, Pargiter (1904), cantos 85–90",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/durga700.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117163.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117165.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117166.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117167.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117169.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117170.html"
+    ],
+    "notes": "Complete causal arc: seizure, remembered promise, Kaushiki, ownership demand and prior vow, forced attacks, Dhumralochana, Kali/Chamunda, shaktis and Shivaduti warning, Raktabeej multiplication and tactic, Nishumbha fall/return/emerging warrior, Shumbha accusation/reabsorption/air battle/final attack/death, restored nature. Sugriva here is the asura messenger, not the monkey of Ramayana. Different Kaushiki emergence account from Shiva Purana Gauri story, not merged. Eight-armed conventional Durga and modest four-armed Kali illustrations are adaptations; battle injuries/deaths are textually retained but artwork is non-graphic."
+  },
+  "pages": [
+    {
+      "id": "devas-remember-the-promise",
+      "art": "sn01",
+      "source": "Devi Mahatmya 5.1–8",
+      "title": {
+        "en": "The Devas Seek Help Again",
+        "hi": "देवता फिर सहायता माँगते हैं",
+        "gu": "દેવો ફરી મદદ માગે છે",
+        "kn": "ದೇವತೆಗಳು ಮತ್ತೆ ನೆರವು ಕೇಳಿದರು"
+      },
+      "text": {
+        "en": "The asura brothers Shumbha and Nishumbha seized the devas’ realm and powers. The devas remembered the Goddess’s promise to help when they called upon her in trouble. They went to the Himalayas and prayed, hoping she would protect them again.",
+        "hi": "असुर भाई शुंभ और निशुंभ ने देवताओं का लोक और अधिकार छीन लिए। देवताओं को संकट में स्मरण करने पर सहायता देने का देवी का वचन याद आया। वे हिमालय गए और फिर रक्षा की आशा से प्रार्थना की।",
+        "gu": "અસુર ભાઈઓ શુંભ અને નિશુંભે દેવોનો લોક અને સત્તા છીનવી લીધાં. દેવોને સંકટમાં સ્મરણ કરતાં મદદ આપવાનું દેવીનું વચન યાદ આવ્યું. તેઓ હિમાલય ગયા અને ફરી રક્ષણની આશાથી પ્રાર્થના કરી.",
+        "kn": "ಅಸುರ ಸಹೋದರರು ಶುಂಭ ಮತ್ತು ನಿಶುಂಭ ದೇವತೆಗಳ ಲೋಕ ಮತ್ತು ಅಧಿಕಾರ ಕಸಿದರು. ಸಂಕಟದಲ್ಲಿ ನೆನೆದರೆ ನೆರವಾಗುವ ದೇವಿಯ ಮಾತು ಅವರಿಗೆ ನೆನಪಾಯಿತು. ಹಿಮಾಲಯಕ್ಕೆ ಹೋಗಿ ಮತ್ತೆ ರಕ್ಷಣೆ ಸಿಗುವ ಭರವಸೆಯಿಂದ ಪ್ರಾರ್ಥಿಸಿದರು."
+      }
+    },
+    {
+      "id": "kaushiki-appears",
+      "art": "sn02",
+      "source": "Devi Mahatmya 5.38–53",
+      "title": {
+        "en": "Kaushiki Appears",
+        "hi": "कौशिकी प्रकट हुईं",
+        "gu": "કૌશિકી પ્રગટ થયાં",
+        "kn": "ಕೌಶಿಕಿಯ ಪ್ರತ್ಯಕ್ಷತೆ"
+      },
+      "text": {
+        "en": "As the devas prayed, Parvati came to bathe in the Ganga. From her body’s sheath, the radiant Goddess Kaushiki appeared. Parvati then became the dark form called Kalika. Chanda and Munda, servants of the brothers, saw Kaushiki’s beauty and reported it to Shumbha. He wished to possess her.",
+        "hi": "देवताओं की प्रार्थना के समय पार्वती गंगा में स्नान करने आईं। उनके शरीर के आवरण से तेजस्वी देवी कौशिकी प्रकट हुईं। तब पार्वती श्याम रूप वाली कालिका बनीं। भाइयों के सेवक चंड-मुंड ने कौशिकी को देखा और शुंभ को बताया। वह उन्हें अपने अधिकार में लेना चाहता था।",
+        "gu": "દેવોની પ્રાર્થના સમયે પાર્વતી ગંગામાં સ્નાન કરવા આવ્યાં. તેમના શરીરના આવરણમાંથી તેજસ્વી દેવી કૌશિકી પ્રગટ થયાં. પછી પાર્વતી શ્યામ રૂપવાળાં કાલિકા બન્યાં. ભાઈઓના સેવકો ચંડ-મુંડે કૌશિકીને જોયાં અને શુંભને જણાવ્યું. તે તેમને પોતાના અધિકારમાં લેવા ઇચ્છતો હતો.",
+        "kn": "ದೇವತೆಗಳು ಪ್ರಾರ್ಥಿಸುತ್ತಿದ್ದಾಗ ಪಾರ್ವತಿ ಗಂಗೆಯಲ್ಲಿ ಸ್ನಾನ ಮಾಡಲು ಬಂದಳು. ಆಕೆಯ ದೇಹದ ಹೊರಹೊದಿಕೆಯಿಂದ ತೇಜಸ್ವಿ ಕೌಶಿಕಿ ದೇವಿ ಪ್ರತ್ಯಕ್ಷಳಾದಳು. ಬಳಿಕ ಪಾರ್ವತಿ ಕಪ್ಪು ರೂಪದ ಕಾಲಿಕೆಯಾಗಿದಳು. ಸಹೋದರರ ಸೇವಕರಾದ ಚಂಡ-ಮುಂಡ ಕೌಶಿಕಿಯನ್ನು ನೋಡಿ ಶುಂಭನಿಗೆ ತಿಳಿಸಿದರು. ಅವನು ಆಕೆಯನ್ನು ತನ್ನ ವಶಕ್ಕೆ ಪಡೆಯಲು ಬಯಸಿದನು."
+      }
+    },
+    {
+      "id": "the-goddess-refuses",
+      "art": "sn03",
+      "source": "Devi Mahatmya 5.54–83",
+      "title": {
+        "en": "A Firm Answer",
+        "hi": "दृढ़ उत्तर",
+        "gu": "દૃઢ ઉત્તર",
+        "kn": "ದೃಢ ಉತ್ತರ"
+      },
+      "text": {
+        "en": "Shumbha sent the asura messenger Sugriva, claiming the Goddess should join him because he owned the world’s treasures. She replied that she had already vowed to marry only one who overcame her in battle. She did not yield to his threats.",
+        "hi": "शुंभ ने असुर दूत सुग्रीव को भेजा। संसार के रत्नों का स्वामी होने के कारण उसने देवी से अपने पास आने की माँग की। देवी ने बताया कि वे युद्ध में जीतने वाले से ही विवाह करने का व्रत ले चुकी हैं। वे धमकी से नहीं झुकीं।",
+        "gu": "શુંભે અસુર દૂત સુગ્રીવને મોકલ્યો. દુનિયાનાં રત્નોનો સ્વામી હોવાથી તેણે દેવીને પોતાની પાસે આવવાની માગણી કરી. દેવીએ જણાવ્યું કે તેઓ યુદ્ધમાં જીતનાર સાથે જ લગ્ન કરવાનું વ્રત લઈ ચૂક્યાં છે. તેઓ ધમકીથી ન ઝૂક્યાં.",
+        "kn": "ಶುಂಭ ಅಸುರ ದೂತ ಸುಗ್ರೀವನನ್ನು ಕಳುಹಿಸಿದನು. ಜಗತ್ತಿನ ಸಂಪತ್ತು ತನ್ನದಾದ್ದರಿಂದ ಆಕೆ ತನ್ನ ಬಳಿಗೆ ಬರಬೇಕು ಎಂದು ಬೇಡಿದನು. ಯುದ್ಧದಲ್ಲಿ ತನ್ನನ್ನು ಗೆಲ್ಲುವವನನ್ನು ಮಾತ್ರ ಮದುವೆಯಾಗುವುದಾಗಿ ಹಿಂದೆಯೇ ಸಂಕಲ್ಪಿಸಿದ್ದೇನೆ ಎಂದು ದೇವಿ ಉತ್ತರಿಸಿದಳು. ಬೆದರಿಕೆಗೆ ಮಣಿಯಲಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "dhumralochanas-attack",
+      "art": "sn04",
+      "source": "Devi Mahatmya 6",
+      "title": {
+        "en": "Force Does Not Succeed",
+        "hi": "बल प्रयोग विफल हुआ",
+        "gu": "બળપ્રયોગ નિષ્ફળ થયો",
+        "kn": "ಬಲವಂತ ವಿಫಲವಾಯಿತು"
+      },
+      "text": {
+        "en": "Shumbha ordered Dhumralochana to bring her by force. When he attacked, the Goddess’s mighty sound destroyed him. Her lion defeated the army that came with him. The brothers’ first attempt at force had failed, but more attacks followed.",
+        "hi": "शुंभ ने धूम्रलोचन को देवी को बलपूर्वक लाने भेजा। आक्रमण पर देवी के शक्तिशाली हुंकार से उसका अंत हुआ। उनके सिंह ने साथ आई सेना पर विजय पाई। पहला बल प्रयोग विफल हुआ, पर आगे और आक्रमण आए।",
+        "gu": "શુંભે ધૂમ્રલોચનને દેવીને બળજબરીથી લાવવા મોકલ્યો. હુમલો કરતાં દેવીના શક્તિશાળી હુંકારથી તેનો અંત થયો. તેમના સિંહે સાથે આવેલી સેનાને હરાવી. પહેલો બળપ્રયોગ નિષ્ફળ થયો, પણ પછી વધુ હુમલા થયા.",
+        "kn": "ದೇವಿಯನ್ನು ಬಲವಂತವಾಗಿ ಕರೆತರಲು ಶುಂಭ ಧೂಮ್ರಲೋಚನನನ್ನು ಕಳುಹಿಸಿದನು. ಅವನು ದಾಳಿ ಮಾಡಿದಾಗ ದೇವಿಯ ಪ್ರಬಲ ಧ್ವನಿ ಅವನನ್ನು ಸಂಹರಿಸಿತು. ಆಕೆಯ ಸಿಂಹ ಅವನ ಸೇನೆಯನ್ನು ಸೋಲಿಸಿತು. ಮೊದಲ ಬಲವಂತ ವಿಫಲವಾಯಿತು; ಇನ್ನಷ್ಟು ದಾಳಿಗಳು ಬಂದವು."
+      }
+    },
+    {
+      "id": "kali-becomes-chamunda",
+      "art": "sn05",
+      "source": "Devi Mahatmya 7",
+      "title": {
+        "en": "Kali, Called Chamunda",
+        "hi": "काली का नाम चामुंडा",
+        "gu": "કાળીનું નામ ચામુંડા",
+        "kn": "ಕಾಳಿ ಚಾಮುಂಡೆಯಾದಳು"
+      },
+      "text": {
+        "en": "Chanda and Munda attacked with another army. Kali emerged from the Goddess’s forehead, fierce in protection. She defeated and killed both commanders. Because she had overcome Chanda and Munda, the Goddess gave her the name Chamunda.",
+        "hi": "चंड-मुंड दूसरी सेना लेकर आए। रक्षा के लिए उग्र रूप वाली काली देवी के मस्तक से प्रकट हुईं। उन्होंने दोनों सेनानायकों को पराजित कर मार दिया। चंड-मुंड पर विजय के कारण देवी ने उनका नाम चामुंडा रखा।",
+        "gu": "ચંડ-મુંડ બીજી સેના લઈને આવ્યા. રક્ષણ માટે ઉગ્ર રૂપવાળાં કાળી દેવીના મસ્તકમાંથી પ્રગટ થયાં. તેમણે બંને સેનાનાયકોને હરાવીને મારી નાખ્યા. ચંડ-મુંડ પર વિજયથી દેવીએ તેમનું નામ ચામુંડા રાખ્યું.",
+        "kn": "ಚಂಡ-ಮುಂಡ ಇನ್ನೊಂದು ಸೇನೆಯೊಂದಿಗೆ ದಾಳಿ ಮಾಡಿದರು. ರಕ್ಷಣೆಗೆ ಉಗ್ರಳಾದ ಕಾಳಿ ದೇವಿಯ ಹಣೆಯಿಂದ ಪ್ರತ್ಯಕ್ಷಳಾದಳು. ಇಬ್ಬರು ಸೇನಾನಾಯಕರನ್ನೂ ಸೋಲಿಸಿ ಸಂಹರಿಸಿದಳು. ಚಂಡ-ಮುಂಡರನ್ನು ಗೆದ್ದದ್ದರಿಂದ ದೇವಿ ಆಕೆಗೆ ಚಾಮುಂಡೆ ಎಂಬ ಹೆಸರು ನೀಡಿದಳು."
+      }
+    },
+    {
+      "id": "the-last-warning",
+      "art": "sn06",
+      "source": "Devi Mahatmya 8.1–39",
+      "title": {
+        "en": "A Warning Before Battle",
+        "hi": "युद्ध से पहले चेतावनी",
+        "gu": "યુદ્ધ પહેલાં ચેતવણી",
+        "kn": "ಯುದ್ಧದ ಮೊದಲು ಎಚ್ಚರಿಕೆ"
+      },
+      "text": {
+        "en": "Divine shaktis joined the Goddess, bearing the powers of the devas. The Goddess’s power Shivaduti sent Shiva with a warning: the asuras should restore the devas’ realm and withdraw. They refused and attacked instead. The Goddess and her allies stood ready to protect.",
+        "hi": "देवताओं की शक्तियाँ देवी के साथ आईं। देवी की शक्ति शिवदूती ने शिव के द्वारा चेतावनी भेजी: असुर देवताओं का लोक लौटाएँ और हट जाएँ। उन्होंने न मानकर आक्रमण किया। देवी और सहयोगी रक्षा के लिए तैयार थीं।",
+        "gu": "દેવોની શક્તિઓ દેવી સાથે આવી. દેવીની શક્તિ શિવદૂતીએ શિવ દ્વારા ચેતવણી મોકલી: અસુરો દેવોનો લોક પાછો આપે અને પાછા હટે. તેમણે ન માનીને હુમલો કર્યો. દેવી અને સાથીઓ રક્ષણ માટે તૈયાર હતાં.",
+        "kn": "ದೇವತೆಗಳ ಶಕ್ತಿಗಳನ್ನು ಹೊಂದಿದ ದಿವ್ಯಶಕ್ತಿಗಳು ದೇವಿಯನ್ನು ಸೇರಿದರು. ದೇವಿಯ ಶಕ್ತಿಯಾದ ಶಿವದೂತಿ ಶಿವನ ಮೂಲಕ ಎಚ್ಚರಿಕೆ ಕಳುಹಿಸಿದಳು: ಅಸುರರು ದೇವತೆಗಳ ಲೋಕ ಮರಳಿಸಿ ಹಿಂದೆ ಸರಿಯಲಿ. ಅವರು ನಿರಾಕರಿಸಿ ದಾಳಿ ಮಾಡಿದರು. ದೇವಿ ಮತ್ತು ಸಹಾಯಕರೂ ರಕ್ಷಣೆಗೆ ಸಿದ್ಧರಾದರು."
+      }
+    },
+    {
+      "id": "raktabeej-multiplies",
+      "art": "sn07",
+      "source": "Devi Mahatmya 8.40–53",
+      "title": {
+        "en": "Raktabeej Multiplies",
+        "hi": "रक्तबीज बढ़ता गया",
+        "gu": "રક્તબીજ વધતો ગયો",
+        "kn": "ರಕ್ತಬೀಜ ಹೆಚ್ಚಾದನು"
+      },
+      "text": {
+        "en": "Raktabeej carried a mace into battle. Whenever a drop of his blood touched the earth, another asura like him appeared. As the shaktis struck him, the copies multiplied. The devas grew afraid. Ordinary attacks were making the danger greater.",
+        "hi": "रक्तबीज गदा लेकर आया। उसके रक्त की बूँद धरती छूती तो उसके जैसा असुर प्रकट होता। शक्तियों के प्रहार से प्रतिरूप बढ़ते गए। देवता भयभीत हुए। सामान्य प्रहार संकट को और बढ़ा रहे थे।",
+        "gu": "રક્તબીજ ગદા લઈને આવ્યો. તેના રક્તનું ટીપું ધરતીને અડતાં તેના જેવો અસુર પ્રગટ થતો. શક્તિઓના પ્રહારથી પ્રતિરૂપો વધતા ગયા. દેવો ભયભીત થયા. સામાન્ય પ્રહાર સંકટને વધુ વધારી રહ્યા હતા.",
+        "kn": "ರಕ್ತಬೀಜ ಗದೆ ಹಿಡಿದು ಬಂದನು. ಅವನ ರಕ್ತದ ಹನಿ ನೆಲಕ್ಕೆ ತಾಗಿದಾಗ ಅವನಂತೆಯೇ ಮತ್ತೊಬ್ಬ ಅಸುರ ಹುಟ್ಟುತ್ತಿದ್ದನು. ಶಕ್ತಿಗಳ ದಾಳಿಯಿಂದ ಪ್ರತಿರೂಪಗಳು ಹೆಚ್ಚಿದವು. ದೇವತೆಗಳು ಭಯಪಟ್ಟರು. ಸಾಮಾನ್ಯ ದಾಳಿಗಳು ಅಪಾಯವನ್ನು ಹೆಚ್ಚಿಸುತ್ತಿದ್ದವು."
+      }
+    },
+    {
+      "id": "durga-and-kali-work-together",
+      "art": "sn08",
+      "source": "Devi Mahatmya 8.54–63",
+      "title": {
+        "en": "A Different Way to Win",
+        "hi": "विजय की नई युक्ति",
+        "gu": "વિજયની નવી યુક્તિ",
+        "kn": "ಜಯದ ಹೊಸ ಉಪಾಯ"
+      },
+      "text": {
+        "en": "Durga asked Kali to catch the blood before it reached the earth and consume the new asuras. As Durga fought, Kali carried out the plan. No more copies could grow. Raktabeej lost his multiplying power and was killed. The devas rejoiced.",
+        "hi": "दुर्गा ने काली से धरती पर गिरने से पहले रक्त ग्रहण करने और नए असुरों को निगलने को कहा। दुर्गा के युद्ध करते समय काली ने योजना पूरी की। नए प्रतिरूप रुक गए। रक्तबीज की बढ़ने की शक्ति समाप्त हुई और उसका अंत हुआ। देवता प्रसन्न हुए।",
+        "gu": "દુર્ગાએ કાળીને ધરતી પર પડતાં પહેલાં રક્ત ગ્રહણ કરવા અને નવા અસુરોને ગળી જવા કહ્યું. દુર્ગા લડતાં રહ્યાં ત્યારે કાળીએ યોજના પૂરી કરી. નવા પ્રતિરૂપો અટક્યા. રક્તબીજની વધવાની શક્તિ સમાપ્ત થઈ અને તેનો અંત થયો. દેવો પ્રસન્ન થયા.",
+        "kn": "ನೆಲಕ್ಕೆ ತಲುಪುವ ಮೊದಲು ರಕ್ತ ಹಿಡಿದು ಹೊಸ ಅಸುರರನ್ನು ನುಂಗಲು ದುರ್ಗೆ ಕಾಳಿಗೆ ತಿಳಿಸಿದಳು. ದುರ್ಗೆ ಹೋರಾಡುತ್ತಿದ್ದಂತೆ ಕಾಳಿ ಯೋಜನೆ ನೆರವೇರಿಸಿದಳು. ಹೊಸ ಪ್ರತಿರೂಪಗಳು ನಿಂತವು. ರಕ್ತಬೀಜನ ಹೆಚ್ಚುವ ಶಕ್ತಿ ಕೊನೆಗೊಂಡು ಅವನು ಸಂಹಾರವಾದನು. ದೇವತೆಗಳು ಸಂತೋಷಪಟ್ಟರು."
+      }
+    },
+    {
+      "id": "nishumbha-returns",
+      "art": "sn09",
+      "source": "Devi Mahatmya 9.1–28",
+      "title": {
+        "en": "Nishumbha Attacks",
+        "hi": "निशुंभ का आक्रमण",
+        "gu": "નિશુંભનો હુમલો",
+        "kn": "ನಿಶುಂಭನ ದಾಳಿ"
+      },
+      "text": {
+        "en": "Nishumbha attacked the Goddess’s lion. She broke his weapons and struck him down. Shumbha too entered the battle, but his attacks were countered. Nishumbha recovered and returned with renewed force. The struggle was not yet over.",
+        "hi": "निशुंभ ने देवी के सिंह पर प्रहार किया। देवी ने उसके अस्त्र तोड़े और उसे गिरा दिया। शुंभ भी युद्ध में आया, पर उसके प्रहार रोके गए। निशुंभ सँभलकर फिर जोर से लौटा। संघर्ष अभी समाप्त नहीं हुआ था।",
+        "gu": "નિશુંભે દેવીના સિંહ પર પ્રહાર કર્યો. દેવીએ તેનાં શસ્ત્રો તોડ્યાં અને તેને પાડી દીધો. શુંભ પણ યુદ્ધમાં આવ્યો, પણ તેના પ્રહારો અટકાવાયા. નિશુંભ સંભાળીને ફરી જોરથી આવ્યો. સંઘર્ષ હજી સમાપ્ત થયો ન હતો.",
+        "kn": "ನಿಶುಂಭ ದೇವಿಯ ಸಿಂಹದ ಮೇಲೆ ದಾಳಿ ಮಾಡಿದನು. ಆಕೆ ಅವನ ಆಯುಧಗಳನ್ನು ಮುರಿದು ಅವನನ್ನು ಬೀಳಿಸಿದಳು. ಶುಂಭನೂ ಯುದ್ಧಕ್ಕೆ ಬಂದನು; ಅವನ ದಾಳಿಗಳನ್ನೂ ತಡೆಯಲಾಯಿತು. ನಿಶುಂಭ ಚೇತರಿಸಿಕೊಂಡು ಮತ್ತೆ ಬಂದನು. ಹೋರಾಟ ಇನ್ನೂ ಮುಗಿದಿರಲಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "nishumbhas-defeat",
+      "art": "sn10",
+      "source": "Devi Mahatmya 9.29–37",
+      "title": {
+        "en": "Nishumbha’s Defeat",
+        "hi": "निशुंभ की पराजय",
+        "gu": "નિશુંભની હાર",
+        "kn": "ನಿಶುಂಭನ ಸೋಲು"
+      },
+      "text": {
+        "en": "Nishumbha attacked again with many weapons. The Goddess countered them and struck him with her spear. Another mighty warrior emerged from him, but she defeated that warrior too. Nishumbha was killed, and his army could no longer overcome her.",
+        "hi": "निशुंभ ने अनेक अस्त्रों से फिर आक्रमण किया। देवी ने उन्हें रोका और शूल से प्रहार किया। उसके भीतर से दूसरा बलवान योद्धा निकला, पर देवी ने उसे भी हराया। निशुंभ का अंत हुआ और उसकी सेना देवी पर विजय न पा सकी।",
+        "gu": "નિશુંભે અનેક શસ્ત્રોથી ફરી હુમલો કર્યો. દેવીએ તેમને રોક્યાં અને શૂળથી પ્રહાર કર્યો. તેની અંદરથી બીજો બળવાન યોદ્ધો નીકળ્યો, પણ દેવીએ તેને પણ હરાવ્યો. નિશુંભનો અંત થયો અને તેની સેના દેવીને જીતી ન શકી.",
+        "kn": "ನಿಶುಂಭ ಹಲವು ಆಯುಧಗಳಿಂದ ಮತ್ತೆ ದಾಳಿ ಮಾಡಿದನು. ದೇವಿ ಅವನ್ನು ತಡೆದು ಶೂಲದಿಂದ ಅವನನ್ನು ಹೊಡೆದಳು. ಅವನಿಂದ ಮತ್ತೊಬ್ಬ ಬಲಿಷ್ಠ ಯೋಧ ಹೊರಬಂದನು; ಆಕೆ ಅವನನ್ನೂ ಸೋಲಿಸಿದಳು. ನಿಶುಂಭ ಸಂಹಾರವಾದನು; ಅವನ ಸೇನೆ ದೇವಿಯನ್ನು ಗೆಲ್ಲಲಾಗಲಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "the-powers-return-to-one",
+      "art": "sn11",
+      "source": "Devi Mahatmya 10.1–6",
+      "title": {
+        "en": "The Powers Return to One",
+        "hi": "शक्तियाँ एक हुईं",
+        "gu": "શક્તિઓ એક થઈ",
+        "kn": "ಶಕ್ತಿಗಳು ಒಂದಾದವು"
+      },
+      "text": {
+        "en": "Shumbha accused the Goddess of relying on others’ strength. She explained that the shaktis were her own manifestations. They returned into her, and she stood alone. Shumbha now faced the same divine Mother whose powers he had thought were separate.",
+        "hi": "शुंभ ने देवी पर दूसरों की शक्ति का सहारा लेने का आरोप लगाया। देवी ने बताया कि शक्तियाँ उनके ही रूप हैं। वे सब देवी में लौट गईं और देवी अकेली खड़ी हुईं। शुंभ उसी दिव्य माँ के सामने था जिसके रूपों को उसने अलग समझा था।",
+        "gu": "શુંભે દેવી પર બીજાની શક્તિનો આધાર લેવાનો આરોપ મૂક્યો. દેવીએ જણાવ્યું કે શક્તિઓ તેમનાં જ રૂપ છે. તે સૌ દેવીમાં પાછી સમાઈ અને દેવી એકલાં ઊભાં રહ્યાં. શુંભ એ જ દિવ્ય મા સામે હતો જેમનાં રૂપ તેણે અલગ માન્યાં હતાં.",
+        "kn": "ಇತರರ ಶಕ್ತಿಯನ್ನು ಅವಲಂಬಿಸಿದ್ದಾಳೆ ಎಂದು ಶುಂಭ ದೇವಿಯನ್ನು ಆರೋಪಿಸಿದನು. ಶಕ್ತಿಗಳು ತನ್ನದೇ ರೂಪಗಳು ಎಂದು ಆಕೆ ತಿಳಿಸಿದಳು. ಅವು ಆಕೆಯೊಳಗೆ ಮರಳಿದವು; ದೇವಿ ಒಬ್ಬಳೇ ನಿಂತಳು. ಪ್ರತ್ಯೇಕವೆಂದು ಅವನು ಭಾವಿಸಿದ್ದ ಶಕ್ತಿಗಳ ದಿವ್ಯ ಮಾತೆಯನ್ನೇ ಈಗ ಎದುರಿಸಿದನು."
+      }
+    },
+    {
+      "id": "battle-in-the-sky",
+      "art": "sn12",
+      "source": "Devi Mahatmya 10.7–23",
+      "title": {
+        "en": "The Battle Rises into the Sky",
+        "hi": "आकाश में युद्ध",
+        "gu": "આકાશમાં યુદ્ધ",
+        "kn": "ಆಕಾಶದಲ್ಲಿ ಯುದ್ಧ"
+      },
+      "text": {
+        "en": "Shumbha attacked fiercely. The Goddess countered his arrows, sword, shield and mace. He then grappled with her, and their battle rose into the sky. At last she whirled him around and cast him down to the earth.",
+        "hi": "शुंभ ने उग्र आक्रमण किया। देवी ने उसके बाण, तलवार, ढाल और गदा रोके। फिर वह उनसे भिड़ा और युद्ध आकाश में पहुँचा। अंत में देवी ने उसे घुमाकर धरती पर नीचे गिरा दिया।",
+        "gu": "શુંભે ઉગ્ર હુમલો કર્યો. દેવીએ તેના બાણ, તલવાર, ઢાલ અને ગદા રોક્યાં. પછી તે તેમની સાથે ભીડ્યો અને યુદ્ધ આકાશમાં પહોંચ્યું. અંતે દેવીએ તેને ફેરવીને ધરતી પર નીચે પાડી દીધો.",
+        "kn": "ಶುಂಭ ಉಗ್ರವಾಗಿ ದಾಳಿ ಮಾಡಿದನು. ದೇವಿ ಅವನ ಬಾಣ, ಕತ್ತಿ, ಗುರಾಣಿ ಮತ್ತು ಗದೆಯನ್ನು ಎದುರಿಸಿದಳು. ಬಳಿಕ ಅವನು ಆಕೆಯೊಂದಿಗೆ ಸೆಣಸಿದನು; ಯುದ್ಧ ಆಕಾಶಕ್ಕೆ ಏರಿತು. ಕೊನೆಗೆ ಆಕೆ ಅವನನ್ನು ತಿರುಗಿಸಿ ಭೂಮಿಗೆ ಎಸೆದಳು."
+      }
+    },
+    {
+      "id": "shumbhas-final-attack",
+      "art": "sn13",
+      "source": "Devi Mahatmya 10.24–27",
+      "title": {
+        "en": "The Final Attack Ends",
+        "hi": "अंतिम आक्रमण का अंत",
+        "gu": "છેલ્લા હુમલાનો અંત",
+        "kn": "ಕೊನೆಯ ದಾಳಿ ಮುಗಿಯಿತು"
+      },
+      "text": {
+        "en": "Even after falling, Shumbha rose and rushed at the Goddess again. She met his final attack with her spear. He was killed, and the earth shook as he fell. The brothers’ cruel rule was finally ended.",
+        "hi": "गिरने के बाद भी शुंभ उठकर फिर देवी की ओर दौड़ा। देवी ने शूल से उसका अंतिम आक्रमण रोका। उसका अंत हुआ और गिरने से धरती काँपी। भाइयों का अत्याचारी शासन आखिर समाप्त हुआ।",
+        "gu": "પડ્યા પછી પણ શુંભ ઊઠીને ફરી દેવી તરફ દોડ્યો. દેવીએ શૂળથી તેનો છેલ્લો હુમલો રોક્યો. તેનો અંત થયો અને પડવાથી ધરતી ધ્રૂજી. ભાઈઓનું અત્યાચારી શાસન આખરે સમાપ્ત થયું.",
+        "kn": "ಬಿದ್ದ ಬಳಿಕವೂ ಶುಂಭ ಎದ್ದು ಮತ್ತೆ ದೇವಿಯತ್ತ ಧಾವಿಸಿದನು. ಆಕೆ ಶೂಲದಿಂದ ಅವನ ಕೊನೆಯ ದಾಳಿಯನ್ನು ತಡೆದಳು. ಅವನು ಸಂಹಾರವಾದನು; ಬಿದ್ದಾಗ ಭೂಮಿ ನಡುಗಿತು. ಸಹೋದರರ ಕ್ರೂರ ಆಳ್ವಿಕೆ ಕೊನೆಗೂ ಮುಗಿಯಿತು."
+      }
+    },
+    {
+      "id": "peace-is-restored",
+      "art": "sn14",
+      "source": "Devi Mahatmya 10.28–32",
+      "title": {
+        "en": "Peace Returns",
+        "hi": "शांति लौटी",
+        "gu": "શાંતિ પાછી આવી",
+        "kn": "ಶಾಂತಿ ಮರಳಿತು"
+      },
+      "text": {
+        "en": "The world grew peaceful again. Rivers flowed in their proper courses, and the sky became clear. The devas rejoiced; celestial singers and dancers celebrated. The Mother’s victory had lifted their fear and restored harmony.",
+        "hi": "संसार फिर शांत हुआ। नदियाँ अपने मार्ग में बहीं और आकाश निर्मल हुआ। देवता आनंदित हुए; दिव्य गायकों और नर्तकों ने उत्सव मनाया। माँ की विजय से भय दूर हुआ और संतुलन लौटा।",
+        "gu": "દુનિયા ફરી શાંત થઈ. નદીઓ પોતાના માર્ગે વહેવા લાગી અને આકાશ સ્વચ્છ થયું. દેવો આનંદિત થયા; દિવ્ય ગાયકો અને નર્તકોએ ઉત્સવ મનાવ્યો. માના વિજયથી ભય દૂર થયો અને સુમેળ પાછો આવ્યો.",
+        "kn": "ಜಗತ್ತು ಮತ್ತೆ ಶಾಂತವಾಯಿತು. ನದಿಗಳು ಸರಿಯಾದ ಹಾದಿಯಲ್ಲಿ ಹರಿದವು; ಆಕಾಶ ಸ್ವಚ್ಛವಾಯಿತು. ದೇವತೆಗಳು ಸಂತೋಷಪಟ್ಟರು; ದಿವ್ಯ ಗಾಯಕರು ಮತ್ತು ನರ್ತಕರು ಸಂಭ್ರಮಿಸಿದರು. ಮಾತೆಯ ಜಯ ಭಯವನ್ನು ದೂರಮಾಡಿ ಸಾಮರಸ್ಯವನ್ನು ಮರಳಿಸಿತು."
+      }
+    }
+  ]
+}

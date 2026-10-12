@@ -40,6 +40,8 @@ export type ShareCaptionParams = {
   firstLineHi: string;
   firstLineEn: string;
   lang: Lang;
+  /** Native authored prose labels; avoids re-scripting Gujarati/Kannada translations. */
+  resolved?: { sectionName: string; verseLabel: string; firstLine: string };
 };
 
 const SHARE_CTA: LocalizedStrings = {
@@ -71,8 +73,8 @@ export function buildShareCaption(
   const { withInstagram = true } = opts;
   // Header + first line are content: gu/kn re-script the Devanagari (which is the
   // recitation text for the verse line too). hi/en outputs are byte-identical to before.
-  const header = `${contentByLang(p.lang, p.sectionNameHi, p.sectionNameEn)} · ${contentByLang(p.lang, p.verseLabelHi, p.verseLabelEn)}`;
-  const firstLine = contentByLang(p.lang, p.firstLineHi, p.firstLineEn);
+  const header = p.resolved ? `${p.resolved.sectionName} · ${p.resolved.verseLabel}` : `${contentByLang(p.lang, p.sectionNameHi, p.sectionNameEn)} · ${contentByLang(p.lang, p.verseLabelHi, p.verseLabelEn)}`;
+  const firstLine = p.resolved?.firstLine ?? contentByLang(p.lang, p.firstLineHi, p.firstLineEn);
   const lines = [`${header}`, `"${firstLine}"`, '', `${pick(p.lang, SHARE_CTA)} ${SMART_LINK}`];
   if (withInstagram) lines.push(instagramLine(p.lang));
   return lines.join('\n');

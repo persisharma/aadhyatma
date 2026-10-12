@@ -2,7 +2,8 @@ import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { LinearGradient } from 'expo-linear-gradient';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { backgroundImages } from '@assets/backgrounds';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TextField from '@/components/TextField';
 import { useTheme } from '@/theme/ThemeContext';
@@ -34,10 +35,7 @@ export default function KathaLibraryScreen({ navigation }: Props) {
 
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <BackgroundLayer source={backgroundImages.category_granth_open_scripture} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={styles.topBar}>
           <Pressable

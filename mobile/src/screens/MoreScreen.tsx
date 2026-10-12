@@ -259,8 +259,17 @@ export default function MoreScreen({ navigation }: Props) {
         >
           {/* Header — single line, left-aligned, selected language only */}
           <View style={styles.header}>
+            <Pressable
+              testID="settings-back"
+              accessibilityRole="button"
+              accessibilityLabel={pick(lang, { hi: 'होम पर वापस जाएँ', en: 'Back to Home', gu: 'હોમ પર પાછા જાઓ', kn: 'ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ' })}
+              onPress={() => navigation.getParent()?.navigate('HomeTab', { screen: 'Home' })}
+              style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.7 }]}
+            >
+              <AppIcon name="back" size={24} color={colors.iconInk} />
+            </Pressable>
             <Text style={{ fontFamily: titleFont, fontSize: 30, color: colors.ink }}>
-              {pick(lang, { hi: 'अन्य', en: 'More', gu: 'અન્ય', kn: 'ಇನ್ನಷ್ಟು' })}
+              {pick(lang, { hi: 'सेटिंग्स', en: 'Settings', gu: 'સેટિંગ્સ', kn: 'ಸೆಟ್ಟಿಂಗ್‌ಗಳು' })}
             </Text>
           </View>
 
@@ -657,7 +666,8 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   scroll: { paddingTop: 12, paddingBottom: 40, paddingHorizontal: 16 },
-  header: { paddingHorizontal: 4, paddingBottom: 8, marginBottom: 12 },
+  header: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingBottom: 8, marginBottom: 12 },
+  backButton: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   groups: { gap: 22 },
   group: { flexDirection: 'column' },
   groupLabel: {

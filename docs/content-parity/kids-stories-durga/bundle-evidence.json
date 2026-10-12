@@ -1,0 +1,38 @@
+{
+  "checkedAtUtc": "2026-10-09T18:23:11.285001+00:00",
+  "baseMain": "9573655d0f909f37a88ff9c442be9aeee443b1ac",
+  "scope": "Production Metro/Hermes export assets, not an IPA/AAB size comparison",
+  "allStoryImageCount": 144,
+  "allStorySourceBytes": 44964738,
+  "newImageCount": 87,
+  "newSourceBytes": 29605018,
+  "homeImageDelivery": "Content-hashed CDN URL via existing assetCache/useCachedAsset; no Metro image import",
+  "platforms": {
+    "ios": {
+      "assetGroups": 130,
+      "allStoryImagesBundled": 0,
+      "storyImageBytesBundled": 0,
+      "kidsStoryAssetsIncluded": [],
+      "assetmap": "tmp/durga-native/main-final-ios/assetmap.json",
+      "assetmapSha256": "915c52d961412bcaf598d6ce3de1e321ea79ad7fab348f058c0af064a995bafc",
+      "log": "tmp/durga-native/main-final-ios.log",
+      "logSha256": "1f2bc45d02990187eb0ee87c52397e9457bbf2784a8655aa425c1c69573dde7c"
+    },
+    "android": {
+      "assetGroups": 130,
+      "allStoryImagesBundled": 0,
+      "storyImageBytesBundled": 0,
+      "kidsStoryAssetsIncluded": [],
+      "assetmap": "tmp/durga-native/main-final-android/assetmap.json",
+      "assetmapSha256": "576c54fd62d3efa59c4481cbd1891b117210b66272ccaeeece3737c6aeb2fd3d",
+      "log": "tmp/durga-native/main-final-android.log",
+      "logSha256": "ad49c7b698bc6f34f2c5884a3652e7e7a0152c2baf8e4bf4b4996322fcf81d00"
+    }
+  },
+  "sourceHashes": {
+    "mobile/src/components/KidsStoriesHomeCard.tsx": "dd7c851f94f8b3cb6d83c3b7b8ce647b2759f8b6edeca1f22546202fa789911a",
+    "mobile/src/components/KidsStoryArt.tsx": "e0da6a1a807e8896b91affadb09dddb802121e8d9d6e29b635ed535f218513f0",
+    "mobile/src/data/kidsStoryAssetManifest.json": "7cb326069b260c49f11ec4de50a4c172d640e38d4c271bf50ce73dd6faa723cf",
+    "scripts/verify-kids-story-assets.mjs": "94dea5ff5df3ad5c73f55b1cf0f88e9397b97eb630e5986e440a909e56089f93"
+  }
+}

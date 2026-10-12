@@ -51,3 +51,47 @@ test.each([
   expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === 'New picture stories are being prepared for this shelf.')).toBe(false);
   act(() => tree.unmount());
 });
+
+test('Maa Durga shelf has nine ordered form routes, a festival introduction and four additional stories', () => {
+  const { navadurgaReadings, storiesForDeity } = require('@/data/kidsStories');
+  const navigation = { navigate: jest.fn(), goBack: jest.fn() };
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<Library navigation={navigation} />); });
+  act(() => tree.root.findByProps({ testID: 'kids-story-deity-durga' }).props.onPress());
+  expect(navigation.navigate).toHaveBeenCalledWith('KidsStoryDeity', { deityId: 'durga' });
+  act(() => tree.unmount());
+  act(() => { tree = TestRenderer.create(<Deity navigation={navigation} route={{ params: { deityId: 'durga' } }} />); });
+  const buttons = tree.root.findAllByType('Pressable' as any);
+  expect(buttons).toHaveLength(14);
+  expect(buttons.map(node => node.props.testID)).toEqual([
+    'kids-story-durga-navaratri',
+    ...navadurgaReadings.map((form: { storyId: string }) => `kids-story-${form.storyId}`),
+    'kids-story-durga-raktabeej', 'kids-story-durga-shumbha-nishumbha',
+    'kids-story-durga-suratha-samadhi', 'kids-story-durga-shakambhari',
+  ]);
+  for (const story of storiesForDeity('durga')) {
+    act(() => tree.root.findByProps({ testID: `kids-story-${story.id}` }).props.onPress());
+    expect(navigation.navigate).toHaveBeenLastCalledWith('KidsStoryReader', { storyId: story.id });
+  }
+  expect(tree.root.findAllByType('Text' as any).filter(node =>
+    Array.isArray(node.props.children) && node.props.children.includes(' · Introduction')
+  )).toHaveLength(4);
+  expect(buttons[7].props.accessibilityLabel).toContain('Day 7 · Kalaratri');
+  act(() => tree.unmount());
+});
+
+test('covers derive their height from reviewed artwork and tab-hosted catalogs have no second bottom inset', () => {
+  const navigation = { navigate: jest.fn(), goBack: jest.fn() };
+  for (const Component of [Library, Deity]) {
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => { tree = TestRenderer.create(<Component navigation={navigation} route={{ params: { deityId: 'durga' } }} />); });
+    expect(tree.root.findByType('SafeAreaView' as any).props.edges).toEqual(['top', 'left', 'right']);
+    const scroll = tree.root.findByType('ScrollView' as any);
+    expect(scroll.props.contentContainerStyle.paddingBottom).toBe(12);
+    for (const art of tree.root.findAllByType('KidsStoryArt' as any)) {
+      expect(art.parent!.props.style.width).toBe(120);
+      expect(art.parent!.props.style.height).toBeUndefined();
+    }
+    act(() => tree.unmount());
+  }
+});

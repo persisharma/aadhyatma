@@ -16,6 +16,9 @@ export function BhaktiIcon({ color, size }: BhaktiIconProps) {
 export function PanchangIcon({ color, size }: TabIconProps) {
   return <StoryIcon name="nav-panchang" size={size + 3} tintColor={color} />;
 }
+export function VratIcon({ color, size }: TabIconProps) {
+  return <StoryIcon name="vrat" size={size + 3} tintColor={color} />;
+}
 export function MoreIcon({ color, size }: TabIconProps) {
   return <AppIcon name="more" color={color} size={size} weight="regular" />;
 }
