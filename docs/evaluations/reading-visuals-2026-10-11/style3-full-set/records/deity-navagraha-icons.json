@@ -1,0 +1,34 @@
+{
+  "id": "deity-navagraha-icons",
+  "title": "Navagraha",
+  "legacyStems": [
+    "backgrounds--deity-navagraha-icons"
+  ],
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-detail-v2",
+  "prompt": "Use case: illustration-story. Create ONE NEW richly detailed devotional reader illustration for the Vedansh app. EXACT 2:1 horizontal landscape canvas, e.g. 1774x887 or 1920x960.\nInput roles: Image 1 is the existing subject/motif reference, showing the content to retain; its muted background rendering and square/portrait dimensions are NOT the target. Images 2 and 3 are approved Krishna storybook STYLE ONLY references. Image 4 is an approved detailed Style 3 landscape sample; match its detailed hand-painted finish and short horizontal format, not its characters or setting.\nRendering: elegant fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered painterly shading, detailed cloth and ornaments, matte gold, subtle warm paper grain. Retain rich narrative and environmental detail: architecture, vegetation, meaningful props, jewellery, fabrics and layered backgrounds. Do not simplify or remove detail merely for the storybook style. Preserve tonal separation, clarity and depth without photographic gloss or a heavy sepia wash.\nComposition: Draw a complete new landscape arrangement appropriate to the subject. Recompose the reference sideways instead of cropping, stretching or shrinking its portrait/square canvas. Every meaningful subject, crown, face, connected hand/arm/leg, foot, vahana and key prop must fit fully inside a comfortable 6 percent inner margin. Keep animals' complete bodies, hooves/paws/tails, long instruments/spears, relevant wheels and full shrine arches visible. The 2:1 canvas is painted edge to edge, with at most a very narrow paper fade; no large blank caption band. Dignified devotional proportions, not caricature or chibi.\nConstraints: exact specified counts of figures, limbs and objects; coherent connected anatomy, no duplicate/disconnected hands or attributes. No new in-image text, letters, pseudo-script, captions, labels, UI, frame, border or watermark. Use the scene's own setting, never import the Krishna style-reference river/cottage/characters into unrelated scenes. No modern items, arbitrary additional main characters, gore or violent injuries.\nScene: A richly detailed symbolic Navagraha painting retaining image 1's NINE medallions: one central radiant Sun, with exactly eight full circular medallions around it arranged in a broad horizontal oval: Moon crescent and stars, spear and round shield, tied unlettered manuscript, mace with mala, lotus, comet with small serpent motif, ringed Saturn planet, and dark eclipse with serpent ring. Preserve fine floral/lotus bases, engraved gold rims and faint celestial orbit lines. All nine complete distinct medallions visible, without an extra or missing medallion. Muted hand-painted pastel colours and matte gold on warm ivory, no words, numbers or additional people.",
+  "scene": "A richly detailed symbolic Navagraha painting retaining image 1's NINE medallions: one central radiant Sun, with exactly eight full circular medallions around it arranged in a broad horizontal oval: Moon crescent and stars, spear and round shield, tied unlettered manuscript, mace with mala, lotus, comet with small serpent motif, ringed Saturn planet, and dark eclipse with serpent ring. Preserve fine floral/lotus bases, engraved gold rims and faint celestial orbit lines. All nine complete distinct medallions visible, without an extra or missing medallion. Muted hand-painted pastel colours and matte gold on warm ivory, no words, numbers or additional people.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/originals/8789ca4359833466.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/hanuman-sita.webp"
+  ],
+  "transparent_background": false,
+  "approved": false,
+  "status": "draft",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-7b2a4fd3-d8e9-4f2f-9472-c41fa198da81.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/deity-navagraha-icons.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/deity-navagraha-icons.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 114868,
+  "sha256": "a55e2a59a26f43cd4a0545be816842efcb95723a8022bb53575830e4e48d7224",
+  "tool": "built-in image_gen"
+}

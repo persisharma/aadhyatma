@@ -15,12 +15,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { useKeepAwake } from 'expo-keep-awake';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { useTheme } from '@/theme/ThemeContext';
-import { elevation } from '@/theme/elevation';
 import { radii, spacing } from '@/theme/spacing';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -32,6 +30,10 @@ import { library } from '@/data/texts';
 import { gitaChaptersManifest } from '@/data/gita';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { buildEntryStartTarget, navigateToHomeStackTarget } from '@/navigation/entryRoutes';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingArtwork from '@/components/ReadingArtwork';
+import { readingParchment } from '@/data/backgroundAsset';
+import { getVidhiReadingBackground } from '@/data/backgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
@@ -208,10 +210,7 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
         <ReaderHeader
           title={contentByLang(lang, vidhi.titleHi, vidhi.titleEn)}
@@ -311,7 +310,7 @@ function StepPage({
   width: number;
   page: Extract<ConductPage, { kind: 'step' }>;
   isPersonalTithi: boolean;
-  vidhi: { id: string; titleHi: string; titleEn: string };
+  vidhi: { id: string; titleHi: string; titleEn: string; deities: string[]; anchor?: string };
 }) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
@@ -329,15 +328,7 @@ function StepPage({
       >
         <View
           testID={`vidhi-reading-card-${step.id}`}
-          style={[
-            styles.readingCard,
-            {
-              backgroundColor: colors.parchmentSoft,
-              borderColor: colors.divider,
-              borderRadius: radii.lg,
-            },
-            elevation.raised,
-          ]}
+          style={styles.readingCard}
         >
           <View style={styles.cardHeader}>
             <View style={[styles.phasePill, { backgroundColor: isPersonalTithi ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
@@ -363,6 +354,7 @@ function StepPage({
           <Text style={[styles.stepTitle, { color: colors.ink, fontFamily: titleFont }]}>
             {contentByLang(lang, step.titleHi, step.titleEn)}
           </Text>
+          <ReadingArtwork source={page.stepIndex === 0 ? getVidhiReadingBackground(vidhi) : undefined} />
           <Text
             style={{
               color: colors.inkSoft,
@@ -592,7 +584,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   listContainer: { flex: 1 },
   pageScroll: { paddingTop: 6, paddingBottom: 52 },
-  readingCard: { borderWidth: 1, padding: 20 },
+  readingCard: { paddingVertical: 20 },
   cardHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   phasePill: { paddingHorizontal: 10, paddingVertical: 4 },
   dotsOverlay: { position: 'absolute', bottom: 4, left: 0, right: 0, alignItems: 'center' },

@@ -836,6 +836,11 @@ function collectJsonFiles(dirRel = ''): string[] {
       // `source` — the heavy art/audio they point to is served from R2, not here.
       entry.name !== 'audioAssetManifest.json' &&
       entry.name !== 'kidsStoryAssetManifest.json' &&
+      entry.name !== 'backgroundAssetManifest.json' &&
+      entry.name !== 'readerIllustrationManifest.json' &&
+      // Art aliases are semantic asset mappings, not scripture. Their manifest
+      // coverage and approved bytes are checked by readerIllustrationAsset tests.
+      entry.name !== 'readerIllustrationAliases.json' &&
       rel !== 'valmiki-ramayan/daily-selection.json'
     ) {
       files.push(rel);

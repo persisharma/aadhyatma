@@ -8,7 +8,8 @@ import { deities } from './deities';
 import { japamMantras } from './japam';
 import { library, type ContentCategory, type Deity } from './texts';
 
-type BackgroundImage = number;
+import type { BackgroundImage } from './backgroundAsset';
+export type { BackgroundImage } from './backgroundAsset';
 
 type ReaderBackgroundVerse = {
   id?: string;
@@ -61,6 +62,7 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
+  'jai-shri-ram': backgroundImages.deity_rama_darbar,
   'hanuman-chalisa': chalisaImages.ram_hanuman,
   'bhagavad-gita': gitaImages.krishna_arjuna_vishvarupa,
   'gita-saar': gitaImages.krishna_arjuna_vishvarupa,
@@ -155,6 +157,17 @@ export function getCategoryBackground(categoryId: ContentCategory): BackgroundIm
 export function getDeityBackground(deityId: Deity): BackgroundImage {
   return deityBackgrounds[deityId];
 }
+
+/** Match the guide's declared deity; remembrance guides retain neutral manuscript art. */
+export function getVidhiReadingBackground(vidhi: { deities: readonly string[]; anchor?: string }): BackgroundImage {
+  if (vidhi.anchor !== 'personal-tithi') {
+    for (const deity of vidhi.deities) {
+      if (Object.prototype.hasOwnProperty.call(deityBackgrounds, deity)) return deityBackgrounds[deity as Deity];
+    }
+  }
+  return backgroundImages.category_granth_open_scripture;
+}
+
 
 /**
  * Per-temple Theerth background overrides, keyed by temple id. Used for

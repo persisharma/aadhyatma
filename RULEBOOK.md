@@ -61,7 +61,7 @@ Every section, regardless of size, must supply these inputs. The slash command w
 | 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `theerth`, `sanskar`, `ashtakam`, `suktam`, `kavacham` (source of truth: `mobile/src/data/categories.ts`). Determines which grid tile this section appears under on Home. The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. The `theerth` tile routes to the Theerth browse screen (state/category list; map in the drill-in view) — see §12. `ashtakam`, `suktam` and `kavacham` are PRD-A forms, each with a multi-instance reader (dispatching on `ashtakamId`/`suktamId`/`kavachamId`, like the chalisas). **Stuti** is a fourth PRD-A form but is **not** a category — its texts (Krishna Stuti, Durga Stuti) are filed under `stotram` (स्तुति ≈ स्तोत्रम्) yet still render via the multi-instance `StutiReader`, routed by `stutiId`. |
 | 7 | `deities` | **yes** | `['hanuman', 'rama']` | Array of deity tags from the `Deity` union in `mobile/src/data/texts.ts` and display metadata in `deities.ts`: `rama`, `krishna`, `vishnu`, `shiva`, `hanuman`, `durga`, `ganesha`, `savitr` (Maa Gayatri), `saraswati`, `lakshmi` (Maa Lakshmi), `surya` (Surya Dev), `radha` (Radha Rani), `kartikeya` (Kartikeya), `kubera` (Kubera), `ganga` (Maa Ganga), `parvati` (Maa Parvati), `narasimha` (Narasimha), `dattatreya` (Dattatreya), `shani` (Shani Dev), `kali` (Maa Kali), `navagraha` (Navagraha) — PRD-A deity expansion §A.4.2 complete, 9 → 21 (source of truth: `mobile/src/data/deities.ts`). The section appears under each tagged deity in the Deity Index/Detail surfaces. At least one required. |
 | 8 | Subsection structure | optional | 18 chapters / 7 kāṇḍas / none | if present, supply count + per-subsection `titleHi`/`titleEn` (mirrors Gita's `chapters-manifest.json`) |
-| 9 | **Background image(s)** for content page | **yes** | `mobile/assets/<id>/*.png` | at least one bundled local PNG/WebP. Faded vintage sketch per `design.md` §6 (≈50 % opacity after sepia, subject top-anchored, bottom third clean) |
+| 9 | **Background image(s)** for content page | **yes** | `mobile/assets/<id>/*.webp` | approved source artwork registered by a typed R2 descriptor and content hash; bundled neutral parchment fallback. Separate opening-card illustrations follow §11.8 and `design.md` §6. |
 | 10 | Per-verse `lines` (Devanagari) | **yes** | `["जय हनुमान ज्ञान गुण सागर", …]` | array of strings; preserve original line breaks |
 | 11 | Per-verse `meaningHi` | **yes** | non-empty string | Hindi prose |
 | 12 | Per-verse `meaningEn` | **yes** | non-empty string | English prose |
@@ -176,7 +176,7 @@ The slash command runs the first three; the human PR author runs the rest.
 1. `cd mobile && npx tsc --noEmit` passes.
 2. `mobile/assets/<id>/` contains ≥ 1 image and `mobile/src/data/<id>/index.ts` invariant checks pass — for a chaptered corpus, each chapter's checks run on first load (`chapterInvariants.ts`; the Gītā has its own), and the whole-corpus walk runs in `__tests__/chapteredCorpusInvariants.test.ts`, never at module scope.
 3. `cd mobile && npm run lint` reports **zero errors** — this is now the gate for font-family literals, `shadowColor` hex, and sub-10 `fontSize` (§3). Then also eyeball the diff for hex literals and hardcoded sizes on reading content, which the rule does not cover — search for `#[0-9A-Fa-f]{3,6}`, `fontFamily:`, and `fontSize:` to confirm. Any `fontSize:`/`lineHeight:` literal on verse / transliteration / meaning / commentary text is a hard reject; it must reference a `typography` token (see §3 "One reading type scale") — except the sanctioned constrained surfaces (`ShareCard`, `ProseShareCard`, `JapamCounterScreen`), which may carry layout-tuned sizes but must never truncate (see §3).
-4. App boots in Expo dev client; the new card is visible on Home below the existing active sections; tapping navigates to a working reader; every page shows a background image; every verse has `meaningHi` and `meaningEn` populated.
+4. App boots in Expo dev client; the new card is visible on Home below the existing active sections; tapping navigates to a working reader; every page has its reading background/fallback, with an illustration only on the first actual reading card of each reading/chapter; every verse has `meaningHi` and `meaningEn` populated.
 5. The new section appears correctly under its category tile (tap the tile on Home → item is listed). If deity tags are set, also verify the item shows under those deity chips.
 6. Hindi/English toggle flips meaning text on **every** page (sample at least page 1, middle, and last). Toggle is visible on every reader page; if a subsection listing exists, also visible there. While toggled to English, confirm **no Devanagari leaks into the verse pill, top-bar title, modals, or any other user-facing string** outside intentional bilingual labels — and the same check in reverse for Hindi. (Origin: Wishlist pill, Gita & Shiva Strotam verse pills shipped Hindi-only `श्लोक · 1.1` in English mode.)
 7. If the section ships an English transliteration field (`transliteration[]` or `linesEn[]`), spot-check the romanization style matches the source language per `design.md §3.1`: Sanskrit verses use IAST diacritics; Awadhi/Hindi verses use pronunciation-based ASCII. Mismatched style (IAST on Awadhi or plain ASCII on a Sanskrit shloka) is a hard reject. **Also run the §11.12 greppable gate**: no raw ITRANS/encoder residue (mid-word capitals, `~n`, `RRi`, `chCh`), no leftover dandas/pipes (`।`, `॥`, `|`) or verse-number markers, and `linesEn.length` == the paired `sanskrit`/`lines` length for every verse.
@@ -380,6 +380,28 @@ Every content/data change must be verified on both iOS and Android before OTA pu
 
 ### 11.8 Background image per deity
 Every deity in the `Deity` type must have a distinct, thematically correct background image in `backgrounds.ts`. Never use another deity's image as a placeholder (e.g., Krishna's image for Vishnu, or Shiva's image for Gayatri). If no appropriate image exists yet, commission/source one before adding the deity. Origin: Vishnu was using Krishna's bansuri image, Gayatri was using Shiva's trishul image.
+
+**Reader asset delivery and placement.** Backgrounds remain quiet reading surfaces under
+`reading-backgrounds`; standalone paintings use the separate `reader-illustrations` category.
+The approved detailed storybook paintings fill a complete 2:1 canvas, displayed with `contain`
+in a compact banner; never crop a deity's attributes to force a portrait into the banner.
+Keep source WebPs, exact prompts/provenance and visually approved SHA-256 hashes under
+`mobile/assets/reader-illustrations/`. Verify both manifests with the preparation scripts,
+publish approved objects before activating their hashes, and preserve semantic deity mappings.
+Paged verse readers show the banner only on the first actual verse of each reading/chapter/theme,
+excluding navigation transition cards; section-based Katha/Pitru readers show it only on section
+zero. Later cards retain parchment/divider with no banner frame, placeholder or banner request.
+Direct links to later cards do not promote them to cover cards. Continuous prose and standalone
+detail/daily/guide screens may keep one opening image.
+
+Use the shared deferred asynchronous loader and persistent Documents content-hash cache.
+Reading/navigation must render immediately with a bundled neutral fallback. Completed valid
+files have no TTL, HEAD/revalidation or automatic eviction; restart and offline reuse must not
+download again. New content hashes, user-deleted storage/uninstall and recovery from interrupted
+or damaged files permit new downloads. Bound concurrent misses, cancel unused work and retain
+normal TLS validation. Unit tests must cover placement, stable geometry, persistence, deduplication,
+failure and cancellation. Run the reader artwork Maestro smoke; record native download/restart/
+outage evidence separately from host CDN integrity and physical-device performance.
 
 When generating a new deity background, use this prompt template and replace the bracketed fields:
 

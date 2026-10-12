@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-10T04:00:30.315203+00:00",
+  "physicalDevices": [
+    {
+      "model": "iPhone 14",
+      "state": "unavailable",
+      "developerMode": "disabled"
+    }
+  ],
+  "androidAdbAvailable": false,
+  "nativeUi": "Mac locked; fresh cua.getApp returned explicit lock blocker",
+  "resumedGoalTurns": [
+    {
+      "turn": 1,
+      "classification": "progress",
+      "evidence": "Full-width correction, source-verified dimensions, browser asset gallery, full tests and both exports; native UI blocked by Mac lock."
+    },
+    {
+      "turn": 2,
+      "classification": "progress",
+      "evidence": "Host Apple URLSession success narrowed earlier simulator failure; native UI remained locked and device unavailable."
+    },
+    {
+      "turn": 3,
+      "classification": "no further progress available",
+      "evidence": "Fresh native lock response and device listing confirm the same unavailable native setup. No pending test/build job can resolve the remaining requirements."
+    }
+  ],
+  "decision": "Blocked audit threshold met; stop until native access changes."
+}

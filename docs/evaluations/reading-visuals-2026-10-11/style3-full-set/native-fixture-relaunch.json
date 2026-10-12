@@ -1,0 +1,139 @@
+{
+  "kind": "controlled native decode/cache fixture; not native CDN download evidence",
+  "checkedAt": "2026-10-11T11:44:22.347045+00:00",
+  "assetsPreserved": 43,
+  "sameShaBytesMtimeInode": true,
+  "partialFiles": 0,
+  "nativeCDNSuccess": false,
+  "assets": {
+    "category-aarti-diya": {
+      "preserved": true
+    },
+    "category-chalisa-booklet-mala": {
+      "preserved": true
+    },
+    "category-granth-open-scripture": {
+      "preserved": true
+    },
+    "category-japam-mala": {
+      "preserved": true
+    },
+    "category-kavacham-protection": {
+      "preserved": true
+    },
+    "category-stotram-hymn-scroll": {
+      "preserved": true
+    },
+    "daan-annapurna-bhiksha": {
+      "preserved": true
+    },
+    "deity-dattatreya": {
+      "preserved": true
+    },
+    "deity-durga-lion": {
+      "preserved": true
+    },
+    "deity-ganesha-modak": {
+      "preserved": true
+    },
+    "deity-ganga": {
+      "preserved": true
+    },
+    "deity-kali": {
+      "preserved": true
+    },
+    "deity-krishna-bansuri": {
+      "preserved": true
+    },
+    "deity-kubera": {
+      "preserved": true
+    },
+    "deity-lakshmi": {
+      "preserved": true
+    },
+    "deity-narasimha-prahlad": {
+      "preserved": true
+    },
+    "deity-navagraha-icons": {
+      "preserved": true
+    },
+    "deity-parvati-bhavani": {
+      "preserved": true
+    },
+    "deity-radha-krishna": {
+      "preserved": true
+    },
+    "deity-rama-darbar": {
+      "preserved": true
+    },
+    "deity-saraswati-veena": {
+      "preserved": true
+    },
+    "deity-shani": {
+      "preserved": true
+    },
+    "deity-surya": {
+      "preserved": true
+    },
+    "hanuman-lankadahan": {
+      "preserved": true
+    },
+    "hanuman-sea": {
+      "preserved": true
+    },
+    "hanuman-sita": {
+      "preserved": true
+    },
+    "krishna-arjuna-vishvarupa": {
+      "preserved": true
+    },
+    "panchang-celestial-almanac": {
+      "preserved": true
+    },
+    "ram-hanuman": {
+      "preserved": true
+    },
+    "shiva": {
+      "preserved": true
+    },
+    "source-gayatri-savitri-sun": {
+      "preserved": true
+    },
+    "source-vishnu-narayana": {
+      "preserved": true
+    },
+    "theerth-gogaji-gogamedi": {
+      "preserved": true
+    },
+    "theerth-jeen-mata": {
+      "preserved": true
+    },
+    "theerth-karni-mata": {
+      "preserved": true
+    },
+    "theerth-khandoba-jejuri": {
+      "preserved": true
+    },
+    "theerth-khatu-shyam": {
+      "preserved": true
+    },
+    "theerth-mahasu-devta-hanol": {
+      "preserved": true
+    },
+    "theerth-ramdevra": {
+      "preserved": true
+    },
+    "theerth-sabarimala": {
+      "preserved": true
+    },
+    "theerth-salasar-balaji": {
+      "preserved": true
+    },
+    "theerth-tejaji-kharnal": {
+      "preserved": true
+    },
+    "theerth-vetrimalai-murugan": {
+      "preserved": true
+    }
+  }
+}

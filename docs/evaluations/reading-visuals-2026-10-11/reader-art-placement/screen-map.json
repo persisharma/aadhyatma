@@ -1,0 +1,107 @@
+[
+  {
+    "screen": "AartiReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "AshtakamReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "BajrangBaanReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "ChalisaReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "DurgaStotramReaderScreen.tsx",
+    "openingCondition": "verseIdx === 0",
+    "accountsForChapterTransitionOffset": true
+  },
+  {
+    "screen": "GaneshStotramReaderScreen.tsx",
+    "openingCondition": "verseIdx === 0",
+    "accountsForChapterTransitionOffset": true
+  },
+  {
+    "screen": "GitaReaderScreen.tsx",
+    "openingCondition": "verseIdx === 0",
+    "accountsForChapterTransitionOffset": true
+  },
+  {
+    "screen": "GitaSaarReaderScreen.tsx",
+    "openingCondition": "verseIdx === 0",
+    "accountsForChapterTransitionOffset": true
+  },
+  {
+    "screen": "HanumanAshtakReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "KavachamReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "KrishnaStotramReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "RamStutiReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "RamcharitmanasReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "SanskarReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "SaraswatiStotramReaderScreen.tsx",
+    "openingCondition": "verseIdx === 0",
+    "accountsForChapterTransitionOffset": true
+  },
+  {
+    "screen": "ShivaStrotamReaderScreen.tsx",
+    "openingCondition": "verseIndex === 0",
+    "accountsForChapterTransitionOffset": true
+  },
+  {
+    "screen": "StutiReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "SuktamReaderScreen.tsx",
+    "openingCondition": "index === 0",
+    "accountsForChapterTransitionOffset": false
+  },
+  {
+    "screen": "SundarkandReaderScreen.tsx",
+    "openingCondition": "verseIdx === 0",
+    "accountsForChapterTransitionOffset": true
+  },
+  {
+    "screen": "ValmikiRamayanReaderScreen.tsx",
+    "openingCondition": "verseIdx === 0",
+    "accountsForChapterTransitionOffset": true
+  },
+  {
+    "screen": "VishnuSahasranamaReaderScreen.tsx",
+    "openingCondition": "verseIdx === 0",
+    "accountsForChapterTransitionOffset": true
+  }
+]

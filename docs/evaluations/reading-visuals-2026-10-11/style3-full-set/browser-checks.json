@@ -1,0 +1,36 @@
+{
+  "desktop": {
+    "allCompact": true,
+    "broken": [],
+    "cards": 43,
+    "images": 86,
+    "loaded": 86,
+    "overflow": false,
+    "width": 1280
+  },
+  "comparison": {
+    "beforeVisible": 43,
+    "loaded": 86,
+    "mode": "before + after",
+    "overflow": false
+  },
+  "phone": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "frames": 43,
+    "frameSize": {
+      "width": 328,
+      "height": 164
+    },
+    "fit": "contain",
+    "overflow": false
+  },
+  "screenshots": [
+    "before-after-browser.jpg",
+    "new-artwork-browser.jpg",
+    "phone-browser.jpg"
+  ],
+  "nativeAppEvidence": false
+}

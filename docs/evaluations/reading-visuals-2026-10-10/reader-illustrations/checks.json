@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-10",
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-v1",
+  "referenceHashes": [
+    {
+      "file": "kj-08.webp",
+      "sha256": "2f67cf972fb9a6d25cd8c9e0af96dfa797ae9e9c25b92e9d6be064b9ffb1c733",
+      "previewMatches": true
+    },
+    {
+      "file": "kj-11.webp",
+      "sha256": "13904e59ad174cc8da6ace47210efec98c349d7944901514c9fc976129002052",
+      "previewMatches": true
+    }
+  ],
+  "uniqueBriefs": 43,
+  "legacySlots": 44,
+  "manifestEntries": 0,
+  "tests": {
+    "focusedSuites": 8,
+    "focusedTests": 205,
+    "typecheck": "passed",
+    "focusedEslint": "passed",
+    "publisherVerify": "passed for empty approved category",
+    "staging": "passed; app manifest unchanged"
+  },
+  "review": {
+    "page": "http://127.0.0.1:8095/reading-visuals-2026-10-10/all-image-fit.html",
+    "capture": "three-scenes-three-styles.png",
+    "scope": "Three scenes across three artwork styles; artwork gallery, not native app evidence",
+    "scenes": 3,
+    "styles": 3,
+    "loadedImages": 11,
+    "comparisonObjectFit": "contain",
+    "horizontalOverflow": false,
+    "browserWarningsAndErrors": 0,
+    "viewportWidth": 847
+  },
+  "generation": "built-in service restored; three storybook drafts generated; 40 briefs held for user style choice",
+  "R2ReplacementUpload": false,
+  "newIllustrationAdoption": false,
+  "nativeDeviceChecks": "pending",
+  "fileSizeComparison": {
+    "dimensions": [
+      960,
+      480
+    ],
+    "sameEncoderSettings": true,
+    "storybookBytes": 218756,
+    "detailedBytes": 326850,
+    "reductionPercent": 33.1,
+    "devicePerformanceMeasured": false
+  }
+}

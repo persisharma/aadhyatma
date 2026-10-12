@@ -42,6 +42,9 @@ import type { KathaContentSection } from '@/panchang/types';
 import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang } from '@/utils/localize';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
+import { getPitruReadingBackground } from '@/data/kathaBackgrounds';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'PitruParichayReader'>;
 
@@ -59,6 +62,7 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const { width } = useWindowDimensions();
+  const background = getPitruReadingBackground();
 
   // Verified-only accessor; plain copies because the section type's arrays are
   // mutable and the registry's are readonly.
@@ -127,7 +131,8 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]} testID="pitru-parichay-reader">
-      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
+      <BackgroundLayer source={readingParchment} />
+      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ReaderHeader
           title={contentByLang(lang, 'पितृ पक्ष — परिचय', 'Pitru Paksha — an introduction')}
           onBack={() => navigation.goBack()}
@@ -177,6 +182,7 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
                         width={width}
                         pillHi="परिचय"
                         pillEn="Introduction"
+                        background={background}
                       />
                     </View>
                   )
@@ -196,7 +202,7 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
                 style={styles.list}
               />
               {total > 1 && (
-                <View style={styles.dotsOverlay} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+                <View style={styles.dotsRail} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
                   <View style={styles.dots}>
                     {sections.map((s, i) => (
                       <View
@@ -230,7 +236,7 @@ const styles = StyleSheet.create({
   // The testID wrapper must fill the FlatList cell: KathaSectionPage's flex:1
   // ScrollView collapses inside an unsized parent and long lessons stop scrolling.
   cell: { flex: 1 },
-  dotsOverlay: { position: 'absolute', bottom: 6, left: 0, right: 0, alignItems: 'center' },
+  dotsRail: { paddingVertical: 8, alignItems: 'center' },
   dots: { flexDirection: 'row', gap: 6, flexWrap: 'wrap', justifyContent: 'center', maxWidth: '80%' },
   dot: { width: 6, height: 6, borderRadius: 3 },
   dotCurrent: { width: 18, height: 6, borderRadius: 999 },

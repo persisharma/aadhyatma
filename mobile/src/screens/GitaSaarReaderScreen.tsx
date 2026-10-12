@@ -284,6 +284,7 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
               const isLastPage = verseIdx === verseCount - 1;
               return (
                 <GitaSaarVersePage
+                  showIllustration={verseIdx === 0}
                   verse={item}
                   sourceId={SOURCE_ID}
                   width={width}

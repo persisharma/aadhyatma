@@ -1,0 +1,31 @@
+{
+  "id": "krishna-arjuna-vishvarupa",
+  "target": "gita-vishvarupa",
+  "title": "Gita \u00b7 Vishvarupa",
+  "details": "Retain the entire original cosmic Vishvarupa scene: Arjuna kneeling in reverence left, ornate chariot/wheel/canopy/red flag and white horses behind him; the central blue-faced cosmic form with all of the target's crown/halo, surrounding crowned heads, radiating individually connected arms and existing handheld symbols/objects, blessing hand, gold/yellow garments, green/red cloth and flower garlands, complete feet. Preserve the same number, ordering and placement of the original faces and arms, without extra/missing/disconnected limbs or duplicate objects. Keep all surrounding miniatures of beings, suns/moon/planets, spiral galaxies and starfields, symbolic landscapes, rivers/mountains/cities, distant armies and foreground ground detail at their original locations. Do not substitute a simpler central figure or remove the cosmic vignettes.",
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-detail-v2",
+  "prompt": "Use case: style-transfer.\nAsset type: compact devotional reader illustration, opaque 2:1 horizontal banner.\nPrimary request: EDIT IMAGE 1. Retain its complete detailed scene and composition; apply only the painted rendering language of images 2 and 3 (the app's Krishna storybook illustrations).\nInput roles: image 1 is the edit target and authoritative composition/detail reference. Images 2 and 3 are STYLE ONLY, never sources of characters, props, setting, framing or portrait dimensions.\nRendering: precise fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered hand-painted shading, matte gold, subtle warm paper grain. Keep all objects and fine craftsmanship readable. Storybook painting can be richly detailed. Do not flatten or simplify the architecture, vegetation, cloth/jewellery patterns or narrative information. Preserve tonal separation, clarity and depth, without a heavy sepia wash.\nInvariants: preserve image 1's exact 2:1 horizontal framing, view angle, relative placement, scale, poses, gestures, facial directions, relationships, foreground/middle-ground/background, complete figures and all significant scene details. Transfer colour/brushwork/shading only. No zoom, recomposition, crop, added blank band, UI, caption, border or watermark. No new characters or iconography. Do not copy the portrait blank parchment bands of the style references.\n\nScene-specific preservation checklist: Retain the entire original cosmic Vishvarupa scene: Arjuna kneeling in reverence left, ornate chariot/wheel/canopy/red flag and white horses behind him; the central blue-faced cosmic form with all of the target's crown/halo, surrounding crowned heads, radiating individually connected arms and existing handheld symbols/objects, blessing hand, gold/yellow garments, green/red cloth and flower garlands, complete feet. Preserve the same number, ordering and placement of the original faces and arms, without extra/missing/disconnected limbs or duplicate objects. Keep all surrounding miniatures of beings, suns/moon/planets, spiral galaxies and starfields, symbolic landscapes, rivers/mountains/cities, distant armies and foreground ground detail at their original locations. Do not substitute a simpler central figure or remove the cosmic vignettes.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/new-banners/gita-vishvarupa.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp"
+  ],
+  "transparent_background": false,
+  "approved": false,
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-3fc153cb-71a5-4143-9ded-89d0b63ad24e.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/raw/krishna-arjuna-vishvarupa.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/krishna-arjuna-vishvarupa.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 100874,
+  "sha256": "8672408d273556b8f991ffba3d0f852fd39332b660414152a7935784e3ed3b4b",
+  "tool": "built-in image_gen",
+  "status": "draft"
+}

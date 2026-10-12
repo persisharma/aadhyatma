@@ -89,12 +89,18 @@ full-text search index. `sourceIdMigration.ts` keeps bookmarks/progress stable a
 ID changes. User language preference, routines (`@vedansh/routines`) and daily done-marks
 (`@vedansh/routine-done`) are persisted in AsyncStorage.
 
-Background artwork is also bundled offline. `mobile/assets/backgrounds/index.ts` is the typed
-static-require registry, while `mobile/src/data/backgrounds.ts` deterministically maps category,
-deity, source/reader and Theerth surfaces to those assets. Deities use distinct semantic plates;
-Theerth normally inherits the presiding deity and may override by temple id. Production sketches
-are 1024×1024 WebP files; `backgrounds.coverage.jest.test.ts` pins both coverage and commissioned
-asset identity so a future placeholder reuse fails explicitly.
+Background artwork is R2-backed with one 3 KB bundled neutral paper fallback.
+`mobile/assets/backgrounds/index.ts` carries typed remote descriptors; `backgrounds.ts` still
+deterministically maps category, deity, reader and Theerth surfaces to their semantic plates.
+`CachedArtwork` paints the fallback immediately and resolves cached artwork with async disk
+operations and bounded, cancellable downloads after interactions. `backgrounds.coverage.jest.test.ts`
+still pins asset identity. The approved Option 2 Katha/Pitru/Daan prose shares a continuous
+parchment folio, compact opening art and an existing manuscript icon as its offline illustration.
+Standalone reader illustrations now have a distinct descriptor/manifest/R2 prefix, with the
+Krishna storybook rendering as their style reference. `BackgroundArtwork` remains the typed
+background wrapper; both purposes share the loader/cache. Three storybook drafts are ready for
+a three-style comparison; wider generation/adoption is held for the user's direction.
+See [[integrations/reading-artwork]] for publishing, caching and QA limits.
 
 ## Content Pipeline
 

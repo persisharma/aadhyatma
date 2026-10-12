@@ -1,0 +1,25 @@
+{
+  "certificateSubjects" : [
+    "cdn.vedansh.app",
+    "ca.gokwik.goskope.com",
+    "*.fra2.goskope.com"
+  ],
+  "checkedAt" : "2026-10-11T17:31:38Z",
+  "elapsedSeconds" : 0.12410604953765869,
+  "errorCode" : -1200,
+  "errorDescription" : "A TLS error caused the secure connection to fail.",
+  "errorDomain" : "NSURLErrorDomain",
+  "scope" : "iOS Simulator foreground URLSession; not physical-device proof",
+  "sessionType" : "default foreground",
+  "streamErrorCode" : -9802,
+  "systemTrustEvaluation" : {
+    "accepted" : false,
+    "code" : -67843,
+    "description" : "“*.fra2.goskope.com” certificate is not trusted",
+    "domain" : "NSOSStatusErrorDomain"
+  },
+  "trustHandling" : "performDefaultHandling; no exceptions or custom credentials",
+  "underlyingCode" : -1200,
+  "underlyingDomain" : "kCFErrorDomainCFNetwork",
+  "url" : "https:\/\/cdn.vedansh.app\/reader-illustrations\/47df1919b9ee3f38.webp"
+}

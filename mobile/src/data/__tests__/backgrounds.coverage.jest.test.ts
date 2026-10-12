@@ -38,6 +38,11 @@ const dedicatedTheerthBackgroundIds = [
 ] as const;
 
 describe('background coverage', () => {
+  test('Jai Shri Ram naam jap uses the Rama painting', () => {
+    expect(getSourceBackground('jai-shri-ram')).toBe(backgroundImages.deity_rama_darbar);
+    expect(getReaderBackground('jai-shri-ram')).toBe(backgroundImages.deity_rama_darbar);
+  });
+
   test('every active category tile has a background', () => {
     for (const category of categories.filter((item) => item.status === 'active')) {
       expect(getCategoryBackground(category.id)).toBeTruthy();

@@ -1,3 +1,4 @@
+import type { BackgroundImage } from '@/data/backgroundAsset';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
@@ -21,7 +22,7 @@ import ShareBrandFooter from './ShareBrandFooter';
 
 export type ProseShareCardProps = {
   /** Resolved plate (reader / Theerth / deity sketch); null → the plain parchment gradient. */
-  background: number | null;
+  background: BackgroundImage | null;
   /** Header band, already in the reading language (`व्रत कथा · छठ पूजा कथा`). */
   header: string;
   page: ProsePage;

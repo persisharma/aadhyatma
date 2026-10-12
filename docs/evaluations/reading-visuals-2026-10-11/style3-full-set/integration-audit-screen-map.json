@@ -1,0 +1,75 @@
+{
+  "canonicalVersePages": {
+    "VersePage": [
+      "StutiReaderScreen.tsx",
+      "ChalisaReaderScreen.tsx",
+      "AshtakamReaderScreen.tsx",
+      "KavachamReaderScreen.tsx",
+      "SuktamReaderScreen.tsx",
+      "AartiReaderScreen.tsx"
+    ],
+    "BajrangBaanVersePage": [
+      "BajrangBaanReaderScreen.tsx"
+    ],
+    "GitaVersePage": [
+      "GitaReaderScreen.tsx"
+    ],
+    "GitaSaarVersePage": [
+      "GitaSaarReaderScreen.tsx"
+    ],
+    "SanskarVersePage": [
+      "SanskarReaderScreen.tsx"
+    ],
+    "ShivaStrotamVersePage": [
+      "GaneshStotramReaderScreen.tsx",
+      "SaraswatiStotramReaderScreen.tsx",
+      "HanumanAshtakReaderScreen.tsx",
+      "RamStutiReaderScreen.tsx",
+      "KrishnaStotramReaderScreen.tsx",
+      "ShivaStrotamReaderScreen.tsx",
+      "VishnuSahasranamaReaderScreen.tsx",
+      "DurgaStotramReaderScreen.tsx"
+    ],
+    "SundarkandVersePage": [
+      "RamcharitmanasReaderScreen.tsx",
+      "SundarkandReaderScreen.tsx",
+      "ValmikiRamayanReaderScreen.tsx"
+    ]
+  },
+  "verseReaderCount": 21,
+  "additionalScreens": {
+    "VratKathaReaderScreen.tsx": [
+      "KathaSectionPage"
+    ],
+    "DaanPunyaScreen.tsx": [
+      "ReadingArtwork"
+    ],
+    "DaanKathaScreen.tsx": [
+      "ProseReadingCard"
+    ],
+    "PitruPakshaShikshaScreen.tsx": [
+      "ReadingArtwork"
+    ],
+    "PitruKathaScreen.tsx": [
+      "ProseReadingCard"
+    ],
+    "TheerthDetailScreen.tsx": [
+      "ReadingBanner"
+    ],
+    "DaanJourneyScreen.tsx": [
+      "ProseReadingCard"
+    ],
+    "DailyBhaktiScreen.tsx": [
+      "ReadingArtwork"
+    ],
+    "VidhiConductScreen.tsx": [
+      "ReadingArtwork"
+    ],
+    "VidhiDetailScreen.tsx": [
+      "ReadingArtwork"
+    ],
+    "PitruParichayReaderScreen.tsx": [
+      "KathaSectionPage"
+    ]
+  }
+}

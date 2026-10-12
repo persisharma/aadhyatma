@@ -1,0 +1,23 @@
+{
+  "id": "vishnu-narayana",
+  "title": "Vishnu \u00b7 Narayana",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-8a8a49e6-7dfd-4e37-a918-987b8a15db0f.png",
+  "prompt": "Use case: illustration-story. Asset type: a new devotional painting for a compact reading banner in the Vedansh mobile app. Output one finished standalone landscape bitmap with EXACT 2:1 aspect ratio (for example 2048 by 1024), not a collage or UI mockup. Compose specifically for this short horizontal canvas; this is newly drawn banner art, not a cropped portrait. Style: refined traditional Indian devotional book illustration in softly luminous watercolor and delicate ink, warm ivory handmade paper, restrained saffron gold, coral red, blue and leafy green; calm expressive faces, clear readable silhouettes, tasteful painted detail and gentle atmosphere, cohesive with an ivory parchment reading interface. The whole scene fills the landscape canvas while every important subject is fully visible with a generous 10 percent safe margin around crowns, heads, hands, feet, halo and meaningful props. Never cut a figure or important prop at any edge. Avoid huge blank margins, tall vertical staging, oversized central portraits, ornate border frames, fake text, lettering, logos, signatures, watermark, UI. Do not distort anatomy to fit; scale complete subjects down and spread the environment sideways. No photorealism, no 3D, no sepia monochrome. Scene: Vishnu with blue skin and four arms reclines upon the complete coiled body of Shesha on the cosmic ocean. His conch and discus are visible. Lakshmi sits at his feet in a red-gold sari. A lotus stalk from his navel rises to a small seated Brahma on its blossom. Show the entire reclining Vishnu, all of Lakshmi, entire serpent canopy, complete Brahma and lotus, crowns, hands and feet. Place the subjects across the wide horizontal composition, keeping Brahma low enough to fit naturally. Soft ocean clouds, subtle pink lotuses.",
+  "status": "superseded-style",
+  "rawPath": "docs/evaluations/reading-visuals-2026-10-10/new-banners/raw/vishnu-narayana.png",
+  "previewPath": "docs/evaluations/reading-visuals-2026-10-10/new-banners/vishnu-narayana.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 90916,
+  "sha256": "07aec208b94fa67704ea64f2317338ac3cb2ff22e9dd15383ae14471102beb02",
+  "tool": "built-in image_gen",
+  "approved": false,
+  "priorStatus": "needs-anatomy-revision",
+  "supersededBy": "krishna-storybook-v1"
+}

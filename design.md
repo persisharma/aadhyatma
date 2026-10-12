@@ -290,7 +290,7 @@ This table is the **single source of truth** for reading-content sizing, impleme
 
 ## 6. Background Image System
 
-Four faded vintage sketches serve the Hanuman texts, bundled at `mobile/assets/chalisa/` (source art in `/images/`):
+Four faded vintage sketches serve the Hanuman texts, published from `mobile/assets/chalisa/` to R2 (source art in `/images/`):
 
 1. `Hanuman_sita.webp`
 2. `Ram_hanuman.webp`
@@ -304,14 +304,117 @@ Four faded vintage sketches serve the Hanuman texts, bundled at `mobile/assets/c
   - **Sundarkand:** stanza-range buckets — stanzas 1–4 sea, 5–11 Sita, 12–18 Lanka-dahan, remainder Ram-Hanuman.
   - **Every other source:** one pinned image per source id (`sourceBackgrounds`), plus category/deity fallback maps for browse screens.
 - A given verse therefore always shows the same image — stable as the user swipes back and forth — but the mapping is curated to match the verse's story beat, never re-rolled per render.
-- Apply the image as a `cover`-sized background. Then stack the parchment overlay (Section 2) on top. Then the content.
+- Browse/background surfaces apply the image as a `cover`-sized background with the parchment overlay (Section 2). Reader folios reserve a compact landscape banner above text. The first focal-crop proposal was rejected; new complete 2:1 compositions are being staged for approval below.
 - `cover` keeps only the middle of a plate on a portrait phone (~46% of a square's width, ~69% of a 2:3's). Multi-figure plates are therefore commissioned **2:3 portrait** with every figure inside the central ~60% (दान-पुण्य, §73).
 
 **Exception — Theerth.** Theerth detail screens resolve their background by **presiding deity**, with per-temple overrides for shrines whose deity plate is too generic (`getTheerthBackground(templeId, deityId)` in `backgrounds.ts`). The browse/map surface uses no background image — only the flat parchment gradient behind the stylised India SVG outline.
 
+### Delivery and prose folios
+
+Reading plates use `backgroundAssetManifest.json` and content-hashed R2 URLs under
+`reading-backgrounds/`. `BackgroundArtwork` paints bundled paper immediately, then requests
+persistent cached artwork after navigation focus and interactions. Deduplicated disk lookups
+bypass the network queue, so unrelated slow downloads do not delay cached paintings. Only
+misses enter the bounded download queue. All file operations are async;
+downloads deduplicate by hash/extension, limit concurrency to two, time out after eight seconds
+and cancel when the final viewer leaves. Completed valid artwork has no expiry, revalidation or
+automatic eviction. Text and controls never await artwork; native decode errors preserve the
+fallback and evict damaged files for recovery.
+
+Paged sections share a single screen-level paper image instead of duplicating it per list cell.
+
+**Approved Option 2 (9 Oct 2026):** Vrat Katha, Pitru introduction/story and Daan Katha use
+`ProseReadingCard` as a continuous folio, without a separate bordered/elevated text card. The
+3,102-byte ivory paper texture has a quiet centre and faint botanical corners. Chapter pills
+and headings precede thematic art; gold lines and the existing leaf icon separate art
+from prose. The latest 10 October correction uses `ReadingBanner`: a 2:1 rectangle, width
+up to 360pt and height up to 180pt, centred on wider cards. The opening section uses this
+compact frame. The existing bundled manuscript icon appears in that opening plate while
+remote art loads or fails, preserving layout and providing a neutral offline visual.
+
+`kathaBackgrounds.ts` selects appropriate thematic deity plates; unsupported traditions use
+neutral manuscript art. The new 900×600 Vishnu/Narayana plate is 94,904 bytes and replaces its
+semantic source mapping. These are thematic illustrations, not newly authored story scenes.
+Normal reading tokens and unrestricted vertical text scrolling remain. Katha and Pitru
+introduction markers sit below the text viewport; the tab bar owns the bottom safe-area inset
+for the Pitru introduction. Utility forms, charts, ledgers and kids stories retain their layouts.
+
+**Approved rollout (10 Oct 2026):** The same paper and `ReadingArtwork` painting/divider
+are shared by all seven canonical verse layouts, covering Chalisa, Aarti, Gita/Gita Saar,
+Stotram/Stuti, Kavacham, Ashtakam, Suktam, Sanskar and the Ramayan readers. Verse pages use
+the thematic banner above the verse instead of placing the painting behind text;
+existing source, verse and kāṇḍa mappings remain. Daily Bhakti uses the same opening plate
+inside its shareable card. Daan's landing page has one Annapurna plate; its journey's Why
+section uses the prose folio. Pitru's education opening uses neutral manuscript art
+and its overview shares the paper. Vidhi preparation and the first conduct step have one
+painting selected from the guide's declared deities; personal-tithi remembrance uses
+neutral manuscript art. Later conduct steps keep the divider without repeating the painting.
+All plates use the same R2 loader and persistent cache. No additional bitmap is bundled for
+this expansion. Native prose measurement protection also covers verse meanings/commentary.
+
+**Reading-space correction (11 Oct 2026):** The user reported that repeating artwork on every
+card pushes the reading content down and forces unnecessary scrolling. Paged readers now
+show one banner on the **first reading card only** (first verse of each chapter/theme for
+chaptered readers, first section of a Katha/Pitru introduction). Later cards keep the existing
+paper and small gold divider, with no banner, manuscript placeholder, reserved image height
+or image subscription. Jumping directly to a later verse does not turn it into a cover card.
+Chapter transition cards are excluded when finding the first verse. Single continuous prose,
+daily verse and detail/guide screens keep their existing one opening image. Illustration
+assets, semantic mappings, R2 manifests and the lifetime cache remain available and unchanged.
+
+**Share background readiness (12 Oct 2026):** Offscreen verse/prose/story captures wait for
+every remote background layer to finish native painting, including both a Story frame and its
+inner card. The capture-only barrier allows up to ten seconds; terminal download/decode failures
+use the painted bundled fallback. Normal reading/navigation never waits on this barrier. Existing
+illustrated kids-story capture still requires its scene artwork and refuses partial albums.
+
+The initial 80pt/220pt frames were followed by a natural-height proposal. The user rejected
+that proposal because tall portrait art increases scrolling, explicitly requesting rectangular
+banners. An intermediate `ReadingBanner` implementation applied focal positions from
+`readingBannerFrames.json`, with three contained compositions. The user rejected these
+crops as clipping the paintings and requested new artwork made to fit. Approved dedicated
+illustrations now replace all mapped crops with complete 2:1 canvases. Theerth shares the same
+short frame. Dimensions are read synchronously from the publication manifest; no network size
+probe, extra image fetch, layout callback or post-load layout shift is needed.
+
+The replacement uses newly composed 2:1 artwork showing the complete meaningful scene
+within the existing 360×180pt maximum. The user specified the approved Krishna kids-story
+rendering: fine warm outlines, expressive faces, broad pastel fills, subtle paper grain, muted
+terracotta/saffron, sage/slate blue-grey and matte gold. Match `kj-08.webp` and `kj-11.webp` as
+style references, composing new short horizontal scenes rather than copying the portrait
+format or its large empty bottom band. The four detailed painting drafts are superseded.
+The user accepted the detailed Style 3 set on 11 October, requested gadas in the ocean-crossing
+and Rama–Hanuman scenes, and authorized integration while retaining current backgrounds.
+All 43 unique 960×480 banners are published and active for 44 aliases, including both checked
+gada corrections. The before/after gallery, exact selected hashes, approval decision and
+43-object public SHA-256 verification are in
+`docs/evaluations/reading-visuals-2026-10-11/style3-full-set/`. Files total 4.45 MiB and range
+from 61–132 KiB; file sizes do not establish device performance. Production iOS/Android exports
+include none of these new banner files. Eight focused suites/205 tests and TypeScript pass.
+
+**Separate asset purposes.** Reading backgrounds remain quiet textures/subdued surfaces behind
+text. Reader illustrations are standalone thematic banners above text, with their own asset
+folder, typed descriptor, `readerIllustrationManifest.json` and R2 prefix `reader-illustrations`.
+This is an asset category, not a new navigation tab. `CachedArtwork` shares the existing deferred
+loader and lifetime cache; `BackgroundArtwork` stays background-only. Legacy semantic aliases
+activate only published illustration manifest entries in `ReadingBanner`, using the whole canvas
+with `contain`. The published manifest contains all 43 approved illustrations. Staging future
+changes leaves the app manifest unchanged; publish approved optimized files before activating
+new hashes. Only changed content should download again. The lifetime cache and immediate
+neutral fallback contract are unchanged.
+Scoped standalone native banner, fallback, Katha scrolling and cache relaunch checks pass.
+The initial simulator certificate failure was resolved in an isolated QA simulator by installing
+the exact corporate CA already trusted by this Mac; default TLS validation remains enabled.
+Real native downloads now verify one transfer per missing hash and offline reuse after restart.
+See the October 11 `r2-loading-followup/review.md`. The complete reader matrix and
+physical-device/frame-time performance remain pending.
+See `docs/content-parity/reader-illustrations-art-style.md` for the category/style contract.
+
 ### Adding more modules
 
-When Ramcharitmanas / Gita modules are added, new faded sketches should follow the same treatment: warm parchment tone, ~50% opacity after sepia, subject centered or top-anchored so the bottom third of the image stays clean for the meaning block.
+New reader artwork should be composed for the compact 2:1 banner with complete subjects and
+meaningful props inside the frame, then visually approved before publication. Keep text on the
+separate parchment surface and preserve the immediate neutral fallback and static layout.
 
 ---
 

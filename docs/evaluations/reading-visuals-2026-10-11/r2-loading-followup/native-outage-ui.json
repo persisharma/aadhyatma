@@ -1,0 +1,79 @@
+{
+  "scope": "Native reader paging while an unavailable-origin request is pending; QA-only observer",
+  "page2": {
+    "type": "runtime-snapshot",
+    "rs": "1",
+    "screenHash": "1or3hn0",
+    "seq": 45,
+    "count": 147,
+    "targets": [
+      "e23|tap|button|Back to home||",
+      "e33|tap|button|साधना में जोड़ें||",
+      "e34|tap|button|Read aloud||",
+      "e91|tap|button|Add bookmark||",
+      "e92|tap|button|Share verse||",
+      "e143|tap|button|होम||tab-home",
+      "e144|tap|button|भक्ति||tab-bhakti",
+      "e145|tap|button|पंचांग||tab-panchang",
+      "e146|tap|button|भजन||tab-bhajan",
+      "e147|tap|button|अन्य||tab-more"
+    ],
+    "scroll": [
+      "e36|swipe|scroll-view|||",
+      "e88|swipe|scroll-view|||"
+    ],
+    "text": [
+      "e24|text|text|हनुमान चालीसा||",
+      "e25|text|text|हनुमान चालीसा||",
+      "e26|text|text|2 / 43||",
+      "e27|text|text|2 / 43||",
+      "e95|text|text|बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार।||",
+      "e96|text|text|बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार।||",
+      "e97|text|text|बल बुधि विद्या देहु मोहिं, हरहु कलेस विकार॥||",
+      "e98|text|text|बल बुधि विद्या देहु मोहिं, हरहु कलेस विकार॥||",
+      "e99|text|text|भावार्थ||",
+      "e100|text|text|भावार्थ||",
+      "e101|text|text|अपनी सीमित बुद्धि को मानकर मैं पवनपुत्र हनुमान का स्मरण करता हूँ; वे मुझे बल, बुद्धि और विद्या दें और मेरे दुख-दोष दूर करें।||",
+      "e102|text|text|अपनी सीमित बुद्धि को मानकर मैं पवनपुत्र हनुमान का स्मरण करता हूँ; वे मुझे बल, बुद्धि और विद्या दें और मेरे दुख-दोष दूर करें।||"
+    ],
+    "udid": "5AD7B853-9A21-4247-98C6-47BAE046E16E"
+  },
+  "page1": {
+    "type": "runtime-snapshot",
+    "rs": "1",
+    "screenHash": "01j09t2",
+    "seq": 46,
+    "count": 126,
+    "targets": [
+      "e23|tap|button|Back to home||",
+      "e33|tap|button|साधना में जोड़ें||",
+      "e34|tap|button|Read aloud||",
+      "e44|tap|button|Add bookmark||",
+      "e45|tap|button|Share verse||",
+      "e122|tap|button|होम||tab-home",
+      "e123|tap|button|भक्ति||tab-bhakti",
+      "e124|tap|button|पंचांग||tab-panchang",
+      "e125|tap|button|भजन||tab-bhajan",
+      "e126|tap|button|अन्य||tab-more"
+    ],
+    "scroll": [
+      "e36|swipe|scroll-view|||",
+      "e41|swipe|scroll-view|||"
+    ],
+    "text": [
+      "e24|text|text|हनुमान चालीसा||",
+      "e25|text|text|हनुमान चालीसा||",
+      "e26|text|text|1 / 43||",
+      "e27|text|text|1 / 43||",
+      "e48|text|text|श्रीगुरु चरन सरोज रज, निज मन मुकुर सुधारि।||",
+      "e49|text|text|श्रीगुरु चरन सरोज रज, निज मन मुकुर सुधारि।||",
+      "e50|text|text|बरनउँ रघुबर बिमल जसु, जो दायक फल चारि॥||",
+      "e51|text|text|बरनउँ रघुबर बिमल जसु, जो दायक फल चारि॥||",
+      "e52|text|text|भावार्थ||",
+      "e53|text|text|भावार्थ||",
+      "e54|text|text|गुरुचरणों की कृपा से मन को निर्मल करके मैं श्रीराम के पवित्र यश का वर्णन करता हूँ, जो धर्म, अर्थ, काम और मोक्ष देने वाले हैं।||",
+      "e55|text|text|गुरुचरणों की कृपा से मन को निर्मल करके मैं श्रीराम के पवित्र यश का वर्णन करता हूँ, जो धर्म, अर्थ, काम और मोक्ष देने वाले हैं।||"
+    ],
+    "udid": "5AD7B853-9A21-4247-98C6-47BAE046E16E"
+  }
+}

@@ -1,0 +1,56 @@
+# Prose artwork must coexist with language/size controls, paging and long text.
+# Screenshots need visual review; a parsed flow alone is not native QA evidence.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "English"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Large"
+- tapOn: "Done"
+- tapOn: { id: "tab-vrat" }
+- extendedWaitUntil:
+    visible: "Katha library,.*"
+    timeout: 15000
+- tapOn: "Katha library,.*"
+- tapOn: "Search stories…"
+- inputText: "Satyanarayana"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Read katha Shri Satyanarayana Vrat Katha"
+    timeout: 15000
+- tapOn: "Read katha Shri Satyanarayana Vrat Katha"
+- extendedWaitUntil:
+    visible: "Share katha"
+    timeout: 15000
+- assertVisible: "1 / 5"
+- takeScreenshot: e2e-shots/reading-katha-large
+- swipe:
+    start: "85%, 55%"
+    end: "15%, 55%"
+    duration: 600
+- waitForAnimationToEnd
+- assertVisible: "2 / 5"
+- swipe:
+    start: "50%, 80%"
+    end: "50%, 40%"
+    duration: 700
+- takeScreenshot: e2e-shots/reading-katha-scrolled
+- assertVisible: "Share katha"
+- tapOn: "Share katha"
+- assertVisible: "Preview page"
+- tapOn: "Preview page"
+- assertVisible: "Done previewing"
+- takeScreenshot: e2e-shots/reading-katha-share-background
+- tapOn: "Done previewing"
+- tapOn: "Cancel"
+- assertVisible: "2 / 5"
+- stopApp: { appId: com.prashantsharma.vedansh }

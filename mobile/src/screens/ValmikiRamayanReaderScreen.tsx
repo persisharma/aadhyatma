@@ -288,6 +288,7 @@ export default function ValmikiRamayanReaderScreen({ navigation, route }: Props)
               const bookmarkId = `${SOURCE_ID}:${chapter.chapter}:${verseIdx}`;
               return (
                 <ValmikiRamayanVersePage
+                  showIllustration={verseIdx === 0}
                   verse={item}
                   sourceId={SOURCE_ID}
                   width={width}

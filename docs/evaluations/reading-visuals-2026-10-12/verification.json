@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-12",
+  "base": "09ac8c6808da5a1d7f5f5feedc31c82081ee4899",
+  "runtimeTestedOnBase": "c42a34de",
+  "mainReconciliation": "09ac8c68 changes marketing/wiki only; mobile tree unchanged",
+  "fullTest": {
+    "command": "cd mobile && npm test",
+    "exitCode": 0,
+    "typecheck": "pass",
+    "widgets": 37,
+    "jestSuites": 242,
+    "jestTests": 2325,
+    "engine": 590,
+    "data": 173,
+    "ask": 49,
+    "totalTests": 3174
+  },
+  "focusedReview": {
+    "suites": 4,
+    "tests": 56,
+    "blockingFindings": 0
+  },
+  "lint": {
+    "files": 79,
+    "errors": 0,
+    "warnings": 5,
+    "warningScope": "Existing Array<T> and hoisted-require patterns in two test files"
+  },
+  "r2": {
+    "publicObjectsVerified": 88,
+    "backgrounds": 45,
+    "illustrations": 43,
+    "exactSHA256": true
+  },
+  "simulator": {
+    "id": "5AD7B853-9A21-4247-98C6-47BAE046E16E",
+    "device": "iPhone 17 Pro",
+    "os": "iOS 26.5",
+    "bundle": "com.prashantsharma.vedansh",
+    "method": "Fresh production Hermes JS embedded in existing Release native shell; isolated QA copy disables OTA. No native compile or release.",
+    "maestro": "pass",
+    "maestroExitCode": 0,
+    "route": "Home Settings \u2192 English / Large \u2192 Vrat \u2192 Katha library search \u2192 Satyanarayana 1/5 \u2192 2/5 \u2192 prose scroll \u2192 share Preview page \u2192 back \u2192 cancel",
+    "openingRevisit": "pass after process restart; complete cached Vishnu banner visually inspected",
+    "freshCachedFilesMatchingApprovedHashes": 4
+  },
+  "limits": [
+    "No physical-device, Android runtime or frame-time/CPU/memory benchmark in this PR pass",
+    "Native download-once/restart/offline evidence is scoped to the four files in the October 11 follow-up; host public hash verification covers all 88 objects",
+    "Process termination may leave ignored partial files; retries cannot use them as valid cache entries"
+  ]
+}
