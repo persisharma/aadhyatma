@@ -792,3 +792,23 @@ assertions and test scope are unchanged. The complete matching-runtime reader ru
 241 suites / 2,335 tests in 97.337 seconds, with clean typecheck and touched-test lint.
 No app/runtime or native-export changes. Evidence:
 docs/evaluations/reading-visuals-2026-10-12/tall-verse-share/review.md.
+
+
+## [2026-10-12] ingest | Approved Style 3 reusable image template
+
+Saved the approved detailed Krishna storybook rendering, fill-in scene brief, complete
+2:1 reader-banner prompt, Hanuman gada corrections and export/approval checks in
+docs/content-parity/reader-illustration-style3-prompt.md. The personal ImageGen template
+artifact-template-vedansh-style-3-reader-banner retains the approved Hanuman–Sita original
+PNG unchanged, its preview and the same self-contained style guide. Reference hashes are
+verified against the approved shipped WebP and original master. Future generations still
+require their own visual acceptance before activation or publication; kids-story pages
+retain their separate format/source contracts. No app, artwork, manifest or R2 change.
+
+
+## [2026-10-12] ingest | Reader style documentation CI coverage
+
+The CI workflow now includes docs/content-parity/reader-illustration*.md in its pull-request
+and main-push path filters, so the saved prompt and style guide receive the existing mobile
+test/export/CDN gate. The prompt links to the committed approved WebP and distinguishes the
+local master/personal Codex template from repository files. No app code or asset changes.

@@ -1,7 +1,7 @@
 ---
 title: Reading artwork on R2
 type: integration
-sources: [mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md]
+sources: [mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md, docs/content-parity/reader-illustration-style3-prompt.md]
 last_verified_date: 2026-10-12
 confidence: high
 status: current
@@ -33,6 +33,14 @@ bytes and retain hash/mtime/inode across restart. Earlier controlled fixtures al
 43 cached paintings across restart. See `r2-loading-followup/review.md`; physical-device and
 frame-time performance remain unverified.
 Detail density is independent of rendering style; earlier simplified comparisons are historical.
+
+The reusable approved rendering and banner-generation prompt is saved in
+[`reader-illustration-style3-prompt.md`](../../docs/content-parity/reader-illustration-style3-prompt.md).
+It includes an approved reference/hash, fill-in scene brief, complete 2:1 composition,
+scene-specific Hanuman gada corrections and export/approval checks. A personal ImageGen
+template, `$artifact-template-vedansh-style-3-reader-banner`, retains the original approved
+PNG and the same guide for reuse outside this checkout. The style can be reused in other
+formats; actual kids-story layout and source gates still follow their own contracts.
 
 ## Details
 
