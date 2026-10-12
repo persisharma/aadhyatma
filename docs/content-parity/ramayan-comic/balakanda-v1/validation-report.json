@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-11",
+  "status": "local-authoring-draft-validated",
+  "episodes": 29,
+  "panels": 137,
+  "readerPages": 55,
+  "sargasCovered": 77,
+  "selectedSheets": 29,
+  "checks": {
+    "uniquePanelIds": true,
+    "pageOrderMatchesNarrative": true,
+    "completeMeasuredSheetCoverage": true,
+    "selectedAssetHashesMatch": true,
+    "allSelectedPNGsDecode": true,
+    "readerJavaScriptSyntax": "passed node --check",
+    "finalMobileSequence": "55 pages / 137 panels at each of 18px and 23px, 390x844; loaded, scroll reachable, no horizontal overflow",
+    "swipe": "page 8 to 9 passed"
+  },
+  "pending": [
+    "Independent complete Sanskrit/Hindi editorial review and rights",
+    "Full en/gu/kn narrative and alignment",
+    "Native Standard/Large device sequence",
+    "Mobile asset/frame registration and CDN/offline fallback"
+  ]
+}

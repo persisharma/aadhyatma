@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Four Princes — lettering fit review</title>
+  <link rel="stylesheet" href="reader.css?fit-review=2">
+  <style>
+    header { position: static; }
+    .reader { margin: 0 auto; }
+    .episode-heading { padding: 12px; }
+    h1 { font-size: 24px; }
+    .review-status { margin: 0; padding: 8px 14px; background: #fff8e6; border-bottom: 1px solid #bd985e; font-size: 12px; }
+    .speech { top: 36%; right: 3%; width: 44%; }
+    .speech::before, .speech::after { height: 16px; bottom: -14px; }
+    .speech::after { height: 12px; bottom: -10px; }
+    .panel { scroll-margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <div class="reader">
+    <header>
+      <p class="review-status">Previous failed fit diagnostic · <a href="fitted.html">Open corrected preview</a></p>
+      <div class="controls">
+        <div class="languages" role="group" aria-label="Reading language">
+          <button id="hi" type="button" lang="hi" aria-pressed="false">हिन्दी</button>
+          <button id="en" type="button" aria-pressed="true">English</button>
+        </div>
+        <button id="size" type="button" aria-pressed="false">Larger text Aa</button>
+      </div>
+    </header>
+    <main>
+      <div class="episode-heading"><h1 id="title">The Four Princes</h1><p id="framing">Time passes, from infancy to adolescence.</p></div>
+      <div id="panels" aria-busy="true"><p role="status">Loading text and artwork…</p></div>
+      <footer><p>Shortened comic-copy proposal · Bāla 1.18 · Editorial and native review pending.</p><a href="index.html">Earlier tall-layout experiment</a></footer>
+    </main>
+  </div>
+  <script src="compact-review.js"></script>
+</body>
+</html>

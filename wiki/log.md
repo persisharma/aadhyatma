@@ -397,6 +397,38 @@ Validation: 232 Jest suites / 2,152 tests passed; TypeScript and navigation/laun
 
 After the user uploaded the prepared package, all 144 manifest URLs returned HTTP 200, matched expected hashes and fully decoded as WebP. All 144 images, including the Home story-library icon, now use the CDN/cache; iOS/Android production exports contain zero story artwork. Added import and renamed-image regression tests, a reusable full-manifest CDN/export verifier, RULEBOOK §29.2 and CI production-export/CDN checks with retained evidence. Latest main navigation changes are retained, including Home settings entry. Fresh simulator CDN download encountered a TLS trust error on the corporate-intercepted network; native first-download/offline and physical-device checks remain pending. Host CDN checks do not establish native download success.
 
+
+## [2026-10-11] ingest | Ramayan comic character continuity references
+
+Added a decision page for the approved richer-colour comic direction and the six-sheet principal-cast authoring package. Records event-based age/dress/disguise selection, flashbacks, publication evidence levels, edition numbering differences, exact prompt/hash provenance and pending cast/forms. Newly generated models await user acceptance; no app reader, production story text, CDN publication, commit or PR was added.
+
+## [2026-10-11] ingest | Ramayan character model refinement
+
+Updated the existing continuity decision for distinct Rama/Lakshmana facial geometry and Hanuman’s refined model with user-requested gold mukut and gada. Revised sheets were visually reviewed, browser comparison checked in colour/greyscale, exact edit prompts and hashes retained. Authoring references remain proposed; no production app integration.
+
+## [2026-10-11] ingest | Ramayan comic screen previews
+
+User accepted the revised character look; generated and visually reviewed three connected static shelf/reader screens. Recorded exact prompts/input/output hashes, source passages, repaired colour/lettering and scene-extract boundaries. Production remains separate text-free art plus native multilingual text; no app/runtime integration or publication.
+
+## [2026-10-11] ingest | Complete local Hindi Bala Kanda comic authoring draft
+
+Updated [[decisions/ramayan-comic-character-continuity]] from `docs/content-parity/ramayan-comic/balakanda-v1/`: 29 episodes, 137 panels, 55 reader pages and all 77 sarga arcs; original source-based Hindi, every causal transition, text-free generated artwork, final hashes/revisions and measured ink boundaries. Final browser sequence passed at 390 × 844 in standard/large text, including full scroll reach and loaded images. Independent editorial/language/native/CDN/rights gates remain open; mobile story/art registration was not changed.
+
+## [2026-10-12] ingest | Ramayan pilot and continuity correction
+
+Corrected the earlier blanket continuity claim: the 1.28 → 1.29 motivating question and Tataka's visible defeat are missing. The one-episode bk-05 lettering experiment remains unaccepted; enlarged backgrounds undermine scene focus and compact art has not passed bilingual text-fit review. No production story, art manifest or CDN changes. Source findings and review boundaries are in `docs/content-parity/ramayan-comic/lettering-pilot-v1/`.
+
+## [2026-10-12] ingest | Ramayan compact panels tested with actual text
+
+Reviewed all three bk-05 scenes in Hindi and English at 390px / 18px using native text over the compact art. Captions obscure faces and the court balloon obscures its speaker; rejected the layout despite loaded images and no horizontal overflow. Saved bilingual screenshots and a scene-by-scene report in the authoring pilot. No production activation or claim of corrected-episode completion.
+
+## [2026-10-12] ingest | Fitted bilingual Ramayan episode preview
+
+Added `lettering-pilot-v1/fitted.html`: in-frame flowing narration, unchanged full-bounds art, and a new Dasharatha close-up for the existing spoken question. Both languages pass 16 browser text-fit states across normal/Large and four phone widths. Narrow Large balloons reflow inside the panel above art. Complete visual captures and pacing/art provenance are recorded; user/editorial/native acceptance and other-episode continuity corrections remain pending. No production activation.
+
+## [2026-10-12] ingest | Accepted lettering expanded to bilingual Bālakāṇḍa
+
+User accepted the fitted episode and continuous balloon outline, then requested the whole build with both languages verified. Added `balakanda-bilingual-v2/`: 29 episodes / 140 panels, full Hindi/English copy, shared artwork, local reader and paired comparison. Corrected Tataka's visible outcome/night rest, the 1.28→1.29 hermitage-question bridge, river-roar answer and explicit English Subahu outcome; repaired Trishanku frame leakage from measured gutters. All 29 paired sequences visually reviewed and all 1,120 browser panel states pass text/art geometry checks. Panel-by-panel causal notes, text hashes, asset hashes and new-art prompts retained. Independent editorial, Gujarati/Kannada, native, rights and publication gates remain open; no mobile/CDN changes.
 ## [2026-10-10] ingest | Kids-story share: one card per scene (art + caption)
 
 The illustrated share had been alternating an image-only scene card with text-only prose cards, so WhatsApp recipients received a story page as two pictures. `paginateProse` gained `firstPageReservedDp`; `kidsStoryShareable` reserves `illustrationMinHeight` (160 dp) + `illustrationGap` (12 dp) on each scene's first page and sets `illustration.heightDp` to the body the title and caption leave. `ProseShareCard` renders art → title → caption inside that fixed box instead of measuring the title at render. Every published caption fits its scene card in all four languages (art 210–294 dp); a longer caption would continue on a plain card. Share-related Jest suites and TypeScript pass; design.md §76 and the share/kids-stories wiki pages are updated. No native capture was re-verified in this session.

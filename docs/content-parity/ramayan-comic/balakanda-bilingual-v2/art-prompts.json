@@ -1,0 +1,26 @@
+{
+  "jobs": [
+    {
+      "id": "bk-08-04",
+      "reference": "/Users/prashant/conductor/workspaces/Aadhyatma/helsinki/docs/content-parity/ramayan-comic/balakanda-v1/assets/bk-08-v1.png",
+      "prompt": "One complete text-free 4:3 landscape panel, rich Indian inked comic illustration matching the attached approved episode sheet exactly. Retain the youthful blue Rama with broad calm face, yellow clothing/red sash, tan angular-faced Lakshmana yellow/green sash, elder grey-bearded Vishwamitra orange robes/staff. No adult king Rama, no crowns on princes. Large readable figures and clear action. Full edge-to-edge painting, no lettering, balloons, blank caption band, empty lower strip, UI, or multi-panel grid. No gore or dismemberment. Preserve hands and all essential details. Scene: decisive end of Tataka encounter in the damaged forest at late afternoon approaching dusk, not bright renewed morning. Rama at LEFT foreground has just released one arrow, bow held steady, Lakshmana beside him. At RIGHT middle distance the same two-armed grey-brown female Tataka from the reference is visibly collapsing backward to the earth, body and face identifiable, falling stones dropping harmlessly. A single small arrow is associated with her upper torso without visible wound, blood, penetration detail or gore. Her defeat and fall must be unmistakable; NOT just a peaceful forest or Rama standing. Elder sage behind the brothers. Serious protective duty, no celebratory gloating. Show one Tataka only."
+    },
+    {
+      "id": "bk-08-04a",
+      "reference": "/Users/prashant/conductor/workspaces/Aadhyatma/helsinki/docs/content-parity/ramayan-comic/balakanda-v1/assets/bk-08-v1.png",
+      "prompt": "One complete text-free 4:3 landscape panel, rich Indian inked comic illustration matching the attached approved episode sheet exactly. Retain the youthful blue Rama with broad calm face, yellow clothing/red sash, tan angular-faced Lakshmana yellow/green sash, elder grey-bearded Vishwamitra orange robes/staff. No adult king Rama, no crowns on princes. Large readable figures and clear action. Full edge-to-edge painting, no lettering, balloons, blank caption band, empty lower strip, UI, or multi-panel grid. No gore or dismemberment. Preserve hands and all essential details. Scene immediately after the encounter: the SAME two princes and elder Vishwamitra resting safely at night beneath forest trees. Three figures together by a small low fire, bows set safely beside the brothers, quiet stars visible. All three relaxed but not celebrating; clear night-time halt, no monsters or battle. Clothing/face continuity exact, meaningful lower-edge blankets/feet retained."
+    },
+    {
+      "id": "bk-09-02a",
+      "reference": "/Users/prashant/conductor/workspaces/Aadhyatma/helsinki/docs/content-parity/ramayan-comic/balakanda-v1/assets/bk-09-v1.png",
+      "prompt": "One complete text-free 4:3 landscape panel, rich Indian inked comic illustration matching the attached approved episode sheet exactly. Retain the youthful blue Rama with broad calm face, yellow clothing/red sash, tan angular-faced Lakshmana yellow/green sash, elder grey-bearded Vishwamitra orange robes/staff. No adult king Rama, no crowns on princes. Large readable figures and clear action. Full edge-to-edge painting, no lettering, balloons, blank caption band, empty lower strip, UI, or multi-panel grid. No gore or dismemberment. Preserve hands and all essential details. Scene between the weapons lesson and the Vamana flashback: present-day Rama and Lakshmana walking with elderly Vishwamitra along a pleasant wooded path. Rama notices a peaceful grove and modest thatched hermitage ahead and asks the sage about it, using a small open-hand gesture toward that destination. Sage turns to answer, Lakshmana listens. Clearly show the green grove and distant hermitage; no Vamana, Bali, cosmic figure or time-flashback imagery in this panel. Morning daylight. Main travellers large, destination readable; do not make a distant tiny cast."
+    }
+  ],
+  "repair": {
+    "prompt": "Targeted correction to this exact comic image. Keep composition, sunset, cast, poses, colours and Tataka falling backward unchanged. Fix the archery continuity: Rama has JUST RELEASED the decisive arrow, so his right hand by his cheek must be open in release, the bowstring relaxed and there must be NO arrow still nocked across his bow. Remove the long horizontal arrow crossing the frame and the duplicate airborne arrow. Retain ONLY the small single arrow already visible against Tataka's upper garment, without any wound, blood or penetration detail. Exactly one arrow associated with the defeated Tataka. No added text or borders. Rama blue hand must remain anatomically correct. Preserve the visible non-graphic fall, all original people and the complete painted bounds.",
+    "input": "exec-2012e267-2ef2-4f31-a096-89833eb8dfd1.png",
+    "selected": "assets/bk-08-04-v2.png",
+    "reason": "Rejected duplicate arrows; accepted corrected released-bow pose and non-graphic fall."
+  },
+  "review": "All three new 4:3 images inspected at full painted bounds; no text baked into artwork. Local review only."
+}

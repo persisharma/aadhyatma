@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>चार राजकुमार · Static lettering proof</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f5ead2; color: #391b0d; font: 15px/1.5 system-ui, sans-serif; }
+    header { max-width: 768px; margin: 0 auto; padding: 18px 16px 14px; }
+    h1 { font-size: 18px; margin: 0 0 5px; }
+    p { margin: 5px 0 12px; }
+    nav { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    button { font: inherit; padding: 8px 14px; border: 1px solid #a87739; border-radius: 6px; color: inherit; background: #fff9e9; cursor: pointer; }
+    a { color: #8b3c12; }
+    :focus-visible { outline: 3px solid #8b3c12; outline-offset: 3px; }
+    main { width: 390px; max-width: 100%; margin: 0 auto; }
+    body.enlarged main { width: 768px; }
+    .comic { display: block; width: 100%; height: auto; }
+    footer { max-width: 768px; margin: 0 auto; padding: 18px 16px 36px; }
+    summary { cursor: pointer; font-weight: 600; }
+    #transcript { font: 20px/1.7 'Kohinoor Devanagari', 'Noto Sans Devanagari', sans-serif; }
+    #transcript h2 { font-size: 21px; }
+    #transcript section { padding-top: 12px; }
+    #transcript blockquote { margin: 8px 0 16px; padding-left: 16px; border-left: 3px solid #ad490f; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>One-episode lettering proof</h1>
+    <p>All three scenes of “चार राजकुमार”. This is a static visual review; the existing reader is unchanged.</p>
+    <nav aria-label="Review controls">
+      <button id="zoom" type="button" aria-pressed="false">Enlarge artwork</button>
+      <a href="bk-05-lettering-v1.png" target="_blank" rel="noopener">Full-resolution image</a>
+      <a href="../balakanda-v1/index.html#bk-05-page-1">Previous reader layout</a>
+    </nav>
+  </header>
+  <main aria-label="Complete illustrated episode">
+    <img class="comic" src="bk-05-lettering-v1.png" width="768" height="2048" alt="चार राजकुमार: three sequential comic scenes showing the four princes’ births, their education with Vashishtha, and Vishwamitra’s arrival at Dasharatha’s court. Narration is placed inside each panel. The final speech balloon points to Dasharatha. A complete Hindi transcript follows." lang="hi">
+  </main>
+  <footer>
+    <details>
+      <summary>Read the complete Hindi transcript</summary>
+      <div id="transcript" lang="hi" aria-live="polite">पाठ लोड हो रहा है…</div>
+    </details>
+    <p>Lettering is embedded in this review image. Enlargement scales the whole proof; it does not test native text reflow or Standard/Large reader behaviour.</p>
+    <a href="README.md">Review scope and provenance</a>
+  </footer>
+  <script>
+    const zoomButton = document.getElementById('zoom');
+    zoomButton.addEventListener('click', () => {
+      const enlarged = document.body.classList.toggle('enlarged');
+      zoomButton.setAttribute('aria-pressed', String(enlarged));
+      zoomButton.textContent = enlarged ? 'Return to 390px preview' : 'Enlarge artwork';
+    });
+    fetch('../balakanda-v1/book.json')
+      .then(response => {
+        if (!response.ok) throw new Error('Transcript unavailable');
+        return response.json();
+      })
+      .then(book => {
+        const episode = book.episodes.find(entry => entry.id === 'bk-05');
+        if (!episode) throw new Error('Episode unavailable');
+        const transcript = document.getElementById('transcript');
+        transcript.replaceChildren();
+        for (const [index, panel] of episode.panels.entries()) {
+          const section = document.createElement('section');
+          const heading = document.createElement('h2');
+          heading.textContent = `दृश्य ${index + 1}`;
+          const narration = document.createElement('p');
+          narration.textContent = panel.narration;
+          section.append(heading, narration);
+          if (panel.dialogue) {
+            const dialogue = document.createElement('blockquote');
+            dialogue.textContent = `${panel.speaker}: ${panel.dialogue}`;
+            section.append(dialogue);
+          }
+          transcript.append(section);
+        }
+      })
+      .catch(() => {
+        document.getElementById('transcript').textContent = 'पाठ अभी उपलब्ध नहीं है। मूल पाठ पिछले रीडर में पढ़ें।';
+      });
+  </script>
+</body>
+</html>

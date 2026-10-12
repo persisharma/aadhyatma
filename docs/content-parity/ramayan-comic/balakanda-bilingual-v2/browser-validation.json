@@ -1,0 +1,267 @@
+{
+  "date": "2026-10-12",
+  "surface": "Brave browser; not native iOS/Android",
+  "files": {
+    "book.json": "12d5d460aa011b1cb4dcbf62b1f827b130f56a73fef7f03728e7881fd93d0a42",
+    "reader.js": "89c8233a3737a4360ce0b8cd8874f9c22a4df0e090ede98e643dd4597c22ca6e",
+    "reader.css": "676c192a8c3b9db3b9a34641fdc3109374c0a3ab92855b78f0b366c999a2e241"
+  },
+  "matrix": [
+    {
+      "failures": [],
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "language": "en",
+      "large": false,
+      "loaded": 140,
+      "panels": 140,
+      "speechCount": 31,
+      "width": 390
+    },
+    {
+      "failures": [],
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "language": "en",
+      "large": true,
+      "loaded": 140,
+      "panels": 140,
+      "speechCount": 31,
+      "width": 390
+    },
+    {
+      "failures": [],
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "language": "hi",
+      "large": false,
+      "loaded": 140,
+      "panels": 140,
+      "speechCount": 31,
+      "width": 390
+    },
+    {
+      "failures": [],
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "language": "hi",
+      "large": true,
+      "loaded": 140,
+      "panels": 140,
+      "speechCount": 31,
+      "width": 390
+    },
+    {
+      "failures": [],
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "language": "en",
+      "large": false,
+      "loaded": 140,
+      "panels": 140,
+      "speechCount": 31,
+      "width": 320
+    },
+    {
+      "failures": [],
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "language": "en",
+      "large": true,
+      "loaded": 140,
+      "panels": 140,
+      "speechCount": 31,
+      "width": 320
+    },
+    {
+      "failures": [],
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "language": "hi",
+      "large": false,
+      "loaded": 140,
+      "panels": 140,
+      "speechCount": 31,
+      "width": 320
+    },
+    {
+      "failures": [],
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "language": "hi",
+      "large": true,
+      "loaded": 140,
+      "panels": 140,
+      "speechCount": 31,
+      "width": 320
+    }
+  ],
+  "panelStates": 1120,
+  "visualReview": {
+    "completeBilingualEpisodes": 29,
+    "largeNarrowEpisodes": [
+      "bk-05",
+      "bk-28"
+    ],
+    "captures": ".context/ramayan-preview/full/"
+  },
+  "navigation": [
+    {
+      "episode": "bk-01",
+      "loaded": true,
+      "panels": 5
+    },
+    {
+      "episode": "bk-02",
+      "loaded": true,
+      "panels": 2
+    },
+    {
+      "episode": "bk-03",
+      "loaded": true,
+      "panels": 6
+    },
+    {
+      "episode": "bk-04",
+      "loaded": true,
+      "panels": 5
+    },
+    {
+      "episode": "bk-05",
+      "loaded": true,
+      "panels": 4
+    },
+    {
+      "episode": "bk-06",
+      "loaded": true,
+      "panels": 4
+    },
+    {
+      "episode": "bk-07",
+      "loaded": true,
+      "panels": 3
+    },
+    {
+      "episode": "bk-08",
+      "loaded": true,
+      "panels": 5
+    },
+    {
+      "episode": "bk-09",
+      "loaded": true,
+      "panels": 5
+    },
+    {
+      "episode": "bk-10",
+      "loaded": true,
+      "panels": 4
+    },
+    {
+      "episode": "bk-11",
+      "loaded": true,
+      "panels": 6
+    },
+    {
+      "episode": "bk-12",
+      "loaded": true,
+      "panels": 4
+    },
+    {
+      "episode": "bk-13",
+      "loaded": true,
+      "panels": 6
+    },
+    {
+      "episode": "bk-14",
+      "loaded": true,
+      "panels": 8
+    },
+    {
+      "episode": "bk-15",
+      "loaded": true,
+      "panels": 5
+    },
+    {
+      "episode": "bk-16",
+      "loaded": true,
+      "panels": 4
+    },
+    {
+      "episode": "bk-17",
+      "loaded": true,
+      "panels": 5
+    },
+    {
+      "episode": "bk-18",
+      "loaded": true,
+      "panels": 3
+    },
+    {
+      "episode": "bk-19",
+      "loaded": true,
+      "panels": 7
+    },
+    {
+      "episode": "bk-20",
+      "loaded": true,
+      "panels": 6
+    },
+    {
+      "episode": "bk-21",
+      "loaded": true,
+      "panels": 5
+    },
+    {
+      "episode": "bk-22",
+      "loaded": true,
+      "panels": 6
+    },
+    {
+      "episode": "bk-23",
+      "loaded": true,
+      "panels": 6
+    },
+    {
+      "episode": "bk-24",
+      "loaded": true,
+      "panels": 3
+    },
+    {
+      "episode": "bk-25",
+      "loaded": true,
+      "panels": 4
+    },
+    {
+      "episode": "bk-26",
+      "loaded": true,
+      "panels": 6
+    },
+    {
+      "episode": "bk-27",
+      "loaded": true,
+      "panels": 5
+    },
+    {
+      "episode": "bk-28",
+      "loaded": true,
+      "panels": 4
+    },
+    {
+      "episode": "bk-29",
+      "loaded": true,
+      "panels": 4
+    }
+  ],
+  "otherInteractions": [
+    "Previous episode from bk-29 to bk-28",
+    "Episode dropdown to bk-05",
+    "Hindi/English switch retains episode",
+    "Normal/Large switch and narrow balloon reflow"
+  ],
+  "pending": [
+    "Independent editorial",
+    "Gujarati/Kannada",
+    "Native complete Standard/Large",
+    "Publication"
+  ]
+}
