@@ -218,7 +218,12 @@ export default function DockedYouTubePlayer({
               onError={onError}
               onChangeState={onChangeState}
               forceAndroidAutoplay
-              initialPlayerParams={{ rel: false, controls: true }}
+              // The app's control strip below is the SINGLE control surface. Leaving
+              // YouTube's own in-frame controls on (`controls: true`) creates a second
+              // surface that fights the `play` prop: pausing from the in-video control
+              // desyncs our state, after which the strip play/pause goes dead and
+              // auto-scroll never resumes. Hiding them keeps the `play` prop authoritative.
+              initialPlayerParams={{ rel: false, controls: false }}
               webViewProps={{
                 allowsInlineMediaPlayback: true,
                 mediaPlaybackRequiresUserAction: false,
