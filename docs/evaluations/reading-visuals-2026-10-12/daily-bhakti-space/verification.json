@@ -1,0 +1,108 @@
+{
+  "simulator": "BD91E840-482E-4816-838A-9C5247E401DA",
+  "beforeJsSha256": "12b7e9e59f7a0f2b38b77e007f30a9c6e1389aa70c69ab0d4f2bf15396541463",
+  "testTotal": 3184,
+  "jestSuites": 242,
+  "jestTests": 2335,
+  "typecheck": true,
+  "focusedLint": true,
+  "ornamentVerticalMarginsPt": {
+    "before": 80,
+    "after": 12
+  },
+  "bannerOnDailyCard": false,
+  "sharedReadingTokensChanged": false,
+  "r2ManifestsOrCacheChanged": false,
+  "deployment": "none",
+  "comparisonBaseCommit": "0ea0a627bfc5dc090163fee7801745c8c2be54ed",
+  "finalBaseCommit": "324aea00e9c7d330fe5c4cdd55dbf93f1f8ff1dc",
+  "comparisonAfterJsSha256": "0b850e7fa33c368948ed92ea7387fb7c22c2bfec3488a17eb451e97c00ce79c0",
+  "comparisonInstalledJsSha256": "0b850e7fa33c368948ed92ea7387fb7c22c2bfec3488a17eb451e97c00ce79c0",
+  "finalJsSha256": "a0e92c6b099a8a1e52e7d8eab707dc19c19520256be47159ae395f18e040ddc2",
+  "screenshots": {
+    "before-en-standard": {
+      "nativePngSha256": "8ad8ab3d7b8b4e99d34cbbce0f1fb0c69543a11f53bb30e9165e18ab157260e9",
+      "reviewJpegSha256": "cc64c8d48e3b3bf914e62ef15781b58c54ef8d4999b2d3e41d4426c428bfe2f0",
+      "bytes": 515878
+    },
+    "before-en-large": {
+      "nativePngSha256": "e9835a02d109a30db177c15a05ba9f6652220eb0dd8938cf48f7cce1dc688944",
+      "reviewJpegSha256": "20e6e2108bf29b936a8feb05087d8ee1c9b151741aa81c74f3db55e71d846e9c",
+      "bytes": 528654
+    },
+    "after-en-standard": {
+      "nativePngSha256": "1a80a145b42885e294859137da92895659c06d276f29b85655f42e59c6b92bae",
+      "reviewJpegSha256": "95a3e5bf271c64e3151f15be9feb120378bf3e9f691402d47f95f2c60d802b46",
+      "bytes": 342818
+    },
+    "after-en-large": {
+      "nativePngSha256": "e2b228ece9872964b500fbae46a8a26b199e6aca1df48afcc3b3b1d13cef55d1",
+      "reviewJpegSha256": "b2e052768745a92cd63cb6a7cdc1b2626637e0778c92190717ad1d96071e3798",
+      "bytes": 372439
+    },
+    "after-hi-standard": {
+      "nativePngSha256": "ee668b9e896d7cf18ed10373ff4e1d8446e007b7014dd25e16b26e79aae1ec06",
+      "reviewJpegSha256": "678c890d1f2896f43fb6deab3fff0d95146c55fb3e296d87fc71df396e5fd343",
+      "bytes": 328433
+    },
+    "after-hi-large": {
+      "nativePngSha256": "c6c82745d4757b57ed9ef4f7bf4418b0ab3367d6528d0a8eba960707c9bdecd9",
+      "reviewJpegSha256": "4655599abe27e1c24699f049911ce8eaff1505ff130ab79430bbd86e426927b2",
+      "bytes": 350331
+    },
+    "after-long-en-large-opening": {
+      "reviewJpegSha256": "0bf18f4a83c8a7b43f23126359c85f3b43be8f359531a081ff44a6610b25f9ea",
+      "bytes": 374087
+    },
+    "after-long-en-large-end": {
+      "reviewJpegSha256": "bb0fc807d0ff9d9f1b2fed401ce080214e137e80c5278685e52e8d3b122e5a0f",
+      "bytes": 430340
+    },
+    "native-share-card": {
+      "reviewJpegSha256": "9245f71cce083d8f043c079b99c7562c70dad93776c76e3c3385198cdf53b0ba",
+      "bytes": 361286
+    },
+    "existing-long-share-clipping": {
+      "reviewJpegSha256": "68087e11cca727b247d285eb84a13c3f6a73feb7f44dc0c385c43d83e0287ffa",
+      "bytes": 477104
+    }
+  },
+  "reviewImageConversion": "Full native frame retained at 1206x2622; JPEG quality 87 for review, no crop or resize.",
+  "installedFinalJsSha256": "a0e92c6b099a8a1e52e7d8eab707dc19c19520256be47159ae395f18e040ddc2",
+  "nativeSmoke": {
+    "flow": "mobile/.maestro/daily-bhakti-smoke.yaml",
+    "exitCode": 0
+  },
+  "comparisonFlowExitCode": 0,
+  "reviewedLayouts": [
+    "en Standard",
+    "en Large",
+    "hi Standard",
+    "hi Large"
+  ],
+  "sourceHashes": {
+    "mobile/src/screens/DailyBhaktiScreen.tsx": "4deb44bb954cc84a23993633bc71a14c776b1ac7a4af8af1319d8c107635c30f",
+    "mobile/src/components/Ornament.tsx": "2a5cdc25e1dd9dea651d141060bae3a09e0ab4aee99a4b14e3658223e5998bed",
+    "mobile/src/components/ShareCard.tsx": "ea6f989515077962ae209d5e5aeeb20adca5bba208540ba9498e846febb8872c"
+  },
+  "longReadingCheck": {
+    "sourceId": "ganesh-stotram",
+    "chapter": 2,
+    "verseIndex": 11,
+    "language": "en",
+    "size": "Large",
+    "verseLineCount": 12,
+    "completeMeaningEndpointInspected": true,
+    "stressFlowExitCode": 1,
+    "failure": "Scroll-up share-button selector after successful endpoint verification",
+    "separateShareFlowExitCode": 0,
+    "existingLongShareClippingConfirmed": true,
+    "shareLayoutChanged": false
+  },
+  "shareExport": {
+    "shortExample": "Gita 18.13 Hindi",
+    "backgroundPaintInspected": true,
+    "exitCode": 0,
+    "physicalDevice": false
+  }
+}

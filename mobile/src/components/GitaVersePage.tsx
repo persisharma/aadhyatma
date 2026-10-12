@@ -15,16 +15,21 @@ import { verseToken, meaningToken, scriptBodyFont, scriptTitleFont, pillTextStyl
 import type { GitaVerse } from '@/data/gita';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
+import ReadingArtwork from './ReadingArtwork';
+import ProseParagraph from './ProseParagraph';
 import Ornament from './Ornament';
 
 type Props = {
   verse: GitaVerse;
   sourceId: string;
   width: number;
+  /** One opening banner per chapter; continuation pages have no image frame. */
+  showIllustration?: boolean;
   topActions?: React.ReactNode;
 };
 
-export default function GitaVersePage({ verse, sourceId, width, topActions }: Props) {
+export default function GitaVersePage({ verse, sourceId, width, topActions, showIllustration = false }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const bg = getReaderBackground(sourceId, verse);
@@ -89,7 +94,7 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <BackgroundLayer source={bg} />
+      <BackgroundLayer source={readingParchment} />
 
       <ScrollView
         style={styles.scroll}
@@ -121,6 +126,8 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
           </View>
           {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
         </View>
+
+        <ReadingArtwork source={showIllustration ? bg : undefined} />
 
         <View style={styles.verseBlock}>
           {verseLinesByLang(lang, verse.sanskrit, verse.transliteration).map((line, idx) => {
@@ -159,7 +166,7 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
         >
           {meaningLabel}
         </Text>
-        <Text style={[styles.body, bodyStyle]}>{meaning}</Text>
+        <ProseParagraph style={[styles.body, bodyStyle]}>{meaning}</ProseParagraph>
 
         {hasCommentary || commentaryFallbackNote ? (
           <>
@@ -181,9 +188,9 @@ export default function GitaVersePage({ verse, sourceId, width, topActions }: Pr
             {hasCommentary ? (
               <View style={styles.paragraphs}>
                 {commentary.map((paragraph, idx) => (
-                  <Text key={`c-${idx}`} style={[styles.body, bodyStyle]}>
+                  <ProseParagraph key={`c-${idx}`} style={[styles.body, bodyStyle]}>
                     {paragraph}
-                  </Text>
+                  </ProseParagraph>
                 ))}
               </View>
             ) : (

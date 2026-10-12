@@ -3,6 +3,17 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 
+// Release mounted readers and their scheduled React work between tests.
+const trees: TestRenderer.ReactTestRenderer[] = [];
+function createReader(element: React.ReactElement) {
+  const tree = TestRenderer.create(element);
+  trees.push(tree);
+  return tree;
+}
+afterEach(() => {
+  act(() => { for (const tree of trees.splice(0)) tree.unmount(); });
+});
+
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
   impactAsync: jest.fn(() => Promise.resolve()),
@@ -63,7 +74,7 @@ test('renders the first Aarti verse without throwing', () => {
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
-    tree = TestRenderer.create(
+    tree = createReader(
       <GitaLanguageProvider initialLang="hi">
         <ShareProvider>
           <AartiReaderScreen navigation={navigation} route={route} />
@@ -79,4 +90,59 @@ test('renders the first Aarti verse without throwing', () => {
     .join(' ');
 
   assert.ok(renderedText.includes(firstVerse.lines[0]));
+});
+
+test('dispatches aartiIndex to the Khatu Shyam Aarti, not the first aarti', () => {
+  const index = getActualData.aartiIndexById['khatu-shyam-aarti'];
+  const khatu = getActualData.getAarti(index);
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+
+  act(() => {
+    tree = createReader(
+      <GitaLanguageProvider initialLang="hi">
+        <ShareProvider>
+          <AartiReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { aartiIndex: index, initialIndex: 0 } } as ReaderProps['route']}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+
+  const renderedText = tree!
+    .root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+
+  assert.ok(renderedText.includes(khatu.verses[0].lines[0]));
+  assert.ok(!renderedText.includes(firstVerse.lines[0]));
+});
+
+// Multi-instance dispatch (RULEBOOK §4 step 13): the appended aarti index opens
+// its own payload.
+test('opens Om Jai Lakshmi Mata by its appended aartiIndex', () => {
+  const index = getActualData.aartiIndexById['om-jai-lakshmi-mata'];
+  assert.equal(index, 9, 'Lakshmi aarti is appended after Khatu Shyam (index 8)');
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+  act(() => {
+    tree = createReader(
+      <GitaLanguageProvider initialLang="hi">
+        <ShareProvider>
+          <AartiReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { aartiIndex: index, initialIndex: 0 } } as ReaderProps['route']}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  const renderedText = tree!
+    .root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+  assert.ok(renderedText.includes('ॐ जय लक्ष्मी माता'), 'Lakshmi aarti refrain');
+  assert.ok(!renderedText.includes(firstVerse.lines[0]), 'no Om Jai Jagdish verse leaks in');
 });

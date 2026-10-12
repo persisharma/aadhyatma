@@ -1,0 +1,20 @@
+{
+  "bytes" : 62452,
+  "certificateSubjects" : [
+    "cdn.vedansh.app",
+    "ca.gokwik.goskope.com",
+    "*.fra2.goskope.com"
+  ],
+  "checkedAt" : "2026-10-11T17:31:38Z",
+  "contentType" : "image\/webp",
+  "elapsedSeconds" : 0.29492700099945068,
+  "scope" : "macOS host foreground URLSession; not physical-device proof",
+  "sessionType" : "default foreground",
+  "sha256" : "47df1919b9ee3f38f7592163faf815e1c8ced5545054025efdf0c188ef57f7b6",
+  "status" : 200,
+  "systemTrustEvaluation" : {
+    "accepted" : true
+  },
+  "trustHandling" : "performDefaultHandling; no exceptions or custom credentials",
+  "url" : "https:\/\/cdn.vedansh.app\/reader-illustrations\/47df1919b9ee3f38.webp"
+}

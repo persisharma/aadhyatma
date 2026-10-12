@@ -13,6 +13,8 @@ type Props = {
   count: number;
   included: boolean;
   renderPage: (index: number) => React.ReactNode;
+  /** Native size of the rendered card; defaults to the prose card. */
+  cardSize?: { width: number; height: number };
   onStep: (delta: -1 | 1) => void;
   onToggle: () => void;
   onDone: () => void;
@@ -52,7 +54,7 @@ export default function SharePagePreview(props: Props) {
       </View>
 
       <View style={[styles.cardShadow, { borderRadius: radii.sm }, elevation.raised]}>
-        <ScaledShareCard width={cardWidth}>{props.renderPage(props.index)}</ScaledShareCard>
+        <ScaledShareCard width={cardWidth} metrics={props.cardSize}>{props.renderPage(props.index)}</ScaledShareCard>
       </View>
 
       <View style={styles.nav}>

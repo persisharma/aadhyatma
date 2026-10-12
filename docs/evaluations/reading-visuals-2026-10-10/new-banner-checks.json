@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-10",
+  "scope": "Artwork browser preview only; not native app evidence",
+  "httpAssets": [
+    {
+      "path": "new-banners/daan-annapurna.webp",
+      "httpStatus": 200,
+      "bytes": 105466
+    },
+    {
+      "path": "new-banners/gita-vishvarupa.webp",
+      "httpStatus": 200,
+      "bytes": 105452
+    },
+    {
+      "path": "new-banners/hanuman-sita.webp",
+      "httpStatus": 200,
+      "bytes": 115932
+    },
+    {
+      "path": "originals/18c31076600bfba8.webp",
+      "httpStatus": 200,
+      "bytes": 288076
+    },
+    {
+      "path": "originals/326e0b71c153f529.webp",
+      "httpStatus": 200,
+      "bytes": 238122
+    },
+    {
+      "path": "originals/acee66cee8bef750.webp",
+      "httpStatus": 200,
+      "bytes": 3102
+    },
+    {
+      "path": "originals/c8504accc316a850.webp",
+      "httpStatus": 200,
+      "bytes": 187972
+    }
+  ],
+  "browser": {
+    "comparisonImagesLoaded": 6,
+    "failedImages": 0,
+    "afterDisplay": [
+      360,
+      180
+    ],
+    "afterNatural": [
+      960,
+      480
+    ],
+    "afterCrop": false,
+    "consoleErrorsAndWarnings": 0,
+    "capture": "new-banner-before-after.png",
+    "viewportCapture": "new-banner-preview.png"
+  },
+  "appAssetsAdopted": false,
+  "R2ReplacementUpload": false
+}

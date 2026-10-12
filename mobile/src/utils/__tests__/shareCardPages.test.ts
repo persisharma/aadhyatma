@@ -1,8 +1,11 @@
 import {
   MAX_SHARE_PAGES,
+  bodyHeightFor,
   paginateProse,
+  pictureCardMetrics,
   proseBodyHeight,
   splitSentences,
+  textWidthFor,
   wrapLineCount,
   type ProseBlockInput,
 } from '@/utils/shareCardPages';
@@ -133,6 +136,67 @@ describe('paginateProse', () => {
     const a = paginateProse({ title: 'T', blocks: [para(long)], lang: 'hi' });
     const b = paginateProse({ title: 'T', blocks: [para(long)], lang: 'hi' });
     expect(a).toEqual(b);
+  });
+
+  test('a reserved block shortens only the first page', () => {
+    const blocks = [para(long), para(long)];
+    const reserved = 220;
+    const res = paginateProse({ title: 'शीर्षक', blocks, lang: 'hi', firstPageReservedDp: reserved });
+    const plain = paginateProse({ title: 'शीर्षक', blocks, lang: 'hi' });
+    expect(res.budgetDp).toBe(plain.budgetDp);
+    expect(res.pages[0].usedDp).toBeLessThanOrEqual(res.budgetDp - reserved);
+    expect(res.pages.length).toBeGreaterThanOrEqual(plain.pages.length);
+    expect(res.pages.slice(1).some((p) => p.usedDp > res.budgetDp - reserved)).toBe(true);
+    expect(res.pages.every((p) => p.usedDp <= res.budgetDp)).toBe(true);
+    expect(pagedWords(res)).toEqual(allWords(blocks));
+  });
+
+  test('a quote keeps its speaker on its first part only and continues like a paragraph', () => {
+    const speech = Array.from({ length: 30 }, (_, i) => `यह संवाद का वाक्य ${i + 1} है।`).join(' ');
+    const res = paginateProse({ blocks: [para('कथा।'), { kind: 'quote', speaker: 'कंस', text: speech }], lang: 'hi' });
+    const quotes = res.pages.flatMap((p) => p.blocks.filter((b) => b.kind === 'quote'));
+    expect(quotes.length).toBeGreaterThan(1);
+    expect(quotes[0].speaker).toBe('कंस');
+    expect(quotes.slice(1).every((q) => q.speaker === undefined && q.continued)).toBe(true);
+    expect(quotes[0].continues).toBe(true);
+    expect(quotes.flatMap((q) => words(q.text))).toEqual(words(speech));
+    for (const p of res.pages) expect(p.usedDp).toBeLessThanOrEqual(res.budgetDp);
+  });
+
+  test('a quote pushed whole onto the next page keeps its speaker there', () => {
+    const speech = 'कंस ने कहा कि यह राज्य मेरा है और कोई इसे नहीं ले सकता।';
+    for (let n = 8; n <= 16; n++) {
+      const filler = Array.from({ length: n }, (_, i) => `यह वाक्य संख्या ${i + 1} है और इसमें कुछ शब्द हैं।`).join(' ');
+      const res = paginateProse({ blocks: [para(filler), { kind: 'quote', speaker: 'कंस', text: speech }], lang: 'hi' });
+      const quotes = res.pages.flatMap((p) => p.blocks.filter((b) => b.kind === 'quote'));
+      expect(quotes[0].speaker).toBe('कंस');
+      expect(quotes.filter((q) => q.speaker)).toHaveLength(1);
+      expect(quotes.flatMap((q) => words(q.text))).toEqual(words(speech));
+    }
+  });
+
+  test('a link block is never split: it moves whole to the next page', () => {
+    const filler = Array.from({ length: 13 }, (_, i) => `Sentence ${i + 1} fills the page a little more.`).join(' ');
+    const link = { kind: 'link' as const, text: 'Read on Vedansh', url: 'https://vedansh.app/get' };
+    for (let n = 1; n <= 6; n++) {
+      const res = paginateProse({ blocks: [...Array.from({ length: n }, () => para(filler)), link], lang: 'en' });
+      const links = res.pages.flatMap((p) => p.blocks.filter((b) => b.kind === 'link'));
+      expect(links).toEqual([{ kind: 'link', text: 'Read on Vedansh', url: 'https://vedansh.app/get', continued: false, continues: false }]);
+      for (const p of res.pages) expect(p.usedDp).toBeLessThanOrEqual(res.budgetDp);
+    }
+  });
+
+  test('the picture layout budgets the taller body, the caption box padding and the narrower text column', () => {
+    const blocks = [para(long)];
+    const picture = paginateProse({ title: 'शीर्षक', blocks, lang: 'hi', layout: 'picture' });
+    const prose = paginateProse({ title: 'शीर्षक', blocks, lang: 'hi' });
+    expect(picture.budgetDp).toBe(bodyHeightFor('picture') - 29);
+    expect(bodyHeightFor('picture')).toBe(744);
+    expect(textWidthFor('picture')).toBe(484 - 2 * pictureCardMetrics.captionPaddingHorizontal);
+    expect(picture.pages.length).toBeLessThanOrEqual(prose.pages.length);
+    expect(picture.pages[0].usedDp).toBeGreaterThanOrEqual(2 * pictureCardMetrics.captionPaddingVertical);
+    for (const p of picture.pages) expect(p.usedDp).toBeLessThanOrEqual(picture.budgetDp);
+    expect(pagedWords(picture)).toEqual(allWords(blocks));
   });
 
   test('flags truncation past MAX_SHARE_PAGES', () => {

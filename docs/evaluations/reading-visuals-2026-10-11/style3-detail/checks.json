@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-11",
+  "scope": "review-only three scene-preserving style transfers",
+  "imagegen": "built-in edit",
+  "imageCount": 3,
+  "wholeCanvasRatio": "2:1",
+  "previewDimensions": [
+    960,
+    480
+  ],
+  "fileHashesVerified": true,
+  "browser": {
+    "imagesLoaded": 9,
+    "imagesTotal": 9,
+    "viewportWidth": 1280,
+    "objectFit": "contain",
+    "horizontalOverflow": false,
+    "consoleWarningsAndErrors": 0,
+    "capture": "comparison.png"
+  },
+  "newFilesHttpStatus": 200,
+  "approvedAssets": 0,
+  "appManifestEntries": 0,
+  "R2Upload": false,
+  "appAdoption": false,
+  "nativeChecks": "not run for this review-only change"
+}

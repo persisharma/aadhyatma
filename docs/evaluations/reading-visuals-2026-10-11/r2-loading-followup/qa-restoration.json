@@ -1,0 +1,8 @@
+{
+  "qaOnlyOtaDisabled": true,
+  "mainBundleIdenticalToOriginalRelease": true,
+  "bundleSHA256": "41129652842f4da030bdfc393c764e349a6cff9ff624e90ae362ee74e8610bd8",
+  "unavailableOriginFlagRemoved": true,
+  "qaPreloadRemoved": true,
+  "productionConfigurationChanged": false
+}

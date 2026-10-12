@@ -3,6 +3,17 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 
+// Release mounted readers and their scheduled React work between tests.
+const trees: TestRenderer.ReactTestRenderer[] = [];
+function createReader(element: React.ReactElement) {
+  const tree = TestRenderer.create(element);
+  trees.push(tree);
+  return tree;
+}
+afterEach(() => {
+  act(() => { for (const tree of trees.splice(0)) tree.unmount(); });
+});
+
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light' },
   impactAsync: jest.fn(() => Promise.resolve()),
@@ -66,7 +77,7 @@ test('renders the first Krishna Stuti verse without throwing', () => {
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
-    tree = TestRenderer.create(
+    tree = createReader(
       <GitaLanguageProvider initialLang="hi">
         <ShareProvider>
           <StutiReaderScreen navigation={navigation} route={route} />

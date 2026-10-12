@@ -1,0 +1,32 @@
+{
+  "id": "krishna-arjuna-vishvarupa",
+  "title": "Gita \u00b7 Vishvarupa",
+  "legacyStems": [
+    "gita--krishna_arjuna_vishvarupa"
+  ],
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-v1",
+  "status": "draft",
+  "approved": false,
+  "prompt": "Use case: illustration-story. Generate ONE new text-free standalone devotional READER ILLUSTRATION for the Vedansh app, a short landscape banner with EXACT 2:1 aspect ratio (e.g. 1920x960). The attached kj-08 and kj-11 images are STYLE references only. Match their soft Indian devotional storybook rendering: fine warm-grey and brown outlines, graceful expressive almond-shaped eyes, broad smooth pastel colour fills, gentle restrained shading, subtle paper grain. Use muted low-saturation warm ivory parchment, powder-blue divine skin, dusty saffron/terracotta, sage, slate blue-grey and restrained matte gold. Simplify background details and ornament while keeping clear poses and meaningful actions. Dignified subjects suitable for the whole app; not chibi or caricature. Create a NEW horizontal composition, do not crop or stretch any portrait or reference. Scale complete subjects to fit; arrange the scene sideways. Keep all crowns, faces, arms, hands, feet, vahanas and meaningful props fully inside a comfortable 7 percent safe margin. Every limb must be connected and the specified arm/character counts exact. Allow only a subtle narrow parchment edge fade; do not copy the portrait references' large empty lower caption band. No tall blank area, UI, text, lettering including Om, captions, labels, watermark, border, photorealism, 3D, dense jewellery, theatrical glow, saturated cobalt, vivid orange or heavy black outlines. Do not copy the references' river/cottage/people onto unrelated scenes. Scene: A respectful symbolic depiction of the Bhagavad Gita Vishvarupa: Arjuna, an adult warrior, kneels with joined palms at the lower left, looking towards a radiant cosmic form of Krishna/Vishnu with multiple serene faces and many arms in the centre-right. A low ornate chariot with a clearly visible wheel is behind Arjuna. The cosmic figure is complete head to feet, its entire radiating halo and all arm gestures contained within the wide frame. A softly luminous cosmic sky occupies the remaining horizontal space. No lettering and no violent imagery.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp"
+  ],
+  "transparent_background": false,
+  "selectedForStyleComparison": true,
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-5a317e02-b84f-46c0-ae91-a8dbb826fdb2.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/reader-illustrations/raw/krishna-arjuna-vishvarupa.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/reader-illustrations/krishna-arjuna-vishvarupa.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 79214,
+  "sha256": "94c0f38f6cebdd690e3711bc5bcc8224a84a6543af90abbdfa009ca245e0acd9",
+  "tool": "built-in image_gen"
+}

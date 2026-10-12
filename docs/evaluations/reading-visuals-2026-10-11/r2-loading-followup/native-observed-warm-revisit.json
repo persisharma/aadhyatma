@@ -1,0 +1,52 @@
+{
+  "phase": "observed-warm-revisit",
+  "audit": {
+    "scope": "QA-only native FileSystem boundary observer",
+    "events": [
+      {
+        "atMs": 0.019332997500896454,
+        "kind": "qaBootstrap"
+      },
+      {
+        "atMs": 176.89833299815655,
+        "kind": "jsStall",
+        "delayMs": 126.89258300513029
+      },
+      {
+        "atMs": 6634.743332996964,
+        "kind": "jsStall",
+        "delayMs": 54.28920800238848
+      },
+      {
+        "atMs": 6643.463624998927,
+        "kind": "createDownload",
+        "id": 3,
+        "identity": "324b157dc73b990e.webp",
+        "url": "https://cdn.vedansh.app/reader-illustrations/324b157dc73b990e.webp"
+      },
+      {
+        "atMs": 6643.565332993865,
+        "kind": "nativeStart",
+        "id": 3,
+        "identity": "324b157dc73b990e.webp",
+        "actualUrl": "https://cdn.vedansh.app/reader-illustrations/324b157dc73b990e.webp"
+      },
+      {
+        "atMs": 6914.816165998578,
+        "kind": "nativeComplete",
+        "id": 3,
+        "identity": "324b157dc73b990e.webp",
+        "status": 200
+      }
+    ]
+  },
+  "files": [
+    {
+      "name": "324b157dc73b990e.webp",
+      "bytes": 103118,
+      "sha256": "324b157dc73b990ec996dfd687e08e3a861c77067cfe6d0a0f28237f25855253",
+      "mtimeNs": 1791740583095247178,
+      "inode": 97864161
+    }
+  ]
+}

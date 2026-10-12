@@ -27,7 +27,7 @@ export const categories: readonly CategoryMeta[] = [
   { id: 'aarti', nameHi: 'आरती', nameEn: 'Aarti', status: 'active' },
   { id: 'stotram', nameHi: 'स्तोत्रम्', nameEn: 'Hymns & Praise', shortNameEn: 'Hymns', status: 'active' },
   { id: 'granth', nameHi: 'ग्रन्थ', nameEn: 'Sacred Books', shortNameEn: 'Books', status: 'active' },
-  { id: 'japam', nameHi: 'जप', nameEn: 'Japa & Mantras', shortNameEn: 'Japa', status: 'active' },
+  { id: 'japam', nameHi: 'जप', nameEn: 'Japa & Mantras', shortNameEn: 'Jap Mala', status: 'active' },
   { id: 'sanskar', nameHi: 'संस्कार', nameEn: 'Good Habits', shortNameEn: 'Habits', status: 'active' },
   { id: 'theerth', nameHi: 'तीर्थ', nameEn: 'Pilgrimage', status: 'active' },
   // PRD-A (Content Breadth Engine) — new textual forms, ranked last (thin/parity;

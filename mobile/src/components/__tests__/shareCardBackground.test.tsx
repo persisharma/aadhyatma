@@ -1,6 +1,8 @@
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { ImageBackground, View as mockView } from 'react-native';
+import { View as mockView } from 'react-native';
+import BackgroundLayer from '../BackgroundLayer';
+import BackgroundArtwork from '../BackgroundArtwork';
 import ShareCard, { type ShareCardProps } from '../ShareCard';
 import { getReaderBackground } from '@/data/backgrounds';
 
@@ -46,20 +48,21 @@ function render(props: ShareCardProps) {
 describe('ShareCard background', () => {
   test('renders the source reader sketch behind the verse', () => {
     const tree = render(baseProps);
-    const bg = tree.root.findAllByType(ImageBackground);
+    const bg = tree.root.findAllByType(BackgroundLayer);
     expect(bg).toHaveLength(1);
     expect(bg[0].props.source).toBe(getReaderBackground('bhagavad-gita'));
   });
 
   test('per-subsection sources follow the stanza key (Valmiki kāṇḍa 5 → Sundara plate)', () => {
     const tree = render({ ...baseProps, sourceId: 'valmiki-ramayan', stanza: 5 });
-    const bg = tree.root.findAllByType(ImageBackground);
+    const bg = tree.root.findAllByType(BackgroundLayer);
     expect(bg[0].props.source).toBe(getReaderBackground('valmiki-ramayan', { stanza: 5 }));
     expect(bg[0].props.source).not.toBe(getReaderBackground('valmiki-ramayan', { stanza: 1 }));
   });
 
   test('a source with no plate falls back to the plain parchment gradient', () => {
     const tree = render({ ...baseProps, sourceId: 'unknown-source-id' });
-    expect(tree.root.findAllByType(ImageBackground)).toHaveLength(0);
+    expect(tree.root.findByType(BackgroundLayer).props.source).toBeNull();
+    expect(tree.root.findAllByType(BackgroundArtwork)).toHaveLength(0);
   });
 });

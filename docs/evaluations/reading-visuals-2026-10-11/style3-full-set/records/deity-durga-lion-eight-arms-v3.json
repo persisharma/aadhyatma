@@ -1,0 +1,24 @@
+{
+  "id": "deity-durga-lion-eight-arms-v3",
+  "replaces": "deity-durga-lion",
+  "prompt": "Use case: precise-object-edit. Edit image 1 minimally. Preserve the whole beautiful 2:1 landscape, scene, style, face, lion and details. Durga currently has SEVEN visible arms and a floating bow. Add ONLY ONE connected viewer-right middle-lower arm and hand emerging naturally from her right shoulder area, bent outward holding the bow at its middle grip. This new hand must be in the open space between the mace hand above and lotus-stem hand below. Keep the existing seven arms untouched. Final count is exactly EIGHT hands: viewer-left sword, trident, discus, blessing; viewer-right conch, mace, BOW IN NEW HAND, lotus stem. No floating or disconnected hand; coherent forearm connected to upper arm. Keep full 2:1 dimensions, all weapons inside edges, no other new objects or text.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/deity-durga-lion-eight-arms-v2.png"
+  ],
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-ead1c029-54fb-4a8b-9968-707e84e1185b.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/deity-durga-lion-eight-arms-v3.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/deity-durga-lion-eight-arms-v3.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 103118,
+  "sha256": "324b157dc73b990ec996dfd687e08e3a861c77067cfe6d0a0f28237f25855253",
+  "tool": "built-in image_gen",
+  "status": "draft",
+  "approved": false
+}

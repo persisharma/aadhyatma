@@ -1,0 +1,29 @@
+{
+  "schema": "xcodebuildmcp.output.build-run-result",
+  "schemaVersion": "2",
+  "didError": false,
+  "error": null,
+  "data": {
+    "summary": {
+      "status": "SUCCEEDED",
+      "durationMs": 82922,
+      "target": "simulator"
+    },
+    "artifacts": {
+      "appPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/scripts/.cache/reading-art-native/Build/Products/Release-iphonesimulator/Vedansh.app",
+      "bundleId": "com.prashantsharma.vedansh",
+      "processId": 76815,
+      "simulatorId": "BD91E840-482E-4816-838A-9C5247E401DA",
+      "buildLogPath": "/Users/prashant/Library/Developer/XcodeBuildMCP/workspaces/Aadhyatma-f9bbaa494f95/logs/build_run_sim_2026-10-11T17-15-59-309Z_pid69110_d3dc57dc.log",
+      "runtimeLogPath": "/Users/prashant/Library/Developer/XcodeBuildMCP/workspaces/Aadhyatma-f9bbaa494f95/logs/com.prashantsharma.vedansh_2026-10-11T17-17-20-414Z_helperpid76770_ownerpid69110_6e7f61a6.log",
+      "osLogPath": "/Users/prashant/Library/Developer/XcodeBuildMCP/workspaces/Aadhyatma-f9bbaa494f95/logs/com.prashantsharma.vedansh_oslog_2026-10-11T17-17-22-224Z_helperpid76839_ownerpid69110_f97b3955.log"
+    },
+    "diagnostics": {
+      "errors": [],
+      "warningsCount": 62
+    }
+  },
+  "nextSteps": [
+    "Stop app in simulator: stop_app_sim({ simulatorId: \"BD91E840-482E-4816-838A-9C5247E401DA\", bundleId: \"com.prashantsharma.vedansh\" })"
+  ]
+}

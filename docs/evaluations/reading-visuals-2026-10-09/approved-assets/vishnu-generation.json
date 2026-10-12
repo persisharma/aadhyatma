@@ -1,0 +1,61 @@
+{
+  "approval": {
+    "option": 2,
+    "source": "User selected Option 2 on 2026-10-09",
+    "exactReference": "docs/evaluations/reading-visuals-2026-10-09/proposals/option-2.png"
+  },
+  "generation": {
+    "mode": "built-in image_gen",
+    "taxonomy": "illustration-story",
+    "prompt": "Use case: illustration-story\nAsset type: A single text-free devotional illustration for the opening of a native mobile Katha reader.\nPrimary request: Create the individual Vishnu/Narayana watercolor painting shown in the approved Option 2 reference, without any of the app interface or typography. Output one wide 3:2 landscape painting only.\nInput images: Image 1 is the approved Option 2 screen; use only its colorful painting as the composition and palette reference, never copy its text or UI. Image 2 is an existing devotional painting, a supporting reference for the complete subject and established iconography.\nSubject and scene: Vishnu/Narayana with serene blue skin reclines across the coils of Shesha, crowned and in saffron-gold garments with a soft coral drape and a pale flower garland. Shesha's several clearly formed cobra heads form a protective canopy behind the head and shoulders. Lakshmi, crowned and dressed in a coral and muted green sari, sits beside his feet on the right. Brahma sits on a pink lotus above the center, with the lotus stem visibly connected to Vishnu's navel. Peaceful pale water, small pink lotuses and a few soft cream clouds suggest the traditional cosmic ocean; no added narrative event or additional characters.\nStyle/medium: Respectful Indian devotional miniature illustration, delicate ink outlines and softly layered watercolor, painterly rather than photorealistic, refined detail visible at mobile size. Match the approved screen's colored watercolor, not the monochrome sepia source.\nComposition/framing: Landscape 3:2. Full central tableau fills the width with comfortable margins. Show every crown, face, hand, limb, lotus, serpent head and coil; no cropped figures. Preserve coherent anatomy, plausible joints and natural hand gestures. Vishnu has exactly four coherent arms. Brahma's multiple faces should read clearly as traditional iconography. Keep all faces gentle and well formed.\nLighting/mood: Warm, tranquil and devotional.\nColor palette: Pale warm cream parchment, restrained saffron and antique gold, coral red, sage green, muted blue skin, delicate pink lotuses. No dark border.\nMaterials/textures: Subtle fine paper texture. All outer edges feather softly into a very pale warm cream background so the artwork blends seamlessly onto a continuous parchment reading page. Keep the central painting clear and colorful.\nConstraints: Illustration only. No title, text, characters, numerals, glyphs, app controls, progress dots, divider, logos, watermark, frame or border. No photorealism, no invented story event. Avoid extra limbs, merged hands, missing fingers, cropped cobra heads or cut-off crowns.",
+    "references": [
+      "docs/evaluations/reading-visuals-2026-10-09/proposals/option-2.png",
+      "mobile/assets/backgrounds/source-vishnu-narayana.webp"
+    ],
+    "originalToolOutput": "/Users/prashant/.codex/generated_images/01a11f53-6041-74b0-ad72-e36f83bee9d4/exec-955d0048-49c3-42d2-96c1-7e9b6a468ad8.png"
+  },
+  "inspection": {
+    "reviewedOriginal": true,
+    "notes": [
+      "Standalone text-free painting; no UI, watermark or border",
+      "Full crowns, serpent heads and figures visible",
+      "Vishnu four coherent arms; Lakshmi both hands visible; Brahma traditional multiple faces",
+      "Color palette and wide composition match approved Option 2 illustration",
+      "Cream edges blend into parchment; no new narrative event"
+    ],
+    "reviewedCompressed": true,
+    "compressedNotes": [
+      "900x600 WebP visually inspected at full saved resolution",
+      "Faces, serpent heads, crowns and hands remain legible after compression",
+      "No cropping or aspect-ratio distortion; cream feathered edges preserved"
+    ]
+  },
+  "output": {
+    "originalPng": "docs/evaluations/reading-visuals-2026-10-09/approved-assets/vishnu-narayana-option2.png",
+    "webp": "mobile/assets/backgrounds/source-vishnu-narayana-option2.webp",
+    "originalDimensions": [
+      1536,
+      1024
+    ],
+    "originalBytes": 3077284,
+    "originalSha256": "144daaf10fb92c77b68e89036b091678b38022d03bbc758a38705d9f34e92651",
+    "compressedDimensions": [
+      900,
+      600
+    ],
+    "compressedBytes": 94904,
+    "compressedSha256": "82e26647302706372c4211649b14fedd1a59d57bbda155180e1357caea48b4bb",
+    "conversion": {
+      "library": "Pillow",
+      "resize": "LANCZOS thumbnail preserving aspect ratio",
+      "format": "WebP",
+      "quality": 78,
+      "method": 6,
+      "targetBytes": 163840
+    }
+  },
+  "publication": {
+    "r2": "not published by asset producer",
+    "application": "not wired by asset producer"
+  }
+}

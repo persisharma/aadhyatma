@@ -26,10 +26,25 @@ test('web never looks up the native tracking bridge', () => {
 });
 
 test('a disabled build does not start tracking or request ATT', () => {
-  mockConfig.extra.metaTrackingEnabled = false;
+  mockNativeLookup.mockReturnValue({ enabled: false, activate: jest.fn() });
   const { startMetaAppEvents } = require('../metaAppEvents');
   startMetaAppEvents();
-  expect(mockNativeLookup).not.toHaveBeenCalled();
+  expect(mockAddListener).not.toHaveBeenCalled();
+});
+
+test("an OTA manifest's disabled flag cannot suppress an enabled binary", () => {
+  mockConfig.extra.metaTrackingEnabled = false;
+  mockNativeLookup.mockReturnValue({ enabled: true, activate: jest.fn().mockResolvedValue(true) });
+  const { startMetaAppEvents } = require('../metaAppEvents');
+  startMetaAppEvents();
+  expect(mockAddListener).toHaveBeenCalledTimes(1);
+});
+
+test('a binary without the enabled constant falls back to the manifest flag', () => {
+  mockConfig.extra.metaTrackingEnabled = false;
+  mockNativeLookup.mockReturnValue({ activate: jest.fn() });
+  const { startMetaAppEvents } = require('../metaAppEvents');
+  startMetaAppEvents();
   expect(mockAddListener).not.toHaveBeenCalled();
 });
 

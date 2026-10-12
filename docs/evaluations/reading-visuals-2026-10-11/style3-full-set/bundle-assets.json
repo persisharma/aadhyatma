@@ -1,0 +1,21 @@
+{
+  "export": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/scripts/.cache/reader-illustration-export",
+  "platforms": {
+    "ios": {
+      "bannerSourceCount": 43,
+      "bundledBannerCount": 0,
+      "bundledReadingFallbackBytes": 3102,
+      "bundle": "_expo/static/js/ios/index-63d1b9eeb6d86efa6dbd70753817af95.hbc",
+      "bundleBytes": 44420799,
+      "assetCount": 103
+    },
+    "android": {
+      "bannerSourceCount": 43,
+      "bundledBannerCount": 0,
+      "bundledReadingFallbackBytes": 3102,
+      "bundle": "_expo/static/js/android/index-814b8ff0c7faea46dcaefb36a8512623.hbc",
+      "bundleBytes": 44441328,
+      "assetCount": 103
+    }
+  }
+}

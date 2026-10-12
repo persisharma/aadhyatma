@@ -1,0 +1,1623 @@
+{
+  "screenCount": 113,
+  "coverage": "All screen source structures reviewed; native screenshots are separately scoped.",
+  "screens": [
+    {
+      "file": "AartiReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "VersePage",
+        "WhenToRecitePanel",
+        "BookmarkButton",
+        "ShareButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "AbujhDaysScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ActivityIndicator",
+        "ListCard",
+        "CardThumb"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "AshtakamReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "VersePage",
+        "WhenToRecitePanel",
+        "BookmarkButton",
+        "ShareButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "BajrangBaanChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "BajrangBaanReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "BajrangBaanVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "BrowseByPurposeScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "CategoryCard",
+        "CategoryIcon"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "CategoryListScreen.tsx",
+      "components": [
+        "StatusBar",
+        "BackgroundLayer",
+        "LibraryCard",
+        "React.Fragment",
+        "ResumeReadingSheet"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "ChalisaReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "AppIcon",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "VersePage",
+        "WhenToRecitePanel",
+        "BookmarkButton",
+        "ShareButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "CreateRoutineScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "Heading",
+        "ModeCard",
+        "Field",
+        "PrimaryButton",
+        "TextInput"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DaanDirectoryDetailScreen.tsx",
+      "components": [
+        "ReaderHeader"
+      ],
+      "cards": [
+        "card",
+        "rowCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DaanDirectoryScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "CauseHeading",
+        "OrgRow",
+        "CauseTile"
+      ],
+      "cards": [
+        "rowCard",
+        "tile"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DaanEntryScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "Switch",
+        "TextField"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DaanJourneyScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ShareButton"
+      ],
+      "cards": [
+        "card",
+        "cardShare",
+        "rowCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DaanKathaScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "BackgroundLayer",
+        "ShareButton",
+        "LanguageToggle",
+        "ReadAloudButton",
+        "Ornament",
+        "ProseReadingCard"
+      ],
+      "cards": [
+        "rowCard"
+      ],
+      "review": "prose gap corrected: semantic background, ProseReadingCard and complete opening illustration"
+    },
+    {
+      "file": "DaanLedgerScreen.tsx",
+      "components": [
+        "ReaderHeader"
+      ],
+      "cards": [
+        "card"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DaanPunyaScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "Svg",
+        "Path",
+        "ShareButton"
+      ],
+      "cards": [
+        "card",
+        "verseCard",
+        "cardActions",
+        "kathaTile"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DailyBhaktiScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "BackgroundLayer",
+        "BookmarkButton",
+        "ShareButton",
+        "Ornament",
+        "RoutineBanner"
+      ],
+      "cards": [
+        "card",
+        "cardHeader",
+        "cardFooter"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DeityDetailScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "LibraryCard",
+        "ResumeReadingSheet"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DeityIndexScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "DeityCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DeityListScreen.tsx",
+      "components": [
+        "StatusBar",
+        "BackgroundLayer",
+        "LibraryCard",
+        "ResumeReadingSheet"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DurgaStotramChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "DurgaStotramReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "NextChapterCard",
+        "PrevChapterCard",
+        "ShivaStrotamVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "GaneshStotramChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "GaneshStotramReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "NextChapterCard",
+        "PrevChapterCard",
+        "ShivaStrotamVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "GharVastuCompareScreen.tsx",
+      "components": [
+        "ReaderHeader"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "GharVastuRosterScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "HomeCard"
+      ],
+      "cards": [
+        "card"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "GharVastuScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "VastuMandalaGrid",
+        "FindingRow"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "GharVastuSetupScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "TextInput",
+        "DishaChakra",
+        "VastuMandalaGrid",
+        "Animated.View"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "GitaChaptersIndexScreen.tsx",
+      "components": [
+        "StatusBar",
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "GitaReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "NextChapterCard",
+        "PrevChapterCard",
+        "GitaVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "GitaSaarReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "NextChapterCard",
+        "PrevChapterCard",
+        "GitaSaarVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "GitaSaarThemesScreen.tsx",
+      "components": [
+        "StatusBar",
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "GocharScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "JyotishStateCard"
+      ],
+      "cards": [
+        "referenceCard",
+        "sadeSatiCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "GunaMilanScreen.tsx",
+      "components": [
+        "Svg",
+        "Circle",
+        "ReaderHeader",
+        "KeyboardAvoidingView",
+        "BirthDetailsForm",
+        "Switch",
+        "ScoreDial",
+        "JyotishShareSheet",
+        "GunaMilanShareCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "HanumanAshtakChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "HanumanAshtakReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "ShivaStrotamVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "HomeScreen.tsx",
+      "components": [
+        "CategoryIcon",
+        "FeatureIcon",
+        "LinearGradient",
+        "TilePressProvider",
+        "HomeWordmark",
+        "AppIcon",
+        "FestiveToran",
+        "TodayStrip",
+        "TodayRecommendationsRow",
+        "RoutineBanner",
+        "CategoryCard",
+        "React.Suspense",
+        "KidsStoriesHomeCard",
+        "FeatureCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "JanmaTithiDetailScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader",
+        "ObservanceDetailHero",
+        "Switch"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "JanmaTithiListScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader",
+        "ActivityIndicator",
+        "ObservanceListRow"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "JapamAlarmsScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "AlarmRow",
+        "AlarmEditorSheet",
+        "Switch",
+        "Modal",
+        "TimeStepper",
+        "TextInput"
+      ],
+      "cards": [
+        "emptyCard",
+        "editorCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "JapamCounterScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ShareButton",
+        "LanguageToggle",
+        "Ornament",
+        "JapamMala",
+        "JapamMalaTray",
+        "JapamAudioPlayer",
+        "Modal",
+        "AlarmEditorSheet"
+      ],
+      "cards": [
+        "confirmCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "KathaLibraryScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "TextField"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "KavachamReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "AppIcon",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "VersePage",
+        "WhenToRecitePanel",
+        "BookmarkButton",
+        "ShareButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "KidsStoryDeityScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "LinearGradient",
+        "KidsStoryArt"
+      ],
+      "cards": [],
+      "review": "illustrated kids family: existing KidsStoryArt pipeline retained, no narrative or artwork changes"
+    },
+    {
+      "file": "KidsStoryLibraryScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "DeityCard"
+      ],
+      "cards": [],
+      "review": "illustrated kids family: existing KidsStoryArt pipeline retained, no narrative or artwork changes"
+    },
+    {
+      "file": "KidsStoryReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "KidsStoryArt"
+      ],
+      "cards": [],
+      "review": "illustrated kids family: existing KidsStoryArt pipeline retained, no narrative or artwork changes"
+    },
+    {
+      "file": "KrishnaStotramChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "KrishnaStotramReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "KrishnaStotramVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "KulParamparaEditScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader",
+        "DeityIcon",
+        "TextInput"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "KulParamparaExportScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader"
+      ],
+      "cards": [
+        "card"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "KulParamparaScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader",
+        "ActivityIndicator",
+        "DeityIcon"
+      ],
+      "cards": [
+        "kuldevCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "KundaliReportScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "AppIcon",
+        "JyotishStateCard",
+        "NorthIndianChart",
+        "ReportSectionCard",
+        "JyotishShareSheet",
+        "JyotishShareCard",
+        "GrahaReadingList",
+        "BasisChain"
+      ],
+      "cards": [
+        "chartCard",
+        "sectionCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "KundaliScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "AppIcon",
+        "ActivityIndicator",
+        "PersonChips",
+        "JyotishStateCard",
+        "BirthInput",
+        "KundaliResult",
+        "CityPicker",
+        "JyotishShareSheet",
+        "JyotishShareCard",
+        "FieldLabel",
+        "TextField",
+        "ClockTimePicker",
+        "CalendarDatePicker",
+        "KundaliOverview",
+        "SectionIntro",
+        "NorthIndianChart",
+        "JyotishPracticeCard",
+        "Modal"
+      ],
+      "cards": [
+        "heroCard",
+        "chartCard",
+        "dashaCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "MoreScreen.tsx",
+      "components": [
+        "MoreIcon",
+        "AppIcon",
+        "LinearGradient",
+        "StoryIcon",
+        "SettingsRow",
+        "LanguagePickerSheet",
+        "ReadingSizePickerSheet",
+        "ReadAloudSettingsSheet",
+        "React.Suspense",
+        "LensPickerSheet",
+        "Modal"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "MuhuratDayDetailScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ShareButton",
+        "MuhuratFinderShareCard",
+        "ActivityIndicator",
+        "LinearGradient",
+        "MuhuratChip",
+        "ShubhYogaCard",
+        "MuhuratBalaStrip",
+        "MuhuratFollowControl",
+        "KV"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "MuhuratDetailScreen.tsx",
+      "components": [
+        "MuhuratCardBody",
+        "LinearGradient",
+        "ShareButton",
+        "ActivityIndicator"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "MuhuratFinderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "React.Fragment",
+        "ListCard",
+        "CardThumb"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "MuhuratResultsScreen.tsx",
+      "components": [
+        "LagnaChip",
+        "ListCard",
+        "CardThumb",
+        "MuhuratChip",
+        "WindowLine",
+        "MuhuratBalaStrip",
+        "ReaderHeader",
+        "ActivityIndicator",
+        "Card",
+        "Empty",
+        "MuhuratFollowControl"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "MyVratScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "Metric",
+        "PriorityRow",
+        "MuhuratFollowList",
+        "VratReminderSheet"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "NamkaranRashiScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "CharanaRow",
+        "ListCard",
+        "CardThumb"
+      ],
+      "cards": [
+        "tile"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "NamkaranResultScreen.tsx",
+      "components": [
+        "ActivityIndicator",
+        "NamkaranResultContent",
+        "NamaksharCard",
+        "CandidateRow",
+        "FilterButton",
+        "RashiSoundsCard",
+        "Switch",
+        "ListCard",
+        "CardThumb",
+        "ReaderHeader",
+        "NameRow",
+        "NameDetailSheet",
+        "JyotishShareSheet",
+        "NamkaranShareCard",
+        "ShortlistStar"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "NamkaranScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "KeyboardAvoidingView",
+        "BirthDetailsForm",
+        "Switch",
+        "BrowseDoor",
+        "CategoryCard",
+        "NakshatraIndexGroup",
+        "ListCard",
+        "CardThumb",
+        "PadaCell"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "ObservanceDetailScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ShareButton",
+        "ObservanceDetailHero",
+        "AppIcon",
+        "ArcStrip",
+        "BhogGuidancePanel"
+      ],
+      "cards": [
+        "kathaCard",
+        "upvasPanel"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "ObservanceListScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "TextField",
+        "AreaFilterChips",
+        "ObservanceRow",
+        "React.Fragment",
+        "ObservanceListRow",
+        "AreaTag"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "PanchangScreen.tsx",
+      "components": [
+        "PanchangChakraBackground",
+        "BackgroundLayer",
+        "CalendarSystemToggle",
+        "MuhuratGlanceCard",
+        "MuhuratFinderDoor",
+        "PanchangTile",
+        "DayVaasCards",
+        "ShubhYogaCard",
+        "TimeCell",
+        "ActivityIndicator",
+        "ObservanceCard",
+        "LensDiscoveryRow",
+        "PitruPakshaDayChip",
+        "PitruSmaranDayChip",
+        "PanchangTimelineRow",
+        "CatalogLanding",
+        "JyotishLanding",
+        "LocationPickerModal",
+        "React.Suspense",
+        "LensPickerSheet",
+        "JyotishStateCard",
+        "JyotishToolTile",
+        "PersonChips",
+        "AppIcon",
+        "JyotishGuidanceRows",
+        "JyotishPracticeCard",
+        "JyotishShareSheet",
+        "JyotishShareCard",
+        "JyotishChakraSeal",
+        "React.Fragment",
+        "CatalogLedgerCell",
+        "TextField",
+        "CatalogLedgerBar",
+        "LensAdditionsSection"
+      ],
+      "cards": [
+        "calendarCard",
+        "timesCard",
+        "jyotishTileGrid",
+        "angaTile",
+        "observanceCard",
+        "additionsCard",
+        "upCard",
+        "upCardTop",
+        "tileGrid",
+        "tile",
+        "tileGlyph",
+        "tileInfo",
+        "finalTileRow",
+        "finalTile"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "PitruKathaScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "ReadAloudButton",
+        "Ornament",
+        "ProseReadingCard"
+      ],
+      "cards": [],
+      "review": "prose gap corrected: semantic background, ProseReadingCard and complete opening illustration"
+    },
+    {
+      "file": "PitruPakshaOverviewScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader",
+        "ActivityIndicator",
+        "PanchangTimelineRow"
+      ],
+      "cards": [
+        "dayCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "PitruPakshaShikshaScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader"
+      ],
+      "cards": [
+        "card",
+        "verseCard",
+        "cardActions",
+        "kathaTile"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "PitruParichayReaderScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "ReadAloudButton",
+        "NextChapterCard",
+        "KathaSectionPage"
+      ],
+      "cards": [],
+      "review": "prose gap corrected: semantic background, ProseReadingCard and complete opening illustration"
+    },
+    {
+      "file": "PitruSmaranDetailScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader",
+        "ObservanceDetailHero",
+        "Switch",
+        "Modal"
+      ],
+      "cards": [
+        "confirmCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "PitruSmaranEditScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader",
+        "TextField",
+        "CalendarDatePicker"
+      ],
+      "cards": [
+        "confirmCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "PitruSmaranListScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader",
+        "ActivityIndicator",
+        "ObservanceListRow"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "PrashnaScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "JyotishStateCard",
+        "PrashnaPhaseContent",
+        "ActionPill",
+        "StrengthPill",
+        "BasisChain"
+      ],
+      "cards": [
+        "card"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "ProfileScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "StatTile"
+      ],
+      "cards": [
+        "identityCard",
+        "statTile"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "PurposeListScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "LibraryCard",
+        "ResumeReadingSheet"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "RamStutiChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "RamStutiReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "ShivaStrotamVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "RamcharitmanasChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "RamcharitmanasReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "RamcharitmanasVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "RashifalScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "JyotishStateCard",
+        "PersonChips",
+        "JyotishGuidanceRows",
+        "RashifalLifeAreas",
+        "JyotishPracticeCard",
+        "JyotishShareSheet",
+        "JyotishShareCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "ReminderSettingsScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "Switch",
+        "TimeStepper"
+      ],
+      "cards": [
+        "card",
+        "cardHeader",
+        "cardTextBlock",
+        "cardTitle",
+        "cardSub"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "RoutineAddItemsScreen.tsx",
+      "components": [
+        "RoutineShell",
+        "RoutineButton"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "RoutineDetailScreen.tsx",
+      "components": [
+        "RoutineShell",
+        "Switch",
+        "TimeStepper",
+        "RoutineButton"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "RoutineListScreen.tsx",
+      "components": [
+        "RoutineShell",
+        "LinearGradient",
+        "RoutineButton"
+      ],
+      "cards": [
+        "card",
+        "cardBg",
+        "cardBody",
+        "cardTop"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "RoutineTodayScreen.tsx",
+      "components": [
+        "RoutineShell",
+        "RoutineButton",
+        "PracticeSeal",
+        "LinearGradient",
+        "MalaStreak",
+        "SankalpTodayCard"
+      ],
+      "cards": [
+        "emptyCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "SadhanaProgramDetailScreen.tsx",
+      "components": [
+        "RoutineShell",
+        "Switch",
+        "RoutineButton"
+      ],
+      "cards": [
+        "introCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "SadhanaProgramListScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ProgramCard",
+        "RoutineShell",
+        "Section"
+      ],
+      "cards": [
+        "card",
+        "cardPressed",
+        "cardBg"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "SanskarReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "SanskarVersePage",
+        "BookmarkButton",
+        "ShareButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "SaraswatiStotramChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "SaraswatiStotramReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "NextChapterCard",
+        "PrevChapterCard",
+        "ShivaStrotamVersePage",
+        "BookmarkButton",
+        "ShareButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "SearchScreen.tsx",
+      "components": [
+        "AskAnswerCard",
+        "AskAbstainCard",
+        "LinearGradient",
+        "AppIcon",
+        "TextInput",
+        "EmptyState",
+        "ResultsList",
+        "ZeroState",
+        "PreparingState",
+        "GroupHeader",
+        "SearchLibraryArtwork",
+        "PopularName",
+        "ActivityIndicator",
+        "DeityIcon",
+        "CategoryIcon",
+        "StoryIcon"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "ShivaStrotamChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "ShivaStrotamReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "NextChapterCard",
+        "PrevChapterCard",
+        "ShivaStrotamVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "StutiReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "AppIcon",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "VersePage",
+        "WhenToRecitePanel",
+        "BookmarkButton",
+        "ShareButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "SuktamReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "AppIcon",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "VersePage",
+        "WhenToRecitePanel",
+        "BookmarkButton",
+        "ShareButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "SundarkandChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "SundarkandReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "NextChapterCard",
+        "PrevChapterCard",
+        "SundarkandVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "TheerthDetailScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "LanguageToggle",
+        "ShareButton",
+        "BackgroundArtwork",
+        "Ornament",
+        "SectionBlock",
+        "DetailProse"
+      ],
+      "cards": [],
+      "review": "existing themed detail retained; dedicated illustration migrated to async BackgroundArtwork"
+    },
+    {
+      "file": "TheerthMapScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "TopBar",
+        "DrillIn",
+        "Listing",
+        "LanguageToggle",
+        "ModeToggle",
+        "BrowseCard",
+        "React.Fragment",
+        "IndiaMap",
+        "LinearGradient"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "TodayVidhanScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader",
+        "AskAnswerCard",
+        "AppIcon"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "ValmikiRamayanChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "ValmikiRamayanReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "NextChapterCard",
+        "PrevChapterCard",
+        "ValmikiRamayanVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "VastuDishaScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "DishaChakra",
+        "ListCard",
+        "CardThumb",
+        "RoomCard",
+        "MandirCard",
+        "Bullet"
+      ],
+      "cards": [
+        "card",
+        "cardHeader"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "VidhiCatalogScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "VidhiCard",
+        "LinearGradient"
+      ],
+      "cards": [
+        "card"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "VidhiConductScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ReaderHeader",
+        "ReadAloudButton",
+        "CompletionPage",
+        "StepPage",
+        "Ornament",
+        "ShareButton",
+        "StepHandoffCard"
+      ],
+      "cards": [
+        "readingCard",
+        "cardHeader",
+        "handoffCard"
+      ],
+      "review": "already has opaque bordered readingCard plus phase/mantra/ref hierarchy; retain guided-task design"
+    },
+    {
+      "file": "VidhiDetailScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "AddToRoutineButton",
+        "BhogGuidancePanel",
+        "LinearGradient"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "VishnuSahasranamaChaptersScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "LanguageToggle",
+        "GitaChapterCard"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "VishnuSahasranamaReaderScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "LanguageToggle",
+        "AddToRoutineButton",
+        "ReadAloudButton",
+        "NextChapterCard",
+        "PrevChapterCard",
+        "ShivaStrotamVersePage",
+        "BookmarkButton",
+        "ShareButton",
+        "JumpToStartButton"
+      ],
+      "cards": [],
+      "review": "verse reader: existing semantic BackgroundLayer and reading tokens, now R2-backed"
+    },
+    {
+      "file": "VratKathaReaderScreen.tsx",
+      "components": [
+        "BackgroundLayer",
+        "ReaderHeader",
+        "ReadingProgressBar",
+        "ShareButton",
+        "LanguageToggle",
+        "ReadAloudButton",
+        "KathaSectionPage"
+      ],
+      "cards": [],
+      "review": "prose gap corrected: semantic background, ProseReadingCard and complete opening illustration"
+    },
+    {
+      "file": "WidgetGalleryScreen.tsx",
+      "components": [
+        "ReaderHeader",
+        "Preview",
+        "ImageBackground"
+      ],
+      "cards": [
+        "card",
+        "cardArt"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "WishlistScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "ActivityIndicator",
+        "AppIcon",
+        "Modal"
+      ],
+      "cards": [
+        "bmCard",
+        "confirmCard"
+      ],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "audio/AudioLibraryScreen.tsx",
+      "components": [
+        "LinearGradient",
+        "DeityChip",
+        "SectionHeading",
+        "TrackCard",
+        "DeityIcon",
+        "StoryIcon"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    },
+    {
+      "file": "audio/NowPlayingScreen.tsx",
+      "components": [
+        "AppIcon",
+        "DeityIcon",
+        "ControlButton",
+        "ActivityIndicator"
+      ],
+      "cards": [],
+      "review": "utility, hub or list: preserve information/task-specific cards"
+    }
+  ]
+}

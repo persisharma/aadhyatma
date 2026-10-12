@@ -1,3 +1,4 @@
+import type { BackgroundImage } from '@/data/backgroundAsset';
 import React, {
   createContext,
   useCallback,
@@ -12,6 +13,7 @@ import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
 import ShareStoryCanvas from '@/components/ShareStoryCanvas';
 import ShareStoryFrame from '@/components/ShareStoryFrame';
+import { ArtworkCaptureContext, createArtworkPaintBarrier, type ArtworkPaintBarrier } from '@/components/ArtworkCaptureContext';
 import ProseShareCard from '@/components/ProseShareCard';
 import ShareTargetSheet, { type ShareSeriesView } from '@/components/ShareTargetSheet';
 import { buildInstagramCaption, buildShareCaption } from '@/data/shareLinks';
@@ -28,10 +30,12 @@ import {
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
 import {
   MAX_SHARE_PAGES,
+  cardMetricsFor,
   paginateProse,
   splitSentences,
   type ProsePage,
   type ProsePagination,
+  type ShareCardLayout,
 } from '@/utils/shareCardPages';
 import { isMultiShareAvailable, shareFiles } from '@/utils/multiShare';
 import { useRatingAsk } from '@/contexts/ratingAsk';
@@ -95,7 +99,12 @@ export type ShareableProse = {
   /** Hashtag / registry key (a `LibraryEntry.id` when one exists, else a namespaced id). */
   sourceId: string;
   /** Resolved plate behind the card; null → the plain parchment gradient. */
-  background: number | null;
+  background: BackgroundImage | null;
+  /**
+   * `picture` lays every page out on the 540×960 picture card and exports 1080×1920 for
+   * every target (kids stories, design.md §76); absent, the 540×675 prose card.
+   */
+  layout?: ShareCardLayout;
   /** Left half of the header band and the caption heading (`व्रत कथा`). */
   sectionNameHi: string;
   sectionNameEn: string;
@@ -206,18 +215,23 @@ function TimelyTagsResolver(props: TimelyResolverProps) {
 
 /** One prose page, resolved for capture: everything `ProseShareCard` needs. */
 type ProseCardSpec = {
-  background: number | null;
+  background: BackgroundImage | null;
   header: string;
   page: ProsePage;
   pageIndex: number;
   pageCount: number;
   lang: Lang;
   illustrationUri?: string;
+  layout?: ShareCardLayout;
 };
 
-type PendingCapture =
-  | { kind: 'verse'; verse: ShareableVerse; lang: Lang; format: ShareFormat }
-  | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat; captureId?: number };
+/** The picture card is already 9:16: it is captured at the story size and never framed. */
+const isPictureCapture = (spec: PendingCapture) => spec.kind === 'prose' && spec.card.layout === 'picture';
+
+type PendingCapture = (
+  | { kind: 'verse'; verse: ShareableVerse; lang: Lang; format: ShareFormat; captureId?: number; measuredHeight?: number }
+  | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat; captureId?: number }
+) & { backgroundPaint?: ArtworkPaintBarrier };
 
 type ProseChooser = {
   content: ShareableProse;
@@ -291,6 +305,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
   const imageReady = useRef<{ id: number; resolve: (ready: boolean) => void } | null>(null);
+  const verseLayout = useRef<{ id: number; resolve: (height: number) => void } | null>(null);
   const captureSequence = useRef(0);
 
   // A dispatched share is a "good moment" the rating ask may ride on (§54). Read
@@ -312,12 +327,25 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     setTimely(next);
   }, []);
 
+  const onVerseHeight = useCallback((id: number | undefined, height: number) => {
+    const current = verseLayout.current;
+    if (current && current.id === id && Number.isFinite(height) && height > 0) {
+      current.resolve(Math.ceil(height));
+    }
+  }, []);
+
   /** Mount `spec` off-screen, let it lay out, and capture it. Null on failure. */
   const capture = useCallback(
     async (spec: PendingCapture, mode: ShareMode, screenshotRef?: React.RefObject<View | null> | null) => {
       let captureTarget = screenshotRef ?? null;
       if (mode === 'card') {
         let painted: Promise<boolean> | null = null;
+        let verseMeasured: Promise<number> | null = null;
+        if (spec.kind === 'verse') {
+          const id = ++captureSequence.current;
+          spec = { ...spec, captureId: id };
+          verseMeasured = new Promise(resolve => { verseLayout.current = { id, resolve }; });
+        }
         if (spec.kind === 'prose' && spec.card.page.illustration) {
           // Load the asset cache only for illustrated captures. Verse/prose-only tests and startup stay light.
           // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -335,18 +363,37 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             return null;
           }
         }
+        const backgroundPaint = createArtworkPaintBarrier();
+        spec = { ...spec, backgroundPaint };
         setPending(spec);
         await waitForLayout();
+        if (verseMeasured) {
+          try {
+            const measuredHeight = await withTimeout(verseMeasured, 5000);
+            if (spec.kind === 'verse') {
+              spec = { ...spec, measuredHeight };
+              setPending(spec);
+            }
+          } catch { return null; }
+          finally { verseLayout.current = null; }
+          await waitForLayout();
+        }
         if (painted) {
           try { if (!await withTimeout(painted, 15000)) return null; }
           catch { return null; }
           finally { imageReady.current = null; }
           await waitForLayout();
         }
+        // Every captured backdrop must finish its native paint (or offline
+        // fallback). This includes both the story frame and its inner card.
+        if (await backgroundPaint.wait()) await waitForLayout();
         captureTarget = cardRef as React.RefObject<View | null>;
       }
-      const outWidth = spec.format === 'story' ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH;
-      const outHeight = spec.format === 'story' ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
+      const tall = spec.format === 'story' || isPictureCapture(spec);
+      const outWidth = tall ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH;
+      const outHeight = spec.kind === 'verse' && spec.measuredHeight
+        ? spec.measuredHeight * (OUTPUT_WIDTH / CARD_WIDTH)
+        : tall ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
       // UIKit captures point dimensions at the screen's scale; Android uses pixels.
       const captureScale = Platform.OS === 'ios' ? PixelRatio.get() : 1;
       if (!captureTarget?.current) return null;
@@ -462,6 +509,10 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
 
       try {
         const fileUri = await capture({ kind: 'verse', verse, lang, format }, mode, opts?.screenshotRef);
+        if (!fileUri && mode === 'card') {
+          alertCouldNotShare(lang);
+          return;
+        }
 
         const captionParams = {
           sectionNameHi: verse.sectionNameHi,
@@ -515,6 +566,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       pageIndex: index,
       pageCount: scope.pagination.pages.length,
       lang,
+      layout: content.layout,
     }),
     []
   );
@@ -786,10 +838,17 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         }
       : undefined;
 
-  const pendingSize = (format: ShareFormat) => ({
-    width: format === 'story' ? storyCanvas.width : CARD_WIDTH,
-    height: format === 'story' ? storyCanvas.height : CARD_HEIGHT,
-  });
+  const pendingSize = (spec: PendingCapture) =>
+    spec.kind === 'verse' && !spec.measuredHeight
+      ? { width: CARD_WIDTH } // Let native text measure without a fixed-height ancestor.
+      : isPictureCapture(spec)
+      ? { width: cardMetricsFor('picture').width, height: cardMetricsFor('picture').height }
+      : {
+          width: spec.format === 'story' ? storyCanvas.width : CARD_WIDTH,
+          height: spec.kind === 'verse' && spec.measuredHeight
+            ? spec.measuredHeight
+            : spec.format === 'story' ? storyCanvas.height : CARD_HEIGHT,
+        };
 
   return (
     <ShareContext.Provider value={value}>
@@ -798,6 +857,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       {chooser ? (
         <ShareTargetSheet
           visible
+          fullVerseImage
           lang={chooser.lang}
           hashtagPreview={hashtagPreview}
           busy={busy}
@@ -829,16 +889,18 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             if (!inFlightRef.current) setProse(null);
           }}
           series={series}
+          cardLayout={prose.content.layout}
         />
       ) : null}
       {pending ? (
+        <ArtworkCaptureContext.Provider value={pending.backgroundPaint ?? null}>
         <View
           pointerEvents="none"
-          style={{ position: 'absolute', left: -10000, top: -10000, ...pendingSize(pending.format) }}
+          style={{ position: 'absolute', left: -10000, top: -10000, ...pendingSize(pending) }}
         >
-          <View ref={cardRef} collapsable={false} style={pendingSize(pending.format)}>
+          <View ref={cardRef} collapsable={false} style={pendingSize(pending)}>
             {pending.kind === 'prose' ? (
-              pending.format === 'story' ? (
+              pending.format === 'story' && !isPictureCapture(pending) ? (
                 <ShareStoryFrame background={pending.card.background}>
                   <ProseShareCard key={pending.captureId ?? 'prose'} {...pending.card}
                     onIllustrationReady={(ready) => {
@@ -870,6 +932,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
                 meaningTitleHi={pending.verse.meaningTitleHi}
                 meaningTitleEn={pending.verse.meaningTitleEn}
                 lang={pending.lang}
+                onHeight={height => onVerseHeight(pending.captureId, height)}
               />
             ) : (
               <ShareCard
@@ -890,10 +953,12 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
                 lang={pending.lang}
                 width={CARD_WIDTH}
                 height={CARD_HEIGHT}
+                onHeight={height => onVerseHeight(pending.captureId, height)}
               />
             )}
           </View>
         </View>
+        </ArtworkCaptureContext.Provider>
       ) : null}
     </ShareContext.Provider>
   );

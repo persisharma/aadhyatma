@@ -7,18 +7,21 @@ import {
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useTheme } from '@/theme/ThemeContext';
+import DeityIcon from './DeityIcon';
+import type { DeityIconKey } from '@/data/deities';
 
-const PIN_GLYPH_SIZE = 18;
+const PIN_GLYPH_SIZE = 22;
 const HIT_SLOP = { top: 16, bottom: 16, left: 16, right: 16 };
 
 type Props = {
   x: number;
   y: number;
   label: string;
+  deityKey: DeityIconKey;
   onPress: () => void;
 };
 
-export default function TheerthPin({ x, y, label, onPress }: Props) {
+export default function TheerthPin({ x, y, label, deityKey, onPress }: Props) {
   const { colors, typography } = useTheme();
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -72,18 +75,9 @@ export default function TheerthPin({ x, y, label, onPress }: Props) {
         onPressOut={() => setShowTooltip(false)}
         delayLongPress={250}
       >
-        <Text
-          style={[
-            styles.glyph,
-            {
-              color: colors.saffronDeep,
-              fontFamily: typography.cardHindi.fontFamily,
-              fontSize: PIN_GLYPH_SIZE,
-            },
-          ]}
-        >
-          {'॥'}
-        </Text>
+        {/* Presiding-deity glyph replaces the old ॥ marker, matching the
+            pilgrimage cards' per-temple deity icons (design.md §29). */}
+        <DeityIcon iconKey={deityKey} fallbackText="" size={PIN_GLYPH_SIZE} />
       </Pressable>
     </View>
   );
@@ -96,11 +90,6 @@ const styles = StyleSheet.create({
     height: PIN_GLYPH_SIZE,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  glyph: {
-    includeFontPadding: false,
-    textAlign: 'center',
-    lineHeight: PIN_GLYPH_SIZE + 2,
   },
   tooltip: {
     position: 'absolute',

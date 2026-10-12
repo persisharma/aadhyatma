@@ -281,6 +281,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
               const verseIdx = index - offset;
               return (
                 <SundarkandVersePage
+                  showIllustration={verseIdx === 0}
                   verse={item}
                   sourceId="sundarkand"
                   width={width}

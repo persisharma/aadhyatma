@@ -15,6 +15,8 @@ type Props = {
   selected: readonly boolean[];
   highlighted: number;
   renderPage: (index: number) => React.ReactNode;
+  /** Native size of the rendered card; defaults to the prose card. */
+  cardSize?: { width: number; height: number };
   onHighlight: (index: number) => void;
   onToggle: (index: number) => void;
   onPreview: () => void;
@@ -105,7 +107,7 @@ export default function SharePagesStrip(props: Props) {
                 },
               ]}
             >
-              <ScaledShareCard width={THUMB_WIDTH}>{props.renderPage(i)}</ScaledShareCard>
+              <ScaledShareCard width={THUMB_WIDTH} metrics={props.cardSize}>{props.renderPage(i)}</ScaledShareCard>
               <Text style={[styles.num, { color: colors.saffronDeep, backgroundColor: colors.parchmentSoft }]}>
                 {i + 1}
               </Text>

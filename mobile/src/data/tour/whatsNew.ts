@@ -26,13 +26,42 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.5.0';
+export const APP_TOUR_VERSION = '1.5.1';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.5.1': {
+    version: '1.5.1',
+    items: [
+      {
+        titleHi: 'जय श्री राम · नाम जप',
+        titleEn: 'Jai Shri Ram · naam jap',
+        bodyHi:
+          'जप माला में अब "जय श्री राम" नाम जप भी — राम दरबार की पृष्ठभूमि के साथ अपनी गणना और संकल्प के साथ जपें।',
+        bodyEn:
+          'The Jap Mala now includes the “Jai Shri Ram” naam jap — chant with a Ram Darbar backdrop, your own count and sankalpa.',
+      },
+      {
+        titleHi: 'लक्ष्मी चालीसा एवं आरती',
+        titleEn: 'Lakshmi Chalisa & Aarti',
+        bodyHi:
+          'श्री लक्ष्मी चालीसा तथा "ॐ जय लक्ष्मी माता" आरती अब पुस्तकालय में — व्याख्या सहित।',
+        bodyEn:
+          'The Shri Lakshmi Chalisa and the “Om Jai Lakshmi Mata” aarti are now in the library, with meanings.',
+      },
+      {
+        titleHi: 'तीर्थ · देवता-चिह्न एवं पाठ',
+        titleEn: 'Theerth · deity art & readings',
+        bodyHi:
+          'तीर्थ कार्ड और मानचित्र पर अब देवता-चिह्न, और हर मंदिर उसके देवता की आरती व चालीसा से जुड़ा — सीधे मंदिर पृष्ठ से पढ़ें।',
+        bodyEn:
+          'Pilgrimage cards and map pins now carry deity glyphs, and each temple links to its deity’s aarti and chalisa — read them straight from the temple page.',
+      },
+    ],
+  },
   '1.5.0': {
     version: '1.5.0',
     items: [

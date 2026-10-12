@@ -20,6 +20,10 @@ import { useNewContent, templeNewKey } from '@/contexts/NewContentContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import IndiaMap, { type IndiaMapPin } from '@/components/IndiaMap';
+import StoryIcon from '@/components/StoryIcon';
+import DeityIcon from '@/components/DeityIcon';
+import { deityIconKey } from '@/data/deities';
+import type { DeityIconKey } from '@/data/deities';
 import {
   temples,
   templesInGroup,
@@ -244,7 +248,6 @@ function Listing({
       {(mode === 'category' ? categoryCards : stateCards).map((c, i) => {
         const card = (
           <BrowseCard
-            glyph={mode === 'category' ? '॥' : 'ॐ'}
             name={c.label}
             meta={`${c.count} ${pick(lang, { hi: 'तीर्थ', en: 'temples', gu: 'તીર્થ', kn: 'ತೀರ್ಥ' })}`}
             hasNew={c.hasNew}
@@ -300,6 +303,7 @@ function DrillIn({
         lat: t.coordinates.lat,
         lng: t.coordinates.lng,
         label: templeName(t, lang),
+        deityKey: deityIconKey(t.deity),
       })),
     [list, lang],
   );
@@ -337,7 +341,7 @@ function DrillIn({
       {list.map((temple) => (
         <BrowseCard
           key={temple.id}
-          glyph="ॐ"
+          deityKey={deityIconKey(temple.deity)}
           name={templeName(temple, lang)}
           meta={templeCity(temple, lang)}
           hasNew={isTempleNew(temple.id)}
@@ -406,7 +410,7 @@ function ModeToggle({
 }
 
 function BrowseCard({
-  glyph,
+  deityKey,
   name,
   meta,
   hasNew,
@@ -416,7 +420,7 @@ function BrowseCard({
   radii,
   onPress,
 }: {
-  glyph: string;
+  deityKey?: DeityIconKey;
   name: string;
   meta: string;
   hasNew?: boolean;
@@ -452,9 +456,12 @@ function BrowseCard({
         end={{ x: 1, y: 1 }}
         style={[rowStyles.thumb, { borderRadius: radii.sm }]}
       >
-        <Text style={{ fontFamily: typography.thumb.fontFamily, fontSize: 18, color: colors.parchmentSoft }}>
-          {glyph}
-        </Text>
+        {/* Temple rows show their presiding deity's glyph (trishul, chakra,
+            lotus…); the grouping rows (category/state), which span many
+            deities, keep the illustrated temple miniature (design.md §26/§47). */}
+        {deityKey
+          ? <DeityIcon iconKey={deityKey} fallbackText="" size={34} />
+          : <StoryIcon name="theerth" size={34} />}
       </LinearGradient>
       <View style={rowStyles.textColumn}>
         <Text

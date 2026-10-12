@@ -30,6 +30,7 @@ const VidhiDetailScreen = lazyScreen('VidhiDetail', 3, () => import('@/screens/V
 // depth 4
 const DaanJourneyScreen = lazyScreen('DaanJourney', 4, () => import('@/screens/DaanJourneyScreen'));
 const KundaliReportScreen = lazyScreen('KundaliReport', 4, () => import('@/screens/KundaliReportScreen'));
+const GrahaReferenceScreen = lazyScreen('GrahaReference', 4, () => import('@/screens/GrahaReferenceScreen'));
 const MuhuratDayDetailScreen = lazyScreen('MuhuratDayDetail', 4, () => import('@/screens/MuhuratDayDetailScreen'));
 const MuhuratResultsScreen = lazyScreen('MuhuratResults', 4, () => import('@/screens/MuhuratResultsScreen'));
 const NamkaranRashiScreen = lazyScreen('NamkaranRashi', 4, () => import('@/screens/NamkaranRashiScreen'));
@@ -157,6 +158,11 @@ export default function PanchangStackNavigator({ initialMode = 'calendar' }: { i
       <Stack.Screen
         name="KundaliReport"
         component={KundaliReportScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="GrahaReference"
+        component={GrahaReferenceScreen}
         options={{ animation: 'slide_from_right' }}
       />
       {/* प्रश्न (PRD-43) — a require() thunk keeps the composer off the launch graph. */}

@@ -220,6 +220,7 @@ export default function DurgaStotramReaderScreen({ navigation, route }: Props) {
               const verseIdx = index - offset;
               return (
                 <ShivaStrotamVersePage
+                  showIllustration={verseIdx === 0}
                   verse={item}
                   sourceId="durga-stotram"
                   width={width}

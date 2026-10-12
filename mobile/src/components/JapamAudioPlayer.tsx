@@ -35,6 +35,10 @@ const MIN_RATE = 0.5;
 const MAX_RATE = 1.5;
 const RATE_STEP = 0.1;
 
+// How often the wall-clock bead counter samples. Matches the audio status
+// update cadence; fine-grained enough for a smooth bead cadence.
+const BEAD_TICK_MS = 250;
+
 // When the counter is opened by tapping an alarm (`autoPlay`), the mantra
 // plays from the shared recording and auto-stops after this long — so the
 // alarm "rings" the mantra then falls silent, rather than looping forever.
@@ -92,13 +96,20 @@ function ActiveAudioPlayer({
   const player = useAudioPlayer(source, { updateInterval: 250 });
   const status = useAudioPlayerStatus(player);
   const [rate, setRate] = useState(1.0);
+  // Whether a chant session is active — our own play/pause intent, NOT the
+  // native `status.playing`. On a looping clip the native flag flickers false
+  // at every loop seam (and its update stream can stall), which both flickered
+  // the Play button and froze the bead count. We set this true when we start
+  // playback and false when we stop it, and drive the button, the listening
+  // hint and the bead counter from it.
+  const [chanting, setChanting] = useState(false);
   const autoPlayedRef = useRef(false);
   // How many times the recording chants the mantra per full playback. A plain
   // single-recitation clip is 1 (one bead per loop); musical renditions repeat
   // the mantra many times, so the count is spread across the clip.
   const repetitions = useMemo(() => getJapamAudioRepetitions(mantraId), [mantraId]);
-  // Cumulative bead-counting state (loops completed, beads emitted, last
-  // position). Advanced by the pure `advanceBeadProgress` reducer each tick.
+  // Cumulative bead-counting state (audio time played, beads emitted, last
+  // clock). Advanced by the pure `advanceBeadProgress` reducer each tick.
   const progressRef = useRef<BeadProgress>(INITIAL_BEAD_PROGRESS);
   // Pending alarm auto-stop timer (see ALARM_AUTO_STOP_MS).
   const capTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -122,6 +133,7 @@ function ActiveAudioPlayer({
   // Reset playback when the mantra changes.
   useEffect(() => {
     setRate(1.0);
+    setChanting(false);
     autoPlayedRef.current = false;
     progressRef.current = INITIAL_BEAD_PROGRESS;
     clearCapTimer();
@@ -144,6 +156,7 @@ function ActiveAudioPlayer({
     try {
       claimPlayback('japam');
       player.play();
+      setChanting(true);
       clearCapTimer();
       capTimerRef.current = setTimeout(() => {
         capTimerRef.current = null;
@@ -152,6 +165,7 @@ function ActiveAudioPlayer({
         } catch {
           /* player may already be released */
         }
+        setChanting(false);
       }, ALARM_AUTO_STOP_MS);
     } catch {
       /* next render will retry via the gate above */
@@ -168,26 +182,42 @@ function ActiveAudioPlayer({
     player.loop = true;
   }, [player]);
 
-  // Advance the bead count as the clip plays, via the pure `advanceBeadProgress`
+  // Advance the bead count on a WALL CLOCK, via the pure `advanceBeadProgress`
   // reducer. A single-recitation clip (`repetitions === 1`) registers one bead
-  // per completed loop; a musical rendition that chants the mantra
+  // per loop-length of play; a musical rendition that chants the mantra
   // `repetitions` times registers one bead per equal-time segment, so the count
-  // tracks the chanting rather than the multi-minute file. Position (not
-  // `didJustFinish`, which isn't emitted while `loop` is enabled and behaves
-  // inconsistently across platforms) drives the counting. A multi-bead tick is
-  // applied as ONE `onIteration(delta)` call — a single atomic counter update
-  // (one render, one persist) rather than N calls.
+  // tracks the chanting rather than the multi-minute file. Counting is timer-
+  // driven (not driven by `status.currentTime`) because native looping does not
+  // reliably report a position wrap, and gated on our own `chanting` intent
+  // (not `status.playing`) because that native flag flickers false at every loop
+  // seam and its update stream can stall — which froze the count after the first
+  // loop. Duration is latched to the last non-zero value so a transient 0 from
+  // the native status doesn't stall the clock. A multi-bead tick is applied as
+  // ONE `onIteration(delta)` call — a single atomic counter update.
+  const durationRef = useRef(0);
+  if ((status.duration ?? 0) > 0) durationRef.current = status.duration;
+  const beadInputsRef = useRef({ duration: 0, repetitions, rate, playing: false });
+  beadInputsRef.current = {
+    duration: durationRef.current,
+    repetitions,
+    rate,
+    playing: chanting,
+  };
   useEffect(() => {
-    if (!status.isLoaded) return;
-    const { state, delta } = advanceBeadProgress(progressRef.current, {
-      currentTime: status.currentTime ?? 0,
-      duration: status.duration ?? 0,
-      repetitions,
-      playing: !!status.playing,
-    });
-    progressRef.current = state;
-    if (delta > 0) onIterationRef.current(delta);
-  }, [status.currentTime, status.duration, status.isLoaded, status.playing, repetitions]);
+    const id = setInterval(() => {
+      const inputs = beadInputsRef.current;
+      const { state, delta } = advanceBeadProgress(progressRef.current, {
+        nowMs: Date.now(),
+        duration: inputs.duration,
+        repetitions: inputs.repetitions,
+        rate: inputs.rate,
+        playing: inputs.playing,
+      });
+      progressRef.current = state;
+      if (delta > 0) onIterationRef.current(delta);
+    }, BEAD_TICK_MS);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     player.shouldCorrectPitch = true;
@@ -216,11 +246,12 @@ function ActiveAudioPlayer({
         } catch {
           /* player may already be released */
         }
+        setChanting(false);
       }),
     [player, clearCapTimer]
   );
 
-  const isPlaying = status.playing;
+  const isPlaying = chanting;
 
   const onPlayingChangeRef = useRef(onPlayingChange);
   useEffect(() => {
@@ -233,15 +264,19 @@ function ActiveAudioPlayer({
 
   const togglePlay = useCallback(() => {
     // A deliberate tap means the user is chanting, not just hearing the alarm
-    // out — drop the auto-stop so their session isn't cut off at 30 s.
+    // out — drop the auto-stop so their session isn't cut off at 30 s. Toggle on
+    // our own `chanting` intent, not the flicker-prone native `status.playing`.
     clearCapTimer();
-    if (status.playing) {
-      player.pause();
-    } else {
+    setChanting((wasChanting) => {
+      if (wasChanting) {
+        player.pause();
+        return false;
+      }
       claimPlayback('japam');
       player.play();
-    }
-  }, [player, status.playing, clearCapTimer]);
+      return true;
+    });
+  }, [player, clearCapTimer]);
 
   const playLabel = isPlaying
     ? pick(lang, { hi: 'विराम', en: 'Pause', gu: 'વિરામ', kn: 'ವಿರಾಮ' })

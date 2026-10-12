@@ -1,0 +1,88 @@
+flow,coverage,assessment,attempts
+aarti-smoke,passed,,device-5582: passed:
+ashtakam-smoke,passed,,device-5584: passed:
+ask-abstain-smoke,passed,,device-5586: passed:
+ask-answer-smoke,passed,,"device-5588: stopped: No visible element found: ""Show the working"" | retest-5590: passed: "
+ask-briefing-smoke,passed,,device-5582: passed:
+background-art-smoke,passed,,device-5584: passed:
+bhajan-audio-smoke,stopped,Fresh audio delivery blocked by emulator TLS inspection trust; seeded-cache media-session checks passed,device-5586: stopped: Element not found: Text matching regex: Pause
+celestial-chakra-smoke,passed,,"device-5588: stopped: Assertion is false: ""Open Daily Rashifal"" is visible | retest-5590: passed: "
+chalisa-smoke,passed,,device-5582: passed:
+daan-punya-smoke,passed,,"device-5584: stopped: Element not found: Text matching regex: Language,.* | retest-5590: passed: "
+daily-bhakti-smoke,passed,,"device-5586: stopped: Assertion is false: ""Daily Verse"" is visible | retest-5590: passed: "
+deity-browse-smoke,passed,,device-5588: passed:
+deity-expansion-smoke,passed,,device-5582: passed:
+discover-icons-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",device-5584: stopped: Assertion is false: id: home-discover-home-widgets is visible
+discovery-purpose-smoke,passed,,device-5586: passed:
+feature-tour-e2e,passed,,device-5588: passed:
+ghar-vastu-compare-smoke,passed,,"device-5582: stopped: Assertion is false: "".*decision is yours.*"" is visible | retest-5590-round2: passed: "
+ghar-vastu-setup-smoke,passed,,"device-5584: stopped: Assertion is false: ""Place on the mandala"" is visible | retest-5590: passed: "
+gita-smoke,passed,,device-5586: passed:
+gochar-smoke,passed,,"device-5588: stopped: Assertion is false: "".*Today.s Panchang.*|.*आज का पंचांग.*"" is visible | retest-5584-birth: passed:  | retest-5590: stopped: Element not found: Text matching regex: .*tap to change year | retest-5590-round2: stopped: No visible element found: id: calendar-year-1992"
+granth-smoke,passed,,device-5582: passed:
+guna-milan-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5584: stopped: No visible element found: ""Language,.*"" | retest-5584-birth: stopped: Assertion is false: ""Bride birth details, time in IST"" is visible | retest-5590: stopped: Element not found: Text matching regex: .*tap to change year | retest-5590-round2: stopped: No visible element found: id: calendar-year-1992"
+home-gutter-smoke,passed,,"device-5586: stopped: No visible element found: ""Kundali\..*Tap to open\."" | retest-5590-round2: passed: "
+home-navigation-smoke,passed,,device-5588: stopped: Assertion is false: id: home-settings is visible | retest-5590: passed:
+home-today-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5582: stopped: Assertion is false: ""Next month"" is visible"
+home-widgets-smoke,passed,,"device-5584: stopped: Assertion is false: ""Japam widget preview"" is visible | retest-5582-widgets-final: passed:  | retest-5590-round2: stopped: Assertion is false: ""Add Vedansh japam widget"" is visible"
+japam-alarms-e2e,passed,,device-5586: passed:
+japam-smoke,passed,,device-5588: passed:
+kavacham-smoke,passed,,device-5582: passed:
+kids-stories-art-framing-smoke,stopped,Automation page/content mismatch; separate ordinary swipe sequences pass 22 pages; full accessibility sequence unresolved,"device-5584: stopped: Assertion is false: ""4 / 10"" is visible"
+kids-stories-art-scroll-smoke,passed,,device-5586: passed:
+kids-stories-durga-full-sequence,stopped,Automation page/content mismatch; separate ordinary swipe sequences pass 22 pages; full accessibility sequence unresolved,device-5588: stopped: Assertion is false: id: story-page-lion-and-warrior is visible
+kids-stories-new-stories-smoke,passed,,device-5582: passed:
+kids-stories-pacing-hindi-smoke,passed,,device-5584: passed:
+kids-stories-regional-smoke,passed,,device-5586: passed:
+kids-stories-share-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",device-5588: stopped: No visible element found: id: kids-story-durga-raktabeej
+kids-stories-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",device-5582: stopped: Assertion is false: id: story-page-promise is visible
+kul-parampara-smoke,passed,,device-5584: passed:
+kundali-report-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5586: stopped: Assertion is false: ""Open Vishnu Sahasranama Excerpt practice"" is visible"
+kundali-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5588: stopped: Assertion is false: ""Open Daily Rashifal"" is visible"
+language-smoke,passed,,"device-5582: stopped: Assertion is false: ""ಹನುಮಾನ ಚಾಲೀಸಾ"" is visible | retest-5590-round2: passed: "
+more-smoke,passed,,device-5584: passed:
+muhurat-finder-smoke,passed,,device-5586: passed:
+muhurat-follow-smoke,passed,,device-5588: passed:
+muhurat-phase2-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5582: stopped: Assertion is false: ""Karana"" is visible"
+muhurat-phase3-smoke,passed,,device-5584: passed:
+muhurat-phase4-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",device-5586: stopped: No visible element found: id: calendar-year-1992
+multi-profile-jyotish-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5588: stopped: Assertion is false: ""Kumbha Moon · Aquarius. Learn more in grahas."" is visible"
+namkaran-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5582: stopped: No visible element found: ""Language,.*"" | retest-5590-round2: stopped: Element not found: Text matching regex: Add Keshav to shortlist"
+new-content-badge-deity-smoke,stopped,Not applicable to release: developer reset control absent,device-5584: stopped: No visible element found: id: dev-reset-new-content
+new-content-badge-home-smoke,stopped,Not applicable to release: developer reset control absent,device-5586: stopped: No visible element found: id: dev-reset-new-content
+new-content-badge-smoke,stopped,Not applicable to release: developer reset control absent,device-5588: stopped: No visible element found: id: dev-reset-new-content
+panchang-day-cache-smoke,passed,,device-5582: passed:
+panchang-location-smoke,passed,,device-5584: passed:
+panchang-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5586: stopped: Assertion is false: ""TITHI"" is visible"
+parv-arc-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5588: stopped: Assertion is false: ""Browse by type"" is visible"
+pitru-paksha-smoke,stopped,Observed locale or old screen-label assumption; full flow not verified,"device-5582: stopped: Element not found: Text matching regex: Language,.*"
+pitru-smaran,stopped,Observed locale or old screen-label assumption; full flow not verified,"device-5584: stopped: Assertion is false: ""अपने पितरों की तिथियाँ जोड़ें"" is visible"
+prashna-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect",device-5586: stopped: Element not found: Text matching regex: .*tap to change year
+rating-prompt-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5588: stopped: Assertion is false: ""Language,.*"" is visible"
+read-aloud-smoke,stopped,Observed locale or old screen-label assumption; full flow not verified,"device-5582: stopped: Assertion is false: ""पाठ सुनें"" is visible"
+regional-lens-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5584: stopped: Assertion is false: ""Browse by type"" is visible"
+regional-parv-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5586: stopped: Assertion is false: ""Browse by type"" is visible"
+reminders-smoke,stopped,Observed locale or old screen-label assumption; full flow not verified,"device-5588: stopped: Assertion is false: ""More"" is visible"
+resume-reading-smoke,passed,,device-5582: passed:
+routine-reminder-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5584: stopped: No visible element found: ""Done"""
+routine-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5586: stopped: No visible element found: ""Done"""
+routine-weekday-smoke,passed,,device-5588: passed:
+sadhana-calendar-preview-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5582: stopped: Assertion is false: "".*Your sankalp begins.*"" is visible"
+sadhana-sankalp-smoke,passed,,device-5584: passed:
+sanskar-smoke,passed,,device-5586: passed:
+search-smoke,passed,,device-5588: passed:
+share-katha-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5582: stopped: Assertion is false: ""Katha library,.*"" is visible"
+share-target-smoke,passed,,device-5584: passed:
+shubh-yoga-smoke,passed,,device-5586: passed:
+single-chapter-open-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5588: stopped: Assertion is false: ""Hymns & Praise\..*Tap to open\."" is visible"
+storybook-icons-smoke,passed,,device-5582: passed:
+stotram-smoke,passed,,device-5584: passed:
+stuti-smoke,passed,,device-5586: passed:
+suktam-smoke,passed,,device-5588: passed:
+theerth-enrichment-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5582: stopped: Assertion is false: "".*Pilgrimage.*Tap to open.*"" is visible"
+theerth-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5584: stopped: Assertion is false: "".*Pilgrimage.*Tap to open.*"" is visible"
+vastu-disha-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5586: stopped: Assertion is false: ""Room by room"" is visible"
+vidhi-smoke,passed,,device-5588: passed:
+vrat-catalog-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5582: stopped: Assertion is false: ""Browse by type"" is visible"
+vrat-follow-smoke,stopped,"Assertion stop; full flow unresolved, see attempt detail and debug evidence; not automatically a product defect","device-5584: stopped: Assertion is false: ""Browse by type"" is visible"
+wishlist-smoke,passed,,device-5586: passed:

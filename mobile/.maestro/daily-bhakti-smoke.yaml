@@ -18,6 +18,8 @@
 #   2. The verse card renders (the "Daily Verse" subtitle + "Meaning" section).
 #   3. The "↻ next" control fetches another verse and the screen stays intact.
 #   4. Global reading-language switching reflects on the screen.
+#   5. A pinned Gita verse exposes its meaning immediately at Standard size,
+#      without spending the viewport on an illustration; Large remains scrollable.
 #
 # Why we switch to English first:
 #   The screen reads the GLOBAL reading language (useGitaLanguage); the default
@@ -57,9 +59,19 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn: "English"
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Standard"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
 
 # ── Step 3: Open the Bhakti tab ──
 - tapOn: { id: "tab-bhakti" }
+- openLink: "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=2&verseIndex=46"
+- tapOn:
+    text: "Open"
+    optional: true
 - waitForAnimationToEnd
 
 # ── Step 4: Assert the verse card rendered ──
@@ -67,24 +79,50 @@ appId: com.prashantsharma.vedansh
     visible: "Daily Verse"
     timeout: 15000
 - assertVisible: "Meaning.*"
+# Pin layout verification to a known complete verse rather than assuming a
+# random long verse/meaning must fit. This exercises the widget landing route,
+# not an OS notification tap.
+- assertVisible: "Your right is only to work.*"
+- takeScreenshot: e2e-shots/daily-reading-standard
+- tapOn: "Share verse"
+- assertVisible: "Share to other apps"
+- tapOn: "Cancel"
 
-# ── Step 5: "next" swaps to another verse; the screen stays intact ──
-# The "Next verse" control sits below the verse + Meaning block, off-screen on
-# Android's shorter viewport — scroll to it (no-op when already visible on iOS).
+# ── Step 5: Large keeps the whole reading reachable at the same type scale ──
+- runFlow: _open-settings.yaml
 - scrollUntilVisible:
-    element:
-      text: "Next verse"
+    element: { text: "Reading size,.*" }
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Large"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- openLink: "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=2&verseIndex=46"
+- tapOn:
+    text: "Open"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/daily-reading-large
+- scrollUntilVisible:
+    element: { text: "Next verse" }
     direction: DOWN
     centerElement: true
     timeout: 10000
+- assertVisible: "Your right is only to work.*"
+
+# ── Step 6: "next" swaps to another verse; the screen stays intact ──
 - tapOn: "Next verse"
 - waitForAnimationToEnd
 - assertVisible: "Daily Verse"
-- assertVisible: "Meaning.*"
 
-# ── Step 6: Restore Hindi (best-effort) ──
+# ── Step 7: Restore Hindi / Standard (best-effort language restore) ──
 - runFlow: _open-settings.yaml
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Standard"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
 - scrollUntilVisible:
     element:
       text: "Language,.*"

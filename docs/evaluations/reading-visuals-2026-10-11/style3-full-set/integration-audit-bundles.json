@@ -1,0 +1,24 @@
+{
+  "export": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/scripts/.cache/reader-integration-audit-export",
+  "platforms": {
+    "android": {
+      "bundle": "_expo/static/js/android/index-d469f9d76b172c67e973407d3e9bf04c.hbc",
+      "bundleBytes": 44441247,
+      "bundleSha256": "3045244c7259678d93202ce56c24b8846439012eb57f49d8aaf79ad84898970c",
+      "assetCount": 103,
+      "bannerBitmapCount": 0,
+      "bundledReadingFallbackBytes": 3102,
+      "finalHanumanSeaHashInBundle": true
+    },
+    "ios": {
+      "bundle": "_expo/static/js/ios/index-c54a96e41849e088e922ad4e66fd83d3.hbc",
+      "bundleBytes": 44420756,
+      "bundleSha256": "6eaa625d54b18bd6e87d2cc6811806bb468a7da20f82182edfcd6eca818b71c2",
+      "assetCount": 103,
+      "bannerBitmapCount": 0,
+      "bundledReadingFallbackBytes": 3102,
+      "finalHanumanSeaHashInBundle": true
+    }
+  },
+  "nativeReleaseContainsFinalHanumanHash": true
+}

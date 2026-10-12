@@ -1,0 +1,20 @@
+{
+  "startedAt": "2026-10-09T19:28:35.993197+00:00",
+  "originalFixture": "/Users/prashant/Library/Developer/CoreSimulator/Devices/BD91E840-482E-4816-838A-9C5247E401DA/data/Containers/Data/Application/564E34B7-F70E-45F4-A3D2-942530B51A0C/Documents/ExponentExperienceData/@prashant.sharma/vedansh/reading-backgrounds/82e2664730270637.webp",
+  "backup": "/tmp/vedansh-reading-vishnu-fixture-backup.webp",
+  "expectedSha256": "82e26647302706372c4211649b14fedd1a59d57bbda155180e1357caea48b4bb",
+  "action": "Moved only the explicitly seeded isolated QA fixture while app process was stopped; restore after fresh native R2 attempt.",
+  "finishedAt": "2026-10-09T19:30:15.418912+00:00",
+  "nativeProcess": 24007,
+  "nativeResult": "NSURLErrorDomain -1200; two failed fresh R2 attempts on preparation/conduct routes",
+  "certificateValidation": "enabled, unchanged",
+  "fallbackScreenshot": "18-native-r2-fallback.jpg",
+  "navigation": "Puja mode and Begin puja reached step 1 while the art request failed",
+  "promotedFileAfterFailedRequest": false,
+  "partialFilesAfterFailedRequest": 0,
+  "fixtureRestored": true,
+  "restoredSha256": "82e26647302706372c4211649b14fedd1a59d57bbda155180e1357caea48b4bb",
+  "log": "native-r2-retry.log",
+  "restoredNativeDecodeScreenshot": "19-native-cache-restored.jpg",
+  "restoredNativeDecodeVerified": true
+}

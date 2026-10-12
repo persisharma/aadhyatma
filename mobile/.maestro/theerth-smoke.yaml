@@ -81,6 +81,29 @@ appId: com.prashantsharma.vedansh
     visible: ".*Sources.*"
     timeout: 15000
 
+# आरती व चालीसा (design.md §27 item 10): the presiding deity's shipped aarti +
+# chalisa sit below the reading as LibraryCards. Dwarkadhish → Krishna, so the
+# cards are Krishna Chalisa and Aarti Kunj Bihari Ki; opening one lands in the
+# reader, and Back returns to the temple.
+- scrollUntilVisible:
+    element:
+      text: "Krishna Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- assertVisible: "Aarti Kunj Bihari Ki\\..*Tap to open\\."
+- tapOn: "Krishna Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss Resume sheet if a prior session left reading progress
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+- assertVisible: "Back"
+- tapOn: "Back"
+- waitForAnimationToEnd
+- assertVisible: ".*Sources.*"
+
 # Back to the drill-in, back to the listing, then switch to By State.
 - tapOn: "Back"
 - waitForAnimationToEnd

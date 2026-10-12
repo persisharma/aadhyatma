@@ -1,6 +1,11 @@
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { ImageBackground, View as mockView } from 'react-native';
+import { View as mockView } from 'react-native';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingArtwork from '@/components/ReadingArtwork';
+import ReadingBanner from '@/components/ReadingBanner';
+import Ornament from '@/components/Ornament';
+import { readingParchment, backgroundRequest } from '@/data/backgroundAsset';
 
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
@@ -52,18 +57,14 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
 const { ShareProvider } = jest.requireActual<typeof import('@/utils/shareVerse')>(
   '@/utils/shareVerse'
 );
-const { getReaderBackground } = jest.requireActual<typeof import('@/data/backgrounds')>(
-  '@/data/backgrounds'
-);
 const DailyBhaktiScreen = jest.requireActual<typeof import('../DailyBhaktiScreen')>(
   '../DailyBhaktiScreen'
 ).default;
 
 /**
- * Guard: the Daily Bhakti verse card must carry the verse's reader-page sketch
- * (getReaderBackground) instead of the plain parchment fill it shipped with.
+ * The daily verse keeps local paper without making each random verse a cover card.
  */
-test('verse card renders the source reader background, not a plain fill', () => {
+test('verse card uses local paper and a compact divider without a banner request', () => {
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
@@ -76,9 +77,12 @@ test('verse card renders the source reader background, not a plain fill', () => 
     );
   });
 
-  const backgrounds = tree!.root.findAllByType(ImageBackground);
+  const backgrounds = tree!.root.findAllByType(BackgroundLayer);
   expect(backgrounds).toHaveLength(1);
-  expect(backgrounds[0].props.source).toBe(
-    getReaderBackground('bhagavad-gita', { stanza: 1 })
-  );
+  expect(backgrounds[0].props.source).toBe(readingParchment);
+  expect(backgroundRequest(backgrounds[0].props.source)).toBeNull();
+  expect(tree!.root.findAllByType(ReadingArtwork)).toHaveLength(0);
+  expect(tree!.root.findAllByType(ReadingBanner)).toHaveLength(0);
+  expect(tree!.root.findByType(Ornament).props.compact).toBe(true);
+  act(() => tree!.unmount());
 });

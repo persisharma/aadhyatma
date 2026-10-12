@@ -2,7 +2,7 @@
 title: Share Cards (verse, prose, series)
 type: subsystem
 sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareContent.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
-last_verified_date: 2026-10-09
+last_verified_date: 2026-10-12
 confidence: high
 status: current
 ---
@@ -10,12 +10,14 @@ status: current
 ## Summary
 
 One provider (`ShareProvider` / `useShare()` in `utils/shareVerse.tsx`, mounted once in
-`App.tsx`) turns any content unit into a branded 540×675 dp parchment card, captures it
-off-screen with `react-native-view-shot` at 1080×1350 (or a 1080×1920 story frame), and
+`App.tsx`) turns content into branded parchment images, captures them
+off-screen with `react-native-view-shot`, and
 hands it to WhatsApp / the OS sheet / Instagram. `share(content, lang)` takes a
 `ShareableContent`: a `ShareableVerse` (the original verse card, design.md §39) or a
 `ShareableProse` (PRD-45, §39.4) — long prose that a pure paginator cuts into a **series**
-of cards. A series gets a pages strip, a preview, and two all-pages rows that hand every
+of cards. Verse images retain a 540×675dp minimum and grow from actual native text layout; they export
+at 1080px width with proportional height. Short story shares retain 1080×1920; longer
+ones grow with the card plus the frame's 120/165dp insets. A series gets a pages strip, a preview, and two all-pages rows that hand every
 page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select multiple).
 
 ## Details
@@ -38,7 +40,7 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
 - **Multi-file share** (`utils/multiShare.ts`): `react-native-share` `open({ urls })`,
   probed via `TurboModuleRegistry.get('RNShare')` then lazily required.
 
-- **Illustrated kids stories** (`kidsStoryShareable`, exported by `shareContent.ts`): four-language prepared scopes alternate a complete reviewed-frame scene card with ordinary paginated narration. Numbered parts pack whole scene groups using the maximum count across all four locales, never silently truncating the story at ten cards. Ending/source cards are included, plus a visible-scene scope. Native gu/kn prose and caption labels bypass transliteration. Scope pills scroll horizontally below the count.
+- **Illustrated kids stories** (`kidsStoryShareable`, exported by `shareContent.ts`): `layout: 'picture'` — every page on the 540×960 (9:16) picture card, captured at 1080×1920 for every target (`isPictureCapture` in the provider; no `ShareStoryFrame`). One card per scene: complete art at the body's full width when the caption allows (never under 400 dp), then the reader's caption box with title, narration and dialogue as a `quote` block in its tinted box. Closing card: cover art (≥260 dp), takeaway, source note and a `link` block printing `vedansh.app/get` (the share message carries the tappable URL). `paginateProse({ layout, firstPageReservedDp })` budgets the taller body, the caption-box padding and the 452 dp text column. Every published caption fits its scene card in all four languages. The sheet hides the 4:5 Instagram-post row for picture content. Numbered parts pack whole scene groups using the maximum count across all four locales, never silently truncating the story at ten cards.
 - **Illustrated capture readiness.** Only illustrated exports load the cache module, resolve the existing hashed R2 request, then wait for native `Image.onLoad` on a fresh capture mount. Fetch/decode timeout or errors return failure: a series aborts before hand-off and a single scene refuses the text-only fallback. Preview may show loading UI, but exported files never deliberately contain a placeholder. The same provider, paginator, branded card, preview and native multi-share adapter remain in use.
 
 ## Gotchas
@@ -55,16 +57,18 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   (save images → Instagram → + → Select multiple) before opening the OS sheet.
 - **Paginator constants are measured.** Advances hi 0.41 · gu 0.43 · kn 0.56 · en 0.44 =
   the minimum that never under-counted any of 500 katha paragraphs per language laid out
-  in Chromium at 484 dp with the app's TTFs, + 0.02. The verse meaning ladder's
-  `AVG_ADVANCE` (0.52/0.46) over-counts prose by ~38 %. If a device clips a page, widen
+  in Chromium at 484 dp with the app's TTFs, + 0.02. If a device clips a prose page, widen
   the advance — never add `adjustsFontSizeToFit` (design.md §39's 7 pt failure).
-- **Verse budget counts logical lines, not wrapped ones.** `fitMeaningType` charges 42 dp per
-  `lines[]` entry, but at 24 pt over 468 dp most Gita lines (40–63 chars) wrap to two. Measured in
-  Chromium with the app TTFs (Oct 2026): 164 of 340 Gita Saar cards wrap, the worst lands at
-  677/675 dp (2 dp into bottom padding — invisible). Any verse share whose meaning uses its full
-  cap *and* wraps its verse would clip the footer; count wrapped verse lines before widening.
-- **Optional title line.** `meaningTitleHi/En` sets a line above the meaning at the fitted size
-  (Gita Saar's theme line); it spends the same budget via `fitMeaningType({ title })`.
+- **Verse height is native, not estimated.** `ShareCard` uses `minHeight`, uncapped text,
+  24/40 verse and 18/27 meaning. The provider waits up to five seconds for a capture-specific
+  native height callback, then resizes the capture container and PNG height. A late callback
+  from an older capture is ignored; missing layout takes the existing failure path instead
+  of capturing a guessed short frame. This work runs only on share.
+- **Optional title line.** `meaningTitleHi/En` renders the complete theme title above the
+  meaning at 18/27; actual wrapping contributes naturally to the measured image height.
+- **Tall images and Instagram.** The verse picker explains one taller image for long text
+  and possible framing adjustments in Instagram. It does not promise fixed aspect chips or
+  third-party crop behavior. Prose/picture picker geometry is unchanged.
 - **No-share surfaces.** Pitru Smaran, the पितृ पक्ष परिचय layer and the personal-tithi
   Vidhi carry no share button — design.md §63/§74 lock it.
 - **Tests that mount a share surface** must wrap it in `ShareProvider` (`useShare()`
@@ -85,6 +89,6 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
 - `design.md` §39 (verse card, sheet, hashtags, story) and §39.4–§39.6 (prose, series,
   all-pages); `RULEBOOK.md` §3 (share contract, constrained surfaces).
 
-Illustrated story cards measure the actual title height before sizing the complete framed scene into the remaining body. A conservative initial frame is replaced after native title layout, and export waits for decoded art and layout. Full prose cards keep the existing fixed readable type.
+Illustrated story cards do not measure the title at render: the paginator fixes the art box (`illustration.heightDp`) from the estimated title + caption height, and `ProseShareCard` renders art → caption box (title → narration → quote/link blocks) inside that geometry. Export still waits for decoded art and layout. Prose type stays at the existing fixed readable size; only the art box varies. `ScaledShareCard` takes `metrics` so previews and thumbnails scale the 9:16 card correctly.
 
-The shared capture pipeline compensates for UIKit point dimensions using `PixelRatio.get()`; Android options remain physical pixels. Native iOS verification caught the old 3x multiplier (3240×4050) and the corrected output is checked at 1080×1350. Story-frame options receive the same correction for 1080×1920.
+The shared capture pipeline compensates for UIKit point dimensions using `PixelRatio.get()`; Android options remain physical pixels. Native iOS verification caught the old 3x multiplier (3240×4050) and the corrected output is checked at 1080×1350. Short story-frame options receive the same correction for 1080×1920; taller verse exports retain 1080px width and scale height proportionally.

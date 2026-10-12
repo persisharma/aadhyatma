@@ -8,8 +8,8 @@ import { getJapamAudioRepetitions } from '@assets/japam-audio';
 
 /**
  * Drive the reducer through a sequence of ticks and return the total beads
- * emitted plus the final state — mirrors how JapamAudioPlayer feeds it status
- * updates.
+ * emitted plus the final state — mirrors how JapamAudioPlayer feeds it wall-
+ * clock ticks on a fixed interval.
  */
 function run(
   ticks: BeadTick[],
@@ -25,85 +25,110 @@ function run(
   return { total, state };
 }
 
-/** Simulate `loops` full playbacks of a clip sampled every `stepSec`. */
-function playLoops(
-  loops: number,
-  duration: number,
-  repetitions: number,
-  stepSec = 0.25
+/**
+ * Simulate `durationMs` of steady playback sampled every `stepMs`, as a fixed-
+ * interval wall clock would deliver it. The first tick seeds the clock and
+ * contributes no play time (there's no prior tick to measure from).
+ */
+function playFor(
+  durationMs: number,
+  opts: {
+    duration: number;
+    repetitions: number;
+    rate?: number;
+    stepMs?: number;
+    startNow?: number;
+  }
 ): BeadTick[] {
+  const { duration, repetitions, rate = 1, stepMs = 250, startNow = 1_000 } = opts;
   const ticks: BeadTick[] = [];
-  for (let l = 0; l < loops; l++) {
-    for (let t = stepSec; t < duration; t += stepSec) {
-      ticks.push({ currentTime: t, duration, repetitions, playing: true });
-    }
-    // Wrap back to the top for the next loop.
-    ticks.push({ currentTime: 0, duration, repetitions, playing: true });
+  for (let t = 0; t <= durationMs; t += stepMs) {
+    ticks.push({ nowMs: startNow + t, duration, repetitions, rate, playing: true });
   }
   return ticks;
 }
 
 describe('advanceBeadProgress', () => {
-  test('single-recitation clip registers exactly one bead per loop', () => {
-    const { total } = run(playLoops(5, 6, 1));
+  test('single-recitation clip registers one bead per loop-length of play', () => {
+    // A 6 s single-recitation clip: five loops = 30 s of play = 5 beads.
+    const { total } = run(playFor(30_000, { duration: 6, repetitions: 1 }));
     expect(total).toBe(5);
   });
 
-  test('a musical rendition registers `repetitions` beads per loop', () => {
-    expect(run(playLoops(1, 480, 16)).total).toBe(16);
-    expect(run(playLoops(3, 193, 6)).total).toBe(18); // 6 × 3 loops
+  test('a musical rendition registers `repetitions` beads per full playback', () => {
+    expect(run(playFor(480_000, { duration: 480, repetitions: 16, stepMs: 1000 })).total).toBe(16);
+    // Three loops of a 193 s, 6-rep clip → 18 beads.
+    expect(run(playFor(193_000 * 3, { duration: 193, repetitions: 6, stepMs: 1000 })).total).toBe(18);
   });
 
   test('beads are spread across the clip, not dumped at the wrap', () => {
-    // Halfway through a 6-rep clip, ~3 beads should have registered.
-    const half: BeadTick[] = [];
-    for (let t = 0.25; t <= 96; t += 0.25) {
-      half.push({ currentTime: t, duration: 192, repetitions: 6, playing: true });
-    }
-    const { total } = run(half);
+    // Halfway through a 6-rep, 192 s clip (96 s of play) → ~3 beads.
+    const { total } = run(playFor(96_000, { duration: 192, repetitions: 6, stepMs: 1000 }));
     expect(total).toBe(3);
   });
 
-  test('a coarse tick that skips segments emits the whole delta at once', () => {
-    // Jump straight from 0 to 75% of a 4-rep clip in one tick → 3 beads.
-    const { total, state } = run([
-      { currentTime: 0, duration: 100, repetitions: 4, playing: true },
-      { currentTime: 75, duration: 100, repetitions: 4, playing: true },
-    ]);
-    expect(total).toBe(3);
-    expect(state.emitted).toBe(3);
+  test('tempo scales the counting: faster play accrues beads sooner', () => {
+    // At 2× tempo, 15 s of wall time plays 30 s of a 6 s clip → 5 beads.
+    const { total } = run(playFor(15_000, { duration: 6, repetitions: 1, rate: 2 }));
+    expect(total).toBe(5);
+  });
+
+  test('it never stalls: continuous play keeps counting well past the first loop', () => {
+    // The regression this fixes: with the old position-wrap reducer, a device
+    // that didn't emit a backward jump froze at one bead. Wall-clock keeps going.
+    const { total } = run(playFor(60_000, { duration: 6, repetitions: 1, stepMs: 250 }));
+    expect(total).toBe(10);
+    expect(total).toBeGreaterThan(1);
+  });
+
+  test('a long gap (paused / backgrounded) does not dump a burst of beads', () => {
+    const base = { duration: 6, repetitions: 1, rate: 1, playing: true as const };
+    const ticks: BeadTick[] = [
+      { nowMs: 1_000, ...base }, // seed
+      { nowMs: 1_250, ...base }, // +250 ms of play
+      { nowMs: 61_250, ...base }, // 60 s wall gap — NOT counted as play time
+      { nowMs: 61_500, ...base }, // +250 ms of play
+    ];
+    expect(run(ticks).total).toBe(0);
+  });
+
+  test('a single tick (no prior clock) registers nothing', () => {
+    expect(
+      run([{ nowMs: 1_000, duration: 6, repetitions: 1, rate: 1, playing: true }]).total
+    ).toBe(0);
   });
 
   test('paused playback and unknown duration register nothing', () => {
     expect(
-      run([{ currentTime: 10, duration: 100, repetitions: 4, playing: false }]).total
+      run([
+        { nowMs: 1_000, duration: 6, repetitions: 1, rate: 1, playing: false },
+        { nowMs: 1_250, duration: 6, repetitions: 1, rate: 1, playing: false },
+      ]).total
     ).toBe(0);
     expect(
-      run([{ currentTime: 10, duration: 0, repetitions: 4, playing: true }]).total
+      run([
+        { nowMs: 1_000, duration: 0, repetitions: 1, rate: 1, playing: true },
+        { nowMs: 1_250, duration: 0, repetitions: 1, rate: 1, playing: true },
+      ]).total
     ).toBe(0);
   });
 
-  test('a missed wrap loses at most one loop and never stalls', () => {
-    const duration = 100;
-    const reps = 4;
-    // Loop 1 plays fully, but the wrap tick (position back to ~0) is dropped;
-    // loop 2 resumes mid-clip. Counting must recover, not freeze.
+  test('a mid-session pause contributes nothing while stopped', () => {
+    // The player's interval keeps ticking (every 1 s here) whether or not audio
+    // is playing, so a pause is a run of `playing: false` ticks, not a gap.
+    const d = { duration: 6, repetitions: 1, rate: 1 };
     const ticks: BeadTick[] = [];
-    for (let t = 25; t <= 100; t += 25) {
-      ticks.push({ currentTime: t, duration, repetitions: reps, playing: true });
-    }
-    // No {currentTime: 0} wrap tick here — it's the "missed" one.
-    for (let t = 25; t <= 100; t += 25) {
-      ticks.push({ currentTime: t, duration, repetitions: reps, playing: true });
-    }
-    // A third loop that DOES wrap cleanly.
-    ticks.push({ currentTime: 0, duration, repetitions: reps, playing: true });
-    for (let t = 25; t <= 100; t += 25) {
-      ticks.push({ currentTime: t, duration, repetitions: reps, playing: true });
-    }
-    const { total } = run(ticks);
-    // Without the fix this would stall at 4; it must keep counting past that.
-    expect(total).toBeGreaterThan(reps);
+    let now = 1_000;
+    const push = (secs: number, playing: boolean) => {
+      for (let i = 0; i < secs; i++) {
+        ticks.push({ nowMs: now, ...d, playing });
+        now += 1_000;
+      }
+    };
+    push(7, true); // seed + 6 s of play → 1 bead
+    push(10, false); // paused — nothing accrues
+    push(7, true); // 6 s more of play → 1 more bead
+    expect(run(ticks).total).toBe(2);
   });
 });
 

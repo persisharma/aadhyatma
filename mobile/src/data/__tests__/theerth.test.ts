@@ -13,6 +13,7 @@ import {
   otherFamous,
   templesInGroup,
 } from '../theerth/temples';
+import { relatedReadingsForDeity } from '../theerth/relatedReadings';
 
 // `temples` is rows only — the prose loads behind a require() thunk so it stays
 // off the launch graph (see temples.ts). Anything asserting on significance,
@@ -308,6 +309,40 @@ const famousTheerth = library.find((entry) => entry.id === 'famous-theerth');
 assert.ok(famousTheerth, 'famous-theerth library entry should exist');
 assert.match(famousTheerth.sub, /71 तीर्थ/, 'Hindi famous-theerth subtitle should match temple count');
 assert.match(famousTheerth.subEn, /71 Theerths/, 'English famous-theerth subtitle should match temple count');
+
+// ─── 11. Related readings (design.md §27 item 10) resolve from the deity ──────
+// Every card a temple shows must be an openable chalisa/aarti of its own deity,
+// chalisas before aartis, primary-deity texts before secondary tags. The only
+// temples allowed to show nothing are those whose deity has no shipped
+// chalisa/aarti at all — pinned so a new deity mapping cannot silently go dark.
+for (const temple of temples) {
+  const related = relatedReadingsForDeity(temple.deity);
+  let lastCategoryRank = -1;
+  for (const entry of related) {
+    const rank = ['chalisa', 'aarti'].indexOf(entry.category);
+    assert.ok(rank >= 0, `${temple.id}: ${entry.id} is not a chalisa/aarti`);
+    assert.ok(rank >= lastCategoryRank, `${temple.id}: chalisas must precede aartis`);
+    lastCategoryRank = rank;
+    assert.equal(entry.status, 'active', `${temple.id}: ${entry.id} is not openable`);
+    assert.ok(!entry.hidden, `${temple.id}: ${entry.id} is hidden`);
+    assert.ok(entry.deities.includes(temple.deity), `${temple.id}: ${entry.id} is not a ${temple.deity} text`);
+  }
+  assert.equal(new Set(related.map((e) => e.id)).size, related.length, `${temple.id}: duplicate cards`);
+}
+const templesWithoutReadings = temples
+  .filter((t) => relatedReadingsForDeity(t.deity).length === 0)
+  .map((t) => t.id)
+  .sort();
+assert.deepEqual(
+  templesWithoutReadings,
+  ['konark-sun'],
+  'only temples whose deity has no shipped chalisa/aarti may hide the block',
+);
+const ramaReadings = relatedReadingsForDeity('rama').map((e) => e.id);
+assert.ok(
+  ramaReadings.indexOf('ram-chalisa') < ramaReadings.indexOf('hanuman-chalisa'),
+  'a Rama temple leads with Ram Chalisa, not the secondary-tagged Hanuman Chalisa',
+);
 
 console.log(
   `✓ theerth data-contract: ${temples.length} temples, ${EXPECTED_STATES.length} states covered, projection aligned, sourced prose present`,

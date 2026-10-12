@@ -1,0 +1,74 @@
+{
+  "artifact": "Android 1.5.0 (12), universal APK from submitted AAB, local test signature",
+  "localManifest": {
+    "objects": 154,
+    "images": 144,
+    "audio": 10,
+    "hashMatches": 154,
+    "imageDecodePass": 144,
+    "audioFormatProbePass": 10
+  },
+  "nativeCachedReplay": {
+    "fixtureSeeded": true,
+    "networkDisabled": true,
+    "storyImages": "pass, Navaratri sampled pages",
+    "pageNavigation": "pass, stable 2/3",
+    "processRestart": "pass, artwork and audio retained",
+    "audio": "pass, media session playing/paused/resumed/background",
+    "audibleQuality": "not tested (-no-audio emulator)",
+    "manualOrdinarySwipeSequence": {
+      "durgaHindiLarge": {
+        "pages": 12,
+        "counterIdMatch": 12,
+        "captionScrollChecked": true
+      },
+      "putanaEnglishLarge": {
+        "pages": 10,
+        "counterIdMatch": 10,
+        "captionScrollChecked": true
+      },
+      "scope": "Fixture-seeded cached images; ordinary coordinate gestures, separate from Maestro accessibility scrolling. Not a complete all-story/language editorial review."
+    },
+    "interruptedCacheFailureRecovery": {
+      "partRemovedAfterOfflineFailure": true,
+      "readerUsableWithPlaceholder": true,
+      "restoredFixtureLoadsOnRemount": true,
+      "successfulRemoteRetry": false
+    }
+  },
+  "liveDelivery": {
+    "status": "blocked",
+    "cause": "Android default trust manager rejects corporate Netskope inspection chain; Google control URL fails too",
+    "browserSample": "one Navaratri CDN image loads/decodes in Brave",
+    "freshImageDownload": "unverified",
+    "freshAudioStream": "unverified",
+    "cachePopulationFromR2": "unverified",
+    "allRemoteObjectsExist": "unverified",
+    "cacheFailureRetry": "32 focused mocked tests pass; not native live-download proof",
+    "browserAudioSample": "Brave direct audio navigation blocked by client (net::ERR_BLOCKED_BY_CLIENT); no bypass attempted, no live audio confirmation."
+  },
+  "changes": {
+    "appBinary": false,
+    "appSource": false,
+    "storeSubmission": false,
+    "R2Objects": false,
+    "securityBypass": false
+  },
+  "historicalCDNValidation": {
+    "checkedAtUtc": "2026-10-09T18:10:37.240Z",
+    "baseUrl": "https://cdn.vedansh.app",
+    "method": "Unauthenticated HTTPS GET through the production CDN for every app-manifest object. Full SHA256 matches the exact uploaded inventory for all 87 new images; legacy assets match their manifest hash prefix. Every response is fully decoded as WebP with sharp/libvips. Raw downloads remain local in tmp.",
+    "manifestSha256": "7cb326069b260c49f11ec4de50a4c172d640e38d4c271bf50ce73dd6faa723cf",
+    "total": 144,
+    "newAssets": 87,
+    "passed": 144,
+    "failed": 0,
+    "bytes": 44964738,
+    "currentManifestSha256": "7cb326069b260c49f11ec4de50a4c172d640e38d4c271bf50ce73dd6faa723cf",
+    "manifestUnchanged": true,
+    "statusCounts": {
+      "200": 144
+    },
+    "currentLiveVerification": false
+  }
+}
