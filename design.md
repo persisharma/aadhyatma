@@ -3465,3 +3465,17 @@ Headings are section-label face at 10 pt (en) / 12 pt (Indic) in `saffronDeep`, 
 ### Native icon sizing follow-up (2026-10-06)
 
 FOR TODAY compact cards retain their normal 196dp width. Above fontScale 1.2 their width grows to `min(windowWidth − 2 × horizontalGutter, 196 × fontScale)` (Home supplies 16dp) and titles wrap to their natural height. At enlarged text, the Today headline/timing chips and inline Routine title also retain their full text. Category art remains 62.7dp in all layouts; screen aspect ratio changes columns and scrolling, never the image aspect ratio. Fresh native evidence is tracked in `docs/evaluations/storybook-icons-2026-10-06/post-change/`.
+
+## 79. App tracking permission (iOS, October 2026)
+
+**Purpose.** Ask iOS App Tracking Transparency (ATT) once, before Meta install measurement starts, so App Review (2.1) can see the request on a fresh install. Android has no equivalent dialog.
+
+**Structure.** A system alert drawn by iOS over Home. Only the second line is ours:
+
+1. Title (iOS, fixed): *Allow “Vedansh” to track your activity across other companies’ apps and websites?*
+2. Purpose line (`NSUserTrackingUsageDescription`): **So we know how you found Vedansh.** Plain words that answer the title's "why?": it names install attribution (the only use) without ad-industry terms, does not repeat the title's "Allow Vedansh", and carries no privacy reassurance (RULEBOOK §3 copy rule). It must stay true to the actual use (App Review 5.1.1); a new use means new copy. English only; the app ships no iOS `locales`.
+3. Buttons (iOS, fixed): *Ask App Not to Track* · *Allow*.
+
+**Interaction.** Requested after navigation is ready and the UI is idle, only while undetermined and askable. If iOS drops the request without showing it, the app asks again up to four times, 750 ms apart, in the same foreground. Meta stays inactive until the user answers. **Allow** lets Meta use the device's advertising ID for exact install attribution; **Ask App Not to Track** keeps the ID off and Meta falls back to Apple's aggregate install reports. Either answer leaves the app fully usable. Changing the purpose line needs a new store binary (Info.plist), not an OTA.
+
+**Files.** `mobile/plugins/metaTrackingConfig.js` (`TRACKING_PERMISSION`), `mobile/src/utils/metaActivationController.ts` (ask/retry/activation order), `mobile/src/utils/metaAppEvents.ts` (native-flag gate), `docs/meta-app-events.md`.
