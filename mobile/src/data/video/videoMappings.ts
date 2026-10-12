@@ -49,6 +49,15 @@ export type VideoMapping = {
   /** ISO date (YYYY-MM-DD) the review was performed, or null when unreviewed. */
   reviewedOn: string | null;
   status: VideoReviewStatus;
+  /**
+   * Optional auto-scroll sync hints (see `@/video/verseSync`). Absent → the reader
+   * auto-advances proportionally (drifts around the intro/pacing). Provide EITHER
+   * `cues` (per-verse start seconds — exact) OR `startSec`/`endSec` (recitation
+   * window — trims intro/outro). Editorial fills these per video.
+   */
+  cues?: readonly number[];
+  startSec?: number;
+  endSec?: number;
 };
 
 /**

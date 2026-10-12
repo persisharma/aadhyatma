@@ -36,6 +36,7 @@ import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import { getTrackForText } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
 import { getVideoMapping } from '@/data/video/videoMappings';
+import { verseIndexForTime } from '@/video/verseSync';
 import DockedYouTubePlayer from '@/components/video/DockedYouTubePlayer';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -150,19 +151,32 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     [lang, bookmarks, shareBusy]
   );
 
-  // Map video playback position → pager page. Proportional (no per-verse timestamps
-  // yet): fraction of the video ≈ fraction of the text. Skipped while the user has
-  // taken manual control.
+  // Map video playback position → pager page. Uses the mapping's sync hints when
+  // present (per-verse cues = exact; startSec/endSec = intro-trimmed); otherwise
+  // proportional. Skipped while the user has taken manual control. The guard stops
+  // the once-a-second tick from re-issuing a scroll to the page already shown.
+  const lastAutoIndexRef = useRef(-1);
   const onVideoProgress = useCallback(
-    (fraction: number) => {
+    (currentSec: number, durationSec: number) => {
       if (!autoScrollRef.current || total === 0) return;
-      const target = Math.min(total - 1, Math.max(0, Math.round(fraction * (total - 1))));
+      const target = verseIndexForTime(currentSec, durationSec, total, {
+        cues: videoMapping?.cues,
+        startSec: videoMapping?.startSec,
+        endSec: videoMapping?.endSec,
+      });
+      if (target === lastAutoIndexRef.current) return;
+      lastAutoIndexRef.current = target;
       listRef.current?.scrollToIndex({ index: target, animated: true });
     },
-    [total]
+    [total, videoMapping]
   );
+  const resumeAutoScroll = useCallback(() => {
+    lastAutoIndexRef.current = -1; // force the next tick to re-sync
+    setAutoScroll(true);
+  }, []);
   const closeVideo = useCallback(() => {
     setVideoOpen(false);
+    lastAutoIndexRef.current = -1;
     setAutoScroll(true);
   }, []);
 
@@ -231,7 +245,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
           {videoMapping && !videoOpen && (
             <Pressable
               onPress={() => {
-                setAutoScroll(true);
+                resumeAutoScroll();
                 setVideoOpen(true);
               }}
               accessibilityRole="button"
@@ -258,7 +272,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
           )}
           {videoOpen && !autoScroll && (
             <Pressable
-              onPress={() => setAutoScroll(true)}
+              onPress={resumeAutoScroll}
               accessibilityRole="button"
               accessibilityLabel={pick(lang, {
                 hi: 'स्वतः-स्क्रॉल पुनः चालू करें',

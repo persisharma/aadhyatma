@@ -47,8 +47,8 @@ type Phase = 'loading' | 'ready' | 'error';
 export type DockedYouTubePlayerProps = {
   mapping: VideoMapping;
   uiLang: Lang;
-  /** Playback progress 0..1, for the reader's auto-scroll. Fires ~1×/sec while playing. */
-  onProgress?: (fraction: number) => void;
+  /** Playback position (seconds) + total duration, for the reader's auto-scroll. Fires ~1×/sec while playing. */
+  onProgress?: (currentSec: number, durationSec: number) => void;
   onClose: () => void;
 };
 
@@ -159,7 +159,7 @@ export default function DockedYouTubePlayer({
           const dur = Number.isFinite(d) ? d : 0;
           setElapsed(cur);
           setDuration(dur);
-          if (dur > 0 && onProgress) onProgress(Math.min(1, Math.max(0, cur / dur)));
+          if (dur > 0 && onProgress) onProgress(cur, dur);
         })
         .catch(() => undefined);
     }, 1000);
