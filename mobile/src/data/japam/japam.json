@@ -107,6 +107,26 @@
       ],
       "meaningHi": "श्री राधा रानी का पावन नाम। नाम जप में हर ‘राधा’ पर एक मनका आगे बढ़ता है — 108 नाम, एक माला।",
       "meaningEn": "The holy name of Shri Radha Rani. In naam japa every ‘Radha’ moves one bead — 108 names, one mala."
+    },
+    {
+      "id": "jai-shri-ram",
+      "nameHi": "जय श्री राम जप",
+      "nameEn": "Jai Shri Ram Japa",
+      "sub": "नाम जप · हर नाम एक मनका",
+      "subEn": "Naam japa · one bead per name",
+      "thumb": "रा",
+      "deities": [
+        "rama"
+      ],
+      "naam": true,
+      "lines": [
+        "जय श्री राम"
+      ],
+      "linesEn": [
+        "Jai Shri Ram"
+      ],
+      "meaningHi": "मर्यादा पुरुषोत्तम श्री राम की जय। ‘जय श्री राम’ राम-भक्तों का पावन जयघोष है — नाम जप में हर ‘जय श्री राम’ पर एक मनका आगे बढ़ता है; 108 बार, एक माला।",
+      "meaningEn": "Glory to Shri Rama, the perfect embodiment of dharma. ‘Jai Shri Ram’ is the beloved victory-cry of Rama's devotees — in naam japa every ‘Jai Shri Ram’ moves one bead; 108 times, one mala."
     }
   ],
   "source": {
