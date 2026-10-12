@@ -436,6 +436,10 @@ Added the user-requested reuse workflow: 20 separate Hindi/English carousels acr
 
 Replaced repeated listing-image layouts with feature-specific hooks, numbered walkthroughs and distinct dark CTA cards, plus Hindi/English Instagram captions and hashtags. Reused approved locale-matched phone captures without changing app pixels or store metadata. All 60 cards pass dimension/hash/bounds checks and contact sheets were reviewed; local ZIP/gallery updated.
 
+## [2026-10-11] ingest | Approved app-icon master and native exports
+
+Recorded the approved copper-relief icon, vermilion bindu, deterministic four-asset export workflow, Android adaptive padding, explicit splash sizing and native-build requirement in `overview.md` and design.md §2.1. The full test suite (3,109 tests), Expo prebuild, iOS asset-catalog compiler and splash-storyboard compiler passed. Generated asset previews are recorded in `docs/evaluations/app-icon-2026-10-11/`; installed native app and Maestro checks remain pending.
+
 ## [2026-10-12] ingest | ATT prompt fix after App Review 2.1 rejection of 1.5.0 (72)
 
 Controller now re-asks ATT within the same foreground when iOS silently returns undetermined and never activates Meta before an answer. JS gate reads the native module's `enabled` constant instead of OTA-overridable `extra`; `push.sh` mirrors the channel profile's `META_TRACKING_ENABLED` for binaries that predate the constant. Tests updated, not run; physical-device recording still required for the App Review reply.
