@@ -7,6 +7,7 @@ import aartiKunjBihari from './aarti-kunj-bihari.json';
 import saraswatiAarti from './saraswati-aarti.json';
 import gayatriAarti from './gayatri-aarti.json';
 import khatuShyamAarti from './khatu-shyam-aarti.json';
+import omJaiLakshmiMata from './om-jai-lakshmi-mata.json';
 
 export type AartiVerse = {
   id: string;
@@ -45,6 +46,7 @@ export const aartiCollection: readonly AartiData[] = [
   saraswatiAarti as AartiData,
   gayatriAarti as AartiData,
   khatuShyamAarti as AartiData,
+  omJaiLakshmiMata as AartiData,
 ];
 
 /**
@@ -62,6 +64,8 @@ export const aartiIdByIndex = [
   'saraswati-aarti',
   'gayatri-aarti',
   'khatu-shyam-aarti',
+  // Appended, never inserted: the index is persisted in legacy `aarti-N` ids.
+  'om-jai-lakshmi-mata',
 ] as const satisfies readonly string[];
 
 export type AartiId = (typeof aartiIdByIndex)[number];
@@ -84,8 +88,8 @@ export function getAarti(index: number): AartiData {
 }
 
 (function assertAartiInvariants() {
-  if (aartiCollection.length !== 9) {
-    throw new Error(`aarti: expected 9 aartis, got ${aartiCollection.length}`);
+  if (aartiCollection.length !== 10) {
+    throw new Error(`aarti: expected 10 aartis, got ${aartiCollection.length}`);
   }
   const seenIds = new Set<string>();
   let totalVerses = 0;

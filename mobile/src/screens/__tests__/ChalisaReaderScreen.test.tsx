@@ -164,3 +164,31 @@ test('dispatches chalisaId to the Khatu Shyam Chalisa, not Hanuman Chalisa', () 
   assert.ok(!renderedText.includes(firstVerse.lines[0]));
   act(() => tree!.unmount());
 });
+
+// Multi-instance dispatch (RULEBOOK §4 step 13): the registry's newest entry must
+// resolve to its own payload, not fall back to Hanuman Chalisa.
+test('opens Lakshmi Chalisa by chalisaId with its own title and opening doha', () => {
+  const lakshmi = getChalisa('lakshmi-chalisa');
+  assert.equal(lakshmi.id, 'lakshmi-chalisa', 'registry resolves the id instead of the Hanuman fallback');
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <ShareProvider>
+          <ChalisaReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { chalisaId: 'lakshmi-chalisa', initialIndex: 0 } }}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  const renderedText = tree!
+    .root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+  assert.ok(renderedText.includes(lakshmi.titleHi), 'Lakshmi Chalisa title');
+  assert.ok(renderedText.includes('मातु लक्ष्मी करि कृपा'), 'Lakshmi Chalisa opening doha');
+  assert.ok(!renderedText.includes(firstVerse.lines[0]), 'no Hanuman Chalisa verse leaks in');
+});

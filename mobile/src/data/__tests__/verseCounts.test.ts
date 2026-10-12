@@ -14,6 +14,7 @@ import { durgaKavachTotal, ganeshaKavachamTotal, ramaRakshaStotraTotal, shivaKav
 import { khatuShyamChalisaCounts } from '../khatu-shyam-chalisa';
 import { krishnaChalisaCounts } from '../krishna-chalisa';
 import { krishnaStotramTotal } from '../krishna-stotram';
+import { lakshmiChalisaCounts } from '../lakshmi-chalisa';
 import { ramChalisaCounts } from '../ram-chalisa';
 import { ramStutiTotal } from '../ram-stuti';
 import { ramcharitmanasTotal } from '../ramcharitmanas';
@@ -65,6 +66,7 @@ test('every generated verse count still matches its corpus', () => {
   ['krishnaStotramTotal', krishnaStotramTotal, generated.krishnaStotramTotal],
   ['krishnaStutiTotal', krishnaStutiTotal, generated.krishnaStutiTotal],
   ['kuberaStotramTotal', kuberaStotramTotal, generated.kuberaStotramTotal],
+  ['lakshmiChalisaCounts', lakshmiChalisaCounts, generated.lakshmiChalisaCounts],
   ['lingashtakamTotal', lingashtakamTotal, generated.lingashtakamTotal],
   ['madhurashtakamTotal', madhurashtakamTotal, generated.madhurashtakamTotal],
   ['mahalakshmiAshtakamTotal', mahalakshmiAshtakamTotal, generated.mahalakshmiAshtakamTotal],
@@ -127,6 +129,7 @@ test('verseCounts exports exactly what texts.ts needs, and nothing stale', () =>
   ['krishnaStotramTotal', krishnaStotramTotal, generated.krishnaStotramTotal],
   ['krishnaStutiTotal', krishnaStutiTotal, generated.krishnaStutiTotal],
   ['kuberaStotramTotal', kuberaStotramTotal, generated.kuberaStotramTotal],
+  ['lakshmiChalisaCounts', lakshmiChalisaCounts, generated.lakshmiChalisaCounts],
   ['lingashtakamTotal', lingashtakamTotal, generated.lingashtakamTotal],
   ['madhurashtakamTotal', madhurashtakamTotal, generated.madhurashtakamTotal],
   ['mahalakshmiAshtakamTotal', mahalakshmiAshtakamTotal, generated.mahalakshmiAshtakamTotal],

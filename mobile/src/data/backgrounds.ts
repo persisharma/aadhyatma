@@ -88,6 +88,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'saraswati-chalisa': backgroundImages.deity_saraswati_veena,
   // Commissioned Khatu Shyam temple plate (shared with khatu-shyam-aarti).
   'khatu-shyam-chalisa': backgroundImages.theerth_khatu_shyam,
+  'lakshmi-chalisa': backgroundImages.deity_lakshmi,
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,
@@ -112,6 +113,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   // The commissioned Khatu Shyam temple plate, so the aarti does not borrow
   // Krishna's bansuri art (precedent: subrahmanya-ashtakam → Vetrimalai plate).
   'khatu-shyam-aarti': backgroundImages.theerth_khatu_shyam,
+  'om-jai-lakshmi-mata': backgroundImages.deity_lakshmi,
   'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
   'matribhumi-vandana': backgroundImages.category_stotram_hymn_scroll,
   lingashtakam: shivaStrotamImages.shiva,

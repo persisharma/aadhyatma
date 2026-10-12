@@ -1,0 +1,165 @@
+{
+  "titleHi": "लक्ष्मी माता की आरती",
+  "titleEn": "Om Jai Lakshmi Mata",
+  "subtitleHi": "ॐ जय लक्ष्मी माता, मैया जय लक्ष्मी माता",
+  "subtitleEn": "Om Jai Lakshmi Mata, Maiya Jai Lakshmi Mata",
+  "deity": "lakshmi",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Mahalakshmi Aarti (Om Jai Lakshmi Mata), Pt. Shyamlal Pandya tradition — cross-verified across pavitragranth.com and Times of India (refrain + 7 stanzas). Majority readings used: 'निशिदिन सेवत, हरि विष्णु विधाता' and 'क्षीरोदधि-जाता'. The minority 'धूप दीप फल मेवा' stanza (present in only one source) is omitted per the complete-text/majority rule.",
+    "referenceUrls": [
+      "https://pavitragranth.com/aartis/shree-lakshmi-aarti",
+      "https://timesofindia.indiatimes.com/religion/mantras-chants/laxmi-mata-aarti-om-jai-laxmi-mata-in-hindi-and-english/articleshow/114717447.cms"
+    ],
+    "retrievedOn": "2026-06-23"
+  },
+  "counts": {
+    "totalVerses": 8
+  },
+  "verses": [
+    {
+      "id": "ol-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "ॐ जय लक्ष्मी माता, मैया जय लक्ष्मी माता।",
+        "तुमको निशिदिन सेवत, हरि विष्णु विधाता॥"
+      ],
+      "linesEn": [
+        "Om jai Lakshmi mata, maiya jai Lakshmi mata.",
+        "Tumko nishidin sevat, Hari Vishnu vidhata."
+      ],
+      "meaningHi": "जय हो लक्ष्मी माता! हे माँ, आपकी जय हो। हरि (विष्णु) और विधाता (ब्रह्मा) दिन-रात आपकी सेवा-आराधना करते हैं। यह आरती की टेक है, जो प्रत्येक पद के पश्चात् दोहराई जाती है।",
+      "meaningEn": "Victory to you, Mother Lakshmi! O Mother, glory to you. Hari (Vishnu) and Vidhata (Brahma) serve and worship you day and night. This is the refrain, repeated after each stanza."
+    },
+    {
+      "id": "ol-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "उमा, रमा, ब्रह्माणी, तुम ही जग-माता।",
+        "सूर्य-चन्द्रमा ध्यावत, नारद ऋषि गाता॥"
+      ],
+      "linesEn": [
+        "Uma, Rama, Brahmani, tum hi jag-mata.",
+        "Surya-chandrama dhyavat, Narad rishi gata."
+      ],
+      "meaningHi": "आप ही उमा (पार्वती), रमा (लक्ष्मी) और ब्रह्माणी (सरस्वती) हैं — आप ही समस्त जगत् की माता हैं। सूर्य और चन्द्रमा आपका ध्यान करते हैं तथा नारद ऋषि आपका गुणगान करते हैं।",
+      "meaningEn": "You are Uma (Parvati), Rama (Lakshmi) and Brahmani (Saraswati) — you alone are the Mother of all the worlds. The Sun and the Moon meditate upon you, and the sage Narada sings your praise."
+    },
+    {
+      "id": "ol-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "दुर्गा रूप निरंजनी, सुख-सम्पत्ति दाता।",
+        "जो कोई तुमको ध्यावत, ऋद्धि-सिद्धि धन पाता॥"
+      ],
+      "linesEn": [
+        "Durga roop niranjani, sukh-sampatti data.",
+        "Jo koi tumko dhyavat, riddhi-siddhi dhan pata."
+      ],
+      "meaningHi": "आप ही निरंजन (निर्मल, निष्कलंक) दुर्गा-रूप हैं और सुख तथा सम्पत्ति प्रदान करने वाली हैं। जो कोई आपका ध्यान करता है, वह ऋद्धि, सिद्धि और धन प्राप्त करता है।",
+      "meaningEn": "You are the pure, untainted form of Durga, the bestower of happiness and prosperity. Whoever meditates upon you attains abundance, accomplishment and wealth."
+    },
+    {
+      "id": "ol-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "तुम पाताल-निवासिनि, तुम ही शुभदाता।",
+        "कर्म-प्रभाव-प्रकाशिनी, भवनिधि की त्राता॥"
+      ],
+      "linesEn": [
+        "Tum patal-nivasini, tum hi shubhdata.",
+        "Karma-prabhav-prakashini, bhavnidhi ki trata."
+      ],
+      "meaningHi": "आप पाताल (अधोलोक) में भी निवास करने वाली हैं और आप ही शुभ फल देने वाली हैं। आप कर्मों के प्रभाव (फल) को प्रकाशित करती हैं और भव-सागर (संसार रूपी समुद्र) से रक्षा करने वाली त्राता हैं।",
+      "meaningEn": "You dwell even in the depths (Patala) and you alone bestow what is auspicious. You reveal the fruit of actions and are the protector who delivers us across the ocean of worldly existence."
+    },
+    {
+      "id": "ol-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "जिस घर में तुम रहतीं, सब सद्गुण आता।",
+        "सब सम्भव हो जाता, मन नहिं घबराता॥"
+      ],
+      "linesEn": [
+        "Jis ghar mein tum rahtin, sab sadgun aata.",
+        "Sab sambhav ho jata, man nahin ghabrata."
+      ],
+      "meaningHi": "जिस घर में आप निवास करती हैं, वहाँ सभी सद्गुण आ जाते हैं। वहाँ सब कुछ सम्भव हो जाता है और मन कभी घबराता नहीं।",
+      "meaningEn": "In whatever home you dwell, all noble virtues arise. There everything becomes possible, and the mind is never gripped by fear."
+    },
+    {
+      "id": "ol-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "तुम बिन यज्ञ न होते, वस्त्र न कोई पाता।",
+        "खान-पान का वैभव, सब तुमसे आता॥"
+      ],
+      "linesEn": [
+        "Tum bin yagya na hote, vastra na koi pata.",
+        "Khaan-paan ka vaibhav, sab tumse aata."
+      ],
+      "meaningHi": "आपके बिना न यज्ञ सम्पन्न होते हैं और न ही किसी को वस्त्र प्राप्त होते हैं। खान-पान का समस्त वैभव (ऐश्वर्य) आपसे ही प्राप्त होता है।",
+      "meaningEn": "Without you no sacrifice (yajna) is completed, nor does anyone obtain clothing. All the abundance of food and sustenance comes from you alone."
+    },
+    {
+      "id": "ol-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · ६",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "शुभ-गुण मन्दिर सुन्दर, क्षीरोदधि-जाता।",
+        "रत्न चतुर्दश तुम बिन, कोई नहिं पाता॥"
+      ],
+      "linesEn": [
+        "Shubh-gun mandir sundar, kshirodadhi-jata.",
+        "Ratna chaturdash tum bin, koi nahin pata."
+      ],
+      "meaningHi": "आप शुभ गुणों की सुन्दर मन्दिर (आगार) हैं और क्षीर-सागर (दुग्ध-सागर) से उत्पन्न हुई हैं। आपके बिना चौदह रत्नों (समुद्र-मंथन के चौदह रत्न) को कोई प्राप्त नहीं कर सकता।",
+      "meaningEn": "You are the beautiful abode of auspicious qualities, born from the ocean of milk (Kshira-sagara). Without you, no one can obtain the fourteen jewels (the fourteen treasures of the ocean-churning)."
+    },
+    {
+      "id": "ol-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद · ७",
+      "labelEn": "Stanza · 7",
+      "lines": [
+        "महालक्ष्मी जी की आरती, जो कोई जन गाता।",
+        "उर आनन्द समाता, पाप उतर जाता॥"
+      ],
+      "linesEn": [
+        "Mahalakshmi ji ki aarti, jo koi jan gata.",
+        "Ur anand samata, paap utar jata."
+      ],
+      "meaningHi": "जो कोई भी महालक्ष्मी जी की यह आरती गाता है, उसके हृदय (उर) में आनन्द समा जाता है और उसके पाप दूर हो जाते हैं। यह आरती-गान का फल बताने वाला समापन पद है।",
+      "meaningEn": "Whoever sings this aarti of Mahalakshmi — joy fills their heart and their sins fall away. This closing stanza states the fruit of singing the aarti."
+    }
+  ]
+}

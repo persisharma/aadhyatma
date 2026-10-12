@@ -100,7 +100,7 @@ assert.deepEqual(
 
 // Newly-added discoverable content must carry addedInVersion, or NewContentContext
 // seeds it as already-known for upgrading users and the NEW badge never shows.
-for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana']) {
+for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata']) {
   const entry = library.find((e) => e.id === id);
   assert.ok(entry, `${id} should exist in library`);
   assert.ok(entry.addedInVersion, `${id} must set addedInVersion so upgraders see its NEW badge`);
@@ -465,6 +465,34 @@ for (const c of NEW_CHALISAS) {
       `${c.name} closing doha should contain "${c.closing}", got: "${closingText}"`
     );
   }
+}
+
+// ─── 10d. Lakshmi Chalisa + Om Jai Lakshmi Mata (1.5.0) ──────────────────────
+// Recovered verbatim from the 2026-06-23 two-source collation. The Ramdas
+// recension carries 39 chaupais; it must never be padded to 40 (§11.5), so it
+// stays out of NEW_CHALISAS above, which pins exactly 40.
+{
+  const data = readJson('lakshmi-chalisa/lakshmi-chalisa.json');
+  const entry = library.find((e) => e.id === 'lakshmi-chalisa');
+  assert.ok(entry, 'lakshmi-chalisa should be in library');
+  assert.deepEqual(entry.deities, ['lakshmi'], 'lakshmi-chalisa must be tagged under the Lakshmi deity (Rule 11.4)');
+  assert.equal(data.verses.length, 43, 'Lakshmi Chalisa: doha + sortha + 39 chaupais + 2 closing dohas');
+  assert.equal(data.verses.length, data.counts.totalVerses, 'Lakshmi Chalisa verses.length must match counts.totalVerses');
+  assert.equal(data.verses.filter((v: any) => v.type === 'chaupai').length, 39, 'Lakshmi Chalisa keeps its 39 verified chaupais');
+  assert.ok(data.verses[0].lines[0].includes('मातु लक्ष्मी करि कृपा'), 'Lakshmi Chalisa opens with its canonical doha');
+  const closing = data.verses.filter((v: any) => v.section === 'closing').flatMap((v: any) => v.lines).join(' ');
+  assert.ok(closing.includes('रामदास'), 'Lakshmi Chalisa closes with the Ramdas signature doha');
+  assert.ok(data.source.referenceUrls.length >= 2, 'Lakshmi Chalisa cites ≥ 2 sources');
+
+  const aarti = readJson('aarti/om-jai-lakshmi-mata.json');
+  const aartiEntry = library.find((e) => e.id === 'om-jai-lakshmi-mata');
+  assert.ok(aartiEntry, 'om-jai-lakshmi-mata should be in library');
+  assert.equal(aarti.deity, 'lakshmi', 'Om Jai Lakshmi Mata aarti deity should be lakshmi');
+  assert.deepEqual(aartiEntry.deities, ['lakshmi'], 'om-jai-lakshmi-mata must be tagged under the Lakshmi deity');
+  assert.equal(aarti.verses.length, 8, 'Om Jai Lakshmi Mata: refrain + 7 stanzas');
+  assert.equal(aartiEntry.verseCount, aarti.verses.length, 'library verseCount matches the aarti payload');
+  assert.ok(aarti.verses[0].lines[0].startsWith('ॐ जय लक्ष्मी माता'), 'Om Jai Lakshmi Mata opens with its refrain');
+  assert.ok(aarti.source.referenceUrls.length >= 2, 'Om Jai Lakshmi Mata cites ≥ 2 sources');
 }
 
 // ─── 10b. Gayatri Mata Aarti canonical structure & refrain ───────────────────
@@ -906,11 +934,13 @@ for (const file of [
   'vishnu-chalisa/vishnu-chalisa.json',
   'saraswati-chalisa/saraswati-chalisa.json',
   'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
+  'lakshmi-chalisa/lakshmi-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',
   'aarti/gayatri-aarti.json',
   'aarti/khatu-shyam-aarti.json',
+  'aarti/om-jai-lakshmi-mata.json',
 ]) {
   const meaningsEn: string[] = readJson(file)
     .verses.map((v: any) => v.meaningEn)
