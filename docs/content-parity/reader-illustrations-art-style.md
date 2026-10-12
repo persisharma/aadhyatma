@@ -32,6 +32,12 @@ Krishna images as style-only references. Review both composition fidelity and re
 Three scene-preserving revisions are in
 `docs/evaluations/reading-visuals-2026-10-11/style3-detail/`; the user accepted these samples.
 
+For future creation, use the saved [Style 3 image template and copyable prompt](reader-illustration-style3-prompt.md).
+It preserves the approved detail, reference roles, complete 2:1 composition, Hanuman gada
+corrections and export/review checks. The reference-backed personal Codex template is
+`$artifact-template-vedansh-style-3-reader-banner`; its retained PNG is independent of the
+temporary gallery.
+
 Adopt the rendering and palette, not the references' story, people, setting or portrait format.
 Do not copy the Yamuna or cottage into unrelated scenes. No existing kids-story image, caption,
 frame/hash or narrative is changed by this category. Revisions to actual kids stories still
