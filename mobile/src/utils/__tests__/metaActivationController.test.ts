@@ -1,4 +1,4 @@
-import { createMetaActivationController, type MetaActivationDependencies } from '../metaActivationController';
+import { ATT_REQUEST_ATTEMPTS, createMetaActivationController, type MetaActivationDependencies } from '../metaActivationController';
 
 function harness(platform: 'ios' | 'android' = 'ios') {
   let state: ReturnType<MetaActivationDependencies['currentState']> = 'active';
@@ -8,6 +8,7 @@ function harness(platform: 'ios' | 'android' = 'ios') {
     getPermission: jest.fn().mockResolvedValue({ status: 'denied', canAskAgain: false }),
     requestPermission: jest.fn().mockResolvedValue({ status: 'granted', canAskAgain: true }),
     activate: jest.fn().mockResolvedValue(true),
+    wait: jest.fn().mockResolvedValue(undefined),
   };
   const controller = createMetaActivationController(deps);
   const setState = (next: NonNullable<typeof state>) => { state = next; controller.onStateChange(next); };
@@ -76,16 +77,44 @@ test('another permission dialog defers ATT instead of consuming its one request'
   expect(deps.activate).toHaveBeenCalledTimes(1);
 });
 
-test('an ATT request that showed no prompt can be retried on a later active transition', async () => {
+test('an ATT request that showed no prompt is retried in the same foreground', async () => {
   const { deps, controller, setState } = harness();
   (deps.getPermission as jest.Mock).mockResolvedValue({ status: 'undetermined', canAskAgain: true });
   (deps.requestPermission as jest.Mock).mockResolvedValueOnce({ status: 'undetermined', canAskAgain: true });
   await controller.start();
+  expect(deps.wait).toHaveBeenCalledTimes(1);
+  expect(deps.requestPermission).toHaveBeenCalledTimes(2);
+  expect(deps.activate).toHaveBeenCalledTimes(1);
   setState('inactive');
   setState('active');
   await controller.start();
   expect(deps.requestPermission).toHaveBeenCalledTimes(2);
   expect(deps.activate).toHaveBeenCalledTimes(1);
+});
+
+test('an unanswered ATT never activates Meta and a later foreground asks again', async () => {
+  const { deps, controller, setState } = harness();
+  (deps.getPermission as jest.Mock).mockResolvedValue({ status: 'undetermined', canAskAgain: true });
+  (deps.requestPermission as jest.Mock).mockResolvedValue({ status: 'undetermined', canAskAgain: true });
+  await controller.start();
+  expect(deps.requestPermission).toHaveBeenCalledTimes(ATT_REQUEST_ATTEMPTS);
+  expect(deps.activate).not.toHaveBeenCalled();
+  (deps.requestPermission as jest.Mock).mockResolvedValue({ status: 'denied', canAskAgain: false });
+  setState('inactive');
+  setState('active');
+  await controller.start();
+  expect(deps.requestPermission).toHaveBeenCalledTimes(ATT_REQUEST_ATTEMPTS + 1);
+  expect(deps.activate).toHaveBeenCalledTimes(1);
+});
+
+test('backgrounding between silent ATT retries stops asking', async () => {
+  const { deps, controller, setState } = harness();
+  (deps.getPermission as jest.Mock).mockResolvedValue({ status: 'undetermined', canAskAgain: true });
+  (deps.requestPermission as jest.Mock).mockResolvedValue({ status: 'undetermined', canAskAgain: true });
+  (deps.wait as jest.Mock).mockImplementationOnce(async () => { setState('background'); });
+  await controller.start();
+  expect(deps.requestPermission).toHaveBeenCalledTimes(1);
+  expect(deps.activate).not.toHaveBeenCalled();
 });
 
 test('backgrounding during ATT defers native activation until foreground', async () => {
