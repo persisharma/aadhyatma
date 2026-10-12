@@ -1,0 +1,26 @@
+{
+  "phase": "observed-warm-restart",
+  "audit": {
+    "scope": "QA-only native FileSystem boundary observer",
+    "events": [
+      {
+        "atMs": 0.018250003457069397,
+        "kind": "qaBootstrap"
+      },
+      {
+        "atMs": 157.83462500572205,
+        "kind": "jsStall",
+        "delayMs": 107.82587499916553
+      }
+    ]
+  },
+  "files": [
+    {
+      "name": "324b157dc73b990e.webp",
+      "bytes": 103118,
+      "sha256": "324b157dc73b990ec996dfd687e08e3a861c77067cfe6d0a0f28237f25855253",
+      "mtimeNs": 1791740583095247178,
+      "inode": 97864161
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "theerth-khandoba-jejuri-reframe-v2",
+  "replaces": "theerth-khandoba-jejuri",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/theerth-khandoba-jejuri.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Correct the framing of image 1, preserving its fine detailed storybook rendering and exact 2:1 landscape. Issue to fix: full curved sword tip above AND the currently clipped bottommost horse hoof. Keep exactly two rider hands, crown/feather, horse's complete four legs/hooves and tail, lingam, trishul and hill temple. Scale the entire principal subject/shrine/animal/prop group together down by about 20 percent within the SAME 2:1 canvas, adding naturally painted matching sky, ground or courtyard around it. Required: every meaningful subject and key prop completely inside a 6 percent safe margin, particularly the specified clipped points. A camera that is farther back, not a taller canvas. Do not crop, distort, fade away or omit the clipped part. Background tree canopy and distant setting may extend edge to edge. Retain all other details and coherent anatomy; no new people, text, captions, border or UI.",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-8cb52e1b-c7fd-4d83-88db-ad78cc814ca3.png"
+}

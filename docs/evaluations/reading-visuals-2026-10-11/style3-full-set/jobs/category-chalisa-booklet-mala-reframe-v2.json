@@ -1,0 +1,14 @@
+{
+  "id": "category-chalisa-booklet-mala-reframe-v2",
+  "replaces": "category-chalisa-booklet-mala",
+  "title": "Chalisa · complete tassel",
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-detail-v2",
+  "approved": false,
+  "transparent_background": false,
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/category-chalisa-booklet-mala.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Edit the supplied 2:1 reader illustration. Preserve this exact detailed Krishna storybook rendering, book with embossed kneeling Hanuman, mala beads, cloth, flowers and temple study. Correct the bottom-edge clipping: move the complete mala loop and its tassel slightly upward and inward so the full tassel tip is visible with at least 6 percent clear painted floor margin below it. Make any small local repositioning needed without losing any beads. Keep the whole book and bookmark visible. Preserve all other scene details and the exact 2:1 landscape format. No added text, blank bands, border or watermark. Do not crop or stretch.",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-0d070342-a47a-4d5f-9cad-bdaaf2d981e9.png"
+}

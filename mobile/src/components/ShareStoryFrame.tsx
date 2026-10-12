@@ -1,3 +1,4 @@
+import type { BackgroundImage } from '@/data/backgroundAsset';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
@@ -6,7 +7,7 @@ import { placeStoryCard, storyCanvas } from '@/utils/shareStoryLayout';
 
 type Props = {
   /** The plate behind the card, full-bleed. */
-  background: number | null;
+  background: BackgroundImage | null;
   /** A native 540×675 card; placed unscaled inside the Story/Reel safe band. */
   children: React.ReactNode;
 };

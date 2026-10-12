@@ -24,6 +24,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Svg, { Path } from 'react-native-svg';
 
 import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingArtwork from '@/components/ReadingArtwork';
+import { readingParchment } from '@/data/backgroundAsset';
 import ReaderHeader from '@/components/ReaderHeader';
 import { getDaanBackground } from '@/data/backgrounds';
 import { useTodayKey } from '@/utils/useTodayKey';
@@ -103,8 +105,8 @@ export default function DaanPunyaScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      {/* Annapurna giving anna to Shiva-as-bhikshu — a 2:3 portrait plate, cover-fitted full screen. */}
-      <BackgroundLayer source={getDaanBackground()} />
+      {/* Shared paper; the complete Annapurna painting appears once in the reading flow. */}
+      <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.root} edges={['top']} testID="daan-punya-screen">
       <ReaderHeader
         title={contentByLang(lang, 'दान-पुण्य', 'Daan Punya')}
@@ -139,6 +141,8 @@ export default function DaanPunyaScreen({ navigation }: Props) {
         <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, textAlign: 'center', marginTop: spacing.xs, paddingHorizontal: spacing.readingGutter }}>
           {contentByLang(lang, 'जप · व्रत · दान — साधना का तीसरा चरण', 'Japa · vrat · daan — the third limb of sadhana')}
         </Text>
+
+        <View style={{ marginHorizontal: spacing.readingGutter }}><ReadingArtwork source={getDaanBackground()} /></View>
 
         {todayMatch?.occasion ? (
           <View style={{ paddingHorizontal: spacing.readingGutter }}>

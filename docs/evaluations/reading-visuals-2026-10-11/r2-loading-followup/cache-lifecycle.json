@@ -1,0 +1,38 @@
+{
+  "verifiedAt": "2026-10-11T17:30:21.689Z",
+  "scope": "Actual app cache module, real host HTTPS and async filesystem adapter in two separate Node processes; not native/device proof",
+  "cacheSourceSha256": "ba114dc0f23e75a14aac39aefd8a1569aceef8392c00d2f4650c62cb79b791eb",
+  "downloadedSourceSha256": "47df1919b9ee3f38f7592163faf815e1c8ced5545054025efdf0c188ef57f7b6",
+  "phases": {
+    "cold": {
+      "mode": "cold",
+      "pid": 4114,
+      "networkRequests": 1,
+      "subscribers": 3,
+      "elapsedMs": 186.194875,
+      "file": {
+        "sha256": "47df1919b9ee3f38f7592163faf815e1c8ced5545054025efdf0c188ef57f7b6",
+        "bytes": 62452,
+        "mtimeNs": "1791739821433386734",
+        "inode": "97743158"
+      },
+      "source": "Real host R2 download with default TLS validation"
+    },
+    "offline-restart": {
+      "mode": "offline-restart",
+      "pid": 4133,
+      "networkRequests": 0,
+      "subscribers": 3,
+      "elapsedMs": 1.4026250000000005,
+      "file": {
+        "sha256": "47df1919b9ee3f38f7592163faf815e1c8ced5545054025efdf0c188ef57f7b6",
+        "bytes": 62452,
+        "mtimeNs": "1791739821433386734",
+        "inode": "97743158"
+      },
+      "source": "Disk only; all download attempts prohibited"
+    }
+  },
+  "nativeDownloadEvidence": false,
+  "physicalDevicePerformance": false
+}

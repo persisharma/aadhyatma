@@ -1,0 +1,32 @@
+{
+  "platforms": {
+    "android": {
+      "manifestAssetCount": 43,
+      "includedCount": 1,
+      "excludedCount": 42,
+      "originalBytes": 7450232,
+      "bundledBytes": 145802,
+      "included": [
+        {
+          "stem": "backgrounds--category-granth-open-scripture",
+          "bytes": 145802,
+          "included": true
+        }
+      ]
+    },
+    "ios": {
+      "manifestAssetCount": 43,
+      "includedCount": 1,
+      "excludedCount": 42,
+      "originalBytes": 7450232,
+      "bundledBytes": 145802,
+      "included": [
+        {
+          "stem": "backgrounds--category-granth-open-scripture",
+          "bytes": 145802,
+          "included": true
+        }
+      ]
+    }
+  }
+}

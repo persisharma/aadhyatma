@@ -1,6 +1,9 @@
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { ImageBackground, View as mockView } from 'react-native';
+import { View as mockView } from 'react-native';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingArtwork from '@/components/ReadingArtwork';
+import { readingParchment, backgroundRequest } from '@/data/backgroundAsset';
 
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
@@ -60,10 +63,9 @@ const DailyBhaktiScreen = jest.requireActual<typeof import('../DailyBhaktiScreen
 ).default;
 
 /**
- * Guard: the Daily Bhakti verse card must carry the verse's reader-page sketch
- * (getReaderBackground) instead of the plain parchment fill it shipped with.
+ * The daily card keeps its source identity while sharing the approved paper/painting layout.
  */
-test('verse card renders the source reader background, not a plain fill', () => {
+test('verse card uses paper and its source painting through the R2 loader', () => {
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
@@ -76,9 +78,12 @@ test('verse card renders the source reader background, not a plain fill', () => 
     );
   });
 
-  const backgrounds = tree!.root.findAllByType(ImageBackground);
+  const backgrounds = tree!.root.findAllByType(BackgroundLayer);
   expect(backgrounds).toHaveLength(1);
-  expect(backgrounds[0].props.source).toBe(
-    getReaderBackground('bhagavad-gita', { stanza: 1 })
-  );
+  expect(backgrounds[0].props.source).toBe(readingParchment);
+  const artwork = tree!.root.findByType(ReadingArtwork);
+  expect(artwork.props.source).toBe(getReaderBackground('bhagavad-gita', { stanza: 1 }));
+  expect(artwork.props.compact).toBeUndefined();
+  expect(backgroundRequest(artwork.props.source)?.remoteUrl).toMatch(/reading-backgrounds\/[a-f0-9]{16}\.webp$/);
+  act(() => tree!.unmount());
 });

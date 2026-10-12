@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
 import ReaderHeader from '@/components/ReaderHeader';
 import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -252,11 +253,8 @@ export default function PitruPakshaOverviewScreen({ navigation }: Props) {
   })();
 
   return (
-    <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+    <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+      <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ReaderHeader
           variant="index"

@@ -1,0 +1,28 @@
+{
+  "assets": 45,
+  "existingR2HashesUnchanged": true,
+  "frame": "full available width; own aspect ratio; contain",
+  "layout": "reserved synchronously from manifest; no Image.getSize/network measurement",
+  "nativeVisualVerification": "pending Mac unlock",
+  "priorR2Verification": "r2-verification.json",
+  "jest": {
+    "suitesPassed": 236,
+    "testsPassed": 2183
+  },
+  "typescript": "passed",
+  "focusedLint": "passed",
+  "productionExports": [
+    "ios",
+    "android"
+  ],
+  "bundledReadingBytesPerPlatform": 3102,
+  "assetGallery": {
+    "renderedImages": 89,
+    "failedImages": 0,
+    "pendingImages": 0,
+    "consoleErrors": 0,
+    "status": "browser verified; not native app proof"
+  },
+  "transportFollowUp": "host-urlsession-r2-verification.json",
+  "nativeAvailability": "native-availability-follow-up.json"
+}

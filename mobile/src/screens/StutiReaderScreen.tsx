@@ -195,6 +195,7 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
             keyExtractor={(v) => v.id}
             renderItem={({ item, index }) => (
               <VersePage
+                showIllustration={index === 0}
                 verse={item}
                 sourceId={stutiId}
                 width={width}

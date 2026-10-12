@@ -20,6 +20,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
+import ProseReadingCard from '@/components/ProseReadingCard';
+import { getDaanBackground } from '@/data/backgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
@@ -113,6 +117,7 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']} testID="daan-journey-screen">
+      <BackgroundLayer source={readingParchment} />
       <ReaderHeader title={title} variant="index" onBack={() => navigation.goBack()} />
       <ScrollView
         ref={scrollRef}
@@ -132,12 +137,14 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
         </Pressable>
 
         {/* महत्व */}
-        <Text style={sectionLabelStyle}>{contentByLang(lang, 'महत्व', 'Why')}</Text>
-        <View style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
+        <ProseReadingCard
+          illustration={getDaanBackground()}
+          heading={<Text style={sectionLabelStyle}>{contentByLang(lang, 'महत्व', 'Why')}</Text>}
+        >
           <Text style={{ fontFamily: bodyFont, fontSize: 13.5, lineHeight: 22, color: colors.inkSoft }}>
             {mahatva}
           </Text>
-        </View>
+        </ProseReadingCard>
 
         {/* शास्त्र */}
         {shastra ? (

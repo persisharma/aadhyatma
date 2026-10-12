@@ -1,3 +1,4 @@
+/* global jest */
 // Global mocks for the Jest suite.
 //
 // AsyncStorage has no native module under Jest, so importing it throws
@@ -9,6 +10,20 @@
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
 );
+
+// Decorative R2 backgrounds use the already-installed async file-system API.
+// Default to offline; cache/lifecycle suites override this with controlled tasks.
+jest.mock('expo-file-system/legacy', () => ({
+  documentDirectory: 'file:///test-documents/',
+  getInfoAsync: jest.fn(() => Promise.resolve({ exists: false })),
+  makeDirectoryAsync: jest.fn(() => Promise.resolve()),
+  moveAsync: jest.fn(() => Promise.resolve()),
+  deleteAsync: jest.fn(() => Promise.resolve()),
+  createDownloadResumable: jest.fn(() => ({
+    downloadAsync: jest.fn(() => Promise.reject(new Error('offline in tests'))),
+    cancelAsync: jest.fn(() => Promise.resolve()),
+  })),
+}));
 
 // expo-speech ships untranspiled ESM and is outside the RN preset's
 // transformIgnorePatterns, so Jest cannot even PARSE it — and it is reached

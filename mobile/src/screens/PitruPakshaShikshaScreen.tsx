@@ -20,11 +20,14 @@
  */
 import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingArtwork from '@/components/ReadingArtwork';
+import { readingParchment } from '@/data/backgroundAsset';
+import { getPitruReadingBackground } from '@/data/kathaBackgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
@@ -104,8 +107,8 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
   const first = parichay[0];
 
   return (
-    <View style={styles.root} testID="pitru-shiksha-screen">
-      <LinearGradient colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]} style={StyleSheet.absoluteFill} />
+    <View style={[styles.root, { backgroundColor: colors.parchment }]} testID="pitru-shiksha-screen">
+      <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ReaderHeader
           variant="index"
@@ -125,6 +128,7 @@ export default function PitruPakshaShikshaScreen({ navigation }: Props) {
               <Text style={{ fontFamily: titleFont, fontSize: 16, lineHeight: 24, color: colors.ink }}>
                 {contentByLang(lang, first.titleHi, first.titleEn)}
               </Text>
+              <ReadingArtwork source={getPitruReadingBackground()} />
               <Text style={{ fontFamily: bodyFont, fontSize: 15, lineHeight: 25, color: colors.inkSoft, marginTop: 8 }}>
                 {commentaryByLang(lang, first.bodyHi, first.bodyEn)[0]}
               </Text>
