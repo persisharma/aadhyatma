@@ -1,27 +1,48 @@
 # Granth Category Smoke Test
 #
-# Verifies the Granth category and its 5 active sections render correctly.
-# Sections: Bhagavad Gītā, Gita Saar, Sundarkand, Ramcharitmanas Mangalacharan, Valmiki Ramayan.
+# Verifies the Granth category and its 6 active sections render correctly.
+# Sections: Bhagavad Gītā, Gita Saar, Sundarkand, Ramcharitmanas Mangalacharan, Valmiki Ramayan, Garud Puran.
 #
-# Bhagavad Gītā and Valmiki Ramayan have a chapter index (kāṇḍa list); the other
-# two go straight to a reader. This flow opens Valmiki Ramayan and its final
-# kāṇḍa so the complete-corpus manifest and a large payload are exercised.
+# This flow opens Valmiki Ramayan and its final kanda to exercise the
+# complete-corpus manifest and a large payload. Garud Puran has its own
+# bilingual prose-reader flow in garud-puran-smoke.yaml.
 
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 
 # Verify Granth tile and open it
-- assertVisible: "Sacred Books. Tap to open."
-- tapOn: "Sacred Books. Tap to open."
+- assertVisible: "Sacred Books.*Tap to open."
+- tapOn: "Sacred Books.*Tap to open."
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Bhagavad Gītā\\..*Tap to open\\."
     timeout: 15000
-- assertVisible: "Gita Saar\\..*Tap to open\\."
-- assertVisible: "Sundarkand\\..*Tap to open\\."
-- assertVisible: "Ramcharitmanas Mangalacharan\\..*Tap to open\\."
-- assertVisible: "Valmiki Ramayan\\..*Tap to open\\."
+- scrollUntilVisible:
+    element:
+      text: "Gita Saar\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Garud Puran\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Sundarkand\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Ramcharitmanas Mangalacharan\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Valmiki Ramayan\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
 
 # Open Valmiki Ramayan chapter index
 - tapOn: "Valmiki Ramayan\\..*Tap to open\\."

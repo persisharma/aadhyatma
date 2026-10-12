@@ -1,0 +1,148 @@
+{
+  "chapter": 5,
+  "id": "babhruvahana",
+  "titleHi": "बभ्रुवाहन और प्रेत सुदेव",
+  "titleEn": "Babhruvahana and Sudeva",
+  "kind": "story",
+  "artId": "babhruvahana",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/507",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/508",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/509",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/510",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/511"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "2.9.1",
+      "2.9.2",
+      "2.9.3",
+      "2.9.4",
+      "2.9.5",
+      "2.9.6",
+      "2.9.7",
+      "2.9.12",
+      "2.9.13",
+      "2.9.14",
+      "2.9.15",
+      "2.9.16",
+      "2.9.17",
+      "2.9.18",
+      "2.9.19",
+      "2.9.20",
+      "2.9.21",
+      "2.9.22",
+      "2.9.23",
+      "2.9.24",
+      "2.9.25",
+      "2.9.26",
+      "2.9.30",
+      "2.9.31",
+      "2.9.32",
+      "2.9.33",
+      "2.9.34",
+      "2.9.35",
+      "2.9.36",
+      "2.9.37",
+      "2.9.38",
+      "2.9.39",
+      "2.9.40",
+      "2.9.41",
+      "2.9.42",
+      "2.9.43",
+      "2.9.44",
+      "2.9.45",
+      "2.9.46",
+      "2.9.47",
+      "2.9.48",
+      "2.9.49",
+      "2.9.50",
+      "2.9.51",
+      "2.9.52",
+      "2.9.70",
+      "2.9.71",
+      "2.9.72",
+      "2.9.73",
+      "2.9.74"
+    ],
+    "sanskritFileSha256": "d1a4aa74e4dd159eb220deb11379fa42a5b0349f2f943cbebd8e690c9f60a7d4",
+    "hindiSourcePages": [
+      507,
+      508,
+      509,
+      510,
+      511
+    ],
+    "hindiFragmentSha256": "7566c980bd1ebf64a049d1d18ed5c7212cb9723cc08b85fb078d869d68803dcb",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "The wider Purana describes Vanga/Krita; Saroddhara VII describes Mahodaya/Treta. The shared narrative is used without combining those settings. This is not the Mahabharata story of Arjuna’s son merely because the king has the same name. Ritual particulars are abridged.",
+    "citeHi": "गरुडपुराण · प्रेतकल्प 9 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Preta chapter 9 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "babhruvahana-1",
+      "chapter": 5,
+      "number": 1,
+      "titleHi": "वन में हुई भेंट",
+      "titleEn": "An encounter in the forest",
+      "bodyHi": [
+        "एक दिन राजा बभ्रुवाहन शिकार के लिए वन में गए। एक घायल मृग का पीछा करते हुए वे साथियों से दूर निकल आए। थकान और प्यास के बाद उन्हें एक सरोवर मिला। उसके पास वटवृक्ष की छाया में विश्राम करते समय उनका सामना एक व्याकुल प्रेत से हुआ।",
+        "राजा ने केवल भय के कारण उसे दूर नहीं किया। उन्होंने पूछा कि वह कौन है और इस दशा में कैसे पहुँचा। उस प्रेत ने अपना नाम सुदेव बताया। वह अपनी पीड़ा और जीवन का वृत्तान्त राजा के सामने रखने लगा।"
+      ],
+      "bodyEn": [
+        "King Babhruvahana went hunting in a forest. While following a wounded deer, he became separated from his companions. Tired and thirsty, he reached a lake and rested near a banyan tree. There he encountered a distressed departed spirit.",
+        "The king did more than react with fear. He asked who the stranger was and how he had come to this condition. The spirit introduced himself as Sudeva and began to explain his life and his suffering."
+      ],
+      "meaningHi": "एक दिन राजा बभ्रुवाहन शिकार के लिए वन में गए। एक घायल मृग का पीछा करते हुए वे साथियों से दूर निकल आए। थकान और प्यास के बाद उन्हें एक सरोवर मिला। उसके पास वटवृक्ष की छाया में विश्राम करते समय उनका सामना एक व्याकुल प्रेत से हुआ।\n\nराजा ने केवल भय के कारण उसे दूर नहीं किया। उन्होंने पूछा कि वह कौन है और इस दशा में कैसे पहुँचा। उस प्रेत ने अपना नाम सुदेव बताया। वह अपनी पीड़ा और जीवन का वृत्तान्त राजा के सामने रखने लगा।",
+      "meaningEn": "King Babhruvahana went hunting in a forest. While following a wounded deer, he became separated from his companions. Tired and thirsty, he reached a lake and rested near a banyan tree. There he encountered a distressed departed spirit.\n\nThe king did more than react with fear. He asked who the stranger was and how he had come to this condition. The spirit introduced himself as Sudeva and began to explain his life and his suffering.",
+      "artId": "babhruvahana"
+    },
+    {
+      "id": "babhruvahana-2",
+      "chapter": 5,
+      "number": 2,
+      "titleHi": "जिसका कोई अपना न था",
+      "titleEn": "Someone without family to help",
+      "bodyHi": [
+        "सुदेव ने बताया कि उसने अपने जीवन में दान और सहायता की थी। पर उसके बाद के संस्कार करने के लिए न परिवार था, न कोई मित्र। पुराण की कथा में वह इसी अभाव से जुड़ी पीड़ा लेकर राजा से सहायता माँगता है।",
+        "राजा उसकी बात सुनकर उसके लिए संस्कार की व्यवस्था करते हैं। कथा में वृषोत्सर्ग का विशेष उल्लेख है। अंत में सुदेव उस पीड़ित दशा से मुक्त होकर राजा का आभार मानता है। यहाँ कथा की मुख्य घटना दी गई है, संस्कार की पूरी विधि नहीं।"
+      ],
+      "bodyEn": [
+        "Sudeva says that he had given generously and helped others while alive. Yet there was no family member or friend to undertake the rites after his death. Within the Purana’s account, this absence is connected with his distressed condition, and he asks the king for help.",
+        "The king arranges the rites on his behalf. The account gives particular importance to vrishotsarga, the ritual release of a bull. At the end, Sudeva is released from his troubled condition and thanks the king. This is a summary of the story, not the complete ritual procedure."
+      ],
+      "meaningHi": "सुदेव ने बताया कि उसने अपने जीवन में दान और सहायता की थी। पर उसके बाद के संस्कार करने के लिए न परिवार था, न कोई मित्र। पुराण की कथा में वह इसी अभाव से जुड़ी पीड़ा लेकर राजा से सहायता माँगता है।\n\nराजा उसकी बात सुनकर उसके लिए संस्कार की व्यवस्था करते हैं। कथा में वृषोत्सर्ग का विशेष उल्लेख है। अंत में सुदेव उस पीड़ित दशा से मुक्त होकर राजा का आभार मानता है। यहाँ कथा की मुख्य घटना दी गई है, संस्कार की पूरी विधि नहीं।",
+      "meaningEn": "Sudeva says that he had given generously and helped others while alive. Yet there was no family member or friend to undertake the rites after his death. Within the Purana’s account, this absence is connected with his distressed condition, and he asks the king for help.\n\nThe king arranges the rites on his behalf. The account gives particular importance to vrishotsarga, the ritual release of a bull. At the end, Sudeva is released from his troubled condition and thanks the king. This is a summary of the story, not the complete ritual procedure.",
+      "artId": "babhruvahana"
+    },
+    {
+      "id": "babhruvahana-3",
+      "chapter": 5,
+      "number": 3,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "इस कथा में राजा का दायित्व अपने परिचित लोगों तक सीमित नहीं रहता। वह ऐसे व्यक्ति की बात सुनता है जिसके लिए कोई आगे नहीं आ रहा। किसी अपरिचित की असहायता को देखना और उत्तरदायित्व लेना इसका एक स्पष्ट मानवीय पक्ष है।",
+        "आज के पाठक के लिए यह अकेले या सहारे से वंचित लोगों के प्रति संवेदना का निमंत्रण हो सकता है। यह हमारी व्याख्या है। कथा के पारलौकिक वर्णन को किसी परिवार के शोक या संस्कारों पर भय पैदा करने का आधार न बनाएँ।"
+      ],
+      "bodyEn": [
+        "The king’s responsibility in this story extends beyond the people he already knows. He listens to someone for whom nobody else is stepping forward. Noticing a stranger’s helplessness and accepting responsibility are central human features of the episode.",
+        "For a reader today, this can be an invitation to care about people who are alone or without support. That is our editorial interpretation. The story’s account of the afterlife should not be used to frighten a grieving family or judge the rites they were able to perform."
+      ],
+      "meaningHi": "इस कथा में राजा का दायित्व अपने परिचित लोगों तक सीमित नहीं रहता। वह ऐसे व्यक्ति की बात सुनता है जिसके लिए कोई आगे नहीं आ रहा। किसी अपरिचित की असहायता को देखना और उत्तरदायित्व लेना इसका एक स्पष्ट मानवीय पक्ष है।\n\nआज के पाठक के लिए यह अकेले या सहारे से वंचित लोगों के प्रति संवेदना का निमंत्रण हो सकता है। यह हमारी व्याख्या है। कथा के पारलौकिक वर्णन को किसी परिवार के शोक या संस्कारों पर भय पैदा करने का आधार न बनाएँ।",
+      "meaningEn": "The king’s responsibility in this story extends beyond the people he already knows. He listens to someone for whom nobody else is stepping forward. Noticing a stranger’s helplessness and accepting responsibility are central human features of the episode.\n\nFor a reader today, this can be an invitation to care about people who are alone or without support. That is our editorial interpretation. The story’s account of the afterlife should not be used to frighten a grieving family or judge the rites they were able to perform.",
+      "artId": "babhruvahana"
+    }
+  ]
+}

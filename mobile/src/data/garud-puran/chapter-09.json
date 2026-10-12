@@ -1,0 +1,104 @@
+{
+  "chapter": 9,
+  "id": "shraddha",
+  "titleHi": "श्राद्ध का परिचय",
+  "titleEn": "Understanding shraddha",
+  "kind": "tradition",
+  "artId": "ancestors",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/181",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/182",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/183",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/184"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "1.99.1",
+      "1.99.2",
+      "1.99.3",
+      "1.99.4",
+      "1.99.5",
+      "1.99.6",
+      "1.99.12",
+      "1.99.13",
+      "1.99.14",
+      "1.99.15",
+      "1.99.16",
+      "1.99.17",
+      "1.99.18",
+      "1.99.19",
+      "1.99.20",
+      "1.99.21",
+      "1.99.22",
+      "1.99.23",
+      "1.99.24",
+      "1.99.25",
+      "1.99.26",
+      "1.99.27",
+      "1.99.28",
+      "1.99.40",
+      "1.99.41",
+      "1.99.42"
+    ],
+    "sanskritFileSha256": "a4a47cc968db31955727426b26d21ff45dcdaa4d49e42b66d0d5f68157ea7336",
+    "hindiSourcePages": [
+      181,
+      182,
+      183,
+      184
+    ],
+    "hindiFragmentSha256": "456bdd5f6fe8f8b6a865de16a23a4d9850c57078b56dd1703379034c6125dbd4",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Educational introduction to selected ingredients and occasions, not a universal ritual prescription. Omits recipient exclusions, caste hierarchy and guaranteed rewards. Regional and lineage variations remain explicit.",
+    "citeHi": "गरुडपुराण · आचारकाण्ड 99 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Achara chapter 99 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "shraddha-1",
+      "chapter": 9,
+      "number": 1,
+      "titleHi": "पितरों के लिए अर्पण",
+      "titleEn": "An offering for the ancestors",
+      "bodyHi": [
+        "आचारकाण्ड में श्राद्ध के अवसरों और उसके आयोजन का वर्णन है। इसमें पितरों के निमित्त अन्न, जल और अन्य अर्पण, आमन्त्रित अतिथि तथा विधिपूर्वक आदर का स्थान आता है। अमावस्या सहित कई अवसरों का उल्लेख किया गया है।",
+        "इस परम्परा में श्राद्ध को जीवित परिवार और पितरों के सम्बन्ध से जोड़ा जाता है। केवल सामग्री इकट्ठी करना ही उसका पूरा परिचय नहीं है; स्मरण और श्रद्धा उसके अर्थ को समझने की दिशा देते हैं। यहाँ विस्तृत विधि के स्थान पर परिचय चुना गया है।"
+      ],
+      "bodyEn": [
+        "The Achara section describes occasions for shraddha and the way it is arranged. Food, water and other offerings for the ancestors, invited guests and respectful observance form part of the account. It names several occasions, including the new moon.",
+        "Within this tradition, shraddha concerns the relationship between the living family and its ancestors. An inventory of materials alone does not convey that meaning. Remembrance and reverence help explain its purpose. This selection is an introduction rather than the detailed procedure."
+      ],
+      "meaningHi": "आचारकाण्ड में श्राद्ध के अवसरों और उसके आयोजन का वर्णन है। इसमें पितरों के निमित्त अन्न, जल और अन्य अर्पण, आमन्त्रित अतिथि तथा विधिपूर्वक आदर का स्थान आता है। अमावस्या सहित कई अवसरों का उल्लेख किया गया है।\n\nइस परम्परा में श्राद्ध को जीवित परिवार और पितरों के सम्बन्ध से जोड़ा जाता है। केवल सामग्री इकट्ठी करना ही उसका पूरा परिचय नहीं है; स्मरण और श्रद्धा उसके अर्थ को समझने की दिशा देते हैं। यहाँ विस्तृत विधि के स्थान पर परिचय चुना गया है।",
+      "meaningEn": "The Achara section describes occasions for shraddha and the way it is arranged. Food, water and other offerings for the ancestors, invited guests and respectful observance form part of the account. It names several occasions, including the new moon.\n\nWithin this tradition, shraddha concerns the relationship between the living family and its ancestors. An inventory of materials alone does not convey that meaning. Remembrance and reverence help explain its purpose. This selection is an introduction rather than the detailed procedure.",
+      "artId": "ancestors"
+    },
+    {
+      "id": "shraddha-2",
+      "chapter": 9,
+      "number": 2,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "श्राद्ध को समझने की शुरुआत इस प्रश्न से हो सकती है कि परिवार अपने पूर्वजों को किस भाव से याद करता है। उनके प्रति आदर, उनके जीवन का स्मरण और मिली हुई देखभाल के लिए कृतज्ञता—ये इसके अर्थ से जुड़ने के सरल रास्ते हैं।",
+        "तिथि, क्रम, अधिकारी और सामग्री के व्यवहार में परिवार, क्षेत्र और परम्परा के अनुसार भेद हो सकते हैं। इस परिचय को सबके लिए एक समान विधि न मानें। अनुष्ठान के समय अपनी परम्परा के जानकार व्यक्ति से मार्गदर्शन लेना अलग कदम है।"
+      ],
+      "bodyEn": [
+        "A simple starting point is to ask how a family remembers those who came before it. Respect, recollection of their lives and gratitude for care received offer accessible ways to approach the meaning of the tradition.",
+        "The date, sequence, participants and materials used in practice can differ by family, region and lineage. This introduction should not be treated as one procedure for everyone. Guidance about an actual observance belongs with someone knowledgeable about the family’s tradition."
+      ],
+      "meaningHi": "श्राद्ध को समझने की शुरुआत इस प्रश्न से हो सकती है कि परिवार अपने पूर्वजों को किस भाव से याद करता है। उनके प्रति आदर, उनके जीवन का स्मरण और मिली हुई देखभाल के लिए कृतज्ञता—ये इसके अर्थ से जुड़ने के सरल रास्ते हैं।\n\nतिथि, क्रम, अधिकारी और सामग्री के व्यवहार में परिवार, क्षेत्र और परम्परा के अनुसार भेद हो सकते हैं। इस परिचय को सबके लिए एक समान विधि न मानें। अनुष्ठान के समय अपनी परम्परा के जानकार व्यक्ति से मार्गदर्शन लेना अलग कदम है।",
+      "meaningEn": "A simple starting point is to ask how a family remembers those who came before it. Respect, recollection of their lives and gratitude for care received offer accessible ways to approach the meaning of the tradition.\n\nThe date, sequence, participants and materials used in practice can differ by family, region and lineage. This introduction should not be treated as one procedure for everyone. Guidance about an actual observance belongs with someone knowledgeable about the family’s tradition.",
+      "artId": "ancestors"
+    }
+  ]
+}

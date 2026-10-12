@@ -1,0 +1,395 @@
+{
+  "titleHi": "गरुड़ पुराण — चयनित कथाएँ और शिक्षाएँ",
+  "titleEn": "Garud Puran — Selected Stories and Teachings",
+  "selectedOn": "2026-10-12",
+  "releaseEligible": false,
+  "sourceSha256": "ce946b707e8a147c1273dfe07cdfc39820c83427b0a7aa1a6ef5ca5c3a8228cf",
+  "selectionBasis": "Editorial relevance plus attested funeral/ancestor-reading context; no popularity survey or claim these are the most followed stories.",
+  "proposedReadingFormat": "Each future editorial Hindi/English reading: 3–5 minutes, source citation, optional original passage. This duration is a target, not the size of the present raw extracts.",
+  "editionBoundary": "Saroddhara is a separate 16-chapter digest. Its chapters are related reading pointers, never identical-number joins to this Hindi abridgement or the three-book Sanskrit corpus.",
+  "practiceBoundary": "Ritual customs vary by region, lineage and family. Present educational context, not a universal procedure. Do not treat afterlife imagery as observed fact or caste, gender, illness or harmful historical prescriptions as present-day instructions.",
+  "references": [
+    {
+      "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press",
+      "role": "Previously captured Hindi OCR; selected passage headings and source samples inspected locally. Rights and print collation pending."
+    },
+    {
+      "url": "https://sacred-texts.com/book/the-garuda-purana/contents",
+      "role": "Saroddhara contents opened; chapter topic pointers."
+    },
+    {
+      "url": "https://sacred-texts.com/book/the-garuda-purana/shell/introduction",
+      "role": "Historical 1911 introduction; funeral-use context, not a contemporary popularity survey."
+    },
+    {
+      "url": "https://sacred-texts.com/book/the-garuda-purana/chapter-vii-babhruvahana-s-sacrament-for-the-departed-one",
+      "role": "English Babhruvahana source opened via web. Direct local HTTP download returned 403; no English chapter stored."
+    },
+    {
+      "url": "https://sacred-texts.com/book/the-garuda-purana/chapter-viii-an-account-of-the-gifts-for-the-dying",
+      "role": "English giving source opened via web; not locally downloaded or aligned."
+    },
+    {
+      "url": "https://sacred-texts.com/book/the-garuda-purana/chapter-xvi-an-account-of-the-law-for-liberation",
+      "role": "English liberation source opened via web; not locally downloaded or aligned."
+    },
+    {
+      "url": "https://ebooks.tirumala.org/downloads/garudapuran.pdf",
+      "role": "TTD institutional digest opened via web; supports the 16-chapter selection approach, not an independent Sanskrit collation."
+    }
+  ],
+  "pending": [
+    "Collate selected OCR against print scans and independent textual witnesses.",
+    "Write and review clearly labelled short Hindi/English editorial readings; none authored here.",
+    "Resolve translation reproduction rights before app reuse.",
+    "Keep editions and ritual variants explicit; do not promote topic pointers to verse-level matches."
+  ],
+  "items": [
+    {
+      "id": "karma",
+      "titleHi": "कर्म और उसके फल",
+      "titleEn": "Karma and its consequences",
+      "kind": "teaching",
+      "selectionReason": "A practical entry into the text's account of conduct and consequences.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "सत्कर्मकी महिमा तथा कर्मविपाकका फल",
+      "sourcePages": [
+        596,
+        597,
+        598
+      ],
+      "stopBeforeHeading": "यममार्गमें स्थित वैतरणी नदीका वर्णन, पापकर्मोंसे घोर वैतरणीमें निवास, वैतरणीसे पार होनेके लिये वैतरणी-धेनुदान, भगवान् विष्णु, गङ्गा तथा ब्राह्मणकी महिमा",
+      "relatedSaroddharaChapters": [],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/karma.json",
+      "textCharacters": 5378
+    },
+    {
+      "id": "daan",
+      "titleHi": "दान का महत्त्व",
+      "titleEn": "The importance of giving",
+      "kind": "teaching",
+      "selectionReason": "Giving is a recurring theme in the collected text and Saroddhara.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "दान-धर्मकी महिमा",
+      "sourcePages": [
+        180,
+        181
+      ],
+      "stopBeforeHeading": "श्राद्धके अवसर तथा अधिकारी; श्राद्धकी संक्षिप्त विधि, महिमा और फल",
+      "relatedSaroddharaChapters": [
+        8
+      ],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/daan.json",
+      "textCharacters": 3700
+    },
+    {
+      "id": "human-life",
+      "titleHi": "मनुष्य जीवन का महत्त्व",
+      "titleEn": "The value of human life",
+      "kind": "teaching",
+      "selectionReason": "An accessible teaching on the opportunity to practise dharma.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "चौरासी लाख योनियोंमें मनुष्यजन्मकी श्रेष्ठता, मनुष्यमात्रका एकमात्र कर्तव्य — धर्माचरण",
+      "sourcePages": [
+        517,
+        518,
+        519
+      ],
+      "stopBeforeHeading": "वृषोत्सर्ग तथा सत्कर्मकी महिमा",
+      "relatedSaroddharaChapters": [
+        16
+      ],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/human-life.json",
+      "textCharacters": 5506
+    },
+    {
+      "id": "liberation",
+      "titleHi": "विवेक, सत्संग और मोक्ष",
+      "titleEn": "Discernment, good company and liberation",
+      "kind": "teaching",
+      "selectionReason": "Balances afterlife material with the text's concluding liberation teaching.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "भगवान् विष्णुद्वारा गरुडको दिये गये महत्त्वपूर्ण उपदेश, मनुष्य-योनिप्राप्तिकी दुर्लभताका वर्णन, मनुष्य-शरीर प्राप्तकर आत्मकल्याणके लिये सचेष्ट रहना, संसारकी दुःखरूपता तथा अनित्यता और ईश्वरकी नित्यताका वर्णन, कालके द्वारा सभीके विनाशका प्रतिपादन, सत्संग और विवेकज्ञानसे मोक्षकी प्राप्ति, तत्त्वज्ञानरूपी मोक्षप्राप्तिके उपाय, गरुडपुराणकी वक्तृ-श्रोतृपरम्परा तथा गरुडपुराणका माहात्म्य",
+      "sourcePages": [
+        604,
+        605,
+        606,
+        607,
+        608,
+        609,
+        610,
+        611,
+        612,
+        613
+      ],
+      "stopBeforeHeading": "[ ब्रह्मकाण्ड¹ ]",
+      "relatedSaroddharaChapters": [
+        16
+      ],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/liberation.json",
+      "textCharacters": 25048
+    },
+    {
+      "id": "babhruvahana",
+      "titleHi": "बभ्रुवाहन और प्रेत सुदेव",
+      "titleEn": "Babhruvahana and the departed Sudeva",
+      "kind": "story",
+      "selectionReason": "A named narrative also present in Saroddhara; help for a departed stranger.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "राजा बभ्रुवाहनकी कथा, राजाद्वारा प्रेतके निमित्त की गयी और्ध्वदेहिक क्रिया एवं वृषोत्सर्गसे प्रेतका उद्धार",
+      "sourcePages": [
+        507,
+        508,
+        509,
+        510,
+        511
+      ],
+      "stopBeforeHeading": "श्राद्धान्नका पितरोंके पास पहुँचना, दृष्टान्तरूपमें देवी सीताद्वारा भोजन करते हुए ब्राह्मणके शरीरमें महाराज दशरथ आदिका दर्शन करना, मृत्युके अनन्तर दूसरे शरीरकी प्राप्ति, सत्कर्मकी महिमा तथा पिण्डदानसे शरीरका निर्माण",
+      "relatedSaroddharaChapters": [
+        7
+      ],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/babhruvahana.json",
+      "textCharacters": 9703
+    },
+    {
+      "id": "five-pretas",
+      "titleHi": "ब्राह्मण और पाँच प्रेत",
+      "titleEn": "The Brahmin and the five pretas",
+      "kind": "story",
+      "selectionReason": "A narrative connecting conduct, company and divine grace; name spelling needs collation.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "संतप्तक ब्राह्मण तथा पाँच प्रेतोंकी कथा, सत्संगति तथा भगवत्कृपासे पाँच प्रेतों तथा ब्राह्मणका उद्धार",
+      "sourcePages": [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505
+      ],
+      "stopBeforeHeading": "और्ध्वदैहिक क्रियाके अधिकारी तथा जीवित-श्राद्धकी संक्षिप्त विधि",
+      "relatedSaroddharaChapters": [],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/five-pretas.json",
+      "textCharacters": 12893
+    },
+    {
+      "id": "viravahana",
+      "titleHi": "राजा वीरवाहन की कथा",
+      "titleEn": "The story of King Viravahana",
+      "kind": "story",
+      "selectionReason": "A ritual-linked narrative that also contains a Narada episode; optional deeper reading.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "वृषोत्सर्गकी महिमामें राजा वीरवाहनकी कथा, देवर्षि नारदके पूर्वजन्मके इतिहासवर्णनमें सत्संगति और भगवद्भक्तिका माहात्म्य, वृषोत्सर्गके प्रभावसे राजा वीरवाहनको पुण्यलोककी प्राप्ति",
+      "sourcePages": [
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499,
+        500
+      ],
+      "stopBeforeHeading": "संतप्तक ब्राह्मण तथा पाँच प्रेतोंकी कथा, सत्संगति तथा भगवत्कृपासे पाँच प्रेतों तथा ब्राह्मणका उद्धार",
+      "relatedSaroddharaChapters": [],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/viravahana.json",
+      "textCharacters": 20416
+    },
+    {
+      "id": "sita-ancestors",
+      "titleHi": "सीता और पितरों का दर्शन",
+      "titleEn": "Sita's vision of the ancestors",
+      "kind": "story",
+      "selectionReason": "A narrative explanation of ancestral offerings. Attribute this telling to Garud Puran, not automatically to Valmiki Ramayan.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "श्राद्धान्नका पितरोंके पास पहुँचना, दृष्टान्तरूपमें देवी सीताद्वारा भोजन करते हुए ब्राह्मणके शरीरमें महाराज दशरथ आदिका दर्शन करना, मृत्युके अनन्तर दूसरे शरीरकी प्राप्ति, सत्कर्मकी महिमा तथा पिण्डदानसे शरीरका निर्माण",
+      "sourcePages": [
+        511,
+        512,
+        513,
+        514,
+        515,
+        516
+      ],
+      "stopBeforeHeading": "जीवकी ऊर्ध्वगति एवं अधोगतिका वर्णन",
+      "relatedSaroddharaChapters": [],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/sita-ancestors.json",
+      "textCharacters": 14966
+    },
+    {
+      "id": "shraddha",
+      "titleHi": "श्राद्ध का परिचय",
+      "titleEn": "Understanding shraddha",
+      "kind": "tradition",
+      "selectionReason": "Relevant to ancestral remembrance; introduce meaning before procedural detail.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "श्राद्धके अवसर तथा अधिकारी; श्राद्धकी संक्षिप्त विधि, महिमा और फल",
+      "sourcePages": [
+        181,
+        182,
+        183,
+        184
+      ],
+      "stopBeforeHeading": "विनायकशान्ति-स्नान",
+      "relatedSaroddharaChapters": [
+        13
+      ],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/shraddha.json",
+      "textCharacters": 8918
+    },
+    {
+      "id": "mourning-rites",
+      "titleHi": "मृत्यु के बाद के संस्कार",
+      "titleEn": "Rites after death",
+      "kind": "tradition",
+      "selectionReason": "The funeral-reading context is historically attested; this is education, not one universal family ritual schedule.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "आशौचमें विहित कृत्य, आशौचकी अवधि, दशगात्रविधि, प्रथमषोडशी, मध्यमषोडशी तथा उत्तमषोडशीका विधान, नौ श्राद्धोंका स्वरूप, वार्षिक कृत्य, जीवका यममार्गनिदान, मार्गमें पड़नेवाले षोडश नगरोंमें जीवकी यातनाका स्वरूप, यमपुरीमें पापात्माओं और पुण्यात्माओंको घोर तथा सौम्यरूपमें यमराजके दर्शन",
+      "sourcePages": [
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492,
+        493
+      ],
+      "stopBeforeHeading": "वृषोत्सर्गकी महिमामें राजा वीरवाहनकी कथा, देवर्षि नारदके पूर्वजन्मके इतिहासवर्णनमें सत्संगति और भगवद्भक्तिका माहात्म्य, वृषोत्सर्गके प्रभावसे राजा वीरवाहनको पुण्यलोककी प्राप्ति",
+      "relatedSaroddharaChapters": [
+        11,
+        12,
+        13
+      ],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/mourning-rites.json",
+      "textCharacters": 27892
+    },
+    {
+      "id": "yama",
+      "titleHi": "यमराज और कर्मफल",
+      "titleEn": "Yama and the fruits of action",
+      "kind": "tradition",
+      "selectionReason": "A short entry into the text's traditional account of judgment.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "जीवका यमपुरीमें प्रवेश, वहाँ शुभाशुभ कर्मोंका फलभोग, कर्मानुसार अन्य देहकी प्राप्ति, मनुष्य-जन्म पाकर धर्माचरण ही मुख्य कर्तव्य",
+      "sourcePages": [
+        534,
+        535
+      ],
+      "stopBeforeHeading": "प्रेतबाधाका स्वरूप तथा मुक्तिके उपाय",
+      "relatedSaroddharaChapters": [
+        14
+      ],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/yama.json",
+      "textCharacters": 2842
+    },
+    {
+      "id": "vaitarani",
+      "titleHi": "वैतरणी का वर्णन",
+      "titleEn": "The account of Vaitarani",
+      "kind": "tradition",
+      "selectionReason": "A recurring afterlife theme; keep graphic detail optional and identify it as a scriptural account.",
+      "status": "research-extract-unverified",
+      "releaseEligible": false,
+      "contentType": "source-passage-not-authored-summary",
+      "sourceId": "bharatkosha-gita-press-abridged-hi",
+      "sourceHeading": "यममार्गमें स्थित वैतरणी नदीका वर्णन, पापकर्मोंसे घोर वैतरणीमें निवास, वैतरणीसे पार होनेके लिये वैतरणी-धेनुदान, भगवान् विष्णु, गङ्गा तथा ब्राह्मणकी महिमा",
+      "sourcePages": [
+        598,
+        599,
+        600,
+        601
+      ],
+      "stopBeforeHeading": "दुःखी गर्भस्थ जीवका विविध प्रकारका चिन्तन करना, यमयातनाग्रस्त जीवका सदा सुकृत करनेका उपदेश देना",
+      "relatedSaroddharaChapters": [
+        2
+      ],
+      "englishReferenceStatus": "topic pointers only; not aligned translations",
+      "meaningHi": null,
+      "meaningEn": null,
+      "sourceNotes": "Selection from a Hindi abridgement, not the complete Purana or a verified complete original chapter. OCR, running headers and footnotes remain. Full source wording is retained within heading boundaries; source promises and social prescriptions are not editorial endorsements.",
+      "localFile": "tmp/garud-puran/selected/vaitarani.json",
+      "textCharacters": 7854
+    }
+  ]
+}

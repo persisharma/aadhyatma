@@ -1,0 +1,129 @@
+{
+  "chapter": 8,
+  "id": "sita-ancestors",
+  "titleHi": "सीता और पितरों का दर्शन",
+  "titleEn": "Sita’s vision of the ancestors",
+  "kind": "story",
+  "artId": "sita-ancestors",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/511",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/512",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/513",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/514",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/515",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/516"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "2.10.1",
+      "2.10.2",
+      "2.10.3",
+      "2.10.4",
+      "2.10.5",
+      "2.10.6",
+      "2.10.7",
+      "2.10.8",
+      "2.10.9",
+      "2.10.10",
+      "2.10.31",
+      "2.10.32",
+      "2.10.33",
+      "2.10.34",
+      "2.10.35",
+      "2.10.36",
+      "2.10.37",
+      "2.10.38",
+      "2.10.39",
+      "2.10.40",
+      "2.10.41",
+      "2.10.42",
+      "2.10.43",
+      "2.10.44",
+      "2.10.45",
+      "2.10.46",
+      "2.10.47",
+      "2.10.48",
+      "2.10.49"
+    ],
+    "sanskritFileSha256": "12ab9a49039f423efaff042c78b4f8ce7870ff28e058c57dd82130ce96214664",
+    "hindiSourcePages": [
+      511,
+      512,
+      513,
+      514,
+      515,
+      516
+    ],
+    "hindiFragmentSha256": "357b7780d6c02bd5ccb38fc0cd72ad595ffaf080d0bc4b265242bdf450f8e174",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Pushkar episode in Garuda Purana 2.10, not the separate popular Gaya sand-pinda story and not attributed to Valmiki Ramayan. Retains Sita’s actual explanation: recognition of Dasharatha and two ancestors, modest forest clothing and simple food.",
+    "citeHi": "गरुडपुराण · प्रेतकल्प 10 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Preta chapter 10 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "sita-ancestors-1",
+      "chapter": 8,
+      "number": 1,
+      "titleHi": "पुष्कर का प्रसंग",
+      "titleEn": "The episode at Pushkar",
+      "bodyHi": [
+        "गरुड़ पूछते हैं कि श्राद्ध में दिया गया अन्न पितरों तक कैसे पहुँचता है। उत्तर में भगवान एक प्रसंग सुनाते हैं। वनवास के समय राम और सीता पुष्कर पहुँचे। राम ने श्राद्ध के लिए ऋषियों को आमन्त्रित किया और सीता ने वन के फलों से भोजन तैयार किया।",
+        "सीता भोजन परोसने आईं, पर अतिथियों के पास पहुँचकर अचानक एक ओर हट गईं। राम ने स्वयं अतिथियों को भोजन कराया। उनके चले जाने के बाद उन्होंने सीता से पूछा कि वे बीच में क्यों हट गई थीं।"
+      ],
+      "bodyEn": [
+        "Garuda asks how an ancestral offering can reach those who have died. In reply, the Lord tells an episode about Rama and Sita visiting Pushkar during their forest exile. Rama invited sages for shraddha, and Sita prepared food from forest fruit.",
+        "Sita came forward to serve, but withdrew after approaching the guests. Rama served them himself. When the guests had left, he asked Sita why she had stepped away."
+      ],
+      "meaningHi": "गरुड़ पूछते हैं कि श्राद्ध में दिया गया अन्न पितरों तक कैसे पहुँचता है। उत्तर में भगवान एक प्रसंग सुनाते हैं। वनवास के समय राम और सीता पुष्कर पहुँचे। राम ने श्राद्ध के लिए ऋषियों को आमन्त्रित किया और सीता ने वन के फलों से भोजन तैयार किया।\n\nसीता भोजन परोसने आईं, पर अतिथियों के पास पहुँचकर अचानक एक ओर हट गईं। राम ने स्वयं अतिथियों को भोजन कराया। उनके चले जाने के बाद उन्होंने सीता से पूछा कि वे बीच में क्यों हट गई थीं।",
+      "meaningEn": "Garuda asks how an ancestral offering can reach those who have died. In reply, the Lord tells an episode about Rama and Sita visiting Pushkar during their forest exile. Rama invited sages for shraddha, and Sita prepared food from forest fruit.\n\nSita came forward to serve, but withdrew after approaching the guests. Rama served them himself. When the guests had left, he asked Sita why she had stepped away.",
+      "artId": "sita-ancestors"
+    },
+    {
+      "id": "sita-ancestors-2",
+      "chapter": 8,
+      "number": 2,
+      "titleHi": "सीता ने क्या देखा",
+      "titleEn": "What Sita saw",
+      "bodyHi": [
+        "सीता ने कहा कि उन्हें अतिथियों में महाराज दशरथ और दो अन्य पूर्वजों के दर्शन हुए थे। वे स्वयं वन के साधारण वस्त्र पहने हुए थीं। उन्हें संकोच हुआ कि राजसी सम्मान पाने वाले इन बड़ों के सामने वे इस रूप में कैसे आएँ और इतना साधारण भोजन कैसे परोसें।",
+        "इस प्रसंग का उपयोग पुराण यह समझाने के लिए करता है कि श्राद्ध केवल दिखाई देने वाले अतिथियों तक सीमित नहीं माना जाता। कथा में उनके माध्यम से पितरों की उपस्थिति का वर्णन है। यह गरुडपुराण का पुष्कर वाला प्रसंग है।"
+      ],
+      "bodyEn": [
+        "Sita said she had seen King Dasharatha and two other ancestors among the guests. Wearing the plain clothing of forest life, she felt shy before elders accustomed to royal honour. She also hesitated over offering them such simple food.",
+        "The Purana uses this episode to explain its belief that shraddha reaches beyond the guests who are visibly present. The ancestors are described as present through them. This is the Pushkar episode told in the Garuda Purana."
+      ],
+      "meaningHi": "सीता ने कहा कि उन्हें अतिथियों में महाराज दशरथ और दो अन्य पूर्वजों के दर्शन हुए थे। वे स्वयं वन के साधारण वस्त्र पहने हुए थीं। उन्हें संकोच हुआ कि राजसी सम्मान पाने वाले इन बड़ों के सामने वे इस रूप में कैसे आएँ और इतना साधारण भोजन कैसे परोसें।\n\nइस प्रसंग का उपयोग पुराण यह समझाने के लिए करता है कि श्राद्ध केवल दिखाई देने वाले अतिथियों तक सीमित नहीं माना जाता। कथा में उनके माध्यम से पितरों की उपस्थिति का वर्णन है। यह गरुडपुराण का पुष्कर वाला प्रसंग है।",
+      "meaningEn": "Sita said she had seen King Dasharatha and two other ancestors among the guests. Wearing the plain clothing of forest life, she felt shy before elders accustomed to royal honour. She also hesitated over offering them such simple food.\n\nThe Purana uses this episode to explain its belief that shraddha reaches beyond the guests who are visibly present. The ancestors are described as present through them. This is the Pushkar episode told in the Garuda Purana.",
+      "artId": "sita-ancestors"
+    },
+    {
+      "id": "sita-ancestors-3",
+      "chapter": 8,
+      "number": 3,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "इस कथा में भोजन के साथ सम्बन्ध और आदर जुड़े हैं। किसी प्रिय पूर्वज को स्मरण करते समय साधारण वस्तु भी गहरे भाव का माध्यम बन सकती है। यह उसका आज के पाठक के लिए निकाला गया अर्थ है।",
+        "इसे गया में सीता द्वारा बालू के पिण्ड देने वाली दूसरी प्रचलित कथा के साथ न मिलाएँ। दोनों का स्थान और घटनाक्रम अलग है। यहाँ उद्देश्य इस विशेष प्रसंग को उसके अपने स्रोत के साथ समझना है।"
+      ],
+      "bodyEn": [
+        "The story connects a meal with relationship and respect. In remembering someone dear, a simple offering can carry a depth of feeling beyond its material value. This is the reflection we draw for a reader today.",
+        "This episode should not be combined with the separate popular story of Sita offering sand pindas at Gaya. Their locations and events differ. Here the aim is to understand this particular telling together with its own source."
+      ],
+      "meaningHi": "इस कथा में भोजन के साथ सम्बन्ध और आदर जुड़े हैं। किसी प्रिय पूर्वज को स्मरण करते समय साधारण वस्तु भी गहरे भाव का माध्यम बन सकती है। यह उसका आज के पाठक के लिए निकाला गया अर्थ है।\n\nइसे गया में सीता द्वारा बालू के पिण्ड देने वाली दूसरी प्रचलित कथा के साथ न मिलाएँ। दोनों का स्थान और घटनाक्रम अलग है। यहाँ उद्देश्य इस विशेष प्रसंग को उसके अपने स्रोत के साथ समझना है।",
+      "meaningEn": "The story connects a meal with relationship and respect. In remembering someone dear, a simple offering can carry a depth of feeling beyond its material value. This is the reflection we draw for a reader today.\n\nThis episode should not be combined with the separate popular story of Sita offering sand pindas at Gaya. Their locations and events differ. Here the aim is to understand this particular telling together with its own source.",
+      "artId": "sita-ancestors"
+    }
+  ]
+}

@@ -26,13 +26,22 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.5.1';
+export const APP_TOUR_VERSION = '1.5.2';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.5.2': {
+    version: '1.5.2',
+    items: [{
+      titleHi: 'गरुड़ पुराण · चयनित पाठ',
+      titleEn: 'Garud Puran · selected readings',
+      bodyHi: 'ग्रन्थ में 12 चयनित पाठ — छोटी कथाएँ, सरल हिन्दी और अंग्रेज़ी व्याख्या, चित्र और स्रोतों के साथ। जहाँ पढ़ना छोड़ा था, वहीं से आगे बढ़ें।',
+      bodyEn: 'Explore 12 selected readings in Sacred Books, with short stories, simple Hindi and English explanations, illustrations and sources. Continue from the page where you left off.',
+    }],
+  },
   '1.5.1': {
     version: '1.5.1',
     items: [

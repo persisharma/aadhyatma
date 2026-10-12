@@ -1,0 +1,15 @@
+# Native-build smoke. For Expo Go, open the worktree bundle, finish onboarding,
+# navigate to the Garud Puran index and run _garud-puran-reader.yaml with APP_ID.
+appId: com.prashantsharma.vedansh
+env:
+  APP_ID: com.prashantsharma.vedansh
+  SHOT_PREFIX: garud-puran
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element:
+      text: Sacred Books.*Tap to open.
+    direction: DOWN
+- tapOn: Sacred Books.*Tap to open.
+- tapOn: 'Garud Puran\..*Tap to open\.'
+- runFlow: _garud-puran-reader.yaml

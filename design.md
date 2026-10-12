@@ -3623,3 +3623,17 @@ FOR TODAY compact cards retain their normal 196dp width. Above fontScale 1.2 the
 **Content.** `grahaReference.ts` — an authored `{natureHi/En, signifiesHi/En}` per graha (generic educational copy; the §14.3.5 bans still hold, scanned by test). Name/meaning/maitri/weekday are reused from the already-reviewed reading tables (`GRAHA_PLAIN`, `maitriNames`, `GRAHA_UPAY`), not re-authored.
 
 **Files.** `mobile/src/panchang/grahaReference.ts`; `mobile/src/screens/GrahaReferenceScreen.tsx`; route in `navigation/types.ts` (`GrahaReference: { focusGraha? }`) + `PanchangStackNavigator.tsx` + `routeGraph.ts`; launcher in `KundaliScreen.tsx`; the Know-this-graha link in `GrahaReadingList.tsx` (wired from `KundaliReportScreen.tsx` `onLearnGraha`). Tests: `grahaReference.test.ts` (completeness + bans), `GrahaReferenceScreen.test.tsx` (lists nine, `focusGraha` expands, tap toggles). Contract: RULEBOOK §14.3.5, §14.7.
+
+---
+
+## 81. Garud Puran — selected stories and explanations
+
+The `garud-puran` Granth row opens `GarudPuranChapters`, with 12 readings grouped into teachings, stories and traditions. The existing `GitaChapterCard` accepts an optional illustration thumbnail; its default numbered appearance is unchanged. Labels say `पाठ`/`Reading` and `पृष्ठ`/`pages`. Each reading resumes its own progress.
+
+`GarudPuranReader` reuses the Gita shell: shared header and page counter, progress bar, language/routine/narration controls, horizontal paging, bookmark/share, jump-to-start and chapter-boundary cards. Its `GarudPuranPage` renders authored prose using the shared meaning token, a short title, the shared `ReadingArtwork` first-page illustration and expandable source/context links. Both index and page identify the collection as selected editorial explanations. Do not display invented shlokas or present the 28 pages as a scripture verse count.
+
+Nine bundled 960×480 WebP paintings follow current-main PR #449: fine warm outlines, detailed storybook scenes, muted pastel fills and no embedded text. Compose a full 2:1 scene with no blank caption band; do not crop a portrait to fill the slot. The opening frame is width 100%, maximum 360×180 pt, rendered with contain. A quiet approved paper texture sits once at screen level, followed by the compact gold leaf divider between artwork and prose. Continuations have no art slot. Page dots sit below, not over, the scroll viewport; the tab bar owns the bottom safe area. Cover art supports readings 1/3/4; giving supports 2; each of the four stories has its own scene; the ancestor still life supports 9/10; Yama and symbolic Vaitarani each have a separate plate. The original generated PNGs remain outside the bundle. Total compressed paintings are about 1.30 MB plus 3,102 bytes of paper texture. Story scenes are deterministic, never randomly rotated.
+
+The source comparison and illustration manifest live in `docs/content/garud-puran/`. `scripts/preview-garud-puran.py` builds `preview.html` from the exact bundled JSON for bilingual reading and artwork review; it is an editorial preview, not a replacement for screenshots of the native app. Technical test and device evidence belongs in `INTEGRATION.md` there. Content contract: RULEBOOK §31.
+
+The approved final set matches the saved Style 3 template and is recorded in `docs/content/garud-puran/design-review/style3-final/manifest.json`. Both Garud screens use `BackgroundLayer(readingParchment)`; saved progress uses Reading / Page and sharing uses the shared prose export.

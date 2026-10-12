@@ -1,0 +1,12 @@
+{
+  "mainCommit": "b6d6ff3153cc7b4085b83b6a040d9f861dbc8434",
+  "checkedOn": "2026-10-12",
+  "referencePRs": [
+    253,
+    429,
+    434,
+    449
+  ],
+  "layoutContract": "Complete 2:1 opening painting at max 360x180pt, quiet screen paper, compact leaf divider, text-first continuation; no blank caption band",
+  "adaptation": "Scoped to Garud Puran; ProseParagraph copied verbatim from current main. Existing whole-app cache/asset plumbing not backported."
+}

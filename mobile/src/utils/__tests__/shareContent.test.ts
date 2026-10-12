@@ -1,5 +1,7 @@
+import { garudPuranChaptersManifest, getGarudPuranChapter } from '@/data/garud-puran';
 import {
   askAnswerShareable,
+  garudPuranShareable,
   daanKathaShareable,
   daanPrincipleShareable,
   observanceShareable,
@@ -158,4 +160,22 @@ describe('askAnswerShareable', () => {
     expect(p.scopes[0].titleEn).toBe('Rahu kaal 10:30–12:00');
     expect(p.scopes[0].blocks).toEqual([{ kind: 'para', hi: 'स्थान — दिल्ली', en: 'Place — Delhi' }]);
   });
+});
+
+test('all Garud pages share as complete bilingual prose with their source and editorial label', () => {
+  for (const row of garudPuranChaptersManifest) {
+    const chapter = getGarudPuranChapter(row.chapter);
+    for (const page of chapter.verses) {
+      const share = garudPuranShareable(chapter, page);
+      expect(share.sectionNameEn).toContain('editorial');
+      expect(share.sheetTitle?.en).toBe('Share this reading');
+      expect(share.scopes[0].headerEn).toContain(chapter.source.citeEn);
+      for (const lang of ['hi', 'en'] as const) {
+        const result = defaultPages(share, lang);
+        expect(result.truncated).toBe(false);
+        expect(result.pages.length).toBeGreaterThan(0);
+        expect(share.scopes[0].blocks.map(b => b[lang]).join('\n\n')).toBe(lang === 'hi' ? page.meaningHi : page.meaningEn);
+      }
+    }
+  }
 });

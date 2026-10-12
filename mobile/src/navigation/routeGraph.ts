@@ -21,6 +21,7 @@ export const routeGraph: Readonly<Record<string, readonly string[]>> = {
   "DeityIndex": ["DeityDetail"],
   "DurgaStotramChapters": ["DurgaStotramReader"],
   "GaneshStotramChapters": ["GaneshStotramReader"],
+  "GarudPuranChapters": ["GarudPuranReader"],
   "GharVastu": ["GharVastuSetup"],
   "GharVastuRoster": ["GharVastu", "GharVastuCompare", "GharVastuSetup"],
   "GharVastuSetup": ["GharVastu"],

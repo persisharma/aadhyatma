@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 
+import { formatLocation } from '@/utils/formatLocation';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { HomeRecord, HomeRoster } from '@/vastu/homeRecord';
@@ -310,6 +311,7 @@ for (const sourceId of [
     ['saraswati-stotram', 'SaraswatiStotramChapters'],
     ['krishna-stotram', 'KrishnaStotramChapters'],
     ['valmiki-ramayan', 'ValmikiRamayanChapters'],
+    ['garud-puran', 'GarudPuranChapters'],
     ['gita-saar', 'GitaSaarChapters'],
   ] as const) {
     assert.deepEqual(
@@ -469,4 +471,13 @@ const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
     screen: 'GharVastuSetup',
     params: { role: 'living' },
   });
+}
+
+// Selected prose keeps its last reading/page through search, saved progress and bookmarks.
+{
+  const progress = { sourceId: 'garud-puran', chapter: 12, verseIndex: 1, updatedAt: 1 };
+  const target = { screen: 'GarudPuranReader', params: { chapter: 12, initialIndex: 1 } };
+  assert.deepEqual(buildProgressTarget(progress), target);
+  assert.deepEqual(buildBookmarkTarget({ ...progress, id: 'garud-12-1', savedAt: 1, previewHi: '', previewEn: '' }), target);
+  assert.deepEqual(formatLocation(progress), { hi: 'पाठ 12 · पृष्ठ 2', en: 'Reading 12 · Page 2' });
 }

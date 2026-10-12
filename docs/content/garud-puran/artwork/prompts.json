@@ -1,0 +1,16 @@
+{
+  "mode": "built-in-image_gen",
+  "style": "Original sepia pencil and muted watercolor on warm ivory, Indian manuscript illustration, 2:3 portrait, no text; artwork is interpretive.",
+  "assets": [
+    {
+      "id": "cover",
+      "prompt": "Use case: illustration-story. Asset type: Vedansh Garud Puran selected teachings cover and quiet reading illustration. Original Indian miniature-inspired fine sepia pencil and muted watercolor on warm ivory manuscript paper. Portrait 2:3 composition. Lord Vishnu as Narayana sits serenely with four anatomically clear arms bearing conch, discus, mace and lotus, traditional crown, gentle blue skin very subtly tinted. Garuda is respectfully seated near him in listening posture, a dignified winged human-bird devotee with golden-brown wings and eagle-like facial features. Peaceful lakeside sacred grove. Both figures fully within central 60 percent, subject in upper two thirds, bottom third clean ivory paper. Fine delicate linework, subtle antique texture, restrained saffron gold, no photorealism, no modern objects, no words, letters, symbols, logos, watermark or frame. Thoughtful devotional mood, no horror, not a screenshot. Clear enough to use as an illustrated card and fade behind a reader.",
+      "sections": [
+        "karma",
+        "human-life",
+        "liberation"
+      ],
+      "role": "Vishnu-Garuda conversation; index cover and shared teachings plate"
+    }
+  ]
+}
