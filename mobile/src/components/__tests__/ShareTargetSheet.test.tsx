@@ -48,6 +48,14 @@ function byLabel(tree: TestRenderer.ReactTestRenderer, label: string) {
 }
 
 describe('ShareTargetSheet', () => {
+  test('verse exports explain the taller image without promising a fixed Instagram crop', async () => {
+    const tree = await renderSheet({ fullVerseImage: true });
+    expect(tree.root.findAll(n => n.props.children === '4:5' || n.props.children === '9:16')).toHaveLength(0);
+    expect(tree.root.findAll(n => n.props.children === 'Long verses use one taller image. You may need to adjust its framing in Instagram.').length).toBeGreaterThan(0);
+    expect(byLabel(tree, 'Share to other apps')).toBeDefined();
+    expect(byLabel(tree, 'Share as Instagram story or reel').props.accessibilityHint).not.toContain('nothing cropped');
+  });
+
   test('offers all three destinations, post and story separately', async () => {
     const tree = await renderSheet();
     expect(byLabel(tree, 'Share to other apps')).toBeDefined();

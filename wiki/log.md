@@ -747,3 +747,48 @@ Followed the Saturn pilot by authoring the narrative-voice reading for every gra
 ## [2026-10-12] ingest | नवग्रह narrative voice signed off — gate opened for all nine grahas
 
 The jyotishi sign-off was confirmed by the product owner (12 Oct 2026). Flipped `GRAHA_NARRATIVE_REVIEW` to `approved` (`signOffRef: 'confirmed-by-product-owner-2026-10-12'`, no names), so `narrativeReadingsApproved()` is true and the narrative-voice reading now shows in **every build** (not just dev) and replaces the legacy bullet card for all nine grahas. Caveat: there is no sheet-hash pin for the narrative yet (the per-graha review-sheet renderer is a follow-up), so a later content edit will NOT auto-revert to draft the way the legacy §78 card does — re-review by hand. The generic "Know the nine grahas" reference (`grahaReference.ts`, design.md §80) ships ungated as generic educational copy. design.md §78/§80, RULEBOOK §14.7.10, test updated (`GRAHA_NARRATIVE_REVIEW.status === 'approved'`). Updated [[panchang]].
+
+## [2026-10-12] ingest | Daily Bhakti reading-space correction
+
+Removed the rotating daily verse card's illustration banner and its asset subscription;
+bundled neutral parchment stays local. Compact Ornament removes nested margins (80pt to
+12pt total) while retaining complete verse/meaning strings and the shared reading-size
+scale. Existing themed share backgrounds, R2 manifests/cache and other readers are unchanged.
+Updated design.md §§6/23, RULEBOOK §11.8 and the reader/artwork wiki contracts. Full npm test
+passes on current main 324aea00: TypeScript and 3,184 tests (242 Jest suites / 2,335 tests).
+Touched lint is clean. Native before/after is inspected in English/Hindi Standard/Large; the
+updated daily-bhakti-smoke passes on freshly exported production JS in an existing Release
+shell. Physical-device/Android runtime and frame/CPU/memory benchmarks remain unverified;
+no release/OTA was published. Evidence: docs/evaluations/reading-visuals-2026-10-12/daily-bhakti-space/review.md.
+
+## [2026-10-12] gap | Long verse share exports can clip content
+
+Native stress QA of Ganesh Stotram 2.11 confirms full reading/meaning remains reachable by
+scrolling at Large, but the unchanged fixed-size ShareCard export clips verse lines and
+omits the meaning/footer. A short Gita export paints its themed background correctly.
+The daily spacing correction does not fix long-share pagination. Evidence:
+docs/evaluations/reading-visuals-2026-10-12/daily-bhakti-space/review.md.
+
+
+## [2026-10-12] ingest | Complete verse shares use one taller image
+
+Resolved the earlier long-verse sharing gap using native natural card/frame height, with
+uncapped 24/40 verse and 18/27 meaning type. Capture ancestors remain unconstrained while
+measuring; final PNG dimensions follow the measured height at 1080px width. Short post/story
+sizes remain 1080×1350 / 1080×1920; the picker explains taller exports and Instagram framing.
+No startup/reader measurement, R2 asset/cache changes, prose/illustrated-series redesign,
+message, release or OTA. Full npm test passes: TypeScript and 3,184 tests (241 Jest suites /
+2,335 tests); focused sharing checks and touched lint pass. Seven native exports pass and
+are visually inspected: long Ganesh 2.11 in four languages, long story, short Gita 2.47 and
+short story. Physical-device/Android runtime and frame/CPU/memory benchmarks remain open.
+Evidence: docs/evaluations/reading-visuals-2026-10-12/tall-verse-share/review.md.
+
+
+## [2026-10-12] ingest | Reader smoke-test cleanup resolves CI stall
+
+PR #453 closeout reproduced the reader-test stall with Node 20, CI=true and TZ=UTC.
+Aarti, Chalisa and Stuti test trees now unmount in afterEach, including failure paths;
+assertions and test scope are unchanged. The complete matching-runtime reader run passes
+241 suites / 2,335 tests in 97.337 seconds, with clean typecheck and touched-test lint.
+No app/runtime or native-export changes. Evidence:
+docs/evaluations/reading-visuals-2026-10-12/tall-verse-share/review.md.

@@ -21,9 +21,11 @@ jest.mock('@/components/ShareStoryCanvas', () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const BackgroundArtwork = require('@/components/BackgroundArtwork').default;
   const source = { kind: 'remote-background', stem: 'backgrounds--deity-rama-darbar' };
-  return { __esModule: true, default: () => React.createElement(React.Fragment, null,
+  return { __esModule: true, default: function MockShareStoryCanvas({ onHeight }: { onHeight?: (height: number) => void }) {
+    React.useEffect(() => { onHeight?.(960); }, [onHeight]);
+    return React.createElement(React.Fragment, null,
     React.createElement(BackgroundArtwork, { source }),
-    React.createElement(BackgroundArtwork, { source })) };
+    React.createElement(BackgroundArtwork, { source })); } };
 });
 jest.mock('@/components/ShareCard', () => 'ShareCard');
 jest.mock('@/components/ProseShareCard', () => 'ProseShareCard');

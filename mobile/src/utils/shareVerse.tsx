@@ -229,7 +229,7 @@ type ProseCardSpec = {
 const isPictureCapture = (spec: PendingCapture) => spec.kind === 'prose' && spec.card.layout === 'picture';
 
 type PendingCapture = (
-  | { kind: 'verse'; verse: ShareableVerse; lang: Lang; format: ShareFormat }
+  | { kind: 'verse'; verse: ShareableVerse; lang: Lang; format: ShareFormat; captureId?: number; measuredHeight?: number }
   | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat; captureId?: number }
 ) & { backgroundPaint?: ArtworkPaintBarrier };
 
@@ -305,6 +305,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
   const imageReady = useRef<{ id: number; resolve: (ready: boolean) => void } | null>(null);
+  const verseLayout = useRef<{ id: number; resolve: (height: number) => void } | null>(null);
   const captureSequence = useRef(0);
 
   // A dispatched share is a "good moment" the rating ask may ride on (§54). Read
@@ -326,12 +327,25 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     setTimely(next);
   }, []);
 
+  const onVerseHeight = useCallback((id: number | undefined, height: number) => {
+    const current = verseLayout.current;
+    if (current && current.id === id && Number.isFinite(height) && height > 0) {
+      current.resolve(Math.ceil(height));
+    }
+  }, []);
+
   /** Mount `spec` off-screen, let it lay out, and capture it. Null on failure. */
   const capture = useCallback(
     async (spec: PendingCapture, mode: ShareMode, screenshotRef?: React.RefObject<View | null> | null) => {
       let captureTarget = screenshotRef ?? null;
       if (mode === 'card') {
         let painted: Promise<boolean> | null = null;
+        let verseMeasured: Promise<number> | null = null;
+        if (spec.kind === 'verse') {
+          const id = ++captureSequence.current;
+          spec = { ...spec, captureId: id };
+          verseMeasured = new Promise(resolve => { verseLayout.current = { id, resolve }; });
+        }
         if (spec.kind === 'prose' && spec.card.page.illustration) {
           // Load the asset cache only for illustrated captures. Verse/prose-only tests and startup stay light.
           // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -353,6 +367,17 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         spec = { ...spec, backgroundPaint };
         setPending(spec);
         await waitForLayout();
+        if (verseMeasured) {
+          try {
+            const measuredHeight = await withTimeout(verseMeasured, 5000);
+            if (spec.kind === 'verse') {
+              spec = { ...spec, measuredHeight };
+              setPending(spec);
+            }
+          } catch { return null; }
+          finally { verseLayout.current = null; }
+          await waitForLayout();
+        }
         if (painted) {
           try { if (!await withTimeout(painted, 15000)) return null; }
           catch { return null; }
@@ -366,7 +391,9 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       }
       const tall = spec.format === 'story' || isPictureCapture(spec);
       const outWidth = tall ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH;
-      const outHeight = tall ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
+      const outHeight = spec.kind === 'verse' && spec.measuredHeight
+        ? spec.measuredHeight * (OUTPUT_WIDTH / CARD_WIDTH)
+        : tall ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
       // UIKit captures point dimensions at the screen's scale; Android uses pixels.
       const captureScale = Platform.OS === 'ios' ? PixelRatio.get() : 1;
       if (!captureTarget?.current) return null;
@@ -482,6 +509,10 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
 
       try {
         const fileUri = await capture({ kind: 'verse', verse, lang, format }, mode, opts?.screenshotRef);
+        if (!fileUri && mode === 'card') {
+          alertCouldNotShare(lang);
+          return;
+        }
 
         const captionParams = {
           sectionNameHi: verse.sectionNameHi,
@@ -808,11 +839,15 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       : undefined;
 
   const pendingSize = (spec: PendingCapture) =>
-    isPictureCapture(spec)
+    spec.kind === 'verse' && !spec.measuredHeight
+      ? { width: CARD_WIDTH } // Let native text measure without a fixed-height ancestor.
+      : isPictureCapture(spec)
       ? { width: cardMetricsFor('picture').width, height: cardMetricsFor('picture').height }
       : {
           width: spec.format === 'story' ? storyCanvas.width : CARD_WIDTH,
-          height: spec.format === 'story' ? storyCanvas.height : CARD_HEIGHT,
+          height: spec.kind === 'verse' && spec.measuredHeight
+            ? spec.measuredHeight
+            : spec.format === 'story' ? storyCanvas.height : CARD_HEIGHT,
         };
 
   return (
@@ -822,6 +857,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       {chooser ? (
         <ShareTargetSheet
           visible
+          fullVerseImage
           lang={chooser.lang}
           hashtagPreview={hashtagPreview}
           busy={busy}
@@ -896,6 +932,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
                 meaningTitleHi={pending.verse.meaningTitleHi}
                 meaningTitleEn={pending.verse.meaningTitleEn}
                 lang={pending.lang}
+                onHeight={height => onVerseHeight(pending.captureId, height)}
               />
             ) : (
               <ShareCard
@@ -916,6 +953,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
                 lang={pending.lang}
                 width={CARD_WIDTH}
                 height={CARD_HEIGHT}
+                onHeight={height => onVerseHeight(pending.captureId, height)}
               />
             )}
           </View>

@@ -5,7 +5,7 @@
  * Rather than shrink it (design.md §39 records why platform auto-fit is banned on the
  * share card), the prose is cut into a series of cards at a fixed, readable size.
  *
- * Same method as the verse card's `fitMeaningType`: the card's geometry is known, so
+ * The prose card's geometry is fixed, so
  * the line budget is arithmetic, not a layout pass. Text is packed a sentence at a time
  * (breaking at । ॥ . ? !), a paragraph that runs past a page continues on the next one
  * (the card draws a leading `…`), a section heading never sits alone at a page foot,
@@ -113,7 +113,7 @@ export const proseType: Record<'indic' | 'latin', { body: Face; title: Face; hea
  * this estimator never under-counted a single paragraph's lines was found — hi 0.390,
  * gu 0.410, kn 0.540, en 0.420. Each value below is that minimum + 0.02, which
  * over-counts by ~11 % overall: pages end a little early rather than ever clipping.
- * (The meaning ladder's `AVG_ADVANCE` — 0.52 / 0.46 — over-counts prose by ~38 %.)
+ * These advances are calibrated for the fixed prose card's text column.
  */
 const ADVANCE: Record<Lang, number> = {
   hi: 0.41,

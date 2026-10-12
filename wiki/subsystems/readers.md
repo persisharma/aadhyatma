@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
-last_verified_date: 2026-10-11
+sources: [mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
+last_verified_date: 2026-10-12
 confidence: high
 status: current
 ---
@@ -100,11 +100,16 @@ These checks do not establish native transport or physical-device performance.
 Dedicated illustrations use `contain` throughout the mapped slots. Manifest dimensions reserve
 geometry without a size probe or layout callback. The frame never waits for downloads or
 changes height on decode. Theerth shares it. Standalone Durga/Daan Katha framing, Katha
-endpoints and controlled-cache relaunch are verified. Native CDN delivery fails simulator TLS
-validation (-1200), while fallback/text/navigation work; the full reader matrix and physical
-performance remain open. Later Vidhi
+endpoints and controlled-cache relaunch are verified. The October 11 isolated-simulator
+follow-up also verifies native CDN delivery, download-once/restart/offline reuse after repairing
+missing corporate CA trust; see [[integrations/reading-artwork]]. The full reader matrix and
+physical performance remain open. Later Vidhi
 steps show the divider without repeating art. Semantic guide art follows declared deities and
 personal-tithi guides remain neutral. Individual reader paging/scroll logic is still separate.
+Daily Bhakti's rotating verse card omits the banner after the October 12 reading-space
+correction. Its bundled parchment needs no remote lookup, and `Ornament compact` replaces
+the nested 80pt vertical margins with 12pt total. Shared reading-size tokens and full text stay
+intact; long verses/meanings still scroll. Source-specific share backgrounds are unchanged.
 `ProseParagraph` preserves complete source strings while giving iOS Fabric one extra point of
 drawing height after natural layout, avoiding observed Kannada final-line clipping. Measurement
 resets on source/font/window changes; Android uses natural layout without the extra callback.

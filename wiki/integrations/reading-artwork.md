@@ -1,7 +1,7 @@
 ---
 title: Reading artwork on R2
 type: integration
-sources: [mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md]
+sources: [mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md]
 last_verified_date: 2026-10-12
 confidence: high
 status: current
@@ -65,7 +65,7 @@ Detail density is independent of rendering style; earlier simplified comparisons
 5. Readers use the approved Option 2 paper and shared `ReadingArtwork` painting/divider;
    prose adds the continuous `ProseReadingCard` folio and `kathaBackgrounds.ts`. Seven canonical
    verse layouts cover 21 reader screens, keeping their existing semantic verse/source mappings.
-   Daily Verse, Daan landing/journey, Pitru education and Vidhi preparation/first conduct step
+   Daan landing/journey, Pitru education and Vidhi preparation/first conduct step
    share this treatment. Vidhi chooses from declared deities; personal-tithi guides are neutral.
    Later conduct steps use the divider alone. `ReadingBanner` reserves a 2:1 rectangle, up to
    360pt wide and 180pt tall, centred on wider cards. Prose sections and Theerth share it.
@@ -75,7 +75,10 @@ Detail density is independent of rendering style; earlier simplified comparisons
    screens pass their actual verse index (after chapter transition offsets), and
    KathaSectionPage gates both Vrat Katha and Pitru introduction artwork to section zero.
    Direct links to later verses/sections remain text-first. Single continuous prose and
-   standalone detail/daily/guide screens keep their one opening image.
+   standalone detail/guide screens keep their one opening image. Daily Bhakti's quick rotating
+   verse card is text-first following the October 12 correction: bundled neutral paper only,
+   no banner frame/placeholder/request, and the compact ornament between verse and meaning.
+   The themed share-card background remains separate and unchanged.
    Approved dedicated illustrations replace the rejected focal crops for all mapped reading
    slots. The legacy crop registry remains only for unmapped art. Manifest dimensions determine geometry before fetching;
    no network dimension probe, layout callback or native decode changes the frame size.

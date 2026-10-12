@@ -3,6 +3,8 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { View as mockView } from 'react-native';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import ReadingArtwork from '@/components/ReadingArtwork';
+import ReadingBanner from '@/components/ReadingBanner';
+import Ornament from '@/components/Ornament';
 import { readingParchment, backgroundRequest } from '@/data/backgroundAsset';
 
 jest.mock('expo-haptics', () => ({
@@ -55,17 +57,14 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
 const { ShareProvider } = jest.requireActual<typeof import('@/utils/shareVerse')>(
   '@/utils/shareVerse'
 );
-const { getReaderBackground } = jest.requireActual<typeof import('@/data/backgrounds')>(
-  '@/data/backgrounds'
-);
 const DailyBhaktiScreen = jest.requireActual<typeof import('../DailyBhaktiScreen')>(
   '../DailyBhaktiScreen'
 ).default;
 
 /**
- * The daily card keeps its source identity while sharing the approved paper/painting layout.
+ * The daily verse keeps local paper without making each random verse a cover card.
  */
-test('verse card uses paper and its source painting through the R2 loader', () => {
+test('verse card uses local paper and a compact divider without a banner request', () => {
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
@@ -81,9 +80,9 @@ test('verse card uses paper and its source painting through the R2 loader', () =
   const backgrounds = tree!.root.findAllByType(BackgroundLayer);
   expect(backgrounds).toHaveLength(1);
   expect(backgrounds[0].props.source).toBe(readingParchment);
-  const artwork = tree!.root.findByType(ReadingArtwork);
-  expect(artwork.props.source).toBe(getReaderBackground('bhagavad-gita', { stanza: 1 }));
-  expect(artwork.props.compact).toBeUndefined();
-  expect(backgroundRequest(artwork.props.source)?.remoteUrl).toMatch(/reading-backgrounds\/[a-f0-9]{16}\.webp$/);
+  expect(backgroundRequest(backgrounds[0].props.source)).toBeNull();
+  expect(tree!.root.findAllByType(ReadingArtwork)).toHaveLength(0);
+  expect(tree!.root.findAllByType(ReadingBanner)).toHaveLength(0);
+  expect(tree!.root.findByType(Ornament).props.compact).toBe(true);
   act(() => tree!.unmount());
 });

@@ -80,6 +80,8 @@ type Props = {
    * whatever the target, so the 4:5 Instagram-post row is not offered for it.
    */
   cardLayout?: ShareCardLayout;
+  /** Verse images grow vertically to preserve the complete reading. */
+  fullVerseImage?: boolean;
 };
 
 type RowProps = {
@@ -146,6 +148,7 @@ export default function ShareTargetSheet({
   busy,
   series,
   cardLayout,
+  fullVerseImage,
 }: Props) {
   const { colors, spacing, radii } = useTheme();
   const cardSize = cardMetricsFor(cardLayout);
@@ -323,26 +326,39 @@ export default function ShareTargetSheet({
             lang={lang}
             icon="instagram"
             title={pick(lang, { hi: 'Instagram पोस्ट', en: 'Instagram post', gu: 'Instagram પોસ્ટ', kn: 'Instagram ಪೋಸ್ಟ್' })}
-            sub={pick(lang, { hi: 'फ़ीड के लिए 4:5 कार्ड', en: '4:5 card — for the feed', gu: 'ફીડ માટે 4:5 કાર્ડ', kn: 'ಫೀಡ್‌ಗಾಗಿ 4:5 ಕಾರ್ಡ್' })}
-            chips={[...pageChip, '4:5']}
+            sub={fullVerseImage ? pick(lang, { hi: 'पूरा श्लोक और अर्थ एक चित्र में', en: 'Complete verse and meaning in one image', gu: 'સંપૂર્ણ શ્લોક અને અર્થ એક ચિત્રમાં', kn: 'ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ ಒಂದೇ ಚಿತ್ರದಲ್ಲಿ' }) : pick(lang, { hi: 'फ़ीड के लिए 4:5 कार्ड', en: '4:5 card — for the feed', gu: 'ફીડ માટે 4:5 કાર્ડ', kn: 'ಫೀಡ್‌ಗಾಗಿ 4:5 ಕಾರ್ಡ್' })}
+            chips={fullVerseImage ? pageChip : [...pageChip, '4:5']}
             onPress={onShareInstagramPost}
             disabled={busy}
             accessibilityLabel="Share on Instagram"
-            accessibilityHint="Instagram post, 4 by 5. Copies the caption and hashtags, then opens the share sheet"
+            accessibilityHint={fullVerseImage ? 'Complete verse image. Copies the caption and hashtags, then opens the share sheet' : 'Instagram post, 4 by 5. Copies the caption and hashtags, then opens the share sheet'}
           />
         )}
         <TargetRow
           lang={lang}
           icon="instagram"
           title={pick(lang, { hi: 'Instagram स्टोरी / रील', en: 'Instagram story / reel', gu: 'Instagram સ્ટોરી / રીલ', kn: 'Instagram ಸ್ಟೋರಿ / ರೀಲ್' })}
-          sub={pick(lang, { hi: 'पूरी स्क्रीन 9:16 — कुछ भी नहीं कटेगा', en: 'Full screen 9:16 — nothing gets cropped', gu: 'આખી સ્ક્રીન 9:16 — કશું કપાશે નહીં', kn: 'ಪೂರ್ಣ ಪರದೆ 9:16 — ಏನೂ ಕತ್ತರಿಸುವುದಿಲ್ಲ' })}
-          chips={[...pageChip, '9:16']}
+          sub={fullVerseImage
+            ? pick(lang, { hi: 'स्टोरी फ्रेम में पूरा श्लोक और अर्थ', en: 'Story frame with the complete verse and meaning', gu: 'સ્ટોરી ફ્રેમમાં સંપૂર્ણ શ્લોક અને અર્થ', kn: 'ಸ್ಟೋರಿ ಚೌಕಟ್ಟಿನಲ್ಲಿ ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ' })
+            : pick(lang, { hi: 'पूरी स्क्रीन 9:16 — कुछ भी नहीं कटेगा', en: 'Full screen 9:16 — nothing gets cropped', gu: 'આખી સ્ક્રીન 9:16 — કશું કપાશે નહીં', kn: 'ಪೂರ್ಣ ಪರದೆ 9:16 — ಏನೂ ಕತ್ತರಿಸುವುದಿಲ್ಲ' })}
+          chips={fullVerseImage ? pageChip : [...pageChip, '9:16']}
           onPress={onShareInstagramStory}
           disabled={busy}
           divider={false}
           accessibilityLabel="Share as Instagram story or reel"
-          accessibilityHint="Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens the share sheet"
+          accessibilityHint={fullVerseImage ? 'Complete verse image in a story frame. Copies the caption and hashtags, then opens the share sheet' : 'Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens the share sheet'}
         />
+
+        {fullVerseImage ? (
+          <Text style={[subLabel, styles.copyNote, { color: colors.inkMuted }]}>
+            {pick(lang, {
+              hi: 'लंबे श्लोक एक ऊँचे चित्र में आएँगे। Instagram में चित्र का फ्रेम समायोजित करना पड़ सकता है।',
+              en: 'Long verses use one taller image. You may need to adjust its framing in Instagram.',
+              gu: 'લાંબા શ્લોક એક ઊંચા ચિત્રમાં આવશે. Instagram માં ચિત્રની ફ્રેમ ગોઠવવી પડી શકે છે.',
+              kn: 'ಉದ್ದವಾದ ಶ್ಲೋಕಗಳು ಒಂದೇ ಎತ್ತರದ ಚಿತ್ರದಲ್ಲಿ ಬರುತ್ತವೆ. Instagram ನಲ್ಲಿ ಚಿತ್ರದ ಚೌಕಟ್ಟನ್ನು ಹೊಂದಿಸಬೇಕಾಗಬಹುದು.',
+            })}
+          </Text>
+        ) : null}
 
         <Text style={[subLabel, styles.copyNote, { color: colors.inkMuted }]}>
           {pick(lang, {

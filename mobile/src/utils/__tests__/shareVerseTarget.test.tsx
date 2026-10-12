@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clipboard, PixelRatio, Platform, Pressable, Share } from 'react-native';
+import { Alert, Clipboard, PixelRatio, Platform, Pressable, Share, StyleSheet, View } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { ShareProvider, useShare, type ShareableVerse } from '@/utils/shareVerse';
@@ -31,8 +31,25 @@ jest.mock('@/contexts/ratingAsk', () => ({ useRatingAsk: () => mockRequestAsk })
 // ShareCard pulls in the reader background plates (image assets + gradients); the
 // flow under test only cares that something mounted and was captured. The story
 // canvas is stubbed the same way — its geometry is pinned by shareStoryLayout.test.ts.
-jest.mock('@/components/ShareCard', () => 'ShareCard');
-jest.mock('@/components/ShareStoryCanvas', () => 'ShareStoryCanvas');
+let mockMeasuredHeight: number | null = 675;
+jest.mock('@/components/ShareCard', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const React = require('react');
+  return { __esModule: true, default: function MockShareCard(props: { onHeight?: (height: number) => void }) {
+    const { onHeight } = props;
+    React.useEffect(() => { if (mockMeasuredHeight != null) onHeight?.(mockMeasuredHeight); }, [onHeight]);
+    return React.createElement('ShareCard', props);
+  } };
+});
+jest.mock('@/components/ShareStoryCanvas', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const React = require('react');
+  return { __esModule: true, default: function MockShareStoryCanvas(props: { onHeight?: (height: number) => void }) {
+    const { onHeight } = props;
+    React.useEffect(() => { if (mockMeasuredHeight != null) onHeight?.(mockMeasuredHeight + 285); }, [onHeight]);
+    return React.createElement('ShareStoryCanvas', props);
+  } };
+});
 jest.mock('@/components/ProseShareCard', () => 'ProseShareCard');
 jest.mock('@/components/ShareStoryFrame', () => 'ShareStoryFrame');
 
@@ -115,6 +132,7 @@ describe('share target flow', () => {
     rnShare.mockClear();
     mockRequestAsk.mockClear();
     mockObservances = [];
+    mockMeasuredHeight = 675;
   });
 
   afterEach(() => {
@@ -122,9 +140,65 @@ describe('share target flow', () => {
     for (const tree of trees.splice(0)) act(() => tree.unmount());
   });
 
+
+
+  test('missing native measurement times out without exporting a guessed or clipped card', async () => {
+    jest.useFakeTimers();
+    mockMeasuredHeight = null;
+    const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => {});
+    try {
+      const tree = await openPicker();
+      act(() => byLabel(tree, 'Share to other apps').props.onPress());
+      await act(async () => { await jest.advanceTimersByTimeAsync(6000); });
+      expect(mockCaptureRef).not.toHaveBeenCalled();
+      expect(rnShare).not.toHaveBeenCalled();
+      expect(alert).toHaveBeenCalled();
+      expect(tree.root.findAllByType('ShareCard' as never)).toHaveLength(0);
+    } finally { alert.mockRestore(); jest.useRealTimers(); }
+  });
+
+  test('waits for native height and exports a long verse as one full-height image', async () => {
+    mockMeasuredHeight = null;
+    const tree = await openPicker();
+    await act(async () => byLabel(tree, 'Share to other apps').props.onPress());
+    await settle();
+    expect(mockCaptureRef).not.toHaveBeenCalled();
+    const frame = tree.root.findAllByType(View).find(n => n.props.pointerEvents === 'none')!;
+    expect(StyleSheet.flatten(frame.props.style).height).toBeUndefined();
+    act(() => tree.root.findByType('ShareCard' as never).props.onHeight(1650.3));
+    await settle();
+    expect(mockCaptureRef).toHaveBeenCalledTimes(1);
+    expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 3302 / PixelRatio.get() });
+    expect(rnShare).toHaveBeenCalledTimes(1);
+  });
+
+  test('a tall story export preserves the whole card and the story frame', async () => {
+    mockMeasuredHeight = 1800;
+    const tree = await openPicker();
+    await act(async () => byLabel(tree, 'Share as Instagram story or reel').props.onPress());
+    await settle();
+    expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 4170 / PixelRatio.get() });
+  });
+
+  test('a long capture does not leave later short verses with a tall empty image', async () => {
+    mockMeasuredHeight = 1800;
+    const long = await openPicker();
+    await act(async () => byLabel(long, 'Share to other apps').props.onPress());
+    await settle();
+    expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ height: 3600 / PixelRatio.get() });
+    mockCaptureRef.mockClear();
+    mockMeasuredHeight = 675;
+    await act(async () => byLabel(long, 'trigger').props.onPress());
+    await act(async () => byLabel(long, 'Share to other apps').props.onPress());
+    await settle();
+    expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 1350 / PixelRatio.get() });
+  });
+
   test('the share button opens the picker instead of sharing straight away', async () => {
     const tree = await openPicker();
     expect(byLabel(tree, 'Share on Instagram')).toBeDefined();
+    expect(tree.root.findAllByType('ShareCard' as never)).toHaveLength(0);
+    expect(tree.root.findAllByType('ShareStoryCanvas' as never)).toHaveLength(0);
     expect(mockShareAsync).not.toHaveBeenCalled();
     expect(rnShare).not.toHaveBeenCalled();
   });

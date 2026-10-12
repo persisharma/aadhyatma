@@ -1,7 +1,8 @@
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text, View as mockView } from 'react-native';
+import { Text, StyleSheet, View as mockView } from 'react-native';
 import ShareCard, { type ShareCardProps } from '../ShareCard';
+import ShareStoryCanvas from '../ShareStoryCanvas';
 
 // ShareCard now renders BackgroundLayer (the reader-page source sketch), whose
 // overlay is an expo-linear-gradient — untranspiled ESM Jest cannot parse.
@@ -13,16 +14,7 @@ jest.mock('expo-linear-gradient', () => ({
     mockReact.createElement(mockView, props, children),
 }));
 
-/**
- * Guard: the ShareCard is a fixed-size promo image, so a long meaning must be
- * fitted rather than clipped — but fitted *legibly*. The card used to hand that
- * job to `adjustsFontSizeToFit` over `numberOfLines={5}` with a fixed
- * `lineHeight: 24`, which drove real meanings to 7 pt inside 24 pt of leading
- * (unreadable at thumbnail size, and the exact iOS auto-fit trap already
- * recorded on CategoryCard). Sizing now happens in JS — `utils/shareCardType.ts`
- * — so these pin: no platform auto-fit, a readable size, leading that scales
- * with it, and no synthesised italic over Indic faces.
- */
+/** Full verse images grow naturally; readable type and complete text are invariant. */
 
 const longMeaning =
   'I bow to Goddess Sharada (Saraswati): fair-complexioned, the very essence of ' +
@@ -61,16 +53,40 @@ function meaningStyle(props: ShareCardProps, text: string) {
   return Object.assign({}, ...[style].flat(Infinity).filter(Boolean)) as Record<string, unknown>;
 }
 
-describe('ShareCard meaning fit', () => {
+describe('ShareCard complete text and readability', () => {
+  test.each(['hi', 'en', 'gu', 'kn'] as const)('long %s verse, title and meaning have no fixed height or line cap', lang => {
+    const props = { ...baseProps, lang, linesHi: Array(12).fill(baseProps.linesHi[0]), linesEn: Array(12).fill(baseProps.linesEn[0]), meaningTitleHi: 'भावार्थ', meaningTitleEn: 'Meaning', meaningHi: baseProps.meaningHi!.repeat(15), meaningEn: longMeaning.repeat(15) };
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => { tree = TestRenderer.create(<ShareCard {...props} />); });
+    const root = tree.root.findAllByType(mockView).find(n => typeof n.props.onLayout === 'function')!;
+    expect(StyleSheet.flatten(root.props.style)).toMatchObject({ minHeight: 675 });
+    expect(StyleSheet.flatten(root.props.style).height).toBeUndefined();
+    for (const text of tree.root.findAllByType(Text)) {
+      expect(text.props.numberOfLines).toBeUndefined();
+      expect(text.props.adjustsFontSizeToFit).toBeFalsy();
+    }
+    act(() => tree.unmount());
+  });
+
+  test('reports the actual native card height for capture, not an authored-line estimate', () => {
+    const onHeight = jest.fn();
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => { tree = TestRenderer.create(<ShareCard {...baseProps} onHeight={onHeight} />); });
+    const root = tree.root.findAllByType(mockView).find(n => typeof n.props.onLayout === 'function')!;
+    act(() => root.props.onLayout({ nativeEvent: { layout: { width: 540, height: 1823.5 } } }));
+    expect(onHeight).toHaveBeenCalledWith(1823.5);
+    act(() => tree.unmount());
+  });
+
   test('does not hand sizing to platform auto-fit', () => {
     const node = meaningNode(baseProps, longMeaning);
     expect(node.props.adjustsFontSizeToFit).toBeFalsy();
     expect(node.props.minimumFontScale).toBeUndefined();
   });
 
-  test('fits by size + line budget, not a hard-coded five lines', () => {
+  test('keeps the full meaning without a line cap', () => {
     const node = meaningNode(baseProps, longMeaning);
-    expect(node.props.numberOfLines).toBeGreaterThan(5);
+    expect(node.props.numberOfLines).toBeUndefined();
   });
 
   test('a long meaning still renders at a readable size with scaled leading', () => {
@@ -133,4 +149,20 @@ describe('ShareCard native meaning override', () => {
       .some((n) => n.props.children === nativeGu);
     expect(nativeShown).toBe(false);
   });
+});
+
+
+test('story layout measures the whole natural frame and keeps the card unconstrained', () => {
+  const onHeight = jest.fn();
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<ShareStoryCanvas {...baseProps} onHeight={onHeight} />); });
+  const frame = tree.root.findAllByType(mockView).find(n => typeof n.props.onLayout === 'function')!;
+  expect(StyleSheet.flatten(frame.props.style)).toMatchObject({ minHeight: 960, paddingTop: 120, paddingBottom: 165 });
+  expect(StyleSheet.flatten(frame.props.style).height).toBeUndefined();
+  const card = tree.root.findByType(ShareCard);
+  expect(card.props.height).toBe(675);
+  expect(card.props.onHeight).toBeUndefined();
+  act(() => frame.props.onLayout({ nativeEvent: { layout: { height: 1900 } } }));
+  expect(onHeight).toHaveBeenCalledWith(1900);
+  act(() => tree.unmount());
 });
