@@ -735,3 +735,24 @@ scrolling and painted share preview. Restarted opening shows the full cached Vis
 four native cache files match approved R2 bytes. No native compile/cloud build/release/OTA;
 physical-device, Android runtime and frame/CPU/memory measurements remain pending. Evidence:
 docs/evaluations/reading-visuals-2026-10-12/pr-verification.md.
+
+## [2026-10-12] ingest | Daily Bhakti reading-space correction
+
+Removed the rotating daily verse card's illustration banner and its asset subscription;
+bundled neutral parchment stays local. Compact Ornament removes nested margins (80pt to
+12pt total) while retaining complete verse/meaning strings and the shared reading-size
+scale. Existing themed share backgrounds, R2 manifests/cache and other readers are unchanged.
+Updated design.md §§6/23, RULEBOOK §11.8 and the reader/artwork wiki contracts. Full npm test
+passes on current main 324aea00: TypeScript and 3,184 tests (242 Jest suites / 2,335 tests).
+Touched lint is clean. Native before/after is inspected in English/Hindi Standard/Large; the
+updated daily-bhakti-smoke passes on freshly exported production JS in an existing Release
+shell. Physical-device/Android runtime and frame/CPU/memory benchmarks remain unverified;
+no release/OTA was published. Evidence: docs/evaluations/reading-visuals-2026-10-12/daily-bhakti-space/review.md.
+
+## [2026-10-12] gap | Long verse share exports can clip content
+
+Native stress QA of Ganesh Stotram 2.11 confirms full reading/meaning remains reachable by
+scrolling at Large, but the unchanged fixed-size ShareCard export clips verse lines and
+omits the meaning/footer. A short Gita export paints its themed background correctly.
+The daily spacing correction does not fix long-share pagination. Evidence:
+docs/evaluations/reading-visuals-2026-10-12/daily-bhakti-space/review.md.

@@ -351,8 +351,8 @@ for the Pitru introduction. Utility forms, charts, ledgers and kids stories reta
 are shared by all seven canonical verse layouts, covering Chalisa, Aarti, Gita/Gita Saar,
 Stotram/Stuti, Kavacham, Ashtakam, Suktam, Sanskar and the Ramayan readers. Verse pages use
 the thematic banner above the verse instead of placing the painting behind text;
-existing source, verse and kāṇḍa mappings remain. Daily Bhakti uses the same opening plate
-inside its shareable card. Daan's landing page has one Annapurna plate; its journey's Why
+existing source, verse and kāṇḍa mappings remain. Daily Bhakti originally used the same opening plate
+inside its shareable card (superseded by the 12 October reading-space correction below). Daan's landing page has one Annapurna plate; its journey's Why
 section uses the prose folio. Pitru's education opening uses neutral manuscript art
 and its overview shares the paper. Vidhi preparation and the first conduct step have one
 painting selected from the guide's declared deities; personal-tithi remembrance uses
@@ -367,8 +367,15 @@ chaptered readers, first section of a Katha/Pitru introduction). Later cards kee
 paper and small gold divider, with no banner, manuscript placeholder, reserved image height
 or image subscription. Jumping directly to a later verse does not turn it into a cover card.
 Chapter transition cards are excluded when finding the first verse. Single continuous prose,
-daily verse and detail/guide screens keep their existing one opening image. Illustration
+detail/guide screens keep their existing one opening image. Illustration
 assets, semantic mappings, R2 manifests and the lifetime cache remain available and unchanged.
+
+**Daily Bhakti reading-space correction (12 Oct 2026):** The rotating daily verse card uses
+bundled neutral parchment without a banner, reserved image space or illustration request.
+The verse starts 14pt below its source/action row. A single compact `Ornament` separates verse
+and meaning with 6pt margins above and below; remove the previous wrapper's additional 14pt
+margins and the ornament's 26pt margins. Preserve full verse/meaning text, shared reading-size
+tokens, vertical scrolling for long content and the existing themed share-card background.
 
 **Share background readiness (12 Oct 2026):** Offscreen verse/prose/story captures wait for
 every remote background layer to finish native painting, including both a Story frame and its
@@ -980,15 +987,15 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 1. Status bar
 2. Title area (centered): "दैनिक भक्ति" (Noto Serif 20 600, ink) + "Daily Verse" (Cormorant 14 400 italic, ink-muted, 4px below)
 3. **Verse card** (centered, 28px side margins):
-   - Background: `parchment-soft` base + the verse's **reader-page sketch** — `BackgroundLayer` over `getReaderBackground(verse.sourceId, { stanza: verse.chapter })`, so the card carries the same faded deity/source plate as the source's own reader (the pool verse's `chapter` doubles as the kāṇḍa/stanza key for Valmiki Ramayan / Sundarkand; sources without a plate fall back to the plain parchment gradient). Card clips it with `overflow: hidden`
+   - Background: `parchment-soft` base + the bundled neutral `readingParchment` through `BackgroundLayer`, clipped with `overflow: hidden`. No illustration banner or remote artwork request on the daily reading card; sharing retains its existing source-specific background.
    - Border: 1px `divider`
    - Shadow: `md` (runtime: **`elevation.raised`** — was an inline `0.14/24` shadow until July 2026)
    - Radius: 18
-   - Padding: 24px
+   - Padding: 20px
    - Content (top to bottom):
      - **Header row**: source pill on the left (Inter 10 600, 0.3em tracking, saffron-deep on saffron-tint bg, radius 999 — "भगवद् गीता · श्लोक 2.47" format, language-aware) · **BookmarkButton + ShareButton** on the right, matching the reader's in-page actions (§25)
-     - Verse text: verse token for the reading language, `ink`. 16px below the header row
-     - Ornament divider (Section 5 `॥` style). 16px vertical margin
+     - Verse text: verse token for the reading language, `ink`. 14px below the header row
+     - Compact ornament divider (Section 5 `॥` style), 6px vertical margins with no outer spacer
      - Meaning label: single-language `भावार्थ` / `Meaning` (same treatment as Section 9)
      - Meaning body: meaning token for the reading language, `ink-soft`
      - **Card footer row**: source name on the left (Cormorant 12 400 italic / script serif, `ink-muted` — no "From" prefix) · an inline **`↻ next`** text pressable on the right (14px, `saffron`) that picks a new random verse. There is no separate 40px refresh circle or attribution line below the card

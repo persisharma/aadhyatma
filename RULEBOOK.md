@@ -392,7 +392,10 @@ Paged verse readers show the banner only on the first actual verse of each readi
 excluding navigation transition cards; section-based Katha/Pitru readers show it only on section
 zero. Later cards retain parchment/divider with no banner frame, placeholder or banner request.
 Direct links to later cards do not promote them to cover cards. Continuous prose and standalone
-detail/daily/guide screens may keep one opening image.
+detail/guide screens may keep one opening image. Daily Bhakti is a quick rotating verse card:
+use bundled neutral parchment without an illustration banner, placeholder or banner request,
+and the compact verse-to-meaning ornament. Keep reading-size tokens and complete text intact;
+long content still scrolls. Its shared export retains the existing themed background.
 
 Use the shared deferred asynchronous loader and persistent Documents content-hash cache.
 Reading/navigation must render immediately with a bundled neutral fallback. Completed valid

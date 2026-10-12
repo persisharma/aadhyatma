@@ -17,10 +17,8 @@ import {
 import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
-import { getReaderBackground } from '@/data/backgrounds';
 import type { TabParamList } from '@/navigation/types';
 import BackgroundLayer from '@/components/BackgroundLayer';
-import ReadingArtwork from '@/components/ReadingArtwork';
 import { readingParchment } from '@/data/backgroundAsset';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
@@ -154,7 +152,7 @@ export default function DailyBhaktiScreen() {
             </Text>
           </View>
 
-          {/* The daily card shares the reader's paper and compact thematic painting. */}
+          {/* A daily verse starts with text; local paper adds warmth without a banner fetch. */}
           <View ref={dailyVerseRef} collapsable={false} style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
             <BackgroundLayer source={readingParchment} />
             {/* Top row: source pill + action icons */}
@@ -208,8 +206,6 @@ export default function DailyBhaktiScreen() {
               </View>
             </View>
 
-            <ReadingArtwork source={getReaderBackground(verse.sourceId, { stanza: verse.chapter })} />
-
             {/* Verse text — script follows the reading language (gu/kn re-script the Devanagari) */}
             <Text
               style={{
@@ -228,9 +224,7 @@ export default function DailyBhaktiScreen() {
             </Text>
 
             {/* Ornament divider */}
-            <View style={styles.ornamentWrap}>
-              <Ornament />
-            </View>
+            <Ornament compact />
 
             {/* Meaning section */}
             <Text style={[styles.meaningLabel, { color: colors.saffronDeep }]}>
@@ -318,7 +312,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     letterSpacing: 0.3,
   },
-  ornamentWrap: { marginVertical: 14 },
   meaningLabel: {
     fontFamily: fontFamilies.devanagariBold,
     fontSize: 12,
