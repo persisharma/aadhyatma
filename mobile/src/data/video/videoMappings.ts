@@ -60,17 +60,17 @@ export type VideoMapping = {
 export const VIDEO_MAPPINGS: readonly VideoMapping[] = [
   {
     contentId: 'hanuman-chalisa',
-    // DEV-ONLY placeholder — YouTube's own IFrame-API sample video, used purely to
-    // exercise the player in the simulator. Replace with the editor-picked,
-    // reviewed Hanuman Chalisa recording before anything ships.
-    videoId: 'M7lc1UVf-VE',
-    titleHi: 'श्री हनुमान चालीसा',
-    titleEn: 'Shri Hanuman Chalisa',
+    // T-Series official — Gulshan Kumar / Hariharan, full 9:42 recitation with
+    // on-screen text; ~5.8B views (the most-viewed Hanuman Chalisa). Embeddable
+    // (oEmbed-confirmed). Picked by the user 2026-10-12.
+    videoId: 'AETFvQonfV8',
+    titleHi: 'श्री हनुमान चालीसा — गुलशन कुमार, हरिहरन',
+    titleEn: 'Shree Hanuman Chalisa — Gulshan Kumar, Hariharan',
     channel: 'T-Series Bhakti Sagar',
-    sourceUrl: 'https://www.youtube.com/watch?v=M7lc1UVf-VE',
+    sourceUrl: 'https://www.youtube.com/watch?v=AETFvQonfV8',
     spokenLang: 'hi',
-    reviewedOn: null,
-    status: 'dev-demo',
+    reviewedOn: '2026-10-12',
+    status: 'verified',
   },
 ];
 
