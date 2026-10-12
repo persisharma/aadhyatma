@@ -1,5 +1,7 @@
 const META_APP_ID = '1128589089734962';
-const TRACKING_PERMISSION = 'Allow Vedansh to measure which ads lead to app installs.';
+// iOS titles the dialog "Allow “Vedansh” to track…" itself; repeating "Allow
+// Vedansh" here read as a second ask. Say the consequence (design.md §79).
+const TRACKING_PERMISSION = 'Lets us see which ads bring people to Vedansh.';
 
 function configureMetaTracking(config, env) {
   const enabled = env.META_TRACKING_ENABLED === 'true';
