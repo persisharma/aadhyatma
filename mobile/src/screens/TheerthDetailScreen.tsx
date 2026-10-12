@@ -10,6 +10,10 @@ import { getTheerthBackground, getTheerthIllustration } from '@/data/backgrounds
 import BackgroundLayer from '@/components/BackgroundLayer';
 import ReadingBanner from '@/components/ReadingBanner';
 import LanguageToggle from '@/components/LanguageToggle';
+import LibraryCard from '@/components/LibraryCard';
+import { useNewContent } from '@/contexts/NewContentContext';
+import { navigateToEntryStart } from '@/navigation/entryRoutes';
+import { relatedReadingsForDeity } from '@/data/theerth/relatedReadings';
 import { getTempleDetailById } from '@/data/theerth/temples';
 import type { Deity } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -53,6 +57,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { share, busy: shareBusy } = useShare();
+  const { markSeen } = useNewContent();
 
   // The reading loads here, on the screen the user opened — see
   // `loadDetails()` in temples.ts for why it is not on the launch path.
@@ -73,6 +78,8 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   const name = contentByLang(lang, temple.nameHi, temple.nameEn);
   const cityState = `${contentByLang(lang, temple.cityHi, temple.cityEn)}, ${contentByLang(lang, temple.stateHi, temple.stateEn)}`;
   const illustration = getTheerthIllustration(temple.id);
+  // The presiding deity's shipped aarti + chalisa (design.md §27 item 10).
+  const relatedReadings = relatedReadingsForDeity(temple.deity);
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -233,6 +240,37 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             </View>
           ))}
 
+          {/* आरती व चालीसा (design.md §27 item 10): the way from a shrine to the
+              readings sung there. Derived from the presiding deity, so a temple
+              whose deity has no shipped chalisa/aarti renders nothing here
+              rather than an empty heading. Cards are the library's own
+              LibraryCard, so NEW badges and ＋ add-to-routine behave exactly as
+              on Home and the deity hub. */}
+          {relatedReadings.length > 0 ? (
+            <View testID="theerth-related-readings">
+              <Ornament colors={colors} />
+              <SectionBlock
+                labelHi="आरती व चालीसा"
+                labelEn="Aarti & Chalisa"
+                lang={lang}
+                colors={colors}
+                typography={typography}
+              />
+              <View style={styles.relatedList}>
+                {relatedReadings.map((entry) => (
+                  <LibraryCard
+                    key={entry.id}
+                    entry={entry}
+                    onPress={() => {
+                      markSeen(entry.id);
+                      navigateToEntryStart(navigation, entry);
+                    }}
+                  />
+                ))}
+              </View>
+            </View>
+          ) : null}
+
           <Text
             style={{
               textAlign: 'center',
@@ -360,6 +398,10 @@ const styles = StyleSheet.create({
     width: 'auto',
     borderWidth: 1,
     overflow: 'hidden',
+    marginTop: 4,
+  },
+  relatedList: {
+    gap: 10,
     marginTop: 4,
   },
   ornamentRow: {
