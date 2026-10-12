@@ -954,7 +954,11 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 4. **View toggle** (segmented control, parchment-soft fill, divider border, pill radius):
    - Two halves: `राज्य · By State` and `श्रेणी · By Category` (lang-swapped labels; category is the default).
    - Active half tinted `saffron-tint` with `saffron-deep` text; inactive transparent with `ink-muted`. Halves are minWidth 100 × minHeight 44, `radiogroup`/`radio` roles.
-5. **Browse card list** — one gradient LibraryCard-style row per **category** or **state**: `[ thumb glyph ॥ (category) / ॐ (state) ]  [ name · meta "N तीर्थ / N temples" ]  [ › ]`, with a NEW badge when any temple inside is still unseen. The meta line follows the §46 meta convention: `cardMeta` size, Inter + tracking for English only; Indic meta takes the script serif with **no** tracking (tracking splits the shirorekha). Category rows follow the curated `groupOrder` — the `TheerthGroup` buckets द्वादश ज्योतिर्लिङ्ग, चार धाम, छोटा चार धाम, शक्ति पीठ, plus an "अन्य प्रसिद्ध तीर्थ · Other Famous Temples" bucket for ungrouped temples; state rows sort alphabetically by `stateEn`.
+5. **Browse card list** — one gradient LibraryCard-style row per **category** or **state**: `[ thumb icon ]  [ name · meta "N तीर्थ / N temples" ]  [ › ]`, with a NEW badge when any temple inside is still unseen. The thumb icon depends on what the row represents, both on the `cardThumbActive` gradient square:
+   - **Grouping rows (category / state)** span many presiding deities, so they carry the shared illustrated **theerth** temple miniature (`<StoryIcon name="theerth" size={34} />`, `assets/icons/storybook/theerth.png`) — the same new-style art Home's category tile and the Discover card use.
+   - **Temple rows** (drill-in) carry their **presiding deity's** glyph via `<DeityIcon iconKey={deityIconKey(temple.deity)} size={34} />` — trishul for Shiva, chakra for Vishnu, lotus for Durga, bansuri for Krishna, and so on — matching how `LibraryCard` thumbs a text's deity.
+
+   Both replaced the earlier flat `॥` (category) / `ॐ` (state) text glyphs. The deity glyph also drives the map pins (§29). The meta line follows the §46 meta convention: `cardMeta` size, Inter + tracking for English only; Indic meta takes the script serif with **no** tracking (tracking splits the shirorekha). Category rows follow the curated `groupOrder` — the `TheerthGroup` buckets द्वादश ज्योतिर्लिङ्ग, चार धाम, छोटा चार धाम, शक्ति पीठ, plus an "अन्य प्रसिद्ध तीर्थ · Other Famous Temples" bucket for ungrouped temples; state rows sort alphabetically by `stateEn`.
 
 **Structure — drill-in** (the same screen pushed again with a `group` or `stateEn` param):
 
@@ -1054,8 +1058,8 @@ type IndiaMapProps = {
 
 **Visual:**
 
-- Glyph: `॥` in `saffron-deep`, Noto Serif Devanagari, 18 px (slightly larger than ornament dividers to read as an interactive element).
-- No background circle / no shape underlay — the glyph itself is the pin. This keeps the map quiet.
+- Marker: the temple's **presiding-deity** glyph (`<DeityIcon iconKey={pin.deityKey} size={22} />`) — trishul, chakra, lotus… — so a cluster of pins reads as *which* deities sit where, and each pin matches its own temple row (§26) and detail-screen deity badge. The pin carries the deity via a required `deityKey: DeityIconKey` field on `IndiaMapPin`. This replaced the earlier flat `॥` Devanagari glyph (18 px `saffron-deep`). The anchor footprint is 22 px (`PIN_GLYPH_SIZE`).
+- No background circle / no shape underlay — the glyph itself is the pin. This keeps the map quiet; the illustration's transparent bg sits directly on the parchment outline.
 - Tap-hold tooltip: small parchment-soft rectangle, `divider` border, 8 px padding, label in Noto Serif Devanagari 13 600 / Cormorant Garamond 13 400 italic (lang-swapped). Tooltip appears above the pin (or below if too close to top edge).
 
 **Interaction:**
