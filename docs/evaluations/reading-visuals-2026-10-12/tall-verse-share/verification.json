@@ -98,5 +98,21 @@
     "mobile/src/components/ShareStoryCanvas.tsx": "1a443940f593aae1fcb55dc0f02de2288e13c0776d3a89647afc9f2d46dfd82f",
     "mobile/src/utils/shareVerse.tsx": "6547392bddf9245a7d71b6670edf5d162595c038592ce5a1616064b024cb1f4e",
     "mobile/src/utils/shareCardType.ts": "da366d9fe77e99f87858fcc3f5c3be041ca29c2988a42a3556baedccf8dfe2dd"
+  },
+  "ciRuntimeCheck": {
+    "nodeMajor": 20,
+    "timezone": "UTC",
+    "CI": true,
+    "exitCode": 0,
+    "suites": 241,
+    "tests": 2335,
+    "seconds": 97.337,
+    "readerTestCleanup": [
+      "AartiReaderScreen",
+      "ChalisaReaderScreen",
+      "StutiReaderScreen"
+    ],
+    "assertionsRemoved": 0,
+    "forceExit": false
   }
 }

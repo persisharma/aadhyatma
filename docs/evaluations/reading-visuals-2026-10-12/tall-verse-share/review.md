@@ -60,3 +60,14 @@ retain their existing fixed card geometry. No message or external post was sent.
   Instagram publication, or frame-time/CPU/memory benchmarks. Longer files necessarily use
   more image memory during sharing; no extra image or text measurement runs while reading.
 - No asset upload, release or OTA was published.
+
+## CI reader-test cleanup
+
+The obsolete PR run and current main stopped progressing during reader tests. A local
+Node 20 / `CI=true` / `TZ=UTC` reproduction also stalled during reader teardown. The
+Aarti, Chalisa and Stuti smoke tests left mounted trees behind; all their created trees
+now unmount in `afterEach`, including assertion-failure paths. No assertions or suites
+were removed, and no forced exit or timeout bypass was added. With cleanup, the complete
+[Node 20 reader suite](node20-reader-results.log) passes: 241 suites / 2,335 tests in
+97.337 seconds. Typecheck and lint on the cleanup changes pass. App source and the seven
+native-export hashes above are unchanged by this test-only follow-up.

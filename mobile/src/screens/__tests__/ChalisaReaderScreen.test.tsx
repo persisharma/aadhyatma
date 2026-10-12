@@ -3,6 +3,17 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 
+// Release mounted readers and their scheduled React work between tests.
+const trees: TestRenderer.ReactTestRenderer[] = [];
+function createReader(element: React.ReactElement) {
+  const tree = TestRenderer.create(element);
+  trees.push(tree);
+  return tree;
+}
+afterEach(() => {
+  act(() => { for (const tree of trees.splice(0)) tree.unmount(); });
+});
+
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light' },
   impactAsync: jest.fn(() => Promise.resolve()),
@@ -70,7 +81,7 @@ test('renders the first Hanuman Chalisa verse without throwing', () => {
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
-    tree = TestRenderer.create(
+    tree = createReader(
       <GitaLanguageProvider initialLang="hi">
         <ShareProvider>
           <ChalisaReaderScreen navigation={navigation} route={route} />
@@ -93,7 +104,7 @@ test('renders When to Recite panel only on the first verse page', () => {
   let firstTree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
-    firstTree = TestRenderer.create(
+    firstTree = createReader(
       <GitaLanguageProvider initialLang="en">
         <ShareProvider>
           <ChalisaReaderScreen navigation={navigation} route={route} />
@@ -113,7 +124,7 @@ test('renders When to Recite panel only on the first verse page', () => {
 
   let secondTree: TestRenderer.ReactTestRenderer | undefined;
   act(() => {
-    secondTree = TestRenderer.create(
+    secondTree = createReader(
       <GitaLanguageProvider initialLang="en">
         <ShareProvider>
           <ChalisaReaderScreen
@@ -141,7 +152,7 @@ test('dispatches chalisaId to the Khatu Shyam Chalisa, not Hanuman Chalisa', () 
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
-    tree = TestRenderer.create(
+    tree = createReader(
       <GitaLanguageProvider initialLang="hi">
         <ShareProvider>
           <ChalisaReaderScreen
@@ -162,7 +173,6 @@ test('dispatches chalisaId to the Khatu Shyam Chalisa, not Hanuman Chalisa', () 
   assert.ok(renderedText.includes(khatu.titleHi));
   assert.ok(renderedText.includes(khatu.verses[0].lines[0]));
   assert.ok(!renderedText.includes(firstVerse.lines[0]));
-  act(() => tree!.unmount());
 });
 
 // Multi-instance dispatch (RULEBOOK §4 step 13): the registry's newest entry must
@@ -172,7 +182,7 @@ test('opens Lakshmi Chalisa by chalisaId with its own title and opening doha', (
   assert.equal(lakshmi.id, 'lakshmi-chalisa', 'registry resolves the id instead of the Hanuman fallback');
   let tree: TestRenderer.ReactTestRenderer | undefined;
   act(() => {
-    tree = TestRenderer.create(
+    tree = createReader(
       <GitaLanguageProvider initialLang="hi">
         <ShareProvider>
           <ChalisaReaderScreen

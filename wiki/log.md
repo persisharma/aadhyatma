@@ -770,3 +770,13 @@ message, release or OTA. Full npm test passes: TypeScript and 3,184 tests (241 J
 are visually inspected: long Ganesh 2.11 in four languages, long story, short Gita 2.47 and
 short story. Physical-device/Android runtime and frame/CPU/memory benchmarks remain open.
 Evidence: docs/evaluations/reading-visuals-2026-10-12/tall-verse-share/review.md.
+
+
+## [2026-10-12] ingest | Reader smoke-test cleanup resolves CI stall
+
+PR #453 closeout reproduced the reader-test stall with Node 20, CI=true and TZ=UTC.
+Aarti, Chalisa and Stuti test trees now unmount in afterEach, including failure paths;
+assertions and test scope are unchanged. The complete matching-runtime reader run passes
+241 suites / 2,335 tests in 97.337 seconds, with clean typecheck and touched-test lint.
+No app/runtime or native-export changes. Evidence:
+docs/evaluations/reading-visuals-2026-10-12/tall-verse-share/review.md.
