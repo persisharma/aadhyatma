@@ -23,6 +23,14 @@ object MetaAppEventsTracker {
 
   fun background() { backgroundAt = SystemClock.elapsedRealtime() }
 
+  fun trackingEnabled(context: Context): Boolean = try {
+    @Suppress("DEPRECATION")
+    val metadata = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA).metaData
+    metadata?.getBoolean("com.vedansh.meta.TRACKING_ENABLED", false) == true
+  } catch (_: Exception) {
+    false
+  }
+
   // Called only after the app UI is ready and active, on the main queue.
   fun activate(application: Application): Boolean {
     val processName = if (Build.VERSION.SDK_INT >= 28) Application.getProcessName() else {
@@ -31,9 +39,7 @@ object MetaAppEventsTracker {
     }
     if (processName != application.packageName) return false
     try {
-      @Suppress("DEPRECATION")
-      val metadata = application.packageManager.getApplicationInfo(application.packageName, PackageManager.GET_META_DATA).metaData
-      if (metadata?.getBoolean("com.vedansh.meta.TRACKING_ENABLED", false) != true) return false
+      if (!trackingEnabled(application)) return false
       FacebookSdk.setAutoLogAppEventsEnabled(false)
       FacebookSdk.setAdvertiserIDCollectionEnabled(true)
       if (!initialized) {
@@ -66,6 +72,11 @@ object MetaAppEventsTracker {
 class MetaAppEventsModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("VedanshMetaAppEvents")
+    // The binary's flag, not the OTA manifest's: JS gates activation on it.
+    Constants {
+      val context = appContext.reactContext?.applicationContext
+      mapOf("enabled" to (context?.let { MetaAppEventsTracker.trackingEnabled(it) } ?: false))
+    }
     OnActivityEntersBackground { MetaAppEventsTracker.background() }
     AsyncFunction("activate") {
       val application = appContext.reactContext?.applicationContext as? Application
