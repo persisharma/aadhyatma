@@ -149,6 +149,25 @@ test('state drill-in lists temples of that state', () => {
   assert.equal(call[1].templeId, 'nageshwar');
 });
 
+// ─── Card icon ────────────────────────────────────────────────────────────────
+
+const withTestId = (tree: TestRenderer.ReactTestRenderer, id: string) =>
+  tree.root.findAll((n) => n.props.testID === id);
+
+test('grouping cards show the temple icon; temple rows + pins show the deity glyph', () => {
+  const { navigation } = makeNav();
+  // Listing (By Category): grouping rows span many deities → temple miniature.
+  const listing = render(navigation, {}, 'en');
+  assert.ok(withTestId(listing, 'storybook-theerth').length > 0, 'category cards render the temple icon');
+  assert.doesNotMatch(allText(listing), /॥|ॐ/, 'old ॥/ॐ marker glyphs are gone');
+  // Drill-in (all 12 Jyotirlinga are Shiva): temple rows + map pins render the
+  // Shiva deity glyph (trishul) — not the generic temple icon, not a text glyph.
+  const drill = render(navigation, { group: 'jyotirlinga' }, 'en');
+  assert.ok(withTestId(drill, 'deity-glyph-trishul').length >= 12, 'temple rows + pins render the deity glyph');
+  assert.equal(withTestId(drill, 'storybook-theerth').length, 0, 'temple rows do not use the generic temple icon');
+  assert.doesNotMatch(allText(drill), /॥|ॐ/, 'old ॥/ॐ marker glyphs are gone in drill-in');
+});
+
 // ─── Backdrop ─────────────────────────────────────────────────────────────────
 
 test('renders no decorative image backdrop (flat parchment only) in either mode', () => {

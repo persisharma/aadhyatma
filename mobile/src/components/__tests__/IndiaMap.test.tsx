@@ -49,8 +49,8 @@ test('every temple projects within the map viewport', () => {
 test('renders a tappable pin per pin and reports its id on press', () => {
   const calls: string[] = [];
   const pins = [
-    { id: 'somnath', lat: 20.888, lng: 70.402, label: 'Somnath' },
-    { id: 'kedarnath', lat: 30.735, lng: 79.067, label: 'Kedarnath' },
+    { id: 'somnath', lat: 20.888, lng: 70.402, label: 'Somnath', deityKey: 'trishul' as const },
+    { id: 'kedarnath', lat: 30.735, lng: 79.067, label: 'Kedarnath', deityKey: 'trishul' as const },
   ];
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
@@ -72,7 +72,7 @@ test('warns (dev) when a pin is out of bounds', () => {
   act(() => {
     TestRenderer.create(
       <IndiaMap
-        pins={[{ id: 'bad', lat: 0, lng: 0, label: 'Bad' }]}
+        pins={[{ id: 'bad', lat: 0, lng: 0, label: 'Bad', deityKey: 'trishul' }]}
         width={300}
         onPinPress={() => {}}
       />,
