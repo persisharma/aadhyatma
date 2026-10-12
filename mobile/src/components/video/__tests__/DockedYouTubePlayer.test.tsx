@@ -53,9 +53,27 @@ jest.mock('@/theme/ThemeContext', () => ({
       saffron: '#B8621B',
       saffronDeep: '#8A3E0B',
       saffronTint: 'rgba(184,98,27,0.12)',
+      onPrimary: '#fff',
+      videoStage: '#000',
     },
   }),
 }));
+
+// The player is unit-tested outside a NavigationContainer, so stand in for
+// useFocusEffect: run the effect on mount and stash the blur cleanup so a test
+// can fire it (a tab switch) without a real navigator.
+const mockFocus: { cleanup?: () => void } = {};
+jest.mock('@react-navigation/native', () => {
+  const ReactLib = require('react');
+  return {
+    useFocusEffect: (cb: () => void | (() => void)) => {
+      ReactLib.useEffect(() => {
+        const cleanup = cb();
+        mockFocus.cleanup = typeof cleanup === 'function' ? cleanup : undefined;
+      }, [cb]);
+    },
+  };
+});
 
 import DockedYouTubePlayer from '../DockedYouTubePlayer';
 import * as arbiter from '@/audio/playbackArbiter';
@@ -118,6 +136,19 @@ it('pauses on background and never auto-resumes on foreground', () => {
   act(() => handlers.forEach((h) => h('background')));
   expect(mockRnyi.props?.play).toBe(false);
   act(() => handlers.forEach((h) => h('active')));
+  expect(mockRnyi.props?.play).toBe(false);
+  act(() => r.unmount());
+});
+
+it('pauses when the reader loses focus (tab switch), without unmounting', () => {
+  let r!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+  });
+  expect(mockRnyi.props?.play).toBe(true);
+  // Simulate the reader blurring (switch to another tab): AppState stays `active`
+  // because inactive tab stacks stay mounted, so only the blur cleanup pauses it.
+  act(() => mockFocus.cleanup?.());
   expect(mockRnyi.props?.play).toBe(false);
   act(() => r.unmount());
 });

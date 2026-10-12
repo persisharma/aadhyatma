@@ -240,60 +240,69 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
         <View style={styles.toggleRow}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={chalisaId} />
-          {/* The YouTube fallback offer — only when there is no recording and a
-              reviewed mapping exists. Opening it docks the player above the reader. */}
-          {videoMapping && !videoOpen && (
-            <Pressable
-              onPress={() => {
-                resumeAutoScroll();
-                setVideoOpen(true);
-              }}
-              accessibilityRole="button"
-              accessibilityLabel={pick(lang, {
-                hi: 'वीडियो चलाएँ',
-                en: 'Play video',
-                gu: 'વિડિઓ ચલાવો',
-                kn: 'ವೀಡಿಯೊ ಪ್ಲೇ ಮಾಡಿ',
-              })}
-              hitSlop={8}
-              style={({ pressed }) => [
-                styles.videoCta,
-                { borderColor: colors.border, backgroundColor: colors.surface },
-                pressed && { opacity: 0.6 },
-              ]}
-            >
-              <View style={styles.ytMark}>
-                <AppIcon name="play" size={10} weight="fill" color="#fff" />
-              </View>
-              <Text style={[styles.videoCtaText, { color: colors.ink }]}>
-                {pick(lang, { hi: 'वीडियो', en: 'Video', gu: 'વિડિઓ', kn: 'ವೀಡಿಯೊ' })}
-              </Text>
-            </Pressable>
-          )}
-          {videoOpen && !autoScroll && (
-            <Pressable
-              onPress={resumeAutoScroll}
-              accessibilityRole="button"
-              accessibilityLabel={pick(lang, {
-                hi: 'स्वतः-स्क्रॉल पुनः चालू करें',
-                en: 'Resume auto-scroll',
-                gu: 'ઓટો-સ્ક્રોલ ફરી શરૂ કરો',
-                kn: 'ಸ್ವಯಂ-ಸ್ಕ್ರಾಲ್ ಮರುಪ್ರಾರಂಭಿಸಿ',
-              })}
-              hitSlop={8}
-              style={[styles.videoCta, { borderColor: colors.saffron, backgroundColor: colors.saffronTint }]}
-            >
-              <Text style={[styles.videoCtaText, { color: colors.saffronDeep }]}>
-                {pick(lang, { hi: 'स्वतः-स्क्रॉल', en: 'Auto-scroll', gu: 'ઓટો-સ્ક્રોલ', kn: 'ಸ್ವಯಂ-ಸ್ಕ್ರಾಲ್' })} ⌄
-              </Text>
-            </Pressable>
-          )}
           {/* Pinned to the right edge so the toggle group stays centred; the read-aloud
               pill (▶ + "सुनें") sits inline with the toggle, clear of the progress bar. */}
           <View style={styles.readAloudSlot}>
             <ReadAloudButton control={readAloud} />
           </View>
         </View>
+
+        {/* The video CTA / auto-scroll pill lives on its OWN centred row, not in the
+            toggle group: on 375–390 pt widths a third pill in the centred group grows
+            into the right-pinned read-aloud slot and the two controls overlap
+            (design.md §56.2 keeps only the toggle/add group centred). */}
+        {((videoMapping && !videoOpen) || (videoOpen && !autoScroll)) && (
+          <View style={styles.videoCtaRow}>
+            {/* The YouTube fallback offer — only when there is no recording and a
+                reviewed mapping exists. Opening it docks the player above the reader. */}
+            {videoMapping && !videoOpen && (
+              <Pressable
+                onPress={() => {
+                  resumeAutoScroll();
+                  setVideoOpen(true);
+                }}
+                accessibilityRole="button"
+                accessibilityLabel={pick(lang, {
+                  hi: 'वीडियो चलाएँ',
+                  en: 'Play video',
+                  gu: 'વિડિઓ ચલાવો',
+                  kn: 'ವೀಡಿಯೊ ಪ್ಲೇ ಮಾಡಿ',
+                })}
+                hitSlop={8}
+                style={({ pressed }) => [
+                  styles.videoCta,
+                  { borderColor: colors.border, backgroundColor: colors.surface },
+                  pressed && { opacity: 0.6 },
+                ]}
+              >
+                <View style={[styles.ytMark, { backgroundColor: colors.youtube }]}>
+                  <AppIcon name="play" size={10} weight="fill" color={colors.onPrimary} />
+                </View>
+                <Text style={[styles.videoCtaText, { color: colors.ink }]}>
+                  {pick(lang, { hi: 'वीडियो', en: 'Video', gu: 'વિડિઓ', kn: 'ವೀಡಿಯೊ' })}
+                </Text>
+              </Pressable>
+            )}
+            {videoOpen && !autoScroll && (
+              <Pressable
+                onPress={resumeAutoScroll}
+                accessibilityRole="button"
+                accessibilityLabel={pick(lang, {
+                  hi: 'स्वतः-स्क्रॉल पुनः चालू करें',
+                  en: 'Resume auto-scroll',
+                  gu: 'ઓટો-સ્ક્રોલ ફરી શરૂ કરો',
+                  kn: 'ಸ್ವಯಂ-ಸ್ಕ್ರಾಲ್ ಮರುಪ್ರಾರಂಭಿಸಿ',
+                })}
+                hitSlop={8}
+                style={[styles.videoCta, { borderColor: colors.saffron, backgroundColor: colors.saffronTint }]}
+              >
+                <Text style={[styles.videoCtaText, { color: colors.saffronDeep }]}>
+                  {pick(lang, { hi: 'स्वतः-स्क्रॉल', en: 'Auto-scroll', gu: 'ઓટો-સ્ક્રોલ', kn: 'ಸ್ವಯಂ-ಸ್ಕ್ರಾಲ್' })} ⌄
+                </Text>
+              </Pressable>
+            )}
+          </View>
+        )}
 
         <View style={styles.listContainer}>
           <FlatList
@@ -412,6 +421,13 @@ const styles = StyleSheet.create({
     paddingTop: 6,
     paddingBottom: 12,
   },
+  videoCtaRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 10,
+    paddingBottom: 12,
+  },
   videoCta: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -425,7 +441,6 @@ const styles = StyleSheet.create({
     width: 22,
     height: 15,
     borderRadius: 4,
-    backgroundColor: '#FF0000',
     alignItems: 'center',
     justifyContent: 'center',
   },
