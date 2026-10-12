@@ -18,8 +18,8 @@ prebuild. Native directories are ignored/generated; do not hand-edit them.
   undetermined/askable and the app is active. iOS can return `undetermined` without
   showing the prompt (launch, iPad scene changes); the controller re-asks up to four
   times, 750 ms apart, in the same foreground and never activates Meta while ATT is
-  unanswered (App Review 2.1, 1.5.0 build 72). The purpose line is "Lets us see which
-  ads bring people to Vedansh." (design.md §79). The native module independently reads
+  unanswered (App Review 2.1, 1.5.0 build 72). The purpose line is "So we know how you
+  found Vedansh." (design.md §79). The native module independently reads
   ATT, enables advertiser-ID collection only when authorized, initializes once,
   and calls `AppEvents.shared.activateApp()` on foreground returns. On iOS 17+
   SDK 18 reads ATT directly; the older OS path also sets advertiser tracking enabled.

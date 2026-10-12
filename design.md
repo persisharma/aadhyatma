@@ -3473,9 +3473,9 @@ FOR TODAY compact cards retain their normal 196dp width. Above fontScale 1.2 the
 **Structure.** A system alert drawn by iOS over Home. Only the second line is ours:
 
 1. Title (iOS, fixed): *Allow “Vedansh” to track your activity across other companies’ apps and websites?*
-2. Purpose line (`NSUserTrackingUsageDescription`): **Lets us see which ads bring people to Vedansh.** It states the consequence, does not repeat the title's "Allow Vedansh", and carries no privacy reassurance (RULEBOOK §3 copy rule). English only; the app ships no iOS `locales`.
+2. Purpose line (`NSUserTrackingUsageDescription`): **So we know how you found Vedansh.** Plain words that answer the title's "why?": it names install attribution (the only use) without ad-industry terms, does not repeat the title's "Allow Vedansh", and carries no privacy reassurance (RULEBOOK §3 copy rule). It must stay true to the actual use (App Review 5.1.1); a new use means new copy. English only; the app ships no iOS `locales`.
 3. Buttons (iOS, fixed): *Ask App Not to Track* · *Allow*.
 
-**Interaction.** Requested after navigation is ready and the UI is idle, only while undetermined and askable. If iOS drops the request without showing it, the app asks again up to four times, 750 ms apart, in the same foreground. Meta stays inactive until the user answers; either answer leaves the app fully usable. Changing the purpose line needs a new store binary (Info.plist), not an OTA.
+**Interaction.** Requested after navigation is ready and the UI is idle, only while undetermined and askable. If iOS drops the request without showing it, the app asks again up to four times, 750 ms apart, in the same foreground. Meta stays inactive until the user answers. **Allow** lets Meta use the device's advertising ID for exact install attribution; **Ask App Not to Track** keeps the ID off and Meta falls back to Apple's aggregate install reports. Either answer leaves the app fully usable. Changing the purpose line needs a new store binary (Info.plist), not an OTA.
 
 **Files.** `mobile/plugins/metaTrackingConfig.js` (`TRACKING_PERMISSION`), `mobile/src/utils/metaActivationController.ts` (ask/retry/activation order), `mobile/src/utils/metaAppEvents.ts` (native-flag gate), `docs/meta-app-events.md`.
