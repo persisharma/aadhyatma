@@ -1,0 +1,2488 @@
+{
+  "date": "2026-10-11",
+  "desktopStandard": [
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "1 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-01-01",
+        "bk-01-02",
+        "bk-01-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "2 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-01-04",
+        "bk-01-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "3 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-02-01",
+        "bk-02-02"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "4 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-03-01",
+        "bk-03-02",
+        "bk-03-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "5 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-03-04",
+        "bk-03-05",
+        "bk-03-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "6 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-04-01",
+        "bk-04-02",
+        "bk-04-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "7 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-04-04",
+        "bk-04-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "8 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-05-01",
+        "bk-05-02",
+        "bk-05-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "9 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-06-01",
+        "bk-06-02",
+        "bk-06-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "10 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-06-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "11 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-07-01",
+        "bk-07-02",
+        "bk-07-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "12 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-08-01",
+        "bk-08-02",
+        "bk-08-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "13 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-08-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "14 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-09-01",
+        "bk-09-02",
+        "bk-09-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "15 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-09-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "16 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-10-01",
+        "bk-10-02",
+        "bk-10-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "17 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-10-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "18 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-11-01",
+        "bk-11-02",
+        "bk-11-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "19 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-11-04",
+        "bk-11-05",
+        "bk-11-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "20 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-12-01",
+        "bk-12-02",
+        "bk-12-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "21 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-12-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "22 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-13-01",
+        "bk-13-02",
+        "bk-13-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "23 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-13-04",
+        "bk-13-05",
+        "bk-13-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "24 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-01",
+        "bk-14-02",
+        "bk-14-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "25 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-04",
+        "bk-14-05",
+        "bk-14-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "26 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-07",
+        "bk-14-08"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "27 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-15-01",
+        "bk-15-02",
+        "bk-15-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "28 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-15-04",
+        "bk-15-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "29 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-16-01",
+        "bk-16-02",
+        "bk-16-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "30 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-16-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "31 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-17-01",
+        "bk-17-02",
+        "bk-17-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "32 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-17-04",
+        "bk-17-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "33 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-18-01",
+        "bk-18-02",
+        "bk-18-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "34 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-01",
+        "bk-19-02",
+        "bk-19-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "35 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-04",
+        "bk-19-05",
+        "bk-19-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "36 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-07"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "37 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-20-01",
+        "bk-20-02",
+        "bk-20-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "38 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-20-04",
+        "bk-20-05",
+        "bk-20-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "39 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-21-01",
+        "bk-21-02",
+        "bk-21-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "40 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-21-04",
+        "bk-21-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "41 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-22-01",
+        "bk-22-02",
+        "bk-22-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "42 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-22-04",
+        "bk-22-05",
+        "bk-22-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "43 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-23-01",
+        "bk-23-02",
+        "bk-23-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "44 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-23-04",
+        "bk-23-05",
+        "bk-23-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "45 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-24-01",
+        "bk-24-02",
+        "bk-24-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "46 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-25-01",
+        "bk-25-02",
+        "bk-25-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "47 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-25-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "48 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-26-01",
+        "bk-26-02",
+        "bk-26-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "49 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-26-04",
+        "bk-26-05",
+        "bk-26-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "50 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-27-01",
+        "bk-27-02",
+        "bk-27-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "51 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-27-04",
+        "bk-27-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "52 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-28-01",
+        "bk-28-02",
+        "bk-28-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "53 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-28-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "54 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-29-01",
+        "bk-29-02",
+        "bk-29-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "55 / 55",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-29-04"
+      ]
+    }
+  ],
+  "desktopLarge": [
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "1 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-01-01",
+        "bk-01-02",
+        "bk-01-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "2 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-01-04",
+        "bk-01-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "3 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-02-01",
+        "bk-02-02"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "4 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-03-01",
+        "bk-03-02",
+        "bk-03-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "5 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-03-04",
+        "bk-03-05",
+        "bk-03-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "6 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-04-01",
+        "bk-04-02",
+        "bk-04-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "7 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-04-04",
+        "bk-04-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "8 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-05-01",
+        "bk-05-02",
+        "bk-05-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "9 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-06-01",
+        "bk-06-02",
+        "bk-06-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "10 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-06-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "11 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-07-01",
+        "bk-07-02",
+        "bk-07-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "12 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-08-01",
+        "bk-08-02",
+        "bk-08-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "13 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-08-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "14 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-09-01",
+        "bk-09-02",
+        "bk-09-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "15 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-09-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "16 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-10-01",
+        "bk-10-02",
+        "bk-10-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "17 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-10-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "18 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-11-01",
+        "bk-11-02",
+        "bk-11-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "19 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-11-04",
+        "bk-11-05",
+        "bk-11-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "20 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-12-01",
+        "bk-12-02",
+        "bk-12-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "21 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-12-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "22 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-13-01",
+        "bk-13-02",
+        "bk-13-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "23 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-13-04",
+        "bk-13-05",
+        "bk-13-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "24 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-01",
+        "bk-14-02",
+        "bk-14-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "25 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-04",
+        "bk-14-05",
+        "bk-14-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "26 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-07",
+        "bk-14-08"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "27 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-15-01",
+        "bk-15-02",
+        "bk-15-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "28 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-15-04",
+        "bk-15-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "29 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-16-01",
+        "bk-16-02",
+        "bk-16-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "30 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-16-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "31 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-17-01",
+        "bk-17-02",
+        "bk-17-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "32 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-17-04",
+        "bk-17-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "33 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-18-01",
+        "bk-18-02",
+        "bk-18-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "34 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-01",
+        "bk-19-02",
+        "bk-19-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "35 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-04",
+        "bk-19-05",
+        "bk-19-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "36 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-07"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "37 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-20-01",
+        "bk-20-02",
+        "bk-20-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "38 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-20-04",
+        "bk-20-05",
+        "bk-20-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "39 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-21-01",
+        "bk-21-02",
+        "bk-21-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "40 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-21-04",
+        "bk-21-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "41 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-22-01",
+        "bk-22-02",
+        "bk-22-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "42 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-22-04",
+        "bk-22-05",
+        "bk-22-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "43 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-23-01",
+        "bk-23-02",
+        "bk-23-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "44 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-23-04",
+        "bk-23-05",
+        "bk-23-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "45 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-24-01",
+        "bk-24-02",
+        "bk-24-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "46 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-25-01",
+        "bk-25-02",
+        "bk-25-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "47 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-25-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "48 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-26-01",
+        "bk-26-02",
+        "bk-26-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "49 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-26-04",
+        "bk-26-05",
+        "bk-26-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "50 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-27-01",
+        "bk-27-02",
+        "bk-27-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "51 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-27-04",
+        "bk-27-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "52 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-28-01",
+        "bk-28-02",
+        "bk-28-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "53 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-28-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "54 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-29-01",
+        "bk-29-02",
+        "bk-29-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "55 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-29-04"
+      ]
+    }
+  ],
+  "finalMobile390x844": [
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "1 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-01-01",
+        "bk-01-02",
+        "bk-01-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "2 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-01-04",
+        "bk-01-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "3 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-02-01",
+        "bk-02-02"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "4 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-03-01",
+        "bk-03-02",
+        "bk-03-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "5 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-03-04",
+        "bk-03-05",
+        "bk-03-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "6 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-04-01",
+        "bk-04-02",
+        "bk-04-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "7 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-04-04",
+        "bk-04-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "8 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-05-01",
+        "bk-05-02",
+        "bk-05-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "9 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-06-01",
+        "bk-06-02",
+        "bk-06-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "10 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-06-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "11 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-07-01",
+        "bk-07-02",
+        "bk-07-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "12 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-08-01",
+        "bk-08-02",
+        "bk-08-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "13 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-08-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "14 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-09-01",
+        "bk-09-02",
+        "bk-09-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "15 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-09-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "16 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-10-01",
+        "bk-10-02",
+        "bk-10-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "17 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-10-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "18 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-11-01",
+        "bk-11-02",
+        "bk-11-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "19 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-11-04",
+        "bk-11-05",
+        "bk-11-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "20 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-12-01",
+        "bk-12-02",
+        "bk-12-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "21 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-12-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "22 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-13-01",
+        "bk-13-02",
+        "bk-13-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "23 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-13-04",
+        "bk-13-05",
+        "bk-13-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "24 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-01",
+        "bk-14-02",
+        "bk-14-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "25 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-04",
+        "bk-14-05",
+        "bk-14-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "26 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-07",
+        "bk-14-08"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "27 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-15-01",
+        "bk-15-02",
+        "bk-15-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "28 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-15-04",
+        "bk-15-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "29 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-16-01",
+        "bk-16-02",
+        "bk-16-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "30 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-16-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "31 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-17-01",
+        "bk-17-02",
+        "bk-17-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "32 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-17-04",
+        "bk-17-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "33 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-18-01",
+        "bk-18-02",
+        "bk-18-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "34 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-01",
+        "bk-19-02",
+        "bk-19-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "35 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-04",
+        "bk-19-05",
+        "bk-19-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "36 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-07"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "37 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-20-01",
+        "bk-20-02",
+        "bk-20-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "38 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-20-04",
+        "bk-20-05",
+        "bk-20-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "39 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-21-01",
+        "bk-21-02",
+        "bk-21-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "40 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-21-04",
+        "bk-21-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "41 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-22-01",
+        "bk-22-02",
+        "bk-22-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "42 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-22-04",
+        "bk-22-05",
+        "bk-22-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "43 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-23-01",
+        "bk-23-02",
+        "bk-23-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "44 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-23-04",
+        "bk-23-05",
+        "bk-23-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "45 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-24-01",
+        "bk-24-02",
+        "bk-24-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "46 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-25-01",
+        "bk-25-02",
+        "bk-25-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "47 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-25-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "48 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-26-01",
+        "bk-26-02",
+        "bk-26-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "49 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-26-04",
+        "bk-26-05",
+        "bk-26-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "50 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-27-01",
+        "bk-27-02",
+        "bk-27-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "51 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-27-04",
+        "bk-27-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "52 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-28-01",
+        "bk-28-02",
+        "bk-28-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "53 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-28-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "54 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-29-01",
+        "bk-29-02",
+        "bk-29-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "55 / 55",
+      "fontSize": "18px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-29-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "1 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-01-01",
+        "bk-01-02",
+        "bk-01-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "2 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-01-04",
+        "bk-01-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "3 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-02-01",
+        "bk-02-02"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "4 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-03-01",
+        "bk-03-02",
+        "bk-03-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "5 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-03-04",
+        "bk-03-05",
+        "bk-03-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "6 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-04-01",
+        "bk-04-02",
+        "bk-04-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "7 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-04-04",
+        "bk-04-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "8 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-05-01",
+        "bk-05-02",
+        "bk-05-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "9 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-06-01",
+        "bk-06-02",
+        "bk-06-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "10 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-06-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "11 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-07-01",
+        "bk-07-02",
+        "bk-07-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "12 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-08-01",
+        "bk-08-02",
+        "bk-08-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "13 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-08-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "14 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-09-01",
+        "bk-09-02",
+        "bk-09-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "15 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-09-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "16 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-10-01",
+        "bk-10-02",
+        "bk-10-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "17 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-10-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "18 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-11-01",
+        "bk-11-02",
+        "bk-11-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "19 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-11-04",
+        "bk-11-05",
+        "bk-11-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "20 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-12-01",
+        "bk-12-02",
+        "bk-12-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "21 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-12-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "22 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-13-01",
+        "bk-13-02",
+        "bk-13-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "23 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-13-04",
+        "bk-13-05",
+        "bk-13-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "24 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-01",
+        "bk-14-02",
+        "bk-14-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "25 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-04",
+        "bk-14-05",
+        "bk-14-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "26 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-14-07",
+        "bk-14-08"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "27 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-15-01",
+        "bk-15-02",
+        "bk-15-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "28 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-15-04",
+        "bk-15-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "29 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-16-01",
+        "bk-16-02",
+        "bk-16-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "30 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-16-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "31 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-17-01",
+        "bk-17-02",
+        "bk-17-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "32 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-17-04",
+        "bk-17-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "33 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-18-01",
+        "bk-18-02",
+        "bk-18-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "34 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-01",
+        "bk-19-02",
+        "bk-19-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "35 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-04",
+        "bk-19-05",
+        "bk-19-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "36 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-19-07"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "37 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-20-01",
+        "bk-20-02",
+        "bk-20-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "38 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-20-04",
+        "bk-20-05",
+        "bk-20-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "39 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-21-01",
+        "bk-21-02",
+        "bk-21-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "40 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-21-04",
+        "bk-21-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "41 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-22-01",
+        "bk-22-02",
+        "bk-22-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "42 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-22-04",
+        "bk-22-05",
+        "bk-22-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "43 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-23-01",
+        "bk-23-02",
+        "bk-23-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "44 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-23-04",
+        "bk-23-05",
+        "bk-23-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "45 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-24-01",
+        "bk-24-02",
+        "bk-24-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "46 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-25-01",
+        "bk-25-02",
+        "bk-25-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "47 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-25-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "48 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-26-01",
+        "bk-26-02",
+        "bk-26-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "49 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-26-04",
+        "bk-26-05",
+        "bk-26-06"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "50 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-27-01",
+        "bk-27-02",
+        "bk-27-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "51 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-27-04",
+        "bk-27-05"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": -0.5,
+      "counter": "52 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-28-01",
+        "bk-28-02",
+        "bk-28-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "53 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-28-04"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0.5,
+      "counter": "54 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-29-01",
+        "bk-29-02",
+        "bk-29-03"
+      ]
+    },
+    {
+      "allImagesLoaded": true,
+      "bottomGap": 0,
+      "counter": "55 / 55",
+      "fontSize": "23px",
+      "horizontalOverflow": false,
+      "panelIds": [
+        "bk-29-04"
+      ]
+    }
+  ],
+  "swipe": {
+    "fromPage": 8,
+    "toPage": 9,
+    "passed": true
+  },
+  "note": "Final mobile pass follows measured ink-frame correction. Browser draft only; does not certify native app Standard/Large."
+}

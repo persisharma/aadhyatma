@@ -1,7 +1,7 @@
 ---
 title: Ramayan comic character continuity
 type: decision
-sources: [docs/content-parity/ramayan-comic/README.md, docs/content-parity/ramayan-comic/character-bible.md, docs/content-parity/ramayan-comic/appearance-timeline.json, docs/content-parity/ramayan-comic/source-manifest.json, docs/content-parity/ramayan-comic/asset-review.json, RULEBOOK.md]
+sources: [docs/content-parity/ramayan-comic/README.md, docs/content-parity/ramayan-comic/character-bible.md, docs/content-parity/ramayan-comic/appearance-timeline.json, docs/content-parity/ramayan-comic/source-manifest.json, docs/content-parity/ramayan-comic/asset-review.json, docs/content-parity/ramayan-comic/balakanda-v1/README.md, docs/content-parity/ramayan-comic/balakanda-v1/book.json, docs/content-parity/ramayan-comic/balakanda-v1/asset-review.json, RULEBOOK.md]
 last_verified_date: 2026-10-11
 confidence: high
 status: current
@@ -9,7 +9,7 @@ status: current
 
 ## Summary
 
-The user selected an inked comic direction with richer colour and the supplied seven-kāṇḍa shelf. The character reference book in `docs/content-parity/ramayan-comic/` supplies six visually reviewed, proposed model sheets covering 19 principal identities, plus an event-based appearance timeline. This is an authoring package; newly generated character models await user acceptance and no Ramayan comic reader is activated.
+The user selected an inked comic direction with richer colour and the supplied seven-kāṇḍa shelf, then accepted the refined character look and comic previews. The character reference book in `docs/content-parity/ramayan-comic/` supplies six visually reviewed model sheets covering 19 principal identities, plus an event-based appearance timeline. A complete Hindi Bala Kanda comic authoring draft now lives in `balakanda-v1/`; no native Ramayan comic story is activated.
 
 ## Details
 
@@ -25,8 +25,22 @@ The user selected an inked comic direction with richer colour and the supplied s
 
 ## Dependencies
 
+The user accepted the revised character look and requested comic-screen previews. `docs/content-parity/ramayan-comic/screens/README.md` records three static, visually reviewed screens: shelf, friendship pact and Rama's ring, with exact prompts/input hashes and repairs. Baked-in preview lettering is not production multilingual architecture; production needs text-free panel art and native translated text. Extracts and illustrative counters do not establish complete episode pacing or native integration.
+
 [[kids-stories]]
 
 ## Gotchas
 
-The reference book does not complete the epic cast or every form. Ravana full anatomy/disguise, Lava/Kusha later rulers and other episode cast remain pending. A portrait study is not permission to omit Ravana's heads/arms in a full-form scene. Optional props and model crowns are not mandatory in every panel. The book verifies authoring references and local preview behavior, not narrative completeness, translation approval, rights clearance, CDN delivery or native app integration.
+The reference book does not complete the epic cast or every form. Ravana full anatomy/disguise, Lava/Kusha later rulers and other episode cast remain pending. A portrait study is not permission to omit Ravana's heads/arms in a full-form scene. Optional props and model crowns are not mandatory in every panel. Local authoring and browser checks do not establish translation approval, rights clearance, CDN delivery or native app integration.
+
+## Complete Bala Kanda authoring draft
+
+`docs/content-parity/ramayan-comic/balakanda-v1/` contains 29 episodes, 137 text-free illustrated panels on 29 selected source sheets and 55 reading pages. The original Hindi adaptation covers all 77 sarga arcs, including journey legends, Shatananda's retrospective, four correct marriage pairs, the two distinct bows and homecoming. It is not verse-by-verse or an exhaustive genealogy list. Every adjacent transition has a causal review. The 154 chapter fetch records are fetch evidence, not proof of full independent editorial comparison.
+
+The local HTML reader separates caption/dialogue text from art, provides shelf navigation, vertical scrolling, horizontal swipe, explicit page buttons and 18/23 px text. All 55 pages/137 panels were exercised in both sizes; the final 390 × 844 pass verified image loading, full scroll reach and no horizontal overflow. Native device checks remain pending.
+
+Generated multi-panel sheets do not reliably have equal row heights. `asset-review.json` records measured ink gutter boundaries, selected hashes and every scene review; `build_book.py` copies those rectangles into `book.json`. Never infer a crop from caption length or reuse a uniform grid without inspecting the actual sheet. No image pixels were trimmed. Every panel links to the full original sheet.
+
+Four supporting reference families supplement the original cast. Retain elder Vishwamitra in the present journey/farewell while his narrated past progresses from king to middle-aged ascetic to elder. All final sheets were inspected and repaired, including Rishyasringa invitation order, divine arms/attributes, six Kartikeya heads/foster mothers, Ahalya's unseen penance, four princes/couples, Shatrughna's tan hands and Parashurama's black beard. Exact built-in image_gen prompts, input hashes and revisions are retained.
+
+English/Gujarati/Kannada full narratives, independent Sanskrit/Hindi editorial approval, rights, production art/frame registration, CDN/offline fallback and complete native Standard/Large evidence remain pending. This local draft does not modify the mobile registry or bundle its artwork.

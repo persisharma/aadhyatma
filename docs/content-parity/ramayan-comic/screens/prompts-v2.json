@@ -1,0 +1,170 @@
+{
+  "createdOn": "2026-10-11",
+  "tool": "built-in image_gen",
+  "scope": "Static visual mockups for selected Option 2, not production shared artwork",
+  "selectedOutputs": [
+    "screens/shelf-v2.png",
+    "screens/friendship-v3.png",
+    "screens/ring-v3.png"
+  ],
+  "generations": [
+    {
+      "id": "shelf",
+      "prompt": "Use case: ui-mockup. Create a realistic, polished Vedansh mobile app COMIC screen, app content only, no phone body, no notch, status bar, OS chrome, perspective or external presentation background. Natural 390 x 844 logical layout, render portrait at high resolution. Preserve the chosen Option 2 style: decisive black ink contours, actual drawn sequential comic storytelling, expressive character acting, crisp cel shading; rich forest emerald, saffron, vermilion and luminous antique gold. Never photorealistic, painterly or 3D. Warm pale parchment app chrome, deep brown Devanagari serif headings, clear readable Hindi dialogue in cream speech balloons with black outlines and pointed speaker tails. Exactly the approved reference UI family; no redesign. Body text equivalent >=14px, no crowding or clipped content. Only two fonts. Footer tabs Home, Bhakti, Panchang, Bhajan, More using the same simple icons as the UI reference, restrained copper accents. No audio button. All reference-sheet text is authoring metadata only, never reproduce it in UI. Keep characters recognizable from actual attached updated model sheets, with correct life stages and clothing. Each character two arms, coherent hands, no extra limbs; Hanuman one tail, one gold mukut with red jewel, warm ivory fur, short peach vanara muzzle, athletic adult, kind eyes and one complete gold gada when shown. Never substitute a brown Sugriva face for Hanuman.\nScreen: SEVEN-KANDA SHELF. Image1 is the layout/comic style reference, images2-5 are the CURRENT character identities and override any old faces in image1. Keep layout as two columns with 3 paired rows plus one wide final tile; subtle drawn wooden shelf ledges beneath each row, clean thin copper frames, complete card titles. All seven visible and comfortably readable. Header back icon, main title \"सचित्र रामायण\", subtitle \"सात काण्ड • एक अमर कथा\", compact हिन्दी / English language switch. Use updated Rama's BROAD oval face, soft cheeks, rounded chin, full lips and calm open eyes; Lakshmana's LONG NARROW DIAMOND face, pointed chin, high nose, focused narrow eyes, distinct asymmetric forelock and leaner neck. They must not be recoloured twins. Card1 \"बालकाण्ड\": young ADOLESCENT brothers, visibly younger and smaller than adult Rama elsewhere, with elderly sage Vishwamitra, forest journey, no grey beard on Rama. Card2 \"अयोध्याकाण्ड\": Rama Sita Lakshmana leaving Ayodhya before matted-hair transition, no crown. Card3 \"अरण्यकाण्ड\": the three in forest hermitage, matted locks on brothers, Sita yellow forest dress. Card4 \"किष्किन्धाकाण्ड\": Rama and brown-furred uncrowned Sugriva by sacred fire, refined IVORY Hanuman behind with mukut/gada; adult angular Lakshmana. Card5 \"सुन्दरकाण्ड\": refined ivory Hanuman with mukut/gada presents one tiny ring to Sita wearing worn yellow cloth and single long black braid. Card6 \"युद्धकाण्ड\": Rama and Lakshmana watch vanaras building ocean bridge toward Lanka, no need Ravana anatomy. Card7 \"उत्तरकाण्ड\": two CHILD boys Lava and Kusha with elder Valmiki at forest hermitage, Sita in ochre nearby, exactly two boys and no infant. Exquisite compact comic cover vignettes, rich colour density, not model sheets. Titles verbatim and accurate. No story balloons on shelf, no invented metrics or progress bar.",
+      "generatedOutput": "/Users/prashant/.codex/generated_images/01a12506-4f87-7b42-99dd-45cfb6de6dc1/exec-5d989fec-4290-483f-a7fd-539b3f20f746.png",
+      "output": "screens/shelf-v1.png",
+      "inputPaths": [
+        "references/approved-corrected-shelf.png",
+        "assets/rama-v3.png",
+        "assets/brothers-v4.png",
+        "assets/vanaras-v3.png",
+        "assets/sita-v2.png"
+      ],
+      "sha256": "d995528b5aeecfbd34727c96927b7a13d49d405309c7ca3c7589eb9f7108b518",
+      "dimensions": [
+        853,
+        1844
+      ],
+      "inputHashes": {
+        "references/approved-corrected-shelf.png": "ba41a2b0e1239cab3478eff5785d9e29713b54ff70e975fa2c421872a77a3649",
+        "assets/rama-v3.png": "58a8141703e7250646fb5527a572600dd088ee7d7acc627f573cbe092ea5e1c5",
+        "assets/brothers-v4.png": "f866ad0bd1017d1ae5bd0c1f068811c18842bac73656dcda380a9c827b66172e",
+        "assets/vanaras-v3.png": "56a764c9ec13573b238253913414ac57608efd5044e244179705ca98c74ce418",
+        "assets/sita-v2.png": "bf2f4904444715d39dc3fa1a4c0b6d1e28972014e2128ea67199bf411936aeb8"
+      }
+    },
+    {
+      "id": "friendship",
+      "prompt": "Use case: ui-mockup. Create a realistic, polished Vedansh mobile app COMIC screen, app content only, no phone body, no notch, status bar, OS chrome, perspective or external presentation background. Natural 390 x 844 logical layout, render portrait at high resolution. Preserve the chosen Option 2 style: decisive black ink contours, actual drawn sequential comic storytelling, expressive character acting, crisp cel shading; rich forest emerald, saffron, vermilion and luminous antique gold. Never photorealistic, painterly or 3D. Warm pale parchment app chrome, deep brown Devanagari serif headings, clear readable Hindi dialogue in cream speech balloons with black outlines and pointed speaker tails. Exactly the approved reference UI family; no redesign. Body text equivalent >=14px, no crowding or clipped content. Only two fonts. Footer tabs Home, Bhakti, Panchang, Bhajan, More using the same simple icons as the UI reference, restrained copper accents. No audio button. All reference-sheet text is authoring metadata only, never reproduce it in UI. Keep characters recognizable from actual attached updated model sheets, with correct life stages and clothing. Each character two arms, coherent hands, no extra limbs; Hanuman one tail, one gold mukut with red jewel, warm ivory fur, short peach vanara muzzle, athletic adult, kind eyes and one complete gold gada when shown. Never substitute a brown Sugriva face for Hanuman.\nScreen: KISHKINDHA COMIC READER \"मित्रता का संकल्प\". Image1 is approved reader style/layout, images2-4 are UPDATED faces that override any old models. This is an actual scene page, never a character sheet. Top header back icon, \"किष्किन्धाकाण्ड\", counter \"3 / 8\"; thin progress line, compact हिन्दी / English toggle; centered episode title. Keep chrome compact so 70% of screen is large richly coloured illustrated comic panels. Three clearly bordered panels, modest gutters, dynamic angles and closeups. Full native-looking 390x844 layout.\nAdult exile Rama: updated broad oval calm face, fuller cheeks/lips, round chin, blue skin, broad shoulders, bark/saffron forest attire, red sash, matted topknot, bow/quiver. Adult exile Lakshmana: narrow LONG angular face, tapered pointed chin, thinner lips, narrow high nose, focused eyes, asymmetric lock, leaner body, tan skin, green sash, bark forest clothes, matted locks, bow/quiver. Faces clearly different even without colour.\nPanel1 wide establishing scene: rocky lush Rishyamuka clearing, Rama and Sugriva close together; Lakshmana beside Rama showing his distinct face clearly; Hanuman in natural IVORY vanara form kneels respectfully and kindles a small sacred fire with two wooden sticks. Gold mukut as approved, gada set safely beside him so hands are free; no duplicated gada. Caption \"हनुमान ने अग्नि प्रज्वलित की।\" A whole coherent scene, no unrelated battle.\nPanel2 panoramic movement: Rama and the brown uncrowned Sugriva walk respectfully around that small flower-adorned fire, with Hanuman/Lakshmana watching. Caption \"राम और सुग्रीव ने अग्नि के चारों ओर परिक्रमा की।\" Show these figures and all important hands/feet and fire within frame. This is a friendship pact, not a marriage; no Sita in this scene.\nPanel3 intimate closer shot of Rama and Sugriva now sitting on leafy branches in the same clearing, companions behind them. Sugriva speaks \"अब हमारे सुख-दुःख साझा हैं।\" Rama answers \"हम एक-दूसरे का साथ देंगे।\" Balloon tails must clearly attach to the correct speaker. Distinct expressions, Rama gentle, Sugriva relieved.\nFooter small \"चित्रकथा रूपांतरण • नमूना\" and \"स्वाइप करके आगे पढ़ें →\" then same five app tabs. No previous/next buttons. Exact Hindi text only as specified, no invented quotes, no labels from model sheets. This is a visual preview; pagination illustrative. Gold crown/gada are requested iconic art choices, not a new scripture assertion.",
+      "generatedOutput": "/Users/prashant/.codex/generated_images/01a12506-4f87-7b42-99dd-45cfb6de6dc1/exec-6d1a0d3d-1fac-4af8-9445-746de96924b0.png",
+      "output": "screens/friendship-v1.png",
+      "inputPaths": [
+        "references/approved-comic-dialogue.png",
+        "assets/rama-v3.png",
+        "assets/brothers-v4.png",
+        "assets/vanaras-v3.png"
+      ],
+      "sha256": "c496dae5992b66b489c0146dfda7e5f6c3ee8bf3d0b6c26a0afa162f5e034390",
+      "dimensions": [
+        853,
+        1844
+      ],
+      "inputHashes": {
+        "references/approved-comic-dialogue.png": "e47e1bf79f625b3489bd113ce80977097da606b82e5392bd7fda71144d133b92",
+        "assets/rama-v3.png": "58a8141703e7250646fb5527a572600dd088ee7d7acc627f573cbe092ea5e1c5",
+        "assets/brothers-v4.png": "f866ad0bd1017d1ae5bd0c1f068811c18842bac73656dcda380a9c827b66172e",
+        "assets/vanaras-v3.png": "56a764c9ec13573b238253913414ac57608efd5044e244179705ca98c74ce418"
+      }
+    },
+    {
+      "id": "ring",
+      "prompt": "Use case: ui-mockup. Create a realistic, polished Vedansh mobile app COMIC screen, app content only, no phone body, no notch, status bar, OS chrome, perspective or external presentation background. Natural 390 x 844 logical layout, render portrait at high resolution. Preserve the chosen Option 2 style: decisive black ink contours, actual drawn sequential comic storytelling, expressive character acting, crisp cel shading; rich forest emerald, saffron, vermilion and luminous antique gold. Never photorealistic, painterly or 3D. Warm pale parchment app chrome, deep brown Devanagari serif headings, clear readable Hindi dialogue in cream speech balloons with black outlines and pointed speaker tails. Exactly the approved reference UI family; no redesign. Body text equivalent >=14px, no crowding or clipped content. Only two fonts. Footer tabs Home, Bhakti, Panchang, Bhajan, More using the same simple icons as the UI reference, restrained copper accents. No audio button. All reference-sheet text is authoring metadata only, never reproduce it in UI. Keep characters recognizable from actual attached updated model sheets, with correct life stages and clothing. Each character two arms, coherent hands, no extra limbs; Hanuman one tail, one gold mukut with red jewel, warm ivory fur, short peach vanara muzzle, athletic adult, kind eyes and one complete gold gada when shown. Never substitute a brown Sugriva face for Hanuman.\nScreen: SUNDARA COMIC READER \"राम की मुद्रिका\". Image1 is approved reader layout/style; images2-3 lock UPDATED Hanuman and Sita identities. Same connected mobile family, 390x844 logical viewport. App header back icon, centered \"सुन्दरकाण्ड\", counter \"5 / 9\", thin progress, compact हिन्दी / English toggle, episode title. Three actual sequential comic panels occupying70% of screen, strong ink frames, modest gutters, no unused caption band. Rich emerald leaves, magenta Ashoka blossoms and gold highlights. This is an extract from the ring-recognition scene, not the entire rescue story.\nSita uses the approved ADULT CAPTIVITY model: same long oval face/almond eyes, dignified but tired, worn simple YELLOW cloth, one long black braid, no bridal red sari, no flower garlands, modest surviving jewellery only. Hanuman has the NEW warm IVORY fur, short peach muzzle, kind expressive eyes, compact gold mukut/red jewel, gold armbands, saffron dhoti and red sash; one tail, two arms. One complete gold gada rests on ground beside him as an iconic accessory. Do not make Hanuman brown; that belongs to Sugriva. No extra Hanumans in one panel.\nPanel1 wide establishing: sorrowful captive Sita seated beneath flowering Ashoka tree; Hanuman kneels a respectful distance away, speaks humbly. Small narration \"अशोक वाटिका में हनुमान सीता के सामने आए।\" Hanuman balloon \"माता, मैं श्रीराम का दूत हूँ।\" Tail unambiguously points to Hanuman.\nPanel2 medium close hands and both faces: Hanuman presents ONE TINY gold signet RING in open hand to Sita, no oversized bangle or bracelet; gold gada remains visible in scene edge or behind him. Hanuman balloon \"यह उनकी दी हुई मुद्रिका है।\" Ring is a clear focal point, tiny but visible; keep normal correct hands with fingers, not ring-shaped finger.\nPanel3 emotion closeup: Sita holds the small ring carefully, face softens with tears of relief and hope but she is still captive. Her bubble \"यह तो श्रीराम की मुद्रिका है!\" Small caption \"मुद्रिका देखकर सीता के मन में आशा जागी।\" No claim she is already rescued. Do not show Rama physically here or Lanka burning. Correct cause-and-reaction progression and recognisable SAME characters across all panels.\nBottom small \"चित्रकथा रूपांतरण • नमूना\", \"स्वाइप करके आगे पढ़ें →\", then consistent five app tabs. No audio button or previous/next buttons. Text verbatim, no extra scripture claims. Counters are illustrative preview content.",
+      "generatedOutput": "/Users/prashant/.codex/generated_images/01a12506-4f87-7b42-99dd-45cfb6de6dc1/exec-1ae40b36-a5ce-493c-95f1-603d2d0ed5b0.png",
+      "output": "screens/ring-v1.png",
+      "inputPaths": [
+        "references/approved-comic-dialogue.png",
+        "assets/vanaras-v3.png",
+        "assets/sita-v2.png"
+      ],
+      "sha256": "8ecceff5c56cb018366b06b78112d3c5148385b5ec132b31172121dd4f7befd4",
+      "dimensions": [
+        853,
+        1844
+      ],
+      "inputHashes": {
+        "references/approved-comic-dialogue.png": "e47e1bf79f625b3489bd113ce80977097da606b82e5392bd7fda71144d133b92",
+        "assets/vanaras-v3.png": "56a764c9ec13573b238253913414ac57608efd5044e244179705ca98c74ce418",
+        "assets/sita-v2.png": "bf2f4904444715d39dc3fa1a4c0b6d1e28972014e2128ea67199bf411936aeb8"
+      }
+    },
+    {
+      "id": "shelf-repair",
+      "prompt": "Edit the attached shelf screen, only the Aरण्यकाण्ड / अरण्यकाण्ड tile (second row, left). Preserve ALL other tiles, all Hindi titles, typography, UI, wooden ledges, dimensions and arrangement exactly. The Aranya tile must show EXACTLY THREE people: Lakshmana, Sita, Rama. In the current tile the seated figure immediately to Sita's right has an inconsistent tan face and blue arm. Correct that seated Rama's face, neck, torso and ALL exposed limbs to the consistent BLUE skin of the updated Rama reference image2. Rama must have broad oval face, fuller soft cheeks, rounded chin, open calm eyes and exile matted topknot, bark/saffron forest clothing. Keep Lakshmana at far left TAN-skinned with the distinctly NARROW LONG ANGULAR face from image3, focused narrow eyes and green sash. Sita remains seated between them in yellow forest clothing. No duplicate people behind them, no floating extra blue limbs. Exactly3 characters in this tile, one coherent body per character. Do not modify any other card or UI.",
+      "generatedOutput": "/Users/prashant/.codex/generated_images/01a12506-4f87-7b42-99dd-45cfb6de6dc1/exec-66d1bbfd-8b38-47ae-ab1b-e227beabfa43.png",
+      "output": "screens/shelf-v2.png",
+      "inputPaths": [
+        "screens/shelf-v1.png",
+        "assets/rama-v3.png",
+        "assets/brothers-v4.png"
+      ],
+      "sha256": "0fa0b961b7fb80bf572ba4347e0b6ef3a9eb10ea4fb0aa4b2376db48fdb757f0",
+      "dimensions": [
+        853,
+        1844
+      ],
+      "inputHashes": {
+        "screens/shelf-v1.png": "d995528b5aeecfbd34727c96927b7a13d49d405309c7ca3c7589eb9f7108b518",
+        "assets/rama-v3.png": "58a8141703e7250646fb5527a572600dd088ee7d7acc627f573cbe092ea5e1c5",
+        "assets/brothers-v4.png": "f866ad0bd1017d1ae5bd0c1f068811c18842bac73656dcda380a9c827b66172e"
+      }
+    },
+    {
+      "id": "ring-repair",
+      "prompt": "Precise local edit of attached Sundara comic screen. Preserve all UI, panel arrangement, colours, inked style, main characters' identities, gold mukut and gada, all other text and illustration. Make only TWO corrections: (1) Remove ALL three background male armed guards from the TOP PANEL. Replace their figures/spears with coherent Ashoka garden leaves, tree trunks, flowers and distant palace. Sita and Hanuman remain the ONLY two people in that top panel, a quiet discreet conversation. (2) In the MIDDLE PANEL speech balloon correct the entire text to EXACTLY \"यह उनकी दी हुई मुद्रिका है।\" Singular \"है\", NO anusvara dot above it (do not write हैं). Preserve balloon shape/tail and all other words. Do not add other characters or objects. Keep exact dimensions and full screen.",
+      "generatedOutput": "/Users/prashant/.codex/generated_images/01a12506-4f87-7b42-99dd-45cfb6de6dc1/exec-a37066fd-e5bd-4838-8283-6ae4031e4287.png",
+      "output": "screens/ring-v2.png",
+      "inputPaths": [
+        "screens/ring-v1.png"
+      ],
+      "sha256": "5da23c09b98351bfe9c28b084609a94203bad586b4a7bbf22442679827747479",
+      "dimensions": [
+        853,
+        1844
+      ],
+      "inputHashes": {
+        "screens/ring-v1.png": "8ecceff5c56cb018366b06b78112d3c5148385b5ec132b31172121dd4f7befd4"
+      }
+    },
+    {
+      "id": "friendship-repair",
+      "prompt": "Precise local TYPOGRAPHIC correction of the attached Kishkindha comic screen. Preserve the ENTIRE illustration, layout, characters, gold mukut/gada, all panels, UI, other Hindi speech balloons, palette and dimensions. Change ONLY the FIRST panel's TOP-LEFT rectangular caption, rewriting it verbatim with accurate Devanagari as \"हनुमान ने अग्नि प्रज्वलित की।\" The word अग्नि must contain अ + ग् + नि, short i vowel, NOT अग्ने. All other text and all characters remain exactly unchanged.",
+      "generatedOutput": "/Users/prashant/.codex/generated_images/01a12506-4f87-7b42-99dd-45cfb6de6dc1/exec-82880198-32c4-45e9-8d3a-6ee91cea0fad.png",
+      "output": "screens/friendship-v2.png",
+      "inputPaths": [
+        "screens/friendship-v1.png"
+      ],
+      "sha256": "aa2090461b351c0530299c1a456507660623af4b25660f357d27763fb874d8ab",
+      "dimensions": [
+        853,
+        1844
+      ],
+      "inputHashes": {
+        "screens/friendship-v1.png": "c496dae5992b66b489c0146dfda7e5f6c3ee8bf3d0b6c26a0afa162f5e034390"
+      }
+    },
+    {
+      "id": "ring-final-text",
+      "prompt": "Edit ONLY the text inside the middle panel's Hanuman speech balloon in this screen. Erase the old entire sentence and replace it with these THREE words and punctuation, exactly: \"श्रीराम की मुद्रिका।\" Nothing else. No \"है\" or \"हैं\" in this balloon. Preserve every other pixel of layout, illustration, characters, remaining text, UI and dimensions. This is a short speech fragment pointing to Rama's ring. Do not alter other balloons.",
+      "generatedOutput": "/Users/prashant/.codex/generated_images/01a12506-4f87-7b42-99dd-45cfb6de6dc1/exec-266d43ae-e57e-4201-a237-50dc3609231b.png",
+      "output": "screens/ring-v3.png",
+      "inputPaths": [
+        "screens/ring-v2.png"
+      ],
+      "sha256": "7de5ab371ed59c8053867811da6615400a863074bda237f6eae9b95d32645cea",
+      "dimensions": [
+        853,
+        1844
+      ],
+      "inputHashes": {
+        "screens/ring-v2.png": "5da23c09b98351bfe9c28b084609a94203bad586b4a7bbf22442679827747479"
+      }
+    },
+    {
+      "id": "friendship-final-text",
+      "prompt": "Edit ONLY the text inside the very first panel's rectangular narration box in this screen. Erase the old sentence completely. Replace it verbatim with this new simpler sentence: \"हनुमान ने पवित्र ज्योति जलाई।\" No other words in this narration box. Preserve the box and ENTIRE rest of image, characters, facial geometry, Hanuman's crown and mace, panels, all other dialogue, app UI and dimensions. No other changes.",
+      "generatedOutput": "/Users/prashant/.codex/generated_images/01a12506-4f87-7b42-99dd-45cfb6de6dc1/exec-e0543512-89e1-4977-b9ba-df4023dffab9.png",
+      "output": "screens/friendship-v3.png",
+      "inputPaths": [
+        "screens/friendship-v2.png"
+      ],
+      "sha256": "2896e79b1dbbecb6bf82ef47341e296e381a21cefc48f0b40eda17d5f96ec06e",
+      "dimensions": [
+        853,
+        1844
+      ],
+      "inputHashes": {
+        "screens/friendship-v2.png": "aa2090461b351c0530299c1a456507660623af4b25660f357d27763fb874d8ab"
+      }
+    }
+  ]
+}

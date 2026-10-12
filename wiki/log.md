@@ -405,3 +405,11 @@ Added a decision page for the approved richer-colour comic direction and the six
 ## [2026-10-11] ingest | Ramayan character model refinement
 
 Updated the existing continuity decision for distinct Rama/Lakshmana facial geometry and Hanuman’s refined model with user-requested gold mukut and gada. Revised sheets were visually reviewed, browser comparison checked in colour/greyscale, exact edit prompts and hashes retained. Authoring references remain proposed; no production app integration.
+
+## [2026-10-11] ingest | Ramayan comic screen previews
+
+User accepted the revised character look; generated and visually reviewed three connected static shelf/reader screens. Recorded exact prompts/input/output hashes, source passages, repaired colour/lettering and scene-extract boundaries. Production remains separate text-free art plus native multilingual text; no app/runtime integration or publication.
+
+## [2026-10-11] ingest | Complete local Hindi Bala Kanda comic authoring draft
+
+Updated [[decisions/ramayan-comic-character-continuity]] from `docs/content-parity/ramayan-comic/balakanda-v1/`: 29 episodes, 137 panels, 55 reader pages and all 77 sarga arcs; original source-based Hindi, every causal transition, text-free generated artwork, final hashes/revisions and measured ink boundaries. Final browser sequence passed at 390 × 844 in standard/large text, including full scroll reach and loaded images. Independent editorial/language/native/CDN/rights gates remain open; mobile story/art registration was not changed.
