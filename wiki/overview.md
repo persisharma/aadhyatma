@@ -2,7 +2,7 @@
 title: Overview
 type: overview
 sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/backgrounds.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, mobile/assets/backgrounds/, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
-last_verified_date: 2026-10-09
+last_verified_date: 2026-10-11
 confidence: medium
 status: current
 ---
@@ -133,6 +133,8 @@ See [[integrations/reading-artwork]] for publishing, caching and QA limits.
 - `docs/superpowers/` — deity-icon plan + design spec.
 
 ## Gotchas
+
+- **App icon exports** — `mobile/assets/branding/app-icon-master.png` is the approved copper-relief master; `node mobile/scripts/export-app-icons.mjs` regenerates all four Expo icon/splash/favicon assets and their hash manifest. Android receives padded adaptive artwork; `mobile/app.json` supplies an explicit splash plugin and ivory backgrounds. These native-shell changes require a rebuilt app, not OTA. The Home wordmark and share-footer text are separate from the launcher icon (design.md §2.1).
 
 - **OTA + `runtimeVersion: appVersion`** — an OTA update reaches only users on a matching store
   build. Publish at the *live store runtime*, not blindly at `app.json`'s version (store builds

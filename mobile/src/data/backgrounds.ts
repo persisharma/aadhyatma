@@ -62,7 +62,6 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
-  'jai-shri-ram': backgroundImages.deity_rama_darbar,
   'hanuman-chalisa': chalisaImages.ram_hanuman,
   'bhagavad-gita': gitaImages.krishna_arjuna_vishvarupa,
   'gita-saar': gitaImages.krishna_arjuna_vishvarupa,
@@ -73,6 +72,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'gayatri-mantra': backgroundImages.source_gayatri_savitri_sun,
   'om-namo-bhagavate-vasudevaya': backgroundImages.source_vishnu_narayana,
   'radha-naam': backgroundImages.deity_radha_krishna,
+  'jai-shri-ram': backgroundImages.deity_rama_darbar,
   ramcharitmanas: backgroundImages.deity_rama_darbar,
   'valmiki-ramayan': backgroundImages.deity_rama_darbar,
   'durga-stotram': backgroundImages.deity_durga_lion,

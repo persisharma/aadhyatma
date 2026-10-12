@@ -77,3 +77,21 @@ scoped observations, not a guarantee of unchanged performance. Hard termination 
 orphan `.part` files; they are never valid cache hits. Successful files have no TTL, network
 revalidation or automatic eviction; new hashes, deleted storage/uninstall or corrupt/interrupted
 file recovery permit another download.
+
+## PR CI follow-up and current-main reconciliation
+
+The original GitHub run [38211395677](https://github.com/persisharma/aadhyatma/actions/runs/38211395677)
+passed every step for `20c41a2e`, including observance verification, both production exports and
+the CDN/asset gate. Main subsequently advanced to `f5e7fa65` (branding, the Jai Shri Ram
+background fix and deity glyphs on Theerth map/cards). Reconciled those changes into the PR.
+The text merge duplicated `jai-shri-ram`: TypeScript reproduced TS1117 before correction.
+Removed the redundant entry and retained main's mapping beside the other naam-jap sources;
+the existing semantic background regression remains active.
+
+Fresh `npm test` passes: TypeScript, 37 widget tests, 242 Jest suites / 2,326 tests, 590 engine,
+173 data and 49 Ask tests (3,175 total). Fresh production Hermes JS embedding passes with
+2,407 modules / 98 assets; its full SHA-256 matches the installed simulator bundle. The updated
+Maestro Katha route passes with exit 0, including Large text, paging, scrolling, share preview
+and return to section 2. [Executed flow output](maestro-merge-ready.log). The original artwork,
+both manifests and shared cache/paint loader are byte-for-byte unchanged by this reconciliation.
+The final remote check result is available in PR #449's checks; no release or OTA was published.
