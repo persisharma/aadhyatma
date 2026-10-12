@@ -34,6 +34,17 @@ test('Home library opens a deity shelf before a story', () => {
   act(() => tree.unmount());
 });
 
+test('library shows the Ramayana comic card and opens the comic reader', () => {
+  const navigation = { navigate: jest.fn(), goBack: jest.fn() };
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<Library navigation={navigation} />); });
+  const card = tree.root.findAllByType('Pressable' as any).find(node => node.props.testID === 'kids-story-comic-balakanda-v1');
+  expect(card).toBeTruthy();
+  act(() => card!.props.onPress());
+  expect(navigation.navigate).toHaveBeenCalledWith('ComicReader', { comicId: 'balakanda-v1' });
+  act(() => tree.unmount());
+});
+
 test.each([
   ['krishna', ['krishna-janma', 'putana', 'kaliya-nag']],
   ['ganesha', ['ganesha-birth']],

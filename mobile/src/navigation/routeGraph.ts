@@ -32,7 +32,7 @@ export const routeGraph: Readonly<Record<string, readonly string[]>> = {
   "Home": ["BrowseByPurpose", "CategoryList", "DaanPunya", "DeityIndex", "KidsStoryLibrary", "RoutineToday", "SadhanaPrograms", "Search", "TheerthMap", "TodayVidhan", "VidhiCatalog"],
   "JanmaTithiList": ["JanmaTithiDetail", "PitruSmaranDetail"],
   "KidsStoryDeity": ["KidsStoryReader"],
-  "KidsStoryLibrary": ["KidsStoryDeity"],
+  "KidsStoryLibrary": ["KidsStoryDeity", "ComicReader"],
   "KrishnaStotramChapters": ["KrishnaStotramReader"],
   "KulParampara": ["KulParamparaEdit", "KulParamparaExport"],
   "Kundali": ["GrahaReference", "KundaliReport"],

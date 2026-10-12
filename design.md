@@ -3535,6 +3535,16 @@ This data-driven picture-book reader does not replace GitaReaderScreen. Story bo
 
 Checks: `screens/__tests__/KidsStoryReaderScreen.test.tsx`, `screens/__tests__/KidsStoryCatalogScreen.test.tsx`, `data/__tests__/kidsStories.test.ts`, `utils/__tests__/kidsStoryShare.test.ts`, `utils/__tests__/kidsStoryShareFlow.test.tsx`, `.maestro/kids-stories-share-smoke.yaml`, `.maestro/kids-stories-smoke.yaml`, `.maestro/kids-stories-new-stories-smoke.yaml`, `.maestro/kids-stories-regional-smoke.yaml`, `.maestro/kids-stories-pacing-hindi-smoke.yaml`, `.maestro/kids-stories-art-scroll-smoke.yaml`. Contract: RULEBOOK §29. Prototypes: `docs/kids-stories-home-prototype.html`, `docs/kids-stories-catalog-prototype.html`, `docs/kids-stories-prototype.html`, and `docs/kids-stories-{putana,kaliya-nag,ganesha-birth,hanuman-sun}-prototype.html`. Sync all nineteen browser review copies from canonical JSON with `node mobile/scripts/sync-kids-story-prototypes.mjs`.
 
+### §76.1 Ramayana comic (CDN-hosted WebView reader)
+
+Below the deity shelves, the Kids library (`KidsStoryLibraryScreen`) carries a `DeityCard` per entry in the `comics` registry (`mobile/src/data/comics.ts`) — currently one, **रामायण कॉमिक · बालकाण्ड** (`balakanda-v1`, 29 illustrated episodes). Tapping it opens `ComicReaderScreen` (`ComicReader` route, child of `KidsStoryLibrary` in the route graph).
+
+Unlike the native picture-book stories (§76), the comic is **not** re-authored into the `kidsStories` page/art model. Its self-contained web reader (`index.html` + `reader.js`/`reader.css` + `book.json` + 29 page PNGs, from `docs/content-parity/ramayan-comic/balakanda-v1`) is hosted on the R2 CDN at `https://cdn.vedansh.app/comics/balakanda-v1/` and loaded in a `react-native-webview` by URL; its relative fetches resolve against that CDN base (text files short-cached, page art immutable). The screen wraps the WebView in the shared `ReaderHeader` and shows an explicit localized error + retry on load failure — no blank screen, no bundled art.
+
+The comic is currently **Hindi-only** (`book.json` narration/dialogue; `en/gu/kn` pending) and is a `local-authoring-draft`; shipping is scoped to the unreleased 1.5.2 OTA runtime. Bilingual (English) content + a reader language toggle are the immediate follow-up.
+
+Checks: `screens/__tests__/ComicReaderScreen.test.tsx`, `data/__tests__/comics.jest.test.ts`, and the comic-card case in `KidsStoryCatalogScreen.test.tsx`. Design spec: `docs/superpowers/specs/2026-10-12-balakanda-comic-in-app-design.md`.
+
 ---
 
 ## 77. गीता सार — themed readings over the Gita (Gita Saar)
