@@ -66,9 +66,14 @@ export function grahaReadingsApproved(review: GrahaReadingReview = GRAHA_READING
  * what already ships (RULEBOOK §14.7.10).
  */
 export const GRAHA_NARRATIVE_REVIEW: GrahaReadingReview = {
-  status: 'draft',
-  signOffRef: null,
-  reviewedOn: null,
+  status: 'approved',
+  // Jyotishi sign-off confirmed by the product owner on 12 Oct 2026 (no names —
+  // the org bars personal details from repo data, as with GRAHA_READING_REVIEW).
+  signOffRef: 'confirmed-by-product-owner-2026-10-12',
+  reviewedOn: '2026-10-12',
+  // No sheet-hash pin yet for the narrative (the per-graha review-sheet renderer
+  // is a follow-up), so a later content edit will NOT auto-revert to draft the way
+  // the legacy card does — re-review by hand if these cells change.
   reviewedSheetSha256: null,
   scope:
     'The narrative-voice cells for all nine grahas (each a module under panchang/narrative/, 12 houses × 4 dignity buckets for the seven taras, one per house for the nodes) and their modifier clauses',

@@ -138,11 +138,12 @@ test('authored narrative copy: no absolute claims, fatality, medical, commerce, 
   }
 });
 
-test('the narrative review is its own gate: draft hides it in store builds, dev always previews', () => {
-  assert.equal(GRAHA_NARRATIVE_REVIEW.status, 'draft');
-  assert.equal(narrativeReadingsApproved(), false);
-  assert.equal(
-    narrativeReadingsApproved({ ...GRAHA_NARRATIVE_REVIEW, status: 'approved', signOffRef: 'ref', reviewedOn: '2026-10-09' }),
-    true,
-  );
+test('the narrative review is approved (signed off 12 Oct 2026), so store builds show it', () => {
+  assert.equal(GRAHA_NARRATIVE_REVIEW.status, 'approved');
+  assert.ok(GRAHA_NARRATIVE_REVIEW.signOffRef, 'where the approval lives — never a name');
+  assert.match(GRAHA_NARRATIVE_REVIEW.reviewedOn ?? '', /^\d{4}-\d{2}-\d{2}$/);
+  assert.equal(narrativeReadingsApproved(), true);
+  // only a complete, dated record opens the gate
+  assert.equal(narrativeReadingsApproved({ ...GRAHA_NARRATIVE_REVIEW, status: 'draft' }), false);
+  assert.equal(narrativeReadingsApproved({ ...GRAHA_NARRATIVE_REVIEW, signOffRef: null }), false);
 });
