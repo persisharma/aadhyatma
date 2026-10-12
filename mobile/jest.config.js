@@ -20,6 +20,12 @@ module.exports = {
     // globs __tests__/*.test.ts straight into `tsx --test`, which cannot run them.
     '<rootDir>/src/panchang/__tests__/**/*.jest.test.{ts,tsx}',
     '<rootDir>/src/audio/__tests__/**/*.jest.test.{ts,tsx}',
+    // YouTube video fallback: pure id/html/registry helpers + the docked player
+    // component. Neither src/video nor src/data/video holds tsx node:assert
+    // scripts, so the plain suffix is safe here.
+    '<rootDir>/src/video/__tests__/**/*.test.{ts,tsx}',
+    '<rootDir>/src/data/video/__tests__/**/*.test.{ts,tsx}',
+    '<rootDir>/src/components/video/__tests__/**/*.test.{ts,tsx}',
     '<rootDir>/src/data/__tests__/**/*.jest.test.{ts,tsx}',
     // src/readAloud holds no tsx scripts, so the plain suffix is safe here.
     '<rootDir>/src/readAloud/__tests__/**/*.test.{ts,tsx}',

@@ -35,6 +35,9 @@ import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
 import { getTrackForText } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
+import { getVideoMapping } from '@/data/video/videoMappings';
+import DockedYouTubePlayer from '@/components/video/DockedYouTubePlayer';
+import { pick } from '@/utils/localize';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
@@ -54,6 +57,20 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     const t = getTrackForText(chalisaId);
     return t && hasRealAudio(t.id) ? t : undefined;
   }, [chalisaId]);
+  // Source priority: a real recording always wins. The YouTube fallback is only
+  // offered when there is no recording AND a reviewed mapping exists.
+  const videoMapping = useMemo(
+    () => (audioTrack ? undefined : getVideoMapping(chalisaId)),
+    [audioTrack, chalisaId]
+  );
+  const [videoOpen, setVideoOpen] = useState(false);
+  // Proportional auto-advance: the pager follows playback until the user swipes by
+  // hand, then it yields until they re-engage the chip.
+  const [autoScroll, setAutoScroll] = useState(true);
+  const autoScrollRef = useRef(true);
+  useEffect(() => {
+    autoScrollRef.current = autoScroll;
+  }, [autoScroll]);
   const chalisa = useMemo(() => getChalisa(chalisaId), [chalisaId]);
   const verses = chalisa.verses;
   const total = verses.length;
@@ -134,6 +151,22 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     [lang, bookmarks, shareBusy]
   );
 
+  // Map video playback position → pager page. Proportional (no per-verse timestamps
+  // yet): fraction of the video ≈ fraction of the text. Skipped while the user has
+  // taken manual control.
+  const onVideoProgress = useCallback(
+    (fraction: number) => {
+      if (!autoScrollRef.current || total === 0) return;
+      const target = Math.min(total - 1, Math.max(0, Math.round(fraction * (total - 1))));
+      listRef.current?.scrollToIndex({ index: target, animated: true });
+    },
+    [total]
+  );
+  const closeVideo = useCallback(() => {
+    setVideoOpen(false);
+    setAutoScroll(true);
+  }, []);
+
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
@@ -180,11 +213,68 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
           sideWidth={audioTrack ? 84 : 60}
         />
 
+        {videoOpen && videoMapping && (
+          <DockedYouTubePlayer
+            mapping={videoMapping}
+            uiLang={lang}
+            onProgress={onVideoProgress}
+            onClose={closeVideo}
+          />
+        )}
+
         <ReadingProgressBar current={currentIndex + 1} total={total} />
 
         <View style={styles.toggleRow}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={chalisaId} />
+          {/* The YouTube fallback offer — only when there is no recording and a
+              reviewed mapping exists. Opening it docks the player above the reader. */}
+          {videoMapping && !videoOpen && (
+            <Pressable
+              onPress={() => {
+                setAutoScroll(true);
+                setVideoOpen(true);
+              }}
+              accessibilityRole="button"
+              accessibilityLabel={pick(lang, {
+                hi: 'वीडियो चलाएँ',
+                en: 'Play video',
+                gu: 'વિડિઓ ચલાવો',
+                kn: 'ವೀಡಿಯೊ ಪ್ಲೇ ಮಾಡಿ',
+              })}
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.videoCta,
+                { borderColor: colors.border, backgroundColor: colors.surface },
+                pressed && { opacity: 0.6 },
+              ]}
+            >
+              <View style={styles.ytMark}>
+                <AppIcon name="play" size={10} weight="fill" color="#fff" />
+              </View>
+              <Text style={[styles.videoCtaText, { color: colors.ink }]}>
+                {pick(lang, { hi: 'वीडियो', en: 'Video', gu: 'વિડિઓ', kn: 'ವೀಡಿಯೊ' })}
+              </Text>
+            </Pressable>
+          )}
+          {videoOpen && !autoScroll && (
+            <Pressable
+              onPress={() => setAutoScroll(true)}
+              accessibilityRole="button"
+              accessibilityLabel={pick(lang, {
+                hi: 'स्वतः-स्क्रॉल पुनः चालू करें',
+                en: 'Resume auto-scroll',
+                gu: 'ઓટો-સ્ક્રોલ ફરી શરૂ કરો',
+                kn: 'ಸ್ವಯಂ-ಸ್ಕ್ರಾಲ್ ಮರುಪ್ರಾರಂಭಿಸಿ',
+              })}
+              hitSlop={8}
+              style={[styles.videoCta, { borderColor: colors.saffron, backgroundColor: colors.saffronTint }]}
+            >
+              <Text style={[styles.videoCtaText, { color: colors.saffronDeep }]}>
+                {pick(lang, { hi: 'स्वतः-स्क्रॉल', en: 'Auto-scroll', gu: 'ઓટો-સ્ક્રોલ', kn: 'ಸ್ವಯಂ-ಸ್ಕ್ರಾಲ್' })} ⌄
+              </Text>
+            </Pressable>
+          )}
           {/* Pinned to the right edge so the toggle group stays centred; the read-aloud
               pill (▶ + "सुनें") sits inline with the toggle, clear of the progress bar. */}
           <View style={styles.readAloudSlot}>
@@ -259,6 +349,10 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             viewabilityConfig={viewabilityConfig}
             onViewableItemsChanged={onViewableItemsChanged}
             onScroll={handleScroll}
+            onScrollBeginDrag={() => {
+              // A hand swipe takes over from the video's auto-advance.
+              if (videoOpen) setAutoScroll(false);
+            }}
             scrollEventThrottle={16}
             getItemLayout={getItemLayout}
             initialScrollIndex={initialIndex}
@@ -303,6 +397,27 @@ const styles = StyleSheet.create({
     gap: 18,
     paddingTop: 6,
     paddingBottom: 12,
+  },
+  videoCta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 20,
+    paddingHorizontal: 11,
+    paddingVertical: 6,
+  },
+  ytMark: {
+    width: 22,
+    height: 15,
+    borderRadius: 4,
+    backgroundColor: '#FF0000',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  videoCtaText: {
+    fontSize: 13,
+    fontWeight: '600',
   },
   readAloudSlot: {
     position: 'absolute',
