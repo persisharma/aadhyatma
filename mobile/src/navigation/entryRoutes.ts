@@ -110,6 +110,7 @@ const chalisaIds = new Set([
   'krishna-chalisa',
   'vishnu-chalisa',
   'saraswati-chalisa',
+  'khatu-shyam-chalisa',
   'lakshmi-chalisa',
 ]);
 

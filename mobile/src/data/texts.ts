@@ -27,6 +27,7 @@ import {
   hanumanAshtakTotal,
   hanumanChalisaTotal,
   kalikaAshtakamTotal,
+  khatuShyamChalisaCounts,
   krishnaChalisaCounts,
   krishnaStotramTotal,
   krishnaStutiTotal,
@@ -382,6 +383,22 @@ export const library: readonly LibraryEntry[] = [
     addedInVersion: '1.4.5',
   },
   {
+    // Khatu Shyam (Barbarika, worshipped as Shri Shyam at Khatu) is tagged under
+    // the existing Krishna deity per
+    // docs/content-parity/chalisa-aarti-existing-deities.md; no new deity id.
+    id: 'khatu-shyam-chalisa',
+    nameHi: 'श्री खाटू श्याम चालीसा',
+    nameEn: 'Shri Khatu Shyam Chalisa',
+    sub: '40 चौपाई + 2 दोहा · अर्थ सहित',
+    subEn: '40 Chaupai + 2 Doha · with meaning',
+    thumb: 'श्या',
+    status: 'active',
+    category: 'chalisa',
+    deities: ['krishna'],
+    verseCount: khatuShyamChalisaCounts.totalVerses,
+    addedInVersion: '1.5.0',
+  },
+  {
     // Ramdas recension: Doha + Sortha, 39 chaupais, 2 closing dohas. The
     // verified text carries 39, not 40 — it is not padded (RULEBOOK §11.5).
     id: 'lakshmi-chalisa',
@@ -620,6 +637,22 @@ export const library: readonly LibraryEntry[] = [
     deities: ['rama'],
     verseCount: ramStutiTotal,
     addedInVersion: '1.4.5',
+  },
+  {
+    // Khatu Shyam (Barbarika, worshipped as Shri Shyam at Khatu, Rajasthan) is
+    // tagged under the existing Krishna deity per
+    // docs/content-parity/chalisa-aarti-existing-deities.md; no new deity id.
+    id: 'khatu-shyam-aarti',
+    nameHi: 'श्री खाटू श्याम जी की आरती',
+    nameEn: 'Shri Khatu Shyam Ji Ki Aarti',
+    sub: '8 पद · व्याख्या सहित',
+    subEn: '8 verses · with commentary',
+    thumb: 'श्या',
+    status: 'active',
+    category: 'aarti',
+    deities: ['krishna'],
+    verseCount: 8,
+    addedInVersion: '1.5.0',
   },
   {
     id: 'prabhati-shloka',

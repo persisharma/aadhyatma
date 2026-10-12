@@ -112,6 +112,15 @@ describe('background coverage', () => {
     );
   });
 
+  test.each(['khatu-shyam-aarti', 'khatu-shyam-chalisa'])(
+    '%s uses the commissioned Khatu Shyam temple plate',
+    (sourceId) => {
+      expect(getSourceBackground(sourceId)).toBe(backgroundImages.theerth_khatu_shyam);
+      expect(getReaderBackground(sourceId)).toBe(backgroundImages.theerth_khatu_shyam);
+      expect(getSourceBackground(sourceId)).not.toBe(getDeityBackground('krishna'));
+    },
+  );
+
   test('every active, non-hidden library source has a source + reader background', () => {
     // Theerth entries open a map + per-temple detail, not a verse reader, so they
     // are exempt from the source/reader background contract (mirrors the

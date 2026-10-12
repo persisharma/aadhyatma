@@ -1,14 +1,6 @@
 import { aartiIdByIndex } from './aarti';
 
 /**
- * How many aartis existed while the legacy `aarti-N` form was being written.
- * Frozen: aartis appended since (index 8 = `om-jai-lakshmi-mata`, 1.5.0) never
- * had a legacy id, so a stored `aarti-8` is not a real reference to them and
- * must keep falling through unchanged rather than silently resolve.
- */
-const LEGACY_AARTI_INDEX_COUNT = 8;
-
-/**
  * Normalize a stored sourceId to its canonical form.
  *
  * Legacy bookmarks/progress saved aartis as `aarti-N` (where N is the index).
@@ -20,7 +12,7 @@ export function canonicalSourceId(raw: string): string {
   const aartiMatch = /^aarti-(\d+)$/.exec(raw);
   if (aartiMatch) {
     const idx = Number(aartiMatch[1]);
-    if (Number.isInteger(idx) && idx >= 0 && idx < Math.min(LEGACY_AARTI_INDEX_COUNT, aartiIdByIndex.length)) {
+    if (Number.isInteger(idx) && idx >= 0 && idx < aartiIdByIndex.length) {
       return aartiIdByIndex[idx];
     }
   }
