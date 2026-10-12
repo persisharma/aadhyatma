@@ -11,5 +11,6 @@ const WebView = React.forwardRef((_props, ref) => {
   }));
   return null;
 });
+WebView.displayName = 'WebView';
 
 module.exports = { __esModule: true, WebView, default: WebView };

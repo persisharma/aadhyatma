@@ -17,7 +17,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { getChalisa, type ChalisaVerse } from '@/data/chalisaRegistry';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, pick } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
@@ -37,7 +37,6 @@ import { getTrackForText } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
 import { getVideoMapping } from '@/data/video/videoMappings';
 import DockedYouTubePlayer from '@/components/video/DockedYouTubePlayer';
-import { pick } from '@/utils/localize';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;

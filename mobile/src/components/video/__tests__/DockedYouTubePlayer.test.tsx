@@ -25,6 +25,7 @@ jest.mock('react-native-webview', () => {
     }));
     return null;
   });
+  WebView.displayName = 'WebView';
   return { __esModule: true, WebView };
 });
 
@@ -103,7 +104,7 @@ it('reports proportional progress from a bridge time event, ignoring garbage', (
 });
 
 it('pauses on background and never on return to foreground', () => {
-  const handlers: Array<(s: string) => void> = [];
+  const handlers: ((s: string) => void)[] = [];
   jest.spyOn(AppState, 'addEventListener').mockImplementation((_e, cb) => {
     handlers.push(cb as (s: string) => void);
     return { remove: jest.fn() } as never;
