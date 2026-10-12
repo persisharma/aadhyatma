@@ -1,4 +1,5 @@
 import type { OccasionId } from '@/panchang/eventMuhurat';
+import type { Graha } from '@/panchang/kundali';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
@@ -216,6 +217,9 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
   Gochar: undefined;
   // Compiled full-chart reading — PRD-20 Phase 6
   KundaliReport: { prashnaContext?: { purposeId: string; questionId: string } } | undefined;
+  // नवग्रह परिचय — the generic "Know the nine grahas" reference (design.md §79).
+  // `focusGraha` opens one graha expanded (the chart card's "Know this graha" link).
+  GrahaReference: { focusGraha?: Graha } | undefined;
   // प्रश्न — purpose-driven reading for the active person (PRD-43 Wave D).
   // `purposeId` preselects a purpose (the Ask intent deep-links here).
   Prashna: { purposeId?: string; questionId?: string } | undefined;
