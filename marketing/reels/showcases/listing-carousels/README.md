@@ -1,8 +1,10 @@
-# Vedansh Instagram feature carousels
+# Vedansh Instagram feature journeys
 
-10 features in Hindi and English, three distinct 1080×1350 slides per carousel. These are Instagram marketing posts with feature-specific hooks, concise benefits, calls to action and accompanying captions/hashtags. The flow is **hook → feature walkthrough → typographic CTA**. A cream/copper treatment and the existing brand fonts/icon preserve Vedansh’s identity; the CTA uses a darker copper background.
+10 features in Hindi and English, three 1080×1350 marketing cards each. V3 replaces the repeated dark CTA with a light cream/copper journey: **choose or enter details → begin → explore the result**. Each feature has its own three-step copy and Instagram caption.
 
-Real phone-screen pixels from the original listing kit appear on the first two slides. Screens remain whole, with captions outside the UI; the third slide is a distinct text-and-brand composition. Listing image layouts are not repeatedly resized. Hindi uses actual Hindi app screens and English uses English screens. No app UI is invented, no new scripture/story text is authored, and store metadata is unchanged.
+The first card uses editorial diagrams, not invented app forms. Kundali explains name, date, time and place; Guna Milan explains both people’s names and birth details, chart generation and the actual matching result. The second card shows a whole real locale-matched app screen. The third shows a feature-specific detail from a real capture, with a light CTA. Chart geometry, scores and displayed app content are unchanged. Crops are set per feature and visually reviewed. The source captures use demo inputs; no new scripture, app UI or store metadata is authored.
+
+Latest review and downloadable ZIPs: `marketing/reels/out/instagram-journeys-v3/review-v3.html`. Older V2 outputs are retained for comparison. Nothing has been posted or uploaded.
 
 ## Reproduce
 

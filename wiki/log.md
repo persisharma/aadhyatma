@@ -439,3 +439,7 @@ Replaced repeated listing-image layouts with feature-specific hooks, numbered wa
 ## [2026-10-12] ingest | ATT prompt fix after App Review 2.1 rejection of 1.5.0 (72)
 
 Controller now re-asks ATT within the same foreground when iOS silently returns undetermined and never activates Meta before an answer. JS gate reads the native module's `enabled` constant instead of OTA-overridable `extra`; `push.sh` mirrors the channel profile's `META_TRACKING_ENABLED` for binaries that predate the constant. Tests updated, not run; physical-device recording still required for the App Review reply.
+
+## [2026-10-12] ingest | Instagram carousel V3 journeys
+
+Updated store-submission runbook for light choose/action/result cards, real screen detail crops and local V3 review outputs. Source: `marketing/reels/showcases/listing-carousels/`. No app behavior, store metadata or publication changes.
