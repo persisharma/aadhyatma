@@ -1,37 +1,53 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, AppState, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
-import { WebView, type WebViewMessageEvent } from 'react-native-webview';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  ActivityIndicator,
+  AppState,
+  Linking,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
+import YoutubePlayer, { PLAYER_STATES, type YoutubeIframeRef } from 'react-native-youtube-iframe';
 import { useTheme } from '@/theme/ThemeContext';
 import AppIcon from '@/components/AppIcon';
 import { pick } from '@/utils/localize';
 import type { Lang } from '@/data/gita/language';
 import { claimPlayback, registerStopper } from '@/audio/playbackArbiter';
-import { buildYouTubePlayerHtml, YT_ORIGIN, type YouTubeBridgeEvent } from '@/video/youtubePlayerHtml';
 import { youtubeWatchUrl } from '@/video/videoId';
 import type { VideoMapping } from '@/data/video/videoMappings';
 
 /**
- * Docked YouTube fallback player. Renders YouTube's official IFrame player inside a
- * WebView at the top of a reader while the verses keep scrolling below. It is the
- * ONLY place a video plays — it never routes through background audio, the lock
- * screen, or the audio-only mini-player (RULEBOOK / YouTube embed terms).
+ * Docked YouTube fallback player. Renders YouTube's official embed (via
+ * react-native-youtube-iframe, which wraps react-native-webview + the IFrame
+ * Player API) at the top of a reader while the verses keep scrolling below. It is
+ * the ONLY place a video plays — it never routes through background audio, the
+ * lock screen, or the audio-only mini-player (RULEBOOK / YouTube embed terms).
+ *
+ * Why the library (not a hand-rolled WebView): on iOS WKWebView a
+ * `loadHTMLString` page gets an opaque origin, so YouTube rejects the embed with
+ * error 150/152 even for embeddable videos. react-native-youtube-iframe sets the
+ * origin/base-url correctly, which is what makes playback actually work on device.
+ * It adds no native module (pure JS over the already-bundled react-native-webview),
+ * so it ships via OTA without a new build.
  *
  * Lifecycle contract:
  *  - Mounts only after an explicit "Play video" tap (no autoplay on reader open).
  *  - Claims the playback arbiter on mount, so recorded audio / TTS / japam stop.
- *  - Pauses (never stops/unmounts) when another source claims, when the app leaves
- *    the foreground, and on screen lock; it does NOT auto-resume on return.
- *  - Tears down the WebView, timers and listeners on unmount.
+ *  - Pauses (never unmounts) when another source claims, when the app leaves the
+ *    foreground, and on screen lock; it does NOT auto-resume on return.
+ *  - Clears its timers/listeners on unmount.
  */
 
-const LOAD_TIMEOUT_MS = 12000;
+const LOAD_TIMEOUT_MS = 15000;
 
 type Phase = 'loading' | 'ready' | 'error';
 
 export type DockedYouTubePlayerProps = {
   mapping: VideoMapping;
   uiLang: Lang;
-  /** Playback progress 0..1, for the reader's auto-scroll. Fires ~2×/sec while playing. */
+  /** Playback progress 0..1, for the reader's auto-scroll. Fires ~1×/sec while playing. */
   onProgress?: (fraction: number) => void;
   onClose: () => void;
 };
@@ -54,14 +70,19 @@ export default function DockedYouTubePlayer({
   onClose,
 }: DockedYouTubePlayerProps) {
   const { colors } = useTheme();
-  const webRef = useRef<WebView>(null);
+  const { width } = useWindowDimensions();
+  const playerRef = useRef<YoutubeIframeRef>(null);
   const [phase, setPhase] = useState<Phase>('loading');
-  const [isPlaying, setIsPlaying] = useState(false);
+  // The user tapped "Play video", so autoplay is the intended, gesture-initiated start.
+  const [playing, setPlaying] = useState(true);
   const [elapsed, setElapsed] = useState(0);
   const [duration, setDuration] = useState(0);
+  // Bump to force-remount the player on retry (the lib has no imperative reload).
+  const [reloadKey, setReloadKey] = useState(0);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const html = useMemo(() => buildYouTubePlayerHtml(mapping.videoId, true), [mapping.videoId]);
+  // 16:9, never below YouTube's 200px minimum embed viewport.
+  const playerHeight = Math.max(200, Math.round(width * (9 / 16)));
 
   const clearLoadTimeout = useCallback(() => {
     if (timeoutRef.current) {
@@ -70,27 +91,23 @@ export default function DockedYouTubePlayer({
     }
   }, []);
 
-  const pause = useCallback(() => {
-    webRef.current?.injectJavaScript('window.__ytPause && window.__ytPause(); true;');
-  }, []);
+  const pause = useCallback(() => setPlaying(false), []);
   const play = useCallback(() => {
-    // Starting playback re-claims exclusivity, mirroring the recorded/tts/japam sources.
+    // Starting playback re-claims exclusivity, mirroring recorded/tts/japam.
     claimPlayback('youtube');
-    webRef.current?.injectJavaScript('window.__ytPlay && window.__ytPlay(); true;');
+    setPlaying(true);
   }, []);
 
   // Claim the session as soon as the player opens — the user asked for the video,
-  // so any recorded audio / TTS / japam must yield immediately (before load, too).
+  // so any recorded audio / TTS / japam must yield immediately.
   useEffect(() => {
     claimPlayback('youtube');
   }, []);
 
-  // Another source (recorded/tts/japam) starting silences the video — pause, don't
-  // close, so the user can resume from where they were.
+  // Another source starting silences the video — pause, don't unmount.
   useEffect(() => registerStopper('youtube', pause), [pause]);
 
-  // Leaving the foreground (home, app switcher) or screen lock pauses playback; we
-  // never auto-resume on return (RULEBOOK — no surprise audio).
+  // Leaving the foreground / screen lock pauses playback; never auto-resume.
   useEffect(() => {
     const sub = AppState.addEventListener('change', (next) => {
       if (next !== 'active') pause();
@@ -98,61 +115,63 @@ export default function DockedYouTubePlayer({
     return () => sub.remove();
   }, [pause]);
 
-  // If the player never reports ready, fall out of the spinner into the error card
-  // instead of hanging forever (offline / blocked network / dead embed).
-  useEffect(() => {
-    timeoutRef.current = setTimeout(() => {
-      setPhase((p) => (p === 'loading' ? 'error' : p));
-    }, LOAD_TIMEOUT_MS);
-    return clearLoadTimeout;
-  }, [clearLoadTimeout]);
-
-  const handleMessage = useCallback(
-    (e: WebViewMessageEvent) => {
-      let msg: YouTubeBridgeEvent;
-      try {
-        msg = JSON.parse(e.nativeEvent.data) as YouTubeBridgeEvent;
-      } catch {
-        return; // ignore anything that isn't our JSON bridge payload
-      }
-      if (!msg || typeof msg !== 'object' || typeof (msg as { event?: unknown }).event !== 'string') {
-        return;
-      }
-      switch (msg.event) {
-        case 'ready':
-          clearLoadTimeout();
-          setPhase('ready');
-          break;
-        case 'state':
-          setIsPlaying(msg.state === 'playing' || msg.state === 'buffering');
-          if (msg.state === 'playing') setPhase('ready');
-          break;
-        case 'time': {
-          const d = Number.isFinite(msg.duration) ? msg.duration : 0;
-          const t = Number.isFinite(msg.currentTime) ? msg.currentTime : 0;
-          setElapsed(t);
-          setDuration(d);
-          if (d > 0 && onProgress) onProgress(Math.min(1, Math.max(0, t / d)));
-          break;
-        }
-        case 'error':
-          clearLoadTimeout();
-          setPhase('error');
-          break;
-      }
-    },
-    [clearLoadTimeout, onProgress]
-  );
-
-  const retry = useCallback(() => {
-    setPhase('loading');
-    setIsPlaying(false);
+  // Fall out of the spinner into the error card if the player never reports ready.
+  const armLoadTimeout = useCallback(() => {
     clearLoadTimeout();
     timeoutRef.current = setTimeout(() => {
       setPhase((p) => (p === 'loading' ? 'error' : p));
     }, LOAD_TIMEOUT_MS);
-    webRef.current?.reload();
   }, [clearLoadTimeout]);
+
+  useEffect(() => {
+    armLoadTimeout();
+    return clearLoadTimeout;
+  }, [armLoadTimeout, clearLoadTimeout]);
+
+  const onReady = useCallback(() => {
+    clearLoadTimeout();
+    setPhase('ready');
+  }, [clearLoadTimeout]);
+
+  const onError = useCallback(() => {
+    clearLoadTimeout();
+    setPhase('error');
+  }, [clearLoadTimeout]);
+
+  const onChangeState = useCallback((state: PLAYER_STATES) => {
+    if (state === PLAYER_STATES.PLAYING) {
+      setPhase('ready');
+      setPlaying(true);
+    } else if (state === PLAYER_STATES.PAUSED || state === PLAYER_STATES.ENDED) {
+      setPlaying(false);
+    }
+  }, []);
+
+  // Report progress for the reader's auto-scroll while actually playing.
+  useEffect(() => {
+    if (phase !== 'ready' || !playing) return undefined;
+    const id = setInterval(() => {
+      const p = playerRef.current;
+      if (!p) return;
+      Promise.all([p.getCurrentTime(), p.getDuration()])
+        .then(([t, d]) => {
+          const cur = Number.isFinite(t) ? t : 0;
+          const dur = Number.isFinite(d) ? d : 0;
+          setElapsed(cur);
+          setDuration(dur);
+          if (dur > 0 && onProgress) onProgress(Math.min(1, Math.max(0, cur / dur)));
+        })
+        .catch(() => undefined);
+    }, 1000);
+    return () => clearInterval(id);
+  }, [phase, playing, onProgress]);
+
+  const retry = useCallback(() => {
+    setPhase('loading');
+    setPlaying(true);
+    setReloadKey((k) => k + 1);
+    armLoadTimeout();
+  }, [armLoadTimeout]);
 
   const openInYouTube = useCallback(() => {
     Linking.openURL(youtubeWatchUrl(mapping.videoId)).catch(() => undefined);
@@ -168,7 +187,7 @@ export default function DockedYouTubePlayer({
 
   return (
     <View style={[styles.wrap, { backgroundColor: colors.surface, borderBottomColor: colors.border }]}>
-      <View style={styles.stage}>
+      <View style={[styles.stage, { height: playerHeight }]}>
         {phase === 'error' ? (
           <ErrorCard
             colors={colors}
@@ -179,24 +198,21 @@ export default function DockedYouTubePlayer({
           />
         ) : (
           <>
-            <WebView
-              ref={webRef}
-              originWhitelist={['*']}
-              source={{ html, baseUrl: YT_ORIGIN }}
-              onMessage={handleMessage}
-              // NOTE: we deliberately do NOT flip to the error card on the WebView's
-              // onError / onHttpError. A YouTube embed pulls many subresources and a
-              // single benign non-2xx (tracking pixel, 204) would otherwise kill the
-              // whole player. A real failure surfaces instead via (a) the load timeout
-              // when the frame never reports ready, or (b) the jsapi onError event.
-              javaScriptEnabled
-              domStorageEnabled
-              allowsInlineMediaPlayback
-              mediaPlaybackRequiresUserAction={false}
-              allowsFullscreenVideo
-              style={styles.web}
-              // Keep the WebView transparent-free (black) so letterboxing matches YouTube.
-              containerStyle={styles.webContainer}
+            <YoutubePlayer
+              key={reloadKey}
+              ref={playerRef}
+              height={playerHeight}
+              play={playing}
+              videoId={mapping.videoId}
+              onReady={onReady}
+              onError={onError}
+              onChangeState={onChangeState}
+              forceAndroidAutoplay
+              initialPlayerParams={{ rel: false, controls: true }}
+              webViewProps={{
+                allowsInlineMediaPlayback: true,
+                mediaPlaybackRequiresUserAction: false,
+              }}
             />
             {phase === 'loading' && (
               <View style={styles.loadingOverlay} pointerEvents="none">
@@ -210,17 +226,17 @@ export default function DockedYouTubePlayer({
       {phase !== 'error' && (
         <View style={[styles.strip, { borderBottomColor: colors.border }]}>
           <Pressable
-            onPress={() => (isPlaying ? pause() : play())}
+            onPress={() => (playing ? pause() : play())}
             accessibilityRole="button"
             accessibilityLabel={
-              isPlaying
+              playing
                 ? pick(uiLang, { hi: 'रोकें', en: 'Pause', gu: 'થોભો', kn: 'ವಿರಾಮ' })
                 : pick(uiLang, { hi: 'चलाएँ', en: 'Play', gu: 'ચલાવો', kn: 'ಪ್ಲೇ' })
             }
             hitSlop={8}
             style={[styles.ppBtn, { backgroundColor: colors.saffron }]}
           >
-            <AppIcon name={isPlaying ? 'pause' : 'play'} size={13} weight="fill" color="#fff" />
+            <AppIcon name={playing ? 'pause' : 'play'} size={13} weight="fill" color="#fff" />
           </Pressable>
           <Text style={[styles.time, { color: colors.inkMuted }]} numberOfLines={1}>
             {fmt(elapsed)} / {fmt(duration)}
@@ -314,10 +330,7 @@ function fmt(sec: number): string {
 
 const styles = StyleSheet.create({
   wrap: { borderBottomWidth: StyleSheet.hairlineWidth },
-  // 16:9, but never below the 200px minimum the embed terms require.
-  stage: { width: '100%', aspectRatio: 16 / 9, minHeight: 200, backgroundColor: '#000' },
-  web: { flex: 1, backgroundColor: '#000' },
-  webContainer: { backgroundColor: '#000' },
+  stage: { width: '100%', backgroundColor: '#000' },
   loadingOverlay: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center' },
   strip: { flexDirection: 'row', alignItems: 'center', gap: 9, paddingHorizontal: 13, paddingVertical: 8, borderBottomWidth: StyleSheet.hairlineWidth },
   ppBtn: { width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },

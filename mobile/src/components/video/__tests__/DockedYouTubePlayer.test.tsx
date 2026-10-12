@@ -5,28 +5,40 @@ import type { VideoMapping } from '@/data/video/videoMappings';
 
 // ---- mocks ------------------------------------------------------------------
 
-// A fake WebView that forwards a ref exposing injectJavaScript/reload and hands
-// the test the live `onMessage`/`onError` props so it can drive the bridge.
-const mockWebview: {
-  onMessage?: (e: { nativeEvent: { data: string } }) => void;
-  onError?: () => void;
-  injectJavaScript: jest.Mock;
-  reload: jest.Mock;
-} = { injectJavaScript: jest.fn(), reload: jest.fn() };
+// Capture the latest props handed to the YoutubePlayer so tests can drive its
+// callbacks and assert the controlled `play` flag.
+const mockRnyi: { props?: Record<string, unknown> } = {};
 
-jest.mock('react-native-webview', () => {
+jest.mock('react-native-youtube-iframe', () => {
   const React = require('react');
-  const WebView = React.forwardRef((props: Record<string, unknown>, ref: React.Ref<unknown>) => {
-    mockWebview.onMessage = props.onMessage as typeof mockWebview.onMessage;
-    mockWebview.onError = props.onError as typeof mockWebview.onError;
+  const Player = React.forwardRef((props: Record<string, unknown>, ref: React.Ref<unknown>) => {
+    mockRnyi.props = props;
     React.useImperativeHandle(ref, () => ({
-      injectJavaScript: mockWebview.injectJavaScript,
-      reload: mockWebview.reload,
+      getCurrentTime: () => Promise.resolve(0),
+      getDuration: () => Promise.resolve(0),
+      seekTo: () => {},
     }));
     return null;
   });
-  WebView.displayName = 'WebView';
-  return { __esModule: true, WebView };
+  Player.displayName = 'YoutubePlayer';
+  return {
+    __esModule: true,
+    default: Player,
+    PLAYER_STATES: {
+      ENDED: 'ended',
+      PAUSED: 'paused',
+      PLAYING: 'playing',
+      UNSTARTED: 'unstarted',
+      BUFFERING: 'buffering',
+      VIDEO_CUED: 'video cued',
+    },
+    PLAYER_ERRORS: {
+      HTML5_ERROR: 'HTML5_error',
+      VIDEO_NOT_FOUND: 'video_not_found',
+      EMBED_NOT_ALLOWED: 'embed_not_allowed',
+      INVALID_PARAMETER: 'invalid_parameter',
+    },
+  };
 });
 
 jest.mock('@/components/AppIcon', () => ({ __esModule: true, default: () => null }));
@@ -52,12 +64,12 @@ const mapping: VideoMapping = {
   contentId: 'hanuman-chalisa',
   videoId: 'AETFvQonfV8',
   titleHi: 'श्री हनुमान चालीसा',
-  titleEn: 'Shri Hanuman Chalisa',
-  channel: 'Test Channel',
+  titleEn: 'Shree Hanuman Chalisa',
+  channel: 'T-Series Bhakti Sagar',
   sourceUrl: 'https://www.youtube.com/watch?v=AETFvQonfV8',
   spokenLang: 'hi',
-  reviewedOn: null,
-  status: 'dev-demo',
+  reviewedOn: '2026-10-12',
+  status: 'verified',
 };
 
 function allText(root: TestRenderer.ReactTestRenderer): string {
@@ -65,10 +77,7 @@ function allText(root: TestRenderer.ReactTestRenderer): string {
 }
 
 beforeEach(() => {
-  mockWebview.injectJavaScript.mockClear();
-  mockWebview.reload.mockClear();
-  mockWebview.onMessage = undefined;
-  mockWebview.onError = undefined;
+  mockRnyi.props = undefined;
   jest.restoreAllMocks();
   jest.useRealTimers();
 });
@@ -80,30 +89,22 @@ it('claims the playback arbiter the moment it opens', () => {
     r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
   });
   expect(claim).toHaveBeenCalledWith('youtube');
+  // Opens playing (the user tapped "Play video").
+  expect(mockRnyi.props?.play).toBe(true);
   act(() => r.unmount());
 });
 
-it('reports proportional progress from a bridge time event, ignoring garbage', () => {
-  const onProgress = jest.fn();
+it('shows the localized error card on a player error', () => {
   let r!: TestRenderer.ReactTestRenderer;
   act(() => {
-    r = TestRenderer.create(
-      <DockedYouTubePlayer mapping={mapping} uiLang="en" onProgress={onProgress} onClose={() => {}} />
-    );
+    r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
   });
-  // malformed payloads must not throw or fire progress
-  act(() => mockWebview.onMessage?.({ nativeEvent: { data: 'not json' } }));
-  act(() => mockWebview.onMessage?.({ nativeEvent: { data: JSON.stringify({ foo: 1 }) } }));
-  expect(onProgress).not.toHaveBeenCalled();
-  // a real time event → fraction
-  act(() =>
-    mockWebview.onMessage?.({ nativeEvent: { data: JSON.stringify({ event: 'time', currentTime: 30, duration: 120 }) } })
-  );
-  expect(onProgress).toHaveBeenLastCalledWith(0.25);
+  act(() => (mockRnyi.props?.onError as (e: string) => void)('embed_not_allowed'));
+  expect(allText(r)).toContain('Can’t play this video');
   act(() => r.unmount());
 });
 
-it('pauses on background and never on return to foreground', () => {
+it('pauses on background and never auto-resumes on foreground', () => {
   const handlers: ((s: string) => void)[] = [];
   jest.spyOn(AppState, 'addEventListener').mockImplementation((_e, cb) => {
     handlers.push(cb as (s: string) => void);
@@ -113,13 +114,11 @@ it('pauses on background and never on return to foreground', () => {
   act(() => {
     r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
   });
-  mockWebview.injectJavaScript.mockClear();
+  expect(mockRnyi.props?.play).toBe(true);
   act(() => handlers.forEach((h) => h('background')));
-  expect(mockWebview.injectJavaScript).toHaveBeenCalledWith(expect.stringContaining('__ytPause'));
-
-  mockWebview.injectJavaScript.mockClear();
+  expect(mockRnyi.props?.play).toBe(false);
   act(() => handlers.forEach((h) => h('active')));
-  expect(mockWebview.injectJavaScript).not.toHaveBeenCalled();
+  expect(mockRnyi.props?.play).toBe(false);
   act(() => r.unmount());
 });
 
@@ -130,7 +129,7 @@ it('falls out of the spinner into the error card when load times out', () => {
     r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
   });
   act(() => {
-    jest.advanceTimersByTime(13000);
+    jest.advanceTimersByTime(16000);
   });
   expect(allText(r)).toContain('Can’t play this video');
   act(() => r.unmount());
