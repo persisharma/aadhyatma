@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { garudPuranChaptersManifest, garudPuranTotal, getGarudPuranChapter } from '../garud-puran';
 import { garudPuranImages } from '@assets/garud-puran';
 
@@ -39,4 +42,20 @@ test('the stories preserve edition-specific locations and the actual ritual in t
   expect(getGarudPuranChapter(7).verses[1].meaningEn).toContain('Mathura');
   expect(getGarudPuranChapter(7).verses[0].meaningEn).toContain('vrishotsarga');
   expect(getGarudPuranChapter(5).verses[1].meaningEn).toContain('Sudeva');
+});
+
+test('bundled artwork exactly matches the approved Style 3 review set', () => {
+  const root = path.resolve(__dirname, '../../../..');
+  const reviewed = JSON.parse(fs.readFileSync(path.join(root, 'docs/content/garud-puran/design-review/style3-final/manifest.json'), 'utf8'));
+  const bundled = JSON.parse(fs.readFileSync(path.join(root, 'docs/content/garud-puran/artwork/manifest.json'), 'utf8'));
+  expect(bundled.approval.status).toBe('approved');
+  expect(bundled.assets).toHaveLength(9);
+  for (const asset of bundled.assets) {
+    const bytes = fs.readFileSync(path.join(root, asset.path));
+    const reference = reviewed.assets.find((item: { id: string }) => item.id === asset.id);
+    expect(reference.sha256).toBe(asset.sha256);
+    expect(createHash('sha256').update(bytes).digest('hex')).toBe(asset.sha256);
+    expect(bytes.length).toBe(asset.bytes);
+    expect(asset.dimensions).toEqual([960, 480]);
+  }
 });

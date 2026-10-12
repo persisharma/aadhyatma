@@ -1,0 +1,18 @@
+{
+  "id": "hanuman-sea-shoulder-gada-v3",
+  "title": "Hanuman \u00b7 crossing the ocean",
+  "base": "hanuman-sea",
+  "prompt": "Use case: precise-object-edit.\nAsset type: Vedansh devotional reader illustration, opaque EXACT 2:1 horizontal banner.\nInput image 1 is the edit target. Correct ONLY Hanuman's gada carry and necessary arm pose: Hanuman must carry the single golden gada resting naturally on his anatomical RIGHT shoulder, held securely in his RIGHT hand. His foreground right elbow is bent, his right fist grips the connected shaft close to the right shoulder/collarbone; the shaft rests across that shoulder and the decorated round mace head extends behind his upper back toward the left of the image. The full mace must be clearly visible inside the canvas. His LEFT arm reaches forward toward the island, preserving the flying action. Remove the current outstretched backward mace carry. Show exactly TWO connected arms and TWO hands: one right hand gripping the shoulder-carried gada, one left hand extended forward. No third arm or second mace.\nPreserve Hanuman's identity, face, crown, jewellery, red-and-gold clothing, bent flying legs, both feet, complete curling tail, and all scene details: ocean waves, rocks and plants, distant island and temple, warm sunset and pastel sky. Preserve the detailed Style 3 Krishna storybook painting, fine warm line work and paper texture. Keep the same camera, complete subject, compact landscape arrangement, and 2:1 aspect ratio. Do not crop the crown, tail, feet, mace head or shaft. No new figures, mountain, text, frame or watermark. The only changes are the requested right-hand shoulder carry and arm repositioning required for it.",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-f876bafb-4b3e-489f-a281-79b8d4e55ca0.png",
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-detail-v2",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/selected/hanuman-sea.webp"
+  ],
+  "transparent_background": false,
+  "userCorrection": "Right hand should hold the gada, resting it on his shoulder",
+  "approved": false,
+  "userAuthorization": "Direct requested refinement of the already authorized integrated asset",
+  "inputSnapshotPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/corrections-before/hanuman-sea-gada-v2.webp",
+  "inputSnapshotSha256": "ae0db21a35dbe3b99de718e6742d204dba44f76e7ab03631189d9cd6ab525c0f"
+}

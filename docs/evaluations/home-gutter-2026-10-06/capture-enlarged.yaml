@@ -1,0 +1,41 @@
+appId: com.prashantsharma.vedansh
+---
+- launchApp: { stopApp: true }
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- tapOn: "Language,.*"
+- tapOn: "English"
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { text: ".*Today.s Panchang.*" }
+    direction: UP
+    timeout: 20000
+- swipe: { direction: DOWN }
+- waitForAnimationToEnd
+- takeScreenshot: enlarged-english-home
+- scrollUntilVisible:
+    element: { text: "Kundali\\..*Tap to open\\." }
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- waitForAnimationToEnd
+- takeScreenshot: enlarged-english-grid
+- scrollUntilVisible:
+    element: { text: "DISCOVER" }
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- waitForAnimationToEnd
+- takeScreenshot: enlarged-english-discover
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- tapOn: "Language,.*"
+- tapOn: "Hindi"

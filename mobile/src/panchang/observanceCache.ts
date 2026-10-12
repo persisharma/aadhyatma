@@ -42,7 +42,12 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 //     Masik Shivaratri, Kalashtami, Purnima and Skanda Sashti vrats…). MOVES
 //     shipped dates — ~417 Ujjain rows 2024–2031 — so every city re-scans.
 //     Adds `maha-navami` (madhyahna).
-const CACHE_VERSION = 9;
+// v10: published-rule audit (Oct 2026) — aparahna by span cover; Raksha Bandhan and
+//     Holi by the Bhadra rules; Ekadashi by Dharmasindhu's Smarta table plus
+//     Vaishnava rows; Janmashtami Smarta (Nishita + Rohini) plus a Vaishnava row;
+//     annual rules no longer stop at their first match in a civil year (Pausha
+//     Putrada 30 Dec 2025 and Saphala 26 Dec 2024 had vanished). MOVES shipped dates.
+const CACHE_VERSION = 10;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 

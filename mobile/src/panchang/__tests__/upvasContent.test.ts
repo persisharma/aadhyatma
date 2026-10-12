@@ -101,13 +101,15 @@ test('§6.1 attached-rule sets are pinned literally', () => {
       .sort();
 
   // The Ekadashi family shares one entry; निर्जला alone carries the stricter one.
-  const ekadashiIds = EKADASHI_RULES.map((r) => r.id);
+  // Each Vaishnava row is the same fast on the other tradition's day, so it
+  // shares its Smarta row's entry (RULEBOOK §23.16).
+  const ekadashiIds = EKADASHI_RULES.flatMap((r) => [r.id, `vaishnava-${r.id}`]);
   assert.ok(ekadashiIds.includes('nirjala-ekadashi'), 'nirjala-ekadashi is an EKADASHI_RULES id');
   assert.deepEqual(
     rulesFor('ekadashi-upvas'),
-    ekadashiIds.filter((id) => id !== 'nirjala-ekadashi').sort()
+    ekadashiIds.filter((id) => id !== 'nirjala-ekadashi' && id !== 'vaishnava-nirjala-ekadashi').sort()
   );
-  assert.deepEqual(rulesFor('nirjala-ekadashi-upvas'), ['nirjala-ekadashi']);
+  assert.deepEqual(rulesFor('nirjala-ekadashi-upvas'), ['nirjala-ekadashi', 'vaishnava-nirjala-ekadashi']);
   assert.deepEqual(rulesFor('purnima-satyanarayan-upvas'), ['purnima-vrat', 'shree-satyanarayan-vrat']);
   assert.deepEqual(rulesFor('pradosh-upvas'), ['pradosh-vrat-krishna', 'pradosh-vrat-shukla']);
   assert.deepEqual(rulesFor('sankashti-chaturthi-upvas'), ['sankashti-chaturthi-vrat']);
@@ -116,7 +118,7 @@ test('§6.1 attached-rule sets are pinned literally', () => {
   // review found distinct procedures, so monthly entries remain absent until
   // they independently clear the two-source gate.
   assert.deepEqual(rulesFor('maha-shivaratri-upvas'), ['maha-shivaratri']);
-  assert.deepEqual(rulesFor('janmashtami-upvas'), ['janmashtami']);
+  assert.deepEqual(rulesFor('janmashtami-upvas'), ['janmashtami', 'janmashtami-vaishnava']);
   assert.equal(OBSERVANCE_RULES.find((r) => r.id === 'masik-shivaratri')?.upvasId, undefined);
   assert.equal(OBSERVANCE_RULES.find((r) => r.id === 'masik-krishna-janmashtami')?.upvasId, undefined);
 });

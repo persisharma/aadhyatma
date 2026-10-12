@@ -20,13 +20,17 @@ import { useNewContent, templeNewKey } from '@/contexts/NewContentContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import IndiaMap, { type IndiaMapPin } from '@/components/IndiaMap';
+import StoryIcon from '@/components/StoryIcon';
+import DeityIcon from '@/components/DeityIcon';
+import { deityIconKey } from '@/data/deities';
+import type { DeityIconKey } from '@/data/deities';
 import {
   temples,
   templesInGroup,
   otherFamous,
   groupMeta,
   groupOrder,
-  type TempleEntry,
+  type TempleListEntry,
   type TheerthGroup,
 } from '@/data/theerth/temples';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -38,7 +42,7 @@ type CategoryKey = TheerthGroup | 'other';
 
 const CATEGORY_KEYS: readonly CategoryKey[] = [...groupOrder, 'other'];
 
-function categoryTemples(key: CategoryKey): TempleEntry[] {
+function categoryTemples(key: CategoryKey): TempleListEntry[] {
   return key === 'other' ? otherFamous() : templesInGroup(key);
 }
 
@@ -54,9 +58,9 @@ function categoryLabel(key: CategoryKey, lang: Lang): string {
   return contentByLang(lang, m.nameHi, m.nameEn);
 }
 
-const stateName = (t: TempleEntry, lang: Lang) => contentByLang(lang, t.stateHi, t.stateEn);
-const templeName = (t: TempleEntry, lang: Lang) => contentByLang(lang, t.nameHi, t.nameEn);
-const templeCity = (t: TempleEntry, lang: Lang) =>
+const stateName = (t: TempleListEntry, lang: Lang) => contentByLang(lang, t.stateHi, t.stateEn);
+const templeName = (t: TempleListEntry, lang: Lang) => contentByLang(lang, t.nameHi, t.nameEn);
+const templeCity = (t: TempleListEntry, lang: Lang) =>
   `${contentByLang(lang, t.cityHi, t.cityEn)}, ${contentByLang(lang, t.stateHi, t.stateEn)}`;
 
 export default function TheerthMapScreen({ navigation, route }: Props) {
@@ -218,7 +222,7 @@ function Listing({
   );
 
   const stateCards = useMemo(() => {
-    const map = new Map<string, TempleEntry[]>();
+    const map = new Map<string, TempleListEntry[]>();
     temples.forEach((t) => {
       if (!map.has(t.stateEn)) map.set(t.stateEn, []);
       map.get(t.stateEn)!.push(t);
@@ -244,7 +248,6 @@ function Listing({
       {(mode === 'category' ? categoryCards : stateCards).map((c, i) => {
         const card = (
           <BrowseCard
-            glyph={mode === 'category' ? '॥' : 'ॐ'}
             name={c.label}
             meta={`${c.count} ${pick(lang, { hi: 'तीर्थ', en: 'temples', gu: 'તીર્થ', kn: 'ತೀರ್ಥ' })}`}
             hasNew={c.hasNew}
@@ -285,7 +288,7 @@ function DrillIn({
   isTempleNew: (id: string) => boolean;
   onTemplePress: (id: string) => void;
 } & ThemeBits) {
-  const list = useMemo<TempleEntry[]>(() => {
+  const list = useMemo<TempleListEntry[]>(() => {
     const base = group ? categoryTemples(group) : temples.filter((t) => t.stateEn === stateEn);
     return [...base].sort((a, b) => templeName(a, lang).localeCompare(templeName(b, lang)));
   }, [group, stateEn, lang]);
@@ -300,6 +303,7 @@ function DrillIn({
         lat: t.coordinates.lat,
         lng: t.coordinates.lng,
         label: templeName(t, lang),
+        deityKey: deityIconKey(t.deity),
       })),
     [list, lang],
   );
@@ -337,7 +341,7 @@ function DrillIn({
       {list.map((temple) => (
         <BrowseCard
           key={temple.id}
-          glyph="ॐ"
+          deityKey={deityIconKey(temple.deity)}
           name={templeName(temple, lang)}
           meta={templeCity(temple, lang)}
           hasNew={isTempleNew(temple.id)}
@@ -406,7 +410,7 @@ function ModeToggle({
 }
 
 function BrowseCard({
-  glyph,
+  deityKey,
   name,
   meta,
   hasNew,
@@ -416,7 +420,7 @@ function BrowseCard({
   radii,
   onPress,
 }: {
-  glyph: string;
+  deityKey?: DeityIconKey;
   name: string;
   meta: string;
   hasNew?: boolean;
@@ -452,9 +456,12 @@ function BrowseCard({
         end={{ x: 1, y: 1 }}
         style={[rowStyles.thumb, { borderRadius: radii.sm }]}
       >
-        <Text style={{ fontFamily: typography.thumb.fontFamily, fontSize: 18, color: colors.parchmentSoft }}>
-          {glyph}
-        </Text>
+        {/* Temple rows show their presiding deity's glyph (trishul, chakra,
+            lotus…); the grouping rows (category/state), which span many
+            deities, keep the illustrated temple miniature (design.md §26/§47). */}
+        {deityKey
+          ? <DeityIcon iconKey={deityKey} fallbackText="" size={34} />
+          : <StoryIcon name="theerth" size={34} />}
       </LinearGradient>
       <View style={rowStyles.textColumn}>
         <Text

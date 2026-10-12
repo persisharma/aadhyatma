@@ -1,0 +1,1300 @@
+{
+  "recordedOn": "2026-10-09",
+  "device": {
+    "name": "Vedansh-Durga-Navaratri-QA",
+    "model": "iPhone 17 Pro",
+    "os": "iOS 26.5",
+    "nativeBuild": "Current-worktree iOS Debug build, 0 errors / 3 warnings",
+    "assetSource": "Final hashed illustrations seeded into isolated local cache; no R2 publication evidence"
+  },
+  "method": "Actual Home-stack reader routes and real language/reading-size contexts via dev-runtime capture, actual native ScrollView offsets, native simctl pixels. Focused Maestro gesture checks recorded separately. Development screen-prefetch test seam disables unrelated warmup; no general cold-start/performance claim.",
+  "coverage": {
+    "readings": 14,
+    "uniquePages": 87,
+    "languages": 4,
+    "sizes": 2,
+    "nativePageVisits": 696,
+    "nativeEndingVisits": 112,
+    "nativeScreenshots": 1504,
+    "allCaptionEndingSheetsManuallyReviewed": true
+  },
+  "provenance": {
+    "appAssetManifestSha256": "7cb326069b260c49f11ec4de50a4c172d640e38d4c271bf50ce73dd6faa723cf",
+    "artFramesSha256": "0b9568ebf3b50f4d6b8e28978f513cd645e061d6503ba93742178f27eebc2fe0",
+    "uploadManifestSha256": "8b602af61dee2a95c4b523d81d75f2ef16f1b875dcc2533ef7edd278e4776917",
+    "uploadZipSha256": "b6da6c63b66b657553f8c5da06aba11a8819aa5fae98238ec4d719e54bfe0d4f",
+    "unchangedLegacyManifestEntries": 57
+  },
+  "readings": [
+    {
+      "storyId": "durga-brahmacharini",
+      "sourceJsonSha256": "68bd08e5ca9fc7f0277b6090c20af8b6d7ee5b27cd4611604d800455a0dbe899",
+      "kind": "story",
+      "coverArt": "br02",
+      "pages": [
+        {
+          "pageId": "parvati-seeks-permission",
+          "art": "br01"
+        },
+        {
+          "pageId": "tapas-and-a-garden",
+          "art": "br02"
+        },
+        {
+          "pageId": "peace-in-the-hermitage",
+          "art": "br03"
+        },
+        {
+          "pageId": "the-devas-ask-shiva",
+          "art": "br04"
+        },
+        {
+          "pageId": "the-seven-sages-test-her",
+          "art": "br05"
+        },
+        {
+          "pageId": "the-ascetics-disguise",
+          "art": "br06"
+        },
+        {
+          "pageId": "shiva-reveals-himself",
+          "art": "br07"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-chandraghanta",
+      "sourceJsonSha256": "423e8b42dcc80ab3d7f539532086c2d58768cceb88ab038a1b62e30ba9927157",
+      "kind": "story",
+      "coverArt": "cg05",
+      "pages": [
+        {
+          "pageId": "the-wedding-procession",
+          "art": "cg01"
+        },
+        {
+          "pageId": "naradas-explanation",
+          "art": "cg02"
+        },
+        {
+          "pageId": "hands-joined",
+          "art": "cg03"
+        },
+        {
+          "pageId": "family-celebrates",
+          "art": "cg04"
+        },
+        {
+          "pageId": "the-third-form",
+          "art": "cg05"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-kalaratri",
+      "sourceJsonSha256": "f3cfbe76466cf2c21325bb75cbc4292d1d09d7182200f2d02a5047f7d5d99bb2",
+      "kind": "introduction",
+      "coverArt": "kr01",
+      "pages": [
+        {
+          "pageId": "the-seventh-form",
+          "art": "kr01"
+        },
+        {
+          "pageId": "hands-that-reassure",
+          "art": "kr02"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-kushmanda",
+      "sourceJsonSha256": "357a6abc8d4ef166f0eaca0e52c3ddda504f1414bf53379f3f06b02f5d9b0e52",
+      "kind": "introduction",
+      "coverArt": "ku01",
+      "pages": [
+        {
+          "pageId": "the-radiant-fourth-form",
+          "art": "ku01"
+        },
+        {
+          "pageId": "a-traditional-creation-account",
+          "art": "ku02"
+        },
+        {
+          "pageId": "symbols-of-kushmanda",
+          "art": "ku03"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-mahagauri",
+      "sourceJsonSha256": "af4d3be9dbe8f5acef4a75951eccd50e64508f1b9f4d8b655cb88ea09d4ab3f8",
+      "kind": "story",
+      "coverArt": "mg07",
+      "pages": [
+        {
+          "pageId": "parvati-begins-tapas",
+          "art": "mg01"
+        },
+        {
+          "pageId": "the-tiger-changes",
+          "art": "mg02"
+        },
+        {
+          "pageId": "gauri-and-kaushiki",
+          "art": "mg03"
+        },
+        {
+          "pageId": "compassion-for-a-refuge-seeker",
+          "art": "mg04"
+        },
+        {
+          "pageId": "shiva-welcomes-gauri",
+          "art": "mg05"
+        },
+        {
+          "pageId": "somanandin-the-guardian",
+          "art": "mg06"
+        },
+        {
+          "pageId": "the-eighth-form",
+          "art": "mg07"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-mahishasura",
+      "sourceJsonSha256": "332a2193ee348fb81790866599406a62a60812b7d4967e9401d95104837e498f",
+      "kind": "story",
+      "coverArt": "dm04",
+      "pages": [
+        {
+          "pageId": "mahishasura-takes-the-realm",
+          "art": "dm01"
+        },
+        {
+          "pageId": "devas-seek-help",
+          "art": "dm02"
+        },
+        {
+          "pageId": "the-goddess-manifests",
+          "art": "dm03"
+        },
+        {
+          "pageId": "gifts-and-the-lion",
+          "art": "dm04"
+        },
+        {
+          "pageId": "the-challenge-is-heard",
+          "art": "dm05"
+        },
+        {
+          "pageId": "the-army-is-defeated",
+          "art": "dm06"
+        },
+        {
+          "pageId": "the-buffalo-charge",
+          "art": "dm07"
+        },
+        {
+          "pageId": "lion-and-warrior",
+          "art": "dm08"
+        },
+        {
+          "pageId": "the-elephant-form",
+          "art": "dm09"
+        },
+        {
+          "pageId": "mountains-and-arrows",
+          "art": "dm10"
+        },
+        {
+          "pageId": "mahishasuras-defeat",
+          "art": "dm11"
+        },
+        {
+          "pageId": "the-devas-give-thanks",
+          "art": "dm12"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-navaratri",
+      "sourceJsonSha256": "e6be55245137bdc6b3986cc46d379c932b25ba1bc413c38fa1b231d2e74993f8",
+      "kind": "introduction",
+      "coverArt": "nv01",
+      "pages": [
+        {
+          "pageId": "nine-nights-of-devotion",
+          "art": "nv01"
+        },
+        {
+          "pageId": "the-nine-names",
+          "art": "nv02"
+        },
+        {
+          "pageId": "celebrate-and-learn",
+          "art": "nv03"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-raktabeej",
+      "sourceJsonSha256": "3cc722f98c8e1dd7d3fbf0f8d59dbd068c4eff1c284f8fe79db7521e1b1c5617",
+      "kind": "story",
+      "coverArt": "rb05",
+      "pages": [
+        {
+          "pageId": "a-new-army-approaches",
+          "art": "rb01"
+        },
+        {
+          "pageId": "helpers-and-a-warning",
+          "art": "rb02"
+        },
+        {
+          "pageId": "one-drop-another-asura",
+          "art": "rb03"
+        },
+        {
+          "pageId": "the-army-keeps-growing",
+          "art": "rb04"
+        },
+        {
+          "pageId": "durgas-plan",
+          "art": "rb05"
+        },
+        {
+          "pageId": "the-plan-works",
+          "art": "rb06"
+        },
+        {
+          "pageId": "raktabeejs-defeat",
+          "art": "rb07"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-shailaputri",
+      "sourceJsonSha256": "6c45a0f25ad96d1aec69c1a3d9d367d1fcc646f0662bef8c16b6b530e768e04b",
+      "kind": "story",
+      "coverArt": "sp04",
+      "pages": [
+        {
+          "pageId": "menas-wish",
+          "art": "sp01"
+        },
+        {
+          "pageId": "the-goddess-becomes-a-daughter",
+          "art": "sp02"
+        },
+        {
+          "pageId": "parvati-grows-and-learns",
+          "art": "sp03"
+        },
+        {
+          "pageId": "shailaputri-the-first-form",
+          "art": "sp04"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-shakambhari",
+      "sourceJsonSha256": "8739e799791885b86c77914faa6ede6ac149567189ce47229578ed93c47ef756",
+      "kind": "story",
+      "coverArt": "sa05",
+      "pages": [
+        {
+          "pageId": "durgama-seizes-the-vedas",
+          "art": "sa01"
+        },
+        {
+          "pageId": "a-long-drought",
+          "art": "sa02"
+        },
+        {
+          "pageId": "shatakshi-appears",
+          "art": "sa03"
+        },
+        {
+          "pageId": "tears-become-rain",
+          "art": "sa04"
+        },
+        {
+          "pageId": "food-until-the-crops-return",
+          "art": "sa05"
+        },
+        {
+          "pageId": "a-circle-of-protection",
+          "art": "sa06"
+        },
+        {
+          "pageId": "durgamas-defeat",
+          "art": "sa07"
+        },
+        {
+          "pageId": "knowledge-and-peace-return",
+          "art": "sa08"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-shumbha-nishumbha",
+      "sourceJsonSha256": "907af3e694458d80450c46537350aae9ce79986b67c56c3a55e66afb237c49f9",
+      "kind": "story",
+      "coverArt": "sn11",
+      "pages": [
+        {
+          "pageId": "devas-remember-the-promise",
+          "art": "sn01"
+        },
+        {
+          "pageId": "kaushiki-appears",
+          "art": "sn02"
+        },
+        {
+          "pageId": "the-goddess-refuses",
+          "art": "sn03"
+        },
+        {
+          "pageId": "dhumralochanas-attack",
+          "art": "sn04"
+        },
+        {
+          "pageId": "kali-becomes-chamunda",
+          "art": "sn05"
+        },
+        {
+          "pageId": "the-last-warning",
+          "art": "sn06"
+        },
+        {
+          "pageId": "raktabeej-multiplies",
+          "art": "sn07"
+        },
+        {
+          "pageId": "durga-and-kali-work-together",
+          "art": "sn08"
+        },
+        {
+          "pageId": "nishumbha-returns",
+          "art": "sn09"
+        },
+        {
+          "pageId": "nishumbhas-defeat",
+          "art": "sn10"
+        },
+        {
+          "pageId": "the-powers-return-to-one",
+          "art": "sn11"
+        },
+        {
+          "pageId": "battle-in-the-sky",
+          "art": "sn12"
+        },
+        {
+          "pageId": "shumbhas-final-attack",
+          "art": "sn13"
+        },
+        {
+          "pageId": "peace-is-restored",
+          "art": "sn14"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-siddhidatri",
+      "sourceJsonSha256": "02e4f766a2e7f2fd9fa1d5a44f9d9135a5594b397887e262c3bcd9f29d66ca31",
+      "kind": "introduction",
+      "coverArt": "si01",
+      "pages": [
+        {
+          "pageId": "the-ninth-form",
+          "art": "si01"
+        },
+        {
+          "pageId": "shiva-and-shakti",
+          "art": "si02"
+        },
+        {
+          "pageId": "many-beings-honour-her",
+          "art": "si03"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-skandamata",
+      "sourceJsonSha256": "7afa235da9f1cc6a4903c534ab62dcc45707796abd6515ea9ac8366722bc8b0f",
+      "kind": "story",
+      "coverArt": "sk05",
+      "pages": [
+        {
+          "pageId": "a-chariot-arrives",
+          "art": "sk01"
+        },
+        {
+          "pageId": "the-mothers-come-too",
+          "art": "sk02"
+        },
+        {
+          "pageId": "arrival-at-kailasa",
+          "art": "sk03"
+        },
+        {
+          "pageId": "parvati-embraces-her-son",
+          "art": "sk04"
+        },
+        {
+          "pageId": "the-mother-of-skanda",
+          "art": "sk05"
+        }
+      ]
+    },
+    {
+      "storyId": "durga-suratha-samadhi",
+      "sourceJsonSha256": "359843430d280cde20a934b248786295671225283dc57649c595c99e21f00933",
+      "kind": "story",
+      "coverArt": "su06",
+      "pages": [
+        {
+          "pageId": "suratha-reaches-the-hermitage",
+          "art": "su01"
+        },
+        {
+          "pageId": "a-merchant-with-the-same-worry",
+          "art": "su02"
+        },
+        {
+          "pageId": "a-question-for-medhas",
+          "art": "su03"
+        },
+        {
+          "pageId": "the-sage-explains",
+          "art": "su04"
+        },
+        {
+          "pageId": "three-years-of-devotion",
+          "art": "su05"
+        },
+        {
+          "pageId": "two-different-wishes",
+          "art": "su06"
+        },
+        {
+          "pageId": "the-mothers-blessings",
+          "art": "su07"
+        }
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "art": "dm01",
+      "objectKey": "kids-stories/b9f6348ede955fa7.webp",
+      "sha256": "b9f6348ede955fa7add88d1bffe4625cf3a75a651627d8615f45f99c26f0ec2c",
+      "bytes": 243518,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "dm02",
+      "objectKey": "kids-stories/b4eb8cc457b7be0e.webp",
+      "sha256": "b4eb8cc457b7be0e6bf9d4fd6901e270d33003726e7a77a5841e10a5be536b9d",
+      "bytes": 312786,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "dm03",
+      "objectKey": "kids-stories/51becfe883c29958.webp",
+      "sha256": "51becfe883c299588d70aee7d9b20923a12c1d0e27415b8857620e3bd6c11909",
+      "bytes": 341046,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "dm04",
+      "objectKey": "kids-stories/576c7e51be8ddd40.webp",
+      "sha256": "576c7e51be8ddd40f0095f8317f2e5e2628620c2072f4f24a1a0a690585fce74",
+      "bytes": 272716,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "dm05",
+      "objectKey": "kids-stories/a26c49ac7af67af1.webp",
+      "sha256": "a26c49ac7af67af1b04e0a353221d14472b4681a05f76a6cd71a3c79d02c2bbe",
+      "bytes": 217854,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "dm06",
+      "objectKey": "kids-stories/e4a862e633c6be37.webp",
+      "sha256": "e4a862e633c6be37db475c78a33fa5d62794a56ff56d0b3462fcd3a6abe3ab6e",
+      "bytes": 292458,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "dm07",
+      "objectKey": "kids-stories/8bca7cd6a83d6e31.webp",
+      "sha256": "8bca7cd6a83d6e31a1ba02dd4bfbad09208cf5041b91a55bd95ab5f0d7d6f753",
+      "bytes": 280474,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "dm08",
+      "objectKey": "kids-stories/de69135584017f5c.webp",
+      "sha256": "de69135584017f5c607997782c2972ec9e35f89ee9312f0a60ea97f26f6b3381",
+      "bytes": 249910,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "dm09",
+      "objectKey": "kids-stories/358db0e590feb317.webp",
+      "sha256": "358db0e590feb3175d684209fa5aad1e8846bd58e86134e5aac225a773cc3fb0",
+      "bytes": 319984,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "dm10",
+      "objectKey": "kids-stories/cfba587ffa26e123.webp",
+      "sha256": "cfba587ffa26e123c407fe7603f1b0b44b047544107d44e2629bf986a1744909",
+      "bytes": 295082,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "dm11",
+      "objectKey": "kids-stories/6e0b0cb95fa3e0f6.webp",
+      "sha256": "6e0b0cb95fa3e0f60c343346bfc2a9c411fad6ecd3887152ec97be729a439e0b",
+      "bytes": 289182,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "kr01",
+      "objectKey": "kids-stories/4706acfdcbab8b05.webp",
+      "sha256": "4706acfdcbab8b057f8b6403f881cea6a0cdf1dba1452b2ce2accb459816d6e4",
+      "bytes": 360534,
+      "retainedHeight": 0.93
+    },
+    {
+      "art": "ku01",
+      "objectKey": "kids-stories/cf829526bd3b8988.webp",
+      "sha256": "cf829526bd3b8988f12d1b78594746b0417d74fa5be87baa7d77aecac4c62feb",
+      "bytes": 356090,
+      "retainedHeight": 0.95
+    },
+    {
+      "art": "ku02",
+      "objectKey": "kids-stories/fef2864491bad932.webp",
+      "sha256": "fef2864491bad9324e2122c0cd5ad44b51bfa173af50d6600587a5566c411a93",
+      "bytes": 319982,
+      "retainedHeight": 0.94
+    },
+    {
+      "art": "ku03",
+      "objectKey": "kids-stories/278692e4c0bb71bc.webp",
+      "sha256": "278692e4c0bb71bc58398e03af0771db36a608a40fa3628619dcdfc0eb114ba6",
+      "bytes": 385888,
+      "retainedHeight": 0.95
+    },
+    {
+      "art": "si01",
+      "objectKey": "kids-stories/f3a8ebd71f943aac.webp",
+      "sha256": "f3a8ebd71f943aac04017a8e7a5de4175dbd8f099067fd4e1967a4dcdf9e1f41",
+      "bytes": 271706,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "si02",
+      "objectKey": "kids-stories/304cfe7d23dc4bd7.webp",
+      "sha256": "304cfe7d23dc4bd7682aa9686c2a592e964d69566d8f98a71fa82f2fdb07d9de",
+      "bytes": 367422,
+      "retainedHeight": 0.95
+    },
+    {
+      "art": "si03",
+      "objectKey": "kids-stories/4affce61b776533c.webp",
+      "sha256": "4affce61b776533cc2e882ba98622ee3d046f2d4fa5a753b724d9f4d6b969752",
+      "bytes": 405314,
+      "retainedHeight": 0.95
+    },
+    {
+      "art": "nv01",
+      "objectKey": "kids-stories/de0f51aac80f7b04.webp",
+      "sha256": "de0f51aac80f7b048b3337588345789eaa4ca5a06984dd19692f64d7db3cbbc8",
+      "bytes": 297676,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "nv03",
+      "objectKey": "kids-stories/3275964e48523d2e.webp",
+      "sha256": "3275964e48523d2e1b72e3fa3b5dcccc4ff7d11fc2d697c61dbf43b56997adfc",
+      "bytes": 385104,
+      "retainedHeight": 0.91
+    },
+    {
+      "art": "rb02",
+      "objectKey": "kids-stories/b3a9dffcb3560663.webp",
+      "sha256": "b3a9dffcb3560663cb7441c97b2ce12e2e82e9bf306d2e9b86ff959e7ad4a9c6",
+      "bytes": 328164,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "rb03",
+      "objectKey": "kids-stories/e304c816ebbceaa4.webp",
+      "sha256": "e304c816ebbceaa4b2f5d2f46fea3d2252c0239654b5372e71ed15932b31e2ab",
+      "bytes": 367478,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "rb05",
+      "objectKey": "kids-stories/9582abe944629dbd.webp",
+      "sha256": "9582abe944629dbda0899ce60b9cdafa02b6b055a3d076ae2f9d57e678bea935",
+      "bytes": 347732,
+      "retainedHeight": 0.93
+    },
+    {
+      "art": "rb06",
+      "objectKey": "kids-stories/8885d4c68cc03cfb.webp",
+      "sha256": "8885d4c68cc03cfb7873b70aa5060839963392564bd925c7f2311510300fa519",
+      "bytes": 379448,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sp04",
+      "objectKey": "kids-stories/e20e50340d46896e.webp",
+      "sha256": "e20e50340d46896e4930901f986dec46fee4b97e46a118157792ba1b06439287",
+      "bytes": 314658,
+      "retainedHeight": 0.91
+    },
+    {
+      "art": "br02",
+      "objectKey": "kids-stories/104a1169dc818e7a.webp",
+      "sha256": "104a1169dc818e7a15993e9e35de3f21f98de0aa8fe2fd140423ad8255ad8ea5",
+      "bytes": 374600,
+      "retainedHeight": 0.91
+    },
+    {
+      "art": "mg07",
+      "objectKey": "kids-stories/14036667dfa11eb0.webp",
+      "sha256": "14036667dfa11eb0f1d34f81454031767fe281c1664f05c547c3e1d710ccfed8",
+      "bytes": 314476,
+      "retainedHeight": 0.91
+    },
+    {
+      "art": "su01",
+      "objectKey": "kids-stories/84d232892fa582fe.webp",
+      "sha256": "84d232892fa582fe4b79e7360c605f46e880c4a2b72bef8d75ad583d242b1459",
+      "bytes": 344724,
+      "retainedHeight": 0.89
+    },
+    {
+      "art": "sa03",
+      "objectKey": "kids-stories/a287fa72c19ed97b.webp",
+      "sha256": "a287fa72c19ed97bdcd5873c121d1ae4e0f8859c613ed4ac3b842e25f0af1d8c",
+      "bytes": 385068,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "dm12",
+      "objectKey": "kids-stories/2db3262d6f5d7bf4.webp",
+      "sha256": "2db3262d6f5d7bf469a166bf1ea087b00a8b293a8ed53c9c4b7a9b6d71438851",
+      "bytes": 282406,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "kr02",
+      "objectKey": "kids-stories/e16041683470d351.webp",
+      "sha256": "e16041683470d351d761f6aeb29eb2f8894d078192391606902d90b5488123a8",
+      "bytes": 274906,
+      "retainedHeight": 0.93
+    },
+    {
+      "art": "sp01",
+      "objectKey": "kids-stories/3764a74f8dbe1e15.webp",
+      "sha256": "3764a74f8dbe1e157c230529a3f7857ebda8c1614e2feac11f26014637dc2990",
+      "bytes": 382116,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sp03",
+      "objectKey": "kids-stories/aef480e276677349.webp",
+      "sha256": "aef480e276677349638c81a96a04eeed10eb8518e61723cb5de5e45cbd64ddab",
+      "bytes": 357590,
+      "retainedHeight": 0.88
+    },
+    {
+      "art": "br01",
+      "objectKey": "kids-stories/a814ea3c382a628a.webp",
+      "sha256": "a814ea3c382a628a9ef0699defdba2614fe5b0bb4cd889027cf6ea228a710baa",
+      "bytes": 368188,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "br03",
+      "objectKey": "kids-stories/f80ae551d65fd245.webp",
+      "sha256": "f80ae551d65fd245ebd09879254e84ce20d74c64768c54ccbb53789f265622f5",
+      "bytes": 377120,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "br04",
+      "objectKey": "kids-stories/2e25cc5203b41667.webp",
+      "sha256": "2e25cc5203b4166745c80d9605ae04db71c4b13f00d46ffef53d60be667ded5f",
+      "bytes": 348516,
+      "retainedHeight": 0.88
+    },
+    {
+      "art": "br05",
+      "objectKey": "kids-stories/9398aac40cdb5696.webp",
+      "sha256": "9398aac40cdb56962b128964fcc7c7ab3798bbd388def26101461fd297b845f4",
+      "bytes": 355578,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "br06",
+      "objectKey": "kids-stories/8556287754c17cef.webp",
+      "sha256": "8556287754c17cef581f8aa8aea43e78d21a2d917e1565455bc2759dd7f1ac8b",
+      "bytes": 378266,
+      "retainedHeight": 0.93
+    },
+    {
+      "art": "br07",
+      "objectKey": "kids-stories/8380455f9e1a5a2e.webp",
+      "sha256": "8380455f9e1a5a2e0b521ba4dcbe6c2f761ea874139c49a2393a3a0b01480e60",
+      "bytes": 373348,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "cg02",
+      "objectKey": "kids-stories/5470245224e74018.webp",
+      "sha256": "5470245224e74018a544df341a639dc763b97ead5d7b99952b6236da18ac990c",
+      "bytes": 396164,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "cg04",
+      "objectKey": "kids-stories/234e55f6ef0c244d.webp",
+      "sha256": "234e55f6ef0c244dbffa5940c59232c0fca5e0daa887e4d7e48985604c4424b1",
+      "bytes": 455234,
+      "retainedHeight": 0.91
+    },
+    {
+      "art": "cg05",
+      "objectKey": "kids-stories/a0d119c03244a97d.webp",
+      "sha256": "a0d119c03244a97de8515f9945d965b2c394495a1dc32dfa68310a705e426cbb",
+      "bytes": 355016,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sk01",
+      "objectKey": "kids-stories/54a416aa5e02d2f8.webp",
+      "sha256": "54a416aa5e02d2f84c0a552404c5ef081f095c192a89b7c02671e60b4eb4b5b7",
+      "bytes": 409590,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "sk02",
+      "objectKey": "kids-stories/d724261018c7d3e9.webp",
+      "sha256": "d724261018c7d3e9627a38c6b5b16c680fcd7243e866b2c02db2b1623f37c082",
+      "bytes": 411824,
+      "retainedHeight": 0.94
+    },
+    {
+      "art": "sk03",
+      "objectKey": "kids-stories/8ade04f9738b6cb1.webp",
+      "sha256": "8ade04f9738b6cb17ea1acbc8313d3f45fea78d42dbe0a60dc60d4ae09359121",
+      "bytes": 433358,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sk05",
+      "objectKey": "kids-stories/4e4f75e910e618e9.webp",
+      "sha256": "4e4f75e910e618e989e563897c4bb1f36d004c64bc91047065d7ac7e2ab130bc",
+      "bytes": 292492,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "mg01",
+      "objectKey": "kids-stories/accf97c09510e413.webp",
+      "sha256": "accf97c09510e4136da2eb31dadae8506b0715cc150e61e5df2f110a8f81344e",
+      "bytes": 389790,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "mg02",
+      "objectKey": "kids-stories/5933c9e895e436a1.webp",
+      "sha256": "5933c9e895e436a100fa26338cb3a0d11f108c0e8b9eddba7970a4231039788e",
+      "bytes": 416196,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "mg04",
+      "objectKey": "kids-stories/ffd22ea1a4ddca0f.webp",
+      "sha256": "ffd22ea1a4ddca0ff3bbe7aee91f6b2f8592cfeb819034bb3d5c9aa7f01d4547",
+      "bytes": 341726,
+      "retainedHeight": 0.89
+    },
+    {
+      "art": "mg05",
+      "objectKey": "kids-stories/f4563514fe959a91.webp",
+      "sha256": "f4563514fe959a911837767ec96a173933b37d5a0352f5feac2d854d49482a83",
+      "bytes": 361586,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "su02",
+      "objectKey": "kids-stories/6eb43e0c185e59d4.webp",
+      "sha256": "6eb43e0c185e59d4edb55476bdb2a2734b76caa7bb8af332e2d4057387c847b0",
+      "bytes": 368034,
+      "retainedHeight": 0.89
+    },
+    {
+      "art": "su03",
+      "objectKey": "kids-stories/2385d68fc8d7b563.webp",
+      "sha256": "2385d68fc8d7b563679adac0c05080d6e3a488ce1ac35912814e0033f44d21da",
+      "bytes": 340088,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "su04",
+      "objectKey": "kids-stories/9bb09ef8458c573b.webp",
+      "sha256": "9bb09ef8458c573ba33940178e45433c127b5e728754efe841b4ea1ed08b4703",
+      "bytes": 388708,
+      "retainedHeight": 0.89
+    },
+    {
+      "art": "sa01",
+      "objectKey": "kids-stories/d3d2669ebac575ef.webp",
+      "sha256": "d3d2669ebac575ef6885e8a6a3cde2cdbc0a95b8911b3f4384933bc7adc454b2",
+      "bytes": 327538,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sa04",
+      "objectKey": "kids-stories/6128d1e7ca6c1f7e.webp",
+      "sha256": "6128d1e7ca6c1f7e578ead18dfc4a803d80ec6f4a62212e9b3808179adc2a19e",
+      "bytes": 454256,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sa05",
+      "objectKey": "kids-stories/3a99d197a02c6ceb.webp",
+      "sha256": "3a99d197a02c6ceb5a4d4e2dc3c1fc8d758da83044963f3f173590eceac6fb8e",
+      "bytes": 424618,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sa06",
+      "objectKey": "kids-stories/4f2704c74ee707aa.webp",
+      "sha256": "4f2704c74ee707aafd747b0ff9b07761a5850ff4742580b4ba76cae5a49a1141",
+      "bytes": 417326,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sa08",
+      "objectKey": "kids-stories/b813a5c986a826f2.webp",
+      "sha256": "b813a5c986a826f2288cf0d423c3620706f778d5d1989bfdeadc1a9199852263",
+      "bytes": 412848,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "cg01",
+      "objectKey": "kids-stories/2b3672dc4af9b885.webp",
+      "sha256": "2b3672dc4af9b8855d2beff4fd101551403d36b399508e0732d8dd367d9d6ccf",
+      "bytes": 356806,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "cg03",
+      "objectKey": "kids-stories/722c196492c59dfe.webp",
+      "sha256": "722c196492c59dfe6ef4f24b08f19967c0ea1762f8c523d5768701a4d2576e88",
+      "bytes": 400304,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sp02",
+      "objectKey": "kids-stories/a3a486e7d51a78c8.webp",
+      "sha256": "a3a486e7d51a78c8ca72d44534614309e6fdd339f54b6efa5f8e5fd900e99492",
+      "bytes": 297150,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sk04",
+      "objectKey": "kids-stories/a4c6d56f7ad21192.webp",
+      "sha256": "a4c6d56f7ad21192cf067493d5afb6058837ead5c2a0242b19ec98f45e8cdfc5",
+      "bytes": 293086,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "mg03",
+      "objectKey": "kids-stories/52d829c8945082ab.webp",
+      "sha256": "52d829c8945082ab4ce8e07df7dc12bf8267829d291fed17669a09f7287d42ea",
+      "bytes": 328538,
+      "retainedHeight": 0.91
+    },
+    {
+      "art": "mg06",
+      "objectKey": "kids-stories/5cbafa7e4bb1c0c9.webp",
+      "sha256": "5cbafa7e4bb1c0c9cf155de444e9d468ab843ae27aa3e0ec42b8ba67a86d8701",
+      "bytes": 276810,
+      "retainedHeight": 0.85
+    },
+    {
+      "art": "su06",
+      "objectKey": "kids-stories/b74021e9887443c7.webp",
+      "sha256": "b74021e9887443c7414892fbbce731dc477e17ccf649f0f9bc4d69049daae562",
+      "bytes": 268544,
+      "retainedHeight": 0.91
+    },
+    {
+      "art": "su07",
+      "objectKey": "kids-stories/335a51f8170520af.webp",
+      "sha256": "335a51f8170520af9a9b43c471cfce309d8ba4d1e557883f3c46537583160604",
+      "bytes": 298542,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sa02",
+      "objectKey": "kids-stories/3c5e9a16ed696005.webp",
+      "sha256": "3c5e9a16ed696005b32bdcc5aeff4034013eaee8366b9294b701bbc2bcc9da39",
+      "bytes": 350252,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sa07",
+      "objectKey": "kids-stories/8051c24b30038201.webp",
+      "sha256": "8051c24b30038201db8629ef4a0628b7811770dcedaa38f02c72fca011b687e1",
+      "bytes": 372704,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "sn02",
+      "objectKey": "kids-stories/0c91623f1c5ec091.webp",
+      "sha256": "0c91623f1c5ec091f78725477fdfebbf260e49b37c01eca9386722c8c59b92a9",
+      "bytes": 318020,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "sn03",
+      "objectKey": "kids-stories/ca2e23ca7acf4274.webp",
+      "sha256": "ca2e23ca7acf4274c43d9ed5f5c934042be5ef99a6b715bb740e0b3428d50f49",
+      "bytes": 280506,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "sn05",
+      "objectKey": "kids-stories/3894c816d24b13ca.webp",
+      "sha256": "3894c816d24b13ca53c3db2d04cdc7d2183dfeedfdd1d6cb9a28851b5db8d19a",
+      "bytes": 332426,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sn06",
+      "objectKey": "kids-stories/5754c46e4b6e60cb.webp",
+      "sha256": "5754c46e4b6e60cb7a233685897ed67f2318a262990893b775fc55797fff7483",
+      "bytes": 351574,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sn11",
+      "objectKey": "kids-stories/dc57dab27bbce1cf.webp",
+      "sha256": "dc57dab27bbce1cf8a1f3972c7137f4e9832b867aca2c5104b6af5392ae67d94",
+      "bytes": 378414,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "sn14",
+      "objectKey": "kids-stories/49c4388db2197504.webp",
+      "sha256": "49c4388db2197504b3fe92180b65100c2cda63095ca746ad02425e6f4aa49eb0",
+      "bytes": 344934,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "rb07",
+      "objectKey": "kids-stories/dc8ab536245261bb.webp",
+      "sha256": "dc8ab536245261bb3d45ad4ea5ed8fed4203a702fc29a4a9faef01322fcbaea9",
+      "bytes": 322790,
+      "retainedHeight": 0.93
+    },
+    {
+      "art": "nv02",
+      "objectKey": "kids-stories/942461738e5146ce.webp",
+      "sha256": "942461738e5146ce9de3adb6f9e0ba35b4ff63e1696a13d129a3622ca34059c2",
+      "bytes": 332740,
+      "retainedHeight": 0.95
+    },
+    {
+      "art": "sn01",
+      "objectKey": "kids-stories/d1825a88b72885f5.webp",
+      "sha256": "d1825a88b72885f51b509a6f79a21d2a3a9a85f142b7a93e64b5da95e00d94eb",
+      "bytes": 365502,
+      "retainedHeight": 0.91
+    },
+    {
+      "art": "sn04",
+      "objectKey": "kids-stories/409aa3304353321f.webp",
+      "sha256": "409aa3304353321f004bbd6a9f5fb87f066cc3de091c851f612b697f50d59be1",
+      "bytes": 312588,
+      "retainedHeight": 0.93
+    },
+    {
+      "art": "sn12",
+      "objectKey": "kids-stories/a6bdb5ddf30336b5.webp",
+      "sha256": "a6bdb5ddf30336b5e8d7576517a0448b76bc49105c9a517f0c2ed92901f77e10",
+      "bytes": 298824,
+      "retainedHeight": 0.93
+    },
+    {
+      "art": "su05",
+      "objectKey": "kids-stories/9a2390db3b711bb1.webp",
+      "sha256": "9a2390db3b711bb1841b6567f8451984a7280edce278de675f68e7675030e9f4",
+      "bytes": 324434,
+      "retainedHeight": 0.89
+    },
+    {
+      "art": "sn08",
+      "objectKey": "kids-stories/3f9eaf79303ed254.webp",
+      "sha256": "3f9eaf79303ed2543040390222a5aaf5a5dafbd7f93a80d7888cf6a6dabb9c25",
+      "bytes": 331492,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sn10",
+      "objectKey": "kids-stories/5adc63836e31edb2.webp",
+      "sha256": "5adc63836e31edb242bd4a73d892fbd1046d835cd1ea21c719fec2422d1249d9",
+      "bytes": 287510,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "sn13",
+      "objectKey": "kids-stories/dd048504f52a14ad.webp",
+      "sha256": "dd048504f52a14ad441d379e63e059a5237188171579e431198de84f9855b696",
+      "bytes": 299862,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "rb04",
+      "objectKey": "kids-stories/37898478d014a185.webp",
+      "sha256": "37898478d014a18531c625fef30730bd4d71a21e4f3aae22292a3c2ab472a668",
+      "bytes": 287552,
+      "retainedHeight": 0.9
+    },
+    {
+      "art": "sn07",
+      "objectKey": "kids-stories/f148dd320f809865.webp",
+      "sha256": "f148dd320f8098658e3eec6e1eb5c346bebaca7064672e617bb9ad121a6fba2c",
+      "bytes": 312672,
+      "retainedHeight": 0.92
+    },
+    {
+      "art": "sn09",
+      "objectKey": "kids-stories/6605f130b3b4189a.webp",
+      "sha256": "6605f130b3b4189acfbe183d06501b085118c67b19880c3a5d5f647979f70360",
+      "bytes": 276952,
+      "retainedHeight": 0.93
+    },
+    {
+      "art": "rb01",
+      "objectKey": "kids-stories/cd0877494ba816bd.webp",
+      "sha256": "cd0877494ba816bdd3cd6aed434fafbdfc97808ea253217f32f8afa353077795",
+      "bytes": 287990,
+      "retainedHeight": 0.9
+    }
+  ],
+  "combinations": [
+    {
+      "lang": "hi",
+      "readingSize": "Standard",
+      "captureProofSha256": "95b79d02a90824d6324c12b85097ae4e758d443c3e1efb12389df4c2d5053dda",
+      "rawEvidenceDirectory": "tmp/durga-native/hi-M/",
+      "pageVisits": 87,
+      "endingVisits": 14,
+      "screenshots": 188,
+      "screenshotManifestSha256": "8d1b5087244625fce5bcd303c5916d72e69c48811feff6ca2f76099e738e6bf1",
+      "screenshotManifestEncoding": "SHA-256 of JSON.stringify(sorted array of {name,sha256})",
+      "manualReview": "All 17 caption/ending native contact sheets reviewed. Full painted scenes reviewed in Hindi Standard and matched across all other combinations.",
+      "fullArtComparison": {
+        "role": "Manually reviewed 87-scene baseline"
+      }
+    },
+    {
+      "lang": "hi",
+      "readingSize": "Large",
+      "captureProofSha256": "8ce6f9dc8c4bdb3425e0c0e5accf80d385e7c5f15c7dcbc00e82c190da8f185f",
+      "rawEvidenceDirectory": "tmp/durga-native/hi-L/",
+      "pageVisits": 87,
+      "endingVisits": 14,
+      "screenshots": 188,
+      "screenshotManifestSha256": "33e44e9a4c6eb450dfacc437008f9d3450dd99eb30c55a86985b9936452ae054",
+      "screenshotManifestEncoding": "SHA-256 of JSON.stringify(sorted array of {name,sha256})",
+      "manualReview": "All 17 caption/ending native contact sheets reviewed. Full painted scenes reviewed in Hindi Standard and matched across all other combinations.",
+      "fullArtComparison": {
+        "baseline": "hi-M",
+        "images": 87,
+        "verticalRegistrationPx": 0,
+        "maximumMeanPixelDifference": 0.5969855679702049,
+        "outliersAbove2": 0
+      }
+    },
+    {
+      "lang": "en",
+      "readingSize": "Standard",
+      "captureProofSha256": "5b470a703a076b7d1a39c7415383fe9d979473cdbe9c5883a08836bb23d4d843",
+      "rawEvidenceDirectory": "tmp/durga-native/en-M/",
+      "pageVisits": 87,
+      "endingVisits": 14,
+      "screenshots": 188,
+      "screenshotManifestSha256": "d9041ad1a3fb643ceb49c0a14a7f176d4cec80d36b494b5e26a34451349ba8c6",
+      "screenshotManifestEncoding": "SHA-256 of JSON.stringify(sorted array of {name,sha256})",
+      "manualReview": "All 17 caption/ending native contact sheets reviewed. Full painted scenes reviewed in Hindi Standard and matched across all other combinations.",
+      "fullArtComparison": {
+        "baseline": "hi-M",
+        "images": 87,
+        "verticalRegistrationPx": 0,
+        "maximumMeanPixelDifference": 0.6035381750465549,
+        "outliersAbove2": 0
+      }
+    },
+    {
+      "lang": "en",
+      "readingSize": "Large",
+      "captureProofSha256": "380d0716791375bb7c92d4a7a65dc348d7a954f870dd0f078fe5cbc8e45b9cb3",
+      "rawEvidenceDirectory": "tmp/durga-native/en-L/",
+      "pageVisits": 87,
+      "endingVisits": 14,
+      "screenshots": 188,
+      "screenshotManifestSha256": "885b02522ae35478688bdd60f1399047906b900b30b74e2fea18814307146944",
+      "screenshotManifestEncoding": "SHA-256 of JSON.stringify(sorted array of {name,sha256})",
+      "manualReview": "All 17 caption/ending native contact sheets reviewed. Full painted scenes reviewed in Hindi Standard and matched across all other combinations.",
+      "fullArtComparison": {
+        "baseline": "hi-M",
+        "images": 87,
+        "verticalRegistrationPx": 0,
+        "maximumMeanPixelDifference": 0.5969855679702049,
+        "outliersAbove2": 0
+      }
+    },
+    {
+      "lang": "gu",
+      "readingSize": "Standard",
+      "captureProofSha256": "84061ffd7092f78aeae714cd038cb162efb4ab565bdf17830eabe062a55ec12f",
+      "rawEvidenceDirectory": "tmp/durga-native/gu-M/",
+      "pageVisits": 87,
+      "endingVisits": 14,
+      "screenshots": 188,
+      "screenshotManifestSha256": "ebe202875b8dd69e205683165bb808fdb4cab554e9b49e5d452636ae3178dbc9",
+      "screenshotManifestEncoding": "SHA-256 of JSON.stringify(sorted array of {name,sha256})",
+      "manualReview": "All 17 caption/ending native contact sheets reviewed. Full painted scenes reviewed in Hindi Standard and matched across all other combinations.",
+      "fullArtComparison": {
+        "baseline": "hi-M",
+        "images": 87,
+        "verticalRegistrationPx": -4,
+        "maximumMeanPixelDifference": 0.6336941340782123,
+        "outliersAbove2": 0
+      }
+    },
+    {
+      "lang": "gu",
+      "readingSize": "Large",
+      "captureProofSha256": "4d380602f1bcbcf28b8e1f70c8f10a539d4fc90b1c50e27ed31821bc0a5ff8d0",
+      "rawEvidenceDirectory": "tmp/durga-native/gu-L/",
+      "pageVisits": 87,
+      "endingVisits": 14,
+      "screenshots": 188,
+      "screenshotManifestSha256": "173b9e227172e7fef7754a601867725cf90620f09a30f2aa90e5d9f552a0cfaf",
+      "screenshotManifestEncoding": "SHA-256 of JSON.stringify(sorted array of {name,sha256})",
+      "manualReview": "All 17 caption/ending native contact sheets reviewed. Full painted scenes reviewed in Hindi Standard and matched across all other combinations.",
+      "fullArtComparison": {
+        "baseline": "hi-M",
+        "images": 87,
+        "verticalRegistrationPx": -4,
+        "maximumMeanPixelDifference": 0.6156657355679702,
+        "outliersAbove2": 0
+      }
+    },
+    {
+      "lang": "kn",
+      "readingSize": "Standard",
+      "captureProofSha256": "e8a17c0f528486d4344f38285c8dd3df48714daa7eeb13aac9e9e576faf8e477",
+      "rawEvidenceDirectory": "tmp/durga-native/kn-M/",
+      "pageVisits": 87,
+      "endingVisits": 14,
+      "screenshots": 188,
+      "screenshotManifestSha256": "191bbf3956a19ff55a8a23f83d879fb8e761c0d03f4298f8219b9da202037b4f",
+      "screenshotManifestEncoding": "SHA-256 of JSON.stringify(sorted array of {name,sha256})",
+      "manualReview": "All 17 caption/ending native contact sheets reviewed. Full painted scenes reviewed in Hindi Standard and matched across all other combinations.",
+      "fullArtComparison": {
+        "baseline": "hi-M",
+        "images": 87,
+        "verticalRegistrationPx": -4,
+        "maximumMeanPixelDifference": 0.6156657355679702,
+        "outliersAbove2": 0
+      }
+    },
+    {
+      "lang": "kn",
+      "readingSize": "Large",
+      "captureProofSha256": "bb2d4e0ab8d86ea01c3e7e6196120d286e343f1d81dfc53f57631b65c86b18da",
+      "rawEvidenceDirectory": "tmp/durga-native/kn-L/",
+      "pageVisits": 87,
+      "endingVisits": 14,
+      "screenshots": 188,
+      "screenshotManifestSha256": "9ec7a673ecb6e694478a47b1b40e816f90770b86d92d5298d2e8da3c24cf4524",
+      "screenshotManifestEncoding": "SHA-256 of JSON.stringify(sorted array of {name,sha256})",
+      "manualReview": "All 17 caption/ending native contact sheets reviewed. Full painted scenes reviewed in Hindi Standard and matched across all other combinations.",
+      "fullArtComparison": {
+        "baseline": "hi-M",
+        "images": 87,
+        "verticalRegistrationPx": -4,
+        "maximumMeanPixelDifference": 0.6336941340782123,
+        "outliersAbove2": 0
+      }
+    }
+  ],
+  "focusedMaestroChecks": [
+    {
+      "id": "gesture-smoke",
+      "result": "passed",
+      "scope": "Actual Hindi-to-English language tap preserves Raktabeej page 3; horizontal swipe reaches page 4 and returns to page 3.",
+      "completedCommands": 10,
+      "flowSha256": "a9ac0bfa893da49f4eb34b7d2287b82bf49ff099814d15bb6f628af6505e9d3e",
+      "logSha256": "f8c74695b7827374589c4e504f6115c89cfac67f658405b583f489ab090d172a",
+      "commandsSha256": "583b3c40c2d1f809be61577ff3107b4ccb15f2eab16eba617b2f0a6c31fe1c5a",
+      "screenshots": [
+        {
+          "path": "tmp/durga-native/gesture-smoke-results/screenshots/durga-gesture-page-preserved.png",
+          "sha256": "b77dbadc6b9aa19d7a07328312c4f3dda3bd6cdc400d9fd9f24febff0080084a"
+        }
+      ]
+    },
+    {
+      "id": "catalog-smoke",
+      "result": "passed",
+      "scope": "Actual Maa Durga library tap, Navaratri shelf, scroll to Raktabeej, open reader page 1, return to same shelf, scroll to Shakambhari, return to deity library.",
+      "completedCommands": 16,
+      "flowSha256": "168755857343925f022dfac59a251df0e8878823a0008749f6f46fab1607c2fc",
+      "logSha256": "570a7a47cad0ec9d9ce02da72ccbb7679b74e59de253c526e01ef74feecd7b32",
+      "commandsSha256": "b3d922e1b60808ab024330ecedf75167cc2d6d8be0fcbcacd2739cb0814e315d",
+      "screenshots": [
+        {
+          "path": "tmp/durga-native/catalog-smoke-results/screenshots/durga-native-shelf-ending.png",
+          "sha256": "6df73f0a0270f1445059e1e7bf9fbebc0a665f0189619f08bab90568d77864cc"
+        },
+        {
+          "path": "tmp/durga-native/catalog-smoke-results/screenshots/durga-native-shelf-raktabeej.png",
+          "sha256": "c1ca2a80b39142b2c899bbd43e42c71682785fe75b0e38574c89cbc9fed5bcf8"
+        },
+        {
+          "path": "tmp/durga-native/catalog-smoke-results/screenshots/durga-native-shelf-top.png",
+          "sha256": "fd32147e6cf49118a9bd13dc323716d6b18c3cd638389056f97d5d86e99d59aa"
+        }
+      ]
+    }
+  ],
+  "pending": [
+    "Remote R2 upload and fresh-cache CDN/offline verification",
+    "Full 696-page Maestro end-to-end gesture run",
+    "Physical iOS and Android reader/gesture checks",
+    "Independent Gujarati/Kannada editorial approval",
+    "Product/editorial sign-off on children adaptations and art"
+  ],
+  "snapshotPhase": "Original integration, before main 85a95731 and the subsequent §29.1 reframe. Historical frame hash and screenshots intentionally retained.",
+  "postChangeEvidence": "layout-native-evidence.json"
+}

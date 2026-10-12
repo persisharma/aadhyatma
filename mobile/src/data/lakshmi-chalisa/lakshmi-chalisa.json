@@ -1,0 +1,800 @@
+{
+  "titleHi": "श्री लक्ष्मी चालीसा",
+  "titleEn": "Lakshmi Chalisa",
+  "subtitleHi": "मातु लक्ष्मी करि कृपा",
+  "subtitleEn": "Maatu Lakshmi Kari Kripa",
+  "language": "hi-en",
+  "script": "Devanagari + Latin",
+  "source": {
+    "baseText": "Traditional Shri Lakshmi Chalisa (Ramdas recension, 'Maatu Lakshmi kari kripa' version), cross-verified line by line against Drik Panchang, Bhakt Vatsal, Brahma Bhakti, Aarti Sandhya, Templepedia and SanskritDocuments. Structure follows the dominant web/devotional recension: opening Doha + Sortha, 39 chaupai couplets, two closing dohas. Notes on majority readings: (1) Opening — the majority of sources (Drik Panchang, Bhakt Vatsal, Brahma Bhakti, Aarti Sandhya, Templepedia, Jagran) open with a Doha followed by a Sortha ('यही मोर अरदास…'); a minority (SanskritDocuments, Pavitra Granth) instead use a second doha 'सिंधु सुता विष्णुप्रिये…॥ टेक ॥'. The majority Doha+Sortha opening is used here. (2) This recension carries 39 chaupai couplets, not a full 40 — the verified text was not padded to reach 40. (3) चौपाई 32 reads 'जय जय जय लक्ष्मी भवानी' in the majority (Drik Panchang, Bhakt Vatsal, Brahma Bhakti, Templepedia); SanskritDocuments reads 'महारानी'. Majority 'भवानी' is used.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/chalisa/lakshmi-mata/lakshmi-mata-chalisa.html",
+      "https://www.bhaktvatsal.com/chalisa/shri-laxmi-chalisa",
+      "https://brahmabhakti.com/chalisa-sangrah/lakshmi-chalisa/",
+      "https://sanskritdocuments.org/doc_z_otherlang_hindi/laxmi40.html"
+    ],
+    "retrievedOn": "2026-06-23"
+  },
+  "counts": {
+    "openingDohas": 2,
+    "chaupais": 39,
+    "closingDohas": 2,
+    "totalVerses": 43
+  },
+  "verses": [
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "मातु लक्ष्मी करि कृपा, करो हृदय में वास।",
+        "मनोकामना सिद्ध करि, पुरवहु मेरी आस॥"
+      ],
+      "linesEn": [
+        "Maatu lakshmi kari kripa, karo hriday men vaas.",
+        "Manokaamanaa siddha kari, puravahu meree aas."
+      ],
+      "meaningHi": "हे माता लक्ष्मी, कृपा करके मेरे हृदय में निवास कीजिए; मेरी मनोकामना सिद्ध कर मेरी आशा पूर्ण कीजिए।",
+      "meaningEn": "O Mother Lakshmi, in your grace come dwell within my heart; fulfil my heart's wish and complete my hope."
+    },
+    {
+      "id": "opening-sortha",
+      "type": "doha",
+      "section": "opening",
+      "number": 2,
+      "labelHi": "सोरठा",
+      "labelEn": "Sortha",
+      "lines": [
+        "यही मोर अरदास, हाथ जोड़ विनती करुं।",
+        "सब विधि करौ सुवास, जय जननि जगदम्बिका॥"
+      ],
+      "linesEn": [
+        "Yahee mora ardaasa, haatha joda vinatee karun.",
+        "Saba vidhi karau suvaasa, jaya janani jagadambikaa."
+      ],
+      "meaningHi": "हे जगदम्बिका माता, आपकी जय हो; हाथ जोड़कर यही मेरी विनती और प्रार्थना है कि आप मेरा जीवन हर प्रकार से सुख और सुगंध से भर दें।",
+      "meaningEn": "O Mother Jagadambika, victory to you; with folded hands this is my plea and prayer — in every way fill my life with sweetness and fragrance."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "सिन्धु सुता मैं सुमिरौं तोही।",
+        "ज्ञान, बुद्धि, विद्या दो मोही॥"
+      ],
+      "linesEn": [
+        "Sindhu sutaa main sumiraun tohee.",
+        "Gyaana, buddhi, vidyaa do mohee."
+      ],
+      "meaningHi": "हे समुद्र की पुत्री (लक्ष्मी), मैं आपका स्मरण करता हूँ; मुझे ज्ञान, बुद्धि और विद्या प्रदान कीजिए।",
+      "meaningEn": "O daughter of the ocean (Lakshmi), I remember you; grant me knowledge, intellect and learning."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "तुम समान नहिं कोई उपकारी।",
+        "सब विधि पुरवहु आस हमारी॥"
+      ],
+      "linesEn": [
+        "Tuma samaana nahin koee upakaaree.",
+        "Saba vidhi puravahu aasa hamaaree."
+      ],
+      "meaningHi": "आपके समान उपकार करने वाला कोई नहीं है; हर प्रकार से आप हमारी आशा पूर्ण कीजिए।",
+      "meaningEn": "There is none so benevolent as you; in every way fulfil our hope."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "जय जय जगत जननि जगदम्बा।",
+        "सबकी तुम ही हो अवलम्बा॥"
+      ],
+      "linesEn": [
+        "Jaya jaya jagata janani jagadambaa.",
+        "Sabakee tuma hee ho avalambaa."
+      ],
+      "meaningHi": "हे जगत की जननी जगदम्बा, आपकी जय हो; आप ही सबका आश्रय हैं।",
+      "meaningEn": "Victory, victory to the mother of the world, Jagadamba; you alone are the support of all."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "तुम ही हो सब घट घट वासी।",
+        "विनती यही हमारी खासी॥"
+      ],
+      "linesEn": [
+        "Tuma hee ho saba ghata ghata vaasee.",
+        "Vinatee yahee hamaaree khaasee."
+      ],
+      "meaningHi": "आप ही प्रत्येक हृदय में निवास करती हैं; हमारी विशेष विनती यही है।",
+      "meaningEn": "You alone dwell in every heart; this is our special entreaty."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "जगजननी जय सिन्धु कुमारी।",
+        "दीनन की तुम हो हितकारी॥"
+      ],
+      "linesEn": [
+        "Jagajananee jaya sindhu kumaaree.",
+        "Deenana kee tuma ho hitakaaree."
+      ],
+      "meaningHi": "हे जगज्जननी, समुद्र की कन्या, आपकी जय हो; आप दीन-दुखियों का हित करने वाली हैं।",
+      "meaningEn": "O mother of the world, daughter of the ocean, victory to you; you are the benefactor of the humble and afflicted."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "विनवौं नित्य तुमहिं महारानी।",
+        "कृपा करौ जग जननि भवानी॥"
+      ],
+      "linesEn": [
+        "Vinavaun nitya tumahin mahaaraanee.",
+        "Kripaa karau jaga janani bhavaanee."
+      ],
+      "meaningHi": "हे महारानी, मैं नित्य आपकी विनती करता हूँ; हे जगज्जननी भवानी, मुझ पर कृपा कीजिए।",
+      "meaningEn": "O great queen, daily I make my plea to you; O mother of the world, Bhavani, bestow your grace upon me."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "केहि विधि स्तुति करौं तिहारी।",
+        "सुधि लीजै अपराध बिसारी॥"
+      ],
+      "linesEn": [
+        "Kehi vidhi stuti karaun tihaaree.",
+        "Sudhi leejai aparaadha bisaaree."
+      ],
+      "meaningHi": "मैं किस प्रकार आपकी स्तुति करूँ? मेरे अपराधों को भुलाकर मेरी सुध लीजिए।",
+      "meaningEn": "In what manner can I sing your praise? Forgetting my faults, take heed of me."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "कृपा दृष्टि चितवो मम ओरी।",
+        "जगजननी विनती सुन मोरी॥"
+      ],
+      "linesEn": [
+        "Kripaa drishti chitavo mama oree.",
+        "Jagajananee vinatee suna moree."
+      ],
+      "meaningHi": "अपनी कृपादृष्टि मेरी ओर डालिए; हे जगज्जननी, मेरी विनती सुनिए।",
+      "meaningEn": "Cast your gracious glance towards me; O mother of the world, hear my entreaty."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "ज्ञान बुद्धि जय सुख की दाता।",
+        "संकट हरो हमारी माता॥"
+      ],
+      "linesEn": [
+        "Gyaana buddhi jaya sukha kee daataa.",
+        "Sankata haro hamaaree maataa."
+      ],
+      "meaningHi": "हे ज्ञान, बुद्धि और सुख की दात्री, आपकी जय हो; हे माता, हमारे संकट हर लीजिए।",
+      "meaningEn": "Victory to you, giver of knowledge, intellect and happiness; O Mother, take away our troubles."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "क्षीरसिन्धु जब विष्णु मथायो।",
+        "चौदह रत्न सिन्धु में पायो॥"
+      ],
+      "linesEn": [
+        "Ksheerasindhu jaba vishnu mathaayo.",
+        "Chaudaha ratna sindhu men paayo."
+      ],
+      "meaningHi": "जब भगवान विष्णु ने क्षीरसागर का मंथन कराया, तब उस समुद्र में से चौदह रत्न प्राप्त हुए।",
+      "meaningEn": "When Lord Vishnu had the ocean of milk churned, fourteen jewels were obtained from that sea."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "चौदह रत्न में तुम सुखरासी।",
+        "सेवा कियो प्रभु बनि दासी॥"
+      ],
+      "linesEn": [
+        "Chaudaha ratna men tuma sukharaasee.",
+        "Sevaa kiyo prabhu bani daasee."
+      ],
+      "meaningHi": "उन चौदह रत्नों में आप सुख की राशि (रूप में प्रकट) थीं; आपने दासी बनकर प्रभु (विष्णु) की सेवा की।",
+      "meaningEn": "Among those fourteen jewels you were the very treasure of bliss; becoming his handmaid, you served the Lord (Vishnu)."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "जब जब जन्म जहां प्रभु लीन्हा।",
+        "रूप बदल तहं सेवा कीन्हा॥"
+      ],
+      "linesEn": [
+        "Jaba jaba janma jahaan prabhu leenhaa.",
+        "Roopa badala tahan sevaa keenhaa."
+      ],
+      "meaningHi": "जब-जब और जहाँ-जहाँ प्रभु (विष्णु) ने अवतार लिया, वहाँ-वहाँ आपने भी रूप बदलकर उनकी सेवा की।",
+      "meaningEn": "Whenever and wherever the Lord (Vishnu) took birth, there too you changed your form and served him."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "स्वयं विष्णु जब नर तनु धारा।",
+        "लीन्हेउ अवधपुरी अवतारा॥"
+      ],
+      "linesEn": [
+        "Svayam vishnu jaba nara tanu dhaaraa.",
+        "Leenheu avadhapuree avataaraa."
+      ],
+      "meaningHi": "जब स्वयं विष्णु ने मनुष्य का शरीर धारण किया और अयोध्यापुरी में (राम रूप में) अवतार लिया,",
+      "meaningEn": "When Vishnu himself took on a human body and was born (as Ram) in the city of Ayodhya,"
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "तब तुम प्रगट जनकपुर माहीं।",
+        "सेवा कियो हृदय पुलकाहीं॥"
+      ],
+      "linesEn": [
+        "Taba tuma pragata janakapura maaheen.",
+        "Sevaa kiyo hridaya pulakaaheen."
+      ],
+      "meaningHi": "तब आप जनकपुर में (सीता रूप में) प्रकट हुईं और पुलकित हृदय से (प्रभु की) सेवा की।",
+      "meaningEn": "then you appeared (as Sita) in Janakpur and, with a heart thrilled in joy, served the Lord."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "अपनाया तोहि अन्तर्यामी।",
+        "विश्व विदित त्रिभुवन की स्वामी॥"
+      ],
+      "linesEn": [
+        "Apanaayaa tohi antaryaamee.",
+        "Vishva vidita tribhuvana kee svaamee."
+      ],
+      "meaningHi": "अन्तर्यामी प्रभु ने आपको अपनाया; आप तीनों लोकों की स्वामिनी हैं, यह सारे विश्व में विख्यात है।",
+      "meaningEn": "The all-knowing Lord took you as his own; that you are the mistress of the three worlds is known throughout the universe."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "तुम सम प्रबल शक्ति नहीं आनी।",
+        "कहं लौ महिमा कहौं बखानी॥"
+      ],
+      "linesEn": [
+        "Tuma sama prabala shakti naheen aanee.",
+        "Kahan lau mahimaa kahaun bakhaanee."
+      ],
+      "meaningHi": "आपके समान प्रबल कोई दूसरी शक्ति नहीं है; मैं आपकी महिमा कहाँ तक बखानकर कहूँ?",
+      "meaningEn": "There is no other power so mighty as you; how far can I describe and recount your glory?"
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "मन क्रम वचन करै सेवकाई।",
+        "मन इच्छित वाञ्छित फल पाई॥"
+      ],
+      "linesEn": [
+        "Mana krama vachana karai sevakaaee.",
+        "Mana ichchhita vaanchhita phala paaee."
+      ],
+      "meaningHi": "जो मन, कर्म और वचन से आपकी सेवा करता है, वह मन-इच्छित और वांछित फल पाता है।",
+      "meaningEn": "Whoever serves you in thought, deed and word obtains the fruit their heart desires and longs for."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "तजि छल कपट और चतुराई।",
+        "पूजहिं विविध भाँति मनलाई॥"
+      ],
+      "linesEn": [
+        "Taji chhala kapata aura chaturaaee.",
+        "Poojahin vividha bhaanti manalaaee."
+      ],
+      "meaningHi": "जो छल, कपट और चतुराई त्यागकर मन लगाकर विविध प्रकार से आपकी पूजा करते हैं,",
+      "meaningEn": "Those who forsake deceit, guile and cunning and worship you wholeheartedly in many ways,"
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "और हाल मैं कहौं बुझाई।",
+        "जो यह पाठ करै मन लाई॥"
+      ],
+      "linesEn": [
+        "Aura haala main kahaun bujhaaee.",
+        "Jo yaha paatha karai mana laaee."
+      ],
+      "meaningHi": "और एक बात मैं समझाकर कहता हूँ — जो मन लगाकर इस पाठ को करता है,",
+      "meaningEn": "And one more thing I explain — whoever recites this prayer with a devoted mind,"
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "ताको कोई कष्ट नोई।",
+        "मन इच्छित पावै फल सोई॥"
+      ],
+      "linesEn": [
+        "Taako koee kashta noee.",
+        "Mana ichchhita paavai phala soee."
+      ],
+      "meaningHi": "उसे कोई कष्ट नहीं रहता; वह अपने मन-इच्छित फल को प्राप्त करता है।",
+      "meaningEn": "no affliction remains for him; he attains the very fruit his heart desires."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "त्राहि त्राहि जय दुःख निवारिणि।",
+        "त्रिविध ताप भव बन्धन हारिणी॥"
+      ],
+      "linesEn": [
+        "Traahi traahi jaya dukha nivaarini.",
+        "Trividha taapa bhava bandhana haarinee."
+      ],
+      "meaningHi": "हे दुःखों को दूर करने वाली, आपकी जय हो — रक्षा कीजिए, रक्षा कीजिए; आप तीनों तापों और संसार-बन्धन को हरने वाली हैं।",
+      "meaningEn": "Save me, save me, victory to you, remover of sorrows; you dispel the three afflictions and the bondage of worldly existence."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "जो चालीसा पढ़ै पढ़ावै।",
+        "ध्यान लगाकर सुनै सुनावै॥"
+      ],
+      "linesEn": [
+        "Jo chaaleesaa padhai padhaavai.",
+        "Dhyaana lagaakara sunai sunaavai."
+      ],
+      "meaningHi": "जो इस चालीसा को पढ़ता और पढ़ाता है, तथा ध्यान लगाकर सुनता और सुनाता है,",
+      "meaningEn": "Whoever reads this Chalisa and has it read, and listens to it and recites it with focused attention,"
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "ताकौ कोई न रोग सतावै।",
+        "पुत्र आदि धन सम्पत्ति पावै॥"
+      ],
+      "linesEn": [
+        "Taakau koee na roga sataavai.",
+        "Putra aadi dhana sampatti paavai."
+      ],
+      "meaningHi": "उसे कोई रोग नहीं सताता; वह पुत्र आदि संतान तथा धन-सम्पत्ति प्राप्त करता है।",
+      "meaningEn": "no disease torments him; he gains children and the like, and wealth and prosperity."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "पुत्रहीन अरु सम्पति हीना।",
+        "अन्ध बधिर कोढ़ी अति दीना॥"
+      ],
+      "linesEn": [
+        "Putraheena aru sampati heenaa.",
+        "Andha badhira kodhee ati deenaa."
+      ],
+      "meaningHi": "जो पुत्रहीन और सम्पत्तिहीन है, अथवा अंधा, बहरा, कोढ़ी और अत्यन्त दीन है,",
+      "meaningEn": "One who is without a son and without wealth, or blind, deaf, leprous and utterly wretched,"
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "विप्र बोलाय कै पाठ करावै।",
+        "शंका दिल में कभी न लावै॥"
+      ],
+      "linesEn": [
+        "Vipra bolaaya kai paatha karaavai.",
+        "Shankaa dila men kabhee na laavai."
+      ],
+      "meaningHi": "वह ब्राह्मण को बुलाकर इस पाठ को कराए और मन में कभी कोई संदेह न लाए।",
+      "meaningEn": "let him call a Brahmin and have this recitation performed, and never let doubt enter his heart."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "पाठ करावै दिन चालीसा।",
+        "ता पर कृपा करैं गौरीसा॥"
+      ],
+      "linesEn": [
+        "Paatha karaavai dina chaaleesaa.",
+        "Taa para kripaa karain gaureesaa."
+      ],
+      "meaningHi": "जो चालीस दिन तक यह पाठ कराता है, उस पर गौरीपति (शिव) भी कृपा करते हैं।",
+      "meaningEn": "Whoever has this recited for forty days — upon him even Gaurisha (Shiva, lord of Gauri) bestows grace."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "सुख सम्पत्ति बहुत सी पावै।",
+        "कमी नहीं काहू की आवै॥"
+      ],
+      "linesEn": [
+        "Sukha sampatti bahuta see paavai.",
+        "Kamee naheen kaahoo kee aavai."
+      ],
+      "meaningHi": "वह बहुत सुख और सम्पत्ति प्राप्त करता है; उसे किसी वस्तु की कमी नहीं आती।",
+      "meaningEn": "He gains much happiness and prosperity; he never falls short of anything."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "बारह मास करै जो पूजा।",
+        "तेहि सम धन्य और नहिं दूजा॥"
+      ],
+      "linesEn": [
+        "Baaraha maasa karai jo poojaa.",
+        "Tehi sama dhanya aura nahin doojaa."
+      ],
+      "meaningHi": "जो बारहों मास आपकी पूजा करता है, उसके समान धन्य दूसरा कोई नहीं है।",
+      "meaningEn": "Whoever worships you through all twelve months — none other is so blessed as he."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "प्रतिदिन पाठ करै मन माही।",
+        "उन सम कोइ जग में कहुं नाहीं॥"
+      ],
+      "linesEn": [
+        "Pratidina paatha karai mana maahee.",
+        "Una sama koi jaga men kahun naaheen."
+      ],
+      "meaningHi": "जो प्रतिदिन मन लगाकर यह पाठ करता है, उसके समान संसार में और कोई नहीं है।",
+      "meaningEn": "Whoever recites this daily with a heartfelt mind — there is none like him anywhere in the world."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "बहुविधि क्या मैं करौं बड़ाई।",
+        "लेय परीक्षा ध्यान लगाई॥"
+      ],
+      "linesEn": [
+        "Bahuvidhi kyaa main karaun badaaee.",
+        "Leya pareekshaa dhyaana lagaaee."
+      ],
+      "meaningHi": "मैं बहुत प्रकार से आपकी कितनी बड़ाई करूँ? ध्यान लगाकर आप स्वयं इसकी परीक्षा ले लीजिए।",
+      "meaningEn": "In how many ways shall I sing your greatness? Fixing your mind, put it to the test yourself."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "करि विश्वास करै व्रत नेमा।",
+        "होय सिद्ध उपजै उर प्रेमा॥"
+      ],
+      "linesEn": [
+        "Kari vishvaasa karai vrata nemaa.",
+        "Hoya siddha upajai ura premaa."
+      ],
+      "meaningHi": "जो विश्वासपूर्वक व्रत और नियम का पालन करता है, उसका कार्य सिद्ध होता है और हृदय में प्रेम उपजता है।",
+      "meaningEn": "Whoever keeps the vow and observance with faith — his purpose is fulfilled and love wells up in his heart."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "जय जय जय लक्ष्मी भवानी।",
+        "सब में व्यापित हो गुण खानी॥"
+      ],
+      "linesEn": [
+        "Jaya jaya jaya lakshmi bhavaanee.",
+        "Saba men vyaapita ho guna khaanee."
+      ],
+      "meaningHi": "हे लक्ष्मी भवानी, आपकी जय हो, जय हो, जय हो; आप गुणों की खान हैं और सबमें व्याप्त हैं।",
+      "meaningEn": "Victory, victory, victory to you, Lakshmi Bhavani; mine of all virtues, you pervade all things."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "तुम्हरो तेज प्रबल जग माहीं।",
+        "तुम सम कोउ दयालु कहुं नाहिं॥"
+      ],
+      "linesEn": [
+        "Tumharo teja prabala jaga maaheen.",
+        "Tuma sama kou dayaalu kahun naahin."
+      ],
+      "meaningHi": "संसार में आपका तेज अत्यन्त प्रबल है; आपके समान दयालु और कोई कहीं नहीं है।",
+      "meaningEn": "Your splendour is mighty in the world; nowhere is there any so compassionate as you."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "मोहि अनाथ की सुधि अब लीजै।",
+        "संकट काटि भक्ति मोहि दीजै॥"
+      ],
+      "linesEn": [
+        "Mohi anaatha kee sudhi aba leejai.",
+        "Sankata kaati bhakti mohi deejai."
+      ],
+      "meaningHi": "मुझ अनाथ की अब सुध लीजिए; मेरे संकट काटकर मुझे अपनी भक्ति प्रदान कीजिए।",
+      "meaningEn": "Now take heed of me, the helpless one; cut away my troubles and grant me devotion to you."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "भूल चूक करि क्षमा हमारी।",
+        "दर्शन दीजै दशा निहारी॥"
+      ],
+      "linesEn": [
+        "Bhoola chooka kari kshamaa hamaaree.",
+        "Darshana deejai dashaa nihaaree."
+      ],
+      "meaningHi": "मेरी भूल-चूक क्षमा कीजिए; मेरी दशा देखकर मुझे दर्शन दीजिए।",
+      "meaningEn": "Forgive my errors and lapses; seeing my plight, grant me your sight."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "बिन दर्शन व्याकुल अधिकारी।",
+        "तुमहि अछत दुःख सहते भारी॥"
+      ],
+      "linesEn": [
+        "Bina darshana vyaakula adhikaaree.",
+        "Tumahi achhata dukha sahate bhaaree."
+      ],
+      "meaningHi": "आपके दर्शन के बिना मैं अत्यन्त व्याकुल हूँ; आपके रहते हुए भी मैं भारी दुःख सहता हूँ।",
+      "meaningEn": "Without your sight I, your servant, am sorely distressed; though you are present, I bear grievous sorrow."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "नहिं मोहिं ज्ञान बुद्धि है तन में।",
+        "सब जानत हो अपने मन में॥"
+      ],
+      "linesEn": [
+        "Nahin mohin gyaana buddhi hai tana men.",
+        "Saba jaanata ho apane mana men."
+      ],
+      "meaningHi": "मुझमें न ज्ञान है और न बुद्धि; यह सब आप अपने मन में स्वयं जानती हैं।",
+      "meaningEn": "Neither knowledge nor intellect is in me; all this you know within your own heart."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "रूप चतुर्भुज करके धारण।",
+        "कष्ट मोर अब करहु निवारण॥"
+      ],
+      "linesEn": [
+        "Roopa chaturbhuja karake dhaarana.",
+        "Kashta mora aba karahu nivaarana."
+      ],
+      "meaningHi": "अपना चतुर्भुज रूप धारण करके अब मेरे कष्टों का निवारण कीजिए।",
+      "meaningEn": "Assuming your four-armed form, now put an end to my afflictions."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "केहि प्रकार मैं करौं बड़ाई।",
+        "ज्ञान बुद्धि मोहि नहिं अधिकाई॥"
+      ],
+      "linesEn": [
+        "Kehi prakaara main karaun badaaee.",
+        "Gyaana buddhi mohi nahin adhikaaee."
+      ],
+      "meaningHi": "मैं किस प्रकार आपकी बड़ाई करूँ? मुझमें इतना ज्ञान और बुद्धि नहीं है।",
+      "meaningEn": "In what manner can I sing your greatness? I have no great store of knowledge or intellect."
+    },
+    {
+      "id": "closing-doha-1",
+      "type": "doha",
+      "section": "closing",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "त्राहि त्राहि दुःख हारिणी, हरो वेगि सब त्रास।",
+        "जयति जयति जय लक्ष्मी, करो शत्रु को नाश॥"
+      ],
+      "linesEn": [
+        "Traahi traahi dukha haarinee, haro vegi saba traasa.",
+        "Jayati jayati jaya lakshmi, karo shatru ko naasha."
+      ],
+      "meaningHi": "हे दुःखों को हरने वाली, रक्षा कीजिए, रक्षा कीजिए; शीघ्र ही मेरे सब भय दूर कीजिए। हे लक्ष्मी, आपकी जय हो, जय हो; मेरे शत्रुओं का नाश कीजिए।",
+      "meaningEn": "O remover of sorrows, save me, save me; swiftly dispel all my fears. Victory, victory to you, Lakshmi; destroy my enemies."
+    },
+    {
+      "id": "closing-doha-2",
+      "type": "doha",
+      "section": "closing",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "रामदास धरि ध्यान नित, विनय करत कर जोर।",
+        "मातु लक्ष्मी दास पर, करहु दया की कोर॥"
+      ],
+      "linesEn": [
+        "Raamadaasa dhari dhyaana nita, vinaya karata kara jora.",
+        "Maatu lakshmi daasa para, karahu dayaa kee kora."
+      ],
+      "meaningHi": "रामदास नित्य ध्यान धारण कर, हाथ जोड़कर विनती करते हैं — हे माता लक्ष्मी, अपने इस दास पर दया की एक कोर (दृष्टि) कीजिए।",
+      "meaningEn": "Ramdas, ever holding you in meditation, prays with folded hands — O Mother Lakshmi, cast but a fraction of your mercy upon this servant."
+    }
+  ]
+}

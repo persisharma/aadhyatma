@@ -5,7 +5,20 @@
  * Run: npx tsx src/data/__tests__/theerth.test.ts
  */
 import assert from 'node:assert/strict';
-import { temples, getTempleById, otherFamous, templesInGroup } from '../theerth/temples';
+import {
+  temples,
+  templesWithDetails,
+  getTempleById,
+  getTempleDetailById,
+  otherFamous,
+  templesInGroup,
+} from '../theerth/temples';
+import { relatedReadingsForDeity } from '../theerth/relatedReadings';
+
+// `temples` is rows only — the prose loads behind a require() thunk so it stays
+// off the launch graph (see temples.ts). Anything asserting on significance,
+// originStory or sections reads from here instead.
+const detailedTemples = templesWithDetails();
 import { library } from '../texts';
 import {
   INDIA_PROJECTION,
@@ -97,7 +110,7 @@ for (const t of temples) {
 }
 
 // ─── 6. Sourced detail prose exists for every temple ──────────────────────────
-for (const t of temples) {
+for (const t of detailedTemples) {
   for (const [key, value] of Object.entries({
     significanceHi: t.significanceHi,
     significanceEn: t.significanceEn,
@@ -115,7 +128,7 @@ for (const t of temples) {
 }
 
 // ─── 6a. Optional extended sections follow the same sourced-prose contract ────
-for (const t of temples) {
+for (const t of detailedTemples) {
   const sections = t.sections ?? [];
   const sectionIds = sections.map((s) => s.id);
   assert.equal(new Set(sectionIds).size, sectionIds.length, `${t.id}: section ids must be unique`);
@@ -157,7 +170,7 @@ assert.equal(LEGACY_WITHOUT_SECTIONS.size, 60, 'legacy no-sections allowlist is 
 // both ways — a temple that HAS sections must carry the five §12.6 ids in order
 // (enriched legacy rows included, which the old `continue` skipped), and a
 // temple that LACKS them must be one of the 60.
-for (const t of temples) {
+for (const t of detailedTemples) {
   const ids = (t.sections ?? []).map((s) => s.id);
   if (ids.length === 0) {
     assert.ok(
@@ -174,7 +187,7 @@ for (const t of temples) {
 }
 
 // Salasar Balaji ships the first full extended reading: sthapana → form → traditions → melas → yatra.
-const salasar = getTempleById('salasar-balaji');
+const salasar = getTempleDetailById('salasar-balaji');
 assert.ok(salasar, 'salasar-balaji must exist');
 assert.deepEqual(
   (salasar.sections ?? []).map((s) => s.id),
@@ -200,7 +213,7 @@ const RAJASTHAN_WAVE: Record<string, { hi: RegExp; en: RegExp; fact: string }> =
   'vetrimalai-murugan': { hi: /रॉस द्वीप/, en: /1932 CE/, fact: 'founded 1926 CE on Ross Island for the Tamil administrative staff, completed 1932 CE, moved to Port Blair after Independence (1966 by some accounts); no recorded consecration tithi' },
 };
 for (const [id, pin] of Object.entries(RAJASTHAN_WAVE)) {
-  const temple = getTempleById(id);
+  const temple = getTempleDetailById(id);
   assert.ok(temple, `${id} must exist`);
   assert.deepEqual(
     (temple.sections ?? []).map((s) => s.id),
@@ -296,6 +309,40 @@ const famousTheerth = library.find((entry) => entry.id === 'famous-theerth');
 assert.ok(famousTheerth, 'famous-theerth library entry should exist');
 assert.match(famousTheerth.sub, /71 तीर्थ/, 'Hindi famous-theerth subtitle should match temple count');
 assert.match(famousTheerth.subEn, /71 Theerths/, 'English famous-theerth subtitle should match temple count');
+
+// ─── 11. Related readings (design.md §27 item 10) resolve from the deity ──────
+// Every card a temple shows must be an openable chalisa/aarti of its own deity,
+// chalisas before aartis, primary-deity texts before secondary tags. The only
+// temples allowed to show nothing are those whose deity has no shipped
+// chalisa/aarti at all — pinned so a new deity mapping cannot silently go dark.
+for (const temple of temples) {
+  const related = relatedReadingsForDeity(temple.deity);
+  let lastCategoryRank = -1;
+  for (const entry of related) {
+    const rank = ['chalisa', 'aarti'].indexOf(entry.category);
+    assert.ok(rank >= 0, `${temple.id}: ${entry.id} is not a chalisa/aarti`);
+    assert.ok(rank >= lastCategoryRank, `${temple.id}: chalisas must precede aartis`);
+    lastCategoryRank = rank;
+    assert.equal(entry.status, 'active', `${temple.id}: ${entry.id} is not openable`);
+    assert.ok(!entry.hidden, `${temple.id}: ${entry.id} is hidden`);
+    assert.ok(entry.deities.includes(temple.deity), `${temple.id}: ${entry.id} is not a ${temple.deity} text`);
+  }
+  assert.equal(new Set(related.map((e) => e.id)).size, related.length, `${temple.id}: duplicate cards`);
+}
+const templesWithoutReadings = temples
+  .filter((t) => relatedReadingsForDeity(t.deity).length === 0)
+  .map((t) => t.id)
+  .sort();
+assert.deepEqual(
+  templesWithoutReadings,
+  ['konark-sun'],
+  'only temples whose deity has no shipped chalisa/aarti may hide the block',
+);
+const ramaReadings = relatedReadingsForDeity('rama').map((e) => e.id);
+assert.ok(
+  ramaReadings.indexOf('ram-chalisa') < ramaReadings.indexOf('hanuman-chalisa'),
+  'a Rama temple leads with Ram Chalisa, not the secondary-tagged Hanuman Chalisa',
+);
 
 console.log(
   `✓ theerth data-contract: ${temples.length} temples, ${EXPECTED_STATES.length} states covered, projection aligned, sourced prose present`,

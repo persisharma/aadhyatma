@@ -1,0 +1,31 @@
+{
+  "id": "daan-annapurna-bhiksha",
+  "target": "daan-annapurna",
+  "title": "Daan \u00b7 Annapurna and Shiva",
+  "details": "Retain Shiva seated left offering his bowl, Annapurna seated right ladling rice from the gold vessel, Nandi behind Shiva, Shiva's trident/drum/crescent/snake and tiger-pattern cloth, Annapurna's crown/halo/jewellery/red-and-green sari, the offering's hand-to-ladle-to-bowl relationship, temple columns and carvings, brass bell, shrine with its small existing Om symbol, lit brass standing lamp, rice/fruit/food vessels and cloth, river boats, Kashi ghats and distant temples, overhead tree leaves, stone paving and petals. Both principal figures have exactly two anatomically connected arms; keep the original hands/feet.",
+  "category": "reader-illustrations",
+  "style": "krishna-storybook-detail-v2",
+  "prompt": "Use case: style-transfer.\nAsset type: compact devotional reader illustration, opaque 2:1 horizontal banner.\nPrimary request: EDIT IMAGE 1. Retain its complete detailed scene and composition; apply only the painted rendering language of images 2 and 3 (the app's Krishna storybook illustrations).\nInput roles: image 1 is the edit target and authoritative composition/detail reference. Images 2 and 3 are STYLE ONLY, never sources of characters, props, setting, framing or portrait dimensions.\nRendering: precise fine warm-brown outlines, graceful expressive faces, muted yet legible pastel colours, soft layered hand-painted shading, matte gold, subtle warm paper grain. Keep all objects and fine craftsmanship readable. Storybook painting can be richly detailed. Do not flatten or simplify the architecture, vegetation, cloth/jewellery patterns or narrative information. Preserve tonal separation, clarity and depth, without a heavy sepia wash.\nInvariants: preserve image 1's exact 2:1 horizontal framing, view angle, relative placement, scale, poses, gestures, facial directions, relationships, foreground/middle-ground/background, complete figures and all significant scene details. Transfer colour/brushwork/shading only. No zoom, recomposition, crop, added blank band, UI, caption, border or watermark. No new characters or iconography. Do not copy the portrait blank parchment bands of the style references.\n\nScene-specific preservation checklist: Retain Shiva seated left offering his bowl, Annapurna seated right ladling rice from the gold vessel, Nandi behind Shiva, Shiva's trident/drum/crescent/snake and tiger-pattern cloth, Annapurna's crown/halo/jewellery/red-and-green sari, the offering's hand-to-ladle-to-bowl relationship, temple columns and carvings, brass bell, shrine with its small existing Om symbol, lit brass standing lamp, rice/fruit/food vessels and cloth, river boats, Kashi ghats and distant temples, overhead tree leaves, stone paving and petals. Both principal figures have exactly two anatomically connected arms; keep the original hands/feet.",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-10/new-banners/daan-annapurna.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-08.webp",
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/mobile/assets/kids-stories/kj-11.webp"
+  ],
+  "transparent_background": false,
+  "approved": false,
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-1dbf84ac-de10-4afd-a6c8-da89b3d9a095.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/raw/daan-annapurna-bhiksha.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-detail/daan-annapurna-bhiksha.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 99228,
+  "sha256": "3ababd21727398228a0fde44ab198cd6bf183d834053de6815c667bc139c0b06",
+  "tool": "built-in image_gen",
+  "status": "draft"
+}

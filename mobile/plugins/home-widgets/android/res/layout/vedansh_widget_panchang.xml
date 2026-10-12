@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- `widget_art` is the optional sketch plate (design.md §59). It is GONE in XML, so
+     a render that never reaches the provider's art step, or fails it, is the flat
+     parchment card exactly as before. The root clips to the rounded parchment shape
+     so the art keeps the card's corners (API 31+, the only versions the provider
+     shows art on); the art's 1dp inset leaves the gold hairline stroke visible. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:padding="16dp" android:gravity="center_vertical"
-    android:background="@drawable/vedansh_widget_background">
-    <TextView android:id="@+id/widget_kicker" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#8A3E0B" android:textSize="10sp" android:textStyle="bold" android:maxLines="2" />
-    <TextView android:id="@+id/widget_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textColor="#1A0E03" android:textSize="20sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="2" />
-    <!-- "तक 10:48 AM": when the headline tithi stops being true. Sits directly
-         under the headline it qualifies, above the vrat line. -->
-    <TextView android:id="@+id/widget_till" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:textColor="#6E5230" android:textSize="11sp" android:textStyle="bold" android:maxLines="1" />
-    <TextView android:id="@+id/widget_subtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="3dp" android:textColor="#6E5230" android:textSize="12sp" android:fontFamily="serif" android:maxLines="2" />
-    <TextView android:id="@+id/widget_meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textColor="#6E5230" android:textSize="11sp" android:textStyle="bold" android:maxLines="1" />
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="ॐ वेदांश़" android:textColor="#A67C34" android:textSize="10sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="1" />
-</LinearLayout>
+    android:background="@drawable/vedansh_widget_background" android:clipToOutline="true">
+    <ImageView android:id="@+id/widget_art" android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_margin="1dp" android:scaleType="centerCrop" android:visibility="gone" android:importantForAccessibility="no" android:contentDescription="@null" />
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical" android:padding="16dp" android:gravity="center_vertical">
+        <TextView android:id="@+id/widget_kicker" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#6B2E05" android:textSize="10sp" android:textStyle="bold" android:maxLines="2" />
+        <TextView android:id="@+id/widget_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textColor="#1A0E03" android:textSize="20sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="2" />
+        <!-- "तक 10:48 AM": when the headline tithi stops being true. Sits directly
+             under the headline it qualifies, above the vrat line. -->
+        <TextView android:id="@+id/widget_till" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:textColor="#4A3420" android:textSize="11sp" android:textStyle="bold" android:maxLines="1" />
+        <TextView android:id="@+id/widget_subtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="3dp" android:textColor="#4A3420" android:textSize="12sp" android:fontFamily="serif" android:maxLines="2" />
+        <TextView android:id="@+id/widget_meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textColor="#4A3420" android:textSize="11sp" android:textStyle="bold" android:maxLines="1" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="ॐ वेदांश़" android:textColor="#7E5A1E" android:textSize="10sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="1" />
+    </LinearLayout>
+</FrameLayout>

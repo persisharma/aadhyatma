@@ -54,6 +54,7 @@ import {
   pitruPakshaWindowAsync,
   primePitruPakshaWindow,
   type PitruPakshaWindow,
+  type Reckoning,
   type TithiRule,
 } from './pitruSmaran';
 
@@ -113,10 +114,18 @@ function startOfLocalDay(d: Date): Date {
  * The disk/memory key for a rule — tithi only, see PRIVACY above. `sarvapitri`
  * entries all share one record, which is correct: they resolve to the same
  * सर्वपितृ अमावस्या.
+ *
+ * The reckoning IS part of the key: a shraddha tithi lands on its aparahna day,
+ * a janma tithi on its sunrise day, and the two differ for about a third of
+ * tithis. Before Oct 2026 both used sunrise and shared one record. The janma
+ * records moved to a `janma:` key; the shraddha keys kept their spelling, and
+ * the sunrise answers still stored under them are cleared by the build-change
+ * reset (`derivedCacheReset`) when this version ships.
  */
-export function smaranRuleKey(rule: SmaranRule): string {
+export function smaranRuleKey(rule: SmaranRule, reckoning: Reckoning = 'shraddha'): string {
   if (rule === 'sarvapitri') return 'sarvapitri';
-  return `m${rule.lunarMonth}-${rule.paksha}-${rule.tithi}`;
+  const tithi = `m${rule.lunarMonth}-${rule.paksha}-${rule.tithi}`;
+  return reckoning === 'janma' ? `janma:${tithi}` : tithi;
 }
 
 /** Future occurrence date-keys per rule, ascending. In-memory mirror of disk. */
@@ -146,8 +155,10 @@ const fetched = new Set<string>();
  * The occurrences already known for `rule` on/after `today`, or null when fewer
  * than `count` are known. Null means "solve"; it never means "no occurrence".
  */
-export function knownOccurrences(rule: SmaranRule, today: Date, count: number): Date[] | null {
-  const future = futureOccurrences(smaranRuleKey(rule), today);
+export function knownOccurrences(
+  rule: SmaranRule, today: Date, count: number, reckoning: Reckoning = 'shraddha'
+): Date[] | null {
+  const future = futureOccurrences(smaranRuleKey(rule, reckoning), today);
   return future.length >= count ? future.slice(0, count) : null;
 }
 
@@ -176,8 +187,10 @@ function futureOccurrences(ruleKey: string, today: Date): Date[] {
  * `count` occurrences on/after `today`, solving and recording only the ones not
  * already known. Returns fewer only when the engine cannot place the rule at all.
  */
-export function ensureOccurrences(rule: SmaranRule, today: Date, count: number): Date[] {
-  const ruleKey = smaranRuleKey(rule);
+export function ensureOccurrences(
+  rule: SmaranRule, today: Date, count: number, reckoning: Reckoning = 'shraddha'
+): Date[] {
+  const ruleKey = smaranRuleKey(rule, reckoning);
   const known = futureOccurrences(ruleKey, today);
   if (known.length >= count) return known.slice(0, count);
 
@@ -188,7 +201,7 @@ export function ensureOccurrences(rule: SmaranRule, today: Date, count: number):
   while (solved.length < count) {
     let found: Date | null = null;
     try {
-      found = nextObservanceForEntry({ tithiRule: rule }, cursor);
+      found = nextObservanceForEntry({ tithiRule: rule }, cursor, {}, reckoning);
     } catch {
       found = null; // a failed solve must never break a screen — see the callers
     }
@@ -206,16 +219,22 @@ export function ensureOccurrences(rule: SmaranRule, today: Date, count: number):
 
 /** Reminder cold misses yield within each annual scan and reuse persisted answers. */
 export async function ensureOccurrencesAsync(
-  rule: SmaranRule, today: Date, count: number, isCancelled: () => boolean = () => false
+  rule: SmaranRule,
+  today: Date,
+  count: number,
+  isCancelled: () => boolean = () => false,
+  reckoning: Reckoning = 'shraddha'
 ): Promise<Date[]> {
   if (isCancelled()) return [];
-  const ruleKey = smaranRuleKey(rule);
+  const ruleKey = smaranRuleKey(rule, reckoning);
   const known = futureOccurrences(ruleKey, today);
   if (known.length >= count) return known.slice(0, count);
   const solved = [...known];
   let cursor = solved.length ? addDays(solved[solved.length - 1], 1) : startOfLocalDay(today);
   while (solved.length < count) {
-    const found = await runInBackground(nextObservanceForEntrySteps({ tithiRule: rule }, cursor), isCancelled).catch(() => null);
+    const found = await runInBackground(
+      nextObservanceForEntrySteps({ tithiRule: rule }, cursor, {}, reckoning), isCancelled
+    ).catch(() => null);
     if (isCancelled()) return [];
     if (!found) break;
     solved.push(found);
@@ -296,10 +315,12 @@ function parseWindow(raw: string): PitruPakshaWindow | null {
  * into memory in ONE `multiGet`, so the screens that follow find their answers
  * already solved. Never throws; a miss just means the caller solves.
  */
-export async function hydrateSmaranSolves(rules: SmaranRule[], today: Date): Promise<void> {
+export async function hydrateSmaranSolves(
+  rules: SmaranRule[], today: Date, reckoning: Reckoning = 'shraddha'
+): Promise<void> {
   const year = today.getFullYear();
   const years = [year, year + 1].filter((y) => !windows.has(y) && !fetched.has(winKey(y)));
-  const ruleKeys = [...new Set(rules.map(smaranRuleKey))].filter(
+  const ruleKeys = [...new Set(rules.map((rule) => smaranRuleKey(rule, reckoning)))].filter(
     (k) => !occurrences.has(k) && !fetched.has(occKey(k))
   );
   // Fully warm already — a disk round trip could not teach this session anything,

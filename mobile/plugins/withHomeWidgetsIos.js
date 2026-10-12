@@ -15,6 +15,15 @@ const FONTS = [
   ['@expo-google-fonts/inter', '600SemiBold/Inter_600SemiBold.ttf'],
 ];
 
+// The widget background plates (design.md §59), generated into the app's assets by
+// scripts/build-widget-backgrounds.mts. The Swift side treats each as optional, so a
+// plate that is absent here only costs that widget its art, never the widget.
+function widgetBackgroundPlates(projectRoot) {
+  const dir = path.join(projectRoot, 'assets', 'widget-backgrounds');
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter((name) => /^vedansh_widget_bg_\w+\.jpg$/.test(name)).sort().map((name) => path.join(dir, name));
+}
+
 function withFiles(config) {
   return withDangerousMod(config, ['ios', async (cfg) => {
     const projectRoot = cfg.modRequest.projectRoot;
@@ -29,6 +38,9 @@ function withFiles(config) {
     for (const [pkg, relative] of FONTS) {
       const file = require.resolve(`${pkg}/${relative}`, { paths: [projectRoot] });
       fs.copyFileSync(file, path.join(destination, path.basename(file)));
+    }
+    for (const plate of widgetBackgroundPlates(projectRoot)) {
+      fs.copyFileSync(plate, path.join(destination, path.basename(plate)));
     }
     return cfg;
   }]);
@@ -71,6 +83,11 @@ function withTarget(config) {
     const fixture = new PbxFile('widget-payload-v1.json');
     fixture.target = target.uuid; fixture.uuid = project.generateUuid(); fixture.fileRef = project.generateUuid();
     project.addToPbxFileReferenceSection(fixture); project.addToPbxBuildFileSection(fixture); project.addToPbxResourcesBuildPhase(fixture); project.addToPbxGroup(fixture, group.uuid);
+    for (const plate of widgetBackgroundPlates(cfg.modRequest.projectRoot)) {
+      const file = new PbxFile(path.basename(plate));
+      file.target = target.uuid; file.uuid = project.generateUuid(); file.fileRef = project.generateUuid();
+      project.addToPbxFileReferenceSection(file); project.addToPbxBuildFileSection(file); project.addToPbxResourcesBuildPhase(file); project.addToPbxGroup(file, group.uuid);
+    }
     project.addFramework('WidgetKit.framework', { target: target.uuid });
     project.addFramework('SwiftUI.framework', { target: target.uuid });
     // EAS only injects DEVELOPMENT_TEAM into the main app target's build

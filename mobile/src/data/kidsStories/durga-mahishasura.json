@@ -1,0 +1,249 @@
+{
+  "id": "durga-mahishasura",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "story",
+  "coverArt": "dm04",
+  "title": {
+    "en": "Durga and Mahishasura",
+    "hi": "दुर्गा और महिषासुर",
+    "gu": "દુર્ગા અને મહિષાસુર",
+    "kn": "ದುರ್ಗೆ ಮತ್ತು ಮಹಿಷಾಸುರ"
+  },
+  "description": {
+    "en": "The devas seek help, and Maa Durga ends Mahishasura’s rule.",
+    "hi": "देवता सहायता माँगते हैं और माँ दुर्गा महिषासुर का अत्याचार समाप्त करती हैं।",
+    "gu": "દેવો મદદ માગે છે અને મા દુર્ગા મહિષાસુરનો અત્યાચાર સમાપ્ત કરે છે.",
+    "kn": "ದೇವತೆಗಳು ನೆರವು ಕೇಳುತ್ತಾರೆ. ದುರ್ಗಾ ಮಾತೆ ಮಹಿಷಾಸುರನ ದೌರ್ಜನ್ಯವನ್ನು ಕೊನೆಗೊಳಿಸುತ್ತಾಳೆ."
+  },
+  "sourceNote": {
+    "en": "An original children’s retelling of Devi Mahatmya 2–4. Battles and deaths are told without graphic detail. The Navadurga tradition associates this victory with Katyayani. Eight arms are a conventional artistic depiction; the takeaway is editorial.",
+    "hi": "देवी माहात्म्य 2–4 का बच्चों के लिए मौलिक सरल रूपांतरण। युद्ध और मृत्यु का वर्णन बिना भयावह विवरण के है। नवदुर्गा परंपरा में यह विजय कात्यायनी से जुड़ी है। चित्रों में आठ भुजाएँ पारंपरिक कलात्मक रूप हैं; सीख संपादकीय है।",
+    "gu": "દેવી માહાત્મ્ય 2–4નું બાળકો માટે મૌલિક સરળ રૂપાંતર. યુદ્ધ અને મૃત્યુની ભયાનક વિગતો ટાળેલી છે. નવદુર્ગા પરંપરામાં આ વિજય કાત્યાયની સાથે જોડાય છે. ચિત્રોમાં આઠ ભુજાઓ પરંપરાગત કલાત્મક રૂપ છે; શીખ સંપાદકીય છે.",
+    "kn": "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 2–4ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ. ಯುದ್ಧ ಮತ್ತು ಮರಣವನ್ನು ಭೀಕರ ವಿವರಗಳಿಲ್ಲದೆ ಹೇಳಲಾಗಿದೆ. ನವದುರ್ಗಾ ಸಂಪ್ರದಾಯದಲ್ಲಿ ಈ ಜಯವನ್ನು ಕಾತ್ಯಾಯನಿಗೆ ಸಂಬಂಧಿಸಲಾಗುತ್ತದೆ. ಎಂಟು ಕೈಗಳು ಸಾಂಪ್ರದಾಯಿಕ ಕಲಾಚಿತ್ರಣ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "Strength becomes a blessing when it protects others. Maa Durga’s victory reminds us to stand against cruelty.",
+    "hi": "दूसरों की रक्षा करने वाली शक्ति वरदान बनती है। माँ दुर्गा की विजय हमें अत्याचार के विरुद्ध खड़ा होना याद दिलाती है।",
+    "gu": "બીજાનું રક્ષણ કરતી શક્તિ આશીર્વાદ બને છે. મા દુર્ગાનો વિજય આપણને અત્યાચાર સામે ઊભા રહેવાનું યાદ અપાવે છે.",
+    "kn": "ಇತರರನ್ನು ಕಾಪಾಡುವ ಶಕ್ತಿ ಆಶೀರ್ವಾದವಾಗುತ್ತದೆ. ದುರ್ಗಾ ಮಾತೆಯ ಜಯ ದೌರ್ಜನ್ಯದ ವಿರುದ್ಧ ನಿಲ್ಲಲು ನಮಗೆ ನೆನಪಿಸುತ್ತದೆ."
+  },
+  "source": {
+    "baseText": "Devi Mahatmya 2–4; Markandeya Purana, Pargiter (1904), cantos 82–84",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/durga700.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117157.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117158.html",
+      "https://www.wisdomlib.org/hinduism/book/the-markandeya-purana/d/doc117161.html",
+      "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-katyayani.html"
+    ],
+    "notes": "Complete causal arc compared with Sanskrit Documents Sanskrit and F. E. Pargiter (1904), Wisdom Library publication. No invented dialogue. Army commanders are summarized, not reassigned; all buffalo/lion/man/elephant/buffalo transformations retained. Conventional eight-armed art differs from the eighteen-armed chapter-2 meditation. Katyayani connection is a Navadurga tradition, not a claim that every episode names that form. Regional editorial review and full native visual checks are recorded separately."
+  },
+  "pages": [
+    {
+      "id": "mahishasura-takes-the-realm",
+      "art": "dm01",
+      "source": "Devi Mahatmya 2.1–7",
+      "title": {
+        "en": "A Realm in Trouble",
+        "hi": "संकट में देवलोक",
+        "gu": "સંકટમાં દેવલોક",
+        "kn": "ದೇವಲೋಕಕ್ಕೆ ಸಂಕಟ"
+      },
+      "text": {
+        "en": "Mahishasura, an asura who could take a buffalo’s form, defeated the devas. He took over their realm and their duties. Driven from their homes, the devas needed help to end his cruel rule.",
+        "hi": "भैंसे का रूप लेने वाला असुर महिषासुर देवताओं को पराजित कर चुका था। उसने उनका लोक और उनके कार्य अपने अधिकार में ले लिए। अपने स्थानों से निकाले गए देवताओं को उसका अत्याचार रोकने के लिए सहायता चाहिए थी।",
+        "gu": "ભેંસાનું રૂપ લઈ શકતો અસુર મહિષાસુર દેવોને હરાવી ચૂક્યો હતો. તેણે તેમનો લોક અને તેમનાં કાર્યો પોતાના અધિકારમાં લઈ લીધાં. પોતાના સ્થાનોથી કાઢી મૂકાયેલા દેવોને તેનો અત્યાચાર રોકવા મદદ જોઈતી હતી.",
+        "kn": "ಎಮ್ಮೆಯ ರೂಪ ತಾಳಬಲ್ಲ ಅಸುರ ಮಹಿಷಾಸುರ ದೇವತೆಗಳನ್ನು ಸೋಲಿಸಿದನು. ಅವರ ಲೋಕವನ್ನೂ ಕರ್ತವ್ಯಗಳನ್ನೂ ತನ್ನ ವಶಕ್ಕೆ ತೆಗೆದುಕೊಂಡನು. ತಮ್ಮ ನೆಲೆಗಳಿಂದ ಹೊರದೂಡಲ್ಪಟ್ಟ ದೇವತೆಗಳಿಗೆ ಅವನ ದೌರ್ಜನ್ಯ ನಿಲ್ಲಿಸಲು ನೆರವು ಬೇಕಾಯಿತು."
+      }
+    },
+    {
+      "id": "devas-seek-help",
+      "art": "dm02",
+      "source": "Devi Mahatmya 2.8–10",
+      "title": {
+        "en": "The Devas Ask for Help",
+        "hi": "देवताओं की पुकार",
+        "gu": "દેવોની વિનંતી",
+        "kn": "ದೇವತೆಗಳ ಮೊರೆ"
+      },
+      "text": {
+        "en": "With Brahma leading them, the devas went to Shiva and Vishnu. They described how Mahishasura had seized their places. Hearing of this injustice, Shiva, Vishnu and the other devas became determined to act.",
+        "hi": "ब्रह्मा के साथ देवता शिव और विष्णु के पास पहुँचे। उन्होंने बताया कि महिषासुर ने उनके स्थान कैसे छीन लिए थे। यह अन्याय सुनकर शिव, विष्णु और दूसरे देवताओं ने उसका सामना करने का संकल्प किया।",
+        "gu": "બ્રહ્મા સાથે દેવો શિવ અને વિષ્ણુ પાસે પહોંચ્યા. તેમણે જણાવ્યું કે મહિષાસુરે તેમનાં સ્થાન કેવી રીતે છીનવી લીધાં હતાં. આ અન્યાય સાંભળીને શિવ, વિષ્ણુ અને બીજા દેવોએ તેનો સામનો કરવાનો નિશ્ચય કર્યો.",
+        "kn": "ಬ್ರಹ್ಮನ ಜೊತೆ ದೇವತೆಗಳು ಶಿವ ಮತ್ತು ವಿಷ್ಣುವಿನ ಬಳಿಗೆ ಹೋದರು. ಮಹಿಷಾಸುರ ತಮ್ಮ ಸ್ಥಾನಗಳನ್ನು ಕಸಿದುಕೊಂಡಿದ್ದನ್ನು ತಿಳಿಸಿದರು. ಈ ಅನ್ಯಾಯವನ್ನು ಕೇಳಿ ಶಿವ, ವಿಷ್ಣು ಮತ್ತು ಇತರ ದೇವತೆಗಳು ಅದನ್ನು ಎದುರಿಸಲು ನಿರ್ಧರಿಸಿದರು."
+      }
+    },
+    {
+      "id": "the-goddess-manifests",
+      "art": "dm03",
+      "source": "Devi Mahatmya 2.11–19",
+      "title": {
+        "en": "Radiance Becomes the Goddess",
+        "hi": "तेज से प्रकट हुईं देवी",
+        "gu": "તેજમાંથી પ્રગટ થયાં દેવી",
+        "kn": "ತೇಜಸ್ಸಿನಿಂದ ದೇವಿಯ ಪ್ರತ್ಯಕ್ಷತೆ"
+      },
+      "text": {
+        "en": "Brilliant radiance came from Shiva, Vishnu, Brahma and the devas. Their light joined together and appeared as the Goddess. Seeing her, the devas felt hope return. This was the divine strength that would face Mahishasura.",
+        "hi": "शिव, विष्णु, ब्रह्मा और देवताओं से तेज निकला। वह तेज एक होकर देवी के रूप में प्रकट हुआ। उन्हें देखकर देवताओं की आशा लौट आई। यही दिव्य शक्ति महिषासुर का सामना करने वाली थी।",
+        "gu": "શિવ, વિષ્ણુ, બ્રહ્મા અને દેવોમાંથી તેજ પ્રગટ્યું. તે તેજ એક થઈને દેવીના રૂપમાં પ્રગટ થયું. તેમને જોઈ દેવોની આશા પાછી આવી. આ જ દિવ્ય શક્તિ મહિષાસુરનો સામનો કરવાની હતી.",
+        "kn": "ಶಿವ, ವಿಷ್ಣು, ಬ್ರಹ್ಮ ಮತ್ತು ದೇವತೆಗಳಿಂದ ಪ್ರಖರ ತೇಜಸ್ಸು ಹೊರಹೊಮ್ಮಿತು. ಅದು ಒಂದಾಗಿ ದೇವಿಯ ರೂಪ ತಾಳಿತು. ಆಕೆಯನ್ನು ನೋಡಿ ದೇವತೆಗಳಿಗೆ ಮತ್ತೆ ಭರವಸೆ ಮೂಡಿತು. ಈ ದಿವ್ಯಶಕ್ತಿಯೇ ಮಹಿಷಾಸುರನನ್ನು ಎದುರಿಸಬೇಕಿತ್ತು."
+      }
+    },
+    {
+      "id": "gifts-and-the-lion",
+      "art": "dm04",
+      "source": "Devi Mahatmya 2.20–32",
+      "title": {
+        "en": "Gifts for Maa Durga",
+        "hi": "माँ दुर्गा को भेंट",
+        "gu": "મા દુર્ગાને ભેટ",
+        "kn": "ದುರ್ಗಾ ಮಾತೆಗೆ ಕಾಣಿಕೆಗಳು"
+      },
+      "text": {
+        "en": "The devas offered their weapons and ornaments to Maa Durga. Shiva gave a trident; Vishnu gave a discus. Others brought a conch, bow and more gifts. Himalaya gave her a lion. Equipped with these gifts, she was ready.",
+        "hi": "देवताओं ने माँ दुर्गा को अपने अस्त्र और आभूषण भेंट किए। शिव ने त्रिशूल दिया और विष्णु ने चक्र। अन्य देवता शंख, धनुष और दूसरी भेंट लाए। हिमालय ने सिंह दिया। इन भेंटों के साथ देवी तैयार थीं।",
+        "gu": "દેવોએ મા દુર્ગાને પોતાનાં શસ્ત્રો અને આભૂષણો ભેટ આપ્યાં. શિવે ત્રિશૂળ અને વિષ્ણુએ ચક્ર આપ્યું. બીજા દેવો શંખ, ધનુષ અને અન્ય ભેટ લાવ્યા. હિમાલયે સિંહ આપ્યો. આ ભેટો સાથે દેવી તૈયાર હતાં.",
+        "kn": "ದೇವತೆಗಳು ದುರ್ಗಾ ಮಾತೆಗೆ ತಮ್ಮ ಆಯುಧಗಳನ್ನೂ ಆಭರಣಗಳನ್ನೂ ಅರ್ಪಿಸಿದರು. ಶಿವ ತ್ರಿಶೂಲ, ವಿಷ್ಣು ಚಕ್ರ ನೀಡಿದರು. ಇತರರು ಶಂಖ, ಬಿಲ್ಲು ಮತ್ತು ಇನ್ನಷ್ಟು ಕಾಣಿಕೆ ತಂದರು. ಹಿಮಾಲಯ ಸಿಂಹವನ್ನು ನೀಡಿದನು. ಈ ಕಾಣಿಕೆಗಳೊಂದಿಗೆ ದೇವಿ ಸಿದ್ಧಳಾದಳು."
+      }
+    },
+    {
+      "id": "the-challenge-is-heard",
+      "art": "dm05",
+      "source": "Devi Mahatmya 2.33–41",
+      "title": {
+        "en": "A Mighty Roar",
+        "hi": "शक्तिशाली गर्जना",
+        "gu": "શક્તિશાળી ગર્જના",
+        "kn": "ಪ್ರಬಲ ಗರ್ಜನೆ"
+      },
+      "text": {
+        "en": "Maa Durga’s mighty roar echoed through the worlds. The devas welcomed her with joy. Mahishasura heard it too and became angry. He gathered his army and sent it toward the radiant Goddess.",
+        "hi": "माँ दुर्गा की प्रबल गर्जना लोकों में गूँज उठी। देवताओं ने आनंद से उनका स्वागत किया। महिषासुर ने भी उसे सुना और क्रोधित हुआ। उसने अपनी सेना इकट्ठी की और तेजस्वी देवी की ओर भेज दी।",
+        "gu": "મા દુર્ગાની પ્રબળ ગર્જના લોકોમાં ગુંજી ઊઠી. દેવોએ આનંદથી તેમનું સ્વાગત કર્યું. મહિષાસુરે પણ તે સાંભળી અને ગુસ્સે થયો. તેણે પોતાની સેના ભેગી કરી અને તેજસ્વી દેવી તરફ મોકલી.",
+        "kn": "ದುರ್ಗಾ ಮಾತೆಯ ಪ್ರಬಲ ಗರ್ಜನೆ ಲೋಕಗಳೆಲ್ಲೆಡೆ ಮೊಳಗಿತು. ದೇವತೆಗಳು ಸಂತೋಷದಿಂದ ಆಕೆಯನ್ನು ಸ್ವಾಗತಿಸಿದರು. ಅದನ್ನು ಕೇಳಿದ ಮಹಿಷಾಸುರ ಕೋಪಗೊಂಡನು. ತನ್ನ ಸೇನೆಯನ್ನು ಒಟ್ಟುಗೂಡಿಸಿ ತೇಜಸ್ವಿ ದೇವಿಯತ್ತ ಕಳುಹಿಸಿದನು."
+      }
+    },
+    {
+      "id": "the-army-is-defeated",
+      "art": "dm06",
+      "source": "Devi Mahatmya 2.42–68; 3.1–19",
+      "title": {
+        "en": "The Goddess Stands Firm",
+        "hi": "देवी अडिग रहीं",
+        "gu": "દેવી અડગ રહ્યાં",
+        "kn": "ದೇವಿ ದೃಢವಾಗಿ ನಿಂತಳು"
+      },
+      "text": {
+        "en": "The army attacked, but Maa Durga stood firm. Her lion fought beside her, and her breath brought forth helpers. The asura commanders could not overcome them. When his army was defeated, Mahishasura entered the battle himself.",
+        "hi": "सेना ने आक्रमण किया, पर माँ दुर्गा अडिग रहीं। उनका सिंह साथ लड़ा और उनकी श्वास से सहायक प्रकट हुए। असुर सेनापति उन्हें हरा नहीं सके। सेना की हार के बाद महिषासुर स्वयं युद्ध में आया।",
+        "gu": "સેનાએ હુમલો કર્યો, પણ મા દુર્ગા અડગ રહ્યાં. તેમનો સિંહ સાથે લડ્યો અને તેમના શ્વાસમાંથી સહાયકો પ્રગટ થયા. અસુર સેનાપતિ તેમને હરાવી શક્યા નહીં. સેના હારી ત્યારે મહિષાસુર પોતે યુદ્ધમાં આવ્યો.",
+        "kn": "ಸೇನೆ ದಾಳಿ ಮಾಡಿತು. ದುರ್ಗಾ ಮಾತೆ ದೃಢವಾಗಿ ನಿಂತಳು. ಸಿಂಹ ಆಕೆಯ ಜೊತೆ ಹೋರಾಡಿತು; ಆಕೆಯ ಉಸಿರಿನಿಂದ ಸಹಾಯಕರು ಕಾಣಿಸಿಕೊಂಡರು. ಅಸುರ ಸೇನಾಪತಿಗಳು ಅವರನ್ನು ಸೋಲಿಸಲಿಲ್ಲ. ಸೇನೆ ಸೋತಾಗ ಮಹಿಷಾಸುರ ತಾನೇ ಯುದ್ಧಕ್ಕೆ ಬಂದನು."
+      }
+    },
+    {
+      "id": "the-buffalo-charge",
+      "art": "dm07",
+      "source": "Devi Mahatmya 3.20–28",
+      "title": {
+        "en": "The Buffalo Charges",
+        "hi": "भैंसे का प्रहार",
+        "gu": "ભેંસાનો હુમલો",
+        "kn": "ಎಮ್ಮೆಯ ದಾಳಿ"
+      },
+      "text": {
+        "en": "In buffalo form, Mahishasura charged across the earth. His hooves, horns and tail caused destruction, and he rushed at the lion. Maa Durga threw her noose and caught him. He tried to escape by changing his shape.",
+        "hi": "भैंसे के रूप में महिषासुर धरती पर झपटा। उसके खुर, सींग और पूँछ विनाश कर रहे थे। वह सिंह की ओर दौड़ा। माँ दुर्गा ने पाश फेंककर उसे बाँध लिया। बचने के लिए वह रूप बदलने लगा।",
+        "gu": "ભેંસાના રૂપમાં મહિષાસુર ધરતી પર ધસી આવ્યો. તેના ખુરા, શિંગડાં અને પૂંછડી વિનાશ કરતાં હતાં. તે સિંહ તરફ દોડ્યો. મા દુર્ગાએ પાશ ફેંકીને તેને બાંધી લીધો. બચવા તે રૂપ બદલવા લાગ્યો.",
+        "kn": "ಎಮ್ಮೆಯ ರೂಪದಲ್ಲಿ ಮಹಿಷಾಸುರ ಭೂಮಿಯ ಮೇಲೆ ನುಗ್ಗಿದನು. ಅವನ ಗೊರಸು, ಕೊಂಬು ಮತ್ತು ಬಾಲ ವಿನಾಶ ಉಂಟುಮಾಡಿದವು. ಸಿಂಹದತ್ತ ಧಾವಿಸಿದಾಗ ದುರ್ಗಾ ಮಾತೆ ಪಾಶ ಎಸೆದು ಬಂಧಿಸಿದಳು. ತಪ್ಪಿಸಿಕೊಳ್ಳಲು ಅವನು ರೂಪ ಬದಲಿಸಲಾರಂಭಿಸಿದನು."
+      }
+    },
+    {
+      "id": "lion-and-warrior",
+      "art": "dm08",
+      "source": "Devi Mahatmya 3.29–31",
+      "title": {
+        "en": "Two Changing Forms",
+        "hi": "बदलते हुए रूप",
+        "gu": "બદલાતાં રૂપ",
+        "kn": "ಬದಲಾಗುವ ರೂಪಗಳು"
+      },
+      "text": {
+        "en": "Mahishasura suddenly became a lion. As Maa Durga countered him, he became a warrior with a sword and shield. She stopped this attack with her arrows. Neither shape could defeat her, so he changed again.",
+        "hi": "महिषासुर अचानक सिंह बन गया। माँ दुर्गा ने उसका सामना किया तो वह तलवार और ढाल वाला योद्धा बन गया। देवी ने बाणों से उसका आक्रमण रोक दिया। दोनों रूप उसे जिता न सके, इसलिए उसने फिर रूप बदला।",
+        "gu": "મહિષાસુર અચાનક સિંહ બની ગયો. મા દુર્ગાએ તેનો સામનો કર્યો તો તે તલવાર અને ઢાલવાળો યોદ્ધો બની ગયો. દેવીએ બાણોથી તેનો હુમલો રોક્યો. બંને રૂપ તેને જીત અપાવી શક્યાં નહીં, એટલે તેણે ફરી રૂપ બદલ્યું.",
+        "kn": "ಮಹಿಷಾಸುರ ಇದ್ದಕ್ಕಿದ್ದಂತೆ ಸಿಂಹವಾದನು. ದುರ್ಗಾ ಮಾತೆ ಅವನನ್ನು ಎದುರಿಸಿದಾಗ ಕತ್ತಿ ಮತ್ತು ಗುರಾಣಿ ಹಿಡಿದ ಯೋಧನಾದನು. ಆಕೆ ಬಾಣಗಳಿಂದ ಆ ದಾಳಿಯನ್ನು ತಡೆದಳು. ಎರಡೂ ರೂಪಗಳು ಗೆಲುವು ತರಲಿಲ್ಲ; ಅವನು ಮತ್ತೆ ರೂಪ ಬದಲಿಸಿದನು."
+      }
+    },
+    {
+      "id": "the-elephant-form",
+      "art": "dm09",
+      "source": "Devi Mahatmya 3.32–33",
+      "title": {
+        "en": "An Elephant Appears",
+        "hi": "हाथी का रूप",
+        "gu": "હાથીનું રૂપ",
+        "kn": "ಆನೆಯ ರೂಪ"
+      },
+      "text": {
+        "en": "Now Mahishasura became a huge elephant. With his trunk he seized Maa Durga’s lion. The Goddess cut through the attacking trunk and freed her lion. Mahishasura returned to his buffalo form, still refusing to stop.",
+        "hi": "अब महिषासुर विशाल हाथी बन गया। उसने सूँड़ से माँ दुर्गा के सिंह को पकड़ लिया। देवी ने आक्रमण करती सूँड़ काटकर सिंह को छुड़ाया। महिषासुर फिर भैंसा बन गया; वह अब भी रुकने को तैयार नहीं था।",
+        "gu": "હવે મહિષાસુર વિશાળ હાથી બની ગયો. તેણે સૂંઢથી મા દુર્ગાના સિંહને પકડી લીધો. દેવીએ હુમલો કરતી સૂંઢ કાપીને સિંહને છોડાવ્યો. મહિષાસુર ફરી ભેંસો બન્યો; તે હજી રોકાવા તૈયાર ન હતો.",
+        "kn": "ಈಗ ಮಹಿಷಾಸುರ ದೊಡ್ಡ ಆನೆಯಾದನು. ಸೊಂಡಿಲಿನಿಂದ ದುರ್ಗಾ ಮಾತೆಯ ಸಿಂಹವನ್ನು ಹಿಡಿದನು. ದಾಳಿ ಮಾಡುತ್ತಿದ್ದ ಸೊಂಡಿಲನ್ನು ಆಕೆ ಕತ್ತರಿಸಿ ಸಿಂಹವನ್ನು ಬಿಡಿಸಿದಳು. ಅವನು ಮತ್ತೆ ಎಮ್ಮೆಯಾದನು; ಇನ್ನೂ ನಿಲ್ಲಲು ಒಪ್ಪಲಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "mountains-and-arrows",
+      "art": "dm10",
+      "source": "Devi Mahatmya 3.34–38",
+      "title": {
+        "en": "Mountains in the Air",
+        "hi": "हवा में पर्वत",
+        "gu": "હવામાં પર્વતો",
+        "kn": "ಗಾಳಿಯಲ್ಲಿ ಪರ್ವತಗಳು"
+      },
+      "text": {
+        "en": "Roaring in anger, the buffalo-form asura hurled mountains at Maa Durga with his horns. Her arrows broke them apart. His strength had brought danger to the worlds; the Goddess now moved forward to end his attack.",
+        "hi": "क्रोधित होकर भैंसे के रूप वाले असुर ने सींगों से पर्वत माँ दुर्गा की ओर उछाले। देवी के बाणों ने उन्हें तोड़ दिया। उसकी शक्ति लोकों के लिए संकट बन गई थी। अब देवी उसका आक्रमण समाप्त करने आगे बढ़ीं।",
+        "gu": "ગુસ્સે થઈને ભેંસાના રૂપવાળા અસુરે શિંગડાંથી પર્વતો મા દુર્ગા તરફ ફેંક્યા. દેવીનાં બાણોએ તેમને તોડી નાખ્યા. તેની શક્તિ લોકો માટે સંકટ બની હતી. હવે દેવી તેનો હુમલો સમાપ્ત કરવા આગળ વધ્યાં.",
+        "kn": "ಕೋಪದಿಂದ ಗರ್ಜಿಸುತ್ತಾ ಎಮ್ಮೆಯ ರೂಪದ ಅಸುರ ತನ್ನ ಕೊಂಬುಗಳಿಂದ ಪರ್ವತಗಳನ್ನು ದುರ್ಗಾ ಮಾತೆಯತ್ತ ಎಸೆದನು. ಆಕೆಯ ಬಾಣಗಳು ಅವನ್ನು ಒಡೆದವು. ಅವನ ಬಲ ಲೋಕಗಳಿಗೆ ಅಪಾಯವಾಗಿತ್ತು. ಅವನ ದಾಳಿ ಕೊನೆಗೊಳಿಸಲು ದೇವಿ ಮುಂದೆ ಬಂದಳು."
+      }
+    },
+    {
+      "id": "mahishasuras-defeat",
+      "art": "dm11",
+      "source": "Devi Mahatmya 3.39–42",
+      "title": {
+        "en": "Cruelty Comes to an End",
+        "hi": "अत्याचार का अंत",
+        "gu": "અત્યાચારનો અંત",
+        "kn": "ದೌರ್ಜನ್ಯದ ಅಂತ್ಯ"
+      },
+      "text": {
+        "en": "Maa Durga pressed the buffalo down and struck with her trident. Mahishasura began emerging from it in human form, but could come only halfway. The Goddess defeated and killed him with her sword. His rule of fear ended.",
+        "hi": "माँ दुर्गा ने भैंसे को दबाकर त्रिशूल से प्रहार किया। महिषासुर उससे मनुष्य रूप में निकलने लगा, पर आधा ही निकल सका। देवी ने तलवार से उसका वध किया। उसके भय और अत्याचार का शासन समाप्त हुआ।",
+        "gu": "મા દુર્ગાએ ભેંસાને દબાવીને ત્રિશૂળથી પ્રહાર કર્યો. મહિષાસુર તેમાંથી મનુષ્યરૂપે નીકળવા લાગ્યો, પણ અડધો જ નીકળી શક્યો. દેવીએ તલવારથી તેનો વધ કર્યો. તેના ભય અને અત્યાચારનું શાસન સમાપ્ત થયું.",
+        "kn": "ದುರ್ಗಾ ಮಾತೆ ಎಮ್ಮೆಯನ್ನು ಕೆಳಗೆ ಒತ್ತಿ ತ್ರಿಶೂಲದಿಂದ ಹೊಡೆದಳು. ಅದರಿಂದ ಮಹಿಷಾಸುರ ಮಾನವ ರೂಪದಲ್ಲಿ ಹೊರಬರತೊಡಗಿದನು; ಅರ್ಧದಷ್ಟು ಮಾತ್ರ ಬರಲು ಸಾಧ್ಯವಾಯಿತು. ದೇವಿ ಕತ್ತಿಯಿಂದ ಅವನನ್ನು ಸಂಹರಿಸಿದಳು. ಅವನ ಭಯದ ಆಡಳಿತ ಕೊನೆಗೊಂಡಿತು."
+      }
+    },
+    {
+      "id": "the-devas-give-thanks",
+      "art": "dm12",
+      "source": "Devi Mahatmya 3.43–44; 4.1–42",
+      "title": {
+        "en": "Hope Returns",
+        "hi": "आशा लौट आई",
+        "gu": "આશા પાછી આવી",
+        "kn": "ಭರವಸೆ ಮರಳಿತು"
+      },
+      "text": {
+        "en": "The devas rejoiced and thanked Maa Durga. They praised her protection and asked her to help when they remembered her in danger. The Goddess granted their request. With Mahishasura defeated, peace and hope returned.",
+        "hi": "देवताओं ने आनंद से माँ दुर्गा को धन्यवाद दिया। उन्होंने देवी की रक्षा का गुणगान किया और संकट में स्मरण करने पर सहायता माँगी। देवी ने उनकी प्रार्थना स्वीकार की। महिषासुर की हार के साथ शांति और आशा लौट आई।",
+        "gu": "દેવોએ આનંદથી મા દુર્ગાનો આભાર માન્યો. તેમણે દેવીના રક્ષણની પ્રશંસા કરી અને સંકટમાં સ્મરણ કરવા પર મદદ માગી. દેવીએ તેમની પ્રાર્થના સ્વીકારી. મહિષાસુરની હાર સાથે શાંતિ અને આશા પાછી આવી.",
+        "kn": "ದೇವತೆಗಳು ಹರ್ಷದಿಂದ ದುರ್ಗಾ ಮಾತೆಗೆ ಕೃತಜ್ಞತೆ ಸಲ್ಲಿಸಿದರು. ಆಕೆಯ ರಕ್ಷಣೆಯನ್ನು ಹೊಗಳಿ, ಸಂಕಟದಲ್ಲಿ ನೆನೆದಾಗ ನೆರವಾಗಬೇಕೆಂದು ಕೇಳಿದರು. ದೇವಿ ಅವರ ಪ್ರಾರ್ಥನೆ ಒಪ್ಪಿದಳು. ಮಹಿಷಾಸುರ ಸೋತಾಗ ಶಾಂತಿ ಮತ್ತು ಭರವಸೆ ಮರಳಿದವು."
+      }
+    }
+  ]
+}

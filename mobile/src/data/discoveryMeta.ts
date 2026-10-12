@@ -92,6 +92,27 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'sunrise',
     source: `${SOURCE_BUNDLED} Vidyarambha Prarthana source references in sanskar/vidyarambha-prarthana.json.`,
   },
+  'matribhumi-vandana': {
+    purposes: ['courage', 'morning-practice'],
+    bestTime: 'sunrise',
+    source: `${SOURCE_BUNDLED} Matribhumi Vandana source references in sanskar/matribhumi-vandana.json.`,
+  },
+  // Lakshmi Chalisa + Aarti mirror the Mahalakshmi Ashtakam row below: same
+  // deity, same Friday/Diwali association already curated for her.
+  'lakshmi-chalisa': {
+    purposes: ['wealth', 'prosperity', 'devotion'],
+    bestDays: [5],
+    bestFestivals: ['diwali'],
+    bestTime: 'sunset',
+    source: `${SOURCE_BUNDLED} Lakshmi Chalisa source references in lakshmi-chalisa/lakshmi-chalisa.json.`,
+  },
+  'om-jai-lakshmi-mata': {
+    purposes: ['wealth', 'prosperity', 'devotion'],
+    bestDays: [5],
+    bestFestivals: ['diwali'],
+    bestTime: 'sunset',
+    source: `${SOURCE_BUNDLED} Om Jai Lakshmi Mata source references in aarti/om-jai-lakshmi-mata.json.`,
+  },
   'mahalakshmi-ashtakam': {
     purposes: ['wealth', 'prosperity', 'devotion'],
     bestDays: [5],

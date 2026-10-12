@@ -8,6 +8,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RemoteViews
@@ -89,9 +90,51 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             // The till row exists on the Panchang layout only.
             if (surface == Surface.PANCHANG) views.setViewVisibility(__APP_PACKAGE__.R.id.widget_till, View.GONE)
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_meta, View.GONE)
+            // Recovery is always the plain parchment card, and it must say so: the
+            // launcher keeps a previous render's art visible unless this hides it.
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.GONE)
             val today = WidgetPayloadContract.currentDateKey("Asia/Kolkata")
             views.setOnClickPendingIntent(__APP_PACKAGE__.R.id.widget_root, link(context, "vedansh://widget/panchang?date=$today", requestCode(id, surface)))
             manager.updateAppWidget(id, views)
+        }
+
+        /**
+         * The faded sketch plate for this surface at this cell size (design.md §59),
+         * cut per size by `scripts/build-widget-backgrounds.mts` so `centerCrop` never
+         * has to turn a square into a wide card. Same size classes as the text:
+         * narrow (<180 dp) is the small square, tall (>=180 dp) the large card.
+         */
+        private fun artFor(surface: Surface, width: Int, height: Int): Int {
+            val small = width < 180
+            val large = !small && height >= 180
+            return when (surface) {
+                Surface.PANCHANG -> when {
+                    small -> __APP_PACKAGE__.R.drawable.vedansh_widget_bg_panchang_small
+                    large -> __APP_PACKAGE__.R.drawable.vedansh_widget_bg_panchang_large
+                    else -> __APP_PACKAGE__.R.drawable.vedansh_widget_bg_panchang_medium
+                }
+                Surface.VERSE -> when {
+                    small -> __APP_PACKAGE__.R.drawable.vedansh_widget_bg_verse_small
+                    large -> __APP_PACKAGE__.R.drawable.vedansh_widget_bg_verse_large
+                    else -> __APP_PACKAGE__.R.drawable.vedansh_widget_bg_verse_medium
+                }
+            }
+        }
+
+        /**
+         * Show the art, or leave the plain parchment card on any doubt. Below API 31
+         * the root cannot clip to its rounded outline, so the plate's square corners
+         * would poke past the card's — those devices keep the flat card.
+         */
+        private fun applyArt(views: RemoteViews, surface: Surface, width: Int, height: Int) {
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.GONE)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
+            try {
+                views.setImageViewResource(__APP_PACKAGE__.R.id.widget_art, artFor(surface, width, height))
+                views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.VISIBLE)
+            } catch (_: Exception) {
+                views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.GONE)
+            }
         }
 
         private fun boundaryIntent(context: Context, surface: Surface): PendingIntent {
@@ -137,6 +180,7 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
                     Surface.PANCHANG -> renderPanchang(context, views, root, locale, id, width)
                     Surface.VERSE -> renderVerse(context, views, root, locale, id, width, height)
                 } ?: return recovery(context, manager, id, surface, true)
+                applyArt(views, surface, width, height)
                 manager.updateAppWidget(id, views)
                 val slice = root.getJSONObject(if (surface == Surface.PANCHANG) "panchang" else "verses")
                 scheduleNextRender(context, surface, WidgetPayloadContract.nextBoundaryMs(

@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -336,9 +337,10 @@ export default function KundaliScreen({ navigation, route }: Props) {
                   pressed && { opacity: 0.65 },
                 ]}
               >
-                <Text style={[styles.shareText, { color: colors.saffronDeep }]}>
-                  ↗ {contentByLang(lang, 'साझा करें', 'Share')}
-                </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                <AppIcon name="share" size={15} />
+                <Text style={[styles.shareText, { color: colors.saffronDeep }]}>{contentByLang(lang, 'साझा करें', 'Share')}</Text>
+              </View>
               </Pressable>
               <Pressable
                 onPress={() => setEditing(true)}
@@ -432,6 +434,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
                 onOpenPractice={() => openPractice()}
                 onManageDetails={() => setEditing(true)}
                 onOpenReport={() => navigation.navigate('KundaliReport')}
+                onOpenGrahaReference={() => navigation.navigate('GrahaReference')}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -802,6 +805,7 @@ function KundaliResult({
   onOpenPractice,
   onManageDetails,
   onOpenReport,
+  onOpenGrahaReference,
   colors,
   typography,
   radii,
@@ -815,6 +819,7 @@ function KundaliResult({
   onOpenPractice: () => void;
   onManageDetails: () => void;
   onOpenReport: () => void;
+  onOpenGrahaReference: () => void;
   colors: any;
   typography: any;
   radii: any;
@@ -1362,6 +1367,47 @@ function KundaliResult({
         {contentByLang(lang, 'साधना', 'Practice')}
       </Text>
       <JyotishPracticeCard onPress={onOpenPractice} />
+
+      <Pressable
+        testID="graha-reference-card"
+        onPress={onOpenGrahaReference}
+        accessibilityRole="button"
+        accessibilityLabel="Know the nine grahas"
+        style={({ pressed }) => [
+          styles.referenceCard,
+          { borderColor: colors.divider, backgroundColor: colors.parchmentSoft, borderRadius: radii.lg },
+          pressed && { opacity: 0.72 },
+        ]}
+      >
+        <Text style={[styles.referenceGlyph, { color: colors.gold }]}>✦</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={[pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep, fontSize: lang === 'en' ? 10 : 12 }]}>
+            {contentByLang(lang, 'जानें', 'Learn')}
+          </Text>
+          <Text
+            style={{
+              color: colors.ink,
+              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+              fontSize: 15,
+              marginTop: 2,
+            }}
+          >
+            {contentByLang(lang, 'नवग्रह — परिचय', 'Know the nine grahas')}
+          </Text>
+          <Text
+            style={{
+              color: colors.inkMuted,
+              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+              fontSize: 11,
+              marginTop: 2,
+            }}
+          >
+            {contentByLang(lang, 'हर ग्रह किसका कारक है', 'What each graha stands for')}
+          </Text>
+        </View>
+        <Text style={{ color: colors.saffron, fontSize: 18 }}>›</Text>
+      </Pressable>
+
       <Pressable
         onPress={onManageDetails}
         accessibilityRole="button"
@@ -1600,6 +1646,8 @@ const styles = StyleSheet.create({
   nowTag: { paddingHorizontal: 7, paddingVertical: 3 },
   nowTagText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   practiceLabel: { fontSize: 12, marginTop: 18, marginBottom: 8 },
+  referenceCard: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderWidth: 1, marginTop: 10 },
+  referenceGlyph: { fontSize: 22, width: 24, textAlign: 'center' },
   modalBackdrop: { flex: 1, justifyContent: 'flex-end' },
   modalSheet: { height: '78%', overflow: 'hidden' },
   modalHeader: { minHeight: 58, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: StyleSheet.hairlineWidth },

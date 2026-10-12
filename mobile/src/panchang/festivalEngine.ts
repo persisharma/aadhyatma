@@ -1,8 +1,8 @@
 import { addDays } from './calendarGrid';
-import { computeTithiAndMonth, getSiderealSunLng, locationKey, nakshatraAtSunrise, solarMonthAtSunrise, tithiAtAparahna, tithiAtMadhyahna, tithiAtMoonrise, tithiAtDayFraction, tithiAtNishita, tithiAtPradosh, UJJAIN_CITY_ID } from './engine';
+import { aparahnaCover, computeTithiAndMonth, getSiderealSunLng, locationKey, nakshatraAtSunrise, solarMonthAtSunrise, tithiAtMadhyahna, tithiAtMoonrise, tithiAtDayFraction, tithiAtNishita, tithiAtPradosh, UJJAIN_CITY_ID } from './engine';
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { getStoredObservanceYear } from './observanceStore';
-import { PRECOMPUTED_OBSERVANCES, type PackedObservance } from './precomputedObservances';
+import type { PackedObservance } from './precomputedObservances';
 import { ALL_LENSES, ruleVisibleForLenses, type ObservanceLens } from './lenses';
 import type { CalendarSystem, GeoLocation, ObservanceRule, ResolvedObservance, ResolvedFestival } from './types';
 
@@ -30,6 +30,16 @@ const cache = new Map<string, ResolvedObservance[]>();
 const ruleById = new Map(OBSERVANCE_RULES.map((rule) => [rule.id, rule] as const));
 // Resolved for EVERY lens, so the per-year cache never depends on the user's set;
 // each query below narrows it. See `ALL_LENSES`.
+// Both are LAZY (launchGraph.test.ts): the 200 KB bundled observance table and
+// the published-rule solvers load on the first observance read, not with the
+// module graph every cold launch evaluates before its first frame.
+let precomputedTable: Record<string, PackedObservance[]> | null = null;
+function precomputedYear(key: string): PackedObservance[] | undefined {
+  precomputedTable ??= (require('./precomputedObservances') as typeof import('./precomputedObservances')).PRECOMPUTED_OBSERVANCES;
+  return precomputedTable[key];
+}
+const special = (): typeof import('./specialDayRules') => require('./specialDayRules') as typeof import('./specialDayRules');
+
 const defaultRules = getObservanceCatalog({ lenses: ALL_LENSES });
 
 function cacheKey(year: number, calendarSystem: CalendarSystem, location?: ObservanceLocation): string {
@@ -59,7 +69,7 @@ export function resolveObservancesForYear(
   if (cached) return cached;
 
   if (cityId === UJJAIN_CITY_ID) {
-    const precomputed = PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
+    const precomputed = precomputedYear(`${calendarSystem}:${year}`);
     const results = precomputed
       ? reconstructPrecomputed(precomputed)
       : resolveObservancesForYearLive(year, calendarSystem);
@@ -261,7 +271,7 @@ export function getCachedObservancesForDate(
   const cached = cache.get(cacheKey(year, calendarSystem, location));
   if (cached) return cached.filter((item) => isSameLocalDate(item.date, date));
 
-  const precomputed = PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
+  const precomputed = precomputedYear(`${calendarSystem}:${year}`);
   if (locationKey(location) === UJJAIN_CITY_ID) {
     // Ujjain answers from the table or not at all — never a live scan here.
     if (!precomputed) return null;
@@ -285,9 +295,9 @@ export function getObservancesForDateKey(
   const year = Number(dateKey.slice(0, 4));
   const cityId = locationKey(location);
   const exact = cityId === UJJAIN_CITY_ID
-    ? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`]
+    ? precomputedYear(`${calendarSystem}:${year}`)
     : getStoredObservanceYear(cityId, calendarSystem, year);
-  const entries = exact ?? PRECOMPUTED_OBSERVANCES[`${calendarSystem}:${year}`];
+  const entries = exact ?? precomputedYear(`${calendarSystem}:${year}`);
   if (entries) return withLenses(reconstructPrecomputed(entries.filter(([, date]) => date === dateKey)), lenses);
   return getObservancesForDate(new Date(`${dateKey}T12:00:00`), calendarSystem, location, lenses);
 }
@@ -484,7 +494,7 @@ export function matchesLunarTithiRuleOnDate(
     return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtMadhyahna);
   }
   if (rule.dayRule === 'aparahna') {
-    return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtAparahna);
+    return matchesAparahnaSpanRuleOnDate(rule, date, calendarSystem, location);
   }
   if (rule.dayRule === 'pradosh') {
     return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtPradosh);
@@ -501,6 +511,33 @@ export function matchesLunarTithiRuleOnDate(
     return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtPradosh,
       () => !instantCovers(rule, addDays(date, 1), calendarSystem, location, tithiAtPradosh)
         && matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtNishita));
+  }
+  if (rule.dayRule === 'ekadashi' || rule.dayRule === 'ekadashi-vaishnava') {
+    return matchesEkadashiRuleOnDate(rule, date, calendarSystem, location, rule.dayRule === 'ekadashi-vaishnava');
+  }
+  if (rule.dayRule === 'shravani') {
+    // Raksha Bandhan: the day is the sunrise day, the day before it or (vriddhi) the day after.
+    return [addDays(date, 1), date, addDays(date, -1)].some((sunriseDay) =>
+      matchesUdayaTithiRuleOnDate(rule, sunriseDay, calendarSystem, location)
+      && sameDay(special().rakshaBandhanDay(sunriseDay, { calendarSystem: computationSystemForRule(rule, calendarSystem), location }), date));
+  }
+  if (rule.dayRule === 'holika-dahan-next') {
+    // Rangwali Holi: the day after Holika Dahan, which is the pradosh day of the
+    // Purnima or the one after it (`holikaDahanDay`).
+    return [addDays(date, -1), addDays(date, -2)].some((pradoshDay) =>
+      matchesInstantVyapiniRuleOnDate(rule, pradoshDay, calendarSystem, location, tithiAtPradosh)
+      && sameDay(addDays(special().holikaDahanDay(pradoshDay, { calendarSystem: computationSystemForRule(rule, calendarSystem), location }), 1), date));
+  }
+  if (rule.dayRule === 'janmashtami-smarta' || rule.dayRule === 'janmashtami-vaishnava') {
+    const vaishnava = rule.dayRule === 'janmashtami-vaishnava';
+    return [addDays(date, 1), date, addDays(date, -1), addDays(date, 2)].some((sunriseDay) => {
+      if (!matchesUdayaTithiRuleOnDate(rule, sunriseDay, calendarSystem, location)) return false;
+      const days = special().janmashtamiDays(sunriseDay, { calendarSystem: computationSystemForRule(rule, calendarSystem), location });
+      // The Vaishnava row is printed only on a day the Smarta one is not.
+      return vaishnava
+        ? sameDay(days.vaishnava, date) && !sameDay(days.vaishnava, days.smarta)
+        : sameDay(days.smarta, date);
+    });
   }
   if (rule.dayRule === 'pradosh-next') {
     // Rangwali Holi: the morning after Holika Dahan, whose fire is lit in the
@@ -578,6 +615,73 @@ function matchesInstantVyapiniRuleOnDate(
   }
   if (yesterdayCovers) return false;
   return neitherCovered();
+}
+
+function sameDay(a: Date, b: Date): boolean {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+/**
+ * Ekadashi by Dharmasindhu (`ekadashiDays`): the Smarta row on its day, the
+ * Vaishnava row only on a day the Smarta one is not (Drik prints "Vaishnava
+ * <name> Ekadashi" exactly then). The month is the lunation's, read on the
+ * Smarta day.
+ */
+function matchesEkadashiRuleOnDate(
+  rule: ObservanceRule,
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location: ObservanceLocation | undefined,
+  vaishnava: boolean
+): boolean {
+  const opts = { calendarSystem: computationSystemForRule(rule, calendarSystem), location };
+  const target = rule.paksha === 'shukla' ? rule.tithi! - 1 : rule.tithi! + 14;
+  // Either day an Ekadashi row can land on has Dashami, Ekadashi or Dwadashi at
+  // sunrise; every other day of the year answers here from the sunrise memo.
+  const rel = (computeTithiAndMonth(date, opts).tithiIndex - target + 30) % 30;
+  if (rel !== 29 && rel !== 0 && rel !== 1) return false;
+  for (const anchor of [date, addDays(date, -1)]) {
+    const days = special().ekadashiDays(anchor, target, opts);
+    if (!days) continue;
+    const day = vaishnava ? days.vaishnava : days.smarta;
+    if (!sameDay(day, date)) continue;
+    if (vaishnava && sameDay(days.vaishnava, days.smarta)) return false;
+    return monthMatchesRule(rule, days.smarta, calendarSystem, location);
+  }
+  return false;
+}
+
+/**
+ * Aparahna-vyapini selection by SPAN (Oct 2026): the day whose aparahna — the
+ * fourth of daylight's five parts — the tithi covers MORE of, as a fraction
+ * (`aparahnaCover`). Dharma Sindhu on darsha shraddha: leave the day with less
+ * of the tithi in aparahna, take the one with more; equal on both days, take
+ * the later (a tithi in two aparahnas whole is a lengthening one). The old
+ * midpoint instant approximated this and split from it twice in Delhi
+ * 2024–2029: Feb 2028 (both spans whole — midpoint kept the first) and Feb 2029
+ * (12 Feb 61% vs 13 Feb 100% — midpoint said 12th). It is the same rule
+ * `pitruSmaran.ts` assigns the Pitru Paksha shraddhas by.
+ *
+ * A tithi that covers no day's span falls back to its sunrise day, as before
+ * (Ashadha 2026's amavasya closes before 14 Jul's span opens).
+ */
+function matchesAparahnaSpanRuleOnDate(
+  rule: ObservanceRule,
+  date: Date,
+  calendarSystem: CalendarSystem,
+  location: ObservanceLocation | undefined
+): boolean {
+  const opts = { calendarSystem: computationSystemForRule(rule, calendarSystem), location };
+  const target = rule.paksha === 'shukla' ? rule.tithi! - 1 : rule.tithi! + 14;
+  const today = aparahnaCover(date, target, opts);
+  const yesterday = aparahnaCover(addDays(date, -1), target, opts);
+  const tomorrow = aparahnaCover(addDays(date, 1), target, opts);
+  if (today > 0) {
+    // More than yesterday or equal (equal → the later day), strictly more than tomorrow.
+    return today >= yesterday && today > tomorrow && monthMatchesRule(rule, date, calendarSystem, location);
+  }
+  if (yesterday > 0 || tomorrow > 0) return false;
+  return matchesUdayaTithiRuleOnDate(rule, date, calendarSystem, location);
 }
 
 /**
@@ -745,7 +849,12 @@ function findObservanceDates(
     try {
       if (matchesRuleOnDate(rule, current, calendarSystem, location)) {
         results.push({ date: new Date(current), rule });
-        if (rule.recurrence === 'annual') break;
+        // An annual lunar rule recurs no sooner than ~354 days on (a lunar year),
+        // so skip ahead rather than stop: a month that opens in early January
+        // comes round again in late December of the same civil year (Pausha
+        // Putrada Ekadashi 2025: 10 Jan AND 30 Dec), and stopping at the first
+        // match silently dropped the December one.
+        if (rule.recurrence === 'annual') current.setDate(current.getDate() + 340);
       }
     } catch {
       // skip dates that fail computation

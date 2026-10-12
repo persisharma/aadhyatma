@@ -33,7 +33,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Step 2: Reading language → English ──
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -137,7 +137,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Step 7: Restore Hindi (best-effort) + cleanup ──
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

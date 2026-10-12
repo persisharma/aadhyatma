@@ -1,0 +1,1363 @@
+# Full source order; captions and source notes come from canonical JSON.
+appId: com.prashantsharma.vedansh
+---
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-navaratri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-navaratri" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 3"
+- assertVisible: { id: "story-page-nine-nights-of-devotion" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-nv01-art
+- scrollUntilVisible:
+    element: { text: "Navaratri means nine nights. During this festival, many families remember Maa Durga, listen to her stories and celebrate her strength and compassion. In a well-known tradition, nine forms of the Mother are honoured in order. Together they are called Navadurga." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Navaratri means nine nights. During this festival, many families remember Maa Durga, listen to her stories and celebrate her strength and compassion. In a well-known tradition, nine forms of the Mother are honoured in order. Together they are called Navadurga."
+- takeScreenshot: durga-en-${DURGA_SIZE}-nv01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 3"
+- assertVisible: { id: "story-page-the-nine-names" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-nv02-art
+- scrollUntilVisible:
+    element: { text: "The traditional order is Shailaputri, Brahmacharini, Chandraghanta, Kushmanda, Skandamata, Katyayani, Kalaratri, Mahagauri and Siddhidatri. Some readings tell related Parvati stories; others introduce a form and its symbols. Every form helps us remember the same divine Mother." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The traditional order is Shailaputri, Brahmacharini, Chandraghanta, Kushmanda, Skandamata, Katyayani, Kalaratri, Mahagauri and Siddhidatri. Some readings tell related Parvati stories; others introduce a form and its symbols. Every form helps us remember the same divine Mother."
+- takeScreenshot: durga-en-${DURGA_SIZE}-nv02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 3"
+- assertVisible: { id: "story-page-celebrate-and-learn" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-nv03-art
+- scrollUntilVisible:
+    element: { text: "Families celebrate in different ways: with worship, music, dance or shared stories. You can listen with someone you love, ask questions and show kindness. Begin a reading each day, and discover the Mother’s courage, patience and care." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Families celebrate in different ways: with worship, music, dance or shared stories. You can listen with someone you love, ask questions and show kindness. Begin a reading each day, and discover the Mother’s courage, patience and care."
+- takeScreenshot: durga-en-${DURGA_SIZE}-nv03-caption
+- scrollUntilVisible:
+    element: { text: "A short Navaratri introduction based on the traditional Navadurga sequence. Customs differ among families and regions. This is not a ritual or fasting guide; the takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "A short Navaratri introduction based on the traditional Navadurga sequence. Customs differ among families and regions. This is not a ritual or fasting guide; the takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-nv03-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-shailaputri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-shailaputri" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 4"
+- assertVisible: { id: "story-page-menas-wish" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sp01-art
+- scrollUntilVisible:
+    element: { text: "Himavat, lord of the mountains, and his wife Mena loved the Goddess. Mena had asked for the divine Mother to be born as her daughter. The Goddess had granted that wish. Now the mountain family awaited her arrival." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Himavat, lord of the mountains, and his wife Mena loved the Goddess. Mena had asked for the divine Mother to be born as her daughter. The Goddess had granted that wish. Now the mountain family awaited her arrival."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sp01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 4"
+- assertVisible: { id: "story-page-the-goddess-becomes-a-daughter" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sp02-art
+- scrollUntilVisible:
+    element: { text: "The Goddess appeared before Mena in her divine form. Mena recognized her with joy and asked her to live as her little daughter. The Mother reminded Mena of the promised boon, then became a baby in front of her." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The Goddess appeared before Mena in her divine form. Mena recognized her with joy and asked her to live as her little daughter. The Mother reminded Mena of the promised boon, then became a baby in front of her."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sp02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 4"
+- assertVisible: { id: "story-page-parvati-grows-and-learns" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sp03-art
+- scrollUntilVisible:
+    element: { text: "The family and the city celebrated the child. She was called Parvati, a name recalling her mountain family. She played with friends, balls and dolls on the Ganga’s sandy banks. When it was time to learn, she studied eagerly with a teacher." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The family and the city celebrated the child. She was called Parvati, a name recalling her mountain family. She played with friends, balls and dolls on the Ganga’s sandy banks. When it was time to learn, she studied eagerly with a teacher."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sp03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 4"
+- assertVisible: { id: "story-page-shailaputri-the-first-form" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sp04-art
+- scrollUntilVisible:
+    element: { text: "Shailaputri means daughter of the mountain. On Navaratri’s first day, devotees remember this form of the Mother. Traditional pictures show her riding a white bull, holding a trident and lotus. Parvati’s mountain birth helps us understand the name." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Shailaputri means daughter of the mountain. On Navaratri’s first day, devotees remember this form of the Mother. Traditional pictures show her riding a white bull, holding a trident and lotus. Parvati’s mountain birth helps us understand the name."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sp04-caption
+- scrollUntilVisible:
+    element: { text: "A related Parvati episode from Shiva Purana 2.3.6–7, followed by Shailaputri’s traditional first-day identity. The chapters do not themselves use this Navadurga title. Original child retelling; takeaway editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "A related Parvati episode from Shiva Purana 2.3.6–7, followed by Shailaputri’s traditional first-day identity. The chapters do not themselves use this Navadurga title. Original child retelling; takeaway editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sp04-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-brahmacharini" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-brahmacharini" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-parvati-seeks-permission" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-br01-art
+- scrollUntilVisible:
+    element: { text: "Parvati wished to be reunited with Shiva. Narada advised her to turn to devoted tapas. Her parents worried about the difficult life in the forest. After hearing her wish, they gave permission. This resolve is remembered in Brahmacharini, Navaratri’s second form." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Parvati wished to be reunited with Shiva. Narada advised her to turn to devoted tapas. Her parents worried about the difficult life in the forest. After hearing her wish, they gave permission. This resolve is remembered in Brahmacharini, Navaratri’s second form."
+- takeScreenshot: durga-en-${DURGA_SIZE}-br01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-tapas-and-a-garden" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-br02-art
+- scrollUntilVisible:
+    element: { text: "With her companions, Parvati reached a Himalayan hermitage. She wore simple clothes and meditated on Shiva for a long time. She also planted and watered trees and welcomed visitors. Her devotion included care for the forest around her." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "With her companions, Parvati reached a Himalayan hermitage. She wore simple clothes and meditated on Shiva for a long time. She also planted and watered trees and welcomed visitors. Her devotion included care for the forest around her."
+- takeScreenshot: durga-en-${DURGA_SIZE}-br02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-peace-in-the-hermitage" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-br03-art
+- scrollUntilVisible:
+    element: { text: "The Purana tells of a wonderful change around her hermitage. Lions and cows no longer troubled one another; cats and mice lived without hostility. Trees bore fruit and flowers blossomed. Parvati’s tapas brought peace even among natural enemies." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The Purana tells of a wonderful change around her hermitage. Lions and cows no longer troubled one another; cats and mice lived without hostility. Trees bore fruit and flowers blossomed. Parvati’s tapas brought peace even among natural enemies."
+- takeScreenshot: durga-en-${DURGA_SIZE}-br03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-the-devas-ask-shiva" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-br04-art
+- scrollUntilVisible:
+    element: { text: "Meanwhile, the asura Taraka was troubling the devas. They hoped that a son of Shiva and Parvati would stop him. With Nandin’s help, they asked Shiva to marry her. Moved by their repeated prayers, Shiva agreed to help." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Meanwhile, the asura Taraka was troubling the devas. They hoped that a son of Shiva and Parvati would stop him. With Nandin’s help, they asked Shiva to marry her. Moved by their repeated prayers, Shiva agreed to help."
+- takeScreenshot: durga-en-${DURGA_SIZE}-br04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-the-seven-sages-test-her" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-br05-art
+- scrollUntilVisible:
+    element: { text: "Shiva sent seven sages to test Parvati’s resolve. They tried to persuade her to choose another path and spoke critically of Shiva. Parvati remained firm in her devotion and Narada’s guidance. The sages recognized her resolve, blessed her and returned to Shiva." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Shiva sent seven sages to test Parvati’s resolve. They tried to persuade her to choose another path and spoke critically of Shiva. Parvati remained firm in her devotion and Narada’s guidance. The sages recognized her resolve, blessed her and returned to Shiva."
+- takeScreenshot: durga-en-${DURGA_SIZE}-br05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-the-ascetics-disguise" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-br06-art
+- scrollUntilVisible:
+    element: { text: "Then Shiva himself came as an elderly ascetic with a staff and umbrella. Parvati welcomed him. When he disparaged Shiva, she explained her trust and would not listen to further insults. She prepared to leave with her companion Vijaya." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Then Shiva himself came as an elderly ascetic with a staff and umbrella. Parvati welcomed him. When he disparaged Shiva, she explained her trust and would not listen to further insults. She prepared to leave with her companion Vijaya."
+- takeScreenshot: durga-en-${DURGA_SIZE}-br06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-shiva-reveals-himself" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-br07-art
+- scrollUntilVisible:
+    element: { text: "Before she could leave, Shiva revealed his true form. He acknowledged her devotion and the tests he had given her. Parvati’s weariness turned to joy. She asked that their marriage include her family and the proper ceremony; Shiva agreed." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Before she could leave, Shiva revealed his true form. He acknowledged her devotion and the tests he had given her. Parvati’s weariness turned to joy. She asked that their marriage include her family and the proper ceremony; Shiva agreed."
+- takeScreenshot: durga-en-${DURGA_SIZE}-br07-caption
+- scrollUntilVisible:
+    element: { text: "A related Parvati episode from Shiva Purana 2.3.21–29, associated with Brahmacharini’s second-day form. Severe fasting and the fire trial are omitted for children; this is not a practice guide. Takeaway editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "A related Parvati episode from Shiva Purana 2.3.21–29, associated with Brahmacharini’s second-day form. Severe fasting and the fire trial are omitted for children; this is not a practice guide. Takeaway editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-br07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-chandraghanta" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-chandraghanta" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 5"
+- assertVisible: { id: "story-page-the-wedding-procession" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg01-art
+- scrollUntilVisible:
+    element: { text: "The wedding hour arrived. Shiva rode his bull to Himavat’s home, accompanied by devas and sages. Music filled the mountain palace. Himavat and Mena welcomed the groom, and Parvati waited in her wedding clothes." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The wedding hour arrived. Shiva rode his bull to Himavat’s home, accompanied by devas and sages. Music filled the mountain palace. Himavat and Mena welcomed the groom, and Parvati waited in her wedding clothes."
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 5"
+- assertVisible: { id: "story-page-naradas-explanation" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg02-art
+- scrollUntilVisible:
+    element: { text: "During the ceremony, Himavat asked about Shiva’s family lineage. Shiva remained silent. Narada played his vina and explained that Shiva’s divine nature was beyond an ordinary family history. Himavat listened, and his uncertainty passed." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "During the ceremony, Himavat asked about Shiva’s family lineage. Shiva remained silent. Narada played his vina and explained that Shiva’s divine nature was beyond an ordinary family history. Himavat listened, and his uncertainty passed."
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 5"
+- assertVisible: { id: "story-page-hands-joined" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg03-art
+- scrollUntilVisible:
+    element: { text: "With Mena beside him, Himavat placed Parvati’s hand in Shiva’s hand. Shiva accepted it as the wedding ceremony continued. The marriage that Parvati had wished for was celebrated with both her family and the devas present." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "With Mena beside him, Himavat placed Parvati’s hand in Shiva’s hand. Shiva accepted it as the wedding ceremony continued. The marriage that Parvati had wished for was celebrated with both her family and the devas present."
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 5"
+- assertVisible: { id: "story-page-family-celebrates" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg04-art
+- scrollUntilVisible:
+    element: { text: "Joy spread through the palace. Celestial musicians sang, dancers danced, and relatives offered gifts. Himavat rejoiced that his daughter’s wish had been fulfilled. Shiva and Parvati’s wedding brought the gathered families, sages and devas together." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Joy spread through the palace. Celestial musicians sang, dancers danced, and relatives offered gifts. Himavat rejoiced that his daughter’s wish had been fulfilled. Shiva and Parvati’s wedding brought the gathered families, sages and devas together."
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 5"
+- assertVisible: { id: "story-page-the-third-form" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg05-art
+- scrollUntilVisible:
+    element: { text: "Navadurga tradition associates married Parvati with Maa Chandraghanta, honoured on the third day. Her name recalls the bell-shaped crescent on her forehead. She is traditionally pictured with ten arms, riding a tiger, with weapons and hands offering blessings." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Navadurga tradition associates married Parvati with Maa Chandraghanta, honoured on the third day. Her name recalls the bell-shaped crescent on her forehead. She is traditionally pictured with ten arms, riding a tiger, with weapons and hands offering blessings."
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg05-caption
+- scrollUntilVisible:
+    element: { text: "An original child-friendly retelling of a related Shiva Purana episode, followed by its Navadurga connection. The chapter does not itself name this Navadurga form. The takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "An original child-friendly retelling of a related Shiva Purana episode, followed by its Navadurga connection. The chapter does not itself name this Navadurga form. The takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-cg05-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-kushmanda" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-kushmanda" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 3"
+- assertVisible: { id: "story-page-the-radiant-fourth-form" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-ku01-art
+- scrollUntilVisible:
+    element: { text: "On Navaratri’s fourth day, many devotees honour Maa Kushmanda. She is remembered as a radiant form of the Mother, associated with the light and energy of creation." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "On Navaratri’s fourth day, many devotees honour Maa Kushmanda. She is remembered as a radiant form of the Mother, associated with the light and energy of creation."
+- takeScreenshot: durga-en-${DURGA_SIZE}-ku01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 3"
+- assertVisible: { id: "story-page-a-traditional-creation-account" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-ku02-art
+- scrollUntilVisible:
+    element: { text: "One devotional account says that her gentle smile brought forth the universe, called Brahmanda. She is also pictured within the Sun’s radiance. This is a traditional account of divine creation, not an ordinary person’s adventure." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "One devotional account says that her gentle smile brought forth the universe, called Brahmanda. She is also pictured within the Sun’s radiance. This is a traditional account of divine creation, not an ordinary person’s adventure."
+- takeScreenshot: durga-en-${DURGA_SIZE}-ku02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 3"
+- assertVisible: { id: "story-page-symbols-of-kushmanda" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-ku03-art
+- scrollUntilVisible:
+    element: { text: "In familiar devotional art, Kushmanda has eight hands and rides a lion. Her hands hold objects such as a lotus, rosary, bow and vessel. Her many hands remind devotees of the Mother’s many powers to sustain the world." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "In familiar devotional art, Kushmanda has eight hands and rides a lion. Her hands hold objects such as a lotus, rosary, bow and vessel. Her many hands remind devotees of the Mother’s many powers to sustain the world."
+- takeScreenshot: durga-en-${DURGA_SIZE}-ku03-caption
+- scrollUntilVisible:
+    element: { text: "A short introduction from Navadurga devotional tradition, not a separate Purana adventure. Traditional origin accounts are attributed; the takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "A short introduction from Navadurga devotional tradition, not a separate Purana adventure. Traditional origin accounts are attributed; the takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-ku03-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-skandamata" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-skandamata" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 5"
+- assertVisible: { id: "story-page-a-chariot-arrives" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk01-art
+- scrollUntilVisible:
+    element: { text: "Six Krittika mothers had raised young Kartikeya with love. At Kailasa, Parvati wished to welcome her son home. She sent a splendid chariot to bring him. Kartikeya prepared to leave the home where the Krittikas had cared for him." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Six Krittika mothers had raised young Kartikeya with love. At Kailasa, Parvati wished to welcome her son home. She sent a splendid chariot to bring him. Kartikeya prepared to leave the home where the Krittikas had cared for him."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 5"
+- assertVisible: { id: "story-page-the-mothers-come-too" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk02-art
+- scrollUntilVisible:
+    element: { text: "The Krittikas were distressed at the thought of parting from him. Kartikeya reassured them with kindness. Instead of leaving them behind, he brought them into the chariot with him. Together they set out for Kailasa." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The Krittikas were distressed at the thought of parting from him. Kartikeya reassured them with kindness. Instead of leaving them behind, he brought them into the chariot with him. Together they set out for Kailasa."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 5"
+- assertVisible: { id: "story-page-arrival-at-kailasa" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk03-art
+- scrollUntilVisible:
+    element: { text: "With Nandin nearby, the chariot reached a banyan tree at Kailasa. The streets were decorated, and music welcomed the travellers. Parvati, Shiva and the devas came to see Kartikeya. The Krittika mothers were there with him." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "With Nandin nearby, the chariot reached a banyan tree at Kailasa. The streets were decorated, and music welcomed the travellers. Parvati, Shiva and the devas came to see Kartikeya. The Krittika mothers were there with him."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 5"
+- assertVisible: { id: "story-page-parvati-embraces-her-son" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk04-art
+- scrollUntilVisible:
+    element: { text: "Shiva and Parvati were filled with joy on seeing their son. Parvati embraced Kartikeya and held him in her lap. The family’s long-awaited meeting became a happy homecoming, shared with the mothers who had raised him." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Shiva and Parvati were filled with joy on seeing their son. Parvati embraced Kartikeya and held him in her lap. The family’s long-awaited meeting became a happy homecoming, shared with the mothers who had raised him."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 5"
+- assertVisible: { id: "story-page-the-mother-of-skanda" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk05-art
+- scrollUntilVisible:
+    element: { text: "Devas and mothers offered Kartikeya gifts; the Krittikas joined in giving gifts. Navadurga tradition remembers the Mother of Skanda as Maa Skandamata on the fifth day. She is pictured with four arms, holding lotuses and her son, and offering a blessing." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Devas and mothers offered Kartikeya gifts; the Krittikas joined in giving gifts. Navadurga tradition remembers the Mother of Skanda as Maa Skandamata on the fifth day. She is pictured with four arms, holding lotuses and her son, and offering a blessing."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk05-caption
+- scrollUntilVisible:
+    element: { text: "An original child-friendly retelling of a related Shiva Purana episode, followed by its Navadurga connection. The chapter does not itself name this Navadurga form. The takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "An original child-friendly retelling of a related Shiva Purana episode, followed by its Navadurga connection. The chapter does not itself name this Navadurga form. The takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sk05-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-mahishasura" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-mahishasura" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 12"
+- assertVisible: { id: "story-page-mahishasura-takes-the-realm" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm01-art
+- scrollUntilVisible:
+    element: { text: "Mahishasura, an asura who could take a buffalo’s form, defeated the devas. He took over their realm and their duties. Driven from their homes, the devas needed help to end his cruel rule." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Mahishasura, an asura who could take a buffalo’s form, defeated the devas. He took over their realm and their duties. Driven from their homes, the devas needed help to end his cruel rule."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 12"
+- assertVisible: { id: "story-page-devas-seek-help" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm02-art
+- scrollUntilVisible:
+    element: { text: "With Brahma leading them, the devas went to Shiva and Vishnu. They described how Mahishasura had seized their places. Hearing of this injustice, Shiva, Vishnu and the other devas became determined to act." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "With Brahma leading them, the devas went to Shiva and Vishnu. They described how Mahishasura had seized their places. Hearing of this injustice, Shiva, Vishnu and the other devas became determined to act."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 12"
+- assertVisible: { id: "story-page-the-goddess-manifests" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm03-art
+- scrollUntilVisible:
+    element: { text: "Brilliant radiance came from Shiva, Vishnu, Brahma and the devas. Their light joined together and appeared as the Goddess. Seeing her, the devas felt hope return. This was the divine strength that would face Mahishasura." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Brilliant radiance came from Shiva, Vishnu, Brahma and the devas. Their light joined together and appeared as the Goddess. Seeing her, the devas felt hope return. This was the divine strength that would face Mahishasura."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 12"
+- assertVisible: { id: "story-page-gifts-and-the-lion" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm04-art
+- scrollUntilVisible:
+    element: { text: "The devas offered their weapons and ornaments to Maa Durga. Shiva gave a trident; Vishnu gave a discus. Others brought a conch, bow and more gifts. Himalaya gave her a lion. Equipped with these gifts, she was ready." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The devas offered their weapons and ornaments to Maa Durga. Shiva gave a trident; Vishnu gave a discus. Others brought a conch, bow and more gifts. Himalaya gave her a lion. Equipped with these gifts, she was ready."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 12"
+- assertVisible: { id: "story-page-the-challenge-is-heard" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm05-art
+- scrollUntilVisible:
+    element: { text: "Maa Durga’s mighty roar echoed through the worlds. The devas welcomed her with joy. Mahishasura heard it too and became angry. He gathered his army and sent it toward the radiant Goddess." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Maa Durga’s mighty roar echoed through the worlds. The devas welcomed her with joy. Mahishasura heard it too and became angry. He gathered his army and sent it toward the radiant Goddess."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 12"
+- assertVisible: { id: "story-page-the-army-is-defeated" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm06-art
+- scrollUntilVisible:
+    element: { text: "The army attacked, but Maa Durga stood firm. Her lion fought beside her, and her breath brought forth helpers. The asura commanders could not overcome them. When his army was defeated, Mahishasura entered the battle himself." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The army attacked, but Maa Durga stood firm. Her lion fought beside her, and her breath brought forth helpers. The asura commanders could not overcome them. When his army was defeated, Mahishasura entered the battle himself."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 12"
+- assertVisible: { id: "story-page-the-buffalo-charge" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm07-art
+- scrollUntilVisible:
+    element: { text: "In buffalo form, Mahishasura charged across the earth. His hooves, horns and tail caused destruction, and he rushed at the lion. Maa Durga threw her noose and caught him. He tried to escape by changing his shape." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "In buffalo form, Mahishasura charged across the earth. His hooves, horns and tail caused destruction, and he rushed at the lion. Maa Durga threw her noose and caught him. He tried to escape by changing his shape."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm07-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 12"
+- assertVisible: { id: "story-page-lion-and-warrior" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm08-art
+- scrollUntilVisible:
+    element: { text: "Mahishasura suddenly became a lion. As Maa Durga countered him, he became a warrior with a sword and shield. She stopped this attack with her arrows. Neither shape could defeat her, so he changed again." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Mahishasura suddenly became a lion. As Maa Durga countered him, he became a warrior with a sword and shield. She stopped this attack with her arrows. Neither shape could defeat her, so he changed again."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm08-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 12"
+- assertVisible: { id: "story-page-the-elephant-form" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm09-art
+- scrollUntilVisible:
+    element: { text: "Now Mahishasura became a huge elephant. With his trunk he seized Maa Durga’s lion. The Goddess cut through the attacking trunk and freed her lion. Mahishasura returned to his buffalo form, still refusing to stop." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Now Mahishasura became a huge elephant. With his trunk he seized Maa Durga’s lion. The Goddess cut through the attacking trunk and freed her lion. Mahishasura returned to his buffalo form, still refusing to stop."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm09-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 12"
+- assertVisible: { id: "story-page-mountains-and-arrows" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm10-art
+- scrollUntilVisible:
+    element: { text: "Roaring in anger, the buffalo-form asura hurled mountains at Maa Durga with his horns. Her arrows broke them apart. His strength had brought danger to the worlds; the Goddess now moved forward to end his attack." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Roaring in anger, the buffalo-form asura hurled mountains at Maa Durga with his horns. Her arrows broke them apart. His strength had brought danger to the worlds; the Goddess now moved forward to end his attack."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm10-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "11 / 12"
+- assertVisible: { id: "story-page-mahishasuras-defeat" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm11-art
+- scrollUntilVisible:
+    element: { text: "Maa Durga pressed the buffalo down and struck with her trident. Mahishasura began emerging from it in human form, but could come only halfway. The Goddess defeated and killed him with her sword. His rule of fear ended." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Maa Durga pressed the buffalo down and struck with her trident. Mahishasura began emerging from it in human form, but could come only halfway. The Goddess defeated and killed him with her sword. His rule of fear ended."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm11-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "12 / 12"
+- assertVisible: { id: "story-page-the-devas-give-thanks" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm12-art
+- scrollUntilVisible:
+    element: { text: "The devas rejoiced and thanked Maa Durga. They praised her protection and asked her to help when they remembered her in danger. The Goddess granted their request. With Mahishasura defeated, peace and hope returned." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The devas rejoiced and thanked Maa Durga. They praised her protection and asked her to help when they remembered her in danger. The Goddess granted their request. With Mahishasura defeated, peace and hope returned."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm12-caption
+- scrollUntilVisible:
+    element: { text: "An original children’s retelling of Devi Mahatmya 2–4. Battles and deaths are told without graphic detail. The Navadurga tradition associates this victory with Katyayani. Eight arms are a conventional artistic depiction; the takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "An original children’s retelling of Devi Mahatmya 2–4. Battles and deaths are told without graphic detail. The Navadurga tradition associates this victory with Katyayani. Eight arms are a conventional artistic depiction; the takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-dm12-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-kalaratri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-kalaratri" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 2"
+- assertVisible: { id: "story-page-the-seventh-form" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-kr01-art
+- scrollUntilVisible:
+    element: { text: "On Navaratri’s seventh day, many devotees honour Maa Kalaratri. Her complexion is dark, her hair flows freely, and she rides a donkey. Her powerful appearance belongs to a Mother who protects her devotees." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "On Navaratri’s seventh day, many devotees honour Maa Kalaratri. Her complexion is dark, her hair flows freely, and she rides a donkey. Her powerful appearance belongs to a Mother who protects her devotees."
+- takeScreenshot: durga-en-${DURGA_SIZE}-kr01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 2"
+- assertVisible: { id: "story-page-hands-that-reassure" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-kr02-art
+- scrollUntilVisible:
+    element: { text: "She is often shown with four hands. Two carry protective weapons; two offer blessing and freedom from fear. Devotees also call her Shubhankari, the one who brings auspiciousness. A fierce appearance can hold a caring purpose." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "She is often shown with four hands. Two carry protective weapons; two offer blessing and freedom from fear. Devotees also call her Shubhankari, the one who brings auspiciousness. A fierce appearance can hold a caring purpose."
+- takeScreenshot: durga-en-${DURGA_SIZE}-kr02-caption
+- scrollUntilVisible:
+    element: { text: "A short introduction from Navadurga devotional tradition, not a separate Purana adventure. Traditional origin accounts are attributed; the takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "A short introduction from Navadurga devotional tradition, not a separate Purana adventure. Traditional origin accounts are attributed; the takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-kr02-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-mahagauri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-mahagauri" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-parvati-begins-tapas" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg01-art
+- scrollUntilVisible:
+    element: { text: "In this Shiva Purana account, Shiva made a remark about Parvati’s dark complexion. She was upset and resolved to become Gauri through tapas. She left Mount Mandara for a forest hermitage. Her resolve also led to a divine power that would protect the devas." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "In this Shiva Purana account, Shiva made a remark about Parvati’s dark complexion. She was upset and resolved to become Gauri through tapas. She left Mount Mandara for a forest hermitage. Her resolve also led to a divine power that would protect the devas."
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-the-tiger-changes" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg02-art
+- scrollUntilVisible:
+    element: { text: "A tiger approached Parvati, intending to attack. Her divine presence stilled it. Parvati looked on it with compassion. The tiger’s harmful intent changed into devotion, and it began guarding her hermitage from other animals." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "A tiger approached Parvati, intending to attack. Her divine presence stilled it. Parvati looked on it with compassion. The tiger’s harmful intent changed into devotion, and it began guarding her hermitage from other animals."
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-gauri-and-kaushiki" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg03-art
+- scrollUntilVisible:
+    element: { text: "Troubled by Shumbha and Nishumbha, the devas sought protection. Brahma visited Parvati. From her dark outer sheath, the eight-armed Kaushiki appeared, while Parvati became radiant Gauri. Brahma gave Kaushiki a lion and sent her to face the asura brothers." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Troubled by Shumbha and Nishumbha, the devas sought protection. Brahma visited Parvati. From her dark outer sheath, the eight-armed Kaushiki appeared, while Parvati became radiant Gauri. Brahma gave Kaushiki a lion and sent her to face the asura brothers."
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-compassion-for-a-refuge-seeker" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg04-art
+- scrollUntilVisible:
+    element: { text: "Kaushiki defeated the brothers. Brahma then warned Gauri that her tiger had a harmful past. She would not abandon one who had sought her refuge and changed. Brahma praised her compassion. The tiger remained under her care." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Kaushiki defeated the brothers. Brahma then warned Gauri that her tiger had a harmful past. She would not abandon one who had sought her refuge and changed. Brahma praised her compassion. The tiger remained under her care."
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-shiva-welcomes-gauri" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg05-art
+- scrollUntilVisible:
+    element: { text: "After visiting her parents, Gauri returned to Shiva with her companions and the tiger. Shiva welcomed her warmly. He explained that her nature had won his heart, whether her complexion was dark or any other colour. Their affection remained the same." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "After visiting her parents, Gauri returned to Shiva with her companions and the tiger. Shiva welcomed her warmly. He explained that her nature had won his heart, whether her complexion was dark or any other colour. Their affection remained the same."
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-somanandin-the-guardian" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg06-art
+- scrollUntilVisible:
+    element: { text: "Gauri asked that the devoted tiger serve at their doorway under Nandin. Shiva agreed. The tiger became a guardian in splendid clothes, carrying a golden staff. He was called Somanandin. Compassion had given him a new place and purpose." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Gauri asked that the devoted tiger serve at their doorway under Nandin. Shiva agreed. The tiger became a guardian in splendid clothes, carrying a golden staff. He was called Somanandin. Compassion had given him a new place and purpose."
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-the-eighth-form" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg07-art
+- scrollUntilVisible:
+    element: { text: "On Navaratri’s eighth day, devotees honour Maa Mahagauri. Her traditional image wears white, rides a white bull and has four arms: a trident, a small drum and two blessing gestures. This Gauri episode is a related story of the Mother’s compassion." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "On Navaratri’s eighth day, devotees honour Maa Mahagauri. Her traditional image wears white, rides a white bull and has four arms: a trident, a small drum and two blessing gestures. This Gauri episode is a related story of the Mother’s compassion."
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg07-caption
+- scrollUntilVisible:
+    element: { text: "An original child-friendly retelling of a related Shiva Purana episode, followed by its Navadurga connection. The chapter does not itself name this Navadurga form. The takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "An original child-friendly retelling of a related Shiva Purana episode, followed by its Navadurga connection. The chapter does not itself name this Navadurga form. The takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-mg07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-siddhidatri" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-siddhidatri" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 3"
+- assertVisible: { id: "story-page-the-ninth-form" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-si01-art
+- scrollUntilVisible:
+    element: { text: "On Navaratri’s ninth day, many devotees honour Maa Siddhidatri. Her name remembers her as the giver of siddhis, or divine attainments. In devotional pictures, she sits on a lotus, peaceful and radiant." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "On Navaratri’s ninth day, many devotees honour Maa Siddhidatri. Her name remembers her as the giver of siddhis, or divine attainments. In devotional pictures, she sits on a lotus, peaceful and radiant."
+- takeScreenshot: durga-en-${DURGA_SIZE}-si01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 3"
+- assertVisible: { id: "story-page-shiva-and-shakti" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-si02-art
+- scrollUntilVisible:
+    element: { text: "A traditional account says that Shiva worshipped Adi Parashakti for creation and received divine attainments through Siddhidatri’s grace. It links her with his left half and with Ardhanarishvara, the united form of Shiva and Shakti." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "A traditional account says that Shiva worshipped Adi Parashakti for creation and received divine attainments through Siddhidatri’s grace. It links her with his left half and with Ardhanarishvara, the united form of Shiva and Shakti."
+- takeScreenshot: durga-en-${DURGA_SIZE}-si02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 3"
+- assertVisible: { id: "story-page-many-beings-honour-her" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-si03-art
+- scrollUntilVisible:
+    element: { text: "Devas, sages and other beings honour Siddhidatri. Her four hands hold a discus, conch, lotus and mace in familiar art. Devotees remember her as the Mother whose grace reaches many kinds of beings." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Devas, sages and other beings honour Siddhidatri. Her four hands hold a discus, conch, lotus and mace in familiar art. Devotees remember her as the Mother whose grace reaches many kinds of beings."
+- takeScreenshot: durga-en-${DURGA_SIZE}-si03-caption
+- scrollUntilVisible:
+    element: { text: "A short introduction from Navadurga devotional tradition, not a separate Purana adventure. Traditional origin accounts are attributed; the takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "A short introduction from Navadurga devotional tradition, not a separate Purana adventure. Traditional origin accounts are attributed; the takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-si03-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-raktabeej" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-raktabeej" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-a-new-army-approaches" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb01-art
+- scrollUntilVisible:
+    element: { text: "Shumbha’s commanders Chanda and Munda had been defeated. Kali had received the name Chamunda after that victory. Angry at his losses, Shumbha sent a larger army. Durga, her lion and Kali/Chamunda stood ready to face it." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Shumbha’s commanders Chanda and Munda had been defeated. Kali had received the name Chamunda after that victory. Angry at his losses, Shumbha sent a larger army. Durga, her lion and Kali/Chamunda stood ready to face it."
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-helpers-and-a-warning" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb02-art
+- scrollUntilVisible:
+    element: { text: "The devas’ shaktis, called the Mothers, came to help Durga. The Goddess’s power Shivaduti sent Shiva with a warning: the asuras should return the devas’ realm and withdraw. They refused and attacked. The Mothers defended against them." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The devas’ shaktis, called the Mothers, came to help Durga. The Goddess’s power Shivaduti sent Shiva with a warning: the asuras should return the devas’ realm and withdraw. They refused and attacked. The Mothers defended against them."
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-one-drop-another-asura" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb03-art
+- scrollUntilVisible:
+    element: { text: "Then Raktabeej entered with his club. He had a terrible power: whenever a drop of his blood reached the ground, another asura like him appeared. When Indra’s shakti struck him, falling drops produced new fighters." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Then Raktabeej entered with his club. He had a terrible power: whenever a drop of his blood reached the ground, another asura like him appeared. When Indra’s shakti struck him, falling drops produced new fighters."
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-the-army-keeps-growing" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb04-art
+- scrollUntilVisible:
+    element: { text: "The Mothers fought bravely, but more blood fell and more asuras appeared. The new fighters were as strong as Raktabeej. Soon they crowded the battlefield. Seeing the danger grow, the devas became afraid. A different plan was needed." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The Mothers fought bravely, but more blood fell and more asuras appeared. The new fighters were as strong as Raktabeej. Soon they crowded the battlefield. Seeing the danger grow, the devas became afraid. A different plan was needed."
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-durgas-plan" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb05-art
+- scrollUntilVisible:
+    element: { text: "Durga understood how to stop the growing army. She told Kali/Chamunda to drink the blood before it reached the ground and consume the new asuras. Durga would fight Raktabeej while Kali stopped his power from producing more enemies." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Durga understood how to stop the growing army. She told Kali/Chamunda to drink the blood before it reached the ground and consume the new asuras. Durga would fight Raktabeej while Kali stopped his power from producing more enemies."
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-the-plan-works" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb06-art
+- scrollUntilVisible:
+    element: { text: "As Durga struck Raktabeej, Kali drank the falling blood and consumed the asuras born from it. Now no fresh army could gather on the ground. Raktabeej attacked again, but Durga stood unharmed and continued the fight." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "As Durga struck Raktabeej, Kali drank the falling blood and consumed the asuras born from it. Now no fresh army could gather on the ground. Raktabeej attacked again, but Durga stood unharmed and continued the fight."
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-raktabeejs-defeat" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb07-art
+- scrollUntilVisible:
+    element: { text: "With his multiplying power stopped, Raktabeej fell and died under Durga’s attacks. The devas rejoiced, and the Mothers celebrated. Durga’s strength and Kali/Chamunda’s action together had ended this terrible threat." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "With his multiplying power stopped, Raktabeej fell and died under Durga’s attacks. The devas rejoiced, and the Mothers celebrated. Durga’s strength and Kali/Chamunda’s action together had ended this terrible threat."
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb07-caption
+- scrollUntilVisible:
+    element: { text: "A children’s retelling of Devi Mahatmya 7.27 and 8. Kali is called Chamunda here; she is not renamed Kalaratri. Blood and battle are narrated briefly, with non-graphic illustrations. The takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "A children’s retelling of Devi Mahatmya 7.27 and 8. Kali is called Chamunda here; she is not renamed Kalaratri. Blood and battle are narrated briefly, with non-graphic illustrations. The takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-rb07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-shumbha-nishumbha" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-shumbha-nishumbha" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 14"
+- assertVisible: { id: "story-page-devas-remember-the-promise" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn01-art
+- scrollUntilVisible:
+    element: { text: "The asura brothers Shumbha and Nishumbha seized the devas’ realm and powers. The devas remembered the Goddess’s promise to help when they called upon her in trouble. They went to the Himalayas and prayed, hoping she would protect them again." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The asura brothers Shumbha and Nishumbha seized the devas’ realm and powers. The devas remembered the Goddess’s promise to help when they called upon her in trouble. They went to the Himalayas and prayed, hoping she would protect them again."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 14"
+- assertVisible: { id: "story-page-kaushiki-appears" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn02-art
+- scrollUntilVisible:
+    element: { text: "As the devas prayed, Parvati came to bathe in the Ganga. From her body’s sheath, the radiant Goddess Kaushiki appeared. Parvati then became the dark form called Kalika. Chanda and Munda, servants of the brothers, saw Kaushiki’s beauty and reported it to Shumbha. He wished to possess her." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "As the devas prayed, Parvati came to bathe in the Ganga. From her body’s sheath, the radiant Goddess Kaushiki appeared. Parvati then became the dark form called Kalika. Chanda and Munda, servants of the brothers, saw Kaushiki’s beauty and reported it to Shumbha. He wished to possess her."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 14"
+- assertVisible: { id: "story-page-the-goddess-refuses" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn03-art
+- scrollUntilVisible:
+    element: { text: "Shumbha sent the asura messenger Sugriva, claiming the Goddess should join him because he owned the world’s treasures. She replied that she had already vowed to marry only one who overcame her in battle. She did not yield to his threats." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Shumbha sent the asura messenger Sugriva, claiming the Goddess should join him because he owned the world’s treasures. She replied that she had already vowed to marry only one who overcame her in battle. She did not yield to his threats."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 14"
+- assertVisible: { id: "story-page-dhumralochanas-attack" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn04-art
+- scrollUntilVisible:
+    element: { text: "Shumbha ordered Dhumralochana to bring her by force. When he attacked, the Goddess’s mighty sound destroyed him. Her lion defeated the army that came with him. The brothers’ first attempt at force had failed, but more attacks followed." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Shumbha ordered Dhumralochana to bring her by force. When he attacked, the Goddess’s mighty sound destroyed him. Her lion defeated the army that came with him. The brothers’ first attempt at force had failed, but more attacks followed."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 14"
+- assertVisible: { id: "story-page-kali-becomes-chamunda" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn05-art
+- scrollUntilVisible:
+    element: { text: "Chanda and Munda attacked with another army. Kali emerged from the Goddess’s forehead, fierce in protection. She defeated and killed both commanders. Because she had overcome Chanda and Munda, the Goddess gave her the name Chamunda." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Chanda and Munda attacked with another army. Kali emerged from the Goddess’s forehead, fierce in protection. She defeated and killed both commanders. Because she had overcome Chanda and Munda, the Goddess gave her the name Chamunda."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 14"
+- assertVisible: { id: "story-page-the-last-warning" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn06-art
+- scrollUntilVisible:
+    element: { text: "Divine shaktis joined the Goddess, bearing the powers of the devas. The Goddess’s power Shivaduti sent Shiva with a warning: the asuras should restore the devas’ realm and withdraw. They refused and attacked instead. The Goddess and her allies stood ready to protect." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Divine shaktis joined the Goddess, bearing the powers of the devas. The Goddess’s power Shivaduti sent Shiva with a warning: the asuras should restore the devas’ realm and withdraw. They refused and attacked instead. The Goddess and her allies stood ready to protect."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 14"
+- assertVisible: { id: "story-page-raktabeej-multiplies" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn07-art
+- scrollUntilVisible:
+    element: { text: "Raktabeej carried a mace into battle. Whenever a drop of his blood touched the earth, another asura like him appeared. As the shaktis struck him, the copies multiplied. The devas grew afraid. Ordinary attacks were making the danger greater." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Raktabeej carried a mace into battle. Whenever a drop of his blood touched the earth, another asura like him appeared. As the shaktis struck him, the copies multiplied. The devas grew afraid. Ordinary attacks were making the danger greater."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn07-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 14"
+- assertVisible: { id: "story-page-durga-and-kali-work-together" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn08-art
+- scrollUntilVisible:
+    element: { text: "Durga asked Kali to catch the blood before it reached the earth and consume the new asuras. As Durga fought, Kali carried out the plan. No more copies could grow. Raktabeej lost his multiplying power and was killed. The devas rejoiced." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Durga asked Kali to catch the blood before it reached the earth and consume the new asuras. As Durga fought, Kali carried out the plan. No more copies could grow. Raktabeej lost his multiplying power and was killed. The devas rejoiced."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn08-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "9 / 14"
+- assertVisible: { id: "story-page-nishumbha-returns" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn09-art
+- scrollUntilVisible:
+    element: { text: "Nishumbha attacked the Goddess’s lion. She broke his weapons and struck him down. Shumbha too entered the battle, but his attacks were countered. Nishumbha recovered and returned with renewed force. The struggle was not yet over." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Nishumbha attacked the Goddess’s lion. She broke his weapons and struck him down. Shumbha too entered the battle, but his attacks were countered. Nishumbha recovered and returned with renewed force. The struggle was not yet over."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn09-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "10 / 14"
+- assertVisible: { id: "story-page-nishumbhas-defeat" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn10-art
+- scrollUntilVisible:
+    element: { text: "Nishumbha attacked again with many weapons. The Goddess countered them and struck him with her spear. Another mighty warrior emerged from him, but she defeated that warrior too. Nishumbha was killed, and his army could no longer overcome her." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Nishumbha attacked again with many weapons. The Goddess countered them and struck him with her spear. Another mighty warrior emerged from him, but she defeated that warrior too. Nishumbha was killed, and his army could no longer overcome her."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn10-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "11 / 14"
+- assertVisible: { id: "story-page-the-powers-return-to-one" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn11-art
+- scrollUntilVisible:
+    element: { text: "Shumbha accused the Goddess of relying on others’ strength. She explained that the shaktis were her own manifestations. They returned into her, and she stood alone. Shumbha now faced the same divine Mother whose powers he had thought were separate." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Shumbha accused the Goddess of relying on others’ strength. She explained that the shaktis were her own manifestations. They returned into her, and she stood alone. Shumbha now faced the same divine Mother whose powers he had thought were separate."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn11-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "12 / 14"
+- assertVisible: { id: "story-page-battle-in-the-sky" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn12-art
+- scrollUntilVisible:
+    element: { text: "Shumbha attacked fiercely. The Goddess countered his arrows, sword, shield and mace. He then grappled with her, and their battle rose into the sky. At last she whirled him around and cast him down to the earth." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Shumbha attacked fiercely. The Goddess countered his arrows, sword, shield and mace. He then grappled with her, and their battle rose into the sky. At last she whirled him around and cast him down to the earth."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn12-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "13 / 14"
+- assertVisible: { id: "story-page-shumbhas-final-attack" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn13-art
+- scrollUntilVisible:
+    element: { text: "Even after falling, Shumbha rose and rushed at the Goddess again. She met his final attack with her spear. He was killed, and the earth shook as he fell. The brothers’ cruel rule was finally ended." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Even after falling, Shumbha rose and rushed at the Goddess again. She met his final attack with her spear. He was killed, and the earth shook as he fell. The brothers’ cruel rule was finally ended."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn13-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "14 / 14"
+- assertVisible: { id: "story-page-peace-is-restored" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn14-art
+- scrollUntilVisible:
+    element: { text: "The world grew peaceful again. Rivers flowed in their proper courses, and the sky became clear. The devas rejoiced; celestial singers and dancers celebrated. The Mother’s victory had lifted their fear and restored harmony." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The world grew peaceful again. Rivers flowed in their proper courses, and the sky became clear. The devas rejoiced; celestial singers and dancers celebrated. The Mother’s victory had lifted their fear and restored harmony."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn14-caption
+- scrollUntilVisible:
+    element: { text: "An original children’s retelling of Devi Mahatmya 5–10. Battles and deaths are described without graphic detail. The separate Raktabeej book tells that part more fully; the takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "An original children’s retelling of Devi Mahatmya 5–10. Battles and deaths are described without graphic detail. The separate Raktabeej book tells that part more fully; the takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sn14-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-suratha-samadhi" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-suratha-samadhi" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 7"
+- assertVisible: { id: "story-page-suratha-reaches-the-hermitage" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-su01-art
+- scrollUntilVisible:
+    element: { text: "King Suratha lost a battle. Back in his city, untrustworthy ministers took his wealth and power. He rode into the forest and reached sage Medhas’s peaceful hermitage. Even there, he kept worrying about the kingdom and people he had left." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "King Suratha lost a battle. Back in his city, untrustworthy ministers took his wealth and power. He rode into the forest and reached sage Medhas’s peaceful hermitage. Even there, he kept worrying about the kingdom and people he had left."
+- takeScreenshot: durga-en-${DURGA_SIZE}-su01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 7"
+- assertVisible: { id: "story-page-a-merchant-with-the-same-worry" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-su02-art
+- scrollUntilVisible:
+    element: { text: "Suratha met a merchant named Samadhi. His greedy family had taken his wealth and sent him away. Yet Samadhi still worried about them. Suratha too cared about those who had driven him out. Both were surprised by their own hearts." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Suratha met a merchant named Samadhi. His greedy family had taken his wealth and sent him away. Yet Samadhi still worried about them. Suratha too cared about those who had driven him out. Both were surprised by their own hearts."
+- takeScreenshot: durga-en-${DURGA_SIZE}-su02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 7"
+- assertVisible: { id: "story-page-a-question-for-medhas" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-su03-art
+- scrollUntilVisible:
+    element: { text: "Together they approached Medhas respectfully. They knew they had been treated unfairly, yet their minds kept returning to their homes. They asked why knowing the truth had not freed them from attachment. The sage listened to both visitors." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Together they approached Medhas respectfully. They knew they had been treated unfairly, yet their minds kept returning to their homes. They asked why knowing the truth had not freed them from attachment. The sage listened to both visitors."
+- takeScreenshot: durga-en-${DURGA_SIZE}-su03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 7"
+- assertVisible: { id: "story-page-the-sage-explains" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-su04-art
+- scrollUntilVisible:
+    element: { text: "Medhas spoke of birds feeding their young and the bonds felt by living beings. He explained the Goddess’s power of maya, which can draw even the wise into attachment. He told them of her greatness. Suratha and Samadhi wished to worship her." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Medhas spoke of birds feeding their young and the bonds felt by living beings. He explained the Goddess’s power of maya, which can draw even the wise into attachment. He told them of her greatness. Suratha and Samadhi wished to worship her."
+- takeScreenshot: durga-en-${DURGA_SIZE}-su04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 7"
+- assertVisible: { id: "story-page-three-years-of-devotion" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-su05-art
+- scrollUntilVisible:
+    element: { text: "At a riverbank, they made an earthen image of the Goddess. They offered flowers, incense and water, and remembered her with devotion. Their worship continued for three years. Then the Mother appeared before them, pleased with their devotion." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "At a riverbank, they made an earthen image of the Goddess. They offered flowers, incense and water, and remembered her with devotion. Their worship continued for three years. Then the Mother appeared before them, pleased with their devotion."
+- takeScreenshot: durga-en-${DURGA_SIZE}-su05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 7"
+- assertVisible: { id: "story-page-two-different-wishes" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-su06-art
+- scrollUntilVisible:
+    element: { text: "The Goddess invited them to ask for blessings. Suratha wished to regain his kingdom and have a steadfast royal future. Samadhi asked for knowledge that would free him from the feelings of “I” and “mine.” The Mother heard each request." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The Goddess invited them to ask for blessings. Suratha wished to regain his kingdom and have a steadfast royal future. Samadhi asked for knowledge that would free him from the feelings of “I” and “mine.” The Mother heard each request."
+- takeScreenshot: durga-en-${DURGA_SIZE}-su06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 7"
+- assertVisible: { id: "story-page-the-mothers-blessings" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-su07-art
+- scrollUntilVisible:
+    element: { text: "The Goddess promised that Suratha would regain his kingdom and later be born as Savarni Manu. She granted Samadhi the liberating knowledge he sought. Then she vanished. Their shared journey had brought each of them a different blessing." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The Goddess promised that Suratha would regain his kingdom and later be born as Savarni Manu. She granted Samadhi the liberating knowledge he sought. Then she vanished. Their shared journey had brought each of them a different blessing."
+- takeScreenshot: durga-en-${DURGA_SIZE}-su07-caption
+- scrollUntilVisible:
+    element: { text: "An original children’s retelling of Devi Mahatmya 1 and 13. Severe fasting and self-blood offerings are omitted. Their worship lasts three years; the takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "An original children’s retelling of Devi Mahatmya 1 and 13. Severe fasting and self-blood offerings are omitted. Their worship lasts three years; the takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-su07-ending
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { id: "kids-story-durga-shakambhari" }
+    centerElement: true
+    visibilityPercentage: 40
+- tapOn: { id: "kids-story-durga-shakambhari" }
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: "1 / 8"
+- assertVisible: { id: "story-page-durgama-seizes-the-vedas" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa01-art
+- scrollUntilVisible:
+    element: { text: "The asura Durgama performed tapas and asked Brahma for control of the Vedas. Brahma granted his request. In this Purana account, people then forgot their sacred learning, and the rites that had sustained the devas stopped. Trouble spread across the world." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The asura Durgama performed tapas and asked Brahma for control of the Vedas. Brahma granted his request. In this Purana account, people then forgot their sacred learning, and the rites that had sustained the devas stopped. Trouble spread across the world."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa01-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "2 / 8"
+- assertVisible: { id: "story-page-a-long-drought" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa02-art
+- scrollUntilVisible:
+    element: { text: "The story tells that rain ceased and drought lasted a hundred years. Rivers dried, crops failed, and people and animals suffered. The sages went to the Himalayas and prayed to the divine Mother for help. Their need was urgent." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The story tells that rain ceased and drought lasted a hundred years. Rivers dried, crops failed, and people and animals suffered. The sages went to the Himalayas and prayed to the divine Mother for help. Their need was urgent."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa02-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "3 / 8"
+- assertVisible: { id: "story-page-shatakshi-appears" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa03-art
+- scrollUntilVisible:
+    element: { text: "The Mother appeared with many eyes, seeing their suffering. She was blue, with four arms holding a bow, arrows, a lotus and nourishing produce. Because of her many eyes she was called Shatakshi. Compassion filled her gaze." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The Mother appeared with many eyes, seeing their suffering. She was blue, with four arms holding a bow, arrows, a lotus and nourishing produce. Because of her many eyes she was called Shatakshi. Compassion filled her gaze."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa03-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "4 / 8"
+- assertVisible: { id: "story-page-tears-become-rain" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa04-art
+- scrollUntilVisible:
+    element: { text: "Seeing the world’s pain, Shatakshi shed tears for nine nights. In the story, her tears flowed as rain. Rivers and lakes filled again. The long-dry earth received water, and the thirsty people and animals began to recover." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Seeing the world’s pain, Shatakshi shed tears for nine nights. In the story, her tears flowed as rain. Rivers and lakes filled again. The long-dry earth received water, and the thirsty people and animals began to recover."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa04-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "5 / 8"
+- assertVisible: { id: "story-page-food-until-the-crops-return" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa05-art
+- scrollUntilVisible:
+    element: { text: "Until crops could grow again, the Mother gave people fruits, roots and vegetables. She provided grass for the animals too. Her care fed the hungry world. Because she nourished everyone with plant food, she was known as Shakambhari." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Until crops could grow again, the Mother gave people fruits, roots and vegetables. She provided grass for the animals too. Her care fed the hungry world. Because she nourished everyone with plant food, she was known as Shakambhari."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa05-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "6 / 8"
+- assertVisible: { id: "story-page-a-circle-of-protection" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa06-art
+- scrollUntilVisible:
+    element: { text: "Durgama heard what had happened and attacked with his army. The Mother surrounded the devas and sages with protective light and stood outside to face him. Many divine shaktis came to help her. The battle continued for ten days." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "Durgama heard what had happened and attacked with his army. The Mother surrounded the devas and sages with protective light and stood outside to face him. Many divine shaktis came to help her. The battle continued for ten days."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa06-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "7 / 8"
+- assertVisible: { id: "story-page-durgamas-defeat" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa07-art
+- scrollUntilVisible:
+    element: { text: "On the eleventh day, Durgama came in his chariot to fight the Mother himself. She countered his attack with her bow. At last she defeated and killed him. The threat ended, and those she protected were safe." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "On the eleventh day, Durgama came in his chariot to fight the Mother himself. She countered his attack with her bow. At last she defeated and killed him. The threat ended, and those she protected were safe."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa07-caption
+- swipe:
+    start: 85%, 42%
+    end: 15%, 42%
+    duration: 600
+- assertVisible: "8 / 8"
+- assertVisible: { id: "story-page-knowledge-and-peace-return" }
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa08-art
+- scrollUntilVisible:
+    element: { text: "The Mother returned the Vedas and asked that this sacred knowledge be cared for. The devas and sages thanked her. Water, food and protection had restored hope. Shatakshi and Shakambhari were remembered as names of the compassionate Mother." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "The Mother returned the Vedas and asked that this sacred knowledge be cared for. The devas and sages thanked her. Water, food and protection had restored hope. Shatakshi and Shakambhari were remembered as names of the compassionate Mother."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa08-caption
+- scrollUntilVisible:
+    element: { text: "An original children’s retelling of Devi Bhagavata 7.28. Drought’s cause is the Purana’s account, not a scientific explanation. War and death have no graphic detail; the takeaway is editorial." }
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 40
+- assertVisible: "An original children’s retelling of Devi Bhagavata 7.28. Drought’s cause is the Purana’s account, not a scientific explanation. War and death have no graphic detail; the takeaway is editorial."
+- takeScreenshot: durga-en-${DURGA_SIZE}-sa08-ending
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Back"

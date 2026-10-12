@@ -1,0 +1,206 @@
+{
+  "bk-20-01": {
+    "frame": {
+      "x": 0,
+      "y": 0,
+      "width": 0.49915397631133673,
+      "height": 0.3308270676691729,
+      "status": "painted-panel-boundary-reviewed-v2"
+    },
+    "reason": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text."
+  },
+  "bk-20-02": {
+    "frame": {
+      "x": 0.5025380710659898,
+      "y": 0,
+      "width": 0.49746192893401014,
+      "height": 0.3308270676691729,
+      "status": "painted-panel-boundary-reviewed-v2"
+    },
+    "reason": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text."
+  },
+  "bk-20-03": {
+    "frame": {
+      "x": 0,
+      "y": 0.3330827067669173,
+      "width": 0.49915397631133673,
+      "height": 0.3263157894736842,
+      "status": "painted-panel-boundary-reviewed-v2"
+    },
+    "reason": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text."
+  },
+  "bk-20-04": {
+    "frame": {
+      "x": 0.5025380710659898,
+      "y": 0.3330827067669173,
+      "width": 0.49746192893401014,
+      "height": 0.3263157894736842,
+      "status": "painted-panel-boundary-reviewed-v2"
+    },
+    "reason": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text."
+  },
+  "bk-20-05": {
+    "frame": {
+      "x": 0,
+      "y": 0.662406015037594,
+      "width": 0.49915397631133673,
+      "height": 0.337593984962406,
+      "status": "painted-panel-boundary-reviewed-v2"
+    },
+    "reason": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text."
+  },
+  "bk-20-06": {
+    "frame": {
+      "x": 0.5025380710659898,
+      "y": 0.662406015037594,
+      "width": 0.49746192893401014,
+      "height": 0.337593984962406,
+      "status": "painted-panel-boundary-reviewed-v2"
+    },
+    "reason": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text."
+  },
+  "bk-10-03": {
+    "en": {
+      "narration": "Subahu continued the attack. Rama killed him and drove away the remaining attackers."
+    },
+    "reason": "Make the English outcome as explicit as Hindi maar giraaya and the visible fallen Subahu; Maricha survives in the previous panel."
+  },
+  "bk-05-01": {
+    "asset": "../lettering-pilot-v1/bk-05-01-compact-v1.png",
+    "hi": {
+      "narration": "कौसल्या से राम, कैकेयी से भरत और सुमित्रा से लक्ष्मण-शत्रुघ्न जन्मे। महल में उत्सव हुआ।"
+    },
+    "en": {
+      "narration": "Kaushalya bore Rama; Kaikeyi, Bharata; Sumitra, Lakshmana and Shatrughna. The palace celebrated."
+    }
+  },
+  "bk-05-02": {
+    "asset": "../lettering-pilot-v1/bk-05-02-compact-v1.png",
+    "hi": {
+      "narration": "चारों भाई शिक्षा और शस्त्रविद्या सीखते बड़े हुए। राम-लक्ष्मण और भरत-शत्रुघ्न में गहरा स्नेह था।"
+    },
+    "en": {
+      "narration": "The brothers grew up studying and training in arms. Rama–Lakshmana and Bharata–Shatrughna were especially close."
+    }
+  },
+  "bk-05-03": {
+    "asset": "../lettering-pilot-v1/bk-05-03-compact-v1.png",
+    "hi": {
+      "narration": "राजकुमार अब किशोर थे। विश्वामित्र दरबार आए। दशरथ ने आदर से उनका स्वागत किया।",
+      "speaker": null,
+      "dialogue": null
+    },
+    "en": {
+      "narration": "The princes were now adolescents. Vishwamitra came to court. Dasharatha welcomed him respectfully.",
+      "speaker": null,
+      "dialogue": null
+    },
+    "insertAfter": [
+      {
+        "id": "bk-05-03a",
+        "source": "1.18",
+        "asset": "../lettering-pilot-v1/bk-05-03a-welcome-v1.png",
+        "overlaySpeech": true,
+        "hi": {
+          "narration": "",
+          "speaker": "दशरथ",
+          "dialogue": "मुनिवर, मैं आपकी क्या सेवा करूँ?"
+        },
+        "en": {
+          "narration": "",
+          "speaker": "Dasharatha",
+          "dialogue": "Revered sage, how may I serve you?"
+        },
+        "artAction": "Close-up of Dasharatha welcoming the unseen sage with an open palm; same moment as the preceding panel.",
+        "reason": "Separate close-up for the existing question; no new event or dialogue."
+      }
+    ]
+  },
+  "bk-07-03": {
+    "hi": {
+      "narration": "गंगा पार करते हुए राम ने संगम की गर्जना पूछी। विश्वामित्र ने बताया कि यह सरयू और गंगा के जल के मिलने की ध्वनि थी। आगे उजड़े मलद-करूष क्षेत्र में उन्होंने ताड़का के आतंक का परिचय दिया।"
+    },
+    "en": {
+      "narration": "Crossing the Ganga, Rama asked about the roar. Vishwamitra explained that it came from the meeting of the Sarayu and Ganga. Beyond lay the ruined Malada and Karusha lands, where he described Tataka’s terror."
+    },
+    "reason": "Restore the answer to Rama's river question, Bāla 1.24.8–11."
+  },
+  "bk-08-04": {
+    "asset": "assets/bk-08-04-v2.png",
+    "hi": {
+      "narration": "संध्या निकट थी। विश्वामित्र ने संकट समाप्त करने को कहा। राम ने बाण छोड़ा; ताड़का भूमि पर गिरी और मारी गई।"
+    },
+    "en": {
+      "narration": "Dusk was near. Vishwamitra urged Rama to end the danger. Rama released an arrow; Tataka fell to the ground and died."
+    },
+    "artAction": "At dusk Rama has released his arrow; Tataka visibly falls backward, without gore.",
+    "reason": "Replace the ambiguous peaceful aftermath with the decisive action and fall, Bāla 1.26.22–26.",
+    "insertAfter": [
+      {
+        "id": "bk-08-04a",
+        "source": "1.26",
+        "asset": "assets/bk-08-04a-v1.png",
+        "hi": {
+          "narration": "वन का भय दूर हो गया। उस रात राम, लक्ष्मण और विश्वामित्र ने वहीं विश्राम किया।",
+          "speaker": null,
+          "dialogue": null
+        },
+        "en": {
+          "narration": "The forest was free of Tataka’s terror. Rama, Lakshmana and Vishwamitra rested there that night.",
+          "speaker": null,
+          "dialogue": null
+        },
+        "artAction": "The three travellers rest beside a small fire beneath the night sky.",
+        "reason": "Retain the night halt before the next morning's lesson, Bāla 1.26.33–36."
+      }
+    ]
+  },
+  "bk-09-01": {
+    "hi": {
+      "narration": "अगली सुबह प्रसन्न विश्वामित्र ने राम को दिव्यास्त्रों का ज्ञान दिया। राम ने विनयपूर्वक उन्हें स्वीकार किया।"
+    },
+    "en": {
+      "narration": "The next morning, pleased with Rama, Vishwamitra taught him the divine weapons. Rama received the knowledge humbly."
+    },
+    "reason": "Make the overnight transition explicit."
+  },
+  "bk-09-02": {
+    "insertAfter": [
+      {
+        "id": "bk-09-02a",
+        "source": "1.28",
+        "asset": "assets/bk-09-02a-v1.png",
+        "hi": {
+          "narration": "यात्रा फिर आगे बढ़ी। एक सुन्दर वन और आश्रम देखकर राम ने विश्वामित्र से उस स्थान के बारे में पूछा।",
+          "speaker": "राम",
+          "dialogue": "मुनिवर, यह किसका आश्रम है?"
+        },
+        "en": {
+          "narration": "They resumed their journey. Seeing a pleasant grove and hermitage, Rama asked Vishwamitra about the place.",
+          "speaker": "Rama",
+          "dialogue": "Whose hermitage is this, revered sage?"
+        },
+        "artAction": "Rama points toward the pleasant wooded hermitage as the three travellers walk; Vishwamitra turns to answer.",
+        "reason": "Restore the motivating question between 1.28 and 1.29, Bāla 1.28.16–22."
+      }
+    ]
+  },
+  "bk-09-03": {
+    "hi": {
+      "narration": "उत्तर में विश्वामित्र ने इस स्थान की पुरानी कथा सुनाई। विष्णु ने वामन रूप में बलि से तीन पग भूमि माँगी और विराट रूप से लोक नापे।"
+    },
+    "en": {
+      "narration": "In answer, Vishwamitra told the place’s ancient story. As Vamana, Vishnu asked Bali for three paces of land, then measured the worlds in a vast form."
+    },
+    "reason": "Explicitly connect the flashback to Rama's question, Bāla 1.29.1–4."
+  },
+  "bk-09-04": {
+    "hi": {
+      "narration": "कथा सुनते हुए वे सिद्धाश्रम पहुँचे। राम-लक्ष्मण ने वहाँ के ऋषियों का प्रणाम स्वीकार किया और यज्ञ-रक्षा की तैयारी की।"
+    },
+    "en": {
+      "narration": "After hearing the story, they arrived at Siddhashrama. Rama and Lakshmana received the sages’ greetings and prepared to guard the sacrifice."
+    },
+    "reason": "Explicit return from the Vamana flashback to the present journey."
+  }
+}

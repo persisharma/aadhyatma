@@ -154,9 +154,15 @@ test('Krishna Paksha festivals keep their civil date across Purnimant and Amanta
 // lunar month early (the "Janmashtami showing wrong" bug).
 test('Janmashtami resolves to its real civil date, not one lunar month early', () => {
   for (const system of ['purnimant', 'amanta'] as const) {
+    // 2025 is a two-date year: Smarta 15 Aug (Ashtami at that night's Nishita),
+    // Vaishnava/ISKCON 16 Aug (the sunrise Ashtami) — RULEBOOK §23.17.
     assert.ok(
-      getObservancesForDate(new Date(2025, 7, 16), system).some((o) => o.rule.id === 'janmashtami'),
-      `${system}: Janmashtami 2025 must be 16 Aug (Bhadrapada Krishna Ashtami)`
+      getObservancesForDate(new Date(2025, 7, 15), system).some((o) => o.rule.id === 'janmashtami'),
+      `${system}: Smarta Janmashtami 2025 must be 15 Aug (Bhadrapada Krishna Ashtami)`
+    );
+    assert.ok(
+      getObservancesForDate(new Date(2025, 7, 16), system).some((o) => o.rule.id === 'janmashtami-vaishnava'),
+      `${system}: Vaishnava Janmashtami 2025 must be 16 Aug`
     );
     assert.ok(
       getObservancesForDate(new Date(2026, 8, 4), system).some((o) => o.rule.id === 'janmashtami'),

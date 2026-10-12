@@ -111,6 +111,8 @@ const chalisaIds = new Set([
   'krishna-chalisa',
   'vishnu-chalisa',
   'saraswati-chalisa',
+  'khatu-shyam-chalisa',
+  'lakshmi-chalisa',
 ]);
 
 // Ashtakam (अष्टकम्) multi-instance form — one AshtakamReader dispatches on
@@ -154,7 +156,7 @@ function theerthEntryParams(id: string): { group?: string } {
   const group = THEERTH_ENTRY_TO_GROUP[id];
   return group ? { group } : {};
 }
-const sanskarIds = new Set(['prabhati-shloka', 'surya-namaskar', 'tulsi-puja', 'bhojan-mantra', 'gau-seva', 'sandhya-deepam', 'ratri-shloka', 'vidyarambha-prarthana']);
+const sanskarIds = new Set(['prabhati-shloka', 'surya-namaskar', 'tulsi-puja', 'bhojan-mantra', 'gau-seva', 'sandhya-deepam', 'ratri-shloka', 'vidyarambha-prarthana', 'matribhumi-vandana']);
 
 const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'shiva-strotam': 'ShivaStrotamChapters',

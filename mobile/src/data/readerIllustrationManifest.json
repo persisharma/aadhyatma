@@ -1,0 +1,263 @@
+{
+  "prefix": "reader-illustrations",
+  "assets": {
+    "category-aarti-diya": {
+      "hash": "95c197d8fd463718",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "category-chalisa-booklet-mala": {
+      "hash": "6f05357f0c41efad",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "category-granth-open-scripture": {
+      "hash": "c54f7e15a8cabdc4",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "category-japam-mala": {
+      "hash": "bf78f947dab0184f",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "category-kavacham-protection": {
+      "hash": "f60645881b7fcbd2",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "category-stotram-hymn-scroll": {
+      "hash": "c77568b989ad905c",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "daan-annapurna-bhiksha": {
+      "hash": "3ababd2172739822",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-dattatreya": {
+      "hash": "3c7883121f519d08",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-durga-lion": {
+      "hash": "324b157dc73b990e",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-ganesha-modak": {
+      "hash": "d25b9255ffa1b3f3",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-ganga": {
+      "hash": "25367a33becc7421",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-kali": {
+      "hash": "ca0d868eb7db9b21",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-krishna-bansuri": {
+      "hash": "f38054b6023adf22",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-kubera": {
+      "hash": "a4334d1f68f446c7",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-lakshmi": {
+      "hash": "7b70b090e5eceb11",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-narasimha-prahlad": {
+      "hash": "5b4a63956b520203",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-navagraha-icons": {
+      "hash": "a55e2a59a26f43cd",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-parvati-bhavani": {
+      "hash": "f489354a2564eaf9",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-radha-krishna": {
+      "hash": "28a425c6391e95f0",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-rama-darbar": {
+      "hash": "934c7e58e18e4c5d",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-saraswati-veena": {
+      "hash": "0bfd51fab0c76639",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-shani": {
+      "hash": "0dc16111235285d3",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "deity-surya": {
+      "hash": "c7d38e9b8588d376",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "hanuman-lankadahan": {
+      "hash": "c243ec97b25c3916",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "hanuman-sea": {
+      "hash": "47df1919b9ee3f38",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "hanuman-sita": {
+      "hash": "0acd6590e27d86c1",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "krishna-arjuna-vishvarupa": {
+      "hash": "8672408d273556b8",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "panchang-celestial-almanac": {
+      "hash": "3476f2fc731e40a2",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "ram-hanuman": {
+      "hash": "85bbc10d3b9545e1",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "shiva": {
+      "hash": "7cb9287b40c1bbe0",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "source-gayatri-savitri-sun": {
+      "hash": "b62d16c427cc7aa0",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "source-vishnu-narayana": {
+      "hash": "ea3ebd005c439ef4",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-gogaji-gogamedi": {
+      "hash": "54128d157693059d",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-jeen-mata": {
+      "hash": "755512f9b8089fe7",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-karni-mata": {
+      "hash": "f6157610fe009fd1",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-khandoba-jejuri": {
+      "hash": "e036fbf06d13d127",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-khatu-shyam": {
+      "hash": "5f49eb1520adcb39",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-mahasu-devta-hanol": {
+      "hash": "6968c0fc82e6aef6",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-ramdevra": {
+      "hash": "86de15db64abaf07",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-sabarimala": {
+      "hash": "e72b4b1d92cbc2e4",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-salasar-balaji": {
+      "hash": "204e4d3d15602de9",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-tejaji-kharnal": {
+      "hash": "7f202702907f142b",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "theerth-vetrimalai-murugan": {
+      "hash": "4c61af521ee50ee8",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    }
+  }
+}

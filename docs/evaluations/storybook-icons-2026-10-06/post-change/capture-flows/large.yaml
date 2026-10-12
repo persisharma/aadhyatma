@@ -1,0 +1,25 @@
+appId: com.prashantsharma.vedansh
+---
+- setOrientation: PORTRAIT
+- launchApp:
+    stopApp: true
+- tapOn: { text: "Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
+- tapOn: { text: "Skip tour|Skip|SKIP", optional: true }
+- tapOn: { text: "Close", optional: true }
+- tapOn: { text: "Got it", optional: true }
+- tapOn: { text: "Not now|अभी नहीं", optional: true }
+- tapOn: { text: "Allow|Don.t Allow", optional: true }
+- tapOn: { id: "tab-home" }
+- tapOn: { text: "Back", optional: true }
+- scrollUntilVisible:
+    element: { text: "Search verses, sections, and mantras" }
+    direction: UP
+    timeout: 20000
+- swipe: { direction: DOWN }
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/large-home
+- scrollUntilVisible:
+    element: { text: "Kundali\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 20000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/large-new

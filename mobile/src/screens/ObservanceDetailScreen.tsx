@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -29,6 +30,9 @@ import { transliterateDevanagari } from '@/utils/transliterate';
 import type { UpvasFastType } from '@/panchang/types';
 import { getObservanceAreas } from '@/panchang/observanceAreas';
 import { areaName } from '@/components/AreaFilterChips';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { observanceShareable } from '@/utils/shareContent';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'ObservanceDetail'>;
 
@@ -76,6 +80,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
+  const { share, busy: shareBusy } = useShare();
   const [calendarSystem] = usePanchangCalendarSystem();
 
   const rule = getRuleById(route.params.ruleId);
@@ -150,7 +155,27 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
           <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
             {contentByLang(lang, 'व्रत विवरण', 'Observance')}
           </Text>
-          <View style={{ width: 36 }} />
+          {rule ? (
+            <ShareButton
+              onPress={() =>
+                void share(
+                  observanceShareable({
+                    rule,
+                    date: next ? { hi: formatDate(next.date, 'hi'), en: formatDate(next.date, 'en') } : null,
+                    katha,
+                    upvas,
+                    bhog,
+                  }),
+                  lang
+                )
+              }
+              busy={shareBusy}
+              accessibilityLabel="Share this day"
+              accessibilityHint="Opens share options for this festival or vrat"
+            />
+          ) : (
+            <View style={{ width: 36 }} />
+          )}
         </View>
 
         {!rule ? (
@@ -255,7 +280,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 pressed && { opacity: 0.8 },
               ]}
             >
-              <Text style={{ fontSize: 14, color: colors.saffron }}>⌕</Text>
+              <AppIcon name="search" size={18} color={colors.saffron} />
               <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
                 {contentByLang(lang, 'इस व्रत के बारे में पूछें — कैसे करें, क्या खाएँ, कथा…', 'Ask about this observance — how, what to eat, katha…')}
               </Text>

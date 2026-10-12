@@ -1,0 +1,47 @@
+appId: com.prashantsharma.vedansh
+---
+- setOrientation: PORTRAIT
+- launchApp:
+    stopApp: true
+- tapOn: { id: "tab-home" }
+- tapOn: { text: "Back", optional: true }
+- scrollUntilVisible:
+    element: { text: "Search verses, sections, and mantras" }
+    direction: UP
+    timeout: 20000
+- swipe: { direction: DOWN }
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/compact-enlarged-home
+- scrollUntilVisible:
+    element: { text: "Kundali\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 20000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/compact-enlarged-new
+- scrollUntilVisible:
+    element: { text: "Muhurat\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 20000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/compact-enlarged-muhurat
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: DOWN
+    timeout: 20000
+- tapOn: "Language,.*"
+- tapOn: "English"
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { text: "Search verses, sections, and mantras" }
+    direction: UP
+    timeout: 20000
+- swipe: { direction: DOWN }
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/compact-enlarged-english-home
+- swipe:
+    start: "50%,60%"
+    end: "50%,45%"
+    duration: 1500
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/compact-enlarged-english-recommendations
+- scrollUntilVisible:
+    element: { text: "Kundali\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 20000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/post-change/compact-enlarged-english-new

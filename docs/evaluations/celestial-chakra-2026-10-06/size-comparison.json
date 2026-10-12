@@ -1,0 +1,58 @@
+{
+  "beforeChakra": {
+    "assetFiles": 164,
+    "assetBytes": 40404745,
+    "bytecodeBytes": 44194457,
+    "bundleAndAssetBytes": 84599202,
+    "bundleSha256": "367f9c5642cba40700311b6780f2bd41cc278928f073d79268803929cb59b9e9"
+  },
+  "withChakra": {
+    "assetFiles": 166,
+    "assetBytes": 40679137,
+    "bytecodeBytes": 44195040,
+    "bundleAndAssetBytes": 84874177,
+    "bundleSha256": "564134d3eeabfbdc142db2c866537805c9830bd755716f66fa74b145d5ea81cf"
+  },
+  "mainBaseline": {
+    "assetFiles": 109,
+    "assetBytes": 38288416,
+    "bytecodeBytes": 44013714,
+    "bundleAndAssetBytes": 82302130,
+    "bundleSha256": "1e9c47eac05d3979d22907265f1fdbec968b4fb5588bbbc1d518593d115ac08b"
+  },
+  "chakraDelta": {
+    "assetFiles": 2,
+    "assetBytes": 274392,
+    "bytecodeBytes": 583,
+    "bundleAndAssetBytes": 274975
+  },
+  "wholePRDelta": {
+    "assetFiles": 57,
+    "assetBytes": 2390721,
+    "bytecodeBytes": 181326,
+    "bundleAndAssetBytes": 2572047
+  },
+  "installed": {
+    "bundleBytes": 44195078,
+    "bundleSha256": "0ae8b048c98d1b9707294fecd9421b2da5658cf535d33cd607b3893c5d55fbeb",
+    "decorationFiles": [
+      {
+        "name": "wheel",
+        "appPath": "assets/assets/decorations/celestial-chakra/wheel.png",
+        "bytes": 246185,
+        "sha256": "ab4185edf92ba8fd41a4a519a0aaa6141f6747a499811b116df867721289bc0d"
+      },
+      {
+        "name": "seal",
+        "appPath": "assets/assets/decorations/celestial-chakra/seal.png",
+        "bytes": 28207,
+        "sha256": "36da6f41daa6466805d34ab80af9d91412ce40db8b96dd8087acc9edc77cb0c5"
+      }
+    ]
+  },
+  "refs": {
+    "beforeChakra": "e9a5f028d6c2c47da5ac6ef06bab6b9ace31e4df",
+    "mainBaseline": "cb38ba6109a11606354e2d23dd57fcae509eb716"
+  },
+  "method": "Production iOS Expo/Hermes exports, same installed dependencies/environment; bundled assets plus bytecode, metadata excluded. Final Home opacity 0.32. Store-compressed IPA/APK/download delta unmeasured."
+}

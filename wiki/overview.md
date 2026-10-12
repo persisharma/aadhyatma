@@ -2,7 +2,7 @@
 title: Overview
 type: overview
 sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/backgrounds.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, mobile/assets/backgrounds/, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
-last_verified_date: 2026-09-25
+last_verified_date: 2026-10-11
 confidence: medium
 status: current
 ---
@@ -22,10 +22,11 @@ backend.
 - **Navigation:** React Navigation 7 — `native-stack` + `bottom-tabs`. **Not** expo-router.
 - **State:** React Context only (no Redux/Zustand). `@react-native-async-storage/async-storage` 2.2.0 for persistence.
 - **OTA:** `expo-updates` ~29.0.17, `runtimeVersion` policy `appVersion`.
+- **Install measurement:** build-gated Android/iOS Meta Core SDK integration; standard activation only, no private feature payloads. Requires new native binaries and revised privacy disclosures before production enablement. See [[integrations/meta-app-events]].
 - **Audio:** `expo-audio` (japam + the bhajan library). **Speech:** `expo-speech` ~14.0.8 — on-device TTS read-aloud on the Gita and chalisa readers (see [[audio]]). **Notifications:** `expo-notifications`. **Calendar math:** `astronomy-engine` ~2.1.19.
 - **Fonts:** Noto Serif Devanagari (Devanagari), Cormorant Garamond (Latin), Noto Serif Gujarati + Noto Serif Kannada (the gu/kn reading languages).
 - **Reading languages:** `hi · en · gu · kn` (one shared `useGitaLanguage()` pref). gu/kn carry no authored content — derived at runtime by transliterating the Devanagari. See [[languages]].
-- **App version:** 1.4.6, iOS build 46 (`mobile/app.json`).
+- **App version:** 1.4.9, iOS build 69, Android version code 11 (`mobile/app.json`).
 - **Entry Point:** `mobile/index.ts` → `registerRootComponent(App)` → `mobile/App.tsx`.
 
 ## Request Shape
@@ -47,14 +48,16 @@ visible Home frame stable instead of moving the launcher grid immediately after 
 3. **Panchang** → lazy `PanchangStackNavigator` (PanchangScreen, observances, katha library,
    vrat, Kundali, Rashifal). Its modules are evaluated only when the tab/launcher first opens,
    keeping Home startup independent of the heavier calendar/Jyotish graph.
-4. **Audio ("Bhajan")** → `AudioStackNavigator` (audio library, Now Playing).
-5. **More** → `MoreStackNavigator` (MoreHome, Wishlist, Profile, Reminders and family tools).
+4. **Vrat** → a second lazy `PanchangStackNavigator`, starting with `initialMode="catalog"` (Vrat & Parv), with independent navigation state. Both instances share the chunk loader.
+5. **Audio ("Bhajan")** → `AudioStackNavigator` (all audio together; the tab is selected/highlighted when opened).
+
+**Settings** opens from Home’s top-right 44 pt gear → hidden `MoreTab` → `MoreStackNavigator` (MoreHome, Wishlist, Profile, Reminders and family tools).
    `MoreScreen` reads raw family counts immediately; `panchang/useMoreFamilySummary.ts`
    hydrates persisted next-date answers and cooperatively derives/solves missing ones only
    while the hub is focused. Blur, unmount and record changes cancel pending work. The
    hub must not call `useJanmaTithiPeople` (birth math during render) or wrap synchronous
    annual solvers in a timer. Closed settings sheets are not mounted. More stack destinations use literal `getComponent`
-   loaders, keeping unvisited tools out of the eager launch graph.
+   loaders, keeping unvisited tools out of the eager launch graph. `MoreTab` retains its name and typed deep-link targets but has no bottom-bar slot. The hub has a localized Settings title and Back to Home. VoiceOver announces five visible tabs; the tour highlights the settings gear and only focused instances register shared Panchang/Vrat anchors. Maestro’s `_open-settings.yaml` centralizes entry through Home.
 
 Deep links and notification taps route through `navigationRef`, exported from
 `mobile/src/notifications/deepLink.ts`; route mapping lives in `mobile/src/navigation/entryRoutes.ts`.
@@ -86,12 +89,18 @@ full-text search index. `sourceIdMigration.ts` keeps bookmarks/progress stable a
 ID changes. User language preference, routines (`@vedansh/routines`) and daily done-marks
 (`@vedansh/routine-done`) are persisted in AsyncStorage.
 
-Background artwork is also bundled offline. `mobile/assets/backgrounds/index.ts` is the typed
-static-require registry, while `mobile/src/data/backgrounds.ts` deterministically maps category,
-deity, source/reader and Theerth surfaces to those assets. Deities use distinct semantic plates;
-Theerth normally inherits the presiding deity and may override by temple id. Production sketches
-are 1024×1024 WebP files; `backgrounds.coverage.jest.test.ts` pins both coverage and commissioned
-asset identity so a future placeholder reuse fails explicitly.
+Background artwork is R2-backed with one 3 KB bundled neutral paper fallback.
+`mobile/assets/backgrounds/index.ts` carries typed remote descriptors; `backgrounds.ts` still
+deterministically maps category, deity, reader and Theerth surfaces to their semantic plates.
+`CachedArtwork` paints the fallback immediately and resolves cached artwork with async disk
+operations and bounded, cancellable downloads after interactions. `backgrounds.coverage.jest.test.ts`
+still pins asset identity. The approved Option 2 Katha/Pitru/Daan prose shares a continuous
+parchment folio, compact opening art and an existing manuscript icon as its offline illustration.
+Standalone reader illustrations now have a distinct descriptor/manifest/R2 prefix, with the
+Krishna storybook rendering as their style reference. `BackgroundArtwork` remains the typed
+background wrapper; both purposes share the loader/cache. Three storybook drafts are ready for
+a three-style comparison; wider generation/adoption is held for the user's direction.
+See [[integrations/reading-artwork]] for publishing, caching and QA limits.
 
 ## Content Pipeline
 
@@ -124,6 +133,8 @@ asset identity so a future placeholder reuse fails explicitly.
 - `docs/superpowers/` — deity-icon plan + design spec.
 
 ## Gotchas
+
+- **App icon exports** — `mobile/assets/branding/app-icon-master.png` is the approved copper-relief master; `node mobile/scripts/export-app-icons.mjs` regenerates all four Expo icon/splash/favicon assets and their hash manifest. Android receives padded adaptive artwork; `mobile/app.json` supplies an explicit splash plugin and ivory backgrounds. These native-shell changes require a rebuilt app, not OTA. The Home wordmark and share-footer text are separate from the launcher icon (design.md §2.1).
 
 - **OTA + `runtimeVersion: appVersion`** — an OTA update reaches only users on a matching store
   build. Publish at the *live store runtime*, not blindly at `app.json`'s version (store builds

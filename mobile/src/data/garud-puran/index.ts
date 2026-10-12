@@ -42,6 +42,7 @@ export type GarudPuranChapter = {
 export const garudPuranTitleHi = 'गरुड़ पुराण';
 export const garudPuranTitleEn = 'Garud Puran';
 export const garudPuranChaptersManifest = manifest.filter(row => row.status === 'verified');
+export const garudPuranReadingCount = garudPuranChaptersManifest.length;
 export const garudPuranTotal = garudPuranChaptersManifest.reduce((sum, row) => sum + row.verseCount, 0);
 
 // Only the manifest is eager. Preserve these chapter numbers for saved progress.

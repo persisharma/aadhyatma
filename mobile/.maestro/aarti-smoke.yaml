@@ -1,10 +1,11 @@
 # Aarti Category Smoke Test
 #
-# Verifies the Aarti category and its 9 active sections render correctly.
+# Verifies the Aarti category and its 11 active sections render correctly.
 # Sections: Om Jai Jagdish Hare, Hanuman Ji Ki Aarti, Jai Ganesh Deva,
 #           Om Jai Shiv Omkara, Jai Ambe Gauri, Aarti Kunj Bihari Ki,
-#           Saraswati Mata Ki Aarti, Gayatri Mata Ki Aarti,
-#           Shri Ram Chandra Ji Ki Aarti (reuses the Ram Stuti content).
+#           Saraswati Mata Ki Aarti, Gayatri Mata Ki Aarti, Om Jai Lakshmi Mata,
+#           Shri Ram Chandra Ji Ki Aarti (reuses the Ram Stuti content),
+#           Shri Khatu Shyam Ji Ki Aarti.
 #
 # Aartis share AartiReaderScreen (multi-instance, dispatched by route param).
 # Opens Om Jai Jagdish to verify the dispatch resolves correctly.
@@ -18,7 +19,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Aarti\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 9 sections appear in CategoryList
+# Verify all 11 sections appear in CategoryList
 # (Sankat Mochan Hanumanashtak now lives in the Ashtakam category.)
 - extendedWaitUntil:
     visible: "Om Jai Jagdish Hare\\..*Tap to open\\."
@@ -43,14 +44,48 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     visibilityPercentage: 60
     timeout: 10000
-# Ram's aarti is the last card — it reuses the Ram Stuti content (opens the
-# RamStuti reader), listed here under the Aarti category. NEW badge absorbed by `.*`.
+# Om Jai Lakshmi Mata (addedInVersion 1.5.0) sits between Gayatri and Ram's
+# aarti. Open it to prove the appended index 9 dispatches its own payload.
+- scrollUntilVisible:
+    element:
+      text: "Om Jai Lakshmi Mata\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Om Jai Lakshmi Mata\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "ॐ जय लक्ष्मी माता.*"
+- tapOn: "Back"
+- waitForAnimationToEnd
+# Ram's aarti reuses the Ram Stuti content (opens the RamStuti reader), listed
+# here under the Aarti category. NEW badge absorbed by `.*`.
 - scrollUntilVisible:
     element:
       text: "Shri Ram Chandra Ji Ki Aarti\\..*Tap to open\\."
     direction: DOWN
     visibilityPercentage: 60
     timeout: 10000
+# Khatu Shyam's aarti is the last card (addedInVersion 1.5.0, NEW badge absorbed
+# by `.*`). Open it to prove the 9th aartiCollection index dispatches correctly.
+- scrollUntilVisible:
+    element:
+      text: "Shri Khatu Shyam Ji Ki Aarti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Shri Khatu Shyam Ji Ki Aarti\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "ॐ जय श्री श्याम हरे.*"
+- tapOn: "Back"
+- waitForAnimationToEnd
 
 # Open Om Jai Jagdish Hare reader
 - scrollUntilVisible:

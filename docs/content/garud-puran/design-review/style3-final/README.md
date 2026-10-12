@@ -17,4 +17,4 @@ All nine 1774×887 masters were visually inspected for the requested scene, main
 
 All nine exports are 960×480 WebP, downsampled proportionally with `cwebp -q 84` and no crop/padding. Combined size: **1,433,814 bytes**. The approved reference remains unchanged. The browser loaded all 13 image elements without errors, all natural ratios are 2:1, each of nine selectors displayed its correct asset and the page had no horizontal overflow at the inspected viewport.
 
-The full set is saved here for visual review. App-bundled images, production manifests and R2 were not changed in this preview pass. No new native verification is implied by this artwork-only revision; earlier native evidence belongs to the previous artwork set.
+The user approved the full set on 12 October 2026 and requested integration and a PR. All nine files now match `mobile/assets/garud-puran/` byte for byte; the asset manifest records that approval. Production CDN manifests and R2 remain unchanged. See `../../INTEGRATION.md` for verification after merging main; earlier native evidence belongs to the preceding artwork set.

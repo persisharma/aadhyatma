@@ -2,7 +2,7 @@
 title: Daan Punya
 type: subsystem
 sources: [mobile/src/data/daan/, mobile/src/contexts/DaanLedgerContext.tsx, mobile/src/components/CategoryIcon.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/DaanPunyaScreen.tsx, mobile/src/screens/DaanJourneyScreen.tsx, mobile/src/screens/DaanLedgerScreen.tsx, mobile/src/screens/DaanEntryScreen.tsx, mobile/src/screens/DaanDirectoryScreen.tsx, mobile/src/screens/DaanDirectoryDetailScreen.tsx, mobile/src/screens/DaanKathaScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/navigation/types.ts, docs/roadmap/prds/26-daan-punya.md, RULEBOOK.md, design.md]
-last_verified_date: 2026-09-23
+last_verified_date: 2026-10-06
 confidence: high
 status: current
 ---
@@ -48,7 +48,7 @@ content is generated from the registries, so it cannot drift from the code).
   doors, so the story never dead-ends). All but DaanPunya registered
   on Home, More AND Panchang stacks (`DaanStackParamList` in navigation/types.ts).
 - **Doors** — More hub साधना row (`more-daan-punya`); Home's full-width closing
-  category card (a native View-composition daan-patra glyph; no duplicate
+  category card (a bundled Storybook daan-patra with three seed-shaped offerings; no duplicate
   Sadhana category card), DISCOVER spotlight and covered-day FOR TODAY card;
   Purpose's विद्या/आरोग्य bridge; Observance Detail's **last** section
   (`observance-daan-door`, renders only when `getDaanOccasionForRule(ruleId)`

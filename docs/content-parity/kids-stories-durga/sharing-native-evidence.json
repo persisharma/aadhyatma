@@ -1,0 +1,584 @@
+{
+  "reviewedOn": "2026-10-09",
+  "device": "E5023980-FFA8-4A9E-BC94-6E47992D3D3F",
+  "method": "Real ShareProvider carousel preparation captures every part through the installed native view-shot module; no external posting. Wrapper records actual mounted ProseShareCard props and native title/body/illustration bounds before delegating to the original captureRef. Image decode and cache resolution are the product pipeline, not test stubs. Export interior pixels compared against each exact source/frame (14dp inset excludes rounded corners; 6/255 tolerance allows source-to-PNG resampling differences); caption text and dialogue reconstructed against the full canonical narrative including ending/source.",
+  "cards": 752,
+  "parts": 100,
+  "illustrations": 348,
+  "nativeDimensions": [
+    1080,
+    1350
+  ],
+  "dimensionNote": "UIKit point options are divided by screen density; actual PNGs are 1080x1350 at 4:5. Android keeps physical-pixel options and is unit-tested, but native Android output is unverified.",
+  "nativeTextOverflows": 0,
+  "nativeArtOverflows": 0,
+  "maxArtMeanPixelDifference": 4.9061067708333335,
+  "artOutliers": [],
+  "stories": [
+    {
+      "lang": "hi",
+      "storyId": "durga-brahmacharini",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-chandraghanta",
+      "cards": 11,
+      "parts": 2,
+      "scenes": 5,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-kalaratri",
+      "cards": 5,
+      "parts": 1,
+      "scenes": 2,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-kushmanda",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-mahagauri",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-mahishasura",
+      "cards": 25,
+      "parts": 3,
+      "scenes": 12,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-navaratri",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-raktabeej",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-shailaputri",
+      "cards": 9,
+      "parts": 1,
+      "scenes": 4,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-shakambhari",
+      "cards": 17,
+      "parts": 2,
+      "scenes": 8,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-shumbha-nishumbha",
+      "cards": 29,
+      "parts": 3,
+      "scenes": 14,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-siddhidatri",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-skandamata",
+      "cards": 11,
+      "parts": 2,
+      "scenes": 5,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "hi",
+      "storyId": "durga-suratha-samadhi",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-brahmacharini",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-chandraghanta",
+      "cards": 11,
+      "parts": 2,
+      "scenes": 5,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-kalaratri",
+      "cards": 5,
+      "parts": 1,
+      "scenes": 2,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-kushmanda",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-mahagauri",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-mahishasura",
+      "cards": 25,
+      "parts": 3,
+      "scenes": 12,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-navaratri",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-raktabeej",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-shailaputri",
+      "cards": 9,
+      "parts": 1,
+      "scenes": 4,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-shakambhari",
+      "cards": 17,
+      "parts": 2,
+      "scenes": 8,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-shumbha-nishumbha",
+      "cards": 29,
+      "parts": 3,
+      "scenes": 14,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-siddhidatri",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-skandamata",
+      "cards": 11,
+      "parts": 2,
+      "scenes": 5,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "en",
+      "storyId": "durga-suratha-samadhi",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-brahmacharini",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-chandraghanta",
+      "cards": 11,
+      "parts": 2,
+      "scenes": 5,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-kalaratri",
+      "cards": 5,
+      "parts": 1,
+      "scenes": 2,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-kushmanda",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-mahagauri",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-mahishasura",
+      "cards": 25,
+      "parts": 3,
+      "scenes": 12,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-navaratri",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-raktabeej",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-shailaputri",
+      "cards": 9,
+      "parts": 1,
+      "scenes": 4,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-shakambhari",
+      "cards": 17,
+      "parts": 2,
+      "scenes": 8,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-shumbha-nishumbha",
+      "cards": 29,
+      "parts": 3,
+      "scenes": 14,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-siddhidatri",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-skandamata",
+      "cards": 11,
+      "parts": 2,
+      "scenes": 5,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "gu",
+      "storyId": "durga-suratha-samadhi",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-brahmacharini",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-chandraghanta",
+      "cards": 11,
+      "parts": 2,
+      "scenes": 5,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-kalaratri",
+      "cards": 5,
+      "parts": 1,
+      "scenes": 2,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-kushmanda",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-mahagauri",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-mahishasura",
+      "cards": 25,
+      "parts": 3,
+      "scenes": 12,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-navaratri",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-raktabeej",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-shailaputri",
+      "cards": 9,
+      "parts": 1,
+      "scenes": 4,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-shakambhari",
+      "cards": 17,
+      "parts": 2,
+      "scenes": 8,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-shumbha-nishumbha",
+      "cards": 29,
+      "parts": 3,
+      "scenes": 14,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-siddhidatri",
+      "cards": 7,
+      "parts": 1,
+      "scenes": 3,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-skandamata",
+      "cards": 11,
+      "parts": 2,
+      "scenes": 5,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    },
+    {
+      "lang": "kn",
+      "storyId": "durga-suratha-samadhi",
+      "cards": 15,
+      "parts": 2,
+      "scenes": 7,
+      "completeNarrative": true,
+      "completeTakeawayAndSource": true
+    }
+  ],
+  "sourceHashes": {
+    "mobile/src/components/ProseShareCard.tsx": "77eefd535954542c60fd91914e3c13fb0a89a3d2077fb13c5e0bf086bd9d2e6d",
+    "mobile/src/utils/kidsStoryShare.ts": "ee5161c4ce60a44ec99d902c5ea5a48896d57b2e61731ef8696fa108bcb5e927",
+    "mobile/src/utils/shareVerse.tsx": "6615daa86aae5d0c8102824429d9b209f2e96611b26053443ee60ea1318e1853"
+  },
+  "captureProof": {
+    "path": "tmp/durga-native/share-exports/capture.json",
+    "sha256": "bed9f12e313f67aacb99289f4a708237692ddeff9d54fc9b41e06dcf66e6aea5"
+  },
+  "screenshotManifestSha256": "0360ff5514747c44d6d286212a565bbbe3436964d045a17d3ed222c0e5059c8f",
+  "remaining": [
+    "Physical iOS/Android OS share handoff and Instagram import are pending; no recipient/publication performed.",
+    "Fresh-cache R2 download still requires upload."
+  ],
+  "nativeOsHandoff": {
+    "scene": "Raktabeej, English, first numbered part",
+    "images": 10,
+    "observedNativeAlbumSize": "15.3 MB",
+    "visibleActions": [
+      "10 Images",
+      "Save 10 Images"
+    ],
+    "maestroProof": "tmp/durga-native/os-sheet-smoke.log",
+    "dismissProof": "tmp/durga-native/os-sheet-dismiss.log",
+    "screenshots": [
+      {
+        "file": "tmp/durga-native/post-os-maestro/screenshots/durga-ten-image-native-share-sheet.png",
+        "sha256": "f3171c835a8c8d574eb562551c7f8a24314abae8a2373994c6b8bb6250b8d982"
+      },
+      {
+        "file": "tmp/durga-native/post-os-dismiss/screenshots/durga-native-share-sheet-dismissed.png",
+        "sha256": "9e3aa440319d914c0d97832fce1c5cff01b70436f50d1b0ee0c62636934965c0"
+      }
+    ],
+    "didSaveOrSend": false,
+    "nonInstrumentedExportCheck": {
+      "cards": 10,
+      "byteIdentical": 9,
+      "remainingCardMaxChannelDifference": 1,
+      "remainingCardMeanChannelDifference": 0.00596176268861454,
+      "geometryAndTextIdentical": true,
+      "proof": "tmp/durga-native/os-share/pixel-identity.json",
+      "sha256": "1a954543050d9b21c3810bbaee0dd6e3df09996d0c97493d170ba80accc16041",
+      "note": "Ten actual native handoff files were compared with the checked instrumented exports; the one non-byte-identical art image differs only by one RGB level within the same art region."
+    }
+  },
+  "postChangeMaestro": {
+    "result": "passed",
+    "log": "tmp/durga-native/share-focused.log",
+    "logSha256": "4413d53c54b3e811c0391c6d17199e313d9da48c4b4905baebe8455bd0c55ca0",
+    "screenshots": [
+      {
+        "file": "tmp/durga-native/post-share-maestro/screenshots/kids-story-share-illustration.png",
+        "sha256": "8df3afc632fe79426590e643e0f88063e50ae574cb117597fbdd3ac92d6049e2"
+      },
+      {
+        "file": "tmp/durga-native/post-share-maestro/screenshots/kids-story-share-narration.png",
+        "sha256": "a3fe82c548675bffaa55365d1e87b33096b4b523a7409d8f6551265cb9d32cf3"
+      }
+    ]
+  }
+}

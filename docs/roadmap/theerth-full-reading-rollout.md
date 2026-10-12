@@ -51,9 +51,20 @@ a parallel track that can land any time, not a gate. Text waves run immediately.
 
 Not in `temples.ts`. Each authoring session writes the complete `TempleDetail` for its
 temples into **one chunk module** under `mobile/src/data/theerth/details/`, merged by
-`details/index.ts` and spread over the inline `templeDetails` map. One chunk file is
-owned by exactly one session, so waves running in parallel never touch the same module.
-A chunk entry replaces that temple's legacy two-line detail wholesale.
+`details/index.ts`. One chunk file is owned by exactly one session, so waves running in
+parallel never touch the same module. A chunk entry replaces that temple's legacy
+two-line detail wholesale; the legacy map now lives in `details/legacy.ts`.
+
+**The readings are off the launch path (September 2026).** `launchGraph.test.ts` caps
+what Hermes evaluates before the first frame, and the readings had begun to eat it — at
+~70-100 KB per chunk, the 15 chunks were on course to blow the budget by ~1 MB. They are
+now loaded through a `require()` thunk (`loadDetails()` in `temples.ts`) and reached only
+via `getTempleDetailById()` (one temple, for the detail screen) or `templesWithDetails()`
+(all 71, for the on-demand search index and the data tests); `temples` itself is rows
+only, from `templeRows.ts`. That took the launch graph from 7,274,340 to 6,852,097 bytes
+and decoupled it from this rollout — the remaining 56 temples add nothing to it. Authoring
+sessions need do nothing extra, but must not add a top-level `import` of `details/` to any
+module the navigator or a context can reach. Contract recorded in RULEBOOK §12.6.
 
 | Chunk module | Temples |
 |---|---|
@@ -155,8 +166,9 @@ record each drop in the PR.
    and `TheerthDetailScreen.test.tsx` picks enriched temples up from the data.
 5. design.md §27 item 9 title list (signature-tradition title). Item 4 is updated by the
    plate PR.
-6. `npm run typecheck`, `npm run lint`, `npx tsx --test theerth.test.ts searchIndex.test.ts`,
-   Jest for `TheerthDetailScreen.test.tsx` + `backgrounds.coverage.jest.test.ts`.
+6. `npm run typecheck`, `npm run lint`, `npm run test:data` (covers `theerth.test.ts`,
+   `searchIndex.test.ts` and the launch-graph budget), Jest for
+   `TheerthDetailScreen.test.tsx` + `backgrounds.coverage.jest.test.ts`.
 7. One commit per temple: `feat(theerth): full <Name> reading — sthapana katha, form,
    traditions, melas, yatra`.
 

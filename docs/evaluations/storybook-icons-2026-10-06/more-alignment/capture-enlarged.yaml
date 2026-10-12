@@ -1,0 +1,37 @@
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    stopApp: true
+- tapOn: { id: "tab-more" }
+- scrollUntilVisible:
+    element: { text: "Open Sadhak profile" }
+    direction: UP
+    timeout: 20000
+- swipe: { direction: DOWN }
+- takeScreenshot: more-after-enlarged-top
+- scrollUntilVisible:
+    element: { text: "Daan Punya, new" }
+    centerElement: true
+- takeScreenshot: more-after-enlarged-practice
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "English"
+- takeScreenshot: more-after-enlarged-english-app
+- scrollUntilVisible:
+    element: { text: "Open Sadhak profile" }
+    direction: UP
+    timeout: 20000
+- swipe: { direction: DOWN }
+- takeScreenshot: more-after-enlarged-english-top
+- scrollUntilVisible:
+    element: { text: "Show App Tour" }
+    centerElement: true
+- takeScreenshot: more-after-enlarged-english-info
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: UP
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "Hindi"

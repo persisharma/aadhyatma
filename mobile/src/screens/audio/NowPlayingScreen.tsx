@@ -1,5 +1,6 @@
+import AppIcon, { type AppIconName } from '@/components/AppIcon';
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -28,6 +29,7 @@ export default function NowPlayingScreen() {
     currentTrack,
     nowPlayingOpen,
     isPlaying,
+    isBuffering,
     positionSec,
     durationSec,
     isLooping,
@@ -68,7 +70,7 @@ export default function NowPlayingScreen() {
               pressed && { opacity: 0.6 },
             ]}
           >
-            <Text style={[styles.headerGlyph, { color: colors.inkSoft }]}>⌄</Text>
+            <AppIcon name="close" size={22} color={colors.iconInk} />
           </Pressable>
           <Text style={[styles.headerTitle, { color: colors.inkMuted, fontFamily: typography.swipeHint.fontFamily }]}>
             {headerLabel}
@@ -130,20 +132,26 @@ export default function NowPlayingScreen() {
         {/* Transport controls */}
         <View style={styles.controls}>
           <ControlButton label={`−${SKIP_SECONDS}`} small onPress={() => skipBy(-SKIP_SECONDS)} color={colors.inkSoft} a11y="Rewind 15 seconds" />
-          <ControlButton label="◀◀" onPress={skipToPrevious} color={colors.inkSoft} a11y="Previous track" />
+          <ControlButton icon="previous" onPress={skipToPrevious} color={colors.inkSoft} a11y="Previous track" />
           <Pressable
             onPress={togglePlay}
+            disabled={isBuffering}
             accessibilityRole="button"
-            accessibilityLabel={isPlaying ? 'Pause' : 'Play'}
+            accessibilityState={{ busy: isBuffering }}
+            accessibilityLabel={isBuffering ? 'Loading' : isPlaying ? 'Pause' : 'Play'}
             style={({ pressed }) => [
               styles.playBtn,
               { backgroundColor: colors.saffron, borderColor: colors.saffronDeep, borderRadius: radii.pill },
               pressed && { opacity: 0.85 },
             ]}
           >
-            <Text style={[styles.playGlyph, { color: colors.onPrimary }]}>{isPlaying ? '❚❚' : '▶'}</Text>
+            {isBuffering ? (
+              <ActivityIndicator size="small" color={colors.onPrimary} />
+            ) : (
+              <AppIcon name={isPlaying ? "pause" : "play"} size={32} color={colors.onPrimary} weight="fill" />
+            )}
           </Pressable>
-          <ControlButton label="▶▶" onPress={skipToNext} color={colors.inkSoft} a11y="Next track" />
+          <ControlButton icon="skip" onPress={skipToNext} color={colors.inkSoft} a11y="Next track" />
           <ControlButton label={`+${SKIP_SECONDS}`} small onPress={() => skipBy(SKIP_SECONDS)} color={colors.inkSoft} a11y="Forward 15 seconds" />
         </View>
 
@@ -165,7 +173,7 @@ export default function NowPlayingScreen() {
               pressed && { opacity: 0.7 },
             ]}
           >
-            <Text style={[styles.loopGlyph, { color: isLooping ? colors.onPrimary : colors.inkSoft }]}>⟳</Text>
+            <AppIcon name="repeat" size={18} color={isLooping ? colors.onPrimary : colors.iconInk} />
           </Pressable>
         </View>
       </SafeAreaView>
@@ -175,12 +183,14 @@ export default function NowPlayingScreen() {
 
 function ControlButton({
   label,
+  icon,
   onPress,
   color,
   small,
   a11y,
 }: {
-  label: string;
+  label?: string;
+  icon?: AppIconName;
   onPress: () => void;
   color: string;
   small?: boolean;
@@ -194,7 +204,7 @@ function ControlButton({
       hitSlop={10}
       style={({ pressed }) => [styles.ctrl, pressed && { opacity: 0.6 }]}
     >
-      <Text style={[small ? styles.ctrlGlyphSmall : styles.ctrlGlyph, { color }]}>{label}</Text>
+      {icon ? <AppIcon name={icon} size={26} color={color} weight="fill" /> : <Text style={[small ? styles.ctrlGlyphSmall : styles.ctrlGlyph, { color }]}>{label}</Text>}
     </Pressable>
   );
 }

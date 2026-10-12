@@ -1,0 +1,62 @@
+Unexpected devicectl JSON version output from devicectl. Connecting to physical Apple devices may not work as expected.
+› Using --device 5799D1D7-B645-4613-8058-822E63009C0F
+Starting Metro Bundler
+warning: Bundler cache is empty, rebuilding (this may take a minute)
+| (node:45122) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:45124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:45123) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:45129) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:45131) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:45125) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:45128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:45126) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:45127) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:45130) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+iOS ./index.ts ▓▓▓▓▓▓▓▓▓░░░░░░░ 59.5% (1494/1937)
+iOS Bundled 4304ms index.ts (2415 modules)
+Writing bundle output to: /var/folders/pj/j5q6q9r95_lc6v2rrqyjj8_80000gp/T/4rsvybi9ggk/main.jsbundle
+Copying 165 asset files
+Done writing bundle output
+› Planning build
+› Preparing Vedansh/VedanshWidgets » VedanshWidgets-Info.plist
+› Executing react-native Pods/hermes-engine » [CP-User] [Hermes] Replace Hermes for the right configuration, if needed
+› Executing react-native Pods/ReactNativeDependencies » [CP-User] [RNDeps] Replace React Native Dependencies for the right configuration, if needed
+› Preparing expo-updates Pods/ReachabilitySwift-ReachabilitySwift » ResourceBundle-ReachabilitySwift-ReachabilitySwift-Info.plist
+› Executing react-native Pods/React-Core-prebuilt » [CP-User] [RNDeps] Replace React Native Core for the right configuration, if needed
+› Preparing Pods/React-cxxreact-React-cxxreact_privacy » ResourceBundle-React-cxxreact_privacy-React-cxxreact-Info.plist
+› Preparing Pods/React-Core-React-Core_privacy » ResourceBundle-React-Core_privacy-React-Core-Info.plist
+› Executing react-native Pods/React-RCTFBReactNativeSpec » [CP-User] [RN]Check FBReactNativeSpec
+› Preparing Pods/RNSVG-RNSVGFilters » ResourceBundle-RNSVGFilters-RNSVG-Info.plist
+› Preparing Pods/ExpoFileSystem-ExpoFileSystem_privacy » ResourceBundle-ExpoFileSystem_privacy-ExpoFileSystem-Info.plist
+› Preparing Pods/RNCAsyncStorage-RNCAsyncStorage_resources » ResourceBundle-RNCAsyncStorage_resources-RNCAsyncStorage-Info.plist
+› Preparing Pods/EXNotifications-ExpoNotifications_privacy » ResourceBundle-ExpoNotifications_privacy-EXNotifications-Info.plist
+› Preparing Pods/EXApplication-ExpoApplication_privacy » ResourceBundle-ExpoApplication_privacy-EXApplication-Info.plist
+› Preparing expo-updates Pods/EXUpdates-EXUpdates » ResourceBundle-EXUpdates-EXUpdates-Info.plist
+› Preparing expo-constants Pods/EXConstants-EXConstants » ResourceBundle-EXConstants-EXConstants-Info.plist
+› Executing expo-updates Pods/EXUpdates » [CP-User] Generate updates resources for expo-updates
+› Preparing Pods/EXConstants-ExpoConstants_privacy » ResourceBundle-ExpoConstants_privacy-EXConstants-Info.plist
+› Executing expo-constants Pods/EXConstants » [CP-User] Generate app.config for prebuilt Constants.manifest
+› Executing Vedansh » [Expo] Configure project
+› Executing Vedansh » Bundle React Native code and images
+› Executing Vedansh » [CP] Copy Pods Resources
+› Preparing Vedansh » Info.plist
+› Signing   Vedansh » Vedansh.app
+› Build Succeeded
+
+› 0 error(s), and 0 warning(s)
+
+Waiting on http://localhost:8081
+› Installing /Users/prashant/Library/Developer/Xcode/DerivedData/Vedansh-fhxvaxaivryxahegvzcsediqjjmj/Build/Products/Release-iphonesimulator/Vedansh.app
+› Installing on Vedansh-Upanishad-QA
+› Opening on Vedansh-Upanishad-QA (com.prashantsharma.vedansh)
+› Opening com.prashantsharma.vedansh://expo-development-client/?url=http%3A%2F%2F192.168.0.102%3A8081 on Vedansh-Upanishad-QA

@@ -1,17 +1,22 @@
-// Jest suite (`.jest.test.ts` suffix — see jest.config.js). Must run under Jest,
-// not tsx: it require()s the bundled MP3s via @assets/audio-library, which the
-// react-native preset's moduleNameMapper stubs (plain `tsx --test` can't parse
-// a .mp3).
+// Jest suite (`.jest.test.ts` suffix — see jest.config.js).
 //
 // Catalog↔registry contract for the audio library: a track surfaces in the UI
 // ONLY when hasRealAudio() is true (see assets/audio-library/index.ts), so every
-// bundled recording must also have a catalog entry (title/deity/duration), or it
-// plays with no metadata. Guards new audio shipping without its catalog row, and
-// pins the hare-rama swap + its japam bead-count calibration.
+// recording in the manifest must also have a catalog entry (title/deity/duration),
+// or it plays with no metadata. Guards new audio shipping without its catalog row,
+// and pins the hare-rama swap + its japam bead-count calibration. `audioRemoteRequest`
+// resolving (with a base URL set) stands in for "this track has a fetchable source".
 import { AUDIO_TRACKS, getTrackById } from '@/data/audio/tracks';
-import { getAudioSource, hasRealAudio } from '@assets/audio-library';
+import { audioRemoteRequest, hasRealAudio } from '@assets/audio-library';
 
 describe('audio library catalog ↔ registry', () => {
+  const ORIGINAL_BASE = process.env.EXPO_PUBLIC_ASSET_BASE_URL;
+  beforeAll(() => { process.env.EXPO_PUBLIC_ASSET_BASE_URL = 'https://cdn.vedansh.app'; });
+  afterAll(() => {
+    if (ORIGINAL_BASE === undefined) delete process.env.EXPO_PUBLIC_ASSET_BASE_URL;
+    else process.env.EXPO_PUBLIC_ASSET_BASE_URL = ORIGINAL_BASE;
+  });
+
   const bundledIds = [
     'gayatri-mantra',
     'hare-rama',
@@ -27,7 +32,7 @@ describe('audio library catalog ↔ registry', () => {
 
   test.each(bundledIds)('%s has a real recording and a catalog entry', (id) => {
     expect(hasRealAudio(id)).toBe(true);
-    expect(getAudioSource(id)).not.toBeNull();
+    expect(audioRemoteRequest(id)).not.toBeNull();
     expect(getTrackById(id)).toBeDefined();
   });
 
@@ -86,7 +91,7 @@ describe('audio library catalog ↔ registry', () => {
   test('every catalog track with real audio is playable (no dangling ids)', () => {
     for (const track of AUDIO_TRACKS) {
       if (hasRealAudio(track.id)) {
-        expect(getAudioSource(track.id)).not.toBeNull();
+        expect(audioRemoteRequest(track.id)).not.toBeNull();
       }
     }
   });

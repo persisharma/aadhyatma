@@ -4,10 +4,12 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import type { Lang } from '@/data/gita/language';
 import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
-import { fitMeaningType, meaningScriptFor, shareCardMetrics } from '@/utils/shareCardType';
+import { meaningScriptFor, shareCardMetrics } from '@/utils/shareCardType';
+import { titleFontByLang } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
 import Ornament from './Ornament';
+import ShareBrandFooter from './ShareBrandFooter';
 
 export type ShareCardProps = {
   /** Source id — resolves the same faded sketch the source's reader page shows. */
@@ -28,9 +30,18 @@ export type ShareCardProps = {
   meaningEn?: string;
   meaningGu?: string;
   meaningKn?: string;
+  /**
+   * One line set above the meaning in the title face (Gita Saar's theme line —
+   * the idea the verse is shared for). gu/kn re-script the Hindi.
+   */
+  meaningTitleHi?: string;
+  meaningTitleEn?: string;
   lang: Lang;
   width: number;
+  /** Minimum height; long text grows the single exported image. */
   height: number;
+  /** Actual native layout height, including wrapped text and branding. */
+  onHeight?: (height: number) => void;
 };
 
 const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(props, ref) {
@@ -41,6 +52,11 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
     gu: props.meaningGu,
     kn: props.meaningKn,
   });
+  const meaningTitle = meaningByLang(
+    props.lang,
+    props.meaningTitleHi ?? '',
+    props.meaningTitleEn ?? ''
+  );
   const lines = verseLinesByLang(props.lang, props.linesHi, props.linesEn);
   // Constrained surface (design.md §13 sanctioned): keeps its own tuned sizes, but the
   // font family must follow the script or gu/kn render as tofu. hi/en unchanged — en
@@ -59,27 +75,20 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
         : props.lang === 'kn'
           ? fontFamilies.kannada // kn meaning now renders in Kannada script
           : typography.cardLatin.fontFamily; // en
-  // Deterministic size + leading for the meaning (see utils/shareCardType.ts).
-  // Platform auto-fit is deliberately not used here: with a fixed lineHeight it
-  // shrank the meaning to ~7 pt while the leading stayed at 24.
+  // Keep type readable and let native text layout grow the image. Estimating
+  // from authored line counts misses wrapping and used to clip long verses.
   const meaningScript = meaningScriptFor(props.lang);
-  const meaningFit = fitMeaningType({
-    meaning,
-    verseLineCount: lines.length,
-    cardWidth: props.width,
-    cardHeight: props.height,
-    script: meaningScript,
-  });
 
   return (
     <View
       ref={ref}
       collapsable={false}
+      onLayout={event => props.onHeight?.(event.nativeEvent.layout.height)}
       style={[
         styles.card,
         {
           width: props.width,
-          height: props.height,
+          minHeight: props.height,
           backgroundColor: colors.parchment,
           borderColor: colors.divider,
         },
@@ -127,62 +136,41 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
 
       <Ornament />
 
+      {meaningTitle ? (
+        <Text
+          style={[
+            styles.meaning,
+            {
+              color: colors.saffronDeep,
+              fontFamily: titleFontByLang(props.lang),
+            },
+          ]}
+        >
+          {meaningTitle}
+        </Text>
+      ) : null}
+
       {meaning ? (
         <Text
-          numberOfLines={meaningFit.numberOfLines}
           style={[
             styles.meaning,
             {
               color: colors.inkSoft,
               fontFamily: meaningFont,
-              fontSize: meaningFit.fontSize,
-              lineHeight: meaningFit.lineHeight,
               // Cormorant has a true italic cut; the Noto Serif Indic faces do
               // not, so an italic there is a synthesised skew that blurs the
               // matras. Same rule as `captionFont` in utils/scriptFont.ts.
               fontStyle: meaningScript === 'latin' ? 'italic' : 'normal',
             },
+            // The title already took the block's top margin from the budget.
+            meaningTitle ? { marginTop: 0 } : null,
           ]}
         >
           {meaning}
         </Text>
       ) : null}
 
-      <View style={[styles.footer, { borderTopColor: colors.divider }]}>
-        <Text
-          style={[
-            styles.wordmarkHi,
-            {
-              color: colors.ink,
-              fontFamily: typography.readerTitle.fontFamily,
-            },
-          ]}
-        >
-          वेदांश़
-        </Text>
-        <Text
-          style={[
-            styles.wordmarkLatin,
-            {
-              color: colors.saffronDeep,
-              fontFamily: typography.cardLatin.fontFamily,
-            },
-          ]}
-        >
-          Vedansh — Sacred Texts, Daily Reading
-        </Text>
-        <Text
-          style={[
-            styles.storeLine,
-            {
-              color: colors.inkMuted,
-              fontFamily: typography.cardLatin.fontFamily,
-            },
-          ]}
-        >
-          Now available on iOS & Android
-        </Text>
-      </View>
+      <ShareBrandFooter />
     </View>
   );
 });
@@ -223,35 +211,11 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   meaning: {
-    // fontSize / lineHeight / fontStyle are set per-render from fitMeaningType().
+    fontSize: shareCardMetrics.meaningFontSize,
+    lineHeight: shareCardMetrics.meaningLineHeight,
     textAlign: 'center',
     marginTop: shareCardMetrics.meaningMarginTop,
     paddingHorizontal: shareCardMetrics.meaningPaddingHorizontal,
-    includeFontPadding: false,
-  },
-  footer: {
-    marginTop: 18,
-    paddingTop: 14,
-    borderTopWidth: 1,
-    alignItems: 'center',
-  },
-  wordmarkHi: {
-    // no tracking on the Devanagari wordmark — it splits the shirorekha
-    fontSize: 18,
-    includeFontPadding: false,
-  },
-  wordmarkLatin: {
-    fontSize: 12,
-    letterSpacing: 1.2,
-    marginTop: 3,
-    fontStyle: 'italic',
-    includeFontPadding: false,
-  },
-  storeLine: {
-    fontSize: 10,
-    letterSpacing: 2,
-    marginTop: 6,
-    textTransform: 'uppercase',
     includeFontPadding: false,
   },
 });

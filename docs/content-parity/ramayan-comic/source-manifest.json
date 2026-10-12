@@ -1,0 +1,370 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-10-11",
+  "baseTradition": "Valmiki Ramayana; adaptation, not scripture transcription",
+  "releaseEligible": false,
+  "publicationComparisonScope": "Two live-opened publications compared for Rama youth and brothers’ exile hair only. Other facts remain at the evidence level shown. No claim of complete two-source epic review.",
+  "derivedCorpusNote": "The local corpus incorporates these publication families. It is useful for stable references but is not an independent third publication. Original edition lineage, full content rights and regional editorial validation remain pending.",
+  "sources": [
+    {
+      "id": "web-bala20",
+      "title": "Valmiki Ramayana, Bala 20 — English",
+      "url": "https://www.valmikiramayan.net/utf8/baala/sarga20/bala_20_prose.htm",
+      "accessStatus": "English published translation; live opened",
+      "reviewNote": "Under-sixteen statement; no exact twelve-year age is asserted."
+    },
+    {
+      "id": "web-hi-bala20",
+      "title": "Valmiki Ramayana, Bala 20 — Hindi publication",
+      "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-20-slokas-with-hindi-meaning/",
+      "accessStatus": "Hindi published translation; live opened",
+      "reviewNote": "Verse 2 independently presented in Hindi. Republisher; original printed scan not reviewed this turn."
+    },
+    {
+      "id": "web-ayodhya52",
+      "title": "Valmiki Ramayana, Ayodhya 52 — English",
+      "url": "https://www.valmikiramayan.net/utf8/ayodhya/sarga52/ayodhya_52_prose.htm",
+      "accessStatus": "English published translation; live opened",
+      "reviewNote": "Banyan latex and matted hair of the two brothers."
+    },
+    {
+      "id": "web-hi-ayodhya52",
+      "title": "Valmiki Ramayana, Ayodhya 52 — Hindi publication",
+      "url": "https://www.ramcharit.in/valmiki-ramayana-ayodhyakanda-sarga-chapter-52-slokas-with-hindi-meaning/",
+      "accessStatus": "Hindi published translation; live opened",
+      "reviewNote": "Hair transition at 67–70. Local meaning grouping differs; compare passage rather than assuming matching numbers."
+    },
+    {
+      "id": "web-kish3",
+      "title": "Valmiki Ramayana, Kishkindha 3",
+      "url": "https://www.valmikiramayan.net/utf8/kish/sarga3/kishkindha_3_prose.htm",
+      "accessStatus": "English published translation; live opened",
+      "reviewNote": "Hanuman approaches in ascetic guise; commentary is distinguished from the translated narrative."
+    },
+    {
+      "id": "web-kish5",
+      "title": "Valmiki Ramayana, Kishkindha 5",
+      "url": "https://www.valmikiramayan.net/utf8/kish/sarga5/kishkindha_5_prose.htm",
+      "accessStatus": "English published translation; live opened",
+      "reviewNote": "Hanuman resumes his natural form around the friendship sequence."
+    },
+    {
+      "id": "web-sundara15",
+      "title": "Valmiki Ramayana, Sundara 15",
+      "url": "https://www.valmikiramayan.net/utf8/sundara/sarga15/sundara_15_prose.htm",
+      "accessStatus": "English published translation; live opened",
+      "reviewNote": "Sita: worn yellow clothing, single braid, distress; the passage also discusses remaining ornaments."
+    },
+    {
+      "id": "web-sundara36",
+      "title": "Valmiki Ramayana, Sundara 36",
+      "url": "https://www.valmikiramayan.net/utf8/sundara/sarga36/sundara_36_prose.htm",
+      "accessStatus": "English published translation; live opened",
+      "reviewNote": "Hanuman gives Rama’s signet ring to Sita."
+    },
+    {
+      "id": "web-yuddha128",
+      "title": "Valmiki Ramayana, Yuddha 128",
+      "url": "https://www.valmikiramayan.net/utf8/yuddha/sarga128/yuddha_128_prose.htm",
+      "accessStatus": "English published translation; live opened",
+      "reviewNote": "Return, grooming and coronation; corresponding local passage uses sarga 131."
+    },
+    {
+      "id": "unavailable-iit",
+      "title": "IIT Kanpur verse 1.20.2",
+      "url": "https://www.valmiki.iitk.ac.in/sloka?field_kanda_tid=1&field_sarga_value=20&field_sloka_value=2&language=dv",
+      "accessStatus": "Unavailable during this turn",
+      "reviewNote": "Not counted as consulted content or corroboration."
+    }
+  ],
+  "facts": [
+    {
+      "id": "rama-youth",
+      "summary": "Rama is described as under sixteen when Dasharatha responds to Vishwamitra.",
+      "corpusReferences": [
+        {
+          "reference": "1.20.2",
+          "id": "valmiki-1-20-2",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-01.json"
+        }
+      ],
+      "publicationSourceIds": [
+        "web-bala20",
+        "web-hi-bala20"
+      ],
+      "evidenceLevel": "two-publication-comparison",
+      "limits": "The exact number twelve and exact later ages are not locked."
+    },
+    {
+      "id": "departure-cloth",
+      "summary": "Rama receives bark garments; Sita initially has silk and Rama fastens bark over it.",
+      "corpusReferences": [
+        {
+          "reference": "2.37.6",
+          "id": "valmiki-2-37-6",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-02.json"
+        },
+        {
+          "reference": "2.37.9",
+          "id": "valmiki-2-37-9",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-02.json"
+        },
+        {
+          "reference": "2.37.14",
+          "id": "valmiki-2-37-14",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-02.json"
+        }
+      ],
+      "publicationSourceIds": [],
+      "evidenceLevel": "local-corpus-only",
+      "limits": "Read the surrounding objections before fixing Sita’s outfit for subsequent scenes."
+    },
+    {
+      "id": "exile-hair",
+      "summary": "Rama and Lakshmana adopt matted locks with banyan latex supplied by Guha.",
+      "corpusReferences": [
+        {
+          "reference": "2.52.67",
+          "id": "valmiki-2-52-67",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-02.json"
+        },
+        {
+          "reference": "2.52.68",
+          "id": "valmiki-2-52-68",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-02.json"
+        },
+        {
+          "reference": "2.52.69",
+          "id": "valmiki-2-52-69",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-02.json"
+        },
+        {
+          "reference": "2.52.70",
+          "id": "valmiki-2-52-70",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-02.json"
+        }
+      ],
+      "publicationSourceIds": [
+        "web-ayodhya52",
+        "web-hi-ayodhya52"
+      ],
+      "evidenceLevel": "two-publication-comparison",
+      "limits": "Passage grouping differs between editions; use the event boundary."
+    },
+    {
+      "id": "bharata-regent",
+      "summary": "Bharata awaits Rama at Nandigrama; his later waiting appearance includes matted locks and Rama’s sandals.",
+      "corpusReferences": [
+        {
+          "reference": "2.115.2",
+          "id": "valmiki-2-115-2",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-02.json"
+        },
+        {
+          "reference": "2.115.3",
+          "id": "valmiki-2-115-3",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-02.json"
+        },
+        {
+          "reference": "6.127.4",
+          "id": "valmiki-6-127-4",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-06.json"
+        }
+      ],
+      "publicationSourceIds": [],
+      "evidenceLevel": "local-corpus-only",
+      "limits": "Padukas are held or installed according to the particular scene, not permanently carried."
+    },
+    {
+      "id": "hanuman-disguise",
+      "summary": "Hanuman approaches Rama and Lakshmana in an ascetic/mendicant guise.",
+      "corpusReferences": [
+        {
+          "reference": "4.3.2",
+          "id": "valmiki-4-3-2",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-04.json"
+        },
+        {
+          "reference": "4.3.22",
+          "id": "valmiki-4-3-22",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-04.json"
+        },
+        {
+          "reference": "4.3.23",
+          "id": "valmiki-4-3-23",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-04.json"
+        }
+      ],
+      "publicationSourceIds": [
+        "web-kish3"
+      ],
+      "evidenceLevel": "one-publication-plus-derived-corpus",
+      "limits": "Specific human facial features and staff design are artistic choices."
+    },
+    {
+      "id": "hanuman-return",
+      "summary": "Hanuman gives up the mendicant guise and resumes his natural form in the friendship sequence.",
+      "corpusReferences": [
+        {
+          "reference": "4.5.14",
+          "id": "valmiki-4-5-14",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-04.json"
+        },
+        {
+          "reference": "4.5.15",
+          "id": "valmiki-4-5-15",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-04.json"
+        }
+      ],
+      "publicationSourceIds": [
+        "web-kish5"
+      ],
+      "evidenceLevel": "one-publication-plus-derived-corpus",
+      "limits": "Do not treat disclosure of his name and visible form transition as interchangeable without checking the scene."
+    },
+    {
+      "id": "sita-captivity",
+      "summary": "Captive Sita wears worn yellow cloth, has one long black braid and is strained by fasting and sorrow.",
+      "corpusReferences": [
+        {
+          "reference": "5.15.18",
+          "id": "valmiki-5-15-18",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-05.json"
+        },
+        {
+          "reference": "5.15.21",
+          "id": "valmiki-5-15-21",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-05.json"
+        }
+      ],
+      "publicationSourceIds": [
+        "web-sundara15"
+      ],
+      "evidenceLevel": "one-publication-plus-derived-corpus",
+      "limits": "Not a new age; surviving ornament details require scene-specific treatment."
+    },
+    {
+      "id": "signet-ring",
+      "summary": "Hanuman presents Rama’s signet ring to Sita.",
+      "corpusReferences": [
+        {
+          "reference": "5.36.2",
+          "id": "valmiki-5-36-2",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-05.json"
+        }
+      ],
+      "publicationSourceIds": [
+        "web-sundara36"
+      ],
+      "evidenceLevel": "one-publication-plus-derived-corpus",
+      "limits": "Prop ownership and handover are recorded for the scene, not every Hanuman image."
+    },
+    {
+      "id": "royal-return",
+      "summary": "Rama’s matted hair is removed/disentangled, he bathes and adopts royal dress before coronation.",
+      "corpusReferences": [
+        {
+          "reference": "6.131.14",
+          "id": "valmiki-6-131-14",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-06.json"
+        },
+        {
+          "reference": "6.131.15",
+          "id": "valmiki-6-131-15",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-06.json"
+        }
+      ],
+      "publicationSourceIds": [
+        "web-yuddha128"
+      ],
+      "evidenceLevel": "one-publication-plus-derived-corpus",
+      "limits": "Local 131 corresponds to web 128; crown is enabled at the actual coronation, not at first landfall."
+    },
+    {
+      "id": "hanuman-flashback",
+      "summary": "Uttara narrates Hanuman’s childhood as an earlier-life account.",
+      "corpusReferences": [
+        {
+          "reference": "7.35.17",
+          "id": "valmiki-7-35-17",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-07.json"
+        }
+      ],
+      "publicationSourceIds": [],
+      "evidenceLevel": "local-corpus-only",
+      "limits": "Story location is Uttara, chronological age is childhood."
+    },
+    {
+      "id": "twins-birth",
+      "summary": "Sita gives birth to two sons, Kusha and Lava.",
+      "corpusReferences": [
+        {
+          "reference": "7.66.1",
+          "id": "valmiki-7-66-1",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-07.json"
+        },
+        {
+          "reference": "7.66.3",
+          "id": "valmiki-7-66-3",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-07.json"
+        },
+        {
+          "reference": "7.66.9",
+          "id": "valmiki-7-66-9",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-07.json"
+        }
+      ],
+      "publicationSourceIds": [],
+      "evidenceLevel": "local-corpus-only",
+      "limits": "Do not introduce a single-child motherhood scene by accident."
+    },
+    {
+      "id": "twins-recitation",
+      "summary": "The two boys recite before Rama under Valmiki’s guidance.",
+      "corpusReferences": [
+        {
+          "reference": "7.94.10",
+          "id": "valmiki-7-94-10",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-07.json"
+        }
+      ],
+      "publicationSourceIds": [],
+      "evidenceLevel": "local-corpus-only",
+      "limits": "Children’s manuscript props are art direction, not a claim that this court scene requires them."
+    },
+    {
+      "id": "twins-rulers",
+      "summary": "Lava and Kusha are later installed as rulers.",
+      "corpusReferences": [
+        {
+          "reference": "7.107.17",
+          "id": "valmiki-7-107-17",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-07.json"
+        },
+        {
+          "reference": "7.107.18",
+          "id": "valmiki-7-107-18",
+          "path": "mobile/src/data/valmiki-ramayan/chapter-07.json"
+        }
+      ],
+      "publicationSourceIds": [],
+      "evidenceLevel": "local-corpus-only",
+      "limits": "Later ruler references pending; do not reuse child bodies for this event."
+    }
+  ],
+  "editorialDesignChoices": [
+    "Face shapes, skin/fur palette, tilak, relative heights and silhouettes",
+    "Exact garment cuts and accessories beyond passage-supported constraints",
+    "Adolescent/adult visual staging beyond the bounded under-sixteen statement",
+    "Later reign maturity without invented numeric ages or automatic grey hair",
+    "2026-10-11 Rama/Lakshmana revised facial geometry, asymmetric Lakshmana forelock and silhouette differentiation",
+    "2026-10-11 user-requested Hanuman adult/enlarged gold mukut and gada: iconic accessory references, not universal narrative-source claims"
+  ],
+  "pending": [
+    "Independent publication comparison for every remaining scene fact",
+    "Recension/numbering alignment for every future production anchor, especially Uttara",
+    "Full narrative and dialogue in hi/en/gu/kn, reviewed end to end",
+    "Rights review for any reused text/art; supplied reference is style guidance only",
+    "Source-led cast and full-form expansion before relevant episode art"
+  ]
+}

@@ -39,7 +39,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 
 # ── Open More → पितृ स्मरण ──
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -101,12 +101,12 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 30000
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - tapOn: "Open Sadhak profile"
 - assertVisible: "‹"
 - tapOn: "‹"
 - tapOn: { id: "tab-home" }
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - tapOn: "Open Sadhak profile"
 - assertVisible: "‹"
 - tapOn: "‹"

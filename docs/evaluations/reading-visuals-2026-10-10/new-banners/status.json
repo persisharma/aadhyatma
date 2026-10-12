@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-10",
+  "state": "superseded-style",
+  "plannedImageSlots": 44,
+  "plannedUniquePaintings": 43,
+  "generatedDrafts": 4,
+  "readyForVisualReview": 0,
+  "requiresAnatomyRevision": [
+    "vishnu-narayana"
+  ],
+  "remainingUniquePaintings": 39,
+  "blocker": {
+    "service": "built-in image_gen",
+    "httpStatus": 401,
+    "code": "token_revoked",
+    "message": "Encountered invalidated oauth token for user, failing request"
+  },
+  "adoptedInApp": false,
+  "uploadedToR2": false,
+  "previewUsesLocalFiles": true,
+  "appCacheContract": "Unchanged: persistent content-hash files; no TTL or revalidation of valid files.",
+  "records": [
+    {
+      "id": "daan-annapurna",
+      "status": "draft",
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 105466,
+      "sha256": "603cf8bbcbe900727083b979761f83f25105e1e3b0507278b0c436c4fa8fa484",
+      "previewPath": "docs/evaluations/reading-visuals-2026-10-10/new-banners/daan-annapurna.webp"
+    },
+    {
+      "id": "gita-vishvarupa",
+      "status": "draft",
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 105452,
+      "sha256": "082266142fe0ba7c2950b455e9c67ab177394bbb1b7eface53d90ac103c9516f",
+      "previewPath": "docs/evaluations/reading-visuals-2026-10-10/new-banners/gita-vishvarupa.webp"
+    },
+    {
+      "id": "hanuman-sita",
+      "status": "draft",
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 115932,
+      "sha256": "ddeadaf5d42c4f8cd86d97e578ab0fb0862f0e4012012465d2ddd27ceab84dc1",
+      "previewPath": "docs/evaluations/reading-visuals-2026-10-10/new-banners/hanuman-sita.webp"
+    },
+    {
+      "id": "vishnu-narayana",
+      "status": "needs-anatomy-revision",
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 90916,
+      "sha256": "07aec208b94fa67704ea64f2317338ac3cb2ff22e9dd15383ae14471102beb02",
+      "previewPath": "docs/evaluations/reading-visuals-2026-10-10/new-banners/vishnu-narayana.webp"
+    }
+  ],
+  "currentPlan": "../reader-illustrations/prompts.json",
+  "reason": "User requested Krishna kids-story style and a distinct reader-illustration category."
+}

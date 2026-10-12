@@ -1,0 +1,149 @@
+# Swipe inside the lower carousel band at 60% height; a screen-centered horizontal swipe
+# lands on Kids Stories instead on this 402x874pt native QA device.
+# The card IDs remain independent of the shuffled display order.
+appId: com.prashantsharma.vedansh
+---
+- launchApp: { stopApp: true }
+- tapOn: { id: "tab-home" }
+- scrollUntilVisible:
+    element: { text: "DISCOVER" }
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-1
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-2
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-3
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-4
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-5
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-6
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-7
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-8
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-9
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-10
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-11
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-12
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-13
+- swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+- waitForAnimationToEnd
+- assertVisible: "DISCOVER"
+- takeScreenshot: discover-card-14
+- repeat:
+    times: 9
+    commands:
+      - runFlow:
+          when:
+            notVisible: { id: "home-discover-home-widgets" }
+          commands:
+            - swipe: { start: "15%, 60%", end: "85%, 60%", duration: 800 }
+            - waitForAnimationToEnd
+- repeat:
+    times: 9
+    commands:
+      - runFlow:
+          when:
+            notVisible: { id: "home-discover-home-widgets" }
+          commands:
+            - swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+            - waitForAnimationToEnd
+- assertVisible: { id: "home-discover-home-widgets" }
+- takeScreenshot: discover-widgets
+- tapOn: { id: "home-discover-home-widgets" }
+- assertVisible: { id: "widget-art-verse" }
+- takeScreenshot: widgets-route
+- tapOn: "Back"
+- assertVisible: "Open Sadhak profile"
+- tapOn: { id: "tab-home" }
+- repeat:
+    times: 9
+    commands:
+      - runFlow:
+          when:
+            notVisible: { id: "home-discover-pitru-smaran" }
+          commands:
+            - swipe: { start: "15%, 60%", end: "85%, 60%", duration: 800 }
+            - waitForAnimationToEnd
+- repeat:
+    times: 9
+    commands:
+      - runFlow:
+          when:
+            notVisible: { id: "home-discover-pitru-smaran" }
+          commands:
+            - swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+            - waitForAnimationToEnd
+- assertVisible: { id: "home-discover-pitru-smaran" }
+- takeScreenshot: discover-pitru
+- tapOn: { id: "home-discover-pitru-smaran" }
+- assertVisible: "Add smaran"
+- takeScreenshot: pitru-route
+- tapOn: "Back"
+- assertVisible: "Open Sadhak profile"
+- tapOn: { id: "tab-home" }
+- repeat:
+    times: 9
+    commands:
+      - runFlow:
+          when:
+            notVisible: { id: "home-discover-jijnasa" }
+          commands:
+            - swipe: { start: "15%, 60%", end: "85%, 60%", duration: 800 }
+            - waitForAnimationToEnd
+- repeat:
+    times: 9
+    commands:
+      - runFlow:
+          when:
+            notVisible: { id: "home-discover-jijnasa" }
+          commands:
+            - swipe: { start: "85%, 60%", end: "15%, 60%", duration: 800 }
+            - waitForAnimationToEnd
+- assertVisible: { id: "home-discover-jijnasa" }
+- takeScreenshot: discover-ask
+- tapOn: { id: "home-discover-jijnasa" }
+- assertVisible: "आज का विधान|Today.s Vidhan"
+- takeScreenshot: ask-route
+- scrollUntilVisible:
+    element: { text: "Ask something else" }
+    direction: DOWN
+    timeout: 20000
+- assertVisible: "Ask something else"
+- tapOn: "Back"
+- assertVisible: "DISCOVER"

@@ -1,0 +1,125 @@
+WARNING: Final field parent in class maestro.cli.command.TestCommand has been mutated reflectively by class picocli.CommandLine$Model$FieldBinding in unnamed module @41e68d87 (file:/Users/prashant/.maestro/lib/picocli-4.6.3.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/prashant/.maestro/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Running on Vedansh-Upanishad-QA - iOS 26.5 - 5799D1D7-B645-4613-8058-822E63009C0F
+ > Flow discover-icons-smoke
+Launch app "com.prashantsharma.vedansh"... COMPLETED
+Tap on id: tab-home... COMPLETED
+Scrolling DOWN until "DISCOVER" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-1... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-2... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-3... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-4... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-5... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-6... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-7... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-8... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-9... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-10... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-11... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-12... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-13... COMPLETED
+Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED
+Take screenshot discover-card-14... COMPLETED
+Repeat 9 times...
+  Run flow when id: home-discover-home-widgets is not visible...
+    Swipe from (15%, 60%) to (85%, 60%) in 800 ms... COMPLETED
+    Wait for animation to end... COMPLETED
+  Run flow when id: home-discover-home-widgets is not visible... COMPLETED
+Repeat 9 times... COMPLETED
+Repeat 9 times...
+  Run flow when id: home-discover-home-widgets is not visible...
+  Run flow when id: home-discover-home-widgets is not visible... SKIPPED
+Repeat 9 times... COMPLETED
+Assert that id: home-discover-home-widgets is visible... COMPLETED
+Take screenshot discover-widgets... COMPLETED
+Tap on id: home-discover-home-widgets... COMPLETED
+Assert that id: widget-art-verse is visible... COMPLETED
+Take screenshot widgets-route... COMPLETED
+Tap on "Back"... COMPLETED
+Assert that "Open Sadhak profile" is visible... COMPLETED
+Tap on id: tab-home... COMPLETED
+Repeat 9 times...
+  Run flow when id: home-discover-pitru-smaran is not visible...
+    Swipe from (15%, 60%) to (85%, 60%) in 800 ms... COMPLETED
+    Wait for animation to end... COMPLETED
+  Run flow when id: home-discover-pitru-smaran is not visible... COMPLETED
+Repeat 9 times... COMPLETED
+Repeat 9 times...
+  Run flow when id: home-discover-pitru-smaran is not visible...
+  Run flow when id: home-discover-pitru-smaran is not visible... SKIPPED
+Repeat 9 times... COMPLETED
+Assert that id: home-discover-pitru-smaran is visible... COMPLETED
+Take screenshot discover-pitru... COMPLETED
+Tap on id: home-discover-pitru-smaran... COMPLETED
+Assert that "Add smaran" is visible... COMPLETED
+Take screenshot pitru-route... COMPLETED
+Tap on "Back"... COMPLETED
+Assert that "Open Sadhak profile" is visible... COMPLETED
+Tap on id: tab-home... COMPLETED
+Repeat 9 times...
+  Run flow when id: home-discover-jijnasa is not visible...
+    Swipe from (15%, 60%) to (85%, 60%) in 800 ms... COMPLETED
+    Wait for animation to end... COMPLETED
+  Run flow when id: home-discover-jijnasa is not visible... COMPLETED
+Repeat 9 times... COMPLETED
+Repeat 9 times...
+  Run flow when id: home-discover-jijnasa is not visible...
+    Swipe from (85%, 60%) to (15%, 60%) in 800 ms... COMPLETED
+    Wait for animation to end... COMPLETED
+  Run flow when id: home-discover-jijnasa is not visible... COMPLETED
+Repeat 9 times... COMPLETED
+Assert that id: home-discover-jijnasa is visible... COMPLETED
+Take screenshot discover-ask... COMPLETED
+Tap on id: home-discover-jijnasa... COMPLETED
+Assert that "आज का विधान|Today.s Vidhan" is visible... COMPLETED
+Take screenshot ask-route... COMPLETED
+Scrolling DOWN until "Ask something else" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Assert that "Ask something else" is visible... COMPLETED
+Tap on "Back"... COMPLETED
+Assert that "DISCOVER" is visible... COMPLETED

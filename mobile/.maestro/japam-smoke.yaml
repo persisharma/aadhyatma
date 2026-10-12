@@ -1,6 +1,6 @@
 # Japam Category Smoke Test
 #
-# Verifies the Japam category and its 4 active mantras render correctly.
+# Verifies the Japam category and its 5 active mantras (4 mantras + Radha naam) render correctly.
 # Mantras: Om Namah Shivaya, Hare Krishna Mahamantra, Gayatri Mantra,
 #          Om Namo Bhagavate Vasudevaya.
 #
@@ -34,6 +34,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Hare Krishna Mahamantra\\..*Tap to open\\."
 - assertVisible: "Gayatri Mantra\\..*Tap to open\\."
 - assertVisible: "Om Namo Bhagavate Vasudevaya\\..*Tap to open\\."
+- assertVisible: "Radha Naam Japa\\..*Tap to open\\."
 
 # Open Gayatri Mantra counter
 - tapOn: "Gayatri Mantra\\..*Tap to open\\."
@@ -42,15 +43,21 @@ appId: com.prashantsharma.vedansh
 
 # ── Counter interaction (PR #40 / #93: bead increment) ──
 # The tap-area a11y label is always English ("Gayatri Mantra. Tap to count one
-# bead. N of 108 on this round, …"), so the count assertions are
+# bead. N of 108 on this mala, …"), so the count assertions are
 # language-independent; the counter starts at 0 on a clean store.
-- assertVisible: ".*0 of 108 on this round.*"
+- assertVisible: ".*0 of 108 on this mala.*"
 
 # Tap the bead area three times → the bead count climbs 0 → 3.
 - tapOn: ".*Tap to count one bead.*"
 - tapOn: ".*Tap to count one bead.*"
 - tapOn: ".*Tap to count one bead.*"
-- assertVisible: ".*3 of 108 on this round.*"
+- assertVisible: ".*3 of 108 on this mala.*"
+
+# The two reset buttons now sit behind one ↺ icon in the stats row; picking
+# "Reset bead count" in its sheet zeroes the current mala.
+- tapOn: "Reset or clear the count"
+- tapOn: "Reset bead count"
+- assertVisible: ".*0 of 108 on this mala.*"
 
 # Back to the mantra list, then clean up (Expo Go termination resets the stack).
 - tapOn: "Back"

@@ -1,14 +1,18 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
+import type { KidsStory } from '@/data/kidsStories';
 
 let mockLang = 'hi';
 const mockScroll = jest.fn();
+const mockShare = jest.fn();
+jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, busy: false }) }));
+jest.mock('@/components/ShareButton', () => ({ __esModule: true, default: 'ShareButton' }));
 jest.mock('react-native', () => {
   const React = require('react');
   return {
     Pressable: 'Pressable', ScrollView: 'ScrollView', Text: 'Text', View: 'View',
     useWindowDimensions: () => ({ width: 390, height: 844 }),
-    FlatList: React.forwardRef((props: any, ref: any) => {
+    FlatList: React.forwardRef(function MockFlatList(props: any, ref: any) {
       React.useImperativeHandle(ref, () => ({ scrollToIndex: mockScroll }));
       return React.createElement('FlatList', props, props.data.map((item: any, index: number) =>
         React.createElement(React.Fragment, { key: item.id }, props.renderItem({ item, index }))));
@@ -21,19 +25,21 @@ jest.mock('@/components/ReaderHeader', () => {
   return { __esModule: true, default: (props: any) => React.createElement('ReaderHeader', props, props.right) };
 });
 jest.mock('@/components/KidsStoryArt', () => ({ __esModule: true, default: 'KidsStoryArt' }));
-jest.mock('@/components/LanguagePickerSheet', () => ({ __esModule: true, default: 'LanguagePickerSheet' }));
+jest.mock('@/components/ReadingProgressBar', () => ({ __esModule: true, default: 'ReadingProgressBar' }));
+jest.mock('@/components/LanguageToggle', () => ({ __esModule: true, default: 'LanguageToggle' }));
 jest.mock('@/data/gita/language', () => ({
   useGitaLanguage: () => ({ lang: mockLang }),
   LANGUAGES: ['hi', 'en', 'gu', 'kn'].map(value => ({ value, shortLabel: value })),
 }));
 jest.mock('@/theme/ThemeContext', () => ({ useTheme: () => ({
-  colors: {}, typography: {}, spacing: { readingGutter: 22, lg: 16, md: 12, sm: 8 },
+  colors: {}, typography: { pageCounter: { fontFamily: 'test-font', fontSize: 14 } }, spacing: { readingGutter: 22, lg: 16, md: 12, sm: 8 },
 }) }));
 jest.mock('@/utils/langType', () => ({ meaningToken: () => ({}), titleFontByLang: () => 'test-font' }));
 jest.mock('@/utils/localize', () => ({ pick: (lang: string, values: Record<string, string>) => values[lang] }));
 
 const Screen = require('../KidsStoryReaderScreen').default;
 const story = require('@/data/kidsStories/krishna-janma.json');
+const { kidsStories }: { kidsStories: readonly KidsStory[] } = require('@/data/kidsStories');
 function mount(pageId?: string, storyId = story.id) {
   const navigation = { goBack: jest.fn() };
   const props = { navigation, route: { params: { storyId, pageId } } };
@@ -43,41 +49,70 @@ function mount(pageId?: string, storyId = story.id) {
 }
 afterEach(() => { mockLang = 'hi'; mockScroll.mockClear(); });
 
-test('first scene mounts with a horizontal pager and vertically scrolling captions', () => {
+test.each(kidsStories.filter(item => item.id !== story.id))('$id uses the same reader from first scene to sourced ending in every language', (item: KidsStory) => {
+  const { tree, props, find } = mount(undefined, item.id);
+  expect(find('story-pager').props.data).toEqual(item.pages);
+  expect(find('story-progress').props.children).toEqual([1, ' / ', item.pages.length]);
+  expect(tree.root.findAllByType('KidsStoryArt' as any).map(node => node.props.art)).toEqual(item.pages.map(page => page.art));
+  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * (item.pages.length - 1) } } }));
+  for (const language of ['hi', 'en', 'gu', 'kn'] as const) {
+    mockLang = language;
+    act(() => tree.update(<Screen {...props} />));
+    expect(find('story-progress').props.children[0]).toBe(item.pages.length);
+    const texts = tree.root.findAllByType('Text' as any).map(node => node.props.children);
+    expect(texts).toContain(item.pages[0].text[language]);
+    expect(texts).toContain(item.pages[item.pages.length - 1].text[language]);
+    expect(texts).toContain(item.takeaway[language]);
+    expect(texts).toContain(item.sourceNote[language]);
+  }
+  expect(find(`story-page-${item.pages[item.pages.length - 1].id}`).type).toBe('ScrollView');
+  act(() => tree.unmount());
+});
+
+test('first scene mounts with a horizontal pager, a counter and no page buttons', () => {
   const { tree, find } = mount();
   const pager = find('story-pager');
   expect(pager.props.horizontal).toBe(true);
   expect(pager.props.pagingEnabled).toBe(true);
   expect(pager.props.initialNumToRender).toBe(1);
+  for (const page of story.pages) {
+    const scene = find(`story-page-${page.id}`);
+    expect(scene.type).toBe('ScrollView');
+    expect(scene.props.horizontal).not.toBe(true);
+    expect(scene.findByType('KidsStoryArt' as any).props.art).toBe(page.art);
+  }
   expect(pager.props.getItemLayout(null, 2)).toEqual({ length: 390, offset: 780, index: 2 });
   expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === story.pages[0].text.hi)).toBe(true);
-  expect(find('story-prev').props.disabled).toBe(true);
+  // Gita-style swipe-only navigation: a header counter, no Previous/Next buttons.
+  expect(find('story-progress').props.children[0]).toBe(1);
+  expect(tree.root.findAllByProps({ testID: 'story-prev' })).toHaveLength(0);
+  expect(tree.root.findAllByProps({ testID: 'story-next' })).toHaveLength(0);
   act(() => tree.unmount());
 });
 
-test('swipes, buttons, language changes and layout changes keep one page index', () => {
-  const { tree, props, find, navigation } = mount('yamuna-crossing');
-  expect(find('story-progress').props.children[0]).toBe(8);
+test('the tab-hosted reader leaves the bottom safe-area inset to its navigator', () => {
+  const { tree, find } = mount();
+  expect(find('kids-story-reader').props.edges).toEqual(['top', 'left', 'right']);
+  act(() => tree.unmount());
+});
+
+test('swipes, language changes and layout changes keep one page index', () => {
+  const { tree, props, find } = mount('yamuna-crossing');
+  expect(find('story-progress').props.children[0]).toBe(12);
   for (const language of ['en', 'gu', 'kn', 'hi']) {
     mockLang = language;
     act(() => tree.update(<Screen {...props} />));
-    expect(find('story-progress').props.children[0]).toBe(8);
-    expect(find('story-pager').props.keyExtractor(story.pages[7])).toBe('yamuna-crossing');
+    expect(find('story-progress').props.children[0]).toBe(12);
+    expect(find('story-pager').props.keyExtractor(story.pages[11])).toBe('yamuna-crossing');
   }
-  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * 8 } } }));
-  expect(find('story-progress').props.children[0]).toBe(9);
-  act(() => find('story-prev').props.onPress());
-  expect(mockScroll).toHaveBeenLastCalledWith({ index: 7, animated: true });
-  expect(find('story-progress').props.children[0]).toBe(8);
-  act(() => find('story-next').props.onPress());
-  expect(mockScroll).toHaveBeenLastCalledWith({ index: 8, animated: true });
+  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * 12 } } }));
+  expect(find('story-progress').props.children[0]).toBe(13);
   const layout = tree.root.findAllByType('View' as any).find(node => node.props.onLayout)!;
   act(() => layout.props.onLayout({ nativeEvent: { layout: { width: 700 } } }));
-  expect(find('story-pager').props.initialScrollIndex).toBe(8);
-  expect(find('story-pager').props.getItemLayout(null, 8).offset).toBe(5600);
-  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 700 * 9 } } }));
-  act(() => find('story-next').props.onPress());
-  expect(navigation.goBack).toHaveBeenCalledTimes(1);
+  expect(find('story-pager').props.initialScrollIndex).toBe(12);
+  expect(find('story-pager').props.getItemLayout(null, 12).offset).toBe(8400);
+  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 700 * 13 } } }));
+  expect(find('story-progress').props.children[0]).toBe(14);
   act(() => tree.unmount());
 });
 
@@ -86,5 +121,17 @@ test('unknown story renders a graceful message without a pager', () => {
   const { tree } = mount(undefined, 'missing');
   expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === 'Story not found.')).toBe(true);
   expect(tree.root.findAllByProps({ testID: 'story-pager' })).toHaveLength(0);
+  act(() => tree.unmount());
+});
+
+test('share follows the visible scene and authored reading language', () => {
+  mockLang = 'gu';
+  const { tree, find } = mount(undefined, 'durga-raktabeej');
+  act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * 3 } } }));
+  act(() => tree.root.findByType('ShareButton' as any).props.onPress());
+  const [content, language] = mockShare.mock.calls[mockShare.mock.calls.length - 1];
+  expect(language).toBe('gu');
+  expect(content.scopes[content.scopes.length - 1].id).toBe('scene-4');
+  expect(content.scopes[0].prepared.gu.firstLine).toBe('દુર્ગા, કાલી અને રક્તબીજ');
   act(() => tree.unmount());
 });

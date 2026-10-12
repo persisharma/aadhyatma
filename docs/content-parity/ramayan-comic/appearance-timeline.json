@@ -1,0 +1,919 @@
+{
+  "schemaVersion": 1,
+  "createdOn": "2026-10-11",
+  "status": "authoring-draft-not-runtime-data",
+  "modelApproval": "Approved style direction; newly generated identities/stages proposed for review",
+  "agePolicy": "Event chronology, not kanda index. Only the under-sixteen youth boundary is currently locked from the consulted age passage. Other visible stages are editorial, with no invented numeric ages.",
+  "stageFieldsAreIndependent": [
+    "characterId",
+    "lifeStage",
+    "dress",
+    "form",
+    "condition/emotion",
+    "sceneProps"
+  ],
+  "stages": [
+    {
+      "id": "rama-infant",
+      "characterId": "rama",
+      "lifeStage": "infant",
+      "dress": "simple cloth",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/rama-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": "No exact numeric age; ornament and tilak styling are artistic."
+    },
+    {
+      "id": "rama-child",
+      "characterId": "rama",
+      "lifeStage": "child",
+      "dress": "simple yellow cloth",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/rama-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": "No exact numeric age; ornament and tilak styling are artistic."
+    },
+    {
+      "id": "rama-youth",
+      "characterId": "rama",
+      "lifeStage": "adolescent",
+      "dress": "journey / Mithila cloth",
+      "form": "natural",
+      "sourceFactIds": [
+        "rama-youth"
+      ],
+      "referenceAsset": "assets/rama-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": "No exact numeric age; ornament and tilak styling are artistic."
+    },
+    {
+      "id": "rama-court",
+      "characterId": "rama",
+      "lifeStage": "later youthful/adult visual model",
+      "dress": "prince in court",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/rama-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Use adult facial model; separate court costume needs scene reference. No numeric age claimed."
+    },
+    {
+      "id": "rama-departure",
+      "characterId": "rama",
+      "lifeStage": "same as court",
+      "dress": "bark over departure garments",
+      "form": "natural",
+      "sourceFactIds": [
+        "departure-cloth"
+      ],
+      "referenceAsset": null,
+      "designStatus": "additional-reference-needed",
+      "notes": "Before Guha hair transition; do not prematurely apply later matted hair."
+    },
+    {
+      "id": "rama-exile",
+      "characterId": "rama",
+      "lifeStage": "adult visual model",
+      "dress": "forest bark / simple cloth",
+      "form": "natural",
+      "sourceFactIds": [
+        "exile-hair"
+      ],
+      "referenceAsset": "assets/rama-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "rama-king",
+      "characterId": "rama",
+      "lifeStage": "adult visual model",
+      "dress": "royal dress and coronation crown",
+      "form": "natural",
+      "sourceFactIds": [
+        "royal-return"
+      ],
+      "referenceAsset": "assets/rama-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "rama-later-reign",
+      "characterId": "rama",
+      "lifeStage": "later adult visual model",
+      "dress": "royal; action-dependent",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/rama-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Starting face only; subtle maturity requires scene acceptance, no automatic white hair."
+    },
+    {
+      "id": "sita-youth",
+      "characterId": "sita",
+      "lifeStage": "youthful Mithila",
+      "dress": "red/ochre modest garment",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/sita-v2.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Reference outfit is not a mandatory prop list; event controls ornaments and veil."
+    },
+    {
+      "id": "sita-palace",
+      "characterId": "sita",
+      "lifeStage": "adult visual model",
+      "dress": "palace sari",
+      "form": "natural",
+      "sourceFactIds": [
+        "royal-return"
+      ],
+      "referenceAsset": "assets/sita-v2.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Reference outfit is not a mandatory prop list; event controls ornaments and veil."
+    },
+    {
+      "id": "sita-exile",
+      "characterId": "sita",
+      "lifeStage": "adult visual model",
+      "dress": "simple travelling cloth",
+      "form": "natural",
+      "sourceFactIds": [
+        "departure-cloth"
+      ],
+      "referenceAsset": "assets/sita-v2.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Reference outfit is not a mandatory prop list; event controls ornaments and veil."
+    },
+    {
+      "id": "sita-captivity",
+      "characterId": "sita",
+      "lifeStage": "same adult",
+      "dress": "worn yellow cloth; single braid",
+      "form": "natural",
+      "sourceFactIds": [
+        "sita-captivity"
+      ],
+      "referenceAsset": "assets/sita-v2.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Reference outfit is not a mandatory prop list; event controls ornaments and veil."
+    },
+    {
+      "id": "sita-hermitage",
+      "characterId": "sita",
+      "lifeStage": "later adult",
+      "dress": "simple earth-tone sari",
+      "form": "natural",
+      "sourceFactIds": [
+        "twins-birth"
+      ],
+      "referenceAsset": "assets/sita-v2.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Reference outfit is not a mandatory prop list; event controls ornaments and veil."
+    },
+    {
+      "id": "lakshmana-youth",
+      "characterId": "lakshmana",
+      "lifeStage": "adolescent visual model",
+      "dress": "simple yellow and green journey cloth",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/brothers-v4.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "lakshmana-departure",
+      "characterId": "lakshmana",
+      "lifeStage": "later youthful/adult visual model",
+      "dress": "departure forest clothes",
+      "form": "natural",
+      "sourceFactIds": [
+        "departure-cloth"
+      ],
+      "referenceAsset": null,
+      "designStatus": "additional-reference-needed",
+      "notes": "Pre-matted-hair reference needed."
+    },
+    {
+      "id": "lakshmana-exile",
+      "characterId": "lakshmana",
+      "lifeStage": "adult visual model",
+      "dress": "bark / ochre and green",
+      "form": "natural",
+      "sourceFactIds": [
+        "exile-hair"
+      ],
+      "referenceAsset": "assets/brothers-v4.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "lakshmana-royal",
+      "characterId": "lakshmana",
+      "lifeStage": "same adult",
+      "dress": "princely court dress, crown-free baseline",
+      "form": "natural",
+      "sourceFactIds": [
+        "royal-return"
+      ],
+      "referenceAsset": "assets/brothers-v4.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "bharata-regent",
+      "characterId": "bharata",
+      "lifeStage": "adult visual model",
+      "dress": "simple ascetic cloth, matted hair",
+      "form": "natural",
+      "sourceFactIds": [
+        "bharata-regent"
+      ],
+      "referenceAsset": "assets/brothers-v4.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "shatrughna-prince",
+      "characterId": "shatrughna",
+      "lifeStage": "adult visual model",
+      "dress": "modest princely dress",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/brothers-v4.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Childhood and later ruler references still needed."
+    },
+    {
+      "id": "hanuman-child",
+      "characterId": "hanuman",
+      "lifeStage": "childhood",
+      "dress": "simple ochre/red cloth",
+      "form": "natural",
+      "sourceFactIds": [
+        "hanuman-flashback"
+      ],
+      "referenceAsset": "assets/vanaras-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "hanuman-adult",
+      "characterId": "hanuman",
+      "lifeStage": "adult",
+      "dress": "simple ochre/red cloth",
+      "form": "natural",
+      "sourceFactIds": [
+        "hanuman-return"
+      ],
+      "referenceAsset": "assets/vanaras-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": " User-requested iconic adult accessory model. Gada and mukut are scene-controlled for narrative art; not an assertion of universal source attire.",
+      "modelAccessories": [
+        "gold mukut with central red gem",
+        "gold gada"
+      ]
+    },
+    {
+      "id": "hanuman-ascetic",
+      "characterId": "hanuman",
+      "lifeStage": "same adult",
+      "dress": "ascetic robes",
+      "form": "human ascetic disguise",
+      "sourceFactIds": [
+        "hanuman-disguise"
+      ],
+      "referenceAsset": "assets/vanaras-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "hanuman-enlarged",
+      "characterId": "hanuman",
+      "lifeStage": "same adult",
+      "dress": "same as current scene",
+      "form": "enlarged vanara",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/vanaras-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Scale reference only; every use needs exact action/source check. Reduced form model pending. User-requested iconic adult accessory model. Gada and mukut are scene-controlled for narrative art; not an assertion of universal source attire.",
+      "modelAccessories": [
+        "gold mukut with central red gem",
+        "gold gada"
+      ]
+    },
+    {
+      "id": "sugriva-exile",
+      "characterId": "sugriva",
+      "lifeStage": "adult / elder as illustrated",
+      "dress": "exile, no crown",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/vanaras-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": " Baseline visual model, not complete biography."
+    },
+    {
+      "id": "sugriva-king",
+      "characterId": "sugriva",
+      "lifeStage": "adult / elder as illustrated",
+      "dress": "restored royal dress",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": null,
+      "designStatus": "additional-reference-needed",
+      "notes": "Crowned model and exact restoration source anchor pending. Baseline visual model, not complete biography."
+    },
+    {
+      "id": "vali-king",
+      "characterId": "vali",
+      "lifeStage": "adult / elder as illustrated",
+      "dress": "royal",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/vanaras-v3.png",
+      "designStatus": "proposed-user-review",
+      "notes": " Baseline visual model, not complete biography."
+    },
+    {
+      "id": "vishwamitra-elder",
+      "characterId": "vishwamitra",
+      "lifeStage": "adult / elder as illustrated",
+      "dress": "ochre sage robes",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/elders-next-generation-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": " Baseline visual model, not complete biography."
+    },
+    {
+      "id": "vashishtha-elder",
+      "characterId": "vashishtha",
+      "lifeStage": "adult / elder as illustrated",
+      "dress": "cream sage robes",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/elders-next-generation-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": " Baseline visual model, not complete biography."
+    },
+    {
+      "id": "valmiki-elder",
+      "characterId": "valmiki",
+      "lifeStage": "adult / elder as illustrated",
+      "dress": "terracotta sage robes",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/elders-next-generation-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": " Baseline visual model, not complete biography."
+    },
+    {
+      "id": "dasharatha-king",
+      "characterId": "dasharatha",
+      "lifeStage": "adult / elder as illustrated",
+      "dress": "royal",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/elders-next-generation-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": " Baseline visual model, not complete biography."
+    },
+    {
+      "id": "janaka-king",
+      "characterId": "janaka",
+      "lifeStage": "adult / elder as illustrated",
+      "dress": "royal",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/elders-next-generation-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": " Baseline visual model, not complete biography."
+    },
+    {
+      "id": "lava-infant",
+      "characterId": "lava",
+      "lifeStage": "infant",
+      "dress": "simple cloth",
+      "form": "natural",
+      "sourceFactIds": [
+        "twins-birth"
+      ],
+      "referenceAsset": null,
+      "designStatus": "additional-reference-needed",
+      "notes": "Pair required at birth; additional infant references needed."
+    },
+    {
+      "id": "lava-child",
+      "characterId": "lava",
+      "lifeStage": "child",
+      "dress": "hermitage cloth",
+      "form": "natural",
+      "sourceFactIds": [
+        "twins-recitation"
+      ],
+      "referenceAsset": "assets/elders-next-generation-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "lava-ruler",
+      "characterId": "lava",
+      "lifeStage": "later ruler; precise visual age pending",
+      "dress": "royal",
+      "form": "natural",
+      "sourceFactIds": [
+        "twins-rulers"
+      ],
+      "referenceAsset": null,
+      "designStatus": "additional-reference-needed",
+      "notes": "Do not use the child model for later installation."
+    },
+    {
+      "id": "kusha-infant",
+      "characterId": "kusha",
+      "lifeStage": "infant",
+      "dress": "simple cloth",
+      "form": "natural",
+      "sourceFactIds": [
+        "twins-birth"
+      ],
+      "referenceAsset": null,
+      "designStatus": "additional-reference-needed",
+      "notes": "Pair required at birth; additional infant references needed."
+    },
+    {
+      "id": "kusha-child",
+      "characterId": "kusha",
+      "lifeStage": "child",
+      "dress": "hermitage cloth",
+      "form": "natural",
+      "sourceFactIds": [
+        "twins-recitation"
+      ],
+      "referenceAsset": "assets/elders-next-generation-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "kusha-ruler",
+      "characterId": "kusha",
+      "lifeStage": "later ruler; precise visual age pending",
+      "dress": "royal",
+      "form": "natural",
+      "sourceFactIds": [
+        "twins-rulers"
+      ],
+      "referenceAsset": null,
+      "designStatus": "additional-reference-needed",
+      "notes": "Do not use the child model for later installation."
+    },
+    {
+      "id": "ravana-portrait",
+      "characterId": "ravana",
+      "lifeStage": "adult",
+      "dress": "royal bust only",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/lanka-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Head identity study only, not permission to depict a one-headed full form."
+    },
+    {
+      "id": "ravana-full-form",
+      "characterId": "ravana",
+      "lifeStage": "same adult",
+      "dress": "scene-dependent",
+      "form": "ten-head / twenty-arm full form",
+      "sourceFactIds": [],
+      "referenceAsset": null,
+      "designStatus": "additional-reference-needed",
+      "notes": "Separate sourced multi-angle/anatomy sheet required before relevant scenes."
+    },
+    {
+      "id": "ravana-ascetic",
+      "characterId": "ravana",
+      "lifeStage": "same adult",
+      "dress": "ascetic disguise",
+      "form": "ascetic disguise",
+      "sourceFactIds": [],
+      "referenceAsset": null,
+      "designStatus": "additional-reference-needed",
+      "notes": "Separate source-led disguise reference required."
+    },
+    {
+      "id": "vibhishana-prince",
+      "characterId": "vibhishana",
+      "lifeStage": "adult",
+      "dress": "Lanka princely dress",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/lanka-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Crown in model is wardrobe study only; enable by reviewed scene role. King variant pending."
+    },
+    {
+      "id": "maricha-rakshasa",
+      "characterId": "maricha",
+      "lifeStage": "adult",
+      "dress": "forest",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/lanka-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": ""
+    },
+    {
+      "id": "maricha-deer",
+      "characterId": "maricha",
+      "lifeStage": "same adult identity",
+      "dress": "none",
+      "form": "golden deer disguise",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/lanka-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Visual concept; exact transformation passage needs two-publication anchoring before scene production."
+    },
+    {
+      "id": "shurpanakha-baseline",
+      "characterId": "shurpanakha",
+      "lifeStage": "adult",
+      "dress": "modest forest clothes",
+      "form": "natural",
+      "sourceFactIds": [],
+      "referenceAsset": "assets/lanka-v1.png",
+      "designStatus": "proposed-user-review",
+      "notes": "Before injury only; disguise and later states pending."
+    }
+  ],
+  "transitions": [
+    {
+      "id": "rama-birth-growth",
+      "fromStage": "rama-infant",
+      "toStage": "rama-child",
+      "trigger": "Childhood passage / explicit elapsed development",
+      "sourceFactIds": [],
+      "kind": "age"
+    },
+    {
+      "id": "rama-youth-growth",
+      "fromStage": "rama-child",
+      "toStage": "rama-youth",
+      "trigger": "Vishwamitra journey",
+      "sourceFactIds": [
+        "rama-youth"
+      ],
+      "kind": "age"
+    },
+    {
+      "id": "rama-later-court",
+      "fromStage": "rama-youth",
+      "toStage": "rama-court",
+      "trigger": "Later court chronology; exact years not locked",
+      "sourceFactIds": [],
+      "kind": "age"
+    },
+    {
+      "id": "rama-departs",
+      "fromStage": "rama-court",
+      "toStage": "rama-departure",
+      "trigger": "Changes clothes before leaving",
+      "sourceFactIds": [
+        "departure-cloth"
+      ],
+      "kind": "appearance"
+    },
+    {
+      "id": "rama-mats-hair",
+      "fromStage": "rama-departure",
+      "toStage": "rama-exile",
+      "trigger": "Guha supplies banyan latex",
+      "sourceFactIds": [
+        "exile-hair"
+      ],
+      "kind": "appearance"
+    },
+    {
+      "id": "rama-coronation",
+      "fromStage": "rama-exile",
+      "toStage": "rama-king",
+      "trigger": "Return, grooming then coronation",
+      "sourceFactIds": [
+        "royal-return"
+      ],
+      "kind": "appearance"
+    },
+    {
+      "id": "rama-later-reign-transition",
+      "fromStage": "rama-king",
+      "toStage": "rama-later-reign",
+      "trigger": "Later events within reign",
+      "sourceFactIds": [],
+      "kind": "age"
+    },
+    {
+      "id": "lakshmana-mats-hair",
+      "fromStage": "lakshmana-departure",
+      "toStage": "lakshmana-exile",
+      "trigger": "Guha hair transition",
+      "sourceFactIds": [
+        "exile-hair"
+      ],
+      "kind": "appearance"
+    },
+    {
+      "id": "lakshmana-return",
+      "fromStage": "lakshmana-exile",
+      "toStage": "lakshmana-royal",
+      "trigger": "Grooming after return",
+      "sourceFactIds": [
+        "royal-return"
+      ],
+      "kind": "appearance"
+    },
+    {
+      "id": "sita-exile-captivity",
+      "fromStage": "sita-exile",
+      "toStage": "sita-captivity",
+      "trigger": "Abduction and ensuing captivity",
+      "sourceFactIds": [
+        "sita-captivity"
+      ],
+      "kind": "appearance"
+    },
+    {
+      "id": "sita-return",
+      "fromStage": "sita-captivity",
+      "toStage": "sita-palace",
+      "trigger": "Reunion, return and royal adornment",
+      "sourceFactIds": [
+        "royal-return"
+      ],
+      "kind": "appearance"
+    },
+    {
+      "id": "sita-later-hermitage",
+      "fromStage": "sita-palace",
+      "toStage": "sita-hermitage",
+      "trigger": "Later Uttara hermitage chronology",
+      "sourceFactIds": [
+        "twins-birth"
+      ],
+      "kind": "appearance"
+    },
+    {
+      "id": "hanuman-human-disguise",
+      "fromStage": "hanuman-adult",
+      "toStage": "hanuman-ascetic",
+      "trigger": "Approaches brothers on Sugriva’s mission",
+      "sourceFactIds": [
+        "hanuman-disguise"
+      ],
+      "kind": "form"
+    },
+    {
+      "id": "hanuman-natural-form",
+      "fromStage": "hanuman-ascetic",
+      "toStage": "hanuman-adult",
+      "trigger": "Resumes natural form in friendship sequence",
+      "sourceFactIds": [
+        "hanuman-return"
+      ],
+      "kind": "form"
+    },
+    {
+      "id": "hanuman-enlargement",
+      "fromStage": "hanuman-adult",
+      "toStage": "hanuman-enlarged",
+      "trigger": "Source-supported scene requires enlargement",
+      "sourceFactIds": [],
+      "kind": "scale"
+    },
+    {
+      "id": "hanuman-resumes-scale",
+      "fromStage": "hanuman-enlarged",
+      "toStage": "hanuman-adult",
+      "trigger": "Scene requires ordinary scale again",
+      "sourceFactIds": [],
+      "kind": "scale"
+    },
+    {
+      "id": "sugriva-restoration",
+      "fromStage": "sugriva-exile",
+      "toStage": "sugriva-king",
+      "trigger": "Restoration after Vali; source anchor pending",
+      "sourceFactIds": [],
+      "kind": "appearance"
+    },
+    {
+      "id": "maricha-transforms",
+      "fromStage": "maricha-rakshasa",
+      "toStage": "maricha-deer",
+      "trigger": "Golden-deer episode; source anchor pending",
+      "sourceFactIds": [],
+      "kind": "form"
+    },
+    {
+      "id": "lava-grows",
+      "fromStage": "lava-infant",
+      "toStage": "lava-child",
+      "trigger": "Childhood and teaching",
+      "sourceFactIds": [
+        "twins-birth",
+        "twins-recitation"
+      ],
+      "kind": "age"
+    },
+    {
+      "id": "lava-later-ruler",
+      "fromStage": "lava-child",
+      "toStage": "lava-ruler",
+      "trigger": "Later installation as ruler",
+      "sourceFactIds": [
+        "twins-rulers"
+      ],
+      "kind": "age"
+    },
+    {
+      "id": "kusha-grows",
+      "fromStage": "kusha-infant",
+      "toStage": "kusha-child",
+      "trigger": "Childhood and teaching",
+      "sourceFactIds": [
+        "twins-birth",
+        "twins-recitation"
+      ],
+      "kind": "age"
+    },
+    {
+      "id": "kusha-later-ruler",
+      "fromStage": "kusha-child",
+      "toStage": "kusha-ruler",
+      "trigger": "Later installation as ruler",
+      "sourceFactIds": [
+        "twins-rulers"
+      ],
+      "kind": "age"
+    }
+  ],
+  "kandas": [
+    {
+      "id": "bala",
+      "title": "Bāla Kāṇḍa",
+      "stageIds": [
+        "rama-infant",
+        "rama-child",
+        "rama-youth",
+        "sita-youth",
+        "lakshmana-youth",
+        "vishwamitra-elder",
+        "vashishtha-elder",
+        "dasharatha-king",
+        "janaka-king"
+      ],
+      "continuityNote": "Cover: youthful Rama on the journey; birth/childhood interior scenes use their own stage. Earlier sage accounts need flashback models."
+    },
+    {
+      "id": "ayodhya",
+      "title": "Ayodhya Kāṇḍa",
+      "stageIds": [
+        "rama-court",
+        "rama-departure",
+        "rama-exile",
+        "sita-palace",
+        "sita-exile",
+        "lakshmana-departure",
+        "lakshmana-exile",
+        "bharata-regent",
+        "shatrughna-prince"
+      ],
+      "continuityNote": "Split departure clothes, later matted locks and Bharata’s Nandigrama regency. No face reset mid-departure."
+    },
+    {
+      "id": "aranya",
+      "title": "Aranya Kāṇḍa",
+      "stageIds": [
+        "rama-exile",
+        "sita-exile",
+        "lakshmana-exile",
+        "maricha-rakshasa",
+        "maricha-deer",
+        "ravana-ascetic",
+        "shurpanakha-baseline"
+      ],
+      "continuityNote": "Continue forest models; transformations are forms. Jatayu and additional episode cast need references."
+    },
+    {
+      "id": "kishkindha",
+      "title": "Kishkindha Kāṇḍa",
+      "stageIds": [
+        "rama-exile",
+        "lakshmana-exile",
+        "hanuman-ascetic",
+        "hanuman-adult",
+        "sugriva-exile",
+        "sugriva-king",
+        "vali-king"
+      ],
+      "continuityNote": "Hanuman’s initial ascetic appearance precedes natural form. Sugriva royal costume begins after restoration."
+    },
+    {
+      "id": "sundara",
+      "title": "Sundara Kāṇḍa",
+      "stageIds": [
+        "hanuman-adult",
+        "hanuman-enlarged",
+        "sita-captivity",
+        "ravana-portrait"
+      ],
+      "continuityNote": "Same adult identities; scene-specific scale, single braid, yellow cloth and ring. Ravana portrait is not a full-form scene asset."
+    },
+    {
+      "id": "yuddha",
+      "title": "Yuddha / Lanka Kāṇḍa",
+      "stageIds": [
+        "rama-exile",
+        "rama-king",
+        "sita-captivity",
+        "sita-palace",
+        "lakshmana-exile",
+        "lakshmana-royal",
+        "hanuman-adult",
+        "ravana-full-form",
+        "vibhishana-prince"
+      ],
+      "continuityNote": "War retains forest models; grooming and royal appearance occur after return. Additional combat cast and royal variants remain pending."
+    },
+    {
+      "id": "uttara",
+      "title": "Uttara Kāṇḍa",
+      "stageIds": [
+        "rama-later-reign",
+        "sita-palace",
+        "sita-hermitage",
+        "valmiki-elder",
+        "lava-infant",
+        "kusha-infant",
+        "lava-child",
+        "kusha-child",
+        "lava-ruler",
+        "kusha-ruler",
+        "hanuman-child"
+      ],
+      "continuityNote": "Resolve life stage by event. Hanuman childhood is a flashback; twins progress beyond the child reference later."
+    }
+  ],
+  "flashbackExample": {
+    "narratedInKanda": "uttara",
+    "event": "Hanuman childhood account",
+    "stageId": "hanuman-child",
+    "sourceFactIds": [
+      "hanuman-flashback"
+    ]
+  },
+  "sceneBindingExample": {
+    "sceneId": "example-only-sita-ring-handover",
+    "isProductionScene": false,
+    "sourceFactIds": [
+      "signet-ring"
+    ],
+    "characters": [
+      {
+        "stageId": "hanuman-adult",
+        "form": "natural vanara",
+        "scale": "scene reviewed small form; additional scale reference needed",
+        "emotion": "reassuring",
+        "props": [
+          "Rama signet ring until handover"
+        ]
+      },
+      {
+        "stageId": "sita-captivity",
+        "emotion": "cautious recognition",
+        "props": [
+          "ring after receipt only"
+        ]
+      }
+    ],
+    "artHasText": false,
+    "textLocales": [
+      "hi",
+      "en",
+      "gu",
+      "kn"
+    ],
+    "panelLayoutByLocale": true
+  },
+  "pendingCoverage": [
+    "All scene-by-scene timeline bindings",
+    "Exact numerical ages beyond the bounded youth evidence",
+    "Earlier lives of sages and rakshasas in flashbacks",
+    "Full Ravana anatomy and ascetic disguise",
+    "Reduced Hanuman scale and additional form studies",
+    "Lava/Kusha infants and later rulers",
+    "Additional cast and source-reviewed costume/prop variants"
+  ],
+  "modelRevisionNote": "2026-10-11: differentiated Rama/Lakshmana facial geometry and silhouettes; refined Hanuman face/fur/build and added user-requested adult mukut/gada. User acceptance still pending."
+}

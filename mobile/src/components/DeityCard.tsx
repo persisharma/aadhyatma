@@ -11,26 +11,34 @@ import DeityIcon from './DeityIcon';
 type Props = {
   nameHi: string;
   nameEn: string;
+  nameGu?: string;
+  nameKn?: string;
   itemCount: string;
   iconKey?: DeityIconKey;
   onPress?: () => void;
+  testID?: string;
   /** When true, shows a green "NEW" badge top-right (deity has unseen content). */
   hasNew?: boolean;
 };
 
-export default function DeityCard({ nameHi, nameEn, itemCount, iconKey, onPress, hasNew }: Props) {
+export default function DeityCard({ nameHi, nameEn, nameGu, nameKn, itemCount, iconKey, onPress, testID, hasNew }: Props) {
   const { colors, radii } = useTheme();
   const { lang } = useGitaLanguage();
 
-  const { primary, secondary } = orderTitlesByLanguage(lang, nameHi, nameEn, {
+  const ordered = orderTitlesByLanguage(lang, nameHi, nameEn, {
     devPrimary: 16,
     devSecondary: 12,
     latPrimary: 18,
     latSecondary: 11,
   });
+  // Story catalog names have editorially authored regional spellings. Keep the
+  // shared title hierarchy, but use those spellings instead of transliteration.
+  const primary = { ...ordered.primary, text: lang === 'gu' ? nameGu ?? ordered.primary.text : lang === 'kn' ? nameKn ?? ordered.primary.text : ordered.primary.text };
+  const secondary = ordered.secondary;
 
   return (
     <Pressable
+      testID={testID}
       onPress={onPress}
       style={({ pressed }) => [
         styles.card,

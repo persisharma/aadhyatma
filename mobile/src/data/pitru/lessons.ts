@@ -181,18 +181,18 @@ export const PITRU_LESSON_ENTRIES: readonly PitruLessonEntry[] = [
     titleEn: 'Whose day is which — how a tithi is matched',
     bodyHi: [
       'देहान्त की तिथि — मास, पक्ष और तिथि — इस पक्ष की उसी संख्या की कृष्ण-पक्ष तिथि पर उतारी जाती है। माघ कृष्ण अष्टमी को गए पितर का महालय श्राद्ध पितृ पक्ष की अष्टमी को होता है।',
-      'पूर्णिमा को दिवंगत हुए पितरों का श्राद्ध पक्ष के आरम्भ की पूर्णिमा को ही किया जाता है। किसी वर्ष कोई तिथि क्षय हो जाए — सूर्योदय पर दो तिथियाँ एक ही दिन में सिमट जाएँ — तो वह दिन दोनों नामों से जाना जाता है, जैसा छपे श्राद्ध-कैलेण्डर करते हैं।',
-      'इस ऐप की पितृ पक्ष तालिका इसी सूर्योदय-तिथि पद्धति से बनी है; अपराह्न-आधारित परिवार-परम्परा हो तो उसे ही प्राथमिकता दें।',
+      'पूर्णिमा को दिवंगत हुए पितरों का श्राद्ध पक्ष के आरम्भ की पूर्णिमा को ही किया जाता है। हर तिथि का दिन वह है जिसके अपराह्न में वह तिथि सबसे अधिक व्याप्त हो — इसलिए किसी वर्ष दो तिथियाँ एक ही दिन पड़ती हैं और वह दिन दोनों नामों से जाना जाता है, और कभी कोई दिन ऐसा भी होता है जिस पर किसी तिथि का श्राद्ध नहीं पड़ता, जैसा छपे श्राद्ध-कैलेण्डर दिखाते हैं।',
+      'इस ऐप की पितृ पक्ष तालिका इसी अपराह्न-व्याप्ति से बनी है, इसलिए कभी-कभी उसका दिन पंचांग में सूर्योदय पर छपी तिथि से एक दिन पहले दिखता है। परिवार या पुरोहित की परम्परा भिन्न हो तो उसे ही प्राथमिकता दें।',
     ],
     bodyEn: [
       'The tithi of passing — month, paksha and tithi — is carried onto the same-numbered krishna tithi of this fortnight. An ancestor who left on Magha krishna ashtami has their Mahalaya shraddha on the paksha’s ashtami.',
-      'Those who passed on a purnima are remembered on the opening purnima of the paksha itself. When a tithi is kshaya in a given year — two tithis fold into one sunrise day — that day carries both names, exactly as printed shraddha calendars do.',
-      'This app’s Pitru Paksha table is built on that sunrise-tithi convention; where the family follows an aparahna-based reckoning, that takes precedence.',
+      'Those who passed on a purnima are remembered on the opening purnima of the paksha itself. Every tithi’s day is the one whose aparahna it covers most — so in some years two tithis share a day and it carries both names, and a day can carry no tithi’s shraddha at all, exactly as printed shraddha calendars show.',
+      'This app’s Pitru Paksha table is built on that aparahna reckoning, which is why its day can sit a day before the tithi printed at sunrise in an almanac. Where your family or officiant follows a different reckoning, that takes precedence.',
     ],
     status: 'verified',
     source: {
       referenceUrls: [IN_REPO_ENGINE, DRIK_SHRADDHA_DATES, DRIK_SHRADDHA_DAYS],
-      verificationNote: `${DOSSIER_NOTE} The mapping, the purnima rule and the kshaya two-name row are the shipped engine and overview screen's own behaviour (pakshaShraddhaDay; PitruPakshaOverviewScreen).`,
+      verificationNote: `${DOSSIER_NOTE} The mapping, the purnima rule, and the aparahna two-name and empty rows are the shipped engine and overview screen's own behaviour (pakshaShraddhaDay; pitruPakshaDayName; PitruPakshaOverviewScreen), pinned day for day against the published 2024–2027 lists in pitruSmaran.test.ts.`,
     },
   },
   {

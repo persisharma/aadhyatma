@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 /**
  * आज का विधान (PRD-41 Phase 2, design.md §71): the briefing of standing
  * questions — what is today, what today asks of me, the day's windows, my
@@ -98,11 +99,11 @@ export default function TodayVidhanScreen({ navigation }: Props) {
             accessibilityLabel="Ask something else"
             onPress={() => navigation.navigate('Search')}
           >
-            <Text style={{ fontSize: 16, color: colors.saffron }}>⌕</Text>
+            <AppIcon name="search" size={20} color={colors.saffron} />
             <Text style={[styles.askMoreText, { color: colors.inkSoft, fontFamily: bodyFont }]}>
               {contentByLang(lang, 'कुछ और पूछें — भोग, विधि, दिशा, मुहूर्त…', 'Ask something else — bhog, vidhi, direction, muhurat…')}
             </Text>
-            <Text style={{ color: colors.saffron, fontSize: 18 }}>›</Text>
+            <AppIcon name="next" size={18} color={colors.saffron} />
           </Pressable>
         </ScrollView>
       </SafeAreaView>

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Alert, AppState, Platform, Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
+import { Alert, AppState, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
@@ -12,7 +12,8 @@ import { radii, spacing } from '@/theme/spacing';
 import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/widgets/native';
 import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
-import { widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
+import { WIDGET_TEXT_TOKENS, widgetBackgroundName, widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
+import { widgetBackgroundImages } from '@assets/widget-backgrounds';
 import { flowedVerse, runningTithi } from '@/widgets/planner';
 import type { MoreStackParamList } from '@/navigation/types';
 
@@ -76,18 +77,18 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
                 renders the whole verse flowed across three lines — not the
                 small-cell excerpt (design.md §59). */}
             <Text numberOfLines={3} style={[styles.verse, { color: colors.ink, fontFamily: bodyFont }]}>{verse ? flowedVerse(verse.lines[lang]) : recovery}</Text>
-            {verse ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{verse.source[lang]}</Text> : null}
+            {verse ? <Text style={[styles.meta, { color: WIDGET_TEXT_TOKENS.inkMuted }]}>{verse.source[lang]}</Text> : null}
           </Preview>
           <Preview content="panchang" title={contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* The tithi RUNNING NOW plus its तक line — a tithi hands over
                 mid-day, so the facsimile would otherwise show the sunrise tithi
                 while the placed widget (and the Home glance) had moved on. */}
             <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{tithi ? tithi.name[lang] : recovery}</Text>
-            {day ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{[tithi?.till?.[lang], day.representedDate[lang], day.sunrise[lang], day.rahuKaal[lang]].filter(Boolean).join(' · ')}</Text> : null}
+            {day ? <Text style={[styles.meta, { color: WIDGET_TEXT_TOKENS.inkMuted }]}>{[tithi?.till?.[lang], day.representedDate[lang], day.sunrise[lang], day.rahuKaal[lang]].filter(Boolean).join(' · ')}</Text> : null}
           </Preview>
           <Preview content="japam" title={contentByLang(lang, 'जप-साधना', 'Japam practice')} accessibilityLabel="Japam widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{japam ? `${japam.totalBeads} / 108` : recovery}</Text>
-            {japam ? <Text style={[styles.meta, { color: colors.inkMuted }]}>{japam.totalRounds} {contentByLang(lang, 'माला', 'rounds')} · {japam.japaStreak} {contentByLang(lang, 'जप-दिन', 'Japam days')}</Text> : null}
+            {japam ? <Text style={[styles.meta, { color: WIDGET_TEXT_TOKENS.inkMuted }]}>{japam.totalRounds} {contentByLang(lang, 'माला', 'rounds')} · {japam.japaStreak} {contentByLang(lang, 'जप-दिन', 'Japam days')}</Text> : null}
           </Preview>
         </View>
         <View style={[styles.instructions, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
@@ -124,22 +125,31 @@ function Preview({ content, title, accessibilityLabel, colors, eyebrowStyle, lan
   const canPin = Platform.OS === 'android' && !!entry.androidProvider;
   const best = pick(lang, { hi: 'सुझाव', en: 'best', gu: 'સૂચિત', kn: 'ಶಿಫಾರಸು' });
   const sizeLabels = entry.sizes.map((size) => `${widgetSizeLabel(size, lang)}${size === entry.recommended ? ` · ${best}` : ''}`);
-  return <View style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
+  // The same sketch plate the native widget draws at this kind's recommended size;
+  // without one the card is the plain parchment it was.
+  const art = entry.recommended === 'lock' ? undefined : widgetBackgroundImages[widgetBackgroundName(content, entry.recommended)];
+  const cardStyle = [styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }];
+  const body = <>
     <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={styles.preview}>
-      <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{title}</Text>{children}<Text style={[styles.brand, { color: colors.gold }]}>ॐ वेदांश़</Text>
+      {/* The facsimile draws in the widgets' own deeper text tokens (design.md §59) —
+          the app's lighter inkMuted/saffronDeep/gold are what kept the art faint. */}
+      <Text style={[eyebrowStyle, { color: WIDGET_TEXT_TOKENS.saffronDeep }]}>{title}</Text>{children}<Text style={[styles.brand, { color: WIDGET_TEXT_TOKENS.gold }]}>ॐ वेदांश़</Text>
     </View>
     <View accessible accessibilityLabel={`${pick(lang, { hi: 'आकार', en: 'Sizes', gu: 'કદ', kn: 'ಗಾತ್ರ' })}: ${sizeLabels.join(', ')}`} style={styles.sizeRow}>
       {entry.sizes.map((size, index) => {
         const recommended = size === entry.recommended;
         return <View key={size} style={[styles.sizeChip, { backgroundColor: recommended ? colors.saffronTint : 'transparent', borderColor: colors.divider }]}>
-          <Text style={[styles.sizeText, { color: recommended ? colors.saffronDeep : colors.inkMuted, fontFamily: bodyFont }]}>{sizeLabels[index]}</Text>
+          <Text style={[styles.sizeText, { color: recommended ? WIDGET_TEXT_TOKENS.saffronDeep : WIDGET_TEXT_TOKENS.inkMuted, fontFamily: bodyFont }]}>{sizeLabels[index]}</Text>
         </View>;
       })}
     </View>
     {canPin ? <Pressable testID={`widget-add-${content}`} accessibilityRole="button" accessibilityLabel={`Add Vedansh ${content} widget`} onPress={() => onPin(content)} style={({ pressed }) => [styles.button, { backgroundColor: colors.saffronDeep }, pressed && { opacity: .75 }]}>
       <Text style={[styles.buttonText, { color: colors.onPrimary }]}>{pinSupported ? contentByLang(lang, 'यह विजेट जोड़ें', 'Add this widget') : contentByLang(lang, 'जोड़ने के चरण देखें', 'View add steps')}</Text>
     </Pressable> : null}
-  </View>;
+  </>;
+  return art
+    ? <ImageBackground testID={`widget-art-${content}`} source={art} resizeMode="cover" style={cardStyle} imageStyle={styles.cardArt}>{body}</ImageBackground>
+    : <View style={cardStyle}>{body}</View>;
 }
 
 const styles = StyleSheet.create({
@@ -147,5 +157,5 @@ const styles = StyleSheet.create({
   // preview cards borrow the card-family corner (radii.lg) and the CTA is a pill.
   // Font sizes here are layout-tuned facsimile chrome for the widget previews (see
   // design.md §59) and stay ≥10 pt per the chrome floor.
-  root: { flex: 1 }, scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl + spacing.lg }, intro: { fontSize: 15, lineHeight: 23, marginBottom: spacing.xl }, grid: { gap: spacing.md }, card: { borderRadius: radii.lg, borderWidth: 1, padding: spacing.lg }, preview: { minHeight: 142, justifyContent: 'space-between' }, verse: { fontSize: 18, lineHeight: 29, marginVertical: spacing.md }, headline: { fontSize: 22, lineHeight: 33, marginVertical: spacing.md }, meta: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18 }, brand: { fontFamily: fontFamilies.devanagariBold, fontSize: 11, marginTop: spacing.md }, sizeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.xs, marginTop: spacing.md }, sizeChip: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: 4 }, sizeText: { fontSize: 12, lineHeight: 18 }, instructions: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.lg, marginTop: spacing.xxl }, instructionsTitle: { fontSize: 20, marginBottom: spacing.sm }, instruction: { fontSize: 14, lineHeight: 23 }, button: { minHeight: 48, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', marginTop: spacing.md }, buttonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 15 }, note: { fontSize: 13, lineHeight: 20, textAlign: 'center', marginTop: spacing.lg },
+  root: { flex: 1 }, scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl + spacing.lg }, intro: { fontSize: 15, lineHeight: 23, marginBottom: spacing.xl }, grid: { gap: spacing.md }, card: { borderRadius: radii.lg, borderWidth: 1, padding: spacing.lg }, cardArt: { borderRadius: radii.lg }, preview: { minHeight: 142, justifyContent: 'space-between' }, verse: { fontSize: 18, lineHeight: 29, marginVertical: spacing.md }, headline: { fontSize: 22, lineHeight: 33, marginVertical: spacing.md }, meta: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18 }, brand: { fontFamily: fontFamilies.devanagariBold, fontSize: 11, marginTop: spacing.md }, sizeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.xs, marginTop: spacing.md }, sizeChip: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: 4 }, sizeText: { fontSize: 12, lineHeight: 18 }, instructions: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.lg, marginTop: spacing.xxl }, instructionsTitle: { fontSize: 20, marginBottom: spacing.sm }, instruction: { fontSize: 14, lineHeight: 23 }, button: { minHeight: 48, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', marginTop: spacing.md }, buttonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 15 }, note: { fontSize: 13, lineHeight: 20, textAlign: 'center', marginTop: spacing.lg },
 });

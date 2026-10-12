@@ -1,0 +1,101 @@
+[
+  {
+    "subject": "routine",
+    "sourceCapture": "discover-card-12.png",
+    "sourceSha256": "c6547fffb9391a1ea2498e4659d9f442b7568cc59f521b39f657c1b794760b61",
+    "cropBoundsPixels": [
+      48,
+      1548,
+      1008,
+      1950
+    ]
+  },
+  {
+    "subject": "daily-bhakti",
+    "sourceCapture": "discover-card-14.png",
+    "sourceSha256": "893e41b5d205f4efe255846b214f3a2467dd996bba3aeaf258af402278f5a728",
+    "cropBoundsPixels": [
+      198,
+      1548,
+      1158,
+      1950
+    ]
+  },
+  {
+    "subject": "daan-punya",
+    "sourceCapture": "discover-card-4.png",
+    "sourceSha256": "cf359716071449f546eaef6e42e5f0bff716c7106a68c2be419af61be0bc152b",
+    "cropBoundsPixels": [
+      48,
+      1548,
+      1008,
+      1950
+    ]
+  },
+  {
+    "subject": "sankalp",
+    "sourceCapture": "discover-card-7.png",
+    "sourceSha256": "7f930d1fc690f669b12251fedd5c9f3a6132468c3de8e981a54b5c48441c5c68",
+    "cropBoundsPixels": [
+      48,
+      1548,
+      1008,
+      1950
+    ]
+  },
+  {
+    "subject": "pitru-smaran",
+    "sourceCapture": "discover-card-1.png",
+    "sourceSha256": "e55f3945d05b7b9e97b7b1c6c8de90093a77bb81f435e6b17bc08c5977ed0e31",
+    "cropBoundsPixels": [
+      48,
+      1548,
+      1008,
+      1950
+    ]
+  },
+  {
+    "subject": "puja-vidhi",
+    "sourceCapture": "discover-card-8.png",
+    "sourceSha256": "3d9370500c374ef7b8cb567beecb47fa304f0dcf1ca7bc1daee0a05fcb8ab897",
+    "cropBoundsPixels": [
+      48,
+      1548,
+      1008,
+      1950
+    ]
+  },
+  {
+    "subject": "jijnasa",
+    "sourceCapture": "discover-card-9.png",
+    "sourceSha256": "c4385f7f41d6c5cbc8f3f5854e0f4318bc8d22d5e5e6f17343c559985a9031d9",
+    "cropBoundsPixels": [
+      48,
+      1548,
+      1008,
+      1950
+    ]
+  },
+  {
+    "subject": "theerth",
+    "sourceCapture": "discover-card-11.png",
+    "sourceSha256": "5fe436d144d002850387640b0abc007e0cb0fce1be42a2e0e525fdfb26aa97fc",
+    "cropBoundsPixels": [
+      48,
+      1548,
+      1008,
+      1950
+    ]
+  },
+  {
+    "subject": "home-widgets",
+    "sourceCapture": "discover-card-10.png",
+    "sourceSha256": "790b1645d0e932e7cc786a825b92ce2f6adea0625986051b5845987d322cadd1",
+    "cropBoundsPixels": [
+      48,
+      1548,
+      1008,
+      1950
+    ]
+  }
+]

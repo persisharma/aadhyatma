@@ -1,0 +1,57 @@
+{
+  "verifiedAt": "2026-10-10T09:09:31.038338+00:00",
+  "geometry": {
+    "aspectRatio": 2,
+    "maxWidthPt": 360,
+    "maxHeightPt": 180,
+    "layoutCallback": false,
+    "remoteDimensionProbe": false
+  },
+  "assets": {
+    "manifestDimensionsAndHashesVerified": 45,
+    "browserBannersLoaded": 44,
+    "fitCover": 41,
+    "fitContain": 3,
+    "r2KeysChanged": false,
+    "imageBytesChanged": false,
+    "newBundledBitmaps": 0
+  },
+  "checks": {
+    "focusedSuites": 6,
+    "focusedTests": 183,
+    "typecheck": "passed",
+    "focusedEslint": "passed",
+    "manifestVerification": "passed",
+    "productionExports": [
+      "ios",
+      "android"
+    ],
+    "bundledReadingBytesPerPlatform": 3102
+  },
+  "evidence": {
+    "gallery": "compact-banner-gallery.png",
+    "detailCrops": [
+      "compact-banner-detail-1.png",
+      "compact-banner-detail-2.png",
+      "compact-banner-detail-3.png"
+    ],
+    "beforeAfter": "compact-banner-before-after.png",
+    "viewport": [
+      1280,
+      720
+    ],
+    "galleryRaster": [
+      1280,
+      4246
+    ],
+    "comparison": "compact-banner-comparison.html"
+  },
+  "native": {
+    "currentBannerCapture": "pending",
+    "attempt": "Isolated simulator showed the previous Daily Gita 5.26 layout. Expo/menu/key actions did not produce a verified current bundle reload. Previous native captures remain historical.",
+    "successfulR2Download": "pending",
+    "physicalPerformanceAndTouch": "pending"
+  },
+  "lifetimeCache": "unchanged; existing persistent content-hash files remain valid",
+  "supersedes": "natural-fit-checks.json; tall proposal rejected by user"
+}

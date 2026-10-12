@@ -1,3 +1,4 @@
+import AppIcon from '@/components/AppIcon';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -26,11 +27,13 @@ function fmt(sec?: number): string {
 type Props = {
   track: AudioTrack;
   onPress: () => void;
+  /** Fired on touch-down — used to warm the track's cache before the tap lands. */
+  onPressIn?: () => void;
   /** Marks the card whose track is the one currently loaded in the player. */
   playing?: boolean;
 };
 
-export default function TrackCard({ track, onPress, playing }: Props) {
+export default function TrackCard({ track, onPress, onPressIn, playing }: Props) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { primary, secondary } = orderTitlesByLanguage(lang, track.titleHi, track.titleEn, {
@@ -50,6 +53,7 @@ export default function TrackCard({ track, onPress, playing }: Props) {
   return (
     <Pressable
       onPress={onPress}
+      onPressIn={onPressIn}
       accessibilityRole="button"
       accessibilityLabel={`Play ${track.titleEn}. ${kindLabel}.`}
       style={({ pressed }) => [
@@ -128,9 +132,7 @@ export default function TrackCard({ track, onPress, playing }: Props) {
         ]}
         pointerEvents="none"
       >
-        <Text style={[styles.playGlyph, { color: playing ? colors.onPrimary : colors.saffronDeep }]}>
-          {playing ? '❚❚' : '▶'}
-        </Text>
+        <AppIcon name={playing ? "pause" : "play"} size={18} color={playing ? colors.onPrimary : colors.iconInk} weight="fill" />
       </View>
     </Pressable>
   );

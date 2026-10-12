@@ -1,0 +1,8 @@
+
+/Users/prashant/.codex/worktrees/ca4c/Aadhyatma/mobile/src/components/__tests__/TodayRecommendationsRow.test.tsx
+  15:33  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+  73:17  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+  74:20  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+
+✖ 3 problems (0 errors, 3 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.

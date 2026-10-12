@@ -286,6 +286,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
               const bookmarkId = `bhagavad-gita:${chapter.chapter}:${verseIdx}`;
               return (
                 <GitaVersePage
+                  showIllustration={verseIdx === 0}
                   verse={item}
                   sourceId="bhagavad-gita"
                   width={width}

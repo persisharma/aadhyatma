@@ -137,6 +137,7 @@ export default function KrishnaStotramReaderScreen({ navigation, route }: Props)
             keyExtractor={(v) => v.id}
             renderItem={({ item, index }) => (
               <KrishnaStotramVersePage
+                showIllustration={index === 0}
                 verse={item}
                 sourceId="krishna-stotram"
                 width={width}

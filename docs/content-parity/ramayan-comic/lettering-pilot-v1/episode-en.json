@@ -1,0 +1,23 @@
+{
+  "episodeId": "bk-05",
+  "status": "English layout draft; editorial approval pending",
+  "title": "The Four Princes",
+  "framing": "Time passes, from infancy to adolescence.",
+  "panels": {
+    "bk-05-01": {
+      "narration": "Kaushalya bore Rama, Kaikeyi Bharata, and Sumitra Lakshmana and Shatrughna. The palace celebrated the four boys’ births.",
+      "speaker": null,
+      "dialogue": null
+    },
+    "bk-05-02": {
+      "narration": "The brothers grew up studying and learning to use weapons. Rama and Lakshmana were especially close, as were Bharata and Shatrughna.",
+      "speaker": null,
+      "dialogue": null
+    },
+    "bk-05-03": {
+      "narration": "As the princes became adolescents, Vishwamitra visited Dasharatha’s court. The king welcomed the sage respectfully and asked why he had come.",
+      "speaker": "Dasharatha",
+      "dialogue": "Revered sage, how may I serve you?"
+    }
+  }
+}

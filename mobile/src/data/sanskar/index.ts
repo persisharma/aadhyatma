@@ -6,6 +6,7 @@ import gauSeva from './gau-seva.json';
 import sandhyaDeepam from './sandhya-deepam.json';
 import ratriShloka from './ratri-shloka.json';
 import vidyarambhaPrarthana from './vidyarambha-prarthana.json';
+import matribhumiVandana from './matribhumi-vandana.json';
 
 import type { SanskarData } from './types';
 export type { SanskarData, SanskarVerse } from './types';
@@ -20,6 +21,7 @@ export const sanskarCollection: readonly SanskarData[] = [
   sandhyaDeepam as SanskarData,
   ratriShloka as SanskarData,
   vidyarambhaPrarthana as SanskarData,
+  matribhumiVandana as SanskarData,
 ];
 
 export const sanskarIds = [
@@ -31,6 +33,7 @@ export const sanskarIds = [
   'sandhya-deepam',
   'ratri-shloka',
   'vidyarambha-prarthana',
+  'matribhumi-vandana',
 ] as const satisfies readonly string[];
 
 export type SanskarId = (typeof sanskarIds)[number];
@@ -53,10 +56,10 @@ export const getSanskarById: Readonly<Record<string, SanskarData>> = Object.free
 // ─── Module-level invariant assertions ───────────────────────────────────────
 
 (function assertSanskarInvariants() {
-  // Exactly 8 sections
-  if (sanskarCollection.length !== 8) {
+  // Exactly 9 sections
+  if (sanskarCollection.length !== 9) {
     throw new Error(
-      `sanskar: expected 8 sections, got ${sanskarCollection.length}`
+      `sanskar: expected 9 sections, got ${sanskarCollection.length}`
     );
   }
 

@@ -40,6 +40,8 @@ export type ShareCaptionParams = {
   firstLineHi: string;
   firstLineEn: string;
   lang: Lang;
+  /** Native authored prose labels; avoids re-scripting Gujarati/Kannada translations. */
+  resolved?: { sectionName: string; verseLabel: string; firstLine: string };
 };
 
 const SHARE_CTA: LocalizedStrings = {
@@ -71,8 +73,8 @@ export function buildShareCaption(
   const { withInstagram = true } = opts;
   // Header + first line are content: gu/kn re-script the Devanagari (which is the
   // recitation text for the verse line too). hi/en outputs are byte-identical to before.
-  const header = `${contentByLang(p.lang, p.sectionNameHi, p.sectionNameEn)} · ${contentByLang(p.lang, p.verseLabelHi, p.verseLabelEn)}`;
-  const firstLine = contentByLang(p.lang, p.firstLineHi, p.firstLineEn);
+  const header = p.resolved ? `${p.resolved.sectionName} · ${p.resolved.verseLabel}` : `${contentByLang(p.lang, p.sectionNameHi, p.sectionNameEn)} · ${contentByLang(p.lang, p.verseLabelHi, p.verseLabelEn)}`;
+  const firstLine = p.resolved?.firstLine ?? contentByLang(p.lang, p.firstLineHi, p.firstLineEn);
   const lines = [`${header}`, `"${firstLine}"`, '', `${pick(p.lang, SHARE_CTA)} ${SMART_LINK}`];
   if (withInstagram) lines.push(instagramLine(p.lang));
   return lines.join('\n');
@@ -91,6 +93,13 @@ export type InstagramCaptionParams = ShareCaptionParams & {
   sourceId: string;
   /** Festival / vrat / vaar inputs for the share date; absent → a date-free block. */
   timely?: TimelyContext;
+  /**
+   * The work the hashtags name, when it differs from the caption header. Prose cards
+   * (design.md §39.4) head the caption `व्रत कथा · छठ पूजा कथा …` but tag the katha
+   * itself (`#ChhathPujaKatha`), not the shelf it sits on.
+   */
+  tagNameHi?: string;
+  tagNameEn?: string;
 };
 
 /**
@@ -104,8 +113,8 @@ export function buildInstagramCaption(p: InstagramCaptionParams): string {
   const hashtags = formatHashtags(
     buildVerseHashtags({
       sourceId: p.sourceId,
-      sectionNameHi: p.sectionNameHi,
-      sectionNameEn: p.sectionNameEn,
+      sectionNameHi: p.tagNameHi ?? p.sectionNameHi,
+      sectionNameEn: p.tagNameEn ?? p.sectionNameEn,
       verseLabelEn: p.verseLabelEn,
       lang: p.lang,
       timely: p.timely,

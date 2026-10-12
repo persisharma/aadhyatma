@@ -55,6 +55,11 @@ import {
 } from '@/notifications/deepLink';
 import { buildInitialNavigationState, type StartTarget } from '@/navigation/startTarget';
 import { preloadPanchangStack } from '@/navigation/lazyPanchangStack';
+import { startScreenPrefetch, prioritise } from '@/navigation/screenPrefetch';
+import { childRoutes } from '@/navigation/routeGraph';
+// Side-effect import: enrols the non-screen warm-ups (search index) with the
+// walk. Must be imported before `startScreenPrefetch` runs.
+import '@/navigation/dataWarmups';
 import ReminderOptInModal from '@/components/ReminderOptInModal';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
@@ -85,6 +90,7 @@ import RootNavigator from '@/navigation/RootNavigator';
 import WidgetCoordinator from '@/widgets/WidgetCoordinator';
 import { handleWidgetDeepLink, parseWidgetDeepLink, widgetStartTarget } from '@/widgets/deepLink';
 import { launchMark, launchMarkOnce } from '@/utils/launchTrace';
+import { startMetaAppEvents } from '@/utils/metaAppEvents';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   /* noop — already prevented */
@@ -192,7 +198,7 @@ export default function App() {
     // throwing past every boundary into a dead screen. Bounded by the same
     // timeout as the reads above.
     const ready = async (target: StartTarget | null) => {
-      if (target?.tab !== 'PanchangTab') return target;
+      if (target?.tab !== 'PanchangTab' && target?.tab !== 'VratTab') return target;
       try {
         await preloadPanchangStack();
         return target;
@@ -214,6 +220,24 @@ export default function App() {
   //      pulled via `getLastNotificationResponseAsync()`.
   //  (b) Warm start — app already running; subscribe via
   //      `addNotificationResponseReceivedListener`.
+  /**
+   * Keep the background warm-up one tap ahead of wherever the user now is.
+   *
+   * Cheap by construction: a map lookup and a few Set inserts per navigation.
+   * It changes the ORDER of the queue and nothing else — the walk still yields
+   * to `InteractionManager` and still warms one module at a time, so following
+   * the user cannot cost the screen they are on.
+   */
+  const handleRouteChange = useCallback(() => {
+    prioritise(childRoutes(navigationRef.getCurrentRoute()?.name));
+  }, []);
+
+  const handleNavigationReady = useCallback(() => {
+    startScreenPrefetch();
+    // Show the app before asking ATT; don't add tracking to the splash gate.
+    InteractionManager.runAfterInteractions(startMetaAppEvents);
+  }, []);
+
   // The handler is a no-op until `navigationRef.isReady()` so we don't lose
   // taps that arrive before navigation has mounted.
   useEffect(() => {
@@ -337,6 +361,20 @@ export default function App() {
                               initialState={
                                 initialTarget ? buildInitialNavigationState(initialTarget) : undefined
                               }
+                              /* The first screen is committed — start warming the
+                                 rest breadth-first from Home. Everything it touches
+                                 waits on InteractionManager, so this can only use
+                                 time the UI is not using (navigation/screenPrefetch). */
+                              onReady={handleNavigationReady}
+                              /* ...and then follow the user. Breadth-first from Home
+                                 is the right guess only until they move; after that,
+                                 what is worth warming is whatever THIS screen opens.
+                                 Pushing the current route's children to the front
+                                 keeps the walk one tap ahead however deep they go,
+                                 instead of finishing a depth they have already left
+                                 behind. Ordering only — it cannot block or drop a
+                                 screen, just reach it sooner. */
+                              onStateChange={handleRouteChange}
                             >
                               <StatusBar style="dark" />
                               <RootNavigator />

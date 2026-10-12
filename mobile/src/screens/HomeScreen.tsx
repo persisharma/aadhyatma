@@ -1,6 +1,8 @@
+import AppIcon from '@/components/AppIcon';
+import FeatureIcon from '@/components/FeatureIcon';
 import React from 'react';
 import {
-  Dimensions,
+  useWindowDimensions,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -8,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -16,9 +18,11 @@ import { categories } from '@/data/categories';
 import CategoryCard from '@/components/CategoryCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
 import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
-import LotusMark from '@/components/LotusMark';
 import HomeWordmark from '@/components/HomeWordmark';
-import SearchFloatingButton from '@/components/SearchFloatingButton';
+import { homeLayout } from '@/utils/homeLayout';
+import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
+import { pillTextStyle } from '@/utils/langType';
 import RoutineBanner from '@/components/RoutineBanner';
 import TodayStrip from '@/components/TodayStrip';
 import TodayRecommendationsRow from '@/components/TodayRecommendationsRow';
@@ -34,6 +38,10 @@ import { shuffleBySeed } from '@/utils/shuffleBySeed';
 import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
+// The illustrated card sits below the category grid. Load its art and copy in
+// a separate chunk so the Home launch graph stays within its byte budget.
+const KidsStoriesHomeCard = React.lazy(() => import('@/components/KidsStoriesHomeCard'));
+
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
 export default function HomeScreen({ navigation }: Props) {
@@ -46,6 +54,7 @@ export default function HomeScreen({ navigation }: Props) {
   // The routine banner now lives inline in the scroll (below the Today strip),
   // so it reveals itself into view before the tour measures its spotlight ring.
   const routineCardRef = useTourTarget('routineCard', (ref) => scrollNodeIntoView(homeScrollRef, ref));
+  const settingsRef = useTourTarget('settingsButton', (ref) => scrollNodeIntoView(homeScrollRef, ref));
   const categoriesGridRef = useTourTarget('categoriesGrid', (ref) => scrollNodeIntoView(homeScrollRef, ref));
   const japaTileRef = useTourTarget('japaTile', (ref) => scrollNodeIntoView(homeScrollRef, ref));
   const theerthTileRef = useTourTarget('theerthTile', (ref) => scrollNodeIntoView(homeScrollRef, ref));
@@ -61,6 +70,11 @@ export default function HomeScreen({ navigation }: Props) {
   // fallback instead of navigating. See @/contexts/TilePressContext.
   const tilePress = useTilePressController();
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = tilePress;
+  const openSearch = React.useCallback(() => navigation.navigate('Search'), [navigation]);
+  const openSettings = React.useCallback(
+    () => rootNav.navigate('MoreTab', moreTabTarget('MoreHome')),
+    [rootNav]
+  );
 
   // Festive toran (design.md §55): on the 18 catalog festivals Home hangs a
   // garland + greeting chip under the wordmark. Same festival resolution as the
@@ -93,7 +107,7 @@ export default function HomeScreen({ navigation }: Props) {
   // added/reordered. Memoized so the CategoryCards keep stable icon/onPress
   // props across unrelated HomeScreen re-renders (context churn, tour registration).
   const tiles: TileItem[] = React.useMemo(() => {
-    const iconFor = (key: CategoryIconKey) => <CategoryIcon iconKey={key} />;
+    const iconFor = (key: CategoryIconKey) => <CategoryIcon iconKey={key} size={spacing.homeCategoryArtwork} />;
     const vratTile: TileItem = {
       key: 'vrat',
       nameHi: 'व्रत',
@@ -102,7 +116,7 @@ export default function HomeScreen({ navigation }: Props) {
       status: 'active',
       icon: iconFor('vrat'),
       onPress: () =>
-        rootNav.navigate('PanchangTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
+        rootNav.navigate('VratTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
     };
     const deityTile: TileItem = {
       key: 'deity',
@@ -180,17 +194,18 @@ export default function HomeScreen({ navigation }: Props) {
     // full-width row (PRD-26; design.md §18).
     result.push(daanTile);
     return result;
-  }, [hasNewInCategory, navigation, rootNav]);
+  }, [hasNewInCategory, navigation, rootNav, spacing.homeCategoryArtwork]);
 
-  const screenWidth = Dimensions.get('window').width;
-  const gridPadding = spacing.xxl;
-  const gridGap = 10;
-  const tileWidth = (screenWidth - 2 * gridPadding - 2 * gridGap) / 3;
+  const { width, fontScale } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const { lang } = useGitaLanguage();
+  const { contentWidth, gridWidth, gridPadding, gridGap, tileWidth, launcherHeight, largeText } =
+    homeLayout(width - insets.left - insets.right, fontScale);
 
   // Discover carousel — wide cards that peek the next one. Width is the viewport
   // minus the side gutter and a sliver of the following card; snap by card+gap.
   const featureGap = spacing.md;
-  const featureWidth = Math.min(320, screenWidth - gridPadding - 56);
+  const featureWidth = Math.min(320, contentWidth - gridPadding - 56);
   const featureSnap = featureWidth + featureGap;
 
   // Spotlight content. One flexible card shell (FeatureCard) carries every
@@ -202,7 +217,7 @@ export default function HomeScreen({ navigation }: Props) {
       descHi: 'अपनी दैनिक साधना चुनें और निरंतरता बनाए रखें।',
       descEn: 'Pick your daily rituals and keep the streak alive.',
       ctaHi: 'शुरू करें', ctaEn: 'Begin',
-      icon: <LotusMark size={28} />,
+      icon: <FeatureIcon name="routine" />,
       onPress: () => navigation.navigate('RoutineToday'),
     },
     {
@@ -211,7 +226,7 @@ export default function HomeScreen({ navigation }: Props) {
       descHi: 'हर दिन एक नया श्लोक चिंतन और भक्ति के लिए।',
       descEn: 'A fresh shloka to reflect on every single day.',
       ctaHi: 'पढ़ें', ctaEn: 'Read',
-      icon: <CategoryIcon iconKey="stotram" />,
+      icon: <FeatureIcon name="daily-bhakti" />,
       onPress: () => rootNav.navigate('DailyBhaktiTab'),
     },
     {
@@ -222,7 +237,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: 'Japa · vrat · daan — understand first, then give. Any day.',
       ctaHi: 'खोलें', ctaEn: 'Open',
       hasNew: true,
-      icon: <CategoryIcon iconKey="daan" />,
+      icon: <FeatureIcon name="daan-punya" />,
       onPress: () => navigation.navigate('DaanPunya'),
     },
     // NOTE: no Panchang spotlight here — the Today strip (§48) owns that
@@ -234,17 +249,7 @@ export default function HomeScreen({ navigation }: Props) {
       descHi: '४१-दिन हनुमान चालीसा जैसे तैयार संकल्प लें।',
       descEn: 'Take a prebuilt vow, like the 41-day Hanuman Chalisa.',
       ctaHi: 'संकल्प लें', ctaEn: 'Begin',
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.saffronDeep,
-          }}
-        >
-          सं
-        </Text>
-      ),
+      icon: <FeatureIcon name="sankalp" />,
       onPress: () => navigation.navigate('SadhanaPrograms'),
     },
     {
@@ -257,17 +262,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: 'Save a tithi once and know its shraddha date every year.',
       ctaHi: 'स्मरण जोड़ें', ctaEn: 'Set up',
       hasNew: true,
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.gold,
-          }}
-        >
-          ॥
-        </Text>
-      ),
+      icon: <FeatureIcon name="pitru-smaran" />,
       onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList')),
     },
     {
@@ -283,17 +278,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: 'Satyanarayan to Shivaratri — every step, guided in hand.',
       ctaHi: 'विधि देखें', ctaEn: 'Open',
       hasNew: true,
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.saffronDeep,
-          }}
-        >
-          ॥
-        </Text>
-      ),
+      icon: <FeatureIcon name="puja-vidhi" />,
       onPress: () => navigation.navigate('VidhiCatalog'),
     },
     {
@@ -307,17 +292,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: "Today's tithi, vrat, bhog, muhurat — answered in one line.",
       ctaHi: 'पूछें', ctaEn: 'Ask',
       hasNew: true,
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.saffronDeep,
-          }}
-        >
-          ?
-        </Text>
-      ),
+      icon: <FeatureIcon name="jijnasa" />,
       onPress: () => navigation.navigate('TodayVidhan'),
     },
     {
@@ -326,7 +301,7 @@ export default function HomeScreen({ navigation }: Props) {
       descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
       descEn: 'Explore sacred temples and dhams across Bharat.',
       ctaHi: 'खोजें', ctaEn: 'Explore',
-      icon: <CategoryIcon iconKey="theerth" />,
+      icon: <FeatureIcon name="theerth" />,
       onPress: () => navigation.navigate('TheerthMap', {}),
     },
     {
@@ -341,17 +316,7 @@ export default function HomeScreen({ navigation }: Props) {
       descEn: "Today's verse, Panchang, and japa on your home screen.",
       ctaHi: 'देखें', ctaEn: 'View',
       hasNew: true,
-      icon: (
-        <Text
-          style={{
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: 22,
-            color: colors.saffronDeep,
-          }}
-        >
-          वि
-        </Text>
-      ),
+      icon: <FeatureIcon name="home-widgets" />,
       onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
     },
   ];
@@ -376,7 +341,10 @@ export default function HomeScreen({ navigation }: Props) {
           contentContainerStyle={[
             styles.scroll,
             {
-              paddingHorizontal: spacing.xxl,
+              width: '100%',
+              maxWidth: contentWidth,
+              alignSelf: 'center',
+              paddingHorizontal: gridPadding,
               paddingBottom: spacing.xxl * 3,
             },
           ]}
@@ -384,8 +352,39 @@ export default function HomeScreen({ navigation }: Props) {
           onScrollBeginDrag={markTileDrag}
         >
           <View style={styles.hero}>
-            <HomeWordmark />
+            <HomeWordmark compact={contentWidth - gridPadding * 2 < 350} />
+            <View ref={settingsRef} collapsable={false} style={styles.settingsAnchor}>
+              <Pressable
+                testID="home-settings"
+                accessibilityRole="button"
+                accessibilityLabel={contentByLang(lang, 'सेटिंग्स', 'Settings')}
+                onPress={() => activateTile(openSettings)}
+                onPressIn={() => beginTilePress(openSettings)}
+                onPressOut={finishTilePress}
+                style={({ pressed }) => [styles.settingsButton, pressed && { opacity: 0.7 }]}
+              >
+                <AppIcon name="settings" size={24} color={colors.iconInk} />
+              </Pressable>
+            </View>
           </View>
+
+          <Pressable
+            onPress={() => activateTile(openSearch)}
+            onPressIn={() => beginTilePress(openSearch)}
+            onPressOut={finishTilePress}
+            accessibilityRole="button"
+            accessibilityLabel="Search verses, sections, and mantras"
+            style={({ pressed }) => [
+              styles.search,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
+              pressed && { opacity: 0.7 },
+            ]}
+          >
+            <AppIcon name="search" size={24} color={colors.iconInk} />
+            <Text style={[styles.searchText, { color: colors.inkMuted }, pillTextStyle(lang, typography.cardMeta), { fontSize: 14, textTransform: 'none', letterSpacing: 0 }]}>
+              {contentByLang(lang, 'श्लोक, मंत्र और ग्रंथ खोजें', 'Search verses, mantras and texts')}
+            </Text>
+          </Pressable>
 
           {todayFestival && (
             <FestiveToran
@@ -396,7 +395,7 @@ export default function HomeScreen({ navigation }: Props) {
 
           <TodayStrip />
 
-          <TodayRecommendationsRow />
+          <TodayRecommendationsRow horizontalGutter={gridPadding} />
 
           {/* Routine banner, inline (not docked) on Home — it sits with the
               Today strip as the "today" cluster, above the library grid, so it
@@ -426,8 +425,8 @@ export default function HomeScreen({ navigation }: Props) {
               <View
                 key={tile.key}
                 // दान-पुण्य is the grid's full-width closing row (design.md §18);
-                // every other tile keeps the 3-column width.
-                style={{ width: tile.fullWidth ? tileWidth * 3 + 2 * gridGap : tileWidth }}
+                // other tiles use the current responsive grid track.
+                style={{ width: tile.fullWidth ? gridWidth : tileWidth }}
                 ref={
                   tile.key === 'japam'
                     ? japaTileRef
@@ -448,10 +447,35 @@ export default function HomeScreen({ navigation }: Props) {
                   onPressOut={finishTilePress}
                   hasNew={tile.hasNew}
                   variant="launcher"
+                  launcherArtwork="illustrated"
+                  launcherHeight={launcherHeight}
+                  launcherLabelLines={largeText ? 2 : 1}
                 />
               </View>
             ))}
           </View>
+
+          <Text
+            style={[
+              styles.sectionLabel,
+              styles.sectionLabelSpaced,
+              {
+                color: colors.inkMuted,
+                fontSize: typography.sectionLabel.fontSize,
+                fontFamily: typography.sectionLabel.fontFamily,
+                letterSpacing: typography.sectionLabel.letterSpacing,
+              },
+            ]}
+          >
+            STORIES FOR KIDS
+          </Text>
+          <React.Suspense fallback={<View style={{ height: 138 }} />}>
+            <KidsStoriesHomeCard
+              onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
+              onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
+              onPressOut={finishTilePress}
+            />
+          </React.Suspense>
 
           <Text
             style={[
@@ -470,6 +494,7 @@ export default function HomeScreen({ navigation }: Props) {
           </Text>
 
           <ScrollView
+              testID="home-discover-carousel"
               horizontal
               showsHorizontalScrollIndicator={false}
               decelerationRate="fast"
@@ -501,6 +526,7 @@ export default function HomeScreen({ navigation }: Props) {
               {orderedSpotlights.map(({ onPress, ...item }) => (
                 <FeatureCard
                   key={item.key}
+                  testID={`home-discover-${item.key}`}
                   item={item}
                   width={featureWidth}
                   onPress={() => activateTile(onPress)}
@@ -560,8 +586,6 @@ export default function HomeScreen({ navigation }: Props) {
         </ScrollView>
         </TilePressProvider>
       </SafeAreaView>
-
-      <SearchFloatingButton onPress={() => navigation.navigate('Search')} />
     </View>
   );
 }
@@ -581,6 +605,20 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 12,
   },
+  settingsAnchor: { position: 'absolute', top: 0, right: 0 },
+  settingsButton: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  search: {
+    minHeight: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    borderWidth: 1,
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    marginBottom: 12,
+  },
+  searchText: { flex: 1, fontSize: 14, textTransform: 'none', letterSpacing: 0 },
   sectionLabel: {
     textTransform: 'uppercase',
     marginBottom: 8,

@@ -3,9 +3,10 @@
 // Deliberately ZERO new engine work: a person's janma tithi is
 // `deriveTithiRuleFromDate` over the birth date already saved in the Kundali
 // roster (#294), and every date answer comes from the same solve path Pitru
-// Smaran ships (`solveNextOccurrence` via the persisted `pitruSmaranSolves`
-// layer — tithi-keyed, person-free, so a janma tithi and a shraddha tithi on
-// the same rule genuinely share one record).
+// Smaran ships (the persisted `pitruSmaranSolves` layer — tithi-keyed,
+// person-free), under the `janma` reckoning: its own record, because a shraddha
+// tithi lands on its aparahna day and a janma tithi on its sunrise day, and the
+// two differ for about a third of tithis.
 //
 // Convention (stated on the detail screen, pinned in the PRD): the janma tithi
 // is the SUNRISE tithi of the birth civil date (udaya-vyapini, Ujjain /

@@ -1,0 +1,49 @@
+{
+  "verifiedAt": "2026-10-11T11:45:00.766817+00:00",
+  "configuration": "Release",
+  "bundleId": "com.prashantsharma.vedansh",
+  "simulator": "Vedansh-Reading-Art-QA",
+  "simulatorId": "BD91E840-482E-4816-838A-9C5247E401DA",
+  "buildToolOutcome": "build_run_sim call timed out after 300 seconds; signed app artifact was built, installed and running; subsequent launch/stop tools succeeded",
+  "initialProcessId": 6043,
+  "relaunchProcessId": 7453,
+  "sourceProject": "mobile/ios (generated, ignored)",
+  "nativeCDN": {
+    "success": false,
+    "error": "NSURLErrorDomain -1200 / -9802 certificate validation failure",
+    "url": "https://cdn.vedansh.app/reader-illustrations/324b157dc73b990e.webp",
+    "evidence": "native-r2-transport.log"
+  },
+  "fallback": {
+    "visible": true,
+    "textAndNavigationWork": true,
+    "screenshot": "native-durga-fallback.jpg"
+  },
+  "controlledFixture": {
+    "count": 43,
+    "source": "exact approved files verified against public R2 full SHA-256",
+    "nativeDownloadProof": false,
+    "wholeCanvasVerified": [
+      "Durga Chalisa",
+      "Daan Katha (Karna)"
+    ],
+    "screenshots": [
+      "native-durga-cached-relaunch.jpg",
+      "native-katha-cached.jpg"
+    ],
+    "relaunchRecord": "native-fixture-relaunch.json"
+  },
+  "proseEndpoint": {
+    "visible": [
+      "last paragraph",
+      "teaching",
+      "source",
+      "next story",
+      "donate",
+      "register action"
+    ],
+    "screenshot": "native-katha-endpoint.jpg"
+  },
+  "physicalDevicePerformance": false,
+  "fullReaderLanguageSizeMatrix": false
+}

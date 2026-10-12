@@ -1,0 +1,42 @@
+{
+  "npmTest": {
+    "exitCode": 0,
+    "node": "25.9.0",
+    "nodeOptions": "--max-old-space-size=8192",
+    "widgets": 37,
+    "uiSuites": 227,
+    "uiTests": 2105,
+    "engine": 589,
+    "data": 166,
+    "ask": 49,
+    "totalTests": 2946,
+    "log": "/tmp/vedansh-chakra-all-tests-node25.log"
+  },
+  "focused": {
+    "exitCode": 0,
+    "suites": 3,
+    "tests": 25
+  },
+  "release": {
+    "exitCode": 0,
+    "errors": 0,
+    "warnings": 0
+  },
+  "nativeSmoke": {
+    "exitCode": 0,
+    "flow": "mobile/.maestro/celestial-chakra-smoke.yaml"
+  },
+  "enlargedEnglish": {
+    "exitCode": 0,
+    "systemText": "accessibility-medium"
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 49,
+    "baselinePanchangWarnings": 50
+  },
+  "initialFailures": [
+    "Full UI gate hit Node 24.19.0 V8 GC crashes twice; passed complete gate under existing Node25.9.0.",
+    "Native flow used incorrect exact Rashifal selector; corrected and rerun passed."
+  ]
+}

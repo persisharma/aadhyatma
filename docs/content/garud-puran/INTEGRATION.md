@@ -1,6 +1,6 @@
 # Garud Puran selected readings — integration review
 
-Prepared 2026-10-12. Local implementation and review assets; no publication, OTA, upload, commit or PR is included.
+Prepared 2026-10-12. The user approved the final Style 3 banners and requested integration, reconciliation with main, verification and a PR. No production release, OTA or R2 upload is part of this change.
 
 ## Delivered scope
 
@@ -33,7 +33,7 @@ Corrections preserved include Sita's Pushkar setting, Santaptaka's name, the wid
 
 Sacred Books → Garud Puran → grouped reading index → illustrated bilingual prose reader. Uses existing reader chrome for bookmarks, sharing, page progress/resume, page jumping, read-aloud, cross-reading advancement and routines. All 28 pages are searchable. Data is lazy-loaded from a small manifest; unpublished/unverified chapters cannot enter the reader. Compatibility fields called `verses` and `verseIndex` represent prose pages here, never Sanskrit verse counts.
 
-The revised nine bundled 960×480 WebP illustrations total 1,296,654 bytes (~1.30 MB), plus a 3,102-byte approved parchment texture. No CDN or network image dependency. The asset brief, generation prompts, source PNG paths and hashes are under [artwork](artwork/README.md). Images are interpretive and visually reviewed, not archaeological reconstructions. This addition uses device read-aloud, not a newly recorded audio library.
+The nine approved Style 3 bundled 960×480 WebP illustrations total 1,433,814 bytes (~1.43 MB). Both Garud screens reuse the app’s shared parchment, and `ReadingArtwork` supplies the standard reader banner and divider. No CDN or network image dependency. The asset brief, generation prompts, source PNG paths and hashes are under [artwork](artwork/README.md). Images are interpretive and visually reviewed, not archaeological reconstructions. This addition uses device read-aloud, not a newly recorded audio library.
 
 ## Preview
 
@@ -41,7 +41,7 @@ Run `python3 scripts/preview-garud-puran.py` to regenerate [preview.html](previe
 
 Open <http://127.0.0.1:8108/docs/content/garud-puran/preview.html>. The interactive content/art preview includes all 12 readings, both languages, source details and nine illustrations. It is separate from actual native screenshots in [screenshots](screenshots/).
 
-## Validation
+## Earlier verification (before main reconciliation)
 
 - TypeScript: passed.
 - Focused content, reader, automatic page advance and read-aloud suites: 153 tests passed. After the final manifest-neighbor and language-font adjustments, typecheck and 25 affected reader tests passed again.
@@ -68,3 +68,9 @@ Local detailed logs are under ignored `tmp/garud-puran/`: `native-ios-reader.log
 ## Visual correction after user review
 
 The initial portrait design was rejected as inconsistent with the recently merged reader improvements. The revised layout and nine landscape scenes follow PR #449 / current-main storybook references; no full-main merge is implied. See [design-review/README.md](design-review/README.md) for the cause, exact design contract and fresh native evidence. The earlier screenshots under `screenshots/` record the first version and are superseded for design approval.
+
+## Approved integration after main reconciliation — 12 October 2026
+
+Merged current `origin/main`, preserving the lazy screen registry, cooperative search indexing, generated navigation graph, source-count optimization and all existing reader features. Garud adds two lazy routes and yields after each indexed reading. The current shared artwork and parchment components render the approved banners. Continuation pages contain no reserved artwork area. Saved progress says Reading / Page, and the shared prose export keeps the full bilingual explanation with source context.
+
+Final checks and native evidence are recorded below after verification. Historical screenshots above remain evidence of earlier revisions; the current asset hashes are in `artwork/manifest.json` and match `design-review/style3-final/manifest.json`.

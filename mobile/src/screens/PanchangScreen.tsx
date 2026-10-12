@@ -1,11 +1,13 @@
+import AppIcon from '@/components/AppIcon';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { backgroundImages } from '@assets/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import { JyotishChakraSeal, PanchangChakraBackground } from '@/components/CelestialChakra';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
@@ -59,7 +61,6 @@ import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType
 import { useTourTarget } from '@/components/tour/tourTargets';
 import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
-import CategoryIcon from '@/components/CategoryIcon';
 import JyotishGuidanceRows from '@/components/JyotishGuidanceRows';
 import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
@@ -143,12 +144,15 @@ function calendarTagLabel(tag: ObservanceCalendarTag, lang: Lang): string {
 }
 
 export default function PanchangScreen({ route }: Props) {
-  const { colors, typography, spacing, radii, elevation } = useTheme();
+  const { colors, typography, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   // Feature-tour spotlight anchors (design.md §47): the Choghadiya/Muhurat glance
   // card and the [Calendar | Vrat & Parv] segment.
-  const muhuratCardRef = useTourTarget('muhuratCard');
-  const panchangSegmentRef = useTourTarget('panchangSegment');
+  // Panchang and Vrat mount independent instances; only the focused screen
+  // may own these shared tour anchors.
+  const isFocused = useIsFocused();
+  const muhuratCardRef = useTourTarget('muhuratCard', undefined, isFocused);
+  const panchangSegmentRef = useTourTarget('panchangSegment', undefined, isFocused);
   const rootNav = useNavigation<any>();
   const { followCount } = useVratFollows();
   const todayKey = new Date().toDateString();
@@ -344,10 +348,12 @@ export default function PanchangScreen({ route }: Props) {
 
   return (
     <View style={styles.root}>
-      <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />
+      {panchangTab === 'calendar'
+        ? <PanchangChakraBackground />
+        : <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />}
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ScrollView
-          contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
+          contentContainerStyle={[styles.scroll, { paddingHorizontal: 14 }]}
           showsVerticalScrollIndicator={false}
         >
           {/* Keep the primary mode switch first in every mode. Contextual
@@ -653,7 +659,7 @@ export default function PanchangScreen({ route }: Props) {
           {/* Daily Muhurat — Choghadiya / Rahu Kaal glance card (PRD-14). Promoted
               to lead the day panel, above the anga grid: "is now auspicious?" is
               the live, time-sensitive question users open Panchang for. */}
-          <View ref={muhuratCardRef} collapsable={false} style={{ marginTop: 12 }}>
+          <View ref={muhuratCardRef} collapsable={false} style={{ marginTop: 8 }}>
             <MuhuratGlanceCard
               date={selectedDate}
               calendarSystem={calendarSystem}
@@ -1206,9 +1212,10 @@ function JyotishLanding({
                 pressed && { opacity: 0.65 },
               ]}
             >
-              <Text style={[styles.jyotishShareText, { color: colors.saffronDeep }]}>
-                ↗ {contentByLang(lang, 'साझा करें', 'Share')}
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                <AppIcon name="share" size={15} />
+                <Text style={[styles.jyotishShareText, { color: colors.saffronDeep }]}>{contentByLang(lang, 'साझा करें', 'Share')}</Text>
+              </View>
             </Pressable>
           </View>
           {/* One आधार line, not a chip per row — Favour and Reflect share a
@@ -1400,7 +1407,7 @@ function JyotishLanding({
         ]}
       >
         <View style={[styles.jyotishHeroIcon, { backgroundColor: colors.saffronTint, borderRadius: radii.lg }]}>
-          <CategoryIcon iconKey="insight" />
+          <JyotishChakraSeal />
         </View>
         <View style={{ flex: 1 }}>
           <Text
@@ -1588,14 +1595,14 @@ function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, c
     <View
       style={[
         styles.angaTile,
-        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, ...elevation.card },
+        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg, ...elevation.card },
       ]}
     >
       {/* The type label leads in the active language (TITHI / तिथि …) — same
           source as the old row, kept uppercase so it reads as a quiet tag. */}
       <Text
         style={{
-          fontSize: 10,
+          fontSize: 12,
           color: colors.saffronDeep,
           // English keeps the tracked uppercase Cormorant tag; Indic uses its own
           // script serif with no tracking (letterSpacing splits the shirorekha).
@@ -1614,14 +1621,14 @@ function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, c
             numberOfLines={1}
             adjustsFontSizeToFit
             minimumFontScale={0.8}
-            style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: i === 0 ? 18 : 15, color: colors.ink, marginTop: i === 0 ? 4 : 6 }}
+            style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: i === 0 ? 21 : 17, color: colors.ink, marginTop: i === 0 ? 4 : 6 }}
           >
             {contentByLang(lang, row.nameHi, row.nameEn)}
           </Text>
           {/* formatEndInstant appends a short date when the end falls past
               midnight — a bare "तक 2:04 AM" would read as this morning. */}
           {row.endTime && (
-            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft, marginTop: i === 0 ? 5 : 3 }}>
+            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15, color: colors.inkSoft, marginTop: i === 0 ? 5 : 3 }}>
               {contentByLang(lang, 'तक ', 'till ')}{formatEndInstant(row.endTime, panchangDate, lang)}
             </Text>
           )}
@@ -1634,7 +1641,7 @@ function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, c
           numberOfLines={1}
           adjustsFontSizeToFit
           minimumFontScale={0.8}
-          style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted, marginTop: 3 }}
+          style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, marginTop: 3 }}
         >
           {contentByLang(lang, `फिर ${successor.nameHi} — शेष दिन`, `then ${successor.nameEn} — rest of day`)}
         </Text>
@@ -1649,7 +1656,7 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
       {/* ︎ forces text (monochrome) presentation so ☀ doesn't render as a
           colour emoji on iOS while ☽ stays a plain glyph — design.md is "no emoji".
           All four metrics now share one filled-with-accent (gold) glyph style. */}
-      <Text style={{ fontSize: 17, color: colors.gold, width: 22, textAlign: 'center' }}>{`${icon}︎`}</Text>
+      <AppIcon name={icon === "☀" ? "sun" : "moon"} size={20} color={colors.iconInk} weight="duotone" />
       <View style={{ marginLeft: 9, flex: 1 }}>
         <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 10, color: colors.inkMuted }}>{label}</Text>
         <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.ink }}>{value}</Text>
@@ -1865,7 +1872,7 @@ function CatalogLedgerCell({
         pressed && { opacity: 0.6 },
       ]}
     >
-      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.gold }}>{glyph}</Text>
+      <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={20} color={colors.iconInk} weight="duotone" />
       <Text
         numberOfLines={1}
         style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 3 }}
@@ -2535,9 +2542,9 @@ const styles = StyleSheet.create({
   dateTagText: { fontSize: 10, lineHeight: 15 },
   todayButton: { alignSelf: 'center', marginTop: 8, borderWidth: 1, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 },
   compactTodayButton: { marginTop: 0, paddingHorizontal: 14, paddingVertical: 7 },
-  angaGrid: { flexDirection: 'row', gap: 8, marginTop: 12 },
+  angaGrid: { flexDirection: 'row', gap: 8, marginTop: 8 },
   angaGridSecondary: { flexDirection: 'row', gap: 8, marginTop: 8 },
-  angaTile: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 12, paddingHorizontal: 14 },
+  angaTile: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 10, paddingHorizontal: 14 },
   timesCard: { borderWidth: 1, padding: 14, marginTop: 10 },
   timesRow: { flexDirection: 'row', justifyContent: 'space-between' },
   timeCell: { flexDirection: 'row', alignItems: 'center', width: '47%', paddingVertical: 4 },

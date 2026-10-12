@@ -133,10 +133,12 @@ convention: Bhai Dooj (11 Nov 2026), Radha Ashtami (19 Sep 2026, 8 Sep 2027), Ja
 Masik Durgashtami (all of 2026). Regenerating the table moved **417 Ujjain rows 2024–2031**;
 `CACHE_VERSION` went to 9 so every other city re-scans.
 
-**The one known divergence** is `KNOWN_DIVERGENCES['holi:2026']`: bhadra covered the 2 Mar
-pradosh, so Drik lit Holika Dahan on 3 Mar and Holi was 4 Mar; the engine does not model
-bhadra and says 3 Mar. The entry is excused only while the engine keeps giving exactly that
-date. **Location caveat:** the table is Ujjain; Drik's lists are New Delhi, and a tithi that
+**No known divergences remain (Oct 2026).** `KNOWN_DIVERGENCES['holi:2026']` (bhadra over the
+2 Mar pradosh, Drik's Holika Dahan 3 Mar / Holi 4 Mar) closed when the Bhadra rules landed
+(RULEBOOK §23.15). The same audit moved four rule families onto their published multi-clause
+rules — Raksha Bandhan/Holi (Bhadra), Ekadashi (Dharmasindhu Smarta + Vaishnava rows),
+Janmashtami (Smarta Nishita+Rohini + Vaishnava row), aparahna by span cover — and every
+published Delhi date 2023–2031 read for them (121) now matches, at Ujjain too. **Location caveat:** the table is Ujjain; Drik's lists are New Delhi, and a tithi that
 opens between the two cities' sunsets legitimately differs (Skanda Sashti 23 vs 24 Mar 2026).
 
 **Mutation check** (run once, Sept 2026): the new script against the pre-audit table fails

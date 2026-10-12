@@ -1,0 +1,58 @@
+{
+  "tool": "built-in image_gen",
+  "status": "visually-reviewed-local-authoring; user/editorial/native acceptance pending",
+  "images": [
+    {
+      "asset": "assets/bk-08-04-v2.png",
+      "sha256": "4a54a39580dba8aad61dff88656db9978789acfe21df82ed7adc86f4e9dbcd67",
+      "reference": "../balakanda-v1/assets/bk-08-v1.png",
+      "referenceSha256": "0afde018ef1c9b6ce11b8d2b4b044a37415a131093e34c25aaf1d0dda658f9d7",
+      "generatedSource": "exec-e18fe94d-06bd-4b3f-9dd7-62b0b438abb3.png",
+      "width": 1448,
+      "height": 1086,
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "review": "Explicit falling Tataka, dusk, released bow; rejects initial duplicate-arrow variant; non-graphic."
+    },
+    {
+      "asset": "assets/bk-08-04a-v1.png",
+      "sha256": "52b196da11ee2ee793dd5a54ed980eb8967e5e9b335583d3f1f6847f7cacaf6e",
+      "reference": "../balakanda-v1/assets/bk-08-v1.png",
+      "referenceSha256": "0afde018ef1c9b6ce11b8d2b4b044a37415a131093e34c25aaf1d0dda658f9d7",
+      "generatedSource": "exec-fc0a8228-f827-4411-b969-a0459c88e1e8.png",
+      "width": 1448,
+      "height": 1086,
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "review": "Three travellers at night fire; complete bodies/props, no extra cast; bridges to morning."
+    },
+    {
+      "asset": "assets/bk-09-02a-v1.png",
+      "sha256": "016e601d0be516c05618286f1350bebb0d078c4077b1e93f791d0173271c13bb",
+      "reference": "../balakanda-v1/assets/bk-09-v1.png",
+      "referenceSha256": "9c8f47ffd4fcc7cdf470b495caec30754c2ffcdfe3c131f38bf8af216293d5a3",
+      "generatedSource": "exec-ba2a34db-9cc0-4eff-8740-81da274dde7b.png",
+      "width": 1448,
+      "height": 1086,
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "review": "Present-day trio walking toward pleasant grove/hermitage; Rama gestures a question, elder sage responds."
+    }
+  ],
+  "rejected": {
+    "generatedSource": "exec-2012e267-2ef2-4f31-a096-89833eb8dfd1.png",
+    "reason": "Duplicate arrows contradicted a single released shot; repaired before selection."
+  }
+}

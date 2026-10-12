@@ -1,6 +1,8 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { StyleSheet, Text } from 'react-native';
+import GarudPuranPage from '../GarudPuranPage';
+import { getGarudPuranChapter } from '@/data/garud-puran';
 import { typography } from '@/theme/typography';
 
 /**
@@ -194,4 +196,12 @@ describe('reader type scale — rendered per component', () => {
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });
+});
+
+test('Garud Puran prose uses the shared meaning scale in Hindi and English', () => {
+  const chapter = getGarudPuranChapter(1);
+  const page = chapter.verses[0];
+  const el = <GarudPuranPage verse={page} source={chapter.source} width={375} />;
+  expect(fontSizeOf(el, 'hi', page.bodyHi[0])).toBe(MEANING_HI);
+  expect(fontSizeOf(el, 'en', page.bodyEn[0])).toBe(MEANING_EN);
 });

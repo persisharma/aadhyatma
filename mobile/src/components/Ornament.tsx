@@ -2,10 +2,15 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 
-export default function Ornament() {
+/** `compact` trims the 26 px vertical margins for a screen that must fit one viewport. */
+export default function Ornament({ compact = false }: { compact?: boolean } = {}) {
   const { colors, typography } = useTheme();
   return (
-    <View style={styles.row} accessibilityElementsHidden importantForAccessibility="no">
+    <View
+      style={[styles.row, compact && styles.rowCompact]}
+      accessibilityElementsHidden
+      importantForAccessibility="no"
+    >
       <View style={[styles.rule, { backgroundColor: colors.saffron }]} />
       <Text
         style={[
@@ -32,6 +37,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 26,
     opacity: 0.6,
+  },
+  rowCompact: {
+    marginVertical: 6,
   },
   rule: {
     flex: 1,

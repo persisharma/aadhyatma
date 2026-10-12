@@ -23,6 +23,10 @@ export const lightColors = {
   saffron: '#B8621B',
   saffronDeep: '#8A3E0B',
   gold: '#A67C34',
+  // Utility ink and active navigation sampled from the selected Storybook
+  // direction; illustration subjects retain their own painted pigments.
+  iconInk: '#6F3F1D',
+  iconAccent: '#AD571F',
 
   divider: 'rgba(138, 62, 11, 0.18)',
   saffronTint: 'rgba(184, 98, 27, 0.12)',
@@ -35,7 +39,7 @@ export const lightColors = {
   //
   // Scope of the warm-only rule: it governs THEME COLOUR AND UI CHROME, which is
   // everything in this file. The one sanctioned exception is the baked deity-glyph
-  // illustration palette (`components/deityGlyphs/palette.ts`, design.md §42),
+  // illustration palette (`assets/icons/storybook/`, design.md §42),
   // which carries cool peacock/water hues — leafGreen, teal, deepBlue — because
   // they are painted attributes of the art, not signals. Those values must never
   // be pulled into chrome; chrome takes its colour from this file only.

@@ -1,0 +1,152 @@
+{
+  "typecheck": "passed",
+  "jest": {
+    "suites": 235,
+    "tests": 2162,
+    "passed": true
+  },
+  "finalLifecycle": {
+    "suites": 2,
+    "tests": 12,
+    "passed": true
+  },
+  "downloadOnceContract": {
+    "suites": 2,
+    "tests": 18,
+    "passed": true,
+    "typecheck": "passed",
+    "focusedLint": "passed with no warnings",
+    "cacheIdentity": "content hash and extension, independent of CDN URL",
+    "coverage": [
+      "completed file reused with no expiry or network revalidation",
+      "fresh module after process restart reuses persistent filesystem",
+      "changed CDN host retains cache hit",
+      "concurrent equal hashes through different URLs download once",
+      "changed hash downloads new artwork without evicting unchanged content",
+      "deleted app artwork can be downloaded again"
+    ]
+  },
+  "neutralReuseFollowup": {
+    "suites": 3,
+    "tests": 22,
+    "passed": true,
+    "typecheck": "passed",
+    "focusedLint": "passed with no warnings",
+    "coverage": "Cache/image lifecycle and share backgrounds; bundled neutral art schedules no disk or network work",
+    "regression": "New neutral reuse test failed before the fix and passed after it"
+  },
+  "launchGraph": {
+    "tests": 2,
+    "passed": true
+  },
+  "lint": {
+    "files": 28,
+    "errors": 0,
+    "existingWarnings": 5
+  },
+  "hermesExports": [
+    "android",
+    "ios"
+  ],
+  "sourceHashes": 43,
+  "publicR2": {
+    "verified": 43,
+    "failed": 0
+  },
+  "maestro": "YAML parses; native run pending",
+  "nativeScreenshots": "Katha Hindi/English Standard, Katha Hindi/English Large including section 2, Daan Hindi Large, Pitru introduction English Large and Pitru Katha English Large opening/teaching/source endpoint; fallback and seeded persistent cache decoding",
+  "nativeFollowup": {
+    "kathaSection2": "Accessibility targeting reached 2 / 5; physical horizontal swipe remains unverified",
+    "pitruIntroduction": "English Large illustration/card and separated dots captured; duplicate bottom safe-area spacing found",
+    "pitruKatha": "English Large opening and native scroll to teaching/source endpoint captured",
+    "deviceAvailability": "One registered iPhone unavailable; adb and emulator not installed"
+  },
+  "nativeLimitations": [
+    "Direct R2 download blocked by simulator proxy TLS -1200",
+    "Paged-prose vertical drag/horizontal swipe gestures unresolved; limited accessibility-driven section navigation and Pitru story endpoint scrolling verified",
+    "Android runtime and physical-device performance unverified"
+  ],
+  "option2": {
+    "approval": "User: ok option 2, 9 October 2026",
+    "implementation": "continuous parchment folio, 220pt maximum opening art, 80pt later-section art, neutral bundled manuscript icon fallback",
+    "focusedReaderChecks": {
+      "suites": 7,
+      "tests": 185,
+      "passed": true
+    },
+    "finalCacheImageShareChecks": {
+      "suites": 3,
+      "tests": 22,
+      "passed": true
+    },
+    "customFallbackDecodeRecovery": {
+      "suites": 1,
+      "tests": 6,
+      "passed": true
+    },
+    "typecheck": "passed",
+    "focusedLint": "passed without warnings",
+    "finalHermesExports": [
+      "ios",
+      "android"
+    ],
+    "sourceHashesVerified": 45,
+    "newR2AssetsVerified": 2,
+    "bundledReadingBytes": 3102,
+    "newPaintingBytes": 94904,
+    "nativeEvidence": "English Standard Katha, Hindi Standard/Large Katha, section 2 compact artwork, Katha section 1 endpoint, Hindi Large Daan and Pitru introduction/story with prose/teaching/source endpoints",
+    "nativeR2": "TLS -1200; no security bypass; a recorded hash-identical fixture was seeded for new painting cache/decode checks",
+    "remaining": "Direct native CDN success, physical touch gestures, complete Kannada Large endpoint and remaining language/family combinations, Android runtime, physical-device frame/memory measurements, complete native screen walkthrough",
+    "finalPaperLayerRefinement": {
+      "readerSuiteTests": 20,
+      "passed": true,
+      "focusedLint": "passed",
+      "finalHermesExports": [
+        "ios",
+        "android"
+      ],
+      "native": "Refreshed final English Standard opening, section endpoint, section 2 and Hindi Large Pitru introduction/endpoint after sharing a single paper layer."
+    },
+    "followupQa": {
+      "date": "2026-10-09",
+      "finalFocusedChecks": {
+        "suites": 6,
+        "tests": 74,
+        "passed": true
+      },
+      "cacheFailureTests": {
+        "tests": 21,
+        "passed": true,
+        "addedCoverage": [
+          "HTTP 204/404/503",
+          "empty HTTP 200",
+          "network rejection releases queue",
+          "disk stat failure",
+          "atomic promotion failure",
+          "orphan partial ignored"
+        ]
+      },
+      "paragraphRegressionTests": {
+        "tests": 4,
+        "passed": true
+      },
+      "typecheck": "passed after final teaching/source changes",
+      "focusedLint": "passed without warnings after final teaching/source changes",
+      "finalHermesExports": [
+        "ios",
+        "android"
+      ],
+      "finalBundleAssetMembership": "verified by MD5 against both export graphs; one reading asset, 3102 bytes; all 45 SHA-256 source prefixes verified",
+      "fix": "iOS natural text height plus one point; bounded measurement, stale-event guard and metric/content reset; unchanged source/font/line spacing; no added Android layout callback",
+      "nativeEvidence": {
+        "Gujarati": "Standard/Large opening, complete Large final paragraph, captures 25-27",
+        "Kannada": "Standard opening and complete final paragraph after guard, captures 32-33; Large opening/long prose, captures 34-35; full Large endpoint remains pending",
+        "DaanKannada": "Large opening, complete teaching and source after guard, captures 36 and 38",
+        "beforeFix": "clipped Kannada paragraph in capture 31 and Daan teaching in 37",
+        "finalEnglishOpening": "capture 14 refreshed after all source edits"
+      },
+      "nativeDownloadLimit": "Proxy TLS -1200 remains; painting decoding uses recorded hash-identical fixture",
+      "deviceLimit": "Registered iPhone 14 unavailable; no Android runtime; no physical-device frame/memory or touch-gesture proof"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "uniqueIllustrations": 43,
+  "legacySlotsCovered": 44,
+  "dimensions": [
+    960,
+    480
+  ],
+  "totalBytes": 4670792,
+  "minBytes": 62452,
+  "maxBytes": 135112,
+  "meanBytes": 108623,
+  "sampleApprovedCount": 3,
+  "approvedCount": 43,
+  "fullSetApprovalPendingCount": 0,
+  "backgroundsUnchanged": true,
+  "sharedCacheUnchanged": true,
+  "newR2Uploads": 43,
+  "newAppManifestEntries": 43
+}

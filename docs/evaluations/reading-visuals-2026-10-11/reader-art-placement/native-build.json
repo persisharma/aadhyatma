@@ -1,0 +1,18 @@
+{
+  "summary": {
+    "status": "SUCCEEDED",
+    "durationMs": 129758,
+    "target": "simulator"
+  },
+  "artifacts": {
+    "appPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/scripts/.cache/reading-art-native/Build/Products/Release-iphonesimulator/Vedansh.app",
+    "bundleId": "com.prashantsharma.vedansh",
+    "processId": 59711,
+    "simulatorId": "5AD7B853-9A21-4247-98C6-47BAE046E16E",
+    "buildLogPath": "/Users/prashant/Library/Developer/XcodeBuildMCP/workspaces/Aadhyatma-f9bbaa494f95/logs/build_run_sim_2026-10-11T18-06-50-844Z_pid69110_69b26417.log",
+    "runtimeLogPath": "/Users/prashant/Library/Developer/XcodeBuildMCP/workspaces/Aadhyatma-f9bbaa494f95/logs/com.prashantsharma.vedansh_2026-10-11T18-08-57-677Z_helperpid59673_ownerpid69110_bba00dbe.log",
+    "osLogPath": "/Users/prashant/Library/Developer/XcodeBuildMCP/workspaces/Aadhyatma-f9bbaa494f95/logs/com.prashantsharma.vedansh_oslog_2026-10-11T18-09-00-374Z_helperpid59806_ownerpid69110_06c5052f.log"
+  },
+  "errors": [],
+  "warningCount": 263
+}

@@ -201,6 +201,28 @@ describe('privacy of the key space', () => {
   test('sarvapitri entries get their own shared record', () => {
     expect(smaranRuleKey('sarvapitri')).toBe('sarvapitri');
   });
+
+  // A shraddha tithi lands on its aparahna day and a janma tithi on its sunrise
+  // day, so one tithi can carry two different answers: they never share a record.
+  test('the shraddha and janma reckonings of one tithi keep separate records', async () => {
+    const scan = jest.spyOn(engine, 'nextObservanceForEntry').mockImplementation((_entry, from, _options, reckoning) => {
+      const d = new Date(from);
+      d.setDate(d.getDate() + (reckoning === 'janma' ? 11 : 10));
+      return d;
+    });
+    expect(smaranRuleKey(RULE, 'janma')).toBe('janma:m11-krishna-8');
+    expect(smaranRuleKey(RULE)).toBe('m11-krishna-8');
+    const [shraddha] = ensureOccurrences(RULE, TODAY, 1);
+    const [janma] = ensureOccurrences(RULE, TODAY, 1, 'janma');
+    expect(janma.getTime() - shraddha.getTime()).toBe(86400000);
+    // Each reading is served from its own record afterwards — no cross-talk.
+    expect(knownOccurrences(RULE, TODAY, 1)).toEqual([shraddha]);
+    expect(knownOccurrences(RULE, TODAY, 1, 'janma')).toEqual([janma]);
+    await persistSmaranSolves();
+    const keys = (await AsyncStorage.getAllKeys()).filter((k) => k.startsWith(`${PREFIX}occ:`));
+    expect(keys).toEqual(expect.arrayContaining([`${PREFIX}occ:m11-krishna-8`, `${PREFIX}occ:janma:m11-krishna-8`]));
+    scan.mockRestore();
+  });
 });
 
 describe('paksha windows', () => {

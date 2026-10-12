@@ -1,0 +1,681 @@
+{
+  "reviewedOn": "2026-10-09",
+  "baseCommit": "85a957316402f4b3f3c704e5382598d62d079ce0",
+  "scope": "Maa Durga/Navaratri collection: 87 scenes and 14 covers. Shared shelf layout and share pipeline also apply to existing books.",
+  "device": {
+    "id": "E5023980-FFA8-4A9E-BC94-6E47992D3D3F",
+    "model": "iPhone 17 Pro",
+    "os": "iOS 26.5",
+    "metro": 8096,
+    "artSource": "Seeded hashed local cache. No remote R2/fresh-cache verification."
+  },
+  "method": "Actual native routes, persisted language/scale contexts, scene URI/hash and full caption binding, native ScrollView measurements and art/caption/ending screenshots. All 87 source frames and 14 covers reviewed; all 101 Hindi Standard caption/ending captures reviewed manually. Remaining native caption regions compared against the previously manually reviewed all-language Standard/Large sequence; representative post-change sheets reviewed. This does not establish a full end-to-end Maestro gesture pass.",
+  "sourceHashes": {
+    "mobile/src/components/kidsStoryArtFrames.json": "19ae2d279547dff4f92ba631519968da800caf5d0734217144c8fa2478966662",
+    "mobile/src/components/KidsStoryArt.tsx": "e0da6a1a807e8896b91affadb09dddb802121e8d9d6e29b635ed535f218513f0",
+    "mobile/src/screens/KidsStoryDeityScreen.tsx": "5f630bf88c16e4e920f131e4791f6a8bdffaf46e3a9d2b7a372203b3a2068f68",
+    "mobile/src/screens/KidsStoryLibraryScreen.tsx": "6671357168ce4e26855b2a0100910ea75a46ba7e8595ea87a3f1290215a8df2f",
+    "mobile/src/screens/KidsStoryReaderScreen.tsx": "e13ea61603d433b2d85b62760b7aa6294639e050b498af4e248753654785f491",
+    "docs/content-parity/kids-stories-durga/layout-review.json": "13250dd2a77e0950731acb85b967fee085ba577b52065a7f120bcb7672331da2"
+  },
+  "meanArtHeightSavedDpAt358Width": 31.853296896551733,
+  "sequences": [
+    {
+      "combo": "hi-M",
+      "proof": "tmp/durga-native/layout-hi-M/capture.json",
+      "proofSha256": "3db8c88e5e3f42fe8fa7117edfbddc995e7c2a04ec92b75bfaa82dec4e23b6dd",
+      "pages": 87,
+      "screenshots": 188,
+      "endings": 14,
+      "nonEndingPages": 73,
+      "nonEndingFitWithoutScroll": 0,
+      "nonEndingScrollDp": {
+        "min": 5,
+        "max": 100,
+        "mean": 53.8447483010488
+      },
+      "endingScrollMaxDp": 456.99993896484375,
+      "screenshotManifestSha256": "cde9e6c0b5c0aa3a625bd5637b3e38e411f9268e8ab62c56c1cc755a31ece88d"
+    },
+    {
+      "combo": "hi-L",
+      "proof": "tmp/durga-native/layout-hi-L/capture.json",
+      "proofSha256": "33d9cb4cdb74c9802ea94c5bec5d1859f56d2a4ea3641bda5fedb476d4364415",
+      "pages": 87,
+      "screenshots": 188,
+      "endings": 14,
+      "nonEndingPages": 73,
+      "nonEndingFitWithoutScroll": 0,
+      "nonEndingScrollDp": {
+        "min": 59,
+        "max": 162.66668701171875,
+        "mean": 102.9543373421447
+      },
+      "endingScrollMaxDp": 559.9999389648438,
+      "screenshotManifestSha256": "a7638ff6d22375477c0029b0a4b28988b13826492ff25364a2901664547ada33"
+    },
+    {
+      "combo": "en-M",
+      "proof": "tmp/durga-native/layout-en-M/capture.json",
+      "proofSha256": "c218830691049246ef1468e1697566fbc8a4bdc8cfbfa454d04e11e8ce5f5793",
+      "pages": 87,
+      "screenshots": 188,
+      "endings": 14,
+      "nonEndingPages": 73,
+      "nonEndingFitWithoutScroll": 0,
+      "nonEndingScrollDp": {
+        "min": 34,
+        "max": 152,
+        "mean": 86.03652912296661
+      },
+      "endingScrollMaxDp": 488.66656494140625,
+      "screenshotManifestSha256": "886ec6870d213d64f288e3ac1f25bfb76ab4c575418dbeb25a7e4ce8e215c642"
+    },
+    {
+      "combo": "en-L",
+      "proof": "tmp/durga-native/layout-en-L/capture.json",
+      "proofSha256": "5155cbae9cb4a8bad3d7ee7d1a9c0e3bdc0aa479c1d436a75c50bb66fbf7d073",
+      "pages": 87,
+      "screenshots": 188,
+      "endings": 14,
+      "nonEndingPages": 73,
+      "nonEndingFitWithoutScroll": 0,
+      "nonEndingScrollDp": {
+        "min": 85,
+        "max": 230,
+        "mean": 153.3515976161173
+      },
+      "endingScrollMaxDp": 649.3333129882812,
+      "screenshotManifestSha256": "b7324b7c055f8f32287a59b6cae20f571062facd92ff281f34dfebe3513afa34"
+    },
+    {
+      "combo": "gu-M",
+      "proof": "tmp/durga-native/layout-gu-M/capture.json",
+      "proofSha256": "b3cd2b460735547d78489ea132ad5cff0f92c80230ec8662c9513b97f21a73d4",
+      "pages": 87,
+      "screenshots": 188,
+      "endings": 14,
+      "nonEndingPages": 73,
+      "nonEndingFitWithoutScroll": 0,
+      "nonEndingScrollDp": {
+        "min": 5.66668701171875,
+        "max": 96.33331298828125,
+        "mean": 52.506850151166525
+      },
+      "endingScrollMaxDp": 445,
+      "screenshotManifestSha256": "f76a1e38f7ad38cfbfa2ebbed573be8dd86c787872f33ad56903609a5128f25c"
+    },
+    {
+      "combo": "gu-L",
+      "proof": "tmp/durga-native/layout-gu-L/capture.json",
+      "proofSha256": "620b3c62ce3b3f06056aeb159b0f494d1c217d972c0f9b056b076a50c547945e",
+      "pages": 87,
+      "screenshots": 188,
+      "endings": 14,
+      "nonEndingPages": 73,
+      "nonEndingFitWithoutScroll": 0,
+      "nonEndingScrollDp": {
+        "min": 55.33331298828125,
+        "max": 198,
+        "mean": 110.50685015116652
+      },
+      "endingScrollMaxDp": 599,
+      "screenshotManifestSha256": "a9f0c7b5902fc92240ac4c58b8b278f798aec3117822c7c3b71e6f977cafd0f9"
+    },
+    {
+      "combo": "kn-M",
+      "proof": "tmp/durga-native/layout-kn-M/capture.json",
+      "proofSha256": "3ac305a4fc48ae5e506bb9e11b03beb9a89313cf5b325c1801a68cd14294b7f2",
+      "pages": 87,
+      "screenshots": 188,
+      "endings": 14,
+      "nonEndingPages": 73,
+      "nonEndingFitWithoutScroll": 0,
+      "nonEndingScrollDp": {
+        "min": 44.66668701171875,
+        "max": 196,
+        "mean": 104.47945289089255
+      },
+      "endingScrollMaxDp": 556,
+      "screenshotManifestSha256": "b1b9aeb4bc1cfecc5738aef1d8631fdae8faa43485aac0cf4baab9c9a375134f"
+    },
+    {
+      "combo": "kn-L",
+      "proof": "tmp/durga-native/layout-kn-L/capture.json",
+      "proofSha256": "d96fcc6661cc1ec0ba4907e1612114a201520736a991a455842d5c0254afeaee",
+      "pages": 87,
+      "screenshots": 188,
+      "endings": 14,
+      "nonEndingPages": 73,
+      "nonEndingFitWithoutScroll": 0,
+      "nonEndingScrollDp": {
+        "min": 108.66668701171875,
+        "max": 286.3333740234375,
+        "mean": 180.75342716582833
+      },
+      "endingScrollMaxDp": 797,
+      "screenshotManifestSha256": "f4f4dca1e0d138649baed9a090fc029d14b3eb8b8f9deb1b1c1a53cd6f48d2e4"
+    }
+  ],
+  "pixelComparison": {
+    "proof": "tmp/durga-native/layout-pixel-comparison.json",
+    "sha256": "da1ba9d1a24e0b65d1a12f952e4d812914dab9b98525e93d05fde65cd9c40108",
+    "count": 696,
+    "maxArtMeanDifference": 0.6373046875,
+    "maxCaptionMeanDifference": 0,
+    "outliers": 0
+  },
+  "remaining": [
+    "Legitimate narration and ending/source overflow remains; complete artwork and readable text preserved.",
+    "Physical iOS/Android, additional device dimensions and independent Gujarati/Kannada editorial checks pending.",
+    "R2 upload and fresh-cache/offline verification pending."
+  ],
+  "covers": {
+    "nativeVisits": 112,
+    "stories": 14,
+    "languageSizeCombinations": 8,
+    "allCardsWithinNativeViewport": true,
+    "allEightContactSheetsManuallyReviewed": true,
+    "captureProof": "tmp/durga-native/layout-covers/capture.json",
+    "proofSha256": "0e65e5efa7866aaaecd4bbebf83b84d2f56e214678e1401837e53015fcf8f364",
+    "screenshots": [
+      {
+        "file": "en-L-durga-brahmacharini.jpg",
+        "sha256": "e34897bd900d3e75d4b8beb576a95c25a3df381b0ba96bdc4938b98fa9f34d21"
+      },
+      {
+        "file": "en-L-durga-chandraghanta.jpg",
+        "sha256": "751930811af6aa8d62847997b980ce49dada715aeb2161c1e06807f0dbd61f6c"
+      },
+      {
+        "file": "en-L-durga-kalaratri.jpg",
+        "sha256": "bdbb5e546ae1f9c232609d915db4934510d88638e41b8a996ebc9f1cde959550"
+      },
+      {
+        "file": "en-L-durga-kushmanda.jpg",
+        "sha256": "fbecb21f55e31eba47cd5417f7f5eb65187a5cd3ecd809da850fa5f71446e0cd"
+      },
+      {
+        "file": "en-L-durga-mahagauri.jpg",
+        "sha256": "48b15662adbce3d60c4e4f804b939353278a8065a6987747ade50b6dbda4c0cc"
+      },
+      {
+        "file": "en-L-durga-mahishasura.jpg",
+        "sha256": "10c590883953e4de9af81020515c73a5b00ede9c5b3de4ff1066d381ac2a2658"
+      },
+      {
+        "file": "en-L-durga-navaratri.jpg",
+        "sha256": "bc4eaea787525237736be29bba47901e08384a284e2e91aa6ab3804390c1ce04"
+      },
+      {
+        "file": "en-L-durga-raktabeej.jpg",
+        "sha256": "7829e6f4f11e9cfee1e3a2fa8287de0d1d79aeaccdcf93134190ae9313816b98"
+      },
+      {
+        "file": "en-L-durga-shailaputri.jpg",
+        "sha256": "9cc8282d3f3718cb6a05a512163ec7b92e5fbdd660f09d110c6ec0d11f3c7d2b"
+      },
+      {
+        "file": "en-L-durga-shakambhari.jpg",
+        "sha256": "77a34f5a19890e84471534c43a9de6d1c41aedc29fa4f58d3c9b265d4e062f21"
+      },
+      {
+        "file": "en-L-durga-shumbha-nishumbha.jpg",
+        "sha256": "55168d3a935081bc471bc3374c783a1d641e6119d767850813bc2a355429fd3f"
+      },
+      {
+        "file": "en-L-durga-siddhidatri.jpg",
+        "sha256": "8f659b3aaf5f0421aae04e83f586eec09c9d99d7ff04ee96cf097f1ce061589d"
+      },
+      {
+        "file": "en-L-durga-skandamata.jpg",
+        "sha256": "51e2f4c930dad604a542e28116f04a9f77e476ca14d4abdad920ce9d4b664f21"
+      },
+      {
+        "file": "en-L-durga-suratha-samadhi.jpg",
+        "sha256": "77a34f5a19890e84471534c43a9de6d1c41aedc29fa4f58d3c9b265d4e062f21"
+      },
+      {
+        "file": "en-M-durga-brahmacharini.jpg",
+        "sha256": "fd2fd7618c4f1724e32519f461053b9c0849e5dd7c971d860455e5f5fe40b6bc"
+      },
+      {
+        "file": "en-M-durga-chandraghanta.jpg",
+        "sha256": "f15c510b15c1ab2f16de374c521f996b690bce327f677b62d09dca9eab404de6"
+      },
+      {
+        "file": "en-M-durga-kalaratri.jpg",
+        "sha256": "2b07fe8b7c9bbc81fe307d1f7673c1e9ee8f294c0cfa7dbe1ee45d8db2753e87"
+      },
+      {
+        "file": "en-M-durga-kushmanda.jpg",
+        "sha256": "a508bdeb050bbecad3d604a23e1c35695eeb729e790124927d3fb5f4046100aa"
+      },
+      {
+        "file": "en-M-durga-mahagauri.jpg",
+        "sha256": "52ecacd44767009c8a35660e0e85cb93bf42ea49d72ea270836a2e05a064bd55"
+      },
+      {
+        "file": "en-M-durga-mahishasura.jpg",
+        "sha256": "32c00a9f22cd7f47984b198e0224c017117542d41cef2c147acbc3966db60fdf"
+      },
+      {
+        "file": "en-M-durga-navaratri.jpg",
+        "sha256": "8a6305b6d1f11eff9fb91bb154790926a5b50f7733abe9089eaadd0c5d5f5639"
+      },
+      {
+        "file": "en-M-durga-raktabeej.jpg",
+        "sha256": "21febaa20fbeeb8f68b4d29981659690da2a31711c131111923d6a6061a0bc7f"
+      },
+      {
+        "file": "en-M-durga-shailaputri.jpg",
+        "sha256": "cfe5109e6950ac52a820955c6769d92b611566c4383fc7d4999196cd3d98b0ce"
+      },
+      {
+        "file": "en-M-durga-shakambhari.jpg",
+        "sha256": "533844cf32fee24eccfc61ef6bfc1eeea47ce507feca622f32fd7d27d0fc31f6"
+      },
+      {
+        "file": "en-M-durga-shumbha-nishumbha.jpg",
+        "sha256": "7c07547d942c1bae129cf277f9a359c01aeb0cb3cae9a0c609c25803dbb011fb"
+      },
+      {
+        "file": "en-M-durga-siddhidatri.jpg",
+        "sha256": "66e45cfd4a67d7349c11f366b43e750ce675ee90d6c57f6814047f953e605422"
+      },
+      {
+        "file": "en-M-durga-skandamata.jpg",
+        "sha256": "13903c8503bf204768c6ca53bd050f2a8399cd8fdfaf7247ee653d83e5e04e3d"
+      },
+      {
+        "file": "en-M-durga-suratha-samadhi.jpg",
+        "sha256": "533844cf32fee24eccfc61ef6bfc1eeea47ce507feca622f32fd7d27d0fc31f6"
+      },
+      {
+        "file": "gu-L-durga-brahmacharini.jpg",
+        "sha256": "9570446a3e7ab7046faf9df8ac8c0eb3fa262166c1bd014848741a27afcd57e3"
+      },
+      {
+        "file": "gu-L-durga-chandraghanta.jpg",
+        "sha256": "bee18bbd10268019988dea23f21e7a7a2651f7529f353fca4a5d09bb8d76cb6b"
+      },
+      {
+        "file": "gu-L-durga-kalaratri.jpg",
+        "sha256": "1363d407b717c8c8194627faf1b0240687e7df38707f2ed378f97896a9bb4c8c"
+      },
+      {
+        "file": "gu-L-durga-kushmanda.jpg",
+        "sha256": "39f9ae73d70f4ca9e774139c74a53c098f4d78bee679524901badd16ae9d2c9d"
+      },
+      {
+        "file": "gu-L-durga-mahagauri.jpg",
+        "sha256": "2575980b251ccf5d8dc70a8251ee761833b6e71e7237a5345bfb534977041b5c"
+      },
+      {
+        "file": "gu-L-durga-mahishasura.jpg",
+        "sha256": "f26e674124706c51ed83d5e9abf327f5d4b2bf5e6a9523140be9f7e1031c76d4"
+      },
+      {
+        "file": "gu-L-durga-navaratri.jpg",
+        "sha256": "5f93ce5ead1d90ae10a73b35d9e3a1827d1f99b92395902e64475a9b0ceac8f6"
+      },
+      {
+        "file": "gu-L-durga-raktabeej.jpg",
+        "sha256": "a3fc127a0d59c636a202d977994fe0fb4a0c8ff688e1c2ec34e8c73d4cef1088"
+      },
+      {
+        "file": "gu-L-durga-shailaputri.jpg",
+        "sha256": "77a2edae79440a8c3c9543e124573592d3e343f43337a9acb86d8336af2091ac"
+      },
+      {
+        "file": "gu-L-durga-shakambhari.jpg",
+        "sha256": "83abf8fb58614a51e60f28be1603960dde8d1883c8bc052da62c3316e38b4402"
+      },
+      {
+        "file": "gu-L-durga-shumbha-nishumbha.jpg",
+        "sha256": "099038882325643960c1a7e5f742b237169c5936f59ed20ee50ab491c3e2c607"
+      },
+      {
+        "file": "gu-L-durga-siddhidatri.jpg",
+        "sha256": "8ad79f34ca13449725afd290bf57d53f4d327bbd21759fae1c7dc61410d540d3"
+      },
+      {
+        "file": "gu-L-durga-skandamata.jpg",
+        "sha256": "dc4842cbc0c7312bf5d4861d9d2843940df95c351fa0bf0a8e55c994250387c0"
+      },
+      {
+        "file": "gu-L-durga-suratha-samadhi.jpg",
+        "sha256": "83abf8fb58614a51e60f28be1603960dde8d1883c8bc052da62c3316e38b4402"
+      },
+      {
+        "file": "gu-M-durga-brahmacharini.jpg",
+        "sha256": "d78018562ad5cdc0343ef3592f5ccba5adf41e0c7896c982a8b8888940831fd2"
+      },
+      {
+        "file": "gu-M-durga-chandraghanta.jpg",
+        "sha256": "290a9b36d3ba3b0bed87ebdd26e5ff769f1e27bd8ccc4d7f782e1929b49bb5fe"
+      },
+      {
+        "file": "gu-M-durga-kalaratri.jpg",
+        "sha256": "9fc7fdeffed99c465c0cb78865e72409e7d8337b184ce47ed352c558c64261d1"
+      },
+      {
+        "file": "gu-M-durga-kushmanda.jpg",
+        "sha256": "c703a7a8efa8445855be6932eb7bce61725570142704705ff159f672c218dae0"
+      },
+      {
+        "file": "gu-M-durga-mahagauri.jpg",
+        "sha256": "73d48a9b57db83fbb8d93ebb5bdb986d88c0149c05ce54e1adda1d2c37ee2c59"
+      },
+      {
+        "file": "gu-M-durga-mahishasura.jpg",
+        "sha256": "9b9deaea23c735922aea489ca22b9074ae0fc6f9fcd963171081f1a7ffd78d86"
+      },
+      {
+        "file": "gu-M-durga-navaratri.jpg",
+        "sha256": "895b668d9bb04d87737ea0e9dbf0006aeb9b5b1b84a132e27e3e8ca036530fc3"
+      },
+      {
+        "file": "gu-M-durga-raktabeej.jpg",
+        "sha256": "5f14b73744d6b9dd95d154335fbf3dd6e2b0d3b9358eeea9e9fbc1593aebf479"
+      },
+      {
+        "file": "gu-M-durga-shailaputri.jpg",
+        "sha256": "8567c90009f3c0188eb8f2d147ab502588ac2498d8e648cd883d7683d4ed99e6"
+      },
+      {
+        "file": "gu-M-durga-shakambhari.jpg",
+        "sha256": "75b15580080625ae020fdff0fcf3ece96282127a3aff6c3542f468043561c814"
+      },
+      {
+        "file": "gu-M-durga-shumbha-nishumbha.jpg",
+        "sha256": "e70d1c42de2d1f27b4f3481dc1bc37f527e5f0f1c252f9be5de5660bc5cf1137"
+      },
+      {
+        "file": "gu-M-durga-siddhidatri.jpg",
+        "sha256": "90045e366cc3023fd261a50d1b56f0e4c433d2ca44165ccab7782a9a5b78e514"
+      },
+      {
+        "file": "gu-M-durga-skandamata.jpg",
+        "sha256": "582a3224a92dbf6f5d01cd81b1b744e842ee65f36654503ce5b0abed8e5ca10b"
+      },
+      {
+        "file": "gu-M-durga-suratha-samadhi.jpg",
+        "sha256": "75b15580080625ae020fdff0fcf3ece96282127a3aff6c3542f468043561c814"
+      },
+      {
+        "file": "hi-L-durga-brahmacharini.jpg",
+        "sha256": "87d5f461c6c5c4a74d03eaf24b7817f8b47c7b2d641d91e0351d35f41f5f11a7"
+      },
+      {
+        "file": "hi-L-durga-chandraghanta.jpg",
+        "sha256": "ce34a8fedb34af4016c2630e550932b85f2277177d8c6665b26ecd45880d109a"
+      },
+      {
+        "file": "hi-L-durga-kalaratri.jpg",
+        "sha256": "61aa3f87ac566f78d79a82ea0aa96f31fe45b60ebc899bb820d7ca31e840110e"
+      },
+      {
+        "file": "hi-L-durga-kushmanda.jpg",
+        "sha256": "05d9bdecf34c5413edfa6d6ffc30cc21dde62555501e920d06517d24c5c2fe7f"
+      },
+      {
+        "file": "hi-L-durga-mahagauri.jpg",
+        "sha256": "467b4d27eef154324c83f4e4fc8b448355d6e04d157917f9dac2e1a8df1eaa79"
+      },
+      {
+        "file": "hi-L-durga-mahishasura.jpg",
+        "sha256": "4046a8c31d9c01ad0291ca59b305c55a610e84dc8ce5d43d21249c7e2852dca3"
+      },
+      {
+        "file": "hi-L-durga-navaratri.jpg",
+        "sha256": "f70502a213c632ea0db78ae59bc05d5bbde182eac713d902cfab2f423379e7f9"
+      },
+      {
+        "file": "hi-L-durga-raktabeej.jpg",
+        "sha256": "14aeb8826ed3deba62fc48342b158682dffe902ef2dd7b2e936d2aaa75c15863"
+      },
+      {
+        "file": "hi-L-durga-shailaputri.jpg",
+        "sha256": "99f0f402ecd97b00739cb0ea61614f56c40cb826f2338c5d815e386aad947184"
+      },
+      {
+        "file": "hi-L-durga-shakambhari.jpg",
+        "sha256": "61555069ab8b8ea5883d804e8a7e5719611a3b2f213d9818e8cbf5da0aa30f06"
+      },
+      {
+        "file": "hi-L-durga-shumbha-nishumbha.jpg",
+        "sha256": "92ae596360f04ca36c533565b6ae745b528309bdb27ee9e9ccfc301b1a29d8fa"
+      },
+      {
+        "file": "hi-L-durga-siddhidatri.jpg",
+        "sha256": "c4ef58db479e42f355e09db012af6e3545fd17db6dc298fce9d92141c28ccaf3"
+      },
+      {
+        "file": "hi-L-durga-skandamata.jpg",
+        "sha256": "f968afc131b979476af5288b643813dd7163e0cc30f1163c8298c5971676a8c3"
+      },
+      {
+        "file": "hi-L-durga-suratha-samadhi.jpg",
+        "sha256": "61555069ab8b8ea5883d804e8a7e5719611a3b2f213d9818e8cbf5da0aa30f06"
+      },
+      {
+        "file": "hi-M-durga-brahmacharini.jpg",
+        "sha256": "e732e485c7ff59208481ddc0321d3fbdb48e9a0c6d43e51d833814bc94c8938d"
+      },
+      {
+        "file": "hi-M-durga-chandraghanta.jpg",
+        "sha256": "b2b4bb0a00795ff41da56ff85803f3303d1eafe2a5e6d426168089378b07b25b"
+      },
+      {
+        "file": "hi-M-durga-kalaratri.jpg",
+        "sha256": "bca0deef8346d648e53a3298283e8b7b31902ca66232be3f3eacef8ab7c8f827"
+      },
+      {
+        "file": "hi-M-durga-kushmanda.jpg",
+        "sha256": "c54a6ce65ec40dfb1caf3cee544805aa871206a0ee1c4612bef05719ad5de234"
+      },
+      {
+        "file": "hi-M-durga-mahagauri.jpg",
+        "sha256": "ab3ae0c98780d398171b3d7c6b4a7dbe840e39ae30302cf0e2b917763a0e4dd4"
+      },
+      {
+        "file": "hi-M-durga-mahishasura.jpg",
+        "sha256": "22e84f8dc166829ac71ea47f3bd82068ed8b59fd8b10fe89c30482b506921f1a"
+      },
+      {
+        "file": "hi-M-durga-navaratri.jpg",
+        "sha256": "e3f6b5ea207e09674130de2c851c3ed395729267684975000ab7c87b7f6049db"
+      },
+      {
+        "file": "hi-M-durga-raktabeej.jpg",
+        "sha256": "c78178b897e38a2a41aa7c5dd38cf3606442e41e2f253c266e1c0fed7e509470"
+      },
+      {
+        "file": "hi-M-durga-shailaputri.jpg",
+        "sha256": "b2e57f2cb056dde7f37afae75780dc9adb4bbac6cc4b5a7bf07b20c802bfc1ff"
+      },
+      {
+        "file": "hi-M-durga-shakambhari.jpg",
+        "sha256": "2b4c6595eea1f2f0d1a39160d8d352ce04102e48a6e0427a6d1159ddbac65b68"
+      },
+      {
+        "file": "hi-M-durga-shumbha-nishumbha.jpg",
+        "sha256": "226263c381ae2625eb8b28a65339e3b78ff54bdf142b09205d2d857642cc58eb"
+      },
+      {
+        "file": "hi-M-durga-siddhidatri.jpg",
+        "sha256": "2b1b6f4930c1e2cd4b8343002182d393d90ed9490823c12b41824d8c20390c76"
+      },
+      {
+        "file": "hi-M-durga-skandamata.jpg",
+        "sha256": "cd7793567617388917f15fef2f8c9fa81a54ea0e1edc9d16a2d5ba1a3b85b663"
+      },
+      {
+        "file": "hi-M-durga-suratha-samadhi.jpg",
+        "sha256": "2b4c6595eea1f2f0d1a39160d8d352ce04102e48a6e0427a6d1159ddbac65b68"
+      },
+      {
+        "file": "kn-L-durga-brahmacharini.jpg",
+        "sha256": "1b827ca4005cfb7c90e684d987027499276e3df2d9d34ba418c1daac3cfc4653"
+      },
+      {
+        "file": "kn-L-durga-chandraghanta.jpg",
+        "sha256": "d33ac9f77fcd17e327837c1ff43b9808bd1540682e7d06ce684fd23989cf82d0"
+      },
+      {
+        "file": "kn-L-durga-kalaratri.jpg",
+        "sha256": "c2e513a1710467523b3a4cfc6d2db98ca91de6ab05570e1ea1cdb83f50a8b6f3"
+      },
+      {
+        "file": "kn-L-durga-kushmanda.jpg",
+        "sha256": "0cd065868aa653abc1fc6f79a8d2edae36902e4c133ab7bfe54eef3a2858e0c2"
+      },
+      {
+        "file": "kn-L-durga-mahagauri.jpg",
+        "sha256": "4e6ba14b14412db9da9f5b0b7fc49b56b5e6a8c6427de5c15e69bbbc9e607a0f"
+      },
+      {
+        "file": "kn-L-durga-mahishasura.jpg",
+        "sha256": "b566a59a5866833a5d0c409c6a734c5df3aa67294182d48e36ed244cb7e0a12f"
+      },
+      {
+        "file": "kn-L-durga-navaratri.jpg",
+        "sha256": "1e5c6f10c5cbc3bba9d45619d32848b8a970b37cd0ee41b062b915dfcce5f539"
+      },
+      {
+        "file": "kn-L-durga-raktabeej.jpg",
+        "sha256": "11cc2a948290741e5b813a642ef858da8115d7e77b2bdb750c6e35c773cce55f"
+      },
+      {
+        "file": "kn-L-durga-shailaputri.jpg",
+        "sha256": "57899a74cea52794e42a4fe3fe7fafb10c4d962c44f519db07ad5fb7d4fb5821"
+      },
+      {
+        "file": "kn-L-durga-shakambhari.jpg",
+        "sha256": "ba8a7a2e63c4ad15fd55fd874d8489b0b1c330771b1b5291a51be0c9dbee492c"
+      },
+      {
+        "file": "kn-L-durga-shumbha-nishumbha.jpg",
+        "sha256": "f34424e9211e4ce7b91883593744d37dbd35b68f58f53699d3146c3a3e40b13a"
+      },
+      {
+        "file": "kn-L-durga-siddhidatri.jpg",
+        "sha256": "e975e5cfa1656257711cf05285f20f7621331b4a9f48fb3ac244b821dc1f83db"
+      },
+      {
+        "file": "kn-L-durga-skandamata.jpg",
+        "sha256": "437de215a7f8aec21fb18f152951fdac24595c487c1f63ec20001fbe0e7dc852"
+      },
+      {
+        "file": "kn-L-durga-suratha-samadhi.jpg",
+        "sha256": "ba8a7a2e63c4ad15fd55fd874d8489b0b1c330771b1b5291a51be0c9dbee492c"
+      },
+      {
+        "file": "kn-M-durga-brahmacharini.jpg",
+        "sha256": "136cfe4a180921e766f0739043268c88101f6f7d37bd596b9223db8a53117635"
+      },
+      {
+        "file": "kn-M-durga-chandraghanta.jpg",
+        "sha256": "5bc9317d097deb7fd01430f1abe2ccb04de2b718deac72f525494b36920a8290"
+      },
+      {
+        "file": "kn-M-durga-kalaratri.jpg",
+        "sha256": "4b1f0ec2e428aa7ec4c0384f7b21c123bd516bc32967c00546661eb2abc3e0ba"
+      },
+      {
+        "file": "kn-M-durga-kushmanda.jpg",
+        "sha256": "fdba19136005b89c9a03ddb5678e987786da1c47d8d9fd540bb20e6098d2082d"
+      },
+      {
+        "file": "kn-M-durga-mahagauri.jpg",
+        "sha256": "738d408483776e78d31cb47e6a9751f2fd4e0c5c92410febddc39c1ac748ebad"
+      },
+      {
+        "file": "kn-M-durga-mahishasura.jpg",
+        "sha256": "09221c8ca9e3dadeac7938df012acd60ca31b35ef28f38b6098a7c7dacb016d5"
+      },
+      {
+        "file": "kn-M-durga-navaratri.jpg",
+        "sha256": "bf8da76545f56d2f85059f1f28e805056ffffc71e3a0307412c1cfb418746fda"
+      },
+      {
+        "file": "kn-M-durga-raktabeej.jpg",
+        "sha256": "549e443f455745ab1afcee699c52cf9f76e215fed1b7b7bc5a49a304202111de"
+      },
+      {
+        "file": "kn-M-durga-shailaputri.jpg",
+        "sha256": "73f0764c0b80a7c47afc2fada8b9e4c2efe838eb9f3d3b91dd80f49c8e99aa81"
+      },
+      {
+        "file": "kn-M-durga-shakambhari.jpg",
+        "sha256": "a2ca934024d3c44ecfc1bb99bc81d571b5b8db65d68ed1486faacedede11837e"
+      },
+      {
+        "file": "kn-M-durga-shumbha-nishumbha.jpg",
+        "sha256": "b0c5b2165a92fd3011856e0f5113520663e7120f5e01c1d72a6adf9bb448602b"
+      },
+      {
+        "file": "kn-M-durga-siddhidatri.jpg",
+        "sha256": "84c18ea523978d94a2f3b0751fa6bd98090a37899e64699b7410b4b621bf40cc"
+      },
+      {
+        "file": "kn-M-durga-skandamata.jpg",
+        "sha256": "03db7c96e183703c6f1d004cfc32c3c0e9991bc0033981635da181da81d80c76"
+      },
+      {
+        "file": "kn-M-durga-suratha-samadhi.jpg",
+        "sha256": "a2ca934024d3c44ecfc1bb99bc81d571b5b8db65d68ed1486faacedede11837e"
+      }
+    ]
+  },
+  "postChangeMaestro": {
+    "pageGesture": {
+      "result": "passed",
+      "log": "tmp/durga-native/post-gesture-smoke.log",
+      "logSha256": "f8c74695b7827374589c4e504f6115c89cfac67f658405b583f489ab090d172a",
+      "screenshots": [
+        {
+          "file": "tmp/durga-native/post-gesture-maestro/screenshots/durga-gesture-page-preserved.png",
+          "sha256": "2e49034998be7b9731fb7e57145f1f57f46b7c9d808277c3bb95479c7d87e893"
+        }
+      ]
+    },
+    "catalogPath": {
+      "result": "passed",
+      "log": "tmp/durga-native/post-catalog-focused.log",
+      "logSha256": "8f8d73fdef28835f320921d65ff75c229070a0a5b3540476b012e2bee95f8dcb",
+      "screenshots": [
+        {
+          "file": "tmp/durga-native/post-catalog-focused/screenshots/durga-native-shelf-ending.png",
+          "sha256": "3e797b312b3236215c51b277e15a348a1c4bea21725821bbaeb4771f96b1671a"
+        },
+        {
+          "file": "tmp/durga-native/post-catalog-focused/screenshots/durga-native-shelf-raktabeej.png",
+          "sha256": "0dd3dcc7744d824f9a5610d2ea22316d4916a56348729d44122b709057bbd5cf"
+        },
+        {
+          "file": "tmp/durga-native/post-catalog-focused/screenshots/durga-native-shelf-top.png",
+          "sha256": "e2c05c08d992134030978f5032cce4ea3695a49a9727c16be6ce5e7c469758b6"
+        }
+      ]
+    },
+    "initialCatalogAttempt": {
+      "result": "scroll target overshot at 100 percent visibility",
+      "log": "tmp/durga-native/post-catalog-smoke.log",
+      "sha256": "d3532ac0cba2124de79fcf3799ddbe0ae60c75fa16f08d897414f58111eeb640",
+      "resolution": "Partial visibility target followed by centering; complete catalog path rerun passed."
+    }
+  },
+  "browserFrames": {
+    "covers": 56,
+    "sceneFrames": 87,
+    "result": "passed",
+    "log": "tmp/durga-native/browser-frame-check.log",
+    "sha256": "d2146bc8651b41702ddd03d7928fd923d2ab28473b761718be87ba28df92cbec"
+  },
+  "preview": {
+    "file": "post-change-preview.jpg",
+    "sha256": "315ddd4e1eb929535fe6747b0a46aefd95306a3ca55f828bf81629409c351124"
+  }
+}

@@ -21,7 +21,7 @@ export type DayInputs = {
 };
 
 /** Bump when the panchang engine changes so persisted days from an older engine are purged. */
-export const PANCHANG_DAY_CACHE_VERSION = 5; // v5: PanchangData.moonRashi (चन्द्र वास); v4: cooperative numerical searches
+export const PANCHANG_DAY_CACHE_VERSION = 6; // v6: PanchangData.sunRashi (सूर्य card); v5: moonRashi (चन्द्र वास); v4: cooperative numerical searches
 
 const DATE_TAG = '__d';
 type TaggedDate = { [DATE_TAG]: number };

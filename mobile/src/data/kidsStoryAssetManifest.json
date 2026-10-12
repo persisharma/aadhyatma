@@ -1,0 +1,581 @@
+{
+  "prefix": "kids-stories",
+  "assets": {
+    "br-01": {
+      "hash": "a814ea3c382a628a",
+      "ext": "webp"
+    },
+    "br-02": {
+      "hash": "104a1169dc818e7a",
+      "ext": "webp"
+    },
+    "br-03": {
+      "hash": "f80ae551d65fd245",
+      "ext": "webp"
+    },
+    "br-04": {
+      "hash": "2e25cc5203b41667",
+      "ext": "webp"
+    },
+    "br-05": {
+      "hash": "9398aac40cdb5696",
+      "ext": "webp"
+    },
+    "br-06": {
+      "hash": "8556287754c17cef",
+      "ext": "webp"
+    },
+    "br-07": {
+      "hash": "8380455f9e1a5a2e",
+      "ext": "webp"
+    },
+    "cg-01": {
+      "hash": "2b3672dc4af9b885",
+      "ext": "webp"
+    },
+    "cg-02": {
+      "hash": "5470245224e74018",
+      "ext": "webp"
+    },
+    "cg-03": {
+      "hash": "722c196492c59dfe",
+      "ext": "webp"
+    },
+    "cg-04": {
+      "hash": "234e55f6ef0c244d",
+      "ext": "webp"
+    },
+    "cg-05": {
+      "hash": "a0d119c03244a97d",
+      "ext": "webp"
+    },
+    "dm-01": {
+      "hash": "b9f6348ede955fa7",
+      "ext": "webp"
+    },
+    "dm-02": {
+      "hash": "b4eb8cc457b7be0e",
+      "ext": "webp"
+    },
+    "dm-03": {
+      "hash": "51becfe883c29958",
+      "ext": "webp"
+    },
+    "dm-04": {
+      "hash": "576c7e51be8ddd40",
+      "ext": "webp"
+    },
+    "dm-05": {
+      "hash": "a26c49ac7af67af1",
+      "ext": "webp"
+    },
+    "dm-06": {
+      "hash": "e4a862e633c6be37",
+      "ext": "webp"
+    },
+    "dm-07": {
+      "hash": "8bca7cd6a83d6e31",
+      "ext": "webp"
+    },
+    "dm-08": {
+      "hash": "de69135584017f5c",
+      "ext": "webp"
+    },
+    "dm-09": {
+      "hash": "358db0e590feb317",
+      "ext": "webp"
+    },
+    "dm-10": {
+      "hash": "cfba587ffa26e123",
+      "ext": "webp"
+    },
+    "dm-11": {
+      "hash": "6e0b0cb95fa3e0f6",
+      "ext": "webp"
+    },
+    "dm-12": {
+      "hash": "2db3262d6f5d7bf4",
+      "ext": "webp"
+    },
+    "gb-00": {
+      "hash": "f57a7e3e98b311f6",
+      "ext": "webp"
+    },
+    "gb-01": {
+      "hash": "e9493ac5906f5ad2",
+      "ext": "webp"
+    },
+    "gb-02": {
+      "hash": "97e7c625f4e8a909",
+      "ext": "webp"
+    },
+    "gb-03": {
+      "hash": "c77f0a4fa8790f99",
+      "ext": "webp"
+    },
+    "gb-04": {
+      "hash": "3af1508903fe1167",
+      "ext": "webp"
+    },
+    "gb-05": {
+      "hash": "f8a13d79c4ed80c4",
+      "ext": "webp"
+    },
+    "gb-06": {
+      "hash": "1e2d7f3d5891f8ce",
+      "ext": "webp"
+    },
+    "gb-07": {
+      "hash": "0defd043ab3ddf1a",
+      "ext": "webp"
+    },
+    "gb-08": {
+      "hash": "e31c224c09698c72",
+      "ext": "webp"
+    },
+    "gb-09": {
+      "hash": "1199c6b9e62adb9b",
+      "ext": "webp"
+    },
+    "gb-10": {
+      "hash": "52acabc7628c53dc",
+      "ext": "webp"
+    },
+    "hs-00": {
+      "hash": "099cc99df102a906",
+      "ext": "webp"
+    },
+    "hs-01": {
+      "hash": "792038b2284fe717",
+      "ext": "webp"
+    },
+    "hs-02": {
+      "hash": "c01b90a95edfb176",
+      "ext": "webp"
+    },
+    "hs-03": {
+      "hash": "3d8c67ae84f989e2",
+      "ext": "webp"
+    },
+    "hs-04": {
+      "hash": "111ebb515e7caba1",
+      "ext": "webp"
+    },
+    "hs-05": {
+      "hash": "1a054319047d31e6",
+      "ext": "webp"
+    },
+    "hs-06": {
+      "hash": "b10d6b34fb6e823a",
+      "ext": "webp"
+    },
+    "hs-07": {
+      "hash": "322f9a1a5b7ed159",
+      "ext": "webp"
+    },
+    "hs-08": {
+      "hash": "fe65f743b0f6b235",
+      "ext": "webp"
+    },
+    "hs-09": {
+      "hash": "826c8e99cffa3d28",
+      "ext": "webp"
+    },
+    "ka-00": {
+      "hash": "a631008c2e56855f",
+      "ext": "webp"
+    },
+    "ka-01": {
+      "hash": "63ccebeb86ac3b01",
+      "ext": "webp"
+    },
+    "ka-02": {
+      "hash": "19bf512c1c010317",
+      "ext": "webp"
+    },
+    "ka-03": {
+      "hash": "4b9db58c83a70918",
+      "ext": "webp"
+    },
+    "ka-04": {
+      "hash": "4ac8f5c6b934d82f",
+      "ext": "webp"
+    },
+    "ka-05": {
+      "hash": "45f45aacc0cbe80d",
+      "ext": "webp"
+    },
+    "ka-06": {
+      "hash": "17e5d1b5b0a2fe02",
+      "ext": "webp"
+    },
+    "ka-07": {
+      "hash": "1869e86bd65aa515",
+      "ext": "webp"
+    },
+    "kj-01": {
+      "hash": "ccafcaf71dc62ea2",
+      "ext": "webp"
+    },
+    "kj-02": {
+      "hash": "39d59012d8b00b34",
+      "ext": "webp"
+    },
+    "kj-03": {
+      "hash": "7cbe36f9769e93c0",
+      "ext": "webp"
+    },
+    "kj-04": {
+      "hash": "eb7f4f13afe959cc",
+      "ext": "webp"
+    },
+    "kj-05": {
+      "hash": "da9a146e8a72d389",
+      "ext": "webp"
+    },
+    "kj-06": {
+      "hash": "7d4532cdc76e722a",
+      "ext": "webp"
+    },
+    "kj-07": {
+      "hash": "431fd69c063ae1eb",
+      "ext": "webp"
+    },
+    "kj-08": {
+      "hash": "2f67cf972fb9a6d2",
+      "ext": "webp"
+    },
+    "kj-09": {
+      "hash": "35ffe97d2dc422c6",
+      "ext": "webp"
+    },
+    "kj-10": {
+      "hash": "5868e6266c62c9ab",
+      "ext": "webp"
+    },
+    "kj-11": {
+      "hash": "13904e59ad174cc8",
+      "ext": "webp"
+    },
+    "kj-12": {
+      "hash": "65c6c26ce3c8b4be",
+      "ext": "webp"
+    },
+    "kj-13": {
+      "hash": "7c352447ac1d9a7b",
+      "ext": "webp"
+    },
+    "kj-14": {
+      "hash": "ac7c36ba70a64dd7",
+      "ext": "webp"
+    },
+    "kj-15": {
+      "hash": "3abdc43114f86564",
+      "ext": "webp"
+    },
+    "kj-16": {
+      "hash": "f0d80681727d5feb",
+      "ext": "webp"
+    },
+    "kj-17": {
+      "hash": "d50e2bd9b90d9c22",
+      "ext": "webp"
+    },
+    "kr-01": {
+      "hash": "4706acfdcbab8b05",
+      "ext": "webp"
+    },
+    "kr-02": {
+      "hash": "e16041683470d351",
+      "ext": "webp"
+    },
+    "ku-01": {
+      "hash": "cf829526bd3b8988",
+      "ext": "webp"
+    },
+    "ku-02": {
+      "hash": "fef2864491bad932",
+      "ext": "webp"
+    },
+    "ku-03": {
+      "hash": "278692e4c0bb71bc",
+      "ext": "webp"
+    },
+    "mg-01": {
+      "hash": "accf97c09510e413",
+      "ext": "webp"
+    },
+    "mg-02": {
+      "hash": "5933c9e895e436a1",
+      "ext": "webp"
+    },
+    "mg-03": {
+      "hash": "52d829c8945082ab",
+      "ext": "webp"
+    },
+    "mg-04": {
+      "hash": "ffd22ea1a4ddca0f",
+      "ext": "webp"
+    },
+    "mg-05": {
+      "hash": "f4563514fe959a91",
+      "ext": "webp"
+    },
+    "mg-06": {
+      "hash": "5cbafa7e4bb1c0c9",
+      "ext": "webp"
+    },
+    "mg-07": {
+      "hash": "14036667dfa11eb0",
+      "ext": "webp"
+    },
+    "nv-01": {
+      "hash": "de0f51aac80f7b04",
+      "ext": "webp"
+    },
+    "nv-02": {
+      "hash": "942461738e5146ce",
+      "ext": "webp"
+    },
+    "nv-03": {
+      "hash": "3275964e48523d2e",
+      "ext": "webp"
+    },
+    "pt-00": {
+      "hash": "f5f83b36e72e66d0",
+      "ext": "webp"
+    },
+    "pt-01": {
+      "hash": "30499ce550762581",
+      "ext": "webp"
+    },
+    "pt-02": {
+      "hash": "f9dc218bad7f7ff7",
+      "ext": "webp"
+    },
+    "pt-03": {
+      "hash": "47cb2abe55d646b6",
+      "ext": "webp"
+    },
+    "pt-04": {
+      "hash": "92cd53fb6b1cda70",
+      "ext": "webp"
+    },
+    "pt-05": {
+      "hash": "b655425398f20676",
+      "ext": "webp"
+    },
+    "pt-06": {
+      "hash": "3ce79d2cc97aa87a",
+      "ext": "webp"
+    },
+    "pt-07": {
+      "hash": "872b436e7d117f78",
+      "ext": "webp"
+    },
+    "pt-08": {
+      "hash": "e0d601b74a906ba4",
+      "ext": "webp"
+    },
+    "pt-09": {
+      "hash": "fccd03d9acd57db7",
+      "ext": "webp"
+    },
+    "rb-01": {
+      "hash": "cd0877494ba816bd",
+      "ext": "webp"
+    },
+    "rb-02": {
+      "hash": "b3a9dffcb3560663",
+      "ext": "webp"
+    },
+    "rb-03": {
+      "hash": "e304c816ebbceaa4",
+      "ext": "webp"
+    },
+    "rb-04": {
+      "hash": "37898478d014a185",
+      "ext": "webp"
+    },
+    "rb-05": {
+      "hash": "9582abe944629dbd",
+      "ext": "webp"
+    },
+    "rb-06": {
+      "hash": "8885d4c68cc03cfb",
+      "ext": "webp"
+    },
+    "rb-07": {
+      "hash": "dc8ab536245261bb",
+      "ext": "webp"
+    },
+    "sa-01": {
+      "hash": "d3d2669ebac575ef",
+      "ext": "webp"
+    },
+    "sa-02": {
+      "hash": "3c5e9a16ed696005",
+      "ext": "webp"
+    },
+    "sa-03": {
+      "hash": "a287fa72c19ed97b",
+      "ext": "webp"
+    },
+    "sa-04": {
+      "hash": "6128d1e7ca6c1f7e",
+      "ext": "webp"
+    },
+    "sa-05": {
+      "hash": "3a99d197a02c6ceb",
+      "ext": "webp"
+    },
+    "sa-06": {
+      "hash": "4f2704c74ee707aa",
+      "ext": "webp"
+    },
+    "sa-07": {
+      "hash": "8051c24b30038201",
+      "ext": "webp"
+    },
+    "sa-08": {
+      "hash": "b813a5c986a826f2",
+      "ext": "webp"
+    },
+    "si-01": {
+      "hash": "f3a8ebd71f943aac",
+      "ext": "webp"
+    },
+    "si-02": {
+      "hash": "304cfe7d23dc4bd7",
+      "ext": "webp"
+    },
+    "si-03": {
+      "hash": "4affce61b776533c",
+      "ext": "webp"
+    },
+    "sk-01": {
+      "hash": "54a416aa5e02d2f8",
+      "ext": "webp"
+    },
+    "sk-02": {
+      "hash": "d724261018c7d3e9",
+      "ext": "webp"
+    },
+    "sk-03": {
+      "hash": "8ade04f9738b6cb1",
+      "ext": "webp"
+    },
+    "sk-04": {
+      "hash": "a4c6d56f7ad21192",
+      "ext": "webp"
+    },
+    "sk-05": {
+      "hash": "4e4f75e910e618e9",
+      "ext": "webp"
+    },
+    "sn-01": {
+      "hash": "d1825a88b72885f5",
+      "ext": "webp"
+    },
+    "sn-02": {
+      "hash": "0c91623f1c5ec091",
+      "ext": "webp"
+    },
+    "sn-03": {
+      "hash": "ca2e23ca7acf4274",
+      "ext": "webp"
+    },
+    "sn-04": {
+      "hash": "409aa3304353321f",
+      "ext": "webp"
+    },
+    "sn-05": {
+      "hash": "3894c816d24b13ca",
+      "ext": "webp"
+    },
+    "sn-06": {
+      "hash": "5754c46e4b6e60cb",
+      "ext": "webp"
+    },
+    "sn-07": {
+      "hash": "f148dd320f809865",
+      "ext": "webp"
+    },
+    "sn-08": {
+      "hash": "3f9eaf79303ed254",
+      "ext": "webp"
+    },
+    "sn-09": {
+      "hash": "6605f130b3b4189a",
+      "ext": "webp"
+    },
+    "sn-10": {
+      "hash": "5adc63836e31edb2",
+      "ext": "webp"
+    },
+    "sn-11": {
+      "hash": "dc57dab27bbce1cf",
+      "ext": "webp"
+    },
+    "sn-12": {
+      "hash": "a6bdb5ddf30336b5",
+      "ext": "webp"
+    },
+    "sn-13": {
+      "hash": "dd048504f52a14ad",
+      "ext": "webp"
+    },
+    "sn-14": {
+      "hash": "49c4388db2197504",
+      "ext": "webp"
+    },
+    "sp-01": {
+      "hash": "3764a74f8dbe1e15",
+      "ext": "webp"
+    },
+    "sp-02": {
+      "hash": "a3a486e7d51a78c8",
+      "ext": "webp"
+    },
+    "sp-03": {
+      "hash": "aef480e276677349",
+      "ext": "webp"
+    },
+    "sp-04": {
+      "hash": "e20e50340d46896e",
+      "ext": "webp"
+    },
+    "story-library": {
+      "hash": "82d89a66b88f2fea",
+      "ext": "webp"
+    },
+    "su-01": {
+      "hash": "84d232892fa582fe",
+      "ext": "webp"
+    },
+    "su-02": {
+      "hash": "6eb43e0c185e59d4",
+      "ext": "webp"
+    },
+    "su-03": {
+      "hash": "2385d68fc8d7b563",
+      "ext": "webp"
+    },
+    "su-04": {
+      "hash": "9bb09ef8458c573b",
+      "ext": "webp"
+    },
+    "su-05": {
+      "hash": "9a2390db3b711bb1",
+      "ext": "webp"
+    },
+    "su-06": {
+      "hash": "b74021e9887443c7",
+      "ext": "webp"
+    },
+    "su-07": {
+      "hash": "335a51f8170520af",
+      "ext": "webp"
+    }
+  }
+}

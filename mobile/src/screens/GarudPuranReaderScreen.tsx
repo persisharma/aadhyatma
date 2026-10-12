@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
-  Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
@@ -18,6 +17,8 @@ import { getGarudPuranChapter, garudPuranChaptersManifest, type GarudPuranPage }
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import JumpToStartButton from '@/components/JumpToStartButton';
@@ -30,6 +31,7 @@ import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
+import { garudPuranShareable } from '@/utils/shareContent';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
@@ -226,9 +228,7 @@ export default function GarudPuranReaderScreen({ navigation, route }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      <View pointerEvents="none" accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={StyleSheet.absoluteFill}>
-        <Image source={require('../../assets/garud-puran/reading-parchment.webp')} style={{ width: '100%', height: '100%' }} resizeMode="cover" accessible={false} />
-      </View>
+      <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ReaderHeader
           title={topTitle}
@@ -319,20 +319,7 @@ export default function GarudPuranReaderScreen({ navigation, route }: Props) {
                       <ShareButton
                         busy={shareBusy}
                         onPress={() => {
-                          share(
-                            {
-                              sourceId: 'garud-puran',
-                              sectionNameHi: 'गरुड़ पुराण — चयनित व्याख्या',
-                              sectionNameEn: 'Garud Puran — selected editorial reading',
-                              verseLabelHi: `${chapter.source.citeHi} · ${item.titleHi}`,
-                              verseLabelEn: `${chapter.source.citeEn} · ${item.titleEn}`,
-                              linesHi: [item.titleHi],
-                              linesEn: [item.titleEn],
-                              meaningHi: item.meaningHi,
-                              meaningEn: item.meaningEn,
-                            },
-                            lang
-                          );
+                          void share(garudPuranShareable(chapter, item), lang);
                         }}
                       />
                     </>

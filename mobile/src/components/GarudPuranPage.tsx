@@ -1,13 +1,13 @@
 /** Illustrated prose page, adapted from KathaSectionPage (not a verse renderer). */
 import React, { useState } from 'react';
-import { Image, Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { garudPuranImages } from '@assets/garud-puran';
 import type { GarudPuranPage as Page, GarudPuranSource } from '@/data/garud-puran';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
 import { commentaryByLang, contentByLang } from '@/utils/localize';
 import { meaningToken, pillTextStyle, scriptTitleFont } from '@/utils/langType';
-import { LeafIcon } from 'phosphor-react-native/src/icons/Leaf';
+import ReadingArtwork from './ReadingArtwork';
 import ProseParagraph from './ProseParagraph';
 
 type Props = { verse: Page; source: GarudPuranSource; width: number; topActions?: React.ReactNode };
@@ -31,16 +31,8 @@ export default function GarudPuranPage({ verse, source, width, topActions }: Pro
           <View style={styles.actions}>{topActions}</View>
         </View>
         <Text accessibilityRole="header" style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>{title}</Text>
-        {verse.number === 1 && (
-          <View testID={`garud-art-${verse.id}`} style={styles.art}>
-            <Image source={garudPuranImages[verse.artId]} style={{ width: '100%', height: '100%' }} resizeMode="contain"
-              accessibilityLabel={contentByLang(lang, 'प्रसंग पर आधारित सांकेतिक चित्र', 'Interpretive illustration for this reading')} />
-          </View>
-        )}
-        <View style={styles.divider} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
-          <View style={[styles.rule, { backgroundColor: colors.gold }]} />
-          <LeafIcon size={18} weight="fill" color={colors.gold} />
-          <View style={[styles.rule, { backgroundColor: colors.gold }]} />
+        <View testID={verse.number === 1 ? `garud-art-${verse.id}` : undefined}>
+          <ReadingArtwork source={verse.number === 1 ? garudPuranImages[verse.artId] : null} />
         </View>
         {body.map((paragraph, index) => <ProseParagraph key={index} style={[styles.paragraph, bodyStyle]}>{paragraph}</ProseParagraph>)}
         <Pressable onPress={() => setShowSources(value => !value)} accessibilityRole="button"
@@ -73,10 +65,7 @@ const styles = StyleSheet.create({
   topRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   actions: { flexDirection: 'row', gap: 8 }, pill: { paddingHorizontal: 10, paddingVertical: 6 },
   title: { fontSize: 20, lineHeight: 30, marginTop: 8, marginBottom: 4 },
-  // Same complete-canvas frame as current-main ReadingBanner. Never crop a portrait to fit.
-  art: { width: '100%', maxWidth: 360, aspectRatio: 2, maxHeight: 180, alignSelf: 'center', marginTop: 8 },
-  divider: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 8, marginBottom: 16, opacity: 0.75 },
-  rule: { flex: 1, height: 1 }, paragraph: { marginBottom: 14 }, sourceText: { marginTop: 14 },
+  paragraph: { marginBottom: 14 }, sourceText: { marginTop: 14 },
   sourceButton: { borderTopWidth: 1, marginTop: 24, minHeight: 48, justifyContent: 'center' },
   link: { minHeight: 48, justifyContent: 'center', marginTop: 8 },
 });

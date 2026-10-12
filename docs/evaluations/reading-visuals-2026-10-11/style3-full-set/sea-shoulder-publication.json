@@ -1,0 +1,19 @@
+{
+  "verifiedAt": "2026-10-11T17:09:09.388Z",
+  "url": "https://cdn.vedansh.app/reader-illustrations/47df1919b9ee3f38.webp",
+  "status": 200,
+  "sha256": "47df1919b9ee3f38f7592163faf815e1c8ced5545054025efdf0c188ef57f7b6",
+  "bytes": 62452,
+  "changedManifestIds": [
+    "hanuman-sea"
+  ],
+  "unchangedManifestIds": 42,
+  "publicationBeforeActivation": true,
+  "focusedVerification": {
+    "suitesPassed": 2,
+    "testsPassed": 8,
+    "publisherVerifyCount": 43,
+    "publicFullSetShaMatches": 43,
+    "diffWhitespaceCheck": "pass"
+  }
+}

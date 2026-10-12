@@ -13,6 +13,9 @@ import { verseToken, meaningToken, scriptTitleFont, pillTextStyle } from '@/util
 import { getReaderBackground } from '@/data/backgrounds';
 import { getDiscoveryMeta } from '@/data/discoveryMeta';
 import BackgroundLayer from './BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
+import ReadingArtwork from './ReadingArtwork';
+import ProseParagraph from './ProseParagraph';
 import Ornament from './Ornament';
 
 export type VersePageVerse = {
@@ -32,13 +35,15 @@ type Props = {
   verse: VersePageVerse;
   sourceId: string;
   width: number;
+  /** One opening banner per reading; continuation pages have no image frame. */
+  showIllustration?: boolean;
   /** Per-verse actions (bookmark/share) rendered in the page header beside the pill. */
   topActions?: React.ReactNode;
   /** Extra content rendered below the meaning, used only for first-page reader metadata. */
   belowContent?: React.ReactNode;
 };
 
-export default function VersePage({ verse, sourceId, width, topActions, belowContent }: Props) {
+export default function VersePage({ verse, sourceId, width, topActions, belowContent, showIllustration = false }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
@@ -74,7 +79,7 @@ export default function VersePage({ verse, sourceId, width, topActions, belowCon
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <BackgroundLayer source={bg} />
+      <BackgroundLayer source={readingParchment} />
 
       <ScrollView
         style={styles.scroll}
@@ -106,6 +111,8 @@ export default function VersePage({ verse, sourceId, width, topActions, belowCon
           </View>
           {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
         </View>
+
+        <ReadingArtwork source={showIllustration ? bg : undefined} />
 
         <View style={styles.verseBlock}>
           {verseLines.map((line, idx) => (
@@ -142,7 +149,7 @@ export default function VersePage({ verse, sourceId, width, topActions, belowCon
         >
           {meaningLabel}
         </Text>
-        <Text style={[styles.body, bodyStyle]}>{meaning}</Text>
+        <ProseParagraph style={[styles.body, bodyStyle]}>{meaning}</ProseParagraph>
         {belowContent}
       </ScrollView>
     </View>
@@ -175,7 +182,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   pill: {
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     paddingHorizontal: 12,
     paddingVertical: 4,
   },

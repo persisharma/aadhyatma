@@ -1,0 +1,37 @@
+# Installed native Release: all three chakra placements and their existing
+# Home/Panchang/Jyotish controls. Decorations are deliberately absent from a11y.
+appId: com.prashantsharma.vedansh
+---
+- launchApp: { stopApp: true }
+- tapOn: { text: "Skip tour", optional: true }
+- tapOn: { text: "Close", optional: true }
+- tapOn: { text: "Got it", optional: true }
+- tapOn: { id: "tab-home" }
+- tapOn: { text: "Back", optional: true }
+- scrollUntilVisible:
+    element: { text: ".*Today.s Panchang.*" }
+    direction: UP
+    timeout: 15000
+- swipe: { direction: DOWN }
+- waitForAnimationToEnd
+- takeScreenshot: home
+- tapOn: ".*Today.s Panchang.*"
+- tapOn: "Panchang"
+- assertVisible: "Today"
+- waitForAnimationToEnd
+- takeScreenshot: panchang
+- tapOn: "Jyotish"
+- assertVisible: "Create Kundali"
+- assertVisible: "Open Daily Rashifal"
+- waitForAnimationToEnd
+- takeScreenshot: jyotish
+- tapOn: "Create Kundali"
+- assertVisible: "Birth name"
+- tapOn: "Back.*"
+- assertVisible: "Create Kundali"
+- tapOn: "Vrat & Parv"
+- assertVisible: "My Vrat.*"
+- tapOn: "Panchang"
+- assertVisible: "Today"
+- tapOn: { id: "tab-home" }
+- assertVisible: ".*Today.s Panchang.*"

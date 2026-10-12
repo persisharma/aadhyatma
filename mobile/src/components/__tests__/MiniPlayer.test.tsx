@@ -1,6 +1,6 @@
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text, View as mockView } from 'react-native';
+import { ActivityIndicator, Text, View as mockView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GitaLanguageProvider } from '@/data/gita/language';
 import type { AudioTrack } from '@/data/audio/tracks';
@@ -93,5 +93,13 @@ describe('MiniPlayer', () => {
     // rama → bowArrow → hand-drawn glyph
     expect(tree.root.findAllByProps({ testID: 'deity-glyph-bowArrow' }).length).toBeGreaterThan(0);
     expect(textOf(tree)).toContain('हरे राम');
+  });
+
+  test('shows a spinner (not the play control) while a tapped track is buffering', () => {
+    mockUse.mockReturnValue(baseState({ isBuffering: true }));
+    const tree = render();
+    expect(tree.root.findAllByType(ActivityIndicator).length).toBe(1);
+    // the play/pause control is replaced by the spinner and disabled
+    expect(tree.root.findAllByProps({ accessibilityLabel: 'Loading' }).length).toBeGreaterThan(0);
   });
 });

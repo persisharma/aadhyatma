@@ -1,3 +1,8 @@
+import DeityIcon from '@/components/DeityIcon';
+import StoryIcon from '@/components/StoryIcon';
+import CategoryIcon from '@/components/CategoryIcon';
+import { deities, deityIconKey } from '@/data/deities';
+import AppIcon from '@/components/AppIcon';
 import React, {
   useCallback,
   useEffect,
@@ -6,6 +11,7 @@ import React, {
   useState,
 } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   Keyboard,
   Pressable,
@@ -22,14 +28,15 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
-  getSearchIndex,
+  EMPTY_SEARCH_INDEX,
   runSearch,
   type SearchHit,
   type SearchSectionEntry,
   type SearchDeityEntry,
   type SearchVerseEntry,
 } from '@/data/searchIndex';
-import { library } from '@/data/texts';
+import { library, type LibraryEntry } from '@/data/texts';
+import { useSearchIndex } from './_useSearchIndex';
 import { getVidhiById } from '@/data/vidhi';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
@@ -41,6 +48,8 @@ import { useAsk } from '@/ask/useAsk';
 import { navigateAskTarget } from '@/ask/actions';
 import type { AskTarget } from '@/ask/types';
 import AskAnswerCard, { AskAbstainCard } from '@/components/AskAnswerCard';
+import { useShare } from '@/utils/shareVerse';
+import { askAnswerShareable } from '@/utils/shareContent';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Search'>;
 
@@ -57,6 +66,7 @@ const POPULAR_FALLBACK_IDS = [
 export default function SearchScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { markSeen } = useNewContent();
   const inputRef = useRef<TextInput>(null);
   const [query, setQuery] = useState(route.params?.initialQuery ?? '');
@@ -100,11 +110,12 @@ export default function SearchScreen({ navigation, route }: Props) {
     return () => clearTimeout(t);
   }, []);
 
-  // Build the index lazily on first user interaction (mount = first interaction
-  // from the user's perspective — they tapped search to get here).
-  const index = useMemo(() => getSearchIndex(), []);
+  // Usually already warm (built in the background after launch). If not, the
+  // screen still renders at once and searches an empty index until it lands —
+  // it never blocks on the build. See `_useSearchIndex.ts`.
+  const index = useSearchIndex();
 
-  const results = useMemo(() => runSearch(query, index), [query, index]);
+  const results = useMemo(() => runSearch(query, index ?? EMPTY_SEARCH_INDEX), [query, index]);
 
   const trimmed = query.trim();
   const hasQuery = trimmed.length > 0;
@@ -239,7 +250,13 @@ export default function SearchScreen({ navigation, route }: Props) {
     hasQuery && resolution ? (
       resolution.kind === 'answer' ? (
         <View style={{ marginTop: spacing.sm, marginBottom: spacing.md }}>
-          <AskAnswerCard answer={resolution.answer} lang={lang} onAction={onAskAction} />
+          <AskAnswerCard
+            answer={resolution.answer}
+            lang={lang}
+            onAction={onAskAction}
+            onShare={() => void share(askAnswerShareable(resolution.answer), lang)}
+            shareBusy={shareBusy}
+          />
         </View>
       ) : isQuestion || resolution.kind === 'declined' ? (
         // A decline is an explicit engine stance (§3.4) — DECLINE_LEXEMES only
@@ -251,7 +268,8 @@ export default function SearchScreen({ navigation, route }: Props) {
             kind={resolution.kind}
             suggestions={resolution.kind === 'none' ? resolution.suggestions : []}
             lang={lang}
-            libraryEmpty={totalHits === 0}
+            // Unknown until the index lands: never claim the library is empty.
+            libraryEmpty={index != null && totalHits === 0}
             onSuggestion={(q) => {
               setQuery(q);
               inputRef.current?.focus();
@@ -284,7 +302,7 @@ export default function SearchScreen({ navigation, route }: Props) {
               pressed && { opacity: 0.7 },
             ]}
           >
-            <Text style={[styles.backGlyph, { color: colors.inkSoft }]}>‹</Text>
+            <AppIcon name="back" size={22} color={colors.iconInk} />
           </Pressable>
           <View
             style={[
@@ -296,7 +314,7 @@ export default function SearchScreen({ navigation, route }: Props) {
               },
             ]}
           >
-            <Text style={[styles.searchGlyph, { color: colors.saffron }]}>⌕</Text>
+            <AppIcon name="search" size={21} color={colors.iconInk} />
             <TextInput
               ref={inputRef}
               value={query}
@@ -324,7 +342,7 @@ export default function SearchScreen({ navigation, route }: Props) {
                 hitSlop={12}
                 style={({ pressed }) => [styles.clearBtn, pressed && { opacity: 0.6 }]}
               >
-                <Text style={[styles.clearGlyph, { color: colors.inkMuted }]}>✕</Text>
+                <AppIcon name="close" size={16} color={colors.iconInk} />
               </Pressable>
             ) : null}
           </View>
@@ -358,7 +376,13 @@ export default function SearchScreen({ navigation, route }: Props) {
             radii={radii}
             lang={lang}
             header={askHeader}
-            empty={askHeader ? null : <ZeroState colors={colors} typography={typography} lang={lang} />}
+            empty={
+              askHeader ? null : index ? (
+                <ZeroState colors={colors} typography={typography} lang={lang} />
+              ) : (
+                <PreparingState colors={colors} typography={typography} lang={lang} />
+              )
+            }
             onSectionPress={(h) => openSection(h.entry.sourceId)}
             onDeityPress={(h) => openDeity(h.entry.deityId)}
             onVersePress={(h) => openVerse(h.entry)}
@@ -472,7 +496,7 @@ function EmptyState({
   lang,
 }: {
   recent: string[];
-  popular: { id: string; nameHi: string; nameEn: string; thumb: string }[];
+  popular: LibraryEntry[];
   /** जिज्ञासा (PRD-41): the briefing door in the question box's empty state. */
   onTodayVidhan: () => void;
   colors: Theme['colors'];
@@ -502,7 +526,7 @@ function EmptyState({
               { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md, opacity: pressed ? 0.85 : 1 },
             ]}
           >
-            <Text style={[styles.vidhanGlyph, { color: colors.saffron }]}>?</Text>
+            <AppIcon name="question" size={26} color={colors.iconInk} weight="duotone" />
             <View style={styles.resultBody}>
               <Text style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]} numberOfLines={1}>
                 {pick(lang, { hi: 'आज का विधान', en: "Today's Vidhan", gu: 'આજનું વિધાન', kn: 'ಇಂದಿನ ವಿಧಾನ' })}
@@ -511,7 +535,7 @@ function EmptyState({
                 {pick(lang, { hi: 'आज की तिथि · व्रत · शुभ समय · संकल्प', en: 'Tithi · observance · windows · sankalp', gu: 'તિથિ · વ્રત · શુભ સમય · સંકલ્પ', kn: 'ತಿಥಿ · ವ್ರತ · ಶುಭ ಸಮಯ · ಸಂಕಲ್ಪ' })}
               </Text>
             </View>
-            <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
+            <AppIcon name="next" size={17} color={colors.iconInk} />
           </Pressable>
           {recent.length > 0 ? (
             <>
@@ -568,7 +592,7 @@ function EmptyState({
                       hitSlop={6}
                       style={({ pressed }) => [styles.recentRemoveBtn, { opacity: pressed ? 0.4 : 1 }]}
                     >
-                      <Text style={[styles.recentRemoveGlyph, { color: colors.inkMuted }]}>✕</Text>
+                      <AppIcon name="close" size={16} color={colors.iconInk} />
                     </Pressable>
                   </View>
                 ))}
@@ -600,17 +624,7 @@ function EmptyState({
                   },
                 ]}
               >
-                <Text
-                  style={[
-                    styles.popularThumb,
-                    {
-                      color: colors.saffronDeep,
-                      fontFamily: typography.readerTitle.fontFamily,
-                    },
-                  ]}
-                >
-                  {p.thumb}
-                </Text>
+                <SearchLibraryArtwork entry={p} />
                 <PopularName
                   nameHi={p.nameHi}
                   nameEn={p.nameEn}
@@ -624,6 +638,57 @@ function EmptyState({
       }
     />
   );
+}
+
+/**
+ * Shown in place of the zero-results state while the index is still being
+ * built (a search within seconds of launch). It must not say "no matches" —
+ * nothing has been searched yet.
+ */
+function PreparingState({
+  colors,
+  typography,
+  lang,
+}: {
+  colors: Theme['colors'];
+  typography: Theme['typography'];
+  lang: Lang;
+}) {
+  const label = pick(lang, {
+    hi: 'खोज तैयार हो रही है…',
+    en: 'Preparing search…',
+    gu: 'શોધ તૈયાર થઈ રહી છે…',
+    kn: 'ಹುಡುಕಾಟ ಸಿದ್ಧವಾಗುತ್ತಿದೆ…',
+  });
+  return (
+    <View
+      style={styles.zero}
+      accessible
+      accessibilityRole="progressbar"
+      accessibilityLabel={label}
+      accessibilityLiveRegion="polite"
+      testID="search-preparing"
+    >
+      <ActivityIndicator color={colors.saffron} />
+      <Text
+        style={[
+          styles.zeroSecondary,
+          { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
+        ]}
+      >
+        {label}
+      </Text>
+    </View>
+  );
+}
+
+function SearchLibraryArtwork({ entry }: { entry?: LibraryEntry }) {
+  const firstDeity = entry?.deities?.[0];
+  return <View style={{ width: 36, height: 36, alignItems: 'center', justifyContent: 'center' }}>
+    {firstDeity
+      ? <DeityIcon iconKey={deityIconKey(firstDeity)} fallbackText={entry?.thumb ?? ''} size={32} />
+      : entry ? <CategoryIcon iconKey={entry.category} /> : <StoryIcon name="sanskar" size={32} />}
+  </View>;
 }
 
 function ZeroState({
@@ -785,14 +850,7 @@ function ResultsList({
                 },
               ]}
             >
-              <Text
-                style={[
-                  styles.sectionThumb,
-                  { color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily },
-                ]}
-              >
-                {s.thumb}
-              </Text>
+              <SearchLibraryArtwork entry={library.find((entry) => entry.id === s.sourceId)} />
               <View style={styles.resultBody}>
                 <Text
                   style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
@@ -807,7 +865,7 @@ function ResultsList({
                   {s.subtitleHi}
                 </Text>
               </View>
-              <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
+              <AppIcon name="next" size={17} color={colors.iconInk} />
             </Pressable>
           );
         }
@@ -828,14 +886,7 @@ function ResultsList({
                 },
               ]}
             >
-              <Text
-                style={[
-                  styles.sectionThumb,
-                  { color: colors.gold, fontFamily: typography.readerTitle.fontFamily },
-                ]}
-              >
-                ॐ
-              </Text>
+              <DeityIcon iconKey={deities.find((deity) => deity.id === d.deityId)?.iconKey} fallbackText="ॐ" size={32} />
               <View style={styles.resultBody}>
                 <Text
                   style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
@@ -850,7 +901,7 @@ function ResultsList({
                   {pick(lang, { hi: 'देवता', en: 'Deity', gu: 'દેવતા', kn: 'ದೇವತೆ' })}
                 </Text>
               </View>
-              <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
+              <AppIcon name="next" size={17} color={colors.iconInk} />
             </Pressable>
           );
         }
@@ -891,7 +942,7 @@ function ResultsList({
                   {contentByLang(lang, v.sectionNameHi, v.sectionNameEn)} · {contentByLang(lang, v.labelHi, v.labelEn)}
                 </Text>
               </View>
-              <Text style={[styles.chevron, { color: colors.saffron }]}>›</Text>
+              <AppIcon name="next" size={17} color={colors.iconInk} />
             </Pressable>
           );
         }

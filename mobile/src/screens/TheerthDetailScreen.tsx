@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -8,10 +8,18 @@ import { contentByLang, pick } from '@/utils/localize';
 import { meaningToken, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getTheerthBackground, getTheerthIllustration } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingBanner from '@/components/ReadingBanner';
 import LanguageToggle from '@/components/LanguageToggle';
-import { getTempleById } from '@/data/theerth/temples';
+import LibraryCard from '@/components/LibraryCard';
+import { useNewContent } from '@/contexts/NewContentContext';
+import { navigateToEntryStart } from '@/navigation/entryRoutes';
+import { relatedReadingsForDeity } from '@/data/theerth/relatedReadings';
+import { getTempleDetailById } from '@/data/theerth/temples';
 import type { Deity } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { theerthShareable } from '@/utils/shareContent';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'TheerthDetail'>;
 
@@ -48,8 +56,12 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   const { templeId } = route.params;
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
+  const { markSeen } = useNewContent();
 
-  const temple = getTempleById(templeId);
+  // The reading loads here, on the screen the user opened — see
+  // `loadDetails()` in temples.ts for why it is not on the launch path.
+  const temple = getTempleDetailById(templeId);
 
   if (!temple) {
     return (
@@ -66,6 +78,8 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
   const name = contentByLang(lang, temple.nameHi, temple.nameEn);
   const cityState = `${contentByLang(lang, temple.cityHi, temple.cityEn)}, ${contentByLang(lang, temple.stateHi, temple.stateEn)}`;
   const illustration = getTheerthIllustration(temple.id);
+  // The presiding deity's shipped aarti + chalisa (design.md §27 item 10).
+  const relatedReadings = relatedReadingsForDeity(temple.deity);
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -90,7 +104,13 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           {/* Language toggle at the top (consistent with the map/listing screens);
               the temple name lives only in the hero below, never duplicated here. */}
           <LanguageToggle />
-          <View style={styles.backBtnSpacer} />
+          {/* Share sits where the back button's mirror spacer was (design.md §39.4). */}
+          <ShareButton
+            onPress={() => void share(theerthShareable(temple), lang)}
+            busy={shareBusy}
+            accessibilityLabel="Share theerth"
+            accessibilityHint="Opens share options for this temple's story"
+          />
         </View>
 
         <ScrollView
@@ -152,7 +172,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
               testID="theerth-illustration"
               accessible
               accessibilityRole="image"
-              accessibilityLabel={name}
+              accessibilityLabel={contentByLang(lang, 'पठन चित्र', 'Reading illustration')}
               style={[
                 styles.illustrationFrame,
                 {
@@ -163,10 +183,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
                 },
               ]}
             >
-              {/* The plates are square with the artwork in the upper part; a
-                  5:4 window anchored to the top keeps the murti and mandap in
-                  view without a centred crop lopping off the canopy. */}
-              <Image source={illustration} style={styles.illustrationImage} resizeMode="cover" />
+              <ReadingBanner source={illustration} />
             </View>
           ) : null}
 
@@ -222,6 +239,37 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
               />
             </View>
           ))}
+
+          {/* आरती व चालीसा (design.md §27 item 10): the way from a shrine to the
+              readings sung there. Derived from the presiding deity, so a temple
+              whose deity has no shipped chalisa/aarti renders nothing here
+              rather than an empty heading. Cards are the library's own
+              LibraryCard, so NEW badges and ＋ add-to-routine behave exactly as
+              on Home and the deity hub. */}
+          {relatedReadings.length > 0 ? (
+            <View testID="theerth-related-readings">
+              <Ornament colors={colors} />
+              <SectionBlock
+                labelHi="आरती व चालीसा"
+                labelEn="Aarti & Chalisa"
+                lang={lang}
+                colors={colors}
+                typography={typography}
+              />
+              <View style={styles.relatedList}>
+                {relatedReadings.map((entry) => (
+                  <LibraryCard
+                    key={entry.id}
+                    entry={entry}
+                    onPress={() => {
+                      markSeen(entry.id);
+                      navigateToEntryStart(navigation, entry);
+                    }}
+                  />
+                ))}
+              </View>
+            </View>
+          ) : null}
 
           <Text
             style={{
@@ -331,7 +379,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  backBtnSpacer: { width: 34, height: 34 },
   scroll: {
     paddingTop: 4,
   },
@@ -349,18 +396,13 @@ const styles = StyleSheet.create({
   },
   illustrationFrame: {
     width: 'auto',
-    aspectRatio: 5 / 4,
     borderWidth: 1,
     overflow: 'hidden',
     marginTop: 4,
   },
-  illustrationImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    width: '100%',
-    aspectRatio: 1,
+  relatedList: {
+    gap: 10,
+    marginTop: 4,
   },
   ornamentRow: {
     flexDirection: 'row',

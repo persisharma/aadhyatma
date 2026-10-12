@@ -214,6 +214,7 @@ export default function SaraswatiStotramReaderScreen({ navigation, route }: Prop
               const verseIdx = index - offset;
               return (
                 <ShivaStrotamVersePage
+                  showIllustration={verseIdx === 0}
                   verse={item}
                   sourceId="saraswati-stotram"
                   width={width}

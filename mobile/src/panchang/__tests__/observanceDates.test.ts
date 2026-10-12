@@ -21,7 +21,7 @@ const dayDiff = (a: string, b: string) => Math.abs((new Date(a).getTime() - new 
 
 // Real published civil dates (Ujjain/IST). Source of truth — NOT engine output.
 const ANCHORS: Record<string, string> = {
-  'janmashtami:2025': '2025-08-16', 'janmashtami:2026': '2026-09-04',
+  'janmashtami:2025': '2025-08-15', 'janmashtami:2026': '2026-09-04',
   'maha-shivaratri:2025': '2025-02-26', 'maha-shivaratri:2026': '2026-02-15', 'maha-shivaratri:2027': '2027-03-06',
   'ganesh-chaturthi:2025': '2025-08-27', 'ganesh-chaturthi:2026': '2026-09-14',
   'diwali:2025': '2025-10-20', 'ram-navami:2025': '2025-04-06', 'narada-jayanti:2025': '2025-05-13',
@@ -115,17 +115,103 @@ test('monthly vrats land on every 2026 date Drik lists', () => {
   }
 });
 
-// Holi 2026 is the one audited date the engine still misses: Drik moved Holika
-// Dahan off the bhadra-covered 2 Mar evening to 3 Mar, so Rangwali Holi was
-// 4 Mar. Bhadra is not modelled; pinned so the gap cannot be forgotten. When a
-// bhadra rule lands this should fail — then flip it to the published date.
-test('Holi 2026 is the known bhadra divergence (published 4 Mar)', () => {
-  assert.equal(engineDate('holi', 2026), '2026-03-03');
+// ── Published-rule audit (Oct 2026, RULEBOOK §23.14–23.17) ──────────────────
+// Every date below was READ from DrikPanchang (New Delhi) or a source quoting it,
+// cross-checked against a second source where one was found; the rules that
+// produce them are in `specialDayRules.ts`. Ujjain (this table) and New Delhi
+// agree on every row. 2023 is outside the bundled table and resolves live.
+
+// Raksha Bandhan — Bhadra rule. 2023, 2029, 2031: Purnima holds under 3 muhurtas
+// past the second sunrise, so Rakhi is the first day after Bhadra ends.
+const RAKHI_PUBLISHED: Record<number, string> = {
+  2023: '2023-08-30', 2024: '2024-08-19', 2025: '2025-08-09', 2026: '2026-08-28', 2027: '2027-08-17',
+  2028: '2028-08-05', 2029: '2029-08-23', 2030: '2030-08-13', 2031: '2031-08-02',
+};
+// Rangwali Holi — the day after Holika Dahan. 2023 and 2026: Bhadra past midnight
+// and the next day holds Purnima 3½ prahars, so Dahan moved a day (7 Mar / 3 Mar).
+const HOLI_PUBLISHED: Record<number, string> = {
+  2023: '2023-03-08', 2024: '2024-03-25', 2025: '2025-03-14', 2026: '2026-03-04', 2027: '2027-03-22',
+  2028: '2028-03-11', 2029: '2029-03-01', 2030: '2030-03-20', 2031: '2031-03-09',
+};
+// Janmashtami — Smarta (Nishita + Rohini) and, only where it differs, Vaishnava.
+// 2025: Smarta 15 Aug (Ashtami at the 15th's Nishita), Vaishnava/ISKCON 16 Aug.
+// 2027: one date, 25 Aug (Ashtami opened after the 24th's sunset; Rohini joins it
+// by day on the 25th). 2030 Smarta is not in any source read — not pinned.
+const JANMASHTAMI_PUBLISHED: Record<number, { smarta: string; vaishnava: string | null }> = {
+  2023: { smarta: '2023-09-06', vaishnava: '2023-09-07' },
+  2024: { smarta: '2024-08-26', vaishnava: null },
+  2025: { smarta: '2025-08-15', vaishnava: '2025-08-16' },
+  2026: { smarta: '2026-09-04', vaishnava: null },
+  2027: { smarta: '2027-08-25', vaishnava: null },
+  2028: { smarta: '2028-08-13', vaishnava: null },
+  2029: { smarta: '2029-08-31', vaishnava: '2029-09-01' },
+};
+// Ekadashi — Dharmasindhu (Drik's Smarta + "Vaishnava <name> Ekadashi"). Covers
+// every pattern: Dashami at arunodaya (Vijaya 2024), Ekadashi on two sunrises →
+// Smarta the second (Nirjala 2024, Rama 2024), Dwadashi on two sunrises → the
+// Vaishnava Mahadvadashi (Nirjala 2025, Kamada 2023), Dwadashi on no sunrise →
+// Smarta the Dashami-sunrise day (Dev Uthani 2025), Ekadashi on no sunrise
+// (Yogini 2025/2026, Dev Uthani 2026).
+const EKADASHI_PUBLISHED: [id: string, smarta: string, vaishnava: string | null][] = [
+  ['kamada-ekadashi', '2023-04-01', '2023-04-02'], ['amalaki-ekadashi', '2023-03-03', null],
+  ['vijaya-ekadashi', '2024-03-06', '2024-03-07'], ['apara-ekadashi', '2024-06-02', '2024-06-03'],
+  ['nirjala-ekadashi', '2024-06-18', null], ['rama-ekadashi', '2024-10-28', null],
+  ['papmochani-ekadashi', '2025-03-25', '2025-03-26'], ['nirjala-ekadashi', '2025-06-06', '2025-06-07'],
+  ['yogini-ekadashi', '2025-06-21', '2025-06-22'], ['dev-uthani-ekadashi', '2025-11-01', '2025-11-02'],
+  ['yogini-ekadashi', '2026-07-10', '2026-07-11'], ['dev-uthani-ekadashi', '2026-11-20', '2026-11-21'],
+  ['vijaya-ekadashi', '2027-03-04', null], ['kamika-ekadashi', '2027-07-29', '2027-07-30'],
+  ['rama-ekadashi', '2027-10-25', '2027-10-26'], ['kamada-ekadashi', '2028-04-05', '2028-04-06'],
+  ['aja-ekadashi', '2028-08-16', '2028-08-17'],
+];
+// Drik's full Smarta Ekadashi list for 2025 (25 dates, three Putradas).
+const SMARTA_EKADASHI_2025 = [
+  '2025-01-10', '2025-01-25', '2025-02-08', '2025-02-24', '2025-03-10', '2025-03-25', '2025-04-08',
+  '2025-04-24', '2025-05-08', '2025-05-23', '2025-06-06', '2025-06-21', '2025-07-06', '2025-07-21',
+  '2025-08-05', '2025-08-19', '2025-09-03', '2025-09-17', '2025-10-03', '2025-10-17', '2025-11-01',
+  '2025-11-15', '2025-12-01', '2025-12-15', '2025-12-30',
+];
+
+test('Raksha Bandhan follows the Bhadra rule on every published date 2023–2031', () => {
+  for (const [year, date] of Object.entries(RAKHI_PUBLISHED)) {
+    assert.ok(engineDates('raksha-bandhan', +year).includes(date), `${year}: want ${date}, got ${engineDates('raksha-bandhan', +year)}`);
+  }
 });
 
-test('Janmashtami resolves exactly to its real civil date', () => {
-  assert.equal(engineDate('janmashtami', 2025), '2025-08-16');
-  assert.equal(engineDate('janmashtami', 2026), '2026-09-04'); // Friday
+test('Rangwali Holi is the day after the Bhadra-ruled Holika Dahan, 2023–2031', () => {
+  for (const [year, date] of Object.entries(HOLI_PUBLISHED)) {
+    assert.ok(engineDates('holi', +year).includes(date), `${year}: want ${date}, got ${engineDates('holi', +year)}`);
+  }
+});
+
+test('Janmashtami: Smarta on its published day, the Vaishnava row only where Drik prints one', () => {
+  for (const [year, { smarta, vaishnava }] of Object.entries(JANMASHTAMI_PUBLISHED)) {
+    assert.deepEqual(engineDates('janmashtami', +year), [smarta], `${year} Smarta`);
+    assert.deepEqual(engineDates('janmashtami-vaishnava', +year), vaishnava ? [vaishnava] : [], `${year} Vaishnava`);
+  }
+});
+
+test('Ekadashi: Smarta and Vaishnava days match every published pair', () => {
+  for (const [id, smarta, vaishnava] of EKADASHI_PUBLISHED) {
+    const year = +smarta.slice(0, 4);
+    assert.ok(engineDates(id, year).includes(smarta), `${id} Smarta ${smarta}: got ${engineDates(id, year)}`);
+    const v = engineDates(`vaishnava-${id}`, year);
+    if (vaishnava) assert.ok(v.includes(vaishnava), `${id} Vaishnava ${vaishnava}: got ${v}`);
+    else assert.ok(!v.some((d) => dayDiff(d, smarta) <= 2), `${id} ${smarta}: no Vaishnava row expected, got ${v}`);
+  }
+});
+
+test('Smarta Ekadashi 2025 is exactly Drik\'s list — including the second Putrada on 30 Dec', () => {
+  const got = resolveObservancesForYear(2025, 'purnimant')
+    .filter((x) => x.rule.dayRule === 'ekadashi' && x.rule.category === 'vrat' && x.rule.marker === 'halfmoon')
+    .map((x) => iso(x.date));
+  assert.deepEqual([...new Set(got)].sort(), SMARTA_EKADASHI_2025);
+});
+
+test('Darsha Amavasya takes the day of greater aparahna cover (Feb 2029: 13th, not the midpoint 12th)', () => {
+  const feb = (y: number) => engineDates('darsha-amavasya', y).filter((d) => d.slice(5, 7) === '02');
+  assert.deepEqual(feb(2029), ['2029-02-13']);
+  // Published 2025 Darsha list (Drik): the three days that differ from the sunrise row.
+  for (const d of ['2025-05-26', '2025-08-22', '2025-11-19']) assert.ok(engineDates('darsha-amavasya', 2025).includes(d), d);
 });
 
 test('Maha Shivaratri is in February (Phalguna), never January (Magha)', () => {
@@ -573,6 +659,8 @@ test('every wave-2 rule resolves exactly once a year, 2024-2031', () => {
 test('wave-2 rules ride the shipped rule that shares their tithi', () => {
   for (const year of [2024, 2025, 2026, 2027, 2028]) {
     assert.equal(engineDate('radha-ashtami', year), engineDate('durva-ashtami', year), `${year}: Radhashtami ≠ Durva Ashtami`);
+    // Equal only while Bhadra leaves Rakhi on the sunrise day — true 2024–2028; in
+    // 2029 and 2031 Rakhi moves to the eve (RULEBOOK §23.15) and the Upakarma does not.
     assert.equal(engineDate('avani-avittam', year), engineDate('raksha-bandhan', year), `${year}: Avani Avittam ≠ Raksha Bandhan`);
     // NOT Shani Jayanti = Vat Savitri: the vrat is madhyahna-vyapini and Drik
     // splits them when the amavasya opens before midday (26 vs 27 May 2025).

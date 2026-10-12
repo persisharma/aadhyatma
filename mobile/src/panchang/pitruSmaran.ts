@@ -16,13 +16,19 @@
 //     `matchesLunarTithiRuleOnDate` (festivalEngine.ts) — an adhik-year barsi is
 //     observed in the nija (true) month, and a kshaya tithi is observed on the day
 //     it prevails, exactly as DrikPanchang lists festivals.
+//   • EXCEPT where a shraddha falls — the Pitru Paksha fortnight (purnima, the
+//     krishna tithis and सर्वपितृ अमावस्या) and every annual (barsi) date: shraddha
+//     is an aparahna rite, so the day is the one whose aparahna SPAN the tithi
+//     covers longest (`assignAparahnaDaysSteps`, `shraddhaDayForSunriseDay`). The
+//     sunrise matcher still finds the lunation and owns the month/adhik guard.
+//     `tithiRuleMatchesDate` and the `janma` reckoning stay on sunrise.
 //
 // This module is RN-free and React-free (tested via `tsx --test`, like the rest of
 // src/panchang). AsyncStorage/React live in PitruSmaranContext and the hooks.
 
 import { addDays } from './calendarGrid';
 import { runInBackground, runSynchronously } from './backgroundWork';
-import { computeTithiAndMonth, computeTithiAndMonthSteps } from './engine';
+import { aparahnaCover, computeTithiAndMonthSteps } from './engine';
 import { matchesLunarTithiRuleOnDate, type ObservanceLocation } from './festivalEngine';
 import {
   LUNAR_MONTH_NAMES_EN,
@@ -70,6 +76,14 @@ export type SolveOptions = {
   /** Omitted ⇒ Ujjain, the engine default every bundled observance table assumes. */
   location?: ObservanceLocation;
 };
+
+/**
+ * Which day an annual tithi lands on. `shraddha` (the dead — Pitru Smaran): the
+ * day whose aparahna the tithi covers longest, the rite's own time. `janma` (the
+ * living — PRD-29): the sunrise day, as every festival rule and almanac heading
+ * names it. They differ for about a third of tithis (126 of 365 days in 2026).
+ */
+export type Reckoning = 'shraddha' | 'janma';
 
 /** The Mahalaya fortnight: `purnima` = भाद्रपद पूर्णिमा (Purnima Shraddha day);
  *  `start` = Pratipada Shraddha (day after purnima); `end` = सर्वपितृ अमावस्या. */
@@ -242,6 +256,11 @@ export function tithiRuleMatchesDate(rule: TithiRule, date: Date, options: Solve
 }
 
 const windowCache = new Map<string, PitruPakshaWindow | null>();
+/**
+ * Each year's krishna-tithi → day table, memoised against the exact window
+ * object it was solved for (see `pakshaTithiDaysSteps`).
+ */
+const tithiDaysCache = new Map<string, { window: PitruPakshaWindow; days: Map<number, Date> }>();
 
 function windowCacheKey(gregorianYear: number, options: SolveOptions): string {
   return `${options.location?.cityId ?? 'ujjain'}:${gregorianYear}`;
@@ -267,10 +286,62 @@ export function primePitruPakshaWindow(
 }
 
 /**
+ * Each tithi of the fortnight assigned to the civil day whose aparahna span it
+ * covers most (`aparahnaSplitForDate`), over the days `from`..`to` inclusive.
+ * Keyed by tithi index (14 = purnima, 15–28 = krishna 1–14, 29 = amavasya).
+ *
+ * Checked against the published Pitru Paksha lists 2024–2027 (all 16 days each):
+ *  • a tithi covering two days' spans goes to the larger cover — 2024 Ekadashi
+ *    covers 144 min of 27 Sep and 87 of 28 Sep, Dwadashi 57 of 28 Sep and 143 of
+ *    29 Sep, so 28 Sep carries no shraddha at all, as Drik lists it;
+ *  • a tithi that opens inside a span and closes before the next joins that day
+ *    — 2026 Panchami opens 30 Sep 2:55 PM, so 30 Sep is "Chaturthi & Panchami";
+ *  • a tithi that covers no span anywhere (it would have to open after one
+ *    day's span and close before the next one's) takes its sunrise day, the
+ *    same fallback the shared matcher's instant rules use. No year 2020–2035
+ *    reaches this branch (Ujjain, Delhi, Jaipur, Chennai).
+ * Cover is the FRACTION of each span (`aparahnaCover`); equal cover keeps the
+ * LATER day (Dharma Sindhu: a tithi in both aparahnas equally is taken on the
+ * next day — it is a lengthening one).
+ */
+function* assignAparahnaDaysSteps(
+  from: Date,
+  to: Date,
+  options: SolveOptions
+): Generator<void, Map<number, Date>, void> {
+  const best = new Map<number, { day: Date; cover: number }>();
+  const sunriseDay = new Map<number, Date>();
+  const opts = { calendarSystem: 'purnimant' as const, location: options.location };
+  for (let day = startOfLocalDay(from); day.getTime() <= to.getTime(); day = addDays(day, 1)) {
+    const { tithiIndex } = yield* computeTithiAndMonthSteps(day, opts);
+    if (!sunriseDay.has(tithiIndex)) sunriseDay.set(tithiIndex, day);
+    yield;
+    // The span holds only the sunrise tithi or its successor.
+    for (const index of [tithiIndex, (tithiIndex + 1) % 30]) {
+      if (index < 14 || index > 29) continue;
+      const cover = aparahnaCover(day, index, opts);
+      if (cover <= 0) continue;
+      // `>=`: the days run in order, so equal cover keeps the LATER day.
+      const current = best.get(index);
+      if (!current || cover >= current.cover) best.set(index, { day, cover });
+    }
+  }
+  const days = new Map<number, Date>();
+  for (let index = 14; index <= 29; index++) {
+    const day = best.get(index)?.day ?? sunriseDay.get(index);
+    if (day) days.set(index, day);
+  }
+  return days;
+}
+
+/**
  * The Pitru Paksha (Mahalaya) fortnight of a Gregorian year, purnimant:
- * भाद्रपद पूर्णिमा, then Pratipada Shraddha (day after) through सर्वपितृ अमावस्या —
- * the first amavasya after that purnima (month-free by construction, so an
- * adhik-Ashwin year cannot orphan the closing amavasya).
+ * Purnima Shraddha, then Pratipada Shraddha (day after) through सर्वपितृ अमावस्या.
+ * The lunation is found by its sunrise days — भाद्रपद पूर्णिमा and the first
+ * amavasya after it (month-free by construction, so an adhik-Ashwin year cannot
+ * orphan the closing amavasya) — and both ends are then moved to their aparahna
+ * days, which can be a day earlier (Sarvapitri 2027: amavasya opens 29 Sep and
+ * holds that afternoon, so 29 Sep, not the sunrise day 30 Sep).
  */
 function* pitruPakshaWindowSteps(gregorianYear: number, options: SolveOptions): Generator<void, PitruPakshaWindow | null, void> {
   const cacheKey = windowCacheKey(gregorianYear, options);
@@ -279,24 +350,30 @@ function* pitruPakshaWindowSteps(gregorianYear: number, options: SolveOptions): 
 
   // Bhadrapada Purnima falls in Sep (early Oct at the latest); scanning from
   // 1 Aug bounds the search without risking a miss.
-  const purnima = yield* scanForRuleSteps(
+  const sunrisePurnima = yield* scanForRuleSteps(
     toObservanceRule({ lunarMonth: 6, paksha: 'shukla', tithi: 15 }),
     new Date(gregorianYear, 7, 1),
     MAX_SCAN_DAYS,
     options
   );
-  if (!purnima || purnima.getFullYear() !== gregorianYear) {
+  if (!sunrisePurnima || sunrisePurnima.getFullYear() !== gregorianYear) {
     windowCache.set(cacheKey, null);
     return null;
   }
-  const start = addDays(purnima, 1);
-  const end = yield* scanForRuleSteps(toObservanceRule({ paksha: 'krishna', tithi: 15 }), start, 20, options);
-  if (!end) {
+  const sunriseEnd = yield* scanForRuleSteps(
+    toObservanceRule({ paksha: 'krishna', tithi: 15 }), addDays(sunrisePurnima, 1), 20, options
+  );
+  if (!sunriseEnd) {
     windowCache.set(cacheKey, null);
     return null;
   }
-  const window = { purnima, start, end };
+  const days = yield* assignAparahnaDaysSteps(addDays(sunrisePurnima, -1), sunriseEnd, options);
+  const purnima = days.get(14) ?? sunrisePurnima;
+  const window = { purnima, start: addDays(purnima, 1), end: days.get(29) ?? sunriseEnd };
   windowCache.set(cacheKey, window);
+  // The same pass already placed every krishna tithi, so a fresh solve leaves
+  // the day table warm; only a window primed from disk has to solve it again.
+  tithiDaysCache.set(cacheKey, { window, days });
   return window;
 }
 
@@ -318,9 +395,9 @@ export function pitruPakshaWindowAsync(
  * the Mahalaya krishna paksha (the traditional mapping — independent of the death
  * month and paksha). Unknown tithi ('sarvapitri') → सर्वपितृ अमावस्या. A पूर्णिमा
  * tithi → Purnima Shraddha, on भाद्रपद पूर्णिमा itself (the day before Pratipada).
- * A tithi that is kshaya inside the window resolves to the day it prevails (the
- * shared matcher's fallback); if it still cannot be placed, सर्वपितृ अमावस्या is
- * the traditional catch-all.
+ * Each krishna tithi lands on its aparahna day (`assignAparahnaDaysSteps`), so
+ * two tithis can share a day and a day can carry none; if a tithi still cannot
+ * be placed, सर्वपितृ अमावस्या is the traditional catch-all.
  */
 export function pakshaShraddhaDay(
   rule: TithiRule | 'sarvapitri',
@@ -333,17 +410,43 @@ export function pakshaShraddhaDay(
   if (!isValidTithiRule(rule)) return null;
   if (rule.paksha === 'shukla' && rule.tithi === 15) return window.purnima;
   if (rule.tithi === 15) return window.end; // krishna 15 = amavasya = Sarvapitri
-  // Scan from the purnima itself, not window.start: a kshaya Pratipada prevails on
-  // the purnima day (a combined "Purnima + Pratipada Shraddha" day, as DrikPanchang
-  // lists such years), which a start-of-window scan would miss.
-  const found = scanForRule(
-    toObservanceRule({ paksha: 'krishna', tithi: rule.tithi }),
-    window.purnima,
-    17,
-    options
-  );
+  const found = pakshaTithiDays(gregorianYear, window, options).get(rule.tithi + 14);
   if (found && found.getTime() <= window.end.getTime()) return found;
   return window.end;
+}
+
+/**
+ * The fortnight's krishna-tithi → day table, solved from the window it belongs
+ * to (memoised against that exact window object, so a window primed from disk
+ * gets a table of its own). The day before the purnima is included: its
+ * span can carry the purnima's tail, which must compete for Pratipada.
+ */
+function pakshaTithiDays(gregorianYear: number, window: PitruPakshaWindow, options: SolveOptions): Map<number, Date> {
+  return runSynchronously(pakshaTithiDaysSteps(gregorianYear, window, options));
+}
+
+function* pakshaTithiDaysSteps(
+  gregorianYear: number, window: PitruPakshaWindow, options: SolveOptions
+): Generator<void, Map<number, Date>, void> {
+  const key = windowCacheKey(gregorianYear, options);
+  const cached = tithiDaysCache.get(key);
+  if (cached && cached.window === window) return cached.days;
+  const days = yield* assignAparahnaDaysSteps(addDays(window.purnima, -1), window.end, options);
+  tithiDaysCache.set(key, { window, days });
+  return days;
+}
+
+/**
+ * Whether `pitruPakshaObservanceForDate` can answer for this year with no
+ * astronomy — the window AND its day table are both in memory. A render-time
+ * read must check this first: a window primed from disk leaves the table to
+ * solve (~80 ms cold on V8).
+ */
+export function isPitruPakshaDayTableWarm(gregorianYear: number, options: SolveOptions = {}): boolean {
+  const key = windowCacheKey(gregorianYear, options);
+  const window = windowCache.get(key);
+  if (window === undefined) return false;
+  return window === null || tithiDaysCache.get(key)?.window === window;
 }
 
 /**
@@ -353,17 +456,33 @@ export function pakshaShraddhaDay(
 export function nextObservanceForEntry(
   entry: Pick<SmaranEntry, 'tithiRule'>,
   fromDate: Date,
-  options: SolveOptions = {}
+  options: SolveOptions = {},
+  reckoning: Reckoning = 'shraddha'
 ): Date | null {
-  return runSynchronously(nextObservanceForEntrySteps(entry, fromDate, options));
+  return runSynchronously(nextObservanceForEntrySteps(entry, fromDate, options, reckoning));
 }
 
 export function* nextObservanceForEntrySteps(
-  entry: Pick<SmaranEntry, 'tithiRule'>, fromDate: Date, options: SolveOptions = {}
+  entry: Pick<SmaranEntry, 'tithiRule'>, fromDate: Date, options: SolveOptions = {}, reckoning: Reckoning = 'shraddha'
 ): Generator<void, Date | null, void> {
   if (entry.tithiRule !== 'sarvapitri') {
     if (!isValidTithiRule(entry.tithiRule)) return null;
-    return yield* scanForRuleSteps(toObservanceRule(entry.tithiRule), fromDate, MAX_SCAN_DAYS, options);
+    const rule = toObservanceRule(entry.tithiRule);
+    if (reckoning === 'janma') return yield* scanForRuleSteps(rule, fromDate, MAX_SCAN_DAYS, options);
+    const from = startOfLocalDay(fromDate);
+    // The aparahna day is the sunrise day or the one before, so a sunrise day
+    // just after `from` can name a shraddha day just before it: that occurrence
+    // has passed, and the scan moves on to the next lunation.
+    let cursor = from;
+    for (let guard = 0; guard < 3; guard++) {
+      const sunriseDay = yield* scanForRuleSteps(rule, cursor, MAX_SCAN_DAYS, options);
+      if (!sunriseDay) return null;
+      yield;
+      const day = shraddhaDayForSunriseDay(entry.tithiRule, sunriseDay, options);
+      if (day.getTime() >= from.getTime()) return day;
+      cursor = addDays(sunriseDay, 1);
+    }
+    return null;
   }
   const from = startOfLocalDay(fromDate);
   for (const year of [from.getFullYear(), from.getFullYear() + 1]) {
@@ -384,9 +503,31 @@ export function nextSarvapitriAmavasya(fromDate: Date, options: SolveOptions = {
 }
 
 /**
+ * The shraddha day of one lunation, given its SUNRISE day (the shared matcher's
+ * answer, kshaya-aware): that day or the one before, whichever aparahna span the
+ * tithi covers the greater fraction of — the Pitru Paksha rule
+ * (`assignAparahnaDaysSteps`) for a single tithi. A tithi can only reach back
+ * one day: it opened after the previous sunrise. Equal cover, or none, keeps
+ * the sunrise (later) day.
+ *
+ * Magha Krishna Ashtami 2027 opens 29 Jan 4:02 AM — its sunrise day 29 Jan
+ * holds the whole aparahna, so nothing moves. Pitru Paksha Saptami 2026 opens
+ * 2 Oct 10:15 AM and closes 3 Oct 8:00 AM, so a Saptami barsi that year is
+ * 2 Oct, the day before the almanac's sunrise heading.
+ */
+function shraddhaDayForSunriseDay(rule: Pick<TithiRule, 'paksha' | 'tithi'>, sunriseDay: Date, options: SolveOptions): Date {
+  const target = tithiSlotIndex(rule);
+  const opts = { calendarSystem: 'purnimant' as const, location: options.location };
+  const before = addDays(sunriseDay, -1);
+  // Strictly more: equal cover keeps the later (sunrise) day.
+  return aparahnaCover(before, target, opts) > aparahnaCover(sunriseDay, target, opts) ? before : sunriseDay;
+}
+
+/**
  * Does this civil day carry the entry's observance? (The Panchang day chip.)
- * Annual-tithi entries match their tithi's day (kshaya-aware via the shared
- * matcher); unknown-tithi entries match सर्वपितृ अमावस्या.
+ * Annual-tithi entries match their shraddha day — the aparahna day of the
+ * lunation the shared sunrise matcher finds on this day or the next;
+ * unknown-tithi entries match सर्वपितृ अमावस्या.
  */
 export function entryMatchesDate(
   entry: Pick<SmaranEntry, 'tithiRule'>,
@@ -401,7 +542,16 @@ export function entryMatchesDate(
     return window !== null && isSameLocalDay(window.end, day);
   }
   if (!isValidTithiRule(entry.tithiRule)) return false;
-  return matchesLunarTithiRuleOnDate(toObservanceRule(entry.tithiRule), day, 'purnimant', options.location);
+  const rule = toObservanceRule(entry.tithiRule);
+  for (const sunriseDay of [day, addDays(day, 1)]) {
+    if (
+      matchesLunarTithiRuleOnDate(rule, sunriseDay, 'purnimant', options.location)
+      && isSameLocalDay(shraddhaDayForSunriseDay(entry.tithiRule, sunriseDay, options), day)
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export type PitruPakshaDayObservance = {
@@ -412,54 +562,91 @@ export type PitruPakshaDayObservance = {
   labelEn: string;
 };
 
+/**
+ * The shraddha name(s) a fortnight day carries, without the "पितृ पक्ष —" prefix:
+ * "पूर्णिमा श्राद्ध", "सप्तमी श्राद्ध", "चतुर्थी व पंचमी श्राद्ध" (two tithis share
+ * the day's aparahna), "सर्वपितृ अमावस्या", or — on a day whose aparahna both
+ * neighbouring tithis cover less than their other day's (28 Sep 2024) — no
+ * tithi at all. `tithis` lists the krishna tithis (1–14) placed on the day.
+ * A screen that already holds the year's window passes it, so the row names and
+ * the rows themselves come from one window.
+ */
+export type PitruPakshaDayName = {
+  tithis: number[];
+  isPurnima: boolean;
+  isSarvapitri: boolean;
+  nameHi: string;
+  nameEn: string;
+};
+
+export function pitruPakshaDayName(
+  date: Date,
+  options: SolveOptions = {},
+  window: PitruPakshaWindow | null = pitruPakshaWindow(startOfLocalDay(date).getFullYear(), options)
+): PitruPakshaDayName | null {
+  const day = startOfLocalDay(date);
+  if (!window || day.getTime() < window.purnima.getTime() || day.getTime() > window.end.getTime()) {
+    return null;
+  }
+  const isPurnima = isSameLocalDay(day, window.purnima);
+  const isSarvapitri = isSameLocalDay(day, window.end);
+  const tithis: number[] = [];
+  for (const [index, d] of pakshaTithiDays(day.getFullYear(), window, options)) {
+    if (index >= 15 && index <= 28 && isSameLocalDay(d, day)) tithis.push(index - 14);
+  }
+  tithis.sort((a, b) => a - b);
+  const hi = tithis.map((t) => TITHI_NAMES_HI[t + 14]);
+  const en = tithis.map((t) => TITHI_NAMES_EN[t + 14]);
+  if (isPurnima) {
+    hi.unshift(TITHI_NAMES_HI[14]);
+    en.unshift(TITHI_NAMES_EN[14]);
+  }
+  let nameHi = hi.length ? `${hi.join(' व ')} श्राद्ध` : 'कोई तिथि-श्राद्ध नहीं';
+  let nameEn = en.length ? `${en.join(' & ')} Shraddha` : 'No tithi shraddha';
+  if (isSarvapitri) {
+    nameHi = hi.length ? `${nameHi} व सर्वपितृ अमावस्या` : 'सर्वपितृ अमावस्या';
+    nameEn = en.length ? `${nameEn} & Sarvapitri Amavasya` : 'Sarvapitri Amavasya';
+  }
+  return { tithis, isPurnima, isSarvapitri, nameHi, nameEn };
+}
+
 /** Public Pitru-Paksha observance for a civil date, or null outside the fortnight. */
 export function pitruPakshaObservanceForDate(
   date: Date,
   options: SolveOptions = {}
 ): PitruPakshaDayObservance | null {
-  const day = startOfLocalDay(date);
-  const window = pitruPakshaWindow(day.getFullYear(), options);
-  if (!window || day.getTime() < window.purnima.getTime() || day.getTime() > window.end.getTime()) {
-    return null;
-  }
-  if (isSameLocalDay(day, window.purnima)) {
-    return {
-      tithi: 15,
-      isPurnima: true,
-      isSarvapitri: false,
-      labelHi: 'पितृ पक्ष — पूर्णिमा श्राद्ध',
-      labelEn: 'Pitru Paksha — Purnima Shraddha',
-    };
-  }
-  if (isSameLocalDay(day, window.end)) {
-    return {
-      tithi: 15,
-      isPurnima: false,
-      isSarvapitri: true,
-      labelHi: 'पितृ पक्ष — सर्वपितृ अमावस्या',
-      labelEn: 'Pitru Paksha — Sarvapitri Amavasya',
-    };
-  }
-  const data = computeTithiAndMonth(day, { calendarSystem: 'purnimant', location: options.location });
-  const next = computeTithiAndMonth(addDays(day, 1), { calendarSystem: 'purnimant', location: options.location });
-  const kshayaIndex = (data.tithiIndex + 2) % 30 === next.tithiIndex ? (data.tithiIndex + 1) % 30 : null;
-  const tithi = (data.tithiIndex % 15) + 1;
-  const nameHi = kshayaIndex === null
-    ? TITHI_NAMES_HI[data.tithiIndex]
-    : `${TITHI_NAMES_HI[data.tithiIndex]} व ${TITHI_NAMES_HI[kshayaIndex]}`;
-  const nameEn = kshayaIndex === null
-    ? TITHI_NAMES_EN[data.tithiIndex]
-    : `${TITHI_NAMES_EN[data.tithiIndex]} & ${TITHI_NAMES_EN[kshayaIndex]}`;
+  const name = pitruPakshaDayName(date, options);
+  if (!name) return null;
   return {
-    tithi,
-    isPurnima: false,
-    isSarvapitri: false,
-    labelHi: `पितृ पक्ष — ${nameHi} श्राद्ध`,
-    labelEn: `Pitru Paksha — ${nameEn} Shraddha`,
+    tithi: name.isPurnima || name.isSarvapitri ? 15 : name.tithis[0] ?? 0,
+    isPurnima: name.isPurnima,
+    isSarvapitri: name.isSarvapitri,
+    labelHi: `पितृ पक्ष — ${name.nameHi}`,
+    labelEn: `Pitru Paksha — ${name.nameEn}`,
   };
+}
+
+/**
+ * Same answer, solving the window and its day table cooperatively — the path
+ * for Home and the Panchang day panel. `undefined` means cancelled.
+ */
+export async function pitruPakshaObservanceForDateAsync(
+  date: Date,
+  isCancelled: () => boolean = () => false,
+  options: SolveOptions = {}
+): Promise<PitruPakshaDayObservance | null | undefined> {
+  const day = startOfLocalDay(date);
+  const year = day.getFullYear();
+  const window = await pitruPakshaWindowAsync(year, isCancelled, options);
+  if (window === undefined) return undefined;
+  if (!window || day.getTime() < window.purnima.getTime() || day.getTime() > window.end.getTime()) return null;
+  const days = await runInBackground(pakshaTithiDaysSteps(year, window, options), isCancelled);
+  if (days === undefined) return undefined;
+  return pitruPakshaObservanceForDate(day, options);
 }
 
 /** Test-only: clear the per-year window memo. */
 export function __resetPitruPakshaWindowCacheForTests(): void {
   windowCache.clear();
+  tithiDaysCache.clear();
 }

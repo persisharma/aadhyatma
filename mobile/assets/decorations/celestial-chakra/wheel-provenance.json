@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "asset": "wheel.png",
+  "method": "built-in image_gen",
+  "useCase": "stylized-concept",
+  "transparentBackground": true,
+  "prompt": "Use case: stylized-concept\nAsset type: reusable transparent devotional celestial-chakra illustration for a native mobile app.\nPrimary request: Create ONE full uncropped isolated celestial wheel drawn in delicate warm ochre ink, faithful to the chakra motif from the supplied devotional image and the two approved mobile placements.\nInput images: Image 1 is the ornamental subject/style reference; ignore its room, lamps, flowers and fabric. Image 2 is the approved faint large Panchang backdrop and Image 3 is the approved right-side Home Today card ornament; these define the exact fine-line ornament style, not a request for a UI screenshot.\nScene/backdrop: genuine transparent RGBA background, no white, parchment or checkerboard pixels.\nSubject: one circular wheel with a central softly textured sun disc and long flowing wavy rays; a ring of tiny dots; several fine concentric orbital circles divided by slender radial spokes; a restrained alternating rhythm of crescent moons, eight-point stars and simple planet discs in the outer ring; small leaf-shaped points facing outward on the perimeter.\nStyle/medium: refined hand-illustrated devotional almanac engraving, exceptionally crisp delicate linework, lightly irregular painterly ink, matching the gentle golden ochre ornament of approved screenshots. No heavy raised metallic effect.\nComposition/framing: front-facing circular wheel centered exactly in a square 1024 by 1024 image, full wheel visible with uniform small margins of about 4 percent on all four sides. Radial circular structure mathematically balanced, no tilt or perspective. All leaf tips remain inside the canvas.\nColor palette: predominantly muted golden ochre and amber near #B8833B; subtle lighter warm gold inside sun and discs, no purple, blue, black or bright yellow. The app will apply opacity, so illustration ink should be fully visible at source.\nConstraints: one illustration only, no caption, no text, no Sanskrit, no zodiac glyphs, no numbers, no logo, no watermark; no frame or external square border; no photo backdrop, no objects other than the wheel. Preserve true transparency even inside gaps between rings and spokes. Avoid opacity haze or any solid background.",
+  "referenceImages": [
+    "/Users/prashant/Downloads/ChatGPT Image 6 Oct 2026, 17_52_03.png",
+    "/Users/prashant/.codex/generated_images/01a10cf8-763b-77d2-ad60-fdb256afb305/exec-8d72509d-d893-4f30-bdc5-33e0d1f27052.png",
+    "/Users/prashant/.codex/generated_images/01a10cf8-763b-77d2-ad60-fdb256afb305/exec-7a27c96f-d3c3-480e-adc8-65de19812e60.png"
+  ],
+  "masterPath": "/Users/prashant/.codex/generated_images/01a11234-7c23-7fc1-a0d3-d46507ecdb73/exec-b829e661-32a3-489b-940a-1e59fb424407.png",
+  "master": {
+    "sha256": "0dab806f1f39ea1a165a160749ba162ff701f28d930f0dd5a793bbb25abd7ee7",
+    "bytes": 1452511,
+    "dimensions": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA",
+    "alphaBounds": [
+      0,
+      16,
+      1236,
+      1254
+    ],
+    "visibleBoundsAlpha16": [
+      26,
+      18,
+      1229,
+      1231
+    ]
+  },
+  "packaging": {
+    "description": "Uniform Lanczos downscale and centering on transparent 1024px canvas using alpha >= 16 visible artwork bounds; lossless PNG compression; no pixels painted or recolored.",
+    "scale": 0.7765869744435284,
+    "resizedDimensions": [
+      974,
+      974
+    ],
+    "origin": [
+      25,
+      27
+    ]
+  },
+  "output": {
+    "path": "/Users/prashant/.codex/worktrees/ca4c/Aadhyatma/mobile/assets/decorations/celestial-chakra/wheel.png",
+    "sha256": "984a0c2a20bb7e4385fb609521c1466468157af787e32506b6f2207a5f544b5c",
+    "bytes": 934703,
+    "dimensions": [
+      1024,
+      1024
+    ],
+    "mode": "RGBA",
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "alphaBounds": [
+      25,
+      39,
+      985,
+      1001
+    ],
+    "visibleBoundsAlpha16": [
+      45,
+      41,
+      980,
+      983
+    ],
+    "visibleBoundsAlpha128": [
+      46,
+      42,
+      978,
+      982
+    ],
+    "transparentPixelFraction": 0.6484642028808594,
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "role": "unquantized packaged intermediate before final indexed-alpha compression"
+  },
+  "referenceMetadata": [
+    {
+      "path": "/Users/prashant/Downloads/ChatGPT Image 6 Oct 2026, 17_52_03.png",
+      "sha256": "2f6df30d41665960194c2e78b2a59d165be07915f55cd298e8e291f55ef41032",
+      "bytes": 1840344,
+      "dimensions": [
+        1122,
+        1402
+      ]
+    },
+    {
+      "path": "/Users/prashant/.codex/generated_images/01a10cf8-763b-77d2-ad60-fdb256afb305/exec-8d72509d-d893-4f30-bdc5-33e0d1f27052.png",
+      "sha256": "85464b1a65a045ce4d8318828f837734b2642d9ffe81b75d64e4be49f52a9e64",
+      "bytes": 1308948,
+      "dimensions": [
+        851,
+        1848
+      ]
+    },
+    {
+      "path": "/Users/prashant/.codex/generated_images/01a10cf8-763b-77d2-ad60-fdb256afb305/exec-7a27c96f-d3c3-480e-adc8-65de19812e60.png",
+      "sha256": "62938a08cbd0e3f81a7ec5f59963fbce7010450cd158d16f7d580b40b29f6e86",
+      "bytes": 1407962,
+      "dimensions": [
+        851,
+        1848
+      ]
+    }
+  ],
+  "finalShippedAsset": {
+    "file": "wheel.png",
+    "bytes": 246185,
+    "sha256": "ab4185edf92ba8fd41a4a519a0aaa6141f6747a499811b116df867721289bc0d",
+    "dimensions": [
+      1024,
+      1024
+    ],
+    "visibleBounds": [
+      45,
+      41,
+      979,
+      983
+    ],
+    "alphaExtrema": [
+      0,
+      252
+    ],
+    "packaging": "Generated RGBA downsampled/centered as recorded in provenance; indexed 256-color alpha PNG packaging with Pillow FASTOCTREE, no dithering. Original unquantized master retained."
+  }
+}

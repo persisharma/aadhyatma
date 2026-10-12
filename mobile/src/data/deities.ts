@@ -10,7 +10,7 @@ export type DeityIconKey =
   | 'modak'
   | 'surya'
   | 'veena'
-  // PRD-A deity expansion (§A.4.2) — drawn glyphs live in components/deityGlyphs/.
+  // PRD-A deity expansion (§A.4.2) — bundled art is mapped in components/deityArtwork.ts.
   | 'lakshmi'
   | 'suryadev'
   | 'radha'

@@ -40,6 +40,7 @@ jest.mock('react-native-svg', () => {
     ReactLib.createElement(View, props, props.children as React.ReactNode);
   const Svg = mk();
   return {
+    ...jest.requireActual('react-native-svg'),
     __esModule: true,
     default: Svg,
     Svg,

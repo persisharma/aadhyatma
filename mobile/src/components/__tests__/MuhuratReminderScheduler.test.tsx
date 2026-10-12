@@ -112,6 +112,16 @@ function firstGradedDay(): Date {
 
 const DAY = firstGradedDay();
 
+// The cooperative calendar solve may yield longer than 40ms under the full
+// suite/native-build load. Wait for the observable notice, then assert its
+// contents as before; a missing notice still fails within a bounded interval.
+async function waitForDayOfNotice() {
+  const deadline = Date.now() + 3000;
+  while (!mockScheduled.some((s) => s.identifier.includes(':dayOf:')) && Date.now() < deadline) {
+    await act(async () => { await new Promise((resolve) => setTimeout(resolve, 10)); });
+  }
+}
+
 async function mount() {
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
@@ -121,9 +131,7 @@ async function mount() {
       </MuhuratFollowProvider>
     );
   });
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 40));
-  });
+  await waitForDayOfNotice();
   return tree;
 }
 
@@ -164,9 +172,7 @@ test('changing city RE-ARMS with a re-derived window, not a stored time', async 
       </MuhuratFollowProvider>
     );
   });
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 40));
-  });
+  await waitForDayOfNotice();
 
   const bengaluruDayOf = mockScheduled.find((s) => s.identifier.includes(':dayOf:'));
   expect(bengaluruDayOf).toBeTruthy();
@@ -191,9 +197,7 @@ test('the evening-before notice does NOT move with the city', async () => {
       </MuhuratFollowProvider>
     );
   });
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 40));
-  });
+  await waitForDayOfNotice();
 
   expect(mockScheduled.find((s) => s.identifier.includes(':advance:'))!.date.getTime()).toBe(ujjainAdvance);
   await act(async () => tree.unmount());

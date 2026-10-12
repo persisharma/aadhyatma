@@ -1,0 +1,115 @@
+{
+  "id": "durga-shailaputri",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "story",
+  "coverArt": "sp04",
+  "title": {
+    "en": "Shailaputri: Daughter of the Mountain",
+    "hi": "शैलपुत्री: पर्वत की पुत्री",
+    "gu": "શૈલપુત્રી: પર્વતની પુત્રી",
+    "kn": "ಶೈಲಪುತ್ರಿ: ಪರ್ವತದ ಮಗಳು"
+  },
+  "description": {
+    "en": "Parvati’s birth and childhood in the mountain family.",
+    "hi": "पर्वत के परिवार में पार्वती के जन्म और बचपन की कथा।",
+    "gu": "પર્વતના પરિવારમાં પાર્વતીના જન્મ અને બાળપણની વાર્તા.",
+    "kn": "ಪರ್ವತದ ಕುಟುಂಬದಲ್ಲಿ ಪಾರ್ವತಿಯ ಜನನ ಮತ್ತು ಬಾಲ್ಯದ ಕಥೆ."
+  },
+  "sourceNote": {
+    "en": "A related Parvati episode from Shiva Purana 2.3.6–7, followed by Shailaputri’s traditional first-day identity. The chapters do not themselves use this Navadurga title. Original child retelling; takeaway editorial.",
+    "hi": "शिवपुराण 2.3.6–7 से पार्वती का संबंधित प्रसंग, फिर शैलपुत्री के प्रथम-दिन रूप का पारंपरिक परिचय। इन अध्यायों में यह नवदुर्गा नाम स्वयं नहीं है। बच्चों के लिए मौलिक रूपांतरण; सीख संपादकीय है।",
+    "gu": "શિવપુરાણ 2.3.6–7માંથી પાર્વતીનો સંબંધિત પ્રસંગ, પછી શૈલપુત્રીના પ્રથમ-દિવસ રૂપનો પરંપરાગત પરિચય. આ અધ્યાયોમાં આ નવદુર્ગા નામ પોતે નથી. બાળકો માટે મૌલિક રૂપાંતર; શીખ સંપાદકીય છે.",
+    "kn": "ಶಿವಪುರಾಣ 2.3.6–7ರ ಸಂಬಂಧಿತ ಪಾರ್ವತಿಯ ಪ್ರಸಂಗದ ಬಳಿಕ ಶೈಲಪುತ್ರಿಯ ಮೊದಲ ದಿನದ ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಚಯ. ಈ ಅಧ್ಯಾಯಗಳು ಸ್ವತಃ ಈ ನವದುರ್ಗಾ ಹೆಸರನ್ನು ಬಳಸುವುದಿಲ್ಲ. ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "Love welcomes a child; learning and play help a child grow. Cherish both.",
+    "hi": "स्नेह बच्चे का स्वागत करता है; सीखना और खेलना उसे बढ़ने में सहायता करते हैं। दोनों को महत्त्व दें।",
+    "gu": "સ્નેહ બાળકનું સ્વાગત કરે છે; શીખવું અને રમવું તેને વધવામાં મદદ કરે છે. બંનેને મહત્ત્વ આપો.",
+    "kn": "ಪ್ರೀತಿ ಮಗುವನ್ನು ಸ್ವಾಗತಿಸುತ್ತದೆ; ಕಲಿಕೆ ಮತ್ತು ಆಟ ಬೆಳೆಯಲು ನೆರವಾಗುತ್ತವೆ. ಎರಡನ್ನೂ ಗೌರವಿಸಿ."
+  },
+  "source": {
+    "baseText": "Shiva Purana 2.3.6–7; Navadurga dhyana; Drik Panchang Shailputri",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226070.html",
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226071.html",
+      "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A6%E0%A5%AC",
+      "https://sa.wikisource.org/wiki/%E0%A4%B6%E0%A4%BF%E0%A4%B5%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D/%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%20%E0%A5%A8%20%28%E0%A4%B0%E0%A5%81%E0%A4%A6%E0%A5%8D%E0%A4%B0%E0%A4%B8%E0%A4%82%E0%A4%B9%E0%A4%BF%E0%A4%A4%E0%A4%BE%29/%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%20%E0%A5%A9%20%28%E0%A4%AA%E0%A4%BE%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%A4%E0%A5%80%E0%A4%96%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%29/%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83%20%E0%A5%A6%E0%A5%AD",
+      "https://gurudevsivananda.org/The-Siva-Purana-PART-2-Vol-2.html",
+      "https://sanskritdocuments.org/doc_devii/navadurga.html",
+      "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-shailputri.html"
+    ],
+    "notes": "Selected birth-and-childhood arc checked against Sanskrit Wikisource chapters6–7 and Shastri-edited translation on Wisdom Library; printed transcription is an additional same-edition check, not an independent recension. Mena’s request, Goddess’s manifestation and infant form, family joy, play and learning retained. First-day Shailaputri linkage is traditional, not a fabricated Purana chapter title. No invented speech or liturgy."
+  },
+  "pages": [
+    {
+      "id": "menas-wish",
+      "art": "sp01",
+      "source": "Shiva Purana 2.3.6.48–50",
+      "title": {
+        "en": "Mena’s Wish",
+        "hi": "मेना की इच्छा",
+        "gu": "મેનાની ઇચ્છા",
+        "kn": "ಮೇನೆಯ ಬಯಕೆ"
+      },
+      "text": {
+        "en": "Himavat, lord of the mountains, and his wife Mena loved the Goddess. Mena had asked for the divine Mother to be born as her daughter. The Goddess had granted that wish. Now the mountain family awaited her arrival.",
+        "hi": "पर्वतों के स्वामी हिमवान और उनकी पत्नी मेना देवी के भक्त थे। मेना ने दिव्य माँ को अपनी पुत्री के रूप में माँगा था। देवी ने वह इच्छा स्वीकार की थी। अब पर्वत का परिवार उनके आने की प्रतीक्षा कर रहा था।",
+        "gu": "પર્વતોના સ્વામી હિમવાન અને તેમની પત્ની મેના દેવીના ભક્ત હતાં. મેનાએ દિવ્ય માને પોતાની પુત્રી તરીકે માગ્યાં હતાં. દેવીએ તે ઇચ્છા સ્વીકારી હતી. હવે પર્વતનો પરિવાર તેમના આગમનની રાહ જોઈ રહ્યો હતો.",
+        "kn": "ಪರ್ವತಗಳ ಒಡೆಯ ಹಿಮವಂತ ಮತ್ತು ಅವನ ಪತ್ನಿ ಮೇನೆ ದೇವಿಯ ಭಕ್ತರಾಗಿದ್ದರು. ದಿವ್ಯ ಮಾತೆ ತನ್ನ ಮಗಳಾಗಿ ಹುಟ್ಟಬೇಕೆಂದು ಮೇನೆ ಕೇಳಿದ್ದಳು. ದೇವಿ ಆ ಬಯಕೆಯನ್ನು ಒಪ್ಪಿದ್ದಳು. ಈಗ ಪರ್ವತದ ಕುಟುಂಬ ಆಕೆಯ ಆಗಮನಕ್ಕಾಗಿ ಕಾಯುತ್ತಿತ್ತು."
+      }
+    },
+    {
+      "id": "the-goddess-becomes-a-daughter",
+      "art": "sp02",
+      "source": "Shiva Purana 2.3.6.31–54",
+      "title": {
+        "en": "A Divine Daughter",
+        "hi": "दिव्य पुत्री",
+        "gu": "દિવ્ય પુત્રી",
+        "kn": "ದಿವ್ಯ ಮಗಳು"
+      },
+      "text": {
+        "en": "The Goddess appeared before Mena in her divine form. Mena recognized her with joy and asked her to live as her little daughter. The Mother reminded Mena of the promised boon, then became a baby in front of her.",
+        "hi": "देवी मेना के सामने अपने दिव्य रूप में प्रकट हुईं। मेना ने आनंद से उन्हें पहचाना और अपनी नन्ही पुत्री बनकर रहने का अनुरोध किया। माँ ने उन्हें पहले दिए वरदान का स्मरण कराया और उनके सामने शिशु बन गईं।",
+        "gu": "દેવી મેના સમક્ષ પોતાના દિવ્ય રૂપમાં પ્રગટ થયાં. મેનાએ આનંદથી તેમને ઓળખ્યાં અને પોતાની નાનકડી પુત્રી બનીને રહેવા વિનંતી કરી. માએ તેમને પહેલાં આપેલા વરદાનનું સ્મરણ કરાવ્યું અને તેમની સામે શિશુ બની ગયાં.",
+        "kn": "ದೇವಿ ಮೇನೆಯ ಮುಂದೆ ದಿವ್ಯ ರೂಪದಲ್ಲಿ ಕಾಣಿಸಿಕೊಂಡಳು. ಮೇನೆ ಸಂತೋಷದಿಂದ ಆಕೆಯನ್ನು ಗುರುತಿಸಿ ತನ್ನ ಪುಟ್ಟ ಮಗಳಾಗಿ ಇರಲು ಕೇಳಿದಳು. ಮಾತೆ ಹಿಂದಿನ ವರವನ್ನು ನೆನಪಿಸಿ, ಅವಳ ಮುಂದೆಯೇ ಶಿಶುವಾದಳು."
+      }
+    },
+    {
+      "id": "parvati-grows-and-learns",
+      "art": "sp03",
+      "source": "Shiva Purana 2.3.7.1–24",
+      "title": {
+        "en": "Parvati Grows Up",
+        "hi": "पार्वती का बचपन",
+        "gu": "પાર્વતીનું બાળપણ",
+        "kn": "ಪಾರ್ವತಿಯ ಬಾಲ್ಯ"
+      },
+      "text": {
+        "en": "The family and the city celebrated the child. She was called Parvati, a name recalling her mountain family. She played with friends, balls and dolls on the Ganga’s sandy banks. When it was time to learn, she studied eagerly with a teacher.",
+        "hi": "परिवार और नगर ने बच्ची के आने का उत्सव मनाया। पर्वत के परिवार से जुड़ा उसका नाम पार्वती पड़ा। वह गंगा के रेतीले तट पर सखियों के साथ गेंद और गुड़ियों से खेलती थी। शिक्षा का समय आया तो गुरु से आनंद और ध्यान के साथ सीखने लगी।",
+        "gu": "પરિવાર અને નગરે બાળકીના આગમનનો ઉત્સવ મનાવ્યો. પર્વતના પરિવાર સાથે જોડાયેલું તેનું નામ પાર્વતી પડ્યું. તે ગંગાના રેતાળ કિનારે સખીઓ સાથે દડા અને ઢીંગલીઓથી રમતી. શિક્ષણનો સમય આવ્યો ત્યારે ગુરુ પાસેથી આનંદ અને ધ્યાનથી શીખવા લાગી.",
+        "kn": "ಕುಟುಂಬ ಮತ್ತು ನಗರ ಮಗುವಿನ ಆಗಮನವನ್ನು ಸಂಭ್ರಮಿಸಿದವು. ಪರ್ವತದ ಕುಟುಂಬವನ್ನು ನೆನಪಿಸುವ ಪಾರ್ವತಿ ಎಂಬ ಹೆಸರು ಆಕೆಗೆ ಬಂದಿತು. ಗಂಗೆಯ ಮರಳುತೀರದಲ್ಲಿ ಗೆಳತಿಯರ ಜೊತೆ ಚೆಂಡು ಮತ್ತು ಗೊಂಬೆಗಳಿಂದ ಆಡುತ್ತಿದ್ದಳು. ಕಲಿಯುವ ಸಮಯ ಬಂದಾಗ ಗುರುಗಳ ಬಳಿ ಆಸಕ್ತಿಯಿಂದ ಕಲಿತಳು."
+      }
+    },
+    {
+      "id": "shailaputri-the-first-form",
+      "art": "sp04",
+      "source": "Navadurga dhyana, Shailaputri; Drik Panchang Shailputri, Origin and Iconography",
+      "title": {
+        "en": "Daughter of the Mountain",
+        "hi": "पर्वत की पुत्री",
+        "gu": "પર્વતની પુત્રી",
+        "kn": "ಪರ್ವತದ ಮಗಳು"
+      },
+      "text": {
+        "en": "Shailaputri means daughter of the mountain. On Navaratri’s first day, devotees remember this form of the Mother. Traditional pictures show her riding a white bull, holding a trident and lotus. Parvati’s mountain birth helps us understand the name.",
+        "hi": "शैलपुत्री का अर्थ है पर्वत की पुत्री। नवरात्रि के पहले दिन भक्त माँ के इस रूप का स्मरण करते हैं। पारंपरिक चित्रों में वे सफेद बैल पर सवार हैं और त्रिशूल व कमल धारण करती हैं। पार्वती का पर्वत में जन्म इस नाम को समझने में सहायता करता है।",
+        "gu": "શૈલપુત્રીનો અર્થ પર્વતની પુત્રી થાય છે. નવરાત્રિના પહેલા દિવસે ભક્તો માના આ રૂપનું સ્મરણ કરે છે. પરંપરાગત ચિત્રોમાં તેઓ સફેદ બળદ પર સવાર છે અને ત્રિશૂળ તથા કમળ ધરાવે છે. પાર્વતીનો પર્વતમાં જન્મ આ નામ સમજવામાં મદદ કરે છે.",
+        "kn": "ಶೈಲಪುತ್ರಿ ಎಂದರೆ ಪರ್ವತದ ಮಗಳು. ನವರಾತ್ರಿಯ ಮೊದಲ ದಿನ ಭಕ್ತರು ಮಾತೆಯ ಈ ರೂಪವನ್ನು ನೆನೆಯುತ್ತಾರೆ. ಸಾಂಪ್ರದಾಯಿಕ ಚಿತ್ರಗಳಲ್ಲಿ ಆಕೆ ಬಿಳಿ ಎತ್ತಿನ ಮೇಲೆ ತ್ರಿಶೂಲ ಮತ್ತು ಕಮಲ ಹಿಡಿದಿರುತ್ತಾಳೆ. ಪಾರ್ವತಿಯ ಪರ್ವತದ ಜನನ ಈ ಹೆಸರನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ನೆರವಾಗುತ್ತದೆ."
+      }
+    }
+  ]
+}

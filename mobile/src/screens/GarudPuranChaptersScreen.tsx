@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -8,6 +8,8 @@ import { garudPuranImages } from '@assets/garud-puran';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { meaningToken } from '@/utils/langType';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
 import ReaderHeader from '@/components/ReaderHeader';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
@@ -27,9 +29,7 @@ export default function GarudPuranChaptersScreen({ navigation }: Props) {
   const { getChapterProgress } = useReadingProgress();
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      <View pointerEvents="none" accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={StyleSheet.absoluteFill}>
-        <Image source={require('../../assets/garud-puran/reading-parchment.webp')} style={{ width: '100%', height: '100%' }} resizeMode="cover" accessible={false} />
-      </View>
+      <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.root} edges={['top', 'left', 'right']}>
         <ReaderHeader title={contentByLang(lang, 'गरुड़ पुराण', 'Garud Puran')} onBack={() => navigation.goBack()} variant="index" />
         <View style={styles.toggle}><LanguageToggle /></View>

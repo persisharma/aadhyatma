@@ -1,0 +1,46 @@
+{
+  "mainBaseline": {
+    "assetFiles": 109,
+    "assetBytes": 38288416,
+    "bytecodeBytes": 44013714,
+    "bundleAndAssetBytes": 82302130,
+    "bundleSha256": "1e9c47eac05d3979d22907265f1fdbec968b4fb5588bbbc1d518593d115ac08b"
+  },
+  "beforeHomePolish": {
+    "assetFiles": 166,
+    "assetBytes": 40679137,
+    "bytecodeBytes": 44195040,
+    "bundleAndAssetBytes": 84874177,
+    "bundleSha256": "564134d3eeabfbdc142db2c866537805c9830bd755716f66fa74b145d5ea81cf"
+  },
+  "afterHomePolish": {
+    "assetFiles": 167,
+    "assetBytes": 40720739,
+    "bytecodeBytes": 44196891,
+    "bundleAndAssetBytes": 84917630,
+    "bundleSha256": "f022a2e2b3b5893e2d09c28fea039e0fc36389b94ca3cc39c30f67cfa3df08ca"
+  },
+  "increment": {
+    "assetFiles": 1,
+    "assetBytes": 41602,
+    "bytecodeBytes": 1851,
+    "bundleAndAssetBytes": 43453
+  },
+  "wholePRDelta": {
+    "assetFiles": 58,
+    "assetBytes": 2432323,
+    "bytecodeBytes": 183177,
+    "bundleAndAssetBytes": 2615500
+  },
+  "installed": {
+    "bundleBytes": 44196929,
+    "bundleSha256": "f33513c636ab9d660f5359d8896fb31ecf2068504956919a85b4b75b8f982757",
+    "questionBytes": 41602,
+    "questionSha256": "4558de27e363482afc94d488a692c424e520db5c8cd9a9706bb5cd2617ea3e94"
+  },
+  "refs": {
+    "main": "cb38ba6109a11606354e2d23dd57fcae509eb716",
+    "before": "456be4e29d6ad1cc2a1d80c7548192c2e9acbe86"
+  },
+  "method": "Production iOS Expo/Hermes exports with identical dependencies; bundled asset files plus bytecode, metadata excluded. Store-compressed IPA/APK/download delta unmeasured."
+}

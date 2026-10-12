@@ -50,6 +50,16 @@ function withAndroidWidgetSources(config) {
       fs.writeFileSync(path.join(java, file), body);
     }
     copyTree(path.join(base, 'res'), path.join(cfg.modRequest.platformProjectRoot, 'app', 'src', 'main', 'res'));
+    // The widget background plates (design.md §59), generated into the app's assets
+    // by scripts/build-widget-backgrounds.mts. `nodpi` because each plate is already
+    // cut to its cell's pixel size; the provider references them by R.drawable, so a
+    // missing plate fails the build rather than a placed widget.
+    const plates = path.join(cfg.modRequest.projectRoot, 'assets', 'widget-backgrounds');
+    const drawables = path.join(cfg.modRequest.platformProjectRoot, 'app', 'src', 'main', 'res', 'drawable-nodpi');
+    fs.mkdirSync(drawables, { recursive: true });
+    for (const name of fs.readdirSync(plates).filter((file) => /^vedansh_widget_bg_\w+\.jpg$/.test(file))) {
+      fs.copyFileSync(path.join(plates, name), path.join(drawables, name));
+    }
     const fixtureTarget = path.join(cfg.modRequest.platformProjectRoot, 'app', 'src', 'main', 'res', 'raw', 'vedansh_widget_payload_v1_fixture.json');
     fs.mkdirSync(path.dirname(fixtureTarget), { recursive: true });
     fs.copyFileSync(path.join(cfg.modRequest.projectRoot, 'src', 'widgets', 'fixtures', 'widget-payload-v1.json'), fixtureTarget);

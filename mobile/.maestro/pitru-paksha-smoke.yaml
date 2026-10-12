@@ -47,7 +47,7 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # ── Global reading language → English (More → Language picker sheet) ──
-- tapOn: { id: "tab-more" }
+- runFlow: _open-settings.yaml
 - waitForAnimationToEnd
 - tapOn: "Language,.*"
 - waitForAnimationToEnd

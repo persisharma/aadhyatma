@@ -1,123 +1,129 @@
 {
-  "style": "Current approved Krishna storybook / PR449 reader banner treatment",
-  "encoding": "cwebp quality84, proportional downscale to960x480; no crop or padding",
+  "style": "Saved Vedansh Style 3 Reader Banner template",
+  "encoding": "cwebp q84 proportional downscale; entire canvas retained",
+  "approval": {
+    "status": "approved",
+    "date": "2026-10-12",
+    "evidence": "User: THis looks good, complete this take a pull from main and verify then raise a PR",
+    "scope": "All nine Style 3 banners and reader integration; no remote publication"
+  },
   "assets": [
     {
       "id": "cover",
       "path": "mobile/assets/garud-puran/cover.webp",
-      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-3790c36d-29de-44dd-9519-f68f0391456c.png",
-      "sha256": "d98d0cbd646c88fa52ea49ae25521b809090cadbbb28021ca1f4289f5c58e1ef",
-      "bytes": 152426,
+      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-2755ec6c-5752-4408-aaf0-1660830bccf7.png",
+      "sha256": "1736a66536efe8f8a9351a784f5d01b26edd86b957b378056847933d89c5dda7",
+      "bytes": 167248,
       "dimensions": [
         960,
         480
       ],
       "kind": "interpretive-ai-illustration",
-      "review": "Complete 2:1 scene reviewed for narrative, subjects, composition and absence of blank caption band. Interpretive artwork."
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering."
     },
     {
       "id": "daan",
       "path": "mobile/assets/garud-puran/daan.webp",
-      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-d9d8dcda-7427-45ca-8a37-200f564b782f.png",
-      "sha256": "61c472c31f28d1ea62aec80a9e49e7ff6716d5ab05e940761531d88b767280b1",
-      "bytes": 129948,
+      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-f1555090-5af9-4908-b53d-824d587ef9ff.png",
+      "sha256": "ae9113918da17ea0d0a3eef9a8d3ece29c9d23c86a24c34ab3a146399d9d80ff",
+      "bytes": 160310,
       "dimensions": [
         960,
         480
       ],
       "kind": "interpretive-ai-illustration",
-      "review": "Complete 2:1 scene reviewed for narrative, subjects, composition and absence of blank caption band. Interpretive artwork."
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering."
     },
     {
       "id": "babhruvahana",
       "path": "mobile/assets/garud-puran/babhruvahana.webp",
-      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-cbea10d9-c6d1-42e3-a58c-6fc5f09f1c8f.png",
-      "sha256": "042184f119ebf1815e426c4c9992313390a3a7a52a43ec172b0aebbb39ccde05",
-      "bytes": 155768,
+      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-c27fed6c-7c98-44ed-b739-abb3b474fde5.png",
+      "sha256": "bd1022c0c8165c3244e4f7c3e7e5f76071cbac3ae2067b35ae08019ffc8a602e",
+      "bytes": 169170,
       "dimensions": [
         960,
         480
       ],
       "kind": "interpretive-ai-illustration",
-      "review": "Complete 2:1 scene reviewed for narrative, subjects, composition and absence of blank caption band. Interpretive artwork."
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering."
     },
     {
       "id": "five-pretas",
       "path": "mobile/assets/garud-puran/five-pretas.webp",
-      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-7ec0428e-9127-413d-9344-4c133c55e596.png",
-      "sha256": "04900929a1f6ceea99aed8946e3255ec32f9768e2eb3487a9404d1414603d2c4",
-      "bytes": 149100,
+      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-b3e2a7fa-758b-447b-aabd-8897b8d97c69.png",
+      "sha256": "676fc775f8aa4dd98680de32e50780f5cdaabc28194a11731b070db301d3ef7b",
+      "bytes": 165628,
       "dimensions": [
         960,
         480
       ],
       "kind": "interpretive-ai-illustration",
-      "review": "Complete 2:1 scene reviewed for narrative, subjects, composition and absence of blank caption band. Interpretive artwork."
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering."
     },
     {
       "id": "viravahana",
       "path": "mobile/assets/garud-puran/viravahana.webp",
-      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-afd1ef2f-90ad-4e6e-892b-daadfef6d4d9.png",
-      "sha256": "46727fcaac3f0dd7fa2cd42c1887ead3d1b125cec0734d82debe293fd49f51a7",
-      "bytes": 150938,
+      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-dc87ad82-ab0e-4c05-9cba-d29630e92899.png",
+      "sha256": "831017832d6281e56f7eb65fb4dc52e101d09d09e9c1d3fb4a073c72db50582d",
+      "bytes": 169544,
       "dimensions": [
         960,
         480
       ],
       "kind": "interpretive-ai-illustration",
-      "review": "Complete 2:1 scene reviewed for narrative, subjects, composition and absence of blank caption band. Interpretive artwork."
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering."
     },
     {
       "id": "sita-ancestors",
       "path": "mobile/assets/garud-puran/sita-ancestors.webp",
-      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-c048d011-bff0-4e55-b2db-981d9f8e1fdc.png",
-      "sha256": "5c908b9e789fc0c08bbaeb026f30043de18a06f85f0461103ad498052f4aba59",
-      "bytes": 152654,
+      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-01d13d77-e32d-4d9a-aca6-a4e36c5873bb.png",
+      "sha256": "4e01fdc4674fa63a5e4b03cf05764b912b980fa8da257eb552290cfe995ec2a4",
+      "bytes": 157450,
       "dimensions": [
         960,
         480
       ],
       "kind": "interpretive-ai-illustration",
-      "review": "Complete 2:1 scene reviewed for narrative, subjects, composition and absence of blank caption band. Interpretive artwork."
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering."
     },
     {
       "id": "ancestors",
       "path": "mobile/assets/garud-puran/ancestors.webp",
-      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-7e4036eb-e603-4eb2-8209-ada75439cd9b.png",
-      "sha256": "29314e93171b8b7ac564d0d7d20ace02ee18a2003f865565e10e1b8a8353dd73",
-      "bytes": 120820,
+      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-3b6a58c1-1c57-4b48-b3f4-68313e73e8ea.png",
+      "sha256": "47b8cee3575f543525c2b4bf4024b3a5e3fc41129394eba9f6d42766605b911d",
+      "bytes": 140544,
       "dimensions": [
         960,
         480
       ],
       "kind": "interpretive-ai-illustration",
-      "review": "Complete 2:1 scene reviewed for narrative, subjects, composition and absence of blank caption band. Interpretive artwork."
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering."
     },
     {
       "id": "yama",
       "path": "mobile/assets/garud-puran/yama.webp",
-      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-a8734a6e-e8c6-443e-a9e0-b87dbd7ffbc7.png",
-      "sha256": "7a4f825167bdd5b082e11aa9862b4c7c176a78e8db529b1b95f59bd7ab972a5a",
-      "bytes": 139590,
+      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-50e90237-2c77-4e52-a33f-ace239356abf.png",
+      "sha256": "3dc3026d3dc0951af85a377a15d9dfb9455fb565e442a760b56a46d0cba02ef2",
+      "bytes": 153568,
       "dimensions": [
         960,
         480
       ],
       "kind": "interpretive-ai-illustration",
-      "review": "Complete 2:1 scene reviewed for narrative, subjects, composition and absence of blank caption band. Interpretive artwork."
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering."
     },
     {
       "id": "vaitarani",
       "path": "mobile/assets/garud-puran/vaitarani.webp",
-      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-c89d0e8c-30ec-41e1-9a7f-53ba2283ab27.png",
-      "sha256": "196acb99b2e8ccd009759c8f9400d9aa3bbb5b6584c2b82f0f53019cba70419d",
-      "bytes": 145410,
+      "originalFile": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-705a3989-5201-463d-a427-b419b2ee3b09.png",
+      "sha256": "cdc5b91f6ea7ac2796abfbd553b0a48c8bb216581d10778bc8283d211468122e",
+      "bytes": 150352,
       "dimensions": [
         960,
         480
       ],
       "kind": "interpretive-ai-illustration",
-      "review": "Complete 2:1 scene reviewed for narrative, subjects, composition and absence of blank caption band. Interpretive artwork."
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering."
     }
   ]
 }

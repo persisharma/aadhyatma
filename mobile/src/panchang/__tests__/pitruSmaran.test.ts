@@ -5,15 +5,18 @@ import { resolveObservancesForYear } from '../festivalEngine';
 import {
   deriveTithiRuleFromDate,
   entryMatchesDate,
+  isPitruPakshaDayTableWarm,
   isValidTithiRule,
   nextObservanceForEntry,
   nextSarvapitriAmavasya,
   pakshaShraddhaDay,
   pitruPakshaWindow,
   pitruPakshaObservanceForDate,
+  pitruPakshaObservanceForDateAsync,
   primePitruPakshaWindow,
   solveNextOccurrence,
   tithiRuleLabel,
+  tithiRuleMatchesDate,
   __resetPitruPakshaWindowCacheForTests,
 } from '../pitruSmaran';
 
@@ -50,6 +53,22 @@ import {
 //     https://amitray.com/nirjala-ekadashi-2026-date-time-rituals-mantras-significance/
 //   • Janmashtami 2026 = Fri 4 Sep 2026 — already pinned as a DrikPanchang anchor
 //     in observanceDates.test.ts.
+//
+// Pitru Paksha full fortnights (retrieved 2026-10-02, same egress limits — web
+// search results quoting DrikPanchang's New Delhi lists and the calendars that
+// copy them; every row below is reproduced by the aparahna-span assignment, and
+// identically at Ujjain and Delhi):
+//   • 2024: Purnima 17 Sep · … · Shashthi & Saptami 23 Sep · Ekadashi 27 Sep ·
+//     NO shraddha 28 Sep · Dwadashi 29 Sep · … · Sarvapitri 2 Oct.
+//     https://www.lastjourney.in/blog/pitru-paksha-shradh-rituals-date-time-2024/
+//   • 2025: Tritiya & Chaturthi 10 Sep · Panchami 11 Sep · Sarvapitri 21 Sep.
+//     https://www.drikpanchang.com/shraddha/tithi/tritiya-shraddha-date-time.html?year=2025
+//   • 2026: Chaturthi & Panchami 30 Sep · Shashthi 1 Oct · Saptami 2 Oct ·
+//     Ashtami 3 Oct. https://divinestore.sanatanajourney.com/blogs/updates/chaturthi-panchami-shraddha-2026-date-tarpan-vidhi,
+//     https://gokarnapuja.com/pitru-paksha-shraddha-dates-2026-procedure-cost/
+//   • 2027: Purnima 15 Sep · Trayodashi & Chaturdashi 28 Sep · Sarvapitri 29 Sep
+//     (the sunrise amavasya is 30 Sep). https://drrpsharma.com/blog/pitru-paksha-2027.html,
+//     https://daanyam.in/festivals/2027/sarva-pitru-amavasya-2027
 
 const iso = (d: Date | null): string | null =>
   d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` : null;
@@ -130,6 +149,111 @@ test('pitruPakshaWindow 2025: purnima 7 Sep, window 8–21 Sep', () => {
   assert.equal(iso(w!.end), '2025-09-21');
 });
 
+test('pitruPakshaWindow moves both ends to their aparahna days (2024 purnima, 2027 amavasya)', () => {
+  // 2024: the purnima opens 17 Sep mid-morning and holds that afternoon; its
+  // sunrise day is 18 Sep, which published lists give to Pratipada.
+  const w2024 = pitruPakshaWindow(2024);
+  assert.equal(iso(w2024!.purnima), '2024-09-17');
+  assert.equal(iso(w2024!.start), '2024-09-18');
+  assert.equal(iso(w2024!.end), '2024-10-02');
+  // 2027: Sarvapitri on 29 Sep, a day before the sunrise amavasya.
+  const w2027 = pitruPakshaWindow(2027);
+  assert.equal(iso(w2027!.purnima), '2027-09-15');
+  assert.equal(iso(w2027!.end), '2027-09-29');
+});
+
+// Every day of four published fortnights, as the day chip and overview name it.
+const PUBLISHED_FORTNIGHTS: Record<number, string[]> = {
+  2024: [
+    'Purnima', 'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami', 'Shashthi & Saptami', 'Ashtami',
+    'Navami', 'Dashami', 'Ekadashi', '—', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Sarvapitri',
+  ],
+  2025: [
+    'Purnima', 'Pratipada', 'Dwitiya', 'Tritiya & Chaturthi', 'Panchami', 'Shashthi', 'Saptami', 'Ashtami',
+    'Navami', 'Dashami', 'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Sarvapitri',
+  ],
+  2026: [
+    'Purnima', 'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi & Panchami', 'Shashthi', 'Saptami', 'Ashtami',
+    'Navami', 'Dashami', 'Ekadashi', 'Dwadashi', 'Trayodashi', 'Chaturdashi', 'Sarvapitri',
+  ],
+  2027: [
+    'Purnima', 'Pratipada', 'Dwitiya', 'Tritiya', 'Chaturthi', 'Panchami', 'Shashthi', 'Saptami', 'Ashtami',
+    'Navami', 'Dashami', 'Ekadashi', 'Dwadashi', 'Trayodashi & Chaturdashi', 'Sarvapitri',
+  ],
+};
+
+const shortName = (labelEn: string): string =>
+  labelEn
+    .replace('Pitru Paksha — ', '')
+    .replace('No tithi shraddha', '—')
+    .replace(' Shraddha', '')
+    .replace('Sarvapitri Amavasya', 'Sarvapitri');
+
+for (const [name, location] of [
+  ['Ujjain', undefined],
+  ['New Delhi', { latitude: 28.6139, longitude: 77.209, elevation: 216, cityId: 'delhi' }],
+] as const) {
+  test(`published Pitru Paksha fortnights 2024–2027 match day for day (${name})`, () => {
+    for (const [year, expected] of Object.entries(PUBLISHED_FORTNIGHTS)) {
+      const w = pitruPakshaWindow(Number(year), { location });
+      assert.ok(w, `window must resolve for ${year}`);
+      const actual: string[] = [];
+      for (let d = new Date(w!.purnima); d.getTime() <= w!.end.getTime(); d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1)) {
+        actual.push(shortName(pitruPakshaObservanceForDate(d, { location })!.labelEn));
+      }
+      assert.deepEqual(actual, expected, `${year} at ${name}`);
+    }
+  });
+}
+
+test('Jaipur 2026: Saptami Shraddha 2 Oct and Ashtami Shraddha 3 Oct are separate days', () => {
+  const jaipur = { latitude: 26.9124, longitude: 75.7873, elevation: 431, cityId: 'jaipur' };
+  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 2), { location: jaipur })?.labelEn, 'Pitru Paksha — Saptami Shraddha');
+  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 3), { location: jaipur })?.labelEn, 'Pitru Paksha — Ashtami Shraddha');
+  assert.equal(iso(pakshaShraddhaDay({ lunarMonth: 7, paksha: 'krishna', tithi: 7 }, 2026, { location: jaipur })), '2026-10-02');
+  assert.equal(iso(pakshaShraddhaDay({ lunarMonth: 7, paksha: 'krishna', tithi: 8 }, 2026, { location: jaipur })), '2026-10-03');
+});
+
+// Annual (barsi) dates use the same aparahna reckoning as the fortnight: an
+// Ashwin-krishna death tithi recurs inside Pitru Paksha itself, so its annual
+// date must be exactly its fortnight day — which the published lists above pin.
+test('annual shraddha dates land on the published Pitru Paksha days (2024–2027)', () => {
+  for (const year of [2024, 2025, 2026, 2027]) {
+    const w = pitruPakshaWindow(year)!;
+    const from = new Date(year, 7, 1);
+    for (let tithi = 1; tithi <= 14; tithi++) {
+      const rule = { lunarMonth: 7, paksha: 'krishna', tithi } as const;
+      assert.equal(
+        iso(nextObservanceForEntry({ tithiRule: rule }, from)),
+        iso(pakshaShraddhaDay(rule, year)),
+        `${year} Ashwin krishna ${tithi}`
+      );
+    }
+    assert.equal(iso(nextObservanceForEntry({ tithiRule: { lunarMonth: 6, paksha: 'shukla', tithi: 15 } }, from)), iso(w.purnima), `${year} purnima`);
+    assert.equal(iso(nextObservanceForEntry({ tithiRule: { lunarMonth: 7, paksha: 'krishna', tithi: 15 } }, from)), iso(w.end), `${year} amavasya`);
+  }
+});
+
+test('annual shraddha: Saptami 2026 is 2 Oct (aparahna); the janma reckoning keeps the sunrise day 3 Oct', () => {
+  const rule = { lunarMonth: 7, paksha: 'krishna', tithi: 7 } as const;
+  const from = new Date(2026, 8, 1);
+  assert.equal(iso(nextObservanceForEntry({ tithiRule: rule }, from)), '2026-10-02');
+  assert.equal(iso(nextObservanceForEntry({ tithiRule: rule }, from, {}, 'janma')), '2026-10-03');
+  assert.equal(iso(solveNextOccurrence(rule, from)), '2026-10-03'); // the bare matcher stays sunrise
+  assert.equal(entryMatchesDate({ tithiRule: rule }, new Date(2026, 9, 2)), true);
+  assert.equal(entryMatchesDate({ tithiRule: rule }, new Date(2026, 9, 3)), false);
+  // The living: `tithiRuleMatchesDate` never moves to the aparahna day.
+  assert.equal(tithiRuleMatchesDate(rule, new Date(2026, 9, 3)), true);
+  assert.equal(tithiRuleMatchesDate(rule, new Date(2026, 9, 2)), false);
+});
+
+test('annual shraddha: a sunrise day after `from` whose aparahna day is before it has passed — the next year answers', () => {
+  const rule = { lunarMonth: 7, paksha: 'krishna', tithi: 7 } as const;
+  const next = nextObservanceForEntry({ tithiRule: rule }, new Date(2026, 9, 3));
+  assert.ok(next && next.getFullYear() === 2027, `from 3 Oct 2026 the 2 Oct shraddha is past; got ${iso(next)}`);
+  assert.equal(iso(next), iso(pakshaShraddhaDay(rule, 2027)));
+});
+
 // The persistence layer (`pitruSmaranSolves.ts`) reads a window off disk and hands
 // it back here, so a cold launch skips the ~40 ms Bhadrapada-Purnima scan. What it
 // seeds must be what every solver downstream then sees — `pakshaShraddhaDay` and
@@ -147,6 +271,37 @@ test('primePitruPakshaWindow seeds the memo, and downstream solvers use the seed
   // A rule mapped into the fortnight must resolve identically off a seeded
   // window — seeded == fresh is the whole contract, whatever the date is.
   assert.equal(iso(pakshaShraddhaDay(ASHTAMI, 2026)), freshShraddha);
+});
+
+test('a window primed from disk names every fortnight day exactly as a fresh solve does (2024–2031)', () => {
+  for (let year = 2024; year <= 2031; year++) {
+    __resetPitruPakshaWindowCacheForTests();
+    const fresh = pitruPakshaWindow(year)!;
+    assert.equal(isPitruPakshaDayTableWarm(year), true, `${year}: a fresh solve leaves the day table warm`);
+    const labels = (): string[] => {
+      const out: string[] = [];
+      for (let d = new Date(fresh.purnima); d.getTime() <= fresh.end.getTime(); d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1)) {
+        out.push(pitruPakshaObservanceForDate(d)!.labelEn);
+      }
+      return out;
+    };
+    const freshLabels = labels();
+    __resetPitruPakshaWindowCacheForTests();
+    primePitruPakshaWindow(year, { ...fresh });
+    assert.equal(isPitruPakshaDayTableWarm(year), false, `${year}: a primed window still has its table to solve`);
+    assert.deepEqual(labels(), freshLabels, `${year}`);
+  }
+});
+
+test('the asynchronous day label agrees with the synchronous one and honours cancellation', async () => {
+  __resetPitruPakshaWindowCacheForTests();
+  const w = pitruPakshaWindow(2026)!;
+  __resetPitruPakshaWindowCacheForTests();
+  primePitruPakshaWindow(2026, { ...w });
+  assert.equal(await pitruPakshaObservanceForDateAsync(new Date(2026, 9, 2), () => true), undefined);
+  assert.equal((await pitruPakshaObservanceForDateAsync(new Date(2026, 9, 2)))?.labelEn, 'Pitru Paksha — Saptami Shraddha');
+  assert.equal(isPitruPakshaDayTableWarm(2026), true);
+  assert.equal(await pitruPakshaObservanceForDateAsync(new Date(2026, 9, 11)), null);
 });
 
 test('primePitruPakshaWindow never overwrites a year this session already solved', () => {
@@ -167,11 +322,12 @@ test('pakshaShraddhaDay maps a tithi into the fortnight (2026 anchors)', () => {
   // The person's own month/paksha is irrelevant — only the tithi maps in.
   assert.equal(iso(pakshaShraddhaDay({ lunarMonth: 11, paksha: 'krishna', tithi: 8 }, 2026)), '2026-10-03'); // Ashtami Shraddha
   assert.equal(iso(pakshaShraddhaDay({ lunarMonth: 1, paksha: 'shukla', tithi: 4 }, 2026)), '2026-09-30'); // Chaturthi Shraddha
-  // Panchami 2026: published aparahna-based lists combine "Chaturthi & Panchami"
-  // on 30 Sep; under the app-wide sunrise-anga convention Panchami's day is 1 Oct
-  // (the documented ±1 sunrise-vs-muhurta limitation, VERIFICATION.md). Pinned to
-  // the engine's own convention so drift is visible.
-  assert.equal(iso(pakshaShraddhaDay({ lunarMonth: 2, paksha: 'krishna', tithi: 5 }, 2026)), '2026-10-01');
+  // Panchami opens 30 Sep 2:55 PM inside that day's aparahna and closes before
+  // 1 Oct's, so it shares 30 Sep with Chaturthi (its sunrise day is 1 Oct).
+  assert.equal(iso(pakshaShraddhaDay({ lunarMonth: 2, paksha: 'krishna', tithi: 5 }, 2026)), '2026-09-30');
+  // Saptami opens 2 Oct ~10:15 AM and holds that afternoon: 2 Oct, not the
+  // sunrise day 3 Oct, which belongs to Ashtami alone.
+  assert.equal(iso(pakshaShraddhaDay({ lunarMonth: 2, paksha: 'krishna', tithi: 7 }, 2026)), '2026-10-02');
   // Purnima-tithi persons observe Purnima Shraddha on Bhadrapada Purnima itself.
   assert.equal(iso(pakshaShraddhaDay({ lunarMonth: 8, paksha: 'shukla', tithi: 15 }, 2026)), '2026-09-26');
   // Amavasya-tithi persons and unknown tithis collect on Sarvapitri Amavasya.
@@ -212,7 +368,9 @@ test('entryMatchesDate: fires only on the observance day (the Panchang day chip 
 test('pitruPakshaObservanceForDate exposes the public daily label only within the fortnight', () => {
   assert.equal(pitruPakshaObservanceForDate(new Date(2026, 8, 25)), null);
   assert.equal(pitruPakshaObservanceForDate(new Date(2026, 8, 26))?.labelEn, 'Pitru Paksha — Purnima Shraddha');
-  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 3))?.labelHi, 'पितृ पक्ष — सप्तमी व अष्टमी श्राद्ध');
+  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 8, 30))?.labelHi, 'पितृ पक्ष — चतुर्थी व पंचमी श्राद्ध');
+  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 2))?.labelHi, 'पितृ पक्ष — सप्तमी श्राद्ध');
+  assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 3))?.labelHi, 'पितृ पक्ष — अष्टमी श्राद्ध');
   assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 10))?.labelEn, 'Pitru Paksha — Sarvapitri Amavasya');
   assert.equal(pitruPakshaObservanceForDate(new Date(2026, 9, 11)), null);
 });

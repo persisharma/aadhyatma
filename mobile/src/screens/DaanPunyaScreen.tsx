@@ -24,9 +24,14 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Svg, { Path } from 'react-native-svg';
 
 import BackgroundLayer from '@/components/BackgroundLayer';
+import ReadingArtwork from '@/components/ReadingArtwork';
+import { readingParchment } from '@/data/backgroundAsset';
 import ReaderHeader from '@/components/ReaderHeader';
 import { getDaanBackground } from '@/data/backgrounds';
 import { useTodayKey } from '@/utils/useTodayKey';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { daanPrincipleShareable } from '@/utils/shareContent';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import {
   DAAN_VAAR_ENTRIES,
@@ -57,6 +62,7 @@ function vaarShortName(lang: Lang, vaarHi: string, vaarEn: string): string {
 export default function DaanPunyaScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const rootNav = useNavigation<any>();
   const { width } = useWindowDimensions();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
@@ -99,8 +105,8 @@ export default function DaanPunyaScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      {/* Annapurna giving anna to Shiva-as-bhikshu — a 2:3 portrait plate, cover-fitted full screen. */}
-      <BackgroundLayer source={getDaanBackground()} />
+      {/* Shared paper; the complete Annapurna painting appears once in the reading flow. */}
+      <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.root} edges={['top']} testID="daan-punya-screen">
       <ReaderHeader
         title={contentByLang(lang, 'दान-पुण्य', 'Daan Punya')}
@@ -135,6 +141,8 @@ export default function DaanPunyaScreen({ navigation }: Props) {
         <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 20, color: colors.inkSoft, textAlign: 'center', marginTop: spacing.xs, paddingHorizontal: spacing.readingGutter }}>
           {contentByLang(lang, 'जप · व्रत · दान — साधना का तीसरा चरण', 'Japa · vrat · daan — the third limb of sadhana')}
         </Text>
+
+        <View style={{ marginHorizontal: spacing.readingGutter }}><ReadingArtwork source={getDaanBackground()} /></View>
 
         {todayMatch?.occasion ? (
           <View style={{ paddingHorizontal: spacing.readingGutter }}>
@@ -268,26 +276,34 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                     {meaningByLang(lang, entry.meaningHi, entry.meaningEn)}
                   </Text>
                 </View>
-                {entry.gitaRef ? (
-                  <View style={styles.cardActions}>
-                      <Pressable
-                        testID="daan-gita-link"
-                        accessibilityRole="button"
-                        accessibilityLabel="Read in the Gita reader"
-                        onPress={() =>
-                          rootNav.navigate('HomeTab', {
-                            screen: 'GitaReader',
-                            params: { chapter: entry.gitaRef!.chapter, initialIndex: entry.gitaRef!.verseIndex },
-                          })
-                        }
-                        style={[styles.chip, { borderColor: colors.saffron, borderRadius: radii.pill }]}
-                      >
-                        <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep }}>
-                          {contentByLang(lang, 'गीता में पढ़ें ›', 'Read in the Gita ›')}
-                        </Text>
-                      </Pressable>
+                <View style={styles.cardActions}>
+                  {entry.gitaRef ? (
+                    <Pressable
+                      testID="daan-gita-link"
+                      accessibilityRole="button"
+                      accessibilityLabel="Read in the Gita reader"
+                      onPress={() =>
+                        rootNav.navigate('HomeTab', {
+                          screen: 'GitaReader',
+                          params: { chapter: entry.gitaRef!.chapter, initialIndex: entry.gitaRef!.verseIndex },
+                        })
+                      }
+                      style={[styles.chip, { borderColor: colors.saffron, borderRadius: radii.pill }]}
+                    >
+                      <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep }}>
+                        {contentByLang(lang, 'गीता में पढ़ें ›', 'Read in the Gita ›')}
+                      </Text>
+                    </Pressable>
+                  ) : null}
+                  <View style={styles.shareEnd}>
+                    <ShareButton
+                      onPress={() => void share(daanPrincipleShareable(entry), lang)}
+                      busy={shareBusy}
+                      accessibilityLabel="Share verse"
+                      accessibilityHint="Opens share options for this verse and its meaning"
+                    />
                   </View>
-                ) : null}
+                </View>
               </View>
             );
           })}
@@ -400,6 +416,7 @@ const styles = StyleSheet.create({
   card: { borderWidth: 1, paddingHorizontal: 14, paddingTop: 13, paddingBottom: 13 },
   verseCard: { justifyContent: 'space-between' },
   cardActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 6, gap: 8 },
+  shareEnd: { marginLeft: 'auto' },
   chip: { borderWidth: 1.5, paddingHorizontal: 12, paddingVertical: 5 },
   journeyBtn: { borderWidth: 1.5, paddingHorizontal: 14, paddingVertical: 7, marginTop: 11, alignSelf: 'flex-start' },
   labelRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8 },

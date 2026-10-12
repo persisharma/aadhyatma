@@ -19,7 +19,7 @@
       "bytes": 167248,
       "sha256": "1736a66536efe8f8a9351a784f5d01b26edd86b957b378056847933d89c5dda7",
       "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
-      "approval": "preview for user review"
+      "approval": "user-approved 2026-10-12"
     },
     {
       "id": "daan",
@@ -36,7 +36,7 @@
       "bytes": 160310,
       "sha256": "ae9113918da17ea0d0a3eef9a8d3ece29c9d23c86a24c34ab3a146399d9d80ff",
       "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
-      "approval": "preview for user review"
+      "approval": "user-approved 2026-10-12"
     },
     {
       "id": "babhruvahana",
@@ -53,7 +53,7 @@
       "bytes": 169170,
       "sha256": "bd1022c0c8165c3244e4f7c3e7e5f76071cbac3ae2067b35ae08019ffc8a602e",
       "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
-      "approval": "preview for user review"
+      "approval": "user-approved 2026-10-12"
     },
     {
       "id": "five-pretas",
@@ -70,7 +70,7 @@
       "bytes": 165628,
       "sha256": "676fc775f8aa4dd98680de32e50780f5cdaabc28194a11731b070db301d3ef7b",
       "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
-      "approval": "preview for user review"
+      "approval": "user-approved 2026-10-12"
     },
     {
       "id": "viravahana",
@@ -87,7 +87,7 @@
       "bytes": 169544,
       "sha256": "831017832d6281e56f7eb65fb4dc52e101d09d09e9c1d3fb4a073c72db50582d",
       "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
-      "approval": "preview for user review"
+      "approval": "user-approved 2026-10-12"
     },
     {
       "id": "sita-ancestors",
@@ -104,7 +104,7 @@
       "bytes": 157450,
       "sha256": "4e01fdc4674fa63a5e4b03cf05764b912b980fa8da257eb552290cfe995ec2a4",
       "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
-      "approval": "preview for user review"
+      "approval": "user-approved 2026-10-12"
     },
     {
       "id": "ancestors",
@@ -121,7 +121,7 @@
       "bytes": 140544,
       "sha256": "47b8cee3575f543525c2b4bf4024b3a5e3fc41129394eba9f6d42766605b911d",
       "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
-      "approval": "preview for user review"
+      "approval": "user-approved 2026-10-12"
     },
     {
       "id": "yama",
@@ -138,7 +138,7 @@
       "bytes": 153568,
       "sha256": "3dc3026d3dc0951af85a377a15d9dfb9455fb565e442a760b56a46d0cba02ef2",
       "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
-      "approval": "preview for user review"
+      "approval": "user-approved 2026-10-12"
     },
     {
       "id": "vaitarani",
@@ -155,9 +155,15 @@
       "bytes": 150352,
       "sha256": "cdc5b91f6ea7ac2796abfbd553b0a48c8bb216581d10778bc8283d211468122e",
       "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
-      "approval": "preview for user review"
+      "approval": "user-approved 2026-10-12"
     }
   ],
   "totalBytes": 1433814,
-  "scope": "Artwork preview; app bundle and R2 unchanged this pass"
+  "scope": "Artwork preview; app bundle and R2 unchanged this pass",
+  "approval": {
+    "status": "approved",
+    "date": "2026-10-12",
+    "evidence": "User: THis looks good, complete this take a pull from main and verify then raise a PR",
+    "scope": "All nine Style 3 banners and reader integration; no remote publication"
+  }
 }

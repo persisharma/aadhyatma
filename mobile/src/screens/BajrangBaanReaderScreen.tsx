@@ -137,6 +137,7 @@ export default function BajrangBaanReaderScreen({ navigation, route }: Props) {
             keyExtractor={(v) => v.id}
             renderItem={({ item, index }) => (
               <BajrangBaanVersePage
+                showIllustration={index === 0}
                 verse={item}
                 sourceId="bajrang-baan"
                 width={width}

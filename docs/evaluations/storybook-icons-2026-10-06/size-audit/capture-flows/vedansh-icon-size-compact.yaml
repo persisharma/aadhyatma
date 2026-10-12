@@ -1,0 +1,27 @@
+appId: com.prashantsharma.vedansh
+---
+- setOrientation: PORTRAIT
+- launchApp:
+    stopApp: true
+- tapOn: { text: "Skip tour", optional: true }
+- tapOn: { text: "Begin", optional: true }
+- tapOn: { text: "Close", optional: true }
+- tapOn: { text: "Got it", optional: true }
+- tapOn: { text: "Not now|अभी नहीं", optional: true }
+- tapOn: { text: "Allow|Don.t Allow", optional: true }
+- tapOn: { id: "tab-home" }
+- tapOn: { text: "Back", optional: true }
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*"
+    timeout: 30000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/09-compact-home-top
+- scrollUntilVisible:
+    element: { text: "Chalisa\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 20000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/10-compact-home-upper
+- scrollUntilVisible:
+    element: { text: "Daan Punya\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 20000
+- takeScreenshot: docs/evaluations/storybook-icons-2026-10-06/size-audit/11-compact-home-lower

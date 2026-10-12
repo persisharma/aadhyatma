@@ -13,8 +13,9 @@
 
 ## Subsystems
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.
+- [[kids-stories]] — lazy four-deity library, nineteen readings including Durga/Navaratri, 143 reviewed illustrations, four-language causal review, reviewed frames, multi-card sharing and hashed R2 delivery; native/editorial/CDN evidence remains explicit.
 - [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, per-routine reminders, home banner + celebration.
-- [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, **festival arcs (पर्व-अर्क: sthapana → family-chosen visarjan)**, Daily Muhurat, shubh-yoga annotations (annotate-only), Kundali, deterministic Daily Rashifal, private IST-only Guna Milan, newborn-private Namkaran, and dated one-shot muhurat follows.
+- [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, **festival arcs (पर्व-अर्क: sthapana → family-chosen visarjan)**, Daily Muhurat, shubh-yoga annotations (annotate-only), Kundali (incl. the draft **graha-by-graha cards with counted labels and upay**, jyotishi-gated), deterministic Daily Rashifal, private IST-only Guna Milan, newborn-private Namkaran, and dated one-shot muhurat follows.
 - [[japam-alarms]] — Japam Alarms: repeat-days, one-time, and skip-next; native AlarmKit/AlarmManager tier with expo fallback.
 - [[audio]] — the three sound sources (recorded library, japam loop, read-aloud TTS), the playback arbiter that keeps them mutually exclusive, and the expo-speech platform traps.
 - [[notifications]] — ten local notification families (daily verse, vrat, **muhurat**, festive, **return / वापसी स्मरण**, sadhana, **routine**, personal Pitru Smaran, public Pitru Paksha, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.
@@ -25,20 +26,23 @@
 - [[vastu-disha]] — live 8-dik compass (fused→magnetometer source ladder, true-north grid correction, tilt/Hold honesty) + गृह वास्तु: mandala-grid home capture, five-class weighted readings, private roster + compare, text handoff, Ask `vastu.myhome`; Phase 1 store-gated (expo-sensors), Phase 2 OTA.
 - [[pitru-shiksha]] — पितृ पक्ष परिचय (PRD-44): the education layer beside the Pitru reminder and the tila-tarpana vidhi — verified-only registry (lessons · tithis · glossary · verse spine with reader refs · kathas · प्रश्नोत्तर), the reading-order screen, the gated overview door, the stance guard.
 - [[gita-saar]] — गीता सार: themed readings over the bundled Gita (a chapter is a theme, a page is one shloka + its plain-language सार), refs never re-typed scripture, three-file theme additions, first theme सच्चा प्रेम.
+- [[share]] — share cards: the one `ShareProvider`, verse/prose/illustrated story cards, density-correct PNG export, the measured paginator that splits long prose into a series, the pages strip / preview, all-pages share via the native-gated `react-native-share`, and the no-share Pitru surfaces.
 - [[daan-punya]] — the education-led giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and a verified directory available from both the giving home and the journey's terminal actions.
 
 ## Concepts
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
-- [[deity-icons]] — deity avatar glyph system: 21 hand-drawn View-composition glyphs (`deityGlyphs/` total registry), baked palette, 36 dp canvas/scaling contract, no-emoji rule.
+- [[deity-icons]] — shared Storybook icon system: 56 painted assets across Home/More/Discover, 21 deity attributes, direct Phosphor utility imports, offline art, shared celestial decorations and stable layout/accessibility contracts.
 
 ## Entities
 _(none yet — add per-model pages as they warrant)_
 
 ## Integrations
-_(none yet — extract from source as needed)_
+- [[integrations/meta-app-events]] — build-gated Android/iOS Meta activation measurement, ATT/privacy guards, native release requirements and verification limits.
+- [[integrations/reading-artwork]] — distinct reading backgrounds and Krishna-style reader illustrations, R2 manifests, immediate offline visuals, shared lifetime cache and bounded downloads.
 
 ## Runbooks
+- [[runbooks/store-submission]] — store asset dimensions, capture provenance and production privacy/delivery gates.
 - [[e2e-verification]] — Maestro e2e: authoring rules, the isolated-simulator verification recipe (multi-worktree machines), gotchas, and the "every change ships with e2e" policy.
 
 ## Decisions
-_(none yet)_
+- [[decisions/ramayan-comic-character-continuity]] — approved comic character direction, event-based continuity, 29-episode Hindi/English Bālakāṇḍa review edition, fitted lettering, measured frames and production boundaries.

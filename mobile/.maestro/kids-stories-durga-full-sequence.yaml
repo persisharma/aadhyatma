@@ -1,0 +1,77 @@
+# Full Durga native sequence: 87 pages in each of four languages at Standard and Large.
+# Use an isolated simulator, compatible native build, own Metro and uploaded R2 art.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow:
+    file: _durga-settings.yaml
+    env:
+      READING_SIZE: "Standard"
+      READING_LANGUAGE: "Hindi"
+- runFlow:
+    file: _durga-pages-hi.yaml
+    env:
+      DURGA_SIZE: "standard"
+- runFlow:
+    file: _durga-settings.yaml
+    env:
+      READING_SIZE: "Standard"
+      READING_LANGUAGE: "English"
+- runFlow:
+    file: _durga-pages-en.yaml
+    env:
+      DURGA_SIZE: "standard"
+- runFlow:
+    file: _durga-settings.yaml
+    env:
+      READING_SIZE: "Standard"
+      READING_LANGUAGE: "Gujarati"
+- runFlow:
+    file: _durga-pages-gu.yaml
+    env:
+      DURGA_SIZE: "standard"
+- runFlow:
+    file: _durga-settings.yaml
+    env:
+      READING_SIZE: "Standard"
+      READING_LANGUAGE: "Kannada"
+- runFlow:
+    file: _durga-pages-kn.yaml
+    env:
+      DURGA_SIZE: "standard"
+- runFlow:
+    file: _durga-settings.yaml
+    env:
+      READING_SIZE: "Large"
+      READING_LANGUAGE: "Hindi"
+- runFlow:
+    file: _durga-pages-hi.yaml
+    env:
+      DURGA_SIZE: "large"
+- runFlow:
+    file: _durga-settings.yaml
+    env:
+      READING_SIZE: "Large"
+      READING_LANGUAGE: "English"
+- runFlow:
+    file: _durga-pages-en.yaml
+    env:
+      DURGA_SIZE: "large"
+- runFlow:
+    file: _durga-settings.yaml
+    env:
+      READING_SIZE: "Large"
+      READING_LANGUAGE: "Gujarati"
+- runFlow:
+    file: _durga-pages-gu.yaml
+    env:
+      DURGA_SIZE: "large"
+- runFlow:
+    file: _durga-settings.yaml
+    env:
+      READING_SIZE: "Large"
+      READING_LANGUAGE: "Kannada"
+- runFlow:
+    file: _durga-pages-kn.yaml
+    env:
+      DURGA_SIZE: "large"

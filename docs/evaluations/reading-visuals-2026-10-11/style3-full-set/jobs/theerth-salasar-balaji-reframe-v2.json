@@ -1,0 +1,9 @@
+{
+  "id": "theerth-salasar-balaji-reframe-v2",
+  "replaces": "theerth-salasar-balaji",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/theerth-salasar-balaji.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Correct the framing of image 1, preserving its fine detailed storybook rendering and exact 2:1 landscape. Issue to fix: whole central carved floral lintel top and shrine arch. Keep face icon, moustache/beard, crown, parasol, offering tray, bells, pots, cups, lamps and rich courtyard. Scale the entire principal subject/shrine/animal/prop group together down by about 20 percent within the SAME 2:1 canvas, adding naturally painted matching sky, ground or courtyard around it. Required: every meaningful subject and key prop completely inside a 6 percent safe margin, particularly the specified clipped points. A camera that is farther back, not a taller canvas. Do not crop, distort, fade away or omit the clipped part. Background tree canopy and distant setting may extend edge to edge. Retain all other details and coherent anatomy; no new people, text, captions, border or UI.",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-2945c4e6-8003-4b15-95de-793bb5028d6e.png"
+}

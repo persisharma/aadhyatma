@@ -284,6 +284,7 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
               const isLastPage = verseIdx === verseCount - 1;
               return (
                 <GitaSaarVersePage
+                  showIllustration={verseIdx === 0}
                   verse={item}
                   sourceId={SOURCE_ID}
                   width={width}
@@ -326,8 +327,16 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
                               verseLabelEn: `Verse ${item.gitaChapter}.${item.gitaVerse}`,
                               linesHi: [...item.sanskrit],
                               linesEn: [...item.transliteration],
-                              meaningHi: item.meaningHi,
-                              meaningEn: item.meaningEn,
+                              // The card carries what the page carries: the theme line
+                              // over the saar, and the theme's closing line on its last page.
+                              meaningTitleHi: item.themeHi,
+                              meaningTitleEn: item.themeEn,
+                              meaningHi: isLastPage
+                                ? `${item.meaningHi}\n\n${chapter.closingHi}`
+                                : item.meaningHi,
+                              meaningEn: isLastPage
+                                ? `${item.meaningEn}\n\n${chapter.closingEn}`
+                                : item.meaningEn,
                             },
                             lang
                           );

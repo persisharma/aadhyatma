@@ -3,6 +3,11 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import TodayRecommendationsRow from '@/components/TodayRecommendationsRow';
 
+let mockDimensions = { width: 375, height: 667, scale: 2, fontScale: 1 };
+jest.mock('react-native/Libraries/Utilities/useWindowDimensions', () => ({
+  default: () => mockDimensions,
+}));
+
 const mockNavigate = jest.fn();
 // Mutable so a single test can flip the reading language; read at render time
 // (inside useGitaLanguage), so no jest-hoisting TDZ issue.
@@ -83,8 +88,27 @@ jest.mock('@/components/FeatureCard', () => {
   };
 });
 
+// Every tree is unmounted after its test. The row's hooks schedule real-timer
+// work (`useTodayAbujh` scans the observance year on a setTimeout); an
+// unmounted tree cancels it, a forgotten one lets it run after Jest has torn
+// the environment down — where the engine's lazy `require()` of the bundled
+// observance table fails the whole run.
+const trees: TestRenderer.ReactTestRenderer[] = [];
+function mountRow(horizontalGutter?: number): TestRenderer.ReactTestRenderer {
+  const tree = TestRenderer.create(<TodayRecommendationsRow horizontalGutter={horizontalGutter} />);
+  trees.push(tree);
+  return tree;
+}
+
 describe('TodayRecommendationsRow', () => {
+  afterEach(() => {
+    act(() => {
+      trees.splice(0).forEach((tree) => tree.unmount());
+    });
+  });
+
   beforeEach(() => {
+    mockDimensions = { width: 375, height: 667, scale: 2, fontScale: 1 };
     renderedFeatureCardProps.length = 0;
     mockLang = 'en';
     mockRecommendations = entries.map((entry) => ({ entry }));
@@ -100,7 +124,7 @@ describe('TodayRecommendationsRow', () => {
     mockLang = 'hi';
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => {
-      tree = TestRenderer.create(<TodayRecommendationsRow />);
+      tree = mountRow();
     });
     const eyebrow = tree.root
       .findAllByType(Text)
@@ -115,7 +139,7 @@ describe('TodayRecommendationsRow', () => {
   test('renders homepage recommendations with the compact card shell', () => {
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => {
-      tree = TestRenderer.create(<TodayRecommendationsRow />);
+      tree = mountRow();
     });
 
     const cards = tree.root
@@ -133,6 +157,25 @@ describe('TodayRecommendationsRow', () => {
     expect(renderedFeatureCardProps.every((props) => props.item.descEn === 'Recommended for today')).toBe(true);
   });
 
+  test('enlarged text widens the recommendation without exceeding the phone gutter', () => {
+    mockDimensions = { width: 375, height: 667, scale: 2, fontScale: 3.12 };
+    act(() => { mountRow(); });
+    for (const card of renderedFeatureCardProps) {
+      expect(card.width).toBeGreaterThan(196);
+      expect(card.width).toBe(375 - 32);
+    }
+  });
+
+  test.each([16, 24])('keeps the full-bleed band and enlarged cards aligned to a %spt page gutter', (gutter) => {
+    mockDimensions = { width: 375, height: 667, scale: 2, fontScale: 3.12 };
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => { tree = mountRow(gutter); });
+    const band = tree.root.findByType(ScrollView);
+    expect(StyleSheet.flatten(band.props.style).marginHorizontal).toBe(-gutter);
+    expect(StyleSheet.flatten(band.props.contentContainerStyle).paddingHorizontal).toBe(gutter);
+    expect(renderedFeatureCardProps.every((card) => card.width === 375 - 2 * gutter)).toBe(true);
+  });
+
   // A festive reminder lands the user on Home, so the card that its message
   // named carries the occasion rather than the generic "Recommended for today"
   // line. Since the row went name-only (§50), this attribution is no longer
@@ -146,7 +189,7 @@ describe('TodayRecommendationsRow', () => {
     ];
 
     act(() => {
-      TestRenderer.create(<TodayRecommendationsRow />);
+      mountRow();
     });
 
     expect(renderedFeatureCardProps.map((props) => props.item.descEn)).toEqual([
@@ -158,7 +201,7 @@ describe('TodayRecommendationsRow', () => {
   test('wires each card and the row for Home first-tap recovery', () => {
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => {
-      tree = TestRenderer.create(<TodayRecommendationsRow />);
+      tree = mountRow();
     });
 
     // Every card carries the full press lifecycle (onPress + the fallback pair),
@@ -180,7 +223,7 @@ describe('TodayRecommendationsRow', () => {
   test('an ordinary day shows no दान-पुण्य FOR TODAY card', () => {
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => {
-      tree = TestRenderer.create(<TodayRecommendationsRow />);
+      tree = mountRow();
     });
     expect(tree.root.findAll((n) => n.props.testID === 'for-today-daan')).toHaveLength(0);
     expect(renderedFeatureCardProps.some((p) => p.item.key === 'daan-today')).toBe(false);
@@ -193,7 +236,7 @@ describe('TodayRecommendationsRow', () => {
     mockObservances = [{ rule: { id: 'makar-sankranti' } }];
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => {
-      tree = TestRenderer.create(<TodayRecommendationsRow />);
+      tree = mountRow();
     });
     expect(tree.root.findAll((n) => n.props.testID === 'for-today-daan').length).toBeGreaterThanOrEqual(1);
     const daanCards = renderedFeatureCardProps.filter((p) => p.item.key === 'daan-today');

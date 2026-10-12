@@ -1,0 +1,228 @@
+{
+  "capturedDate": "2026-10-06",
+  "platform": "iOS 26.5 simulator",
+  "simulator": "Vedansh-Upanishad-QA",
+  "simulatorUDID": "5799D1D7-B645-4613-8058-822E63009C0F",
+  "appId": "com.prashantsharma.vedansh",
+  "appVersion": "1.4.9",
+  "appBuild": "69",
+  "configuration": "Release",
+  "beforeCommit": "65bbfa72ecaf874dc51eb370d2d42f700205b4ba",
+  "finalSourceBase": "65bbfa72ecaf874dc51eb370d2d42f700205b4ba",
+  "finalSourceNote": "Latest installed Release contains the More correction in this commit. Source hashes below identify the pre-commit implementation used for captures. Gallery composites only resize the raw screenshots to logical-point density and add headings outside them.",
+  "finalSourceSha256": {
+    "mobile/src/components/MoreIcon.tsx": "fd1bdd7025c4a4ed3a48068ad05f9ecce29fef5e12384e2f71c5ada6bf6d8bb7",
+    "mobile/src/screens/MoreScreen.tsx": "0026e8e8251e94abfb58d9aa44add0ba7d0afcad7382518169898db865838057",
+    "mobile/assets/icons/more-storybook/manifest.json": "0e6970a733b7c6b0b4d4123ef4c45abf082f66bc26233acfbf685be43ac7301e"
+  },
+  "captures": [
+    {
+      "file": "after-top.png",
+      "phase": "final",
+      "language": "hi",
+      "systemTextSize": "large",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "157967efd838a5e73a73fd0c20d8fbd9ed9604641bb011decbf0b6a8d34b298a"
+    },
+    {
+      "file": "after-middle.png",
+      "phase": "final",
+      "language": "hi",
+      "systemTextSize": "large",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "5e5048b0118636a4558e2cbc5959c63ea31642601e9f762fc52d1d2593bc749d"
+    },
+    {
+      "file": "after-bottom.png",
+      "phase": "final",
+      "language": "hi",
+      "systemTextSize": "large",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "b63334e2f8ead7eb43b39449feec92f423118c4f8abfe8fb4fa5ba3431a90391"
+    },
+    {
+      "file": "after-info.png",
+      "phase": "final",
+      "language": "hi",
+      "systemTextSize": "large",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "b63334e2f8ead7eb43b39449feec92f423118c4f8abfe8fb4fa5ba3431a90391"
+    },
+    {
+      "file": "after-english-top.png",
+      "phase": "final",
+      "language": "en",
+      "systemTextSize": "large",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "47ed06c59ae7af04ec8e3fea8f1280e6943288e7d1b3726d92be2eea72a4a672"
+    },
+    {
+      "file": "after-enlarged-top.png",
+      "phase": "final",
+      "language": "hi",
+      "systemTextSize": "accessibility-medium",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "98208d17082eab15dd4494e48b8d3544be06a0e26366f4442f7999e738d8e9bd"
+    },
+    {
+      "file": "after-enlarged-practice.png",
+      "phase": "final",
+      "language": "hi",
+      "systemTextSize": "accessibility-medium",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "b070c611a9a6000f43975b7e41ff2d5b3307e32c1c88e7876cb1c1c1488b69cb"
+    },
+    {
+      "file": "after-enlarged-english-app.png",
+      "phase": "final",
+      "language": "en",
+      "systemTextSize": "accessibility-medium",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "009a09537f2af56b1cba4ccc8ba89fcfef7556132322610cd3e6823e84f020fc"
+    },
+    {
+      "file": "after-enlarged-english-top.png",
+      "phase": "final",
+      "language": "en",
+      "systemTextSize": "accessibility-medium",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "7bccc7ccef35197babd2bf81fe78495d1e537a2ac5e175a8253077f0ac8da05e"
+    },
+    {
+      "file": "after-enlarged-english-info.png",
+      "phase": "final",
+      "language": "en",
+      "systemTextSize": "accessibility-medium",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "a950d66785f3fda2ee013b8127e846c088dcb237946d17f99f555a03280c9feb"
+    },
+    {
+      "file": "before-top.png",
+      "phase": "before",
+      "language": "hi",
+      "systemTextSize": "large",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "6b2969234c6d4e5176e5726f5cdedb88aa8b6fc869d5202dedc96648a5290bc4"
+    },
+    {
+      "file": "before-middle.png",
+      "phase": "before",
+      "language": "hi",
+      "systemTextSize": "large",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "8335bb0a44d8a4521e743d5e98a8295553b8a2027b1b807f9a9c541e19925885"
+    },
+    {
+      "file": "before-bottom.png",
+      "phase": "before",
+      "language": "hi",
+      "systemTextSize": "large",
+      "pixelDimensions": [
+        1206,
+        2622
+      ],
+      "logicalPoints": [
+        402,
+        874
+      ],
+      "density": 3,
+      "sha256": "dd306dd33d80eac17477ec98995f86eeda3dc832f4a9bd6fcaa936a3cbbb01c4"
+    }
+  ]
+}

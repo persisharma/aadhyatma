@@ -50,14 +50,14 @@ export default function JanmaTithiReminderScheduler() {
       if (cancelled) return;
       const now = new Date();
       const today = startOfLocalDay(now);
-      void hydrateSmaranSolves(optedIn.map(({ rule }) => rule!), today).then(async () => {
+      void hydrateSmaranSolves(optedIn.map(({ rule }) => rule!), today, 'janma').then(async () => {
         if (cancelled) return;
         const inputs: JanmaTithiReminderInput[] = [];
         for (const { person, rule } of optedIn) {
           if (cancelled) return;
           let nextDate: Date | null = null;
           try {
-            nextDate = (await ensureOccurrencesAsync(rule!, today, 1, () => cancelled))[0] ?? null;
+            nextDate = (await ensureOccurrencesAsync(rule!, today, 1, () => cancelled, 'janma'))[0] ?? null;
           } catch {
             nextDate = null; // an unsolvable rule schedules nothing, never crashes
           }

@@ -49,13 +49,13 @@ export const PITRU_PRASHNA_ENTRIES: readonly PitruPrashnaEntry[] = [
     questionHi: 'छपे पंचांग में श्राद्ध की तारीख़ एक दिन अलग क्यों दिखती है?',
     questionEn: 'Why does a printed almanac show the shraddha a day apart?',
     answerHi:
-      'श्राद्ध अपराह्न का कर्म है, इसलिए शास्त्रीय गणना उस दिन को चुनती है जिसके अपराह्न में तिथि व्याप्त हो — जबकि अधिकांश तालिकाएँ सूर्योदय की तिथि से दिन नाम देती हैं। जब तिथि दोपहर के बाद बदलती है, दोनों पद्धतियाँ एक दिन का अन्तर दिखा सकती हैं। ऐप की तालिका सूर्योदय-तिथि पद्धति पर है; अपने परिवार या पुरोहित की पद्धति को प्राथमिकता दें।',
+      'श्राद्ध अपराह्न का कर्म है, इसलिए शास्त्रीय गणना उस दिन को चुनती है जिसके अपराह्न में तिथि व्याप्त हो — जबकि अधिकांश पंचांग दिन का नाम सूर्योदय की तिथि से देते हैं। जब कोई तिथि अपराह्न से पहले आरम्भ हो जाए, दोनों में एक दिन का अन्तर दिख सकता है। ऐप की पितृ पक्ष तालिका छपे श्राद्ध-कैलेण्डरों की तरह अपराह्न-व्याप्ति पर बनी है; अपने परिवार या पुरोहित की पद्धति को प्राथमिकता दें।',
     answerEn:
-      'Shraddha is an afternoon rite, so the classical reckoning picks the day whose afternoon the tithi covers — while most tables name a day by its sunrise tithi. When a tithi changes after midday the two methods can differ by a day. The app’s table follows the sunrise-tithi convention; give your family’s or officiant’s reckoning precedence.',
+      'Shraddha is an afternoon rite, so the classical reckoning picks the day whose afternoon the tithi covers — while most almanacs name a day by its sunrise tithi. When a tithi begins before the afternoon, the two can differ by a day. The app’s Pitru Paksha table follows the afternoon reckoning, as printed shraddha calendars do; give your family’s or officiant’s reckoning precedence.',
     status: 'verified',
     source: {
       referenceUrls: [DRIK_SHRADDHA_DATES, DHARMA_SINDHU_SHRADDHA, IN_REPO_ENGINE],
-      verificationNote: `${DOSSIER_NOTE} Aparahna timing is the dossier's recorded fact; the sunrise convention is the shipped table's documented behaviour.`,
+      verificationNote: `${DOSSIER_NOTE} Aparahna timing is the dossier's recorded fact; the table's aparahna assignment is the shipped engine's behaviour (pitruSmaran.ts).`,
     },
   },
   {

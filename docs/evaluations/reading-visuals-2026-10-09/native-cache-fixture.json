@@ -1,0 +1,6 @@
+{
+  "device": "Vedansh-Reading-Art-QA",
+  "method": "Host-seeded hash-identical source files in isolated Expo Go documents, to verify native cache reads and image decoding while CDN TLS is blocked by the network proxy.",
+  "assetCount": 43,
+  "doesNotProve": "Native successful CDN download"
+}

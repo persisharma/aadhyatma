@@ -1,0 +1,936 @@
+{
+  "reviewedOn": "2026-10-09",
+  "baseCommit": "91abb204",
+  "device": "E5023980-FFA8-4A9E-BC94-6E47992D3D3F",
+  "scope": "Right-side share controls on three native screens; unchanged nine-form shelf. No new art or narrative changes.",
+  "method": "Source audit of 37 share controls; 24 actual native screen visits in hi/en/gu/kn at Standard/Large. All three contact sheets visually inspected, plus clean representative screens and real picker/preview/cancel gestures. Captures include a debug LogBox warning bar; it was dismissed through its UI before the clean flow screenshots. No external posting.",
+  "sourceHashes": {
+    "mobile/src/screens/KidsStoryReaderScreen.tsx": "db90fe84521e58f2be43d4089b9795489ab81ac50613a766dbe72972694d0f43",
+    "mobile/src/screens/VratKathaReaderScreen.tsx": "6b0344e5a5f636dbf14139f9bed76d5f58072c73a96aab69c799f3f60e79d295",
+    "mobile/src/screens/DaanKathaScreen.tsx": "00aab9eaf4779703d8d920c3b6989437978947e38823cf6e510580f1dcf86afb",
+    "mobile/src/components/LanguageToggle.tsx": "f81814cbca3ef78719f1deefce93d50863ba5180f9df474be90622dbf04a8211",
+    "mobile/src/utils/kidsStoryShare.ts": "ee5161c4ce60a44ec99d902c5ea5a48896d57b2e61731ef8696fa108bcb5e927",
+    "mobile/src/components/kidsStoryArtFrames.json": "19ae2d279547dff4f92ba631519968da800caf5d0734217144c8fa2478966662",
+    "mobile/src/data/kidsStoryAssetManifest.json": "7cb326069b260c49f11ec4de50a4c172d640e38d4c271bf50ce73dd6faa723cf"
+  },
+  "tests": {
+    "total": 3094,
+    "widgets": 37,
+    "jest": 2248,
+    "jestSuites": 234,
+    "engine": 590,
+    "data": 170,
+    "ask": 49,
+    "typecheck": "passed",
+    "log": "tmp/durga-native/pr-full-test.log",
+    "sha256": "1de136151876a6eb8999586a20c134a9ace87fbe47061110136d9d8a9a9200c3"
+  },
+  "lint": {
+    "productionFiles": 15,
+    "errors": 0,
+    "warnings": 0,
+    "log": "tmp/durga-native/pr-production-lint.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "shareSourceAudit": [
+    {
+      "path": "mobile/src/screens/VratKathaReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/DaanPunyaScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/KundaliScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/GaneshStotramReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/StutiReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/GitaSaarReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/SaraswatiStotramReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/GitaReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/HanumanAshtakReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/PanchangScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/DaanKathaScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/RamStutiReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/MuhuratDetailScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/KrishnaStotramReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/ChalisaReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/MuhuratDayDetailScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/RamcharitmanasReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/AshtakamReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/TheerthDetailScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/ShivaStrotamReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/KavachamReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/SundarkandReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/SuktamReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/VishnuSahasranamaReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/DaanJourneyScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/SanskarReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/DailyBhaktiScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/VidhiConductScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/AartiReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/ObservanceDetailScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/KundaliReportScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/KidsStoryReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/BajrangBaanReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/DurgaStotramReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/JapamCounterScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/screens/ValmikiRamayanReaderScreen.tsx",
+      "controls": 1
+    },
+    {
+      "path": "mobile/src/components/AskAnswerCard.tsx",
+      "controls": 1
+    }
+  ],
+  "screenshots": [
+    {
+      "buttons": [
+        {
+          "height": 48.00000762939453,
+          "label": "चित्र-कथा साझा करें",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        }
+      ],
+      "lang": "hi",
+      "route": {
+        "key": "KidsStoryReader-3l9V1wfo9Nms5a-sUg1ux",
+        "name": "KidsStoryReader",
+        "params": {
+          "storyId": "durga-raktabeej"
+        }
+      },
+      "size": "M",
+      "file": "KidsStoryReader-hi-M.png",
+      "sha256": "e09b240cc2d46de53bcdc63943776ea0a36da5265f437e5aee1a003f6d77b9ed"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48.00000762939453,
+          "label": "चित्र-कथा साझा करें",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        }
+      ],
+      "lang": "hi",
+      "route": {
+        "key": "KidsStoryReader-3l9V1wfo9Nms5a-sUg1ux",
+        "name": "KidsStoryReader",
+        "params": {
+          "storyId": "durga-raktabeej"
+        }
+      },
+      "size": "L",
+      "file": "KidsStoryReader-hi-L.png",
+      "sha256": "5154ad0acc2996e3e4010f27ccb79a89c9d9b51da00bd50f71b93e8ff9726a3a"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "Share picture story",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        }
+      ],
+      "lang": "en",
+      "route": {
+        "key": "KidsStoryReader-3l9V1wfo9Nms5a-sUg1ux",
+        "name": "KidsStoryReader",
+        "params": {
+          "storyId": "durga-raktabeej"
+        }
+      },
+      "size": "M",
+      "file": "KidsStoryReader-en-M.png",
+      "sha256": "1f8145a89d81fa127ef50e4e45c67e832712a628d41b513f16ef1b53a6c8dd2f"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "Share picture story",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        }
+      ],
+      "lang": "en",
+      "route": {
+        "key": "KidsStoryReader-3l9V1wfo9Nms5a-sUg1ux",
+        "name": "KidsStoryReader",
+        "params": {
+          "storyId": "durga-raktabeej"
+        }
+      },
+      "size": "L",
+      "file": "KidsStoryReader-en-L.png",
+      "sha256": "ca7ea595e7cb70b06ce40b2151e7ca08a23ca0f14880818b32deb3f63346fdd5"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ચિત્રવાર્તા શેર કરો",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        }
+      ],
+      "lang": "gu",
+      "route": {
+        "key": "KidsStoryReader-3l9V1wfo9Nms5a-sUg1ux",
+        "name": "KidsStoryReader",
+        "params": {
+          "storyId": "durga-raktabeej"
+        }
+      },
+      "size": "M",
+      "file": "KidsStoryReader-gu-M.png",
+      "sha256": "a10ad631c1a0d463bd3ab12b9f3f127fc6bc23e0953f9423b3099deeb13d5e47"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ચિત્રવાર્તા શેર કરો",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        }
+      ],
+      "lang": "gu",
+      "route": {
+        "key": "KidsStoryReader-3l9V1wfo9Nms5a-sUg1ux",
+        "name": "KidsStoryReader",
+        "params": {
+          "storyId": "durga-raktabeej"
+        }
+      },
+      "size": "L",
+      "file": "KidsStoryReader-gu-L.png",
+      "sha256": "f4b3626bbae4e50107d159e57ac6cc7e25c2043e30a7ce870e6863a26c01039a"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        }
+      ],
+      "lang": "kn",
+      "route": {
+        "key": "KidsStoryReader-3l9V1wfo9Nms5a-sUg1ux",
+        "name": "KidsStoryReader",
+        "params": {
+          "storyId": "durga-raktabeej"
+        }
+      },
+      "size": "M",
+      "file": "KidsStoryReader-kn-M.png",
+      "sha256": "fe6d5ccad1bc3c323611ef86d579d33ca416d0f73f3bf824379b1f4d9e853d7b"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        }
+      ],
+      "lang": "kn",
+      "route": {
+        "key": "KidsStoryReader-3l9V1wfo9Nms5a-sUg1ux",
+        "name": "KidsStoryReader",
+        "params": {
+          "storyId": "durga-raktabeej"
+        }
+      },
+      "size": "L",
+      "file": "KidsStoryReader-kn-L.png",
+      "sha256": "d2a72b14022cc151e3036892e5bac8d1352725139899d4de1b131bdb27166366"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "चित्र-कथा साझा करें",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        }
+      ],
+      "lang": "hi",
+      "route": {
+        "key": "VratKathaReader-2NtgSZuEF0hoDtL0vpGjX",
+        "name": "VratKathaReader",
+        "params": {
+          "kathaId": "satyanarayana-vrat-katha"
+        }
+      },
+      "size": "M",
+      "file": "VratKathaReader-hi-M.png",
+      "sha256": "24503e72598a63a123e385f22dd9193bc7001dc1315f5f9f914cf2506e90e64f"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "चित्र-कथा साझा करें",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "hi",
+      "route": {
+        "key": "VratKathaReader-2NtgSZuEF0hoDtL0vpGjX",
+        "name": "VratKathaReader",
+        "params": {
+          "kathaId": "satyanarayana-vrat-katha"
+        }
+      },
+      "size": "L",
+      "file": "VratKathaReader-hi-L.png",
+      "sha256": "18079c54b9396f99cf5b4a9cc3eedd0334bb181ebdedcdde26afe899a0bebf47"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "Share picture story",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "en",
+      "route": {
+        "key": "VratKathaReader-2NtgSZuEF0hoDtL0vpGjX",
+        "name": "VratKathaReader",
+        "params": {
+          "kathaId": "satyanarayana-vrat-katha"
+        }
+      },
+      "size": "M",
+      "file": "VratKathaReader-en-M.png",
+      "sha256": "9d6da5edaf2c974e290f6f4c5593bd839481a0a6c717439b8a9fa2ccb0b5b2f4"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "Share picture story",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "en",
+      "route": {
+        "key": "VratKathaReader-2NtgSZuEF0hoDtL0vpGjX",
+        "name": "VratKathaReader",
+        "params": {
+          "kathaId": "satyanarayana-vrat-katha"
+        }
+      },
+      "size": "L",
+      "file": "VratKathaReader-en-L.png",
+      "sha256": "00509327e98eb0557333e4d76c159180b105d3eafddd0cedd65829d076fbb4fc"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ચિત્રવાર્તા શેર કરો",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "gu",
+      "route": {
+        "key": "VratKathaReader-2NtgSZuEF0hoDtL0vpGjX",
+        "name": "VratKathaReader",
+        "params": {
+          "kathaId": "satyanarayana-vrat-katha"
+        }
+      },
+      "size": "M",
+      "file": "VratKathaReader-gu-M.png",
+      "sha256": "7ebd5d6d3b738396fb57ff3bac1f512b4e075a819280c540784e986559b8c997"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ચિત્રવાર્તા શેર કરો",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "gu",
+      "route": {
+        "key": "VratKathaReader-2NtgSZuEF0hoDtL0vpGjX",
+        "name": "VratKathaReader",
+        "params": {
+          "kathaId": "satyanarayana-vrat-katha"
+        }
+      },
+      "size": "L",
+      "file": "VratKathaReader-gu-L.png",
+      "sha256": "5bd26e354db1de1426e60a4c3a129bbfd212edf5ba8395f8774bb15c6627820d"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "kn",
+      "route": {
+        "key": "VratKathaReader-2NtgSZuEF0hoDtL0vpGjX",
+        "name": "VratKathaReader",
+        "params": {
+          "kathaId": "satyanarayana-vrat-katha"
+        }
+      },
+      "size": "M",
+      "file": "VratKathaReader-kn-M.png",
+      "sha256": "ca3472ed95b8080aff4aa4376e3dac71de05c704aca99826b5f0f1f7b1795367"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "kn",
+      "route": {
+        "key": "VratKathaReader-2NtgSZuEF0hoDtL0vpGjX",
+        "name": "VratKathaReader",
+        "params": {
+          "kathaId": "satyanarayana-vrat-katha"
+        }
+      },
+      "size": "L",
+      "file": "VratKathaReader-kn-L.png",
+      "sha256": "0c2f46c4b63906b460057941cbc3dd4432d06c101ad66df345c3125679e1f04a"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "चित्र-कथा साझा करें",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "hi",
+      "route": {
+        "key": "DaanKatha-XKhhnBgSV_YGqPa7DMFmP",
+        "name": "DaanKatha",
+        "params": {
+          "kathaId": "karna"
+        }
+      },
+      "size": "M",
+      "file": "DaanKatha-hi-M.png",
+      "sha256": "ee3ed661aec1282dd4fe72e036b93dcc59702ce675a2785144e3222b0dab4c61"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "चित्र-कथा साझा करें",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "hi",
+      "route": {
+        "key": "DaanKatha-XKhhnBgSV_YGqPa7DMFmP",
+        "name": "DaanKatha",
+        "params": {
+          "kathaId": "karna"
+        }
+      },
+      "size": "L",
+      "file": "DaanKatha-hi-L.png",
+      "sha256": "623208cb10c299b3e0eedf1e448fb6f9bc0719579ce4bf70149a63d72bd1ebe9"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "Share picture story",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "en",
+      "route": {
+        "key": "DaanKatha-XKhhnBgSV_YGqPa7DMFmP",
+        "name": "DaanKatha",
+        "params": {
+          "kathaId": "karna"
+        }
+      },
+      "size": "M",
+      "file": "DaanKatha-en-M.png",
+      "sha256": "93e7a78819926488f8ba4c41299377030975d6890f1259da63df3d340995db90"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "Share picture story",
+          "width": 48,
+          "x": 332,
+          "y": 144.6666669845581
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "en",
+      "route": {
+        "key": "DaanKatha-XKhhnBgSV_YGqPa7DMFmP",
+        "name": "DaanKatha",
+        "params": {
+          "kathaId": "karna"
+        }
+      },
+      "size": "L",
+      "file": "DaanKatha-en-L.png",
+      "sha256": "eb11e9caa3c94156426e00125b0422a4226f2276cd05fc075e78972caad97386"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ચિત્રવાર્તા શેર કરો",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "gu",
+      "route": {
+        "key": "DaanKatha-XKhhnBgSV_YGqPa7DMFmP",
+        "name": "DaanKatha",
+        "params": {
+          "kathaId": "karna"
+        }
+      },
+      "size": "M",
+      "file": "DaanKatha-gu-M.png",
+      "sha256": "7fdddc2bc016dd11a07503ef78ea52a35cd01670edc432fa6cba96ba8af076c5"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ચિત્રવાર્તા શેર કરો",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "gu",
+      "route": {
+        "key": "DaanKatha-XKhhnBgSV_YGqPa7DMFmP",
+        "name": "DaanKatha",
+        "params": {
+          "kathaId": "karna"
+        }
+      },
+      "size": "L",
+      "file": "DaanKatha-gu-L.png",
+      "sha256": "e59762b36052e8327ca29d66358f14f4509c2a4c5d8231bd23447ee846ff5879"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "kn",
+      "route": {
+        "key": "DaanKatha-XKhhnBgSV_YGqPa7DMFmP",
+        "name": "DaanKatha",
+        "params": {
+          "kathaId": "karna"
+        }
+      },
+      "size": "M",
+      "file": "DaanKatha-kn-M.png",
+      "sha256": "195e6e282f07402356e37ddd49cf730216d3c11337de45cf94c6d52b11e6ea81"
+    },
+    {
+      "buttons": [
+        {
+          "height": 48,
+          "label": "ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ",
+          "width": 48,
+          "x": 332,
+          "y": 144
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        },
+        {
+          "height": 48,
+          "label": "Share katha",
+          "width": 48,
+          "x": 332,
+          "y": 70
+        }
+      ],
+      "lang": "kn",
+      "route": {
+        "key": "DaanKatha-XKhhnBgSV_YGqPa7DMFmP",
+        "name": "DaanKatha",
+        "params": {
+          "kathaId": "karna"
+        }
+      },
+      "size": "L",
+      "file": "DaanKatha-kn-L.png",
+      "sha256": "28d99aeefceb85e49df02ca545d2e401268d4e389149264c18f30a144e2721ac"
+    }
+  ],
+  "flows": [
+    {
+      "name": "pr-kids-share",
+      "log": "tmp/durga-native/pr-kids-share.log",
+      "logSha256": "2993c7eaa90fe8c1f25cd83bdc7d7a00b60260cab90560379cdccc9730502ed2",
+      "screenshots": [
+        {
+          "file": "kids-story-share-illustration.png",
+          "sha256": "89c2d4cba64aa28f068063be8802a9aea20f67d5b4e802bff4dd5585fab32c0c"
+        },
+        {
+          "file": "kids-story-share-narration.png",
+          "sha256": "7441594d278aee267e4e15393f21670825d5a89dc0ec2bd648a37b96313ded5b"
+        },
+        {
+          "file": "right-share-reader.png",
+          "sha256": "a28411f46c1921b9b1af848a9a0717c22d9651d30d622f62f6a9bceb37290568"
+        }
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "pr-vrat-share-rerun",
+      "log": "tmp/durga-native/pr-vrat-share-rerun.log",
+      "logSha256": "e38dbdcfbf9d92ca7468a081f4286fd3224480aa49ed01a876ac56c902c4f8a5",
+      "screenshots": [
+        {
+          "file": "right-share-preview.png",
+          "sha256": "ce17c0247764d5d49016f42df2646c812d0639ddb772d47e4a7731c1a60c92da"
+        },
+        {
+          "file": "right-share-reader.png",
+          "sha256": "c2189d6657ee15ff833a3893baa5b8087cfa694728f8a5ffdf62179382535975"
+        }
+      ],
+      "result": "passed"
+    },
+    {
+      "name": "pr-daan-share",
+      "log": "tmp/durga-native/pr-daan-share.log",
+      "logSha256": "f191276836f28331124dbaa5d533f81312c353d01ad002b1f2916b95f857815d",
+      "screenshots": [
+        {
+          "file": "right-share-preview.png",
+          "sha256": "6022ad3c4138573a41eb8597859d81383b75eb7980317f677a3eee87ec55ade4"
+        },
+        {
+          "file": "right-share-reader.png",
+          "sha256": "13f2db99c0a056ae633f0cbc849f7baec938acfefe09980ad95d325f519fb7bb"
+        }
+      ],
+      "result": "passed"
+    }
+  ],
+  "earlierFailure": {
+    "log": "tmp/durga-native/pr-vrat-share.log",
+    "sha256": "fae6bb88c3c83a4f778b69939c4a9c38090c61b3cee942efc9bb6146b02ad5a3",
+    "reason": "App was backgrounded by the preceding Maestro run teardown. Bringing the same running app foreground with simctl launch allowed the rerun to pass; no source repair was needed."
+  },
+  "releaseGates": "R2 upload/fresh-cache/offline proof, independent regional editorial approval, physical iOS/Android, full gesture sequence and Instagram import remain pending."
+}

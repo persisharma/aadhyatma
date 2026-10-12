@@ -1,0 +1,76 @@
+{
+  "id": "durga-kalaratri",
+  "deityId": "durga",
+  "ageMin": 6,
+  "kind": "introduction",
+  "coverArt": "kr01",
+  "title": {
+    "en": "Kalaratri: A Fearless Protector",
+    "hi": "कालरात्रि: निर्भय रक्षक",
+    "gu": "કાલરાત્રિ: નિર્ભય રક્ષક",
+    "kn": "ಕಾಲರಾತ್ರಿ: ನಿರ್ಭಯ ರಕ್ಷಕಿ"
+  },
+  "description": {
+    "en": "Meet the powerful, reassuring form honoured on the seventh day.",
+    "hi": "सातवें दिन पूजित शक्तिशाली और अभय देने वाले रूप का परिचय।",
+    "gu": "સાતમા દિવસે પૂજાતા શક્તિશાળી અને અભય આપતા રૂપનો પરિચય.",
+    "kn": "ಏಳನೇ ದಿನ ಆರಾಧಿಸುವ ಶಕ್ತಿಶಾಲಿ, ಅಭಯ ನೀಡುವ ರೂಪದ ಪರಿಚಯ."
+  },
+  "sourceNote": {
+    "en": "A short introduction from Navadurga devotional tradition, not a separate Purana adventure. Traditional origin accounts are attributed; the takeaway is editorial.",
+    "hi": "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।",
+    "gu": "નવદુર્ગાની ભક્તિપરંપરામાંથી ટૂંકો પરિચય; આ અલગ પુરાણકથા નથી. પરંપરાગત ઉત્પત્તિવર્ણનનો સ્રોત જણાવ્યો છે; શીખ સંપાદકીય છે.",
+    "kn": "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "en": "Look beyond appearances. Courage and kindness can belong together.",
+    "hi": "केवल बाहरी रूप देखकर निर्णय न लें। साहस और दया साथ हो सकते हैं।",
+    "gu": "માત્ર બહારનું રૂપ જોઈને નિર્ણય ન લો. સાહસ અને દયા સાથે હોઈ શકે છે.",
+    "kn": "ಹೊರಗಿನ ರೂಪವನ್ನಷ್ಟೇ ನೋಡಿ ತೀರ್ಮಾನಿಸಬೇಡಿ. ಧೈರ್ಯ ಮತ್ತು ದಯೆ ಒಟ್ಟಾಗಿರಬಹುದು."
+  },
+  "source": {
+    "baseText": "Navadurga dhyana; Drik Panchang, Kalaratri traditional guide",
+    "retrievedOn": "2026-10-09",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/navadurga.html",
+      "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-kalaratri.html"
+    ],
+    "notes": "Two-page form introduction. Dark complexion, donkey, four hands and reassurance/boon gestures checked against dhyana and traditional guide. No standalone combat fabricated. Kali/Chamunda in Devi Mahatmya 8 is not silently renamed Kalaratri. Clothed, modest devotional illustration is an explicit child-audience adaptation of fiercer iconographic descriptions."
+  },
+  "pages": [
+    {
+      "id": "the-seventh-form",
+      "art": "kr01",
+      "source": "Navadurga dhyana, Kalaratri; Drik Panchang Kalaratri, Navratri Worship",
+      "title": {
+        "en": "The Seventh Form",
+        "hi": "सातवाँ रूप",
+        "gu": "સાતમું રૂપ",
+        "kn": "ಏಳನೇ ರೂಪ"
+      },
+      "text": {
+        "en": "On Navaratri’s seventh day, many devotees honour Maa Kalaratri. Her complexion is dark, her hair flows freely, and she rides a donkey. Her powerful appearance belongs to a Mother who protects her devotees.",
+        "hi": "नवरात्रि के सातवें दिन अनेक भक्त माँ कालरात्रि की आराधना करते हैं। उनका वर्ण श्याम है, केश खुले हैं और वाहन गधा है। उनका शक्तिशाली रूप अपने भक्तों की रक्षा करने वाली माँ का है।",
+        "gu": "નવરાત્રિના સાતમા દિવસે ઘણા ભક્તો મા કાલરાત્રિની આરાધના કરે છે. તેમનો વર્ણ શ્યામ છે, વાળ ખુલ્લા છે અને વાહન ગધેડો છે. તેમનું શક્તિશાળી રૂપ પોતાના ભક્તોનું રક્ષણ કરતી માનું છે.",
+        "kn": "ನವರಾತ್ರಿಯ ಏಳನೇ ದಿನ ಹಲವು ಭಕ್ತರು ಕಾಲರಾತ್ರಿ ಮಾತೆಯನ್ನು ಆರಾಧಿಸುತ್ತಾರೆ. ಆಕೆಯ ಮೈಬಣ್ಣ ಗಾಢವಾಗಿದೆ, ಕೂದಲು ಹರಡಿದೆ, ವಾಹನ ಕತ್ತೆ. ಆಕೆಯ ಪ್ರಬಲ ರೂಪ ಭಕ್ತರನ್ನು ಕಾಪಾಡುವ ಮಾತೆಯ ರೂಪವಾಗಿದೆ."
+      }
+    },
+    {
+      "id": "hands-that-reassure",
+      "art": "kr02",
+      "source": "Drik Panchang Kalaratri, Iconography and Details; Navadurga dhyana",
+      "title": {
+        "en": "Hands That Reassure",
+        "hi": "अभय देने वाले हाथ",
+        "gu": "અભય આપતા હાથ",
+        "kn": "ಅಭಯ ನೀಡುವ ಕೈಗಳು"
+      },
+      "text": {
+        "en": "She is often shown with four hands. Two carry protective weapons; two offer blessing and freedom from fear. Devotees also call her Shubhankari, the one who brings auspiciousness. A fierce appearance can hold a caring purpose.",
+        "hi": "उन्हें प्रायः चार भुजाओं के साथ दिखाया जाता है। दो हाथों में रक्षा के अस्त्र हैं; दो आशीर्वाद और अभय देते हैं। भक्त उन्हें शुभंकरी भी कहते हैं, अर्थात शुभ करने वाली। उग्र रूप के भीतर करुणामय उद्देश्य हो सकता है।",
+        "gu": "તેમને ઘણી વાર ચાર ભુજાઓ સાથે બતાવવામાં આવે છે. બે હાથમાં રક્ષણનાં શસ્ત્રો છે; બે આશીર્વાદ અને અભય આપે છે. ભક્તો તેમને શુભંકરી પણ કહે છે, એટલે શુભ કરનાર. ઉગ્ર રૂપમાં કરુણાભર્યો હેતુ હોઈ શકે છે.",
+        "kn": "ಆಕೆಯನ್ನು ಸಾಮಾನ್ಯವಾಗಿ ನಾಲ್ಕು ಕೈಗಳೊಂದಿಗೆ ಚಿತ್ರಿಸುತ್ತಾರೆ. ಎರಡು ಕೈಗಳಲ್ಲಿ ರಕ್ಷಣೆಯ ಆಯುಧಗಳು; ಇನ್ನೆರಡು ಆಶೀರ್ವಾದ ಮತ್ತು ಅಭಯ ನೀಡುತ್ತವೆ. ಭಕ್ತರು ಆಕೆಯನ್ನು ಶುಭಂಕರಿ, ಶುಭವನ್ನು ತರುವವಳು ಎಂದೂ ಕರೆಯುತ್ತಾರೆ. ಉಗ್ರ ರೂಪದೊಳಗೆ ಕಾಳಜಿಯ ಉದ್ದೇಶ ಇರಬಹುದು."
+      }
+    }
+  ]
+}

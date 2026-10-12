@@ -1,0 +1,12 @@
+# More now opens from Home's top-right gear. Reselect Home to pop its stack.
+appId: com.prashantsharma.vedansh
+---
+- tapOn: { id: "tab-home" }
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "home-settings" }
+    direction: UP
+    centerElement: false
+- tapOn: { id: "home-settings" }
+- waitForAnimationToEnd

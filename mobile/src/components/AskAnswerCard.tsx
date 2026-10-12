@@ -19,6 +19,7 @@ import type { Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import type { AskAnswer, AskSuggestion, AskTarget, Localized } from '@/ask/types';
+import ShareButton from './ShareButton';
 
 function loc(lang: Lang, l: Localized): string {
   return contentByLang(lang, l.hi, l.en);
@@ -30,9 +31,15 @@ type AnswerProps = {
   onAction: (target: AskTarget) => void;
   /** Phase 2 briefing renders several cards; `compact` tightens the padding. */
   compact?: boolean;
+  /**
+   * Share this answer as a card (PRD-45, design.md §39.4). The card stays free of the
+   * share provider; the screen that owns `useShare()` passes the handler.
+   */
+  onShare?: () => void;
+  shareBusy?: boolean;
 };
 
-export default function AskAnswerCard({ answer, lang, onAction, compact }: AnswerProps) {
+export default function AskAnswerCard({ answer, lang, onAction, compact, onShare, shareBusy }: AnswerProps) {
   const { colors, spacing, radii, elevation } = useTheme();
   const [showWorking, setShowWorking] = useState(false);
   const titleFont = scriptTitleFont(lang, fontFamilies.devanagariBold);
@@ -52,8 +59,18 @@ export default function AskAnswerCard({ answer, lang, onAction, compact }: Answe
       accessibilityLabel={`Answer. ${answer.headline.en}`}
       testID="ask-answer-card"
     >
-      <View style={[styles.tag, { backgroundColor: colors.goldChipBg, borderRadius: radii.pill }]}>
-        <Text style={[eyebrowTextStyle(lang, 10.5, 0.9), { color: colors.saffronDeep }]}>{loc(lang, answer.tag)}</Text>
+      <View style={styles.tagRow}>
+        <View style={[styles.tag, { backgroundColor: colors.goldChipBg, borderRadius: radii.pill }]}>
+          <Text style={[eyebrowTextStyle(lang, 10.5, 0.9), { color: colors.saffronDeep }]}>{loc(lang, answer.tag)}</Text>
+        </View>
+        {onShare ? (
+          <ShareButton
+            onPress={onShare}
+            busy={shareBusy}
+            accessibilityLabel="Share answer"
+            accessibilityHint="Opens share options for this answer"
+          />
+        ) : null}
       </View>
 
       <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{loc(lang, answer.headline)}</Text>
@@ -236,6 +253,7 @@ export function AskAbstainCard({ kind, suggestions, lang, onSuggestion, libraryE
 }
 
 const styles = StyleSheet.create({
+  tagRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   card: { borderWidth: 1 },
   tag: { alignSelf: 'flex-start', paddingHorizontal: 8, paddingVertical: 3, marginBottom: 8 },
   headline: { fontSize: 19, lineHeight: 28 },

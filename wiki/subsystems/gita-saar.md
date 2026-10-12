@@ -67,6 +67,9 @@ Design: design.md §75; contract: RULEBOOK §29.
 
 ## Gotchas
 
+- **The share card must carry the theme line.** It once shared verse + saar only (reported as
+  "not capturing full content"); it now passes `meaningTitleHi/En = themeHi/En` and appends the
+  closing line on a theme's last page (design.md §77, [[share]]).
 - **Manifest `verseCount` is hand-typed and test-pinned.** It has been wrong twice: 16 for
   true-prema (the share card merged three pairs; the registry has 19 pages) and 11 for daivi
   (three lists of 3 + 4 + 3 = 10). Both times the loader threw at first open and

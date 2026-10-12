@@ -13,27 +13,35 @@
  * for themselves. §2.7 holds: no give/pay control, the app never transacts.
  */
 import React, { useMemo, useRef } from 'react';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
+import ProseReadingCard from '@/components/ProseReadingCard';
+import { getDaanBackground } from '@/data/backgrounds';
 import { Pressable, ScrollView, StyleSheet, Text, View, type FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
-import Ornament from '@/components/Ornament';
 import LanguageToggle from '@/components/LanguageToggle';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { daanKathaShareable } from '@/utils/shareContent';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getDaanKatha, getDaanKathas } from '@/data/daan';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
 import { commentaryByLang, contentByLang, meaningByLang } from '@/utils/localize';
 import { meaningToken, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import ProseParagraph from '@/components/ProseParagraph';
 
 type Props = NativeStackScreenProps<DaanStackParamList, 'DaanKatha'>;
 
 export default function DaanKathaScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
@@ -92,10 +100,20 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']} testID="daan-katha-screen">
+      <BackgroundLayer source={readingParchment} />
       <ReaderHeader
         title={contentByLang(lang, katha.titleHi, katha.titleEn)}
         variant="index"
         onBack={() => navigation.goBack()}
+        sideWidth={48}
+        right={
+          <ShareButton
+            onPress={() => void share(daanKathaShareable(katha), lang)}
+            busy={shareBusy}
+            accessibilityLabel="Share katha"
+            accessibilityHint="Opens share options for this katha and its teaching"
+          />
+        }
       />
       <View style={styles.toggleRow}>
         <LanguageToggle />
@@ -105,25 +123,24 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
         </View>
       </View>
       <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
-        <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.sm }}>
+        <ProseParagraph style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.sm }}>
           {contentByLang(lang, katha.subtitleHi, katha.subtitleEn)}
-        </Text>
+        </ProseParagraph>
 
-        {/* Ornament divider — the title→ornament→prose rhythm every reader shares. */}
-        <Ornament />
-
-        {katha.sections.map((section) => (
-          <View key={section.id}>
-            {commentaryByLang(lang, section.paragraphsHi, section.paragraphsEn).map((paragraph, idx) => (
-              <Text
-                key={`${section.id}-${idx}`}
-                style={[storyBodyStyle, { marginBottom: spacing.md }]}
-              >
-                {paragraph}
-              </Text>
-            ))}
-          </View>
-        ))}
+        <ProseReadingCard illustration={getDaanBackground()}>
+          {katha.sections.map((section) => (
+            <View key={section.id}>
+              {commentaryByLang(lang, section.paragraphsHi, section.paragraphsEn).map((paragraph, idx) => (
+                <ProseParagraph
+                  key={`${section.id}-${idx}`}
+                  style={[storyBodyStyle, { marginBottom: spacing.md }]}
+                >
+                  {paragraph}
+                </ProseParagraph>
+              ))}
+            </View>
+          ))}
+        </ProseReadingCard>
 
         <View
           testID="daan-katha-teaching"
@@ -132,14 +149,14 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
           <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.saffronDeep, marginBottom: 6 }}>
             {contentByLang(lang, 'शिक्षा', 'The teaching')}
           </Text>
-          <Text style={{ fontFamily: titleFont, fontSize: 16, lineHeight: 26, color: colors.saffronDeep }}>
+          <ProseParagraph style={{ fontFamily: titleFont, fontSize: 16, lineHeight: 26, color: colors.saffronDeep }}>
             {meaningByLang(lang, katha.teachingHi, katha.teachingEn)}
-          </Text>
+          </ProseParagraph>
         </View>
 
-        <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.md }}>
+        <ProseParagraph style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.md }}>
           {contentByLang(lang, `स्रोत: ${katha.canonHi}`, `Source: ${katha.canonEn}`)}
-        </Text>
+        </ProseParagraph>
         <Text style={{ fontFamily: titleFont, fontSize: 16, color: colors.gold, textAlign: 'center', marginTop: spacing.md, opacity: 0.8 }}>
           ॥ ॐ ॥
         </Text>

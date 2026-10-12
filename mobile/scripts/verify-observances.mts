@@ -33,7 +33,8 @@ const { SunPosition, EclipticGeoMoon, MakeTime } =
 // script does not do — those rules are pinned by observanceDates.test.ts instead.
 type Muhurta =
   | 'udaya' | 'madhyahna' | 'aparahna' | 'nishita' | 'pradosh'
-  | 'ratri' | 'pradosh-next' | 'sunset' | 'sunset-last' | 'purvahna';
+  | 'ratri' | 'pradosh-next' | 'sunset' | 'sunset-last' | 'purvahna'
+  | 'shravani' | 'holika-dahan-next';
 export interface AnnualFestival {
   id: string;
   month: number; // purnimant lunar month, 1-based (Chaitra=1 … Phalguna=12)
@@ -46,7 +47,7 @@ export interface AnnualFestival {
 export const ANNUAL: AnnualFestival[] = [
   { id: 'vasant-panchami', month: 11, paksha: 'shukla', tithi: 5, muhurta: 'udaya' },
   { id: 'maha-shivaratri', month: 12, paksha: 'krishna', tithi: 14, muhurta: 'nishita' },
-  { id: 'holi', month: 12, paksha: 'shukla', tithi: 15, muhurta: 'pradosh-next' }, // Rangwali: the morning after Holika Dahan
+  { id: 'holi', month: 12, paksha: 'shukla', tithi: 15, muhurta: 'holika-dahan-next' }, // Rangwali: the day after Holika Dahan (Bhadra rule)
   { id: 'ram-navami', month: 1, paksha: 'shukla', tithi: 9, muhurta: 'madhyahna' },
   { id: 'hanuman-jayanti', month: 1, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
   { id: 'akshaya-tritiya', month: 2, paksha: 'shukla', tithi: 3, muhurta: 'purvahna' },
@@ -57,11 +58,12 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'vat-savitri-vrat', month: 3, paksha: 'krishna', tithi: 15, muhurta: 'madhyahna' },
   { id: 'narada-jayanti', month: 3, paksha: 'krishna', tithi: 1, muhurta: 'udaya' },
   { id: 'guru-purnima', month: 4, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
-  { id: 'raksha-bandhan', month: 5, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
-  // Janmashtami's formal rule is Nishita, but its civil day has matched the udaya (sunrise)
-  // Ashtami for every year here; anchors below pin the truth. Treated as udaya to avoid
-  // false day-shift flags from a crude Nishita approximation.
-  { id: 'janmashtami', month: 6, paksha: 'krishna', tithi: 8, muhurta: 'udaya' },
+  { id: 'raksha-bandhan', month: 5, paksha: 'shukla', tithi: 15, muhurta: 'shravani' },
+  // Janmashtami (Smarta/Vaishnava, Nishita + Rohini) and every Ekadashi (Dharmasindhu's
+  // sunrise-pattern table) are NOT rows here: their rules need Rohini and arunodaya, which
+  // this script does not model, and a sunrise stand-in disagreed with Drik's Smarta day
+  // (Janmashtami 2025: 15 Aug, not 16). Both are pinned day for day against published
+  // dates in observanceDates.test.ts (JANMASHTAMI_PUBLISHED, EKADASHI_PUBLISHED).
   { id: 'ganesh-chaturthi', month: 6, paksha: 'shukla', tithi: 4, muhurta: 'madhyahna' },
   { id: 'navratri-start', month: 7, paksha: 'shukla', tithi: 1, muhurta: 'udaya' },
   { id: 'dussehra', month: 7, paksha: 'shukla', tithi: 10, muhurta: 'aparahna' },
@@ -76,7 +78,6 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'diwali', month: 8, paksha: 'krishna', tithi: 15, muhurta: 'pradosh' }, // Lakshmi Puja (Amavasya at Pradosh)
   { id: 'govardhan-puja', month: 8, paksha: 'shukla', tithi: 1, muhurta: 'udaya' },
   { id: 'bhai-dooj', month: 8, paksha: 'shukla', tithi: 2, muhurta: 'udaya' },
-  { id: 'dev-uthani-ekadashi', month: 8, paksha: 'shukla', tithi: 11, muhurta: 'udaya' },
 
   // Regional wave 1 (Sept 2026) — Rajasthani, Bihari/Maithil and Jain observances.
   // `sakat-chauth` is deliberately absent: it is chandrodaya-matched and this script
@@ -128,7 +129,7 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'shankaracharya-jayanti', month: 2, paksha: 'shukla', tithi: 5, muhurta: 'udaya' },
   { id: 'tulsidas-jayanti', month: 5, paksha: 'shukla', tithi: 7, muhurta: 'udaya' },
   { id: 'valmiki-jayanti', month: 7, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
-  { id: 'vallabhacharya-jayanti', month: 2, paksha: 'krishna', tithi: 11, muhurta: 'udaya' },
+  // vallabhacharya-jayanti rides Varuthini Ekadashi's Dharmasindhu day — pinned with the Ekadashis.
   { id: 'kabir-jayanti', month: 3, paksha: 'shukla', tithi: 15, muhurta: 'udaya' },
   { id: 'baglamukhi-jayanti', month: 2, paksha: 'shukla', tithi: 8, muhurta: 'udaya' },
   { id: 'dhumavati-jayanti', month: 3, paksha: 'shukla', tithi: 8, muhurta: 'udaya' },
@@ -152,7 +153,6 @@ export const ANNUAL: AnnualFestival[] = [
 // anchor exists it overrides the muhurta approximation. Catches month-level regressions and
 // pins the festivals whose exact day the crude muhurta calc can't nail (e.g. Janmashtami).
 export const ANCHORS: Record<string, string> = {
-  'janmashtami:2025': '2025-08-16', 'janmashtami:2026': '2026-09-04',
   'maha-shivaratri:2025': '2025-02-26', 'maha-shivaratri:2026': '2026-02-15', 'maha-shivaratri:2027': '2027-03-06',
   'ganesh-chaturthi:2025': '2025-08-27', 'ganesh-chaturthi:2026': '2026-09-14',
   'diwali:2025': '2025-10-20', 'ram-navami:2025': '2025-04-06', 'narada-jayanti:2025': '2025-05-13',
@@ -188,7 +188,12 @@ export const ANCHORS: Record<string, string> = {
   'diwali:2024': '2024-10-31', 'diwali:2026': '2026-11-08', 'diwali:2028': '2028-10-17',
   'diwali:2029': '2029-11-05', 'diwali:2030': '2030-10-26',
   'maha-shivaratri:2028': '2028-02-23', 'maha-shivaratri:2029': '2029-02-11',
-  'holi:2027': '2027-03-22', 'holi:2028': '2028-03-11', 'holi:2029': '2029-03-01',
+  'holi:2026': '2026-03-04', 'holi:2027': '2027-03-22', 'holi:2028': '2028-03-11', 'holi:2029': '2029-03-01',
+  // Bhadra rules (Oct 2026) — Drik New Delhi; Ujjain agrees in every year below.
+  'holi:2024': '2024-03-25', 'holi:2030': '2030-03-20', 'holi:2031': '2031-03-09',
+  'raksha-bandhan:2024': '2024-08-19', 'raksha-bandhan:2025': '2025-08-09', 'raksha-bandhan:2026': '2026-08-28',
+  'raksha-bandhan:2027': '2027-08-17', 'raksha-bandhan:2028': '2028-08-05', 'raksha-bandhan:2029': '2029-08-23',
+  'raksha-bandhan:2030': '2030-08-13', 'raksha-bandhan:2031': '2031-08-02',
   'akshaya-tritiya:2026': '2026-04-19', 'akshaya-tritiya:2027': '2027-05-09', 'akshaya-tritiya:2028': '2028-04-27',
   'parashurama-jayanti:2025': '2025-04-29', 'sita-navami:2025': '2025-05-05', 'ganga-saptami:2025': '2025-05-03',
   'narasimha-jayanti:2024': '2024-05-21', 'narasimha-jayanti:2025': '2025-05-11',
@@ -199,7 +204,6 @@ export const ANCHORS: Record<string, string> = {
   'ahoi-ashtami:2026': '2026-11-01', 'dattatreya-jayanti:2024': '2024-12-14',
   'kaal-bhairav-jayanti:2024': '2024-11-22', 'kaal-bhairav-jayanti:2027': '2027-11-20',
   'bhai-dooj:2026': '2026-11-11', 'radha-ashtami:2026': '2026-09-19', 'radha-ashtami:2027': '2027-09-08',
-  'janmashtami:2027': '2027-08-25',
   'maha-navami:2024': '2024-10-11', 'maha-navami:2025': '2025-10-01', 'maha-navami:2026': '2026-10-19',
   'maha-navami:2027': '2027-10-08', 'maha-navami:2028': '2028-09-26', 'maha-navami:2029': '2029-10-15',
 };
@@ -208,11 +212,6 @@ export const ANCHORS: Record<string, string> = {
 // excused from the gate — but only while the engine still gives exactly `engine`; if it
 // moves (fixed, or broken differently) the run fails so the entry gets revisited.
 export const KNOWN_DIVERGENCES: Record<string, { published: string; engine: string; reason: string }> = {
-  'holi:2026': {
-    published: '2026-03-04',
-    engine: '2026-03-03',
-    reason: 'bhadra covered the 2 Mar pradosh, so Drik moved Holika Dahan to 3 Mar; bhadra is not modelled',
-  },
 };
 
 const ayan = (y: number) => 23.853 + 0.01396 * (y - 2000);
@@ -287,17 +286,79 @@ export function expectedDate(f: AnnualFestival, year: number): string | null {
     // month, as the engine does.
     const monthDay = !within(udayaDay.sunrise) && pos(target) === 0 ? addDays(udayaDay.date, 1) : udayaDay.date;
     if (!nija(monthDay)) { d = addDays(end, 0); continue; }
-    return pickDay(f.muhurta, days, udayaDay, within);
+    return pickDay(f.muhurta, days, udayaDay, within, [start, end]);
   }
   return null;
 }
 
-function pickDay(muhurta: Muhurta, days: Day[], udayaDay: Day, within: (t: Date) => boolean): string {
+// The Moon−Sun elongation, and when it next reaches `deg` after `from` — this script's own
+// bisection, for Bhadra (the first half of a Shukla Purnima ends at 174°).
+function elongation(t: Date): number {
+  const y = t.getFullYear();
+  const sun = (SunPosition(MakeTime(t)).elon - ayan(y) + 360) % 360;
+  const moon = (EclipticGeoMoon(MakeTime(t)).lon - ayan(y) + 360) % 360;
+  return (moon - sun + 360) % 360;
+}
+function reaches(from: Date, deg: number): Date {
+  let lo = from.getTime();
+  let hi = lo + 30 * 3600e3;
+  for (let i = 0; i < 40; i++) {
+    const mid = (lo + hi) / 2;
+    const d = ((deg - elongation(new Date(mid)) + 540) % 360) - 180;
+    if (d > 0) lo = mid; else hi = mid;
+  }
+  return new Date(hi);
+}
+const overlap = (a0: Date, a1: Date, b0: Date, b1: Date) =>
+  Math.max(0, Math.min(a1.getTime(), b1.getTime()) - Math.max(a0.getTime(), b0.getTime()));
+
+function pickDay(muhurta: Muhurta, days: Day[], udayaDay: Day, within: (t: Date) => boolean, span: [Date, Date]): string {
   const covering = (m: string) => days.filter((d) => within(INSTANT[m](d)));
   const first = (m: string) => covering(m)[0] ?? udayaDay;
+  const [start, end] = span;
   switch (muhurta) {
     case 'udaya':
       return iso(udayaDay.date);
+    case 'aparahna': {
+      // Greater fraction of the aparahna span (0.6–0.8 of daylight); equal → the later day.
+      let best: Day | null = null;
+      let bestCover = 0;
+      for (const d of days) {
+        const a0 = at(d.sunrise, d.sunset, 0.6);
+        const a1 = at(d.sunrise, d.sunset, 0.8);
+        const cover = overlap(a0, a1, start, end) / (a1.getTime() - a0.getTime());
+        if (cover > 0 && cover >= bestCover) { best = d; bestCover = cover; }
+      }
+      return iso((best ?? udayaDay).date);
+    }
+    case 'shravani': {
+      // Raksha Bandhan: Bhadra-free aparahna; else the last sunrise day if Purnima lasts
+      // 3 of its 15 muhurtas; else the day before, after Bhadra.
+      const free0 = reaches(new Date(start.getTime() + 60e3), 174);
+      let best: Day | null = null;
+      let bestCover = 0;
+      for (const d of days) {
+        const cover = overlap(at(d.sunrise, d.sunset, 0.6), at(d.sunrise, d.sunset, 0.8), free0, end);
+        if (cover > 0 && cover >= bestCover) { best = d; bestCover = cover; }
+      }
+      if (best) return iso(best.date);
+      const last = days.filter((d) => within(d.sunrise)).at(-1);
+      if (!last) return iso(udayaDay.date);
+      const daylight = last.sunset.getTime() - last.sunrise.getTime();
+      return iso(end.getTime() - last.sunrise.getTime() >= 0.2 * daylight ? last.date : addDays(last.date, -1));
+    }
+    case 'holika-dahan-next': {
+      // Holika Dahan on the pradosh day unless Bhadra outlasts its midnight; then the next
+      // day if it holds Purnima for 7/8 of daylight. Rangwali Holi is the day after.
+      const h0 = first('pradosh');
+      const bhadraEnd = reaches(new Date(start.getTime() + 60e3), 174);
+      let dahan = h0;
+      if (bhadraEnd > at(h0.sunset, h0.nextSunrise, 0.5)) {
+        const next = days[days.indexOf(h0) + 1];
+        if (next && end.getTime() - next.sunrise.getTime() >= (7 / 8) * (next.sunset.getTime() - next.sunrise.getTime())) dahan = next;
+      }
+      return iso(addDays(dahan.date, 1));
+    }
     case 'ratri':
       return iso((covering('pradosh')[0] ?? covering('nishita')[0] ?? udayaDay).date);
     case 'pradosh-next':

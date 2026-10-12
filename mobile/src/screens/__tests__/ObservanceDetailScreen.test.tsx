@@ -14,6 +14,7 @@
  * registry will serve once entries flip.
  */
 import React, * as mockReact from 'react';
+import { ShareProvider } from '@/utils/shareVerse';
 import TestRenderer, { act } from 'react-test-renderer';
 import { View as mockView } from 'react-native';
 
@@ -102,12 +103,12 @@ function renderDetail(ruleId: string): TestRenderer.ReactTestRenderer {
   let renderer!: TestRenderer.ReactTestRenderer;
   act(() => {
     renderer = TestRenderer.create(
-      <GitaLanguageProvider>
+      <GitaLanguageProvider><ShareProvider>
         <ObservanceDetailScreen
           navigation={nav}
           route={{ key: 'k', name: 'ObservanceDetail', params: { ruleId } } as never}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
   });
   renderers.push(renderer);

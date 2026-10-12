@@ -1,0 +1,39 @@
+{
+  "source": "app-icon-master.png",
+  "sourceSha256": "9a1cf0b61d59bf9700c8c2ebf816cf35708efcc27a65d708eb94b4c22c036796",
+  "approval": "User approved the enlarged copper relief icon with vermilion bindu after launcher-size comparison.",
+  "generator": "built-in image_gen",
+  "prompt": "app-icon-prompt.txt",
+  "packaging": "node mobile/scripts/export-app-icons.mjs",
+  "backgroundColor": "#FFF1D5",
+  "adaptive": {
+    "canvas": 1024,
+    "artwork": 682,
+    "offset": 171,
+    "viewportDp": 72,
+    "layerDp": 108,
+    "safeCircleDp": 66
+  },
+  "files": {
+    "icon.png": {
+      "sha256": "f7857770c37fed8f93ee52ab175439041d6299ac1c80d71f215b8d7da8565c7a",
+      "width": 1024,
+      "height": 1024
+    },
+    "splash-icon.png": {
+      "sha256": "db7562e0e9605fb9c4794315879fa8869f100e7ffb0adb18bffe28d4f6f0ded7",
+      "width": 512,
+      "height": 512
+    },
+    "favicon.png": {
+      "sha256": "dfd53e7e4bc2700f0644f622022d704a43800c8c9cd830b8547355be477738d9",
+      "width": 64,
+      "height": 64
+    },
+    "adaptive-icon.png": {
+      "sha256": "a1730d26dfcbd2a144fb5ac66397affc703a9aed638241826082021c1f8f85a0",
+      "width": 1024,
+      "height": 1024
+    }
+  }
+}

@@ -7,13 +7,15 @@
  */
 import React, { useMemo, useRef } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, type FlatList } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
-import Ornament from '@/components/Ornament';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
+import ProseReadingCard from '@/components/ProseReadingCard';
+import { getPitruReadingBackground } from '@/data/kathaBackgrounds';
 import LanguageToggle from '@/components/LanguageToggle';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
@@ -23,6 +25,7 @@ import type { MoreStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
 import { commentaryByLang, contentByLang, meaningByLang } from '@/utils/localize';
 import { meaningToken, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import ProseParagraph from '@/components/ProseParagraph';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'PitruKatha'>;
 
@@ -34,6 +37,7 @@ export default function PitruKathaScreen({ navigation, route }: Props) {
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
   const katha = getPitruKatha(route.params.kathaId);
+  const background = getPitruReadingBackground(route.params.kathaId);
 
   // Read-aloud over the story prose — same hook every reader uses (RULEBOOK §3).
   // The katha section carries `paragraphs*`; map it to the adapter's prose shape
@@ -76,7 +80,7 @@ export default function PitruKathaScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.root} testID="pitru-katha-screen">
-      <LinearGradient colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]} style={StyleSheet.absoluteFill} />
+      <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ReaderHeader
           variant="index"
@@ -93,25 +97,24 @@ export default function PitruKathaScreen({ navigation, route }: Props) {
               </View>
             </View>
             <ScrollView contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]} showsVerticalScrollIndicator={false}>
-              <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.sm }}>
+              <ProseParagraph style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: 19, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.sm }}>
                 {contentByLang(lang, katha.subtitleHi, katha.subtitleEn)}
-              </Text>
+              </ProseParagraph>
 
-              {/* Ornament divider — the title→ornament→prose rhythm every reader shares. */}
-              <Ornament />
-
-              {katha.sections.map((section) => (
-                <View key={section.id}>
-                  {commentaryByLang(lang, section.paragraphsHi, section.paragraphsEn).map((paragraph, idx) => (
-                    <Text
-                      key={`${section.id}-${idx}`}
-                      style={[storyBodyStyle, { marginBottom: spacing.md }]}
-                    >
-                      {paragraph}
-                    </Text>
-                  ))}
-                </View>
-              ))}
+              <ProseReadingCard illustration={background}>
+                {katha.sections.map((section) => (
+                  <View key={section.id}>
+                    {commentaryByLang(lang, section.paragraphsHi, section.paragraphsEn).map((paragraph, idx) => (
+                      <ProseParagraph
+                        key={`${section.id}-${idx}`}
+                        style={[storyBodyStyle, { marginBottom: spacing.md }]}
+                      >
+                        {paragraph}
+                      </ProseParagraph>
+                    ))}
+                  </View>
+                ))}
+              </ProseReadingCard>
 
             <View
               testID="pitru-katha-teaching"
@@ -129,14 +132,14 @@ export default function PitruKathaScreen({ navigation, route }: Props) {
               >
                 {contentByLang(lang, 'शिक्षा', 'The teaching')}
               </Text>
-              <Text style={{ fontFamily: titleFont, fontSize: 14, lineHeight: 23, color: colors.saffronDeep }}>
+              <ProseParagraph style={{ fontFamily: titleFont, fontSize: 14, lineHeight: 23, color: colors.saffronDeep }}>
                 {meaningByLang(lang, katha.teachingHi, katha.teachingEn)}
-              </Text>
+              </ProseParagraph>
             </View>
 
-            <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.md }}>
+            <ProseParagraph style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.md }}>
               {contentByLang(lang, `स्रोत: ${katha.canonHi}`, `Source: ${katha.canonEn}`)}
-            </Text>
+            </ProseParagraph>
 
             {katha.ref && (
               <Pressable

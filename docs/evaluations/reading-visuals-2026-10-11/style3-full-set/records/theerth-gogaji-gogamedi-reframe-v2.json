@@ -1,0 +1,24 @@
+{
+  "id": "theerth-gogaji-gogamedi-reframe-v2",
+  "replaces": "theerth-gogaji-gogamedi",
+  "referenced_image_paths": [
+    "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/theerth-gogaji-gogamedi.png"
+  ],
+  "prompt": "Use case: precise-object-edit. Correct the framing of image 1, preserving its fine detailed storybook rendering and exact 2:1 landscape. Issue to fix: complete spear TIP and full flag at the top. Keep horse and all four hooves, rider and two hands, snake shrine and foreground serpent. Scale the entire principal subject/shrine/animal/prop group together down by about 20 percent within the SAME 2:1 canvas, adding naturally painted matching sky, ground or courtyard around it. Required: every meaningful subject and key prop completely inside a 6 percent safe margin, particularly the specified clipped points. A camera that is farther back, not a taller canvas. Do not crop, distort, fade away or omit the clipped part. Background tree canopy and distant setting may extend edge to edge. Retain all other details and coherent anatomy; no new people, text, captions, border or UI.",
+  "source": "/Users/prashant/.codex/generated_images/01a11cd0-e973-70c1-8cdb-e2a3d5c80a6c/exec-aadd01b6-efa9-4e31-bc21-ed44357f960b.png",
+  "rawPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/raw/theerth-gogaji-gogamedi-reframe-v2.png",
+  "previewPath": "/Users/prashant/.codex/worktrees/9a60/Aadhyatma/docs/evaluations/reading-visuals-2026-10-11/style3-full-set/theerth-gogaji-gogamedi-reframe-v2.webp",
+  "rawDimensions": [
+    1774,
+    887
+  ],
+  "dimensions": [
+    960,
+    480
+  ],
+  "bytes": 106542,
+  "sha256": "54128d157693059df9aa85fb6b909b9fa12f2022418962ee2219264ad0fda54d",
+  "tool": "built-in image_gen",
+  "status": "draft",
+  "approved": false
+}

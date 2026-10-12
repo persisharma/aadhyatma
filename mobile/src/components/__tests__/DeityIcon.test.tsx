@@ -1,9 +1,10 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text } from 'react-native';
+import { Image, Text } from 'react-native';
 
 import DeityIcon from '../DeityIcon';
-import { deityGlyphs } from '../deityGlyphs';
+import { deityArtwork } from '../deityArtwork';
+import { deities } from '@/data/deities';
 
 function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
@@ -30,17 +31,20 @@ function texts(tree: TestRenderer.ReactTestRenderer) {
 }
 
 describe('DeityIcon', () => {
-  test('every registered iconKey renders a drawn View glyph — no emoji, no text', () => {
-    const keys = Object.keys(deityGlyphs) as (keyof typeof deityGlyphs)[];
-    expect(keys.length).toBe(21);
-    for (const key of keys) {
-      const tree = render(<DeityIcon iconKey={key} fallbackText="ॐ" />);
+  test('every registered deity renders bundled symbolic art, without duplicate labels or text', () => {
+    expect(Object.keys(deityArtwork)).toHaveLength(21);
+    for (const deity of deities) {
+      const tree = render(<DeityIcon iconKey={deity.iconKey} fallbackText="ॐ" />);
       expect(texts(tree)).toHaveLength(0);
-      expect(tree.root.findAllByProps({ testID: `deity-glyph-${key}` }).length).toBeGreaterThan(0);
+      const image = tree.root.findByType(Image);
+      expect(image.props.source).toBeTruthy();
+      expect(image.props.source.uri).toBeUndefined();
+      expect(image.props.accessible).toBe(false);
+      expect(tree.root.findAllByProps({ testID: `deity-glyph-${deity.iconKey}` }).length).toBeGreaterThan(0);
     }
   });
 
-  test('transform-scales the drawn glyph for non-base sizes only', () => {
+  test('transform-scales the art for non-base sizes only', () => {
     const hasScale = (n: TestRenderer.ReactTestInstance, match: (s: unknown) => boolean) =>
       Array.isArray(n.props.style?.transform) &&
       n.props.style.transform.some((t: Record<string, unknown>) => match(t.scale));
@@ -59,35 +63,15 @@ describe('DeityIcon', () => {
     expect(fontSizeOf(t[0].props.style)!).toBeGreaterThan(22);
   });
 
-  test('renders a View-based glyph (no text) for a drawn icon like gada', () => {
+  test('renders a bundled image (no text) for a drawn icon like gada', () => {
     expect(texts(render(<DeityIcon iconKey="gada" fallbackText="ॐ" size={120} />))).toHaveLength(0);
   });
 
-  test('chakra glyph carries its silhouette parts', () => {
-    const tree = render(<DeityIcon iconKey="chakra" fallbackText="ॐ" />);
-    for (const part of ['ring', 'spoke', 'hub']) {
-      expect(tree.root.findAllByProps({ testID: `deity-icon-chakra-${part}` }).length).toBeGreaterThan(0);
-    }
-  });
-
-  test('shani glyph carries ring and disc; navagraha carries its gold center', () => {
-    const shani = render(<DeityIcon iconKey="shani" fallbackText="ॐ" />);
-    expect(shani.root.findAllByProps({ testID: 'deity-icon-shani-ring' }).length).toBeGreaterThan(0);
-    expect(shani.root.findAllByProps({ testID: 'deity-icon-shani-disc' }).length).toBeGreaterThan(0);
-    const nava = render(<DeityIcon iconKey="navagraha" fallbackText="ॐ" />);
-    expect(nava.root.findAllByProps({ testID: 'deity-icon-navagraha-center' }).length).toBeGreaterThan(0);
-  });
-
-  test('trishul, lakshmi, and narasimha glyphs carry their silhouette parts', () => {
-    const trishul = render(<DeityIcon iconKey="trishul" fallbackText="ॐ" />);
-    for (const part of ['shaft', 'crossbar', 'prong']) {
-      expect(trishul.root.findAllByProps({ testID: `deity-icon-trishul-${part}` }).length).toBeGreaterThan(0);
-    }
-    const lakshmi = render(<DeityIcon iconKey="lakshmi" fallbackText="ॐ" />);
-    expect(lakshmi.root.findAllByProps({ testID: 'deity-icon-lakshmi-coin' }).length).toBeGreaterThan(0);
-    expect(lakshmi.root.findAllByProps({ testID: 'deity-icon-lakshmi-cup' }).length).toBeGreaterThan(0);
-    const narasimha = render(<DeityIcon iconKey="narasimha" fallbackText="ॐ" />);
-    expect(narasimha.root.findAllByProps({ testID: 'deity-icon-narasimha-mane' }).length).toBeGreaterThan(0);
-    expect(narasimha.root.findAllByProps({ testID: 'deity-icon-narasimha-face' }).length).toBeGreaterThan(0);
+  test('preserves distinct sun and flower attributes and the guru Om emblem', () => {
+    expect(deityArtwork.surya).not.toBe(deityArtwork.suryadev);
+    expect(new Set([deityArtwork.lotus, deityArtwork.lakshmi, deityArtwork.radha, deityArtwork.parvati]).size).toBe(4);
+    expect(deityArtwork.dattatreya).toBe('stotram');
+    expect(deityArtwork.navagraha).toBe('navagraha');
+    expect(deityArtwork.kali).toBe('kali');
   });
 });

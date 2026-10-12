@@ -1,0 +1,41 @@
+:root { color-scheme: light; --paper: #fff3d6; --ink: #301b10; --copper: #a54919; --copy-size: 18px; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #eee1c5; color: var(--ink); font: 15px/1.5 'Kohinoor Devanagari', 'Noto Sans Devanagari', system-ui, sans-serif; }
+body.large { --copy-size: 23px; }
+a { color: var(--copper); }
+button { color: inherit; font: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--copper); outline-offset: 3px; }
+.reader { width: 430px; max-width: 100%; margin: 0 auto; background: var(--paper); }
+header { background: #fff8e6; border-bottom: 1px solid #c89a5e; }
+.chapter { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 14px 8px; border-bottom: 2px solid #b56028; }
+.chapter a { font-size: 12px; text-decoration: none; }
+.chapter strong { font-size: 20px; }
+.chapter span { font-size: 12px; }
+.controls { display: flex; justify-content: center; align-items: center; gap: 12px; padding: 10px; }
+.languages { display: flex; padding: 2px; border: 1px solid #cda56c; border-radius: 24px; background: #f0dcb9; }
+.languages button { min-width: 72px; padding: 5px 10px; border: 0; border-radius: 20px; background: transparent; font-size: 15px; }
+.languages button[aria-pressed="true"] { background: #fff9e9; font-weight: 650; }
+#size { padding: 6px 9px; background: #fff9e9; border: 1px solid #cda56c; border-radius: 20px; font-size: 13px; }
+#size[aria-pressed="true"] { background: #ead0a4; }
+.episode-heading { text-align: center; padding: 15px 12px 18px; }
+.eyebrow { margin: 0 0 3px; font: 11px/1.5 system-ui, sans-serif; letter-spacing: 1.5px; color: var(--copper); }
+h1 { margin: 0 0 4px; font-size: 28px; line-height: 1.25; }
+#framing { margin: 0; font-size: 13px; color: #705339; }
+#panels { padding: 0 7px; }
+.panel { position: relative; margin: 0 0 12px; border: 2px solid #23160e; background: #fff2c9; scroll-margin-top: 12px; }
+.narration { margin: 0; padding: 9px 12px 10px; border-bottom: 1.5px solid #23160e; font-size: var(--copy-size); font-weight: 500; line-height: 1.4; overflow-wrap: break-word; }
+.art { display: block; width: 100%; height: auto; }
+.speech { position: absolute; top: 5%; right: 3%; width: 54%; margin: 0; padding: 12px 14px; border: 1.5px solid transparent; font-size: var(--copy-size); line-height: 1.4; text-align: center; overflow-wrap: break-word; }
+.bubble-shape { position: absolute; top: -1.5px; left: -1.5px; width: calc(100% + 3px); height: calc(100% + 3px); overflow: visible; pointer-events: none; }
+.bubble-shape path { fill: #fffef4; stroke: #23160e; stroke-width: 1.5; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.speech .spoken { position: relative; z-index: 1; }
+.dialogue-panel.flow-speech .speech { position: relative; inset: auto; width: auto; margin: 12px 16px 28px; }
+html[lang="en"] .narration, html[lang="en"] .speech { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; line-height: 1.3; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+footer { text-align: center; padding: 10px 18px 24px; }
+.next { display: block; padding: 12px 14px; border: 1px solid #b9773b; background: #f1d7aa; border-radius: 6px; font-weight: 600; text-decoration: none; }
+footer p { margin: 14px 0 0; font-size: 12px; color: #705339; }
+footer details { margin-top: 12px; font-size: 12px; }
+footer summary { cursor: pointer; }
+footer details a { display: block; margin-top: 10px; }
+@media (prefers-reduced-motion: no-preference) { button { transition: background-color 120ms ease; } }

@@ -72,7 +72,7 @@ function readNextFromMemory(people: JanmaTithiPerson[], today: Date): Map<string
       nextById.set(person.id, null);
       continue;
     }
-    const known = knownOccurrences(rule, today, 1);
+    const known = knownOccurrences(rule, today, 1, 'janma');
     if (!known) return null; // partial is not warm — one miss and the list solves
     nextById.set(person.id, known[0]);
   }
@@ -91,7 +91,7 @@ export function useJanmaTithiList(todayMs: number): JanmaTithiListEntry[] | null
   );
 
   const signature = people
-    .map(({ person, rule }) => `${person.id}:${rule ? smaranRuleKey(rule) : 'none'}`)
+    .map(({ person, rule }) => `${person.id}:${rule ? smaranRuleKey(rule, 'janma') : 'none'}`)
     .join('|');
 
   useEffect(() => {
@@ -105,7 +105,7 @@ export function useJanmaTithiList(todayMs: number): JanmaTithiListEntry[] | null
       .map(({ rule }) => rule)
       .filter((rule): rule is TithiRule => rule !== null);
 
-    void hydrateSmaranSolves(rules, today).then(() => {
+    void hydrateSmaranSolves(rules, today, 'janma').then(() => {
       if (cancelled) return;
       const warm = readNextFromMemory(people, today);
       if (warm) {
@@ -117,7 +117,7 @@ export function useJanmaTithiList(todayMs: number): JanmaTithiListEntry[] | null
           if (cancelled) return;
           const solved = new Map<string, Date | null>();
           people.forEach(({ person, rule }) => {
-            solved.set(person.id, rule ? ensureOccurrences(rule, today, 1)[0] ?? null : null);
+            solved.set(person.id, rule ? ensureOccurrences(rule, today, 1, 'janma')[0] ?? null : null);
           });
           if (!cancelled) setNextById(solved);
           void persistSmaranSolves();
@@ -155,8 +155,8 @@ const EMPTY_DETAIL: JanmaDetailSolve = { next: null, nextReady: false, following
 
 function readJanmaDetailFromMemory(rule: TithiRule, todayMs: number): JanmaDetailSolve {
   const today = new Date(todayMs);
-  const both = knownOccurrences(rule, today, 2);
-  const one = both ?? knownOccurrences(rule, today, 1);
+  const both = knownOccurrences(rule, today, 2, 'janma');
+  const one = both ?? knownOccurrences(rule, today, 1, 'janma');
   return {
     next: one?.[0] ?? null,
     nextReady: one !== null,
@@ -175,7 +175,7 @@ export function useJanmaTithiDetailSolve(rule: TithiRule | null, todayMs: number
     rule ? readJanmaDetailFromMemory(rule, todayMs) : EMPTY_DETAIL
   );
 
-  const ruleKey = rule ? smaranRuleKey(rule) : null;
+  const ruleKey = rule ? smaranRuleKey(rule, 'janma') : null;
 
   useEffect(() => {
     if (!rule) {
@@ -187,7 +187,7 @@ export function useJanmaTithiDetailSolve(rule: TithiRule | null, todayMs: number
     let restHandle: ReturnType<typeof setTimeout> | undefined;
     let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
 
-    void hydrateSmaranSolves([rule], new Date(todayMs)).then(() => {
+    void hydrateSmaranSolves([rule], new Date(todayMs), 'janma').then(() => {
       if (cancelled) return;
       const warm = readJanmaDetailFromMemory(rule, todayMs);
       setSolve(warm);
@@ -197,11 +197,11 @@ export function useJanmaTithiDetailSolve(rule: TithiRule | null, todayMs: number
         handle = setTimeout(() => {
           if (cancelled) return;
           const today = new Date(todayMs);
-          const next = ensureOccurrences(rule, today, 1)[0] ?? null;
+          const next = ensureOccurrences(rule, today, 1, 'janma')[0] ?? null;
           setSolve((prev) => ({ ...prev, next, nextReady: true }));
           restHandle = setTimeout(() => {
             if (cancelled) return;
-            const following = ensureOccurrences(rule, today, 2)[1] ?? null;
+            const following = ensureOccurrences(rule, today, 2, 'janma')[1] ?? null;
             setSolve((prev) => ({ ...prev, following, restReady: true }));
             void persistSmaranSolves();
           }, 0);
@@ -233,7 +233,7 @@ export function useJanmaTithiForDate(date: Date): JanmaTithiPerson[] {
   const [matches, setMatches] = useState<JanmaTithiPerson[]>([]);
 
   const signature = people
-    .map(({ person, rule }) => `${person.id}:${rule ? smaranRuleKey(rule) : 'none'}`)
+    .map(({ person, rule }) => `${person.id}:${rule ? smaranRuleKey(rule, 'janma') : 'none'}`)
     .join('|');
 
   useEffect(() => {

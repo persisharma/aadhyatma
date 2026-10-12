@@ -1,8 +1,10 @@
 import type { OccasionId } from '@/panchang/eventMuhurat';
+import type { Graha } from '@/panchang/kundali';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
 import type { EntityType as AskEntityType } from '@/ask/types';
+import type { StoryDeityId } from '@/data/kidsStories';
 
 export type TabParamList = {
   // Nested-navigator params so cross-tab jumps (e.g. Pitru Smaran's गीता पाठ
@@ -13,8 +15,10 @@ export type TabParamList = {
   // navigate('PanchangTab', { screen: 'ObservanceList', params: {...}, initial: false })
   // are type-checked instead of hidden behind `useNavigation<any>()`.
   PanchangTab: NavigatorScreenParams<PanchangStackParamList> | undefined;
+  VratTab: NavigatorScreenParams<PanchangStackParamList> | undefined;
   // Dedicated audio library + media player.
   AudioTab: undefined;
+  // Hidden from the bar; Home's settings button opens this existing stack.
   // Nested params typed so the Panchang day chip can deep-link to a Pitru Smaran
   // detail (PRD-17) without an untyped navigator cast.
   MoreTab: NavigatorScreenParams<MoreStackParamList> | undefined;
@@ -58,6 +62,9 @@ export type GharVastuStackParamList = {
 
 export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   Home: undefined;
+  KidsStoryLibrary: undefined;
+  KidsStoryDeity: { deityId: StoryDeityId };
+  KidsStoryReader: { storyId: string; pageId?: string };
   /**
    * जिज्ञासा (PRD-41). `seed` is ask-from-context: the surface the user came
    * from names an entity so "iska bhog kya hai" resolves against it.
@@ -77,9 +84,9 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   StutiReader: { initialIndex?: number; stutiId?: string } | undefined;
   GitaChapters: undefined;
   GitaReader: GitaReaderParams;
-  // गीता सार (design.md §76): a chapter is a theme, the reader pages its verses.
   GarudPuranChapters: undefined;
   GarudPuranReader: { chapter: number; initialIndex?: number };
+  // गीता सार (design.md §77): a chapter is a theme, the reader pages its verses.
   GitaSaarChapters: undefined;
   GitaSaarReader: { chapter: number; initialIndex?: number };
   SundarkandChapters: undefined;
@@ -151,8 +158,6 @@ export type DaanStackParamList = {
 
 export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
   MoreHome: undefined;
-  KidsStoryLibrary: undefined;
-  KidsStoryReader: { storyId: string; pageId?: string };
   Wishlist: undefined;
   Profile: undefined;
   Reminders: undefined;
@@ -214,6 +219,9 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
   Gochar: undefined;
   // Compiled full-chart reading — PRD-20 Phase 6
   KundaliReport: { prashnaContext?: { purposeId: string; questionId: string } } | undefined;
+  // नवग्रह परिचय — the generic "Know the nine grahas" reference (design.md §79).
+  // `focusGraha` opens one graha expanded (the chart card's "Know this graha" link).
+  GrahaReference: { focusGraha?: Graha } | undefined;
   // प्रश्न — purpose-driven reading for the active person (PRD-43 Wave D).
   // `purposeId` preselects a purpose (the Ask intent deep-links here).
   Prashna: { purposeId?: string; questionId?: string } | undefined;
