@@ -49,6 +49,15 @@ export type VideoMapping = {
   /** ISO date (YYYY-MM-DD) the review was performed, or null when unreviewed. */
   reviewedOn: string | null;
   status: VideoReviewStatus;
+  /**
+   * Optional auto-scroll sync hints (see `@/video/verseSync`). Absent → the reader
+   * auto-advances proportionally (drifts around the intro/pacing). Provide EITHER
+   * `cues` (per-verse start seconds — exact) OR `startSec`/`endSec` (recitation
+   * window — trims intro/outro). Editorial fills these per video.
+   */
+  cues?: readonly number[];
+  startSec?: number;
+  endSec?: number;
 };
 
 /**
@@ -71,6 +80,16 @@ export const VIDEO_MAPPINGS: readonly VideoMapping[] = [
     spokenLang: 'hi',
     reviewedOn: '2026-10-12',
     status: 'verified',
+    // Per-verse recitation start times in SECONDS, index-aligned to the 43
+    // hanumanChalisaVerses (2 opening dohas, 40 chaupais, closing doha). Sourced
+    // from this recording's on-screen lyric alignment and converted from the
+    // supplied M:SS marks. Drives exact auto-scroll (verseSync.ts `cues` mode).
+    // The video runs 582 s; recitation spans ~2 s … 570 s.
+    cues: [
+      2, 24, 56, 67, 83, 93, 104, 115, 131, 141, 152, 162, 178, 189, 199, 210,
+      225, 231, 242, 257, 273, 284, 295, 305, 321, 332, 342, 353, 369, 379, 390,
+      401, 416, 427, 437, 448, 464, 474, 485, 495, 511, 523, 540,
+    ],
   },
 ];
 

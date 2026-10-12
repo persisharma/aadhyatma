@@ -10,6 +10,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import YoutubePlayer, { PLAYER_STATES, type YoutubeIframeRef } from 'react-native-youtube-iframe';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
 import AppIcon from '@/components/AppIcon';
 import { pick } from '@/utils/localize';
@@ -47,8 +48,8 @@ type Phase = 'loading' | 'ready' | 'error';
 export type DockedYouTubePlayerProps = {
   mapping: VideoMapping;
   uiLang: Lang;
-  /** Playback progress 0..1, for the reader's auto-scroll. Fires ~1×/sec while playing. */
-  onProgress?: (fraction: number) => void;
+  /** Playback position (seconds) + total duration, for the reader's auto-scroll. Fires ~1×/sec while playing. */
+  onProgress?: (currentSec: number, durationSec: number) => void;
   onClose: () => void;
 };
 
@@ -115,6 +116,15 @@ export default function DockedYouTubePlayer({
     return () => sub.remove();
   }, [pause]);
 
+  // Leaving this reader (tab switch, or a push onto the stack) pauses playback.
+  // AppState alone is not enough: inactive tab stacks stay mounted, so AppState
+  // never leaves `active` on a tab switch and the video would keep playing over
+  // the next tab. The blur cleanup confines playback to the visible reader; we
+  // still never auto-resume on return.
+  useFocusEffect(
+    useCallback(() => () => pause(), [pause]),
+  );
+
   // Fall out of the spinner into the error card if the player never reports ready.
   const armLoadTimeout = useCallback(() => {
     clearLoadTimeout();
@@ -159,7 +169,7 @@ export default function DockedYouTubePlayer({
           const dur = Number.isFinite(d) ? d : 0;
           setElapsed(cur);
           setDuration(dur);
-          if (dur > 0 && onProgress) onProgress(Math.min(1, Math.max(0, cur / dur)));
+          if (dur > 0 && onProgress) onProgress(cur, dur);
         })
         .catch(() => undefined);
     }, 1000);
@@ -187,7 +197,7 @@ export default function DockedYouTubePlayer({
 
   return (
     <View style={[styles.wrap, { backgroundColor: colors.surface, borderBottomColor: colors.border }]}>
-      <View style={[styles.stage, { height: playerHeight }]}>
+      <View style={[styles.stage, { height: playerHeight, backgroundColor: colors.videoStage }]}>
         {phase === 'error' ? (
           <ErrorCard
             colors={colors}
@@ -216,7 +226,7 @@ export default function DockedYouTubePlayer({
             />
             {phase === 'loading' && (
               <View style={styles.loadingOverlay} pointerEvents="none">
-                <ActivityIndicator color="#fff" />
+                <ActivityIndicator color={colors.onPrimary} />
               </View>
             )}
           </>
@@ -236,7 +246,7 @@ export default function DockedYouTubePlayer({
             hitSlop={8}
             style={[styles.ppBtn, { backgroundColor: colors.saffron }]}
           >
-            <AppIcon name={playing ? 'pause' : 'play'} size={13} weight="fill" color="#fff" />
+            <AppIcon name={playing ? 'pause' : 'play'} size={13} weight="fill" color={colors.onPrimary} />
           </Pressable>
           <Text style={[styles.time, { color: colors.inkMuted }]} numberOfLines={1}>
             {fmt(elapsed)} / {fmt(duration)}
@@ -309,8 +319,8 @@ function ErrorCard({
         })}
       </Text>
       <Pressable onPress={onRetry} accessibilityRole="button" style={[styles.retryBtn, { backgroundColor: colors.saffron }]}>
-        <AppIcon name="reset" size={15} color="#fff" />
-        <Text style={styles.retryText}>
+        <AppIcon name="reset" size={15} color={colors.onPrimary} />
+        <Text style={[styles.retryText, { color: colors.onPrimary }]}>
           {pick(uiLang, { hi: 'पुनः प्रयास', en: 'Retry', gu: 'ફરી પ્રયાસ', kn: 'ಮರುಪ್ರಯತ್ನ' })}
         </Text>
       </Pressable>
@@ -330,7 +340,7 @@ function fmt(sec: number): string {
 
 const styles = StyleSheet.create({
   wrap: { borderBottomWidth: StyleSheet.hairlineWidth },
-  stage: { width: '100%', backgroundColor: '#000' },
+  stage: { width: '100%' },
   loadingOverlay: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center' },
   strip: { flexDirection: 'row', alignItems: 'center', gap: 9, paddingHorizontal: 13, paddingVertical: 8, borderBottomWidth: StyleSheet.hairlineWidth },
   ppBtn: { width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
@@ -346,7 +356,7 @@ const styles = StyleSheet.create({
   errTitle: { fontSize: 18, fontWeight: '700' },
   errBody: { fontSize: 14, fontStyle: 'italic', textAlign: 'center', lineHeight: 20 },
   retryBtn: { flexDirection: 'row', alignItems: 'center', gap: 7, borderRadius: 12, paddingHorizontal: 22, paddingVertical: 10, marginTop: 4 },
-  retryText: { color: '#fff', fontSize: 15, fontWeight: '700' },
+  retryText: { fontSize: 15, fontWeight: '700' },
   errOpen: { paddingVertical: 4 },
   errOpenText: { fontSize: 14, fontWeight: '600' },
 });
