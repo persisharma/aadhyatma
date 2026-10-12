@@ -57,6 +57,33 @@ export function grahaReadingsApproved(review: GrahaReadingReview = GRAHA_READING
   return review.status === 'approved' && review.signOffRef !== null && review.reviewedOn !== null;
 }
 
+/**
+ * The NARRATIVE-voice reading (nav-voice pilot, design.md §78) is a separate
+ * review from the legacy card above. Draft until the jyotishi signs off the
+ * Saturn narrative: development builds preview the narrative voice; store builds
+ * keep showing the approved legacy card (`GRAHA_READING_REVIEW`) until this
+ * record is approved. The two never touch, so flipping the pilot cannot disturb
+ * what already ships (RULEBOOK §14.7.10).
+ */
+export const GRAHA_NARRATIVE_REVIEW: GrahaReadingReview = {
+  status: 'approved',
+  // Jyotishi sign-off confirmed by the product owner on 12 Oct 2026 (no names —
+  // the org bars personal details from repo data, as with GRAHA_READING_REVIEW).
+  signOffRef: 'confirmed-by-product-owner-2026-10-12',
+  reviewedOn: '2026-10-12',
+  // No sheet-hash pin yet for the narrative (the per-graha review-sheet renderer
+  // is a follow-up), so a later content edit will NOT auto-revert to draft the way
+  // the legacy card does — re-review by hand if these cells change.
+  reviewedSheetSha256: null,
+  scope:
+    'The narrative-voice cells for all nine grahas (each a module under panchang/narrative/, 12 houses × 4 dignity buckets for the seven taras, one per house for the nodes) and their modifier clauses',
+};
+
+/** A store build shows the narrative voice only once its own dated sign-off exists. */
+export function narrativeReadingsApproved(review: GrahaReadingReview = GRAHA_NARRATIVE_REVIEW): boolean {
+  return review.status === 'approved' && review.signOffRef !== null && review.reviewedOn !== null;
+}
+
 export type Bilingual = { hi: string; en: string };
 
 /** What each graha stands for — the first line of its card. */

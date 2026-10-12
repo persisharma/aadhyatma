@@ -17,7 +17,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import BasisChain from '@/components/BasisChain';
 import type { Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
-import { MAITRI_LABELS } from '@/panchang/grahaReadingContent';
+import { MAITRI_LABELS, narrativeReadingsApproved } from '@/panchang/grahaReadingContent';
 import type { Graha } from '@/panchang/kundali';
 import type { KundaliEmptyHouses, KundaliGrahaCard, KundaliGrahaTone } from '@/panchang/kundaliReportModel';
 import { useTheme } from '@/theme/ThemeContext';
@@ -34,10 +34,15 @@ type Props = {
   emptyHouses?: KundaliEmptyHouses;
   lang: Lang;
   onPractice: (sourceId: string) => void;
+  /** Opens the generic "Know this graha" reference. Shows the link when set. */
+  onLearnGraha?: (graha: Graha) => void;
 };
 
-export default function GrahaReadingList({ cards, introHi, introEn, emptyHouses, lang, onPractice }: Props) {
+export default function GrahaReadingList({ cards, introHi, introEn, emptyHouses, lang, onPractice, onLearnGraha }: Props) {
   const { colors, typography, radii } = useTheme();
+  // The narrative voice shows in dev always, and in store builds once its own
+  // review is signed off; otherwise the approved legacy card stays (design.md §78).
+  const showNarrative = __DEV__ || narrativeReadingsApproved();
   const [open, setOpen] = useState<ReadonlySet<Graha>>(() => new Set());
   const [basisOpen, setBasisOpen] = useState<ReadonlySet<Graha>>(() => new Set());
   const [emptyBasisOpen, setEmptyBasisOpen] = useState(false);
@@ -109,6 +114,10 @@ export default function GrahaReadingList({ cards, introHi, introEn, emptyHouses,
 
             {expanded && (
               <View testID={`graha-card-${card.graha}`} style={styles.body}>
+                {showNarrative && card.narrative ? (
+                  <NarrativeReading lang={lang} narrative={card.narrative} />
+                ) : (
+                <>
                 <Label lang={lang} hi="इस ग्रह के बारे में" en="About this graha" />
                 <Bullets
                   lang={lang}
@@ -158,6 +167,8 @@ export default function GrahaReadingList({ cards, introHi, introEn, emptyHouses,
                     <Bullets lang={lang} hi={card.rulesHi} en={card.rulesEn} />
                   </>
                 )}
+                </>
+                )}
 
                 <View style={[styles.upay, { borderColor: colors.divider, backgroundColor: colors.goldTint, borderRadius: radii.md }]}>
                   <Label lang={lang} hi={`उपाय · ${card.upay.introHi}`} en={`Upay · ${card.upay.introEn}`} />
@@ -173,6 +184,20 @@ export default function GrahaReadingList({ cards, introHi, introEn, emptyHouses,
                   />
                   <PracticeLink sourceId={card.upay.practiceSourceId} lang={lang} onPractice={onPractice} />
                 </View>
+
+                {onLearnGraha && (
+                  <Pressable
+                    testID={`graha-learn-${card.graha}`}
+                    onPress={() => onLearnGraha(card.graha)}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Learn about ${card.nameEn}`}
+                    style={({ pressed }) => [styles.learnLink, pressed && { opacity: 0.7 }]}
+                  >
+                    <Text style={[styles.learnLinkText, { color: colors.saffron }]}>
+                      {contentByLang(lang, `${card.nameHi} के बारे में जानें →`, `Know ${card.nameEn} →`)}
+                    </Text>
+                  </Pressable>
+                )}
 
                 <Pressable
                   testID={`graha-basis-toggle-${card.graha}`}
@@ -373,6 +398,45 @@ function PracticeLink({ sourceId, lang, onPractice }: { sourceId: string; lang: 
   );
 }
 
+/**
+ * The narrative-voice reading: the lead paragraph synthesised for this chart,
+ * then one line to tend. Shown in place of the legacy bullet blocks; the upay
+ * and the आधार chain still follow it (design.md §78).
+ */
+function NarrativeReading({ lang, narrative }: { lang: Lang; narrative: NonNullable<KundaliGrahaCard['narrative']> }) {
+  const { colors, typography, radii } = useTheme();
+  return (
+    <>
+      <Text
+        style={{
+          marginTop: 10,
+          color: colors.ink,
+          fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+          fontSize: 14,
+          lineHeight: 23,
+        }}
+      >
+        {contentByLang(lang, narrative.leadHi, narrative.leadEn)}
+      </Text>
+      <View style={[styles.tendBox, { borderLeftColor: colors.saffron, backgroundColor: colors.saffronTint, borderRadius: radii.sm }]}>
+        <Text
+          style={{
+            color: colors.inkSoft,
+            fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+            fontSize: 12.5,
+            lineHeight: 19,
+          }}
+        >
+          <Text style={{ color: colors.saffronDeep, fontFamily: scriptBodyFont(lang, fontFamilies.interSemiBold) }}>
+            {contentByLang(lang, 'एक बात का ध्यान: ', 'One thing to tend: ')}
+          </Text>
+          {contentByLang(lang, narrative.tendHi, narrative.tendEn)}
+        </Text>
+      </View>
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   list: { marginTop: 10, gap: 8 },
   card: {
@@ -398,6 +462,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
   },
+  tendBox: { marginTop: 11, paddingVertical: 8, paddingHorizontal: 11, borderLeftWidth: 3 },
+  learnLink: { minHeight: 36, marginTop: 10, alignSelf: 'flex-start', justifyContent: 'center' },
+  learnLinkText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   upayRow: { flexDirection: 'row', gap: 8, marginTop: 6 },
   // 64 pt fits MANTRA at the section-label tracking (2.4) without breaking the word.
   upayLabel: { width: 64, fontSize: 10, paddingTop: 2 },
