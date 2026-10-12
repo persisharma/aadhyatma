@@ -4,6 +4,8 @@ import {
   isMappingEnabled,
   type VideoMapping,
 } from '../videoMappings';
+import { getChalisa } from '@/data/chalisaRegistry';
+import { isValidCueSheet } from '@/video/videoSync';
 
 const base: VideoMapping = {
   contentId: 'test-text',
@@ -68,5 +70,14 @@ describe('registry integrity', () => {
   it('has at most one mapping per content id', () => {
     const ids = VIDEO_MAPPINGS.map((m) => m.contentId);
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('every cue sheet times exactly the pages of the text it maps', () => {
+    // A sheet that drifts from the text's page count would mis-sync every verse after
+    // the drift; the reader refuses it, so it must never ship.
+    for (const m of VIDEO_MAPPINGS) {
+      if (!m.cues) continue;
+      expect(isValidCueSheet(m.cues, getChalisa(m.contentId).verses.length)).toBe(true);
+    }
   });
 });

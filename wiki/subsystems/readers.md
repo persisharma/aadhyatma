@@ -164,6 +164,11 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
   pattern or it will dead-end. The test auto-covers it once its manifest length exceeds 1.
 - **`navigation.replace`, not `push`** — chapters swap in place; the back button returns to the
   chapter list, not the previous chapter.
+- **Video auto-advance needs a human-timed cue sheet.** `ChalisaReaderScreen` turns pages with the
+  docked YouTube video only from `VideoMapping.cues` (one start-second per page, `video/videoSync.ts`).
+  The first cut mapped fraction-of-video → fraction-of-text and drifted several verses (intro music,
+  slow dohas); there is deliberately no proportional fallback now. YouTube is unreachable from the
+  cloud container, so sheets are captured on device with the dev swipe-along (design.md §81).
 - **A reader missing read-aloud is invisible at runtime.** `useReadAloud()` is a lenient hook whose
   default renders no control, which is what keeps every reader's own smoke suite green without a
   provider. So "the pill isn't showing" is indistinguishable from "the provider isn't wired" or

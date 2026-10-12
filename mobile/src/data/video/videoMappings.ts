@@ -49,6 +49,13 @@ export type VideoMapping = {
   /** ISO date (YYYY-MM-DD) the review was performed, or null when unreviewed. */
   reviewedOn: string | null;
   status: VideoReviewStatus;
+  /**
+   * Verse-sync cue sheet: the second each reader page starts being sung, one per
+   * page, strictly increasing (`@/video/videoSync`). Timed by a human against this
+   * exact upload — never estimated. Without it the reader plays the video but does
+   * not auto-advance. Capture it with the dev swipe-along in `ChalisaReaderScreen`.
+   */
+  cues?: readonly number[];
 };
 
 /**

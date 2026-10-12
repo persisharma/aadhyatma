@@ -3623,3 +3623,19 @@ FOR TODAY compact cards retain their normal 196dp width. Above fontScale 1.2 the
 **Content.** `grahaReference.ts` — an authored `{natureHi/En, signifiesHi/En}` per graha (generic educational copy; the §14.3.5 bans still hold, scanned by test). Name/meaning/maitri/weekday are reused from the already-reviewed reading tables (`GRAHA_PLAIN`, `maitriNames`, `GRAHA_UPAY`), not re-authored.
 
 **Files.** `mobile/src/panchang/grahaReference.ts`; `mobile/src/screens/GrahaReferenceScreen.tsx`; route in `navigation/types.ts` (`GrahaReference: { focusGraha? }`) + `PanchangStackNavigator.tsx` + `routeGraph.ts`; launcher in `KundaliScreen.tsx`; the Know-this-graha link in `GrahaReadingList.tsx` (wired from `KundaliReportScreen.tsx` `onLearnGraha`). Tests: `grahaReference.test.ts` (completeness + bans), `GrahaReferenceScreen.test.tsx` (lists nine, `focusGraha` expands, tap toggles). Contract: RULEBOOK §14.3.5, §14.7.
+
+---
+
+## 81. Docked video fallback & verse sync (Chalisa reader, October 2026)
+
+**Purpose.** Where a text has no real recording but a reviewed YouTube mapping (`data/video/videoMappings.ts`, `status: 'verified'`), the reader offers a video that plays docked above the verses — and the pager turns with the singing so the text on screen is the verse being sung.
+
+**Structure.** A **Video** chip on the toggle row (only when there is no recording and an enabled mapping) mounts `DockedYouTubePlayer` above the progress bar: a 16:9 stage (≥ 200 pt tall), a control strip (26 pt saffron play/pause, `m:ss / m:ss` at 12 italic `inkMuted`, ↗ open-in-YouTube, close) and a title/channel line (16 / 13 italic). Load failure or a 15 s timeout swaps the stage for one localized error card with Retry and Open in YouTube.
+
+**Verse sync.** Each mapping may carry a **cue sheet** (`cues`): the second each reader page starts being sung, one per page, strictly increasing, timed by a human against that exact upload. The player reports its position every 500 ms; the reader shows the page of the last cue at or before it (`video/videoSync.ts → pageAtTime`) and scrolls only when that page changes. There is **no proportional fallback** — a recording's intro, slower dohas and interludes made "fraction of video ≈ fraction of text" drift by several verses — so a mapping without a valid sheet (missing, wrong page count, non-increasing) plays the video but never auto-advances, and the Auto-scroll chip does not appear.
+
+**Interaction.** A hand swipe while synced hands control to the reader (auto-advance pauses); an **Auto-scroll ⌄** chip (saffron border on `saffronTint`) re-engages it and the pager jumps to the sung verse on the next tick. Closing the video resets to auto. The player claims the playback arbiter (`'youtube'`), pauses on background/lock or when another source claims, and never auto-resumes.
+
+**Capturing a sheet (dev builds only).** With a mapping that has no sheet, play the video and swipe forward as each verse begins; each forward arrival records the video time (seek back and re-swipe to correct one). When every page has a time, Metro logs `[video cues] <id>: cues: [...]` to paste into the mapping. `videoMappings.test.ts` rejects a sheet whose length does not match the text's pages.
+
+**Files.** `mobile/src/components/video/DockedYouTubePlayer.tsx`, `mobile/src/video/videoSync.ts`, `mobile/src/data/video/videoMappings.ts`, `mobile/src/screens/ChalisaReaderScreen.tsx`.

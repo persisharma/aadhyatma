@@ -41,14 +41,16 @@ import type { VideoMapping } from '@/data/video/videoMappings';
  */
 
 const LOAD_TIMEOUT_MS = 15000;
+// Half-second polling keeps a verse flip within ~0.5s of its cue.
+const PROGRESS_POLL_MS = 500;
 
 type Phase = 'loading' | 'ready' | 'error';
 
 export type DockedYouTubePlayerProps = {
   mapping: VideoMapping;
   uiLang: Lang;
-  /** Playback progress 0..1, for the reader's auto-scroll. Fires ~1×/sec while playing. */
-  onProgress?: (fraction: number) => void;
+  /** Playback position in seconds, for the reader's cue-sheet auto-scroll. Fires ~2×/sec while playing. */
+  onProgress?: (seconds: number) => void;
   onClose: () => void;
 };
 
@@ -159,10 +161,10 @@ export default function DockedYouTubePlayer({
           const dur = Number.isFinite(d) ? d : 0;
           setElapsed(cur);
           setDuration(dur);
-          if (dur > 0 && onProgress) onProgress(Math.min(1, Math.max(0, cur / dur)));
+          onProgress?.(cur);
         })
         .catch(() => undefined);
-    }, 1000);
+    }, PROGRESS_POLL_MS);
     return () => clearInterval(id);
   }, [phase, playing, onProgress]);
 
