@@ -5,7 +5,7 @@ import { useTheme } from '@/theme/ThemeContext';
 /**
  * Branding footer shared by every exported share card (design.md §39): `वेदांश़` ·
  * tagline · store line over a 1 px `divider` rule. One component so the verse card
- * and the prose card (§39.4) cannot drift; its height is `shareCardMetrics.footerBlock`.
+ * and the prose card (§39.4) cannot drift.
  */
 export default function ShareBrandFooter() {
   const { colors, typography } = useTheme();

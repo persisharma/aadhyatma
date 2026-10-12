@@ -31,7 +31,7 @@ The stress flow passed its scroll-down, meaning and endpoint screenshot steps, t
 its separate scroll-up share-button selector. A fresh share-only flow passed and generated
 the actual PNG. The committed daily smoke remains passing.
 
-**Existing sharing limitation:** [the long native share export](existing-long-share-clipping.jpg)
+**Sharing limitation observed before the tall-image follow-up:** [the long native share export](existing-long-share-clipping.jpg)
 clips verse lines and omits the meaning/footer on the fixed canvas. This predates the daily
 layout correction: `ShareCard` and `shareCardType` are unchanged. Long verse sharing needs
 a separate pagination correction; do not interpret the successful short export or reader
@@ -63,3 +63,5 @@ The isolated QA simulator was given the previously verified corporate inspection
 (fingerprint `5dee1b47c5dd97886586e1cb1669a6c5df31393323109b7eae020c0d0fcd6234`)
 so native HTTPS backgrounds can paint, as in the October 11 R2 follow-up. App transport
 security and the shared simulator installation were not modified.
+
+The above long-share gap is now resolved by the [one taller image follow-up](../tall-verse-share/review.md), which includes four-language native exports and short/story checks.

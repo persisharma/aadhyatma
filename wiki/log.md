@@ -756,3 +756,17 @@ scrolling at Large, but the unchanged fixed-size ShareCard export clips verse li
 omits the meaning/footer. A short Gita export paints its themed background correctly.
 The daily spacing correction does not fix long-share pagination. Evidence:
 docs/evaluations/reading-visuals-2026-10-12/daily-bhakti-space/review.md.
+
+
+## [2026-10-12] ingest | Complete verse shares use one taller image
+
+Resolved the earlier long-verse sharing gap using native natural card/frame height, with
+uncapped 24/40 verse and 18/27 meaning type. Capture ancestors remain unconstrained while
+measuring; final PNG dimensions follow the measured height at 1080px width. Short post/story
+sizes remain 1080×1350 / 1080×1920; the picker explains taller exports and Instagram framing.
+No startup/reader measurement, R2 asset/cache changes, prose/illustrated-series redesign,
+message, release or OTA. Full npm test passes: TypeScript and 3,184 tests (241 Jest suites /
+2,335 tests); focused sharing checks and touched lint pass. Seven native exports pass and
+are visually inspected: long Ganesh 2.11 in four languages, long story, short Gita 2.47 and
+short story. Physical-device/Android runtime and frame/CPU/memory benchmarks remain open.
+Evidence: docs/evaluations/reading-visuals-2026-10-12/tall-verse-share/review.md.

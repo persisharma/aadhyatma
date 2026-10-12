@@ -1,0 +1,102 @@
+{
+  "device": "BD91E840-482E-4816-838A-9C5247E401DA",
+  "jsSha256": "e55d6332bbedc36b7db7215258892bacd654c005b3dc1bea02c9ac8e7f64248a",
+  "nativeShell": "Existing Release shell; fresh production Hermes JS; QA-only OTA disabled",
+  "cases": [
+    {
+      "case": "long-en",
+      "exitCode": 0,
+      "width": 1080,
+      "height": 2740,
+      "bytes": 4042912,
+      "pngSha256": "0d2bd9af35621b4325deb432a90d8491529ae17aac341ad6a481030b8f3f560c",
+      "seconds": 42.6,
+      "reviewJpegSha256": "9beeae938753dd11001af1e6e97bd74b8fb710b335c212304e0bb434f601cb5a",
+      "reviewJpegBytes": 825320
+    },
+    {
+      "case": "long-hi",
+      "exitCode": 0,
+      "width": 1080,
+      "height": 1976,
+      "bytes": 2966602,
+      "pngSha256": "f5f3d18fc97613e08ce2ddee26f256fa702fe47e98324f1beddf3496993018c0",
+      "seconds": 35.2,
+      "reviewJpegSha256": "359d960a831117c0be7ed55b1e5197996d54d92bb6db9bc6a352a583eb59f097",
+      "reviewJpegBytes": 596224
+    },
+    {
+      "case": "long-gu",
+      "exitCode": 0,
+      "width": 1080,
+      "height": 1972,
+      "bytes": 3009663,
+      "pngSha256": "a88d52a0207f1cd1942493fa99e49afd5626e6ca89d91e917af71c3e81736fa8",
+      "seconds": 39.9,
+      "reviewJpegSha256": "7d26a77abf00798027ecc253856cbc4421fda6c4ed9d543912fab9edaca8da26",
+      "reviewJpegBytes": 605089
+    },
+    {
+      "case": "long-kn",
+      "exitCode": 0,
+      "width": 1080,
+      "height": 2300,
+      "bytes": 3487206,
+      "pngSha256": "01ba3c770828d02d21c33fe598cccf466c6e56aacd9e40eece04fcee5ea465a9",
+      "seconds": 36.4,
+      "reviewJpegSha256": "b8d5b0b8d7209717bb4ac6ebe086b05a994f6013c6647ae3e691c965ed6e10af",
+      "reviewJpegBytes": 778431
+    },
+    {
+      "case": "long-story",
+      "exitCode": 0,
+      "width": 1080,
+      "height": 3310,
+      "bytes": 4584762,
+      "pngSha256": "637c82d5222c800bcfeab6e4f9588fba30b679df18998bb42157aa2c8e9fd5eb",
+      "seconds": 36.3,
+      "reviewJpegSha256": "82db825e024d175f0d7488548ec7dbc72d5c514ab29a40c5cdda5b041b8350ad",
+      "reviewJpegBytes": 868864
+    },
+    {
+      "case": "short-en",
+      "exitCode": 0,
+      "width": 1080,
+      "height": 1350,
+      "bytes": 2218805,
+      "pngSha256": "87c98c8017af7dda9a46814c95d4d79a7a4e6982663932eec920946516c4d0c8",
+      "seconds": 35.6,
+      "reviewJpegSha256": "79a986f969802701d4866787f9cfc5c80129dfd4be5f88d4984c97751007df18",
+      "reviewJpegBytes": 371655
+    },
+    {
+      "case": "short-story",
+      "exitCode": 0,
+      "width": 1080,
+      "height": 1920,
+      "bytes": 2963899,
+      "pngSha256": "70c2b3768cbeb7e9c1dca68ac649672d208237d1951114e01c5fcbc63b459da8",
+      "seconds": 36.0,
+      "reviewJpegSha256": "267d7f09a966be23a6f13dceaadd68ba398c3acb3f68276c71550f43638f4b44",
+      "reviewJpegBytes": 459146
+    }
+  ],
+  "baseCommit": "a0a7c112880c88d0ca8e22eb406dce7d0264c62f",
+  "testTotal": 3184,
+  "jestSuites": 241,
+  "jestTests": 2335,
+  "reviewConversion": "Full native PNG dimensions retained; JPEG quality 87; no crop or resize",
+  "measurementTimeoutMs": 5000,
+  "verseType": "24/40",
+  "meaningType": "18/27",
+  "startupOrReaderMeasurement": false,
+  "r2AssetManifestCacheChanges": false,
+  "externalMessagesOrPostsSent": false,
+  "releaseOrOtaPublished": false,
+  "sourceHashes": {
+    "mobile/src/components/ShareCard.tsx": "9f6bd1788961958aae1a92108d07dd3177fcd5f4bef14141cd4b29abeb59d985",
+    "mobile/src/components/ShareStoryCanvas.tsx": "1a443940f593aae1fcb55dc0f02de2288e13c0776d3a89647afc9f2d46dfd82f",
+    "mobile/src/utils/shareVerse.tsx": "6547392bddf9245a7d71b6670edf5d162595c038592ce5a1616064b024cb1f4e",
+    "mobile/src/utils/shareCardType.ts": "da366d9fe77e99f87858fcc3f5c3be041ca29c2988a42a3556baedccf8dfe2dd"
+  }
+}
