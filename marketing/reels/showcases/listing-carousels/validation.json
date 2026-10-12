@@ -1,5 +1,5 @@
 {
-  "design": "Instagram: feature-specific hook, product walkthrough, distinct dark CTA",
+  "design": "V3: light editorial choice → real app action → feature-specific result detail",
   "features": 10,
   "carousels": 20,
   "slidesPerCarousel": 3,
@@ -20,7 +20,10 @@
     "layoutBoundsPass": true,
     "allContactSheetsVisuallyReviewed": true,
     "hindiScreensMatchHindiCopy": true,
-    "storeListingCopyUnchanged": true
+    "storeListingCopyUnchanged": true,
+    "resultDetailsCroppedFromRealScreens": true,
+    "firstCardIsEditorialDiagram": true,
+    "darkCtaRemoved": true
   },
   "sourceHashes": [
     {
@@ -142,6 +145,369 @@
       "lang": "en",
       "source": "output/store-draft-1.5.0-2026-10-11/raw/android-phone-en/01-home.png",
       "sourceSha256": "85443e486a081603197b0e0145f393068490ed02399fef6bab39a03794aa263d"
+    }
+  ],
+  "reviewDate": "2026-10-12",
+  "outputs": [
+    {
+      "feature": "panchang",
+      "lang": "hi",
+      "card": "01-hook",
+      "outputSha256": "6bca8a3f8238d52a691e15da149e979946c5cf0646956331d88c29f2e3582e1f"
+    },
+    {
+      "feature": "panchang",
+      "lang": "hi",
+      "card": "02-feature",
+      "outputSha256": "39603ed7e2d3cd598efd39198f8081114b17f564aac020c73ec8ab4db970fb86"
+    },
+    {
+      "feature": "panchang",
+      "lang": "hi",
+      "card": "03-cta",
+      "outputSha256": "e92cbd3d3c935cb4fa2bfe5021a58245df1648dd48a7fab2a8aa97ddd80640dc"
+    },
+    {
+      "feature": "panchang",
+      "lang": "en",
+      "card": "01-hook",
+      "outputSha256": "10a7f0b70bd358463e68dec19f31440def2fa86aaac6a6ddaa413023828c2c61"
+    },
+    {
+      "feature": "panchang",
+      "lang": "en",
+      "card": "02-feature",
+      "outputSha256": "339834f37ef4c09079bf25f75880846a0ee3ebfdac6e5c8334357bd3b8949b02"
+    },
+    {
+      "feature": "panchang",
+      "lang": "en",
+      "card": "03-cta",
+      "outputSha256": "2aa810da116c29095c837528593e8adcd52e3503a3c56227a5379d31b29c2274"
+    },
+    {
+      "feature": "kundali",
+      "lang": "hi",
+      "card": "01-hook",
+      "outputSha256": "d4c31582b7ab5a17f1906e3745378e4abc81a5ed1ebf71d1224f6ddf243b661b"
+    },
+    {
+      "feature": "kundali",
+      "lang": "hi",
+      "card": "02-feature",
+      "outputSha256": "6909b6f93c6f47d118e07c54eac0cc0f0ee1c6cb65370d49351b52edca9d0e6c"
+    },
+    {
+      "feature": "kundali",
+      "lang": "hi",
+      "card": "03-cta",
+      "outputSha256": "11302a69c37cc13e232c5492c6dc1d841168cb6821a00fce800151f4a79b8a39"
+    },
+    {
+      "feature": "kundali",
+      "lang": "en",
+      "card": "01-hook",
+      "outputSha256": "c765236a0fe582d118686adeda42ed86d012dbb56600e66679bb69600c9b79db"
+    },
+    {
+      "feature": "kundali",
+      "lang": "en",
+      "card": "02-feature",
+      "outputSha256": "c5aeb323ebe9b023fbd1e37ab4567f9ed68faf0c9288b971b59efd792af5ac86"
+    },
+    {
+      "feature": "kundali",
+      "lang": "en",
+      "card": "03-cta",
+      "outputSha256": "145c04599da66cdd8a83ad48205be0f401eb19322de466e2f3e3e4e6b5efec0b"
+    },
+    {
+      "feature": "kids-stories",
+      "lang": "hi",
+      "card": "01-hook",
+      "outputSha256": "8873cc3cf1e60d45ae9702ade21169d74adeaf40eb428a3f3251ce9c2230237c"
+    },
+    {
+      "feature": "kids-stories",
+      "lang": "hi",
+      "card": "02-feature",
+      "outputSha256": "a6bb52b91dc7949016f8e6192084fa11ffb11e52a9f130da2836551d2401ac81"
+    },
+    {
+      "feature": "kids-stories",
+      "lang": "hi",
+      "card": "03-cta",
+      "outputSha256": "140d16704bc970cb9120365df60f1a6a28bf789b48d4bbeb0f45ff8d90a8dc43"
+    },
+    {
+      "feature": "kids-stories",
+      "lang": "en",
+      "card": "01-hook",
+      "outputSha256": "4b70cda21088af4ee091352e549ae62fb409612411cf57fb93890e0a3e4e977e"
+    },
+    {
+      "feature": "kids-stories",
+      "lang": "en",
+      "card": "02-feature",
+      "outputSha256": "3f3b3736b38b916f7f7c07df85655625ddd5f826f8345b66efe415bc1042be09"
+    },
+    {
+      "feature": "kids-stories",
+      "lang": "en",
+      "card": "03-cta",
+      "outputSha256": "f78a781e90362c8386aab45521b49bcebb26753aaf154b3a3a784d0c2aa5c139"
+    },
+    {
+      "feature": "gita",
+      "lang": "hi",
+      "card": "01-hook",
+      "outputSha256": "bc0caa1770a4b3de4aae10bbbf731113c3a2790cc8426f5e6cc4317afa902ccd"
+    },
+    {
+      "feature": "gita",
+      "lang": "hi",
+      "card": "02-feature",
+      "outputSha256": "2a5374b7a7cf112f4b900b066b78730bddb06b3b7d79fece36af07716e0e5d67"
+    },
+    {
+      "feature": "gita",
+      "lang": "hi",
+      "card": "03-cta",
+      "outputSha256": "51c090172a498aab055720156a64f0ff94908230557fb63d62c7ad8063fafcdd"
+    },
+    {
+      "feature": "gita",
+      "lang": "en",
+      "card": "01-hook",
+      "outputSha256": "1a73a2813831ae57863d1ab88f8b89f76d6d3bcfc510aad506fde3c505e1b112"
+    },
+    {
+      "feature": "gita",
+      "lang": "en",
+      "card": "02-feature",
+      "outputSha256": "81ba6cdbc136eb70838477e4bdb312d8100b6c30e31c5711c2109265abee0823"
+    },
+    {
+      "feature": "gita",
+      "lang": "en",
+      "card": "03-cta",
+      "outputSha256": "57d280e4fb057ccd0c747983704639c8d53ecfe5832ac578d762b33731bdbe95"
+    },
+    {
+      "feature": "japam",
+      "lang": "hi",
+      "card": "01-hook",
+      "outputSha256": "ffe63500c27e4f52d6b361ee8da6d9d786732759eecfd4d8b6291b091ff08130"
+    },
+    {
+      "feature": "japam",
+      "lang": "hi",
+      "card": "02-feature",
+      "outputSha256": "0dbc0f6053f1c87f5a3ddff8b46ee4e6700674e3c7a29013ddcf673f39133f01"
+    },
+    {
+      "feature": "japam",
+      "lang": "hi",
+      "card": "03-cta",
+      "outputSha256": "50a588ac225be8b2f35280746e373d845cb0cfc3d7da0e00b88a9f96bb4af54a"
+    },
+    {
+      "feature": "japam",
+      "lang": "en",
+      "card": "01-hook",
+      "outputSha256": "ecca22c2e10c70d059b941a873b778c179057294ef26a96f0b48bb7f906fd1d1"
+    },
+    {
+      "feature": "japam",
+      "lang": "en",
+      "card": "02-feature",
+      "outputSha256": "99eb52aa00e99c115ad29c36963d178bd653fb19f4a61fbc712fbf1d9f77c8d0"
+    },
+    {
+      "feature": "japam",
+      "lang": "en",
+      "card": "03-cta",
+      "outputSha256": "e6c0bd8844b8086ebdfc49ed3451906f5c7ccfd511d84c6ca25cb9907432aaa5"
+    },
+    {
+      "feature": "vrat",
+      "lang": "hi",
+      "card": "01-hook",
+      "outputSha256": "15d0dd24e3c2538292fa7c27b0be74562c1e1b8be8ba3c82cccb5bc4c5a8898d"
+    },
+    {
+      "feature": "vrat",
+      "lang": "hi",
+      "card": "02-feature",
+      "outputSha256": "1b7465b0d0939a781c562345788b8064e3c8a45d84ca38a6e0d8194765fb6d1e"
+    },
+    {
+      "feature": "vrat",
+      "lang": "hi",
+      "card": "03-cta",
+      "outputSha256": "dd6b7f359d27752d539cf335329fa8f1e00c104a2cbab3201e6d31330fd9afac"
+    },
+    {
+      "feature": "vrat",
+      "lang": "en",
+      "card": "01-hook",
+      "outputSha256": "a8b47b7d58512c60a498463d1148f65f01eb33a0c9329de8e01e56c09c990c27"
+    },
+    {
+      "feature": "vrat",
+      "lang": "en",
+      "card": "02-feature",
+      "outputSha256": "468154fc32c63c165bbbc0ff0eee6ee01f8431c711ed84c8f796db0a223343e9"
+    },
+    {
+      "feature": "vrat",
+      "lang": "en",
+      "card": "03-cta",
+      "outputSha256": "ffc401251ba56dbfd70a590fe5ae733f3c7186e48d4ca4cc5016ab2e6e8ba26e"
+    },
+    {
+      "feature": "sankalp",
+      "lang": "hi",
+      "card": "01-hook",
+      "outputSha256": "b3215a0f959de783c7f81573664194bd166ad0bb4086849f5198e4793f7d4170"
+    },
+    {
+      "feature": "sankalp",
+      "lang": "hi",
+      "card": "02-feature",
+      "outputSha256": "f4a73f8cdf33262fde448f42312cf5d7ad8c7fb456d7733836c9b8b5b725c26a"
+    },
+    {
+      "feature": "sankalp",
+      "lang": "hi",
+      "card": "03-cta",
+      "outputSha256": "87ce7e6a610d6db87a59359f0c21623b66ca7dbc39d6a179724493f1ae8eaf58"
+    },
+    {
+      "feature": "sankalp",
+      "lang": "en",
+      "card": "01-hook",
+      "outputSha256": "16b4e812cff09ef7d33d7555eb637601d7aa3bbc4eaa8e27b311991891f6d3da"
+    },
+    {
+      "feature": "sankalp",
+      "lang": "en",
+      "card": "02-feature",
+      "outputSha256": "669acbc964f3e3d9edf4d16145ffe7cb65904a101c9e432080026491e92c16fa"
+    },
+    {
+      "feature": "sankalp",
+      "lang": "en",
+      "card": "03-cta",
+      "outputSha256": "67ea24ba333b9fdfb5b29050cfe8dee4a62b20b08d83c6f06129afdfc9d424a9"
+    },
+    {
+      "feature": "guna-milan",
+      "lang": "hi",
+      "card": "01-hook",
+      "outputSha256": "37b8a347c730dd086804e1f96ce8e63fea122d6f469c3d02fb094d9aa8630760"
+    },
+    {
+      "feature": "guna-milan",
+      "lang": "hi",
+      "card": "02-feature",
+      "outputSha256": "cb27449389460484dade2cd55efdad71d7b4cd247b2744196add5093a7e783bf"
+    },
+    {
+      "feature": "guna-milan",
+      "lang": "hi",
+      "card": "03-cta",
+      "outputSha256": "5adbcff8c07bffe69c0f6270c9620946c1600b6311663617867e8213cbec65c5"
+    },
+    {
+      "feature": "guna-milan",
+      "lang": "en",
+      "card": "01-hook",
+      "outputSha256": "84bacdcbcdaf627ff0e09623ec3faff12d4e33f481bb7e8ec66415c75cf4b85c"
+    },
+    {
+      "feature": "guna-milan",
+      "lang": "en",
+      "card": "02-feature",
+      "outputSha256": "079f9b187c1ba441882c36c028f02f1e2a577881d97cce05da032b8cedf78257"
+    },
+    {
+      "feature": "guna-milan",
+      "lang": "en",
+      "card": "03-cta",
+      "outputSha256": "1fbc7202ec387d19348f0957850a0a80f4a70009fc45c6a1640ef60b920bec3a"
+    },
+    {
+      "feature": "bhajans",
+      "lang": "hi",
+      "card": "01-hook",
+      "outputSha256": "23fd1b5380acb5d26432dd252348285768cc2a76412f20fd324f46b032e3aacc"
+    },
+    {
+      "feature": "bhajans",
+      "lang": "hi",
+      "card": "02-feature",
+      "outputSha256": "6b4afec9d810dba1f9d1010c366f5ea2d70952c0f8f8edff43c4666f4e40d504"
+    },
+    {
+      "feature": "bhajans",
+      "lang": "hi",
+      "card": "03-cta",
+      "outputSha256": "437839a90adcd54fbfd2f30d42c0a18606146b31af263817f025b717a7b04878"
+    },
+    {
+      "feature": "bhajans",
+      "lang": "en",
+      "card": "01-hook",
+      "outputSha256": "c144f6f707418fe4afcfddb2a8d059461a6b22538b901c60104031b2eca77af4"
+    },
+    {
+      "feature": "bhajans",
+      "lang": "en",
+      "card": "02-feature",
+      "outputSha256": "56688e5d13f8a047659b7548bb1bf492214d918de809da5169712d9faeab3bf7"
+    },
+    {
+      "feature": "bhajans",
+      "lang": "en",
+      "card": "03-cta",
+      "outputSha256": "548c99403376b243b3ad32d55ee868ff77e2a27ba276d5cf79bb155295fa9150"
+    },
+    {
+      "feature": "daily-practice",
+      "lang": "hi",
+      "card": "01-hook",
+      "outputSha256": "eee1c682ffde06c5a6c3bf632ce42bf88922260fa2f2b0dbb6c8e28f12b34160"
+    },
+    {
+      "feature": "daily-practice",
+      "lang": "hi",
+      "card": "02-feature",
+      "outputSha256": "f1402e5e7c7343aa89cf8e5b7d12779671f9ec25915b58973f3dd5929d0d2d78"
+    },
+    {
+      "feature": "daily-practice",
+      "lang": "hi",
+      "card": "03-cta",
+      "outputSha256": "87dc6902641a705e32c374ffe89f9a85364d950f77ba6b2563e072a9bdfcf809"
+    },
+    {
+      "feature": "daily-practice",
+      "lang": "en",
+      "card": "01-hook",
+      "outputSha256": "8c281e177a0515b408f380fa19794b78f380538bd05f895565b923b237fbf421"
+    },
+    {
+      "feature": "daily-practice",
+      "lang": "en",
+      "card": "02-feature",
+      "outputSha256": "ea2893b38e74210669dd24d9cf3e95c3ceceff4e0abbbc4d551e481598b88639"
+    },
+    {
+      "feature": "daily-practice",
+      "lang": "en",
+      "card": "03-cta",
+      "outputSha256": "48d0d5e9199e985af1205c9b54089cb94d7c6357b86ebf0e109df56abd94a5f7"
     }
   ]
 }
