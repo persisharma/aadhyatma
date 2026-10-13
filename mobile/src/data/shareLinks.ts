@@ -64,6 +64,11 @@ function instagramLine(lang: Lang): string {
   return `${pick(lang, FOLLOW_IG_CTA)} ${INSTAGRAM_URL}`;
 }
 
+/** "Read on Vedansh: <link>" + the Instagram line — the tail of every text share (§39.7). */
+export function shareLinkLines(lang: Lang): string[] {
+  return [`${pick(lang, SHARE_CTA)} ${SMART_LINK}`, instagramLine(lang)];
+}
+
 export function buildShareCaption(
   p: ShareCaptionParams,
   // The Instagram caption (buildInstagramCaption) omits the profile line — it already

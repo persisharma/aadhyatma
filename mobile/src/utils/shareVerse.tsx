@@ -38,6 +38,7 @@ import {
   type ShareCardLayout,
 } from '@/utils/shareCardPages';
 import { isMultiShareAvailable, shareFiles } from '@/utils/multiShare';
+import { buildProseShareText, buildVerseShareText } from '@/utils/shareText';
 import { useRatingAsk } from '@/contexts/ratingAsk';
 import type { Lang } from '@/data/gita/language';
 
@@ -235,7 +236,10 @@ type PendingCapture = (
 
 type ProseChooser = {
   content: ShareableProse;
+  /** Card language (§39.7): pages, caption and hashtags. Starts as `uiLang`. */
   lang: Lang;
+  /** The reader's language — the sheet's own chrome and alerts. */
+  uiLang: Lang;
   scopeIndex: number;
   selected: boolean[];
   highlighted: number;
@@ -297,7 +301,10 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const [pending, setPending] = useState<PendingCapture | null>(null);
   const [chooser, setChooser] = useState<{
     verse: ShareableVerse;
+    /** The reader's language — the sheet's chrome and alerts. */
     lang: Lang;
+    /** What the card + caption are written in (§39.7); starts as `lang`. */
+    cardLang: Lang;
     opts?: ShareOptions;
   } | null>(null);
   const [prose, setProse] = useState<ProseChooser | null>(null);
@@ -423,6 +430,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       caption: string,
       target: ShareTarget,
       format: ShareFormat,
+      /** Alert language — the reader's, not the card's. */
       lang: Lang
     ): Promise<boolean> => {
       if (target === 'instagram') {
@@ -500,7 +508,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       lang: Lang,
       opts: ShareOptions | undefined,
       target: ShareTarget,
-      format: ShareFormat
+      format: ShareFormat,
+      uiLang: Lang = lang
     ) => {
       if (inFlightRef.current) return;
       inFlightRef.current = true;
@@ -510,7 +519,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       try {
         const fileUri = await capture({ kind: 'verse', verse, lang, format }, mode, opts?.screenshotRef);
         if (!fileUri && mode === 'card') {
-          alertCouldNotShare(lang);
+          alertCouldNotShare(uiLang);
           return;
         }
 
@@ -532,7 +541,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               })
             : buildShareCaption(captionParams);
 
-        const dispatched = await deliver(fileUri, caption, target, format, lang);
+        const dispatched = await deliver(fileUri, caption, target, format, uiLang);
         // Report the moment once the sheet has closed (the awaits in deliver have
         // resolved). The rating gate + 1200 ms settle delay live in the provider;
         // here we only say "a verse share just happened" (§54).
@@ -611,7 +620,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const runProsePage = useCallback(
     async (target: ShareTarget, format: ShareFormat) => {
       if (!prose || !activeScope || inFlightRef.current) return;
-      const { content, lang, highlighted } = prose;
+      const { content, lang, uiLang, highlighted } = prose;
       const scope = activeScope;
       setProse(null);
       inFlightRef.current = true;
@@ -619,10 +628,10 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       try {
         const spec = cardSpec(content, scope, lang, highlighted);
         const fileUri = await capture({ kind: 'prose', card: spec, format }, 'card');
-        if (spec.page.illustration && !fileUri) { alertCouldNotShare(lang); return; }
+        if (spec.page.illustration && !fileUri) { alertCouldNotShare(uiLang); return; }
         const label = spec.pageCount > 1 ? pageWord(highlighted + 1, spec.pageCount) : null;
         const caption = proseCaption(content, scope, lang, target, label);
-        await deliver(fileUri, caption, target, format, lang);
+        await deliver(fileUri, caption, target, format, uiLang);
       } catch {
         // Dismissal or failure: swallow, as the verse path does.
       } finally {
@@ -663,7 +672,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         const uris = await captureSeries(state, scope);
         if (!uris) {
           setProse(null);
-          alertCouldNotShare(state.lang);
+          alertCouldNotShare(state.uiLang);
           return;
         }
         const label = { hi: `${uris.length} पृष्ठ`, en: `${uris.length} pages` };
@@ -709,6 +718,38 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     }
   }, [prose]);
 
+  /**
+   * "Send as text" (§39.7): one plain message to the OS sheet. No capture, so the
+   * sheet's dismissal has to be waited out explicitly before the OS sheet presents.
+   */
+  const sendText = useCallback(async (message: string, moment?: 'verse-shared') => {
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
+    setBusy(true);
+    try {
+      await wait(SHEET_DISMISS_MS);
+      const result = await Share.share({ message }, { dialogTitle: 'Share' });
+      if (moment && result.action === Share.sharedAction) requestRatingAskRef.current(moment);
+    } catch {
+      // Dismissal or failure: swallow, as the image paths do.
+    } finally {
+      setBusy(false);
+      inFlightRef.current = false;
+    }
+  }, []);
+
+  const runProseText = useCallback(() => {
+    if (!prose || !activeScope || inFlightRef.current) return;
+    const message = buildProseShareText({
+      header: activeScope.header,
+      pages: activeScope.pagination.pages,
+      indices: prose.selected.flatMap((on, i) => (on ? [i] : [])),
+      lang: prose.lang,
+    });
+    setProse(null);
+    void sendText(message);
+  }, [prose, activeScope, sendText]);
+
   const share = useCallback(
     async (content: ShareableContent, lang: Lang, opts?: ShareOptions) => {
       if (inFlightRef.current) return;
@@ -718,6 +759,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         setProse({
           content,
           lang,
+          uiLang: lang,
           scopeIndex: 0,
           selected: defaultSelection(first.pagination.pages.length),
           highlighted: 0,
@@ -729,7 +771,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       // No explicit target → let the reader pick, so "Share on Instagram" is
       // discoverable from every share button without a second control.
       if (!opts?.target) {
-        setChooser({ verse, lang, opts });
+        setChooser({ verse, lang, cardLang: lang, opts });
         return;
       }
       await run(verse, lang, opts, opts.target, opts.format ?? 'post');
@@ -747,7 +789,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           sectionNameHi: chooser.verse.sectionNameHi,
           sectionNameEn: chooser.verse.sectionNameEn,
           verseLabelEn: chooser.verse.verseLabelEn,
-          lang: chooser.lang,
+          lang: chooser.cardLang,
           timely,
         })
       );
@@ -771,12 +813,28 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   const pickTarget = useCallback(
     (target: ShareTarget, format: ShareFormat) => {
       if (!chooser) return;
-      const { verse, lang, opts } = chooser;
+      const { verse, lang, cardLang, opts } = chooser;
       setChooser(null);
-      void run(verse, lang, opts, target, format);
+      void run(verse, cardLang, opts, target, format, lang);
     },
     [chooser, run]
   );
+
+  const pickText = useCallback(() => {
+    if (!chooser || inFlightRef.current) return;
+    const message = buildVerseShareText(chooser.verse, chooser.cardLang);
+    setChooser(null);
+    void sendText(message, 'verse-shared');
+  }, [chooser, sendText]);
+
+  /** Re-language the prose series; page count can change, so selection resets. */
+  const setProseCardLang = useCallback((next: Lang) => {
+    setProse((p) => {
+      if (!p || p.lang === next) return p;
+      const scope = resolveScopes(p.content, next)[p.scopeIndex];
+      return { ...p, lang: next, highlighted: 0, selected: defaultSelection(scope.pagination.pages.length) };
+    });
+  }, []);
 
   const renderProsePage = useCallback(
     (index: number) =>
@@ -864,15 +922,18 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           onShareSystem={() => pickTarget('system', 'post')}
           onShareInstagramPost={() => pickTarget('instagram', 'post')}
           onShareInstagramStory={() => pickTarget('instagram', 'story')}
+          onShareText={pickText}
+          cardLang={chooser.cardLang}
+          onCardLang={(next) => setChooser((c) => (c ? { ...c, cardLang: next } : c))}
           onClose={() => setChooser(null)}
         />
       ) : null}
       {prose ? (
         <ShareTargetSheet
           visible
-          lang={prose.lang}
+          lang={prose.uiLang}
           title={pick(
-            prose.lang,
+            prose.uiLang,
             prose.content.sheetTitle ?? {
               hi: 'कथा साझा करें',
               en: 'Share this katha',
@@ -885,6 +946,9 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           onShareSystem={() => void runProsePage('system', 'post')}
           onShareInstagramPost={() => void runProsePage('instagram', 'post')}
           onShareInstagramStory={() => void runProsePage('instagram', 'story')}
+          onShareText={runProseText}
+          cardLang={prose.lang}
+          onCardLang={setProseCardLang}
           onClose={() => {
             if (!inFlightRef.current) setProse(null);
           }}

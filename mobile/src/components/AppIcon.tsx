@@ -52,6 +52,7 @@ import { FlagPennantIcon } from 'phosphor-react-native/src/icons/FlagPennant';
 import { BirdIcon } from 'phosphor-react-native/src/icons/Bird';
 import { SparkleIcon } from 'phosphor-react-native/src/icons/Sparkle';
 import { GearSixIcon } from 'phosphor-react-native/src/icons/GearSix';
+import { ChatTextIcon } from 'phosphor-react-native/src/icons/ChatText';
 
 // Direct imports keep the full icon catalogue out of the launch bundle.
 const icons = {
@@ -59,6 +60,7 @@ const icons = {
   question: QuestionIcon,
   widgets: SquaresFourIcon,
   share: ShareNetworkIcon,
+  text: ChatTextIcon,
   heart: HeartIcon,
   back: ArrowLeftIcon,
   next: CaretRightIcon,

@@ -321,6 +321,55 @@ describe('share target flow', () => {
     expect(mockRequestAsk).toHaveBeenCalledWith('verse-shared');
   });
 
+  test('Send as text shares the full verse as a plain message, no capture', async () => {
+    const tree = await openPicker();
+    await act(async () => byLabel(tree, 'Send as text').props.onPress());
+    await settle();
+    await settle();
+    expect(mockCaptureRef).not.toHaveBeenCalled();
+    expect(rnShare).toHaveBeenCalledTimes(1);
+    const payload = rnShare.mock.calls[0][0] as { message: string; url?: string };
+    expect(payload.url).toBeUndefined();
+    expect(payload.message).toContain('Hanuman Chalisa · Verse 12');
+    expect(payload.message).toContain('jai hanuman gyan gun sagar');
+    expect(payload.message).toContain('https://vedansh.app/get');
+    expect(mockRequestAsk).toHaveBeenCalledWith('verse-shared');
+  });
+
+  test('a dismissed text share does not report the moment', async () => {
+    rnShare.mockResolvedValueOnce({ action: 'dismissedAction' } as Awaited<ReturnType<typeof Share.share>>);
+    const tree = await openPicker();
+    await act(async () => byLabel(tree, 'Send as text').props.onPress());
+    await settle();
+    await settle();
+    expect(rnShare).toHaveBeenCalledTimes(1);
+    expect(mockRequestAsk).not.toHaveBeenCalled();
+  });
+
+  test('the card language chip re-languages the card, caption and hashtags — not the sheet', async () => {
+    const tree = await openPicker();
+    await act(async () => byLabel(tree, 'Card language: Hindi').props.onPress());
+    // Chrome stays in the reader's English.
+    expect(byLabel(tree, 'Share on Instagram')).toBeDefined();
+    expect(tree.root.findAll(n => n.props.children === 'Share this verse').length).toBeGreaterThan(0);
+    await act(async () => byLabel(tree, 'Share on Instagram').props.onPress());
+    await settle();
+    expect(tree.root.findAllByType('ShareCard' as never)).toHaveLength(0);
+    expect(mockCaptureRef).toHaveBeenCalledTimes(1);
+    const copied = setString.mock.calls[0][0] as string;
+    expect(copied).toContain('हनुमान चालीसा · चौपाई 12');
+    expect(copied).toContain('जय हनुमान ज्ञान गुन सागर');
+  });
+
+  test('the card is mounted in the chosen card language', async () => {
+    mockMeasuredHeight = null;
+    const tree = await openPicker();
+    await act(async () => byLabel(tree, 'Card language: Kannada').props.onPress());
+    await act(async () => byLabel(tree, 'Share to other apps').props.onPress());
+    await settle();
+    expect(tree.root.findByType('ShareCard' as never).props.lang).toBe('kn');
+  });
+
   test('the Instagram-without-image error path does NOT report the moment', async () => {
     // No image → the branch that only shows an alert, never a share sheet.
     mockCaptureRef.mockResolvedValueOnce(null as never);

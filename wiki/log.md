@@ -864,3 +864,7 @@ Compared PR #253 and current-main #429/#434/#449 after user rejected the older c
 ## [2026-10-12] ingest | Approved Garud Puran Style 3 integration and main reconciliation
 
 User approved all nine final banners and requested a verified PR. Merged main while retaining shared reader components, lazy navigation, cooperative search and both wiki histories. Activated the approved local assets, corrected page/resume vocabulary and adopted prose sharing. Asset hashes, source boundaries and final verification are in the Garud integration review.
+
+## [2026-10-13] ingest | Share sheet: Send as text + card-language chips
+
+Added a no-image `Send as text` row (verse lines + meaning, or the selected prose pages rejoined across page breaks, plus the caption link lines) and hi/en/gu/kn card-language chips that re-language the card, caption, hashtags and text without changing the sheet chrome. OTA-only; no native module. Updated [[share]], design.md §39.1/§39.6/§39.7 and the share-target Maestro flow (not run — no simulator).
