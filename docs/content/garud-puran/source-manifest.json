@@ -1,0 +1,458 @@
+[
+  {
+    "file": "raw/bharatkosha.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press",
+    "bytes": 800291,
+    "sha256": "2f04053ffd093585721d09115787d3d2e087f882f2fe64c8040d9ce3bc56a8e6",
+    "retrievedAt": "2026-10-01T17:52:08.156396+00:00"
+  },
+  {
+    "file": "raw/dutt-archive-meta.json",
+    "url": "https://archive.org/metadata/cu31924023202819",
+    "resolvedUrl": "https://archive.org/metadata/cu31924023202819",
+    "bytes": 145967,
+    "sha256": "de1a521814356b246da43c93c7df63e630b36b5cd13f8cddb8df6c3cc14012a9",
+    "retrievedAt": "2026-10-01T17:53:30.501941+00:00"
+  },
+  {
+    "file": "raw/dutt-index.html",
+    "url": "https://www.wisdomlib.org/hinduism/book/the-garuda-purana-dutt",
+    "resolvedUrl": "https://www.wisdomlib.org/hinduism/book/the-garuda-purana-dutt",
+    "bytes": 98152,
+    "sha256": "427b82d27ae7aee74762bdc69e400a9760c2cdcf923a3e01054b227bca699763",
+    "retrievedAt": "2026-10-01T17:52:05.675730+00:00"
+  },
+  {
+    "file": "raw/dutt-original-ocr.txt",
+    "url": "https://archive.org/download/cu31924023202819/cu31924023202819_djvu.txt",
+    "resolvedUrl": "https://dn760005.eu.archive.org/0/items/cu31924023202819/cu31924023202819_djvu.txt",
+    "bytes": 1781506,
+    "sha256": "f4b72aaeea6e0d6084327e469ef96f8a743dc6c372bc16f11247cb9395e37e32",
+    "retrievedAt": "2026-10-01T17:53:48.190780+00:00"
+  },
+  {
+    "file": "raw/dutt-original-pages.xml",
+    "url": "https://archive.org/download/cu31924023202819/cu31924023202819_djvu.xml",
+    "resolvedUrl": "https://dn710604.ca.archive.org/0/items/cu31924023202819/cu31924023202819_djvu.xml",
+    "bytes": 19652902,
+    "sha256": "c25610657b4bc0aac171153fedb3924430661348410ceaee1d1eff996e30eb27",
+    "retrievedAt": "2026-10-01T17:56:07.698077+00:00"
+  },
+  {
+    "file": "raw/dutt-vol2-meta.json",
+    "url": "https://archive.org/metadata/TheGarudaMahapuranamVol.IIM.N.Dutt",
+    "resolvedUrl": "https://archive.org/metadata/TheGarudaMahapuranamVol.IIM.N.Dutt",
+    "bytes": 9336,
+    "sha256": "5fc68aa30a2d90b4d3f2aa86c9fdf3e876d2a7cf0c5c7478d971a32289809aeb",
+    "retrievedAt": "2026-10-01T17:55:22.920391+00:00"
+  },
+  {
+    "file": "raw/dutt-vol2-ocr.txt",
+    "url": "https://archive.org/download/TheGarudaMahapuranamVol.IIM.N.Dutt/The%20Garuda%20Mahapuranam%20Vol.%20II%20-%20M.N.%20Dutt_djvu.txt",
+    "resolvedUrl": "https://dn721706.ca.archive.org/0/items/TheGarudaMahapuranamVol.IIM.N.Dutt/The%20Garuda%20Mahapuranam%20Vol.%20II%20-%20M.N.%20Dutt_djvu.txt",
+    "retrievedAt": "2026-10-01T17:58:10.705341+00:00",
+    "bytes": 3855264,
+    "sha256": "cd629f5862b03c8a2fc15ff0461105f0de7b1a4e29955564151dc198723a24c0"
+  },
+  {
+    "file": "raw/dutt-vol2.pdf",
+    "url": "https://archive.org/download/TheGarudaMahapuranamVol.IIM.N.Dutt/The%20Garuda%20Mahapuranam%20Vol.%20II%20-%20M.N.%20Dutt.pdf",
+    "resolvedUrl": "https://dn721706.ca.archive.org/0/items/TheGarudaMahapuranamVol.IIM.N.Dutt/The%20Garuda%20Mahapuranam%20Vol.%20II%20-%20M.N.%20Dutt.pdf",
+    "retrievedAt": "2026-10-01T18:02:25.154682+00:00",
+    "bytes": 75878293,
+    "sha256": "f563a79951f98649f39e2358ee935854d8238c39a01180be2765894affe4eb22"
+  },
+  {
+    "file": "raw/gretil.html",
+    "url": "https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_garuDapurANa.htm",
+    "resolvedUrl": "https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_garuDapurANa.htm",
+    "bytes": 2812322,
+    "sha256": "0f0844cf1fd274e81d84b3f2fd0a8698c0f90ede101e4b7d29f70f8b915a5ec0",
+    "retrievedAt": "2026-10-01T17:52:11.931936+00:00"
+  },
+  {
+    "file": "raw/hindi-archive-meta.json",
+    "url": "https://archive.org/metadata/garuda-puran-gita-press-gorakhpur",
+    "resolvedUrl": "https://archive.org/metadata/garuda-puran-gita-press-gorakhpur",
+    "bytes": 7441,
+    "sha256": "9286ad175bd430ceb1d4e5197c524faf9e71fc8772f35a8b4ae0c36678e4bf0e",
+    "retrievedAt": "2026-10-01T17:53:27.461555+00:00"
+  },
+  {
+    "file": "raw/hindi-dli-vol1-meta.json",
+    "url": "https://archive.org/metadata/in.ernet.dli.2015.312987",
+    "resolvedUrl": "https://archive.org/metadata/in.ernet.dli.2015.312987",
+    "retrievedAt": "2026-10-01T17:58:51.145254+00:00",
+    "bytes": 8010,
+    "sha256": "c62ef254a41ba8beaf4b061e8764fa7f7d4945e94e73cea3e64c56f9f5fbc77e"
+  },
+  {
+    "file": "raw/hindi-dli-vol1.pdf",
+    "url": "https://archive.org/download/in.ernet.dli.2015.312987/2015.312987.Garud-Purana.pdf",
+    "resolvedUrl": "https://dn710905.ca.archive.org/0/items/in.ernet.dli.2015.312987/2015.312987.Garud-Purana.pdf",
+    "retrievedAt": "2026-10-01T18:00:13.736980+00:00",
+    "bytes": 8310651,
+    "sha256": "76dd58293fc50fcda091bb2fcc9f314dc2e18f0cbba54d72e5402a1e26e79b53"
+  },
+  {
+    "file": "raw/hindi-dli-vol1.txt",
+    "url": "https://archive.org/download/in.ernet.dli.2015.312987/2015.312987.Garud-Purana_djvu.txt",
+    "resolvedUrl": "https://dn710905.ca.archive.org/0/items/in.ernet.dli.2015.312987/2015.312987.Garud-Purana_djvu.txt",
+    "retrievedAt": "2026-10-01T18:00:04.634036+00:00",
+    "bytes": 1815358,
+    "sha256": "865584c30f189e59e40cee06934a6ab4f9ae624a364d2f4741be695d11752956"
+  },
+  {
+    "file": "raw/hindi-dli-vol1.xml",
+    "url": "https://archive.org/download/in.ernet.dli.2015.312987/2015.312987.Garud-Purana_djvu.xml",
+    "resolvedUrl": "https://dn710905.ca.archive.org/0/items/in.ernet.dli.2015.312987/2015.312987.Garud-Purana_djvu.xml",
+    "retrievedAt": "2026-10-01T18:00:15.782606+00:00",
+    "bytes": 9608838,
+    "sha256": "62fb38a2e339354e9403992c7692c1c47444d2bce3038e5cd18adfbac7388b6a"
+  },
+  {
+    "file": "raw/hindi-dli-vol2-meta.json",
+    "url": "https://archive.org/metadata/in.ernet.dli.2015.312988",
+    "resolvedUrl": "https://archive.org/metadata/in.ernet.dli.2015.312988",
+    "retrievedAt": "2026-10-01T17:58:49.044435+00:00",
+    "bytes": 7896,
+    "sha256": "a54b8277625e75fca9e1a16b573feb42f4642dfeee65ad04e29ecc43f06d4e3f"
+  },
+  {
+    "file": "raw/hindi-dli-vol2.pdf",
+    "url": "https://archive.org/download/in.ernet.dli.2015.312988/2015.312988.Garud-Purana.pdf",
+    "resolvedUrl": "https://dn721507.ca.archive.org/0/items/in.ernet.dli.2015.312988/2015.312988.Garud-Purana.pdf",
+    "retrievedAt": "2026-10-01T18:00:44.757645+00:00",
+    "bytes": 7855401,
+    "sha256": "38f0ae646cdeaf508ee0d004850b9a689ff9e34eac7c6a35551db5f437661a19"
+  },
+  {
+    "file": "raw/hindi-dli-vol2.txt",
+    "url": "https://archive.org/download/in.ernet.dli.2015.312988/2015.312988.Garud-Purana_djvu.txt",
+    "resolvedUrl": "https://dn760002.eu.archive.org/0/items/in.ernet.dli.2015.312988/2015.312988.Garud-Purana_djvu.txt",
+    "retrievedAt": "2026-10-01T18:00:50.351191+00:00",
+    "bytes": 1832263,
+    "sha256": "a1d032331a4f96a7151067d1d2a212762cf339d45eccd0764f5d15d6ba239f84"
+  },
+  {
+    "file": "raw/hindi-dli-vol2.xml",
+    "url": "https://archive.org/download/in.ernet.dli.2015.312988/2015.312988.Garud-Purana_djvu.xml",
+    "resolvedUrl": "https://dn760002.eu.archive.org/0/items/in.ernet.dli.2015.312988/2015.312988.Garud-Purana_djvu.xml",
+    "retrievedAt": "2026-10-01T18:00:57.680172+00:00",
+    "bytes": 9876931,
+    "sha256": "c459d84a9c8df08dbbe8277f64ed03a77ef8f1a84844667d59d1de623156e36f"
+  },
+  {
+    "file": "raw/hindi-original-ocr.txt",
+    "url": "https://archive.org/download/garuda-puran-gita-press-gorakhpur/Garuda%20Puran%20-%20Gita%20Press%20Gorakhpur_djvu.txt",
+    "resolvedUrl": "https://dn760005.eu.archive.org/0/items/garuda-puran-gita-press-gorakhpur/Garuda%20Puran%20-%20Gita%20Press%20Gorakhpur_djvu.txt",
+    "bytes": 1625986,
+    "sha256": "2f7c2a7dfddd7f29cd4a7a548dd7e966aad3f3d1a011700a1cf6805828cc7e02",
+    "retrievedAt": "2026-10-01T17:55:29.058531+00:00"
+  },
+  {
+    "file": "raw/hindi-pages/0021.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=21",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=21",
+    "retrievedAt": "2026-10-01T17:56:56.378270+00:00",
+    "bytes": 747684,
+    "sha256": "8d55020918b21deb2a8bf78f95e3b8efe4954a80d7377f5b6a3b8128a8869060"
+  },
+  {
+    "file": "raw/hindi-pages/0041.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=41",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=41",
+    "retrievedAt": "2026-10-01T17:56:56.695956+00:00",
+    "bytes": 809014,
+    "sha256": "70632ed20318a75c55e54c5053b86a07d42d041cec065684b0f5a76b23ec7fc5"
+  },
+  {
+    "file": "raw/hindi-pages/0061.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=61",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=61",
+    "retrievedAt": "2026-10-01T17:57:10.796620+00:00",
+    "bytes": 837298,
+    "sha256": "f05625d6f40baf14f1634a3634f0767a0139a6e5e3cc1ff548d62fe89e3372f3"
+  },
+  {
+    "file": "raw/hindi-pages/0081.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=81",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=81",
+    "retrievedAt": "2026-10-01T17:57:14.899125+00:00",
+    "bytes": 842838,
+    "sha256": "3a88544e7ace8b33dd0a16d4ce4a74bb575996523be5801c97ac94d82525af61"
+  },
+  {
+    "file": "raw/hindi-pages/0101.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=101",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=101",
+    "retrievedAt": "2026-10-01T17:57:26.850834+00:00",
+    "bytes": 833123,
+    "sha256": "21883174256592bba1a7744fa9d3a6373a2dfdcb0cc5e6faeacce638151c9619"
+  },
+  {
+    "file": "raw/hindi-pages/0121.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=121",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=121",
+    "retrievedAt": "2026-10-01T17:57:33.283206+00:00",
+    "bytes": 823843,
+    "sha256": "5329b769fc432f1fdc4e4335f6d03fca9889ef50c0a3d1871b37a20be3752b99"
+  },
+  {
+    "file": "raw/hindi-pages/0141.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=141",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=141",
+    "retrievedAt": "2026-10-01T17:57:42.271808+00:00",
+    "bytes": 846065,
+    "sha256": "2c2f1ebbf4280eab57219889fa52c1c4b11cd4302813bb5a28d1c843d0f60f91"
+  },
+  {
+    "file": "raw/hindi-pages/0161.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=161",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=161",
+    "retrievedAt": "2026-10-01T17:57:49.038224+00:00",
+    "bytes": 836981,
+    "sha256": "6e19185f8f177ce55127e74fb76a770ad65f8280918ec7b72f6f70f727ab101c"
+  },
+  {
+    "file": "raw/hindi-pages/0181.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=181",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=181",
+    "retrievedAt": "2026-10-01T17:58:00.679824+00:00",
+    "bytes": 845413,
+    "sha256": "012db762193596e53afaa185ba6c2578f3da3f5fe10861d811f79676e229fa2b"
+  },
+  {
+    "file": "raw/hindi-pages/0201.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=201",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=201",
+    "retrievedAt": "2026-10-01T17:58:08.475810+00:00",
+    "bytes": 837025,
+    "sha256": "7e461084386263a8bb5903b3197074fada18866fc8a1dff8adfcb07d712fdc65"
+  },
+  {
+    "file": "raw/hindi-pages/0221.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=221",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=221",
+    "retrievedAt": "2026-10-01T17:58:15.599046+00:00",
+    "bytes": 830413,
+    "sha256": "9a5f38253179d0df9498c53d9a9102eaac2bcdd25ae1b7e6679b3820eff7f002"
+  },
+  {
+    "file": "raw/hindi-pages/0241.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=241",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=241",
+    "retrievedAt": "2026-10-01T17:58:21.295065+00:00",
+    "bytes": 831335,
+    "sha256": "1e66ba17bf16c6b527a7a8206b70f2e7d0c96542f264f5af6c7bb4581cbc4b71"
+  },
+  {
+    "file": "raw/hindi-pages/0261.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=261",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=261",
+    "retrievedAt": "2026-10-01T17:58:32.776648+00:00",
+    "bytes": 825285,
+    "sha256": "beeefff8dde398b4fac17bc6d92c58c3eeb5443a2255503f4398c4cfe019da2b"
+  },
+  {
+    "file": "raw/hindi-pages/0281.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=281",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=281",
+    "retrievedAt": "2026-10-01T17:58:37.685407+00:00",
+    "bytes": 830416,
+    "sha256": "10b59a038f93c9ab34a723e0105d400df72d601aabe3072876aab05b8244fcbe"
+  },
+  {
+    "file": "raw/hindi-pages/0301.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=301",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=301",
+    "retrievedAt": "2026-10-01T17:58:47.066424+00:00",
+    "bytes": 822246,
+    "sha256": "464f7408b6d51b2bf91c8d05f725c349ce0d227c64d9536278ae066cb89b6db4"
+  },
+  {
+    "file": "raw/hindi-pages/0321.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=321",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=321",
+    "retrievedAt": "2026-10-01T17:58:52.660441+00:00",
+    "bytes": 819609,
+    "sha256": "8fb381d1f4a32f609e4903b72b665b9c49cc7b41696a80fa0d752e8b85ae798d"
+  },
+  {
+    "file": "raw/hindi-pages/0341.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=341",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=341",
+    "retrievedAt": "2026-10-01T17:58:59.391810+00:00",
+    "bytes": 807251,
+    "sha256": "fda104cce20dff76ad305e906f49f8f1c83e275312099093a7b151e04a226d5e"
+  },
+  {
+    "file": "raw/hindi-pages/0361.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=361",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=361",
+    "retrievedAt": "2026-10-01T17:59:08.064859+00:00",
+    "bytes": 830166,
+    "sha256": "6336a732720d6cc643fd52424fe292de97083c83cbfe91075d6ac130f3c5b596"
+  },
+  {
+    "file": "raw/hindi-pages/0381.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=381",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=381",
+    "retrievedAt": "2026-10-01T17:59:21.145312+00:00",
+    "bytes": 821067,
+    "sha256": "6f32ea356aed93e92eac50720031e7dacb1921094192db85aa42c37e90329569"
+  },
+  {
+    "file": "raw/hindi-pages/0401.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=401",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=401",
+    "retrievedAt": "2026-10-01T17:59:25.613114+00:00",
+    "bytes": 846564,
+    "sha256": "eab365f2a899e06c9efe80ac966e154ee532116156a868305d6a1f510ad3088b"
+  },
+  {
+    "file": "raw/hindi-pages/0421.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=421",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=421",
+    "retrievedAt": "2026-10-01T17:59:40.631124+00:00",
+    "bytes": 838123,
+    "sha256": "024753cdf764e2ab02ed035743818f65fad82761cd5bb323cbb5964d9e4a4d5c"
+  },
+  {
+    "file": "raw/hindi-pages/0441.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=441",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=441",
+    "retrievedAt": "2026-10-01T17:59:55.176437+00:00",
+    "bytes": 823600,
+    "sha256": "81a56e8a64032dcc08889b81b04ba89fac84006089019cd53582adec1b14e471"
+  },
+  {
+    "file": "raw/hindi-pages/0461.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=461",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=461",
+    "retrievedAt": "2026-10-01T18:00:13.355680+00:00",
+    "bytes": 778323,
+    "sha256": "34026aa4d62b21c4ae46908bb09977ae15bbb1239393df72dbd3ece99f15bbb1"
+  },
+  {
+    "file": "raw/hindi-pages/0481.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=481",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=481",
+    "retrievedAt": "2026-10-01T18:00:10.315641+00:00",
+    "bytes": 828559,
+    "sha256": "93ce86982d29195fbc9fb6d717742d599bc6b96bf50df2a1bb8621a6a4decc21"
+  },
+  {
+    "file": "raw/hindi-pages/0501.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=501",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=501",
+    "retrievedAt": "2026-10-01T18:00:33.575560+00:00",
+    "bytes": 827188,
+    "sha256": "c0c50973c593d1a72274591a734f83287a404ae6f295a260deedb6532be3d081"
+  },
+  {
+    "file": "raw/hindi-pages/0521.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=521",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=521",
+    "retrievedAt": "2026-10-01T18:00:33.397459+00:00",
+    "bytes": 840731,
+    "sha256": "ceb5eb2e0b589e8334fbdf9571b3f221708eb0405c520ef61bd6530d7f16bac4"
+  },
+  {
+    "file": "raw/hindi-pages/0541.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=541",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=541",
+    "retrievedAt": "2026-10-01T18:00:58.059649+00:00",
+    "bytes": 843894,
+    "sha256": "8d5f3fb2cdab07615ed70170c1116caf7b34a66bc903de575f18ff5e276c7968"
+  },
+  {
+    "file": "raw/hindi-pages/0561.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=561",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=561",
+    "retrievedAt": "2026-10-01T18:00:55.506371+00:00",
+    "bytes": 843551,
+    "sha256": "e1ad3055063d2433bfd82503da5fb5b82b3465bda28ef6b338e3235a0cfc2aab"
+  },
+  {
+    "file": "raw/hindi-pages/0581.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=581",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=581",
+    "retrievedAt": "2026-10-01T18:01:09.495781+00:00",
+    "bytes": 841089,
+    "sha256": "b71484158da915e8284648bbe1e773f0b892d1ae76149f39c52ba4505e59bf56"
+  },
+  {
+    "file": "raw/hindi-pages/0601.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=601",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=601",
+    "retrievedAt": "2026-10-01T18:01:13.102157+00:00",
+    "bytes": 843831,
+    "sha256": "33f45d11f039fd59a6e2e98dad472c42ce88cccec7ec4e15abb3c51f6a070132"
+  },
+  {
+    "file": "raw/hindi-pages/0621.html",
+    "url": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=621",
+    "resolvedUrl": "https://bharatkosha.org/hi/granth/garuda-puran-gita-press?from=621",
+    "retrievedAt": "2026-10-01T18:01:23.714663+00:00",
+    "bytes": 728105,
+    "sha256": "c8fbc61b9382f82a02d46fbcf5b81ce2f86435ba2c9d047dec18e01e428eb3fd"
+  },
+  {
+    "file": "raw/hindi-scandata.xml",
+    "url": "https://archive.org/download/garuda-puran-gita-press-gorakhpur/Garuda%20Puran%20-%20Gita%20Press%20Gorakhpur_scandata.xml",
+    "resolvedUrl": "https://dn760005.eu.archive.org/0/items/garuda-puran-gita-press-gorakhpur/Garuda%20Puran%20-%20Gita%20Press%20Gorakhpur_scandata.xml",
+    "bytes": 191537,
+    "sha256": "1473c8a051a592867922dcf2278da5764f617b7440f783cf417f39359fe4fd21",
+    "retrievedAt": "2026-10-01T17:55:19.200856+00:00"
+  },
+  {
+    "file": "raw/hindi-sharma-search.json",
+    "url": "https://archive.org/advancedsearch.php?q=title%3A%28garud%29+AND+%28creator%3A%28sharma%29+OR+title%3A%28sharma%29%29&output=json&rows=30&fl%5B%5D=identifier&fl%5B%5D=title",
+    "resolvedUrl": "https://archive.org/advancedsearch.php?q=title%3A%28garud%29+AND+%28creator%3A%28sharma%29+OR+title%3A%28sharma%29%29&output=json&rows=30&fl%5B%5D=identifier&fl%5B%5D=title",
+    "retrievedAt": "2026-10-01T17:58:06.381847+00:00",
+    "bytes": 1313,
+    "sha256": "e127969337c64eaafdf6b900bc1ea098f7feb80c58d9bf7c81971d18345ca2d9"
+  },
+  {
+    "file": "raw/hindi-sharma-vol1-meta.json",
+    "url": "https://archive.org/metadata/PCOv_garud-puran-vol-1-ed-with-simple-translation-by-shri-ram-sharma-acharya-chaman-lal-gautam",
+    "resolvedUrl": "https://archive.org/metadata/PCOv_garud-puran-vol-1-ed-with-simple-translation-by-shri-ram-sharma-acharya-chaman-lal-gautam",
+    "retrievedAt": "2026-10-01T17:58:50.592492+00:00",
+    "bytes": 9385,
+    "sha256": "b4673c108fcf018c8a8baf75abc83a9a9052014908cc3d1dc0e30b4a61c03f20"
+  },
+  {
+    "file": "raw/hindi-sharma-vol2-meta.json",
+    "url": "https://archive.org/metadata/YoAy_garud-puran-vol-2-ed-with-simple-translation-by-shri-ram-sharma-acharya-chaman-lal-gautam",
+    "resolvedUrl": "https://archive.org/metadata/YoAy_garud-puran-vol-2-ed-with-simple-translation-by-shri-ram-sharma-acharya-chaman-lal-gautam",
+    "retrievedAt": "2026-10-01T17:57:56.484030+00:00",
+    "bytes": 9882,
+    "sha256": "e3f6fdde20669c871e7fa642292f79879e3ebad6e7be88a91503aa62129d81ce"
+  },
+  {
+    "file": "raw/purana-index.html",
+    "url": "https://sanskritdocuments.org/sanskrit/purana/",
+    "resolvedUrl": "https://sanskritdocuments.org/sanskrit/purana/",
+    "bytes": 99704,
+    "sha256": "4e2da4b384cad56a30a8b62b199bd4869a539691d79f47354cb4d69fa620a08e",
+    "retrievedAt": "2026-10-01T17:52:09.331546+00:00"
+  },
+  {
+    "file": "raw/sanskritdocuments.html",
+    "url": "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+    "resolvedUrl": "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+    "bytes": 3488008,
+    "sha256": "73b89b652164383c4b45c9a05601ee725cc563ba32b07928dc2b5e27e97d3e69",
+    "retrievedAt": "2026-10-01T17:52:11.554980+00:00"
+  },
+  {
+    "file": "raw/wikisource-chapter62.json",
+    "url": "https://sa.wikisource.org/w/api.php?action=parse&page=%E0%A4%97%E0%A4%B0%E0%A5%81%E0%A4%A1%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D%2F%E0%A4%86%E0%A4%9A%E0%A4%BE%E0%A4%B0%E0%A4%95%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%2F%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83+%E0%A5%AC%E0%A5%A8&prop=wikitext&format=json",
+    "resolvedUrl": "https://sa.wikisource.org/w/api.php?action=parse&page=%E0%A4%97%E0%A4%B0%E0%A5%81%E0%A4%A1%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D%2F%E0%A4%86%E0%A4%9A%E0%A4%BE%E0%A4%B0%E0%A4%95%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%2F%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83+%E0%A5%AC%E0%A5%A8&prop=wikitext&format=json",
+    "retrievedAt": "2026-10-01T18:02:08.407589+00:00",
+    "bytes": 10769,
+    "sha256": "97ea6ab820420bb7082caaee75d317de9970872aa8a3ed620aa287a00e4dab89"
+  }
+]

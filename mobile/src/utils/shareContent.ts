@@ -12,6 +12,8 @@
  * tila-tarpana guide shares that register).
  */
 
+import type { GarudPuranChapter, GarudPuranPage } from '@/data/garud-puran';
+import { garudPuranImages } from '@assets/garud-puran';
 import type { DaanKathaEntry, DaanPrincipleEntry } from '@/data/daan/types';
 import type { KathaContentEntry } from '@/panchang/types';
 import type { TempleEntry } from '@/data/theerth/temples';
@@ -328,3 +330,20 @@ export function askAnswerShareable(answer: {
 
 /** Illustrated kids stories use the same picker, preview, capture and native multi-file hand-off. */
 export { kidsStoryShareable } from './kidsStoryShare';
+
+/** A selected Garud reading stays prose, with its source context on every share. */
+export function garudPuranShareable(chapter: GarudPuranChapter, page: GarudPuranPage): ShareableProse {
+  return {
+    kind: 'prose', sourceId: 'garud-puran', background: garudPuranImages[page.artId],
+    sheetTitle: { hi: 'यह पाठ साझा करें', en: 'Share this reading', gu: 'આ પાઠ શેર કરો', kn: 'ಈ ಪಾಠವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ' },
+    sectionNameHi: 'गरुड़ पुराण — चयनित व्याख्या',
+    sectionNameEn: 'Garud Puran — selected editorial reading',
+    scopes: [{
+      id: page.id, labelHi: 'यह पृष्ठ', labelEn: 'This page',
+      headerHi: `${chapter.source.citeHi} · पृष्ठ ${page.number}`,
+      headerEn: `${chapter.source.citeEn} · Page ${page.number}`,
+      titleHi: page.titleHi, titleEn: page.titleEn,
+      blocks: pairParagraphs(page.bodyHi, page.bodyEn),
+    }],
+  };
+}

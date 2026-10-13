@@ -1,0 +1,102 @@
+{
+  "chapter": 12,
+  "id": "vaitarani",
+  "titleHi": "वैतरणी का वर्णन",
+  "titleEn": "The account of Vaitarani",
+  "kind": "tradition",
+  "artId": "vaitarani",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/598",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/599",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/600",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/601"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "2.47.1",
+      "2.47.2",
+      "2.47.3",
+      "2.47.4",
+      "2.47.5",
+      "2.47.6",
+      "2.47.7",
+      "2.47.24",
+      "2.47.25",
+      "2.47.26",
+      "2.47.27",
+      "2.47.28",
+      "2.47.29",
+      "2.47.30",
+      "2.47.31",
+      "2.47.32",
+      "2.47.33",
+      "2.47.34",
+      "2.47.35",
+      "2.47.36",
+      "2.47.37",
+      "2.47.38",
+      "2.47.39",
+      "2.47.40"
+    ],
+    "sanskritFileSha256": "cd927d44c81f6f16911d891b4eae5e40619dcf02666c75df92f493173a893984",
+    "hindiSourcePages": [
+      598,
+      599,
+      600,
+      601
+    ],
+    "hindiFragmentSha256": "66049bad912ad402026f0937d4815fc16a09ba0b8cba4ebff4fc5fb4b393d747",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Names the river as the text’s afterlife account. The actual source describes a frightening river and a specific cow-gift rite; the art is an explicitly symbolic, nonliteral river plate. No claim that a donation buys safe passage.",
+    "citeHi": "गरुडपुराण · प्रेतकल्प 47 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Preta chapter 47 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "vaitarani-1",
+      "chapter": 12,
+      "number": 1,
+      "titleHi": "यात्रा की कठिन नदी",
+      "titleEn": "A difficult river on the journey",
+      "bodyHi": [
+        "वैतरणी को प्रेतकल्प में यममार्ग की एक कठिन नदी कहा गया है। पुराण उसका भयपूर्ण वर्णन करता है और उसे पापकर्मों के फल से जोड़ता है। यहाँ उस चित्रण के भीषण विवरणों को छोड़कर उसका प्रसंग समझाया गया है।",
+        "इसी अध्याय में वैतरणी-धेनु के दान का विशेष संस्कार आता है। उसके बाद अपने जीवन में स्वयं दान और शुभ कर्म करने की बात कही गई है। परलोक का वर्णन और संस्कार की यह व्यवस्था मूल पाठ की धार्मिक मान्यताएँ हैं।"
+      ],
+      "bodyEn": [
+        "The Preta section describes Vaitarani as a difficult river on the way to Yama’s realm. Its frightening account is connected with the consequences of harmful actions. This reading explains the setting without reproducing the graphic details.",
+        "The same chapter describes a specific rite involving the gift of a cow associated with Vaitarani. It also urges giving and doing good while one is alive. The afterlife account and the rite belong to the religious beliefs expressed by the source."
+      ],
+      "meaningHi": "वैतरणी को प्रेतकल्प में यममार्ग की एक कठिन नदी कहा गया है। पुराण उसका भयपूर्ण वर्णन करता है और उसे पापकर्मों के फल से जोड़ता है। यहाँ उस चित्रण के भीषण विवरणों को छोड़कर उसका प्रसंग समझाया गया है।\n\nइसी अध्याय में वैतरणी-धेनु के दान का विशेष संस्कार आता है। उसके बाद अपने जीवन में स्वयं दान और शुभ कर्म करने की बात कही गई है। परलोक का वर्णन और संस्कार की यह व्यवस्था मूल पाठ की धार्मिक मान्यताएँ हैं।",
+      "meaningEn": "The Preta section describes Vaitarani as a difficult river on the way to Yama’s realm. Its frightening account is connected with the consequences of harmful actions. This reading explains the setting without reproducing the graphic details.\n\nThe same chapter describes a specific rite involving the gift of a cow associated with Vaitarani. It also urges giving and doing good while one is alive. The afterlife account and the rite belong to the religious beliefs expressed by the source.",
+      "artId": "vaitarani"
+    },
+    {
+      "id": "vaitarani-2",
+      "chapter": 12,
+      "number": 2,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "इस अंश से निकाली गई हमारी दैनिक सीख है कि अच्छे काम हमेशा बाद के लिए न छोड़ें। जब सहायता करने की क्षमता और अवसर सामने हो, तब उस पर विचार किया जा सकता है। जीवन सीमित है—यह स्मरण कर्म की ओर लौटा सकता है।",
+        "इसका अर्थ यह नहीं कि कोई भुगतान करके पारलौकिक सुरक्षा खरीदी जा सकती है। चित्र में दिखाई गई नदी केवल सांकेतिक कला है; वह मूल पाठ के हर विवरण का दावा नहीं करती। संस्कार की वास्तविक विधि इस छोटे परिचय का विषय नहीं है।"
+      ],
+      "bodyEn": [
+        "Our everyday reflection is not to postpone every good intention until later. When the ability and opportunity to help are present, they deserve consideration. Remembering that life is limited can bring attention back to action now.",
+        "This does not mean that a payment can purchase guaranteed safety in the afterlife. The accompanying river illustration is symbolic art, not a literal rendering of every detail in the text. The actual ritual procedure lies outside this short introduction."
+      ],
+      "meaningHi": "इस अंश से निकाली गई हमारी दैनिक सीख है कि अच्छे काम हमेशा बाद के लिए न छोड़ें। जब सहायता करने की क्षमता और अवसर सामने हो, तब उस पर विचार किया जा सकता है। जीवन सीमित है—यह स्मरण कर्म की ओर लौटा सकता है।\n\nइसका अर्थ यह नहीं कि कोई भुगतान करके पारलौकिक सुरक्षा खरीदी जा सकती है। चित्र में दिखाई गई नदी केवल सांकेतिक कला है; वह मूल पाठ के हर विवरण का दावा नहीं करती। संस्कार की वास्तविक विधि इस छोटे परिचय का विषय नहीं है।",
+      "meaningEn": "Our everyday reflection is not to postpone every good intention until later. When the ability and opportunity to help are present, they deserve consideration. Remembering that life is limited can bring attention back to action now.\n\nThis does not mean that a payment can purchase guaranteed safety in the afterlife. The accompanying river illustration is symbolic art, not a literal rendering of every detail in the text. The actual ritual procedure lies outside this short introduction.",
+      "artId": "vaitarani"
+    }
+  ]
+}

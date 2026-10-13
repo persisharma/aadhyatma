@@ -72,6 +72,13 @@ export const lightColors = {
   modalBackdrop: 'rgba(47, 30, 16, 0.55)',
   onPrimary: '#FFFFFF',
 
+  // Media letterbox behind the 16:9 YouTube embed. A video stage is black by
+  // convention (not a UI signal), so it sits outside the warm-only chrome rule.
+  videoStage: '#000000',
+  // YouTube's brand red for the small play-mark on the video CTA — an external
+  // brand attribute (like the baked illustration palette), never a UI signal.
+  youtube: '#FF0000',
+
   cardSurface: 'rgba(255, 250, 235, 0.72)',
   cardActiveFrom: '#FFF5E0',
   cardActiveTo: '#F5DEAC',

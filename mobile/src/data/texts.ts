@@ -10,6 +10,8 @@
 // launch-safe by design (see `gita-saar/index.ts` LAUNCH-GRAPH RULE).
 import { gitaSaarTotal, gitaSaarChaptersManifest } from './gita-saar';
 import {
+  garudPuranTotal,
+  garudPuranReadingCount,
   achyutashtakamTotal,
   bajrangBaanTotal,
   bhavaniAshtakamTotal,
@@ -158,6 +160,18 @@ export const library: readonly LibraryEntry[] = [
     deities: ['krishna'],
     verseCount: gitaSaarTotal,
     addedInVersion: '1.4.9',
+  },
+  {
+    id: 'garud-puran',
+    nameHi: 'गरुड़ पुराण',
+    nameEn: 'Garud Puran',
+    sub: `${garudPuranReadingCount} चयनित पाठ · सरल व्याख्या`,
+    subEn: `${garudPuranReadingCount} selected readings · simple explanations`,
+    thumb: 'ग',
+    status: 'active',
+    category: 'granth',
+    deities: ['vishnu'],
+    verseCount: garudPuranTotal,
   },
   {
     id: 'sundarkand',

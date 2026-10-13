@@ -1,0 +1,121 @@
+{
+  "chapter": 4,
+  "id": "liberation",
+  "titleHi": "विवेक, सत्संग और मोक्ष",
+  "titleEn": "Discernment, good company and liberation",
+  "kind": "teaching",
+  "artId": "cover",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/604",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/605",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/606",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/607",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/608",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/609",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/610",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/611",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/612",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/613"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "2.49.1",
+      "2.49.2",
+      "2.49.3",
+      "2.49.4",
+      "2.49.5",
+      "2.49.6",
+      "2.49.7",
+      "2.49.8",
+      "2.49.25",
+      "2.49.26",
+      "2.49.27",
+      "2.49.28",
+      "2.49.29",
+      "2.49.55",
+      "2.49.56",
+      "2.49.57",
+      "2.49.58",
+      "2.49.59",
+      "2.49.82",
+      "2.49.83",
+      "2.49.84",
+      "2.49.85",
+      "2.49.93",
+      "2.49.94",
+      "2.49.95",
+      "2.49.96",
+      "2.49.97",
+      "2.49.98",
+      "2.49.99",
+      "2.49.100",
+      "2.49.101"
+    ],
+    "sanskritFileSha256": "7921ec3f62615741250c17147798d367d6b44707161107a44c388affea12f3fc",
+    "hindiSourcePages": [
+      604,
+      605,
+      606,
+      607,
+      608,
+      609,
+      610,
+      611,
+      612,
+      613
+    ],
+    "hindiFragmentSha256": "8c029f113f0dbfdb6de5768f833e8afe56ba894c17ec685716d7396aa430add0",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Selected liberation teaching, not the entire chapter or a complete account of any school of Vedanta. Satsanga, discernment, knowledge and reduced possessiveness are present in the cited passages.",
+    "citeHi": "गरुडपुराण · प्रेतकल्प 49 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Preta chapter 49 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "liberation-1",
+      "chapter": 4,
+      "number": 1,
+      "titleHi": "गरुड़ का अंतिम प्रश्न",
+      "titleEn": "Garuda asks about freedom",
+      "bodyHi": [
+        "गरुड़ पूछते हैं कि जन्म-मरण और दुःख के चक्र से मुक्ति का उपाय क्या है। उत्तर में जीवन की अनित्यता, आत्मतत्त्व को समझने और मोह से ऊपर उठने की बात आती है। सत्संग और विवेक को सही दिशा देखने में सहायक बताया गया है।",
+        "यह अंश केवल बहुत-सी पुस्तकें पढ़ लेने को पर्याप्त नहीं मानता। समझ के बिना पढ़ना अधूरा रहता है। अनेक शास्त्र और सीमित आयु होने के कारण उनके सार को पहचानने पर बल दिया गया है। ज्ञान का उद्देश्य जीवन को बदलने वाली समझ है।"
+      ],
+      "bodyEn": [
+        "Garuda asks how living beings can find release from the cycle of birth, death and suffering. The reply turns to impermanence, understanding the self and loosening attachment. Good company and discernment are presented as aids to seeing clearly.",
+        "The passage does not treat the accumulation of reading as sufficient in itself. Study without understanding remains incomplete. Since texts are many and life is limited, it urges the reader to discern their essence. Knowledge matters as an understanding that changes the way one lives."
+      ],
+      "meaningHi": "गरुड़ पूछते हैं कि जन्म-मरण और दुःख के चक्र से मुक्ति का उपाय क्या है। उत्तर में जीवन की अनित्यता, आत्मतत्त्व को समझने और मोह से ऊपर उठने की बात आती है। सत्संग और विवेक को सही दिशा देखने में सहायक बताया गया है।\n\nयह अंश केवल बहुत-सी पुस्तकें पढ़ लेने को पर्याप्त नहीं मानता। समझ के बिना पढ़ना अधूरा रहता है। अनेक शास्त्र और सीमित आयु होने के कारण उनके सार को पहचानने पर बल दिया गया है। ज्ञान का उद्देश्य जीवन को बदलने वाली समझ है।",
+      "meaningEn": "Garuda asks how living beings can find release from the cycle of birth, death and suffering. The reply turns to impermanence, understanding the self and loosening attachment. Good company and discernment are presented as aids to seeing clearly.\n\nThe passage does not treat the accumulation of reading as sufficient in itself. Study without understanding remains incomplete. Since texts are many and life is limited, it urges the reader to discern their essence. Knowledge matters as an understanding that changes the way one lives.",
+      "artId": "cover"
+    },
+    {
+      "id": "liberation-2",
+      "chapter": 4,
+      "number": 2,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "मोह छोड़ने का आशय इस चयन में जिम्मेदारियाँ छोड़ देना नहीं है। अपने विचार में “सब कुछ मेरा ही है” की पकड़ को पहचानना और उसे ढीला करना एक उपयोगी अर्थ है। मूल प्रसंग ममता और मुक्ति के सम्बन्ध पर विचार करता है।",
+        "ऐसा साथ चुनना जो प्रश्न पूछने, सीखने और ईमानदारी से जीने में मदद करे, इस शिक्षा का दैनिक उपयोग हो सकता है। शांत होकर पढ़ना, समझना और अपने व्यवहार पर लौटना—यह हमारी संपादकीय दिशा है; कोई तत्काल मोक्ष का वादा नहीं।"
+      ],
+      "bodyEn": [
+        "For this reading, loosening attachment is not an invitation to abandon responsibilities. A useful reflection is to notice the grip of “everything must be mine” and examine it. The source itself connects possessiveness with bondage and knowledge with freedom.",
+        "Choosing company that supports learning, honest questions and thoughtful conduct is one way to apply the teaching. Reading quietly, understanding what is read and returning to one’s own behaviour form our editorial suggestion. This is not a promise of instant liberation."
+      ],
+      "meaningHi": "मोह छोड़ने का आशय इस चयन में जिम्मेदारियाँ छोड़ देना नहीं है। अपने विचार में “सब कुछ मेरा ही है” की पकड़ को पहचानना और उसे ढीला करना एक उपयोगी अर्थ है। मूल प्रसंग ममता और मुक्ति के सम्बन्ध पर विचार करता है।\n\nऐसा साथ चुनना जो प्रश्न पूछने, सीखने और ईमानदारी से जीने में मदद करे, इस शिक्षा का दैनिक उपयोग हो सकता है। शांत होकर पढ़ना, समझना और अपने व्यवहार पर लौटना—यह हमारी संपादकीय दिशा है; कोई तत्काल मोक्ष का वादा नहीं।",
+      "meaningEn": "For this reading, loosening attachment is not an invitation to abandon responsibilities. A useful reflection is to notice the grip of “everything must be mine” and examine it. The source itself connects possessiveness with bondage and knowledge with freedom.\n\nChoosing company that supports learning, honest questions and thoughtful conduct is one way to apply the teaching. Reading quietly, understanding what is read and returning to one’s own behaviour form our editorial suggestion. This is not a promise of instant liberation.",
+      "artId": "cover"
+    }
+  ]
+}

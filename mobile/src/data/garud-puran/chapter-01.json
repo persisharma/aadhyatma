@@ -1,0 +1,85 @@
+{
+  "chapter": 1,
+  "id": "karma",
+  "titleHi": "कर्म और उसके फल",
+  "titleEn": "Karma and its consequences",
+  "kind": "teaching",
+  "artId": "cover",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/596",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/597",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/598"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "2.46.1",
+      "2.46.2",
+      "2.46.3",
+      "2.46.4",
+      "2.46.5",
+      "2.46.6",
+      "2.46.7",
+      "2.46.8",
+      "2.46.9"
+    ],
+    "sanskritFileSha256": "d26999a1380c40d48073e39d81931ccf3f3107eccfdc7d34fa48b8501ae59f8d",
+    "hindiSourcePages": [
+      596,
+      597,
+      598
+    ],
+    "hindiFragmentSha256": "a566ee1505ab75fa706926a6d71b8f0332a819ab0f1059f9a583e60d95bef748",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Limited to truthfulness, forgiveness, conduct and accountability. Omits the chapter’s later disease, bodily-mark and birth-status claims; this is explicitly a selection. Present-day reflection is editorial, not a verse translation.",
+    "citeHi": "गरुडपुराण · प्रेतकल्प 46 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Preta chapter 46 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "karma-1",
+      "chapter": 1,
+      "number": 1,
+      "titleHi": "कर्म का प्रश्न",
+      "titleEn": "The question of conduct",
+      "bodyHi": [
+        "गरुड़ भगवान से पूछते हैं कि अच्छे और बुरे कर्मों का फल कैसे मिलता है। इस संवाद में सत्य, धर्म और क्षमा को महत्त्व दिया गया है। मनुष्य का आचरण केवल उसी क्षण समाप्त नहीं हो जाता; पुराण उसे आगे की गति से भी जोड़ता है।",
+        "इस प्रसंग में यम उस उत्तरदायित्व को सामने लाते हैं जिसे संसार की नज़र से छिपाया जा सकता है, पर अपने कर्म से मिटाया नहीं जा सकता। यह पुराण की धार्मिक दृष्टि है। यहाँ हमने उसके सत्य और आचरण से जुड़े अंश चुने हैं।"
+      ],
+      "bodyEn": [
+        "Garuda asks how good and harmful actions bear fruit. The passage honours truthfulness, right conduct and forgiveness. In the Purana’s religious account, an action does not end with the moment in which it is done; it also shapes the person’s onward journey.",
+        "Yama represents accountability for conduct that may escape the notice of other people. The reading here selects the passage’s emphasis on truth and responsibility. It presents the Purana’s teaching, rather than a claim that every event in someone’s life has an identifiable moral cause."
+      ],
+      "meaningHi": "गरुड़ भगवान से पूछते हैं कि अच्छे और बुरे कर्मों का फल कैसे मिलता है। इस संवाद में सत्य, धर्म और क्षमा को महत्त्व दिया गया है। मनुष्य का आचरण केवल उसी क्षण समाप्त नहीं हो जाता; पुराण उसे आगे की गति से भी जोड़ता है।\n\nइस प्रसंग में यम उस उत्तरदायित्व को सामने लाते हैं जिसे संसार की नज़र से छिपाया जा सकता है, पर अपने कर्म से मिटाया नहीं जा सकता। यह पुराण की धार्मिक दृष्टि है। यहाँ हमने उसके सत्य और आचरण से जुड़े अंश चुने हैं।",
+      "meaningEn": "Garuda asks how good and harmful actions bear fruit. The passage honours truthfulness, right conduct and forgiveness. In the Purana’s religious account, an action does not end with the moment in which it is done; it also shapes the person’s onward journey.\n\nYama represents accountability for conduct that may escape the notice of other people. The reading here selects the passage’s emphasis on truth and responsibility. It presents the Purana’s teaching, rather than a claim that every event in someone’s life has an identifiable moral cause.",
+      "artId": "cover"
+    },
+    {
+      "id": "karma-2",
+      "chapter": 1,
+      "number": 2,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "इस शिक्षा को अपने व्यवहार की ओर मोड़कर पढ़ें। क्रोध आने पर रुकना, अपनी गलती स्वीकार करना और किसी के साथ किया अन्याय सुधारना—ये इसके आज के जीवन में उपयोग के उदाहरण हैं। ये उदाहरण हमारी संपादकीय व्याख्या हैं।",
+        "किसी दूसरे के रोग, गरीबी या दुःख को देखकर उसके कर्मों का फैसला करना इस चयन का उद्देश्य नहीं है। इसके स्थान पर प्रश्न है: मेरे आज के शब्द और काम क्या किसी का भरोसा बढ़ा रहे हैं, या उसे चोट पहुँचा रहे हैं?"
+      ],
+      "bodyEn": [
+        "A useful way to reflect on this teaching is to examine our own behaviour. Pausing before speaking in anger, acknowledging a mistake and repairing an injury are present-day applications. These examples are editorial reflections, not quotations from the text.",
+        "This selection is not a basis for judging a person’s illness, poverty or suffering as deserved. Its practical question is closer to home: do my words and actions build trust, or do they cause harm? Responsibility begins with the choices that are actually mine."
+      ],
+      "meaningHi": "इस शिक्षा को अपने व्यवहार की ओर मोड़कर पढ़ें। क्रोध आने पर रुकना, अपनी गलती स्वीकार करना और किसी के साथ किया अन्याय सुधारना—ये इसके आज के जीवन में उपयोग के उदाहरण हैं। ये उदाहरण हमारी संपादकीय व्याख्या हैं।\n\nकिसी दूसरे के रोग, गरीबी या दुःख को देखकर उसके कर्मों का फैसला करना इस चयन का उद्देश्य नहीं है। इसके स्थान पर प्रश्न है: मेरे आज के शब्द और काम क्या किसी का भरोसा बढ़ा रहे हैं, या उसे चोट पहुँचा रहे हैं?",
+      "meaningEn": "A useful way to reflect on this teaching is to examine our own behaviour. Pausing before speaking in anger, acknowledging a mistake and repairing an injury are present-day applications. These examples are editorial reflections, not quotations from the text.\n\nThis selection is not a basis for judging a person’s illness, poverty or suffering as deserved. Its practical question is closer to home: do my words and actions build trust, or do they cause harm? Responsibility begins with the choices that are actually mine.",
+      "artId": "cover"
+    }
+  ]
+}

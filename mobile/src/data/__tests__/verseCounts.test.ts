@@ -1,3 +1,4 @@
+import { garudPuranTotal, garudPuranReadingCount } from '../garud-puran';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
@@ -57,6 +58,8 @@ test('every generated verse count still matches its corpus', () => {
   ['ganeshStotramTotal', ganeshStotramTotal, generated.ganeshStotramTotal],
   ['ganeshaKavachamTotal', ganeshaKavachamTotal, generated.ganeshaKavachamTotal],
   ['gangashtakamTotal', gangashtakamTotal, generated.gangashtakamTotal],
+  ['garudPuranTotal', garudPuranTotal, generated.garudPuranTotal],
+  ['garudPuranReadingCount', garudPuranReadingCount, generated.garudPuranReadingCount],
   ['gayatriChalisaCounts', gayatriChalisaCounts, generated.gayatriChalisaCounts],
   ['hanumanAshtakTotal', hanumanAshtakTotal, generated.hanumanAshtakTotal],
   ['hanumanChalisaTotal', hanumanChalisaTotal, generated.hanumanChalisaTotal],
@@ -120,6 +123,8 @@ test('verseCounts exports exactly what texts.ts needs, and nothing stale', () =>
   ['ganeshStotramTotal', ganeshStotramTotal, generated.ganeshStotramTotal],
   ['ganeshaKavachamTotal', ganeshaKavachamTotal, generated.ganeshaKavachamTotal],
   ['gangashtakamTotal', gangashtakamTotal, generated.gangashtakamTotal],
+  ['garudPuranTotal', garudPuranTotal, generated.garudPuranTotal],
+  ['garudPuranReadingCount', garudPuranReadingCount, generated.garudPuranReadingCount],
   ['gayatriChalisaCounts', gayatriChalisaCounts, generated.gayatriChalisaCounts],
   ['hanumanAshtakTotal', hanumanAshtakTotal, generated.hanumanAshtakTotal],
   ['hanumanChalisaTotal', hanumanChalisaTotal, generated.hanumanChalisaTotal],

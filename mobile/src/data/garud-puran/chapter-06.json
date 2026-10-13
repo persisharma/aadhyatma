@@ -1,0 +1,148 @@
+{
+  "chapter": 6,
+  "id": "five-pretas",
+  "titleHi": "ब्राह्मण और पाँच प्रेत",
+  "titleEn": "The Brahmin and the five pretas",
+  "kind": "story",
+  "artId": "five-pretas",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/500",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/501",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/502",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/503",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/504",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/505"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "2.7.1",
+      "2.7.2",
+      "2.7.3",
+      "2.7.4",
+      "2.7.5",
+      "2.7.6",
+      "2.7.7",
+      "2.7.23",
+      "2.7.24",
+      "2.7.25",
+      "2.7.26",
+      "2.7.27",
+      "2.7.28",
+      "2.7.29",
+      "2.7.30",
+      "2.7.43",
+      "2.7.44",
+      "2.7.45",
+      "2.7.46",
+      "2.7.47",
+      "2.7.48",
+      "2.7.49",
+      "2.7.50",
+      "2.7.51",
+      "2.7.52",
+      "2.7.53",
+      "2.7.54",
+      "2.7.55",
+      "2.7.56",
+      "2.7.57",
+      "2.7.58",
+      "2.7.59",
+      "2.7.60",
+      "2.7.61",
+      "2.7.62",
+      "2.7.63",
+      "2.7.64",
+      "2.7.65",
+      "2.7.66",
+      "2.7.67",
+      "2.7.95",
+      "2.7.96",
+      "2.7.97",
+      "2.7.98",
+      "2.7.99",
+      "2.7.100",
+      "2.7.101",
+      "2.7.102"
+    ],
+    "sanskritFileSha256": "5fae8130d900fdbd9762948e7e506588580acffea67ddd3c53827b5c99cbffd9",
+    "hindiSourcePages": [
+      500,
+      501,
+      502,
+      503,
+      504,
+      505
+    ],
+    "hindiFragmentSha256": "ed2ca37bfcaa9eb069780d3f83c335251a720efd2f1bb56be37ca43cf299ff1d",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Santaptaka spelling follows Sanskrit 2.7.2–3 and the Hindi body, not the OCR contents typo. The Sanskrit ending distinguishes the pretas’ heaven from the Brahmin’s Vishnu-world destination; the summary says release without merging them. Violent details are omitted.",
+    "citeHi": "गरुडपुराण · प्रेतकल्प 7 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Preta chapter 7 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "five-pretas-1",
+      "chapter": 6,
+      "number": 1,
+      "titleHi": "भय से संवाद तक",
+      "titleEn": "From fear to conversation",
+      "bodyHi": [
+        "संतप्तक नाम के एक ब्राह्मण तीर्थयात्रा करते हुए वन में मार्ग भूल गए। वहाँ उनका सामना पाँच प्रेतों से हुआ। आरम्भ में परिस्थिति भयपूर्ण थी। उन्होंने मन से भगवान का स्मरण किया और सहायता की प्रार्थना की।",
+        "कथा में भगवान की उपस्थिति और कृपा से स्थिति बदलती है। आगे ब्राह्मण और प्रेतों के बीच बातचीत होती है। प्रेत पहले के कठोर व्यवहार से हटकर विनम्र होते हैं और अपने पूर्व जीवन की बातें बताने लगते हैं।"
+      ],
+      "bodyEn": [
+        "A Brahmin named Santaptaka lost his way in a forest while travelling on pilgrimage. He encountered five pretas, or departed spirits, in a frightening situation. He remembered the Lord inwardly and prayed for help.",
+        "In the story, the Lord’s presence and grace change the course of the encounter. A conversation follows between the Brahmin and the spirits. Their earlier hostility gives way to humility, and they begin to speak about their previous lives."
+      ],
+      "meaningHi": "संतप्तक नाम के एक ब्राह्मण तीर्थयात्रा करते हुए वन में मार्ग भूल गए। वहाँ उनका सामना पाँच प्रेतों से हुआ। आरम्भ में परिस्थिति भयपूर्ण थी। उन्होंने मन से भगवान का स्मरण किया और सहायता की प्रार्थना की।\n\nकथा में भगवान की उपस्थिति और कृपा से स्थिति बदलती है। आगे ब्राह्मण और प्रेतों के बीच बातचीत होती है। प्रेत पहले के कठोर व्यवहार से हटकर विनम्र होते हैं और अपने पूर्व जीवन की बातें बताने लगते हैं।",
+      "meaningEn": "A Brahmin named Santaptaka lost his way in a forest while travelling on pilgrimage. He encountered five pretas, or departed spirits, in a frightening situation. He remembered the Lord inwardly and prayed for help.\n\nIn the story, the Lord’s presence and grace change the course of the encounter. A conversation follows between the Brahmin and the spirits. Their earlier hostility gives way to humility, and they begin to speak about their previous lives.",
+      "artId": "five-pretas"
+    },
+    {
+      "id": "five-pretas-2",
+      "chapter": 6,
+      "number": 2,
+      "titleHi": "अपने कर्मों को पहचानना",
+      "titleEn": "Recognising their actions",
+      "bodyHi": [
+        "पाँचों अपने आचरण के अलग-अलग प्रसंग बताते हैं। इनमें अतिथि का अपमान, प्यासे के प्रति क्रूरता, विश्वासघात और लोभ जैसे कर्म आते हैं। उनकी बातों में यह स्वीकार होता है कि उन्होंने दूसरों को कष्ट पहुँचाया था।",
+        "अंत में भगवान प्रकट होते हैं। यह कथा सत्संग और भगवत्कृपा से मुक्ति का वर्णन करती है। हमने उसके हिंसक विवरणों को छोड़कर संवाद, अपने कर्मों की पहचान और उद्धार के प्रसंग को चुना है।"
+      ],
+      "bodyEn": [
+        "The five spirits describe different episodes from their lives. Their accounts include insulting a guest, cruelty towards someone who was thirsty, betrayal and greed. They acknowledge actions through which they caused suffering to others.",
+        "The Lord reveals himself at the close of the episode. The story attributes release to good company and divine grace. This selection leaves out the graphic violence and focuses on the conversation, recognition of harmful conduct and the account of release."
+      ],
+      "meaningHi": "पाँचों अपने आचरण के अलग-अलग प्रसंग बताते हैं। इनमें अतिथि का अपमान, प्यासे के प्रति क्रूरता, विश्वासघात और लोभ जैसे कर्म आते हैं। उनकी बातों में यह स्वीकार होता है कि उन्होंने दूसरों को कष्ट पहुँचाया था।\n\nअंत में भगवान प्रकट होते हैं। यह कथा सत्संग और भगवत्कृपा से मुक्ति का वर्णन करती है। हमने उसके हिंसक विवरणों को छोड़कर संवाद, अपने कर्मों की पहचान और उद्धार के प्रसंग को चुना है।",
+      "meaningEn": "The five spirits describe different episodes from their lives. Their accounts include insulting a guest, cruelty towards someone who was thirsty, betrayal and greed. They acknowledge actions through which they caused suffering to others.\n\nThe Lord reveals himself at the close of the episode. The story attributes release to good company and divine grace. This selection leaves out the graphic violence and focuses on the conversation, recognition of harmful conduct and the account of release.",
+      "artId": "five-pretas"
+    },
+    {
+      "id": "five-pretas-3",
+      "chapter": 6,
+      "number": 3,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "गलती स्वीकार करना और उसके कारण हुए दुःख को समझना परिवर्तन की शुरुआत हो सकती है। किसी की सहायता, किसी विश्वसनीय व्यक्ति का साथ और अपने भीतर ईमानदारी—इन पर विचार करने का अवसर यह कथा देती है।",
+        "पुराण में उद्धार का आधार सत्संग और भगवान की कृपा है। आधुनिक जीवन में क्षमा माँगना या हानि की भरपाई करना हमारी व्याख्या के उदाहरण हैं। इन्हें मूल कथा का छूटा हुआ संवाद या किसी निश्चित फल की गारंटी न समझें।"
+      ],
+      "bodyEn": [
+        "Acknowledging wrongdoing and understanding the suffering it caused can be a beginning of change. The story offers room to reflect on honest self-examination and the help that can come through trustworthy company.",
+        "In the Purana, release is attributed to good company and the Lord’s grace. Apologising or repairing harm are examples in our present-day interpretation. They are not additional dialogue from the story, nor a guarantee of a particular spiritual outcome."
+      ],
+      "meaningHi": "गलती स्वीकार करना और उसके कारण हुए दुःख को समझना परिवर्तन की शुरुआत हो सकती है। किसी की सहायता, किसी विश्वसनीय व्यक्ति का साथ और अपने भीतर ईमानदारी—इन पर विचार करने का अवसर यह कथा देती है।\n\nपुराण में उद्धार का आधार सत्संग और भगवान की कृपा है। आधुनिक जीवन में क्षमा माँगना या हानि की भरपाई करना हमारी व्याख्या के उदाहरण हैं। इन्हें मूल कथा का छूटा हुआ संवाद या किसी निश्चित फल की गारंटी न समझें।",
+      "meaningEn": "Acknowledging wrongdoing and understanding the suffering it caused can be a beginning of change. The story offers room to reflect on honest self-examination and the help that can come through trustworthy company.\n\nIn the Purana, release is attributed to good company and the Lord’s grace. Apologising or repairing harm are examples in our present-day interpretation. They are not additional dialogue from the story, nor a guarantee of a particular spiritual outcome.",
+      "artId": "five-pretas"
+    }
+  ]
+}

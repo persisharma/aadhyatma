@@ -8,6 +8,11 @@ export function formatLocation(progress: ReadingProgress): { hi: string; en: str
     case 'durga-chalisa':
     case 'ganesh-chalisa':
       return { hi: `पद ${verseNum}`, en: `Verse ${verseNum}` };
+    case 'garud-puran':
+      return {
+        hi: `पाठ ${progress.chapter} · पृष्ठ ${verseNum}`,
+        en: `Reading ${progress.chapter} · Page ${verseNum}`,
+      };
     case 'bhagavad-gita':
       return {
         hi: `अध्याय ${progress.chapter} · श्लोक ${verseNum}`,

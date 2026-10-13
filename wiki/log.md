@@ -845,6 +845,26 @@ and main-push path filters, so the saved prompt and style guide receive the exis
 test/export/CDN gate. The prompt links to the committed approved WebP and distinguishes the
 local master/personal Codex template from repository files. No app code or asset changes.
 
+## [2026-10-01] ingest | Garud Puran source acquisition only
+
+Recorded the collector and source inventory in `subsystems/readers.md`. Research data remains in ignored `tmp/garud-puran/`; no mobile integration. Edition boundaries, missing/duplicate source references, noisy OCR, translation alignment and reuse-review gaps remain explicit.
+
+## [2026-10-12] ingest | Garud Puran selected-source handoff
+
+User narrowed reading scope to important sections and stories. Gathered 12 heading-bounded Hindi research extracts, including four stories, with source page hashes and explicit draft status. Added curated-selection.json and select-garud-puran.py; local selected-source ZIP is separate from the full collection. Contents page numbers disagree with actual body headings. English Saroddhara references are topic pointers only; concise bilingual readings and independent verification remain pending. No app integration.
+
+## [2026-10-12] ingest | Garud Puran selected-reading integration
+
+Added twelve source-compared Hindi/English editorial readings, 28 pages and nine interpretive illustrations under the user's subsequent integration authorisation. Registered the chapter index and reader across library, search, routine and entry routes; preserved common bookmark/share/progress/narration behaviour. Documented RULEBOOK §31 and design §81, source comparison hashes, artwork mapping and a regenerable preview. Full-corpus acquisition remains separate and unverified. See docs/content/garud-puran/INTEGRATION.md for test/device evidence and limitations.
+
+## [2026-10-12] ingest | Align Garud Puran with current reader art
+
+Compared PR #253 and current-main #429/#434/#449 after user rejected the older checkout’s portrait layout. Re-composed nine complete landscape scenes with approved style references; adopted quiet paper, compact leaf divider, contained 2:1 images and non-overlapping page markers. Content and source verification unchanged. Scoped current-main dependency/paragraph compatibility copied; no whole-branch merge or publication. See Garud design-review evidence.
+
+## [2026-10-12] ingest | Approved Garud Puran Style 3 integration and main reconciliation
+
+User approved all nine final banners and requested a verified PR. Merged main while retaining shared reader components, lazy navigation, cooperative search and both wiki histories. Activated the approved local assets, corrected page/resume vocabulary and adopted prose sharing. Asset hashes, source boundaries and final verification are in the Garud integration review.
+
 ## [2026-10-13] ingest | Bilingual comic speaker pointers
 
 Recorded explicit painted-frame speaker anchors for all 31 dialogue panels, build-time coverage validation, and the distinction between geometric containment and correct speaker attribution. Local browser checks cover all 140 panels at four widths in Hindi/English and Standard/Large; native/editorial checks remain pending. See [[decisions/ramayan-comic-character-continuity]].
