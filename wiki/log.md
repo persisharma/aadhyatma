@@ -868,3 +868,7 @@ User approved all nine final banners and requested a verified PR. Merged main wh
 ## [2026-10-13] ingest | Share sheet: Send as text + card-language chips
 
 Added a no-image `Send as text` row (verse lines + meaning, or the selected prose pages rejoined across page breaks, plus the caption link lines) and hi/en/gu/kn card-language chips that re-language the card, caption, hashtags and text without changing the sheet chrome. OTA-only; no native module. Updated [[share]], design.md §39.1/§39.6/§39.7 and the share-target Maestro flow (not run — no simulator).
+
+## [2026-10-13] ingest | More → Share the App invite copy refreshed
+
+Rewrote `APP_SHARE_INVITE` (hi/en/gu/kn) from five launch-era bullets to seven covering shipped surfaces: Ramayan, kids' stories, vrat katha/puja vidhi/tirth, Ask Vedansh. Store-gated Vastu and widgets deliberately omitted. design.md §37 synced; `shareLinks.test.ts` pins seven bullets per language and the link line.
