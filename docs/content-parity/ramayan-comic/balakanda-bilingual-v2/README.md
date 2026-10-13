@@ -1,6 +1,6 @@
 # Bālakāṇḍa — bilingual comic review edition
 
-29 complete episode sequences, 140 illustrated panels, Hindi and English. This expands the user-accepted `lettering-pilot-v1/fitted.html` layout across the existing Bālakāṇḍa draft. It does not generate the other six kāṇḍas or publish a mobile story.
+29 complete episode sequences, 140 illustrated panels, Hindi and English. This expands the user-accepted `lettering-pilot-v1/fitted.html` layout across the existing Bālakāṇḍa draft. It does not generate the other six kāṇḍas. The native app integration now consumes this exact edition; see [native-integration-review.md](native-integration-review.md).
 
 ## Open
 
@@ -38,4 +38,4 @@ Every dialogue panel has a visually reviewed speaker position in `speaker-anchor
 
 The original 137 panels remain in sequence; the approved Dasharatha close-up, post-Tataka night rest and hermitage-question bridge add three. Tataka’s former ambiguous final scene is replaced, not retained as a second outcome.
 
-**Not a production release:** independent Sanskrit/Hindi/English editorial approval, Gujarati/Kannada full narratives, rights clearance, native Standard/Large sequence review, production art/frame registration and CDN/offline delivery remain pending. No mobile registry, production manifest or CDN upload changed.
+**Release boundary:** the 2026-10-13 native integration adds the app book/frames and immutable CDN artwork without changing this authoring preview. Independent Sanskrit/Hindi/English editorial approval, Gujarati/Kannada full narratives, rights clearance and complete native sequence review remain separate gates. See the native review for executed checks and first-download limitations; no OTA/store release is implied.

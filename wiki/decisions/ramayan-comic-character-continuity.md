@@ -2,14 +2,14 @@
 title: Ramayan comic character continuity
 type: decision
 sources: [docs/content-parity/ramayan-comic/README.md, docs/content-parity/ramayan-comic/character-bible.md, docs/content-parity/ramayan-comic/appearance-timeline.json, docs/content-parity/ramayan-comic/source-manifest.json, docs/content-parity/ramayan-comic/asset-review.json, docs/content-parity/ramayan-comic/balakanda-v1/README.md, docs/content-parity/ramayan-comic/balakanda-v1/book.json, docs/content-parity/ramayan-comic/balakanda-v1/asset-review.json, RULEBOOK.md]
-last_verified_date: 2026-10-12
+last_verified_date: 2026-10-13
 confidence: high
 status: needs-review
 ---
 
 ## Summary
 
-The user selected an inked comic direction with richer colour and the supplied seven-kāṇḍa shelf, then accepted the refined character look and comic previews. The character reference book in `docs/content-parity/ramayan-comic/` supplies six visually reviewed model sheets covering 19 principal identities, plus an event-based appearance timeline. The current local Hindi/English Bālakāṇḍa review edition lives in `balakanda-bilingual-v2/` (29 episodes, 140 panels), expanding the accepted fitted pilot. The original Hindi draft remains in `balakanda-v1/`; no native Ramayan comic story is activated.
+The user selected an inked comic direction with richer colour and the supplied seven-kāṇḍa shelf, then accepted the refined character look and comic previews. The character reference book in `docs/content-parity/ramayan-comic/` supplies six visually reviewed model sheets covering 19 principal identities, plus an event-based appearance timeline. The current local Hindi/English Bālakāṇḍa review edition lives in `balakanda-bilingual-v2/` (29 episodes, 140 panels), expanding the accepted fitted pilot. The original Hindi draft remains in `balakanda-v1/`; the current branch now integrates the reviewed bilingual edition with native comic shelf/reader screens (deployment remains separate).
 
 ## Details
 
@@ -66,3 +66,11 @@ The explicit Tataka fall/death and added night rest precede the next-morning wea
 All 29 paired episode sequences were visually reviewed; every panel has a manually authored pacing/art note, source reference, neighbours and exact bilingual text hash in `pacing-review.json`. `browser-validation.json` records 1,120 panel states (140 × two languages × two sizes × two widths), all images loaded, no clipped text/line clamp/horizontal overflow, and protected art/tail bounds. Dense narrow Large examples and the approved close-up fallback were visually inspected. `art-review.json` and `art-prompts.json` retain new-asset selection and provenance; `asset-manifest.json` validates actual PNG dimensions, hashes and authoring frames.
 
 These checks are agent/browser evidence, not independent editorial or native certification. Gujarati/Kannada full narratives, independent source/translation review, rights, whole-edition acceptance, mobile registration, native Standard/Large and CDN/offline delivery remain pending. The mobile frame registry is deliberately unchanged because no native story consumes these authoring assets. The other six kāṇḍas are not part of this expansion.
+
+## Native reader integration — 2026-10-13
+
+The user rejected the hosted website UI inside the app and explicitly selected the corrected 140-panel edition. `ComicChaptersScreen` now lists native episode cards; `ComicReaderScreen` uses shared reader chrome, language context, global reading-size tokens and swipe paging. The old catalog id is retained, but its HTML URL and WebView are removed. Source/full-art/review links, website footer and independent reader controls are not rendered in the app.
+
+`mobile/scripts/sync-comic-book.mjs` preserves every reviewed bilingual caption, art frame and speaker anchor in the lazy native book. `ComicPanel` ports the ink-bordered narration and natural-height SVG speech geometry; the approved side balloon falls back to flow when measured copy no longer fits. `comicAssetManifest.json` resolves 35 byte-identical reviewed PNGs through immutable CDN keys and the existing persistent cache. PNGs are retained to preserve the approved pixels; no story images are bundled. The standalone preview remains an authoring/review surface.
+
+Gujarati/Kannada narratives remain pending. Those app locales show an explicit English-fallback notice, without changing the user's global language. `native-integration-review.md` in the bilingual-v2 package records the integration evidence and native/editorial limits. This supersedes the earlier WebView implementation and the earlier statement that mobile registration was unchanged; it does not imply an OTA or store release.

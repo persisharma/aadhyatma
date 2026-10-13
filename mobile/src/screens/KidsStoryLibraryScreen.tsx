@@ -57,7 +57,7 @@ export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreen
               gu: '29 પ્રસંગ · સચિત્ર',
               kn: '29 ಪ್ರಸಂಗಗಳು · ಚಿತ್ರಸಹಿತ',
             })}
-            onPress={() => navigation.navigate('ComicReader', { comicId: comic.id })}
+            onPress={() => navigation.navigate('ComicChapters', { comicId: comic.id })}
           />
         ))}
       </ScrollView>

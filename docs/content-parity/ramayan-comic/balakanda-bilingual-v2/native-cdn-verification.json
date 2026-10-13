@@ -1,0 +1,217 @@
+{
+  "checkedAt": "2026-10-13T05:13:41.304Z",
+  "assets": 35,
+  "panels": 140,
+  "cdn": [
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/e7d0e879c6fa9245.png",
+      "bytes": 3204145,
+      "sha256": "e7d0e879c6fa92455a09716b360e4230777631ac481c4cb07f41a02f4f3ab10c",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/5f5dda931fc9fe70.png",
+      "bytes": 3293538,
+      "sha256": "5f5dda931fc9fe70782b1e7751c7ce5e933e5345e00702b0a3db9f38cc179bea",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/7ae23b30248f8b30.png",
+      "bytes": 3364230,
+      "sha256": "7ae23b30248f8b30ddb729eef7b17ed5adbb7116ee7ffcebabb21c1c3140295e",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/7fd51d0e007f7da3.png",
+      "bytes": 3274537,
+      "sha256": "7fd51d0e007f7da31d6172636a67c91e9c636d533c44cab54d2745be3f2baba4",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/b7aaf018a7206fbf.png",
+      "bytes": 3034360,
+      "sha256": "b7aaf018a7206fbf48f052e86f4a2d216065f2a65620ee971a6125b6d8cecd4d",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/e9b6578a638ab04b.png",
+      "bytes": 2963963,
+      "sha256": "e9b6578a638ab04bb7723b9e18ceb6eeb440901a4812bf0ca039b763147547be",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/a9dd440506ff75b8.png",
+      "bytes": 2838826,
+      "sha256": "a9dd440506ff75b827b1e509fb4a90f7456ec010c5b702d4e1ec5f125427bd17",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/46cccdf45d6777aa.png",
+      "bytes": 2588956,
+      "sha256": "46cccdf45d6777aa30173e3554bc0bba732b339d5991116f68beed6f88436fa4",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/4936827efa2e3c82.png",
+      "bytes": 3255712,
+      "sha256": "4936827efa2e3c82123deb02399f00a9da1d724550b1e0fd066f36c908a51e53",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/9e1d44e1b0d31b50.png",
+      "bytes": 3330272,
+      "sha256": "9e1d44e1b0d31b50d5f761dc3f604ec67df0f858737dec39ec34c9b0ab0b0834",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/0afde018ef1c9b6c.png",
+      "bytes": 3511799,
+      "sha256": "0afde018ef1c9b6ce11b8d2b4b044a37415a131093e34c25aaf1d0dda658f9d7",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/4a54a39580dba8aa.png",
+      "bytes": 3234916,
+      "sha256": "4a54a39580dba8aad61dff88656db9978789acfe21df82ed7adc86f4e9dbcd67",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/52b196da11ee2ee7.png",
+      "bytes": 3144417,
+      "sha256": "52b196da11ee2ee793dd5a54ed980eb8967e5e9b335583d3f1f6847f7cacaf6e",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/9c8f47ffd4fcc7cd.png",
+      "bytes": 3328059,
+      "sha256": "9c8f47ffd4fcc7cdf470b495caec30754c2ffcdfe3c131f38bf8af216293d5a3",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/016e601d0be516c0.png",
+      "bytes": 3283724,
+      "sha256": "016e601d0be516c05618286f1350bebb0d078c4077b1e93f791d0173271c13bb",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/b671aaf5789a02bc.png",
+      "bytes": 3059772,
+      "sha256": "b671aaf5789a02bceb35b168af7ff1fd87c9c23e1ce76855568f655dfdd8037c",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/87cbad97634c8fad.png",
+      "bytes": 3591969,
+      "sha256": "87cbad97634c8fadaa0feb3f0abc0beaf3cffbbac4a97e5663e115a58238447b",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/22b793d11dfb0091.png",
+      "bytes": 3271453,
+      "sha256": "22b793d11dfb00918191c30e4737900b7bce03416b818bfd8061b71e0936e2a8",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/89e1d0e157ea8c55.png",
+      "bytes": 3495478,
+      "sha256": "89e1d0e157ea8c55c06b038eb70d51b569bcaeaaa1ede325ee17bdd4b5884dbe",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/c0f2103a3e6752c5.png",
+      "bytes": 3802687,
+      "sha256": "c0f2103a3e6752c50c24f05cc25d9550c8212e80b140b110d271e590d119bb99",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/aa00d0ec05ffdf98.png",
+      "bytes": 3452798,
+      "sha256": "aa00d0ec05ffdf98345b49968b42226ea302e6562ea18abad3f7d9fb190e826e",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/d878e8d84c201271.png",
+      "bytes": 3047124,
+      "sha256": "d878e8d84c20127117f6ea3bb8c65f72ad0cb86c361ddc78dcfe2a4e76ced3a3",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/db40d6eccf2346aa.png",
+      "bytes": 3442000,
+      "sha256": "db40d6eccf2346aa083695b8763fe66f2eb1517e32c55fcc08e15c3641e6f1d8",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/e05d6eb7bc62af14.png",
+      "bytes": 2977209,
+      "sha256": "e05d6eb7bc62af14c9332cdb16ee1c3e386f65a1bd9b2005356317277ab868e8",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/2b6a9b6fde8d2323.png",
+      "bytes": 3716700,
+      "sha256": "2b6a9b6fde8d232314ffafb4c2d88074a1f8bd6495b010f56fdf714d813846c6",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/24e6770a8d2550bd.png",
+      "bytes": 3169210,
+      "sha256": "24e6770a8d2550bd35f627eb6e03b504a1544d3039ce0255bac6c7003508ca54",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/2de274de848802fc.png",
+      "bytes": 3364136,
+      "sha256": "2de274de848802fc47b7513b07d3674e9b256b60c0624554afa89d0f0211b456",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/1a137d79130e3cc8.png",
+      "bytes": 3236004,
+      "sha256": "1a137d79130e3cc8a3784d6551b656d8c28454e1ca46a8c30c3039a8ecd8f3cd",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/199cc1fcf0dea119.png",
+      "bytes": 3578681,
+      "sha256": "199cc1fcf0dea119607b204563f3b5ee8c1b55e2ac0f7cc85f784e6217f91327",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/d61202f55891544d.png",
+      "bytes": 3422787,
+      "sha256": "d61202f55891544dfbc4d40ebfbf238a9be553c218774de3b7aa1086225af347",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/5286ee6dd007177d.png",
+      "bytes": 3035533,
+      "sha256": "5286ee6dd007177d198a47fe5070c4226249f2e493afb2acb822406ab5812cb7",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/18fb585aaa53903d.png",
+      "bytes": 3327738,
+      "sha256": "18fb585aaa53903dde5bc25e84c077af180f3d29d9d21d910470837de0824ae1",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/46f558fda0e0a60b.png",
+      "bytes": 3063719,
+      "sha256": "46f558fda0e0a60b84344a0a78088aa056758727838fa183511fc2b66d456dea",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/ad9776ddcf540685.png",
+      "bytes": 3058740,
+      "sha256": "ad9776ddcf5406852ee93366f9335fcfbb27ce47938344b5e2c4dc68ca6d6f3b",
+      "status": 200
+    },
+    {
+      "url": "https://cdn.vedansh.app/comics/balakanda-bilingual-v2/47c6e6d8f1d92f03.png",
+      "bytes": 3131324,
+      "sha256": "47c6e6d8f1d92f03dd252c46d2c53178f00aaf5f121e3585d5e36f4cf95bcf08",
+      "status": 200
+    }
+  ]
+}

@@ -868,3 +868,7 @@ User approved all nine final banners and requested a verified PR. Merged main wh
 ## [2026-10-13] ingest | Bilingual comic speaker pointers
 
 Recorded explicit painted-frame speaker anchors for all 31 dialogue panels, build-time coverage validation, and the distinction between geometric containment and correct speaker attribution. Local browser checks cover all 140 panels at four widths in Hindi/English and Standard/Large; native/editorial checks remain pending. See [[decisions/ramayan-comic-character-continuity]].
+
+## [2026-10-13] ingest | Replace hosted comic WebView with the native reviewed reader
+
+The comic now uses native episode cards, shared reader controls and global reading size. All 140 bilingual-v2 panels and 31 reviewed speaker anchors are preserved. The 35 unchanged PNGs are hosted at content-hash CDN URLs and use the shared persistent asset cache; iOS/Android exports contain no comic artwork. App source/review chrome is removed; provenance remains in authoring files. See [[decisions/ramayan-comic-character-continuity]] and the bilingual-v2 native integration review for verified checks and remaining native/editorial/release boundaries.
