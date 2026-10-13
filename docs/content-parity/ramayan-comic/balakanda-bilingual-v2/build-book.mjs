@@ -9,6 +9,7 @@ const base = await readJson('../balakanda-v1/book.json');
 const english = await readJson('english.json');
 const revisions = await readJson('revisions.json');
 const pacing = await readJson('pacing-notes.json');
+const speakerAnchors = (await readJson('speaker-anchors.json')).panels;
 assert.equal(english.episodes.length, base.episodes.length);
 const fullFrame = { x: 0, y: 0, width: 1, height: 1, status: 'full-painted-bounds-reviewed' };
 const episodes = base.episodes.map((episode, index) => {
@@ -34,6 +35,12 @@ const episodes = base.episodes.map((episode, index) => {
   return { id: episode.id, sargas: episode.sargas, hi: { title: episode.title, framing: episode.framing }, en: { title, framing }, panels };
 });
 const panels = episodes.flatMap(episode => episode.panels);
+assert.deepEqual(Object.keys(speakerAnchors).sort(), panels.filter(panel => panel.hi.dialogue).map(panel => panel.id).sort(), 'Every dialogue needs exactly one reviewed speaker anchor');
+for (const panel of panels.filter(panel => panel.hi.dialogue)) {
+  const anchor = speakerAnchors[panel.id];
+  assert.ok(Number.isFinite(anchor.x) && anchor.x > 0 && anchor.x < 1 && anchor.review, `${panel.id}/speaker anchor`);
+  panel.speakerAnchor = anchor;
+}
 assert.equal(pacing.episodes.length, episodes.length);
 const pacingReview = episodes.flatMap((episode, episodeIndex) => {
   assert.equal(pacing.episodes[episodeIndex].length, episode.panels.length, `${episode.id}/pacing`);

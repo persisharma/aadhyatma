@@ -134,7 +134,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Valmiki and Narada converse beneath trees at a quiet hermitage; Narada carries a veena, Valmiki listens thoughtfully.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.31,
+            "review": "Valmiki, grey-haired sage seated on the left."
+          }
         },
         {
           "id": "bk-01-02",
@@ -165,7 +169,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Narada speaks to Valmiki, gently gesturing through the story; depict only the two sages, no literal future-event montage.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.72,
+            "review": "Narada, dark-haired veena bearer on the right."
+          }
         },
         {
           "id": "bk-01-03",
@@ -228,7 +236,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Four-headed four-armed Brahma blesses seated Valmiki at hermitage, serene divine light, palm-leaf writing materials nearby.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.63,
+            "review": "Brahma, crowned multiple-faced figure on the lotus at right."
+          }
         },
         {
           "id": "bk-01-05",
@@ -382,7 +394,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Dasharatha speaks privately with minister Sumantra, then turns toward Vashishtha for counsel in palace chamber.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.16,
+            "review": "Sumantra, blue-turbaned minister at far left, not the crowned king or white-robed sage."
+          }
         },
         {
           "id": "bk-03-02",
@@ -849,7 +865,11 @@
             "height": 1,
             "status": "full-painted-bounds-reviewed"
           },
-          "reviewNote": "Separate close-up for the existing question; no new event or dialogue."
+          "reviewNote": "Separate close-up for the existing question; no new event or dialogue.",
+          "speakerAnchor": {
+            "x": 0.21,
+            "review": "Dasharatha close-up at left; retain the approved side balloon, use this anchor when it flows above art."
+          }
         }
       ]
     },
@@ -894,7 +914,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Vishwamitra explains his disrupted ritual to Dasharatha in court; adolescent Rama listens quietly nearby.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.24,
+            "review": "Vishwamitra, orange-robed staff bearer at left."
+          }
         },
         {
           "id": "bk-06-02",
@@ -925,7 +949,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Dasharatha's worried close-up as he gestures protectively toward youthful Rama, restrained grief, Vishwamitra firm in foreground.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.46,
+            "review": "Dasharatha, crowned king in the middle."
+          }
         },
         {
           "id": "bk-06-03",
@@ -956,7 +984,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Gentle Vashishtha mediates between worried Dasharatha and stern narrow-faced Vishwamitra; sages unmistakably distinct.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.5,
+            "review": "Vashishtha, white-robed sage in the centre, between Dasharatha and Vishwamitra."
+          }
         },
         {
           "id": "bk-06-04",
@@ -1095,7 +1127,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Three travellers cross river in simple boat, Rama asks about rushing confluence; dark forest visible on far bank, no Tataka yet.",
-          "reviewNote": "Restore the answer to Rama's river question, Bāla 1.24.8–11."
+          "reviewNote": "Restore the answer to Rama's river question, Bāla 1.24.8–11.",
+          "speakerAnchor": {
+            "x": 0.45,
+            "review": "Rama, blue-skinned youth in the middle of the boat."
+          }
         }
       ]
     },
@@ -1172,7 +1208,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Youthful Rama thoughtfully readies his bow, Lakshmana stands watch, Vishwamitra gives measured counsel; no triumphant violence.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.5,
+            "review": "Rama, blue-skinned bow bearer in the centre."
+          }
         },
         {
           "id": "bk-08-03",
@@ -1342,7 +1382,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Close teaching moment, Rama asks with folded hands and Vishwamitra demonstrates calm recall of a fading luminous arrow; no battle.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.58,
+            "review": "Rama, blue-skinned youth with joined hands, right of the teaching sage."
+          }
         },
         {
           "id": "bk-09-02a",
@@ -1374,7 +1418,11 @@
             "height": 1,
             "status": "full-painted-bounds-reviewed"
           },
-          "reviewNote": "Restore the motivating question between 1.28 and 1.29, Bāla 1.28.16–22."
+          "reviewNote": "Restore the motivating question between 1.28 and 1.29, Bāla 1.28.16–22.",
+          "speakerAnchor": {
+            "x": 0.46,
+            "review": "Rama, blue-skinned youth in the centre, pointing toward the hermitage."
+          }
         },
         {
           "id": "bk-09-03",
@@ -1574,7 +1622,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Relieved Vishwamitra and rishis thank both adolescent brothers beside completed altar at clear sunrise, no lingering enemies.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.28,
+            "review": "Vishwamitra, tall orange-robed sage at left of the fire."
+          }
         }
       ]
     },
@@ -1820,7 +1872,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Rama enquires beside broad Ganga, Vishwamitra points toward snow peaks; Lakshmana watches river, no literal three floating rivers.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.44,
+            "review": "Rama, blue-skinned youth in front of the pointing sage."
+          }
         },
         {
           "id": "bk-12-02",
@@ -2115,7 +2171,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Garuda with one pair of wings and two arms counsels grieving Anshuman beside horse; no conflating Anshuman with later Bhagiratha.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.63,
+            "review": "Garuda, eagle-headed winged figure on the right."
+          }
         }
       ]
     },
@@ -2191,7 +2251,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Ascetic Bhagiratha receives blessing from four-headed Brahma beneath Himalaya sky; rushing celestial river implied above.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.67,
+            "review": "Brahma, crowned multiple-faced figure on the lotus at right."
+          }
         },
         {
           "id": "bk-14-03",
@@ -2731,7 +2795,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Youthful Rama asks Vishwamitra about deserted hermitage, Lakshmana looks at overgrown path, no stone statue.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.51,
+            "review": "Rama, blue-skinned youth at centre, addressing the sage at right."
+          }
         },
         {
           "id": "bk-17-02",
@@ -2932,7 +3000,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Shatananda gratefully asks Vishwamitra about his mother Ahalya while Rama and Lakshmana listen, Janaka nearby.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.17,
+            "review": "Shatananda, kneeling white-robed sage at left."
+          }
         },
         {
           "id": "bk-18-03",
@@ -3039,7 +3111,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Royal Vishwamitra offers riches for a single sacred cow; gentle Vashishtha refuses firmly, Shabala between them.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.79,
+            "review": "Vashishtha, white-robed sage at right of Shabala."
+          }
         },
         {
           "id": "bk-19-03",
@@ -3195,7 +3271,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Younger Vishwamitra leaves royal crown and armour behind and walks into forest with simple ascetic staff, determined introspection.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.67,
+            "review": "Vishwamitra, lone orange-robed figure walking at right; abandoned crown at left is not the speaker."
+          }
         }
       ]
     },
@@ -3303,7 +3383,11 @@
             "status": "painted-panel-boundary-reviewed-v2"
           },
           "artAction": "Travel-worn uncrowned Trishanku appeals to middle-aged ascetic Vishwamitra in forest, compassionate reception.",
-          "reviewNote": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text."
+          "reviewNote": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text.",
+          "speakerAnchor": {
+            "x": 0.29,
+            "review": "Trishanku, kneeling figure in torn clothes at left."
+          }
         },
         {
           "id": "bk-20-04",
@@ -3365,7 +3449,11 @@
             "status": "painted-panel-boundary-reviewed-v2"
           },
           "artAction": "Trishanku falls upside down through starry sky toward distant earth, fully clothed, terrified but unharmed; not floating upright in heaven.",
-          "reviewNote": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text."
+          "reviewNote": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text.",
+          "speakerAnchor": {
+            "x": 0.26,
+            "review": "Trishanku, inverted falling crowned figure at left, not the upright figure at right."
+          }
         },
         {
           "id": "bk-20-06",
@@ -3503,7 +3591,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Shunahshepa clings to seated ascetic Vishwamitra beside Pushkara lake, who listens protectively, Ambarisha waits at respectful distance.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.47,
+            "review": "Shunahshepa, child clinging to the sage in the lower centre."
+          }
         },
         {
           "id": "bk-21-04",
@@ -3703,7 +3795,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Solitary ageing Vishwamitra meditates calmly beneath tree, face softer and beard greying, broken anger replaced by discipline.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.43,
+            "review": "Vishwamitra, solitary seated sage."
+          }
         },
         {
           "id": "bk-22-05",
@@ -3903,7 +3999,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Youthful broad-faced blue Rama approaches enormous sacred bow on wheeled chest, narrow-faced Lakshmana and elder Vishwamitra watch, no crown.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.29,
+            "review": "Vishwamitra, grey-bearded orange-robed sage behind Rama at left."
+          }
         },
         {
           "id": "bk-23-05",
@@ -3965,7 +4065,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Janaka respectfully discusses proposal with Vishwamitra while two youthful princes stand nearby; Sita dignified in balcony, messenger departs.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.54,
+            "review": "Janaka, crowned bearded king with joined hands at centre-right, not the messenger at far right."
+          }
         }
       ]
     },
@@ -4288,7 +4392,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Exactly one youthful couple Rama and Sita join hands before small sacred fire, Janaka and officiating Vashishtha, Rama broad calm blue face, Sita red bridal attire.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.84,
+            "review": "Janaka, crowned bearded king at far right of the wedding group."
+          }
         },
         {
           "id": "bk-26-03",
@@ -4550,7 +4658,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Dasharatha pleads with stern Parashurama, youthful Rama stands composed, brides safely in caravan background, no Lakshmana taunting duel.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.23,
+            "review": "Dasharatha, crowned kneeling king at lower left."
+          }
         },
         {
           "id": "bk-27-05",
@@ -4581,7 +4693,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Parashurama offers intact Vaishnava bow and arrow to respectful youthful Rama, one axe held safely or set at side, no extra weapons.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.3,
+            "review": "Parashurama, bearded ascetic offering the bow from the left."
+          }
         }
       ]
     },
@@ -4626,7 +4742,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Close face contrast between youthful serene Rama and mature fierce Parashurama, Rama speaks firmly without mockery, father visible behind.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.78,
+            "review": "Rama, blue-skinned youth at right, not Dasharatha in the centre."
+          }
         },
         {
           "id": "bk-28-02",
@@ -4688,7 +4808,11 @@
             "status": "visually-reviewed-authoring-draft"
           },
           "artAction": "Rama holds drawn Vaishnava bow upward away from people, Parashurama consents with lowered axe, symbolic celestial glow as merit is relinquished.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi."
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "speakerAnchor": {
+            "x": 0.25,
+            "review": "Parashurama, bearded ascetic with axe at left."
+          }
         },
         {
           "id": "bk-28-04",

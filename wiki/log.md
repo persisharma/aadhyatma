@@ -864,3 +864,7 @@ Compared PR #253 and current-main #429/#434/#449 after user rejected the older c
 ## [2026-10-12] ingest | Approved Garud Puran Style 3 integration and main reconciliation
 
 User approved all nine final banners and requested a verified PR. Merged main while retaining shared reader components, lazy navigation, cooperative search and both wiki histories. Activated the approved local assets, corrected page/resume vocabulary and adopted prose sharing. Asset hashes, source boundaries and final verification are in the Garud integration review.
+
+## [2026-10-13] ingest | Bilingual comic speaker pointers
+
+Recorded explicit painted-frame speaker anchors for all 31 dialogue panels, build-time coverage validation, and the distinction between geometric containment and correct speaker attribution. Local browser checks cover all 140 panels at four widths in Hindi/English and Standard/Large; native/editorial checks remain pending. See [[decisions/ramayan-comic-character-continuity]].

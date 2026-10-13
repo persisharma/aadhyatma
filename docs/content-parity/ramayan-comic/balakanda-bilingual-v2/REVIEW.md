@@ -1,5 +1,13 @@
 # Full bilingual review — 2026-10-12
 
+## Speaker-pointer correction — 2026-10-13
+
+The earlier geometry checks did not establish correct speaker attribution: every flowing balloon used a fixed left-side tail. The user identified Vashishtha's dialogue pointing toward Dasharatha in bk-06-03. All 31 dialogue panels have now been matched to their depicted speakers; `speaker-anchors.json` records each normalized horizontal position and a character-identification note. The renderer aligns each flowing tail with that position inside the visible painted frame. The approved Dasharatha side bubble remains, and its narrow/Large fallback uses the reviewed anchor.
+
+All 140 panels passed browser layout checks in Hindi/English, Standard/Large, at 320/390/768/1440px: 2,240 panel states. Checks cover image loading, horizontal text/panel bounds, narration outside art, continuous closed outlines, flowing tail alignment and tail/art clearance. All 31 dialogue panels were visually inspected in both languages at Standard/390px and Large/320px (124 dialogue renders), including Sumantra at the left edge, Janaka at the right edge, the inverted Trishanku and the side-bubble fallback. `speaker-validation.json` records this review separately from the earlier report.
+
+Fresh full bilingual captures of all 29 episodes and narrow/Large captures of all 21 episodes containing dialogue are under `.context/speaker-audit/`. The full DOM results and screenshot indexes are there too. Narrative text, panel sequence, source references, image bytes and painted frames are unchanged. Native/editorial/four-language release checks remain pending; these changes concern the local bilingual preview.
+
 ## Scope and evidence boundary
 
 Agent-reviewed local authoring edition: 29 episodes / 140 panels, Hindi and English. All 29 complete episode sequences were visually inspected with actual text in side-by-side 390px columns, including the last panels and the four marriages. This is not independent editorial certification, a verse-by-verse translation, the whole seven-kāṇḍa epic, or native app validation.

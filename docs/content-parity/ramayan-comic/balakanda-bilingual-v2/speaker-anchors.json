@@ -1,0 +1,130 @@
+{
+  "coordinateSystem": "x is normalized within the visible painted frame, independent of language, caption length and viewport; flowing tail tip aligns with this x.",
+  "reviewedAgainst": "All 31 dialogue scenes inspected against current framed PNG artwork, 2026-10-13.",
+  "panels": {
+    "bk-01-01": {
+      "x": 0.31,
+      "review": "Valmiki, grey-haired sage seated on the left."
+    },
+    "bk-01-02": {
+      "x": 0.72,
+      "review": "Narada, dark-haired veena bearer on the right."
+    },
+    "bk-01-04": {
+      "x": 0.63,
+      "review": "Brahma, crowned multiple-faced figure on the lotus at right."
+    },
+    "bk-03-01": {
+      "x": 0.16,
+      "review": "Sumantra, blue-turbaned minister at far left, not the crowned king or white-robed sage."
+    },
+    "bk-05-03a": {
+      "x": 0.21,
+      "review": "Dasharatha close-up at left; retain the approved side balloon, use this anchor when it flows above art."
+    },
+    "bk-06-01": {
+      "x": 0.24,
+      "review": "Vishwamitra, orange-robed staff bearer at left."
+    },
+    "bk-06-02": {
+      "x": 0.46,
+      "review": "Dasharatha, crowned king in the middle."
+    },
+    "bk-06-03": {
+      "x": 0.5,
+      "review": "Vashishtha, white-robed sage in the centre, between Dasharatha and Vishwamitra."
+    },
+    "bk-07-03": {
+      "x": 0.45,
+      "review": "Rama, blue-skinned youth in the middle of the boat."
+    },
+    "bk-08-02": {
+      "x": 0.5,
+      "review": "Rama, blue-skinned bow bearer in the centre."
+    },
+    "bk-09-02": {
+      "x": 0.58,
+      "review": "Rama, blue-skinned youth with joined hands, right of the teaching sage."
+    },
+    "bk-09-02a": {
+      "x": 0.46,
+      "review": "Rama, blue-skinned youth in the centre, pointing toward the hermitage."
+    },
+    "bk-10-04": {
+      "x": 0.28,
+      "review": "Vishwamitra, tall orange-robed sage at left of the fire."
+    },
+    "bk-12-01": {
+      "x": 0.44,
+      "review": "Rama, blue-skinned youth in front of the pointing sage."
+    },
+    "bk-13-06": {
+      "x": 0.63,
+      "review": "Garuda, eagle-headed winged figure on the right."
+    },
+    "bk-14-02": {
+      "x": 0.67,
+      "review": "Brahma, crowned multiple-faced figure on the lotus at right."
+    },
+    "bk-17-01": {
+      "x": 0.51,
+      "review": "Rama, blue-skinned youth at centre, addressing the sage at right."
+    },
+    "bk-18-02": {
+      "x": 0.17,
+      "review": "Shatananda, kneeling white-robed sage at left."
+    },
+    "bk-19-02": {
+      "x": 0.79,
+      "review": "Vashishtha, white-robed sage at right of Shabala."
+    },
+    "bk-19-07": {
+      "x": 0.67,
+      "review": "Vishwamitra, lone orange-robed figure walking at right; abandoned crown at left is not the speaker."
+    },
+    "bk-20-03": {
+      "x": 0.29,
+      "review": "Trishanku, kneeling figure in torn clothes at left."
+    },
+    "bk-20-05": {
+      "x": 0.26,
+      "review": "Trishanku, inverted falling crowned figure at left, not the upright figure at right."
+    },
+    "bk-21-03": {
+      "x": 0.47,
+      "review": "Shunahshepa, child clinging to the sage in the lower centre."
+    },
+    "bk-22-04": {
+      "x": 0.43,
+      "review": "Vishwamitra, solitary seated sage."
+    },
+    "bk-23-04": {
+      "x": 0.29,
+      "review": "Vishwamitra, grey-bearded orange-robed sage behind Rama at left."
+    },
+    "bk-23-06": {
+      "x": 0.54,
+      "review": "Janaka, crowned bearded king with joined hands at centre-right, not the messenger at far right."
+    },
+    "bk-26-02": {
+      "x": 0.84,
+      "review": "Janaka, crowned bearded king at far right of the wedding group."
+    },
+    "bk-27-04": {
+      "x": 0.23,
+      "review": "Dasharatha, crowned kneeling king at lower left."
+    },
+    "bk-27-05": {
+      "x": 0.3,
+      "review": "Parashurama, bearded ascetic offering the bow from the left."
+    },
+    "bk-28-01": {
+      "x": 0.78,
+      "review": "Rama, blue-skinned youth at right, not Dasharatha in the centre."
+    },
+    "bk-28-03": {
+      "x": 0.25,
+      "review": "Parashurama, bearded ascetic with axe at left."
+    }
+  }
+}

@@ -25,6 +25,8 @@ Narration reflows in a compact cream compartment **inside the panel border**, ab
 
 Both languages use the same text-free artwork. Original source sheets are displayed through measured painted-panel frames; full originals remain accessible under each panel. New standalone illustrations retain their entire 4:3 bounds. Frame geometry is independent of caption length.
 
+Every dialogue panel has a visually reviewed speaker position in `speaker-anchors.json`, measured within its displayed painted frame. Flowing balloon tails follow that position across Hindi/English, text sizes and viewport widths. The builder rejects missing or unused speaker positions. See `speaker-validation.json` for the 2026-10-13 attribution/layout review.
+
 ## Authoring and verification
 
 - `english.json`: original English adaptation aligned with the existing Hindi narrative, not copied publication translations.
