@@ -844,3 +844,7 @@ The CI workflow now includes docs/content-parity/reader-illustration*.md in its 
 and main-push path filters, so the saved prompt and style guide receive the existing mobile
 test/export/CDN gate. The prompt links to the committed approved WebP and distinguishes the
 local master/personal Codex template from repository files. No app code or asset changes.
+
+## [2026-10-13] ingest | Bilingual comic speaker pointers
+
+Recorded explicit painted-frame speaker anchors for all 31 dialogue panels, build-time coverage validation, and the distinction between geometric containment and correct speaker attribution. Local browser checks cover all 140 panels at four widths in Hindi/English and Standard/Large; native/editorial checks remain pending. See [[decisions/ramayan-comic-character-continuity]].

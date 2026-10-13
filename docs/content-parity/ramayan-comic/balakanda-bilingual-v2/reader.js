@@ -37,8 +37,9 @@ function artwork(panel, locale, decorative = false) {
   return crop;
 }
 
-function balloon(copy) {
+function balloon(copy, anchor) {
   const speech = element('p', 'speech');
+  speech.dataset.speakerX = anchor.x;
   const shape = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   shape.classList.add('bubble-shape');
   shape.setAttribute('aria-hidden', 'true');
@@ -49,10 +50,15 @@ function balloon(copy) {
 }
 
 function drawBalloon(speech, flowing) {
-  const { width, height } = speech.getBoundingClientRect();
+  const { width, height, left: speechLeft } = speech.getBoundingClientRect();
   const radiusX = flowing ? 28 : width * 0.42;
   const radiusY = flowing ? Math.min(28, height / 2) : height * 0.42;
-  const bottom = flowing ? `H ${width * 0.22 + 26} L ${width * 0.22} ${height + 23} L ${width * 0.22} ${height} H ${radiusX}` : `H ${radiusX}`;
+  // Anchor to the painted frame, not the text box: margins and translations
+  // must not move the pointer to a different character.
+  const art = speech.closest('.panel').querySelector('.crop').getBoundingClientRect();
+  const tipX = art.left + art.width * Number(speech.dataset.speakerX) - speechLeft;
+  const baseX = Math.max(radiusX + 13, Math.min(width - radiusX - 13, tipX));
+  const bottom = flowing ? `H ${baseX + 13} L ${tipX} ${height + 23} L ${baseX - 13} ${height} H ${radiusX}` : `H ${radiusX}`;
   const left = flowing ? `V ${radiusY}` : `L -22 ${height * 0.9} L 0 ${radiusY}`;
   const shape = speech.querySelector('svg');
   shape.setAttribute('viewBox', `0 0 ${width} ${height}`);
@@ -97,7 +103,7 @@ function episodeView(episode, locale, navigation = true) {
     article.dataset.panel = panel.id;
     article.setAttribute('aria-label', `${copy.panels} ${number(index + 1, locale)} / ${number(episode.panels.length, locale)}`);
     if (panel[locale].narration) article.append(element('p', 'narration', panel[locale].narration));
-    if (panel[locale].dialogue) article.append(balloon(panel[locale]));
+    if (panel[locale].dialogue) article.append(balloon(panel[locale], panel.speakerAnchor));
     article.append(artwork(panel, locale));
     section.append(article, link(`${copy.sargas} ${panel.source} · ${copy.original}`, panel.asset, 'panel-source'));
   }
@@ -209,7 +215,7 @@ window.addEventListener('hashchange', () => {
 });
 window.addEventListener('resize', fitBalloons);
 document.fonts.ready.then(fitBalloons);
-fetch('book.json').then(response => {
+fetch('book.json', { cache: 'no-store' }).then(response => {
   if (!response.ok) throw new Error(`Book: ${response.status}`);
   return response.json();
 }).then(data => { book = data; render(); }).catch(error => {
