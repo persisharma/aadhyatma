@@ -1,3 +1,5 @@
+> Superseded on 2026-10-13: the user requested native episode cards and the app's reader controls, using the corrected 140-panel bilingual edition. See design.md §76.1 and `docs/content-parity/ramayan-comic/balakanda-bilingual-v2/native-integration-review.md`. The historical WebView proposal below is not the current implementation.
+
 # Bālakāṇḍa comic — in-app (WebView over CDN) design
 
 **Date:** 2026-10-12

@@ -1,0 +1,145 @@
+{
+  "prefix": "comics/balakanda-bilingual-v2",
+  "assets": {
+    "bk-01-v2": {
+      "hash": "e7d0e879c6fa9245",
+      "ext": "png"
+    },
+    "bk-02-v1": {
+      "hash": "5f5dda931fc9fe70",
+      "ext": "png"
+    },
+    "bk-03-v2": {
+      "hash": "7ae23b30248f8b30",
+      "ext": "png"
+    },
+    "bk-04-v3": {
+      "hash": "7fd51d0e007f7da3",
+      "ext": "png"
+    },
+    "bk-05-01-compact-v1": {
+      "hash": "b7aaf018a7206fbf",
+      "ext": "png"
+    },
+    "bk-05-02-compact-v1": {
+      "hash": "e9b6578a638ab04b",
+      "ext": "png"
+    },
+    "bk-05-03-compact-v1": {
+      "hash": "a9dd440506ff75b8",
+      "ext": "png"
+    },
+    "bk-05-03a-welcome-v1": {
+      "hash": "46cccdf45d6777aa",
+      "ext": "png"
+    },
+    "bk-06-v1": {
+      "hash": "4936827efa2e3c82",
+      "ext": "png"
+    },
+    "bk-07-v1": {
+      "hash": "9e1d44e1b0d31b50",
+      "ext": "png"
+    },
+    "bk-08-04-v2": {
+      "hash": "4a54a39580dba8aa",
+      "ext": "png"
+    },
+    "bk-08-04a-v1": {
+      "hash": "52b196da11ee2ee7",
+      "ext": "png"
+    },
+    "bk-08-v1": {
+      "hash": "0afde018ef1c9b6c",
+      "ext": "png"
+    },
+    "bk-09-02a-v1": {
+      "hash": "016e601d0be516c0",
+      "ext": "png"
+    },
+    "bk-09-v1": {
+      "hash": "9c8f47ffd4fcc7cd",
+      "ext": "png"
+    },
+    "bk-10-v2": {
+      "hash": "b671aaf5789a02bc",
+      "ext": "png"
+    },
+    "bk-11-v1": {
+      "hash": "87cbad97634c8fad",
+      "ext": "png"
+    },
+    "bk-12-v3": {
+      "hash": "22b793d11dfb0091",
+      "ext": "png"
+    },
+    "bk-13-v2": {
+      "hash": "89e1d0e157ea8c55",
+      "ext": "png"
+    },
+    "bk-14-v1": {
+      "hash": "c0f2103a3e6752c5",
+      "ext": "png"
+    },
+    "bk-15-v2": {
+      "hash": "aa00d0ec05ffdf98",
+      "ext": "png"
+    },
+    "bk-16-v2": {
+      "hash": "d878e8d84c201271",
+      "ext": "png"
+    },
+    "bk-17-v1": {
+      "hash": "db40d6eccf2346aa",
+      "ext": "png"
+    },
+    "bk-18-v2": {
+      "hash": "e05d6eb7bc62af14",
+      "ext": "png"
+    },
+    "bk-19-v1": {
+      "hash": "2b6a9b6fde8d2323",
+      "ext": "png"
+    },
+    "bk-20-v2": {
+      "hash": "24e6770a8d2550bd",
+      "ext": "png"
+    },
+    "bk-21-v2": {
+      "hash": "2de274de848802fc",
+      "ext": "png"
+    },
+    "bk-22-v2": {
+      "hash": "1a137d79130e3cc8",
+      "ext": "png"
+    },
+    "bk-23-v1": {
+      "hash": "199cc1fcf0dea119",
+      "ext": "png"
+    },
+    "bk-24-v1": {
+      "hash": "d61202f55891544d",
+      "ext": "png"
+    },
+    "bk-25-v2": {
+      "hash": "5286ee6dd007177d",
+      "ext": "png"
+    },
+    "bk-26-v2": {
+      "hash": "18fb585aaa53903d",
+      "ext": "png"
+    },
+    "bk-27-v3": {
+      "hash": "46f558fda0e0a60b",
+      "ext": "png"
+    },
+    "bk-28-v1": {
+      "hash": "ad9776ddcf540685",
+      "ext": "png"
+    },
+    "bk-29-v2": {
+      "hash": "47c6e6d8f1d92f03",
+      "ext": "png"
+    }
+  }
+}

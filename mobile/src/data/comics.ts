@@ -1,13 +1,9 @@
-// Hosted comic readers surfaced in-app via a WebView (see ComicReaderScreen).
-// The reader bundle (index.html + reader.js/css + book.json + page art) lives on the
-// R2 CDN; the app only points a WebView at `url`. Keeping this data-driven leaves room
-// for more comics without touching the screen.
+// Lightweight library metadata. Books load only when the native shelf opens.
 
 export type Comic = {
   id: string;
   title: { hi: string; en: string; gu: string; kn: string };
-  /** Full https URL of the reader's index.html on the CDN. */
-  url: string;
+  episodeCount: number;
 };
 
 export const comics: Comic[] = [
@@ -19,7 +15,7 @@ export const comics: Comic[] = [
       gu: 'રામાયણ કોમિક · બાલકાંડ',
       kn: 'ರಾಮಾಯಣ ಕಾಮಿಕ್ · ಬಾಲಕಾಂಡ',
     },
-    url: 'https://cdn.vedansh.app/comics/balakanda-v1/index.html',
+    episodeCount: 29,
   },
 ];
 

@@ -1,77 +1,55 @@
-import React, { useState } from 'react';
-import { View, Text, ActivityIndicator, Pressable, StyleSheet } from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { FlatList, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { WebView } from 'react-native-webview';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
+import LanguageToggle from '@/components/LanguageToggle';
+import ComicPanel from '@/components/ComicPanel';
+import ComicLanguageNotice from '@/components/ComicLanguageNotice';
+import { comicLanguage, comicPageIndex, comicPages, getComicBook } from '@/data/comicBooks';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
+import { meaningToken } from '@/utils/langType';
 import { pick } from '@/utils/localize';
-import { titleFontByLang } from '@/utils/langType';
-import { comicById } from '@/data/comics';
 import type { HomeStackParamList } from '@/navigation/types';
 
-/**
- * Hosts a CDN-hosted comic reader (self-contained HTML/JS) inside a WebView.
- * The reader bundle lives on the R2 CDN; we only load its index.html by https
- * URL, so its relative fetches (book.json, page art) resolve against the CDN.
- */
-export default function ComicReaderScreen({
-  route,
-  navigation,
-}: NativeStackScreenProps<HomeStackParamList, 'ComicReader'>) {
+type Page = ReturnType<typeof comicPages>[number];
+export default function ComicReaderScreen({ route, navigation }: NativeStackScreenProps<HomeStackParamList, 'ComicReader'>) {
   const { lang } = useGitaLanguage();
-  const { colors } = useTheme();
-  const [failed, setFailed] = useState(false);
-  const comic = comicById(route.params.comicId);
-
-  const title = comic ? pick(lang, comic.title) : '';
-  const errorText = pick(lang, {
-    hi: 'कॉमिक अभी लोड नहीं हो सका।',
-    en: 'Could not load the comic.',
-    gu: 'કોમિક અત્યારે લોડ થઈ શક્યું નહીં.',
-    kn: 'ಕಾಮಿಕ್ ಈಗ ಲೋಡ್ ಆಗಲಿಲ್ಲ.',
-  });
-  const retryText = pick(lang, { hi: 'पुनः प्रयास करें', en: 'Try again', gu: 'ફરી પ્રયાસ કરો', kn: 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ' });
-
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
-      <ReaderHeader title={title} onBack={() => navigation.goBack()} variant="index" />
-      {!comic || failed ? (
-        <View style={styles.center} testID="comic-reader-error">
-          <Text style={{ color: colors.inkSoft, fontFamily: titleFontByLang(lang), fontSize: 17, textAlign: 'center' }}>
-            {errorText}
-          </Text>
-          {comic && (
-            <Pressable
-              testID="comic-reader-retry"
-              onPress={() => setFailed(false)}
-              style={[styles.retry, { backgroundColor: colors.saffron }]}
-            >
-              <Text style={{ color: '#fff', fontFamily: titleFontByLang(lang), fontSize: 15 }}>{retryText}</Text>
-            </Pressable>
-          )}
-        </View>
-      ) : (
-        <WebView
-          testID="comic-reader-webview"
-          source={{ uri: comic.url }}
-          onError={() => setFailed(true)}
-          onHttpError={() => setFailed(true)}
-          startInLoadingState
-          renderLoading={() => (
-            <View style={styles.center}>
-              <ActivityIndicator color={colors.saffron} />
-            </View>
-          )}
-          style={{ flex: 1, backgroundColor: colors.parchment }}
-        />
-      )}
-    </SafeAreaView>
-  );
+  const language = comicLanguage(lang);
+  const { colors, typography, spacing } = useTheme();
+  const book = getComicBook(route.params.comicId);
+  const pages = useMemo(() => book ? comicPages(book) : [], [book]);
+  const start = book ? comicPageIndex(book, route.params.episodeId, route.params.panelId) : 0;
+  const [index, setIndex] = useState(start);
+  const { width } = useWindowDimensions();
+  const [pageWidth, setPageWidth] = useState(width);
+  const pager = useRef<FlatList<Page>>(null);
+  useEffect(() => {
+    setIndex(start);
+    pager.current?.scrollToIndex({ index: start, animated: false });
+  }, [book, start]);
+  const current = pages[index] ?? pages[0];
+  return <SafeAreaView testID="comic-native-reader" style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
+    <ReaderHeader title={current?.episode[language].title ?? ''} onBack={() => navigation.goBack()} sideWidth={60} right={current &&
+      <Text testID="comic-progress" style={{ ...typography.pageCounter, color: colors.inkMuted, textAlign: 'right', minWidth: 48 }}>{index + 1} / {pages.length}</Text>} />
+    {book ? <>
+      <ReadingProgressBar current={index + 1} total={pages.length} />
+      <View style={{ paddingTop: 6, paddingBottom: spacing.md }}><LanguageToggle /></View>
+      <ComicLanguageNotice />
+      <View style={{ flex: 1 }} onLayout={event => { if (event.nativeEvent.layout.width > 0) setPageWidth(event.nativeEvent.layout.width); }}>
+        <FlatList testID="comic-pager" key={pageWidth} ref={pager} data={pages} extraData={{ language, typography }} keyExtractor={page => page.panel.id}
+          horizontal pagingEnabled directionalLockEnabled showsHorizontalScrollIndicator={false} initialScrollIndex={index}
+          initialNumToRender={1} maxToRenderPerBatch={2} windowSize={3}
+          getItemLayout={(_, position) => ({ length: pageWidth, offset: pageWidth * position, index: position })}
+          onMomentumScrollEnd={event => setIndex(Math.max(0, Math.min(pages.length - 1, Math.round(event.nativeEvent.contentOffset.x / pageWidth))))}
+          renderItem={({ item: page }) => <ScrollView testID={`comic-page-${page.panel.id}`} directionalLockEnabled nestedScrollEnabled style={{ width: pageWidth, flex: 1 }}
+            contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.sm, gap: spacing.sm }}>
+            {page.episodeIndex === 0 && !!page.episode[language].framing && <Text style={{ ...meaningToken(language, typography), color: colors.inkSoft }}>{page.episode[language].framing}</Text>}
+            <ComicPanel panel={page.panel} language={language} />
+          </ScrollView>} />
+      </View>
+    </> : <Text testID="comic-reader-error" style={{ ...meaningToken(lang, typography), color: colors.ink, padding: spacing.readingGutter }}>{pick(lang, { hi: 'कथा नहीं मिली।', en: 'Story not found.', gu: 'વાર્તા મળી નથી.', kn: 'ಕಥೆ ಸಿಗಲಿಲ್ಲ.' })}</Text>}
+  </SafeAreaView>;
 }
-
-const styles = StyleSheet.create({
-  center: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 16, padding: 24 },
-  retry: { paddingVertical: 10, paddingHorizontal: 20, borderRadius: 999 },
-});
