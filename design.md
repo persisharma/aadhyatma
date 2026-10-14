@@ -43,7 +43,7 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 **Home gradient** (top → bottom): `#F6ECD0` → `#F1E3BF` (`parchmentHighlight` → `parchmentGradientEnd` in `colors.ts`).
 
 **Reader overlay** (on top of background image): vertical gradient
-`rgba(243,231,201,0.90)` → `rgba(243,231,201,0.90)` → `rgba(243,231,201,0.92)` → `rgba(233,217,177,0.95)` at stops `0`, `0.4`, `0.85`, `1`. The 90% paper floor protects normal body and muted text against dark image details. Opening illustration banners retain their full painted strength.
+`rgba(243,231,201,0.90)` → `rgba(243,231,201,0.90)` → `rgba(243,231,201,0.92)` → `rgba(233,217,177,0.95)`.
 
 **Background image filters:** the CSS filter stack (`opacity: 0.52`, `sepia(0.35) saturate(0.85) brightness(1.02)`) applies only to `design-preview.html`. In React Native the sketch renders unfiltered — `BackgroundLayer.tsx` sets no `imageStyle` opacity or tint — and the fade comes solely from the parchment overlay gradient stacked above it.
 
@@ -314,8 +314,8 @@ Four faded vintage sketches serve the Hanuman texts, published from `mobile/asse
   - **Sundarkand:** stanza-range buckets — stanzas 1–4 sea, 5–11 Sita, 12–18 Lanka-dahan, remainder Ram-Hanuman.
   - **Every other source:** one pinned image per source id (`sourceBackgrounds`), plus category/deity fallback maps for browse screens.
 - A given verse therefore always shows the same image — stable as the user swipes back and forth — but the mapping is curated to match the verse's story beat, never re-rolled per render.
-- Browse/background surfaces contain the complete source canvas in a top-aligned, aspect-ratio-sized layer, bounded by the surface height. Paper fills the remaining area under the stronger parchment overlay (Section 2). This preserves side figures, vahanas and attributes across phone, tablet and growing share-card ratios. Neutral reading parchment continues to cover the whole reading surface.
-- Full-screen `cover` formerly kept only ~46% of a square plate's width on a tall phone. Source paintings remain intact; layout now preserves their composition. Reader folios keep complete 2:1 compositions in their separate compact banners.
+- Background surfaces contain the complete source composition at the top of the available area, retaining its aspect ratio and fading its lower edge into parchment. The stronger parchment overlay (Section 2) keeps text readable across detailed scenes. Reader folios retain their approved themed art and banner behavior below.
+- Multi-figure plates preserve complete figures and quiet parchment space; the background layout avoids clipping their faces, bows, feet and tails on portrait phones.
 
 **Exception — Theerth.** Theerth detail screens resolve their background by **presiding deity**, with per-temple overrides for shrines whose deity plate is too generic (`getTheerthBackground(templeId, deityId)` in `backgrounds.ts`). The browse/map surface uses no background image — only the flat parchment gradient behind the stylised India SVG outline.
 
@@ -331,7 +331,7 @@ and cancel when the final viewer leaves. Completed valid artwork has no expiry, 
 automatic eviction. Text and controls never await artwork; native decode errors preserve the
 fallback and evict damaged files for recovery.
 
-**Bounded artwork refinements (14 Oct 2026):** `artworkCorrections.ts` overrides five reviewed WebPs (under 1.25 MiB total): Karni Mata background/banner, Hanuman-Sita background, Ram-Hanuman background and Rama Darbar background. Karni Mata has a clean feminine face; Hanuman-Sita has no corner mark or hard frame. The recreated Rama scenes have clearer faces, connected hands and poses with quiet lower parchment. The shared loader chooses these refinements before any cached or remote image, including offline, and share capture waits for their native paint. Existing published manifests remain unchanged; no unpublished CDN hashes are activated. Future CDN migration must upload and verify these files before removing the overrides. Vishnu backgrounds use the existing published sepia plate; its coloured opening banner is preserved.
+Five reviewed correction WebPs are bundled in `mobile/assets/artwork-corrections/` within a 1.25 MiB budget. They correct Karni Mata's background and colored banner, remove the Hanuman–Sita corner mark, and recreate Rama blessing Hanuman and Rama Darbar. `artworkCorrections.ts` resolves these before stale CDN cache entries, including offline use; unpublished CDN hashes are not activated. Other artwork retains the existing remote delivery. The Vishnu background uses the published sepia Narayana plate; colored banners remain separate. Full-strength previews retain source detail while normal backgrounds receive the parchment overlay.
 
 Paged sections share a single screen-level paper image instead of duplicating it per list cell.
 
@@ -351,11 +351,10 @@ Normal reading tokens and unrestricted vertical text scrolling remain. Katha and
 introduction markers sit below the text viewport; the tab bar owns the bottom safe-area inset
 for the Pitru introduction. Utility forms, charts, ledgers and kids stories retain their layouts.
 
-**Approved rollout (10 Oct 2026):** The same paper and `ReadingArtwork` painting/divider
-are shared by all seven canonical verse layouts, covering Chalisa, Aarti, Gita/Gita Saar,
-Stotram/Stuti, Kavacham, Ashtakam, Suktam, Sanskar and the Ramayan readers. Verse pages use
-the thematic banner above the verse instead of placing the painting behind text;
-existing source, verse and kāṇḍa mappings remain. Daily Bhakti originally used the same opening plate
+**Approved rollout (10 Oct 2026):** The `ReadingArtwork` painting/divider is shared by all
+seven canonical verse layouts, covering Chalisa, Aarti, Gita/Gita Saar,
+Stotram/Stuti, Kavacham, Ashtakam, Suktam, Sanskar and the Ramayan readers. Verse pages add
+the thematic banner above the verse; existing source, verse and kāṇḍa mappings remain. Daily Bhakti originally used the same opening plate
 inside its shareable card (superseded by the 12 October reading-space correction below). Daan's landing page has one Annapurna plate; its journey's Why
 section uses the prose folio. Pitru's education opening uses neutral manuscript art
 and its overview shares the paper. Vidhi preparation and the first conduct step have one
@@ -374,12 +373,25 @@ Chapter transition cards are excluded when finding the first verse. Single conti
 detail/guide screens keep their existing one opening image. Illustration
 assets, semantic mappings, R2 manifests and the lifetime cache remain available and unchanged.
 
-**Daily Bhakti reading-space correction (12 Oct 2026):** The rotating daily verse card uses
-bundled neutral parchment without a banner, reserved image space or illustration request.
+**Daily Bhakti reading-space correction (12 Oct 2026):** The rotating daily verse card has
+no banner, reserved image space or illustration request (its themed background was restored
+on 14 Oct — see below).
 The verse starts 14pt below its source/action row. A single compact `Ornament` separates verse
 and meaning with 6pt margins above and below; remove the previous wrapper's additional 14pt
 margins and the ornament's 26pt margins. Preserve full verse/meaning text, shared reading-size
 tokens, vertical scrolling for long content and the existing themed share-card background.
+
+**Themed backgrounds restored (14 Oct 2026):** Adding the banner was never meant to change
+the background. The 10 Oct rollout had also swapped the seven verse layouts, Daan Punya's
+landing and the Daily Bhakti card from their semantic plate to the neutral paper, so once
+the banner was gated (11–12 Oct) continuation verses and the daily card lost all thematic art.
+They again use their original `BackgroundLayer` plate — `getReaderBackground(sourceId, verse)`
+on every verse page (banner or not), `getReaderBackground(sourceId, { stanza: chapter })` on
+the Daily Bhakti card, `getDaanBackground()` on Daan Punya — with the parchment overlay
+(Section 2). Banner gating is unchanged. The neutral paper remains the CachedArtwork offline
+fallback and the background of surfaces that never had a plate (prose folios, Pitru, Vidhi,
+Daan journey/Katha, Garud Puran). Guarded by `readerArtworkPlacement.test.tsx` and
+`DailyBhaktiScreen.test.tsx`.
 
 **Share background readiness (12 Oct 2026):** Offscreen verse/prose/story captures wait for
 every remote background layer to finish native painting, including both a Story frame and its
@@ -991,7 +1003,7 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 1. Status bar
 2. Title area (centered): "दैनिक भक्ति" (Noto Serif 20 600, ink) + "Daily Verse" (Cormorant 14 400 italic, ink-muted, 4px below)
 3. **Verse card** (centered, 28px side margins):
-   - Background: `parchment-soft` base + the bundled neutral `readingParchment` through `BackgroundLayer`, clipped with `overflow: hidden`. No illustration banner or remote artwork request on the daily reading card; sharing retains its existing source-specific background.
+   - Background: `parchment-soft` base + the verse's own reader-page plate through `BackgroundLayer` (`getReaderBackground(sourceId, { stanza: chapter })`, with the parchment overlay), clipped with `overflow: hidden` — the same plate as its reader page and share card. No illustration banner on the daily reading card.
    - Border: 1px `divider`
    - Shadow: `md` (runtime: **`elevation.raised`** — was an inline `0.14/24` shadow until July 2026)
    - Radius: 18

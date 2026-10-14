@@ -2,7 +2,7 @@
 title: Reading artwork on R2
 type: integration
 sources: [mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md, docs/content-parity/reader-illustration-style3-prompt.md]
-last_verified_date: 2026-10-12
+last_verified_date: 2026-10-14
 confidence: high
 status: current
 ---
@@ -70,8 +70,8 @@ formats; actual kids-story layout and source gates still follow their own contra
    app process reads the same file asynchronously; changing the CDN host does not invalidate it.
    Changed artwork receives a new manifest hash and downloads once under its new filename.
    Explicitly deleted app artwork/storage or uninstall removes local files and permits a new fetch.
-5. Readers use the approved Option 2 paper and shared `ReadingArtwork` painting/divider;
-   prose adds the continuous `ProseReadingCard` folio and `kathaBackgrounds.ts`. Seven canonical
+5. Readers share the `ReadingArtwork` painting/divider; verse readers keep their semantic
+   background plate, while prose uses the approved Option 2 paper and adds the continuous `ProseReadingCard` folio and `kathaBackgrounds.ts`. Seven canonical
    verse layouts cover 21 reader screens, keeping their existing semantic verse/source mappings.
    Daan landing/journey, Pitru education and Vidhi preparation/first conduct step
    share this treatment. Vidhi chooses from declared deities; personal-tithi guides are neutral.
@@ -84,8 +84,16 @@ formats; actual kids-story layout and source gates still follow their own contra
    KathaSectionPage gates both Vrat Katha and Pitru introduction artwork to section zero.
    Direct links to later verses/sections remain text-first. Single continuous prose and
    standalone detail/guide screens keep their one opening image. Daily Bhakti's quick rotating
-   verse card is text-first following the October 12 correction: bundled neutral paper only,
-   no banner frame/placeholder/request, and the compact ornament between verse and meaning.
+   verse card is text-first following the October 12 correction: no banner frame/placeholder/
+   request, and the compact ornament between verse and meaning.
+   **Gotcha — a banner never replaces the background.** The 10 Oct rollout had swapped the seven
+   verse layouts, Daan Punya and the Daily Bhakti card from their semantic plate to the neutral
+   paper; once banners were gated, later verses and the daily card showed no thematic art.
+   Restored 14 Oct: verse pages use `BackgroundLayer source={bg}` (`getReaderBackground`) on
+   every card, Daily Bhakti uses `getReaderBackground(sourceId, { stanza: chapter })`, Daan
+   Punya uses `getDaanBackground()`. Neutral paper is only the offline fallback and the surface
+   for screens that never had a plate (prose folios, Pitru, Vidhi, Daan journey/Katha, Garud Puran).
+   `readerArtworkPlacement.test.tsx` pins this per layout.
    The themed share-card background remains separate and unchanged.
    Approved dedicated illustrations replace the rejected focal crops for all mapped reading
    slots. The legacy crop registry remains only for unmapped art. Manifest dimensions determine geometry before fetching;

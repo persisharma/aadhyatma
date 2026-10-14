@@ -19,7 +19,7 @@ import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
 import BackgroundLayer from '@/components/BackgroundLayer';
-import { readingParchment } from '@/data/backgroundAsset';
+import { getReaderBackground } from '@/data/backgrounds';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -152,9 +152,12 @@ export default function DailyBhaktiScreen() {
             </Text>
           </View>
 
-          {/* A daily verse starts with text; local paper adds warmth without a banner fetch. */}
+          {/* Verse Card — carries the same faded source sketch as the verse's own
+              reader page (getReaderBackground). `chapter` doubles as the stanza/kāṇḍa
+              key for the sources whose plate varies per subsection. No banner: a
+              daily verse starts with text. */}
           <View ref={dailyVerseRef} collapsable={false} style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
-            <BackgroundLayer source={readingParchment} />
+            <BackgroundLayer source={getReaderBackground(verse.sourceId, { stanza: verse.chapter })} />
             {/* Top row: source pill + action icons */}
             <View style={styles.cardHeader}>
               <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
