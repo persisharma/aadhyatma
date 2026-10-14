@@ -671,7 +671,7 @@ export const library: readonly LibraryEntry[] = [
   {
     // Shivanand Swami's Gujarati Amba aarti, known by its cue "ॐ जयो जयो मा
     // जगदंबे". Stored in Devanagari; the gu reading language restores the
-    // Gujarati script exactly (aarti/jay-adhya-shakti.json source notes).
+    // Gujarati script letter for letter (aarti/jay-adhya-shakti.json source notes).
     id: 'jay-adhya-shakti',
     nameHi: 'जय आद्या शक्ति',
     nameEn: 'Jay Adhya Shakti',

@@ -6,7 +6,7 @@
   "deity": "durga",
   "language": "gu-hi-en",
   "source": {
-    "baseText": "Jay Adhya Shakti (જય આદ્યા શક્તિ), the Gujarati Amba aarti signed by Shivanand Swami. Gujarati text supplied by the maintainer on 2026-10-14: eighteen stanzas, each followed by the cue ॥ ૐ જયો જયો મા જગદંબે ॥. It is stored in Devanagari through a one-to-one Gujarati-to-Devanagari codepoint mapping (offset -0x180), so the app's Gujarati reading language reproduces the supplied text exactly. No word, spelling or punctuation was changed, and the cue stays on every page as printed. Two stanzas the maintainer marked as later additions are not included: ભાવ ન જાણું, ભક્તિ ન જાણું (it names Vallabh Bhatt) and માનો મંડપ લાલ ગુલાલ. The aarti's own signature stanza (ભણે શિવાનંદ સ્વામી) closes Shivanand Swami's composition. Meanings and romanization are Aadhyatma editorial.",
+    "baseText": "Jay Adhya Shakti (જય આદ્યા શક્તિ), the Gujarati Amba aarti signed by Shivanand Swami. Gujarati text supplied by the maintainer on 2026-10-14: eighteen stanzas, each followed by the cue ॥ ૐ જયો જયો મા જગદંબે ॥. It is stored in Devanagari through a one-to-one Gujarati-to-Devanagari codepoint mapping (offset -0x180), so the app's Gujarati reading language reproduces the supplied text letter for letter. The maintainer then supplied the same text in Devanagari, identical word for word, which ends each stanza's second line with a danda (।) where the Gujarati copy had a full stop; the danda is used, so the Gujarati view shows it too. No word or spelling was changed, and the cue stays on every page as printed. Two stanzas the maintainer marked as later additions are not included: ભાવ ન જાણું, ભક્તિ ન જાણું (it names Vallabh Bhatt) and માનો મંડપ લાલ ગુલાલ. The aarti's own signature stanza (ભણે શિવાનંદ સ્વામી) closes Shivanand Swami's composition. Meanings and romanization are Aadhyatma editorial.",
     "referenceUrls": [],
     "canonicalEdition": "Shubh Panchang Amba aarti (Gujarati); Swargarohan Ambama Aarti - Jay Adhya Shakti; Pujasthan Jay Aadhya Shakti",
     "canonicalEditionUrls": [
@@ -31,7 +31,7 @@
       "labelEn": "Stanza · 1",
       "lines": [
         "जय आद्या शक्ति, मा जय आद्या शक्ति,",
-        "अखंड ब्रह्मांड निपजाव्यां (२), पडवे प्रगट्यां मा.",
+        "अखंड ब्रह्मांड निपजाव्यां (२), पडवे प्रगट्यां मा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -52,7 +52,7 @@
       "labelEn": "Stanza · 2",
       "lines": [
         "द्वितीया बेउ स्वरूप, शिवशक्ति जाणुं, मा शिवशक्ति जाणुं,",
-        "ब्रह्मा गणपति गाये (२), हर गाये हर मा.",
+        "ब्रह्मा गणपति गाये (२), हर गाये हर मा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -73,7 +73,7 @@
       "labelEn": "Stanza · 3",
       "lines": [
         "तृतीया त्रण स्वरूप, त्रिभुवनमां बेठां, मा त्रिभुवनमां बेठां,",
-        "त्रया थकी तरवेणी (२), तुं तरवेणी मा.",
+        "त्रया थकी तरवेणी (२), तुं तरवेणी मा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -94,7 +94,7 @@
       "labelEn": "Stanza · 4",
       "lines": [
         "चोथे चतुरा महालक्ष्मी, मा सचराचर व्याप्यां, मा सचराचर व्याप्यां,",
-        "चार भुजा चौ दिशा (२), प्रगट्यां दक्षिणमां.",
+        "चार भुजा चौ दिशा (२), प्रगट्यां दक्षिणमां।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -115,7 +115,7 @@
       "labelEn": "Stanza · 5",
       "lines": [
         "पंचमे पंच ऋषि, पंचमी गुण पद्मा, मा पंचमी गुण पद्मा,",
-        "पंच सहस्त्र त्यां सोहिये (२), पंचे तत्त्वो मा.",
+        "पंच सहस्त्र त्यां सोहिये (२), पंचे तत्त्वो मा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -136,7 +136,7 @@
       "labelEn": "Stanza · 6",
       "lines": [
         "षष्ठी तुं नारायणी, महिषासुर मार्यो, मा महिषासुर मार्यो,",
-        "नर नारीना रूपे (२), व्याप्यां सघळे मा.",
+        "नर नारीना रूपे (२), व्याप्यां सघळे मा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -157,7 +157,7 @@
       "labelEn": "Stanza · 7",
       "lines": [
         "सप्तमी सप्त पाताळ, संध्या सावित्री, मा संध्या सावित्री,",
-        "गौ गंगा गायत्री (२), गौरी गीता मा.",
+        "गौ गंगा गायत्री (२), गौरी गीता मा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -178,7 +178,7 @@
       "labelEn": "Stanza · 8",
       "lines": [
         "अष्टमी अष्ट भुजा, आई आनंदा, मा आई आनंदा,",
-        "सुरवर मुनिवर जन्म्या (२), देव दैत्यो मा.",
+        "सुरवर मुनिवर जन्म्या (२), देव दैत्यो मा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -199,7 +199,7 @@
       "labelEn": "Stanza · 9",
       "lines": [
         "नवमी नवकुळ नाग, सेवे नवदुर्गा, मा सेवे नवदुर्गा,",
-        "नवरात्रिना पूजन, शिवरात्रिना अर्चन, कीधां हर ब्रह्मा.",
+        "नवरात्रिना पूजन, शिवरात्रिना अर्चन, कीधां हर ब्रह्मा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -220,7 +220,7 @@
       "labelEn": "Stanza · 10",
       "lines": [
         "दशमी दश अवतार, जय विजयादशमी, मा जय विजयादशमी,",
-        "रामे राम रमाड्या (२), रावण रोळ्यो मा.",
+        "रामे राम रमाड्या (२), रावण रोळ्यो मा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -241,7 +241,7 @@
       "labelEn": "Stanza · 11",
       "lines": [
         "एकादशी अगियारस, कात्यायनी कामा, मा कात्यायनी कामा,",
-        "कामदुर्गा काळिका (२), श्यामा ने रामा.",
+        "कामदुर्गा काळिका (२), श्यामा ने रामा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -262,7 +262,7 @@
       "labelEn": "Stanza · 12",
       "lines": [
         "बारसे बाळा रूप, बहुचरी अंबा, मा बहुचरी अंबा,",
-        "बटुक भैरव सोहीए, काळ भैरव सोहीए, तारा छे तुज मा.",
+        "बटुक भैरव सोहीए, काळ भैरव सोहीए, तारा छे तुज मा।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -283,7 +283,7 @@
       "labelEn": "Stanza · 13",
       "lines": [
         "तेरसे तुळजा रूप, तमे तारुणी माता, मा तमे तारुणी माता,",
-        "ब्रह्मा विष्णु सदाशिव (२), गुण तारा गाता.",
+        "ब्रह्मा विष्णु सदाशिव (२), गुण तारा गाता।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -304,7 +304,7 @@
       "labelEn": "Stanza · 14",
       "lines": [
         "चौदशे चौदा रूप, चंडी चामुंडा, मा चंडी चामुंडा,",
-        "भाव भक्ति कंई आपो, चतुराई कंई आपो, सिंहवाहिनी माता.",
+        "भाव भक्ति कंई आपो, चतुराई कंई आपो, सिंहवाहिनी माता।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -325,7 +325,7 @@
       "labelEn": "Stanza · 15",
       "lines": [
         "पूनमे कुंभ भर्यो, सांभळजो करुणा, मा सांभळजो करुणा,",
-        "वशिष्ठ देवे वखाण्यां, मार्कंड देवे वखाण्यां, गाई शुभ कविता.",
+        "वशिष्ठ देवे वखाण्यां, मार्कंड देवे वखाण्यां, गाई शुभ कविता।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -346,7 +346,7 @@
       "labelEn": "Stanza · 16",
       "lines": [
         "संवत सोळ सत्तावन, सोळसें बावीसमां, मा सोळसें बावीसमां,",
-        "संवत सोळे प्रगट्यां (२), रेवाने तीरे.",
+        "संवत सोळे प्रगट्यां (२), रेवाने तीरे।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -367,7 +367,7 @@
       "labelEn": "Stanza · 17",
       "lines": [
         "त्रांबावटी नगरी, आई रूपावटी नगरी, मा मंछावटी नगरी,",
-        "सोळ सहस्त्र त्यां सोहिये (२), क्षमा करो गौरी, मा दया करो गौरी.",
+        "सोळ सहस्त्र त्यां सोहिये (२), क्षमा करो गौरी, मा दया करो गौरी।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
@@ -388,7 +388,7 @@
       "labelEn": "Stanza · 18",
       "lines": [
         "शिवशक्तिनी आरती, जे कोई गाशे, मा जे भावे गाशे,",
-        "भणे शिवानंद स्वामी, सुख संपत्ति थाशे, हर कैलासे जाशे, मा अंबा दुःख हरशे.",
+        "भणे शिवानंद स्वामी, सुख संपत्ति थाशे, हर कैलासे जाशे, मा अंबा दुःख हरशे।",
         "॥ ॐ जयो जयो मा जगदंबे ॥"
       ],
       "linesEn": [
