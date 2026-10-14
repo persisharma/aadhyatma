@@ -43,7 +43,7 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 **Home gradient** (top → bottom): `#F6ECD0` → `#F1E3BF` (`parchmentHighlight` → `parchmentGradientEnd` in `colors.ts`).
 
 **Reader overlay** (on top of background image): vertical gradient
-`rgba(243,231,201,0.85)` → `rgba(243,231,201,0.55)` → `rgba(243,231,201,0.75)` → `rgba(233,217,177,0.95)`.
+`rgba(243,231,201,0.90)` → `rgba(243,231,201,0.90)` → `rgba(243,231,201,0.92)` → `rgba(233,217,177,0.95)` at stops `0`, `0.4`, `0.85`, `1`. The 90% paper floor protects normal body and muted text against dark image details. Opening illustration banners retain their full painted strength.
 
 **Background image filters:** the CSS filter stack (`opacity: 0.52`, `sepia(0.35) saturate(0.85) brightness(1.02)`) applies only to `design-preview.html`. In React Native the sketch renders unfiltered — `BackgroundLayer.tsx` sets no `imageStyle` opacity or tint — and the fade comes solely from the parchment overlay gradient stacked above it.
 
@@ -314,8 +314,8 @@ Four faded vintage sketches serve the Hanuman texts, published from `mobile/asse
   - **Sundarkand:** stanza-range buckets — stanzas 1–4 sea, 5–11 Sita, 12–18 Lanka-dahan, remainder Ram-Hanuman.
   - **Every other source:** one pinned image per source id (`sourceBackgrounds`), plus category/deity fallback maps for browse screens.
 - A given verse therefore always shows the same image — stable as the user swipes back and forth — but the mapping is curated to match the verse's story beat, never re-rolled per render.
-- Browse/background surfaces apply the image as a `cover`-sized background with the parchment overlay (Section 2). Reader folios reserve a compact landscape banner above text. The first focal-crop proposal was rejected; new complete 2:1 compositions are being staged for approval below.
-- `cover` keeps only the middle of a plate on a portrait phone (~46% of a square's width, ~69% of a 2:3's). Multi-figure plates are therefore commissioned **2:3 portrait** with every figure inside the central ~60% (दान-पुण्य, §73).
+- Browse/background surfaces contain the complete source canvas in a top-aligned, aspect-ratio-sized layer, bounded by the surface height. Paper fills the remaining area under the stronger parchment overlay (Section 2). This preserves side figures, vahanas and attributes across phone, tablet and growing share-card ratios. Neutral reading parchment continues to cover the whole reading surface.
+- Full-screen `cover` formerly kept only ~46% of a square plate's width on a tall phone. Source paintings remain intact; layout now preserves their composition. Reader folios keep complete 2:1 compositions in their separate compact banners.
 
 **Exception — Theerth.** Theerth detail screens resolve their background by **presiding deity**, with per-temple overrides for shrines whose deity plate is too generic (`getTheerthBackground(templeId, deityId)` in `backgrounds.ts`). The browse/map surface uses no background image — only the flat parchment gradient behind the stylised India SVG outline.
 
@@ -330,6 +330,8 @@ downloads deduplicate by hash/extension, limit concurrency to two, time out afte
 and cancel when the final viewer leaves. Completed valid artwork has no expiry, revalidation or
 automatic eviction. Text and controls never await artwork; native decode errors preserve the
 fallback and evict damaged files for recovery.
+
+**Bounded artwork refinements (14 Oct 2026):** `artworkCorrections.ts` overrides five reviewed WebPs (under 1.25 MiB total): Karni Mata background/banner, Hanuman-Sita background, Ram-Hanuman background and Rama Darbar background. Karni Mata has a clean feminine face; Hanuman-Sita has no corner mark or hard frame. The recreated Rama scenes have clearer faces, connected hands and poses with quiet lower parchment. The shared loader chooses these refinements before any cached or remote image, including offline, and share capture waits for their native paint. Existing published manifests remain unchanged; no unpublished CDN hashes are activated. Future CDN migration must upload and verify these files before removing the overrides. Vishnu backgrounds use the existing published sepia plate; its coloured opening banner is preserved.
 
 Paged sections share a single screen-level paper image instead of duplicating it per list cell.
 
