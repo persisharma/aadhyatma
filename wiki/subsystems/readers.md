@@ -107,7 +107,9 @@ physical performance remain open. Later Vidhi
 steps show the divider without repeating art. Semantic guide art follows declared deities and
 personal-tithi guides remain neutral. Individual reader paging/scroll logic is still separate.
 Daily Bhakti's rotating verse card omits the banner after the October 12 reading-space
-correction. Its bundled parchment needs no remote lookup, and `Ornament compact` replaces
+correction but keeps its verse's reader-page plate (restored 14 Oct). Every verse page keeps
+its semantic `BackgroundLayer` plate whether or not it shows the banner — the banner is
+additive, never a background replacement. `Ornament compact` replaces
 the nested 80pt vertical margins with 12pt total. Shared reading-size tokens and full text stay
 intact; long verses/meanings still scroll. Source-specific share backgrounds are unchanged.
 `ProseParagraph` preserves complete source strings while giving iOS Fabric one extra point of

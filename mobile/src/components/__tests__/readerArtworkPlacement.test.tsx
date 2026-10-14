@@ -21,6 +21,8 @@ import ProseReadingCard from '../ProseReadingCard';
 import GarudPuranPage from '../GarudPuranPage';
 import { getGarudPuranChapter } from '@/data/garud-puran';
 import ReadingBanner from '../ReadingBanner';
+import BackgroundLayer from '../BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
 
 // Keep actual reader layout; only native image I/O is outside this test's scope.
 jest.mock('../CachedArtwork', () => () => null);
@@ -53,6 +55,17 @@ test.each(cases)('%s: later cards remove the banner frame while keeping all read
   expect(tree.root.findAllByProps({ testID: 'prose-reading-illustration' })).toHaveLength(0);
   expect(text(tree)).toEqual(reading);
   act(() => tree.unmount());
+});
+
+test.each(cases)('%s: every card keeps its themed background whether or not it shows the banner', (_, page) => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  for (const show of [true, false]) {
+    act(() => { tree = TestRenderer.create(wrap(page(show))); });
+    const [layer] = tree.root.findAllByType(BackgroundLayer);
+    expect(layer.props.source).toBeTruthy();
+    expect(layer.props.source).not.toBe(readingParchment);
+    act(() => tree.unmount());
+  }
 });
 
 test('Katha has a banner only on its first section, including when a later section is opened directly', () => {

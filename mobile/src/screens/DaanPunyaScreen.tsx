@@ -25,7 +25,6 @@ import Svg, { Path } from 'react-native-svg';
 
 import BackgroundLayer from '@/components/BackgroundLayer';
 import ReadingArtwork from '@/components/ReadingArtwork';
-import { readingParchment } from '@/data/backgroundAsset';
 import ReaderHeader from '@/components/ReaderHeader';
 import { getDaanBackground } from '@/data/backgrounds';
 import { useTodayKey } from '@/utils/useTodayKey';
@@ -106,7 +105,7 @@ export default function DaanPunyaScreen({ navigation }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       {/* Shared paper; the complete Annapurna painting appears once in the reading flow. */}
-      <BackgroundLayer source={readingParchment} />
+      <BackgroundLayer source={getDaanBackground()} />
       <SafeAreaView style={styles.root} edges={['top']} testID="daan-punya-screen">
       <ReaderHeader
         title={contentByLang(lang, 'दान-पुण्य', 'Daan Punya')}

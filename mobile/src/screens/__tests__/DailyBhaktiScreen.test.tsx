@@ -5,7 +5,8 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import ReadingArtwork from '@/components/ReadingArtwork';
 import ReadingBanner from '@/components/ReadingBanner';
 import Ornament from '@/components/Ornament';
-import { readingParchment, backgroundRequest } from '@/data/backgroundAsset';
+import { readingParchment } from '@/data/backgroundAsset';
+import { getReaderBackground } from '@/data/backgrounds';
 
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
@@ -62,9 +63,10 @@ const DailyBhaktiScreen = jest.requireActual<typeof import('../DailyBhaktiScreen
 ).default;
 
 /**
- * The daily verse keeps local paper without making each random verse a cover card.
+ * The daily verse keeps its source's themed background without making each
+ * random verse a cover card (no banner).
  */
-test('verse card uses local paper and a compact divider without a banner request', () => {
+test('verse card keeps the source background and a compact divider without a banner', () => {
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
@@ -79,8 +81,8 @@ test('verse card uses local paper and a compact divider without a banner request
 
   const backgrounds = tree!.root.findAllByType(BackgroundLayer);
   expect(backgrounds).toHaveLength(1);
-  expect(backgrounds[0].props.source).toBe(readingParchment);
-  expect(backgroundRequest(backgrounds[0].props.source)).toBeNull();
+  expect(backgrounds[0].props.source).toEqual(getReaderBackground('bhagavad-gita', { stanza: 1 }));
+  expect(backgrounds[0].props.source).not.toBe(readingParchment);
   expect(tree!.root.findAllByType(ReadingArtwork)).toHaveLength(0);
   expect(tree!.root.findAllByType(ReadingBanner)).toHaveLength(0);
   expect(tree!.root.findByType(Ornament).props.compact).toBe(true);
