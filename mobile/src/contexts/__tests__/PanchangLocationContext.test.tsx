@@ -171,8 +171,9 @@ describe('PanchangLocationContext', () => {
 
   test('a GPS fix keeps the bundled city when no pincode is closer', async () => {
     mockRequestPermissions.mockResolvedValue({ status: 'granted' });
-    // Srinagar. The geocoder carries 1 of the directory's 207 Jammu & Kashmir pincodes, so
-    // the nearest one is 156 km away in Doda — the bundled city wins, and must.
+    // A fix exactly on the bundled Srinagar entry. Under the first geocoder (1 of 207 J&K
+    // pincodes) the nearest pincode was 156 km away in Doda; coverage is complete now, but
+    // the guard is unchanged — whichever tier is closer wins, ties to the city.
     mockLastKnown.mockResolvedValue({ coords: { latitude: 34.0837, longitude: 74.7973 } });
     await mountAndHydrate();
     await act(async () => {
@@ -193,8 +194,8 @@ describe('PanchangLocationContext', () => {
     });
     await flush();
     expect(mockCurrent).toHaveBeenCalled();
-    // Chembur, ~7 km from the bundled Mumbai centroid this used to snap to.
-    expect(captured.location.cityId).toBe('pin-400071');
+    // Chembur Extension, ~7 km from the bundled Mumbai centroid this used to snap to.
+    expect(captured.location.cityId).toBe('pin-400074');
     expect(captured.location.labelEn).toContain('Mumbai');
   });
 

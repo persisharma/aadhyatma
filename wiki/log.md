@@ -882,3 +882,16 @@ surfaces showed no thematic art. Restored the original plates; banner gating is 
 Screens that never had a plate keep the paper. Added a per-layout regression test. Updated
 design.md §6/§23, RULEBOOK §11.8 and the readers/reading-artwork pages. Focused Jest suites,
 TypeScript and touched-file lint pass; native visual check not run.
+
+## [2026-10-14] ingest | Nationwide place-name search in the location picker
+
+"A lot of places not in the list": only 52 cities + 342 Rajasthan tehsils were findable by name;
+everything else needed an exact pincode. Rebuilt `scripts/build-pincodes.mjs` on the data.gov.in
+post-office directory (npm `india-pincode`): 19,654 pincodes (was 18,466; J&K 1 → 186, Ladakh 0 → 13)
+and a new lazily-loaded `pincodeOffices.json` of 165,192 town/village names. Office coordinates are
+noisy, so the generator gates snaps, broken columns, DMS typos and misfiled states, and votes by
+consensus with the old geocoder — median error 3.3 km vs 5.4 km before. Picker gains a
+"Towns & villages" group, a no-match line, and served-offices captions; a picked place stores its
+pincode with the name in `labelEn`. State labels now say "Jammu and Kashmir", matching `STATE_LENS`.
+Updated design.md Location Picker, [[panchang]] location sections/gotchas, the Maestro location flow
+(device run owed). Jest, engine, Ask and typecheck pass; `contentCorrectness` fails identically on main.

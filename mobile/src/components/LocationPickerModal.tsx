@@ -17,11 +17,16 @@ import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { CITIES, cityMatchesQuery, type City } from '@/panchang/locations';
 import {
   isPincodeQuery,
+  isPlaceQuery,
   lookupPincode,
   pincodeCityId,
+  placesForPincode,
+  searchPlaces,
   toDevanagariDigits,
   warmPincodeTable,
+  warmPlaceIndex,
   type PincodeEntry,
+  type PlaceMatch,
 } from '@/panchang/pincodes';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
@@ -31,14 +36,42 @@ type Row =
   | { kind: 'header'; id: string; hi: string; en: string }
   | { kind: 'city'; city: City }
   | { kind: 'pincode'; entry: PincodeEntry }
-  | { kind: 'pincode-missing'; query: string };
+  | { kind: 'pincode-missing'; query: string }
+  | { kind: 'place'; place: PlaceMatch }
+  | { kind: 'no-match'; query: string };
+
+/** A town office within this distance of a same-named listed city IS that city. */
+const SAME_PLACE_KM = 25;
+
+const DEVANAGARI = /[\u0900-\u097F]/;
+
+function sameNamedCityNearby(place: PlaceMatch, cities: City[]): boolean {
+  const name = place.name.toLowerCase();
+  return cities.some((city) => {
+    if (city.nameEn.toLowerCase() !== name) return false;
+    const cosLat = Math.cos((city.latitude * Math.PI) / 180);
+    const dLat = city.latitude - place.entry.latitude;
+    const dLng = (city.longitude - place.entry.longitude) * cosLat;
+    return Math.sqrt(dLat * dLat + dLng * dLng) * 111.2 <= SAME_PLACE_KM;
+  });
+}
+
+/** "Kolhapur RS, Shahupuri +11" — what a bare pincode actually covers. */
+function placesSummary(pincode: string): string {
+  const places = placesForPincode(pincode);
+  if (places.length === 0) return '';
+  const shown = places.slice(0, 3).join(', ');
+  return places.length > 3 ? `${shown} +${places.length - 3}` : shown;
+}
 
 /**
- * City/pincode/GPS picker for the panchang reference location.
+ * City/village/pincode/GPS picker for the panchang reference location.
  *
- * THREE WAYS IN, in increasing precision:
+ * FOUR WAYS IN:
  *   - GPS, which snaps to the nearest pincode centroid (see `pincodes.ts`);
  *   - a 6-digit pincode typed into the search box, resolved exactly;
+ *   - a town or village name (3+ Latin letters), matched against India Post's ~165k
+ *     post offices and listed under the city tiers as "Towns & villages";
  *   - the browsable `CITIES` list.
  *
  * `CITIES` is two tiers — nationwide cities, then Rajasthan tehsils — and the tehsils
@@ -46,10 +79,10 @@ type Row =
  * headers rather than rendered as one flat 390-row scroll. A tehsil is identified by
  * carrying a `districtEn`.
  *
- * The 18,466 pincodes are deliberately NOT browsable rows: they have no Devanagari place
- * names (see `pincodes.ts`), and 18k rows is not a list anyone scrolls. They surface only
- * when the query IS a pincode, which is also what keeps the 566 KB table off the launch
- * path — it loads when this sheet opens, not when the app starts.
+ * The 19.6k pincodes and their offices are deliberately NOT browsable rows: they have no
+ * Devanagari place names (see `pincodes.ts`), and nobody scrolls 165k rows. They surface
+ * only when the query is a pincode or a place name, which is also what keeps their 2.5 MB
+ * off the launch path — they load when this sheet opens, not when the app starts.
  */
 export default function LocationPickerModal({ visible, onClose }: {
   visible: boolean;
@@ -60,11 +93,14 @@ export default function LocationPickerModal({ visible, onClose }: {
   const { location, gpsStatus, selectCity, selectPincode, requestDeviceLocation } = usePanchangLocation();
   const [query, setQuery] = useState('');
 
-  // Parse the 566 KB table once the sheet is actually open, so the first pincode typed
-  // resolves instantly instead of paying for the load mid-keystroke.
+  // Parse both tables once the sheet is actually open, so the first pincode or place
+  // name typed resolves instantly instead of paying for the load mid-keystroke.
   useEffect(() => {
     if (!visible) return;
-    const handle = InteractionManager.runAfterInteractions(() => warmPincodeTable());
+    const handle = InteractionManager.runAfterInteractions(() => {
+      warmPincodeTable();
+      warmPlaceIndex();
+    });
     return () => handle.cancel();
   }, [visible]);
 
@@ -82,6 +118,11 @@ export default function LocationPickerModal({ visible, onClose }: {
     const matches = CITIES.filter((city) => cityMatchesQuery(city, query));
     const cities = matches.filter((city) => !city.districtEn);
     const tehsils = matches.filter((city) => city.districtEn);
+    // A town office that is a listed city (Pokaran S.O beside the Pokaran tehsil) would
+    // only repeat it in Latin; the bilingual city row is the better answer.
+    const places = isPlaceQuery(trimmed)
+      ? searchPlaces(trimmed).filter((place) => !sameNamedCityNearby(place, matches))
+      : [];
     const out: Row[] = [];
     if (cities.length > 0) {
       out.push({ kind: 'header', id: 'h-cities', hi: 'प्रमुख शहर', en: 'Major cities' });
@@ -91,6 +132,11 @@ export default function LocationPickerModal({ visible, onClose }: {
       out.push({ kind: 'header', id: 'h-tehsils', hi: 'राजस्थान · तहसील', en: 'Rajasthan · tehsils' });
       out.push(...tehsils.map((city) => ({ kind: 'city' as const, city })));
     }
+    if (places.length > 0) {
+      out.push({ kind: 'header', id: 'h-places', hi: 'कस्बे व गाँव', en: 'Towns & villages' });
+      out.push(...places.map((place) => ({ kind: 'place' as const, place })));
+    }
+    if (out.length === 0 && trimmed.length > 0) out.push({ kind: 'no-match', query: trimmed });
     return out;
   }, [query]);
 
@@ -106,6 +152,10 @@ export default function LocationPickerModal({ visible, onClose }: {
 
   const onPickPincode = (entry: PincodeEntry) => {
     if (selectPincode(entry.pincode)) onClose();
+  };
+
+  const onPickPlace = (place: PlaceMatch) => {
+    if (selectPincode(place.entry.pincode, place.name)) onClose();
   };
 
   return (
@@ -150,8 +200,8 @@ export default function LocationPickerModal({ visible, onClose }: {
               <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
                 {meaningByLang(
                   lang,
-                  'स्थान की अनुमति नहीं मिली — नीचे सूची से अपना शहर चुनें।',
-                  'Location permission was denied — pick your city from the list below.'
+                  'स्थान की अनुमति नहीं मिली — नीचे अपना शहर या गाँव खोजें।',
+                  'Location permission was denied — search for your town or village below.'
                 )}
               </Text>
             )}
@@ -159,17 +209,17 @@ export default function LocationPickerModal({ visible, onClose }: {
               <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
                 {meaningByLang(
                   lang,
-                  'स्थान प्राप्त नहीं हो सका — नीचे सूची से अपना शहर चुनें।',
-                  'Could not get your location — pick your city from the list below.'
+                  'स्थान प्राप्त नहीं हो सका — नीचे अपना शहर या गाँव खोजें।',
+                  'Could not get your location — search for your town or village below.'
                 )}
               </Text>
             )}
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder={contentByLang(lang, 'शहर या पिनकोड खोजें…', 'Search city or pincode…')}
+              placeholder={contentByLang(lang, 'शहर, गाँव या पिनकोड खोजें…', 'Search city, village or pincode…')}
               placeholderTextColor={colors.inkMuted}
-              accessibilityLabel={contentByLang(lang, 'शहर या पिनकोड खोजें', 'Search city or pincode')}
+              accessibilityLabel={contentByLang(lang, 'शहर, गाँव या पिनकोड खोजें', 'Search city, village or pincode')}
               style={[
                 styles.search,
                 {
@@ -184,8 +234,8 @@ export default function LocationPickerModal({ visible, onClose }: {
             <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkMuted }}>
               {meaningByLang(
                 lang,
-                'कोई भी भारतीय पिनकोड लिखें, या सूची से शहर चुनें — सूर्योदय व तिथि की गणना इसी स्थान के लिए होगी।',
-                'Type any Indian pincode, or pick a city from the list — sunrise and tithi are computed for this place.'
+                'कोई भी शहर, कस्बा, गाँव (अंग्रेज़ी अक्षरों में) या पिनकोड लिखें — सूर्योदय व तिथि की गणना इसी स्थान के लिए होगी।',
+                'Type any town, village or Indian pincode — sunrise and tithi are computed for this place.'
               )}
             </Text>
           </View>
@@ -196,6 +246,8 @@ export default function LocationPickerModal({ visible, onClose }: {
               if (row.kind === 'header') return row.id;
               if (row.kind === 'pincode') return `pin-${row.entry.pincode}`;
               if (row.kind === 'pincode-missing') return `missing-${row.query}`;
+              if (row.kind === 'place') return `place-${row.place.entry.pincode}-${row.place.name}`;
+              if (row.kind === 'no-match') return `no-match-${row.query}`;
               return row.city.id;
             }}
             contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingVertical: spacing.lg }}
@@ -212,17 +264,70 @@ export default function LocationPickerModal({ visible, onClose }: {
                   </Text>
                 );
               }
+              if (row.kind === 'no-match') {
+                // The directory is Latin-only, so a Devanagari query that found no city
+                // is told exactly that rather than left looking at an empty sheet.
+                const devanagari = DEVANAGARI.test(row.query);
+                return (
+                  <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+                    {devanagari
+                      ? meaningByLang(
+                          lang,
+                          'कस्बों व गाँवों के नाम अंग्रेज़ी अक्षरों में खोजें (जैसे “Shahupuri”), या पिनकोड लिखें।',
+                          'Search towns and villages in English letters (e.g. “Shahupuri”), or type the pincode.'
+                        )
+                      : meaningByLang(
+                          lang,
+                          'यह स्थान नहीं मिला — वर्तनी जाँचें, निकट का कस्बा खोजें, या पिनकोड लिखें।',
+                          'No place found — check the spelling, try a nearby town, or type the pincode.'
+                        )}
+                  </Text>
+                );
+              }
+              if (row.kind === 'place') {
+                const { place } = row;
+                const { entry } = place;
+                const selected =
+                  location.cityId === pincodeCityId(entry.pincode) && location.labelEn.startsWith(`${place.name} · `);
+                // Title line is Latin in every language (the directory has no Devanagari
+                // names); the caption carries the Hindi — pincode digits and state.
+                const title = `${place.name} · ${entry.districtEn}`;
+                return (
+                  <Pressable
+                    onPress={() => onPickPlace(place)}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected }}
+                    accessibilityLabel={`${place.name}, ${entry.districtEn}, ${entry.stateEn}, pincode ${entry.pincode}${selected ? ', selected' : ''}`}
+                    style={({ pressed }) => [
+                      styles.cityRow,
+                      { borderBottomColor: colors.divider },
+                      pressed && { opacity: 0.7 },
+                    ]}
+                  >
+                    <View style={{ flex: 1 }}>
+                      <Text
+                        numberOfLines={1}
+                        style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 15, color: colors.ink }}
+                      >
+                        {title}
+                      </Text>
+                      <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 11, lineHeight: 16, color: colors.inkMuted }}>
+                        {contentByLang(lang, `${toDevanagariDigits(entry.pincode)} · ${entry.stateHi}`, `${entry.pincode} · ${entry.stateEn}`)}
+                      </Text>
+                    </View>
+                    {selected && <Text style={{ fontSize: 15, color: colors.saffronDeep }}>✓</Text>}
+                  </Pressable>
+                );
+              }
               if (row.kind === 'pincode') {
                 const { entry } = row;
                 const selected = location.cityId === pincodeCityId(entry.pincode);
-                // District and taluka both, because neither alone is reliably the name a user
-                // recognises — 416001 is Kolhapur/Karvir, 781001 is Kamrup/Guwahati. Collapsed
-                // when they are equal (Mumbai). Latin in every language: neither source dataset
-                // has Devanagari place names, and guessing the spelling would be worse.
-                const place =
-                  entry.talukaEn && entry.talukaEn !== entry.districtEn
-                    ? `${entry.districtEn} · ${entry.talukaEn}`
-                    : entry.districtEn;
+                // District, then the offices the code serves — "Kamrup Metro · Guwahati GPO,
+                // Fancy Bazar, Uzanbazar" — because the district alone is often not the name
+                // a user knows. Latin in every language: neither source dataset has
+                // Devanagari place names, and guessing the spelling would be worse.
+                const served = placesSummary(entry.pincode);
+                const place = served ? `${entry.districtEn} · ${served}` : entry.districtEn;
                 return (
                   <Pressable
                     onPress={() => onPickPincode(entry)}

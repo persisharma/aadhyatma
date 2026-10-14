@@ -104,7 +104,7 @@ function chainTo(file: string): string {
 const FORBIDDEN = [
   /^src\/data\/gita\/chapter-\d+\.json$/,
   /^src\/data\/valmiki-ramayan\/chapter-\d+\.json$/,
-  /^src\/panchang\/pincodeData\.json$/,
+  /^src\/panchang\/pincode(Data|Offices)\.json$/,
 ];
 
 test('no on-demand corpus payload is statically reachable from the app entry', () => {
