@@ -349,11 +349,10 @@ Normal reading tokens and unrestricted vertical text scrolling remain. Katha and
 introduction markers sit below the text viewport; the tab bar owns the bottom safe-area inset
 for the Pitru introduction. Utility forms, charts, ledgers and kids stories retain their layouts.
 
-**Approved rollout (10 Oct 2026):** The same paper and `ReadingArtwork` painting/divider
-are shared by all seven canonical verse layouts, covering Chalisa, Aarti, Gita/Gita Saar,
-Stotram/Stuti, Kavacham, Ashtakam, Suktam, Sanskar and the Ramayan readers. Verse pages use
-the thematic banner above the verse instead of placing the painting behind text;
-existing source, verse and kāṇḍa mappings remain. Daily Bhakti originally used the same opening plate
+**Approved rollout (10 Oct 2026):** The `ReadingArtwork` painting/divider is shared by all
+seven canonical verse layouts, covering Chalisa, Aarti, Gita/Gita Saar,
+Stotram/Stuti, Kavacham, Ashtakam, Suktam, Sanskar and the Ramayan readers. Verse pages add
+the thematic banner above the verse; existing source, verse and kāṇḍa mappings remain. Daily Bhakti originally used the same opening plate
 inside its shareable card (superseded by the 12 October reading-space correction below). Daan's landing page has one Annapurna plate; its journey's Why
 section uses the prose folio. Pitru's education opening uses neutral manuscript art
 and its overview shares the paper. Vidhi preparation and the first conduct step have one
@@ -372,12 +371,25 @@ Chapter transition cards are excluded when finding the first verse. Single conti
 detail/guide screens keep their existing one opening image. Illustration
 assets, semantic mappings, R2 manifests and the lifetime cache remain available and unchanged.
 
-**Daily Bhakti reading-space correction (12 Oct 2026):** The rotating daily verse card uses
-bundled neutral parchment without a banner, reserved image space or illustration request.
+**Daily Bhakti reading-space correction (12 Oct 2026):** The rotating daily verse card has
+no banner, reserved image space or illustration request (its themed background was restored
+on 14 Oct — see below).
 The verse starts 14pt below its source/action row. A single compact `Ornament` separates verse
 and meaning with 6pt margins above and below; remove the previous wrapper's additional 14pt
 margins and the ornament's 26pt margins. Preserve full verse/meaning text, shared reading-size
 tokens, vertical scrolling for long content and the existing themed share-card background.
+
+**Themed backgrounds restored (14 Oct 2026):** Adding the banner was never meant to change
+the background. The 10 Oct rollout had also swapped the seven verse layouts, Daan Punya's
+landing and the Daily Bhakti card from their semantic plate to the neutral paper, so once
+the banner was gated (11–12 Oct) continuation verses and the daily card lost all thematic art.
+They again use their original `BackgroundLayer` plate — `getReaderBackground(sourceId, verse)`
+on every verse page (banner or not), `getReaderBackground(sourceId, { stanza: chapter })` on
+the Daily Bhakti card, `getDaanBackground()` on Daan Punya — with the parchment overlay
+(Section 2). Banner gating is unchanged. The neutral paper remains the CachedArtwork offline
+fallback and the background of surfaces that never had a plate (prose folios, Pitru, Vidhi,
+Daan journey/Katha, Garud Puran). Guarded by `readerArtworkPlacement.test.tsx` and
+`DailyBhaktiScreen.test.tsx`.
 
 **Share background readiness (12 Oct 2026):** Offscreen verse/prose/story captures wait for
 every remote background layer to finish native painting, including both a Story frame and its
@@ -989,7 +1001,7 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 1. Status bar
 2. Title area (centered): "दैनिक भक्ति" (Noto Serif 20 600, ink) + "Daily Verse" (Cormorant 14 400 italic, ink-muted, 4px below)
 3. **Verse card** (centered, 28px side margins):
-   - Background: `parchment-soft` base + the bundled neutral `readingParchment` through `BackgroundLayer`, clipped with `overflow: hidden`. No illustration banner or remote artwork request on the daily reading card; sharing retains its existing source-specific background.
+   - Background: `parchment-soft` base + the verse's own reader-page plate through `BackgroundLayer` (`getReaderBackground(sourceId, { stanza: chapter })`, with the parchment overlay), clipped with `overflow: hidden` — the same plate as its reader page and share card. No illustration banner on the daily reading card.
    - Border: 1px `divider`
    - Shadow: `md` (runtime: **`elevation.raised`** — was an inline `0.14/24` shadow until July 2026)
    - Radius: 18

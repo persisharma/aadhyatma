@@ -872,3 +872,13 @@ Recorded explicit painted-frame speaker anchors for all 31 dialogue panels, buil
 ## [2026-10-13] ingest | Replace hosted comic WebView with the native reviewed reader
 
 The comic now uses native episode cards, shared reader controls and global reading size. All 140 bilingual-v2 panels and 31 reviewed speaker anchors are preserved. The 35 unchanged PNGs are hosted at content-hash CDN URLs and use the shared persistent asset cache; iOS/Android exports contain no comic artwork. App source/review chrome is removed; provenance remains in authoring files. See [[decisions/ramayan-comic-character-continuity]] and the bilingual-v2 native integration review for verified checks and remaining native/editorial/release boundaries.
+
+## [2026-10-14] ingest | Themed reading backgrounds restored
+
+The 10 Oct banner rollout had also replaced the semantic `BackgroundLayer` plate with neutral
+paper on the seven canonical verse layouts (21 readers), Daan Punya and the Daily Bhakti card.
+After banners were gated to first verses (11 Oct) and removed from Daily Bhakti (12 Oct), those
+surfaces showed no thematic art. Restored the original plates; banner gating is unchanged.
+Screens that never had a plate keep the paper. Added a per-layout regression test. Updated
+design.md §6/§23, RULEBOOK §11.8 and the readers/reading-artwork pages. Focused Jest suites,
+TypeScript and touched-file lint pass; native visual check not run.

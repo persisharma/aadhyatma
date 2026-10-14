@@ -390,11 +390,13 @@ Keep source WebPs, exact prompts/provenance and visually approved SHA-256 hashes
 publish approved objects before activating their hashes, and preserve semantic deity mappings.
 Paged verse readers show the banner only on the first actual verse of each reading/chapter/theme,
 excluding navigation transition cards; section-based Katha/Pitru readers show it only on section
-zero. Later cards retain parchment/divider with no banner frame, placeholder or banner request.
+zero. Later cards keep their themed background and divider with no banner frame, placeholder
+or banner request. Adding or gating a banner never changes a surface's `BackgroundLayer`
+source: verse pages, the Daily Bhakti card and Daan Punya keep their semantic plate.
 Direct links to later cards do not promote them to cover cards. Continuous prose and standalone
 detail/guide screens may keep one opening image. Daily Bhakti is a quick rotating verse card:
-use bundled neutral parchment without an illustration banner, placeholder or banner request,
-and the compact verse-to-meaning ornament. Keep reading-size tokens and complete text intact;
+keep the verse's reader-page background without an illustration banner, placeholder or banner
+request, and the compact verse-to-meaning ornament. Keep reading-size tokens and complete text intact;
 long content still scrolls. Its shared export retains the existing themed background.
 
 Use the shared deferred asynchronous loader and persistent Documents content-hash cache.

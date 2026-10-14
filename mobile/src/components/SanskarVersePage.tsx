@@ -12,7 +12,6 @@ import {
 import { verseToken, meaningToken, scriptTitleFont, pillTextStyle } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
-import { readingParchment } from '@/data/backgroundAsset';
 import ReadingArtwork from './ReadingArtwork';
 import ProseParagraph from './ProseParagraph';
 import Ornament from './Ornament';
@@ -93,7 +92,7 @@ export default function SanskarVersePage({ verse, sourceId, width, topActions, s
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <BackgroundLayer source={readingParchment} />
+      <BackgroundLayer source={bg} />
 
       <ScrollView
         style={styles.scroll}
