@@ -1,0 +1,404 @@
+{
+  "titleHi": "जय आद्या शक्ति",
+  "titleEn": "Jay Adhya Shakti",
+  "subtitleHi": "ॐ जयो जयो मा जगदंबे",
+  "subtitleEn": "Om Jayo Jayo Ma Jagdambe",
+  "deity": "durga",
+  "language": "gu-hi-en",
+  "source": {
+    "baseText": "Jay Adhya Shakti (જય આદ્યા શક્તિ), the Gujarati Amba aarti signed by Shivanand Swami. Gujarati text supplied by the maintainer on 2026-10-14: eighteen stanzas, each followed by the cue ॥ ૐ જયો જયો મા જગદંબે ॥. It is stored in Devanagari through a one-to-one Gujarati-to-Devanagari codepoint mapping (offset -0x180), so the app's Gujarati reading language reproduces the supplied text exactly. No word, spelling or punctuation was changed, and the cue stays on every page as printed. Two stanzas the maintainer marked as later additions are not included: ભાવ ન જાણું, ભક્તિ ન જાણું (it names Vallabh Bhatt) and માનો મંડપ લાલ ગુલાલ. The aarti's own signature stanza (ભણે શિવાનંદ સ્વામી) closes Shivanand Swami's composition. Meanings and romanization are Aadhyatma editorial.",
+    "referenceUrls": [],
+    "canonicalEdition": "Shubh Panchang Amba aarti (Gujarati); Swargarohan Ambama Aarti - Jay Adhya Shakti; Pujasthan Jay Aadhya Shakti",
+    "canonicalEditionUrls": [
+      "https://shubhpanchang.com/gu/aarti/goddess-amba",
+      "https://www.swargarohan.org/aarti-stuti/001",
+      "https://www.pujasthan.com/jay-aadhya-shakti-aarti-lyrics-hindi-english/"
+    ],
+    "canonicalEditionStatus": "Pending (2026-10-14): the RULEBOOK §11.1 two-source line collation is not done. The authoring session's network policy refused every lyric host it tried (shubhpanchang.com, swargarohan.org, bhajansangrah.in and others), so no page was opened. One unconfirmed variant: a web search for the reading દ્વિતીયા બેય સ્વરૂપ matched the Shubh Panchang Gujarati page, where the supplied stanza 2 reads બેઉ. To clear: collate every line against two of the pages listed, record each variant here, move those URLs into referenceUrls, and replace this status with a dated verified line.",
+    "maintainerAttestation": "On 2026-10-14 the maintainer supplied this text and accepted it for release without the second-source collation. The pending status stays until that collation is done (RULEBOOK §11.1, maintainer-attested exception).",
+    "retrievedOn": "2026-10-14"
+  },
+  "counts": {
+    "totalVerses": 18
+  },
+  "verses": [
+    {
+      "id": "jas-01",
+      "type": "stanza",
+      "section": "body",
+      "number": 1,
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "जय आद्या शक्ति, मा जय आद्या शक्ति,",
+        "अखंड ब्रह्मांड निपजाव्यां (२), पडवे प्रगट्यां मा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Jay Aadya Shakti, Ma jay Aadya Shakti,",
+        "Akhand brahmaand nipjaavyaan (2), padve pragatyaan Ma.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "हे आद्या शक्ति माँ, आपकी जय हो! आपने सम्पूर्ण अखंड ब्रह्मांड की रचना की, और पड़वा (प्रतिपदा) के दिन आप प्रकट हुईं। प्रत्येक पद के बाद की टेक — ॐ जयो जयो मा जगदंबे — का अर्थ है: हे जगदम्बा माँ, आपकी जय हो, जय हो।",
+      "meaningEn": "Victory to you, Adya Shakti, the Primordial Power; victory to you, Mother. You brought forth the whole, unbroken universe, and on Padvo (Pratipada, the first lunar day) you manifested, O Mother. The cue after every stanza, Om jayo jayo Ma Jagdambe, means: Om, victory, victory to you, Mother of the world.",
+      "meaningGu": "હે આદ્યા શક્તિ મા, તમારો જય હો! તમે સમગ્ર અખંડ બ્રહ્માંડ ઉત્પન્ન કર્યું, અને પડવે (પ્રતિપદાએ) તમે પ્રગટ થયાં. દરેક પદ પછીની ટેક — ૐ જયો જયો મા જગદંબે — નો અર્થ છે: હે જગદંબા મા, તમારો જય હો, જય હો."
+    },
+    {
+      "id": "jas-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "द्वितीया बेउ स्वरूप, शिवशक्ति जाणुं, मा शिवशक्ति जाणुं,",
+        "ब्रह्मा गणपति गाये (२), हर गाये हर मा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Dviteeya beu swaroop, Shivshakti jaanun, Ma Shivshakti jaanun,",
+        "Brahma Ganpati gaaye (2), Har gaaye Har Ma.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "द्वितीया को आपके दो स्वरूप हैं; मैं आपको शिव और शक्ति के रूप में जानता हूँ। ब्रह्मा और गणपति आपका गुणगान करते हैं, और हर (शिव) भी आपका गुण गाते हैं, हे माँ।",
+      "meaningEn": "On Dvitiya, the second day, you take two forms; I know you as Shiva and Shakti. Brahma and Ganapati sing your praise, and Hara (Shiva) sings it too, O Mother.",
+      "meaningGu": "બીજના દિવસે તમારાં બે સ્વરૂપ છે; હું તમને શિવ અને શક્તિ રૂપે જાણું છું. બ્રહ્મા અને ગણપતિ તમારાં ગુણગાન ગાય છે, અને હર (શિવ) પણ ગાય છે, હે મા."
+    },
+    {
+      "id": "jas-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "तृतीया त्रण स्वरूप, त्रिभुवनमां बेठां, मा त्रिभुवनमां बेठां,",
+        "त्रया थकी तरवेणी (२), तुं तरवेणी मा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Triteeya tran swaroop, tribhuvanmaan bethaan, Ma tribhuvanmaan bethaan,",
+        "Traya thaki Tarveni (2), tun Tarveni Ma.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "तृतीया को आपके तीन स्वरूप हैं, जो तीनों लोकों में विराजमान हैं। तीनों के मिलन से त्रिवेणी बनती है; हे माँ, आप ही त्रिवेणी हैं।",
+      "meaningEn": "On Tritiya, the third day, you take three forms, seated across the three worlds. From the three comes the Triveni, the meeting of three rivers; you yourself are that Triveni, O Mother.",
+      "meaningGu": "ત્રીજના દિવસે તમારાં ત્રણ સ્વરૂપ છે, જે ત્રણે ભુવનમાં બિરાજે છે. ત્રણના સંગમથી ત્રિવેણી બને છે; હે મા, તમે જ ત્રિવેણી છો."
+    },
+    {
+      "id": "jas-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "चोथे चतुरा महालक्ष्मी, मा सचराचर व्याप्यां, मा सचराचर व्याप्यां,",
+        "चार भुजा चौ दिशा (२), प्रगट्यां दक्षिणमां.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Chothe Chatura Mahalakshmi, Ma sacharaachar vyaapyaan, Ma sacharaachar vyaapyaan,",
+        "Chaar bhuja chau disha (2), pragatyaan dakshinmaan.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "चतुर्थी को आप चतुरा महालक्ष्मी हैं; हे माँ, आप समस्त चर-अचर में व्याप्त हैं। चार भुजाओं वाली आप चारों दिशाओं में हैं, और दक्षिण दिशा में प्रकट हुईं।",
+      "meaningEn": "On the fourth day you are Chatura Mahalakshmi, the wise Great Lakshmi; Mother, you pervade everything that moves and everything that does not. Four-armed, you reach the four directions, and you manifested in the south.",
+      "meaningGu": "ચોથના દિવસે તમે ચતુરા મહાલક્ષ્મી છો; હે મા, તમે સમગ્ર સચરાચરમાં વ્યાપેલાં છો. ચાર ભુજાવાળાં તમે ચારે દિશામાં છો, અને દક્ષિણમાં પ્રગટ થયાં."
+    },
+    {
+      "id": "jas-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "पंचमे पंच ऋषि, पंचमी गुण पद्मा, मा पंचमी गुण पद्मा,",
+        "पंच सहस्त्र त्यां सोहिये (२), पंचे तत्त्वो मा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Panchame panch rushi, panchami gun Padma, Ma panchami gun Padma,",
+        "Panch sahastra tyaan sohiye (2), panche tattvo Ma.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "पंचमी को पाँच ऋषि हैं, और पंचमी को आप गुणमयी पद्मा (लक्ष्मी) हैं। वहाँ पाँच सहस्र शोभायमान हैं; हे माँ, आप ही पाँचों तत्त्व हैं।",
+      "meaningEn": "On Panchami, the fifth day, are the five rishis; on Panchami you are Padma (Lakshmi), rich in virtues. Five thousand shine there in splendour; you are the five elements, O Mother.",
+      "meaningGu": "પાંચમના દિવસે પાંચ ઋષિ છે, અને પાંચમે તમે ગુણમયી પદ્મા (લક્ષ્મી) છો. ત્યાં પાંચ હજાર શોભે છે; હે મા, તમે જ પાંચે તત્ત્વ છો."
+    },
+    {
+      "id": "jas-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · ६",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "षष्ठी तुं नारायणी, महिषासुर मार्यो, मा महिषासुर मार्यो,",
+        "नर नारीना रूपे (२), व्याप्यां सघळे मा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Shashthi tun Narayani, Mahishasur maaryo, Ma Mahishasur maaryo,",
+        "Nar naarina roope (2), vyaapyaan saghale Ma.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "षष्ठी को आप नारायणी हैं, जिन्होंने महिषासुर का वध किया। हे माँ, नर और नारी के रूपों में आप सर्वत्र व्याप्त हैं।",
+      "meaningEn": "On Shashthi, the sixth day, you are Narayani, who slew Mahishasura. In the forms of man and woman, you pervade everything, O Mother.",
+      "meaningGu": "છઠના દિવસે તમે નારાયણી છો, જેમણે મહિષાસુરનો વધ કર્યો. હે મા, નર અને નારીનાં રૂપે તમે સઘળે વ્યાપેલાં છો."
+    },
+    {
+      "id": "jas-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · ७",
+      "labelEn": "Stanza · 7",
+      "lines": [
+        "सप्तमी सप्त पाताळ, संध्या सावित्री, मा संध्या सावित्री,",
+        "गौ गंगा गायत्री (२), गौरी गीता मा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Saptami sapt paataal, Sandhya Savitri, Ma Sandhya Savitri,",
+        "Gau Ganga Gayatri (2), Gauri Geeta Ma.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "सप्तमी को आप सातों पातालों में हैं; आप संध्या और सावित्री हैं। हे माँ, आप ही गौ, गंगा, गायत्री, गौरी और गीता हैं।",
+      "meaningEn": "On Saptami, the seventh day, you are in the seven netherworlds; you are Sandhya and Savitri. You are the cow, the Ganga, Gayatri, Gauri and the Gita, O Mother.",
+      "meaningGu": "સાતમના દિવસે તમે સાતે પાતાળમાં છો; તમે સંધ્યા અને સાવિત્રી છો. હે મા, તમે જ ગૌ, ગંગા, ગાયત્રી, ગૌરી અને ગીતા છો."
+    },
+    {
+      "id": "jas-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद · ८",
+      "labelEn": "Stanza · 8",
+      "lines": [
+        "अष्टमी अष्ट भुजा, आई आनंदा, मा आई आनंदा,",
+        "सुरवर मुनिवर जन्म्या (२), देव दैत्यो मा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Ashtami asht bhuja, Aai Aananda, Ma Aai Aananda,",
+        "Survar munivar janmya (2), dev daityo Ma.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "अष्टमी को आप अष्टभुजा हैं, आनंदमयी आई (माँ)। हे माँ, श्रेष्ठ देवता और श्रेष्ठ मुनि, देव और दैत्य, सब आपसे जन्मे।",
+      "meaningEn": "On Ashtami, the eighth day, you are eight-armed, Aai Ananda, the blissful Mother. The best of gods and the best of sages, gods and demons alike, were born of you, O Mother.",
+      "meaningGu": "આઠમના દિવસે તમે અષ્ટભુજા છો, આનંદમયી આઈ (મા). હે મા, સુરવર અને મુનિવર, દેવ અને દૈત્ય, સૌ તમારાથી જન્મ્યા."
+    },
+    {
+      "id": "jas-09",
+      "type": "stanza",
+      "section": "body",
+      "number": 9,
+      "labelHi": "पद · ९",
+      "labelEn": "Stanza · 9",
+      "lines": [
+        "नवमी नवकुळ नाग, सेवे नवदुर्गा, मा सेवे नवदुर्गा,",
+        "नवरात्रिना पूजन, शिवरात्रिना अर्चन, कीधां हर ब्रह्मा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Navami navkul naag, seve Navdurga, Ma seve Navdurga,",
+        "Navratrina poojan, Shivratrina archan, keedhaan Har Brahma.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "नवमी को नौ कुलों के नाग नवदुर्गा की सेवा करते हैं। हर (शिव) और ब्रह्मा ने नवरात्रि का पूजन और शिवरात्रि का अर्चन किया।",
+      "meaningEn": "On Navami, the ninth day, the serpents of the nine clans serve the Navadurga. Hara (Shiva) and Brahma performed the worship of Navaratri and the offering of Shivaratri.",
+      "meaningGu": "નોમના દિવસે નવ કુળના નાગ નવદુર્ગાની સેવા કરે છે. હર (શિવ) અને બ્રહ્માએ નવરાત્રિનું પૂજન અને શિવરાત્રિનું અર્ચન કર્યું."
+    },
+    {
+      "id": "jas-10",
+      "type": "stanza",
+      "section": "body",
+      "number": 10,
+      "labelHi": "पद · १०",
+      "labelEn": "Stanza · 10",
+      "lines": [
+        "दशमी दश अवतार, जय विजयादशमी, मा जय विजयादशमी,",
+        "रामे राम रमाड्या (२), रावण रोळ्यो मा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Dashami dash avtaar, jay Vijayadashami, Ma jay Vijayadashami,",
+        "Raame Raam ramaadya (2), Raavan rolyo Ma.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "दशमी को दस अवतार हैं; विजयादशमी की जय हो। राम ने अपनी लीला रचाई और रावण रौंदा गया, हे माँ।",
+      "meaningEn": "On Dashami, the tenth day, are the ten avatars; victory on Vijayadashami. Rama played out his divine play, and Ravana was crushed, O Mother.",
+      "meaningGu": "દશમના દિવસે દશ અવતાર છે; વિજયાદશમીનો જય હો. રામે પોતાની લીલા રચી અને રાવણ રોળાયો, હે મા."
+    },
+    {
+      "id": "jas-11",
+      "type": "stanza",
+      "section": "body",
+      "number": 11,
+      "labelHi": "पद · ११",
+      "labelEn": "Stanza · 11",
+      "lines": [
+        "एकादशी अगियारस, कात्यायनी कामा, मा कात्यायनी कामा,",
+        "कामदुर्गा काळिका (२), श्यामा ने रामा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Ekadashi agiyaaras, Katyayani Kaama, Ma Katyayani Kaama,",
+        "Kaamdurga Kaalika (2), Shyaama ne Raama.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "एकादशी (ग्यारस) को आप कात्यायनी और कामा हैं। आप ही कामदुर्गा, कालिका, श्यामा और रामा हैं।",
+      "meaningEn": "On Ekadashi, the eleventh day (agiyaras), you are Katyayani and Kama. You are Kamadurga, Kalika, Shyama and Rama.",
+      "meaningGu": "એકાદશી (અગિયારસ)ના દિવસે તમે કાત્યાયની અને કામા છો. તમે જ કામદુર્ગા, કાળિકા, શ્યામા અને રામા છો."
+    },
+    {
+      "id": "jas-12",
+      "type": "stanza",
+      "section": "body",
+      "number": 12,
+      "labelHi": "पद · १२",
+      "labelEn": "Stanza · 12",
+      "lines": [
+        "बारसे बाळा रूप, बहुचरी अंबा, मा बहुचरी अंबा,",
+        "बटुक भैरव सोहीए, काळ भैरव सोहीए, तारा छे तुज मा.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Baarase baala roop, Bahuchari Amba, Ma Bahuchari Amba,",
+        "Batuk Bhairav sohiye, Kaal Bhairav sohiye, taara chhe tuj Ma.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "द्वादशी (बारस) को आपका बाला-रूप है; आप बहुचरी और अम्बा हैं। बटुक भैरव और काल भैरव वहाँ शोभा पाते हैं; हे माँ, वे आपके ही हैं।",
+      "meaningEn": "On Baras, the twelfth day, you take the form of a young girl; you are Bahuchari, you are Amba. Batuk Bhairav and Kaal Bhairav shine there in splendour; they are yours, O Mother.",
+      "meaningGu": "બારસના દિવસે તમારું બાળા રૂપ છે; તમે બહુચરી અને અંબા છો. બટુક ભૈરવ અને કાળ ભૈરવ ત્યાં શોભે છે; હે મા, તેઓ તમારા જ છે."
+    },
+    {
+      "id": "jas-13",
+      "type": "stanza",
+      "section": "body",
+      "number": 13,
+      "labelHi": "पद · १३",
+      "labelEn": "Stanza · 13",
+      "lines": [
+        "तेरसे तुळजा रूप, तमे तारुणी माता, मा तमे तारुणी माता,",
+        "ब्रह्मा विष्णु सदाशिव (२), गुण तारा गाता.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Terase Tulja roop, tame Taaruni Maata, Ma tame Taaruni Maata,",
+        "Brahma Vishnu Sadashiv (2), gun taara gaata.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "त्रयोदशी (तेरस) को आपका तुलजा रूप है; आप तारुणी माता हैं। ब्रह्मा, विष्णु और सदाशिव आपके गुण गाते हैं।",
+      "meaningEn": "On Teras, the thirteenth day, you take the form of Tulja; you are Taruni Mata. Brahma, Vishnu and Sadashiva sing your virtues.",
+      "meaningGu": "તેરસના દિવસે તમારું તુળજા રૂપ છે; તમે તારુણી માતા છો. બ્રહ્મા, વિષ્ણુ અને સદાશિવ તમારા ગુણ ગાય છે."
+    },
+    {
+      "id": "jas-14",
+      "type": "stanza",
+      "section": "body",
+      "number": 14,
+      "labelHi": "पद · १४",
+      "labelEn": "Stanza · 14",
+      "lines": [
+        "चौदशे चौदा रूप, चंडी चामुंडा, मा चंडी चामुंडा,",
+        "भाव भक्ति कंई आपो, चतुराई कंई आपो, सिंहवाहिनी माता.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Chaudashe chauda roop, Chandi Chamunda, Ma Chandi Chamunda,",
+        "Bhaav bhakti kain aapo, chaturaai kain aapo, Sinhavaahini Maata.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "चतुर्दशी (चौदस) को आपके चौदह रूप हैं, चंडी और चामुंडा। हे सिंहवाहिनी माता, हमें कुछ भाव और भक्ति दीजिए, कुछ चतुराई (विवेक) दीजिए।",
+      "meaningEn": "On Chaudas, the fourteenth day, you take fourteen forms, Chandi and Chamunda. Grant us some feeling and devotion, grant us some wisdom, O lion-riding Mother.",
+      "meaningGu": "ચૌદશના દિવસે તમારાં ચૌદ રૂપ છે, ચંડી અને ચામુંડા. હે સિંહવાહિની માતા, અમને કંઈક ભાવ અને ભક્તિ આપો, કંઈક ચતુરાઈ આપો."
+    },
+    {
+      "id": "jas-15",
+      "type": "stanza",
+      "section": "body",
+      "number": 15,
+      "labelHi": "पद · १५",
+      "labelEn": "Stanza · 15",
+      "lines": [
+        "पूनमे कुंभ भर्यो, सांभळजो करुणा, मा सांभळजो करुणा,",
+        "वशिष्ठ देवे वखाण्यां, मार्कंड देवे वखाण्यां, गाई शुभ कविता.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Poonme kumbh bharyo, saambhaljo karuna, Ma saambhaljo karuna,",
+        "Vashishth deve vakhaanyaan, Maarkand deve vakhaanyaan, gaai shubh kavita.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "पूर्णिमा (पूनम) को कुंभ भरा गया; हे माँ, करुणा करके हमारी सुनिए। वशिष्ठ देव ने और मार्कंडेय देव ने शुभ कविता गाकर आपका बखान किया।",
+      "meaningEn": "On Punam, the full-moon day, the kumbh (sacred pot) was filled; Mother, listen to us in your compassion. Sage Vashishtha praised you and sage Markandeya praised you, singing auspicious verse.",
+      "meaningGu": "પૂનમના દિવસે કુંભ ભર્યો; હે મા, કરુણા કરીને અમારું સાંભળજો. વશિષ્ઠ દેવે અને માર્કંડ દેવે શુભ કવિતા ગાઈને તમારાં વખાણ કર્યાં."
+    },
+    {
+      "id": "jas-16",
+      "type": "stanza",
+      "section": "body",
+      "number": 16,
+      "labelHi": "पद · १६",
+      "labelEn": "Stanza · 16",
+      "lines": [
+        "संवत सोळ सत्तावन, सोळसें बावीसमां, मा सोळसें बावीसमां,",
+        "संवत सोळे प्रगट्यां (२), रेवाने तीरे.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Samvat sol sattaavan, solsen baaveesmaan, Ma solsen baaveesmaan,",
+        "Samvat sole pragatyaan (2), Revaane teere.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "संवत सोलह सौ सत्तावन (1657) में, सोलह सौ बाईस (1622) में; संवत सोलह (सौ) में आप रेवा (नर्मदा) के तट पर प्रकट हुईं। पद ये वर्ष जैसे के तैसे देता है।",
+      "meaningEn": "In Samvat sixteen fifty-seven (1657), in sixteen twenty-two (1622); in Samvat sixteen hundred you manifested on the bank of the Reva (the Narmada). The stanza gives these years exactly as printed.",
+      "meaningGu": "સંવત સોળ સત્તાવન (૧૬૫૭)માં, સોળસો બાવીસ (૧૬૨૨)માં; સંવત સોળ(સો)માં તમે રેવા (નર્મદા)ને તીરે પ્રગટ થયાં. પદ આ વર્ષો છપાયાં છે તેમ જ આપે છે."
+    },
+    {
+      "id": "jas-17",
+      "type": "stanza",
+      "section": "body",
+      "number": 17,
+      "labelHi": "पद · १७",
+      "labelEn": "Stanza · 17",
+      "lines": [
+        "त्रांबावटी नगरी, आई रूपावटी नगरी, मा मंछावटी नगरी,",
+        "सोळ सहस्त्र त्यां सोहिये (२), क्षमा करो गौरी, मा दया करो गौरी.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Traambaavati nagari, Aai Roopaavati nagari, Ma Manchhaavati nagari,",
+        "Sol sahastra tyaan sohiye (2), kshama karo Gauri, Ma daya karo Gauri.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "ताम्बावटी नगरी, आई (माँ) की रूपावटी नगरी, माँ की मंछावटी नगरी: वहाँ सोलह सहस्र शोभायमान हैं। हे गौरी, क्षमा करो; हे माँ गौरी, दया करो।",
+      "meaningEn": "The city of Trambavati, Aai's city of Rupavati, the Mother's city of Manchhavati: sixteen thousand shine there in splendour. Forgive us, Gauri; have mercy, Mother Gauri.",
+      "meaningGu": "ત્રાંબાવટી નગરી, આઈની રૂપાવટી નગરી, માની મંછાવટી નગરી: ત્યાં સોળ હજાર શોભે છે. હે ગૌરી, ક્ષમા કરો; હે મા ગૌરી, દયા કરો."
+    },
+    {
+      "id": "jas-18",
+      "type": "stanza",
+      "section": "body",
+      "number": 18,
+      "labelHi": "पद · १८",
+      "labelEn": "Stanza · 18",
+      "lines": [
+        "शिवशक्तिनी आरती, जे कोई गाशे, मा जे भावे गाशे,",
+        "भणे शिवानंद स्वामी, सुख संपत्ति थाशे, हर कैलासे जाशे, मा अंबा दुःख हरशे.",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Shivshaktini aarti, je koi gaashe, Ma je bhaave gaashe,",
+        "Bhane Shivanand Swami, sukh sampatti thaashe, Har Kailaase jaashe, Ma Amba dukh harshe.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "शिव-शक्ति की यह आरती जो कोई गाएगा, हे माँ, जो भाव से गाएगा, उसके लिए शिवानंद स्वामी कहते हैं: उसे सुख और सम्पत्ति मिलेगी, वह हर (शिव) के कैलास जाएगा, और माँ अम्बा उसका दुःख हर लेंगी। यह कवि का नाम-उल्लेख और आरती गाने का फल है।",
+      "meaningEn": "Whoever sings this aarti of Shiva and Shakti, Mother, whoever sings it with feeling, says Shivanand Swami, will gain happiness and prosperity, will go to Hara's Kailasa, and Mother Amba will take away their sorrow. This closing names the poet and the fruit of singing the aarti.",
+      "meaningGu": "શિવ-શક્તિની આ આરતી જે કોઈ ગાશે, હે મા, જે ભાવથી ગાશે, તેના માટે શિવાનંદ સ્વામી કહે છે: તેને સુખ અને સંપત્તિ મળશે, તે હર (શિવ)ના કૈલાસે જશે, અને મા અંબા તેનું દુઃખ હરશે. આ કવિના નામનો ઉલ્લેખ અને આરતી ગાવાનું ફળ છે."
+    }
+  ]
+}
