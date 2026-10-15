@@ -12,6 +12,9 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { getSourceBackground } from '@/data/backgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
@@ -23,9 +26,20 @@ type Props = NativeStackScreenProps<RootStackParamList, 'SundarkandChapters'>;
 export default function SundarkandChaptersScreen({ navigation }: Props) {
   const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { getChapterProgress } = useReadingProgress();
 
   const title = contentByLang(lang, sundarkandTitleHi, sundarkandTitleEn);
+  const listingShare = buildListingShare({
+    sourceId: 'sundarkand',
+    titleHi: sundarkandTitleHi, titleEn: sundarkandTitleEn,
+    background: getSourceBackground('sundarkand'),
+    items: sundarkandChaptersManifest.map((chapter) => ({
+      titleHi: chapter.titleHi, titleEn: chapter.titleEn,
+      detailHi: `${chapter.verseCount} श्लोक`,
+      detailEn: `${chapter.verseCount} verses`,
+    })),
+  });
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -35,6 +49,8 @@ export default function SundarkandChaptersScreen({ navigation }: Props) {
         <ReaderHeader
           title={title}
           onBack={() => navigation.goBack()}
+          sideWidth={60}
+          right={<ShareButton busy={shareBusy} accessibilityLabel="Share chapter listing" accessibilityHint="Share the complete chapter list as post, Story, or Reel cards" onPress={() => void share(listingShare, lang)} />}
           variant="index"
         />
 
