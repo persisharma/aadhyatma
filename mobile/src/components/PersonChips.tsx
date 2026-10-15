@@ -19,7 +19,7 @@ import type { Lang } from '@/data/gita/language';
 import type { PersonProfile } from '@/panchang/birthProfiles';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang } from '@/utils/localize';
-import { pillTextStyle, scriptTitleFont } from '@/utils/langType';
+import { indicSafeTag, pillTextStyle, scriptTitleFont } from '@/utils/langType';
 
 const CHIP_FONT_CAP = 1.25;
 
@@ -51,6 +51,8 @@ export default function PersonChips({
   addAccessibilityLabel = 'Add another person',
   fullMessageHi,
   fullMessageEn,
+  onManage,
+  manageAccessibilityLabel = 'Manage birth details',
 }: {
   people: readonly PersonProfile[];
   activeId: string | null;
@@ -65,22 +67,47 @@ export default function PersonChips({
   addAccessibilityLabel?: string;
   fullMessageHi?: string;
   fullMessageEn?: string;
+  /**
+   * Opens the active person's birth-details form, where they are edited or
+   * removed. Omitted where the surface already carries its own Edit (Kundali).
+   */
+  onManage?: () => void;
+  manageAccessibilityLabel?: string;
 }) {
   const { colors, typography, spacing, radii } = useTheme();
   if (people.length === 0) return null;
 
   return (
     <View style={styles.wrap} accessibilityLabel="Person switcher">
-      <Text
-        maxFontSizeMultiplier={CHIP_FONT_CAP}
-        style={[
-          pillTextStyle(lang, typography.sectionLabel),
-          styles.label,
-          { color: colors.inkMuted },
-        ]}
-      >
-        {contentByLang(lang, labelHi, labelEn)}
-      </Text>
+      <View style={styles.labelRow}>
+        <Text
+          maxFontSizeMultiplier={CHIP_FONT_CAP}
+          style={[
+            pillTextStyle(lang, typography.sectionLabel),
+            styles.label,
+            { color: colors.inkMuted },
+          ]}
+        >
+          {contentByLang(lang, labelHi, labelEn)}
+        </Text>
+        {onManage ? (
+          <Pressable
+            onPress={onManage}
+            accessibilityRole="button"
+            accessibilityLabel={manageAccessibilityLabel}
+            // No bottom slop: the chips sit 6 dp below and must keep their taps.
+            hitSlop={{ top: 12, left: 12, right: 12, bottom: 0 }}
+            style={({ pressed }) => pressed && { opacity: 0.6 }}
+          >
+            <Text
+              maxFontSizeMultiplier={CHIP_FONT_CAP}
+              style={[indicSafeTag(lang, 0), styles.manage, { color: colors.saffronDeep }]}
+            >
+              {contentByLang(lang, 'सँभालें', 'Manage')}
+            </Text>
+          </Pressable>
+        ) : null}
+      </View>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -164,7 +191,14 @@ export default function PersonChips({
 
 const styles = StyleSheet.create({
   wrap: { marginBottom: 12 },
-  label: { fontSize: 10, marginBottom: 6 },
+  labelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
+  label: { fontSize: 10 },
+  manage: { fontSize: 12 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   chip: {
     minHeight: 44,
