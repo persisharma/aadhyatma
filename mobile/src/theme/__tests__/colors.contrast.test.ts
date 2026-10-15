@@ -135,3 +135,18 @@ describe('chip text readability on COMPOSITED chip tints (design.md §3/§12)', 
     expect(contrastRatio(lightColors.avoid, surface)).toBeLessThan(4.5);
   });
 });
+
+describe('reading text over the actual artwork overlay', () => {
+  const stops = [lightColors.overlayTop, lightColors.overlayUpper, lightColors.overlayLower, lightColors.overlayBottom];
+  const parse = (rgba: string) => rgba.match(/[\d.]+/g)!.map(Number);
+  test.each(['ink', 'inkSoft', 'inkMuted', 'saffronDeep'] as const)('%s clears normal-text contrast even over black artwork at every gradient position', token => {
+    for (let segment = 0; segment < stops.length - 1; segment++) {
+      const a = parse(stops[segment]); const b = parse(stops[segment + 1]);
+      for (let sample = 0; sample <= 100; sample++) {
+        const mixed = a.map((channel, i) => channel + (b[i] - channel) * sample / 100);
+        const background = '#' + mixed.slice(0, 3).map(channel => Math.round(channel * mixed[3]).toString(16).padStart(2, '0')).join('');
+        expect(contrastRatio(lightColors[token], background)).toBeGreaterThanOrEqual(4.5);
+      }
+    }
+  });
+});

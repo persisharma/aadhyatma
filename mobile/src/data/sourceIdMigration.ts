@@ -1,4 +1,4 @@
-import { aartiIdByIndex } from './aarti';
+import { aartiIdByIndex } from './aarti/ids';
 
 /**
  * Normalize a stored sourceId to its canonical form.

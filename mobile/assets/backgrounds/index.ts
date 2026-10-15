@@ -62,7 +62,7 @@ export const backgroundImages: Record<BackgroundImageKey, RemoteBackground> = {
   deity_shani: backgroundAsset('backgrounds--deity-shani'),
   deity_kali: backgroundAsset('backgrounds--deity-kali'),
   deity_navagraha_icons: backgroundAsset('backgrounds--deity-navagraha-icons'),
-  source_vishnu_narayana: backgroundAsset('backgrounds--source-vishnu-narayana-option2'),
+  source_vishnu_narayana: backgroundAsset('backgrounds--source-vishnu-narayana'),
   source_gayatri_savitri_sun: backgroundAsset('backgrounds--source-gayatri-savitri-sun'),
   deity_saraswati_veena: backgroundAsset('backgrounds--deity-saraswati-veena'),
   panchang_celestial_almanac: backgroundAsset('backgrounds--panchang-celestial-almanac'),

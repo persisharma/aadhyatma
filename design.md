@@ -43,7 +43,7 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 **Home gradient** (top → bottom): `#F6ECD0` → `#F1E3BF` (`parchmentHighlight` → `parchmentGradientEnd` in `colors.ts`).
 
 **Reader overlay** (on top of background image): vertical gradient
-`rgba(243,231,201,0.85)` → `rgba(243,231,201,0.55)` → `rgba(243,231,201,0.75)` → `rgba(233,217,177,0.95)`.
+`rgba(243,231,201,0.90)` → `rgba(243,231,201,0.90)` → `rgba(243,231,201,0.92)` → `rgba(233,217,177,0.95)`.
 
 **Background image filters:** the CSS filter stack (`opacity: 0.52`, `sepia(0.35) saturate(0.85) brightness(1.02)`) applies only to `design-preview.html`. In React Native the sketch renders unfiltered — `BackgroundLayer.tsx` sets no `imageStyle` opacity or tint — and the fade comes solely from the parchment overlay gradient stacked above it.
 
@@ -159,6 +159,8 @@ This applies to Sundarkand's chaupais, dohas, sorthas, and chhands, and to all o
 | ✓ Awadhi doha | `Buddhiheen tanu jaanike, sumirau pavan-kumaar.` |
 | ✗ | `dhritarashtra uvacha` for a Sanskrit verse (diacritics dropped) |
 | ✗ | `mahābīra bikrama bajaraṁgī` for an Awadhi chaupai (IAST imposed where it doesn't fit) |
+
+**Gujarati-language verses (e.g. `jay-adhya-shakti`) → the same pronunciation-based ASCII as Awadhi/Hindi** (`Jay Aadya Shakti, Ma jay Aadya Shakti`). Their Devanagari `lines` are a 1:1 codepoint re-scripting of the Gujarati source (offset −0x180), so the `gu` reading language below reproduces the source letter for letter; never respell them as Hindi.
 
 **Gujarati / Kannada (`gu` / `kn`) are script conversion, not romanization.** This §3.1 governs only the *Latin* `linesEn`/`transliteration` field, where schwa-deletion and recitation nuance matter. The Gujarati and Kannada reading languages instead render the Devanagari re-scripted to the sister Brahmi script (`mobile/src/utils/transliterate.ts`) — an orthography-preserving 1:1 codepoint mapping, which is exactly how this content is printed regionally. Mechanical conversion is correct there precisely because it is *not* romanization. (gu/kn carry no authored content fields; see RULEBOOK §1.)
 
@@ -314,8 +316,8 @@ Four faded vintage sketches serve the Hanuman texts, published from `mobile/asse
   - **Sundarkand:** stanza-range buckets — stanzas 1–4 sea, 5–11 Sita, 12–18 Lanka-dahan, remainder Ram-Hanuman.
   - **Every other source:** one pinned image per source id (`sourceBackgrounds`), plus category/deity fallback maps for browse screens.
 - A given verse therefore always shows the same image — stable as the user swipes back and forth — but the mapping is curated to match the verse's story beat, never re-rolled per render.
-- Browse/background surfaces apply the image as a `cover`-sized background with the parchment overlay (Section 2). Reader folios reserve a compact landscape banner above text. The first focal-crop proposal was rejected; new complete 2:1 compositions are being staged for approval below.
-- `cover` keeps only the middle of a plate on a portrait phone (~46% of a square's width, ~69% of a 2:3's). Multi-figure plates are therefore commissioned **2:3 portrait** with every figure inside the central ~60% (दान-पुण्य, §73).
+- Background surfaces contain the complete source composition at the top of the available area, retaining its aspect ratio and fading its lower edge into parchment. The stronger parchment overlay (Section 2) keeps text readable across detailed scenes. Reader folios retain their approved themed art and banner behavior below.
+- Multi-figure plates preserve complete figures and quiet parchment space; the background layout avoids clipping their faces, bows, feet and tails on portrait phones.
 
 **Exception — Theerth.** Theerth detail screens resolve their background by **presiding deity**, with per-temple overrides for shrines whose deity plate is too generic (`getTheerthBackground(templeId, deityId)` in `backgrounds.ts`). The browse/map surface uses no background image — only the flat parchment gradient behind the stylised India SVG outline.
 
@@ -330,6 +332,8 @@ downloads deduplicate by hash/extension, limit concurrency to two, time out afte
 and cancel when the final viewer leaves. Completed valid artwork has no expiry, revalidation or
 automatic eviction. Text and controls never await artwork; native decode errors preserve the
 fallback and evict damaged files for recovery.
+
+Five reviewed correction WebPs are bundled in `mobile/assets/artwork-corrections/` within a 1.25 MiB budget. They correct Karni Mata's background and colored banner, remove the Hanuman–Sita corner mark, and recreate Rama blessing Hanuman and Rama Darbar. `artworkCorrections.ts` resolves these before stale CDN cache entries, including offline use; unpublished CDN hashes are not activated. Other artwork retains the existing remote delivery. The Vishnu background uses the published sepia Narayana plate; colored banners remain separate. Full-strength previews retain source detail while normal backgrounds receive the parchment overlay.
 
 Paged sections share a single screen-level paper image instead of duplicating it per list cell.
 
@@ -349,11 +353,10 @@ Normal reading tokens and unrestricted vertical text scrolling remain. Katha and
 introduction markers sit below the text viewport; the tab bar owns the bottom safe-area inset
 for the Pitru introduction. Utility forms, charts, ledgers and kids stories retain their layouts.
 
-**Approved rollout (10 Oct 2026):** The same paper and `ReadingArtwork` painting/divider
-are shared by all seven canonical verse layouts, covering Chalisa, Aarti, Gita/Gita Saar,
-Stotram/Stuti, Kavacham, Ashtakam, Suktam, Sanskar and the Ramayan readers. Verse pages use
-the thematic banner above the verse instead of placing the painting behind text;
-existing source, verse and kāṇḍa mappings remain. Daily Bhakti originally used the same opening plate
+**Approved rollout (10 Oct 2026):** The `ReadingArtwork` painting/divider is shared by all
+seven canonical verse layouts, covering Chalisa, Aarti, Gita/Gita Saar,
+Stotram/Stuti, Kavacham, Ashtakam, Suktam, Sanskar and the Ramayan readers. Verse pages add
+the thematic banner above the verse; existing source, verse and kāṇḍa mappings remain. Daily Bhakti originally used the same opening plate
 inside its shareable card (superseded by the 12 October reading-space correction below). Daan's landing page has one Annapurna plate; its journey's Why
 section uses the prose folio. Pitru's education opening uses neutral manuscript art
 and its overview shares the paper. Vidhi preparation and the first conduct step have one
@@ -372,12 +375,25 @@ Chapter transition cards are excluded when finding the first verse. Single conti
 detail/guide screens keep their existing one opening image. Illustration
 assets, semantic mappings, R2 manifests and the lifetime cache remain available and unchanged.
 
-**Daily Bhakti reading-space correction (12 Oct 2026):** The rotating daily verse card uses
-bundled neutral parchment without a banner, reserved image space or illustration request.
+**Daily Bhakti reading-space correction (12 Oct 2026):** The rotating daily verse card has
+no banner, reserved image space or illustration request (its themed background was restored
+on 14 Oct — see below).
 The verse starts 14pt below its source/action row. A single compact `Ornament` separates verse
 and meaning with 6pt margins above and below; remove the previous wrapper's additional 14pt
 margins and the ornament's 26pt margins. Preserve full verse/meaning text, shared reading-size
 tokens, vertical scrolling for long content and the existing themed share-card background.
+
+**Themed backgrounds restored (14 Oct 2026):** Adding the banner was never meant to change
+the background. The 10 Oct rollout had also swapped the seven verse layouts, Daan Punya's
+landing and the Daily Bhakti card from their semantic plate to the neutral paper, so once
+the banner was gated (11–12 Oct) continuation verses and the daily card lost all thematic art.
+They again use their original `BackgroundLayer` plate — `getReaderBackground(sourceId, verse)`
+on every verse page (banner or not), `getReaderBackground(sourceId, { stanza: chapter })` on
+the Daily Bhakti card, `getDaanBackground()` on Daan Punya — with the parchment overlay
+(Section 2). Banner gating is unchanged. The neutral paper remains the CachedArtwork offline
+fallback and the background of surfaces that never had a plate (prose folios, Pitru, Vidhi,
+Daan journey/Katha, Garud Puran). Guarded by `readerArtworkPlacement.test.tsx` and
+`DailyBhaktiScreen.test.tsx`.
 
 **Share background readiness (12 Oct 2026):** Offscreen verse/prose/story captures wait for
 every remote background layer to finish native painting, including both a Story frame and its
@@ -989,7 +1005,7 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 1. Status bar
 2. Title area (centered): "दैनिक भक्ति" (Noto Serif 20 600, ink) + "Daily Verse" (Cormorant 14 400 italic, ink-muted, 4px below)
 3. **Verse card** (centered, 28px side margins):
-   - Background: `parchment-soft` base + the bundled neutral `readingParchment` through `BackgroundLayer`, clipped with `overflow: hidden`. No illustration banner or remote artwork request on the daily reading card; sharing retains its existing source-specific background.
+   - Background: `parchment-soft` base + the verse's own reader-page plate through `BackgroundLayer` (`getReaderBackground(sourceId, { stanza: chapter })`, with the parchment overlay), clipped with `overflow: hidden` — the same plate as its reader page and share card. No illustration banner on the daily reading card.
    - Border: 1px `divider`
    - Shadow: `md` (runtime: **`elevation.raised`** — was an inline `0.14/24` shadow until July 2026)
    - Radius: 18
@@ -1808,7 +1824,7 @@ Twenty-one deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · k
 
 ### Data-shape families (one directory per module under `mobile/src/data/`)
 
-- **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati/khatu-shyam/lakshmi chalisa dirs — eleven total; `khatu-shyam-chalisa` (Oct 2026, 1 doha + 40 chaupais + 1 doha) is tagged `krishna` and shares the Khatu Shyam temple plate with the aarti below; `lakshmi-chalisa` (1.5.0) is the Ramdas recension with 39 verified chaupais, deliberately not padded to 40), **aartis** (`aarti/index.ts` `aartiCollection`, 10 aartis, appended only because the index is persisted in legacy `aarti-N` ids, `refrain`/`stanza` verse types; the 9th, `khatu-shyam-aarti` (श्री खाटू श्याम जी की आरती, Oct 2026), is tagged `krishna` rather than a new deity and reads on the commissioned Khatu Shyam temple plate (`theerth_khatu_shyam`) instead of Krishna's bansuri art; the 10th, `om-jai-lakshmi-mata` (1.5.0), is tagged `lakshmi`; the Aarti *category* also lists an 11th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (9 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana, matribhumi-vandana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
+- **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati/khatu-shyam/lakshmi chalisa dirs — eleven total; `khatu-shyam-chalisa` (Oct 2026, 1 doha + 40 chaupais + 1 doha) is tagged `krishna` and shares the Khatu Shyam temple plate with the aarti below; `lakshmi-chalisa` (1.5.0) is the Ramdas recension with 39 verified chaupais, deliberately not padded to 40), **aartis** (`aarti/index.ts` `aartiCollection`, 11 aartis, appended only because the index is persisted in legacy `aarti-N` ids — the id order itself lives in the payload-free `aarti/ids.ts`, which is all the launch path (`sourceIdMigration`, `entryRoutes`, `backgrounds`) may import, `refrain`/`stanza` verse types; the 9th, `khatu-shyam-aarti` (श्री खाटू श्याम जी की आरती, Oct 2026), is tagged `krishna` rather than a new deity and reads on the commissioned Khatu Shyam temple plate (`theerth_khatu_shyam`) instead of Krishna's bansuri art; the 10th, `om-jai-lakshmi-mata` (1.5.0), is tagged `lakshmi`; the 11th, `jay-adhya-shakti` (जय आद्या शक्ति, 1.5.2), is Shivanand Swami's Gujarati Amba aarti: 18 stanzas, all `stanza` type, each keeping its printed cue `॥ ॐ जयो जयो मा जगदंबे ॥` as its last line, stored in Devanagari so the `gu` reading language restores the Gujarati letter for letter (§3.1; stanza-ending full stops are dandas, per the maintainer's Devanagari copy), with authored `meaningGu`, tagged `durga` on the Durga lion plate; the Aarti *category* also lists a 12th card, `ram-aarti`, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (9 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana, matribhumi-vandana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
 - **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas / 648 sargas / 23,289 verified verse records, §53), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants; the large Valmiki payload is the exception that validates lazily per loaded kāṇḍa.
 - **Themed readings over a bundled corpus (`gita-saar/`, §75)** — a chapter is a *theme*, a verse is a `{chapter, verse}` **ref** into `gita/` plus the theme's own plain-language सार. The loader pulls the Sanskrit/IAST from the corpus at open time; the theme files carry no scripture (RULEBOOK §29). Routes, bookmarks, progress, search and the routine picker treat it as one more chaptered text.
 - **Japam** (`japam/japam.json`) — mantras with round targets; routes to the counter, not a verse pager.
