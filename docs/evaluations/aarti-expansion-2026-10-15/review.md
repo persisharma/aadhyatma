@@ -28,7 +28,8 @@ Each full stanza has Hindi text, pronunciation-based Latin text and original Hin
 
 ## Validation
 
-- Full `npm test` with Node 20.20.2 exited 0: typecheck, 258 Jest suites / 2,519 tests, 37 widget tests, 617 engine tests, 173 data tests and 49 Ask tests passed.
+- Full `npm test` with Node 20.20.2 exited 0 before the final merge of main `e13830a1`: typecheck, 258 Jest suites / 2,519 tests, 37 widget tests, 617 engine tests, 173 data tests and 49 Ask tests passed.
+- After merging main `e13830a1`, typecheck and 30 focused reader/integration/discovery tests passed.
 - Targeted ESLint on changed TypeScript files and `git diff --check` passed.
 - Reader tests mount every added aarti at its first and last page in Hindi and English. Integration tests pin complete edition counts, closing anchors, discovery routing, canonical legacy IDs, background coverage and both source publications.
 - Native verification is **incomplete and deferred by the user on 2026-10-15**: “raise PR, native chec will do separately.” The PR does not claim the native gate has passed.

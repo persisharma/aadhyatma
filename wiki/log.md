@@ -946,4 +946,3 @@ reading-language title only, one-line description (≤32 chars), `N पृष्
 fills the card height with cover-cropped art, `LanguageToggle` + scope line on every listing. Each
 comic prasang shows a curated key scene (`episodeCovers.ts`); Garud paintings crop around a focal
 point. All 28 kids-story descriptions were shortened. Updated [[kids-stories]] and [[languages]].
-
