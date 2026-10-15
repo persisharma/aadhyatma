@@ -341,21 +341,21 @@ test('a Rama shrine leads with Ram Chalisa, then the rama-tagged Hanuman Chalisa
   assert.ok(ram < hanuman && hanuman < aarti, `order: ram=${ram} hanuman=${hanuman} aarti=${aarti}`);
 });
 
-test('a temple whose deity has no shipped chalisa or aarti renders no readings block at all (Konark → Surya)', () => {
+test('Konark shows the newly shipped Surya Chalisa in its readings block', () => {
   const tree = renderTree('konark-sun', 'en');
   assert.equal(
     tree.root.findAll((n) => typeof n.type === 'string' && n.props.testID === 'theerth-related-readings').length,
-    0,
-    'no block, not an empty heading',
+    1,
+    'readings block is visible',
   );
   const text = tree.root.findAllByType(Text).map((n) => n.props.children).flat(Number.POSITIVE_INFINITY).join(' ');
-  assert.doesNotMatch(text, /Aarti & Chalisa/);
+  assert.match(text, /Aarti & Chalisa/);
+  assert.match(text, /Surya Chalisa/);
   assert.match(text, /Sources/, 'the rest of the screen is unaffected');
 });
 
 test('every temple with a mapped reading renders at least one openable card', () => {
   for (const temple of temples) {
-    if (temple.id === 'konark-sun') continue;
     const tree = renderTree(temple.id, 'en');
     const cards = tree.root.findAll(
       (n) => typeof n.props.accessibilityLabel === 'string' && / Tap to open\.$/.test(n.props.accessibilityLabel) && typeof n.props.onPress === 'function',

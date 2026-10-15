@@ -100,7 +100,7 @@ assert.deepEqual(
 
 // Newly-added discoverable content must carry addedInVersion, or NewContentContext
 // seeds it as already-known for upgrading users and the NEW badge never shows.
-for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata', 'jay-adhya-shakti', 'shani-aarti', 'dattatreya-aarti']) {
+for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata', 'jay-adhya-shakti', 'shani-aarti', 'dattatreya-aarti', 'surya-chalisa']) {
   const entry = library.find((e) => e.id === id);
   assert.ok(entry, `${id} should exist in library`);
   assert.ok(entry.addedInVersion, `${id} must set addedInVersion so upgraders see its NEW badge`);
@@ -496,6 +496,23 @@ for (const c of NEW_CHALISAS) {
 }
 
 // ─── 10b. Gayatri Mata Aarti canonical structure & refrain ───────────────────
+
+// ─── Surya Chalisa: the two witnesses agree apart from a recorded reading ───
+{
+  const data = readJson('surya-chalisa/surya-chalisa.json');
+  const entry = library.find((e) => e.id === 'surya-chalisa');
+  assert.ok(entry, 'surya-chalisa should be in library');
+  assert.deepEqual(entry.deities, ['surya']);
+  assert.equal(entry.addedInVersion, '1.5.2');
+  assert.equal(data.verses.length, 42);
+  assert.equal(data.counts.totalVerses, 42);
+  assert.equal(data.verses.filter((v: any) => v.type === 'chaupai').length, 40);
+  assert.ok(data.verses[0].lines[0].startsWith('कनक बदन कुण्डल मकर'));
+  assert.ok(data.source.referenceUrls.length >= 2);
+  assert.ok(data.source.baseText.includes('जोजन याको'));
+  assert.ok(data.verses.every((v: any) => v.lines.length === v.linesEn.length && v.meaningHi && v.meaningEn));
+}
+
 
 const gayatriAarti = readJson('aarti/gayatri-aarti.json');
 assert.equal(
@@ -1005,6 +1022,7 @@ for (const file of [
   'saraswati-chalisa/saraswati-chalisa.json',
   'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
   'lakshmi-chalisa/lakshmi-chalisa.json',
+  'surya-chalisa/surya-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',

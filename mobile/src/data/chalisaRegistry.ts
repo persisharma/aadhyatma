@@ -64,6 +64,12 @@ import {
   lakshmiChalisaVerses,
   type LakshmiChalisaVerse,
 } from './lakshmi-chalisa';
+import {
+  suryaChalisaTitleEn,
+  suryaChalisaTitleHi,
+  suryaChalisaVerses,
+  type SuryaChalisaVerse,
+} from './surya-chalisa';
 
 export type ChalisaId =
   | 'hanuman-chalisa'
@@ -76,7 +82,8 @@ export type ChalisaId =
   | 'vishnu-chalisa'
   | 'saraswati-chalisa'
   | 'khatu-shyam-chalisa'
-  | 'lakshmi-chalisa';
+  | 'lakshmi-chalisa'
+  | 'surya-chalisa';
 
 export type ChalisaVerse =
   | HanumanChalisaVerse
@@ -89,7 +96,8 @@ export type ChalisaVerse =
   | VishnuChalisaVerse
   | SaraswatiChalisaVerse
   | KhatuShyamChalisaVerse
-  | LakshmiChalisaVerse;
+  | LakshmiChalisaVerse
+  | SuryaChalisaVerse;
 
 export type ChalisaPayload = {
   id: ChalisaId;
@@ -164,6 +172,12 @@ const registry: Record<ChalisaId, ChalisaPayload> = {
     titleHi: lakshmiChalisaTitleHi,
     titleEn: lakshmiChalisaTitleEn,
     verses: lakshmiChalisaVerses,
+  },
+  'surya-chalisa': {
+    id: 'surya-chalisa',
+    titleHi: suryaChalisaTitleHi,
+    titleEn: suryaChalisaTitleEn,
+    verses: suryaChalisaVerses,
   },
 };
 

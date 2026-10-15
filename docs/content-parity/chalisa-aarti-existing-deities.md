@@ -21,7 +21,7 @@ Status legend:
 - **HOLD** — identity, variant, provenance, or copyright requires a human
   editorial decision before transcription.
 
-The two Khatu Shyam rows (`khatu-shyam-chalisa`, `khatu-shyam-aarti`) are wired into the reader (October 2026), the two Lakshmi rows ship in 1.5.0, and Shani Aarti plus Marathi Dattatreya Aarti are marked **SHIPPED** in 1.5.2. The maintainer accepted the Khatu Shyam rows on one supplied source (RULEBOOK §11.1 exception), so their second-source collation is still pending. RULEBOOK §10 still requires a complete two-source
+The two Khatu Shyam rows (`khatu-shyam-chalisa`, `khatu-shyam-aarti`) are wired into the reader (October 2026), the two Lakshmi rows ship in 1.5.0, and Shani Aarti, Marathi Dattatreya Aarti and Surya Chalisa are marked **SHIPPED** in 1.5.2. The maintainer accepted the Khatu Shyam rows on one supplied source (RULEBOOK §11.1 exception), so their second-source collation is still pending. RULEBOOK §10 still requires a complete two-source
 comparison, source metadata, clean romanization, and per-verse Hindi and English
 meanings before reader integration.
 
@@ -47,11 +47,11 @@ meanings before reader integration.
 | `satyanarayan-chalisa` | सत्यनारायण चालीसा · Satyanarayan Chalisa | `vishnu` | To be fixed after variant review | [Bhakti Pulse](https://www.bhaktipulse.com/post-96.html) | **HOLD** — only one weak source found; check whether it is merely Vishnu Chalisa retitled. |
 | `shani-chalisa` | शनि चालीसा · Shani Chalisa | `shani` | `जयति जयति शनिदेव दयाला` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/lord-shani/other/shani-dev-chalisa.html?lang=hi) · [Sanskrit Documents](https://sanskritdocuments.org/doc_z_otherlang_hindi/shani40.html) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-shani-chalisa) | **2C** — strongest first-batch candidate. There is also a second Shani Chalisa; do not merge versions. |
 | `shrinathji-chalisa` | श्रीनाथजी चालीसा · Shrinathji Chalisa | `krishna` | Unresolved | No acceptable public-domain text pair found | **HOLD** — search results point to commercial recordings with named modern lyricists. Obtain permission or a clearly public-domain temple edition. |
-| `surya-chalisa` | सूर्य चालीसा · Surya Chalisa | `surya` | `कनक बदन कुण्डल मकर, मुक्ता माला अंग` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/lord-surya/surya-deva-chalisa.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/shri-surya-dev-chalisa-hindi/) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-surya-chalisa) | **2C** — strongest first-batch candidate. |
+| `surya-chalisa` | सूर्य चालीसा · Surya Chalisa | `surya` | `कनक बदन कुण्डल मकर, मुक्ता माला अंग` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/lord-surya/surya-deva-chalisa.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/shri-surya-dev-chalisa-hindi/) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-surya-chalisa) | **SHIPPED 1.5.2** — 42 verses (opening doha, 40 chaupais, closing doha), collated against HinduNidhi and Pavitra Granth. The one जोजन/योजन variant is recorded in the JSON. |
 | `vaishno-devi-chalisa` | वैष्णो देवी चालीसा · Vaishno Devi Chalisa | `durga` | `गरुड़ वाहिनी वैष्णवी, त्रिकुटा पर्वत धाम` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/vaishno-mata/vaishno-mata-chalisa.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/mata-vashno-devi-chalisa-hindi/) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-vaishno-chalisa) | **2C** — tag `durga`; no Vaishno deity id. |
 | `vindhyeshwari-chalisa` | विन्ध्येश्वरी चालीसा · Vindhyeshwari Chalisa | `durga` | `नमो नमो विन्ध्येश्वरी, नमो नमो जगदम्ब` | [Sanskrit Documents](https://sanskritdocuments.org/doc_devii/vindhyeshvarIchAlIsA.html) · [HinduNidhi](https://hindunidhi.com/vindhyeshvari-chalisa-hindi/) · [Sri Mandir](https://www.srimandir.com/articles/chalisa/vindhyeshwari-chalisa) | **2C** — strongest first-batch candidate. |
 
-Chalisa status: **13 `2C`, 6 `HOLD`, 1 `WIRED · collation pending`, 1 `SHIPPED`**.
+Chalisa status: **12 `2C`, 6 `HOLD`, 1 `WIRED · collation pending`, 2 `SHIPPED`**.
 
 ## Aartis
 
@@ -107,10 +107,10 @@ importance; it reflected the source and rights risk at the time.
 - `ganga-chalisa` has reachable HinduNidhi and Pavitra Granth text, but their
   opening chaupais already have several substantive word variants. The full
   recension and per-verse editorial meanings remain unapproved. `surya-chalisa`
-  also has two reachable candidates; its complete line collation and meanings
-  remain to be authored. `navagraha-chalisa` now has reachable HinduNidhi and
+  has now passed its 42-unit collation and is shipped with the one recorded variant.
+  `navagraha-chalisa` has reachable HinduNidhi and
   BhaktiBharat candidates with matching opening and closing; its full collation
-  and source-lineage review are pending. None of these has been wired.
+  and source-lineage review are pending. Ganga and Navagraha Chalisa have not been wired.
 - `kali-chalisa`, `kali-aarti`, `ganga-aarti`, `parvati-chalisa`,
   `radha-chalisa`, `kubera-chalisa`, `narasimha-chalisa`, and
   `annapurna-chalisa` each lose a required manifest source to Drik's 403.

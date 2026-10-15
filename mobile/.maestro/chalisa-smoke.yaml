@@ -1,9 +1,9 @@
 # Chalisa Category Smoke Test
 #
-# Verifies the Chalisa category and its 11 active sections render correctly.
+# Verifies the Chalisa category and its 12 active sections render correctly.
 # Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa,
 # Gayatri Chalisa, Ram Chalisa, Krishna Chalisa, Vishnu Chalisa,
-# Saraswati Chalisa, Shri Khatu Shyam Chalisa, Lakshmi Chalisa.
+# Saraswati Chalisa, Shri Khatu Shyam Chalisa, Lakshmi Chalisa, Surya Chalisa.
 #
 # Chalisas share ChalisaReaderScreen (multi-instance pattern, dispatched by
 # route.params.chalisaId). Opening Hanuman Chalisa verifies the dispatch
@@ -21,7 +21,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 11 sections appear in CategoryList
+# Verify all 12 sections appear in CategoryList
 - extendedWaitUntil:
     visible: "Hanuman Chalisa\\..*Tap to open\\."
     timeout: 15000
@@ -82,6 +82,21 @@ appId: com.prashantsharma.vedansh
     text: "Start over from the beginning"
     optional: true
 - assertVisible: "मातु लक्ष्मी करि कृपा.*"
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+# Surya Chalisa (addedInVersion 1.5.2) follows Lakshmi. Open its doha.
+- scrollUntilVisible:
+    element:
+      text: "Surya Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Surya Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "कनक बदन कुण्डल मकर.*"
 - tapOn: "Back to home"
 - waitForAnimationToEnd
 # Scroll back up so the reader opens from Hanuman Chalisa at the top.

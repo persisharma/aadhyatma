@@ -202,3 +202,26 @@ test('opens Lakshmi Chalisa by chalisaId with its own title and opening doha', (
   assert.ok(renderedText.includes('मातु लक्ष्मी करि कृपा'), 'Lakshmi Chalisa opening doha');
   assert.ok(!renderedText.includes(firstVerse.lines[0]), 'no Hanuman Chalisa verse leaks in');
 });
+
+test('opens Surya Chalisa by chalisaId with its own opening doha', () => {
+  const surya = getChalisa('surya-chalisa');
+  assert.equal(surya.id, 'surya-chalisa');
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+  act(() => {
+    tree = createReader(
+      <GitaLanguageProvider initialLang="hi">
+        <ShareProvider>
+          <ChalisaReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { chalisaId: 'surya-chalisa', initialIndex: 0 } }}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  const renderedText = tree!.root.findAllByType(Text)
+    .map((node) => node.props.children).flat(Number.POSITIVE_INFINITY).join(' ');
+  assert.ok(renderedText.includes(surya.titleHi));
+  assert.ok(renderedText.includes('कनक बदन कुण्डल मकर'));
+  assert.ok(!renderedText.includes(firstVerse.lines[0]));
+});

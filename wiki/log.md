@@ -955,3 +955,11 @@ HinduNidhi and BhaktiBharat both serve the Sundardas-attributed opening and
 closing, while the Drik Panchang candidate returns HTTP 403. Added the pair
 to the acquisition manifest as 2C; full line collation, source-lineage review
 and editorial meanings are still required before reader integration.
+
+## [2026-10-15] ingest | Surya Chalisa enters the multi-instance reader
+
+Collated all 42 units of the Kanak-badan Surya Chalisa across HinduNidhi and
+Pavitra Granth. Only the chaupai-30 जोजन/योजन reading differs after punctuation
+and spelling normalization; the chosen HinduNidhi reading is noted in the source
+metadata. Added original per-verse Hindi/English meanings, pronunciation-based
+ASCII, registry/search/routine/library integration and Konark temple discovery.
