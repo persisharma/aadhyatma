@@ -13,6 +13,9 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { getSourceBackground } from '@/data/backgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
@@ -24,9 +27,20 @@ type Props = NativeStackScreenProps<RootStackParamList, 'GitaChapters'>;
 export default function GitaChaptersIndexScreen({ navigation }: Props) {
   const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { getChapterProgress } = useReadingProgress();
 
   const title = contentByLang(lang, gitaTitleHi, gitaTitleEn);
+  const listingShare = buildListingShare({
+    sourceId: 'bhagavad-gita',
+    titleHi: gitaTitleHi, titleEn: gitaTitleEn,
+    background: getSourceBackground('bhagavad-gita'),
+    items: gitaChaptersManifest.map((chapter) => ({
+      titleHi: chapter.titleHi, titleEn: chapter.titleEn,
+      detailHi: `${chapter.verseCount} श्लोक`,
+      detailEn: `${chapter.verseCount} verses`,
+    })),
+  });
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -37,6 +51,8 @@ export default function GitaChaptersIndexScreen({ navigation }: Props) {
         <ReaderHeader
           title={title}
           onBack={() => navigation.goBack()}
+          sideWidth={60}
+          right={<ShareButton busy={shareBusy} accessibilityLabel="Share chapter listing" accessibilityHint="Share the complete chapter list as post, Story, or Reel cards" onPress={() => void share(listingShare, lang)} />}
           variant="index"
         />
 

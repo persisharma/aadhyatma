@@ -14,6 +14,7 @@ import { library, type LibraryEntry } from '@/data/texts';
 import { janmaNakshatraIndex, nakshatraName } from '@/panchang/janmaTithi';
 import { setJanmaReminder } from '@/panchang/janmaTithiPrefs';
 import { useJanmaPrefs, useJanmaTithiDetailSolve, useJanmaTithiPeople } from '@/panchang/useJanmaTithi';
+import { selectPerson } from '@/panchang/birthProfileStore';
 import { tithiRuleLabel } from '@/panchang/pitruSmaran';
 import { useKulRecord } from '@/panchang/kulParamparaStore';
 import { getCityById } from '@/panchang/locations';
@@ -122,8 +123,12 @@ export default function JanmaTithiDetailScreen({ navigation, route }: Props) {
     if (target) navigateToHomeStackTarget(readerNav, target);
   };
 
-  const openKundali = () =>
-    rootNav.navigate('PanchangTab', panchangTabTarget('Kundali', undefined));
+  // Kundali edits whoever is ACTIVE, so make this person active first —
+  // otherwise Edit (and the Remove inside it) would act on someone else.
+  const openKundali = async () => {
+    if (person) await selectPerson(person.id);
+    rootNav.navigate('PanchangTab', panchangTabTarget('Kundali', { editing: true }));
+  };
 
   return (
     <View style={styles.root}>
@@ -139,7 +144,9 @@ export default function JanmaTithiDetailScreen({ navigation, route }: Props) {
           right={
             person ? (
               <Pressable
-                onPress={openKundali}
+                onPress={() => {
+                  void openKundali();
+                }}
                 accessibilityRole="button"
                 accessibilityLabel="Edit birth details in Kundali"
                 hitSlop={12}

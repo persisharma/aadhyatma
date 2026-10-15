@@ -3,6 +3,9 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import { backgroundImages } from '@assets/backgrounds';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import TextField from '@/components/TextField';
@@ -19,6 +22,7 @@ type Props = NativeStackScreenProps<PanchangStackParamList, 'KathaLibrary'>;
 export default function KathaLibraryScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const rootNav = useNavigation<any>();
   const [query, setQuery] = useState('');
 
@@ -55,7 +59,22 @@ export default function KathaLibraryScreen({ navigation }: Props) {
               {lang === 'en' ? 'कथा संग्रह' : 'Katha Library'} · {library.length}
             </Text>
           </View>
-          <View style={{ width: 36 }} />
+          <ShareButton
+            busy={shareBusy || filtered.length === 0}
+            accessibilityLabel="Share katha listing"
+            accessibilityHint="Share the currently listed kathas as post, Story, or Reel cards"
+            onPress={() => void share(buildListingShare({
+              sourceId: 'katha-library',
+              titleHi: query.trim() ? 'कथा खोज परिणाम' : 'कथा संग्रह',
+              titleEn: query.trim() ? 'Katha Search Results' : 'Katha Library',
+              background: backgroundImages.category_granth_open_scripture,
+              items: filtered.map((katha) => ({
+                titleHi: katha.titleHi, titleEn: katha.titleEn,
+                detailHi: `${katha.sections.length} खंड`,
+                detailEn: `${katha.sections.length} sections`,
+              })),
+            }), lang)}
+          />
         </View>
 
         <ScrollView
@@ -107,7 +126,7 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 },
-  backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+  backButton: { width: 48, height: 48, borderWidth: 1, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 8, paddingBottom: 32 },
   search: { marginBottom: 8 },
   row: { flexDirection: 'row', alignItems: 'center', paddingVertical: 13, borderBottomWidth: StyleSheet.hairlineWidth },

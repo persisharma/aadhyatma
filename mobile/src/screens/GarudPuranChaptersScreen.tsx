@@ -7,7 +7,11 @@ import { garudPuranChaptersManifest, type GarudPuranArtId } from '@/data/garud-p
 import { garudPuranImages, garudPuranThumbFocus } from '@assets/garud-puran';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
+import { readingParchment } from '@/data/backgroundAsset';
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import LanguageToggle from '@/components/LanguageToggle';
 import ListingCard, { ListingScope, ListingSectionHeader, ListingThumbImage } from '@/components/ListingCard';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
@@ -23,10 +27,25 @@ const groups = [
 export default function GarudPuranChaptersScreen({ navigation }: Props) {
   const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { getChapterProgress } = useReadingProgress();
+  const listingShare = buildListingShare({
+    sourceId: 'garud-puran', titleHi: 'गरुड़ पुराण', titleEn: 'Garud Puran',
+    background: readingParchment,
+    items: garudPuranChaptersManifest.map((reading) => ({
+      titleHi: reading.titleHi, titleEn: reading.titleEn,
+      detailHi: `${reading.verseCount} पृष्ठ`, detailEn: `${reading.verseCount} pages`,
+    })),
+  });
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.parchment }]} edges={['top', 'left', 'right']}>
-      <ReaderHeader title={contentByLang(lang, 'गरुड़ पुराण', 'Garud Puran')} onBack={() => navigation.goBack()} variant="index" />
+      <ReaderHeader
+        title={contentByLang(lang, 'गरुड़ पुराण', 'Garud Puran')}
+        onBack={() => navigation.goBack()}
+        variant="index"
+        sideWidth={60}
+        right={<ShareButton busy={shareBusy} accessibilityLabel="Share chapter listing" accessibilityHint="Share the complete reading list as post, Story, or Reel cards" onPress={() => void share(listingShare, lang)} />}
+      />
       <View style={{ paddingBottom: spacing.md }}><LanguageToggle /></View>
       <ScrollView testID="garud-puran-index" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: 40, gap: spacing.md }}>
         <ListingScope>
