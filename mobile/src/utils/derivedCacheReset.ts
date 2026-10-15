@@ -86,8 +86,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * - `@vedansh/language`, `regionalLanguage`, `font-scale`, `read-aloud` — display
  *   and reading preferences.
  * - `@vedansh/tour-completed-v`, `whats-new-seen-v`, `onboarding-setup-v`,
- *   `rating-prompt` — already version-suffixed where they should be; clearing
- *   them would replay the tour or the rating ask on every update.
+ *   `rating-prompt`, `daily-bhakti-nudge` — already version-suffixed where they
+ *   should be; clearing them would replay the tour, the rating ask or the Daily
+ *   Bhakti setup strip's rested asks on every update.
  */
 export const DERIVED_CACHE_KEY_PREFIXES = [
   '@vedansh:panchang-days:',

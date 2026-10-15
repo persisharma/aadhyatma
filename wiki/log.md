@@ -882,3 +882,13 @@ surfaces showed no thematic art. Restored the original plates; banner gating is 
 Screens that never had a plate keep the paper. Added a per-layout regression test. Updated
 design.md §6/§23, RULEBOOK §11.8 and the readers/reading-artwork pages. Focused Jest suites,
 TypeScript and touched-file lint pass; native visual check not run.
+
+## [2026-10-15] ingest | Daily Bhakti reminder + widget setup strip
+
+Added a one-ask-at-a-time strip under the Daily Bhakti title: the daily-verse reminder while it is
+not set up (on + granted), a Settings link on a hard denial, then the verse widget once the
+reminder is set up or its ask is resting. "Not now" rests the reminder ask for 15 days and ends
+the widget ask (`@vedansh/daily-bhakti-nudge`). Android pins the verse widget directly; iOS gets a how-to sheet.
+The widget ask is gated on the new `hasWidgetHost()` so an OTA never offers it to a binary without
+the extension, and it ends on a completed add flow because neither bridge can report placement.
+Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pages.
