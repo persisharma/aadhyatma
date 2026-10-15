@@ -2,6 +2,7 @@ import AppIcon from '@/components/AppIcon';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Keyboard,
   Modal,
@@ -286,6 +287,32 @@ export default function KundaliScreen({ navigation, route }: Props) {
     }
   };
 
+  // Removal is one tap from a form that also holds Save, and it cannot be
+  // undone — so it names whose details go before anything is deleted.
+  const confirmRemove = () => {
+    const name = profile?.name?.trim();
+    Alert.alert(
+      name
+        ? contentByLang(lang, `${name} के जन्म विवरण हटाएँ?`, `Remove ${name}'s birth details?`)
+        : contentByLang(lang, 'जन्म विवरण हटाएँ?', 'Remove these birth details?'),
+      contentByLang(
+        lang,
+        'इनकी कुंडली और जन्म तिथि इस फ़ोन से हट जाएँगी। यह वापस नहीं होगा।',
+        'Their Kundali and Janma Tithi will be removed from this phone. This cannot be undone.'
+      ),
+      [
+        { text: contentByLang(lang, 'रहने दें', 'Keep'), style: 'cancel' },
+        {
+          text: contentByLang(lang, 'हटाएँ', 'Remove'),
+          style: 'destructive',
+          onPress: () => {
+            void startOver();
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={styles.root}>
       <LinearGradient
@@ -418,7 +445,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
                 }}
                 onGenerate={handleGenerate}
                 onCancel={creating ? cancelNewPerson : chart ? () => setEditing(false) : undefined}
-                onDelete={!creating && profile ? startOver : undefined}
+                onDelete={!creating && profile ? confirmRemove : undefined}
                 colors={colors}
                 typography={typography}
                 radii={radii}

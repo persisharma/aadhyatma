@@ -2293,6 +2293,14 @@ Rashifal` (Rashifal). English accessibility labels stay stable in every reading
 language: `Show Kundali for <label>`, `Show Jyotish for <label>`, `Show Rashifal
 for <label>`, `Add another person`, and the row itself is `Person switcher`.
 
+**Manage link.** Where a surface has no Edit of its own (the Jyotish landing), the
+label row carries a right-aligned `सँभालें · Manage` text link (12 pt
+`indicSafeTag`, `saffronDeep`, label `Manage birth details`). It opens the active
+person's form (`Kundali { editing: true }`), which is where a person is edited or
+removed — so removal is reachable from the place people look for it. Its hit slop
+stops at the label row so the chips 6 dp below keep every tap. The Kundali screen
+omits it: its top bar already has `बदलें · Edit`.
+
 **Placement.** The switcher sits ABOVE what it changes: on the Kundali screen it
 is the first thing under the top bar in every state (so adding a second person is
 one tap from the first person's own chart), and on the Jyotish landing it sits
@@ -2304,7 +2312,10 @@ is saved — a guest still gets the untouched creation landing.
 with the saved people untouched and no chip selected; `बदलें · Edit` still edits
 the active person. Removing one of several people lands on a **survivor's** chart,
 not the blank form; removing the last one returns the guest state and the switcher
-disappears with them.
+disappears with them. Removal is irreversible, so `सुरक्षित जन्म विवरण हटाएँ`
+first raises a destructive confirm naming the person (`<नाम> के जन्म विवरण
+हटाएँ? · Remove <name>'s birth details?`, buttons `रहने दें · Keep` /
+`हटाएँ · Remove`); nothing is deleted until Remove is pressed.
 
 **Whose is it?** With more than one person saved, copy that used to say "your"
 names the person instead — `चन्द्र राशि · <नाम> की कुंडली से · Moon sign · From
@@ -2343,7 +2354,9 @@ less.
 
 **Structure (saved state).** Exactly four blocks, in this order:
 
-1. **The person switcher** (§51a), first. It no longer governs only the guidance
+1. **The person switcher** (§51a), first, 18 dp below the segmented control
+   (`jyotishSavedLanding`) — more than its label's 6 dp gap to the chips, so the
+   label reads as the chips' heading, not the toggle's caption. It no longer governs only the guidance
    card — every tile in the grid below reads out of the same active person — so
    it must sit above everything it changes and re-answer the whole screen on one
    render. `birthProfileStore`'s single active selection is what makes that true.
@@ -3369,7 +3382,7 @@ Roster `मेरे घर`: living home pinned first; each card label · role 
 
 **जन्म तिथि list (`screens/JanmaTithiListScreen.tsx`).** Two §33 ObservanceList row sections: **जीवित · जन्म तिथि** — one row per roster person (✦ lead glyph in the §63 muted circle; title = `personLabel` — name or birth date, never an invented placeholder; caption = rule in words; right column = this year's date + relative label) opening the detail; **पितृ · स्मरण तिथि** — the saved §63 entries as quiet rows into the shipped `PitruSmaranDetail`. The empty state explains that the tithi comes from saved birth details and offers ONE door to the Kundali screen — the roster is never editable here (RULEBOOK §14.5: one store, one owner). No engine or device-status footer.
 
-**Person detail (`screens/JanmaTithiDetailScreen.tsx`).** §33 detail-hero pattern (✦ ॐ ✦ leading, `personLabel` title 24 pt, tithi caption, the saffron-tint `इस वर्ष · date · in N days` pill, published warm-first before the rows below). Information rows (§63 anatomy): जन्म (date · time · city, with the sunrise-convention note as an 11 pt italic second line), अगले वर्ष, जन्म नक्षत्र (the Moon nakshatra at the IST birth instant — the shared Lahiri primitive). Then the **स्मरण toggle** — default OFF per person, persisted in `@vedansh:janma-tithi:v1` only after the shared OS grant succeeds (a refusal leaves it honestly off; the §63 save-flow rule). Then **इस दिन की परम्परा** rows, shipped sections only: विष्णु सहस्रनाम (the dirghayu paath) plus up to two of the kuldev's own texts when the §Part-B record names a registry deity — all through `buildEntryStartTarget`, never a hand-rolled route. Birth details stay Kundali's to edit: the header's सम्पादन cross-tabs to the Kundali screen via `panchangTabTarget`.
+**Person detail (`screens/JanmaTithiDetailScreen.tsx`).** §33 detail-hero pattern (✦ ॐ ✦ leading, `personLabel` title 24 pt, tithi caption, the saffron-tint `इस वर्ष · date · in N days` pill, published warm-first before the rows below). Information rows (§63 anatomy): जन्म (date · time · city, with the sunrise-convention note as an 11 pt italic second line), अगले वर्ष, जन्म नक्षत्र (the Moon nakshatra at the IST birth instant — the shared Lahiri primitive). Then the **स्मरण toggle** — default OFF per person, persisted in `@vedansh:janma-tithi:v1` only after the shared OS grant succeeds (a refusal leaves it honestly off; the §63 save-flow rule). Then **इस दिन की परम्परा** rows, shipped sections only: विष्णु सहस्रनाम (the dirghayu paath) plus up to two of the kuldev's own texts when the §Part-B record names a registry deity — all through `buildEntryStartTarget`, never a hand-rolled route. Birth details stay Kundali's to edit: the header's सम्पादन first makes THIS person the active one (Kundali edits whoever is active, so without it Edit — and the Remove inside it — acted on someone else), then cross-tabs to the Kundali form via `panchangTabTarget('Kundali', { editing: true })`.
 
 **Home Today chip (`components/JanmaTithiDayChip.tsx`).** `✦ जन्म तिथि — <label>` beside the §63 chip in the Today strip's row, same muted-gold register (`goldTint` fill, `gold` border, `inkSoft` text — NEVER festive saffron), one per matching person, resolved off the render path (`useJanmaTithiForDate`, the `usePitruSmaranForDate` deferral). Tap → that person's detail via `moreTabTarget`.
 

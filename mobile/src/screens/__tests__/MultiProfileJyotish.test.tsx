@@ -9,7 +9,7 @@
  */
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text } from 'react-native';
+import { Alert, Text, type AlertButton } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
@@ -81,6 +81,17 @@ function textOf(tree: TestRenderer.ReactTestRenderer): string {
 async function press(tree: TestRenderer.ReactTestRenderer, accessibilityLabel: string) {
   await act(async () => {
     tree.root.findByProps({ accessibilityLabel }).props.onPress();
+  });
+}
+
+// Removal asks first; accept the dialog the way a person would.
+async function removeAndConfirm(tree: TestRenderer.ReactTestRenderer) {
+  const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => {});
+  await press(tree, 'Remove saved birth details');
+  const buttons = (alert.mock.calls.at(-1)?.[2] ?? []) as AlertButton[];
+  alert.mockRestore();
+  await act(async () => {
+    buttons.find((button) => button.style === 'destructive')?.onPress?.();
   });
 }
 
@@ -165,7 +176,7 @@ test('Kundali: removing one of two people lands on the survivor, not the blank f
   const tree = render(kundaliScreen);
 
   await press(tree, 'Edit birth details');
-  await press(tree, 'Remove saved birth details');
+  await removeAndConfirm(tree);
 
   const body = textOf(tree);
   expect(body).toContain('Aarav');
@@ -183,7 +194,7 @@ test('Kundali: removing the LAST person returns the blank create form', async ()
   const tree = render(kundaliScreen);
 
   await press(tree, 'Edit birth details');
-  await press(tree, 'Remove saved birth details');
+  await removeAndConfirm(tree);
 
   expect(textOf(tree)).toContain('Create your Kundali');
   // Nobody left to switch to, so the switcher disappears with them.
