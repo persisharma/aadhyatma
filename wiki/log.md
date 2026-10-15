@@ -895,3 +895,12 @@ consensus with the old geocoder — median error 3.3 km vs 5.4 km before. Picker
 pincode with the name in `labelEn`. State labels now say "Jammu and Kashmir", matching `STATE_LENS`.
 Updated design.md Location Picker, [[panchang]] location sections/gotchas, the Maestro location flow
 (device run owed). Jest, engine, Ask and typecheck pass; `contentCorrectness` fails identically on main.
+
+## [2026-10-15] ingest | Spelling-variant and district search for places
+
+Report: Chhapra (Saran), Bhagalpur, Muzaffarpur, Darbhanga "not found". India Post spells Chhapra
+"Chapra", and Saran is a district, not an office. Added `foldPlaceName` (chh/ch → c, aspirate h
+dropped, w → v, doubled letters collapsed…), precomputed for all 165k names by the generator, plus
+district-name search over each district's head offices; literal spelling wins fold ties. Office
+table grows 1.9 → 3.4 MB (still lazy). Tests pin the four Bihar towns under common spellings and
+re-fold every shipped name against the runtime copy. See [[panchang]].

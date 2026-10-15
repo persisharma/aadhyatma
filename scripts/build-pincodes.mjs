@@ -99,8 +99,10 @@
  * OFFICE NAMES are cleaned, not rewritten: the trailing B.O / S.O / H.O type marker
  * and any "(Account S.O)" parenthetical are removed, G.P.O. is normalised to GPO,
  * names typed entirely in capitals are title-cased (keeping a short acronym list),
- * and only printable ASCII survives — which is what lets `pincodes.ts` search a
- * lower-cased copy of the joined string with offsets that still index the original.
+ * and only printable ASCII survives. Search runs on a second, spelling-folded copy
+ * (`foldPlaceName`: chh/ch → c, aspirate h dropped, w → v, doubled letters collapsed…)
+ * so "Chhapra" finds India Post's "Chapra" — precomputed here, because folding 165k
+ * names on a phone at first search would take seconds.
  *
  * Usage:  node scripts/build-pincodes.mjs
  */
@@ -231,6 +233,28 @@ function titleCase(raw) {
  * "Jogia  B.O (Alauli S.O)" → "Jogia";  "Guwahati G.P.O." → "Guwahati GPO";
  * "Town Hall SO Mumbai" → "Town Hall (Mumbai)".
  */
+/**
+ * The spelling-variant fold search compares on. MUST stay identical to
+ * `foldPlaceName` in `mobile/src/panchang/pincodes.ts` (a test pins it). India Post
+ * spells Chhapra "Chapra"; users type Muzzafarpur for Muzaffarpur. So: lower-case,
+ * punctuation to spaces, ph → f, chh/ch → c, drop the h of an aspirate (bh dh gh jh
+ * kh th) and of sh, w → v, z → j, q → k, then collapse doubled letters.
+ */
+export function foldPlaceName(raw) {
+  return raw
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+    .replace(/ph/g, 'f')
+    .replace(/chh/g, 'ch')
+    .replace(/ch/g, 'c')
+    .replace(/([kgjtdbs])h/g, '$1')
+    .replace(/w/g, 'v')
+    .replace(/z/g, 'j')
+    .replace(/q/g, 'k')
+    .replace(/([a-z])\1+/g, '$1');
+}
+
 export function cleanOfficeName(raw) {
   let name = raw
     .replace(/[^\x20-\x7e]/g, ' ')
@@ -648,9 +672,12 @@ function main() {
     pincodeCount: pins.length,
     count: names.length,
     perPincode,
-    // One string, not 150k: one allocation to load, and `pincodes.ts` searches a
-    // lower-cased copy of it whose offsets index this one (names are ASCII-only).
+    // One string, not 165k: one allocation to load. Display only.
     names: names.join('|'),
+    // The same names through `foldPlaceName`, in the same order — what search runs on.
+    // Precomputed because folding 165k names on a phone at first search took seconds
+    // (520 ms in Node); `pincodes.test.ts` asserts the runtime fold reproduces it.
+    folded: names.map(foldPlaceName).join('|'),
     // H = head office, S = sub office (a town), B = branch office (a village).
     kinds: kinds.join(''),
   };

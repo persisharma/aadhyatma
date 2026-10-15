@@ -3,6 +3,7 @@ import { test } from 'node:test';
 
 import { nearestCity } from '../locations';
 import {
+  foldPlaceName,
   isPincodeCityId,
   isPincodeQuery,
   isPlaceQuery,
@@ -43,6 +44,7 @@ test('office table: aligned with the pincode table, one kind per name, no separa
   assert.equal(pincodeOffices.perPincode.length, pincodeData.count);
   const names = pincodeOffices.names.split('|');
   assert.equal(names.length, pincodeOffices.count);
+  assert.equal(pincodeOffices.folded.split('|').length, pincodeOffices.count, 'one folded name per name');
   assert.equal(pincodeOffices.kinds.length, pincodeOffices.count);
   assert.equal(pincodeOffices.perPincode.reduce((a, b) => a + b, 0), pincodeOffices.count);
   assert.ok(pincodeOffices.count > 160000, `expected 160k+ office names, got ${pincodeOffices.count}`);
@@ -269,6 +271,66 @@ test('searchPlaces finds a village the city list never had', () => {
   assert.equal(first.entry.stateEn, 'Telangana');
 });
 
+test('the shipped folded names are exactly what the runtime fold produces', () => {
+  // The generator precomputes the fold (folding 165k names on a phone took seconds) and
+  // duplicates `foldPlaceName` to do it. Any drift between the two copies silently makes
+  // names unfindable, so every shipped name is re-folded here.
+  const names = pincodeOffices.names.split('|');
+  const folded = pincodeOffices.folded.split('|');
+  for (let i = 0; i < names.length; i += 1) {
+    if (foldPlaceName(names[i]) !== folded[i]) {
+      assert.fail(`name ${i} "${names[i]}" folds to "${foldPlaceName(names[i])}" at runtime but shipped "${folded[i]}"`);
+    }
+  }
+});
+
+test('foldPlaceName meets the common romanisation variants', () => {
+  const same: [string, string][] = [
+    ['Chhapra', 'Chapra'],
+    ['Muzzafarpur', 'Muzaffarpur'],
+    ['Bagalpur', 'Bhagalpur'],
+    ['Darbanga', 'Darbhanga'],
+    ['Vrindavan', 'Wrindawan'],
+    ['Jhansi', 'Jansi'],
+    ['Phulera', 'Fulera'],
+    ['  Mount--Abu ', 'mount abu'],
+  ];
+  for (const [a, b] of same) assert.equal(foldPlaceName(a), foldPlaceName(b), `${a} ≡ ${b}`);
+});
+
+test('the Bihar district towns are found under every common spelling, and by district name', () => {
+  // Reported Oct 2026: Chhapra (Saran), Bhagalpur, Muzaffarpur and Darbhanga could not be
+  // found. India Post spells Chhapra "Chapra", and Saran is a district, not an office.
+  const cases: [string, string][] = [
+    ['chhapra', '841301'],
+    ['chapra', '841301'],
+    ['saran', '841301'],
+    ['bhagalpur', '812001'],
+    ['bagalpur', '812001'],
+    ['muzaffarpur', '842001'],
+    ['muzzafarpur', '842001'],
+    ['darbhanga', '846004'],
+    ['darbanga', '846004'],
+  ];
+  for (const [query, pin] of cases) {
+    const [first] = searchPlaces(query);
+    assert.ok(first, `"${query}" found nothing`);
+    assert.equal(first.entry.pincode, pin, `"${query}" led with ${first.name} ${first.entry.pincode}`);
+    assert.equal(first.entry.stateEn, 'Bihar');
+  }
+});
+
+test('when two places fold alike, the one spelled exactly as typed comes first', () => {
+  // Shahupuri (Kolhapur) and Sahupuri (Chandauli) both fold to "sahupuri".
+  assert.equal(searchPlaces('shahupuri')[0].entry.pincode, '416001');
+  assert.equal(searchPlaces('sahupuri')[0].entry.pincode, '221009');
+});
+
+test('a district prefix needs four letters, a whole district name does not', () => {
+  assert.notEqual(searchPlaces('ram')[0].entry.districtEn, 'Ramanagara', '"ram" must not lead with a district');
+  assert.equal(searchPlaces('saran')[0].entry.districtEn, 'Saran');
+});
+
 test('searchPlaces is case- and space-insensitive', () => {
   assert.deepEqual(
     searchPlaces('  SHAHU   puri ').map((p) => p.entry.pincode),
@@ -295,7 +357,8 @@ test('searchPlaces honours its limit and returns nothing for a non-name', () => 
   assert.equal(searchPlaces('ram', 10).length, 10);
   assert.deepEqual(searchPlaces('ra'), []);
   assert.deepEqual(searchPlaces('zzqqxx'), []);
-  assert.deepEqual(searchPlaces('a|b|c'), [], 'the separator never matches across names');
+  // The name separator cannot survive the fold, so a query can never match across names.
+  assert.equal(foldPlaceName('a|b|c'), 'a b c');
 });
 
 test('placesForPincode lists what a code serves, towns first', () => {

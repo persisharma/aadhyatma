@@ -4,7 +4,8 @@
  *
  * WHY THIS IS NOT PART OF `CITIES`. Two hard reasons, both structural:
  *
- *   1. SIZE. 19,654 pincodes are 605 KB and their office names another 1.9 MB.
+ *   1. SIZE. 19,654 pincodes are 605 KB and their office names another 3.4 MB (display
+ *      and spelling-folded copies).
  *      `CITIES` is imported by `panchangPrefs`, which is imported by the launch
  *      prefetch — putting either table there would drag megabytes of JSON parse onto
  *      the cold-start path that #268/#269/#272 spent three commits clearing. So both
@@ -69,6 +70,8 @@ type OfficeTable = {
   count: number;
   perPincode: number[];
   names: string;
+  /** `names` through `foldPlaceName`, same order — what search runs on. */
+  folded: string;
   kinds: string;
 };
 
@@ -251,23 +254,61 @@ const KIND_RANK: Record<string, number> = { H: 0, S: 1, B: 2 };
 
 type PlaceIndex = {
   offices: OfficeTable;
-  /** `offices.names` lower-cased. Names are ASCII-only, so offsets index both. */
-  lower: string;
-  /** Start offset of name i in `names`; `starts[count]` is one past the end. */
-  starts: Int32Array;
+  /** Start offset of name i in `offices.names`; `nameStarts[count]` is one past the end. */
+  nameStarts: Int32Array;
+  /** Start offset of name i in `offices.folded`, likewise. */
+  foldStarts: Int32Array;
   /** Pincode-table row of name i. */
   rowOfName: Int32Array;
   /** Index of the first name of pincode-table row r. */
   firstOfRow: Int32Array;
+  /** Folded district name → its head offices' name indices (the district's towns). */
+  districtHeads: Map<string, number[]>;
 };
 
 let placeIndex: PlaceIndex | null = null;
 let placeIndexFailed = false;
 
 /**
- * The second lazy load — 1.9 MB of names, reached only once a query looks like a name.
- * Built once: a lower-cased copy to search with `indexOf` (native, so 1.9 MB scans in
- * milliseconds) and two typed arrays mapping a hit offset back to its name and pincode.
+ * The spelling-variant fold every name and query is compared through. India Post spells
+ * Chhapra "Chapra"; users type Muzzafarpur for Muzaffarpur, Bagalpur for Bhagalpur. So:
+ * lower-case, punctuation to spaces, ph → f, chh/ch → c, drop the h of an aspirate
+ * (bh dh gh jh kh th) and of sh, w → v, z → j, q → k, then collapse doubled letters.
+ *
+ * MUST stay identical to `foldPlaceName` in `scripts/build-pincodes.mjs`, which
+ * precomputes it for all 165k names (folding them on a phone at first search took
+ * seconds). `pincodes.test.ts` re-folds the shipped names and fails on any drift.
+ */
+export function foldPlaceName(raw: string): string {
+  return raw
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim()
+    .replace(/ph/g, 'f')
+    .replace(/chh/g, 'ch')
+    .replace(/ch/g, 'c')
+    .replace(/([kgjtdbs])h/g, '$1')
+    .replace(/w/g, 'v')
+    .replace(/z/g, 'j')
+    .replace(/q/g, 'k')
+    .replace(/([a-z])\1+/g, '$1');
+}
+
+function separatorStarts(joined: string, count: number): Int32Array {
+  const starts = new Int32Array(count + 1);
+  let name = 0;
+  for (let i = 0; i < joined.length; i += 1) {
+    if (joined.charCodeAt(i) === 124 /* | */) starts[++name] = i + 1;
+  }
+  starts[count] = joined.length + 1;
+  return starts;
+}
+
+/**
+ * The second lazy load — the office names, reached only once a query looks like a name.
+ * Built once: offset tables for the display and folded strings (search is native
+ * `indexOf` over the folded one, so 1.6 MB scans in milliseconds), each name's pincode
+ * row, and the head offices of every district so "Saran" finds Chapra.
  */
 function loadPlaceIndex(): PlaceIndex | null {
   if (placeIndex || placeIndexFailed) return placeIndex;
@@ -278,24 +319,36 @@ function loadPlaceIndex(): PlaceIndex | null {
   }
   try {
     const offices = require('./pincodeOffices.json') as OfficeTable;
-    if (offices.format !== EXPECTED_FORMAT || offices.pincodeCount !== data.count) {
+    if (
+      offices.format !== EXPECTED_FORMAT ||
+      offices.pincodeCount !== data.count ||
+      typeof offices.folded !== 'string'
+    ) {
       placeIndexFailed = true;
       return null;
     }
-    const starts = new Int32Array(offices.count + 1);
-    let name = 0;
-    for (let i = 0; i < offices.names.length; i += 1) {
-      if (offices.names.charCodeAt(i) === 124 /* | */) starts[++name] = i + 1;
-    }
-    starts[offices.count] = offices.names.length + 1;
     const rowOfName = new Int32Array(offices.count);
     const firstOfRow = new Int32Array(offices.perPincode.length);
+    const districtHeads = new Map<string, number[]>();
     let next = 0;
     for (let row = 0; row < offices.perPincode.length; row += 1) {
       firstOfRow[row] = next;
-      for (let k = 0; k < offices.perPincode[row]; k += 1) rowOfName[next++] = row;
+      for (let k = 0; k < offices.perPincode[row]; k += 1) {
+        if (offices.kinds.charCodeAt(next) === 72 /* H */) {
+          const district = foldPlaceName(data.districts[data.rows[row * STRIDE + DISTRICT]]);
+          (districtHeads.get(district) ?? districtHeads.set(district, []).get(district)!).push(next);
+        }
+        rowOfName[next++] = row;
+      }
     }
-    placeIndex = { offices, lower: offices.names.toLowerCase(), starts, rowOfName, firstOfRow };
+    placeIndex = {
+      offices,
+      nameStarts: separatorStarts(offices.names, offices.count),
+      foldStarts: separatorStarts(offices.folded, offices.count),
+      rowOfName,
+      firstOfRow,
+      districtHeads,
+    };
     return placeIndex;
   } catch {
     placeIndexFailed = true;
@@ -309,29 +362,24 @@ export function warmPlaceIndex(): void {
 }
 
 function nameAt(index: PlaceIndex, i: number): string {
-  return index.offices.names.slice(index.starts[i], index.starts[i + 1] - 1);
+  return index.offices.names.slice(index.nameStarts[i], index.nameStarts[i + 1] - 1);
 }
 
-/** The largest i with starts[i] <= offset. */
+/** The largest i with foldStarts[i] <= offset. */
 function nameContaining(index: PlaceIndex, offset: number): number {
   let lo = 0;
   let hi = index.offices.count - 1;
   while (lo < hi) {
     const mid = (lo + hi + 1) >> 1;
-    if (index.starts[mid] <= offset) lo = mid;
+    if (index.foldStarts[mid] <= offset) lo = mid;
     else hi = mid - 1;
   }
   return lo;
 }
 
-/** Lower-case, single-spaced, and stripped of the name separator. */
-export function normalizePlaceQuery(query: string): string {
-  return query.toLowerCase().replace(/\|/g, ' ').replace(/\s+/g, ' ').trim();
-}
-
-/** Latin letters are what the directory has; a Devanagari query cannot match it. */
+/** Three letters after folding; the directory is Latin, so a Devanagari query is not a name. */
 export function isPlaceQuery(query: string): boolean {
-  const q = normalizePlaceQuery(query);
+  const q = foldPlaceName(query);
   return q.length >= MIN_PLACE_QUERY && /[a-z]/.test(q);
 }
 
@@ -339,45 +387,63 @@ export function isPlaceQuery(query: string): boolean {
 const MAX_SCANNED_HITS = 4000;
 
 /**
- * Post offices whose name contains `query`, best first: names starting with it, then a
- * later word starting with it, then any substring. Within each, head and sub offices
- * (towns) come before branch offices (villages) — "srinagar" must put Srinagar GPO
- * above the six villages also called Srinagar — then the exact name, then shorter
- * names, then directory order. Same-named villages in different districts are all
- * returned; the picker tells them apart by district and state.
+ * Post offices matching `query`, compared through `foldPlaceName` so spelling variants
+ * meet ("chhapra" finds Chapra). Best first: the head offices of a DISTRICT whose name
+ * starts with the query ("saran" → Chapra, Saran's headquarters) and names starting with
+ * it, then a later word starting with it, then any substring. Within each, head and sub
+ * offices (towns) before branch offices (villages) — "srinagar" must put Srinagar GPO
+ * above the six villages also called Srinagar — then the exact name, then shorter names,
+ * then directory order. Same-named villages in different districts are all returned; the
+ * picker tells them apart by district and state.
  */
 export function searchPlaces(query: string, limit = 50): PlaceMatch[] {
   if (!isPlaceQuery(query)) return [];
   const index = loadPlaceIndex();
   const data = loadTable();
   if (!index || !data) return [];
-  const q = normalizePlaceQuery(query);
+  const q = foldPlaceName(query);
+  // Two folded names can be equal (Shahupuri, Kolhapur and Sahupuri, Chandauli); the one
+  // spelled exactly as typed wins that tie.
+  const typed = query.trim().toLowerCase().replace(/\s+/g, ' ');
 
-  const hits: { i: number; rank: number; exact: boolean }[] = [];
-  let lastName = -1;
+  const hits: { i: number; rank: number; exact: boolean; length: number }[] = [];
+  const seen = new Set<number>();
+  for (const [district, heads] of index.districtHeads) {
+    // A whole district name always; a district PREFIX only from four letters, or "ram"
+    // would lead with Ramanagara's head offices.
+    if (!(district === q || (q.length >= 4 && district.startsWith(q)))) continue;
+    for (const i of heads) {
+      seen.add(i);
+      const length = index.foldStarts[i + 1] - 1 - index.foldStarts[i];
+      hits.push({ i, rank: 0, exact: district === q, length });
+    }
+  }
+
+  const folded = index.offices.folded;
   let from = 0;
   while (hits.length < MAX_SCANNED_HITS) {
-    const at = index.lower.indexOf(q, from);
+    const at = folded.indexOf(q, from);
     if (at < 0) break;
     from = at + 1;
     const i = nameContaining(index, at);
-    if (i === lastName) continue;
-    // A query is single-spaced and separator-free, so a hit never spans two names.
-    const start = index.starts[i];
-    const length = index.starts[i + 1] - 1 - start;
-    let tier: number;
-    if (at === start) tier = 0;
-    else tier = /[ (\-./]/.test(index.lower[at - 1]) ? 1 : 2;
-    lastName = i;
-    hits.push({ i, rank: tier * 3 + KIND_RANK[index.offices.kinds[i]], exact: at === start && length === q.length });
+    if (seen.has(i)) continue;
+    seen.add(i);
+    // A folded query has no separator, so a hit never spans two names.
+    const start = index.foldStarts[i];
+    const length = index.foldStarts[i + 1] - 1 - start;
+    const tier = at === start ? 0 : folded.charCodeAt(at - 1) === 32 /* space */ ? 1 : 2;
+    hits.push({ i, rank: tier * 3 + KIND_RANK[index.offices.kinds[i]], exact: at === start && length === q.length, length });
   }
 
+  const literal = (hit: { i: number; exact: boolean }) => hit.exact && nameAt(index, hit.i).toLowerCase() === typed;
   hits.sort((a, b) => {
     if (a.rank !== b.rank) return a.rank - b.rank;
     if (a.exact !== b.exact) return a.exact ? -1 : 1;
-    const la = index.starts[a.i + 1] - index.starts[a.i];
-    const lb = index.starts[b.i + 1] - index.starts[b.i];
-    if (la !== lb) return la - lb;
+    if (a.exact) {
+      const la = literal(a);
+      if (la !== literal(b)) return la ? -1 : 1;
+    }
+    if (a.length !== b.length) return a.length - b.length;
     return a.i - b.i;
   });
 
