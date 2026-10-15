@@ -1,0 +1,10 @@
+{
+  "generation": "built-in image_gen",
+  "prompt_notes": {
+    "theerth-karni-mata-background": "Precise edit of original sepia shrine: remove central face moustache and beard, use a serene feminine Karni Mata face; keep crown, trishul, garlands, six rats, temple and quiet lower parchment.",
+    "theerth-karni-mata-banner": "Precise edit of original 2:1 storybook shrine banner: correct only the feminine face, preserving pastel colours, architecture, six rats and complete framing.",
+    "hanuman-sita-background": "Preserve antique sepia Hanuman kneeling before Sita; remove corner A-like mark, empty label and hard frame; fade busy foliage and ground.",
+    "ram-hanuman-background": "Recreate Rama blessing Hanuman in the same monochrome sepia style, with clear faces, connected blessing hand, namaste gesture, complete bow, feet and tail; quiet lower third.",
+    "rama-darbar-background": "Recreate exactly Rama, Sita, Lakshmana and Hanuman in antique sepia; clarify faces and anatomy, simplify ornament and keep all figures intact with quiet lower parchment."
+  }
+}
