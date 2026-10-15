@@ -894,7 +894,9 @@ function collectJsonFiles(dirRel = ''): string[] {
       // `kidsStories` holds retold picture-book narratives (design.md §76), not
       // verse-level scripture — each carries a prose `sourceNote` rather than the
       // structured `source.referenceUrls` this §14 provenance rule checks for.
-      if (entry.name !== '__tests__' && entry.name !== 'kidsStories') {
+      // `comicBooks` is the same kind of retelling: its provenance is `baseText`
+      // + `sourceCoverage` (sargas), held by comics.jest.test.ts.
+      if (entry.name !== '__tests__' && entry.name !== 'kidsStories' && entry.name !== 'comicBooks') {
         files.push(...collectJsonFiles(rel));
       }
     } else if (
@@ -904,6 +906,7 @@ function collectJsonFiles(dirRel = ''): string[] {
       // `source` — the heavy art/audio they point to is served from R2, not here.
       entry.name !== 'audioAssetManifest.json' &&
       entry.name !== 'kidsStoryAssetManifest.json' &&
+      entry.name !== 'comicAssetManifest.json' &&
       entry.name !== 'backgroundAssetManifest.json' &&
       entry.name !== 'readerIllustrationManifest.json' &&
       // Art aliases are semantic asset mappings, not scripture. Their manifest
