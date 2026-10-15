@@ -940,3 +940,10 @@ Added the sourced Ambe Tu Hai Jagdambe Kali, Shani, Kubera, Santoshi, Ahoi, Vais
 ## [2026-10-15] gap | Native aarti verification deferred
 
 The user requested the PR now and separate native checks. Full automated tests passed, but all-nine iOS/Android Standard/Large journeys and Saraswati japa remain incomplete; see `docs/evaluations/aarti-expansion-2026-10-15/review.md` for partial results and rerun commands.
+## [2026-10-15] ingest | Shared listing card for comic, Garud Puran and kids-story lists
+The three section listings now render one `ListingCard` (design.md §82, RULEBOOK §3 "Listing cards"):
+reading-language title only, one-line description (≤32 chars), `N पृष्ठ` meta, a 92-wide thumb that
+fills the card height with cover-cropped art, `LanguageToggle` + scope line on every listing. Each
+comic prasang shows a curated key scene (`episodeCovers.ts`); Garud paintings crop around a focal
+point. All 28 kids-story descriptions were shortened. Updated [[kids-stories]] and [[languages]].
+

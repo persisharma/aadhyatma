@@ -35,6 +35,28 @@ test('stories have unique stable pages and authored text in all four languages',
   }
 });
 
+// RULEBOOK §3 "Listing cards" / §29: the shelf shows the description on ONE line
+// (12pt, ~148pt column on a 360dp phone). Copy is written to fit, never cut off.
+// 32 code points is the measured ceiling for the app fonts in every script.
+test('listing descriptions fit one line in every language', () => {
+  for (const story of kidsStories) {
+    for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+      const text = story.description[lang].trim();
+      assert.ok([...text].length <= 32, `${story.id}: ${lang} description "${text}" is longer than one listing line (32)`);
+      assert.ok(!/[।.]$/.test(text), `${story.id}: ${lang} description is a phrase, not a sentence`);
+    }
+  }
+});
+
+test('introductions say so in their own description, since cards carry no kind tag', () => {
+  for (const story of kidsStories.filter(item => item.kind === 'introduction')) {
+    assert.match(story.description.hi, /परिचय/, `${story.id}: hi`);
+    assert.match(story.description.gu, /પરિચય/, `${story.id}: gu`);
+    assert.match(story.description.kn, /ಪರಿಚಯ/, `${story.id}: kn`);
+    assert.match(story.description.en, /^Meet /, `${story.id}: en`);
+  }
+});
+
 test('locale selection changes narration while keeping the shared illustration and page', () => {
   const story = getKidsStory('krishna-janma')!;
   const index = storyPageIndex(story, 'yamuna-crossing');
