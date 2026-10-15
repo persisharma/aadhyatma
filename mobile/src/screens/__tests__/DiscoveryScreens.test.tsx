@@ -3,6 +3,7 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 import { GitaLanguageProvider } from '@/data/gita/language';
+import { ShareProvider } from '@/utils/shareVerse';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
@@ -36,7 +37,9 @@ function renderWithLanguage(node: React.ReactElement, initialLang: 'hi' | 'en' =
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang={initialLang}>{node}</GitaLanguageProvider>
+      <GitaLanguageProvider initialLang={initialLang}>
+        <ShareProvider>{node}</ShareProvider>
+      </GitaLanguageProvider>
     );
   });
   return tree;
