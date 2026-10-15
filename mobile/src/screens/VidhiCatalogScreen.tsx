@@ -12,6 +12,9 @@ import { contentByLang } from '@/utils/localize';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { VIDHI_ENTRIES, type VidhiEntry } from '@/data/vidhi';
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import type { VidhiStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<VidhiStackParamList, 'VidhiCatalog'>;
@@ -26,6 +29,7 @@ type Props = NativeStackScreenProps<VidhiStackParamList, 'VidhiCatalog'>;
 export default function VidhiCatalogScreen({ navigation }: Props) {
   const { colors } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -34,6 +38,15 @@ export default function VidhiCatalogScreen({ navigation }: Props) {
           variant="index"
           title={contentByLang(lang, 'पूजा विधियाँ', 'Puja Vidhis')}
           onBack={() => navigation.goBack()}
+          sideWidth={60}
+          right={<ShareButton busy={shareBusy} accessibilityLabel="Share puja vidhi listing" accessibilityHint="Share the complete list as post, Story, or Reel cards" onPress={() => void share(buildListingShare({
+            sourceId: 'vidhi-catalog', titleHi: 'पूजा विधियाँ', titleEn: 'Puja Vidhis', background: null,
+            items: VIDHI_ENTRIES.map((entry) => ({
+              titleHi: entry.titleHi, titleEn: entry.titleEn,
+              detailHi: `${entry.steps.length} चरण · लगभग ${entry.durationHintMin} मिनट`,
+              detailEn: `${entry.steps.length} steps · About ${entry.durationHintMin} min`,
+            })),
+          }), lang)} />}
         />
         <ScrollView
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.screenGutter }]}

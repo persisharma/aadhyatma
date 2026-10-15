@@ -10,6 +10,9 @@ import { deities } from '@/data/deities';
 import { getRandomDeityBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import DeityCard from '@/components/DeityCard';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import { useNewContent } from '@/contexts/NewContentContext';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -18,6 +21,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'DeityIndex'>;
 export default function DeityIndexScreen({ navigation }: Props) {
   const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { isNew } = useNewContent();
   // The index isn't tied to one deity, so it wears a random deity backdrop —
   // stable while open (useMemo []), fresh on each visit. Matches the image
@@ -87,6 +91,20 @@ export default function DeityIndexScreen({ navigation }: Props) {
               · {title.secondary.text}
             </Text>
           </View>
+          <ShareButton
+            busy={shareBusy}
+            accessibilityLabel="Share deity index"
+            accessibilityHint="Share the complete deity list as post, Story, or Reel cards"
+            onPress={() => void share(buildListingShare({
+              sourceId: 'deity-index', titleHi: 'देवता', titleEn: 'By Deity',
+              background: backgroundImage,
+              items: deities.map((deity) => ({
+                titleHi: deity.nameHi, titleEn: deity.nameEn,
+                detailHi: `${deityTexts(deity.id).length} पाठ`,
+                detailEn: getItemCount(deity.id),
+              })),
+            }), lang)}
+          />
         </View>
 
         <ScrollView
@@ -128,6 +146,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleRow: {
+    flex: 1,
+    minWidth: 0,
     flexDirection: 'row',
     alignItems: 'baseline',
   },

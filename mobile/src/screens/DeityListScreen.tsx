@@ -10,6 +10,9 @@ import { deities } from '@/data/deities';
 import { getDeityBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LibraryCard from '@/components/LibraryCard';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useNewContent } from '@/contexts/NewContentContext';
@@ -22,6 +25,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'DeityList'>;
 export default function DeityListScreen({ navigation, route }: Props) {
   const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { deityId } = route.params;
   const { getProgress, clearProgress, clearChapterProgress, isLoading } = useReadingProgress();
   const { markSeen } = useNewContent();
@@ -99,6 +103,24 @@ export default function DeityListScreen({ navigation, route }: Props) {
               · {title.secondary.text}
             </Text>
           </View>
+          <ShareButton
+            busy={shareBusy}
+            accessibilityLabel="Share deity listing"
+            accessibilityHint="Share the complete list as post, Story, or Reel cards"
+            onPress={() => {
+              if (!deityMeta) return;
+              void share(buildListingShare({
+                sourceId: `deity-${deityId}`,
+                titleHi: deityMeta.nameHi,
+                titleEn: deityMeta.nameEn,
+                background: backgroundImage,
+                items: items.map((entry) => ({
+                  titleHi: entry.nameHi, titleEn: entry.nameEn,
+                  detailHi: entry.sub, detailEn: entry.subEn,
+                })),
+              }), lang);
+            }}
+          />
         </View>
 
         <ScrollView
@@ -166,6 +188,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleRow: {
+    flex: 1,
+    minWidth: 0,
     flexDirection: 'row',
     alignItems: 'baseline',
   },

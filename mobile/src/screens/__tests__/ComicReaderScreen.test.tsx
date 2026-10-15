@@ -3,6 +3,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 let mockLang = 'hi';
 let mockLarge = false;
 const mockScroll = jest.fn();
+const mockShare = jest.fn();
 jest.mock('react-native', () => {
   const React = require('react');
   return {
@@ -20,6 +21,8 @@ jest.mock('expo-linear-gradient', () => ({ LinearGradient: 'LinearGradient' }));
 jest.mock('@/components/ReaderHeader', () => ({ __esModule: true, default: (props: any) => {
   const React = require('react'); return React.createElement('ReaderHeader', props, props.right);
 } }));
+jest.mock('@/components/ShareButton', () => ({ __esModule: true, default: 'ShareButton' }));
+jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, busy: false }) }));
 jest.mock('@/components/ReadingProgressBar', () => ({ __esModule: true, default: 'ReadingProgressBar' }));
 jest.mock('@/components/LanguageToggle', () => ({ __esModule: true, default: 'LanguageToggle' }));
 jest.mock('@/components/ComicPanel', () => ({ __esModule: true, default: 'ComicPanel' }));
@@ -49,6 +52,13 @@ test('29 native episode cards open the selected scene in the reader', () => {
   act(() => find('comic-episode-bk-06').props.onPress());
   expect(navigation.navigate).toHaveBeenCalledWith('ComicReader', { comicId: 'balakanda-v1', episodeId: 'bk-06' });
   expect(tree.root.findAllByType('WebView' as any)).toHaveLength(0);
+});
+test('the episode index sends all 29 titles to the listing share picker', () => {
+  const { tree } = mount(undefined, Shelf);
+  act(() => tree.root.findByType('ShareButton' as any).props.onPress());
+  const content = mockShare.mock.calls.at(-1)?.[0];
+  expect(content.scopes.flatMap((scope: any) => scope.prepared.en.pages)
+    .flatMap((page: any) => page.blocks.filter((block: any) => block.kind === 'heading'))).toHaveLength(29);
 });
 test('140 panels use swipe paging and unrestricted vertical scrolling without source/web controls', () => {
   const { tree, find } = mount();
