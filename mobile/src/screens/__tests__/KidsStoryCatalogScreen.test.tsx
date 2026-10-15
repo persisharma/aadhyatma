@@ -1,7 +1,11 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 
-jest.mock('react-native', () => ({ Pressable: 'Pressable', ScrollView: 'ScrollView', StyleSheet: { create: (x: unknown) => x }, Text: 'Text', View: 'View' }));
+jest.mock('react-native', () => ({
+  Image: 'Image', Pressable: 'Pressable', ScrollView: 'ScrollView', Text: 'Text', View: 'View',
+  StyleSheet: { create: (x: unknown) => x, absoluteFillObject: {} },
+  Platform: { OS: 'ios', select: (options: Record<string, unknown>) => options.ios ?? options.default },
+}));
 jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: 'SafeAreaView' }));
 jest.mock('@/components/ReaderHeader', () => ({ __esModule: true, default: 'ReaderHeader' }));
 jest.mock('@/components/DeityIcon', () => ({ __esModule: true, default: 'DeityIcon' }));
@@ -10,15 +14,23 @@ jest.mock('@/components/DeityCard', () => ({ __esModule: true, default: ({ testI
   return React.createElement('Pressable', { testID, onPress });
 } }));
 jest.mock('@/components/KidsStoryArt', () => ({ __esModule: true, default: 'KidsStoryArt' }));
+jest.mock('@/components/LanguageToggle', () => ({ __esModule: true, default: 'LanguageToggle' }));
 jest.mock('expo-linear-gradient', () => ({ LinearGradient: 'LinearGradient' }));
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'en' }) }));
 jest.mock('@/theme/ThemeContext', () => ({ useTheme: () => ({
-  colors: {}, elevation: { card: {}, raised: {} }, radii: { lg: 16 }, typography: { subtitle: { fontSize: 15 } }, spacing: { readingGutter: 22, xxl: 24, lg: 16, md: 12 },
+  colors: {}, elevation: { card: {}, raised: {} }, radii: { lg: 16, sm: 10 }, typography: require('@/theme/typography').typography, spacing: { readingGutter: 22, xxl: 24, lg: 16, md: 12 },
 }) }));
-jest.mock('@/utils/langType', () => ({ meaningToken: () => ({}), titleFontByLang: () => 'test-font' }));
+jest.mock('@/utils/langType', () => ({
+  meaningToken: () => ({}), titleFontByLang: () => 'test-font', isLatinLang: (lang: string) => lang === 'en', pillTextStyle: () => ({}),
+}));
 jest.mock('@/utils/localize', () => ({ pick: (lang: string, values: Record<string, string>) => values[lang] }));
 
 const Library = require('../KidsStoryLibraryScreen').default;
+// ListingCard forwards its testID to the Pressable it renders: select the host.
+const card = (tree: TestRenderer.ReactTestRenderer, testID: string) =>
+  tree.root.find(node => node.type === ('Pressable' as any) && node.props.testID === testID);
+const texts = (tree: TestRenderer.ReactTestRenderer) =>
+  tree.root.findAllByType('Text' as any).map(node => [].concat(node.props.children).join(''));
 const Deity = require('../KidsStoryDeityScreen').default;
 
 test('Home library opens a deity shelf before a story', () => {
@@ -54,7 +66,7 @@ test.each([
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => { tree = TestRenderer.create(<Deity navigation={navigation} route={{ params: { deityId } }} />); });
   for (const storyId of storyIds) {
-    act(() => tree.root.findByProps({ testID: `kids-story-${storyId}` }).props.onPress());
+    act(() => card(tree, `kids-story-${storyId}`).props.onPress());
     expect(navigation.navigate).toHaveBeenLastCalledWith('KidsStoryReader', { storyId });
   }
   expect(tree.root.findAllByType('Pressable' as any)).toHaveLength(storyIds.length);
@@ -81,17 +93,43 @@ test('Maa Durga shelf has nine ordered form routes, a festival introduction and 
     'kids-story-durga-suratha-samadhi', 'kids-story-durga-shakambhari',
   ]);
   for (const story of storiesForDeity('durga')) {
-    act(() => tree.root.findByProps({ testID: `kids-story-${story.id}` }).props.onPress());
+    act(() => card(tree, `kids-story-${story.id}`).props.onPress());
     expect(navigation.navigate).toHaveBeenLastCalledWith('KidsStoryReader', { storyId: story.id });
   }
-  expect(tree.root.findAllByType('Text' as any).filter(node =>
-    Array.isArray(node.props.children) && node.props.children.includes(' · Introduction')
-  )).toHaveLength(4);
+  // One style for every card: no Story/Introduction tag and no per-card age —
+  // the shelf states the age once and introductions say so in their own line.
+  const visible = texts(tree);
+  expect(visible.filter(text => /Introduction|Story$|^6\+ ·/.test(text))).toEqual([]);
+  expect(visible).toContain('Ages 6+ · 14 illustrated readings');
+  expect(visible).toContain('Day 7');
+  expect(visible).not.toContain('Day 7 · Kalaratri');
   expect(buttons[7].props.accessibilityLabel).toContain('Day 7 · Kalaratri');
   act(() => tree.unmount());
 });
 
-test('covers derive their height from reviewed artwork and tab-hosted catalogs have no second bottom inset', () => {
+test('every shelf card is the shared listing card: reading-language title, one-line description, count-only meta, filled thumb', () => {
+  const { storiesForDeity } = require('@/data/kidsStories');
+  const navigation = { navigate: jest.fn(), goBack: jest.fn() };
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<Deity navigation={navigation} route={{ params: { deityId: 'durga' } }} />); });
+  const visible = texts(tree);
+  for (const story of storiesForDeity('durga')) {
+    expect(visible).toContain(story.title.en);
+    expect(visible).not.toContain(story.title.hi);
+    expect(visible).toContain(`${story.pages.length} pages`);
+  }
+  const descriptions = tree.root.findAllByType('Text' as any).filter(node => node.props.numberOfLines === 1);
+  expect(descriptions).toHaveLength(14);
+  expect(tree.root.findAllByType('LanguageToggle' as any)).toHaveLength(1);
+  for (const art of tree.root.findAllByType('KidsStoryArt' as any)) {
+    expect(art.props.fill).toBe(true);
+    const box = Object.assign({}, ...[].concat(art.parent!.props.style));
+    expect(box).toMatchObject({ width: 92, minHeight: 115, alignSelf: 'stretch' });
+  }
+  act(() => tree.unmount());
+});
+
+test('tab-hosted catalogs have no second bottom inset', () => {
   const navigation = { navigate: jest.fn(), goBack: jest.fn() };
   for (const Component of [Library, Deity]) {
     let tree!: TestRenderer.ReactTestRenderer;
@@ -99,10 +137,6 @@ test('covers derive their height from reviewed artwork and tab-hosted catalogs h
     expect(tree.root.findByType('SafeAreaView' as any).props.edges).toEqual(['top', 'left', 'right']);
     const scroll = tree.root.findByType('ScrollView' as any);
     expect(scroll.props.contentContainerStyle.paddingBottom).toBe(12);
-    for (const art of tree.root.findAllByType('KidsStoryArt' as any)) {
-      expect(art.parent!.props.style.width).toBe(120);
-      expect(art.parent!.props.style.height).toBeUndefined();
-    }
     act(() => tree.unmount());
   }
 });

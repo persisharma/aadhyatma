@@ -12,6 +12,11 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: kids-story-catalog
 - tapOn: { id: "kids-story-deity-krishna" }
 - assertVisible: { id: "kids-story-putana" }
+# Shared listing card (design.md §82): the shelf carries the language toggle,
+# one scope line and a filled cover thumb on each card.
+- assertVisible: { id: "lang-toggle-en" }
+- assertVisible: { id: "kids-story-scope" }
+- assertVisible: { id: "kids-story-putana-thumb" }
 - takeScreenshot: kids-krishna-shelf
 - tapOn: { id: "kids-story-krishna-janma" }
 - assertVisible: { id: "story-pager" }

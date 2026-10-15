@@ -7,6 +7,7 @@ import { cachedAssetUri } from '@/utils/assetCache';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
+import { coverRect } from '@/utils/coverRect';
 
 export function comicArtRequest(art: string) {
   return remoteAssetRequest(manifest, art, assetBaseUrl());
@@ -17,11 +18,26 @@ export function comicArtGeometry(panel: ComicPanel, width: number) {
   const sheetHeight = sheetWidth * dimensions.height / dimensions.width;
   return { height: sheetHeight * frame.height, sheetWidth, sheetHeight, left: -sheetWidth * frame.x, top: -sheetHeight * frame.y };
 }
+/** Sheet placement that makes the panel's frame cover a box (the listing thumb), cropped around `focusX`. */
+export function comicArtCoverGeometry(panel: ComicPanel, boxWidth: number, boxHeight: number, focusX = 0.5) {
+  const { frame, dimensions } = panel;
+  const rect = coverRect(dimensions.width * frame.width, dimensions.height * frame.height, boxWidth, boxHeight, focusX);
+  const sheetWidth = dimensions.width * rect.scale;
+  const sheetHeight = dimensions.height * rect.scale;
+  return { sheetWidth, sheetHeight, left: rect.left - sheetWidth * frame.x, top: rect.top - sheetHeight * frame.y };
+}
 
-export default function ComicArt({ panel, label, compact = false }: { panel: ComicPanel; label: string; compact?: boolean }) {
+/**
+ * `fill` renders the panel cover-cropped into its parent (absolute fill) — the
+ * listing thumb — instead of at the panel's own aspect ratio.
+ */
+export default function ComicArt({ panel, label, compact = false, fill = false, focusX = 0.5 }: {
+  panel: ComicPanel; label: string; compact?: boolean; fill?: boolean; focusX?: number;
+}) {
   const { colors } = useTheme();
   const { lang } = useGitaLanguage();
-  const [width, setWidth] = useState(0);
+  const [box, setBox] = useState({ width: 0, height: 0 });
+  const width = box.width;
   const [attempt, setAttempt] = useState(0);
   const [state, setState] = useState<{ art: string; uri?: string; failed?: boolean }>({ art: panel.art });
   useEffect(() => {
@@ -37,11 +53,13 @@ export default function ComicArt({ panel, label, compact = false }: { panel: Com
     return () => { active = false; };
   }, [panel.art, attempt]);
   const current = state.art === panel.art ? state : { art: panel.art };
-  const geometry = comicArtGeometry(panel, width);
+  const geometry = fill ? comicArtCoverGeometry(panel, box.width, box.height, focusX) : comicArtGeometry(panel, width);
   return (
-    <View testID={`comic-art-${panel.id}`} onLayout={event => setWidth(event.nativeEvent.layout.width)}
-      style={{ width: '100%', aspectRatio: panel.dimensions.width * panel.frame.width / (panel.dimensions.height * panel.frame.height), overflow: 'hidden', backgroundColor: colors.parchmentSoft }}>
-      {current.uri && width > 0 ? <Image testID={`comic-image-${panel.id}`} source={{ uri: current.uri }} accessibilityLabel={label}
+    <View testID={`comic-art-${panel.id}`} onLayout={event => setBox({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
+      style={fill
+        ? { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, overflow: 'hidden', backgroundColor: colors.parchmentSoft }
+        : { width: '100%', aspectRatio: panel.dimensions.width * panel.frame.width / (panel.dimensions.height * panel.frame.height), overflow: 'hidden', backgroundColor: colors.parchmentSoft }}>
+      {current.uri && width > 0 && (!fill || box.height > 0) ? <Image testID={`comic-image-${panel.id}`} source={{ uri: current.uri }} accessibilityLabel={label}
         onError={() => setState({ art: panel.art, failed: true })} resizeMode="stretch"
         style={{ position: 'absolute', width: geometry.sheetWidth, height: geometry.sheetHeight, left: geometry.left, top: geometry.top }} />
         : <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 12 }}>

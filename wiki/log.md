@@ -924,3 +924,11 @@ the widget ask (`@vedansh/daily-bhakti-nudge`). Android pins the verse widget di
 The widget ask is gated on the new `hasWidgetHost()` so an OTA never offers it to a binary without
 the extension, and it ends on a completed add flow because neither bridge can report placement.
 Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pages.
+
+## [2026-10-15] ingest | Shared listing card for comic, Garud Puran and kids-story lists
+The three section listings now render one `ListingCard` (design.md §82, RULEBOOK §3 "Listing cards"):
+reading-language title only, one-line description (≤32 chars), `N पृष्ठ` meta, a 92-wide thumb that
+fills the card height with cover-cropped art, `LanguageToggle` + scope line on every listing. Each
+comic prasang shows a curated key scene (`episodeCovers.ts`); Garud paintings crop around a focal
+point. All 28 kids-story descriptions were shortened. Updated [[kids-stories]] and [[languages]].
+

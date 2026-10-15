@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
@@ -20,7 +20,6 @@ type Props = {
    * Devanagari needs no counterpart — श्लोक / पद are already number-agnostic.
    */
   unitLabelEnSingular?: string;
-  imageSource?: number;
 };
 
 export default function GitaChapterCard({
@@ -31,7 +30,6 @@ export default function GitaChapterCard({
   unitLabelHi = 'श्लोक',
   unitLabelEn = 'verses',
   unitLabelEnSingular = 'verse',
-  imageSource,
 }: Props) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
@@ -77,9 +75,9 @@ export default function GitaChapterCard({
         colors={[colors.cardThumbActiveFrom, colors.cardThumbActiveTo]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        style={[styles.thumb, { borderRadius: radii.md }, imageSource ? { width: 92 } : undefined]}
+        style={[styles.thumb, { borderRadius: radii.md }]}
       >
-        {imageSource ? <Image source={imageSource} style={{ width: '100%', height: '100%' }} resizeMode="contain" accessible={false} /> : <Text
+        <Text
           style={[
             styles.thumbNumber,
             {
@@ -89,7 +87,7 @@ export default function GitaChapterCard({
           ]}
         >
           {chapter.chapter}
-        </Text>}
+        </Text>
       </LinearGradient>
 
       <View style={styles.meta}>
