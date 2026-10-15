@@ -38,4 +38,6 @@ def save():
     (d/'art-prompts.json').write_text(json.dumps(prompts,ensure_ascii=False,indent=2)+'\n')
     print(f'{len(stories)} stories, {len(prompts)} scenes')
 
+for extra in ['krishna-more.py','ganesha-more.py','hanuman-more.py']:
+    if (ROOT/extra).exists(): exec(compile((ROOT/extra).read_text(),extra,'exec'))
 save()

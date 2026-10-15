@@ -1,0 +1,200 @@
+{
+  "id": "hanuman-sita",
+  "deityId": "hanuman",
+  "ageMin": 6,
+  "coverArt": "as01",
+  "title": {
+    "hi": "हनुमान और सीता",
+    "en": "Hanuman Finds Sita",
+    "gu": "હનુમાન અને સીતા",
+    "kn": "ಹನುಮಂತ ಮತ್ತು ಸೀತೆ"
+  },
+  "description": {
+    "hi": "अशोक वाटिका में विश्वास, राम की अँगूठी और आशा का संदेश।",
+    "en": "A ring, a careful conversation and hope in Ashoka Grove.",
+    "gu": "અશોકવાટિકામાં વિશ્વાસ, રામની વીંટી અને આશાનો સંદેશ.",
+    "kn": "ಅಶೋಕವನದಲ್ಲಿ ನಂಬಿಕೆ, ರಾಮನ ಉಂಗುರ ಮತ್ತು ಭರವಸೆಯ ಸಂದೇಶ."
+  },
+  "takeaway": {
+    "hi": "संपादकीय सीख: भरोसा धैर्य, पहचान और दूसरे की बात सुनने से बनता है।",
+    "en": "Editorial reflection: trust grows through patience, recognition and listening.",
+    "gu": "સંપાદકીય વિચાર: વિશ્વાસ ધીરજ, ઓળખ અને ધ્યાનથી સાંભળવાથી બને છે.",
+    "kn": "ಸಂಪಾದಕೀಯ ಚಿಂತನೆ: ತಾಳ್ಮೆ, ಪರಿಚಯ ಮತ್ತು ಕೇಳುವಿಕೆಯಿಂದ ನಂಬಿಕೆ ಬೆಳೆಯುತ್ತದೆ."
+  },
+  "sourceNote": {
+    "hi": "सुंदरकांड 15 और 31–40 का सरल पुनर्कथन, शास्त्री संस्करण से तुलना सहित। राम की अँगूठी और सीता की चूड़ामणि अलग पहचान-चिह्न हैं। बाद का वाटिका-विनाश और लंका-दहन इस कथा में नहीं है।",
+    "en": "Original prose from Sundara 15 and 31–40, compared with Shastri. Rama’s ring and Sita’s chudamani are distinct tokens. The later destruction of the grove and burning of Lanka are outside this story.",
+    "gu": "સુંદરકાંડ 15 અને 31–40નું પુનર્કથન, શાસ્ત્રી સંસ્કરણ સાથે સરખામણી. રામની વીંટી અને સીતાનો ચૂડામણિ જુદાં ઓળખચિહ્ન છે. પછીનો વાટિકાવિનાશ અને લંકાદહન અહીં નથી.",
+    "kn": "ಸುಂದರಕಾಂಡ 15 ಮತ್ತು 31–40 ಆಧರಿಸಿದ ಮರುಕಥನ; ಶಾಸ್ತ್ರಿ ಆವೃತ್ತಿಯೊಂದಿಗೆ ಹೋಲಿಸಲಾಗಿದೆ. ರಾಮನ ಉಂಗುರ ಮತ್ತು ಸೀತೆಯ ಚೂಡಾಮಣಿ ಬೇರೆ ಗುರುತುಗಳು. ಮುಂದಿನ ವನನಾಶ ಮತ್ತು ಲಂಕಾದಹನ ಇಲ್ಲಿಲ್ಲ."
+  },
+  "source": {
+    "baseText": "Valmiki Ramayana, Sundara 15; 31–40",
+    "retrievedOn": "2026-10-15",
+    "referenceUrls": [
+      "https://www.valmikiramayan.net/utf8/sundara/sarga15/sundarasans15.htm",
+      "https://valmikiramayan.net/sundara/sarga35/sundara_35_prose.htm",
+      "https://valmikiramayan.net/sundara/sarga36/sundara_36_prose.htm",
+      "https://www.valmikiramayan.net/utf8/sundara/sarga38/sundarasans38.htm",
+      "https://www.valmikiramayan.net/utf8/sundara/sarga40/sundarasans40.htm",
+      "https://www.wisdomlib.org/hinduism/book/the-ramayana-of-valmiki/d/doc424595.html",
+      "https://www.wisdomlib.org/hinduism/book/the-ramayana-of-valmiki/d/doc424596.html",
+      "https://www.wisdomlib.org/hinduism/book/the-ramayana-of-valmiki/d/doc424597.html"
+    ],
+    "notes": "Original prose from Sundara 15 and 31–40, compared with Shastri. Rama’s ring and Sita’s chudamani are distinct tokens. The later destruction of the grove and burning of Lanka are outside this story."
+  },
+  "pages": [
+    {
+      "id": "ashoka-grove",
+      "art": "as01",
+      "source": "Valmiki Ramayana, Sundara 15",
+      "title": {
+        "hi": "अशोक वाटिका में",
+        "en": "In Ashoka Grove",
+        "gu": "અશોકવાટિકામાં",
+        "kn": "ಅಶೋಕವನದಲ್ಲಿ"
+      },
+      "text": {
+        "hi": "लंका में खोजते हुए हनुमान अशोक वाटिका पहुँचे। पेड़ से उन्होंने एक दुखी स्त्री को देखा। राम ने सीता का जो वर्णन किया था, उससे उनका रूप मिलता था। हनुमान ने सावधानी से उन्हें देखा।",
+        "en": "Searching Lanka, Hanuman reached Ashoka Grove. From a tree he saw a sorrowful woman. Her appearance matched Rama’s description of Sita. Hanuman watched carefully before approaching her.",
+        "gu": "લંકામાં શોધતાં હનુમાન અશોકવાટિકામાં આવ્યા. વૃક્ષ પરથી તેમણે દુઃખી સ્ત્રીને જોઈ. રામે કરેલા સીતાના વર્ણન સાથે તેમનો દેખાવ મળતો હતો. હનુમાને સાવધાનીથી જોયું.",
+        "kn": "ಲಂಕೆಯಲ್ಲಿ ಹುಡುಕುತ್ತ ಹನುಮಂತ ಅಶೋಕವನ ತಲುಪಿದ. ಮರದಿಂದ ದುಃಖಿತ ಮಹಿಳೆಯನ್ನು ಕಂಡ. ಅವಳ ರೂಪ ರಾಮನ ಸೀತಾವರ್ಣನೆಗೆ ಹೊಂದಿತ್ತು. ಹತ್ತಿರ ಹೋಗುವ ಮೊದಲು ಎಚ್ಚರಿಕೆಯಿಂದ ಗಮನಿಸಿದ."
+      }
+    },
+    {
+      "id": "voice-from-the-tree",
+      "art": "as02",
+      "source": "Valmiki Ramayana, Sundara 31–32",
+      "title": {
+        "hi": "पेड़ से रामकथा",
+        "en": "A gentle voice in the tree",
+        "gu": "વૃક્ષ પરથી રામકથા",
+        "kn": "ಮರದಿಂದ ಕೇಳಿದ ರಾಮಕಥೆ"
+      },
+      "text": {
+        "hi": "सीता को अचानक डर न लगे, इसलिए हनुमान पेड़ में छिपे रहकर धीरे-धीरे राम का वृत्तांत कहने लगे। परिचित नाम सुनकर सीता ने ध्यान दिया और उस आवाज़ का स्रोत खोजने लगीं।",
+        "en": "To avoid frightening Sita, Hanuman stayed hidden and gently recounted Rama’s story. Hearing the familiar names, Sita listened closely and looked around to discover where the voice was coming from.",
+        "gu": "સીતા અચાનક ડરી ન જાય માટે હનુમાન વૃક્ષમાં છુપાઈ ધીમે રામનો વૃત્તાંત કહેવા લાગ્યા. ઓળખીતાં નામ સાંભળી સીતાએ ધ્યાન આપ્યું અને અવાજ ક્યાંથી આવે છે તે જોવા લાગ્યાં.",
+        "kn": "ಸೀತೆಗೆ ಭಯವಾಗದಂತೆ ಹನುಮಂತ ಮರದಲ್ಲೇ ಅಡಗಿ ಮೃದುವಾಗಿ ರಾಮನ ಕಥೆ ಹೇಳಿದ. ಪರಿಚಿತ ಹೆಸರುಗಳನ್ನು ಕೇಳಿದ ಸೀತೆ ಗಮನವಿಟ್ಟು ಆಲಿಸಿ ಧ್ವನಿ ಎಲ್ಲಿಂದ ಬರುತ್ತಿದೆ ಎಂದು ನೋಡಿದಳು."
+      }
+    },
+    {
+      "id": "a-messengers-greeting",
+      "art": "as03",
+      "source": "Valmiki Ramayana, Sundara 33–34",
+      "title": {
+        "hi": "राम का दूत",
+        "en": "Rama’s messenger",
+        "gu": "રામના દૂત",
+        "kn": "ರಾಮನ ದೂತ"
+      },
+      "text": {
+        "hi": "हनुमान नीचे उतरे और विनम्रता से प्रणाम किया। उन्होंने स्वयं को राम का दूत बताया और राम-लक्ष्मण का कुशल समाचार दिया। सीता के सामने आशा की एक नई किरण आई, लेकिन उन्हें पहचान की पुष्टि चाहिए थी।",
+        "en": "Hanuman came down and bowed respectfully. He introduced himself as Rama’s messenger and brought news of Rama and Lakshmana. Sita heard a new reason for hope, but still needed to be certain who he was.",
+        "gu": "હનુમાન નીચે આવી નમ્રતાથી નમ્યા. પોતે રામના દૂત હોવાનું કહી રામ-લક્ષ્મણના કુશળ સમાચાર આપ્યા. સીતાને આશાનું કિરણ મળ્યું, પણ ઓળખની ખાતરી હજી જરૂરી હતી.",
+        "kn": "ಹನುಮಂತ ಕೆಳಗಿಳಿದು ಗೌರವದಿಂದ ನಮಸ್ಕರಿಸಿದ. ತಾನು ರಾಮನ ದೂತನೆಂದು ಪರಿಚಯಿಸಿ ರಾಮ-ಲಕ್ಷ್ಮಣರ ಕ್ಷೇಮ ತಿಳಿಸಿದ. ಸೀತೆಗೆ ಭರವಸೆ ಮೂಡಿದರೂ ಅವನ ಗುರುತಿನ ಖಚಿತತೆ ಬೇಕಿತ್ತು."
+      }
+    },
+    {
+      "id": "sitas-caution",
+      "art": "as04",
+      "source": "Valmiki Ramayana, Sundara 34–35",
+      "title": {
+        "hi": "धैर्य से उत्तर",
+        "en": "Answering with patience",
+        "gu": "ધીરજથી જવાબ",
+        "kn": "ತಾಳ್ಮೆಯ ಉತ್ತರ"
+      },
+      "text": {
+        "hi": "रावण पहले छल से सीता तक पहुँचा था। इसलिए सीता ने प्रश्न पूछे और सावधानी रखी। हनुमान ने धैर्य से राम, लक्ष्मण और सुग्रीव से हुई मित्रता का परिचय दिया। उन्होंने विश्वास के लिए समय दिया।",
+        "en": "Ravana had approached Sita through deception before. She therefore asked questions and remained cautious. Hanuman patiently described Rama, Lakshmana and their alliance with Sugriva, allowing trust to grow without pressure.",
+        "gu": "રાવણ પહેલાં છળથી સીતા પાસે આવ્યો હતો. એટલે સીતાએ સાવધાનીથી પ્રશ્નો પૂછ્યા. હનુમાને ધીરજથી રામ, લક્ષ્મણ અને સુગ્રીવ સાથેની મિત્રતા સમજાવી. વિશ્વાસ ઊભો થવા સમય આપ્યો.",
+        "kn": "ರಾವಣ ಹಿಂದೆ ಮೋಸದಿಂದ ಸೀತೆಯನ್ನು ಸಮೀಪಿಸಿದ್ದ. ಆದ್ದರಿಂದ ಅವಳು ಎಚ್ಚರಿಕೆಯಿಂದ ಪ್ರಶ್ನೆ ಕೇಳಿದಳು. ಹನುಮಂತ ತಾಳ್ಮೆಯಿಂದ ರಾಮ, ಲಕ್ಷ್ಮಣ ಮತ್ತು ಸುಗ್ರೀವನ ಮೈತ್ರಿಯನ್ನು ವಿವರಿಸಿದ. ನಂಬಿಕೆ ಬೆಳೆಯಲು ಅವಕಾಶ ಕೊಟ್ಟ."
+      }
+    },
+    {
+      "id": "ramas-ring",
+      "art": "as05",
+      "source": "Valmiki Ramayana, Sundara 36.1–7",
+      "title": {
+        "hi": "पहचान की अँगूठी",
+        "en": "Rama’s ring",
+        "gu": "રામની વીંટી",
+        "kn": "ರಾಮನ ಉಂಗುರ"
+      },
+      "text": {
+        "hi": "हनुमान ने राम की दी हुई अँगूठी सीता को दिखाई। उसे पहचानकर सीता का संदेह दूर हुआ। उन्हें भरोसा हो गया कि राम का संदेश सचमुच उन तक पहुँचा है। उनके दुख के बीच आनंद जागा।",
+        "en": "Hanuman showed Sita the ring Rama had entrusted to him. Recognising it, she felt her doubt give way. Rama’s message had truly reached her, bringing joy into her sorrow.",
+        "gu": "હનુમાને રામે આપેલી વીંટી સીતાને બતાવી. ઓળખતાં તેમનો સંશય દૂર થયો. રામનો સંદેશ ખરેખર પહોંચ્યો છે એવો વિશ્વાસ થયો. દુઃખ વચ્ચે આનંદ જાગ્યો.",
+        "kn": "ಹನುಮಂತ ರಾಮ ಕೊಟ್ಟ ಉಂಗುರವನ್ನು ಸೀತೆಗೆ ತೋರಿಸಿದ. ಅದನ್ನು ಗುರುತಿಸಿದ ಸೀತೆಯ ಅನುಮಾನ ದೂರವಾಯಿತು. ರಾಮನ ಸಂದೇಶ ನಿಜವಾಗಿ ತಲುಪಿದೆ ಎಂಬ ವಿಶ್ವಾಸದಿಂದ ದುಃಖದ ನಡುವೆ ಸಂತಸ ಮೂಡಿತು."
+      }
+    },
+    {
+      "id": "an-offer-of-rescue",
+      "art": "as06",
+      "source": "Valmiki Ramayana, Sundara 37",
+      "title": {
+        "hi": "हनुमान का प्रस्ताव",
+        "en": "An offer of rescue",
+        "gu": "બચાવનો પ્રસ્તાવ",
+        "kn": "ರಕ್ಷಣೆಯ ಪ್ರಸ್ತಾಪ"
+      },
+      "text": {
+        "hi": "हनुमान ने सीता को अपनी पीठ पर बैठाकर राम तक ले जाने का प्रस्ताव रखा। सीता को छोटे वानर की शक्ति पर प्रश्न हुआ। तब हनुमान ने बड़ा रूप दिखाकर अपनी क्षमता समझाई।",
+        "en": "Hanuman offered to carry Sita on his back to Rama. Sita wondered how the small vanara could manage it. Hanuman then showed a larger form to demonstrate his strength.",
+        "gu": "હનુમાને સીતાને પીઠ પર બેસાડી રામ પાસે લઈ જવાનો પ્રસ્તાવ કર્યો. નાના વાનરની શક્તિ વિશે સીતાને પ્રશ્ન થયો. હનુમાને મોટું રૂપ બતાવી પોતાની ક્ષમતા સમજાવી.",
+        "kn": "ಸೀತೆಯನ್ನು ಬೆನ್ನಿನ ಮೇಲೆ ಕೂರಿಸಿ ರಾಮನ ಬಳಿಗೆ ಕರೆದೊಯ್ಯುವ ಪ್ರಸ್ತಾಪ ಹನುಮಂತ ಮಾಡಿದ. ಸಣ್ಣ ವಾನರನಿಗೆ ಇದು ಹೇಗೆ ಸಾಧ್ಯವೆಂದು ಸೀತೆ ಯೋಚಿಸಿದಳು. ಹನುಮಂತ ದೊಡ್ಡ ರೂಪ ತಾಳಿ ತನ್ನ ಶಕ್ತಿ ತೋರಿಸಿದ."
+      }
+    },
+    {
+      "id": "sitas-decision",
+      "art": "as07",
+      "source": "Valmiki Ramayana, Sundara 37",
+      "title": {
+        "hi": "सीता का निर्णय",
+        "en": "Sita’s decision",
+        "gu": "સીતાનો નિર્ણય",
+        "kn": "ಸೀತೆಯ ನಿರ್ಧಾರ"
+      },
+      "text": {
+        "hi": "सीता ने गिरने और पीछा किए जाने का भय बताया। वे चाहती थीं कि राम स्वयं आकर उन्हें छुड़ाएँ। हनुमान ने उनकी बात समझी और निर्णय का सम्मान किया। अब राम को सही समाचार पहुँचाना आवश्यक था।",
+        "en": "Sita explained her fears of falling or being pursued. She wanted Rama himself to come and rescue her. Hanuman understood and respected her decision. He would carry accurate news back to Rama instead.",
+        "gu": "સીતાએ પડી જવાનો અને પીછો થવાનો ભય જણાવ્યો. તેઓ રામ પોતે આવી છોડાવે એવું ઇચ્છતાં હતાં. હનુમાને વાત સમજી નિર્ણયનો આદર કર્યો. હવે રામ સુધી સાચા સમાચાર પહોંચાડવાના હતા.",
+        "kn": "ಬೀಳುವ ಮತ್ತು ಶತ್ರುಗಳು ಬೆನ್ನಟ್ಟುವ ಭಯವನ್ನು ಸೀತೆ ತಿಳಿಸಿದಳು. ರಾಮನೇ ಬಂದು ರಕ್ಷಿಸಬೇಕೆಂದು ಅವಳು ಬಯಸಿದಳು. ಹನುಮಂತ ಅವಳ ನಿರ್ಧಾರ ಗೌರವಿಸಿದ. ರಾಮನಿಗೆ ನಿಖರ ಸುದ್ದಿ ತಲುಪಿಸಬೇಕಿತ್ತು."
+      }
+    },
+    {
+      "id": "chudamani-message",
+      "art": "as08",
+      "source": "Valmiki Ramayana, Sundara 38–40",
+      "title": {
+        "hi": "सीता का पहचान-चिह्न",
+        "en": "Sita’s token",
+        "gu": "સીતાનું ઓળખચિહ્ન",
+        "kn": "ಸೀತೆಯ ಗುರುತು"
+      },
+      "text": {
+        "hi": "सीता ने राम के लिए अपनी चूड़ामणि हनुमान को दी। उन्होंने ऐसे निजी प्रसंग और संदेश भी बताए जिन्हें राम पहचान सकें। हनुमान ने आभूषण सँभाला और उनकी बात ध्यान से सुनी।",
+        "en": "Sita gave Hanuman her chudamani, a hair jewel, for Rama. She also entrusted personal memories and a message that Rama would recognise. Hanuman received the jewel and listened carefully to her words.",
+        "gu": "સીતાએ રામ માટે પોતાનો ચૂડામણિ હનુમાનને આપ્યો. રામ ઓળખી શકે એવી અંગત સ્મૃતિઓ અને સંદેશ પણ આપ્યા. હનુમાને આભૂષણ સાચવી તેમની વાત ધ્યાનથી સાંભળી.",
+        "kn": "ಸೀತೆ ತನ್ನ ಚೂಡಾಮಣಿಯನ್ನು ರಾಮನಿಗಾಗಿ ಹನುಮಂತನಿಗೆ ಕೊಟ್ಟಳು. ರಾಮ ಗುರುತಿಸಬಲ್ಲ ನೆನಪುಗಳು ಮತ್ತು ಸಂದೇಶವನ್ನೂ ತಿಳಿಸಿದಳು. ಹನುಮಂತ ಆಭರಣ ಸ್ವೀಕರಿಸಿ ಅವಳ ಮಾತು ಗಮನದಿಂದ ಕೇಳಿದ."
+      }
+    },
+    {
+      "id": "hopeful-farewell",
+      "art": "as09",
+      "source": "Valmiki Ramayana, Sundara 40",
+      "title": {
+        "hi": "आशा का संदेश",
+        "en": "A hopeful farewell",
+        "gu": "આશાનો સંદેશ",
+        "kn": "ಭರವಸೆಯ ವಿದಾಯ"
+      },
+      "text": {
+        "hi": "हनुमान ने सीता को आश्वस्त किया कि वे राम तक उनका समाचार पहुँचाएँगे। भेंट समाप्त हुई, पर सीता का दुख अब आशा से जुड़ गया था। हनुमान अपने स्वामी के लिए संदेश लेकर आगे बढ़े।",
+        "en": "Hanuman reassured Sita that he would bring her news to Rama. Their meeting ended with hope amid her sorrow. He prepared to continue his mission, carrying her message faithfully.",
+        "gu": "હનુમાને સીતાને ખાતરી આપી કે તેમના સમાચાર રામ સુધી પહોંચાડશે. દુઃખ વચ્ચે આશા સાથે મુલાકાત પૂરી થઈ. હનુમાન સંદેશ સાચવી પોતાનું કાર્ય આગળ વધારવા તૈયાર થયા.",
+        "kn": "ಸೀತೆಯ ಸುದ್ದಿ ರಾಮನಿಗೆ ತಲುಪಿಸುವುದಾಗಿ ಹನುಮಂತ ಧೈರ್ಯ ತುಂಬಿದ. ದುಃಖದ ನಡುವೆಯೂ ಭರವಸೆಯೊಂದಿಗೆ ಭೇಟಿ ಮುಗಿಯಿತು. ಅವಳ ಸಂದೇಶವನ್ನು ನಿಷ್ಠೆಯಿಂದ ಹೊತ್ತು ಹನುಮಂತ ಮುಂದುವರಿಯಲು ಸಿದ್ಧನಾದ."
+      }
+    }
+  ]
+}

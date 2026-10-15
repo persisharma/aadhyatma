@@ -1,0 +1,178 @@
+{
+  "id": "hanuman-ocean",
+  "deityId": "hanuman",
+  "ageMin": 6,
+  "coverArt": "oc01",
+  "title": {
+    "hi": "हनुमान की समुद्र-यात्रा",
+    "en": "Hanuman Crosses the Ocean",
+    "gu": "હનુમાનની સમુદ્રયાત્રા",
+    "kn": "ಹನುಮಂತನ ಸಾಗರಯಾನ"
+  },
+  "description": {
+    "hi": "सीता की खोज में साहस, विनम्रता और सूझबूझ की यात्रा।",
+    "en": "Courage and judgement on the search for Sita.",
+    "gu": "સીતાની શોધમાં હિંમત અને સૂઝની સફર.",
+    "kn": "ಸೀತೆಯ ಹುಡುಕಾಟದಲ್ಲಿ ಧೈರ್ಯ ಮತ್ತು ವಿವೇಕದ ಪಯಣ."
+  },
+  "takeaway": {
+    "hi": "संपादकीय सीख: हर बाधा के लिए एक जैसा उत्तर नहीं होता।",
+    "en": "Editorial reflection: different obstacles call for different responses.",
+    "gu": "સંપાદકીય વિચાર: દરેક અવરોધનો જવાબ એકસરખો નથી.",
+    "kn": "ಸಂಪಾದಕೀಯ ಚಿಂತನೆ: ಬೇರೆಬೇರೆ ಅಡ್ಡಿಗಳಿಗೆ ಬೇರೆಬೇರೆ ಪರಿಹಾರ ಬೇಕು."
+  },
+  "sourceNote": {
+    "hi": "वाल्मीकि रामायण की बाहर जाने वाली यात्रा का सरल पुनर्कथन। मैनाक सहायक है, सुरसा परीक्षा लेती हैं, सिंहिका अलग संकट है। कथा लंका पहुँचने पर समाप्त होती है; सीता से भेंट अगली कहानी है।",
+    "en": "Original retelling of the outward journey, compared with Shastri’s Sundara chapter 1. Mainaka is an ally, Surasa administers a test and Simhika is a separate danger. The ending is arrival in Lanka; meeting Sita is a separate story.",
+    "gu": "વાલ્મીકિ રામાયણની બહાર જતી યાત્રાનું પુનર્કથન. મૈનાક સહાયક છે, સુરસા પરીક્ષા લે છે અને સિંહિકા જુદું સંકટ છે. લંકા પહોંચતાં કથા પૂરી થાય છે; સીતાની મુલાકાત અલગ વાર્તા છે.",
+    "kn": "ವಾಲ್ಮೀಕಿ ರಾಮಾಯಣದ ಹೊರಯಾನದ ಮರುಕಥನ. ಮೈನಾಕ ಮಿತ್ರ, ಸುರಸೆ ಪರೀಕ್ಷಿಸುವವಳು, ಸಿಂಹಿಕೆ ಪ್ರತ್ಯೇಕ ಅಪಾಯ. ಲಂಕೆಗೆ ತಲುಪುವಲ್ಲಿ ಕಥೆ ಮುಗಿಯುತ್ತದೆ; ಸೀತೆಯ ಭೇಟಿ ಪ್ರತ್ಯೇಕ ಕಥೆ."
+  },
+  "source": {
+    "baseText": "Valmiki Ramayana, Kishkindha 66–67; Sundara 1",
+    "retrievedOn": "2026-10-15",
+    "referenceUrls": [
+      "https://www.valmikiramayan.net/utf8/kish/sarga66/kishkindhasans66.htm",
+      "https://www.valmikiramayan.net/utf8/sundara/sarga1/sundarasans1.htm",
+      "https://www.wisdomlib.org/hinduism/book/the-ramayana-of-valmiki/d/doc424560.html"
+    ],
+    "notes": "Original retelling of the outward journey, compared with Shastri’s Sundara chapter 1. Mainaka is an ally, Surasa administers a test and Simhika is a separate danger. The ending is arrival in Lanka; meeting Sita is a separate story."
+  },
+  "pages": [
+    {
+      "id": "mission-at-the-shore",
+      "art": "oc01",
+      "source": "Valmiki Ramayana, Kishkindha 66–67",
+      "title": {
+        "hi": "समुद्र के किनारे",
+        "en": "At the ocean’s edge",
+        "gu": "સમુદ્રકિનારે",
+        "kn": "ಸಾಗರದ ತೀರದಲ್ಲಿ"
+      },
+      "text": {
+        "hi": "रावण सीता को लंका ले गया था। राम की खोज-टोली समुद्र के किनारे पहुँची। बुज़ुर्ग जांबवान ने हनुमान को उनकी शक्ति याद दिलाई। हनुमान सीता का पता लगाने के लिए आगे आए।",
+        "en": "Ravana had taken Sita to Lanka. Rama’s search party reached the ocean. The elder Jambavan reminded Hanuman of his strength. Hanuman stepped forward to discover where Sita was being held.",
+        "gu": "રાવણ સીતાને લંકા લઈ ગયો હતો. રામની શોધટોળી સમુદ્રકિનારે આવી. વડીલ જાંબવાને હનુમાનને તેમની શક્તિ યાદ અપાવી. સીતાનો પત્તો મેળવવા હનુમાન આગળ આવ્યા.",
+        "kn": "ರಾವಣ ಸೀತೆಯನ್ನು ಲಂಕೆಗೆ ಕರೆದೊಯ್ದಿದ್ದ. ರಾಮನ ಹುಡುಕಾಟದ ತಂಡ ಸಾಗರದ ತೀರ ತಲುಪಿತು. ಹಿರಿಯ ಜಾಂಬವಂತ ಹನುಮಂತನಿಗೆ ಅವನ ಶಕ್ತಿ ನೆನಪಿಸಿದ. ಸೀತೆಯಿರುವ ಸ್ಥಳ ತಿಳಿಯಲು ಹನುಮಂತ ಮುಂದೆ ಬಂದ."
+      }
+    },
+    {
+      "id": "leap-from-mahendra",
+      "art": "oc02",
+      "source": "Valmiki Ramayana, Kishkindha 67; Sundara 1.8–50",
+      "title": {
+        "hi": "महेंद्र से उड़ान",
+        "en": "The leap from Mahendra",
+        "gu": "મહેન્દ્ર પરથી ઉડાન",
+        "kn": "ಮಹೇಂದ್ರದಿಂದ ಜಿಗಿತ"
+      },
+      "text": {
+        "hi": "हनुमान महेंद्र पर्वत पर चढ़े। उन्होंने अपना शरीर विशाल किया और प्रणाम करके यात्रा के लिए तैयार हुए। दृढ़ संकल्प के साथ वे समुद्र के ऊपर लंका की ओर उछले।",
+        "en": "Hanuman climbed Mount Mahendra. He enlarged his body and offered reverent salutations before setting out. With firm resolve, he leapt across the sea toward Lanka.",
+        "gu": "હનુમાન મહેન્દ્ર પર્વત પર ચઢ્યા. શરીર વિશાળ કરીને પ્રણામ કર્યા અને પ્રવાસ માટે તૈયાર થયા. દૃઢ સંકલ્પથી સમુદ્ર ઉપર લંકા તરફ કૂદ્યા.",
+        "kn": "ಹನುಮಂತ ಮಹೇಂದ್ರ ಪರ್ವತ ಏರಿದ. ದೇಹವನ್ನು ಹಿಗ್ಗಿಸಿ ಗೌರವದಿಂದ ನಮಸ್ಕರಿಸಿ ಯಾನಕ್ಕೆ ಸಿದ್ಧನಾದ. ದೃಢಸಂಕಲ್ಪದಿಂದ ಸಾಗರದ ಮೇಲಾಗಿ ಲಂಕೆಯತ್ತ ಜಿಗಿದ."
+      }
+    },
+    {
+      "id": "mainakas-offer",
+      "art": "oc03",
+      "source": "Valmiki Ramayana, Sundara 1.92–136",
+      "title": {
+        "hi": "मैनाक का निमंत्रण",
+        "en": "Mainaka offers rest",
+        "gu": "મૈનાકનું આમંત્રણ",
+        "kn": "ಮೈನಾಕನ ಆಹ್ವಾನ"
+      },
+      "text": {
+        "hi": "समुद्र से मैनाक पर्वत उठा और हनुमान को विश्राम का निमंत्रण दिया। वह सहायता करना चाहता था। हनुमान ने कृतज्ञता जताई, पर्वत को छुआ और बिना देर किए अपनी खोज में आगे बढ़ गए।",
+        "en": "Mainaka rose from the sea and offered Hanuman a place to rest. He wished to help. Hanuman expressed gratitude, touched the mountain and continued without delay, keeping Sita’s search foremost.",
+        "gu": "સમુદ્રમાંથી મૈનાક પર્વત ઊઠ્યો અને આરામ માટે બોલાવ્યા. તે સહાય કરવા માગતો હતો. હનુમાને આભાર માની પર્વતને સ્પર્શ કર્યો અને શોધમાં વિલંબ કર્યા વિના આગળ વધ્યા.",
+        "kn": "ಸಾಗರದಿಂದ ಮೈನಾಕ ಪರ್ವತ ಎದ್ದು ವಿಶ್ರಾಂತಿಗೆ ಆಹ್ವಾನಿಸಿದ. ಅವನು ನೆರವಾಗಲು ಬಯಸಿದ. ಹನುಮಂತ ಕೃತಜ್ಞತೆ ತಿಳಿಸಿ ಬೆಟ್ಟವನ್ನು ಮುಟ್ಟಿ ಸೀತೆಯ ಹುಡುಕಾಟ ವಿಳಂಬವಾಗದಂತೆ ಮುಂದುವರಿದ."
+      }
+    },
+    {
+      "id": "surasas-test",
+      "art": "oc04",
+      "source": "Valmiki Ramayana, Sundara 1.144–158",
+      "title": {
+        "hi": "सुरसा की परीक्षा",
+        "en": "Surasa’s test",
+        "gu": "સુરસાની પરીક્ષા",
+        "kn": "ಸುರಸೆಯ ಪರೀಕ್ಷೆ"
+      },
+      "text": {
+        "hi": "देवताओं ने नागमाता सुरसा से हनुमान की परीक्षा लेने को कहा। सुरसा ने रास्ता रोककर उन्हें अपने मुँह में आने को कहा। हनुमान ने राम का कार्य बताया, पर परीक्षा अभी पूरी नहीं हुई थी।",
+        "en": "The gods asked Surasa, mother of serpents, to test Hanuman. She blocked his path and demanded that he enter her mouth. Hanuman explained Rama’s mission, but the test was not yet over.",
+        "gu": "દેવોએ નાગમાતા સુરસાને હનુમાનની પરીક્ષા લેવા કહ્યું. સુરસાએ રસ્તો રોકી પોતાના મોઢામાં આવવા કહ્યું. હનુમાને રામનું કાર્ય સમજાવ્યું, પણ પરીક્ષા હજી પૂરી નહોતી.",
+        "kn": "ದೇವತೆಗಳು ನಾಗಮಾತೆ ಸುರಸೆಗೆ ಹನುಮಂತನನ್ನು ಪರೀಕ್ಷಿಸಲು ಹೇಳಿದರು. ಅವಳು ದಾರಿ ತಡೆದು ತನ್ನ ಬಾಯೊಳಗೆ ಬರಲು ಹೇಳಿದಳು. ಹನುಮಂತ ರಾಮನ ಕಾರ್ಯ ವಿವರಿಸಿದರೂ ಪರೀಕ್ಷೆ ಇನ್ನೂ ಮುಗಿದಿರಲಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "a-small-solution",
+      "art": "oc05",
+      "source": "Valmiki Ramayana, Sundara 1.159–170",
+      "title": {
+        "hi": "सूझबूझ का उपाय",
+        "en": "A clever small solution",
+        "gu": "સૂઝભર્યો ઉપાય",
+        "kn": "ಚುರುಕಾದ ಪರಿಹಾರ"
+      },
+      "text": {
+        "hi": "सुरसा मुँह बड़ा करती गईं। हनुमान अचानक अंगूठे जितने छोटे हुए, उनके मुँह में गए और तुरंत बाहर निकल आए। शर्त पूरी हो गई। सुरसा प्रसन्न होकर उन्हें सफलता का आशीर्वाद देने लगीं।",
+        "en": "As Surasa opened her mouth wider, Hanuman suddenly became thumb-sized. He entered her mouth and came out at once, fulfilling her condition. Pleased with his judgement, Surasa blessed his mission.",
+        "gu": "સુરસા મોઢું મોટું કરતાં ગયાં. હનુમાન અચાનક અંગૂઠા જેટલા નાના થઈ અંદર ગયા અને તરત બહાર નીકળ્યા. શરત પૂરી થઈ. તેમની સૂઝથી પ્રસન્ન સુરસાએ સફળતાના આશીર્વાદ આપ્યા.",
+        "kn": "ಸುರಸೆ ಬಾಯನ್ನು ಇನ್ನಷ್ಟು ತೆರೆದಳು. ಹನುಮಂತ ಕ್ಷಣದಲ್ಲೇ ಹೆಬ್ಬೆರಳಿನಷ್ಟು ಸಣ್ಣವನಾಗಿ ಒಳಹೋಗಿ ತಕ್ಷಣ ಹೊರಬಂದ. ಷರತ್ತು ಈಡೇರಿತು. ಅವನ ವಿವೇಕಕ್ಕೆ ಮೆಚ್ಚಿದ ಸುರಸೆ ಯಶಸ್ಸನ್ನು ಆಶೀರ್ವದಿಸಿದಳು."
+      }
+    },
+    {
+      "id": "shadow-grabber",
+      "art": "oc06",
+      "source": "Valmiki Ramayana, Sundara 1.178–190",
+      "title": {
+        "hi": "छाया पर पकड़",
+        "en": "A shadow seized",
+        "gu": "છાયા પર પકડ",
+        "kn": "ನೆರಳಿನ ಸೆರೆ"
+      },
+      "text": {
+        "hi": "आगे बढ़ते हुए हनुमान की गति अचानक धीमी हुई। समुद्र में रहने वाली सिंहिका ने उनकी छाया पकड़ ली थी। हनुमान ने पहचान लिया कि यह उन्हें रोकने वाला वास्तविक संकट है।",
+        "en": "Further on, Hanuman suddenly felt his movement slow. Simhika, who lived in the sea, had caught his shadow. Hanuman recognised that this was a real danger trying to hold him back.",
+        "gu": "આગળ જતાં હનુમાનની ગતિ અચાનક ધીમી પડી. સમુદ્રમાં રહેતી સિંહિકાએ તેમની છાયા પકડી હતી. હનુમાને ઓળખ્યું કે આ તેમને રોકતું ખરું સંકટ છે.",
+        "kn": "ಮುಂದೆ ಸಾಗುತ್ತಿದ್ದ ಹನುಮಂತನ ವೇಗ ಏಕಾಏಕಿ ಕಡಿಮೆಯಾಯಿತು. ಸಾಗರದಲ್ಲಿದ್ದ ಸಿಂಹಿಕೆ ಅವನ ನೆರಳನ್ನು ಹಿಡಿದಿದ್ದಳು. ತನ್ನನ್ನು ತಡೆಯುತ್ತಿರುವುದು ನಿಜವಾದ ಅಪಾಯವೆಂದು ಹನುಮಂತ ಅರಿತ."
+      }
+    },
+    {
+      "id": "overcoming-simhika",
+      "art": "oc07",
+      "source": "Valmiki Ramayana, Sundara 1.191–204",
+      "title": {
+        "hi": "संकट से बाहर",
+        "en": "Escaping danger",
+        "gu": "સંકટમાંથી બહાર",
+        "kn": "ಅಪಾಯದಿಂದ ಪಾರು"
+      },
+      "text": {
+        "hi": "सिंहिका ने हनुमान को निगलने के लिए मुँह फैलाया। हनुमान छोटे होकर भीतर गए, उसे परास्त किया और सुरक्षित बाहर निकल आए। अब समुद्र के ऊपर उनका मार्ग फिर खुल गया था।",
+        "en": "Simhika opened her mouth to swallow him. Hanuman made himself small, entered and overcame her, then escaped safely. His route across the sea was clear again.",
+        "gu": "સિંહિકાએ હનુમાનને ગળવા મોઢું ખોલ્યું. હનુમાન નાના થઈ અંદર ગયા, તેને પરાસ્ત કરી સુરક્ષિત બહાર આવ્યા. સમુદ્ર ઉપરનો માર્ગ ફરી ખુલ્લો થયો.",
+        "kn": "ಸಿಂಹಿಕೆ ಅವನನ್ನು ನುಂಗಲು ಬಾಯಿ ತೆರೆದಳು. ಹನುಮಂತ ಸಣ್ಣವನಾಗಿ ಒಳಹೋಗಿ ಅವಳನ್ನು ಸೋಲಿಸಿ ಸುರಕ್ಷಿತವಾಗಿ ಹೊರಬಂದ. ಸಾಗರದ ಮೇಲಿನ ದಾರಿ ಮತ್ತೆ ತೆರೆದಿತ್ತು."
+      }
+    },
+    {
+      "id": "lanka-in-sight",
+      "art": "oc08",
+      "source": "Valmiki Ramayana, Sundara 1.205–end",
+      "title": {
+        "hi": "लंका सामने है",
+        "en": "Lanka in sight",
+        "gu": "લંકા સામે છે",
+        "kn": "ಲಂಕೆ ಎದುರಾಗಿದೆ"
+      },
+      "text": {
+        "hi": "आखिर हनुमान लंका के तट पर पहुँचे। उन्होंने नगर और उसके पहरे देखे। सीता को खोजने के लिए सावधानी चाहिए थी, इसलिए वे छोटा रूप लेकर चुपचाप आगे बढ़ने को तैयार हुए।",
+        "en": "At last Hanuman reached Lanka’s shore. He studied the city and its guards. Finding Sita would require care, so he took a small form and prepared to move forward quietly.",
+        "gu": "અંતે હનુમાન લંકાના કિનારે પહોંચ્યા. તેમણે નગર અને પહેરો જોયો. સીતાની શોધ સાવધાનીથી કરવી હતી, તેથી નાનું રૂપ લઈને ચૂપચાપ આગળ વધવા તૈયાર થયા.",
+        "kn": "ಕೊನೆಗೆ ಹನುಮಂತ ಲಂಕೆಯ ತೀರ ತಲುಪಿದ. ನಗರ ಮತ್ತು ಕಾವಲನ್ನು ಗಮನಿಸಿದ. ಸೀತೆಯ ಹುಡುಕಾಟಕ್ಕೆ ಎಚ್ಚರಿಕೆ ಬೇಕೆಂದು ಸಣ್ಣ ರೂಪ ತಾಳಿ ಸದ್ದಿಲ್ಲದೆ ಮುಂದುವರಿಯಲು ಸಿದ್ಧನಾದ."
+      }
+    }
+  ]
+}
