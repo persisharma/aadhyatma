@@ -1,0 +1,43 @@
+from pathlib import Path
+import json
+ROOT=Path(__file__).parent
+OUT=ROOT/'mobile/src/data/kidsStories'
+OUT.mkdir(parents=True,exist_ok=True)
+stories=[]
+prompts=[]
+def T(s):
+    a=s.split('|'); assert len(a)==4,s
+    return dict(zip(['hi','en','gu','kn'],a))
+def story(id,deity,prefix,title,description,takeaway,base,urls,note,rows):
+    pages=[]
+    for i,row in enumerate(rows,1):
+        pid,ref,heading,text,action=row
+        art=f'{prefix}{i:02}'
+        pages.append(dict(id=pid,art=art,source=ref,title=T(heading),text=T(text)))
+        prompts.append(dict(storyId=id,deity=deity,art=art,stem=f'{prefix}-{i:02}',source=ref,action=action))
+    s=dict(id=id,deityId=deity,ageMin=6,coverArt=pages[0]['art'],title=T(title),description=T(description),takeaway=T(takeaway),sourceNote=T(note),source=dict(baseText=base,retrievedOn='2026-10-15',referenceUrls=urls,notes=T(note)['en']),pages=pages)
+    stories.append(s)
+    (OUT/f'{id}.json').write_text(json.dumps(s,ensure_ascii=False,indent=2)+'\n')
+
+story('krishna-makhan-chori','krishna','mc',
+'कृष्ण की माखन लीला|Krishna and the Butter Pots|કૃષ્ણની માખણ લીલા|ಕೃಷ್ಣ ಮತ್ತು ಬೆಣ್ಣೆಯ ಮಡಕೆಗಳು',
+'गोकुल की गलियों में बाल कृष्ण की शरारतों और सबके स्नेह की कथा।|Butter pots, playful plans and the affection of Gokul.|ગોકુળમાં બાળ કૃષ્ણની મસ્તી અને સૌના સ્નેહની કથા.|ಗೋಕುಲದ ಬಾಲಕೃಷ್ಣನ ತುಂಟಾಟ ಮತ್ತು ಎಲ್ಲರ ಪ್ರೀತಿಯ ಕಥೆ.',
+'संपादकीय सीख: स्नेह के साथ दूसरों की मेहनत और चीज़ों का सम्मान भी करें।|Editorial reflection: affection goes with respect for other people’s work and belongings.|સંપાદકીય વિચાર: સ્નેહ સાથે બીજાની મહેનત અને વસ્તુઓનો આદર કરીએ.|ಸಂಪಾದಕೀಯ ಚಿಂತನೆ: ಪ್ರೀತಿಯ ಜೊತೆಗೆ ಇತರರ ದುಡಿಮೆ ಮತ್ತು ವಸ್ತುಗಳನ್ನು ಗೌರವಿಸೋಣ.',
+'Bhagavata Purana 10.8.21–31',
+['https://vedabase.io/en/library/sb/10/8/','https://bhagavata.org/canto10/chapter8.html'],
+'भागवत 10.8.21–31 का सरल पुनर्कथन। ये बचपन के कई प्रसंग हैं, एक दिन की घटना नहीं। मिट्टी खाने का अगला प्रसंग इसमें नहीं है।|Original prose based on Bhagavata 10.8.21–31, compared in Vedabase and Bhagavata.org. These are recurring childhood episodes, not one day. The later earth-eating episode is outside this story.|ભાગવત 10.8.21–31નું સરળ પુનર્કથન. આ બાળપણના અનેક પ્રસંગો છે, એક દિવસની ઘટના નથી. પછીનો માટી ખાવાનો પ્રસંગ અહીં નથી.|ಭಾಗವತ 10.8.21–31 ಆಧರಿಸಿದ ಸರಳ ಮರುಕಥನ. ಇವು ಬಾಲ್ಯದ ಹಲವು ಘಟನೆಗಳು; ಒಂದೇ ದಿನದ ಕಥೆಯಲ್ಲ. ಮುಂದಿನ ಮಣ್ಣು ತಿನ್ನುವ ಘಟನೆ ಇಲ್ಲಿಲ್ಲ.',[
+('gokul-childhood','Bhagavata Purana 10.8.21–28','गोकुल के दो भाई|Two brothers in Gokul|ગોકુળના બે ભાઈ|ಗೋಕುಲದ ಇಬ್ಬರು ಸೋದರರು','गोकुल में कृष्ण और बड़े भाई बलराम चलना सीख रहे थे। यशोदा और रोहिणी उनका ध्यान रखतीं। दोनों दूसरे बच्चों के साथ खेलने लगे, तो उनकी चंचलता देखकर गाँव की स्त्रियाँ प्रसन्न होतीं।|In Gokul, Krishna and his elder brother Balarama learned to walk. Yashoda and Rohini watched over them. Soon the brothers played with other children, delighting the village women with their lively games.|ગોકુળમાં કૃષ્ણ અને મોટા ભાઈ બલરામ ચાલતાં શીખ્યા. યશોદા અને રોહિણી તેમનું ધ્યાન રાખતાં. પછી બંને બીજા બાળકો સાથે રમવા લાગ્યા. તેમની મસ્તી જોઈ ગામની સ્ત્રીઓ ખુશ થતી.|ಗೋಕುಲದಲ್ಲಿ ಕೃಷ್ಣ ಮತ್ತು ಅಣ್ಣ ಬಲರಾಮ ನಡೆಯಲು ಕಲಿತರು. ಯಶೋದೆ ಮತ್ತು ರೋಹಿಣಿ ಅವರನ್ನು ನೋಡಿಕೊಳ್ಳುತ್ತಿದ್ದರು. ಇಬ್ಬರೂ ಇತರ ಮಕ್ಕಳ ಜೊತೆ ಆಡಲು ಆರಂಭಿಸಿದಾಗ ಅವರ ಚುರುಕು ಆಟಗಳು ಊರಿನ ಮಹಿಳೆಯರಿಗೆ ಸಂತಸ ತಂದವು.','Toddler blue Krishna in muted yellow dhoti and slightly older fair Balarama in blue walk toward Yashoda terracotta sari and Rohini sage sari in rustic Gokul courtyard; full figures, calves safely in background.'),
+('hidden-butter','Bhagavata Purana 10.8.29–30','ऊँचे टंगे मटके|Pots hung high|ઊંચે લટકતાં મટકાં|ಎತ್ತರದಲ್ಲಿ ನೇತಾಡುವ ಮಡಕೆಗಳು','गोपियाँ दूध, दही और माखन को ऊँचे टंगे मटकों में रखती थीं। कृष्ण और बलराम उन्हें आसानी से छू नहीं सकते थे। लेकिन वे माखन तक पहुँचने का कोई उपाय ढूँढ़ लेते।|The gopis kept milk, curd and butter in pots hanging high above the floor. Krishna and Balarama could not reach them easily. Yet the brothers kept finding ways to get to the butter.|ગોપીઓ દૂધ, દહીં અને માખણ ઊંચે લટકતાં મટકાંમાં રાખતી. કૃષ્ણ અને બલરામ સહેલાઈથી ત્યાં પહોંચી શકતા નહીં. છતાં બંને માખણ સુધી પહોંચવાનો રસ્તો શોધતા.|ಗೋಪಿಯರು ಹಾಲು, ಮೊಸರು ಮತ್ತು ಬೆಣ್ಣೆಯನ್ನು ಎತ್ತರದಲ್ಲಿ ನೇತಾಡುವ ಮಡಕೆಗಳಲ್ಲಿ ಇಡುತ್ತಿದ್ದರು. ಕೃಷ್ಣ ಮತ್ತು ಬಲರಾಮನಿಗೆ ಅವು ಸುಲಭವಾಗಿ ಸಿಗುತ್ತಿರಲಿಲ್ಲ. ಆದರೂ ಬೆಣ್ಣೆ ತಲುಪಲು ಇಬ್ಬರೂ ಉಪಾಯ ಹುಡುಕುತ್ತಿದ್ದರು.','Same toddler brothers look upward at intact butter pots suspended by ropes in Gokul dairy room, woman placing pot higher; no climbing yet.'),
+('a-clever-reach','Bhagavata Purana 10.8.30','माखन तक पहुँच|Reaching the butter|માખણ સુધી પહોંચ્યા|ಬೆಣ್ಣೆ ತಲುಪುವ ಉಪಾಯ','कभी वे लकड़ी के आसन और उलटी ओखली लगाकर ऊपर चढ़ते। ऊँचे रखे मटकों तक भी उनके हाथ पहुँच जाते। गोपियों की सावधानी के बाद भी कृष्ण की शरारतें चलती रहतीं।|Sometimes they arranged wooden seats and an overturned mortar to climb higher. Even the hanging pots came within reach. The gopis’ careful hiding places could not put an end to Krishna’s mischief.|ક્યારેક તેઓ લાકડાનાં આસન અને ઊંધી ખાંડણિયાની મદદથી ઉપર ચઢતા. ઊંચાં મટકાં પણ તેમના હાથમાં આવી જતાં. ગોપીઓની કાળજી છતાં કૃષ્ણની મસ્તી ચાલુ રહેતી.|ಕೆಲವೊಮ್ಮೆ ಮರದ ಮಣೆಗಳನ್ನು ಮತ್ತು ತಲೆಕೆಳಗಾದ ಒರಳನ್ನು ಜೋಡಿಸಿ ಮೇಲೇರಿದರು. ನೇತಾಡುವ ಮಡಕೆಗಳೂ ಕೈಗೆಟುಕಿದವು. ಗೋಪಿಯರ ಎಚ್ಚರಿಕೆಯ ನಡುವೆಯೂ ಕೃಷ್ಣನ ತುಂಟಾಟ ಮುಂದುವರಿಯಿತು.','Krishna carefully standing on a low wooden seat atop overturned wooden mortar reaches into hanging butter pot; Balarama beside support; plausible arms, no modern furniture.'),
+('sharing-with-monkeys','Bhagavata Purana 10.8.29','बंदरों के साथी|Sharing with monkeys|વાંદરા સાથે માખણ|ಮಂಗಗಳ ಜೊತೆ ಬೆಣ್ಣೆ','कृष्ण माखन खाते और बंदरों को भी बाँटते। बंदर पेट भर जाने पर और न लेते, तो कभी वे मटका भी तोड़ देते। इन्हीं शरारतों की शिकायत लेकर गोपियाँ यशोदा के पास आतीं।|Krishna ate butter and shared it with the monkeys. Sometimes, when the monkeys were too full to take more, he broke a pot. These were the pranks the gopis brought to Yashoda’s attention.|કૃષ્ણ માખણ ખાતા અને વાંદરાને પણ આપતા. વાંદરા પેટ ભરાતાં વધુ ન લે તો ક્યારેક તેઓ મટકું તોડી નાખતા. ગોપીઓ આવી મસ્તીની ફરિયાદ લઈને યશોદા પાસે આવતી.|ಕೃಷ್ಣ ಬೆಣ್ಣೆ ತಿಂದು ಮಂಗಗಳಿಗೂ ಹಂಚುತ್ತಿದ್ದ. ಹೊಟ್ಟೆ ತುಂಬಿದ ಮಂಗಗಳು ಇನ್ನಷ್ಟು ಬೇಡವೆಂದಾಗ ಕೆಲವೊಮ್ಮೆ ಮಡಕೆಯನ್ನು ಒಡೆಯುತ್ತಿದ್ದ. ಇಂತಹ ತುಂಟಾಟಗಳ ಬಗ್ಗೆ ಗೋಪಿಯರು ಯಶೋದೆಗೆ ಹೇಳಲು ಬರುತ್ತಿದ್ದರು.','Krishna offers butter from small earthen pot to two friendly monkeys in courtyard; a few already-broken pottery fragments aside, no dangerous action or text.'),
+('gopis-complain','Bhagavata Purana 10.8.28–31','यशोदा से शिकायत|Telling Yashoda|યશોદાને ફરિયાદ|ಯಶೋದೆಗೆ ದೂರು','गोपियाँ बतातीं कि माखन कितनी मुश्किल से छिपाया, फिर भी कृष्ण उसे ढूँढ़ लेते हैं। कृष्ण माँ के पास चुपचाप बैठे रहते, जैसे कुछ हुआ ही न हो। सबकी नज़र अब उन्हीं पर थी।|The gopis described how carefully they hid their butter and how Krishna still found it. Beside his mother, Krishna sat quietly, as though nothing had happened. Everyone turned to look at him.|ગોપીઓ કહેતી કે માખણ કેટલું સાચવીને સંતાડ્યું, છતાં કૃષ્ણ શોધી લે છે. કૃષ્ણ મા પાસે શાંતિથી બેસતા, જાણે કંઈ બન્યું જ ન હોય. હવે સૌની નજર તેમના પર હતી.|ಎಷ್ಟು ಜೋಪಾನವಾಗಿ ಬೆಣ್ಣೆ ಬಚ್ಚಿಟ್ಟರೂ ಕೃಷ್ಣ ಹುಡುಕಿಬಿಡುತ್ತಾನೆ ಎಂದು ಗೋಪಿಯರು ಹೇಳಿದರು. ಕೃಷ್ಣ ಮಾತ್ರ ತಾಯಿಯ ಪಕ್ಕದಲ್ಲಿ ಏನೂ ಆಗದಂತೆ ಸುಮ್ಮನೆ ಕುಳಿತಿದ್ದ. ಎಲ್ಲರೂ ಅವನತ್ತ ನೋಡಿದರು.','Three gopis gently gesture to seated Yashoda about butter; Krishna sits quietly beside Yashoda looking slightly worried, rustic home, no monkeys or climbing.'),
+('affection-wins','Bhagavata Purana 10.8.31','स्नेह भरी मुस्कान|Affection softens the complaint|સ્નેહભર્યું સ્મિત|ಪ್ರೀತಿಯ ನಗು','कृष्ण की आँखों में डर था कि माँ डाँटेंगी। लेकिन उनका चेहरा देखकर गोपियों का मन स्नेह से भर जाता। यशोदा भी मुस्कुरा देतीं। भागवत का यह प्रसंग गोकुल के कृष्ण-प्रेम की झलक देता है।|Krishna looked afraid that his mother would scold him. But seeing his face, the gopis softened with affection. Yashoda smiled too. The episode closes with a glimpse of Gokul’s love for Krishna.|કૃષ્ણને ડર હતો કે મા ઠપકો આપશે. તેમનું મુખ જોઈ ગોપીઓનું મન સ્નેહથી ભરાઈ જતું. યશોદા પણ હસી પડતાં. આ પ્રસંગ ગોકુળના કૃષ્ણ પ્રત્યેના પ્રેમની ઝલક આપે છે.|ತಾಯಿ ಗದರಿಸಬಹುದೆಂದು ಕೃಷ್ಣನ ಕಣ್ಣುಗಳಲ್ಲಿ ಭಯವಿತ್ತು. ಆದರೆ ಅವನ ಮುಖ ನೋಡಿ ಗೋಪಿಯರ ಮನಸ್ಸು ಪ್ರೀತಿಯಿಂದ ಮೃದುವಾಯಿತು. ಯಶೋದೆಯೂ ನಕ್ಕಳು. ಈ ಘಟನೆ ಗೋಕುಲದ ಕೃಷ್ಣಪ್ರೇಮವನ್ನು ತೋರಿಸುತ್ತದೆ.','Warm intimate closing: Yashoda seated smiling gently at quiet Krishna beside her, gopis faces soften into affectionate smiles; distinct close composition, full painted courtyard to edges.')])
+
+def save():
+    d=ROOT/'docs/content-parity/kids-stories-nine-additions'; d.mkdir(parents=True,exist_ok=True)
+    (d/'art-prompts.json').write_text(json.dumps(prompts,ensure_ascii=False,indent=2)+'\n')
+    print(f'{len(stories)} stories, {len(prompts)} scenes')
+
+for extra in ['krishna-more.py','ganesha-more.py','hanuman-more.py']:
+    if (ROOT/extra).exists(): exec(compile((ROOT/extra).read_text(),extra,'exec'))
+save()
