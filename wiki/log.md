@@ -924,3 +924,7 @@ the widget ask (`@vedansh/daily-bhakti-nudge`). Android pins the verse widget di
 The widget ask is gated on the new `hasWidgetHost()` so an OTA never offers it to a binary without
 the extension, and it ends on a completed add flow because neither bridge can report placement.
 Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pages.
+
+## [2026-10-15] ingest | Share public listing and chapter-index cards
+
+Added a reusable listing-to-prose mapping for category, deity, purpose, katha, observance and vidhi catalogs and chapter/theme/episode indexes. Three complete rows per card preserve titles and details in all four reading languages; long indexes use labelled scopes under the ten-card share limit. The existing post, Story/Reel and carousel picker handles export; Story/Reel files are static images. Typecheck and focused share tests passed; native visual and destination checks remain pending. See [[share]].

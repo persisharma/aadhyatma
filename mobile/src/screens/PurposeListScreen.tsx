@@ -15,6 +15,9 @@ import { getCategoryBackground } from '@/data/backgrounds';
 import type { LibraryEntry } from '@/data/texts';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LibraryCard from '@/components/LibraryCard';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useNewContent } from '@/contexts/NewContentContext';
@@ -27,6 +30,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'PurposeList'>;
 export default function PurposeListScreen({ navigation, route }: Props) {
   const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { purposeId } = route.params;
   const meta = getPurposeMeta(purposeId);
   // null for every purpose the taxonomy does not honestly share with a seva.
@@ -102,6 +106,21 @@ export default function PurposeListScreen({ navigation, route }: Props) {
               · {title.secondary.text}
             </Text>
           </View>
+          <ShareButton
+            busy={shareBusy}
+            accessibilityLabel="Share purpose listing"
+            accessibilityHint="Share the complete list as post, Story, or Reel cards"
+            onPress={() => void share(buildListingShare({
+              sourceId: `purpose-${purposeId}`,
+              titleHi: meta.nameHi,
+              titleEn: meta.nameEn,
+              background: backgroundImage,
+              items: items.map((entry) => ({
+                titleHi: entry.nameHi, titleEn: entry.nameEn,
+                detailHi: entry.sub, detailEn: entry.subEn,
+              })),
+            }), lang)}
+          />
         </View>
 
         <ScrollView
@@ -195,6 +214,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleRow: {
+    flex: 1,
+    minWidth: 0,
     flexDirection: 'row',
     alignItems: 'baseline',
   },

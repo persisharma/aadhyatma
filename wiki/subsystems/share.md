@@ -1,8 +1,8 @@
 ---
 title: Share Cards (verse, prose, series)
 type: subsystem
-sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareContent.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
-last_verified_date: 2026-10-12
+sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareContent.ts, mobile/src/utils/listingShare.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
+last_verified_date: 2026-10-15
 confidence: high
 status: current
 ---
@@ -28,6 +28,7 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   `askAnswerShareable`), tested in `shareContent.test.ts`. Screens only call
   `share(builder(data), lang)` from a `ShareButton`.
 - **Share placement.** Share icons sit at the right side of their content card/header. Kids Stories pins it right of the centred language toggle; Vrat Katha places it after the header counter and Daan Katha in the header right slot, keeping read-aloud in its own language-row slot.
+- **Listing indexes.** `listingShare.ts` maps visible catalog entries into the existing `ShareableProse` card and picker. Category, deity, purpose, katha, observance and vidhi lists and chapter/theme/episode indexes carry the header share circle. Each row retains its title and detail; up to three complete rows fit a card, with the prose type budget checked in hi/en/gu/kn. A long index is split into labelled scopes of at most ten cards. Search-filtered katha and observance lists share the current results. Story/Reel output is a static 9:16 image; the app does not create a video.
 - **Scopes.** A prose share carries ≥1 scope (katha: *this part* / *whole katha*; temple:
   *significance & story* / *full reading*). The sheet's segment switches scope and
   re-paginates; the first scope is the default.
@@ -55,6 +56,9 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
 - **Instagram carousels.** No share intent creates one; whether Instagram's share target
   accepts several images is unverified, so the carousel row pauses on hand-off steps
   (save images → Instagram → + → Select multiple) before opening the OS sheet.
+- **Long listing parts.** A 90-entry katha library takes several scope selections; the
+  all-pages row exports one selected part at a time. The builder never drops entries
+  just to fit the ten-card native share cap.
 - **Paginator constants are measured.** Advances hi 0.41 · gu 0.43 · kn 0.56 · en 0.44 =
   the minimum that never under-counted any of 500 katha paragraphs per language laid out
   in Chromium at 484 dp with the app's TTFs, + 0.02. If a device clips a prose page, widen

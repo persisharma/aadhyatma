@@ -11,6 +11,9 @@ import { meaningToken } from '@/utils/langType';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import { readingParchment } from '@/data/backgroundAsset';
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
@@ -26,12 +29,27 @@ const groups = [
 export default function GarudPuranChaptersScreen({ navigation }: Props) {
   const { colors, spacing, typography } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { getChapterProgress } = useReadingProgress();
+  const listingShare = buildListingShare({
+    sourceId: 'garud-puran', titleHi: 'गरुड़ पुराण', titleEn: 'Garud Puran',
+    background: readingParchment,
+    items: garudPuranChaptersManifest.map((reading) => ({
+      titleHi: reading.titleHi, titleEn: reading.titleEn,
+      detailHi: `${reading.verseCount} पृष्ठ`, detailEn: `${reading.verseCount} pages`,
+    })),
+  });
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <BackgroundLayer source={readingParchment} />
       <SafeAreaView style={styles.root} edges={['top', 'left', 'right']}>
-        <ReaderHeader title={contentByLang(lang, 'गरुड़ पुराण', 'Garud Puran')} onBack={() => navigation.goBack()} variant="index" />
+        <ReaderHeader
+          title={contentByLang(lang, 'गरुड़ पुराण', 'Garud Puran')}
+          onBack={() => navigation.goBack()}
+          variant="index"
+          sideWidth={60}
+          right={<ShareButton busy={shareBusy} accessibilityLabel="Share chapter listing" accessibilityHint="Share the complete reading list as post, Story, or Reel cards" onPress={() => void share(listingShare, lang)} />}
+        />
         <View style={styles.toggle}><LanguageToggle /></View>
         <ScrollView testID="garud-puran-index" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: spacing.screenGutter, paddingBottom: 40, gap: spacing.md }}>
           <Text style={{ color: colors.inkSoft, ...meaningToken(lang, typography), textAlign: 'center', fontSize: 15, lineHeight: 23 }}>
