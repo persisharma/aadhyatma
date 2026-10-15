@@ -8,6 +8,7 @@ appId: ${APP_ID}
 - takeScreenshot: ${SHOT_PREFIX}-index-hi
 - tapOn: English
 - assertVisible: 'Reading 1\. Karma and its consequences\. 2 pages\. Tap to open\.'
+- assertVisible: { id: "garud-puran-reading-1-thumb" }
 - takeScreenshot: ${SHOT_PREFIX}-index-en
 - scrollUntilVisible:
     element:

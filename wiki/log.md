@@ -928,3 +928,11 @@ Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pa
 ## [2026-10-15] ingest | Share public listing and chapter-index cards
 
 Added a reusable listing-to-prose mapping for category, deity, purpose, katha, observance and vidhi catalogs and chapter/theme/episode indexes. Three complete rows per card preserve titles and details in all four reading languages; long indexes use labelled scopes under the ten-card share limit. The existing post, Story/Reel and carousel picker handles export; Story/Reel files are static images. Typecheck and focused share tests passed; native visual and destination checks remain pending. See [[share]].
+
+## [2026-10-15] ingest | Shared listing card for comic, Garud Puran and kids-story lists
+The three section listings now render one `ListingCard` (design.md §82, RULEBOOK §3 "Listing cards"):
+reading-language title only, one-line description (≤32 chars), `N पृष्ठ` meta, a 92-wide thumb that
+fills the card height with cover-cropped art, `LanguageToggle` + scope line on every listing. Each
+comic prasang shows a curated key scene (`episodeCovers.ts`); Garud paintings crop around a focal
+point. All 28 kids-story descriptions were shortened. Updated [[kids-stories]] and [[languages]].
+
