@@ -73,6 +73,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'om-namo-bhagavate-vasudevaya': backgroundImages.source_vishnu_narayana,
   'radha-naam': backgroundImages.deity_radha_krishna,
   'jai-shri-ram': backgroundImages.deity_rama_darbar,
+  'saraswati-moola-mantra': backgroundImages.deity_saraswati_veena,
   ramcharitmanas: backgroundImages.deity_rama_darbar,
   'valmiki-ramayan': backgroundImages.deity_rama_darbar,
   'durga-stotram': backgroundImages.deity_durga_lion,
@@ -114,6 +115,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   // Krishna's bansuri art (precedent: subrahmanya-ashtakam → Vetrimalai plate).
   'khatu-shyam-aarti': backgroundImages.theerth_khatu_shyam,
   'om-jai-lakshmi-mata': backgroundImages.deity_lakshmi,
+  'om-jai-gange-mata': backgroundImages.deity_ganga,
   'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
   'matribhumi-vandana': backgroundImages.category_stotram_hymn_scroll,
   lingashtakam: shivaStrotamImages.shiva,

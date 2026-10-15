@@ -792,3 +792,7 @@ assertions and test scope are unchanged. The complete matching-runtime reader ru
 241 suites / 2,335 tests in 97.337 seconds, with clean typecheck and touched-test lint.
 No app/runtime or native-export changes. Evidence:
 docs/evaluations/reading-visuals-2026-10-12/tall-verse-share/review.md.
+
+## [2026-10-13] ingest | Aarti and japa content integration and competitor title audit
+
+The aarti registry is append-only because legacy `aarti-N` ids migrate by index; a library row and source background are separate discovery requirements. Japa JSON entries enter the library automatically; a new per-mantra source must roll into the top-level source URLs, and silent counting works without an audio asset. The offline Ishvar Vaani title audit lives in `docs/research/competitors/2026-10-13-aarti-japa-title-audit.md`; it distinguishes composition matches from title-only gaps and records the selected Ganga Aarti variant and Saraswati Moola Mantra sources.

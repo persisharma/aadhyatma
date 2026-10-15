@@ -16,8 +16,8 @@
         "Maha Mrityunjay Mantra",
         "Rigveda 7.59.12 · Tryambaka Mantra"
       ],
-      "meaningHi": "लाभ:\n\nमहामृत्युंजय मंत्र को 'संजीवनी मंत्र' भी कहा जाता है। यह मंत्र अकाल मृत्यु से रक्षा करता है, गंभीर रोगों से मुक्ति दिलाता है, और भय का नाश करता है। इसके नियमित जाप से आयु, आरोग्य और आत्मबल की वृद्धि होती है। यह मंत्र मोक्ष-प्राप्ति का भी साधन माना गया है।\n\nकथा:\n\nयह मंत्र ऋषि मार्कण्डेय से जुड़ा है। मार्कण्डेय को केवल 16 वर्ष की आयु प्राप्त थी। जब यमराज उन्हें लेने आए, तो मार्कण्डेय ने शिवलिंग को पकड़कर इसी मंत्र का जाप किया। भगवान शिव प्रकट हुए और यमराज को भगाकर मार्कण्डेय को चिरंजीवी बना दिया। तभी से यह मंत्र मृत्यु पर विजय का प्रतीक है।",
-      "meaningEn": "Benefits:\n\nThe Maha Mrityunjay Mantra is also called the 'Sanjeevani Mantra' (life-restoring mantra). It protects against untimely death, grants liberation from serious illnesses, and destroys fear. Regular chanting increases longevity, health, and inner strength. It is also considered a path to moksha (liberation).\n\nStory:\n\nThis mantra is associated with Rishi Markandeya, who was destined to live only 16 years. When Yama (the god of death) came to claim him, Markandeya clung to a Shiva lingam and chanted this mantra with deep devotion. Lord Shiva appeared, drove away Yama, and granted Markandeya immortality. Since then, this mantra symbolizes victory over death."
+      "meaningHi": "ऋग्वेद ७.५९.१२ का त्र्यम्बक मंत्र रुद्र को सम्बोधित है। प्रचलित जप में इसके पहले “ॐ” बोला जाता है। अगले पद में पोषण करने वाले त्र्यम्बक से मृत्यु के बन्धन से मुक्ति की प्रार्थना है।",
+      "meaningEn": "The Tryambaka verse is Rigveda 7.59.12 and addresses Rudra. The commonly recited japa adds “Om” before the Vedic verse. The prayer asks the nourishing Three-Eyed One for release from the bond of death."
     },
     {
       "id": "ss-3-1",
@@ -36,12 +36,11 @@
     }
   ],
   "source": {
-    "baseText": "Traditional Shiva mantras and Shiva Tandava Stotram, checked against Vaidika Vignanam, GreenMesg, and Sanskrit Documents references.",
+    "baseText": "Rigveda 7.59.12, Tryambaka verse. Checked against the Rigveda Samhita/Padapatha with Sayana commentary and the University of Texas metrically restored Rigveda Book 7. The commonly recited Om prefix is devotional usage, outside the cited Rigvedic verse.",
     "referenceUrls": [
-      "https://vignanam.org/devanagari/shiva-tandava-stotram.html",
-      "https://greenmesg.org/stotras/shiva/shiva_tandava_stotram.php",
-      "https://sanskritdocuments.org/doc_shiva/tANDavastotram1.html"
+      "https://rigveda.sanatana.in/describe/rikMandala/007.059.012",
+      "https://lrc.la.utexas.edu/books/rigveda/RV07"
     ],
-    "retrievedOn": "2026-05-30"
+    "retrievedOn": "2026-10-13"
   }
 }

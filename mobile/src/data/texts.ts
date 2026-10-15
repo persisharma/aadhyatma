@@ -622,6 +622,18 @@ export const library: readonly LibraryEntry[] = [
     addedInVersion: '1.5.0',
   },
   {
+    id: 'om-jai-gange-mata',
+    nameHi: 'गंगा माता की आरती',
+    nameEn: 'Om Jai Gange Mata',
+    sub: '5 पद · अर्थ सहित',
+    subEn: '5 verses · with meaning',
+    thumb: 'गं',
+    status: 'active',
+    category: 'aarti',
+    deities: ['ganga'],
+    verseCount: 5,
+  },
+  {
     // Rama's aarti reuses the existing Ram Stuti (श्रीरामचन्द्र कृपालु भजु मन) —
     // popularly sung as Ram's aarti. This entry lists it under the Aarti
     // category; routing (entryRoutes.ts) sends it to the RamStuti reader, so the

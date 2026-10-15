@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
-last_verified_date: 2026-10-12
+sources: [mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/aarti/index.ts, mobile/src/data/japam/index.ts, mobile/src/data/japam/japam.json, mobile/src/data/backgrounds.ts, mobile/src/components/JapamAudioPlayer.tsx, RULEBOOK.md]
+last_verified_date: 2026-10-13
 confidence: high
 status: current
 ---
@@ -122,6 +122,18 @@ registry in `data/ashtakam/index.ts` is the source of truth; the matching `data/
 makes an active entry discoverable through category, deity, search, routine, progress, and
 purpose surfaces. Rudrashtakam is the current reference addition: 8 hymn verses plus its
 phalashruti, represented as 9 reader pages without creating a new deity or category.
+
+**Aarti and japa content additions:** an aarti requires a complete JSON record in
+`data/aarti/`, an appended import/id in `data/aarti/index.ts` (legacy `aarti-N` ids are
+position-based), a separate discoverable `data/texts.ts` row, and a semantic
+`data/backgrounds.ts` mapping. Japa records in `data/japam/japam.json` become library entries
+automatically, but a newly sourced mantra needs per-record source metadata rolled up into
+the file's top-level source URL list; the data correctness suite enforces that. The japa
+counter works without a recording and shows the audio-unavailable state, so a source-verified
+silent mantra does not need a newly licensed audio file. If audio is later attached, its loop
+needs a verified repetition count to keep the 108-bead counter accurate. The 2026-10-13
+[title audit](../../docs/research/competitors/2026-10-13-aarti-japa-title-audit.md) records
+composition-level deduplication and edition variants.
 
 **Tests:** `readerAutoAdvance.test.tsx` enforces the auto-advance contract for every
 multi-chapter reader (transition injected at chapter 1's tail, prev-transition at chapter 2's
