@@ -40,6 +40,7 @@ meanings before reader integration.
 | `lakshminarayan-chalisa` | लक्ष्मीनारायण चालीसा · Lakshminarayan Chalisa | `vishnu`, `lakshmi` | To be fixed after variant review | No acceptable independent pair found | **HOLD** — prove it is distinct from Vishnu Chalisa before adding. |
 | `kartikeya-chalisa` | कार्तिकेय चालीसा · Kartikeya Chalisa | `kartikeya` | Variant-dependent | [Sri Mandir](https://www.srimandir.com/articles/chalisa/kartikeya-chalisa) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-kartikeya-chalisa) | **HOLD** — the sources publish different compositions/openings. Select an attributed traditional edition first. |
 | `narasimha-chalisa` | नरसिंह चालीसा · Narasimha Chalisa | `narasimha` | `मास वैशाख कृतिका युत, हरण मही को भार` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/lord-narasimha/narasimha-chalisa.html?lang=hi) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-narsingh-chalisa) | **2C** |
+| `navagraha-chalisa` | नवग्रह चालीसा · Navagraha Chalisa | `navagraha` | `श्री गणपति गुरुपद कमल, प्रेम सहित सिरनाय` | [HinduNidhi](https://hindunidhi.com/navgrah-chalisa-hindi/) · [BhaktiBharat](https://www.bhaktibharat.com/chalisa/shri-navgrah-chalisa) · [DrikPanchang, blocked](https://www.drikpanchang.com/lyrics/chalisa/navagraha/navagraha-chalisa.html?lang=hi) | **2C** — two reachable HTML candidates share the opening and closing, including the सुन्दरदास signature; full line-by-line collation, source independence and meanings are pending. Added 2026-10-15; Drik returned HTTP 403. |
 | `parvati-chalisa` | पार्वती चालीसा · Parvati Chalisa | `parvati` | `जय गिरि तनये दक्षजे, शम्भु प्रिये गुणखानि` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/parvati-mata/parvati-mata-chalisa.html?lang=hi) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-parvati-chalisa) | **2C** |
 | `radha-chalisa` | राधा चालीसा · Radha Chalisa | `radha` | Fix to the Drik/Pavitra shared opening during collation | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/shri-radha/shri-radha-chalisa.html?lang=hi) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-radha-chalisa) | **2C** |
 | `santoshi-mata-chalisa` | संतोषी माता चालीसा · Santoshi Mata Chalisa | `durga` | `श्री गणपति पद नाय सिर, धरि हिय शारदा ध्यान` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/santoshi-mata/santoshi-mata-chalisa.html?lang=hi) · [Ved Puran scan](https://vedpuran.net/wp-content/uploads/2021/05/santoshi-maa-chalisa.pdf) | **2C** — other sites publish a different opening; keep this composition isolated. |
@@ -50,7 +51,7 @@ meanings before reader integration.
 | `vaishno-devi-chalisa` | वैष्णो देवी चालीसा · Vaishno Devi Chalisa | `durga` | `गरुड़ वाहिनी वैष्णवी, त्रिकुटा पर्वत धाम` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/vaishno-mata/vaishno-mata-chalisa.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/mata-vashno-devi-chalisa-hindi/) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-vaishno-chalisa) | **2C** — tag `durga`; no Vaishno deity id. |
 | `vindhyeshwari-chalisa` | विन्ध्येश्वरी चालीसा · Vindhyeshwari Chalisa | `durga` | `नमो नमो विन्ध्येश्वरी, नमो नमो जगदम्ब` | [Sanskrit Documents](https://sanskritdocuments.org/doc_devii/vindhyeshvarIchAlIsA.html) · [HinduNidhi](https://hindunidhi.com/vindhyeshvari-chalisa-hindi/) · [Sri Mandir](https://www.srimandir.com/articles/chalisa/vindhyeshwari-chalisa) | **2C** — strongest first-batch candidate. |
 
-Chalisa status: **12 `2C`, 6 `HOLD`, 1 `WIRED · collation pending`, 1 `SHIPPED`**.
+Chalisa status: **13 `2C`, 6 `HOLD`, 1 `WIRED · collation pending`, 1 `SHIPPED`**.
 
 ## Aartis
 
@@ -107,7 +108,9 @@ importance; it reflected the source and rights risk at the time.
   opening chaupais already have several substantive word variants. The full
   recension and per-verse editorial meanings remain unapproved. `surya-chalisa`
   also has two reachable candidates; its complete line collation and meanings
-  remain to be authored. Neither has been wired.
+  remain to be authored. `navagraha-chalisa` now has reachable HinduNidhi and
+  BhaktiBharat candidates with matching opening and closing; its full collation
+  and source-lineage review are pending. None of these has been wired.
 - `kali-chalisa`, `kali-aarti`, `ganga-aarti`, `parvati-chalisa`,
   `radha-chalisa`, `kubera-chalisa`, `narasimha-chalisa`, and
   `annapurna-chalisa` each lose a required manifest source to Drik's 403.

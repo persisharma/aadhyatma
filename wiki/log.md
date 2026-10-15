@@ -948,3 +948,10 @@ closing differs or is corrupted across reachable sources; Ganga Chalisa has
 substantive wording variants; Surya Chalisa still needs complete editorial
 collation and meanings. Other candidate gaps and HOLD identities are listed in
 `docs/content-parity/chalisa-aarti-existing-deities.md` under the 2026-10-15 audit.
+
+## [2026-10-15] ingest | Navagraha Chalisa candidate pair identified
+
+HinduNidhi and BhaktiBharat both serve the Sundardas-attributed opening and
+closing, while the Drik Panchang candidate returns HTTP 403. Added the pair
+to the acquisition manifest as 2C; full line collation, source-lineage review
+and editorial meanings are still required before reader integration.
