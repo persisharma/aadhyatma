@@ -1,6 +1,6 @@
 # Chalisa and Aarti content parity — existing deities only
 
-Research snapshot: **2026-07-31**
+Research snapshot: **2026-07-31** · status updated **2026-10-15**
 
 ## Scope
 
@@ -21,7 +21,7 @@ Status legend:
 - **HOLD** — identity, variant, provenance, or copyright requires a human
   editorial decision before transcription.
 
-The two Khatu Shyam rows (`khatu-shyam-chalisa`, `khatu-shyam-aarti`) are wired into the reader (October 2026), and the two Lakshmi rows marked **SHIPPED** ship in 1.5.0 from their two-source June collation. The maintainer accepted each on one supplied source (RULEBOOK §11.1 exception), so their second-source collation is still pending. No other row is `active`. RULEBOOK §10 still requires a complete two-source
+The two Khatu Shyam rows (`khatu-shyam-chalisa`, `khatu-shyam-aarti`) are wired into the reader (October 2026), the two Lakshmi rows ship in 1.5.0, and Shani Aarti plus Marathi Dattatreya Aarti are marked **SHIPPED** in 1.5.2. The maintainer accepted the Khatu Shyam rows on one supplied source (RULEBOOK §11.1 exception), so their second-source collation is still pending. RULEBOOK §10 still requires a complete two-source
 comparison, source metadata, clean romanization, and per-verse Hindi and English
 meanings before reader integration.
 
@@ -50,7 +50,7 @@ meanings before reader integration.
 | `vaishno-devi-chalisa` | वैष्णो देवी चालीसा · Vaishno Devi Chalisa | `durga` | `गरुड़ वाहिनी वैष्णवी, त्रिकुटा पर्वत धाम` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/vaishno-mata/vaishno-mata-chalisa.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/mata-vashno-devi-chalisa-hindi/) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-vaishno-chalisa) | **2C** — tag `durga`; no Vaishno deity id. |
 | `vindhyeshwari-chalisa` | विन्ध्येश्वरी चालीसा · Vindhyeshwari Chalisa | `durga` | `नमो नमो विन्ध्येश्वरी, नमो नमो जगदम्ब` | [Sanskrit Documents](https://sanskritdocuments.org/doc_devii/vindhyeshvarIchAlIsA.html) · [HinduNidhi](https://hindunidhi.com/vindhyeshvari-chalisa-hindi/) · [Sri Mandir](https://www.srimandir.com/articles/chalisa/vindhyeshwari-chalisa) | **2C** — strongest first-batch candidate. |
 
-Chalisa acquisition result: **14 `2C`, 6 `HOLD`, 0 `1C`**.
+Chalisa status: **12 `2C`, 6 `HOLD`, 1 `WIRED · collation pending`, 1 `SHIPPED`**.
 
 ## Aartis
 
@@ -76,9 +76,9 @@ Chalisa acquisition result: **14 `2C`, 6 `HOLD`, 0 `1C`**.
 | `vaishno-devi-aarti` | वैष्णो देवी आरती · Vaishno Devi Aarti | `durga` | `जय वैष्णवी माता, मैया जय वैष्णवी माता` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/vaishno-mata/vaishno-mata-aarti.html?lang=hi) · [HinduNidhi Aarti Sangrah](https://hindunidhi.com/aarti-sangrah/) | **2C** |
 | `vishnu-lakshmi-ramana-aarti` | विष्णु आरती · Vishnu Aarti (Om Jai Lakshmi Ramana) | `vishnu` | Competitor begins `ॐ जय लक्ष्मी रमणा, स्वामी जय लक्ष्मी रमणा` | No independent source matching the competitor's generic eight-stanza version found | **HOLD** — the established Satyanarayan Aarti has a similar refrain but different narrative. Do not create a duplicate/composite. |
 
-Aarti acquisition result: **14 `2C`, 2 `1C`, 3 `HOLD`**.
+Aarti status: **10 `2C`, 2 `1C`, 3 `HOLD`, 1 `WIRED · collation pending`, 3 `SHIPPED`**.
 
-## What is ready to gather first
+## Original gathering order (historical)
 
 The first transcription batch should be small enough for line-by-line review:
 
@@ -91,9 +91,34 @@ The first transcription batch should be small enough for line-by-line review:
 7. `shani-aarti`
 8. `dattatreya-aarti`
 
-These have the clearest source identity and at least two independent candidates.
-This ordering does not imply devotional importance; it minimizes variant and
-rights risk.
+This was the July 2026 acquisition order, not the current ship queue. Row statuses
+above show which texts are now wired or shipped. The order does not imply devotional
+importance; it reflected the source and rights risk at the time.
+
+## 2026-10-15 source-access audit for the eleven missing deities
+
+- `www.drikpanchang.com` returned HTTP 403 for every direct candidate probed.
+  SanskritDocuments, Pavitra Granth, HinduNidhi, Sanatan Sanstha and Hindu
+  Janajagruti returned HTTP 200 with usable text on their HTML candidate pages.
+- `shani-chalisa` remains out: the reachable SanskritDocuments closing doha is
+  visibly corrupted and differs from Pavitra Granth/HinduNidhi's closing;
+  the independent full ending is unresolved.
+- `ganga-chalisa` has reachable HinduNidhi and Pavitra Granth text, but their
+  opening chaupais already have several substantive word variants. The full
+  recension and per-verse editorial meanings remain unapproved. `surya-chalisa`
+  also has two reachable candidates; its complete line collation and meanings
+  remain to be authored. Neither has been wired.
+- `kali-chalisa`, `kali-aarti`, `ganga-aarti`, `parvati-chalisa`,
+  `radha-chalisa`, `kubera-chalisa`, `narasimha-chalisa`, and
+  `annapurna-chalisa` each lose a required manifest source to Drik's 403.
+  `narasimha-aarti` also has only the blocked Drik candidate in this manifest.
+- `dattatreya-chalisa`, `kartikeya-chalisa`, and `gauri-chalisa` remain HOLD
+  under the editorial-identity rule; the other HOLD rows outside these eleven
+  deities remain unchanged.
+- Searches for Surya, Radha, Kartikeya, Kubera, Parvati and Navagraha aartis
+  surfaced different openings or poorly attributed/modern texts. None passed
+  the complete, independent two-source identity gate in this pass. This is a
+  research outcome, not a claim that no such traditional aarti exists.
 
 ## Acquisition-to-reader gate
 

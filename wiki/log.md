@@ -940,3 +940,11 @@ BhajanUSA, with Sanatan Sanstha as a third check; recorded the one refrain spell
 Appended `dattatreya-aarti` at persisted index 12, kept the Marathi language explicit, and
 updated the reader/count tests and Maestro flow. The SanskritDocuments Marathi PDF was opened
 but yielded no extractable text, so it was not counted as a line-collated source.
+
+## [2026-10-15] gap | Remaining Chalisa and Aarti source gates
+
+Drik Panchang returned HTTP 403 for direct candidate URLs. Shani Chalisa's
+closing differs or is corrupted across reachable sources; Ganga Chalisa has
+substantive wording variants; Surya Chalisa still needs complete editorial
+collation and meanings. Other candidate gaps and HOLD identities are listed in
+`docs/content-parity/chalisa-aarti-existing-deities.md` under the 2026-10-15 audit.
