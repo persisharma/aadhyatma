@@ -11,17 +11,17 @@ jest.mock('expo-linear-gradient', () => ({
 }));
 
 test.each([
-  ['backgrounds--deity-rama-darbar', 1],
-  ['backgrounds--daan-annapurna-bhiksha', 2 / 3],
-  ['backgrounds--source-vishnu-narayana-option2', 1.5],
-] as const)('%s keeps every figure inside a contained source canvas', (stem, aspectRatio) => {
+  'backgrounds--deity-rama-darbar',
+  'backgrounds--daan-annapurna-bhiksha',
+  'backgrounds--source-vishnu-narayana-option2',
+] as const)('%s fills the whole reading surface as the primary background', stem => {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => { tree = TestRenderer.create(<BackgroundLayer source={backgroundAsset(stem)} />); });
   const art = tree.root.findByType(BackgroundArtwork);
-  expect(art.props.resizeMode).toBe('contain');
-  const frame = tree.root.findAllByType(mockView).find(node => StyleSheet.flatten(node.props.style)?.aspectRatio === aspectRatio);
-  expect(frame).toBeDefined();
-  expect(StyleSheet.flatten(frame!.props.style)).toMatchObject({ top: 0, width: '100%', maxHeight: '100%', aspectRatio });
+  // The themed artwork is primary: it fills the screen (default cover), not a
+  // letterboxed/contained canvas that would reveal the plain parchment behind it.
+  expect(art.props.resizeMode).toBeUndefined();
+  expect(StyleSheet.flatten(art.props.style)).toEqual(StyleSheet.absoluteFillObject);
   act(() => tree.unmount());
 });
 
