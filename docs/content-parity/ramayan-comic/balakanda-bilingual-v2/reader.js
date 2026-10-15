@@ -49,30 +49,24 @@ function balloon(copy, anchor) {
   return speech;
 }
 
-function drawBalloon(speech, flowing) {
-  const { width, height, left: speechLeft } = speech.getBoundingClientRect();
-  const radiusX = flowing ? 28 : width * 0.42;
-  const radiusY = flowing ? Math.min(28, height / 2) : height * 0.42;
-  // Anchor to the painted frame, not the text box: margins and translations
-  // must not move the pointer to a different character.
-  const art = speech.closest('.panel').querySelector('.crop').getBoundingClientRect();
-  const tipX = art.left + art.width * Number(speech.dataset.speakerX) - speechLeft;
-  const baseX = Math.max(radiusX + 13, Math.min(width - radiusX - 13, tipX));
-  const bottom = flowing ? `H ${baseX + 13} L ${tipX} ${height + 23} L ${baseX - 13} ${height} H ${radiusX}` : `H ${radiusX}`;
-  const left = flowing ? `V ${radiusY}` : `L -22 ${height * 0.9} L 0 ${radiusY}`;
-  const shape = speech.querySelector('svg');
-  shape.setAttribute('viewBox', `0 0 ${width} ${height}`);
-  shape.querySelector('path').setAttribute('d', `M ${radiusX} 0 H ${width - radiusX} Q ${width} 0 ${width} ${radiusY} V ${height - radiusY} Q ${width} ${height} ${width - radiusX} ${height} ${bottom} Q 0 ${height} 0 ${height - radiusY} ${left} Q 0 0 ${radiusX} 0 Z`);
-}
-
 function fitBalloons() {
   for (const speech of content.querySelectorAll('.speech')) {
-    const panel = speech.closest('.panel');
-    if (panel.classList.contains('overlay')) {
-      panel.classList.remove('flow-speech');
-      if (speech.offsetHeight > panel.querySelector('.crop').clientHeight * 0.46) panel.classList.add('flow-speech');
-    }
-    drawBalloon(speech, !panel.classList.contains('overlay') || panel.classList.contains('flow-speech'));
+    const scene = speech.closest('.scene');
+    const layout = window.comicSpeechLayouts[scene.closest('.panel').dataset.panel];
+    const artHeight = scene.querySelector('.crop').clientHeight;
+    scene.classList.remove('flow-speech');
+    speech.style.width = `${layout.width * 100}%`;
+    const height = speech.offsetHeight;
+    const overlay = window.comicSpeechFits(layout, artHeight, height);
+    const g = window.comicSpeechGeometry(layout, scene.clientWidth, artHeight, height);
+    speech.style.left = `${g.x}px`;
+    speech.style.top = `${g.y}px`;
+    if (!overlay) scene.classList.add('flow-speech');
+    const shape = speech.querySelector('svg');
+    shape.style.display = overlay ? '' : 'none';
+    shape.setAttribute('viewBox', `0 0 ${g.width} ${height}`);
+    shape.querySelector('path').setAttribute('d', window.comicBalloonPath(0, 0, g.width, height,
+      scene.clientWidth * layout.tipX - g.x, artHeight * layout.tipY - g.y, layout.tail));
   }
 }
 
@@ -98,13 +92,18 @@ function episodeView(episode, locale, navigation = true) {
   }
   section.append(heading);
   for (const [index, panel] of episode.panels.entries()) {
-    const article = element('article', `panel${panel.overlaySpeech ? ' overlay' : ''}`);
+    const article = element('article', 'panel');
     article.id = `${locale}-${panel.id}`;
     article.dataset.panel = panel.id;
     article.setAttribute('aria-label', `${copy.panels} ${number(index + 1, locale)} / ${number(episode.panels.length, locale)}`);
     if (panel[locale].narration) article.append(element('p', 'narration', panel[locale].narration));
-    if (panel[locale].dialogue) article.append(balloon(panel[locale], panel.speakerAnchor));
-    article.append(artwork(panel, locale));
+    const scene = element('div', 'scene');
+    scene.append(artwork(panel, locale));
+    if (panel[locale].dialogue) {
+      const speech = balloon(panel[locale], panel.speakerAnchor);
+      scene.append(speech);
+    }
+    article.append(scene);
     section.append(article, link(`${copy.sargas} ${panel.source} · ${copy.original}`, panel.asset, 'panel-source'));
   }
   if (navigation) {
