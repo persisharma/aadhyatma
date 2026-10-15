@@ -31,7 +31,7 @@ test('episode/panel routes retain stable positions and unsupported translations 
   for (const episode of book.episodes) {
     expect(comicPages(book)[comicPageIndex(book, episode.id)].panel.id).toBe(episode.panels[0].id);
   }
-  expect(comicPages(book)[comicPageIndex(book, undefined, 'bk-06-03')].panel.speakerAnchor?.x).toBe(0.5);
+  expect(comicPages(book)[comicPageIndex(book, undefined, 'bk-06-03')].panel.speakerAnchor?.x).toBe(0.51);
   expect(comicPageIndex(book, 'missing')).toBe(0);
   expect(comicPageIndex(book, undefined, 'missing')).toBe(0);
   expect(['hi', 'en', 'gu', 'kn'].map(lang => comicLanguage(lang as any))).toEqual(['hi', 'en', 'en', 'en']);

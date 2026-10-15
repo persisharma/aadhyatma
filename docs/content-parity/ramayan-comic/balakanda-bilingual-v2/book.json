@@ -121,23 +121,23 @@
             "speaker": "Valmiki",
             "dialogue": "Who is the person who has these qualities?"
           },
-          "asset": "../balakanda-v1/assets/bk-01-v2.png",
+          "asset": "top-dialogue-art/assets/bk-01-01-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
             "y": 0,
-            "width": 0.5025380710659898,
-            "height": 0.3030075187969925,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Valmiki and Narada converse beneath trees at a quiet hermitage; Narada carries a veena, Valmiki listens thoughtfully.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.31,
-            "review": "Valmiki, grey-haired sage seated on the left."
+            "x": 0.24,
+            "review": "Valmiki identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -156,23 +156,23 @@
             "speaker": "Narada",
             "dialogue": "Let me tell you Rama’s story."
           },
-          "asset": "../balakanda-v1/assets/bk-01-v2.png",
+          "asset": "top-dialogue-art/assets/bk-01-02-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5025380710659898,
+            "x": 0,
             "y": 0,
-            "width": 0.49746192893401014,
-            "height": 0.3030075187969925,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Narada speaks to Valmiki, gently gesturing through the story; depict only the two sages, no literal future-event montage.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.72,
-            "review": "Narada, dark-haired veena bearer on the right."
+            "x": 0.75,
+            "review": "Narada identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -223,23 +223,23 @@
             "speaker": "Brahma",
             "dialogue": "Tell Rama’s life in poetry."
           },
-          "asset": "../balakanda-v1/assets/bk-01-v2.png",
+          "asset": "top-dialogue-art/assets/bk-01-04-top-v2.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5025380710659898,
-            "y": 0.3030075187969925,
-            "width": 0.49746192893401014,
-            "height": 0.3406015037593985,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Four-headed four-armed Brahma blesses seated Valmiki at hermitage, serene divine light, palm-leaf writing materials nearby.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.63,
-            "review": "Brahma, crowned multiple-faced figure on the lotus at right."
+            "x": 0.69,
+            "review": "Brahma identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -381,23 +381,23 @@
             "speaker": "Sumantra",
             "dialogue": "Invite Rishyasringa."
           },
-          "asset": "../balakanda-v1/assets/bk-03-v2.png",
+          "asset": "top-dialogue-art/assets/bk-03-01-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
             "y": 0,
-            "width": 0.4949238578680203,
-            "height": 0.324812030075188,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Dasharatha speaks privately with minister Sumantra, then turns toward Vashishtha for counsel in palace chamber.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
             "x": 0.16,
-            "review": "Sumantra, blue-turbaned minister at far left, not the crowned king or white-robed sage."
+            "review": "Sumantra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -837,7 +837,7 @@
         {
           "id": "bk-05-03a",
           "source": "1.18",
-          "asset": "../lettering-pilot-v1/bk-05-03a-welcome-v1.png",
+          "asset": "top-dialogue-art/assets/bk-05-03a-top-v2.png",
           "overlaySpeech": true,
           "hi": {
             "narration": "",
@@ -855,8 +855,8 @@
             18
           ],
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
@@ -865,10 +865,10 @@
             "height": 1,
             "status": "full-painted-bounds-reviewed"
           },
-          "reviewNote": "Separate close-up for the existing question; no new event or dialogue.",
+          "reviewNote": "Separate close-up for the existing question; no new event or dialogue. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.21,
-            "review": "Dasharatha close-up at left; retain the approved side balloon, use this anchor when it flows above art."
+            "x": 0.28,
+            "review": "Dasharatha identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         }
       ]
@@ -901,23 +901,23 @@
             "speaker": "Vishwamitra",
             "dialogue": "Send Rama to guard the sacrifice."
           },
-          "asset": "../balakanda-v1/assets/bk-06-v1.png",
+          "asset": "top-dialogue-art/assets/bk-06-01-top-v2.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
             "y": 0,
-            "width": 0.5,
-            "height": 0.4990791896869245,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Vishwamitra explains his disrupted ritual to Dasharatha in court; adolescent Rama listens quietly nearby.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.24,
-            "review": "Vishwamitra, orange-robed staff bearer at left."
+            "x": 0.2,
+            "review": "Vishwamitra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -936,23 +936,23 @@
             "speaker": "Dasharatha",
             "dialogue": "Rama is not even sixteen yet."
           },
-          "asset": "../balakanda-v1/assets/bk-06-v1.png",
+          "asset": "top-dialogue-art/assets/bk-06-02-top-v2.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5,
+            "x": 0,
             "y": 0,
-            "width": 0.5,
-            "height": 0.4990791896869245,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Dasharatha's worried close-up as he gestures protectively toward youthful Rama, restrained grief, Vishwamitra firm in foreground.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.46,
-            "review": "Dasharatha, crowned king in the middle."
+            "x": 0.58,
+            "review": "Dasharatha identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -971,23 +971,23 @@
             "speaker": "Vashishtha",
             "dialogue": "Your Majesty, keep the promise you made."
           },
-          "asset": "../balakanda-v1/assets/bk-06-v1.png",
+          "asset": "top-dialogue-art/assets/bk-06-03-top-v2.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
-            "y": 0.4990791896869245,
-            "width": 0.5,
-            "height": 0.5009208103130756,
-            "status": "visually-reviewed-authoring-draft"
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Gentle Vashishtha mediates between worried Dasharatha and stern narrow-faced Vishwamitra; sages unmistakably distinct.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.5,
-            "review": "Vashishtha, white-robed sage in the centre, between Dasharatha and Vishwamitra."
+            "x": 0.51,
+            "review": "Vashishtha identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -1114,23 +1114,23 @@
             "speaker": "Rama",
             "dialogue": "What is that roaring sound, revered sage?"
           },
-          "asset": "../balakanda-v1/assets/bk-07-v1.png",
+          "asset": "top-dialogue-art/assets/bk-07-03-top-v1.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
-            "y": 0.5,
+            "y": 0,
             "width": 1,
-            "height": 0.5,
-            "status": "visually-reviewed-authoring-draft"
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Three travellers cross river in simple boat, Rama asks about rushing confluence; dark forest visible on far bank, no Tataka yet.",
-          "reviewNote": "Restore the answer to Rama's river question, Bāla 1.24.8–11.",
+          "reviewNote": "Restore the answer to Rama's river question, Bāla 1.24.8–11. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.45,
-            "review": "Rama, blue-skinned youth in the middle of the boat."
+            "x": 0.52,
+            "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         }
       ]
@@ -1195,23 +1195,23 @@
             "speaker": "Rama",
             "dialogue": "First, I will restrain her power."
           },
-          "asset": "../balakanda-v1/assets/bk-08-v1.png",
+          "asset": "top-dialogue-art/assets/bk-08-02-top-v1.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5034530386740331,
+            "x": 0,
             "y": 0,
-            "width": 0.4965469613259669,
-            "height": 0.5,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Youthful Rama thoughtfully readies his bow, Lakshmana stands watch, Vishwamitra gives measured counsel; no triumphant violence.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.5,
-            "review": "Rama, blue-skinned bow bearer in the centre."
+            "x": 0.49,
+            "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -1369,29 +1369,29 @@
             "speaker": "Rama",
             "dialogue": "How can these weapons be recalled?"
           },
-          "asset": "../balakanda-v1/assets/bk-09-v1.png",
+          "asset": "top-dialogue-art/assets/bk-09-02-top-v3.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.4972375690607735,
+            "x": 0,
             "y": 0,
-            "width": 0.5027624309392266,
-            "height": 0.4843462246777164,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Close teaching moment, Rama asks with folded hands and Vishwamitra demonstrates calm recall of a fading luminous arrow; no battle.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.58,
-            "review": "Rama, blue-skinned youth with joined hands, right of the teaching sage."
+            "x": 0.61,
+            "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
           "id": "bk-09-02a",
           "source": "1.28",
-          "asset": "assets/bk-09-02a-v1.png",
+          "asset": "top-dialogue-art/assets/bk-09-02a-top-v1.png",
           "hi": {
             "narration": "यात्रा फिर आगे बढ़ी। एक सुन्दर वन और आश्रम देखकर राम ने विश्वामित्र से उस स्थान के बारे में पूछा।",
             "speaker": "राम",
@@ -1408,8 +1408,8 @@
             28
           ],
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
@@ -1418,10 +1418,10 @@
             "height": 1,
             "status": "full-painted-bounds-reviewed"
           },
-          "reviewNote": "Restore the motivating question between 1.28 and 1.29, Bāla 1.28.16–22.",
+          "reviewNote": "Restore the motivating question between 1.28 and 1.29, Bāla 1.28.16–22. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.46,
-            "review": "Rama, blue-skinned youth in the centre, pointing toward the hermitage."
+            "x": 0.51,
+            "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -1609,23 +1609,23 @@
             "speaker": "Vishwamitra",
             "dialogue": "You have protected the sacrifice."
           },
-          "asset": "../balakanda-v1/assets/bk-10-v2.png",
+          "asset": "top-dialogue-art/assets/bk-10-04-top-v1.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5048342541436464,
-            "y": 0.5,
-            "width": 0.4951657458563536,
-            "height": 0.5,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Relieved Vishwamitra and rishis thank both adolescent brothers beside completed altar at clear sunrise, no lingering enemies.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.28,
-            "review": "Vishwamitra, tall orange-robed sage at left of the fire."
+            "x": 0.23,
+            "review": "Vishwamitra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         }
       ]
@@ -1859,23 +1859,23 @@
             "speaker": "Rama",
             "dialogue": "How does Ganga flow through all three worlds?"
           },
-          "asset": "../balakanda-v1/assets/bk-12-v3.png",
+          "asset": "top-dialogue-art/assets/bk-12-01-top-v1.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
             "y": 0,
-            "width": 0.4993093922651934,
-            "height": 0.4990791896869245,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Rama enquires beside broad Ganga, Vishwamitra points toward snow peaks; Lakshmana watches river, no literal three floating rivers.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.44,
-            "review": "Rama, blue-skinned youth in front of the pointing sage."
+            "x": 0.39,
+            "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -2158,23 +2158,23 @@
             "speaker": "Garuda",
             "dialogue": "They need the waters of Ganga."
           },
-          "asset": "../balakanda-v1/assets/bk-13-v2.png",
+          "asset": "top-dialogue-art/assets/bk-13-06-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5,
-            "y": 0.6669172932330827,
-            "width": 0.5,
-            "height": 0.3330827067669173,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Garuda with one pair of wings and two arms counsels grieving Anshuman beside horse; no conflating Anshuman with later Bhagiratha.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.63,
-            "review": "Garuda, eagle-headed winged figure on the right."
+            "x": 0.74,
+            "review": "Garuda identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         }
       ]
@@ -2238,23 +2238,23 @@
             "speaker": "Brahma",
             "dialogue": "Only Shiva can bear Ganga’s force."
           },
-          "asset": "../balakanda-v1/assets/bk-14-v1.png",
+          "asset": "top-dialogue-art/assets/bk-14-02-top-v1.png",
           "dimensions": {
-            "width": 1024,
-            "height": 1536
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.498046875,
+            "x": 0,
             "y": 0,
-            "width": 0.501953125,
-            "height": 0.24609375,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Ascetic Bhagiratha receives blessing from four-headed Brahma beneath Himalaya sky; rushing celestial river implied above.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.67,
-            "review": "Brahma, crowned multiple-faced figure on the lotus at right."
+            "x": 0.69,
+            "review": "Brahma identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -2782,23 +2782,23 @@
             "speaker": "Rama",
             "dialogue": "Why is this hermitage so deserted?"
           },
-          "asset": "../balakanda-v1/assets/bk-17-v1.png",
+          "asset": "top-dialogue-art/assets/bk-17-01-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
             "y": 0,
-            "width": 0.4957698815566836,
-            "height": 0.33157894736842103,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Youthful Rama asks Vishwamitra about deserted hermitage, Lakshmana looks at overgrown path, no stone statue.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.51,
-            "review": "Rama, blue-skinned youth at centre, addressing the sage at right."
+            "x": 0.44,
+            "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -2987,23 +2987,23 @@
             "speaker": "Shatananda",
             "dialogue": "Was my mother’s hospitality accepted?"
           },
-          "asset": "../balakanda-v1/assets/bk-18-v2.png",
+          "asset": "top-dialogue-art/assets/bk-18-02-top-v1.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5027624309392266,
+            "x": 0,
             "y": 0,
-            "width": 0.4972375690607735,
-            "height": 0.4990791896869245,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Shatananda gratefully asks Vishwamitra about his mother Ahalya while Rama and Lakshmana listen, Janaka nearby.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.17,
-            "review": "Shatananda, kneeling white-robed sage at left."
+            "x": 0.18,
+            "review": "Shatananda identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -3098,23 +3098,23 @@
             "speaker": "Vashishtha",
             "dialogue": "I cannot give Shabala away."
           },
-          "asset": "../balakanda-v1/assets/bk-19-v1.png",
+          "asset": "top-dialogue-art/assets/bk-19-02-top-v1.png",
           "dimensions": {
-            "width": 1024,
-            "height": 1536
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.4990234375,
+            "x": 0,
             "y": 0,
-            "width": 0.5009765625,
-            "height": 0.24869791666666666,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Royal Vishwamitra offers riches for a single sacred cow; gentle Vashishtha refuses firmly, Shabala between them.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.79,
-            "review": "Vashishtha, white-robed sage at right of Shabala."
+            "x": 0.82,
+            "review": "Vashishtha identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -3258,23 +3258,23 @@
             "speaker": "Vishwamitra",
             "dialogue": "I will now follow the path of austerity and restraint."
           },
-          "asset": "../balakanda-v1/assets/bk-19-v1.png",
+          "asset": "top-dialogue-art/assets/bk-19-07-top-v2.png",
           "dimensions": {
-            "width": 1024,
-            "height": 1536
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
-            "y": 0.7278645833333334,
+            "y": 0,
             "width": 1,
-            "height": 0.2721354166666667,
-            "status": "visually-reviewed-authoring-draft"
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Younger Vishwamitra leaves royal crown and armour behind and walks into forest with simple ascetic staff, determined introspection.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.67,
-            "review": "Vishwamitra, lone orange-robed figure walking at right; abandoned crown at left is not the speaker."
+            "x": 0.78,
+            "review": "Vishwamitra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         }
       ]
@@ -3370,23 +3370,23 @@
             "speaker": "Trishanku",
             "dialogue": "I have come to you for refuge."
           },
-          "asset": "../balakanda-v1/assets/bk-20-v2.png",
+          "asset": "top-dialogue-art/assets/bk-20-03-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
-            "y": 0.3330827067669173,
-            "width": 0.49915397631133673,
-            "height": 0.3263157894736842,
-            "status": "painted-panel-boundary-reviewed-v2"
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Travel-worn uncrowned Trishanku appeals to middle-aged ascetic Vishwamitra in forest, compassionate reception.",
-          "reviewNote": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text.",
+          "reviewNote": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.29,
-            "review": "Trishanku, kneeling figure in torn clothes at left."
+            "x": 0.34,
+            "review": "Trishanku identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -3436,23 +3436,23 @@
             "speaker": "Trishanku",
             "dialogue": "Revered sage, protect me!"
           },
-          "asset": "../balakanda-v1/assets/bk-20-v2.png",
+          "asset": "top-dialogue-art/assets/bk-20-05-top-v2.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
-            "y": 0.662406015037594,
-            "width": 0.49915397631133673,
-            "height": 0.337593984962406,
-            "status": "painted-panel-boundary-reviewed-v2"
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Trishanku falls upside down through starry sky toward distant earth, fully clothed, terrified but unharmed; not floating upright in heaven.",
-          "reviewNote": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text.",
+          "reviewNote": "Re-measured original 1182x1330 sheet: row 2 ended at y=877, not y=893; remove adjacent scene leakage without cropping painted content for text. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.26,
-            "review": "Trishanku, inverted falling crowned figure at left, not the upright figure at right."
+            "x": 0.28,
+            "review": "Trishanku identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -3578,23 +3578,23 @@
             "speaker": "Shunahshepa",
             "dialogue": "Revered sage, please save my life."
           },
-          "asset": "../balakanda-v1/assets/bk-21-v2.png",
+          "asset": "top-dialogue-art/assets/bk-21-03-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
-            "y": 0.3157894736842105,
-            "width": 0.4957698815566836,
-            "height": 0.3172932330827068,
-            "status": "visually-reviewed-authoring-draft"
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Shunahshepa clings to seated ascetic Vishwamitra beside Pushkara lake, who listens protectively, Ambarisha waits at respectful distance.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.47,
-            "review": "Shunahshepa, child clinging to the sage in the lower centre."
+            "x": 0.46,
+            "review": "Shunahshepa identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -3782,23 +3782,23 @@
             "speaker": "Vishwamitra",
             "dialogue": "I must overcome my anger too."
           },
-          "asset": "../balakanda-v1/assets/bk-22-v2.png",
+          "asset": "top-dialogue-art/assets/bk-22-04-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5033840947546532,
-            "y": 0.3157894736842105,
-            "width": 0.4966159052453469,
-            "height": 0.3157894736842105,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Solitary ageing Vishwamitra meditates calmly beneath tree, face softer and beard greying, broken anger replaced by discipline.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
             "x": 0.43,
-            "review": "Vishwamitra, solitary seated sage."
+            "review": "Vishwamitra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -3986,23 +3986,23 @@
             "speaker": "Vishwamitra",
             "dialogue": "Rama, my child, look at this bow."
           },
-          "asset": "../balakanda-v1/assets/bk-23-v1.png",
+          "asset": "top-dialogue-art/assets/bk-23-04-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5033840947546532,
-            "y": 0.31278195488721805,
-            "width": 0.4966159052453469,
-            "height": 0.33383458646616543,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Youthful broad-faced blue Rama approaches enormous sacred bow on wheeled chest, narrow-faced Lakshmana and elder Vishwamitra watch, no crown.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.29,
-            "review": "Vishwamitra, grey-bearded orange-robed sage behind Rama at left."
+            "x": 0.3,
+            "review": "Vishwamitra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -4052,23 +4052,23 @@
             "speaker": "Janaka",
             "dialogue": "I will give Sita in marriage to Rama."
           },
-          "asset": "../balakanda-v1/assets/bk-23-v1.png",
+          "asset": "top-dialogue-art/assets/bk-23-06-top-v3.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5033840947546532,
-            "y": 0.6466165413533834,
-            "width": 0.4966159052453469,
-            "height": 0.3533834586466165,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Janaka respectfully discusses proposal with Vishwamitra while two youthful princes stand nearby; Sita dignified in balcony, messenger departs.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.54,
-            "review": "Janaka, crowned bearded king with joined hands at centre-right, not the messenger at far right."
+            "x": 0.67,
+            "review": "Janaka identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         }
       ]
@@ -4379,23 +4379,23 @@
             "speaker": "Janaka",
             "dialogue": "Sita will be your companion in dharma."
           },
-          "asset": "../balakanda-v1/assets/bk-26-v2.png",
+          "asset": "top-dialogue-art/assets/bk-26-02-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.49915397631133673,
+            "x": 0,
             "y": 0,
-            "width": 0.5008460236886633,
-            "height": 0.3330827067669173,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Exactly one youthful couple Rama and Sita join hands before small sacred fire, Janaka and officiating Vashishtha, Rama broad calm blue face, Sita red bridal attire.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.84,
-            "review": "Janaka, crowned bearded king at far right of the wedding group."
+            "x": 0.86,
+            "review": "Janaka identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -4645,23 +4645,23 @@
             "speaker": "Dasharatha",
             "dialogue": "Please grant my sons safety."
           },
-          "asset": "../balakanda-v1/assets/bk-27-v3.png",
+          "asset": "top-dialogue-art/assets/bk-27-04-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
-            "x": 0.5025380710659898,
-            "y": 0.3293233082706767,
-            "width": 0.49746192893401014,
-            "height": 0.32781954887218046,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Dasharatha pleads with stern Parashurama, youthful Rama stands composed, brides safely in caravan background, no Lakshmana taunting duel.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.23,
-            "review": "Dasharatha, crowned kneeling king at lower left."
+            "x": 0.28,
+            "review": "Dasharatha identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -4680,23 +4680,23 @@
             "speaker": "Parashurama",
             "dialogue": "Show me that you can fit an arrow to this bow."
           },
-          "asset": "../balakanda-v1/assets/bk-27-v3.png",
+          "asset": "top-dialogue-art/assets/bk-27-05-top-v1.png",
           "dimensions": {
-            "width": 1182,
-            "height": 1330
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
-            "y": 0.6571428571428571,
+            "y": 0,
             "width": 1,
-            "height": 0.34285714285714286,
-            "status": "visually-reviewed-authoring-draft"
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Parashurama offers intact Vaishnava bow and arrow to respectful youthful Rama, one axe held safely or set at side, no extra weapons.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.3,
-            "review": "Parashurama, bearded ascetic offering the bow from the left."
+            "x": 0.27,
+            "review": "Parashurama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         }
       ]
@@ -4729,23 +4729,23 @@
             "speaker": "Rama",
             "dialogue": "Now you shall see my strength."
           },
-          "asset": "../balakanda-v1/assets/bk-28-v1.png",
+          "asset": "top-dialogue-art/assets/bk-28-01-top-v1.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
             "y": 0,
-            "width": 0.5027624309392266,
-            "height": 0.5,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Close face contrast between youthful serene Rama and mature fierce Parashurama, Rama speaks firmly without mockery, father visible behind.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.78,
-            "review": "Rama, blue-skinned youth at right, not Dasharatha in the centre."
+            "x": 0.74,
+            "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {
@@ -4795,23 +4795,23 @@
             "speaker": "Parashurama",
             "dialogue": "Let the worlds I have earned be your target."
           },
-          "asset": "../balakanda-v1/assets/bk-28-v1.png",
+          "asset": "top-dialogue-art/assets/bk-28-03-top-v2.png",
           "dimensions": {
-            "width": 1448,
-            "height": 1086
+            "width": 1122,
+            "height": 1402
           },
           "frame": {
             "x": 0,
-            "y": 0.5,
-            "width": 0.5027624309392266,
-            "height": 0.5,
-            "status": "visually-reviewed-authoring-draft"
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           },
           "artAction": "Rama holds drawn Vaishnava bow upward away from people, Parashurama consents with lowered axe, symbolic celestial glow as merit is relinquished.",
-          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi.",
+          "reviewNote": "Retains the original scene; English adaptation aligned with Hindi. Portrait recomposed with painted headroom; see top-dialogue-art/review.json.",
           "speakerAnchor": {
-            "x": 0.25,
-            "review": "Parashurama, bearded ascetic with axe at left."
+            "x": 0.24,
+            "review": "Parashurama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast."
           }
         },
         {

@@ -11,7 +11,8 @@ jest.mock('@/components/ComicArt', () => ({
   comicArtGeometry: (panel: any, width: number) => ({ height: width * panel.dimensions.height * panel.frame.height / (panel.dimensions.width * panel.frame.width) }),
 }));
 jest.mock('@/theme/ThemeContext', () => ({ useTheme: () => ({ colors: {}, typography: require('@/theme/fontScale').scaleTypography(require('@/theme/typography').typography, mockLarge ? 1.15 : 1) }) }));
-const { default: Panel, comicBalloonPath } = require('../ComicPanel');
+const { default: Panel } = require('../ComicPanel');
+const { comicBalloonPath, comicSpeechGeometry } = require('@/data/comicSpeechLayouts');
 const panels = comicPages(getComicBook('balakanda-v1')!).map(p => p.panel);
 const trees: TestRenderer.ReactTestRenderer[] = [];
 afterEach(() => { trees.splice(0).forEach(tree => act(() => tree.unmount())); mockLarge = false; });
@@ -35,28 +36,60 @@ test.each(['hi', 'en'] as const)('all 140 %s panels render complete reviewed tex
     }
   }
 });
-test('every flowing tail remains attached to its reviewed speaker at narrow and wide widths', () => {
+test('all speaking scenes place their full dialogue on the art with a reviewed tail target', () => {
+  const { comicSpeechLayouts } = require('@/data/comicSpeechLayouts');
+  expect(Object.keys(comicSpeechLayouts).sort()).toEqual(panels.filter(p => p.hi.dialogue).map(p => p.id).sort());
   for (const panel of panels.filter(p => p.speakerAnchor)) {
-    for (const width of [272, 342, 720]) {
-      const speechWidth = width - 36;
-      const tip = width * panel.speakerAnchor!.x - 18;
-      const d = comicBalloonPath(speechWidth, 130, tip);
-      expect(d).toContain(`L ${tip} 153`);
+    const layout = comicSpeechLayouts[panel.id];
+    for (const width of [272, 342, 720]) for (const textHeight of [48, 84, 140]) {
+      const artHeight = width * panel.dimensions.height * panel.frame.height / (panel.dimensions.width * panel.frame.width);
+      const g = comicSpeechGeometry(layout, width, artHeight, textHeight);
+      expect(g.y).toBeLessThan(artHeight);
+      expect(g.x).toBeGreaterThanOrEqual(0);
+      expect(g.x + g.width).toBeLessThanOrEqual(width);
+      if (require('@/data/comicSpeechLayouts').comicSpeechFits(layout, artHeight, textHeight)) expect(g.y + textHeight).toBeLessThanOrEqual(g.canvasHeight);
+      expect(g.y).toBeGreaterThanOrEqual(0);
+      expect(g.canvasHeight).toBe(artHeight);
+      const d = comicBalloonPath(g.x, g.y, g.width, textHeight, width * layout.tipX, artHeight * layout.tipY, layout.tail);
+      expect(d).not.toMatch(/NaN|Infinity/);
+      expect(d.match(/ L /g)).toHaveLength(2);
       expect(d.endsWith('Z')).toBe(true);
-      expect(tip + 18).toBeCloseTo(width * panel.speakerAnchor!.x);
     }
   }
 });
-test('approved close-up uses a side balloon only while measured copy fits the clear art area', () => {
-  const panel = panels.find(p => p.id === 'bk-05-03a')!;
+test('dialogue follows the cast instead of a fixed top inset without shrinking text', () => {
+  const panel = panels.find(p => p.id === 'bk-07-03')!;
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => { tree = TestRenderer.create(<Panel panel={panel} language="hi" />); });
   trees.push(tree);
-  act(() => tree.root.findByProps({ testID: `comic-panel-${panel.id}` }).props.onLayout({ nativeEvent: { layout: { width: 346 } } }));
-  const measurement = tree.root.findAllByType('Text' as any).find(n => n.props.onLayout)!;
-  act(() => measurement.props.onLayout({ nativeEvent: { layout: { height: 40 } } }));
-  expect(tree.root.findAllByProps({ accessibilityLabel: `${panel.hi.speaker}: ${panel.hi.dialogue}` })).toHaveLength(1);
-  act(() => measurement.props.onLayout({ nativeEvent: { layout: { height: 400 } } }));
-  expect(tree.root.findAllByProps({ accessibilityLabel: `${panel.hi.speaker}: ${panel.hi.dialogue}` })).toHaveLength(0);
-  expect(tree.root.findAllByType('Text' as any).some(n => n.props.children === panel.hi.speaker)).toBe(true);
+  act(() => tree.root.findByProps({ testID: `comic-panel-${panel.id}` }).props.onLayout({ nativeEvent: { layout: { width: 276 } } }));
+  const speech = tree.root.findByProps({ testID: 'comic-speech' });
+  act(() => speech.props.onLayout({ nativeEvent: { layout: { height: 100 } } }));
+  const scene = tree.root.findByProps({ testID: 'comic-scene' });
+  expect(scene.findByProps({ testID: 'comic-speech' })).toBe(speech);
+  expect(speech.props.style.position).toBe('absolute');
+  expect(speech.props.style.top).toBeGreaterThan(40);
+  expect(scene.props.style.minHeight).toBeGreaterThan(speech.props.style.top + 100);
+  expect(tree.root.findByProps({ accessibilityLabel: `${panel.hi.speaker}: ${panel.hi.dialogue}` }).props.numberOfLines).toBeUndefined();
+});
+test('extreme accessibility text flows instead of covering characters', () => {
+  const { comicSpeechLayouts, comicSpeechFits } = require('@/data/comicSpeechLayouts');
+  for (const layout of Object.values(comicSpeechLayouts) as any[]) {
+    expect(comicSpeechFits(layout, 400, 40)).toBe(true);
+    expect(comicSpeechFits(layout, 400, 300)).toBe(false);
+  }
+  const panel = panels.find(p => p.id === 'bk-01-01')!;
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<Panel panel={panel} language="hi" />); });
+  trees.push(tree);
+  act(() => tree.root.findByProps({ testID: `comic-panel-${panel.id}` }).props.onLayout({ nativeEvent: { layout: { width: 304 } } }));
+  act(() => tree.root.findByProps({ testID: 'comic-speech' }).props.onLayout({ nativeEvent: { layout: { height: 300 } } }));
+  expect(tree.root.findByProps({ testID: 'comic-speech' }).props.style.position).toBe('relative');
+  expect(tree.root.findAllByProps({ testID: 'comic-balloon-outline' })).toHaveLength(0);
+});
+
+test('tail ends at its reviewed speaker point instead of stopping after 30 points', () => {
+  const d = comicBalloonPath(10, 200, 280, 60, 100, 50, 'top');
+  expect(d).toContain('L 100 50');
+  expect(d).not.toContain('L 100 170');
 });
