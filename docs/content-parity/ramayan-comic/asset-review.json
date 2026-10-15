@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-10-11",
+  "scope": "Reference sheets, not episode illustrations or app covers",
+  "selectedSheetCount": 6,
+  "identityCount": 19,
+  "sheets": [
+    {
+      "id": "rama",
+      "path": "assets/rama-v3.png",
+      "sha256": "58a8141703e7250646fb5527a572600dd088ee7d7acc627f573cbe092ea5e1c5",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2150139,
+      "retainedHeight": 1,
+      "crop": "none; complete authoring sheet",
+      "reviewedOn": "2026-10-11",
+      "reviewStatus": "visually-reviewed-refinement-proposed-user-review",
+      "checks": [
+        "Whole sheet inspected, including lower studies and labels",
+        "Required figures, visible anatomy, feet and important props within bounds",
+        "Comic ink/cel style and rich palette compared with supplied references"
+      ],
+      "observations": [
+        "Broader oval face, fuller cheeks/lips and rounded chin; open calm eyes distinguish Rama from Lakshmana.",
+        "Child/adolescent proportions remain clearly younger; adult exile and king retain the same revised identity.",
+        "Exile matted locks and complete clothing/props retained; lower views establish face independent of wardrobe."
+      ],
+      "pending": [
+        "User acceptance of this character model",
+        "Scene-specific anatomy/props/expressions and source review at production resolution"
+      ],
+      "previousPath": "assets/rama-v2.png"
+    },
+    {
+      "id": "sita",
+      "path": "assets/sita-v2.png",
+      "sha256": "bf2f4904444715d39dc3fa1a4c0b6d1e28972014e2128ea67199bf411936aeb8",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2284384,
+      "retainedHeight": 1,
+      "crop": "none; complete authoring sheet",
+      "reviewedOn": "2026-10-11",
+      "reviewStatus": "visually-reviewed-proposed-model",
+      "checks": [
+        "Whole sheet inspected, including lower studies and labels",
+        "Required figures, visible anatomy, feet and important props within bounds",
+        "Comic ink/cel style and rich palette compared with supplied references"
+      ],
+      "observations": [
+        "Five same-identity life/circumstance states; nine angle/expression studies.",
+        "Removed unintended single infant from hermitage model; later reference is empty-handed.",
+        "Removed unsourced travel staff/bag. Captivity now shows worn yellow cloth and one visible braid.",
+        "Subtle jewellery remains; exact surviving ornaments must be resolved per scene."
+      ],
+      "pending": [
+        "User acceptance of this character model",
+        "Scene-specific anatomy/props/expressions and source review at production resolution"
+      ]
+    },
+    {
+      "id": "brothers",
+      "path": "assets/brothers-v4.png",
+      "sha256": "f866ad0bd1017d1ae5bd0c1f068811c18842bac73656dcda380a9c827b66172e",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2184353,
+      "retainedHeight": 1,
+      "crop": "none; complete authoring sheet",
+      "reviewedOn": "2026-10-11",
+      "reviewStatus": "visually-reviewed-refinement-proposed-user-review",
+      "checks": [
+        "Whole sheet inspected, including lower studies and labels",
+        "Required figures, visible anatomy, feet and important props within bounds",
+        "Comic ink/cel style and rich palette compared with supplied references"
+      ],
+      "observations": [
+        "Lakshmana now has a longer narrow diamond face, high cheekbones, tapered chin, high narrow nose and focused eyes.",
+        "Asymmetric swept forelock and leaner silhouette distinguish him from Rama even without skin colour.",
+        "Adolescent remains smaller/slighter. Exile Lakshmana and Bharata retain matted locks; Bharata, Shatrughna and padukas pair retained."
+      ],
+      "pending": [
+        "User acceptance of this character model",
+        "Scene-specific anatomy/props/expressions and source review at production resolution"
+      ],
+      "previousPath": "assets/brothers-v3.png"
+    },
+    {
+      "id": "vanaras",
+      "path": "assets/vanaras-v3.png",
+      "sha256": "56a764c9ec13573b238253913414ac57608efd5044e244179705ca98c74ce418",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2140445,
+      "retainedHeight": 1,
+      "crop": "none; complete authoring sheet",
+      "reviewedOn": "2026-10-11",
+      "reviewStatus": "visually-reviewed-refinement-proposed-user-review",
+      "checks": [
+        "Whole sheet inspected, including lower studies and labels",
+        "Required figures, visible anatomy, feet and important props within bounds",
+        "Comic ink/cel style and rich palette compared with supplied references"
+      ],
+      "observations": [
+        "Hanuman refined with warm ivory fur, short peach-toned vanara muzzle, expressive kind eyes and upright athletic proportions.",
+        "Ordinary and enlarged adult forms carry one gold gada each and wear matching gold mukuts; adult front/profile studies match the crown and face.",
+        "Childhood and human ascetic-disguise figures remain free of adult crown/mace; disguise has no tail.",
+        "Sugriva and Vali remain distinct; all natural forms retain one attached tail and two arms.",
+        "Adult mukut/gada are the requested iconic model accessories, with narrative appearance still selected by sourced scene."
+      ],
+      "pending": [
+        "User acceptance of this character model",
+        "Scene-specific anatomy/props/expressions and source review at production resolution"
+      ],
+      "previousPath": "assets/vanaras-v1.png"
+    },
+    {
+      "id": "elders",
+      "path": "assets/elders-next-generation-v1.png",
+      "sha256": "12fdfa8fe03fd88f605a0024cb22f00591d7f6eebf898a5271be68ad780683fd",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2312437,
+      "retainedHeight": 1,
+      "crop": "none; complete authoring sheet",
+      "reviewedOn": "2026-10-11",
+      "reviewStatus": "visually-reviewed-proposed-model",
+      "checks": [
+        "Whole sheet inspected, including lower studies and labels",
+        "Required figures, visible anatomy, feet and important props within bounds",
+        "Comic ink/cel style and rich palette compared with supplied references"
+      ],
+      "observations": [
+        "Seven figures: three distinguishable sages, two distinguishable kings, two child twins.",
+        "Lava/Kusha have child bodies and natural skin, not blue adult hero bodies.",
+        "Manuscripts and individual colour/costume designs are optional artistic models."
+      ],
+      "pending": [
+        "User acceptance of this character model",
+        "Scene-specific anatomy/props/expressions and source review at production resolution"
+      ]
+    },
+    {
+      "id": "lanka",
+      "path": "assets/lanka-v1.png",
+      "sha256": "a439da6ac86b68b607d4477ddff573a263327b33b765c8134507aa4d828abff9",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2295063,
+      "retainedHeight": 1,
+      "crop": "none; complete authoring sheet",
+      "reviewedOn": "2026-10-11",
+      "reviewStatus": "visually-reviewed-proposed-model",
+      "checks": [
+        "Whole sheet inspected, including lower studies and labels",
+        "Required figures, visible anatomy, feet and important props within bounds",
+        "Comic ink/cel style and rich palette compared with supplied references"
+      ],
+      "observations": [
+        "Ravana portrait and profile share facial/crown identity; no full-form claim.",
+        "Vibhishana, Maricha, golden deer and Shurpanakha pre-injury baseline are distinct.",
+        "Deer has four visible legs, coherent antlers and one tail.",
+        "Full forms, alternate disguises, coronation variants and additional cast remain pending."
+      ],
+      "pending": [
+        "User acceptance of this character model",
+        "Scene-specific anatomy/props/expressions and source review at production resolution"
+      ]
+    }
+  ],
+  "rendering": "All are 1536 × 1024 landscape PNGs; full image retained, no stretching or crop. They intentionally contain English authoring labels and cannot be substituted for text-free production art.",
+  "notEstablished": [
+    "Complete epic cast or all forms",
+    "Guaranteed image-generation identity consistency",
+    "Complete four-language narrative or editorial sign-off",
+    "Native reader fit, Standard/Large or physical-device approval",
+    "CDN publication or rights clearance"
+  ],
+  "previewChecks": {
+    "status": "passed-local-browser-refinement-review",
+    "reviewedOn": "2026-10-11",
+    "scope": "Revised Rama v3, brothers v4 and vanaras v3; original six-sheet/timeline checks retained in validation-report.md",
+    "checks": [
+      "Updated images decode at 1536 x 1024 with full artwork bounds",
+      "Hanuman adult/enlarged mukut and one complete gada each visually inspected",
+      "Rama and Lakshmana comparison inspected in colour and greyscale; toggle resets to colour",
+      "No horizontal overflow at current approximately 847 x 767 browser viewport"
+    ],
+    "captures": [
+      "preview-brothers-greyscale-v2.jpg",
+      "preview-hanuman-v3.jpg"
+    ],
+    "limitations": [
+      "Authoring book only, no native app/device or narrow mobile reader validation"
+    ]
+  }
+}

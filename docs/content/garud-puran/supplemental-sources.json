@@ -1,0 +1,14 @@
+{
+  "hindi-dli-vol1-meta.json": "https://archive.org/metadata/in.ernet.dli.2015.312987",
+  "hindi-dli-vol2-meta.json": "https://archive.org/metadata/in.ernet.dli.2015.312988",
+  "hindi-dli-vol1.pdf": "https://archive.org/download/in.ernet.dli.2015.312987/2015.312987.Garud-Purana.pdf",
+  "hindi-dli-vol2.pdf": "https://archive.org/download/in.ernet.dli.2015.312988/2015.312988.Garud-Purana.pdf",
+  "hindi-dli-vol1.txt": "https://archive.org/download/in.ernet.dli.2015.312987/2015.312987.Garud-Purana_djvu.txt",
+  "hindi-dli-vol2.txt": "https://archive.org/download/in.ernet.dli.2015.312988/2015.312988.Garud-Purana_djvu.txt",
+  "hindi-dli-vol1.xml": "https://archive.org/download/in.ernet.dli.2015.312987/2015.312987.Garud-Purana_djvu.xml",
+  "hindi-dli-vol2.xml": "https://archive.org/download/in.ernet.dli.2015.312988/2015.312988.Garud-Purana_djvu.xml",
+  "dutt-vol2-meta.json": "https://archive.org/metadata/TheGarudaMahapuranamVol.IIM.N.Dutt",
+  "dutt-vol2.pdf": "https://archive.org/download/TheGarudaMahapuranamVol.IIM.N.Dutt/The%20Garuda%20Mahapuranam%20Vol.%20II%20-%20M.N.%20Dutt.pdf",
+  "dutt-vol2-ocr.txt": "https://archive.org/download/TheGarudaMahapuranamVol.IIM.N.Dutt/The%20Garuda%20Mahapuranam%20Vol.%20II%20-%20M.N.%20Dutt_djvu.txt",
+  "wikisource-chapter62.json": "https://sa.wikisource.org/w/api.php?action=parse&page=%E0%A4%97%E0%A4%B0%E0%A5%81%E0%A4%A1%E0%A4%AA%E0%A5%81%E0%A4%B0%E0%A4%BE%E0%A4%A3%E0%A4%AE%E0%A5%8D%2F%E0%A4%86%E0%A4%9A%E0%A4%BE%E0%A4%B0%E0%A4%95%E0%A4%BE%E0%A4%A3%E0%A5%8D%E0%A4%A1%E0%A4%83%2F%E0%A4%85%E0%A4%A7%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AF%E0%A4%83+%E0%A5%AC%E0%A5%A8&prop=wikitext&format=json"
+}

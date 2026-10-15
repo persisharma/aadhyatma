@@ -1,18 +1,20 @@
 name: CI
 
 # Test gate for the mobile app. Runs typecheck + the Jest/tsx suites so loop PRs
-# (and any PR touching mobile/) get a real red/green signal to block merge on.
+# (including saved reader-art style documents) get a real red/green signal.
 
 on:
   pull_request:
     paths:
       - 'mobile/**'
+      - 'docs/content-parity/reader-illustration*.md'
       - 'scripts/verify-kids-story-assets.mjs'
       - '.github/workflows/ci.yml'
   push:
     branches: [main]
     paths:
       - 'mobile/**'
+      - 'docs/content-parity/reader-illustration*.md'
       - 'scripts/verify-kids-story-assets.mjs'
       - '.github/workflows/ci.yml'
 

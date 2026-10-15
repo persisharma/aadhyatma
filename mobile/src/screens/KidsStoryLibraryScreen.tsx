@@ -5,6 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ReaderHeader from '@/components/ReaderHeader';
 import DeityCard from '@/components/DeityCard';
 import { storyDeities, storiesForDeity } from '@/data/kidsStories';
+import { comics } from '@/data/comics';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
 import { titleFontByLang } from '@/utils/langType';
@@ -42,6 +43,23 @@ export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreen
             />
           );
         })}
+        {comics.map(comic => (
+          <DeityCard
+            key={comic.id}
+            testID={`kids-story-comic-${comic.id}`}
+            nameHi={comic.title.hi}
+            nameEn={comic.title.en}
+            nameGu={comic.title.gu}
+            nameKn={comic.title.kn}
+            itemCount={pick(lang, {
+              hi: '29 प्रसंग · सचित्र',
+              en: '29 episodes · illustrated',
+              gu: '29 પ્રસંગ · સચિત્ર',
+              kn: '29 ಪ್ರಸಂಗಗಳು · ಚಿತ್ರಸಹಿತ',
+            })}
+            onPress={() => navigation.navigate('ComicChapters', { comicId: comic.id })}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );

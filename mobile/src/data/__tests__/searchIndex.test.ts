@@ -266,3 +266,13 @@ const index = getSearchIndex();
   const section = runSearch('Valmiki Ramayan', index);
   assert.equal(section.sections[0]?.entry.sourceId, 'valmiki-ramayan');
 }
+
+// Selected prose is indexed with page references, never fabricated verse labels.
+{
+  const pages = index.verses.filter(v => v.sourceId === 'garud-puran');
+  assert.equal(pages.length, 28);
+  assert.ok(pages.every(v => /^Reading \d+ · Page \d+$/.test(v.labelEn)));
+  for (const query of ['Sudeva', 'सुदेव', 'पुष्कर']) {
+    assert.ok(runSearch(query, index).verses.some(h => h.entry.sourceId === 'garud-puran'), query);
+  }
+}

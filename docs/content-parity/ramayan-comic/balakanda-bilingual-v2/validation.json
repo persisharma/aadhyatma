@@ -1,0 +1,13 @@
+{
+  "episodes": 29,
+  "panels": 140,
+  "languages": [
+    "hi",
+    "en"
+  ],
+  "all77Sargas": true,
+  "uniqueIds": true,
+  "languageAndDialogueParity": true,
+  "validFramesAndAssetHashes": true,
+  "nativeAndIndependentEditorial": "pending"
+}

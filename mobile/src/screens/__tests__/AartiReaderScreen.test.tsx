@@ -146,3 +146,37 @@ test('opens Om Jai Lakshmi Mata by its appended aartiIndex', () => {
   assert.ok(renderedText.includes('ॐ जय लक्ष्मी माता'), 'Lakshmi aarti refrain');
   assert.ok(!renderedText.includes(firstVerse.lines[0]), 'no Om Jai Jagdish verse leaks in');
 });
+
+// Jay Adhya Shakti is Gujarati stored in Devanagari: hi shows the Devanagari,
+// gu must restore the maintainer-supplied Gujarati line and its own meaningGu.
+test.each([
+  ['hi', 'जय आद्या शक्ति, मा जय आद्या शक्ति,'],
+  ['gu', 'જય આદ્યા શક્તિ, મા જય આદ્યા શક્તિ,'],
+] as const)('opens Jay Adhya Shakti by its appended aartiIndex (%s)', (lang, openingLine) => {
+  const index = getActualData.aartiIndexById['jay-adhya-shakti'];
+  assert.equal(index, 10, 'Jay Adhya Shakti is appended after Om Jai Lakshmi Mata (index 9)');
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+  act(() => {
+    tree = createReader(
+      <GitaLanguageProvider initialLang={lang}>
+        <ShareProvider>
+          <AartiReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { aartiIndex: index, initialIndex: 0 } } as ReaderProps['route']}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  const renderedText = tree!
+    .root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+  assert.ok(renderedText.includes(openingLine), `${lang} opening line`);
+  if (lang === 'gu') {
+    const jas = getActualData.getAarti(index);
+    assert.ok(renderedText.includes(jas.verses[0].meaningGu!), 'gu shows the authored Gujarati meaning');
+  }
+  assert.ok(!renderedText.includes(firstVerse.lines[0]), 'no Om Jai Jagdish verse leaks in');
+});

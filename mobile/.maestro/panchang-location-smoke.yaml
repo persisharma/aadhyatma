@@ -7,7 +7,8 @@
 #      reference line.
 #   4. The engine recomputes for the new city (time block re-renders) and the
 #      selection persists across a tab switch.
-#   5. Restoring Ujjain returns the default reference.
+#   5. A village the city list never had (Kothimir, Telangana — a branch post
+#      office) is found by NAME and becomes the reference as "Kothimir · 504273".
 #
 # The "Use my location" GPS path is NOT exercised here — Maestro cannot script
 # the native permission dialog reliably in Expo Go. The grant/deny/timeout
@@ -18,7 +19,8 @@
 #   - The location chip is a Pressable whose accessibility label derives from
 #     its child text: "Location: <city>" (a bordered chip + ⌄ chevron).
 #   - City rows expose accessibilityLabel "<NameEn>" ("<NameEn>, selected" for
-#     the active one); the search field exposes "Search city or pincode".
+#     the active one); the search field exposes "Search city, village or pincode".
+#   - Village rows render "<Name> · <District>" as their title text.
 #   - SELECTOR COLLISION: the search TextInput's *value* is matchable text too,
 #     so typing the full "Delhi" makes `tapOn: "Delhi"` ambiguous — it resolves
 #     to the field (rendered above the list) and pops the iOS edit menu instead
@@ -63,10 +65,10 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "Choose location"
 - assertVisible: "Use my location"
-- assertVisible: "Search city or pincode"
+- assertVisible: "Search city, village or pincode"
 
 # ── Step 5: Search for Delhi and pick it (partial query — see selector notes) ──
-- tapOn: "Search city or pincode"
+- tapOn: "Search city, village or pincode"
 - inputText: "Delh"
 # Dismiss the soft keyboard first — on Android it covers the "Delhi" result row,
 # so the tap would land on the keyboard and leave the picker open (the reference
@@ -105,6 +107,21 @@ appId: com.prashantsharma.vedansh
       text: ".*Delhi.*"
     direction: UP
     centerElement: true
+    timeout: 15000
+
+# ── Step 8: A village is found by name (not in the city list, no pincode typed) ──
+- tapOn: "Location: .*"
+- waitForAnimationToEnd
+- tapOn: "Search city, village or pincode"
+# Partial again, so the field's value never equals the row's title text.
+- inputText: "Kothimi"
+- hideKeyboard
+- waitForAnimationToEnd
+- assertVisible: "Towns & villages"
+- tapOn: "Kothimir · .*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*Kothimir · 504273.*"
     timeout: 15000
 
 # No explicit location/language restore needed: the next run's _launch

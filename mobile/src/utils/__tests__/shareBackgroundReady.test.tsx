@@ -5,7 +5,12 @@ import { ThemeProvider } from '@/theme/ThemeContext';
 import { ShareProvider, useShare } from '@/utils/shareVerse';
 import { subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
 import { createArtworkPaintBarrier } from '@/components/ArtworkCaptureContext';
+import { bundledArtworkCorrection } from '@/data/artworkCorrections';
 
+// Must stay a CDN-only plate: a stem with a bundled correction (artworkCorrections.ts)
+// never requests the remote image, which is what the first test waits on. Rama
+// Darbar was the fixture until #467 bundled its corrected art.
+const mockRemoteStem = 'backgrounds--deity-krishna-bansuri';
 const mockCapture = jest.fn(() => Promise.resolve('file:///tmp/card.png'));
 jest.mock('react-native-view-shot', () => ({ captureRef: (...args: unknown[]) => mockCapture(...args as []) }));
 jest.mock('expo-sharing', () => ({ isAvailableAsync: jest.fn(), shareAsync: jest.fn() }));
@@ -20,8 +25,8 @@ jest.mock('@/components/ShareStoryCanvas', () => {
   const React = require('react');
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const BackgroundArtwork = require('@/components/BackgroundArtwork').default;
-  const source = { kind: 'remote-background', stem: 'backgrounds--deity-rama-darbar' };
   return { __esModule: true, default: function MockShareStoryCanvas({ onHeight }: { onHeight?: (height: number) => void }) {
+    const source = { kind: 'remote-background', stem: mockRemoteStem };
     React.useEffect(() => { onHeight?.(960); }, [onHeight]);
     return React.createElement(React.Fragment, null,
     React.createElement(BackgroundArtwork, { source }),
@@ -61,6 +66,10 @@ async function begin() {
   act(() => tree.root.findAll(n => n.props.accessibilityLabel === 'trigger' && typeof n.props.onPress === 'function')[0].props.onPress());
   await settle();
 }
+
+test('the fixture plate is still fetched remotely, not bundled', () => {
+  expect(bundledArtworkCorrection({ kind: 'remote-background', stem: mockRemoteStem })).toBeNull();
+});
 
 test('capture waits for both remote background layers to paint, not only the layout or download', async () => {
   await begin();

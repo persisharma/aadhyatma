@@ -3,7 +3,7 @@ import { library, type LibraryEntry } from '@/data/texts';
 import type { RoutineItem } from '@/data/routine/types';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
-import { aartiIndexById } from '@/data/aarti';
+import { aartiIndexById } from '@/data/aarti/ids';
 import { ashtakamIds as ashtakamIdList } from '@/data/ashtakam';
 import { stutiIds as stutiIdList } from '@/data/stuti';
 import { shivaStrotamChaptersManifest } from '@/data/shiva-strotam';
@@ -19,6 +19,7 @@ import { ramcharitmanasChaptersManifest } from '@/data/ramcharitmanas';
 import { valmikiRamayanChaptersManifest } from '@/data/valmiki-ramayan';
 import { sundarkandChaptersManifest } from '@/data/sundarkand';
 import { gitaChaptersManifest } from '@/data/gita';
+import { garudPuranChaptersManifest } from '@/data/garud-puran';
 import { gitaSaarChaptersManifest } from '@/data/gita-saar';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
 import type { HomeRoster } from '@/vastu/homeRecord';
@@ -174,6 +175,7 @@ const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'valmiki-ramayan': 'ValmikiRamayanChapters',
   'sundarkand': 'SundarkandChapters',
   'bhagavad-gita': 'GitaChapters',
+  'garud-puran': 'GarudPuranChapters',
   'gita-saar': 'GitaSaarChapters',
 };
 
@@ -204,6 +206,7 @@ const chapterCountBySourceId: Record<string, number> = {
   'valmiki-ramayan': valmikiRamayanChaptersManifest.length,
   'sundarkand': sundarkandChaptersManifest.length,
   'bhagavad-gita': gitaChaptersManifest.length,
+  'garud-puran': garudPuranChaptersManifest.length,
   'gita-saar': gitaSaarChaptersManifest.length,
 };
 
@@ -222,6 +225,7 @@ const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'valmiki-ramayan': 'ValmikiRamayanReader',
   'sundarkand': 'SundarkandReader',
   'bhagavad-gita': 'GitaReader',
+  'garud-puran': 'GarudPuranReader',
   'gita-saar': 'GitaSaarReader',
 };
 

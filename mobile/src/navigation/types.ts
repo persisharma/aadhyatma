@@ -65,6 +65,8 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   KidsStoryLibrary: undefined;
   KidsStoryDeity: { deityId: StoryDeityId };
   KidsStoryReader: { storyId: string; pageId?: string };
+  ComicChapters: { comicId: string };
+  ComicReader: { comicId: string; episodeId?: string; panelId?: string };
   /**
    * जिज्ञासा (PRD-41). `seed` is ask-from-context: the surface the user came
    * from names an entity so "iska bhog kya hai" resolves against it.
@@ -84,6 +86,8 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   StutiReader: { initialIndex?: number; stutiId?: string } | undefined;
   GitaChapters: undefined;
   GitaReader: GitaReaderParams;
+  GarudPuranChapters: undefined;
+  GarudPuranReader: { chapter: number; initialIndex?: number };
   // गीता सार (design.md §77): a chapter is a theme, the reader pages its verses.
   GitaSaarChapters: undefined;
   GitaSaarReader: { chapter: number; initialIndex?: number };

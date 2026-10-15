@@ -3,6 +3,7 @@ import { Image, InteractionManager, StyleSheet, View, type ImageResizeMode, type
 import { NavigationContext } from '@react-navigation/native';
 import { bundledReadingFallback } from '@/data/backgroundAsset';
 import { artworkRequest, type ArtworkImage } from '@/data/artworkAsset';
+import { bundledArtworkCorrection } from '@/data/artworkCorrections';
 import { evictBackgroundAsset, subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
 import { ArtworkCaptureContext } from './ArtworkCaptureContext';
 
@@ -24,8 +25,12 @@ export default function CachedArtwork({ source, style, resizeMode = 'cover', fal
   const captureDone = useRef<(() => void) | undefined>(undefined);
   const fallbackLoaded = useRef(false);
   const remoteFailed = useRef(false);
-  const request = artworkRequest(source);
+  const bundledSource = bundledArtworkCorrection(source) ?? (typeof source === 'number' ? source : null);
+  const visibleBundledSource = useRef(bundledSource);
+  visibleBundledSource.current = bundledSource;
+  const request = bundledSource === null ? artworkRequest(source) : null;
   const url = request?.remoteUrl;
+  const captureKey = url ?? (bundledSource !== null ? `bundled:${bundledSource}` : null);
   const [resolved, setResolved] = useState<{ url: string; uri: string } | null>(null);
   const [loadedUri, setLoadedUri] = useState<string | null>(null);
   const uri = resolved && resolved.url === url ? resolved.uri : null;
@@ -35,14 +40,17 @@ export default function CachedArtwork({ source, style, resizeMode = 'cover', fal
     remoteFailed.current = false;
   }, [url]);
   useEffect(() => {
-    if (!capture || !url) return;
+    fallbackLoaded.current = false;
+  }, [bundledSource]);
+  useEffect(() => {
+    if (!capture || !captureKey) return;
     const done = capture.register();
     captureDone.current = done;
-    if ((uri && loadedUri === uri) || (remoteFailed.current && fallbackLoaded.current)) done();
+    if ((uri && loadedUri === uri) || (fallbackLoaded.current && (!url || remoteFailed.current))) done();
     return () => { done(); captureDone.current = undefined; };
     // A new capture/source registers once; native events settle its paint.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [capture, url]);
+  }, [capture, captureKey]);
   useEffect(() => {
     visibleUri.current = uri;
     return () => { visibleUri.current = null; };
@@ -87,13 +95,17 @@ export default function CachedArtwork({ source, style, resizeMode = 'cover', fal
 
   return (
     <View pointerEvents="none" accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={style}>
-      {typeof source !== 'number' && fallback ? fallback : (
-        <Image source={typeof source === 'number' ? source : bundledReadingFallback} style={[styles.image, typeof source === 'number' ? imageStyle : undefined]} resizeMode={resizeMode}
+      {bundledSource === null && fallback ? fallback : (
+        <Image key={bundledSource ?? 'reading-fallback'} source={bundledSource ?? bundledReadingFallback} style={[styles.image, bundledSource !== null ? imageStyle : undefined]} resizeMode={resizeMode}
           onLoad={() => {
+            if (visibleBundledSource.current !== bundledSource) return;
             fallbackLoaded.current = true;
-            if (remoteFailed.current) captureDone.current?.();
+            if (!url || remoteFailed.current) captureDone.current?.();
           }}
-          onError={() => { if (remoteFailed.current) captureDone.current?.(); }} />
+          onError={() => {
+            if (visibleBundledSource.current !== bundledSource) return;
+            if (!url || remoteFailed.current) captureDone.current?.();
+          }} />
       )}
       {uri ? (
         <Image

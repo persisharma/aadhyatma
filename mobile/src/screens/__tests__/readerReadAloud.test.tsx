@@ -65,6 +65,8 @@ import { ReadAloudProvider } from '@/contexts/ReadAloudContext';
 import { prepareForSpeech } from '@/readAloud/pronounce';
 import { getChalisa } from '@/data/chalisaRegistry';
 import { getGitaChapter } from '@/data/gita';
+import { getGarudPuranChapter } from '@/data/garud-puran';
+import GarudPuranReaderScreen from '../GarudPuranReaderScreen';
 import { getGitaSaarChapter } from '@/data/gita-saar';
 import { getAarti } from '@/data/aarti';
 import { getAshtakam } from '@/data/ashtakam';
@@ -179,6 +181,7 @@ if (!katha) throw new Error('fixture katha must exist');
  * not hardcoded. Japam is deliberately absent: it is a counter, not a reader.
  */
 const READERS: readonly ReaderEntry[] = [
+  { name: 'Garud Puran', ...screen(GarudPuranReaderScreen, 'GarudPuranReader', { chapter: 1 }), firstSpokenLine: getGarudPuranChapter(1).verses[0].bodyHi[0] },
   {
     name: 'ChalisaReaderScreen (hanuman-chalisa)',
     ...screen(ChalisaReaderScreen, 'ChalisaReader', {

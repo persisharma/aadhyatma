@@ -1,0 +1,7 @@
+{
+  "id": "babhruvahana",
+  "prompt": "Use case: precise-object-edit. The first attached image is the approved Style 3 rendering reference. The SECOND image is the exact edit target. Make ONLY this framing correction in the second image: the horse at the far left must be fully inside the image. Shift the whole horse slightly right and reduce its size only as needed so its tail, rear body, all visible legs and hooves, ears and muzzle fit completely inside a comfortable 6 percent canvas safety margin. Keep the horse waiting in the background beside the banyan tree. Preserve everything else: Babhruvahana and Sudeva, their faces, clothes, poses and hands, bow, lake, tree, architecture, detailed approved Style 3 rendering, colours and exact 2:1 landscape canvas. No crop, blank padding, new characters, lettering or UI. Return one final corrected banner.",
+  "previous": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-7a58d5c1-9aa8-4789-b460-2d72500de069.png",
+  "original": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-c27fed6c-7c98-44ed-b739-abb3b474fde5.png",
+  "tool": "built-in image_gen"
+}

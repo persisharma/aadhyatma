@@ -13,7 +13,6 @@ import { verseToken, meaningToken, scriptTitleFont, pillTextStyle } from '@/util
 import type { ShivaStrotamVerse } from '@/data/shiva-strotam';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
-import { readingParchment } from '@/data/backgroundAsset';
 import ReadingArtwork from './ReadingArtwork';
 import ProseParagraph from './ProseParagraph';
 import Ornament from './Ornament';
@@ -75,7 +74,7 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width, topActio
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <BackgroundLayer source={readingParchment} />
+      <BackgroundLayer source={bg} />
 
       <ScrollView
         style={styles.scroll}

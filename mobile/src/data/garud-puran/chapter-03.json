@@ -1,0 +1,84 @@
+{
+  "chapter": 3,
+  "id": "human-life",
+  "titleHi": "मनुष्य जीवन का महत्त्व",
+  "titleEn": "The value of human life",
+  "kind": "teaching",
+  "artId": "cover",
+  "status": "verified",
+  "contentKind": "editorial-summary",
+  "source": {
+    "baseText": "Garuda Purana: SanskritDocuments/GRETIL Venkatesvara recension; Gita Press Sankshipta Garud Puran Hindi abridgement as captured by BharatKosha.",
+    "retrievedOn": "2026-10-12",
+    "verificationLevel": "source-cross-checked-editorial-summary",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_purana/garuDapurANa.html",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/517",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/518",
+      "https://bharatkosha.org/hi/granth/garuda-puran-gita-press/519"
+    ],
+    "independentSourceFamilies": [
+      "Venkatesvara-Sansknet-GRETIL",
+      "Gita-Press-Hindi-abridgement"
+    ],
+    "sanskritReferences": [
+      "2.12.4",
+      "2.12.8",
+      "2.12.9",
+      "2.12.12",
+      "2.12.13",
+      "2.12.14",
+      "2.12.15",
+      "2.12.16"
+    ],
+    "sanskritFileSha256": "e57ea90780f158de234f52154cbd7b7dd2450888e08128ab4b0326257940f04a",
+    "hindiSourcePages": [
+      517,
+      518,
+      519
+    ],
+    "hindiFragmentSha256": "545a5bae71ef4d8892265f83f25f75bee4a1a00f69315ff9c8b9981d8328db39",
+    "verificationNote": "Compared the listed Sanskrit passages with the independently published Hindi abridgement for the limited claims in this editorial reading. GRETIL and SanskritDocuments count as one family. This is not certification of the complete source chapters or of every OCR character. No original verse or published translation is reproduced.",
+    "notes": "Selected passages on discernment and craving. Omits historical caste hierarchy and numerical classifications of beings rather than restating them as contemporary fact.",
+    "citeHi": "गरुडपुराण · प्रेतकल्प 12 · चयनित प्रसंग",
+    "citeEn": "Garuda Purana · Preta chapter 12 · selected passages"
+  },
+  "verses": [
+    {
+      "id": "human-life-1",
+      "chapter": 3,
+      "number": 1,
+      "titleHi": "विवेक का अवसर",
+      "titleEn": "An opportunity for discernment",
+      "bodyHi": [
+        "प्रेतकल्प में मनुष्य-जन्म को दुर्लभ अवसर कहा गया है। भोजन, नींद और भय जैसी वृत्तियाँ अनेक प्राणियों में होती हैं; मनुष्य के सामने विवेक से अपने जीवन की दिशा चुनने का प्रश्न भी आता है।",
+        "यह प्रसंग तृष्णा की बढ़ती चाल को समझाता है। जिसके पास थोड़ा है, वह अधिक चाहता है; अधिक मिलने पर भी इच्छा समाप्त नहीं होती। इसलिए केवल वस्तुएँ जोड़ते जाना संतोष का भरोसेमंद आधार नहीं बनता।"
+      ],
+      "bodyEn": [
+        "The Preta section describes human birth as a rare opportunity. Many living beings share needs such as food, sleep and safety. The passage asks what we do with the capacity to reflect on our conduct and choose a direction for our lives.",
+        "It illustrates the way craving can keep growing. A person with a little wants more, and gaining more does not necessarily bring the wanting to an end. Accumulation alone therefore fails to settle the deeper question of what makes a life worthwhile."
+      ],
+      "meaningHi": "प्रेतकल्प में मनुष्य-जन्म को दुर्लभ अवसर कहा गया है। भोजन, नींद और भय जैसी वृत्तियाँ अनेक प्राणियों में होती हैं; मनुष्य के सामने विवेक से अपने जीवन की दिशा चुनने का प्रश्न भी आता है।\n\nयह प्रसंग तृष्णा की बढ़ती चाल को समझाता है। जिसके पास थोड़ा है, वह अधिक चाहता है; अधिक मिलने पर भी इच्छा समाप्त नहीं होती। इसलिए केवल वस्तुएँ जोड़ते जाना संतोष का भरोसेमंद आधार नहीं बनता।",
+      "meaningEn": "The Preta section describes human birth as a rare opportunity. Many living beings share needs such as food, sleep and safety. The passage asks what we do with the capacity to reflect on our conduct and choose a direction for our lives.\n\nIt illustrates the way craving can keep growing. A person with a little wants more, and gaining more does not necessarily bring the wanting to an end. Accumulation alone therefore fails to settle the deeper question of what makes a life worthwhile.",
+      "artId": "cover"
+    },
+    {
+      "id": "human-life-2",
+      "chapter": 3,
+      "number": 2,
+      "titleHi": "सरल अर्थ",
+      "titleEn": "Simple meaning",
+      "bodyHi": [
+        "इस शिक्षा का सरल प्रश्न है: उपलब्ध जीवन और विवेक का उपयोग किस काम में हो रहा है? इच्छा होना और हर इच्छा के पीछे बिना सोचे भागना अलग बातें हैं। रुककर आवश्यकता और लालसा को पहचानना एक उपयोगी अभ्यास हो सकता है।",
+        "सीखने, सेवा करने और अपने व्यवहार को सुधारने का अवसर केवल भविष्य के लिए टालना जरूरी नहीं है। आज की कोई छोटी सजग पसंद भी शुरुआत हो सकती है। यह दैनिक जीवन के लिए हमारी व्याख्या है, जीवन की कठिनाइयों को नकारना नहीं।"
+      ],
+      "bodyEn": [
+        "The simple question is how we are using the life and judgment available to us. Having a desire is different from pursuing every desire without reflection. Pausing to distinguish a genuine need from an expanding appetite can be a useful practice.",
+        "Learning, serving and correcting our behaviour need not be postponed until some perfect future. A small deliberate choice today can be a beginning. This is an editorial application of the passage, not a denial of the practical difficulties people face."
+      ],
+      "meaningHi": "इस शिक्षा का सरल प्रश्न है: उपलब्ध जीवन और विवेक का उपयोग किस काम में हो रहा है? इच्छा होना और हर इच्छा के पीछे बिना सोचे भागना अलग बातें हैं। रुककर आवश्यकता और लालसा को पहचानना एक उपयोगी अभ्यास हो सकता है।\n\nसीखने, सेवा करने और अपने व्यवहार को सुधारने का अवसर केवल भविष्य के लिए टालना जरूरी नहीं है। आज की कोई छोटी सजग पसंद भी शुरुआत हो सकती है। यह दैनिक जीवन के लिए हमारी व्याख्या है, जीवन की कठिनाइयों को नकारना नहीं।",
+      "meaningEn": "The simple question is how we are using the life and judgment available to us. Having a desire is different from pursuing every desire without reflection. Pausing to distinguish a genuine need from an expanding appetite can be a useful practice.\n\nLearning, serving and correcting our behaviour need not be postponed until some perfect future. A small deliberate choice today can be a beginning. This is an editorial application of the passage, not a denial of the practical difficulties people face.",
+      "artId": "cover"
+    }
+  ]
+}

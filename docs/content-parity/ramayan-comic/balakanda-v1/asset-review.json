@@ -1,0 +1,1974 @@
+{
+  "date": "2026-10-11",
+  "reviewer": "Codex visual authoring pass, not independent human editorial sign-off",
+  "scope": "All 29 final episode sheets and 137 individual panel actions inspected; measured ink gutter boundaries replace equal-height assumptions and retain complete scenes. No crop based on caption length.",
+  "assets": {
+    "bk-01": {
+      "selectedAsset": "assets/bk-01-v2.png",
+      "sha256": "e7d0e879c6fa92455a09716b360e4230777631ac481c4cb07f41a02f4f3ab10c",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-01-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5025380710659898,
+          "height": 0.3030075187969925,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-01-02",
+          "x": 0.5025380710659898,
+          "y": 0.0,
+          "width": 0.49746192893401014,
+          "height": 0.3030075187969925,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-01-03",
+          "x": 0,
+          "y": 0.3030075187969925,
+          "width": 0.5025380710659898,
+          "height": 0.3406015037593985,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-01-04",
+          "x": 0.5025380710659898,
+          "y": 0.3030075187969925,
+          "width": 0.49746192893401014,
+          "height": 0.3406015037593985,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-01-05",
+          "x": 0,
+          "y": 0.643609022556391,
+          "width": 1,
+          "height": 0.35639097744360904,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Valmiki retained distinct terracotta/tapered beard; later adult king Rama is explicitly a prologue frame, Lava/Kusha children.",
+      "retainedRevisions": [
+        "assets/bk-01-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 594,
+        "horizontal": [
+          403,
+          856
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-02": {
+      "selectedAsset": "assets/bk-02-v1.png",
+      "sha256": "5f5dda931fc9fe70782b1e7751c7ce5e933e5345e00702b0a3db9f38cc179bea",
+      "dimensions": {
+        "width": 2048,
+        "height": 768
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-02-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.501953125,
+          "height": 1.0,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-02-02",
+          "x": 0.501953125,
+          "y": 0.0,
+          "width": 0.498046875,
+          "height": 1.0,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Ayodhya city and Dasharatha council; no child/adult Rama confusion.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 1028,
+        "horizontal": [],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-03": {
+      "selectedAsset": "assets/bk-03-v2.png",
+      "sha256": "7ae23b30248f8b30ddb729eef7b17ed5adbb7116ee7ffcebabb21c1c3140295e",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-03-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.4949238578680203,
+          "height": 0.324812030075188,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-03-02",
+          "x": 0.4949238578680203,
+          "y": 0.0,
+          "width": 0.5050761421319797,
+          "height": 0.324812030075188,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-03-03",
+          "x": 0,
+          "y": 0.324812030075188,
+          "width": 0.4949238578680203,
+          "height": 0.32857142857142857,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-03-04",
+          "x": 0.4949238578680203,
+          "y": 0.324812030075188,
+          "width": 0.5050761421319797,
+          "height": 0.32857142857142857,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-03-05",
+          "x": 0,
+          "y": 0.6533834586466165,
+          "width": 0.4949238578680203,
+          "height": 0.34661654135338343,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-03-06",
+          "x": 0.4949238578680203,
+          "y": 0.6533834586466165,
+          "width": 0.5050761421319797,
+          "height": 0.34661654135338343,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Rishyasringa absent from pre-invitation council; Sumantra blue turban matches council; visiting women distinct from queens; six ordered actions.",
+      "retainedRevisions": [
+        "assets/bk-03-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 585,
+        "horizontal": [
+          432,
+          869
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-04": {
+      "selectedAsset": "assets/bk-04-v3.png",
+      "sha256": "7fd51d0e007f7da31d6172636a67c91e9c636d533c44cab54d2745be3f2baba4",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-04-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.49746192893401014,
+          "height": 0.3323308270676692,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-04-02",
+          "x": 0.49746192893401014,
+          "y": 0.0,
+          "width": 0.5025380710659898,
+          "height": 0.3323308270676692,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-04-03",
+          "x": 0,
+          "y": 0.3323308270676692,
+          "width": 0.49746192893401014,
+          "height": 0.324812030075188,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-04-04",
+          "x": 0.49746192893401014,
+          "y": 0.3323308270676692,
+          "width": 0.5025380710659898,
+          "height": 0.324812030075188,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-04-05",
+          "x": 0,
+          "y": 0.6571428571428571,
+          "width": 1,
+          "height": 0.34285714285714286,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Vishnu four arms; Brahma four arms, three visible faces with fourth occluded; Indra no trident; juvenile Hanuman no crown/gada.",
+      "retainedRevisions": [
+        "assets/bk-04-v1.png",
+        "assets/bk-04-v2.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 588,
+        "horizontal": [
+          442,
+          874
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-05": {
+      "selectedAsset": "assets/bk-05-v1.png",
+      "sha256": "43bb6fca3daae86d96643dc20b6b1796434ad99f2a22bba62986978ae0b92e92",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-05-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5041436464088398,
+          "height": 0.496316758747698,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-05-02",
+          "x": 0.5041436464088398,
+          "y": 0.0,
+          "width": 0.4958563535911602,
+          "height": 0.496316758747698,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-05-03",
+          "x": 0,
+          "y": 0.496316758747698,
+          "width": 1,
+          "height": 0.503683241252302,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Exactly four infants, three mothers; four children; adolescent journey brothers introduced after time passage.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 730,
+        "horizontal": [
+          539
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-06": {
+      "selectedAsset": "assets/bk-06-v1.png",
+      "sha256": "4936827efa2e3c82123deb02399f00a9da1d724550b1e0fd066f36c908a51e53",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-06-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5,
+          "height": 0.4990791896869245,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-06-02",
+          "x": 0.5,
+          "y": 0.0,
+          "width": 0.5,
+          "height": 0.4990791896869245,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-06-03",
+          "x": 0,
+          "y": 0.4990791896869245,
+          "width": 0.5,
+          "height": 0.5009208103130756,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-06-04",
+          "x": 0.5,
+          "y": 0.4990791896869245,
+          "width": 0.5,
+          "height": 0.5009208103130756,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Request, paternal fear, Vashishtha mediation and departure all retained; Vashishtha distinct from Vishwamitra.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 724,
+        "horizontal": [
+          542
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-07": {
+      "selectedAsset": "assets/bk-07-v1.png",
+      "sha256": "9e1d44e1b0d31b50d5f761dc3f604ec67df0f858737dec39ec34c9b0ab0b0834",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-07-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.4972375690607735,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-07-02",
+          "x": 0.4972375690607735,
+          "y": 0.0,
+          "width": 0.5027624309392266,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-07-03",
+          "x": 0,
+          "y": 0.5,
+          "width": 1,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Three present-journey scenes with young Rama/Lakshmana; historical Kamadeva account in native caption.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 720,
+        "horizontal": [
+          543
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-08": {
+      "selectedAsset": "assets/bk-08-v1.png",
+      "sha256": "0afde018ef1c9b6ce11b8d2b4b044a37415a131093e34c25aaf1d0dda658f9d7",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-08-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5034530386740331,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-08-02",
+          "x": 0.5034530386740331,
+          "y": 0.0,
+          "width": 0.4965469613259669,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-08-03",
+          "x": 0,
+          "y": 0.5,
+          "width": 0.5034530386740331,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-08-04",
+          "x": 0.5034530386740331,
+          "y": 0.5,
+          "width": 0.4965469613259669,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Tataka origin, deliberation, dust/stone attack, non-graphic consequence; no gore.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 729,
+        "horizontal": [
+          543
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-09": {
+      "selectedAsset": "assets/bk-09-v1.png",
+      "sha256": "9c8f47ffd4fcc7cdf470b495caec30754c2ffcdfe3c131f38bf8af216293d5a3",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-09-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.4972375690607735,
+          "height": 0.4843462246777164,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-09-02",
+          "x": 0.4972375690607735,
+          "y": 0.0,
+          "width": 0.5027624309392266,
+          "height": 0.4843462246777164,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-09-03",
+          "x": 0,
+          "y": 0.4843462246777164,
+          "width": 0.4972375690607735,
+          "height": 0.5156537753222836,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-09-04",
+          "x": 0.4972375690607735,
+          "y": 0.4843462246777164,
+          "width": 0.5027624309392266,
+          "height": 0.5156537753222836,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Astras, recall, Vamana/Bali embedded story, present Siddhashrama arrival; four distinct scenes.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 720,
+        "horizontal": [
+          526
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-10": {
+      "selectedAsset": "assets/bk-10-v2.png",
+      "sha256": "b671aaf5789a02bceb35b168af7ff1fd87c9c23e1ce76855568f655dfdd8037c",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-10-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5048342541436464,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-10-02",
+          "x": 0.5048342541436464,
+          "y": 0.0,
+          "width": 0.4951657458563536,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-10-03",
+          "x": 0,
+          "y": 0.5,
+          "width": 0.5048342541436464,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-10-04",
+          "x": 0.5048342541436464,
+          "y": 0.5,
+          "width": 0.4951657458563536,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Alive red-brown Maricha expelled, purple/auburn Subahu falls; their identity and fate remain distinct.",
+      "retainedRevisions": [
+        "assets/bk-10-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 731,
+        "horizontal": [
+          543
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-11": {
+      "selectedAsset": "assets/bk-11-v1.png",
+      "sha256": "87cbad97634c8fadaa0feb3f0abc0beaf3cffbbac4a97e5663e115a58238447b",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-11-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.4966159052453469,
+          "height": 0.3330827067669173,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-11-02",
+          "x": 0.4966159052453469,
+          "y": 0.0,
+          "width": 0.5033840947546532,
+          "height": 0.3330827067669173,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-11-03",
+          "x": 0,
+          "y": 0.3330827067669173,
+          "width": 0.4966159052453469,
+          "height": 0.3323308270676692,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-11-04",
+          "x": 0.4966159052453469,
+          "y": 0.3330827067669173,
+          "width": 0.5033840947546532,
+          "height": 0.3323308270676692,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-11-05",
+          "x": 0,
+          "y": 0.6654135338345865,
+          "width": 0.4966159052453469,
+          "height": 0.33458646616541354,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-11-06",
+          "x": 0.4966159052453469,
+          "y": 0.6654135338345865,
+          "width": 0.5033840947546532,
+          "height": 0.33458646616541354,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Six journey/family scenes; representative group conveys hundred daughters, not a literal count; no disability caricature.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 587,
+        "horizontal": [
+          443,
+          885
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-12": {
+      "selectedAsset": "assets/bk-12-v3.png",
+      "sha256": "22b793d11dfb00918191c30e4737900b7bce03416b818bfd8061b71e0936e2a8",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-12-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.4993093922651934,
+          "height": 0.4990791896869245,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-12-02",
+          "x": 0.4993093922651934,
+          "y": 0.0,
+          "width": 0.5006906077348067,
+          "height": 0.4990791896869245,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-12-03",
+          "x": 0,
+          "y": 0.4990791896869245,
+          "width": 0.4993093922651934,
+          "height": 0.5009208103130756,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-12-04",
+          "x": 0.4993093922651934,
+          "y": 0.4990791896869245,
+          "width": 0.5006906077348067,
+          "height": 0.5009208103130756,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Six visible Kartikeya heads; six Krittika foster mothers plus Ganga; one spear, no accidental vajra; present narrator kept distinct.",
+      "retainedRevisions": [
+        "assets/bk-12-v1.png",
+        "assets/bk-12-v2.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 723,
+        "horizontal": [
+          542
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-13": {
+      "selectedAsset": "assets/bk-13-v2.png",
+      "sha256": "89e1d0e157ea8c55c06b038eb70d51b569bcaeaaa1ede325ee17bdd4b5884dbe",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-13-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5,
+          "height": 0.3323308270676692,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-13-02",
+          "x": 0.5,
+          "y": 0.0,
+          "width": 0.5,
+          "height": 0.3323308270676692,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-13-03",
+          "x": 0,
+          "y": 0.3323308270676692,
+          "width": 0.5,
+          "height": 0.33458646616541354,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-13-04",
+          "x": 0.5,
+          "y": 0.3323308270676692,
+          "width": 0.5,
+          "height": 0.33458646616541354,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-13-05",
+          "x": 0,
+          "y": 0.6669172932330827,
+          "width": 0.5,
+          "height": 0.3330827067669173,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-13-06",
+          "x": 0.5,
+          "y": 0.6669172932330827,
+          "width": 0.5,
+          "height": 0.3330827067669173,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Sagara angular grey full beard distinct from Dasharatha; non-graphic ashes; Anshuman and Garuda close unresolved redemption.",
+      "retainedRevisions": [
+        "assets/bk-13-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 591,
+        "horizontal": [
+          442,
+          887
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-14": {
+      "selectedAsset": "assets/bk-14-v1.png",
+      "sha256": "c0f2103a3e6752c50c24f05cc25d9550c8212e80b140b110d271e590d119bb99",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-14-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.498046875,
+          "height": 0.24609375,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-14-02",
+          "x": 0.498046875,
+          "y": 0.0,
+          "width": 0.501953125,
+          "height": 0.24609375,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-14-03",
+          "x": 0,
+          "y": 0.24609375,
+          "width": 0.498046875,
+          "height": 0.25390625,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-14-04",
+          "x": 0.498046875,
+          "y": 0.24609375,
+          "width": 0.501953125,
+          "height": 0.25390625,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-14-05",
+          "x": 0,
+          "y": 0.5,
+          "width": 0.498046875,
+          "height": 0.2421875,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-14-06",
+          "x": 0.498046875,
+          "y": 0.5,
+          "width": 0.501953125,
+          "height": 0.2421875,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-14-07",
+          "x": 0,
+          "y": 0.7421875,
+          "width": 0.498046875,
+          "height": 0.2578125,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-14-08",
+          "x": 0.498046875,
+          "y": 0.7421875,
+          "width": 0.501953125,
+          "height": 0.2578125,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Eight complete Ganga descent scenes; seven streams represented; Jahnu obstacle and release retained; present journey resumes.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 510,
+        "horizontal": [
+          378,
+          768,
+          1140
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-15": {
+      "selectedAsset": "assets/bk-15-v2.png",
+      "sha256": "aa00d0ec05ffdf98345b49968b42226ea302e6562ea18abad3f7d9fb190e826e",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-15-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.49746192893401014,
+          "height": 0.3398496240601504,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-15-02",
+          "x": 0.49746192893401014,
+          "y": 0.0,
+          "width": 0.5025380710659898,
+          "height": 0.3398496240601504,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-15-03",
+          "x": 0,
+          "y": 0.3398496240601504,
+          "width": 0.49746192893401014,
+          "height": 0.33533834586466166,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-15-04",
+          "x": 0.49746192893401014,
+          "y": 0.3398496240601504,
+          "width": 0.5025380710659898,
+          "height": 0.33533834586466166,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-15-05",
+          "x": 0,
+          "y": 0.675187969924812,
+          "width": 1,
+          "height": 0.324812030075188,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Only source-aligned treasure imagery retained: white horse, Dhanvantari, Varuni, Kaustubha; no added Lakshmi/cow/elephants. Shiva alone has trident.",
+      "retainedRevisions": [
+        "assets/bk-15-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 588,
+        "horizontal": [
+          452,
+          898
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-16": {
+      "selectedAsset": "assets/bk-16-v2.png",
+      "sha256": "d878e8d84c20127117f6ea3bb8c65f72ad0cb86c361ddc78dcfe2a4e76ced3a3",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-16-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5013812154696132,
+          "height": 0.498158379373849,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-16-02",
+          "x": 0.5013812154696132,
+          "y": 0.0,
+          "width": 0.4986187845303867,
+          "height": 0.498158379373849,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-16-03",
+          "x": 0,
+          "y": 0.498158379373849,
+          "width": 0.5013812154696132,
+          "height": 0.501841620626151,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-16-04",
+          "x": 0.5013812154696132,
+          "y": 0.498158379373849,
+          "width": 0.4986187845303867,
+          "height": 0.501841620626151,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Kashyapa bald crown/short square white beard distinct from Vishwamitra; seven Maruts shown, prenatal violence symbolic.",
+      "retainedRevisions": [
+        "assets/bk-16-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 726,
+        "horizontal": [
+          541
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-17": {
+      "selectedAsset": "assets/bk-17-v1.png",
+      "sha256": "db40d6eccf2346aa083695b8763fe66f2eb1517e32c55fcc08e15c3641e6f1d8",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-17-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.4957698815566836,
+          "height": 0.33157894736842103,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-17-02",
+          "x": 0.4957698815566836,
+          "y": 0.0,
+          "width": 0.5042301184433164,
+          "height": 0.33157894736842103,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-17-03",
+          "x": 0,
+          "y": 0.33157894736842103,
+          "width": 0.4957698815566836,
+          "height": 0.3225563909774436,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-17-04",
+          "x": 0.4957698815566836,
+          "y": 0.33157894736842103,
+          "width": 0.5042301184433164,
+          "height": 0.3225563909774436,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-17-05",
+          "x": 0,
+          "y": 0.6541353383458647,
+          "width": 1,
+          "height": 0.3458646616541353,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Ahalya unseen penance represented through translucent outline, not stone; respectful hospitality and Gautama reunion.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 586,
+        "horizontal": [
+          441,
+          870
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-18": {
+      "selectedAsset": "assets/bk-18-v2.png",
+      "sha256": "e05d6eb7bc62af14c9332cdb16ee1c3e386f65a1bd9b2005356317277ab868e8",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-18-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5027624309392266,
+          "height": 0.4990791896869245,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-18-02",
+          "x": 0.5027624309392266,
+          "y": 0.0,
+          "width": 0.4972375690607735,
+          "height": 0.4990791896869245,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-18-03",
+          "x": 0,
+          "y": 0.4990791896869245,
+          "width": 1,
+          "height": 0.5009208103130756,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Shatananda priest distinct; unsupported stone-Ahalya inset removed; embedded Vishwamitra life begins after family news.",
+      "retainedRevisions": [
+        "assets/bk-18-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 728,
+        "horizontal": [
+          542
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-19": {
+      "selectedAsset": "assets/bk-19-v1.png",
+      "sha256": "2b6a9b6fde8d232314ffafb4c2d88074a1f8bd6495b010f56fdf714d813846c6",
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-19-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.4990234375,
+          "height": 0.24869791666666666,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-19-02",
+          "x": 0.4990234375,
+          "y": 0.0,
+          "width": 0.5009765625,
+          "height": 0.24869791666666666,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-19-03",
+          "x": 0,
+          "y": 0.24869791666666666,
+          "width": 0.4990234375,
+          "height": 0.24544270833333334,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-19-04",
+          "x": 0.4990234375,
+          "y": 0.24869791666666666,
+          "width": 0.5009765625,
+          "height": 0.24544270833333334,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-19-05",
+          "x": 0,
+          "y": 0.494140625,
+          "width": 0.4990234375,
+          "height": 0.23372395833333334,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-19-06",
+          "x": 0.4990234375,
+          "y": 0.494140625,
+          "width": 0.5009765625,
+          "height": 0.23372395833333334,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-19-07",
+          "x": 0,
+          "y": 0.7278645833333334,
+          "width": 1,
+          "height": 0.2721354166666667,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Royal Vishwamitra then ascetic; Shabala refusal/force/defeat/weapon revenge/staff defeat/renunciation ordered; no graphic casualties.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 511,
+        "horizontal": [
+          382,
+          759,
+          1118
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-20": {
+      "selectedAsset": "assets/bk-20-v2.png",
+      "sha256": "24e6770a8d2550bd35f627eb6e03b504a1544d3039ce0255bac6c7003508ca54",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-20-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5042301184433164,
+          "height": 0.3308270676691729,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-20-02",
+          "x": 0.5042301184433164,
+          "y": 0.0,
+          "width": 0.4957698815566836,
+          "height": 0.3308270676691729,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-20-03",
+          "x": 0,
+          "y": 0.3308270676691729,
+          "width": 0.5042301184433164,
+          "height": 0.3406015037593985,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-20-04",
+          "x": 0.5042301184433164,
+          "y": 0.3308270676691729,
+          "width": 0.4957698815566836,
+          "height": 0.3406015037593985,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-20-05",
+          "x": 0,
+          "y": 0.6714285714285714,
+          "width": 0.5042301184433164,
+          "height": 0.32857142857142857,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-20-06",
+          "x": 0.5042301184433164,
+          "y": 0.6714285714285714,
+          "width": 0.4957698815566836,
+          "height": 0.32857142857142857,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Middle-aged Vishwamitra black beard with grey temples; Trishanku upside down; no caste/skin caricature or extra-armed Vishnu.",
+      "retainedRevisions": [
+        "assets/bk-20-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 596,
+        "horizontal": [
+          440,
+          893
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-21": {
+      "selectedAsset": "assets/bk-21-v2.png",
+      "sha256": "2de274de848802fc47b7513b07d3674e9b256b60c0624554afa89d0f0211b456",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-21-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.4957698815566836,
+          "height": 0.3157894736842105,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-21-02",
+          "x": 0.4957698815566836,
+          "y": 0.0,
+          "width": 0.5042301184433164,
+          "height": 0.3157894736842105,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-21-03",
+          "x": 0,
+          "y": 0.3157894736842105,
+          "width": 0.4957698815566836,
+          "height": 0.3172932330827068,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-21-04",
+          "x": 0.4957698815566836,
+          "y": 0.3157894736842105,
+          "width": 0.5042301184433164,
+          "height": 0.3172932330827068,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-21-05",
+          "x": 0,
+          "y": 0.6330827067669172,
+          "width": 1,
+          "height": 0.3669172932330827,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Ambarisha teal/narrow crown distinct from Dasharatha; middle-aged Vishwamitra; child rescued, no graphic sacrifice. Divine assembly is illustrative; caption attributes boon to Indra.",
+      "retainedRevisions": [
+        "assets/bk-21-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 586,
+        "horizontal": [
+          420,
+          842
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-22": {
+      "selectedAsset": "assets/bk-22-v2.png",
+      "sha256": "1a137d79130e3cc8a3784d6551b656d8c28454e1ca46a8c30c3039a8ecd8f3cd",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-22-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5033840947546532,
+          "height": 0.3157894736842105,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-22-02",
+          "x": 0.5033840947546532,
+          "y": 0.0,
+          "width": 0.4966159052453469,
+          "height": 0.3157894736842105,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-22-03",
+          "x": 0,
+          "y": 0.3157894736842105,
+          "width": 0.5033840947546532,
+          "height": 0.3157894736842105,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-22-04",
+          "x": 0.5033840947546532,
+          "y": 0.3157894736842105,
+          "width": 0.4966159052453469,
+          "height": 0.3157894736842105,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-22-05",
+          "x": 0,
+          "y": 0.631578947368421,
+          "width": 0.5033840947546532,
+          "height": 0.3684210526315789,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-22-06",
+          "x": 0.5033840947546532,
+          "y": 0.631578947368421,
+          "width": 0.4966159052453469,
+          "height": 0.3684210526315789,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Vishwamitra progresses middle to elderly across years of practice; Menaka farewell and Rambha curse differentiated; giving food without anger before recognition.",
+      "retainedRevisions": [
+        "assets/bk-22-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 595,
+        "horizontal": [
+          420,
+          840
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-23": {
+      "selectedAsset": "assets/bk-23-v1.png",
+      "sha256": "199cc1fcf0dea119607b204563f3b5ee8c1b55e2ac0f7cc85f784e6217f91327",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-23-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5033840947546532,
+          "height": 0.31278195488721805,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-23-02",
+          "x": 0.5033840947546532,
+          "y": 0.0,
+          "width": 0.4966159052453469,
+          "height": 0.31278195488721805,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-23-03",
+          "x": 0,
+          "y": 0.31278195488721805,
+          "width": 0.5033840947546532,
+          "height": 0.33383458646616543,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-23-04",
+          "x": 0.5033840947546532,
+          "y": 0.31278195488721805,
+          "width": 0.4966159052453469,
+          "height": 0.33383458646616543,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-23-05",
+          "x": 0,
+          "y": 0.6466165413533834,
+          "width": 0.5033840947546532,
+          "height": 0.3533834586466165,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-23-06",
+          "x": 0.5033840947546532,
+          "y": 0.6466165413533834,
+          "width": 0.4966159052453469,
+          "height": 0.3533834586466165,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Infant Sita furrow is retrospective; adolescent Rama at bow; eight-wheel cart represented with far wheels occluded; broken Shiva bow follows stringing.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 595,
+        "horizontal": [
+          416,
+          860
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-24": {
+      "selectedAsset": "assets/bk-24-v1.png",
+      "sha256": "d61202f55891544dfbc4d40ebfbf238a9be553c218774de3b7aa1086225af347",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-24-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.4972375690607735,
+          "height": 0.4990791896869245,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-24-02",
+          "x": 0.4972375690607735,
+          "y": 0.0,
+          "width": 0.5027624309392266,
+          "height": 0.4990791896869245,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-24-03",
+          "x": 0,
+          "y": 0.4990791896869245,
+          "width": 1,
+          "height": 0.5009208103130756,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Envoy, caravan without Rama/Lakshmana, then Mithila reunion; two princes already at destination.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 720,
+        "horizontal": [
+          542
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-25": {
+      "selectedAsset": "assets/bk-25-v2.png",
+      "sha256": "5286ee6dd007177d198a47fe5070c4226249f2e493afb2acb822406ab5812cb7",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-25-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.4972375690607735,
+          "height": 0.498158379373849,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-25-02",
+          "x": 0.4972375690607735,
+          "y": 0.0,
+          "width": 0.5027624309392266,
+          "height": 0.498158379373849,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-25-03",
+          "x": 0,
+          "y": 0.498158379373849,
+          "width": 0.4972375690607735,
+          "height": 0.501841620626151,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-25-04",
+          "x": 0.4972375690607735,
+          "y": 0.498158379373849,
+          "width": 0.5027624309392266,
+          "height": 0.501841620626151,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Four proposed pairs; exactly four princes in gifts scene; Shatrughna teal, Bharata cream.",
+      "retainedRevisions": [
+        "assets/bk-25-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 720,
+        "horizontal": [
+          541
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-26": {
+      "selectedAsset": "assets/bk-26-v2.png",
+      "sha256": "18fb585aaa53903dde5bc25e84c077af180f3d29d9d21d910470837de0824ae1",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-26-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.49915397631133673,
+          "height": 0.3330827067669173,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-26-02",
+          "x": 0.49915397631133673,
+          "y": 0.0,
+          "width": 0.5008460236886633,
+          "height": 0.3330827067669173,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-26-03",
+          "x": 0,
+          "y": 0.3330827067669173,
+          "width": 0.49915397631133673,
+          "height": 0.3330827067669173,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-26-04",
+          "x": 0.49915397631133673,
+          "y": 0.3330827067669173,
+          "width": 0.5008460236886633,
+          "height": 0.3330827067669173,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-26-05",
+          "x": 0,
+          "y": 0.6661654135338346,
+          "width": 0.49915397631133673,
+          "height": 0.33383458646616543,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-26-06",
+          "x": 0.49915397631133673,
+          "y": 0.6661654135338346,
+          "width": 0.5008460236886633,
+          "height": 0.33383458646616543,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Rama-Sita, Lakshmana-Urmila, Bharata-Mandavi, Shatrughna-Shrutakirti; exactly four couples; Shatrughna arms/hands tan.",
+      "retainedRevisions": [
+        "assets/bk-26-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 590,
+        "horizontal": [
+          443,
+          886
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-27": {
+      "selectedAsset": "assets/bk-27-v3.png",
+      "sha256": "46f558fda0e0a60b84344a0a78088aa056758727838fa183511fc2b66d456dea",
+      "dimensions": {
+        "width": 1182,
+        "height": 1330
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-27-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5025380710659898,
+          "height": 0.3293233082706767,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-27-02",
+          "x": 0.5025380710659898,
+          "y": 0.0,
+          "width": 0.49746192893401014,
+          "height": 0.3293233082706767,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-27-03",
+          "x": 0,
+          "y": 0.3293233082706767,
+          "width": 0.5025380710659898,
+          "height": 0.32781954887218046,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-27-04",
+          "x": 0.5025380710659898,
+          "y": 0.3293233082706767,
+          "width": 0.49746192893401014,
+          "height": 0.32781954887218046,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-27-05",
+          "x": 0,
+          "y": 0.6571428571428571,
+          "width": 1,
+          "height": 0.34285714285714286,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Present elder Vishwamitra grey hair/beard in farewell; black-bearded Parashurama in four subsequent cells; axe and distinct intact bow.",
+      "retainedRevisions": [
+        "assets/bk-27-v1.png",
+        "assets/bk-27-v2.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 594,
+        "horizontal": [
+          438,
+          874
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-28": {
+      "selectedAsset": "assets/bk-28-v1.png",
+      "sha256": "ad9776ddcf5406852ee93366f9335fcfbb27ce47938344b5e2c4dc68ca6d6f3b",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-28-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5027624309392266,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-28-02",
+          "x": 0.5027624309392266,
+          "y": 0.0,
+          "width": 0.4972375690607735,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-28-03",
+          "x": 0,
+          "y": 0.5,
+          "width": 0.5027624309392266,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-28-04",
+          "x": 0.5027624309392266,
+          "y": 0.5,
+          "width": 0.4972375690607735,
+          "height": 0.5,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Vaishnava bow stays intact; Rama responds, strings, target choice, departure; no second bow-break.",
+      "retainedRevisions": [],
+      "inkBoundariesPixels": {
+        "vertical": 728,
+        "horizontal": [
+          543
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    },
+    "bk-29": {
+      "selectedAsset": "assets/bk-29-v2.png",
+      "sha256": "47c6e6d8f1d92f03dd252c46d2c53178f00aaf5f121e3585d5e36f4cf95bcf08",
+      "dimensions": {
+        "width": 1448,
+        "height": 1086
+      },
+      "frameStatus": "visually-reviewed-authoring-draft",
+      "retainedSheetFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1
+      },
+      "emptyBottomBandTrimmed": false,
+      "panelFrames": [
+        {
+          "panelId": "bk-29-01",
+          "x": 0,
+          "y": 0.0,
+          "width": 0.5027624309392266,
+          "height": 0.4990791896869245,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-29-02",
+          "x": 0.5027624309392266,
+          "y": 0.0,
+          "width": 0.4972375690607735,
+          "height": 0.4990791896869245,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-29-03",
+          "x": 0,
+          "y": 0.4990791896869245,
+          "width": 0.5027624309392266,
+          "height": 0.5009208103130756,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        },
+        {
+          "panelId": "bk-29-04",
+          "x": 0.5027624309392266,
+          "y": 0.4990791896869245,
+          "width": 0.4972375690607735,
+          "height": 0.5009208103130756,
+          "review": "Full scene inspected in final selected sheet; action, roles and order compared with panel artAction. Captions are outside image."
+        }
+      ],
+      "reviewNotes": "Ornate Vaishnava bow handed to Varuna; three queens/four brides; Bharata-Shatrughna leave with uncle; household ending, no exile/coronation.",
+      "retainedRevisions": [
+        "assets/bk-29-v1.png"
+      ],
+      "inkBoundariesPixels": {
+        "vertical": 728,
+        "horizontal": [
+          542
+        ],
+        "method": "Full-width dark gutter detection with visual boundary comparison; split at ink centre, retain painted content."
+      }
+    }
+  },
+  "characterModels": {
+    "divinities-v1.png": {
+      "sha256": "7b7afe2e7be2317efdeb78eb242e6d00f500a5caf332712661733ade75ecce21",
+      "width": 1536,
+      "height": 1024,
+      "status": "superseded"
+    },
+    "divinities-v2.png": {
+      "sha256": "17e609ccdfc40ab16ef7c1465fc485a9161f3c859f283dc50beede1e9e83b292",
+      "width": 1536,
+      "height": 1024,
+      "status": "visually-reviewed-authoring-reference"
+    },
+    "sages-v1.png": {
+      "sha256": "e0d1845a6d4f9e09de8750f30faf3a4b016334388701d945cd54a3d9a2b3f5e2",
+      "width": 1536,
+      "height": 1024,
+      "status": "visually-reviewed-authoring-reference"
+    },
+    "supporting-v1.png": {
+      "sha256": "156f9b0ef4e647ccc05b319a495bdad390e8ddde19958ad1203b0c2fdd520c24",
+      "width": 1536,
+      "height": 1024,
+      "status": "visually-reviewed-authoring-reference"
+    },
+    "women-v1.png": {
+      "sha256": "c7d21b302a18f012698bec7a8b19f5545dea6d2229db6f49ef159fc785faaecb",
+      "width": 1536,
+      "height": 1024,
+      "status": "visually-reviewed-authoring-reference"
+    }
+  },
+  "pending": [
+    "Independent scripture/editorial and artwork review",
+    "Full English, Gujarati and Kannada narratives and aligned meanings",
+    "Native Standard and Large sequence on devices",
+    "CDN upload, production asset manifest and runtime fallback verification"
+  ]
+}

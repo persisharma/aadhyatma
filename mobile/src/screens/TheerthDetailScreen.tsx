@@ -279,7 +279,6 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
               color: colors.inkMuted,
               marginTop: spacing.xl,
               fontStyle: lang === 'en' ? 'italic' : 'normal',
-              opacity: 0.7,
             }}
           >
             {`${pick(lang, { hi: 'स्रोत', en: 'Sources', gu: 'સ્રોત', kn: 'ಮೂಲಗಳು' })} — ${temple.sources.map((s) => s.label).join(', ')}`}

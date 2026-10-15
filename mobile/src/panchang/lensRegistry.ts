@@ -2,7 +2,7 @@
  * The क्षेत्रीय पंचांग display registry and seeding maps (PRD-42 §4.1–4.2).
  *
  * SPLIT OUT OF `lenses.ts` ON PURPOSE, and for the same reason `pincodes.ts`
- * keeps its 700 KB table behind a lazy `require`: `panchangPrefs.ts` reads the
+ * keeps its 605 KB table behind a lazy `require`: `panchangPrefs.ts` reads the
  * stored lens set on the LAUNCH PATH, so whatever `lenses.ts` imports is
  * evaluated before the first frame. The launch path needs only the ids — it must
  * decide whether a stored string is still a lens this build ships. The bilingual
@@ -235,7 +235,7 @@ export function lensesForLocation(input: {
 /**
  * Seed from a pincode location's own label — `416001 · Kolhapur, Maharashtra`.
  *
- * The pincode table carries `stateEn` but lives behind a lazy 700 KB require that
+ * The pincode table carries `stateEn` but lives behind a lazy 605 KB require that
  * must never reach the launch path, and the stored record is self-describing by
  * the same rule (`panchangPrefs.parseStoredPincodeLocation`). So the state is read
  * back off the label the record already carries. An unrecognised tail seeds

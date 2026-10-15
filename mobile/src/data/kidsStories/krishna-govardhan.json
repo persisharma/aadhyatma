@@ -1,0 +1,181 @@
+{
+  "id": "krishna-govardhan",
+  "deityId": "krishna",
+  "ageMin": 6,
+  "coverArt": "gv01",
+  "title": {
+    "hi": "कृष्ण और गोवर्धन",
+    "en": "Krishna and Govardhan",
+    "gu": "કૃષ્ણ અને ગોવર્ધન",
+    "kn": "ಕೃಷ್ಣ ಮತ್ತು ಗೋವರ್ಧನ"
+  },
+  "description": {
+    "hi": "तूफ़ान में गोकुल को आश्रय देने वाले कृष्ण की कथा।",
+    "en": "A storm, a lifted hill and shelter for an entire community.",
+    "gu": "તોફાનમાં સૌને આશ્રય આપતા કૃષ્ણની કથા.",
+    "kn": "ಬಿರುಗಾಳಿಯಲ್ಲಿ ಎಲ್ಲರಿಗೂ ಆಶ್ರಯ ನೀಡಿದ ಕೃಷ್ಣನ ಕಥೆ."
+  },
+  "takeaway": {
+    "hi": "संपादकीय सीख: शक्ति का सुंदर उपयोग दूसरों की रक्षा करना है।",
+    "en": "Editorial reflection: strength finds a caring purpose in protecting others.",
+    "gu": "સંપાદકીય વિચાર: શક્તિનો સારો ઉપયોગ બીજાનું રક્ષણ કરવો છે.",
+    "kn": "ಸಂಪಾದಕೀಯ ಚಿಂತನೆ: ಇತರರನ್ನು ರಕ್ಷಿಸುವುದರಲ್ಲಿ ಶಕ್ತಿಯ ಒಳ್ಳೆಯ ಬಳಕೆ ಇದೆ."
+  },
+  "sourceNote": {
+    "hi": "भागवत 10.24–25 और 10.27.1–16 पर आधारित। इंद्र की क्षमा-याचना बाद का प्रसंग है। मूल कथा में एक हाथ से पर्वत उठता है; छोटी उँगली चित्रण की परिचित परंपरा है।",
+    "en": "Original retelling compared in Vedabase and Bhagavata.org. Indra’s apology occurs later. The text says one hand; the little-finger depiction is a familiar artistic convention.",
+    "gu": "ભાગવત 10.24–25 અને 10.27.1–16 આધારિત. ઇન્દ્રની ક્ષમાયાચના પછીનો પ્રસંગ છે. મૂળમાં એક હાથથી પર્વત ઊંચકાય છે; ટચલી આંગળીનું ચિત્ર પરંપરાગત છે.",
+    "kn": "ಭಾಗವತ 10.24–25 ಮತ್ತು 10.27.1–16 ಆಧರಿಸಿದೆ. ಇಂದ್ರನ ಕ್ಷಮಾಯಾಚನೆ ನಂತರದ ಘಟನೆ. ಮೂಲದಲ್ಲಿ ಒಂದು ಕೈಯಿಂದ ಬೆಟ್ಟ ಎತ್ತುತ್ತಾನೆ; ಕಿರುಬೆರಳಿನ ಚಿತ್ರಣ ಕಲಾ ಪರಂಪರೆ."
+  },
+  "source": {
+    "baseText": "Bhagavata Purana 10.24–25; 10.27.1–16",
+    "retrievedOn": "2026-10-15",
+    "referenceUrls": [
+      "https://vedabase.io/en/library/sb/10/24/",
+      "https://vedabase.io/en/library/sb/10/25/",
+      "https://vedabase.io/en/library/sb/10/27/",
+      "https://bhagavata.org/canto10/chapter24.html",
+      "https://bhagavata.org/canto10/chapter25.html",
+      "https://bhagavata.org/canto10/chapter27.html"
+    ],
+    "notes": "Original retelling compared in Vedabase and Bhagavata.org. Indra’s apology occurs later. The text says one hand; the little-finger depiction is a familiar artistic convention."
+  },
+  "pages": [
+    {
+      "id": "festival-preparations",
+      "art": "gv01",
+      "source": "Bhagavata Purana 10.24.1–11",
+      "title": {
+        "hi": "उत्सव की तैयारी",
+        "en": "Preparing a festival",
+        "gu": "ઉત્સવની તૈયારી",
+        "kn": "ಹಬ್ಬದ ಸಿದ್ಧತೆ"
+      },
+      "text": {
+        "hi": "नंद और व्रजवासी इंद्र की पूजा की तैयारी कर रहे थे। उनका मानना था कि वर्षा से घास उगती और गायों का पालन होता है। कृष्ण ने नंद से इस आयोजन का कारण पूछा।",
+        "en": "Nanda and the people of Vraja were preparing worship for Indra. They depended on rain for grass and their cows’ wellbeing. Krishna asked Nanda to explain the purpose of the celebration.",
+        "gu": "નંદ અને વ્રજવાસીઓ ઇન્દ્રપૂજાની તૈયારી કરતા હતા. વરસાદથી ઘાસ ઊગે અને ગાયોનું પોષણ થાય એમ તેઓ માનતા. કૃષ્ણે નંદને આ આયોજનનું કારણ પૂછ્યું.",
+        "kn": "ನಂದ ಮತ್ತು ವ್ರಜವಾಸಿಗಳು ಇಂದ್ರನ ಪೂಜೆಗೆ ಸಿದ್ಧತೆ ಮಾಡುತ್ತಿದ್ದರು. ಮಳೆಯಿಂದ ಹುಲ್ಲು ಬೆಳೆದು ಹಸುಗಳು ಬದುಕುತ್ತವೆ ಎಂದು ನಂಬಿದ್ದರು. ಕೃಷ್ಣ ನಂದನನ್ನು ಈ ಆಚರಣೆಯ ಉದ್ದೇಶ ಕೇಳಿದ."
+      }
+    },
+    {
+      "id": "honouring-govardhan",
+      "art": "gv02",
+      "source": "Bhagavata Purana 10.24.25–38",
+      "title": {
+        "hi": "गोवर्धन का सम्मान",
+        "en": "Honouring Govardhan",
+        "gu": "ગોવર્ધનનો આદર",
+        "kn": "ಗೋವರ್ಧನಕ್ಕೆ ಗೌರವ"
+      },
+      "text": {
+        "hi": "कृष्ण ने गायों, गोवर्धन पर्वत और अपने पालन-पोषण के काम का सम्मान करने को कहा। नंद ने बात स्वीकार की। लोगों ने भोजन अर्पित किया, गायों को सजाया और पर्वत की परिक्रमा की।",
+        "en": "Krishna proposed honouring the cows, Govardhan Hill and the work that sustained their community. Nanda agreed. The people offered food, decorated their cows and walked around the hill in celebration.",
+        "gu": "કૃષ્ણે ગાયો, ગોવર્ધન પર્વત અને જીવનનિર્વાહના કામનો આદર કરવા કહ્યું. નંદે વાત સ્વીકારી. લોકોએ ભોજન અર્પ્યું, ગાયોને શણગારી અને પર્વતની પરિક્રમા કરી.",
+        "kn": "ಹಸುಗಳು, ಗೋವರ್ಧನ ಬೆಟ್ಟ ಮತ್ತು ಜೀವನಕ್ಕೆ ನೆರವಾಗುವ ಕೆಲಸವನ್ನು ಗೌರವಿಸೋಣ ಎಂದು ಕೃಷ್ಣ ಹೇಳಿದ. ನಂದ ಒಪ್ಪಿದ. ಜನರು ಆಹಾರ ಅರ್ಪಿಸಿ, ಹಸುಗಳನ್ನು ಅಲಂಕರಿಸಿ ಬೆಟ್ಟದ ಸುತ್ತ ಪ್ರದಕ್ಷಿಣೆ ಮಾಡಿದರು."
+      }
+    },
+    {
+      "id": "indras-anger",
+      "art": "gv03",
+      "source": "Bhagavata Purana 10.25.1–10",
+      "title": {
+        "hi": "घिर आए बादल",
+        "en": "The storm arrives",
+        "gu": "તોફાન આવ્યું",
+        "kn": "ಬಿರುಗಾಳಿ ಬಂತು"
+      },
+      "text": {
+        "hi": "इंद्र को लगा कि व्रजवासियों ने उनका अपमान किया है। क्रोध में उन्होंने विनाशकारी बादल भेजे। तेज़ वर्षा, ओले और हवा से गायों और लोगों को ठंड और डर घेरने लगे।",
+        "en": "Indra felt that the people of Vraja had slighted him. In anger, he sent destructive storm clouds. Heavy rain, hail and fierce wind left the people and cows cold and frightened.",
+        "gu": "ઇન્દ્રને લાગ્યું કે વ્રજવાસીઓએ તેમનું અપમાન કર્યું. ગુસ્સે થઈ તેમણે ભયંકર વાદળાં મોકલ્યાં. વરસાદ, કરા અને પવનથી લોકો અને ગાયો ઠંડીમાં ડરી ગયાં.",
+        "kn": "ವ್ರಜವಾಸಿಗಳು ತನ್ನನ್ನು ಅವಮಾನಿಸಿದ್ದಾರೆಂದು ಇಂದ್ರ ಭಾವಿಸಿದ. ಕೋಪದಿಂದ ಭೀಕರ ಮೋಡಗಳನ್ನು ಕಳುಹಿಸಿದ. ಮಳೆ, ಆಲಿಕಲ್ಲು ಮತ್ತು ಗಾಳಿಯಿಂದ ಜನರು ಹಾಗೂ ಹಸುಗಳು ಚಳಿಯಲ್ಲಿ ನಡುಗಿ ಹೆದರಿದರು."
+      }
+    },
+    {
+      "id": "asking-for-shelter",
+      "art": "gv04",
+      "source": "Bhagavata Purana 10.25.11–18",
+      "title": {
+        "hi": "कृष्ण के पास",
+        "en": "Seeking Krishna’s help",
+        "gu": "કૃષ્ણ પાસે સહાય",
+        "kn": "ಕೃಷ್ಣನ ನೆರವು"
+      },
+      "text": {
+        "hi": "लोग अपने बच्चों और गायों को बचाने की कोशिश कर रहे थे। उन्होंने कृष्ण से रक्षा की प्रार्थना की। सबकी पीड़ा देखकर कृष्ण ने इंद्र का अहंकार शांत करने और व्रज की रक्षा करने का निश्चय किया।",
+        "en": "The villagers tried to protect their children and cows. They turned to Krishna for safety. Seeing their distress, Krishna resolved to protect Vraja and bring Indra’s pride to an end.",
+        "gu": "લોકો બાળકો અને ગાયોને બચાવવા પ્રયત્ન કરતા હતા. તેમણે કૃષ્ણને રક્ષણ માટે પ્રાર્થના કરી. સૌની પીડા જોઈ કૃષ્ણે વ્રજને બચાવવા અને ઇન્દ્રનું અભિમાન શાંત કરવા નક્કી કર્યું.",
+        "kn": "ಜನರು ಮಕ್ಕಳನ್ನೂ ಹಸುಗಳನ್ನೂ ಕಾಪಾಡಲು ಪ್ರಯತ್ನಿಸಿದರು. ರಕ್ಷಣೆಗಾಗಿ ಕೃಷ್ಣನ ಮೊರೆ ಹೋದರು. ಅವರ ಸಂಕಟ ಕಂಡ ಕೃಷ್ಣ ವ್ರಜವನ್ನು ರಕ್ಷಿಸಿ ಇಂದ್ರನ ಅಹಂಕಾರ ತಣಿಸಲು ನಿರ್ಧರಿಸಿದ."
+      }
+    },
+    {
+      "id": "mountain-shelter",
+      "art": "gv05",
+      "source": "Bhagavata Purana 10.25.19–22",
+      "title": {
+        "hi": "पर्वत बना आश्रय",
+        "en": "A hill becomes shelter",
+        "gu": "પર્વત બન્યો આશ્રય",
+        "kn": "ಬೆಟ್ಟವೇ ಆಶ್ರಯ"
+      },
+      "text": {
+        "hi": "कृष्ण ने एक हाथ से गोवर्धन उठा लिया। उन्होंने लोगों को गायों और गाड़ियों सहित उसके नीचे आने को कहा और आश्वस्त किया कि पर्वत नहीं गिरेगा। सब उस विशाल आश्रय में आ गए।",
+        "en": "Krishna lifted Govardhan with one hand. He invited everyone beneath it with their cows and carts, reassuring them that the hill would not fall. The whole community entered the vast shelter.",
+        "gu": "કૃષ્ણે એક હાથથી ગોવર્ધન ઊંચક્યો. તેમણે લોકોને ગાયો અને ગાડાં સાથે નીચે આવવા કહ્યું અને પર્વત નહીં પડે એવી ખાતરી આપી. સૌ એ મોટા આશ્રયમાં આવી ગયાં.",
+        "kn": "ಕೃಷ್ಣ ಒಂದು ಕೈಯಿಂದ ಗೋವರ್ಧನ ಎತ್ತಿದ. ಹಸುಗಳು ಮತ್ತು ಬಂಡಿಗಳೊಂದಿಗೆ ಅದರ ಕೆಳಗೆ ಬರಲು ಹೇಳಿ ಬೆಟ್ಟ ಬೀಳುವುದಿಲ್ಲವೆಂದು ಧೈರ್ಯ ತುಂಬಿದ. ಎಲ್ಲರೂ ವಿಶಾಲ ಆಶ್ರಯದೊಳಗೆ ಬಂದರು."
+      }
+    },
+    {
+      "id": "seven-days",
+      "art": "gv06",
+      "source": "Bhagavata Purana 10.25.23–27",
+      "title": {
+        "hi": "सात दिन की रक्षा",
+        "en": "Seven days of shelter",
+        "gu": "સાત દિવસનું રક્ષણ",
+        "kn": "ಏಳು ದಿನಗಳ ರಕ್ಷಣೆ"
+      },
+      "text": {
+        "hi": "सात दिन तक कृष्ण पर्वत उठाए खड़े रहे। व्रजवासी उनके संरक्षण में सुरक्षित रहे। कृष्ण की शक्ति देखकर इंद्र का अभिमान टूट गया। उन्होंने बादलों को लौटने का आदेश दिया और तूफ़ान थम गया।",
+        "en": "For seven days Krishna held the hill steady while Vraja remained safe beneath it. Seeing Krishna’s power, Indra’s pride gave way. He called back the clouds, and the storm came to an end.",
+        "gu": "સાત દિવસ કૃષ્ણે પર્વત ઊંચકી રાખ્યો. વ્રજવાસીઓ તેમના રક્ષણમાં સુરક્ષિત રહ્યાં. કૃષ્ણની શક્તિ જોઈ ઇન્દ્રનું અભિમાન તૂટ્યું. તેમણે વાદળાં પાછાં બોલાવ્યાં અને તોફાન શમ્યું.",
+        "kn": "ಏಳು ದಿನ ಕೃಷ್ಣ ಬೆಟ್ಟವನ್ನು ಎತ್ತಿ ಹಿಡಿದ. ವ್ರಜವಾಸಿಗಳು ಅವನ ರಕ್ಷಣೆಯಲ್ಲಿ ಸುರಕ್ಷಿತರಾಗಿದ್ದರು. ಕೃಷ್ಣನ ಶಕ್ತಿ ಕಂಡ ಇಂದ್ರನ ಅಹಂಕಾರ ಕರಗಿತು. ಮೋಡಗಳನ್ನು ಹಿಂದಕ್ಕೆ ಕರೆದಾಗ ಬಿರುಗಾಳಿ ನಿಂತಿತು."
+      }
+    },
+    {
+      "id": "safe-return",
+      "art": "gv07",
+      "source": "Bhagavata Purana 10.25.28–33",
+      "title": {
+        "hi": "फिर खुला आकाश",
+        "en": "Safe under clear skies",
+        "gu": "ફરી સ્વચ્છ આકાશ",
+        "kn": "ಮತ್ತೆ ತಿಳಿಯಾದ ಆಕಾಶ"
+      },
+      "text": {
+        "hi": "वर्षा रुकने पर कृष्ण ने सबको बाहर आने को कहा। लोग गायों और सामान के साथ निकले। कृष्ण ने गोवर्धन को उसके स्थान पर रख दिया। प्रियजनों ने उन्हें गले लगाकर अपना आनंद जताया।",
+        "en": "When the rain stopped, Krishna asked everyone to come out. The people led their cows and belongings into the open. Krishna set Govardhan back in its place, and his loved ones embraced him with joy.",
+        "gu": "વરસાદ અટકતાં કૃષ્ણે સૌને બહાર આવવા કહ્યું. લોકો ગાયો અને સામાન સાથે નીકળ્યા. કૃષ્ણે ગોવર્ધન પાછો તેના સ્થાને મૂક્યો. સ્વજનોએ આનંદથી તેમને ભેટી લીધા.",
+        "kn": "ಮಳೆ ನಿಂತಾಗ ಕೃಷ್ಣ ಎಲ್ಲರನ್ನೂ ಹೊರಗೆ ಕರೆದ. ಜನರು ಹಸುಗಳು ಮತ್ತು ಸಾಮಾನುಗಳೊಂದಿಗೆ ಹೊರಬಂದರು. ಕೃಷ್ಣ ಗೋವರ್ಧನವನ್ನು ಮೊದಲಿನ ಸ್ಥಳದಲ್ಲಿ ಇಟ್ಟ. ಪ್ರೀತಿಪಾತ್ರರು ಸಂತೋಷದಿಂದ ಅವನನ್ನು ಅಪ್ಪಿಕೊಂಡರು."
+      }
+    },
+    {
+      "id": "indras-apology",
+      "art": "gv08",
+      "source": "Bhagavata Purana 10.27.1–16",
+      "title": {
+        "hi": "इंद्र की क्षमा-याचना",
+        "en": "Indra asks forgiveness",
+        "gu": "ઇન્દ્રની ક્ષમાયાચના",
+        "kn": "ಇಂದ್ರನ ಕ್ಷಮಾಯಾಚನೆ"
+      },
+      "text": {
+        "hi": "बाद में इंद्र कृष्ण के पास आए और अपना अहंकार स्वीकार किया। कृष्ण ने समझाया कि पद और संपत्ति से मद नहीं करना चाहिए। इंद्र को अपने दायित्व पर लौटने की सीख मिली।",
+        "en": "Later, Indra came to Krishna and admitted his pride. Krishna taught him not to let status and prosperity cloud his judgement. Indra was reminded to return to his responsibilities with humility.",
+        "gu": "પછી ઇન્દ્ર કૃષ્ણ પાસે આવ્યા અને પોતાનું અભિમાન સ્વીકાર્યું. કૃષ્ણે સમજાવ્યું કે પદ અને સંપત્તિથી ઘમંડ ન કરવો. ઇન્દ્રને નમ્રતાથી પોતાની જવાબદારી નિભાવવાની શીખ મળી.",
+        "kn": "ನಂತರ ಇಂದ್ರ ಕೃಷ್ಣನ ಬಳಿಗೆ ಬಂದು ತನ್ನ ಅಹಂಕಾರ ಒಪ್ಪಿಕೊಂಡ. ಸ್ಥಾನಮಾನ ಮತ್ತು ಸಂಪತ್ತಿನಿಂದ ಮದ ಪಡಬಾರದೆಂದು ಕೃಷ್ಣ ತಿಳಿಸಿದ. ಇಂದ್ರ ವಿನಯದಿಂದ ತನ್ನ ಕರ್ತವ್ಯಕ್ಕೆ ಮರಳುವ ಪಾಠ ಕಲಿತ."
+      }
+    }
+  ]
+}

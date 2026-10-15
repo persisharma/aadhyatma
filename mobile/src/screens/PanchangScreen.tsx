@@ -340,6 +340,7 @@ export default function PanchangScreen({ route }: Props) {
   const openPitruSmaran = () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList'));
   const openKundali = () => rootNav.navigate('Kundali');
   const openAddPerson = () => rootNav.navigate('Kundali', { newPerson: true });
+  const openManagePerson = () => rootNav.navigate('Kundali', { editing: true });
   const openRashifal = () => rootNav.navigate('Rashifal');
   const openGochar = () => rootNav.navigate('Gochar');
   const openPrashna = () => rootNav.navigate('Prashna');
@@ -871,6 +872,7 @@ export default function PanchangScreen({ route }: Props) {
               canAddPerson={canAddKundaliPerson}
               onSelectPerson={(id) => { void selectKundaliPerson(id); }}
               onAddPerson={openAddPerson}
+              onManagePerson={openManagePerson}
               onOpenKundali={openKundali}
               onOpenRashifal={openRashifal}
               onOpenGochar={openGochar}
@@ -907,6 +909,7 @@ function JyotishLanding({
   canAddPerson,
   onSelectPerson,
   onAddPerson,
+  onManagePerson,
   onOpenKundali,
   onOpenRashifal,
   onOpenGochar,
@@ -929,6 +932,7 @@ function JyotishLanding({
   canAddPerson: boolean;
   onSelectPerson: (id: string) => void;
   onAddPerson: () => void;
+  onManagePerson: () => void;
   onOpenKundali: () => void;
   onOpenRashifal: () => void;
   onOpenGochar: () => void;
@@ -1117,7 +1121,7 @@ function JyotishLanding({
         : SADE_SATI_PHASE_SHORT[guidance.sadeSatiPhase];
 
     return (
-      <View accessibilityLabel="Jyotish tools landing, saved profile">
+      <View accessibilityLabel="Jyotish tools landing, saved profile" style={styles.jyotishSavedLanding}>
         {/* Whose day this is, ABOVE everything it changes. The chips no longer
             govern only the guidance card: every tile in the grid below reads out
             of this same active person, so a switch has to re-answer the whole
@@ -1134,6 +1138,7 @@ function JyotishLanding({
           labelEn="Whose Jyotish"
           selectAccessibilityLabel={(label) => `Show Jyotish for ${label}`}
           addAccessibilityLabel="Add another person"
+          onManage={onManagePerson}
           fullMessageHi={`${MAX_PEOPLE} लोग तक सहेजे जा सकते हैं।`}
           fullMessageEn={`Up to ${MAX_PEOPLE} people can be saved.`}
         />
@@ -2443,6 +2448,9 @@ const styles = StyleSheet.create({
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },
   jyotishHeroIcon: { width: 58, height: 58, alignItems: 'center', justifyContent: 'center' },
   jyotishIntro: { paddingHorizontal: 1, paddingTop: 12, paddingBottom: 5 },
+  // The §51c intro block used to supply this gap; without it the switcher label
+  // sat flush under the segmented control, closer to it than to its own chips.
+  jyotishSavedLanding: { paddingTop: 18 },
   jyotishSectionLabel: { fontSize: 10, marginTop: 18, marginBottom: 8 },
   jyotishPractice: { minHeight: 72, borderWidth: 1, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
   jyotishPracticeGlyph: { fontFamily: fontFamilies.devanagariBold, fontSize: 24 },

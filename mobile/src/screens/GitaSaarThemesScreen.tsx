@@ -9,6 +9,9 @@ import { contentByLang, pick } from '@/utils/localize';
 import { scriptBodyFont } from '@/utils/langType';
 import { getSourceBackground } from '@/data/backgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
@@ -26,9 +29,20 @@ type Props = NativeStackScreenProps<RootStackParamList, 'GitaSaarChapters'>;
 export default function GitaSaarThemesScreen({ navigation }: Props) {
   const { colors, spacing, typography } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { getChapterProgress } = useReadingProgress();
 
   const title = contentByLang(lang, gitaSaarTitleHi, gitaSaarTitleEn);
+  const listingShare = buildListingShare({
+    sourceId: 'gita-saar',
+    titleHi: gitaSaarTitleHi, titleEn: gitaSaarTitleEn,
+    background: getSourceBackground('gita-saar'),
+    items: gitaSaarChaptersManifest.map((chapter) => ({
+      titleHi: chapter.titleHi, titleEn: chapter.titleEn,
+      detailHi: `${chapter.verseCount} श्लोक`,
+      detailEn: `${chapter.verseCount} verses`,
+    })),
+  });
   const lede = pick(lang, {
     hi: 'एक विषय, गीता के चुने हुए श्लोक, सरल अर्थ। हर श्लोक से पूरा अर्थ गीता में खुलता है।',
     en: 'One theme, the Gita\'s chosen verses, plain meaning. Every verse opens its full meaning in the Gita.',
@@ -42,7 +56,13 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
       <BackgroundLayer source={getSourceBackground('gita-saar')} />
 
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <ReaderHeader title={title} onBack={() => navigation.goBack()} variant="index" />
+        <ReaderHeader
+          title={title}
+          onBack={() => navigation.goBack()}
+          sideWidth={60}
+          right={<ShareButton busy={shareBusy} accessibilityLabel="Share chapter listing" accessibilityHint="Share the complete chapter list as post, Story, or Reel cards" onPress={() => void share(listingShare, lang)} />}
+          variant="index"
+        />
 
         <View style={styles.toggleRow}>
           <LanguageToggle />

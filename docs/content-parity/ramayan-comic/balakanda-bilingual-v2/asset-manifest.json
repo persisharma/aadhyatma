@@ -1,0 +1,1853 @@
+{
+  "status": "local-authoring-only; not a mobile/CDN manifest",
+  "assets": {
+    "top-dialogue-art/assets/bk-01-01-top-v1.png": {
+      "sha256": "3181e19b8958ca4ec8069ec722350d6a8f8db0f0595530c37e2ea9c9aa765109",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-01-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-01-02-top-v1.png": {
+      "sha256": "03c45d3f3004ce573e99741c975f3fa0b7972700b21cf69c0471739df10e7e3b",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-01-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-01-v2.png": {
+      "sha256": "e7d0e879c6fa92455a09716b360e4230777631ac481c4cb07f41a02f4f3ab10c",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-01-03",
+          "frame": {
+            "x": 0,
+            "y": 0.3030075187969925,
+            "width": 0.5025380710659898,
+            "height": 0.3406015037593985,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-01-05",
+          "frame": {
+            "x": 0,
+            "y": 0.643609022556391,
+            "width": 1,
+            "height": 0.35639097744360904,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-01-04-top-v2.png": {
+      "sha256": "0744249777e5f4a99fddf32de2f1bd5c8b9c62ea1ef1380814a0e81badc009bb",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-01-04",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-02-v1.png": {
+      "sha256": "5f5dda931fc9fe70782b1e7751c7ce5e933e5345e00702b0a3db9f38cc179bea",
+      "width": 2048,
+      "height": 768,
+      "panels": [
+        {
+          "id": "bk-02-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.501953125,
+            "height": 1,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-02-02",
+          "frame": {
+            "x": 0.501953125,
+            "y": 0,
+            "width": 0.498046875,
+            "height": 1,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-03-01-top-v1.png": {
+      "sha256": "ce0a4b30785551c5f6141248a04210e7652edd698f4e8894b28bfef9296ebf09",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-03-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-03-v2.png": {
+      "sha256": "7ae23b30248f8b30ddb729eef7b17ed5adbb7116ee7ffcebabb21c1c3140295e",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-03-02",
+          "frame": {
+            "x": 0.4949238578680203,
+            "y": 0,
+            "width": 0.5050761421319797,
+            "height": 0.324812030075188,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-03-03",
+          "frame": {
+            "x": 0,
+            "y": 0.324812030075188,
+            "width": 0.4949238578680203,
+            "height": 0.32857142857142857,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-03-04",
+          "frame": {
+            "x": 0.4949238578680203,
+            "y": 0.324812030075188,
+            "width": 0.5050761421319797,
+            "height": 0.32857142857142857,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-03-05",
+          "frame": {
+            "x": 0,
+            "y": 0.6533834586466165,
+            "width": 0.4949238578680203,
+            "height": 0.34661654135338343,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-03-06",
+          "frame": {
+            "x": 0.4949238578680203,
+            "y": 0.6533834586466165,
+            "width": 0.5050761421319797,
+            "height": 0.34661654135338343,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-04-v3.png": {
+      "sha256": "7fd51d0e007f7da31d6172636a67c91e9c636d533c44cab54d2745be3f2baba4",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-04-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.49746192893401014,
+            "height": 0.3323308270676692,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-04-02",
+          "frame": {
+            "x": 0.49746192893401014,
+            "y": 0,
+            "width": 0.5025380710659898,
+            "height": 0.3323308270676692,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-04-03",
+          "frame": {
+            "x": 0,
+            "y": 0.3323308270676692,
+            "width": 0.49746192893401014,
+            "height": 0.324812030075188,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-04-04",
+          "frame": {
+            "x": 0.49746192893401014,
+            "y": 0.3323308270676692,
+            "width": 0.5025380710659898,
+            "height": 0.324812030075188,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-04-05",
+          "frame": {
+            "x": 0,
+            "y": 0.6571428571428571,
+            "width": 1,
+            "height": 0.34285714285714286,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "../lettering-pilot-v1/bk-05-01-compact-v1.png": {
+      "sha256": "b7aaf018a7206fbf48f052e86f4a2d216065f2a65620ee971a6125b6d8cecd4d",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-05-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../lettering-pilot-v1/bk-05-02-compact-v1.png": {
+      "sha256": "e9b6578a638ab04bb7723b9e18ceb6eeb440901a4812bf0ca039b763147547be",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-05-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../lettering-pilot-v1/bk-05-03-compact-v1.png": {
+      "sha256": "a9dd440506ff75b827b1e509fb4a90f7456ec010c5b702d4e1ec5f125427bd17",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-05-03",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-05-03a-top-v2.png": {
+      "sha256": "e4f41573796c2554ac783f0ea366579d411c75e866ce3bdc8e9727512bb924b0",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-05-03a",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-06-01-top-v2.png": {
+      "sha256": "df041e6b8dc84dc4d1fa3e7d892c34044343e8f4cfa91b7d62e95e7aeefd3f22",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-06-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-06-02-top-v2.png": {
+      "sha256": "a45c193d0bf7e70de0e2318e842f8c18eef6fb89eaf2ae3bfa0e12353fd886eb",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-06-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-06-03-top-v2.png": {
+      "sha256": "ba8d6b6e8d478cecb806764d1db540d38185ccaae29f76ee8c836f3a228e3d47",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-06-03",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-06-v1.png": {
+      "sha256": "4936827efa2e3c82123deb02399f00a9da1d724550b1e0fd066f36c908a51e53",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-06-04",
+          "frame": {
+            "x": 0.5,
+            "y": 0.4990791896869245,
+            "width": 0.5,
+            "height": 0.5009208103130756,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-07-v1.png": {
+      "sha256": "9e1d44e1b0d31b50d5f761dc3f604ec67df0f858737dec39ec34c9b0ab0b0834",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-07-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.4972375690607735,
+            "height": 0.5,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-07-02",
+          "frame": {
+            "x": 0.4972375690607735,
+            "y": 0,
+            "width": 0.5027624309392266,
+            "height": 0.5,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-07-03-top-v1.png": {
+      "sha256": "0ffc661cb8904cda0090292ef0e588ea2c16868e5d37f894afce3ec5da319f10",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-07-03",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-08-v1.png": {
+      "sha256": "0afde018ef1c9b6ce11b8d2b4b044a37415a131093e34c25aaf1d0dda658f9d7",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-08-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.5034530386740331,
+            "height": 0.5,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-08-03",
+          "frame": {
+            "x": 0,
+            "y": 0.5,
+            "width": 0.5034530386740331,
+            "height": 0.5,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-08-02-top-v1.png": {
+      "sha256": "a0821bb42de8e9d1942ded4694e69bc3141f99f6f649eccacb03a102150f6e17",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-08-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "assets/bk-08-04-v2.png": {
+      "sha256": "4a54a39580dba8aad61dff88656db9978789acfe21df82ed7adc86f4e9dbcd67",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-08-04",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "assets/bk-08-04a-v1.png": {
+      "sha256": "52b196da11ee2ee793dd5a54ed980eb8967e5e9b335583d3f1f6847f7cacaf6e",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-08-04a",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-09-v1.png": {
+      "sha256": "9c8f47ffd4fcc7cdf470b495caec30754c2ffcdfe3c131f38bf8af216293d5a3",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-09-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.4972375690607735,
+            "height": 0.4843462246777164,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-09-03",
+          "frame": {
+            "x": 0,
+            "y": 0.4843462246777164,
+            "width": 0.4972375690607735,
+            "height": 0.5156537753222836,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-09-04",
+          "frame": {
+            "x": 0.4972375690607735,
+            "y": 0.4843462246777164,
+            "width": 0.5027624309392266,
+            "height": 0.5156537753222836,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-09-02-top-v3.png": {
+      "sha256": "68a5b136745033d8cce573d5ba17e8465d6292f61f6e8fbe631f00e62441cf8e",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-09-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-09-02a-top-v1.png": {
+      "sha256": "2e9e1de1f5425376ed27f5eab5f2d1459cd82cb19bfed5664cbcb9b93ffe241a",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-09-02a",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-10-v2.png": {
+      "sha256": "b671aaf5789a02bceb35b168af7ff1fd87c9c23e1ce76855568f655dfdd8037c",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-10-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.5048342541436464,
+            "height": 0.5,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-10-02",
+          "frame": {
+            "x": 0.5048342541436464,
+            "y": 0,
+            "width": 0.4951657458563536,
+            "height": 0.5,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-10-03",
+          "frame": {
+            "x": 0,
+            "y": 0.5,
+            "width": 0.5048342541436464,
+            "height": 0.5,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-10-04-top-v1.png": {
+      "sha256": "4c90978335f36403428cf4b79d868c4a9129a8603355a19bf2ee00bfa7b7cdb3",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-10-04",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-11-v1.png": {
+      "sha256": "87cbad97634c8fadaa0feb3f0abc0beaf3cffbbac4a97e5663e115a58238447b",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-11-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.4966159052453469,
+            "height": 0.3330827067669173,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-11-02",
+          "frame": {
+            "x": 0.4966159052453469,
+            "y": 0,
+            "width": 0.5033840947546532,
+            "height": 0.3330827067669173,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-11-03",
+          "frame": {
+            "x": 0,
+            "y": 0.3330827067669173,
+            "width": 0.4966159052453469,
+            "height": 0.3323308270676692,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-11-04",
+          "frame": {
+            "x": 0.4966159052453469,
+            "y": 0.3330827067669173,
+            "width": 0.5033840947546532,
+            "height": 0.3323308270676692,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-11-05",
+          "frame": {
+            "x": 0,
+            "y": 0.6654135338345865,
+            "width": 0.4966159052453469,
+            "height": 0.33458646616541354,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-11-06",
+          "frame": {
+            "x": 0.4966159052453469,
+            "y": 0.6654135338345865,
+            "width": 0.5033840947546532,
+            "height": 0.33458646616541354,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-12-01-top-v1.png": {
+      "sha256": "1e9e77d831f3ddc15c7f9f620f0e31359214e380fa4098eb1040149850d4740e",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-12-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-12-v3.png": {
+      "sha256": "22b793d11dfb00918191c30e4737900b7bce03416b818bfd8061b71e0936e2a8",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-12-02",
+          "frame": {
+            "x": 0.4993093922651934,
+            "y": 0,
+            "width": 0.5006906077348067,
+            "height": 0.4990791896869245,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-12-03",
+          "frame": {
+            "x": 0,
+            "y": 0.4990791896869245,
+            "width": 0.4993093922651934,
+            "height": 0.5009208103130756,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-12-04",
+          "frame": {
+            "x": 0.4993093922651934,
+            "y": 0.4990791896869245,
+            "width": 0.5006906077348067,
+            "height": 0.5009208103130756,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-13-v2.png": {
+      "sha256": "89e1d0e157ea8c55c06b038eb70d51b569bcaeaaa1ede325ee17bdd4b5884dbe",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-13-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.5,
+            "height": 0.3323308270676692,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-13-02",
+          "frame": {
+            "x": 0.5,
+            "y": 0,
+            "width": 0.5,
+            "height": 0.3323308270676692,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-13-03",
+          "frame": {
+            "x": 0,
+            "y": 0.3323308270676692,
+            "width": 0.5,
+            "height": 0.33458646616541354,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-13-04",
+          "frame": {
+            "x": 0.5,
+            "y": 0.3323308270676692,
+            "width": 0.5,
+            "height": 0.33458646616541354,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-13-05",
+          "frame": {
+            "x": 0,
+            "y": 0.6669172932330827,
+            "width": 0.5,
+            "height": 0.3330827067669173,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-13-06-top-v1.png": {
+      "sha256": "42c3579c515c022003f7e120625c88abc865d38fec1b7e02e2301cdec3f3ff91",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-13-06",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-14-v1.png": {
+      "sha256": "c0f2103a3e6752c50c24f05cc25d9550c8212e80b140b110d271e590d119bb99",
+      "width": 1024,
+      "height": 1536,
+      "panels": [
+        {
+          "id": "bk-14-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.498046875,
+            "height": 0.24609375,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-14-03",
+          "frame": {
+            "x": 0,
+            "y": 0.24609375,
+            "width": 0.498046875,
+            "height": 0.25390625,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-14-04",
+          "frame": {
+            "x": 0.498046875,
+            "y": 0.24609375,
+            "width": 0.501953125,
+            "height": 0.25390625,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-14-05",
+          "frame": {
+            "x": 0,
+            "y": 0.5,
+            "width": 0.498046875,
+            "height": 0.2421875,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-14-06",
+          "frame": {
+            "x": 0.498046875,
+            "y": 0.5,
+            "width": 0.501953125,
+            "height": 0.2421875,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-14-07",
+          "frame": {
+            "x": 0,
+            "y": 0.7421875,
+            "width": 0.498046875,
+            "height": 0.2578125,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-14-08",
+          "frame": {
+            "x": 0.498046875,
+            "y": 0.7421875,
+            "width": 0.501953125,
+            "height": 0.2578125,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-14-02-top-v1.png": {
+      "sha256": "b56966282f5b32b6979cfa055c938c7f5f4e5d7ee5416151f0101711364b817f",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-14-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-15-v2.png": {
+      "sha256": "aa00d0ec05ffdf98345b49968b42226ea302e6562ea18abad3f7d9fb190e826e",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-15-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.49746192893401014,
+            "height": 0.3398496240601504,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-15-02",
+          "frame": {
+            "x": 0.49746192893401014,
+            "y": 0,
+            "width": 0.5025380710659898,
+            "height": 0.3398496240601504,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-15-03",
+          "frame": {
+            "x": 0,
+            "y": 0.3398496240601504,
+            "width": 0.49746192893401014,
+            "height": 0.33533834586466166,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-15-04",
+          "frame": {
+            "x": 0.49746192893401014,
+            "y": 0.3398496240601504,
+            "width": 0.5025380710659898,
+            "height": 0.33533834586466166,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-15-05",
+          "frame": {
+            "x": 0,
+            "y": 0.675187969924812,
+            "width": 1,
+            "height": 0.324812030075188,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-16-v2.png": {
+      "sha256": "d878e8d84c20127117f6ea3bb8c65f72ad0cb86c361ddc78dcfe2a4e76ced3a3",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-16-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.5013812154696132,
+            "height": 0.498158379373849,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-16-02",
+          "frame": {
+            "x": 0.5013812154696132,
+            "y": 0,
+            "width": 0.4986187845303867,
+            "height": 0.498158379373849,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-16-03",
+          "frame": {
+            "x": 0,
+            "y": 0.498158379373849,
+            "width": 0.5013812154696132,
+            "height": 0.501841620626151,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-16-04",
+          "frame": {
+            "x": 0.5013812154696132,
+            "y": 0.498158379373849,
+            "width": 0.4986187845303867,
+            "height": 0.501841620626151,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-17-01-top-v1.png": {
+      "sha256": "7c1e134be37751db92dfac3da5216c1ea8ec7b60b8dd58c31588c19f6efa80e8",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-17-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-17-v1.png": {
+      "sha256": "db40d6eccf2346aa083695b8763fe66f2eb1517e32c55fcc08e15c3641e6f1d8",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-17-02",
+          "frame": {
+            "x": 0.4957698815566836,
+            "y": 0,
+            "width": 0.5042301184433164,
+            "height": 0.33157894736842103,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-17-03",
+          "frame": {
+            "x": 0,
+            "y": 0.33157894736842103,
+            "width": 0.4957698815566836,
+            "height": 0.3225563909774436,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-17-04",
+          "frame": {
+            "x": 0.4957698815566836,
+            "y": 0.33157894736842103,
+            "width": 0.5042301184433164,
+            "height": 0.3225563909774436,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-17-05",
+          "frame": {
+            "x": 0,
+            "y": 0.6541353383458647,
+            "width": 1,
+            "height": 0.3458646616541353,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-18-v2.png": {
+      "sha256": "e05d6eb7bc62af14c9332cdb16ee1c3e386f65a1bd9b2005356317277ab868e8",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-18-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.5027624309392266,
+            "height": 0.4990791896869245,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-18-03",
+          "frame": {
+            "x": 0,
+            "y": 0.4990791896869245,
+            "width": 1,
+            "height": 0.5009208103130756,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-18-02-top-v1.png": {
+      "sha256": "38830af8045eb22ef83ea6d0c668b68b53e7e5446ec8f4518e5165b5703bd75e",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-18-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-19-v1.png": {
+      "sha256": "2b6a9b6fde8d232314ffafb4c2d88074a1f8bd6495b010f56fdf714d813846c6",
+      "width": 1024,
+      "height": 1536,
+      "panels": [
+        {
+          "id": "bk-19-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.4990234375,
+            "height": 0.24869791666666666,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-19-03",
+          "frame": {
+            "x": 0,
+            "y": 0.24869791666666666,
+            "width": 0.4990234375,
+            "height": 0.24544270833333334,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-19-04",
+          "frame": {
+            "x": 0.4990234375,
+            "y": 0.24869791666666666,
+            "width": 0.5009765625,
+            "height": 0.24544270833333334,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-19-05",
+          "frame": {
+            "x": 0,
+            "y": 0.494140625,
+            "width": 0.4990234375,
+            "height": 0.23372395833333334,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-19-06",
+          "frame": {
+            "x": 0.4990234375,
+            "y": 0.494140625,
+            "width": 0.5009765625,
+            "height": 0.23372395833333334,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-19-02-top-v1.png": {
+      "sha256": "3b5aa04daff7927587543d5e92fce43c32080f6a5c615790304a0f78db6f2439",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-19-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-19-07-top-v2.png": {
+      "sha256": "5d45bdcd29c810a412a62f5c6942ed71387a84f2853fe7e2adecb827bc7400c5",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-19-07",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-20-v2.png": {
+      "sha256": "24e6770a8d2550bd35f627eb6e03b504a1544d3039ce0255bac6c7003508ca54",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-20-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.49915397631133673,
+            "height": 0.3308270676691729,
+            "status": "painted-panel-boundary-reviewed-v2"
+          }
+        },
+        {
+          "id": "bk-20-02",
+          "frame": {
+            "x": 0.5025380710659898,
+            "y": 0,
+            "width": 0.49746192893401014,
+            "height": 0.3308270676691729,
+            "status": "painted-panel-boundary-reviewed-v2"
+          }
+        },
+        {
+          "id": "bk-20-04",
+          "frame": {
+            "x": 0.5025380710659898,
+            "y": 0.3330827067669173,
+            "width": 0.49746192893401014,
+            "height": 0.3263157894736842,
+            "status": "painted-panel-boundary-reviewed-v2"
+          }
+        },
+        {
+          "id": "bk-20-06",
+          "frame": {
+            "x": 0.5025380710659898,
+            "y": 0.662406015037594,
+            "width": 0.49746192893401014,
+            "height": 0.337593984962406,
+            "status": "painted-panel-boundary-reviewed-v2"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-20-03-top-v1.png": {
+      "sha256": "adb6b3d1ec48fe0abadd79496be6a0f07541100f4be141d1135c1e8ab7bcf0c8",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-20-03",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-20-05-top-v2.png": {
+      "sha256": "8ea4fd054937188c8610ab89f2685b383f879129bcf6a8abab16b7deed40cc6c",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-20-05",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-21-v2.png": {
+      "sha256": "2de274de848802fc47b7513b07d3674e9b256b60c0624554afa89d0f0211b456",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-21-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.4957698815566836,
+            "height": 0.3157894736842105,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-21-02",
+          "frame": {
+            "x": 0.4957698815566836,
+            "y": 0,
+            "width": 0.5042301184433164,
+            "height": 0.3157894736842105,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-21-04",
+          "frame": {
+            "x": 0.4957698815566836,
+            "y": 0.3157894736842105,
+            "width": 0.5042301184433164,
+            "height": 0.3172932330827068,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-21-05",
+          "frame": {
+            "x": 0,
+            "y": 0.6330827067669172,
+            "width": 1,
+            "height": 0.3669172932330827,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-21-03-top-v1.png": {
+      "sha256": "a2f2ae978d6304626e8479e2feba0d58d08837668684a85210f77febd7f76252",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-21-03",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-22-v2.png": {
+      "sha256": "1a137d79130e3cc8a3784d6551b656d8c28454e1ca46a8c30c3039a8ecd8f3cd",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-22-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.5033840947546532,
+            "height": 0.3157894736842105,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-22-02",
+          "frame": {
+            "x": 0.5033840947546532,
+            "y": 0,
+            "width": 0.4966159052453469,
+            "height": 0.3157894736842105,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-22-03",
+          "frame": {
+            "x": 0,
+            "y": 0.3157894736842105,
+            "width": 0.5033840947546532,
+            "height": 0.3157894736842105,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-22-05",
+          "frame": {
+            "x": 0,
+            "y": 0.631578947368421,
+            "width": 0.5033840947546532,
+            "height": 0.3684210526315789,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-22-06",
+          "frame": {
+            "x": 0.5033840947546532,
+            "y": 0.631578947368421,
+            "width": 0.4966159052453469,
+            "height": 0.3684210526315789,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-22-04-top-v1.png": {
+      "sha256": "998a76c3eb6a5d5de1482623eee26ffaf0fc15f48fbde7c0f30c20f600e05975",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-22-04",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-23-v1.png": {
+      "sha256": "199cc1fcf0dea119607b204563f3b5ee8c1b55e2ac0f7cc85f784e6217f91327",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-23-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.5033840947546532,
+            "height": 0.31278195488721805,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-23-02",
+          "frame": {
+            "x": 0.5033840947546532,
+            "y": 0,
+            "width": 0.4966159052453469,
+            "height": 0.31278195488721805,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-23-03",
+          "frame": {
+            "x": 0,
+            "y": 0.31278195488721805,
+            "width": 0.5033840947546532,
+            "height": 0.33383458646616543,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-23-05",
+          "frame": {
+            "x": 0,
+            "y": 0.6466165413533834,
+            "width": 0.5033840947546532,
+            "height": 0.3533834586466165,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-23-04-top-v1.png": {
+      "sha256": "556805de5b2040ae2e61f22e88592399ede470ba46577e157718e1c632a699a1",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-23-04",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-23-06-top-v3.png": {
+      "sha256": "41bd18d8f58b44bdd0a52b8012c99a0cbaa132f4e49d9a831129905fb9be5871",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-23-06",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-24-v1.png": {
+      "sha256": "d61202f55891544dfbc4d40ebfbf238a9be553c218774de3b7aa1086225af347",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-24-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.4972375690607735,
+            "height": 0.4990791896869245,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-24-02",
+          "frame": {
+            "x": 0.4972375690607735,
+            "y": 0,
+            "width": 0.5027624309392266,
+            "height": 0.4990791896869245,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-24-03",
+          "frame": {
+            "x": 0,
+            "y": 0.4990791896869245,
+            "width": 1,
+            "height": 0.5009208103130756,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-25-v2.png": {
+      "sha256": "5286ee6dd007177d198a47fe5070c4226249f2e493afb2acb822406ab5812cb7",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-25-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.4972375690607735,
+            "height": 0.498158379373849,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-25-02",
+          "frame": {
+            "x": 0.4972375690607735,
+            "y": 0,
+            "width": 0.5027624309392266,
+            "height": 0.498158379373849,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-25-03",
+          "frame": {
+            "x": 0,
+            "y": 0.498158379373849,
+            "width": 0.4972375690607735,
+            "height": 0.501841620626151,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-25-04",
+          "frame": {
+            "x": 0.4972375690607735,
+            "y": 0.498158379373849,
+            "width": 0.5027624309392266,
+            "height": 0.501841620626151,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-26-v2.png": {
+      "sha256": "18fb585aaa53903dde5bc25e84c077af180f3d29d9d21d910470837de0824ae1",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-26-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.49915397631133673,
+            "height": 0.3330827067669173,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-26-03",
+          "frame": {
+            "x": 0,
+            "y": 0.3330827067669173,
+            "width": 0.49915397631133673,
+            "height": 0.3330827067669173,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-26-04",
+          "frame": {
+            "x": 0.49915397631133673,
+            "y": 0.3330827067669173,
+            "width": 0.5008460236886633,
+            "height": 0.3330827067669173,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-26-05",
+          "frame": {
+            "x": 0,
+            "y": 0.6661654135338346,
+            "width": 0.49915397631133673,
+            "height": 0.33383458646616543,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-26-06",
+          "frame": {
+            "x": 0.49915397631133673,
+            "y": 0.6661654135338346,
+            "width": 0.5008460236886633,
+            "height": 0.33383458646616543,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-26-02-top-v1.png": {
+      "sha256": "60c9ca4999358d39140869e82af528a460d91d8e3657f1c5c7e46d6d2b9e5c24",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-26-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-27-v3.png": {
+      "sha256": "46f558fda0e0a60b84344a0a78088aa056758727838fa183511fc2b66d456dea",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
+        {
+          "id": "bk-27-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.5025380710659898,
+            "height": 0.3293233082706767,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-27-02",
+          "frame": {
+            "x": 0.5025380710659898,
+            "y": 0,
+            "width": 0.49746192893401014,
+            "height": 0.3293233082706767,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-27-03",
+          "frame": {
+            "x": 0,
+            "y": 0.3293233082706767,
+            "width": 0.5025380710659898,
+            "height": 0.32781954887218046,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-27-04-top-v1.png": {
+      "sha256": "fb583b6805e8192ae0d280c7aa0e104a177642a4f5efaa1031090845a839032f",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-27-04",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-27-05-top-v1.png": {
+      "sha256": "c8ca0b5f0a49b19657d52de81e6dd9246fc43164545c893eb10a0dfadf8adafe",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-27-05",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-28-01-top-v1.png": {
+      "sha256": "ad0a4aade0c1dc4b173bd547b105dad9a5f7c6ac3c4ee89d64a0ba0928473ae3",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-28-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-28-v1.png": {
+      "sha256": "ad9776ddcf5406852ee93366f9335fcfbb27ce47938344b5e2c4dc68ca6d6f3b",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-28-02",
+          "frame": {
+            "x": 0.5027624309392266,
+            "y": 0,
+            "width": 0.4972375690607735,
+            "height": 0.5,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-28-04",
+          "frame": {
+            "x": 0.5027624309392266,
+            "y": 0.5,
+            "width": 0.4972375690607735,
+            "height": 0.5,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-28-03-top-v2.png": {
+      "sha256": "a00d3a01e21eeb46035d9e46b40e7e93e759115fae7c9dd759b51e78e7c6a29f",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-28-03",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-29-v2.png": {
+      "sha256": "47c6e6d8f1d92f03dd252c46d2c53178f00aaf5f121e3585d5e36f4cf95bcf08",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
+        {
+          "id": "bk-29-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 0.5027624309392266,
+            "height": 0.4990791896869245,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-29-02",
+          "frame": {
+            "x": 0.5027624309392266,
+            "y": 0,
+            "width": 0.4972375690607735,
+            "height": 0.4990791896869245,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-29-03",
+          "frame": {
+            "x": 0,
+            "y": 0.4990791896869245,
+            "width": 0.5027624309392266,
+            "height": 0.5009208103130756,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        },
+        {
+          "id": "bk-29-04",
+          "frame": {
+            "x": 0.5027624309392266,
+            "y": 0.4990791896869245,
+            "width": 0.4972375690607735,
+            "height": 0.5009208103130756,
+            "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -49,6 +49,8 @@ const GaneshStotramChaptersScreen = lazyScreen('GaneshStotramChapters', 3, () =>
 const GaneshStotramReaderScreen = lazyScreen('GaneshStotramReader', 3, () => import('@/screens/GaneshStotramReaderScreen'));
 const GitaChaptersIndexScreen = lazyScreen('GitaChapters', 3, () => import('@/screens/GitaChaptersIndexScreen'));
 const GitaReaderScreen = lazyScreen('GitaReader', 3, () => import('@/screens/GitaReaderScreen'));
+const GarudPuranChaptersScreen = lazyScreen('GarudPuranChapters', 3, () => import('@/screens/GarudPuranChaptersScreen'));
+const GarudPuranReaderScreen = lazyScreen('GarudPuranReader', 4, () => import('@/screens/GarudPuranReaderScreen'));
 const GitaSaarThemesScreen = lazyScreen('GitaSaarChapters', 3, () => import('@/screens/GitaSaarThemesScreen'));
 const GitaSaarReaderScreen = lazyScreen('GitaSaarReader', 3, () => import('@/screens/GitaSaarReaderScreen'));
 const HanumanAshtakChaptersScreen = lazyScreen('HanumanAshtakChapters', 3, () => import('@/screens/HanumanAshtakChaptersScreen'));
@@ -56,6 +58,8 @@ const HanumanAshtakReaderScreen = lazyScreen('HanumanAshtakReader', 3, () => imp
 const JapamCounterScreen = lazyScreen('JapamCounter', 3, () => import('@/screens/JapamCounterScreen'));
 const KavachamReaderScreen = lazyScreen('KavachamReader', 3, () => import('@/screens/KavachamReaderScreen'));
 const KidsStoryReaderScreen = lazyScreen('KidsStoryReader', 4, () => import('@/screens/KidsStoryReaderScreen'));
+const ComicChaptersScreen = lazyScreen('ComicChapters', 3, () => import('@/screens/ComicChaptersScreen'));
+const ComicReaderScreen = lazyScreen('ComicReader', 4, () => import('@/screens/ComicReaderScreen'));
 const KrishnaStotramChaptersScreen = lazyScreen('KrishnaStotramChapters', 3, () => import('@/screens/KrishnaStotramChaptersScreen'));
 const KrishnaStotramReaderScreen = lazyScreen('KrishnaStotramReader', 3, () => import('@/screens/KrishnaStotramReaderScreen'));
 const PurposeListScreen = lazyScreen('PurposeList', 3, () => import('@/screens/PurposeListScreen'));
@@ -113,6 +117,8 @@ export default function HomeStackNavigator() {
       <Stack.Screen name="KidsStoryLibrary" component={KidsStoryLibraryScreen} />
       <Stack.Screen name="KidsStoryDeity" component={KidsStoryDeityScreen} />
       <Stack.Screen name="KidsStoryReader" component={KidsStoryReaderScreen} />
+      <Stack.Screen name="ComicChapters" component={ComicChaptersScreen} />
+      <Stack.Screen name="ComicReader" component={ComicReaderScreen} />
       <Stack.Screen name="DeityList" component={DeityListScreen} />
       <Stack.Screen name="DeityIndex" component={DeityIndexScreen} />
       <Stack.Screen name="DeityDetail" component={DeityDetailScreen} />
@@ -157,6 +163,8 @@ export default function HomeStackNavigator() {
         component={GitaReaderScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
+      <Stack.Screen name="GarudPuranChapters" component={GarudPuranChaptersScreen} />
+      <Stack.Screen name="GarudPuranReader" component={GarudPuranReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
       <Stack.Screen name="GitaSaarChapters" component={GitaSaarThemesScreen} />
       <Stack.Screen
         name="GitaSaarReader"

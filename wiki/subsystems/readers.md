@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/aarti/index.ts, mobile/src/data/japam/index.ts, mobile/src/data/japam/japam.json, mobile/src/data/backgrounds.ts, mobile/src/components/JapamAudioPlayer.tsx, RULEBOOK.md]
-last_verified_date: 2026-10-13
+sources: [mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
+last_verified_date: 2026-10-15
 confidence: high
 status: current
 ---
@@ -107,7 +107,9 @@ physical performance remain open. Later Vidhi
 steps show the divider without repeating art. Semantic guide art follows declared deities and
 personal-tithi guides remain neutral. Individual reader paging/scroll logic is still separate.
 Daily Bhakti's rotating verse card omits the banner after the October 12 reading-space
-correction. Its bundled parchment needs no remote lookup, and `Ornament compact` replaces
+correction but keeps its verse's reader-page plate (restored 14 Oct). Every verse page keeps
+its semantic `BackgroundLayer` plate whether or not it shows the banner — the banner is
+additive, never a background replacement. `Ornament compact` replaces
 the nested 80pt vertical margins with 12pt total. Shared reading-size tokens and full text stay
 intact; long verses/meanings still scroll. Source-specific share backgrounds are unchanged.
 `ProseParagraph` preserves complete source strings while giving iOS Fabric one extra point of
@@ -141,6 +143,28 @@ head, no trailing transition on the final chapter, and `navigation.replace` fire
 transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro can't drive
 (velocity-scrolled, ~47 swipes). Each reader also has a chapter-1 smoke test (RULEBOOK §3
 *Reader smoke test*).
+
+## Garud Puran source research (not integrated)
+
+As of 2026-10-01, `docs/content/garud-puran/README.md` inventories the separate
+research collection under Git-ignored `tmp/garud-puran/`.
+`scripts/gather-garud-puran.py` fetches and extracts it without touching the app.
+SanskritDocuments/GRETIL share a source lineage, and both omit Achara 62; a
+Wikisource candidate is kept separately. Hindi scans, a distinctly labelled
+Hindi abridgement, and English OCR/scans are collected but not aligned to verses.
+All research records remain ineligible for release. Read the inventory's edition,
+OCR, numbering and rights gaps before implementing a reader; these files do not
+mean Garud Puran is registered in the library or its bilingual content is verified.
+
+Selection update verified 2026-10-12: the user requested a smaller collection of
+important sections and stories. `docs/content/garud-puran/curated-selection.json`
+now describes 12 Hindi research extracts (four stories) built by
+`scripts/select-garud-puran.py` from the cached abridgement. Heading boundaries,
+not contents-list page numbers, select the passages; those numbering systems
+disagree. `tmp/garud-puran/garud-puran-selected-sources.zip` is the separate local
+handoff. The proposed 3–5-minute bilingual readings are not authored yet. English
+Saroddhara links are related-topic pointers, not aligned translations; there is no
+measured popularity ranking, and every item remains ineligible for release.
 
 ## Dependencies
 
@@ -183,3 +207,15 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
   months after v1). `src/screens/__tests__/readerReadAloud.test.tsx` tables all 21 readers and
   presses the pill on each; a new reader must be added to it (same rule as
   `readerAutoAdvance.test.tsx`). See [[audio]] for the platform traps.
+
+### Garud Puran selected readings (2026-10-12)
+
+The user subsequently authorised bilingual preparation, source verification, integration and artwork preview. `mobile/src/data/garud-puran/` now holds twelve editorial selections / 28 prose pages, using a manifest plus per-reading lazy loaders. It is a selected explanation format (RULEBOOK §31, design §81), not the complete acquired corpus or an invented Sanskrit translation. SanskritDocuments/GRETIL form one source family; the Gita Press Hindi abridgement forms the second. Detailed references, hashes and edition notes are in `docs/content/garud-puran/selected-readings-review.json`.
+
+`GarudPuranChapters` groups teachings/stories/traditions using the existing chapter cards with optional art thumbnails. `GarudPuranReader` reuses the Gita navigation/progress/bookmark/share/routine/narration shell with `GarudPuranPage` for prose and source disclosure. Compatibility fields `verses`/`verseIndex` identify prose pages; labels are readings/pages. Search and routine manifests route through the ordinary chaptered-source maps. Nine static bundled 2:1 WebP paintings add about 1.30 MB plus 3 KB of paper texture; no R2 dependency. `scripts/preview-garud-puran.py` regenerates the bilingual HTML content/art gallery. The earlier research collection's release-ineligible status is unchanged.
+
+User review corrected the initial portrait layout against current-main PR #449 (after the older checkout base). Garud uses its landscape paintings at max 360×180pt, approved screen-level paper, a Phosphor leaf divider and separate page dots; continuation pages have no image slot. `ProseParagraph` and Phosphor typings were copied from current main. Current preview evidence is `docs/content/garud-puran/design-review/`; earlier portrait screenshots are historical.
+
+### Garud Puran final Style 3 integration (2026-10-12)
+
+After user approval, nine exact Style 3 WebPs (1,433,814 bytes total) were bundled locally; the approval and hashes are pinned in `docs/content/garud-puran/artwork/manifest.json`. Current-main `ReadingArtwork` and `BackgroundLayer(readingParchment)` provide the common banner/divider/paper treatment. `HomeStackNavigator` registers both routes lazily, the generated route graph warms the reader from the index, and search yields per reading. Prose sharing carries source context without truncating the explanation; saved progress is labelled Reading / Page. See `docs/content/garud-puran/INTEGRATION.md` for final verification. No R2 or OTA publication.

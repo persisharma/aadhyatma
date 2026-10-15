@@ -83,6 +83,7 @@ type ReaderCase = {
 // Every multi-subsection reader. Adding a new chaptered reader? Add it here so
 // the auto-advance contract is enforced for it too.
 const READERS: ReaderCase[] = [
+  { name: 'Garud Puran', routeName: 'GarudPuranReader', Screen: require('../GarudPuranReaderScreen').default, chapterCount: 12 },
   {
     name: 'Durga Stotram',
     routeName: 'DurgaStotramReader',

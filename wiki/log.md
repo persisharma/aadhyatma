@@ -397,6 +397,38 @@ Validation: 232 Jest suites / 2,152 tests passed; TypeScript and navigation/laun
 
 After the user uploaded the prepared package, all 144 manifest URLs returned HTTP 200, matched expected hashes and fully decoded as WebP. All 144 images, including the Home story-library icon, now use the CDN/cache; iOS/Android production exports contain zero story artwork. Added import and renamed-image regression tests, a reusable full-manifest CDN/export verifier, RULEBOOK §29.2 and CI production-export/CDN checks with retained evidence. Latest main navigation changes are retained, including Home settings entry. Fresh simulator CDN download encountered a TLS trust error on the corporate-intercepted network; native first-download/offline and physical-device checks remain pending. Host CDN checks do not establish native download success.
 
+
+## [2026-10-11] ingest | Ramayan comic character continuity references
+
+Added a decision page for the approved richer-colour comic direction and the six-sheet principal-cast authoring package. Records event-based age/dress/disguise selection, flashbacks, publication evidence levels, edition numbering differences, exact prompt/hash provenance and pending cast/forms. Newly generated models await user acceptance; no app reader, production story text, CDN publication, commit or PR was added.
+
+## [2026-10-11] ingest | Ramayan character model refinement
+
+Updated the existing continuity decision for distinct Rama/Lakshmana facial geometry and Hanuman’s refined model with user-requested gold mukut and gada. Revised sheets were visually reviewed, browser comparison checked in colour/greyscale, exact edit prompts and hashes retained. Authoring references remain proposed; no production app integration.
+
+## [2026-10-11] ingest | Ramayan comic screen previews
+
+User accepted the revised character look; generated and visually reviewed three connected static shelf/reader screens. Recorded exact prompts/input/output hashes, source passages, repaired colour/lettering and scene-extract boundaries. Production remains separate text-free art plus native multilingual text; no app/runtime integration or publication.
+
+## [2026-10-11] ingest | Complete local Hindi Bala Kanda comic authoring draft
+
+Updated [[decisions/ramayan-comic-character-continuity]] from `docs/content-parity/ramayan-comic/balakanda-v1/`: 29 episodes, 137 panels, 55 reader pages and all 77 sarga arcs; original source-based Hindi, every causal transition, text-free generated artwork, final hashes/revisions and measured ink boundaries. Final browser sequence passed at 390 × 844 in standard/large text, including full scroll reach and loaded images. Independent editorial/language/native/CDN/rights gates remain open; mobile story/art registration was not changed.
+
+## [2026-10-12] ingest | Ramayan pilot and continuity correction
+
+Corrected the earlier blanket continuity claim: the 1.28 → 1.29 motivating question and Tataka's visible defeat are missing. The one-episode bk-05 lettering experiment remains unaccepted; enlarged backgrounds undermine scene focus and compact art has not passed bilingual text-fit review. No production story, art manifest or CDN changes. Source findings and review boundaries are in `docs/content-parity/ramayan-comic/lettering-pilot-v1/`.
+
+## [2026-10-12] ingest | Ramayan compact panels tested with actual text
+
+Reviewed all three bk-05 scenes in Hindi and English at 390px / 18px using native text over the compact art. Captions obscure faces and the court balloon obscures its speaker; rejected the layout despite loaded images and no horizontal overflow. Saved bilingual screenshots and a scene-by-scene report in the authoring pilot. No production activation or claim of corrected-episode completion.
+
+## [2026-10-12] ingest | Fitted bilingual Ramayan episode preview
+
+Added `lettering-pilot-v1/fitted.html`: in-frame flowing narration, unchanged full-bounds art, and a new Dasharatha close-up for the existing spoken question. Both languages pass 16 browser text-fit states across normal/Large and four phone widths. Narrow Large balloons reflow inside the panel above art. Complete visual captures and pacing/art provenance are recorded; user/editorial/native acceptance and other-episode continuity corrections remain pending. No production activation.
+
+## [2026-10-12] ingest | Accepted lettering expanded to bilingual Bālakāṇḍa
+
+User accepted the fitted episode and continuous balloon outline, then requested the whole build with both languages verified. Added `balakanda-bilingual-v2/`: 29 episodes / 140 panels, full Hindi/English copy, shared artwork, local reader and paired comparison. Corrected Tataka's visible outcome/night rest, the 1.28→1.29 hermitage-question bridge, river-roar answer and explicit English Subahu outcome; repaired Trishanku frame leakage from measured gutters. All 29 paired sequences visually reviewed and all 1,120 browser panel states pass text/art geometry checks. Panel-by-panel causal notes, text hashes, asset hashes and new-art prompts retained. Independent editorial, Gujarati/Kannada, native, rights and publication gates remain open; no mobile/CDN changes.
 ## [2026-10-10] ingest | Kids-story share: one card per scene (art + caption)
 
 The illustrated share had been alternating an image-only scene card with text-only prose cards, so WhatsApp recipients received a story page as two pictures. `paginateProse` gained `firstPageReservedDp`; `kidsStoryShareable` reserves `illustrationMinHeight` (160 dp) + `illustrationGap` (12 dp) on each scene's first page and sets `illustration.heightDp` to the body the title and caption leave. `ProseShareCard` renders art → title → caption inside that fixed box instead of measuring the title at render. Every published caption fits its scene card in all four languages (art 210–294 dp); a longer caption would continue on a plain card. Share-related Jest suites and TypeScript pass; design.md §76 and the share/kids-stories wiki pages are updated. No native capture was re-verified in this session.
@@ -792,6 +824,110 @@ assertions and test scope are unchanged. The complete matching-runtime reader ru
 241 suites / 2,335 tests in 97.337 seconds, with clean typecheck and touched-test lint.
 No app/runtime or native-export changes. Evidence:
 docs/evaluations/reading-visuals-2026-10-12/tall-verse-share/review.md.
+
+
+## [2026-10-12] ingest | Approved Style 3 reusable image template
+
+Saved the approved detailed Krishna storybook rendering, fill-in scene brief, complete
+2:1 reader-banner prompt, Hanuman gada corrections and export/approval checks in
+docs/content-parity/reader-illustration-style3-prompt.md. The personal ImageGen template
+artifact-template-vedansh-style-3-reader-banner retains the approved Hanuman–Sita original
+PNG unchanged, its preview and the same self-contained style guide. Reference hashes are
+verified against the approved shipped WebP and original master. Future generations still
+require their own visual acceptance before activation or publication; kids-story pages
+retain their separate format/source contracts. No app, artwork, manifest or R2 change.
+
+
+## [2026-10-12] ingest | Reader style documentation CI coverage
+
+The CI workflow now includes docs/content-parity/reader-illustration*.md in its pull-request
+and main-push path filters, so the saved prompt and style guide receive the existing mobile
+test/export/CDN gate. The prompt links to the committed approved WebP and distinguishes the
+local master/personal Codex template from repository files. No app code or asset changes.
+
+## [2026-10-01] ingest | Garud Puran source acquisition only
+
+Recorded the collector and source inventory in `subsystems/readers.md`. Research data remains in ignored `tmp/garud-puran/`; no mobile integration. Edition boundaries, missing/duplicate source references, noisy OCR, translation alignment and reuse-review gaps remain explicit.
+
+## [2026-10-12] ingest | Garud Puran selected-source handoff
+
+User narrowed reading scope to important sections and stories. Gathered 12 heading-bounded Hindi research extracts, including four stories, with source page hashes and explicit draft status. Added curated-selection.json and select-garud-puran.py; local selected-source ZIP is separate from the full collection. Contents page numbers disagree with actual body headings. English Saroddhara references are topic pointers only; concise bilingual readings and independent verification remain pending. No app integration.
+
+## [2026-10-12] ingest | Garud Puran selected-reading integration
+
+Added twelve source-compared Hindi/English editorial readings, 28 pages and nine interpretive illustrations under the user's subsequent integration authorisation. Registered the chapter index and reader across library, search, routine and entry routes; preserved common bookmark/share/progress/narration behaviour. Documented RULEBOOK §31 and design §81, source comparison hashes, artwork mapping and a regenerable preview. Full-corpus acquisition remains separate and unverified. See docs/content/garud-puran/INTEGRATION.md for test/device evidence and limitations.
+
+## [2026-10-12] ingest | Align Garud Puran with current reader art
+
+Compared PR #253 and current-main #429/#434/#449 after user rejected the older checkout’s portrait layout. Re-composed nine complete landscape scenes with approved style references; adopted quiet paper, compact leaf divider, contained 2:1 images and non-overlapping page markers. Content and source verification unchanged. Scoped current-main dependency/paragraph compatibility copied; no whole-branch merge or publication. See Garud design-review evidence.
+
+## [2026-10-12] ingest | Approved Garud Puran Style 3 integration and main reconciliation
+
+User approved all nine final banners and requested a verified PR. Merged main while retaining shared reader components, lazy navigation, cooperative search and both wiki histories. Activated the approved local assets, corrected page/resume vocabulary and adopted prose sharing. Asset hashes, source boundaries and final verification are in the Garud integration review.
+
+## [2026-10-13] ingest | Bilingual comic speaker pointers
+
+Recorded explicit painted-frame speaker anchors for all 31 dialogue panels, build-time coverage validation, and the distinction between geometric containment and correct speaker attribution. Local browser checks cover all 140 panels at four widths in Hindi/English and Standard/Large; native/editorial checks remain pending. See [[decisions/ramayan-comic-character-continuity]].
+
+## [2026-10-13] ingest | Replace hosted comic WebView with the native reviewed reader
+
+The comic now uses native episode cards, shared reader controls and global reading size. All 140 bilingual-v2 panels and 31 reviewed speaker anchors are preserved. The 35 unchanged PNGs are hosted at content-hash CDN URLs and use the shared persistent asset cache; iOS/Android exports contain no comic artwork. App source/review chrome is removed; provenance remains in authoring files. See [[decisions/ramayan-comic-character-continuity]] and the bilingual-v2 native integration review for verified checks and remaining native/editorial/release boundaries.
+
+## [2026-10-13] ingest | Put comic dialogue on the illustrated scene
+
+Replaced the separate native speech gutter with 31 scene-specific on-image balloons. Short tails retain the reviewed speaker direction; measured sky/side slots fall back to the lower edge when text would cover faces. Narration, app text-size controls and original art frames remain intact. See [[decisions/ramayan-comic-character-continuity]] and the bilingual-v2 speech overlay review for evidence boundaries.
+
+- 2026-10-13 — Corrected the rejected fixed-top comic speech layout: 31 reviewed portrait scenes, measured bubbles beside the cast, uncapped speaker endpoints, inverted Trishanku special placement, full-width native reader and shared browser/native geometry. See [[decisions/ramayan-comic-character-continuity]] and `speech-overlay-review.md`; final native sequence review tracked separately from layout checks and release.
+
+- 2026-10-15 — User accepted corrected comic speaker placement. Both all-140 Hindi native sequences completed at Standard/Large; all captured panel compositions reviewed. Browser 2,240 states and dialogue 248 states passed, along with 15 focused tests/typecheck. Changes remain local and uncommitted; physical-device, full English native sequence, editorial and release checks are separate.
+
+## [2026-10-14] ingest | Themed reading backgrounds restored
+
+The 10 Oct banner rollout had also replaced the semantic `BackgroundLayer` plate with neutral
+paper on the seven canonical verse layouts (21 readers), Daan Punya and the Daily Bhakti card.
+After banners were gated to first verses (11 Oct) and removed from Daily Bhakti (12 Oct), those
+surfaces showed no thematic art. Restored the original plates; banner gating is unchanged.
+Screens that never had a plate keep the paper. Added a per-layout regression test. Updated
+design.md §6/§23, RULEBOOK §11.8 and the readers/reading-artwork pages. Focused Jest suites,
+TypeScript and touched-file lint pass; native visual check not run.
+
+## [2026-10-14] ingest | Nationwide place-name search in the location picker
+
+"A lot of places not in the list": only 52 cities + 342 Rajasthan tehsils were findable by name;
+everything else needed an exact pincode. Rebuilt `scripts/build-pincodes.mjs` on the data.gov.in
+post-office directory (npm `india-pincode`): 19,654 pincodes (was 18,466; J&K 1 → 186, Ladakh 0 → 13)
+and a new lazily-loaded `pincodeOffices.json` of 165,192 town/village names. Office coordinates are
+noisy, so the generator gates snaps, broken columns, DMS typos and misfiled states, and votes by
+consensus with the old geocoder — median error 3.3 km vs 5.4 km before. Picker gains a
+"Towns & villages" group, a no-match line, and served-offices captions; a picked place stores its
+pincode with the name in `labelEn`. State labels now say "Jammu and Kashmir", matching `STATE_LENS`.
+Updated design.md Location Picker, [[panchang]] location sections/gotchas, the Maestro location flow
+(device run owed). Jest, engine, Ask and typecheck pass; `contentCorrectness` fails identically on main.
+
+## [2026-10-15] ingest | Spelling-variant and district search for places
+
+Report: Chhapra (Saran), Bhagalpur, Muzaffarpur, Darbhanga "not found". India Post spells Chhapra
+"Chapra", and Saran is a district, not an office. Added `foldPlaceName` (chh/ch → c, aspirate h
+dropped, w → v, doubled letters collapsed…), precomputed for all 165k names by the generator, plus
+district-name search over each district's head offices; literal spelling wins fold ties. Office
+table grows 1.9 → 3.4 MB (still lazy). Tests pin the four Bihar towns under common spellings and
+re-fold every shipped name against the runtime copy. See [[panchang]].
+
+- 2026-10-15 — Committed the accepted comic artwork/placement revision and reconciled origin/main through c05acdbd, preserving both comic and themed-background wiki history. No app release is implied by this branch push.
+
+## [2026-10-15] ingest | Daily Bhakti reminder + widget setup strip
+
+Added a one-ask-at-a-time strip under the Daily Bhakti title: the daily-verse reminder while it is
+not set up (on + granted), a Settings link on a hard denial, then the verse widget once the
+reminder is set up or its ask is resting. "Not now" rests the reminder ask for 15 days and ends
+the widget ask (`@vedansh/daily-bhakti-nudge`). Android pins the verse widget directly; iOS gets a how-to sheet.
+The widget ask is gated on the new `hasWidgetHost()` so an OTA never offers it to a binary without
+the extension, and it ends on a completed add flow because neither bridge can report placement.
+Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pages.
+
+## [2026-10-15] ingest | Share public listing and chapter-index cards
+
+Added a reusable listing-to-prose mapping for category, deity, purpose, katha, observance and vidhi catalogs and chapter/theme/episode indexes. Three complete rows per card preserve titles and details in all four reading languages; long indexes use labelled scopes under the ten-card share limit. The existing post, Story/Reel and carousel picker handles export; Story/Reel files are static images. Typecheck and focused share tests passed; native visual and destination checks remain pending. See [[share]].
 
 ## [2026-10-13] ingest | Aarti and japa content integration and competitor title audit
 

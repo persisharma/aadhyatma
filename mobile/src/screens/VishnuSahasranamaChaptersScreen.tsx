@@ -8,6 +8,9 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { getSourceBackground } from '@/data/backgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
@@ -19,9 +22,20 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'VishnuSahasranamaChapte
 export default function VishnuSahasranamaChaptersScreen({ navigation }: Props) {
   const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { getChapterProgress } = useReadingProgress();
 
   const title = contentByLang(lang, vishnuSahasranamaTitleHi, vishnuSahasranamaTitleEn);
+  const listingShare = buildListingShare({
+    sourceId: 'vishnu-sahasranama',
+    titleHi: vishnuSahasranamaTitleHi, titleEn: vishnuSahasranamaTitleEn,
+    background: getSourceBackground('vishnu-sahasranama'),
+    items: vishnuSahasranamaChaptersManifest.map((chapter) => ({
+      titleHi: chapter.titleHi, titleEn: chapter.titleEn,
+      detailHi: `${chapter.verseCount} श्लोक`,
+      detailEn: `${chapter.verseCount} verses`,
+    })),
+  });
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -30,6 +44,8 @@ export default function VishnuSahasranamaChaptersScreen({ navigation }: Props) {
         <ReaderHeader
           title={title}
           onBack={() => navigation.goBack()}
+          sideWidth={60}
+          right={<ShareButton busy={shareBusy} accessibilityLabel="Share chapter listing" accessibilityHint="Share the complete chapter list as post, Story, or Reel cards" onPress={() => void share(listingShare, lang)} />}
           variant="index"
         />
 

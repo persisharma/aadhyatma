@@ -8,6 +8,13 @@ import { ArtworkCaptureContext, createArtworkPaintBarrier } from '../ArtworkCapt
 import { readerIllustrationAsset } from '@/data/readerIllustrationAsset';
 import { backgroundAsset, bundledReadingFallback } from '@/data/backgroundAsset';
 import { evictBackgroundAsset, subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
+import { bundledArtworkCorrection } from '@/data/artworkCorrections';
+
+jest.mock('@assets/artwork-corrections/theerth-karni-mata-background.webp', () => 101);
+jest.mock('@assets/artwork-corrections/theerth-karni-mata-banner.webp', () => 102);
+jest.mock('@assets/artwork-corrections/hanuman-sita-background.webp', () => 103);
+jest.mock('@assets/artwork-corrections/ram-hanuman-background.webp', () => 104);
+jest.mock('@assets/artwork-corrections/rama-darbar-background.webp', () => 105);
 
 jest.mock('@/utils/backgroundAssetCache', () => ({
   subscribeBackgroundAsset: jest.fn(),
@@ -20,7 +27,7 @@ jest.mock('@/data/readerIllustrationManifest.json', () => ({
 }));
 
 const source = backgroundAsset('backgrounds--source-vishnu-narayana');
-const other = backgroundAsset('backgrounds--deity-rama-darbar');
+const other = backgroundAsset('backgrounds--deity-durga-lion');
 const neutral = backgroundAsset('backgrounds--reading-parchment-option2');
 let deferred: (() => void)[];
 let cancels: jest.Mock[];
@@ -147,4 +154,40 @@ test('reader illustrations share deferred work and keep fallback until native de
   expect(StyleSheet.flatten(remote.props.style).opacity).toBe(0);
   act(() => remote.props.onLoad());
   expect(StyleSheet.flatten(remote.props.style).opacity).toBe(1);
+});
+
+test.each([
+  backgroundAsset('backgrounds--theerth-karni-mata'),
+  backgroundAsset('chalisa--Hanuman_sita'),
+  backgroundAsset('chalisa--Ram_hanuman'),
+  backgroundAsset('backgrounds--deity-rama-darbar'),
+  readerIllustrationAsset('theerth-karni-mata'),
+])('reviewed correction %s paints immediately without requesting stale cached art', corrected => {
+  act(() => { tree = TestRenderer.create(<CachedArtwork source={corrected} fallback={<Image source={99} />} />); });
+  expect(tree.root.findByType(Image).props.source).toBe(bundledArtworkCorrection(corrected));
+  expect(deferred).toHaveLength(0);
+  expect(subscribeBackgroundAsset).not.toHaveBeenCalled();
+});
+
+test('sharing a bundled correction waits for native paint, including after changing the source', async () => {
+  const capture = createArtworkPaintBarrier();
+  const corrected = backgroundAsset('backgrounds--theerth-karni-mata');
+  act(() => { tree = TestRenderer.create(<ArtworkCaptureContext.Provider value={capture}><CachedArtwork source={corrected} /></ArtworkCaptureContext.Provider>); });
+  let painted = false;
+  const waiting = capture.wait(1000).then(result => { painted = true; return result; });
+  await Promise.resolve();
+  expect(painted).toBe(false);
+  act(() => tree.root.findByType(Image).props.onLoad());
+  await expect(waiting).resolves.toBe(true);
+  const oldEvents = tree.root.findByType(Image).props;
+  act(() => tree.update(<ArtworkCaptureContext.Provider value={capture}><CachedArtwork source={readerIllustrationAsset('theerth-karni-mata')} /></ArtworkCaptureContext.Provider>));
+  painted = false;
+  const changed = capture.wait(1000).then(result => { painted = true; return result; });
+  await Promise.resolve();
+  expect(painted).toBe(false);
+  act(() => { oldEvents.onLoad(); oldEvents.onError(); });
+  await Promise.resolve();
+  expect(painted).toBe(false);
+  act(() => tree.root.findByType(Image).props.onLoad());
+  await expect(changed).resolves.toBe(true);
 });

@@ -18,7 +18,11 @@ import BajrangBaanVersePage from '../BajrangBaanVersePage';
 import SanskarVersePage from '../SanskarVersePage';
 import KathaSectionPage from '../KathaSectionPage';
 import ProseReadingCard from '../ProseReadingCard';
+import GarudPuranPage from '../GarudPuranPage';
+import { getGarudPuranChapter } from '@/data/garud-puran';
 import ReadingBanner from '../ReadingBanner';
+import BackgroundLayer from '../BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
 
 // Keep actual reader layout; only native image I/O is outside this test's scope.
 jest.mock('../CachedArtwork', () => () => null);
@@ -53,6 +57,17 @@ test.each(cases)('%s: later cards remove the banner frame while keeping all read
   act(() => tree.unmount());
 });
 
+test.each(cases)('%s: every card keeps its themed background whether or not it shows the banner', (_, page) => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  for (const show of [true, false]) {
+    act(() => { tree = TestRenderer.create(wrap(page(show))); });
+    const [layer] = tree.root.findAllByType(BackgroundLayer);
+    expect(layer.props.source).toBeTruthy();
+    expect(layer.props.source).not.toBe(readingParchment);
+    act(() => tree.unmount());
+  }
+});
+
 test('Katha has a banner only on its first section, including when a later section is opened directly', () => {
   const section = { id: 'part', titleHi: 'कथा', titleEn: 'Katha', bodyHi: ['कथा पाठ'], bodyEn: ['All story paragraphs remain readable.'] };
   let tree!: TestRenderer.ReactTestRenderer;
@@ -73,5 +88,17 @@ test('a single continuous prose reading keeps its one opening illustration', () 
   act(() => { tree = TestRenderer.create(<ProseReadingCard illustration={backgroundImages.category_granth_open_scripture}><Text>Complete continuous story</Text></ProseReadingCard>); });
   expect(tree.root.findAllByType(ReadingBanner)).toHaveLength(1);
   expect(text(tree)).toContain('Complete continuous story');
+  act(() => tree.unmount());
+});
+
+test('Garud Puran reserves artwork only for the opening page and preserves continuation text', () => {
+  const chapter = getGarudPuranChapter(5);
+  let tree!: TestRenderer.ReactTestRenderer;
+  const page = (index: number) => wrap(<GarudPuranPage verse={chapter.verses[index]} source={chapter.source} width={375} />);
+  act(() => { tree = TestRenderer.create(page(0)); });
+  expect(tree.root.findAllByType(ReadingBanner)).toHaveLength(1);
+  act(() => { tree.update(page(1)); });
+  expect(tree.root.findAllByType(ReadingBanner)).toHaveLength(0);
+  expect(text(tree)).toContain(chapter.verses[1].bodyEn[0]);
   act(() => tree.unmount());
 });

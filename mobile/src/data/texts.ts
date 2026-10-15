@@ -10,6 +10,8 @@
 // launch-safe by design (see `gita-saar/index.ts` LAUNCH-GRAPH RULE).
 import { gitaSaarTotal, gitaSaarChaptersManifest } from './gita-saar';
 import {
+  garudPuranTotal,
+  garudPuranReadingCount,
   achyutashtakamTotal,
   bajrangBaanTotal,
   bhavaniAshtakamTotal,
@@ -158,6 +160,18 @@ export const library: readonly LibraryEntry[] = [
     deities: ['krishna'],
     verseCount: gitaSaarTotal,
     addedInVersion: '1.4.9',
+  },
+  {
+    id: 'garud-puran',
+    nameHi: 'गरुड़ पुराण',
+    nameEn: 'Garud Puran',
+    sub: `${garudPuranReadingCount} चयनित पाठ · सरल व्याख्या`,
+    subEn: `${garudPuranReadingCount} selected readings · simple explanations`,
+    thumb: 'ग',
+    status: 'active',
+    category: 'granth',
+    deities: ['vishnu'],
+    verseCount: garudPuranTotal,
   },
   {
     id: 'sundarkand',
@@ -665,6 +679,22 @@ export const library: readonly LibraryEntry[] = [
     deities: ['krishna'],
     verseCount: 8,
     addedInVersion: '1.5.0',
+  },
+  {
+    // Shivanand Swami's Gujarati Amba aarti, known by its cue "ॐ जयो जयो मा
+    // जगदंबे". Stored in Devanagari; the gu reading language restores the
+    // Gujarati script letter for letter (aarti/jay-adhya-shakti.json source notes).
+    id: 'jay-adhya-shakti',
+    nameHi: 'जय आद्या शक्ति',
+    nameEn: 'Jay Adhya Shakti',
+    sub: '18 पद · व्याख्या सहित',
+    subEn: '18 verses · with commentary',
+    thumb: 'आ',
+    status: 'active',
+    category: 'aarti',
+    deities: ['durga'],
+    verseCount: 18,
+    addedInVersion: '1.5.2',
   },
   {
     id: 'prabhati-shloka',

@@ -10,6 +10,9 @@ import { categories } from '@/data/categories';
 import { getCategoryBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LibraryCard from '@/components/LibraryCard';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useNewContent } from '@/contexts/NewContentContext';
@@ -26,6 +29,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   // the Japa "inside" step (design.md §47). Harmless for other categories.
   const japamInsideRef = useTourTarget('japamInside');
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   const { categoryId } = route.params;
   const { getProgress, clearProgress, clearChapterProgress, isLoading } = useReadingProgress();
   const { markSeen } = useNewContent();
@@ -103,6 +107,24 @@ export default function CategoryListScreen({ navigation, route }: Props) {
               · {title.secondary.text}
             </Text>
           </View>
+          <ShareButton
+            busy={shareBusy}
+            accessibilityLabel="Share category listing"
+            accessibilityHint="Share the complete list as post, Story, or Reel cards"
+            onPress={() => {
+              if (!categoryMeta) return;
+              void share(buildListingShare({
+                sourceId: `category-${categoryId}`,
+                titleHi: categoryMeta.nameHi,
+                titleEn: categoryMeta.nameEn,
+                background: backgroundImage,
+                items: items.map((entry) => ({
+                  titleHi: entry.nameHi, titleEn: entry.nameEn,
+                  detailHi: entry.sub, detailEn: entry.subEn,
+                })),
+              }), lang);
+            }}
+          />
         </View>
 
         <ScrollView
@@ -176,6 +198,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleRow: {
+    flex: 1,
+    minWidth: 0,
     flexDirection: 'row',
     alignItems: 'baseline',
   },

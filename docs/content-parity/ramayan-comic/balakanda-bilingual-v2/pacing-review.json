@@ -1,0 +1,1831 @@
+{
+  "reviewer": "Agent authoring and browser visual pass; not independent Sanskrit/editorial approval",
+  "pending": [
+    "gu full narrative",
+    "kn full narrative",
+    "independent editorial",
+    "complete native Standard/Large"
+  ],
+  "panels": [
+    {
+      "episode": "bk-01",
+      "panel": "bk-01-01",
+      "source": "1.1",
+      "previous": null,
+      "next": "bk-01-02",
+      "review": "Narada answers Valmiki’s search for an exemplary person.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "72fa52896b9092205045aa541e8cf7435c9cdac5085be7ce480af995a66912c5"
+    },
+    {
+      "episode": "bk-01",
+      "panel": "bk-01-02",
+      "source": "1.1",
+      "previous": "bk-01-01",
+      "next": "bk-01-03",
+      "review": "The brief whole-life outline is explicitly a prologue, not a jump in the main journey.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "318e566393afafc058c2db17d7c3c077aa8d6f845780a3bb4fd5d311e48e6662"
+    },
+    {
+      "episode": "bk-01",
+      "panel": "bk-01-03",
+      "source": "1.2",
+      "previous": "bk-01-02",
+      "next": "bk-01-04",
+      "review": "The bird’s death and its mate’s grief motivate the first verse; fallen bird visible, no gore.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "f0c37d5fa8857eac6923a528f15b242ea5f19960e0b8a61dce2a6a5b46526c5d"
+    },
+    {
+      "episode": "bk-01",
+      "panel": "bk-01-04",
+      "source": "1.2-3",
+      "previous": "bk-01-03",
+      "next": "bk-01-05",
+      "review": "Brahma’s encouragement leads to meditation and composition.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "01d0895950255a2bf955427d94a2d4018e6ae20fa99bb01d1353d1a1984da609"
+    },
+    {
+      "episode": "bk-01",
+      "panel": "bk-01-05",
+      "source": "1.4",
+      "previous": "bk-01-04",
+      "next": "bk-02-01",
+      "review": "Teaching leads to Lava/Kusha’s later court performance; later-time label prevents age confusion.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "ff9650ba6ad5346617a109534f800f6a72e99cc829fbe30bfb2dd9e465e5199e"
+    },
+    {
+      "episode": "bk-02",
+      "panel": "bk-02-01",
+      "source": "1.5-6",
+      "previous": "bk-01-05",
+      "next": "bk-02-02",
+      "review": "Return from the prologue to Dasharatha’s prosperous Ayodhya.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "745de48b26e9ccafbf1042fa34253e08a043169bf353eed85e277cba7c417982"
+    },
+    {
+      "episode": "bk-02",
+      "panel": "bk-02-02",
+      "source": "1.7",
+      "previous": "bk-02-01",
+      "next": "bk-03-01",
+      "review": "Counsel establishes the king and Vashishtha before the succession concern.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e99a983ec16d4cadc61ba2e7145586abd33dbb66729d56815f9c46eb11f79b7b"
+    },
+    {
+      "episode": "bk-03",
+      "panel": "bk-03-01",
+      "source": "1.8-9",
+      "previous": "bk-02-02",
+      "next": "bk-03-02",
+      "review": "Concern for an heir motivates the rite and Sumantra’s invitation proposal.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "d09ea78e35de8d827ac9cc526f9e929ed380cf36e61f7ebd55a32affc3d7b988"
+    },
+    {
+      "episode": "bk-03",
+      "panel": "bk-03-02",
+      "source": "1.10",
+      "previous": "bk-03-01",
+      "next": "bk-03-03",
+      "review": "Anga’s drought establishes why Romapada sought Rishyasringa; explicit earlier-story framing.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "7efd7f6749f5fcaaf55f6428ffc8cd6fcc2cdc29f65465da1f4826b0b3d704dd"
+    },
+    {
+      "episode": "bk-03",
+      "panel": "bk-03-03",
+      "source": "1.10",
+      "previous": "bk-03-02",
+      "next": "bk-03-04",
+      "review": "Women act as city envoys, not Dasharatha’s queens; gifts motivate friendship.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "6fc3ff34a8fd2d726d6a63b4e2d6a6fb97397ed20d73a79f5b9b980fde7f6d69"
+    },
+    {
+      "episode": "bk-03",
+      "panel": "bk-03-04",
+      "source": "1.10",
+      "previous": "bk-03-03",
+      "next": "bk-03-05",
+      "review": "The sage seeks the visitors and accompanies them to Anga.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "8e74b0e3fe5547a1022f268ebf62ebcd19738862404b61c0b5abb822d3f40450"
+    },
+    {
+      "episode": "bk-03",
+      "panel": "bk-03-05",
+      "source": "1.10",
+      "previous": "bk-03-04",
+      "next": "bk-03-06",
+      "review": "Arrival resolves the drought and leads to honour and Shanta’s marriage.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "3b616788f299fc6872653b89299bacbc407115dc26e6cae3769e55d04529db94"
+    },
+    {
+      "episode": "bk-03",
+      "panel": "bk-03-06",
+      "source": "1.11",
+      "previous": "bk-03-05",
+      "next": "bk-04-01",
+      "review": "Dasharatha visits Anga before the couple travels to Ayodhya; invitation order visible.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "208f8e826d6e5c73aece70dfe71c96c8f26cdbb89706e2d911132422d62591f3"
+    },
+    {
+      "episode": "bk-04",
+      "panel": "bk-04-01",
+      "source": "1.12-14",
+      "previous": "bk-03-06",
+      "next": "bk-04-02",
+      "review": "Preparations and completed Ashvamedha precede the separate Putreshti.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "cdc328311d6d5ca73d6b91ff3a5b297ec26411999777ddd213196e290694a2b0"
+    },
+    {
+      "episode": "bk-04",
+      "panel": "bk-04-02",
+      "source": "1.15",
+      "previous": "bk-04-01",
+      "next": "bk-04-03",
+      "review": "Putreshti and the gods’ concern introduce the parallel divine strand.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "cef52973c2d93ce4f61d34c96c2af5e043c07928f7f50019ec596a30bab9cea4"
+    },
+    {
+      "episode": "bk-04",
+      "panel": "bk-04-03",
+      "source": "1.15-16",
+      "previous": "bk-04-02",
+      "next": "bk-04-04",
+      "review": "Ravana’s unprotected human vulnerability motivates Vishnu’s resolve.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "80c71702c4f5c2db3e4539070e45c23ce44ac4620810c7e04f7bd9f6188b82ce"
+    },
+    {
+      "episode": "bk-04",
+      "panel": "bk-04-04",
+      "source": "1.16",
+      "previous": "bk-04-03",
+      "next": "bk-04-05",
+      "review": "The divine messenger gives payasa; Sumitra’s two shares retained.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "fd09ec998e592db50afbf2fa9e9284c6a0cc368141d45619376850e0d9ea557c"
+    },
+    {
+      "episode": "bk-04",
+      "panel": "bk-04-05",
+      "source": "1.17",
+      "previous": "bk-04-04",
+      "next": "bk-05-01",
+      "review": "The future vanara helpers prepare the wider arc, before the princes’ births.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "38c7e16888bb985dedf0e91e8d2174ecedc46e2c4a3ad7d536e60e76b66f18a7"
+    },
+    {
+      "episode": "bk-05",
+      "panel": "bk-05-01",
+      "source": "1.18",
+      "previous": "bk-04-05",
+      "next": "bk-05-02",
+      "review": "Three mothers and four infants clearly identified in both copy and art.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "8e682554121a1c171d6bad8086731b3f8cc47e7fbbcae254743ce6f6248750e4"
+    },
+    {
+      "episode": "bk-05",
+      "panel": "bk-05-02",
+      "source": "1.18",
+      "previous": "bk-05-01",
+      "next": "bk-05-03",
+      "review": "Time advances to study; both brother-pair bonds retained.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e01944daf5084cbade865f401775dea8e44218560628e63a29bfe47430dd53aa"
+    },
+    {
+      "episode": "bk-05",
+      "panel": "bk-05-03",
+      "source": "1.18",
+      "previous": "bk-05-02",
+      "next": "bk-05-03a",
+      "review": "Adolescence and elder Vishwamitra’s arrival establish the audience.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "cfd63dea50d0945692cd17fc577924adfb836246a8a2f93340b4bd939d79fa14"
+    },
+    {
+      "episode": "bk-05",
+      "panel": "bk-05-03a",
+      "source": "1.18",
+      "previous": "bk-05-03",
+      "next": "bk-06-01",
+      "review": "Dasharatha’s existing question now has a dedicated close-up and protected speech area.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "b881350f69b0d555c81a55c17a62d0f8d8ced63a7d3ba0f948c6504c85e65f4d"
+    },
+    {
+      "episode": "bk-06",
+      "panel": "bk-06-01",
+      "source": "1.19",
+      "previous": "bk-05-03a",
+      "next": "bk-06-02",
+      "review": "The disrupted sacrifice gives Vishwamitra a concrete reason to request Rama.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "b46bf5ffcdf2233c4219b33313b729718d9b1e39f091caed5a2ae546dde86614"
+    },
+    {
+      "episode": "bk-06",
+      "panel": "bk-06-02",
+      "source": "1.20",
+      "previous": "bk-06-01",
+      "next": "bk-06-03",
+      "review": "Dasharatha’s fear motivates his offer to go instead; under-sixteen claim remains contextual.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "2dc65c16e413a2eb39145ddaa9f90b423e79a34d38b93bcc8ef9bd4af1f17833"
+    },
+    {
+      "episode": "bk-06",
+      "panel": "bk-06-03",
+      "source": "1.21",
+      "previous": "bk-06-02",
+      "next": "bk-06-04",
+      "review": "Vishwamitra’s displeasure and Vashishtha’s counsel answer the refusal.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "63b2483047d6e1f309b5c153c05bbf00355870b4ff05d9aafbabc609348b57ff"
+    },
+    {
+      "episode": "bk-06",
+      "panel": "bk-06-04",
+      "source": "1.21-22",
+      "previous": "bk-06-03",
+      "next": "bk-07-01",
+      "review": "Acceptance, blessing and departure conclude the court exchange.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "b792427fa11ec2e416057ce1951621d2688f26d933ec55290d93964e8816e2c9"
+    },
+    {
+      "episode": "bk-07",
+      "panel": "bk-07-01",
+      "source": "1.22",
+      "previous": "bk-06-04",
+      "next": "bk-07-02",
+      "review": "Departure leads to the first riverbank lesson in Bala and Atibala.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "abd4cffebeca28489b1404599f6146920ac7ad57c0cc49aa246fc1b87bb47c23"
+    },
+    {
+      "episode": "bk-07",
+      "panel": "bk-07-02",
+      "source": "1.23",
+      "previous": "bk-07-01",
+      "next": "bk-07-03",
+      "review": "River-confluence welcome introduces the narrated Kamadeva history; current trio remains visible.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "55c7ab131070f82f14f1062d61cc6b6e07c33c575f973f148cd522f1028ad6b6"
+    },
+    {
+      "episode": "bk-07",
+      "panel": "bk-07-03",
+      "source": "1.24",
+      "previous": "bk-07-02",
+      "next": "bk-08-01",
+      "review": "Rama’s roar question now receives the Sarayu–Ganga answer before entry into Tataka’s region.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e846f856262044fda7c7d8354095a5dda451210b89e9dad49a16bddfc4174eea"
+    },
+    {
+      "episode": "bk-08",
+      "panel": "bk-08-01",
+      "source": "1.25",
+      "previous": "bk-07-03",
+      "next": "bk-08-02",
+      "review": "Tataka’s family and curse establish the danger and connect Maricha to the next conflict.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "48ea67d0d8334ad13057d3c3d1d5272d08a9b330f77afff72583d2aec38d8a5a"
+    },
+    {
+      "episode": "bk-08",
+      "panel": "bk-08-02",
+      "source": "1.25-26",
+      "previous": "bk-08-01",
+      "next": "bk-08-03",
+      "review": "Rama’s initial restraint and the sage’s protective-duty answer precede combat.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "2cb58afd538f8b2b6e68c084710995e638de9f45196f11ad624f20f045740ec0"
+    },
+    {
+      "episode": "bk-08",
+      "panel": "bk-08-03",
+      "source": "1.26",
+      "previous": "bk-08-02",
+      "next": "bk-08-04",
+      "review": "Sound of the bow provokes the dust-and-stone attack; both brothers respond.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "b35d8fb4e359d30e216054ec754e2a2585d02cffb4da879f2f7530ffe44931dd"
+    },
+    {
+      "episode": "bk-08",
+      "panel": "bk-08-04",
+      "source": "1.26",
+      "previous": "bk-08-03",
+      "next": "bk-08-04a",
+      "review": "Replaced ambiguous aftermath with Tataka’s visible fall at dusk; death explicit in both languages.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "d26bfdd7c85be6f0244536cef7dabba1b8040498bd2b2cf6aaa730bcbe47f95a"
+    },
+    {
+      "episode": "bk-08",
+      "panel": "bk-08-04a",
+      "source": "1.26",
+      "previous": "bk-08-04",
+      "next": "bk-09-01",
+      "review": "Added night rest closes the confrontation and motivates the next morning’s lesson.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "7c69d26b38b930f37f17595c120cd4fff957b334a0cc9eb3cc00dc89b38c9d03"
+    },
+    {
+      "episode": "bk-09",
+      "panel": "bk-09-01",
+      "source": "1.27",
+      "previous": "bk-08-04a",
+      "next": "bk-09-02",
+      "review": "Next morning is explicit after the night-rest panel; Rama receives the divine weapons.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "1d84e6b7aad561f86eedb447716891c6b49db31ff7fd1d92ff86f038c6de108e"
+    },
+    {
+      "episode": "bk-09",
+      "panel": "bk-09-02",
+      "source": "1.28",
+      "previous": "bk-09-01",
+      "next": "bk-09-02a",
+      "review": "Rama asks how to recall the weapons; instruction completes the restraint lesson.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e8dc1918eb7c63e911ad518d43c1f6dd13fad8a4d1e0d18b94a99a7cc96fb789"
+    },
+    {
+      "episode": "bk-09",
+      "panel": "bk-09-02a",
+      "source": "1.28",
+      "previous": "bk-09-02",
+      "next": "bk-09-03",
+      "review": "Added resumed walk, pleasant grove and Rama’s hermitage question before the flashback.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "3127f04455f4808584032cd4c3e0a45b5321993a7206dd4d42810d6b9470ce9b"
+    },
+    {
+      "episode": "bk-09",
+      "panel": "bk-09-03",
+      "source": "1.29",
+      "previous": "bk-09-02a",
+      "next": "bk-09-04",
+      "review": "Vishwamitra’s answer introduces Vamana/Bali as the place’s ancient story, not a present event.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "a1f27bfea7ecbab6ed6f584bbe3e94a70a55faf8832ea4c72e90b51cb515f876"
+    },
+    {
+      "episode": "bk-09",
+      "panel": "bk-09-04",
+      "source": "1.29",
+      "previous": "bk-09-03",
+      "next": "bk-10-01",
+      "review": "Explicit return to the travelling trio and arrival at Siddhashrama leads to guarding the rite.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "b649f85e63b24c59a764e59748b3e811236f815cce960e8e231490a96a34843c"
+    },
+    {
+      "episode": "bk-10",
+      "panel": "bk-10-01",
+      "source": "1.30",
+      "previous": "bk-09-04",
+      "next": "bk-10-02",
+      "review": "Six days and nights of watch establish the obligation and passing time.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "7f4093c42fee5d1d7beae4bd8e77b3c3f32ab2f020776f2b292efaa5a5c37f43"
+    },
+    {
+      "episode": "bk-10",
+      "panel": "bk-10-02",
+      "source": "1.30",
+      "previous": "bk-10-01",
+      "next": "bk-10-03",
+      "review": "Final-day attack; Maricha is hurled away but explicitly survives.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "53ba051678ba123214df3bf44ba0814c16c2b80d538c4abbdd8f28fdd891a965"
+    },
+    {
+      "episode": "bk-10",
+      "panel": "bk-10-03",
+      "source": "1.30",
+      "previous": "bk-10-02",
+      "next": "bk-10-04",
+      "review": "Subahu’s continued attack ends in death; fallen body visible, distinct from Maricha.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e98c4abc8884fb154aad39eb69792759ad76f1f66c2acad822aec53615aba492"
+    },
+    {
+      "episode": "bk-10",
+      "panel": "bk-10-04",
+      "source": "1.30",
+      "previous": "bk-10-03",
+      "next": "bk-11-01",
+      "review": "Uninterrupted completion and praise resolve the task before the Mithila invitation.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "9690fbdc1483b286730d0961db865f7e7eaa58e541fb826881f05f8fab206a29"
+    },
+    {
+      "episode": "bk-11",
+      "panel": "bk-11-01",
+      "source": "1.31",
+      "previous": "bk-10-04",
+      "next": "bk-11-02",
+      "review": "Successful protection leads to the sages’ Mithila journey and interest in Shiva’s bow.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "d4d51d8220ec761eeecd276eab532791b023c583a29065128ec817ca97ffb9a3"
+    },
+    {
+      "episode": "bk-11",
+      "panel": "bk-11-02",
+      "source": "1.31-32",
+      "previous": "bk-11-01",
+      "next": "bk-11-03",
+      "review": "Rest beside Shona frames Vishwamitra’s family retrospective.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "9012f295e380afe3782c6e560d603db8f4b0aa363183f78111e5370cbe77e231"
+    },
+    {
+      "episode": "bk-11",
+      "panel": "bk-11-03",
+      "source": "1.32",
+      "previous": "bk-11-02",
+      "next": "bk-11-04",
+      "review": "The daughters refuse the proposal; Vayu’s retaliation is identified as injustice, not blame on them.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "217e15c0e0547c045955e9fdbad89b506d3e8dda41f0046c1e888bc7f257624c"
+    },
+    {
+      "episode": "bk-11",
+      "panel": "bk-11-04",
+      "source": "1.33",
+      "previous": "bk-11-03",
+      "next": "bk-11-05",
+      "review": "The daughters report the event and receive their father’s support.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "cf98abd1a09a77e7a506aa25f426caed4b0ccfa317793ce17f5f8051f610325e"
+    },
+    {
+      "episode": "bk-11",
+      "panel": "bk-11-05",
+      "source": "1.33",
+      "previous": "bk-11-04",
+      "next": "bk-11-06",
+      "review": "Marriage to Brahmadatta resolves their altered condition in the narrated tradition.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "bc2ce47ac5e3f4ed01b8242a79bd3d17cad512df04b9c2d90a8a4e5d9701648a"
+    },
+    {
+      "episode": "bk-11",
+      "panel": "bk-11-06",
+      "source": "1.34",
+      "previous": "bk-11-05",
+      "next": "bk-12-01",
+      "review": "Gadhi/Satyavati/Kaushiki connect the family account back to present narrator Vishwamitra.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e76726b7a3eac48d032e53f1422a17f1329b0002d631d07a6ecbe643121c3e12"
+    },
+    {
+      "episode": "bk-12",
+      "panel": "bk-12-01",
+      "source": "1.35",
+      "previous": "bk-11-06",
+      "next": "bk-12-02",
+      "review": "Rama’s Ganga question motivates the divine family story.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "2d1a35a5bfbbbcda134f5ac13f7ee00c35c15abd7607784a4075b540f01b06cf"
+    },
+    {
+      "episode": "bk-12",
+      "panel": "bk-12-02",
+      "source": "1.35-36",
+      "previous": "bk-12-01",
+      "next": "bk-12-03",
+      "review": "Ganga and Uma’s different paths lead to Agni bearing the divine energy.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "2b7432338caddc1bb42897d25fce553e8238cb95aeb4c41cf9ad4be51676f527"
+    },
+    {
+      "episode": "bk-12",
+      "panel": "bk-12-03",
+      "source": "1.37",
+      "previous": "bk-12-02",
+      "next": "bk-12-04",
+      "review": "Agni/Ganga lead to Sharavana and Kumara’s birth; six foster mothers retained.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "c7130e2484ef3ffc83083b9d0097a11b3f94138b3fd4dc087a6ffae9f4170c8d"
+    },
+    {
+      "episode": "bk-12",
+      "panel": "bk-12-04",
+      "source": "1.37",
+      "previous": "bk-12-03",
+      "next": "bk-13-01",
+      "review": "Six-faced Kartikeya’s appointment completes the birth-and-role arc.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "5a782e7578df3eaa4c0345ed44a9d0c02fc870b7b83da934b82729beb6ff9f69"
+    },
+    {
+      "episode": "bk-13",
+      "panel": "bk-13-01",
+      "source": "1.38",
+      "previous": "bk-12-04",
+      "next": "bk-13-02",
+      "review": "Sagara’s family and Asamanjasa’s exile establish the genealogy and motive.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "9f8c10556622ec24993cb5b4c0b425a348a89910408f5dcb96e94ae6f3dc17ac"
+    },
+    {
+      "episode": "bk-13",
+      "panel": "bk-13-02",
+      "source": "1.39",
+      "previous": "bk-13-01",
+      "next": "bk-13-03",
+      "review": "The stolen horse prevents completion of the rite and triggers the search.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "b68b8617cf8f47b4131fe49ab017ca090c74eb48ecb5cc73b6d4ff11bf394aef"
+    },
+    {
+      "episode": "bk-13",
+      "panel": "bk-13-03",
+      "source": "1.39-40",
+      "previous": "bk-13-02",
+      "next": "bk-13-04",
+      "review": "Destructive digging leads the sons to Kapila rather than an unexplained confrontation.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "08a70fc63c9bb2877288467f8d4b3ddbc64222c5a978e857217b2441e0aa3b6b"
+    },
+    {
+      "episode": "bk-13",
+      "panel": "bk-13-04",
+      "source": "1.40",
+      "previous": "bk-13-03",
+      "next": "bk-13-05",
+      "review": "Mistaking Kapila for the thief causes the attack and reduction to ashes.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "0aa0c4507abcdd46f369656039d375e0d945ebc1110a622067432706ada89f54"
+    },
+    {
+      "episode": "bk-13",
+      "panel": "bk-13-05",
+      "source": "1.41",
+      "previous": "bk-13-04",
+      "next": "bk-13-06",
+      "review": "The missing sons prompt Anshuman’s search; ashes and horse make the consequence visible.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "6e947ab4f36386ca4dccc3b9813ca5b48fc74fb8f6ba991197559991a66808d1"
+    },
+    {
+      "episode": "bk-13",
+      "panel": "bk-13-06",
+      "source": "1.41",
+      "previous": "bk-13-05",
+      "next": "bk-14-01",
+      "review": "Garuda explains the need for Ganga; returning the horse closes the immediate rite.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "ff838b5f0a5db4777421a0c5b75f161ed7628c58838d2ec046e0efb5458a97cb"
+    },
+    {
+      "episode": "bk-14",
+      "panel": "bk-14-01",
+      "source": "1.42",
+      "previous": "bk-13-06",
+      "next": "bk-14-02",
+      "review": "Several generations pass; Bhagiratha inherits the unresolved task.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "6de44277e0a8fcee201ee6edb587b465759c27321497d0b62bf3fadfd3835421"
+    },
+    {
+      "episode": "bk-14",
+      "panel": "bk-14-02",
+      "source": "1.42",
+      "previous": "bk-14-01",
+      "next": "bk-14-03",
+      "review": "Austerities win Brahma’s response, which establishes why Shiva is needed.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "8cd5895cd9167e3d89da4c077071b52c7355d5af79586aaad63447a784875b1d"
+    },
+    {
+      "episode": "bk-14",
+      "panel": "bk-14-03",
+      "source": "1.43",
+      "previous": "bk-14-02",
+      "next": "bk-14-04",
+      "review": "Shiva’s favour enables the descent and restrains Ganga’s force.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "479d2bf632f4ffeb9905d4fbcd4c377dc1d19aa93dca735558f572d7e01c11bd"
+    },
+    {
+      "episode": "bk-14",
+      "panel": "bk-14-04",
+      "source": "1.43",
+      "previous": "bk-14-03",
+      "next": "bk-14-05",
+      "review": "Further prayer releases seven streams; one follows Bhagiratha.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "dddccc7e624f45151f6e87d4a17c1d2e0dfcf07a804ad287c823b8921f9c94d2"
+    },
+    {
+      "episode": "bk-14",
+      "panel": "bk-14-05",
+      "source": "1.43",
+      "previous": "bk-14-04",
+      "next": "bk-14-06",
+      "review": "Flooding Jahnu’s rite causes the interruption; wave image is symbolic, not literal drinking.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "27a052a73dd60b27f7c6499215f196db6ff40c392dee93837c8f0b52aa21cf9f"
+    },
+    {
+      "episode": "bk-14",
+      "panel": "bk-14-06",
+      "source": "1.43",
+      "previous": "bk-14-05",
+      "next": "bk-14-07",
+      "review": "The gods’ appeal restores the flow and explains the name Jahnavi.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "a8de603129da49c3da2a3db238a6765ab5bb55b11ec04614c7da6aaba008a23d"
+    },
+    {
+      "episode": "bk-14",
+      "panel": "bk-14-07",
+      "source": "1.43-44",
+      "previous": "bk-14-06",
+      "next": "bk-14-08",
+      "review": "Water reaches the ashes and completes the ancestors’ deliverance.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "5ff90c3e67f0412b32b903d86970b3f906b1592f9de5c2f196b237df4a474bcb"
+    },
+    {
+      "episode": "bk-14",
+      "panel": "bk-14-08",
+      "source": "1.44",
+      "previous": "bk-14-07",
+      "next": "bk-15-01",
+      "review": "Praise and the narrator’s conclusion return to Rama’s travelling party.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "eba60e27fa7f6907132c85c24a2f6918a0330abafad15f02b30ffd583d8e1514"
+    },
+    {
+      "episode": "bk-15",
+      "panel": "bk-15-01",
+      "source": "1.45",
+      "previous": "bk-14-08",
+      "next": "bk-15-02",
+      "review": "Near Vishala, Vishwamitra explicitly opens the ancient churning account.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "6f299ea6d476193f044a3c7ba119c0e4e29fb7ec764f7069e1b74c93aa475f40"
+    },
+    {
+      "episode": "bk-15",
+      "panel": "bk-15-02",
+      "source": "1.45",
+      "previous": "bk-15-01",
+      "next": "bk-15-03",
+      "review": "Mandara/Vasuki and the sinking mountain motivate Vishnu’s tortoise support.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "1a10482704d8375abc9319c1ed088cd762d058ee1e3ca2b011a1c3ec6e243cc9"
+    },
+    {
+      "episode": "bk-15",
+      "panel": "bk-15-03",
+      "source": "1.45",
+      "previous": "bk-15-02",
+      "next": "bk-15-04",
+      "review": "Poison threatens the worlds; Shiva’s intervention averts the danger.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "03dabfd3733e342f8a7a41c0a05d812912898568c6b46ab6d73b0dc74fe176a8"
+    },
+    {
+      "episode": "bk-15",
+      "panel": "bk-15-04",
+      "source": "1.45",
+      "previous": "bk-15-03",
+      "next": "bk-15-05",
+      "review": "The treasures and nectar appear, leading to a dispute.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "659ca8c74c46a23591bd49bb4ac220672298ce0869dc53410785d28d9d18a888"
+    },
+    {
+      "episode": "bk-15",
+      "panel": "bk-15-05",
+      "source": "1.45",
+      "previous": "bk-15-04",
+      "next": "bk-16-01",
+      "review": "Vishnu’s help and the gods’ victory lead into Diti’s grief in the next episode.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "39820feb7358bc1bd0fe3814764be26cf32cddcd1d1646b159d4804884879c5f"
+    },
+    {
+      "episode": "bk-16",
+      "panel": "bk-16-01",
+      "source": "1.46",
+      "previous": "bk-15-05",
+      "next": "bk-16-02",
+      "review": "Loss of sons motivates Diti’s wish and Kashyapa’s prescribed vow.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "a0e5ddd7609939aedd40d5695f96dbdc4ce08f67d38f23e7c2bae484d9caa83b"
+    },
+    {
+      "episode": "bk-16",
+      "panel": "bk-16-02",
+      "source": "1.46",
+      "previous": "bk-16-01",
+      "next": "bk-16-03",
+      "review": "Indra’s fear and the lapse lead to seven parts; represented symbolically, without bodily harm imagery.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "0aef9c3815cde624c9f80bafa5770828fecce768d8269292c3861472b544758f"
+    },
+    {
+      "episode": "bk-16",
+      "panel": "bk-16-03",
+      "source": "1.47",
+      "previous": "bk-16-02",
+      "next": "bk-16-04",
+      "review": "Diti’s request and Indra’s acceptance resolve the conflict as the Maruts.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "db2779a4678a365c1c53f9dd4a7d575e38d873659d67ec1315307b061f8fecf9"
+    },
+    {
+      "episode": "bk-16",
+      "panel": "bk-16-04",
+      "source": "1.47-48",
+      "previous": "bk-16-03",
+      "next": "bk-17-01",
+      "review": "The ancient account returns to the present welcome by King Sumati in Vishala.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "1ffc13554c3f5e428479cdf72d37445960f100776e881e411d047ff44dbacf6b"
+    },
+    {
+      "episode": "bk-17",
+      "panel": "bk-17-01",
+      "source": "1.48",
+      "previous": "bk-16-04",
+      "next": "bk-17-02",
+      "review": "The deserted hermitage motivates Rama’s question and the Gautama/Ahalya retrospective.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "63506c6fd86455a9857996e7c8be98be1c4519433c4a1c656519f3a5537508bb"
+    },
+    {
+      "episode": "bk-17",
+      "panel": "bk-17-02",
+      "source": "1.48",
+      "previous": "bk-17-01",
+      "next": "bk-17-03",
+      "review": "Indra’s disguise, recognition and Gautama’s return explain the curse; not a stone version.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "f69ea5f77ca7405097588fd17c2ac7fd234d6d231d5f9b4c38c11d675982bf1a"
+    },
+    {
+      "episode": "bk-17",
+      "panel": "bk-17-03",
+      "source": "1.48-49",
+      "previous": "bk-17-02",
+      "next": "bk-17-04",
+      "review": "Unseen penance and the stated condition for its end establish the long wait.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "36df8585c25bc0f814499a98d1f4a0777d92e6de1cf7661f658507c28f78384b"
+    },
+    {
+      "episode": "bk-17",
+      "panel": "bk-17-04",
+      "source": "1.49",
+      "previous": "bk-17-03",
+      "next": "bk-17-05",
+      "review": "Rama/Lakshmana’s arrival fulfils the condition; mutual honour and hospitality visible.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "192fea7a136530a513e43be6afe2c1f53b60278a940f1ad9e935104701db7534"
+    },
+    {
+      "episode": "bk-17",
+      "panel": "bk-17-05",
+      "source": "1.49",
+      "previous": "bk-17-04",
+      "next": "bk-18-01",
+      "review": "Gautama’s reunion and blessing close the arc before departure for Mithila.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e5179e56e6d4229871ba1560e178a0ec6d789c30541c62c5ff2977e7b17fa7ff"
+    },
+    {
+      "episode": "bk-18",
+      "panel": "bk-18-01",
+      "source": "1.50",
+      "previous": "bk-17-05",
+      "next": "bk-18-02",
+      "review": "Arrival in Mithila follows Ahalya’s hermitage; Janaka hears the princes’ accomplishments.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "a58aedea415377b17ea4051424ef00b97feb57f9ac33b0cec199711d2a979cdf"
+    },
+    {
+      "episode": "bk-18",
+      "panel": "bk-18-02",
+      "source": "1.51",
+      "previous": "bk-18-01",
+      "next": "bk-18-03",
+      "review": "Shatananda’s relationship to Ahalya motivates his question about her reception.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "d15b2bdf3d20de05ea1ef2d9066b154153bcb33777775c7738cfb6c05864811a"
+    },
+    {
+      "episode": "bk-18",
+      "panel": "bk-18-03",
+      "source": "1.51",
+      "previous": "bk-18-02",
+      "next": "bk-19-01",
+      "review": "His response introduces Vishwamitra’s earlier king-to-sage life as a framed retrospective.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "eedb9459bb7d69350a93f1aa29a972763d5513ef81f17ac6dc9827bd2e4edc71"
+    },
+    {
+      "episode": "bk-19",
+      "panel": "bk-19-01",
+      "source": "1.52",
+      "previous": "bk-18-03",
+      "next": "bk-19-02",
+      "review": "Royal Vishwamitra’s arrival and Shabala’s hospitality establish the desired power.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "5e38eedfb87257f3ebc4cf188e98f635b7ffde886bd3511b9e73f15585a96716"
+    },
+    {
+      "episode": "bk-19",
+      "panel": "bk-19-02",
+      "source": "1.53",
+      "previous": "bk-19-01",
+      "next": "bk-19-03",
+      "review": "The offer and Vashishtha’s refusal explain why the cow cannot be taken.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "02ea205b5515f090a3ee2cb4b624ba9e64de83a96b79eba880f60d910c629d73"
+    },
+    {
+      "episode": "bk-19",
+      "panel": "bk-19-03",
+      "source": "1.54",
+      "previous": "bk-19-02",
+      "next": "bk-19-04",
+      "review": "Force prompts Shabala’s appeal and permission to defend herself.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "6b04544ac8c6fbc29b82815f33c0bf598f61e153a91f0a1fa6e3e4f275d9ac24"
+    },
+    {
+      "episode": "bk-19",
+      "panel": "bk-19-04",
+      "source": "1.54-55",
+      "previous": "bk-19-03",
+      "next": "bk-19-05",
+      "review": "Defeat and loss of sons motivate Vishwamitra’s grief and revenge; aftermath rather than battle detail.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "56d4b16f5ae1f6585c2af8531c8a9260b4dcaa8c724476ffe4e83ea6a2780a0d"
+    },
+    {
+      "episode": "bk-19",
+      "panel": "bk-19-05",
+      "source": "1.55",
+      "previous": "bk-19-04",
+      "next": "bk-19-06",
+      "review": "Austerities obtain weapons from Shiva; the caption establishes return to attack.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "110f72d3b78b0e0cebfa1a1a45de71d3368bc86cde4b2a683a506376176ff7ba"
+    },
+    {
+      "episode": "bk-19",
+      "panel": "bk-19-06",
+      "source": "1.56",
+      "previous": "bk-19-05",
+      "next": "bk-19-07",
+      "review": "Vashishtha’s staff neutralizes the weapons and changes Vishwamitra’s understanding.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "7c08058ecca915a09b3b4f67848b235160abb83c527a4bf72224463f228a124c"
+    },
+    {
+      "episode": "bk-19",
+      "panel": "bk-19-07",
+      "source": "1.56",
+      "previous": "bk-19-06",
+      "next": "bk-20-01",
+      "review": "Renunciation and the Brahmarshi goal carry into further austerity.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "f1f2fe76d4a349a34fb30b0806a1d67c8c77e61983d612784daa85b29236a25c"
+    },
+    {
+      "episode": "bk-20",
+      "panel": "bk-20-01",
+      "source": "1.57",
+      "previous": "bk-19-07",
+      "next": "bk-20-02",
+      "review": "Raj arshi recognition and Trishanku’s separate request introduce the next test.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "ac5a0e7b144a347d33369ac1d75548c47e3e1eea2f4b41f0c680b476d2bae2d1"
+    },
+    {
+      "episode": "bk-20",
+      "panel": "bk-20-02",
+      "source": "1.57-58",
+      "previous": "bk-20-01",
+      "next": "bk-20-03",
+      "review": "Refusal, appeal to the sons and curse explain loss of royal splendour, without skin-tone caricature.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "356548bf6a91717e66852bb7e629a62e91019067e50045925c18c413cfce5884"
+    },
+    {
+      "episode": "bk-20",
+      "panel": "bk-20-03",
+      "source": "1.58",
+      "previous": "bk-20-02",
+      "next": "bk-20-04",
+      "review": "Trishanku seeks Vishwamitra’s refuge; the promise motivates the rite.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "b299e4aa3415add257ea32785a41812f03767c7da04b5dcc8b9df92f7fd9b8ab"
+    },
+    {
+      "episode": "bk-20",
+      "panel": "bk-20-04",
+      "source": "1.59",
+      "previous": "bk-20-03",
+      "next": "bk-20-05",
+      "review": "Invitations and refusals reveal Vishwamitra’s unresolved anger.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "ee3ccff93574b2e9cca4137f77501e5810c895a8d7464e98401ee34c3ad3f940"
+    },
+    {
+      "episode": "bk-20",
+      "panel": "bk-20-05",
+      "source": "1.60",
+      "previous": "bk-20-04",
+      "next": "bk-20-06",
+      "review": "Ascent and rejection cause the headfirst fall and plea for protection.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "01eba9ba7dc7ab1bcec7328c3482e8913285533c542a42fa796a27f44c709351"
+    },
+    {
+      "episode": "bk-20",
+      "panel": "bk-20-06",
+      "source": "1.60",
+      "previous": "bk-20-05",
+      "next": "bk-21-01",
+      "review": "The halted fall, new stars and agreement resolve Trishanku’s position.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "b6e04fd02eab2f16237b10a337e210cd35be16096343385f1c62af31cb68bc1d"
+    },
+    {
+      "episode": "bk-21",
+      "panel": "bk-21-01",
+      "source": "1.61",
+      "previous": "bk-20-06",
+      "next": "bk-21-02",
+      "review": "Loss of the sacrificial animal causes a demand that endangers a boy, not an unexplained voluntary offering.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "2b64024c1e4c21177318b5e9259eb16d2037fabca0a472a6a55ab3c1b81df44e"
+    },
+    {
+      "episode": "bk-21",
+      "panel": "bk-21-02",
+      "source": "1.61",
+      "previous": "bk-21-01",
+      "next": "bk-21-03",
+      "review": "Family discussion leads to Shunahshepa accompanying the king; his fear remains explicit.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "b1c7b1f6754c0973f2e9f87c35d363fef17aa46b46992757d9e2166dfe25d6d6"
+    },
+    {
+      "episode": "bk-21",
+      "panel": "bk-21-03",
+      "source": "1.62",
+      "previous": "bk-21-02",
+      "next": "bk-21-04",
+      "review": "The boy actively seeks his relative’s protection at Pushkara.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "0bc11946704bd067dbc02c89de0cab3f7be6460c68e307573da002b8ca3add41"
+    },
+    {
+      "episode": "bk-21",
+      "panel": "bk-21-04",
+      "source": "1.62",
+      "previous": "bk-21-03",
+      "next": "bk-21-05",
+      "review": "Refusal by the sage’s sons precedes teaching protective prayers.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "5abe6dd25a3fd88f6a1c4af95cfc917486788c3ecf4bf19a0d6e67f6afb5d756"
+    },
+    {
+      "episode": "bk-21",
+      "panel": "bk-21-05",
+      "source": "1.62",
+      "previous": "bk-21-04",
+      "next": "bk-22-01",
+      "review": "Recitation leads to long life and rescue; the boy is not killed.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "5c98db5a7f5cd37529ddbeadf89704b52e47efffcc33d17005543c7b2bd6948b"
+    },
+    {
+      "episode": "bk-22",
+      "panel": "bk-22-01",
+      "source": "1.63",
+      "previous": "bk-21-05",
+      "next": "bk-22-02",
+      "review": "Menaka interrupts austerity; years pass before the realization.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "01ef5e59546dcb7a6bda6071f23529f06805a17e02e59860177f7e11eb974e5d"
+    },
+    {
+      "episode": "bk-22",
+      "panel": "bk-22-02",
+      "source": "1.63",
+      "previous": "bk-22-01",
+      "next": "bk-22-03",
+      "review": "Peaceful parting and renewed effort distinguish this from the later angry response.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "ff8d57ac7f009c4e0681c92bd55c8a9c40b614f58c9266bfca3aff2bf6a5f06b"
+    },
+    {
+      "episode": "bk-22",
+      "panel": "bk-22-03",
+      "source": "1.64",
+      "previous": "bk-22-02",
+      "next": "bk-22-04",
+      "review": "Rambha’s curse exposes the remaining failure to control anger.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "7ba592b2e24d9087f9c669ec5426ca8cb3a8421ebf6f294f1a8711f7931f030d"
+    },
+    {
+      "episode": "bk-22",
+      "panel": "bk-22-04",
+      "source": "1.64",
+      "previous": "bk-22-03",
+      "next": "bk-22-05",
+      "review": "Recognition of that failure motivates silence and patience.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "ab8aaab11df90791874bef58ffc64275c9710dcf913c0db5818263d878d6205b"
+    },
+    {
+      "episode": "bk-22",
+      "panel": "bk-22-05",
+      "source": "1.65",
+      "previous": "bk-22-04",
+      "next": "bk-22-06",
+      "review": "Giving away the meal without anger demonstrates the changed response.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "63c3d94e2b1170fa77e658231724409cac4cd30dfc0194f820bb843f417bd598"
+    },
+    {
+      "episode": "bk-22",
+      "panel": "bk-22-06",
+      "source": "1.65",
+      "previous": "bk-22-05",
+      "next": "bk-23-01",
+      "review": "Brahma and Vashishtha’s recognition resolves the retrospective and cues Shiva’s bow.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "437e733097c0d5f80821c524b52173fcb17ac90687c5f91fe5c6d1927f979696"
+    },
+    {
+      "episode": "bk-23",
+      "panel": "bk-23-01",
+      "source": "1.66",
+      "previous": "bk-22-06",
+      "next": "bk-23-02",
+      "review": "Explicit return to present Mithila; family-held Shiva bow establishes the object.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "6859cc98bba023ada0074b89f5a0e910e02395dab0fce13479c8a2838d4f57fa"
+    },
+    {
+      "episode": "bk-23",
+      "panel": "bk-23-02",
+      "source": "1.66",
+      "previous": "bk-23-01",
+      "next": "bk-23-03",
+      "review": "Janaka’s remembered discovery and upbringing explain Sita’s origin.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "c2c095fc532227509c2acbf48279cb13984c9a31e65ecd6db35b9c5b4810c062"
+    },
+    {
+      "episode": "bk-23",
+      "panel": "bk-23-03",
+      "source": "1.66",
+      "previous": "bk-23-02",
+      "next": "bk-23-04",
+      "review": "His marriage condition and earlier failed kings explain the stakes, without adding Ravana to the scene.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "931c07614d30aaa16050bb3347e0120fe7a2fc4349fe2a98fdc4ce57c05a7a51"
+    },
+    {
+      "episode": "bk-23",
+      "panel": "bk-23-04",
+      "source": "1.67",
+      "previous": "bk-23-03",
+      "next": "bk-23-05",
+      "review": "Vishwamitra’s permission precedes Rama’s handling of the bow.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "b9bcce2d0ace8e53277c78c2edb74241ca89652d2a6a74ee20ab223c5c325333"
+    },
+    {
+      "episode": "bk-23",
+      "panel": "bk-23-05",
+      "source": "1.67",
+      "previous": "bk-23-04",
+      "next": "bk-23-06",
+      "review": "Lifting/stringing and the break cause the court’s astonishment; broken bow visible.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "7721f1732f26e8d91a164feac3339f4d19451c2fff5b37752d817d5f260df774"
+    },
+    {
+      "episode": "bk-23",
+      "panel": "bk-23-06",
+      "source": "1.67",
+      "previous": "bk-23-05",
+      "next": "bk-24-01",
+      "review": "Janaka’s proposal and messengers lead directly to the invitation episode.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e10a0a633171626efc0f2cb45fcd136b2298e3bdba0079cbb9a2e1a3c87be9ee"
+    },
+    {
+      "episode": "bk-24",
+      "panel": "bk-24-01",
+      "source": "1.68",
+      "previous": "bk-23-06",
+      "next": "bk-24-02",
+      "review": "Messengers carry both the bow news and the princes’ well-being to Ayodhya.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "aa607dbc45f978379ab21013d7030cac621fa1c33ec37b02e4e01a807557f43f"
+    },
+    {
+      "episode": "bk-24",
+      "panel": "bk-24-02",
+      "source": "1.68-69",
+      "previous": "bk-24-01",
+      "next": "bk-24-03",
+      "review": "Consultation and consent motivate Dasharatha’s journey with the other sons.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "48756303e3324c0d2ee80d50b4802f1bd869cdc114d1628df2bae17989af77bc"
+    },
+    {
+      "episode": "bk-24",
+      "panel": "bk-24-03",
+      "source": "1.69",
+      "previous": "bk-24-02",
+      "next": "bk-25-01",
+      "review": "Welcome and reunion precede the marriage arrangements.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "061eee0d7a335f8253ddf5fbbaacb64a548df40516c2e45f1d504c6fe9ab3b35"
+    },
+    {
+      "episode": "bk-25",
+      "panel": "bk-25-01",
+      "source": "1.70",
+      "previous": "bk-24-03",
+      "next": "bk-25-02",
+      "review": "Kushadhvaja’s arrival and the Ikshvaku lineage identify both households.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "f44c0ddbd31b83f4866df7aed770a6726457ef9d7077bbf1752049b54fc911ad"
+    },
+    {
+      "episode": "bk-25",
+      "panel": "bk-25-02",
+      "source": "1.71",
+      "previous": "bk-25-01",
+      "next": "bk-25-03",
+      "review": "Janaka’s lineage leads to the Rama/Sita and Lakshmana/Urmila proposals.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "a9927702431071734b690e9b1d04cac3e8645f188b607667a31fee61e33d96b3"
+    },
+    {
+      "episode": "bk-25",
+      "panel": "bk-25-03",
+      "source": "1.72",
+      "previous": "bk-25-02",
+      "next": "bk-25-04",
+      "review": "Kushadhvaja’s daughters are paired with Bharata/Shatrughna, not Janaka’s daughters.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e3588a85a296b8c4d14871bee35c7ed1a1e588b79d92e27edc601decbdaa9b0f"
+    },
+    {
+      "episode": "bk-25",
+      "panel": "bk-25-04",
+      "source": "1.71-72",
+      "previous": "bk-25-03",
+      "next": "bk-26-01",
+      "review": "Agreement leads to a chosen time, preparatory rites and gifts.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "bd34faad3d7bb4e33a22ec83cb47464b933250a63d6a10095dfc289967e52920"
+    },
+    {
+      "episode": "bk-26",
+      "panel": "bk-26-01",
+      "source": "1.73",
+      "previous": "bk-25-04",
+      "next": "bk-26-02",
+      "review": "Yudhajit’s arrival explains his later role accompanying Bharata and Shatrughna.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "18b7f634254ada54190a8704b4b8dd7d61b8082db1d72da2800723fcafc31903"
+    },
+    {
+      "episode": "bk-26",
+      "panel": "bk-26-02",
+      "source": "1.73",
+      "previous": "bk-26-01",
+      "next": "bk-26-03",
+      "review": "Rama/Sita’s hand-taking at the sacred fire; Janaka’s adapted words retain companionship in dharma.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "2eb1de9e09b2cb6df8e9bb4d4431e229418449efcd6e3f2c1c5dd3bd815e0ef4"
+    },
+    {
+      "episode": "bk-26",
+      "panel": "bk-26-03",
+      "source": "1.73",
+      "previous": "bk-26-02",
+      "next": "bk-26-04",
+      "review": "Lakshmana/Urmila marriage separately identified in green.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "0c1429adef15444ecfce83262036d4190aa30e2a915345f64b424277ca95f1dc"
+    },
+    {
+      "episode": "bk-26",
+      "panel": "bk-26-04",
+      "source": "1.73",
+      "previous": "bk-26-03",
+      "next": "bk-26-05",
+      "review": "Bharata/Mandavi marriage separately identified in maroon.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "a977ae314e665f9d5d0aef6dfe8e0ba193854fe8e0c1698991ffc2c5e87e6d7f"
+    },
+    {
+      "episode": "bk-26",
+      "panel": "bk-26-05",
+      "source": "1.73",
+      "previous": "bk-26-04",
+      "next": "bk-26-06",
+      "review": "Shatrughna/Shrutakirti marriage separately identified in blue.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e9ae277dd9e603231546b56fdd27c72b742ce7a9ebd6d8911251dde2ba262dbe"
+    },
+    {
+      "episode": "bk-26",
+      "panel": "bk-26-06",
+      "source": "1.73",
+      "previous": "bk-26-05",
+      "next": "bk-27-01",
+      "review": "All four couples and blessings close the wedding sequence before departure.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "0ebae787b31abc29b9c77fc4a74fe41bd79b87d82d29ffed8caeee2434528099"
+    },
+    {
+      "episode": "bk-27",
+      "panel": "bk-27-01",
+      "source": "1.74",
+      "previous": "bk-26-06",
+      "next": "bk-27-02",
+      "review": "Next-morning farewell removes elder Vishwamitra from the returning party.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "502d79cdb8715d9a2566f40bd3becfc3075c358ea9a326915fc6fe26d57f128b"
+    },
+    {
+      "episode": "bk-27",
+      "panel": "bk-27-02",
+      "source": "1.74",
+      "previous": "bk-27-01",
+      "next": "bk-27-03",
+      "review": "Storm and Parashurama’s arrival interrupt the return journey.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "c51cd79f709140ec97371f7ec14cce2c19e7d0f5970020d420e5e9b83cfee3df"
+    },
+    {
+      "episode": "bk-27",
+      "panel": "bk-27-03",
+      "source": "1.75",
+      "previous": "bk-27-02",
+      "next": "bk-27-04",
+      "review": "Two distinct bows are explained; the Vaishnava bow is not the broken Shiva bow.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "c152c02609ec9de316e1404f5b8767c66bb0d9ec043bf6e384ed1a0a46007fad"
+    },
+    {
+      "episode": "bk-27",
+      "panel": "bk-27-04",
+      "source": "1.75",
+      "previous": "bk-27-03",
+      "next": "bk-27-05",
+      "review": "Dasharatha’s plea and Parashurama’s direct challenge establish the conflict.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "79f548d1ad9adb1e8572ff71a9775bef75bcced996650cab823eac056a697f21"
+    },
+    {
+      "episode": "bk-27",
+      "panel": "bk-27-05",
+      "source": "1.75",
+      "previous": "bk-27-04",
+      "next": "bk-28-01",
+      "review": "The bow is handed over and the task is stated before Rama’s response.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "de7c0176fc144254a027a07364bdd5589572dd4d901f0cfb627bea446895780f"
+    },
+    {
+      "episode": "bk-28",
+      "panel": "bk-28-01",
+      "source": "1.76",
+      "previous": "bk-27-05",
+      "next": "bk-28-02",
+      "review": "Rama’s prior silence and respectful response answer the challenge.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "c0266cb9217a05565dfb03f1a04aa232b6664030746de2c1c40a56a77e5f35da"
+    },
+    {
+      "episode": "bk-28",
+      "panel": "bk-28-02",
+      "source": "1.76",
+      "previous": "bk-28-01",
+      "next": "bk-28-03",
+      "review": "Stringing the Vaishnava bow demonstrates his strength and changes Parashurama’s response.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "e301ae7e286ce455dc4e0cc0f837c6b0dc1ca96dbbab7da88642bb6a26bb83d3"
+    },
+    {
+      "episode": "bk-28",
+      "panel": "bk-28-03",
+      "source": "1.76",
+      "previous": "bk-28-02",
+      "next": "bk-28-04",
+      "review": "Rama refrains from bodily harm; two alternatives and Parashurama’s choice are explicit.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "4ee31cb03ac6f65c473a03bd3b1b3bcc13a482d808e7e44c96a6b5d8b2730605"
+    },
+    {
+      "episode": "bk-28",
+      "panel": "bk-28-04",
+      "source": "1.76",
+      "previous": "bk-28-03",
+      "next": "bk-29-01",
+      "review": "Release, acknowledgement and departure to Mahendra resolve the encounter.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "354bcf8421460fa370926e708500840f6a7ec7fe5b6cd6f627757b262a2af9f7"
+    },
+    {
+      "episode": "bk-29",
+      "panel": "bk-29-01",
+      "source": "1.77",
+      "previous": "bk-28-04",
+      "next": "bk-29-02",
+      "review": "The unbroken Vaishnava bow is entrusted to Varuna; travel resumes.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "818227d87e02822f85d488a51ad3335defa9ec56c9dd5fa5e9585d600f4d5e85"
+    },
+    {
+      "episode": "bk-29",
+      "panel": "bk-29-02",
+      "source": "1.77",
+      "previous": "bk-29-01",
+      "next": "bk-29-03",
+      "review": "Homecoming shows the three mothers welcoming the four brides.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "4462ca403fc2982ecca92a4b0b30d09524ca408595f5f53044ba5ec3a59e84f8"
+    },
+    {
+      "episode": "bk-29",
+      "panel": "bk-29-03",
+      "source": "1.77",
+      "previous": "bk-29-02",
+      "next": "bk-29-04",
+      "review": "A later departure with Yudhajit distinguishes the maternal-family visit from the wedding return.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "14f486d2923634660edfffe7e3ee88d750eaf0bc39607499a04135af1683fdbf"
+    },
+    {
+      "episode": "bk-29",
+      "panel": "bk-29-04",
+      "source": "1.77",
+      "previous": "bk-29-03",
+      "next": null,
+      "review": "Service and Rama/Sita’s deepening affection close Bālakāṇḍa; exile/coronation not appended.",
+      "languages": [
+        "hi",
+        "en"
+      ],
+      "textSha256": "1161abe74b30d6febf3858510ec91b0855790175b0bb541d32c0351499be79f1"
+    }
+  ]
+}

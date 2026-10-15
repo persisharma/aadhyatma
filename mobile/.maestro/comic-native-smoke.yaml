@@ -1,0 +1,43 @@
+# Native corrected Bālakāṇḍa: shelf -> speaker correction -> language -> back.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element: { id: "home-kids-stories-card" }
+    centerElement: true
+- tapOn: { id: "home-kids-stories-card" }
+- scrollUntilVisible:
+    element: { id: "kids-story-comic-balakanda-v1" }
+    centerElement: true
+- tapOn: { id: "kids-story-comic-balakanda-v1" }
+- extendedWaitUntil:
+    visible: { id: "comic-episodes" }
+    timeout: 60000
+- assertVisible: { id: "comic-episode-bk-01" }
+- assertNotVisible: { id: "comic-reader-webview" }
+- tapOn: { id: "lang-toggle-hi" }
+- takeScreenshot: comic-native-shelf
+- scrollUntilVisible:
+    element: { id: "comic-episode-bk-06" }
+    centerElement: true
+- tapOn: { id: "comic-episode-bk-06" }
+- assertVisible: { id: "comic-page-bk-06-01" }
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 400
+- assertVisible: { id: "comic-page-bk-06-02" }
+- swipe:
+    start: 85%, 45%
+    end: 15%, 45%
+    duration: 400
+- assertVisible: { id: "comic-page-bk-06-03" }
+- extendedWaitUntil:
+    visible: { id: "comic-image-bk-06-03" }
+    timeout: 30000
+- takeScreenshot: comic-native-vashishtha-hi
+- tapOn: { id: "lang-toggle-en" }
+- assertVisible: { id: "comic-page-bk-06-03" }
+- takeScreenshot: comic-native-vashishtha-en
+- tapOn: "Back"
+- assertVisible: { id: "comic-episodes" }

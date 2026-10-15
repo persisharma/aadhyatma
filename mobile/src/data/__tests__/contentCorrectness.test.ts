@@ -100,7 +100,7 @@ assert.deepEqual(
 
 // Newly-added discoverable content must carry addedInVersion, or NewContentContext
 // seeds it as already-known for upgrading users and the NEW badge never shows.
-for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata']) {
+for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata', 'jay-adhya-shakti']) {
   const entry = library.find((e) => e.id === id);
   assert.ok(entry, `${id} should exist in library`);
   assert.ok(entry.addedInVersion, `${id} must set addedInVersion so upgraders see its NEW badge`);
@@ -587,6 +587,46 @@ assert.deepEqual(
   'khatu-shyam-aarti must be tagged under the Krishna deity only'
 );
 
+// ─── 10e. Jay Adhya Shakti canonical structure ──────────────────────────────
+// Shivanand Swami's Gujarati Amba aarti, stored in Devanagari so the gu reading
+// language restores the supplied Gujarati exactly. Eighteen stanzas, each
+// printed with the cue ॥ ॐ जयो जयो मा जगदंबे ॥; the two later-addition stanzas
+// (भाव न जाणुं…, मानो मंडप…) are deliberately excluded (see source.baseText).
+
+const jayAdhyaShakti = readJson('aarti/jay-adhya-shakti.json');
+assert.equal(jayAdhyaShakti.verses.length, 18, 'Jay Adhya Shakti should have 18 stanzas');
+assert.ok(
+  jayAdhyaShakti.verses.every((v: any) => v.type === 'stanza' && v.lines.at(-1) === '॥ ॐ जयो जयो मा जगदंबे ॥'),
+  'every Jay Adhya Shakti stanza should end with its printed cue'
+);
+assert.ok(
+  jayAdhyaShakti.verses[0].lines[0].startsWith('जय आद्या शक्ति'),
+  `Jay Adhya Shakti should open with "जय आद्या शक्ति", got: "${jayAdhyaShakti.verses[0].lines[0]}"`
+);
+assert.ok(
+  jayAdhyaShakti.verses.at(-1).lines.join(' ').includes('भणे शिवानंद स्वामी'),
+  'Jay Adhya Shakti should close with its Shivanand Swami signature stanza'
+);
+assert.ok(
+  !jayAdhyaShakti.verses.some((v: any) => /वल्लभ भट्ट|मानो मंडप/.test(v.lines.join(' '))),
+  'Jay Adhya Shakti should not include the later-addition stanzas'
+);
+assert.ok(
+  jayAdhyaShakti.verses.every((v: any) => /[\u0A80-\u0AFF]/.test(v.meaningGu ?? '')),
+  'every Jay Adhya Shakti stanza should carry an authored Gujarati meaning'
+);
+assert.equal(jayAdhyaShakti.deity, 'durga', 'Jay Adhya Shakti deity should be durga (Amba)');
+assert.deepEqual(
+  library.find((e) => e.id === 'jay-adhya-shakti')?.deities,
+  ['durga'],
+  'jay-adhya-shakti must be tagged under the Durga deity only'
+);
+assert.equal(
+  library.find((e) => e.id === 'jay-adhya-shakti')?.verseCount,
+  jayAdhyaShakti.verses.length,
+  'jay-adhya-shakti library verseCount matches the payload'
+);
+
 // ─── 11. Library labels are precise about excerpts and verse types ───────────
 
 const libraryById = new Map(library.map((entry) => [entry.id, entry]));
@@ -854,7 +894,9 @@ function collectJsonFiles(dirRel = ''): string[] {
       // `kidsStories` holds retold picture-book narratives (design.md §76), not
       // verse-level scripture — each carries a prose `sourceNote` rather than the
       // structured `source.referenceUrls` this §14 provenance rule checks for.
-      if (entry.name !== '__tests__' && entry.name !== 'kidsStories') {
+      // `comicBooks` is the same kind of retelling: its provenance is `baseText`
+      // + `sourceCoverage` (sargas), held by comics.jest.test.ts.
+      if (entry.name !== '__tests__' && entry.name !== 'kidsStories' && entry.name !== 'comicBooks') {
         files.push(...collectJsonFiles(rel));
       }
     } else if (
@@ -864,6 +906,7 @@ function collectJsonFiles(dirRel = ''): string[] {
       // `source` — the heavy art/audio they point to is served from R2, not here.
       entry.name !== 'audioAssetManifest.json' &&
       entry.name !== 'kidsStoryAssetManifest.json' &&
+      entry.name !== 'comicAssetManifest.json' &&
       entry.name !== 'backgroundAssetManifest.json' &&
       entry.name !== 'readerIllustrationManifest.json' &&
       // Art aliases are semantic asset mappings, not scripture. Their manifest
@@ -882,6 +925,7 @@ function collectJsonFiles(dirRel = ''): string[] {
 // honest pending block (no unread page in referenceUrls). This list may only
 // shrink: once a file is collated against two sources, remove it here.
 const MAINTAINER_ATTESTED_SINGLE_SOURCE = new Set([
+  'aarti/jay-adhya-shakti.json',
   'aarti/khatu-shyam-aarti.json',
   'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
 ]);

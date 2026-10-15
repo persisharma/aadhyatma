@@ -1,0 +1,169 @@
+{
+  "template": "artifact-template-vedansh-style-3-reader-banner",
+  "reference": "approved-style3-reference.png",
+  "referenceSha256": "631a4f2ea25e90e56c12a7ba1a10da1992a8941228b7704d7ccd6824a4971d42",
+  "encoding": "cwebp q84 proportional downscale; entire canvas retained",
+  "assets": [
+    {
+      "id": "cover",
+      "file": "cover.webp",
+      "original": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-2755ec6c-5752-4408-aaf0-1660830bccf7.png",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 167248,
+      "sha256": "1736a66536efe8f8a9351a784f5d01b26edd86b957b378056847933d89c5dda7",
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
+      "approval": "user-approved 2026-10-12"
+    },
+    {
+      "id": "daan",
+      "file": "daan.webp",
+      "original": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-f1555090-5af9-4908-b53d-824d587ef9ff.png",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 160310,
+      "sha256": "ae9113918da17ea0d0a3eef9a8d3ece29c9d23c86a24c34ab3a146399d9d80ff",
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
+      "approval": "user-approved 2026-10-12"
+    },
+    {
+      "id": "babhruvahana",
+      "file": "babhruvahana.webp",
+      "original": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-c27fed6c-7c98-44ed-b739-abb3b474fde5.png",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 169170,
+      "sha256": "bd1022c0c8165c3244e4f7c3e7e5f76071cbac3ae2067b35ae08019ffc8a602e",
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
+      "approval": "user-approved 2026-10-12"
+    },
+    {
+      "id": "five-pretas",
+      "file": "five-pretas.webp",
+      "original": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-b3e2a7fa-758b-447b-aabd-8897b8d97c69.png",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 165628,
+      "sha256": "676fc775f8aa4dd98680de32e50780f5cdaabc28194a11731b070db301d3ef7b",
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
+      "approval": "user-approved 2026-10-12"
+    },
+    {
+      "id": "viravahana",
+      "file": "viravahana.webp",
+      "original": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-dc87ad82-ab0e-4c05-9cba-d29630e92899.png",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 169544,
+      "sha256": "831017832d6281e56f7eb65fb4dc52e101d09d09e9c1d3fb4a073c72db50582d",
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
+      "approval": "user-approved 2026-10-12"
+    },
+    {
+      "id": "sita-ancestors",
+      "file": "sita-ancestors.webp",
+      "original": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-01d13d77-e32d-4d9a-aca6-a4e36c5873bb.png",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 157450,
+      "sha256": "4e01fdc4674fa63a5e4b03cf05764b912b980fa8da257eb552290cfe995ec2a4",
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
+      "approval": "user-approved 2026-10-12"
+    },
+    {
+      "id": "ancestors",
+      "file": "ancestors.webp",
+      "original": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-3b6a58c1-1c57-4b48-b3f4-68313e73e8ea.png",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 140544,
+      "sha256": "47b8cee3575f543525c2b4bf4024b3a5e3fc41129394eba9f6d42766605b911d",
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
+      "approval": "user-approved 2026-10-12"
+    },
+    {
+      "id": "yama",
+      "file": "yama.webp",
+      "original": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-50e90237-2c77-4e52-a33f-ace239356abf.png",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 153568,
+      "sha256": "3dc3026d3dc0951af85a377a15d9dfb9455fb565e442a760b56a46d0cba02ef2",
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
+      "approval": "user-approved 2026-10-12"
+    },
+    {
+      "id": "vaitarani",
+      "file": "vaitarani.webp",
+      "original": "/Users/prashant/.codex/generated_images/01a0f88a-b19f-7330-a8cf-18250649b003/exec-705a3989-5201-463d-a427-b419b2ee3b09.png",
+      "sourceDimensions": [
+        1774,
+        887
+      ],
+      "dimensions": [
+        960,
+        480
+      ],
+      "bytes": 150352,
+      "sha256": "cdc5b91f6ea7ac2796abfbd553b0a48c8bb216581d10778bc8283d211468122e",
+      "review": "Full master visually inspected: Style 3 rendering, scene subjects and complete main figures. No image crop, distortion, blank caption band or lettering.",
+      "approval": "user-approved 2026-10-12"
+    }
+  ],
+  "totalBytes": 1433814,
+  "scope": "Artwork preview; app bundle and R2 unchanged this pass",
+  "approval": {
+    "status": "approved",
+    "date": "2026-10-12",
+    "evidence": "User: THis looks good, complete this take a pull from main and verify then raise a PR",
+    "scope": "All nine Style 3 banners and reader integration; no remote publication"
+  }
+}

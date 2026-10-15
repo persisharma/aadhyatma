@@ -64,6 +64,8 @@ export const lightColors = {
   newBadgeBg: 'rgba(184, 98, 27, 0.16)',
   newBadgeText: '#8A3E0B',
 
+  // The themed artwork is the primary reading surface; the parchment veil only
+  // softens it enough to keep verse labels legible without washing it out.
   overlayTop: 'rgba(243, 231, 201, 0.85)',
   overlayUpper: 'rgba(243, 231, 201, 0.55)',
   overlayLower: 'rgba(243, 231, 201, 0.75)',
@@ -71,6 +73,13 @@ export const lightColors = {
 
   modalBackdrop: 'rgba(47, 30, 16, 0.55)',
   onPrimary: '#FFFFFF',
+
+  // Media letterbox behind the 16:9 YouTube embed. A video stage is black by
+  // convention (not a UI signal), so it sits outside the warm-only chrome rule.
+  videoStage: '#000000',
+  // YouTube's brand red for the small play-mark on the video CTA — an external
+  // brand attribute (like the baked illustration palette), never a UI signal.
+  youtube: '#FF0000',
 
   cardSurface: 'rgba(255, 250, 235, 0.72)',
   cardActiveFrom: '#FFF5E0',

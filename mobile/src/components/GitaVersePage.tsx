@@ -15,7 +15,6 @@ import { verseToken, meaningToken, scriptBodyFont, scriptTitleFont, pillTextStyl
 import type { GitaVerse } from '@/data/gita';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
-import { readingParchment } from '@/data/backgroundAsset';
 import ReadingArtwork from './ReadingArtwork';
 import ProseParagraph from './ProseParagraph';
 import Ornament from './Ornament';
@@ -94,7 +93,7 @@ export default function GitaVersePage({ verse, sourceId, width, topActions, show
 
   return (
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <BackgroundLayer source={readingParchment} />
+      <BackgroundLayer source={bg} />
 
       <ScrollView
         style={styles.scroll}

@@ -1,3 +1,4 @@
+import { garudPuranTotal, garudPuranReadingCount } from '../src/data/garud-puran';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -54,6 +55,8 @@ const VALUES: readonly (readonly [string, number | Record<string, number>])[] = 
   ['ganeshStotramTotal', ganeshStotramTotal],
   ['ganeshaKavachamTotal', ganeshaKavachamTotal],
   ['gangashtakamTotal', gangashtakamTotal],
+  ['garudPuranTotal', garudPuranTotal],
+  ['garudPuranReadingCount', garudPuranReadingCount],
   ['gayatriChalisaCounts', gayatriChalisaCounts],
   ['hanumanAshtakTotal', hanumanAshtakTotal],
   ['hanumanChalisaTotal', hanumanChalisaTotal],

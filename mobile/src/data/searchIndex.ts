@@ -35,6 +35,7 @@ import {
   gitaChaptersManifest,
   type GitaVerse,
 } from './gita';
+import { getGarudPuranChapter, garudPuranChaptersManifest } from './garud-puran';
 import { getGitaSaarChapter, gitaSaarChaptersManifest, type GitaSaarVerse } from './gita-saar';
 import {
   getSundarkandChapter,
@@ -403,6 +404,11 @@ function* entryUnits(verses: SearchVerseEntry[], entry: LibraryEntry): Generator
     return;
   }
 
+  if (entry.id === 'garud-puran') {
+    yield* pushChapteredGarudPuran(verses, entry);
+    return;
+  }
+
   if (entry.id === 'gita-saar') {
     yield* pushChapteredGitaSaar(verses, entry);
     return;
@@ -661,6 +667,22 @@ function* pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
       );
     });
     // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
+  }
+}
+
+function* pushChapteredGarudPuran(out: SearchVerseEntry[], entry: LibraryEntry) {
+  for (const ch of garudPuranChaptersManifest) {
+    getGarudPuranChapter(ch.chapter).verses.forEach((page, idx) => out.push(makeVerseEntry({
+      sourceId: entry.id,
+      sectionNameHi: `${entry.nameHi} · ${ch.titleHi}`,
+      sectionNameEn: `${entry.nameEn} · ${ch.titleEn}`,
+      chapter: ch.chapter, verseIndex: idx,
+      labelHi: `पाठ ${ch.chapter} · पृष्ठ ${idx + 1}`,
+      labelEn: `Reading ${ch.chapter} · Page ${idx + 1}`,
+      linesHi: [page.titleHi], linesEn: [page.titleEn],
+      meaningHi: page.meaningHi, meaningEn: page.meaningEn,
+    })));
     yield;
   }
 }
