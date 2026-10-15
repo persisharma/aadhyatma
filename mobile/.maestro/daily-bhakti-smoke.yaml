@@ -20,6 +20,12 @@
 #   4. Global reading-language switching reflects on the screen.
 #   5. A pinned Gita verse exposes its meaning immediately at Standard size,
 #      without spending the viewport on an illustration; Large remains scrollable.
+#   6. The setup strip (design.md §23), when up, rests on "Not now". It is
+#      state-dependent: _launch.yaml grants notifications (no reminder ask) and
+#      Expo Go has no widget extension (no widget ask), so it is usually absent;
+#      a dev build shows the widget ask. Both branches are conditional so either
+#      runtime passes; the gate itself is unit-tested in
+#      src/components/__tests__/dailyBhaktiNudgeView.test.ts.
 #
 # Why we switch to English first:
 #   The screen reads the GLOBAL reading language (useGitaLanguage); the default
@@ -73,6 +79,22 @@ appId: com.prashantsharma.vedansh
     text: "Open"
     optional: true
 - waitForAnimationToEnd
+
+# ── Step 3b: Rest the setup strip if one is up, before the layout asserts ──
+- runFlow:
+    when:
+      visible:
+        id: "daily-bhakti-nudge-reminder"
+    commands:
+      - tapOn: { id: "daily-bhakti-nudge-reminder-dismiss" }
+      - assertNotVisible: { id: "daily-bhakti-nudge-reminder" }
+- runFlow:
+    when:
+      visible:
+        id: "daily-bhakti-nudge-widget"
+    commands:
+      - tapOn: { id: "daily-bhakti-nudge-widget-dismiss" }
+      - assertNotVisible: { id: "daily-bhakti-nudge-widget" }
 
 # ── Step 4: Assert the verse card rendered ──
 - extendedWaitUntil:

@@ -51,6 +51,8 @@ jest.mock('@react-navigation/native', () => ({
 // The docked banner drags in the routine store + navigation stack — out of
 // scope for this suite.
 jest.mock('@/components/RoutineBanner', () => () => null);
+// The setup strip needs the notification provider; it has its own suite.
+jest.mock('@/components/DailyBhaktiNudge', () => () => null);
 
 const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/language')>(
   '@/data/gita/language'

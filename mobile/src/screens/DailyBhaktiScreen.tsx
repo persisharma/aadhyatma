@@ -26,6 +26,7 @@ import BookmarkButton from '@/components/BookmarkButton';
 import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import RoutineBanner from '@/components/RoutineBanner';
+import DailyBhaktiNudge from '@/components/DailyBhaktiNudge';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { useTourTarget } from '@/components/tour/tourTargets';
 
@@ -89,6 +90,9 @@ export default function DailyBhaktiScreen() {
   const bookmarkId = verse
     ? `${verse.sourceId}:${verse.chapter ?? ''}:${verse.verseIndex}`
     : '';
+  const verseLines = verse
+    ? verseLinesByLang(lang, verse.textHi, verse.textEn.length > 0 ? verse.textEn : verse.textHi)
+    : [];
 
   if (!verse) {
     return (
@@ -151,6 +155,10 @@ export default function DailyBhaktiScreen() {
               {screenTitle.secondary.text}
             </Text>
           </View>
+
+          {/* Setup strip (design.md §23): reminder first, then the verse widget —
+              one ask at a time, renders nothing once both are settled. */}
+          <DailyBhaktiNudge previewLines={verseLines} />
 
           {/* Verse Card — carries the same faded source sketch as the verse's own
               reader page (getReaderBackground). `chapter` doubles as the stanza/kāṇḍa
@@ -219,11 +227,7 @@ export default function DailyBhaktiScreen() {
                 marginTop: 14,
               }}
             >
-              {verseLinesByLang(
-                lang,
-                verse.textHi,
-                verse.textEn.length > 0 ? verse.textEn : verse.textHi
-              ).join('\n')}
+              {verseLines.join('\n')}
             </Text>
 
             {/* Ornament divider */}

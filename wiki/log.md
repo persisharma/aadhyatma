@@ -914,3 +914,13 @@ table grows 1.9 → 3.4 MB (still lazy). Tests pin the four Bihar towns under co
 re-fold every shipped name against the runtime copy. See [[panchang]].
 
 - 2026-10-15 — Committed the accepted comic artwork/placement revision and reconciled origin/main through c05acdbd, preserving both comic and themed-background wiki history. No app release is implied by this branch push.
+
+## [2026-10-15] ingest | Daily Bhakti reminder + widget setup strip
+
+Added a one-ask-at-a-time strip under the Daily Bhakti title: the daily-verse reminder while it is
+not set up (on + granted), a Settings link on a hard denial, then the verse widget once the
+reminder is set up or its ask is resting. "Not now" rests the reminder ask for 15 days and ends
+the widget ask (`@vedansh/daily-bhakti-nudge`). Android pins the verse widget directly; iOS gets a how-to sheet.
+The widget ask is gated on the new `hasWidgetHost()` so an OTA never offers it to a binary without
+the extension, and it ends on a completed add flow because neither bridge can report placement.
+Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pages.

@@ -3,8 +3,16 @@ import path from 'node:path';
 import { comics, comicById } from '../comics';
 import { getComicBook, comicPageIndex, comicPages, comicLanguage } from '../comicBooks';
 import manifest from '../comicAssetManifest.json';
+import balakandaSource from '../comicBooks/balakanda.json';
 
 const book = getComicBook('balakanda-v1')!;
+// contentCorrectness's verse-provenance rule skips comicBooks (a retelling, like
+// kidsStories); this is where the comic's own provenance is held instead.
+test('the retelling declares its base text and covers every Bāla Kāṇḍa sarga', () => {
+  expect(balakandaSource.baseText).toMatch(/Valmiki Ramayana, Bala Kanda/);
+  expect(balakandaSource.scope).toMatch(/retelling/);
+  expect(balakandaSource.sourceCoverage).toEqual(Array.from({ length: 77 }, (_, i) => i + 1));
+});
 test('native reader uses the complete reviewed edition with no website URL', () => {
   expect(comicById('balakanda-v1')).not.toHaveProperty('url');
   expect(book.episodes).toHaveLength(29);
