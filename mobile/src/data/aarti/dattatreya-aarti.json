@@ -1,0 +1,128 @@
+{
+  "titleHi": "श्री दत्तात्रेय आरती (मराठी)",
+  "titleEn": "Dattatreya Aarti (Marathi)",
+  "subtitleHi": "त्रिगुणात्मक त्रैमूर्ति दत्त हा जाणा",
+  "subtitleEn": "Trigunatmak Traimurti Datta Ha Jana",
+  "deity": "dattatreya",
+  "language": "mr-en",
+  "source": {
+    "baseText": "Sant Eknath's Marathi Datta Aarti beginning 'त्रिगुणात्मक त्रैमूर्ति दत्त हा जाणा'. The complete 18-line text (four numbered stanzas and the two-line धृ refrain) was compared line by line between Hindu Janajagruti and BhajanUSA, and checked against Sanatan Sanstha. The app follows the Hindu Janajagruti/Sanatan reading 'आरती ओवाळीता'; BhajanUSA prints 'ओवाळिता'. Spacing of 'श्री गुरुदत्ता' and 'श्री दत्तध्यान' also differs without changing the words. The Marathi source language is preserved; Hindi and English meanings are editorial.",
+    "referenceUrls": [
+      "https://www.hindujagruti.org/hindi/hinduism/hindu-gods/dattatreya/shri-dattas-arati",
+      "https://www.bhajanusa.com/bhajans/trigunatmaktrimurtidatta/",
+      "https://www.sanatan.org/en/a/129.html"
+    ],
+    "retrievedOn": "2026-10-15"
+  },
+  "counts": {
+    "totalVerses": 5
+  },
+  "verses": [
+    {
+      "id": "datta-aarti-01",
+      "type": "stanza",
+      "section": "body",
+      "number": 1,
+      "labelHi": "पद · १ (मराठी)",
+      "labelEn": "Stanza · 1 (Marathi)",
+      "lines": [
+        "त्रिगुणात्मक त्रैमूर्ति दत्त हा जाणा ।",
+        "त्रिगुणी अवतार त्रैलोक्यराणा ।",
+        "नेति नेति शब्द न ये अनुमाना ।",
+        "सुरवर-मुनिजन-योगी-समाधि न ये ध्याना ।। १ ।।"
+      ],
+      "linesEn": [
+        "Trigunatmak traimurti Datta ha jana.",
+        "Triguni avatar trailokya rana.",
+        "Neti neti shabda na ye anumana.",
+        "Suravar-munijan-yogi-samadhi na ye dhyana."
+      ],
+      "meaningHi": "हे दत्त, आप त्रिगुणात्मक त्रिमूर्ति का रूप और तीनों लोकों के अधिपति हैं। 'नेति, नेति' कहने पर भी आपकी पूर्ण कल्पना नहीं हो पाती; देव, मुनि और योगियों के गहन ध्यान से भी आपका स्वरूप परे है।",
+      "meaningEn": "Datta is praised as the threefold form, embodying the three qualities and ruling the three worlds. Even 'not this, not this' cannot fully describe him; his nature lies beyond the deepest meditation of gods, sages and yogis."
+    },
+    {
+      "id": "datta-aarti-02",
+      "type": "refrain",
+      "section": "body",
+      "number": 2,
+      "labelHi": "टेक (मराठी)",
+      "labelEn": "Refrain (Marathi)",
+      "lines": [
+        "जय देव जय देव जय श्री गुरुदत्ता ।",
+        "आरती ओवाळीता हरली भवचिंता ।। धृ० ।।"
+      ],
+      "linesEn": [
+        "Jai dev jai dev jai Shri Gurudatta.",
+        "Aarti ovalita harali bhavchinta."
+      ],
+      "meaningHi": "हे श्री गुरुदत्त, आपकी जय हो। आपकी आरती उतारते समय संसार की चिंता दूर हो जाती है। यह आरती की मराठी टेक है।",
+      "meaningEn": "Glory to Shri Guru Datta. In offering this aarti, the devotee's worldly anxiety falls away. This is the Marathi refrain."
+    },
+    {
+      "id": "datta-aarti-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · २ (मराठी)",
+      "labelEn": "Stanza · 2 (Marathi)",
+      "lines": [
+        "सबाह्य अभ्यंतरी तू एक दत्त ।",
+        "अभाग्यासी कैंची कळेल ही मात ।",
+        "पराही परतली तेथे कैंचा हेत ।",
+        "जन्ममरणाचा पुरलासे अंत ।। २ ।।"
+      ],
+      "linesEn": [
+        "Sabahya abhyantari tu ek Datta.",
+        "Abhagyasi kainchi kalel hi mat.",
+        "Parahi paratali tethe kaincha het.",
+        "Janma-maranacha puralase ant."
+      ],
+      "meaningHi": "हे दत्त, बाहर और भीतर आप ही एक हैं; इस सत्य को अभागा व्यक्ति कैसे समझे? जहाँ परा वाणी भी लौट जाती है, वहाँ कोई तर्क क्या पहुँच पाएगा? आपकी अनुभूति से जन्म और मृत्यु का चक्र समाप्त होता है।",
+      "meaningEn": "Datta, you are the one presence within and without; a person without that insight cannot grasp it. Even the highest speech turns back there, beyond argument. Realising you brings the cycle of birth and death to an end."
+    },
+    {
+      "id": "datta-aarti-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · ३ (मराठी)",
+      "labelEn": "Stanza · 3 (Marathi)",
+      "lines": [
+        "दत्त येऊनिया उभा ठाकला ।",
+        "सद्भावे साष्टांगे प्रणिपात केला ।",
+        "प्रसन्न होऊनी आशीर्वाद दिधला ।",
+        "जन्ममरणाचा फेरा चुकविला ।। ३ ।।"
+      ],
+      "linesEn": [
+        "Datta yeuniya ubha thakala.",
+        "Sadbhave sashtange pranipat kela.",
+        "Prasanna houni aashirvad didhala.",
+        "Janma-maranacha fera chukavila."
+      ],
+      "meaningHi": "दत्त सामने आकर खड़े हुए। भक्त ने सच्चे भाव से साष्टांग प्रणाम किया; प्रसन्न होकर दत्त ने आशीर्वाद दिया और जन्म-मरण के फेर से छुड़ाया।",
+      "meaningEn": "Datta appears before the devotee, who bows fully with sincere devotion. Pleased, Datta blesses the devotee and frees them from the cycle of birth and death."
+    },
+    {
+      "id": "datta-aarti-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · ४ (मराठी)",
+      "labelEn": "Stanza · 4 (Marathi)",
+      "lines": [
+        "दत्त दत्त ऐसे लागले ध्यान ।",
+        "हारपले मन झाले उन्मन ।",
+        "मीतूपणाची झाली बोळवण ।",
+        "एका जनार्दनी श्री दत्तध्यान ।। ४ ।।"
+      ],
+      "linesEn": [
+        "Datta Datta aise lagale dhyan.",
+        "Harapale man jhale unman.",
+        "Mi-tu-panachi jhali bolavan.",
+        "Eka Janardani Shri Dattadhyan."
+      ],
+      "meaningHi": "'दत्त, दत्त' के स्मरण में ध्यान लग गया; मन अपनी चंचलता खोकर स्थिर हुआ। 'मैं' और 'तू' का भेद विदा हुआ। अंतिम पंक्ति में संत एकनाथ अपनी जनार्दन-परम्परा से दत्त के ध्यान को नमन करते हैं।",
+      "meaningEn": "Meditation settles on the name 'Datta'; the restless mind falls quiet. The divide between 'I' and 'you' is set aside. In the closing signature, Eknath invokes Datta through his Janardan lineage."
+    }
+  ]
+}

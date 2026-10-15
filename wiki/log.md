@@ -932,3 +932,11 @@ printed with SanskritDocuments' Shani Chalisa; Navbharat Times confirms the sele
 reading. Appended id/index 11, tagged `shani`, and updated source migration, tests, Maestro and
 reader counts. Drik Panchang returned HTTP 403; the Shani Chalisa remains unshipped because
 its closing doha differs across the reachable sources.
+
+## [2026-10-15] ingest | Marathi Datta Aarti added as a distinct reading
+
+Collated Sant Eknath's four stanzas and refrain (18 lines) across Hindu Janajagruti and
+BhajanUSA, with Sanatan Sanstha as a third check; recorded the one refrain spelling variant.
+Appended `dattatreya-aarti` at persisted index 12, kept the Marathi language explicit, and
+updated the reader/count tests and Maestro flow. The SanskritDocuments Marathi PDF was opened
+but yielded no extractable text, so it was not counted as a line-collated source.

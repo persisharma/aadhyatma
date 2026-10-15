@@ -10,6 +10,7 @@ import khatuShyamAarti from './khatu-shyam-aarti.json';
 import omJaiLakshmiMata from './om-jai-lakshmi-mata.json';
 import jayAdhyaShakti from './jay-adhya-shakti.json';
 import shaniAarti from './shani-aarti.json';
+import dattatreyaAarti from './dattatreya-aarti.json';
 
 export { aartiIdByIndex, aartiIndexById, type AartiId } from './ids';
 
@@ -53,6 +54,7 @@ export const aartiCollection: readonly AartiData[] = [
   omJaiLakshmiMata as AartiData,
   jayAdhyaShakti as AartiData,
   shaniAarti as AartiData,
+  dattatreyaAarti as AartiData,
 ];
 
 export const aartiTitleHi = 'आरती संग्रह';
@@ -66,8 +68,8 @@ export function getAarti(index: number): AartiData {
 }
 
 (function assertAartiInvariants() {
-  if (aartiCollection.length !== 12) {
-    throw new Error(`aarti: expected 12 aartis, got ${aartiCollection.length}`);
+  if (aartiCollection.length !== 13) {
+    throw new Error(`aarti: expected 13 aartis, got ${aartiCollection.length}`);
   }
   const seenIds = new Set<string>();
   let totalVerses = 0;

@@ -118,6 +118,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'om-jai-lakshmi-mata': backgroundImages.deity_lakshmi,
   'jay-adhya-shakti': backgroundImages.deity_durga_lion,
   'shani-aarti': backgroundImages.deity_shani,
+  'dattatreya-aarti': backgroundImages.deity_dattatreya,
   'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
   'matribhumi-vandana': backgroundImages.category_stotram_hymn_scroll,
   lingashtakam: shivaStrotamImages.shiva,

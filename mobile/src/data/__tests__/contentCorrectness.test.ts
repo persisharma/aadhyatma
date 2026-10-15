@@ -100,7 +100,7 @@ assert.deepEqual(
 
 // Newly-added discoverable content must carry addedInVersion, or NewContentContext
 // seeds it as already-known for upgrading users and the NEW badge never shows.
-for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata', 'jay-adhya-shakti', 'shani-aarti']) {
+for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata', 'jay-adhya-shakti', 'shani-aarti', 'dattatreya-aarti']) {
   const entry = library.find((e) => e.id === id);
   assert.ok(entry, `${id} should exist in library`);
   assert.ok(entry.addedInVersion, `${id} must set addedInVersion so upgraders see its NEW badge`);
@@ -639,6 +639,20 @@ assert.deepEqual(library.find((e) => e.id === 'shani-aarti')?.deities, ['shani']
 assert.equal(library.find((e) => e.id === 'shani-aarti')?.verseCount, 5);
 assert.equal(library.find((e) => e.id === 'shani-aarti')?.addedInVersion, '1.5.2');
 
+// ─── 10g. Marathi Dattatreya Aarti two-source collation ──────────────────────
+const dattatreyaAarti = readJson('aarti/dattatreya-aarti.json');
+assert.equal(dattatreyaAarti.deity, 'dattatreya');
+assert.equal(dattatreyaAarti.language, 'mr-en', 'the source language must stay explicit');
+assert.equal(dattatreyaAarti.verses.length, 5, 'four stanzas and one refrain');
+assert.equal(dattatreyaAarti.counts.totalVerses, dattatreyaAarti.verses.length);
+assert.ok(dattatreyaAarti.verses[0].lines[0].startsWith('त्रिगुणात्मक त्रैमूर्ति दत्त हा जाणा'));
+assert.equal(dattatreyaAarti.verses[1].type, 'refrain');
+assert.ok(dattatreyaAarti.verses.at(-1).lines.at(-1).startsWith('एका जनार्दनी श्री दत्तध्यान'));
+assert.ok(dattatreyaAarti.source.referenceUrls.length >= 2);
+assert.deepEqual(library.find((e) => e.id === 'dattatreya-aarti')?.deities, ['dattatreya']);
+assert.equal(library.find((e) => e.id === 'dattatreya-aarti')?.verseCount, 5);
+assert.equal(library.find((e) => e.id === 'dattatreya-aarti')?.addedInVersion, '1.5.2');
+
 // ─── 11. Library labels are precise about excerpts and verse types ───────────
 
 const libraryById = new Map(library.map((entry) => [entry.id, entry]));
@@ -998,6 +1012,7 @@ for (const file of [
   'aarti/khatu-shyam-aarti.json',
   'aarti/om-jai-lakshmi-mata.json',
   'aarti/shani-aarti.json',
+  'aarti/dattatreya-aarti.json',
 ]) {
   const meaningsEn: string[] = readJson(file)
     .verses.map((v: any) => v.meaningEn)
