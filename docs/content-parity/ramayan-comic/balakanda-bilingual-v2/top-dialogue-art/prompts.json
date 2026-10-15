@@ -1,0 +1,766 @@
+{
+  "mode": "built-in image_gen",
+  "jobs": [
+    {
+      "id": "bk-01-02",
+      "asset": "../balakanda-v1/assets/bk-01-v2.png",
+      "frame": {
+        "x": 0.5025380710659898,
+        "y": 0,
+        "width": 0.49746192893401014,
+        "height": 0.3030075187969925,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Narada speaks to Valmiki, gently gesturing through the story; depict only the two sages, no literal future-event montage.",
+      "speaker": "Narada",
+      "dialogue": "Let me tell you Rama’s story.",
+      "review": "Narada, dark-haired veena bearer on the right.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-01-02, visible source-frame bounds normalized within input 1: x=0.5025380710659898, y=0, width=0.49746192893401014, height=0.3030075187969925. Exact scene: Narada speaks to Valmiki, gently gesturing through the story; depict only the two sages, no literal future-event montage.. Speaker identity to preserve: Narada, dark-haired veena bearer on the right.. Dialogue context (DO NOT PRINT): Let me tell you Rama’s story..",
+      "version": 1
+    },
+    {
+      "id": "bk-01-04",
+      "asset": "../balakanda-v1/assets/bk-01-v2.png",
+      "frame": {
+        "x": 0.5025380710659898,
+        "y": 0.3030075187969925,
+        "width": 0.49746192893401014,
+        "height": 0.3406015037593985,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Four-headed four-armed Brahma blesses seated Valmiki at hermitage, serene divine light, palm-leaf writing materials nearby.",
+      "speaker": "Brahma",
+      "dialogue": "Tell Rama’s life in poetry.",
+      "review": "Brahma, crowned multiple-faced figure on the lotus at right.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-01-04, visible source-frame bounds normalized within input 1: x=0.5025380710659898, y=0.3030075187969925, width=0.49746192893401014, height=0.3406015037593985. Exact scene: Four-headed four-armed Brahma blesses seated Valmiki at hermitage, serene divine light, palm-leaf writing materials nearby.. Speaker identity to preserve: Brahma, crowned multiple-faced figure on the lotus at right.. Dialogue context (DO NOT PRINT): Tell Rama’s life in poetry..",
+      "version": 1
+    },
+    {
+      "id": "bk-03-01",
+      "asset": "../balakanda-v1/assets/bk-03-v2.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 0.4949238578680203,
+        "height": 0.324812030075188,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Dasharatha speaks privately with minister Sumantra, then turns toward Vashishtha for counsel in palace chamber.",
+      "speaker": "Sumantra",
+      "dialogue": "Invite Rishyasringa.",
+      "review": "Sumantra, blue-turbaned minister at far left, not the crowned king or white-robed sage.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-03-01, visible source-frame bounds normalized within input 1: x=0, y=0, width=0.4949238578680203, height=0.324812030075188. Exact scene: Dasharatha speaks privately with minister Sumantra, then turns toward Vashishtha for counsel in palace chamber.. Speaker identity to preserve: Sumantra, blue-turbaned minister at far left, not the crowned king or white-robed sage.. Dialogue context (DO NOT PRINT): Invite Rishyasringa..",
+      "version": 1
+    },
+    {
+      "id": "bk-05-03a",
+      "asset": "../lettering-pilot-v1/bk-05-03a-welcome-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "status": "full-painted-bounds-reviewed"
+      },
+      "action": "Close-up of Dasharatha welcoming the unseen sage with an open palm; same moment as the preceding panel.",
+      "speaker": "Dasharatha",
+      "dialogue": "Revered sage, how may I serve you?",
+      "review": "Dasharatha close-up at left; retain the approved side balloon, use this anchor when it flows above art.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-05-03a, visible source-frame bounds normalized within input 1: x=0, y=0, width=1, height=1. Exact scene: Close-up of Dasharatha welcoming the unseen sage with an open palm; same moment as the preceding panel.. Speaker identity to preserve: Dasharatha close-up at left; retain the approved side balloon, use this anchor when it flows above art.. Dialogue context (DO NOT PRINT): Revered sage, how may I serve you?.",
+      "version": 1
+    },
+    {
+      "id": "bk-06-01",
+      "asset": "../balakanda-v1/assets/bk-06-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 0.5,
+        "height": 0.4990791896869245,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Vishwamitra explains his disrupted ritual to Dasharatha in court; adolescent Rama listens quietly nearby.",
+      "speaker": "Vishwamitra",
+      "dialogue": "Send Rama to guard the sacrifice.",
+      "review": "Vishwamitra, orange-robed staff bearer at left.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-06-01, visible source-frame bounds normalized within input 1: x=0, y=0, width=0.5, height=0.4990791896869245. Exact scene: Vishwamitra explains his disrupted ritual to Dasharatha in court; adolescent Rama listens quietly nearby.. Speaker identity to preserve: Vishwamitra, orange-robed staff bearer at left.. Dialogue context (DO NOT PRINT): Send Rama to guard the sacrifice..",
+      "version": 1
+    },
+    {
+      "id": "bk-06-02",
+      "asset": "../balakanda-v1/assets/bk-06-v1.png",
+      "frame": {
+        "x": 0.5,
+        "y": 0,
+        "width": 0.5,
+        "height": 0.4990791896869245,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Dasharatha's worried close-up as he gestures protectively toward youthful Rama, restrained grief, Vishwamitra firm in foreground.",
+      "speaker": "Dasharatha",
+      "dialogue": "Rama is not even sixteen yet.",
+      "review": "Dasharatha, crowned king in the middle.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-06-02, visible source-frame bounds normalized within input 1: x=0.5, y=0, width=0.5, height=0.4990791896869245. Exact scene: Dasharatha's worried close-up as he gestures protectively toward youthful Rama, restrained grief, Vishwamitra firm in foreground.. Speaker identity to preserve: Dasharatha, crowned king in the middle.. Dialogue context (DO NOT PRINT): Rama is not even sixteen yet..",
+      "version": 1
+    },
+    {
+      "id": "bk-06-03",
+      "asset": "../balakanda-v1/assets/bk-06-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0.4990791896869245,
+        "width": 0.5,
+        "height": 0.5009208103130756,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Gentle Vashishtha mediates between worried Dasharatha and stern narrow-faced Vishwamitra; sages unmistakably distinct.",
+      "speaker": "Vashishtha",
+      "dialogue": "Your Majesty, keep the promise you made.",
+      "review": "Vashishtha, white-robed sage in the centre, between Dasharatha and Vishwamitra.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-06-03, visible source-frame bounds normalized within input 1: x=0, y=0.4990791896869245, width=0.5, height=0.5009208103130756. Exact scene: Gentle Vashishtha mediates between worried Dasharatha and stern narrow-faced Vishwamitra; sages unmistakably distinct.. Speaker identity to preserve: Vashishtha, white-robed sage in the centre, between Dasharatha and Vishwamitra.. Dialogue context (DO NOT PRINT): Your Majesty, keep the promise you made..",
+      "version": 1
+    },
+    {
+      "id": "bk-07-03",
+      "asset": "../balakanda-v1/assets/bk-07-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0.5,
+        "width": 1,
+        "height": 0.5,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Three travellers cross river in simple boat, Rama asks about rushing confluence; dark forest visible on far bank, no Tataka yet.",
+      "speaker": "Rama",
+      "dialogue": "What is that roaring sound, revered sage?",
+      "review": "Rama, blue-skinned youth in the middle of the boat.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-07-03, visible source-frame bounds normalized within input 1: x=0, y=0.5, width=1, height=0.5. Exact scene: Three travellers cross river in simple boat, Rama asks about rushing confluence; dark forest visible on far bank, no Tataka yet.. Speaker identity to preserve: Rama, blue-skinned youth in the middle of the boat.. Dialogue context (DO NOT PRINT): What is that roaring sound, revered sage?.\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-08-02",
+      "asset": "../balakanda-v1/assets/bk-08-v1.png",
+      "frame": {
+        "x": 0.5034530386740331,
+        "y": 0,
+        "width": 0.4965469613259669,
+        "height": 0.5,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Youthful Rama thoughtfully readies his bow, Lakshmana stands watch, Vishwamitra gives measured counsel; no triumphant violence.",
+      "speaker": "Rama",
+      "dialogue": "First, I will restrain her power.",
+      "review": "Rama, blue-skinned bow bearer in the centre.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-08-02, visible source-frame bounds normalized within input 1: x=0.5034530386740331, y=0, width=0.4965469613259669, height=0.5. Exact scene: Youthful Rama thoughtfully readies his bow, Lakshmana stands watch, Vishwamitra gives measured counsel; no triumphant violence.. Speaker identity to preserve: Rama, blue-skinned bow bearer in the centre.. Dialogue context (DO NOT PRINT): First, I will restrain her power..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-09-02",
+      "asset": "../balakanda-v1/assets/bk-09-v1.png",
+      "frame": {
+        "x": 0.4972375690607735,
+        "y": 0,
+        "width": 0.5027624309392266,
+        "height": 0.4843462246777164,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Close teaching moment, Rama asks with folded hands and Vishwamitra demonstrates calm recall of a fading luminous arrow; no battle.",
+      "speaker": "Rama",
+      "dialogue": "How can these weapons be recalled?",
+      "review": "Rama, blue-skinned youth with joined hands, right of the teaching sage.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-09-02, visible source-frame bounds normalized within input 1: x=0.4972375690607735, y=0, width=0.5027624309392266, height=0.4843462246777164. Exact scene: Close teaching moment, Rama asks with folded hands and Vishwamitra demonstrates calm recall of a fading luminous arrow; no battle.. Speaker identity to preserve: Rama, blue-skinned youth with joined hands, right of the teaching sage.. Dialogue context (DO NOT PRINT): How can these weapons be recalled?.\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-09-02a",
+      "asset": "assets/bk-09-02a-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "status": "full-painted-bounds-reviewed"
+      },
+      "action": "Rama points toward the pleasant wooded hermitage as the three travellers walk; Vishwamitra turns to answer.",
+      "speaker": "Rama",
+      "dialogue": "Whose hermitage is this, revered sage?",
+      "review": "Rama, blue-skinned youth in the centre, pointing toward the hermitage.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-09-02a, visible source-frame bounds normalized within input 1: x=0, y=0, width=1, height=1. Exact scene: Rama points toward the pleasant wooded hermitage as the three travellers walk; Vishwamitra turns to answer.. Speaker identity to preserve: Rama, blue-skinned youth in the centre, pointing toward the hermitage.. Dialogue context (DO NOT PRINT): Whose hermitage is this, revered sage?.\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-10-04",
+      "asset": "../balakanda-v1/assets/bk-10-v2.png",
+      "frame": {
+        "x": 0.5048342541436464,
+        "y": 0.5,
+        "width": 0.4951657458563536,
+        "height": 0.5,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Relieved Vishwamitra and rishis thank both adolescent brothers beside completed altar at clear sunrise, no lingering enemies.",
+      "speaker": "Vishwamitra",
+      "dialogue": "You have protected the sacrifice.",
+      "review": "Vishwamitra, tall orange-robed sage at left of the fire.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-10-04, visible source-frame bounds normalized within input 1: x=0.5048342541436464, y=0.5, width=0.4951657458563536, height=0.5. Exact scene: Relieved Vishwamitra and rishis thank both adolescent brothers beside completed altar at clear sunrise, no lingering enemies.. Speaker identity to preserve: Vishwamitra, tall orange-robed sage at left of the fire.. Dialogue context (DO NOT PRINT): You have protected the sacrifice..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-12-01",
+      "asset": "../balakanda-v1/assets/bk-12-v3.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 0.4993093922651934,
+        "height": 0.4990791896869245,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Rama enquires beside broad Ganga, Vishwamitra points toward snow peaks; Lakshmana watches river, no literal three floating rivers.",
+      "speaker": "Rama",
+      "dialogue": "How does Ganga flow through all three worlds?",
+      "review": "Rama, blue-skinned youth in front of the pointing sage.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-12-01, visible source-frame bounds normalized within input 1: x=0, y=0, width=0.4993093922651934, height=0.4990791896869245. Exact scene: Rama enquires beside broad Ganga, Vishwamitra points toward snow peaks; Lakshmana watches river, no literal three floating rivers.. Speaker identity to preserve: Rama, blue-skinned youth in front of the pointing sage.. Dialogue context (DO NOT PRINT): How does Ganga flow through all three worlds?.\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-13-06",
+      "asset": "../balakanda-v1/assets/bk-13-v2.png",
+      "frame": {
+        "x": 0.5,
+        "y": 0.6669172932330827,
+        "width": 0.5,
+        "height": 0.3330827067669173,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Garuda with one pair of wings and two arms counsels grieving Anshuman beside horse; no conflating Anshuman with later Bhagiratha.",
+      "speaker": "Garuda",
+      "dialogue": "They need the waters of Ganga.",
+      "review": "Garuda, eagle-headed winged figure on the right.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-13-06, visible source-frame bounds normalized within input 1: x=0.5, y=0.6669172932330827, width=0.5, height=0.3330827067669173. Exact scene: Garuda with one pair of wings and two arms counsels grieving Anshuman beside horse; no conflating Anshuman with later Bhagiratha.. Speaker identity to preserve: Garuda, eagle-headed winged figure on the right.. Dialogue context (DO NOT PRINT): They need the waters of Ganga..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-14-02",
+      "asset": "../balakanda-v1/assets/bk-14-v1.png",
+      "frame": {
+        "x": 0.498046875,
+        "y": 0,
+        "width": 0.501953125,
+        "height": 0.24609375,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Ascetic Bhagiratha receives blessing from four-headed Brahma beneath Himalaya sky; rushing celestial river implied above.",
+      "speaker": "Brahma",
+      "dialogue": "Only Shiva can bear Ganga’s force.",
+      "review": "Brahma, crowned multiple-faced figure on the lotus at right.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-14-02, visible source-frame bounds normalized within input 1: x=0.498046875, y=0, width=0.501953125, height=0.24609375. Exact scene: Ascetic Bhagiratha receives blessing from four-headed Brahma beneath Himalaya sky; rushing celestial river implied above.. Speaker identity to preserve: Brahma, crowned multiple-faced figure on the lotus at right.. Dialogue context (DO NOT PRINT): Only Shiva can bear Ganga’s force..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-17-01",
+      "asset": "../balakanda-v1/assets/bk-17-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 0.4957698815566836,
+        "height": 0.33157894736842103,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Youthful Rama asks Vishwamitra about deserted hermitage, Lakshmana looks at overgrown path, no stone statue.",
+      "speaker": "Rama",
+      "dialogue": "Why is this hermitage so deserted?",
+      "review": "Rama, blue-skinned youth at centre, addressing the sage at right.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-17-01, visible source-frame bounds normalized within input 1: x=0, y=0, width=0.4957698815566836, height=0.33157894736842103. Exact scene: Youthful Rama asks Vishwamitra about deserted hermitage, Lakshmana looks at overgrown path, no stone statue.. Speaker identity to preserve: Rama, blue-skinned youth at centre, addressing the sage at right.. Dialogue context (DO NOT PRINT): Why is this hermitage so deserted?.\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-18-02",
+      "asset": "../balakanda-v1/assets/bk-18-v2.png",
+      "frame": {
+        "x": 0.5027624309392266,
+        "y": 0,
+        "width": 0.4972375690607735,
+        "height": 0.4990791896869245,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Shatananda gratefully asks Vishwamitra about his mother Ahalya while Rama and Lakshmana listen, Janaka nearby.",
+      "speaker": "Shatananda",
+      "dialogue": "Was my mother’s hospitality accepted?",
+      "review": "Shatananda, kneeling white-robed sage at left.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-18-02, visible source-frame bounds normalized within input 1: x=0.5027624309392266, y=0, width=0.4972375690607735, height=0.4990791896869245. Exact scene: Shatananda gratefully asks Vishwamitra about his mother Ahalya while Rama and Lakshmana listen, Janaka nearby.. Speaker identity to preserve: Shatananda, kneeling white-robed sage at left.. Dialogue context (DO NOT PRINT): Was my mother’s hospitality accepted?.\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-19-02",
+      "asset": "../balakanda-v1/assets/bk-19-v1.png",
+      "frame": {
+        "x": 0.4990234375,
+        "y": 0,
+        "width": 0.5009765625,
+        "height": 0.24869791666666666,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Royal Vishwamitra offers riches for a single sacred cow; gentle Vashishtha refuses firmly, Shabala between them.",
+      "speaker": "Vashishtha",
+      "dialogue": "I cannot give Shabala away.",
+      "review": "Vashishtha, white-robed sage at right of Shabala.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-19-02, visible source-frame bounds normalized within input 1: x=0.4990234375, y=0, width=0.5009765625, height=0.24869791666666666. Exact scene: Royal Vishwamitra offers riches for a single sacred cow; gentle Vashishtha refuses firmly, Shabala between them.. Speaker identity to preserve: Vashishtha, white-robed sage at right of Shabala.. Dialogue context (DO NOT PRINT): I cannot give Shabala away..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-19-07",
+      "asset": "../balakanda-v1/assets/bk-19-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0.7278645833333334,
+        "width": 1,
+        "height": 0.2721354166666667,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Younger Vishwamitra leaves royal crown and armour behind and walks into forest with simple ascetic staff, determined introspection.",
+      "speaker": "Vishwamitra",
+      "dialogue": "I will now follow the path of austerity and restraint.",
+      "review": "Vishwamitra, lone orange-robed figure walking at right; abandoned crown at left is not the speaker.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-19-07, visible source-frame bounds normalized within input 1: x=0, y=0.7278645833333334, width=1, height=0.2721354166666667. Exact scene: Younger Vishwamitra leaves royal crown and armour behind and walks into forest with simple ascetic staff, determined introspection.. Speaker identity to preserve: Vishwamitra, lone orange-robed figure walking at right; abandoned crown at left is not the speaker.. Dialogue context (DO NOT PRINT): I will now follow the path of austerity and restraint..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-20-03",
+      "asset": "../balakanda-v1/assets/bk-20-v2.png",
+      "frame": {
+        "x": 0,
+        "y": 0.3330827067669173,
+        "width": 0.49915397631133673,
+        "height": 0.3263157894736842,
+        "status": "painted-panel-boundary-reviewed-v2"
+      },
+      "action": "Travel-worn uncrowned Trishanku appeals to middle-aged ascetic Vishwamitra in forest, compassionate reception.",
+      "speaker": "Trishanku",
+      "dialogue": "I have come to you for refuge.",
+      "review": "Trishanku, kneeling figure in torn clothes at left.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-20-03, visible source-frame bounds normalized within input 1: x=0, y=0.3330827067669173, width=0.49915397631133673, height=0.3263157894736842. Exact scene: Travel-worn uncrowned Trishanku appeals to middle-aged ascetic Vishwamitra in forest, compassionate reception.. Speaker identity to preserve: Trishanku, kneeling figure in torn clothes at left.. Dialogue context (DO NOT PRINT): I have come to you for refuge..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-20-05",
+      "asset": "../balakanda-v1/assets/bk-20-v2.png",
+      "frame": {
+        "x": 0,
+        "y": 0.662406015037594,
+        "width": 0.49915397631133673,
+        "height": 0.337593984962406,
+        "status": "painted-panel-boundary-reviewed-v2"
+      },
+      "action": "Trishanku falls upside down through starry sky toward distant earth, fully clothed, terrified but unharmed; not floating upright in heaven.",
+      "speaker": "Trishanku",
+      "dialogue": "Revered sage, protect me!",
+      "review": "Trishanku, inverted falling crowned figure at left, not the upright figure at right.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-20-05, visible source-frame bounds normalized within input 1: x=0, y=0.662406015037594, width=0.49915397631133673, height=0.337593984962406. Exact scene: Trishanku falls upside down through starry sky toward distant earth, fully clothed, terrified but unharmed; not floating upright in heaven.. Speaker identity to preserve: Trishanku, inverted falling crowned figure at left, not the upright figure at right.. Dialogue context (DO NOT PRINT): Revered sage, protect me!.\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-21-03",
+      "asset": "../balakanda-v1/assets/bk-21-v2.png",
+      "frame": {
+        "x": 0,
+        "y": 0.3157894736842105,
+        "width": 0.4957698815566836,
+        "height": 0.3172932330827068,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Shunahshepa clings to seated ascetic Vishwamitra beside Pushkara lake, who listens protectively, Ambarisha waits at respectful distance.",
+      "speaker": "Shunahshepa",
+      "dialogue": "Revered sage, please save my life.",
+      "review": "Shunahshepa, child clinging to the sage in the lower centre.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-21-03, visible source-frame bounds normalized within input 1: x=0, y=0.3157894736842105, width=0.4957698815566836, height=0.3172932330827068. Exact scene: Shunahshepa clings to seated ascetic Vishwamitra beside Pushkara lake, who listens protectively, Ambarisha waits at respectful distance.. Speaker identity to preserve: Shunahshepa, child clinging to the sage in the lower centre.. Dialogue context (DO NOT PRINT): Revered sage, please save my life..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-22-04",
+      "asset": "../balakanda-v1/assets/bk-22-v2.png",
+      "frame": {
+        "x": 0.5033840947546532,
+        "y": 0.3157894736842105,
+        "width": 0.4966159052453469,
+        "height": 0.3157894736842105,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Solitary ageing Vishwamitra meditates calmly beneath tree, face softer and beard greying, broken anger replaced by discipline.",
+      "speaker": "Vishwamitra",
+      "dialogue": "I must overcome my anger too.",
+      "review": "Vishwamitra, solitary seated sage.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-22-04, visible source-frame bounds normalized within input 1: x=0.5033840947546532, y=0.3157894736842105, width=0.4966159052453469, height=0.3157894736842105. Exact scene: Solitary ageing Vishwamitra meditates calmly beneath tree, face softer and beard greying, broken anger replaced by discipline.. Speaker identity to preserve: Vishwamitra, solitary seated sage.. Dialogue context (DO NOT PRINT): I must overcome my anger too..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown. Brahma must have EXACTLY FOUR ARMS, never five.",
+      "version": 1
+    },
+    {
+      "id": "bk-23-04",
+      "asset": "../balakanda-v1/assets/bk-23-v1.png",
+      "frame": {
+        "x": 0.5033840947546532,
+        "y": 0.31278195488721805,
+        "width": 0.4966159052453469,
+        "height": 0.33383458646616543,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Youthful broad-faced blue Rama approaches enormous sacred bow on wheeled chest, narrow-faced Lakshmana and elder Vishwamitra watch, no crown.",
+      "speaker": "Vishwamitra",
+      "dialogue": "Rama, my child, look at this bow.",
+      "review": "Vishwamitra, grey-bearded orange-robed sage behind Rama at left.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-23-04, visible source-frame bounds normalized within input 1: x=0.5033840947546532, y=0.31278195488721805, width=0.4966159052453469, height=0.33383458646616543. Exact scene: Youthful broad-faced blue Rama approaches enormous sacred bow on wheeled chest, narrow-faced Lakshmana and elder Vishwamitra watch, no crown.. Speaker identity to preserve: Vishwamitra, grey-bearded orange-robed sage behind Rama at left.. Dialogue context (DO NOT PRINT): Rama, my child, look at this bow..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-23-06",
+      "asset": "../balakanda-v1/assets/bk-23-v1.png",
+      "frame": {
+        "x": 0.5033840947546532,
+        "y": 0.6466165413533834,
+        "width": 0.4966159052453469,
+        "height": 0.3533834586466165,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Janaka respectfully discusses proposal with Vishwamitra while two youthful princes stand nearby; Sita dignified in balcony, messenger departs.",
+      "speaker": "Janaka",
+      "dialogue": "I will give Sita in marriage to Rama.",
+      "review": "Janaka, crowned bearded king with joined hands at centre-right, not the messenger at far right.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-23-06, visible source-frame bounds normalized within input 1: x=0.5033840947546532, y=0.6466165413533834, width=0.4966159052453469, height=0.3533834586466165. Exact scene: Janaka respectfully discusses proposal with Vishwamitra while two youthful princes stand nearby; Sita dignified in balcony, messenger departs.. Speaker identity to preserve: Janaka, crowned bearded king with joined hands at centre-right, not the messenger at far right.. Dialogue context (DO NOT PRINT): I will give Sita in marriage to Rama..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-26-02",
+      "asset": "../balakanda-v1/assets/bk-26-v2.png",
+      "frame": {
+        "x": 0.49915397631133673,
+        "y": 0,
+        "width": 0.5008460236886633,
+        "height": 0.3330827067669173,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Exactly one youthful couple Rama and Sita join hands before small sacred fire, Janaka and officiating Vashishtha, Rama broad calm blue face, Sita red bridal attire.",
+      "speaker": "Janaka",
+      "dialogue": "Sita will be your companion in dharma.",
+      "review": "Janaka, crowned bearded king at far right of the wedding group.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-26-02, visible source-frame bounds normalized within input 1: x=0.49915397631133673, y=0, width=0.5008460236886633, height=0.3330827067669173. Exact scene: Exactly one youthful couple Rama and Sita join hands before small sacred fire, Janaka and officiating Vashishtha, Rama broad calm blue face, Sita red bridal attire.. Speaker identity to preserve: Janaka, crowned bearded king at far right of the wedding group.. Dialogue context (DO NOT PRINT): Sita will be your companion in dharma..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-27-04",
+      "asset": "../balakanda-v1/assets/bk-27-v3.png",
+      "frame": {
+        "x": 0.5025380710659898,
+        "y": 0.3293233082706767,
+        "width": 0.49746192893401014,
+        "height": 0.32781954887218046,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Dasharatha pleads with stern Parashurama, youthful Rama stands composed, brides safely in caravan background, no Lakshmana taunting duel.",
+      "speaker": "Dasharatha",
+      "dialogue": "Please grant my sons safety.",
+      "review": "Dasharatha, crowned kneeling king at lower left.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-27-04, visible source-frame bounds normalized within input 1: x=0.5025380710659898, y=0.3293233082706767, width=0.49746192893401014, height=0.32781954887218046. Exact scene: Dasharatha pleads with stern Parashurama, youthful Rama stands composed, brides safely in caravan background, no Lakshmana taunting duel.. Speaker identity to preserve: Dasharatha, crowned kneeling king at lower left.. Dialogue context (DO NOT PRINT): Please grant my sons safety..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-27-05",
+      "asset": "../balakanda-v1/assets/bk-27-v3.png",
+      "frame": {
+        "x": 0,
+        "y": 0.6571428571428571,
+        "width": 1,
+        "height": 0.34285714285714286,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Parashurama offers intact Vaishnava bow and arrow to respectful youthful Rama, one axe held safely or set at side, no extra weapons.",
+      "speaker": "Parashurama",
+      "dialogue": "Show me that you can fit an arrow to this bow.",
+      "review": "Parashurama, bearded ascetic offering the bow from the left.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-27-05, visible source-frame bounds normalized within input 1: x=0, y=0.6571428571428571, width=1, height=0.34285714285714286. Exact scene: Parashurama offers intact Vaishnava bow and arrow to respectful youthful Rama, one axe held safely or set at side, no extra weapons.. Speaker identity to preserve: Parashurama, bearded ascetic offering the bow from the left.. Dialogue context (DO NOT PRINT): Show me that you can fit an arrow to this bow..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-28-01",
+      "asset": "../balakanda-v1/assets/bk-28-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 0.5027624309392266,
+        "height": 0.5,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Close face contrast between youthful serene Rama and mature fierce Parashurama, Rama speaks firmly without mockery, father visible behind.",
+      "speaker": "Rama",
+      "dialogue": "Now you shall see my strength.",
+      "review": "Rama, blue-skinned youth at right, not Dasharatha in the centre.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-28-01, visible source-frame bounds normalized within input 1: x=0, y=0, width=0.5027624309392266, height=0.5. Exact scene: Close face contrast between youthful serene Rama and mature fierce Parashurama, Rama speaks firmly without mockery, father visible behind.. Speaker identity to preserve: Rama, blue-skinned youth at right, not Dasharatha in the centre.. Dialogue context (DO NOT PRINT): Now you shall see my strength..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-28-03",
+      "asset": "../balakanda-v1/assets/bk-28-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0.5,
+        "width": 0.5027624309392266,
+        "height": 0.5,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Rama holds drawn Vaishnava bow upward away from people, Parashurama consents with lowered axe, symbolic celestial glow as merit is relinquished.",
+      "speaker": "Parashurama",
+      "dialogue": "Let the worlds I have earned be your target.",
+      "review": "Parashurama, bearded ascetic with axe at left.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-28-03, visible source-frame bounds normalized within input 1: x=0, y=0.5, width=0.5027624309392266, height=0.5. Exact scene: Rama holds drawn Vaishnava bow upward away from people, Parashurama consents with lowered axe, symbolic celestial glow as merit is relinquished.. Speaker identity to preserve: Parashurama, bearded ascetic with axe at left.. Dialogue context (DO NOT PRINT): Let the worlds I have earned be your target..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 1
+    },
+    {
+      "id": "bk-20-05",
+      "asset": "../balakanda-v1/assets/bk-20-v2.png",
+      "frame": {
+        "x": 0,
+        "y": 0.662406015037594,
+        "width": 0.49915397631133673,
+        "height": 0.337593984962406,
+        "status": "painted-panel-boundary-reviewed-v2"
+      },
+      "action": "Trishanku falls upside down through starry sky toward distant earth, fully clothed, terrified but unharmed; not floating upright in heaven.",
+      "speaker": "Trishanku",
+      "dialogue": "Revered sage, protect me!",
+      "review": "Trishanku, inverted falling crowned figure at left, not the upright figure at right.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-20-05, visible source-frame bounds normalized within input 1: x=0, y=0.662406015037594, width=0.49915397631133673, height=0.337593984962406. Exact scene: Trishanku falls upside down through starry sky toward distant earth, fully clothed, terrified but unharmed; not floating upright in heaven.. Speaker identity to preserve: Trishanku, inverted falling crowned figure at left, not the upright figure at right.. Dialogue context (DO NOT PRINT): Revered sage, protect me!.\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.\nEXACT CAST: only TWO people: upside-down Trishanku at LEFT (one head, exactly two arms, two legs, uncrowned with moustache) and INDRA at RIGHT with one head, black moustache, no beard, one gold crown, blue/white garments, two arms. Do NOT depict Brahma or any multiheaded character. Match the lower-left panel of the original sheet exactly in identities. Clear top 35% starry sky.",
+      "version": 2
+    },
+    {
+      "id": "bk-06-01",
+      "asset": "../balakanda-v1/assets/bk-06-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 0.5,
+        "height": 0.4990791896869245,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Vishwamitra explains his disrupted ritual to Dasharatha in court; adolescent Rama listens quietly nearby.",
+      "speaker": "Vishwamitra",
+      "dialogue": "Send Rama to guard the sacrifice.",
+      "review": "Vishwamitra, orange-robed staff bearer at left.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-06-01, visible source-frame bounds normalized within input 1: x=0, y=0, width=0.5, height=0.4990791896869245. Exact scene: Vishwamitra explains his disrupted ritual to Dasharatha in court; adolescent Rama listens quietly nearby.. Speaker identity to preserve: Vishwamitra, orange-robed staff bearer at left.. Dialogue context (DO NOT PRINT): Send Rama to guard the sacrifice..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.\nWider distant camera: all characters fit entirely BELOW the horizontal midpoint; upper 45% only beautiful empty-of-people palace arches. Keep all three characters distinct and faces recognizable.",
+      "version": 2
+    },
+    {
+      "id": "bk-06-02",
+      "asset": "../balakanda-v1/assets/bk-06-v1.png",
+      "frame": {
+        "x": 0.5,
+        "y": 0,
+        "width": 0.5,
+        "height": 0.4990791896869245,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Dasharatha's worried close-up as he gestures protectively toward youthful Rama, restrained grief, Vishwamitra firm in foreground.",
+      "speaker": "Dasharatha",
+      "dialogue": "Rama is not even sixteen yet.",
+      "review": "Dasharatha, crowned king in the middle.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-06-02, visible source-frame bounds normalized within input 1: x=0.5, y=0, width=0.5, height=0.4990791896869245. Exact scene: Dasharatha's worried close-up as he gestures protectively toward youthful Rama, restrained grief, Vishwamitra firm in foreground.. Speaker identity to preserve: Dasharatha, crowned king in the middle.. Dialogue context (DO NOT PRINT): Rama is not even sixteen yet..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.\nWider distant camera: all characters fit entirely BELOW the horizontal midpoint; upper 45% only beautiful empty-of-people palace arches. Keep all three characters distinct and faces recognizable.",
+      "version": 2
+    },
+    {
+      "id": "bk-06-03",
+      "asset": "../balakanda-v1/assets/bk-06-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0.4990791896869245,
+        "width": 0.5,
+        "height": 0.5009208103130756,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Gentle Vashishtha mediates between worried Dasharatha and stern narrow-faced Vishwamitra; sages unmistakably distinct.",
+      "speaker": "Vashishtha",
+      "dialogue": "Your Majesty, keep the promise you made.",
+      "review": "Vashishtha, white-robed sage in the centre, between Dasharatha and Vishwamitra.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-06-03, visible source-frame bounds normalized within input 1: x=0, y=0.4990791896869245, width=0.5, height=0.5009208103130756. Exact scene: Gentle Vashishtha mediates between worried Dasharatha and stern narrow-faced Vishwamitra; sages unmistakably distinct.. Speaker identity to preserve: Vashishtha, white-robed sage in the centre, between Dasharatha and Vishwamitra.. Dialogue context (DO NOT PRINT): Your Majesty, keep the promise you made..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.\nWider distant camera: all characters fit entirely BELOW the horizontal midpoint; upper 45% only beautiful empty-of-people palace arches. Keep all three characters distinct and faces recognizable.",
+      "version": 2
+    },
+    {
+      "id": "bk-01-04",
+      "version": 2,
+      "asset": "top-dialogue-art/assets/bk-01-04-top-v1.png",
+      "prompt": "Edit this exact illustration. Preserve all art, composition, painted upper sky, Valmiki on the left, Brahma on the right, clothing, faces, lotus, and colors. Correct only Brahma's anatomy: he currently has five arms. REMOVE the extra lower arm on the viewer LEFT that holds a loop of brown prayer beads near his left knee. Keep exactly four arms total: upper viewer-left holds pink lotus, lower viewer-left raises an open blessing palm, upper viewer-right holds a book, lower viewer-right holds the brass water pot. Paint natural red robe where the removed arm was. No other alterations, no text. Four headed Brahma has three faces visible and rear face hidden."
+    },
+    {
+      "id": "bk-05-03a",
+      "prompt": "Preserve this exact Dasharatha welcome scene, age, costume, expression, open palm, style and colors. Recompose with a more distant camera so the TOP OF HIS CROWN starts at 42% down the portrait. Top 38% must be continuous richly painted palace architecture without any figure or prop. Keep the welcome hand and body visible in lower 60%. No lettering or blank bands.",
+      "version": 2,
+      "asset": "top-dialogue-art/assets/bk-05-03a-top-v1.png"
+    },
+    {
+      "id": "bk-09-02",
+      "prompt": "Preserve this exact scene and all three figures, their identities, positions, outfits, folded hands and teaching gesture. Move ONLY the small luminous arrow and its glowing trail out of the upper sky down to the empty space immediately above the sage's raised hand at about 38% down the image. The entire top 30% must be ordinary blue sky and tree canopy with no important action or weapon. No text or blank bands.",
+      "version": 2,
+      "asset": "top-dialogue-art/assets/bk-09-02-top-v1.png"
+    },
+    {
+      "id": "bk-23-06",
+      "prompt": "Correct this exact composition while retaining its inked Indian comic style and all principal identities. There must be only ONE grey-haired orange-robed Vishwamitra on the left, not a duplicated head behind him: erase the duplicate hidden head at extreme left. Keep youthful blue Rama, Lakshmana, green-robed crowned Janaka, departing messenger and red-dressed Sita. Move Sita's balcony DOWN so top of her head is at 38% of image height, and move main figures lower as needed while keeping hands and feet. Top 32% should contain only painted palace pillars, sky and curtains with no people. No text.",
+      "version": 2,
+      "asset": "top-dialogue-art/assets/bk-23-06-top-v1.png"
+    },
+    {
+      "id": "bk-28-03",
+      "prompt": "Preserve this exact scene, characters, clothing, colors, drawn bow action and style. Recompose with all figures AND ENTIRE bow/arrow lower and slightly smaller so nothing important appears in the upper 34% of the image. Topmost bow tip must be below 35%. Keep Rama holding fully drawn bow aimed upward and away from everyone; Parashurama at left with lowered axe, father behind. Keep full bodies and feet. Extend the natural blue sky, trees and architectural scenery above. No blank bands, no text.",
+      "version": 2,
+      "asset": "top-dialogue-art/assets/bk-28-03-top-v1.png"
+    },
+    {
+      "id": "bk-19-07",
+      "asset": "../balakanda-v1/assets/bk-19-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0.7278645833333334,
+        "width": 1,
+        "height": 0.2721354166666667,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Younger Vishwamitra leaves royal crown and armour behind and walks into forest with simple ascetic staff, determined introspection.",
+      "speaker": "Vishwamitra",
+      "dialogue": "I will now follow the path of austerity and restraint.",
+      "review": "Vishwamitra, lone orange-robed figure walking at right; abandoned crown at left is not the speaker.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-19-07, visible source-frame bounds normalized within input 1: x=0, y=0.7278645833333334, width=1, height=0.2721354166666667. Exact scene: Younger Vishwamitra leaves royal crown and armour behind and walks into forest with simple ascetic staff, determined introspection.. Speaker identity to preserve: Vishwamitra, lone orange-robed figure walking at right; abandoned crown at left is not the speaker.. Dialogue context (DO NOT PRINT): I will now follow the path of austerity and restraint..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 2
+    },
+    {
+      "id": "bk-09-02",
+      "version": 3,
+      "asset": "top-dialogue-art/assets/bk-09-02-top-v2.png",
+      "prompt": "Keep all the painting completely unchanged EXCEPT the little glowing weapon in the sky. Move the entire small glowing arrow and all its sparkles down until it FLOATS JUST ABOVE THE SAGE'S OPEN PALM, with the arrow point level with the top of the sage's forehead. This means no luminous marks above the sage's hair bun. It should be a miniature magical arrow he is recalling, about the length of his hand, not a huge arrow in sky. Erase the old high arrow and fill with matching blue sky. No text. Do not move or change any figure."
+    }
+  ],
+  "pilotPrompt": "Use case: identity-preserve / illustration-story. Create ONE text-free standalone comic panel, portrait 4:5, by recomposing ONLY the TOP-LEFT scene in the supplied episode sheet. The other five panels are reference context only and must NOT appear. Preserve the exact established rich Indian inked comic style, line weights, colour palette, recognisable faces, clothing, veena and character roles: elderly grey-haired, long white-bearded Valmiki in rust-red robes seated cross-legged on the LEFT, thoughtfully questioning youthful black-haired Narada in saffron-yellow robes seated on the RIGHT holding a large brown veena and making an open-hand speaking gesture. Quiet green hermitage, large tree at left, distant deer between the sages, thatched hut to right. Both complete seated figures, feet, garments, hands and the entire veena must remain visible. Recompose the scene so the upper 30 percent of the panel is CONTINUOUS PAINTED NATURAL BACKGROUND: softly detailed pale blue sky, distant green canopy, airy tree branches framing the top corners. All faces, heads, hands and sacred objects begin BELOW this upper scenery area. This is intentional space inside the illustration for a native speech bubble later; do NOT draw the bubble or any text. The scene must flow continuously from this upper backdrop to the figures, with no horizontal seam, boxed caption region, blank paper, solid-colour strip, white band, border, letterboxing, faded margin or bottom padding. Keep characters large and expressive across the lower two-thirds, not miniature people far away. Natural warm daylight; retain original expressive inked comic look rather than generic pastel storybook, photorealism or 3D. Exactly two principal people. No lettering, no speech balloons, no titles, no UI, no watermark. Fully painted edge-to-edge 4:5 portrait illustration.\n",
+  "repairs": [
+    {
+      "id": "bk-20-05",
+      "asset": "../balakanda-v1/assets/bk-20-v2.png",
+      "frame": {
+        "x": 0,
+        "y": 0.662406015037594,
+        "width": 0.49915397631133673,
+        "height": 0.337593984962406,
+        "status": "painted-panel-boundary-reviewed-v2"
+      },
+      "action": "Trishanku falls upside down through starry sky toward distant earth, fully clothed, terrified but unharmed; not floating upright in heaven.",
+      "speaker": "Trishanku",
+      "dialogue": "Revered sage, protect me!",
+      "review": "Trishanku, inverted falling crowned figure at left, not the upright figure at right.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-20-05, visible source-frame bounds normalized within input 1: x=0, y=0.662406015037594, width=0.49915397631133673, height=0.337593984962406. Exact scene: Trishanku falls upside down through starry sky toward distant earth, fully clothed, terrified but unharmed; not floating upright in heaven.. Speaker identity to preserve: Trishanku, inverted falling crowned figure at left, not the upright figure at right.. Dialogue context (DO NOT PRINT): Revered sage, protect me!.\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.\nEXACT CAST: only TWO people: upside-down Trishanku at LEFT (one head, exactly two arms, two legs, uncrowned with moustache) and INDRA at RIGHT with one head, black moustache, no beard, one gold crown, blue/white garments, two arms. Do NOT depict Brahma or any multiheaded character. Match the lower-left panel of the original sheet exactly in identities. Clear top 35% starry sky.",
+      "version": 2
+    },
+    {
+      "id": "bk-06-01",
+      "asset": "../balakanda-v1/assets/bk-06-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "width": 0.5,
+        "height": 0.4990791896869245,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Vishwamitra explains his disrupted ritual to Dasharatha in court; adolescent Rama listens quietly nearby.",
+      "speaker": "Vishwamitra",
+      "dialogue": "Send Rama to guard the sacrifice.",
+      "review": "Vishwamitra, orange-robed staff bearer at left.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-06-01, visible source-frame bounds normalized within input 1: x=0, y=0, width=0.5, height=0.4990791896869245. Exact scene: Vishwamitra explains his disrupted ritual to Dasharatha in court; adolescent Rama listens quietly nearby.. Speaker identity to preserve: Vishwamitra, orange-robed staff bearer at left.. Dialogue context (DO NOT PRINT): Send Rama to guard the sacrifice..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.\nWider distant camera: all characters fit entirely BELOW the horizontal midpoint; upper 45% only beautiful empty-of-people palace arches. Keep all three characters distinct and faces recognizable.",
+      "version": 2
+    },
+    {
+      "id": "bk-06-02",
+      "asset": "../balakanda-v1/assets/bk-06-v1.png",
+      "frame": {
+        "x": 0.5,
+        "y": 0,
+        "width": 0.5,
+        "height": 0.4990791896869245,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Dasharatha's worried close-up as he gestures protectively toward youthful Rama, restrained grief, Vishwamitra firm in foreground.",
+      "speaker": "Dasharatha",
+      "dialogue": "Rama is not even sixteen yet.",
+      "review": "Dasharatha, crowned king in the middle.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-06-02, visible source-frame bounds normalized within input 1: x=0.5, y=0, width=0.5, height=0.4990791896869245. Exact scene: Dasharatha's worried close-up as he gestures protectively toward youthful Rama, restrained grief, Vishwamitra firm in foreground.. Speaker identity to preserve: Dasharatha, crowned king in the middle.. Dialogue context (DO NOT PRINT): Rama is not even sixteen yet..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.\nWider distant camera: all characters fit entirely BELOW the horizontal midpoint; upper 45% only beautiful empty-of-people palace arches. Keep all three characters distinct and faces recognizable.",
+      "version": 2
+    },
+    {
+      "id": "bk-06-03",
+      "asset": "../balakanda-v1/assets/bk-06-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0.4990791896869245,
+        "width": 0.5,
+        "height": 0.5009208103130756,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Gentle Vashishtha mediates between worried Dasharatha and stern narrow-faced Vishwamitra; sages unmistakably distinct.",
+      "speaker": "Vashishtha",
+      "dialogue": "Your Majesty, keep the promise you made.",
+      "review": "Vashishtha, white-robed sage in the centre, between Dasharatha and Vishwamitra.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-06-03, visible source-frame bounds normalized within input 1: x=0, y=0.4990791896869245, width=0.5, height=0.5009208103130756. Exact scene: Gentle Vashishtha mediates between worried Dasharatha and stern narrow-faced Vishwamitra; sages unmistakably distinct.. Speaker identity to preserve: Vashishtha, white-robed sage in the centre, between Dasharatha and Vishwamitra.. Dialogue context (DO NOT PRINT): Your Majesty, keep the promise you made..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.\nWider distant camera: all characters fit entirely BELOW the horizontal midpoint; upper 45% only beautiful empty-of-people palace arches. Keep all three characters distinct and faces recognizable.",
+      "version": 2
+    },
+    {
+      "id": "bk-01-04",
+      "version": 2,
+      "asset": "top-dialogue-art/assets/bk-01-04-top-v1.png",
+      "prompt": "Edit this exact illustration. Preserve all art, composition, painted upper sky, Valmiki on the left, Brahma on the right, clothing, faces, lotus, and colors. Correct only Brahma's anatomy: he currently has five arms. REMOVE the extra lower arm on the viewer LEFT that holds a loop of brown prayer beads near his left knee. Keep exactly four arms total: upper viewer-left holds pink lotus, lower viewer-left raises an open blessing palm, upper viewer-right holds a book, lower viewer-right holds the brass water pot. Paint natural red robe where the removed arm was. No other alterations, no text. Four headed Brahma has three faces visible and rear face hidden."
+    },
+    {
+      "id": "bk-05-03a",
+      "prompt": "Preserve this exact Dasharatha welcome scene, age, costume, expression, open palm, style and colors. Recompose with a more distant camera so the TOP OF HIS CROWN starts at 42% down the portrait. Top 38% must be continuous richly painted palace architecture without any figure or prop. Keep the welcome hand and body visible in lower 60%. No lettering or blank bands.",
+      "version": 2,
+      "asset": "top-dialogue-art/assets/bk-05-03a-top-v1.png"
+    },
+    {
+      "id": "bk-09-02",
+      "prompt": "Preserve this exact scene and all three figures, their identities, positions, outfits, folded hands and teaching gesture. Move ONLY the small luminous arrow and its glowing trail out of the upper sky down to the empty space immediately above the sage's raised hand at about 38% down the image. The entire top 30% must be ordinary blue sky and tree canopy with no important action or weapon. No text or blank bands.",
+      "version": 2,
+      "asset": "top-dialogue-art/assets/bk-09-02-top-v1.png"
+    },
+    {
+      "id": "bk-23-06",
+      "prompt": "Correct this exact composition while retaining its inked Indian comic style and all principal identities. There must be only ONE grey-haired orange-robed Vishwamitra on the left, not a duplicated head behind him: erase the duplicate hidden head at extreme left. Keep youthful blue Rama, Lakshmana, green-robed crowned Janaka, departing messenger and red-dressed Sita. Move Sita's balcony DOWN so top of her head is at 38% of image height, and move main figures lower as needed while keeping hands and feet. Top 32% should contain only painted palace pillars, sky and curtains with no people. No text.",
+      "version": 2,
+      "asset": "top-dialogue-art/assets/bk-23-06-top-v1.png"
+    },
+    {
+      "id": "bk-28-03",
+      "prompt": "Preserve this exact scene, characters, clothing, colors, drawn bow action and style. Recompose with all figures AND ENTIRE bow/arrow lower and slightly smaller so nothing important appears in the upper 34% of the image. Topmost bow tip must be below 35%. Keep Rama holding fully drawn bow aimed upward and away from everyone; Parashurama at left with lowered axe, father behind. Keep full bodies and feet. Extend the natural blue sky, trees and architectural scenery above. No blank bands, no text.",
+      "version": 2,
+      "asset": "top-dialogue-art/assets/bk-28-03-top-v1.png"
+    },
+    {
+      "id": "bk-19-07",
+      "asset": "../balakanda-v1/assets/bk-19-v1.png",
+      "frame": {
+        "x": 0,
+        "y": 0.7278645833333334,
+        "width": 1,
+        "height": 0.2721354166666667,
+        "status": "visually-reviewed-authoring-draft"
+      },
+      "action": "Younger Vishwamitra leaves royal crown and armour behind and walks into forest with simple ascetic staff, determined introspection.",
+      "speaker": "Vishwamitra",
+      "dialogue": "I will now follow the path of austerity and restraint.",
+      "review": "Vishwamitra, lone orange-robed figure walking at right; abandoned crown at left is not the speaker.",
+      "prompt": "Create ONE standalone portrait 4:5 TEXT-FREE panel. Input 1 is the exact scene/character edit reference; input 2 is the user-approved composition/style reference ONLY, not a source of extra characters or objects. Recompose the specified scene from input 1 to match input 2's rich Indian inked-comic rendering and generous PAINTED space above the characters. Keep the upper 35% as continuous natural scenery (sky/canopy, palace columns/drapery, or the scene's appropriate background), softly detailed enough to sit behind a native speech bubble later. All faces, heads, crowns, important hands, weapons and action must begin below that upper region. Characters large across the lower portion, recognisable faces/complexions/ages/clothing/relative left-right positions maintained from source. Preserve the entire illustrated action with complete required limbs, props, garments and feet; no tiny distant cast. Extend/recompose the environment naturally, no blank or flat strip, no caption box, no white or parchment band, no horizontal seam or border. Exactly the source scene's characters and event; do not copy people from other panels in the reference sheet or from input 2. No lettering, speech balloon, narration, UI or watermark. Full edge-to-edge painted 4:5 portrait. Hands anatomically plausible, correct head/arm counts, no duplicate weapons. Target panel bk-19-07, visible source-frame bounds normalized within input 1: x=0, y=0.7278645833333334, width=1, height=0.2721354166666667. Exact scene: Younger Vishwamitra leaves royal crown and armour behind and walks into forest with simple ascetic staff, determined introspection.. Speaker identity to preserve: Vishwamitra, lone orange-robed figure walking at right; abandoned crown at left is not the speaker.. Dialogue context (DO NOT PRINT): I will now follow the path of austerity and restraint..\nCRITICAL COMPOSITION: the TOP of every person's hair/crown and every important weapon must be below 40% of total image height. No person may intrude into the upper two-fifths. Fill that upper region with real scenery, not a blank band. The figure group uses the lower 60%, fully shown.",
+      "version": 2
+    },
+    {
+      "id": "bk-09-02",
+      "version": 3,
+      "asset": "top-dialogue-art/assets/bk-09-02-top-v2.png",
+      "prompt": "Keep all the painting completely unchanged EXCEPT the little glowing weapon in the sky. Move the entire small glowing arrow and all its sparkles down until it FLOATS JUST ABOVE THE SAGE'S OPEN PALM, with the arrow point level with the top of the sage's forehead. This means no luminous marks above the sage's hair bun. It should be a miniature magical arrow he is recalling, about the length of his hand, not a huge arrow in sky. Erase the old high arrow and fill with matching blue sky. No text. Do not move or change any figure."
+    },
+    {
+      "id": "bk-23-06",
+      "version": 3,
+      "asset": "top-dialogue-art/assets/bk-23-06-top-v2.png",
+      "prompt": "Edit this exact image, keeping all figures, faces, clothes, gestures, colors and the rest of scene unchanged. The woman Sita in red at the top right is too high. LOWER her balcony and her entire figure significantly: top of her head must align horizontally with the TOP OF JANAKA'S GOLD CROWN (the crowned green-robed man below her). Keep her behind him on a lower balcony, visible head and shoulders. Erase her old position and paint continuous matching palace wall/column there. Nothing human should remain above 40% of image height. Do not duplicate Sita. Do not change other figures. No text."
+    }
+  ]
+}

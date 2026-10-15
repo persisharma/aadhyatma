@@ -32,11 +32,11 @@ export default function ComicReaderScreen({ route, navigation }: NativeStackScre
   }, [book, start]);
   const current = pages[index] ?? pages[0];
   return <SafeAreaView testID="comic-native-reader" style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
-    <ReaderHeader title={current?.episode[language].title ?? ''} onBack={() => navigation.goBack()} sideWidth={60} right={current &&
+    <ReaderHeader title={current?.episode[language].title ?? ''} onBack={() => navigation.goBack()} sideWidth={60} style={{ paddingHorizontal: 8, paddingTop: 4, paddingBottom: 4, minHeight: 56 }} right={current &&
       <Text testID="comic-progress" style={{ ...typography.pageCounter, color: colors.inkMuted, textAlign: 'right', minWidth: 48 }}>{index + 1} / {pages.length}</Text>} />
     {book ? <>
       <ReadingProgressBar current={index + 1} total={pages.length} />
-      <View style={{ paddingTop: 6, paddingBottom: spacing.md }}><LanguageToggle /></View>
+      <View style={{ paddingVertical: 8 }}><LanguageToggle compact /></View>
       <ComicLanguageNotice />
       <View style={{ flex: 1 }} onLayout={event => { if (event.nativeEvent.layout.width > 0) setPageWidth(event.nativeEvent.layout.width); }}>
         <FlatList testID="comic-pager" key={pageWidth} ref={pager} data={pages} extraData={{ language, typography }} keyExtractor={page => page.panel.id}
@@ -45,8 +45,8 @@ export default function ComicReaderScreen({ route, navigation }: NativeStackScre
           getItemLayout={(_, position) => ({ length: pageWidth, offset: pageWidth * position, index: position })}
           onMomentumScrollEnd={event => setIndex(Math.max(0, Math.min(pages.length - 1, Math.round(event.nativeEvent.contentOffset.x / pageWidth))))}
           renderItem={({ item: page }) => <ScrollView testID={`comic-page-${page.panel.id}`} directionalLockEnabled nestedScrollEnabled style={{ width: pageWidth, flex: 1 }}
-            contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.sm, gap: spacing.sm }}>
-            {page.episodeIndex === 0 && !!page.episode[language].framing && <Text style={{ ...meaningToken(language, typography), color: colors.inkSoft }}>{page.episode[language].framing}</Text>}
+            contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 8, gap: 6 }}>
+            {page.episodeIndex === 0 && !!page.episode[language].framing && <Text style={{ ...meaningToken(language, typography), color: colors.inkSoft, paddingHorizontal: 8 }}>{page.episode[language].framing}</Text>}
             <ComicPanel panel={page.panel} language={language} />
           </ScrollView>} />
       </View>

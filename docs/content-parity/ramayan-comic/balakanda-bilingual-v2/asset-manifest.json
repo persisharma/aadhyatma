@@ -1,47 +1,51 @@
 {
   "status": "local-authoring-only; not a mobile/CDN manifest",
   "assets": {
-    "../balakanda-v1/assets/bk-01-v2.png": {
-      "sha256": "e7d0e879c6fa92455a09716b360e4230777631ac481c4cb07f41a02f4f3ab10c",
-      "width": 1182,
-      "height": 1330,
+    "top-dialogue-art/assets/bk-01-01-top-v1.png": {
+      "sha256": "3181e19b8958ca4ec8069ec722350d6a8f8db0f0595530c37e2ea9c9aa765109",
+      "width": 1122,
+      "height": 1402,
       "panels": [
         {
           "id": "bk-01-01",
           "frame": {
             "x": 0,
             "y": 0,
-            "width": 0.5025380710659898,
-            "height": 0.3030075187969925,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
-        },
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-01-02-top-v1.png": {
+      "sha256": "03c45d3f3004ce573e99741c975f3fa0b7972700b21cf69c0471739df10e7e3b",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
         {
           "id": "bk-01-02",
           "frame": {
-            "x": 0.5025380710659898,
+            "x": 0,
             "y": 0,
-            "width": 0.49746192893401014,
-            "height": 0.3030075187969925,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
-        },
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-01-v2.png": {
+      "sha256": "e7d0e879c6fa92455a09716b360e4230777631ac481c4cb07f41a02f4f3ab10c",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
         {
           "id": "bk-01-03",
           "frame": {
             "x": 0,
             "y": 0.3030075187969925,
             "width": 0.5025380710659898,
-            "height": 0.3406015037593985,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
-          "id": "bk-01-04",
-          "frame": {
-            "x": 0.5025380710659898,
-            "y": 0.3030075187969925,
-            "width": 0.49746192893401014,
             "height": 0.3406015037593985,
             "status": "visually-reviewed-authoring-draft"
           }
@@ -54,6 +58,23 @@
             "width": 1,
             "height": 0.35639097744360904,
             "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-01-04-top-v2.png": {
+      "sha256": "0744249777e5f4a99fddf32de2f1bd5c8b9c62ea1ef1380814a0e81badc009bb",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-01-04",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -85,21 +106,28 @@
         }
       ]
     },
-    "../balakanda-v1/assets/bk-03-v2.png": {
-      "sha256": "7ae23b30248f8b30ddb729eef7b17ed5adbb7116ee7ffcebabb21c1c3140295e",
-      "width": 1182,
-      "height": 1330,
+    "top-dialogue-art/assets/bk-03-01-top-v1.png": {
+      "sha256": "ce0a4b30785551c5f6141248a04210e7652edd698f4e8894b28bfef9296ebf09",
+      "width": 1122,
+      "height": 1402,
       "panels": [
         {
           "id": "bk-03-01",
           "frame": {
             "x": 0,
             "y": 0,
-            "width": 0.4949238578680203,
-            "height": 0.324812030075188,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
-        },
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-03-v2.png": {
+      "sha256": "7ae23b30248f8b30ddb729eef7b17ed5adbb7116ee7ffcebabb21c1c3140295e",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
         {
           "id": "bk-03-02",
           "frame": {
@@ -260,13 +288,64 @@
         }
       ]
     },
-    "../lettering-pilot-v1/bk-05-03a-welcome-v1.png": {
-      "sha256": "46cccdf45d6777aa30173e3554bc0bba732b339d5991116f68beed6f88436fa4",
-      "width": 1448,
-      "height": 1086,
+    "top-dialogue-art/assets/bk-05-03a-top-v2.png": {
+      "sha256": "e4f41573796c2554ac783f0ea366579d411c75e866ce3bdc8e9727512bb924b0",
+      "width": 1122,
+      "height": 1402,
       "panels": [
         {
           "id": "bk-05-03a",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-06-01-top-v2.png": {
+      "sha256": "df041e6b8dc84dc4d1fa3e7d892c34044343e8f4cfa91b7d62e95e7aeefd3f22",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-06-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-06-02-top-v2.png": {
+      "sha256": "a45c193d0bf7e70de0e2318e842f8c18eef6fb89eaf2ae3bfa0e12353fd886eb",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-06-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-06-03-top-v2.png": {
+      "sha256": "ba8d6b6e8d478cecb806764d1db540d38185ccaae29f76ee8c836f3a228e3d47",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-06-03",
           "frame": {
             "x": 0,
             "y": 0,
@@ -282,36 +361,6 @@
       "width": 1448,
       "height": 1086,
       "panels": [
-        {
-          "id": "bk-06-01",
-          "frame": {
-            "x": 0,
-            "y": 0,
-            "width": 0.5,
-            "height": 0.4990791896869245,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
-          "id": "bk-06-02",
-          "frame": {
-            "x": 0.5,
-            "y": 0,
-            "width": 0.5,
-            "height": 0.4990791896869245,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
-          "id": "bk-06-03",
-          "frame": {
-            "x": 0,
-            "y": 0.4990791896869245,
-            "width": 0.5,
-            "height": 0.5009208103130756,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
         {
           "id": "bk-06-04",
           "frame": {
@@ -348,15 +397,22 @@
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
           }
-        },
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-07-03-top-v1.png": {
+      "sha256": "0ffc661cb8904cda0090292ef0e588ea2c16868e5d37f894afce3ec5da319f10",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
         {
           "id": "bk-07-03",
           "frame": {
             "x": 0,
-            "y": 0.5,
+            "y": 0,
             "width": 1,
-            "height": 0.5,
-            "status": "visually-reviewed-authoring-draft"
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -377,16 +433,6 @@
           }
         },
         {
-          "id": "bk-08-02",
-          "frame": {
-            "x": 0.5034530386740331,
-            "y": 0,
-            "width": 0.4965469613259669,
-            "height": 0.5,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
           "id": "bk-08-03",
           "frame": {
             "x": 0,
@@ -394,6 +440,23 @@
             "width": 0.5034530386740331,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-08-02-top-v1.png": {
+      "sha256": "a0821bb42de8e9d1942ded4694e69bc3141f99f6f649eccacb03a102150f6e17",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-08-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -448,16 +511,6 @@
           }
         },
         {
-          "id": "bk-09-02",
-          "frame": {
-            "x": 0.4972375690607735,
-            "y": 0,
-            "width": 0.5027624309392266,
-            "height": 0.4843462246777164,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
           "id": "bk-09-03",
           "frame": {
             "x": 0,
@@ -479,10 +532,27 @@
         }
       ]
     },
-    "assets/bk-09-02a-v1.png": {
-      "sha256": "016e601d0be516c05618286f1350bebb0d078c4077b1e93f791d0173271c13bb",
-      "width": 1448,
-      "height": 1086,
+    "top-dialogue-art/assets/bk-09-02-top-v3.png": {
+      "sha256": "68a5b136745033d8cce573d5ba17e8465d6292f61f6e8fbe631f00e62441cf8e",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-09-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-09-02a-top-v1.png": {
+      "sha256": "2e9e1de1f5425376ed27f5eab5f2d1459cd82cb19bfed5664cbcb9b93ffe241a",
+      "width": 1122,
+      "height": 1402,
       "panels": [
         {
           "id": "bk-09-02a",
@@ -530,15 +600,22 @@
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
           }
-        },
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-10-04-top-v1.png": {
+      "sha256": "4c90978335f36403428cf4b79d868c4a9129a8603355a19bf2ee00bfa7b7cdb3",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
         {
           "id": "bk-10-04",
           "frame": {
-            "x": 0.5048342541436464,
-            "y": 0.5,
-            "width": 0.4951657458563536,
-            "height": 0.5,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -610,21 +687,28 @@
         }
       ]
     },
-    "../balakanda-v1/assets/bk-12-v3.png": {
-      "sha256": "22b793d11dfb00918191c30e4737900b7bce03416b818bfd8061b71e0936e2a8",
-      "width": 1448,
-      "height": 1086,
+    "top-dialogue-art/assets/bk-12-01-top-v1.png": {
+      "sha256": "1e9e77d831f3ddc15c7f9f620f0e31359214e380fa4098eb1040149850d4740e",
+      "width": 1122,
+      "height": 1402,
       "panels": [
         {
           "id": "bk-12-01",
           "frame": {
             "x": 0,
             "y": 0,
-            "width": 0.4993093922651934,
-            "height": 0.4990791896869245,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
-        },
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-12-v3.png": {
+      "sha256": "22b793d11dfb00918191c30e4737900b7bce03416b818bfd8061b71e0936e2a8",
+      "width": 1448,
+      "height": 1086,
+      "panels": [
         {
           "id": "bk-12-02",
           "frame": {
@@ -711,15 +795,22 @@
             "height": 0.3330827067669173,
             "status": "visually-reviewed-authoring-draft"
           }
-        },
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-13-06-top-v1.png": {
+      "sha256": "42c3579c515c022003f7e120625c88abc865d38fec1b7e02e2301cdec3f3ff91",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
         {
           "id": "bk-13-06",
           "frame": {
-            "x": 0.5,
-            "y": 0.6669172932330827,
-            "width": 0.5,
-            "height": 0.3330827067669173,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -735,16 +826,6 @@
             "x": 0,
             "y": 0,
             "width": 0.498046875,
-            "height": 0.24609375,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
-          "id": "bk-14-02",
-          "frame": {
-            "x": 0.498046875,
-            "y": 0,
-            "width": 0.501953125,
             "height": 0.24609375,
             "status": "visually-reviewed-authoring-draft"
           }
@@ -807,6 +888,23 @@
             "width": 0.501953125,
             "height": 0.2578125,
             "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-14-02-top-v1.png": {
+      "sha256": "b56966282f5b32b6979cfa055c938c7f5f4e5d7ee5416151f0101711364b817f",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-14-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -915,21 +1013,28 @@
         }
       ]
     },
-    "../balakanda-v1/assets/bk-17-v1.png": {
-      "sha256": "db40d6eccf2346aa083695b8763fe66f2eb1517e32c55fcc08e15c3641e6f1d8",
-      "width": 1182,
-      "height": 1330,
+    "top-dialogue-art/assets/bk-17-01-top-v1.png": {
+      "sha256": "7c1e134be37751db92dfac3da5216c1ea8ec7b60b8dd58c31588c19f6efa80e8",
+      "width": 1122,
+      "height": 1402,
       "panels": [
         {
           "id": "bk-17-01",
           "frame": {
             "x": 0,
             "y": 0,
-            "width": 0.4957698815566836,
-            "height": 0.33157894736842103,
-            "status": "visually-reviewed-authoring-draft"
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
-        },
+        }
+      ]
+    },
+    "../balakanda-v1/assets/bk-17-v1.png": {
+      "sha256": "db40d6eccf2346aa083695b8763fe66f2eb1517e32c55fcc08e15c3641e6f1d8",
+      "width": 1182,
+      "height": 1330,
+      "panels": [
         {
           "id": "bk-17-02",
           "frame": {
@@ -988,16 +1093,6 @@
           }
         },
         {
-          "id": "bk-18-02",
-          "frame": {
-            "x": 0.5027624309392266,
-            "y": 0,
-            "width": 0.4972375690607735,
-            "height": 0.4990791896869245,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
           "id": "bk-18-03",
           "frame": {
             "x": 0,
@@ -1005,6 +1100,23 @@
             "width": 1,
             "height": 0.5009208103130756,
             "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-18-02-top-v1.png": {
+      "sha256": "38830af8045eb22ef83ea6d0c668b68b53e7e5446ec8f4518e5165b5703bd75e",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-18-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -1020,16 +1132,6 @@
             "x": 0,
             "y": 0,
             "width": 0.4990234375,
-            "height": 0.24869791666666666,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
-          "id": "bk-19-02",
-          "frame": {
-            "x": 0.4990234375,
-            "y": 0,
-            "width": 0.5009765625,
             "height": 0.24869791666666666,
             "status": "visually-reviewed-authoring-draft"
           }
@@ -1073,15 +1175,39 @@
             "height": 0.23372395833333334,
             "status": "visually-reviewed-authoring-draft"
           }
-        },
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-19-02-top-v1.png": {
+      "sha256": "3b5aa04daff7927587543d5e92fce43c32080f6a5c615790304a0f78db6f2439",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-19-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-19-07-top-v2.png": {
+      "sha256": "5d45bdcd29c810a412a62f5c6942ed71387a84f2853fe7e2adecb827bc7400c5",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
         {
           "id": "bk-19-07",
           "frame": {
             "x": 0,
-            "y": 0.7278645833333334,
+            "y": 0,
             "width": 1,
-            "height": 0.2721354166666667,
-            "status": "visually-reviewed-authoring-draft"
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -1112,32 +1238,12 @@
           }
         },
         {
-          "id": "bk-20-03",
-          "frame": {
-            "x": 0,
-            "y": 0.3330827067669173,
-            "width": 0.49915397631133673,
-            "height": 0.3263157894736842,
-            "status": "painted-panel-boundary-reviewed-v2"
-          }
-        },
-        {
           "id": "bk-20-04",
           "frame": {
             "x": 0.5025380710659898,
             "y": 0.3330827067669173,
             "width": 0.49746192893401014,
             "height": 0.3263157894736842,
-            "status": "painted-panel-boundary-reviewed-v2"
-          }
-        },
-        {
-          "id": "bk-20-05",
-          "frame": {
-            "x": 0,
-            "y": 0.662406015037594,
-            "width": 0.49915397631133673,
-            "height": 0.337593984962406,
             "status": "painted-panel-boundary-reviewed-v2"
           }
         },
@@ -1149,6 +1255,40 @@
             "width": 0.49746192893401014,
             "height": 0.337593984962406,
             "status": "painted-panel-boundary-reviewed-v2"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-20-03-top-v1.png": {
+      "sha256": "adb6b3d1ec48fe0abadd79496be6a0f07541100f4be141d1135c1e8ab7bcf0c8",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-20-03",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-20-05-top-v2.png": {
+      "sha256": "8ea4fd054937188c8610ab89f2685b383f879129bcf6a8abab16b7deed40cc6c",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-20-05",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -1179,16 +1319,6 @@
           }
         },
         {
-          "id": "bk-21-03",
-          "frame": {
-            "x": 0,
-            "y": 0.3157894736842105,
-            "width": 0.4957698815566836,
-            "height": 0.3172932330827068,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
           "id": "bk-21-04",
           "frame": {
             "x": 0.4957698815566836,
@@ -1206,6 +1336,23 @@
             "width": 1,
             "height": 0.3669172932330827,
             "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-21-03-top-v1.png": {
+      "sha256": "a2f2ae978d6304626e8479e2feba0d58d08837668684a85210f77febd7f76252",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-21-03",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -1246,16 +1393,6 @@
           }
         },
         {
-          "id": "bk-22-04",
-          "frame": {
-            "x": 0.5033840947546532,
-            "y": 0.3157894736842105,
-            "width": 0.4966159052453469,
-            "height": 0.3157894736842105,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
           "id": "bk-22-05",
           "frame": {
             "x": 0,
@@ -1273,6 +1410,23 @@
             "width": 0.4966159052453469,
             "height": 0.3684210526315789,
             "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-22-04-top-v1.png": {
+      "sha256": "998a76c3eb6a5d5de1482623eee26ffaf0fc15f48fbde7c0f30c20f600e05975",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-22-04",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -1313,16 +1467,6 @@
           }
         },
         {
-          "id": "bk-23-04",
-          "frame": {
-            "x": 0.5033840947546532,
-            "y": 0.31278195488721805,
-            "width": 0.4966159052453469,
-            "height": 0.33383458646616543,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
           "id": "bk-23-05",
           "frame": {
             "x": 0,
@@ -1331,15 +1475,39 @@
             "height": 0.3533834586466165,
             "status": "visually-reviewed-authoring-draft"
           }
-        },
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-23-04-top-v1.png": {
+      "sha256": "556805de5b2040ae2e61f22e88592399ede470ba46577e157718e1c632a699a1",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-23-04",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-23-06-top-v3.png": {
+      "sha256": "41bd18d8f58b44bdd0a52b8012c99a0cbaa132f4e49d9a831129905fb9be5871",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
         {
           "id": "bk-23-06",
           "frame": {
-            "x": 0.5033840947546532,
-            "y": 0.6466165413533834,
-            "width": 0.4966159052453469,
-            "height": 0.3533834586466165,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -1444,16 +1612,6 @@
           }
         },
         {
-          "id": "bk-26-02",
-          "frame": {
-            "x": 0.49915397631133673,
-            "y": 0,
-            "width": 0.5008460236886633,
-            "height": 0.3330827067669173,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
           "id": "bk-26-03",
           "frame": {
             "x": 0,
@@ -1495,6 +1653,23 @@
         }
       ]
     },
+    "top-dialogue-art/assets/bk-26-02-top-v1.png": {
+      "sha256": "60c9ca4999358d39140869e82af528a460d91d8e3657f1c5c7e46d6d2b9e5c24",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-26-02",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
     "../balakanda-v1/assets/bk-27-v3.png": {
       "sha256": "46f558fda0e0a60b84344a0a78088aa056758727838fa183511fc2b66d456dea",
       "width": 1182,
@@ -1529,25 +1704,56 @@
             "height": 0.32781954887218046,
             "status": "visually-reviewed-authoring-draft"
           }
-        },
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-27-04-top-v1.png": {
+      "sha256": "fb583b6805e8192ae0d280c7aa0e104a177642a4f5efaa1031090845a839032f",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
         {
           "id": "bk-27-04",
           "frame": {
-            "x": 0.5025380710659898,
-            "y": 0.3293233082706767,
-            "width": 0.49746192893401014,
-            "height": 0.32781954887218046,
-            "status": "visually-reviewed-authoring-draft"
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
-        },
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-27-05-top-v1.png": {
+      "sha256": "c8ca0b5f0a49b19657d52de81e6dd9246fc43164545c893eb10a0dfadf8adafe",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
         {
           "id": "bk-27-05",
           "frame": {
             "x": 0,
-            "y": 0.6571428571428571,
+            "y": 0,
             "width": 1,
-            "height": 0.34285714285714286,
-            "status": "visually-reviewed-authoring-draft"
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-28-01-top-v1.png": {
+      "sha256": "ad0a4aade0c1dc4b173bd547b105dad9a5f7c6ac3c4ee89d64a0ba0928473ae3",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-28-01",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]
@@ -1558,31 +1764,11 @@
       "height": 1086,
       "panels": [
         {
-          "id": "bk-28-01",
-          "frame": {
-            "x": 0,
-            "y": 0,
-            "width": 0.5027624309392266,
-            "height": 0.5,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
           "id": "bk-28-02",
           "frame": {
             "x": 0.5027624309392266,
             "y": 0,
             "width": 0.4972375690607735,
-            "height": 0.5,
-            "status": "visually-reviewed-authoring-draft"
-          }
-        },
-        {
-          "id": "bk-28-03",
-          "frame": {
-            "x": 0,
-            "y": 0.5,
-            "width": 0.5027624309392266,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
           }
@@ -1595,6 +1781,23 @@
             "width": 0.4972375690607735,
             "height": 0.5,
             "status": "visually-reviewed-authoring-draft"
+          }
+        }
+      ]
+    },
+    "top-dialogue-art/assets/bk-28-03-top-v2.png": {
+      "sha256": "a00d3a01e21eeb46035d9e46b40e7e93e759115fae7c9dd759b51e78e7c6a29f",
+      "width": 1122,
+      "height": 1402,
+      "panels": [
+        {
+          "id": "bk-28-03",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1,
+            "status": "full-painted-bounds-reviewed"
           }
         }
       ]

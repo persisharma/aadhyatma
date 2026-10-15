@@ -41,6 +41,20 @@ for (const panel of panels.filter(panel => panel.hi.dialogue)) {
   assert.ok(Number.isFinite(anchor.x) && anchor.x > 0 && anchor.x < 1 && anchor.review, `${panel.id}/speaker anchor`);
   panel.speakerAnchor = anchor;
 }
+// Reviewed portrait revisions reserve painted headroom for native lettering.
+// Text, source coverage, panel order and pacing remain byte-for-byte unchanged.
+const artReview = await readJson('top-dialogue-art/review.json');
+assert.deepEqual(Object.keys(artReview.panels).sort(), panels.filter(p => p.hi.dialogue).map(p => p.id).sort());
+for (const panel of panels.filter(p => p.hi.dialogue)) {
+  const revision = artReview.panels[panel.id];
+  const bytes = await readFile(new URL(revision.asset, root));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), revision.sha256, `${panel.id}/reviewed art`);
+  panel.asset = revision.asset;
+  panel.dimensions = { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) };
+  panel.frame = fullFrame;
+  panel.speakerAnchor = { x: revision.speakerX, review: revision.review };
+  panel.reviewNote += ' Portrait recomposed with painted headroom; see top-dialogue-art/review.json.';
+}
 assert.equal(pacing.episodes.length, episodes.length);
 const pacingReview = episodes.flatMap((episode, episodeIndex) => {
   assert.equal(pacing.episodes[episodeIndex].length, episode.panels.length, `${episode.id}/pacing`);
