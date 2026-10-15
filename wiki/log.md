@@ -873,6 +873,14 @@ Recorded explicit painted-frame speaker anchors for all 31 dialogue panels, buil
 
 The comic now uses native episode cards, shared reader controls and global reading size. All 140 bilingual-v2 panels and 31 reviewed speaker anchors are preserved. The 35 unchanged PNGs are hosted at content-hash CDN URLs and use the shared persistent asset cache; iOS/Android exports contain no comic artwork. App source/review chrome is removed; provenance remains in authoring files. See [[decisions/ramayan-comic-character-continuity]] and the bilingual-v2 native integration review for verified checks and remaining native/editorial/release boundaries.
 
+## [2026-10-13] ingest | Put comic dialogue on the illustrated scene
+
+Replaced the separate native speech gutter with 31 scene-specific on-image balloons. Short tails retain the reviewed speaker direction; measured sky/side slots fall back to the lower edge when text would cover faces. Narration, app text-size controls and original art frames remain intact. See [[decisions/ramayan-comic-character-continuity]] and the bilingual-v2 speech overlay review for evidence boundaries.
+
+- 2026-10-13 — Corrected the rejected fixed-top comic speech layout: 31 reviewed portrait scenes, measured bubbles beside the cast, uncapped speaker endpoints, inverted Trishanku special placement, full-width native reader and shared browser/native geometry. See [[decisions/ramayan-comic-character-continuity]] and `speech-overlay-review.md`; final native sequence review tracked separately from layout checks and release.
+
+- 2026-10-15 — User accepted corrected comic speaker placement. Both all-140 Hindi native sequences completed at Standard/Large; all captured panel compositions reviewed. Browser 2,240 states and dialogue 248 states passed, along with 15 focused tests/typecheck. Changes remain local and uncommitted; physical-device, full English native sequence, editorial and release checks are separate.
+
 ## [2026-10-14] ingest | Themed reading backgrounds restored
 
 The 10 Oct banner rollout had also replaced the semantic `BackgroundLayer` plate with neutral
@@ -882,6 +890,8 @@ surfaces showed no thematic art. Restored the original plates; banner gating is 
 Screens that never had a plate keep the paper. Added a per-layout regression test. Updated
 design.md §6/§23, RULEBOOK §11.8 and the readers/reading-artwork pages. Focused Jest suites,
 TypeScript and touched-file lint pass; native visual check not run.
+
+- 2026-10-15 — Committed the accepted comic artwork/placement revision and reconciled origin/main through c05acdbd, preserving both comic and themed-background wiki history. No app release is implied by this branch push.
 
 ## [2026-10-15] ingest | Daily Bhakti reminder + widget setup strip
 

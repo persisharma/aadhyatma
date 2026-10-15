@@ -64,12 +64,12 @@ export const lightColors = {
   newBadgeBg: 'rgba(184, 98, 27, 0.16)',
   newBadgeText: '#8A3E0B',
 
-  // Keep normal reading labels clear even above dark source pixels.
-  overlayTop: 'rgba(243, 231, 201, 0.90)',
-  overlayUpper: 'rgba(243, 231, 201, 0.90)',
-  overlayLower: 'rgba(243, 231, 201, 0.92)',
+  // The themed artwork is the primary reading surface; the parchment veil only
+  // softens it enough to keep verse labels legible without washing it out.
+  overlayTop: 'rgba(243, 231, 201, 0.85)',
+  overlayUpper: 'rgba(243, 231, 201, 0.55)',
+  overlayLower: 'rgba(243, 231, 201, 0.75)',
   overlayBottom: 'rgba(233, 217, 177, 0.95)',
-  artworkFadeClear: 'rgba(243, 231, 201, 0)',
 
   modalBackdrop: 'rgba(47, 30, 16, 0.55)',
   onPrimary: '#FFFFFF',
