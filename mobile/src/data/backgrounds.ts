@@ -3,7 +3,7 @@ import { chalisaImages } from '@assets/chalisa';
 import { garudPuranImages } from '@assets/garud-puran';
 import { gitaImages } from '@assets/gita';
 import { shivaStrotamImages } from '@assets/shiva-strotam';
-import { aartiIdByIndex } from './aarti';
+import { aartiIdByIndex } from './aarti/ids';
 import { categories } from './categories';
 import { deities } from './deities';
 import { japamMantras } from './japam';
@@ -116,6 +116,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   // Krishna's bansuri art (precedent: subrahmanya-ashtakam → Vetrimalai plate).
   'khatu-shyam-aarti': backgroundImages.theerth_khatu_shyam,
   'om-jai-lakshmi-mata': backgroundImages.deity_lakshmi,
+  'jay-adhya-shakti': backgroundImages.deity_durga_lion,
   'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
   'matribhumi-vandana': backgroundImages.category_stotram_hymn_scroll,
   lingashtakam: shivaStrotamImages.shiva,
