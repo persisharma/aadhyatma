@@ -16,23 +16,23 @@ Audited 2026-10-13 against the offline Ishvar Vaani 1.0.8 SQLite snapshot at `/U
 | Jay Ganesh Deva | Covered | `jai-ganesh-deva` |
 | Aarti Kije Hanuman Lala Ki | Covered | `hanuman-aarti` |
 | Jai Ambe Gauri | Covered | `jai-ambe-gauri` |
-| Ambe Tu Hai Jagdambe Kali | Gap | Distinct Kali composition. Collate full edition and meanings; do not relabel Jai Ambe Gauri. |
+| Ambe Tu Hai Jagdambe Kali | **Integrated 2026-10-15** | `ambe-tu-hai-jagdambe-kali` · 5 pages; distinct composition, Drik/BhaktiBharat collation. Original Hindi/English meanings; no recorded audio. |
 | Om Jai Lakshmi Mata | Covered | `om-jai-lakshmi-mata` |
 | Aarti Kunjbihari Ki | Covered | `aarti-kunj-bihari` |
 | Om Jai Shiv Omkara | Covered | `om-jai-shiv-omkara` |
 | Om Jai Jagdish Hare | Covered | `om-jai-jagdish` |
-| Jai Jai Shri Shanidev | Gap | Shani aarti has independent source candidates in the earlier manifest; full line collation remains. |
-| Om Jai Yaksha Kuber Hare | Hold | Kubera text edition/attribution and rights need to be established. |
-| Jai Santoshi Mata | Gap, hold for variant choice | [Drik Panchang](https://www.drikpanchang.com/lyrics/aarti/santoshi-mata/santoshi-mata-aarti.html?lang=hi) and [Sri Mandir](https://www.srimandir.com/hi/articles/aarti/sri-santoshi-mata-aarti) differ in multiple full lines. Select one complete edition before meaning work. |
+| Jai Jai Shri Shanidev | **Integrated 2026-10-15** | `shani-aarti` · 5 pages; Drik/BhaktiBharat collation. Original Hindi/English meanings; no recorded audio. |
+| Om Jai Yaksha Kuber Hare | **Integrated 2026-10-15** | `kubera-aarti` · 8 pages; Drik/BhaktiBharat concordance, Prempal signature retained. Original Hindi/English meanings; no recorded audio. |
+| Jai Santoshi Mata | **Integrated 2026-10-15** | `santoshi-mata-aarti` · 12 pages; complete Drik edition, variants recorded. Original Hindi/English meanings; no recorded audio. |
 | Om Jai Gange Mata | **Added locally** | `om-jai-gange-mata`: [Drik Panchang](https://www.drikpanchang.com/lyrics/aarti/ganga-mata/ganga-mata-aarti.html?lang=hi) refrain plus four stanzas, checked against [Aaj Tak](https://www.aajtak.in/religion/aarti/shri-ganga-aarti-2450477). The latter has `श्री जय` instead of `मैया जय`, a different stanza-3 first line, `एक ही बार जो तेरी / शरणागति आता`, and `दास वही` in the closing stanza. Kept one Drik edition intact. Original per-stanza meanings. No audio. |
 | Jai Saraswati Mata | Covered | `saraswati-aarti` |
-| Jai Ahoi Mata | Gap | Need complete independent edition pair, meaning and deity/catalog decision. |
-| Jai Vaishno Mata | Gap | Earlier manifest has a Vaishno aarti candidate; verify its opening against this exact title before adding. |
-| Om Jai Ekadashi Mata | Gap | Need complete independent edition pair and deity/catalog decision. |
-| Jai Jai Tulsi Mata | Gap | Earlier manifest has a Tulsi aarti candidate; verify the exact refrain and stanza set. |
-| Shri Shakambhari Amba Ji Ki Aarti | Gap | Need complete independent edition pair, attribution and deity/catalog decision. |
+| Jai Ahoi Mata | **Integrated 2026-10-15** | `ahoi-mata-aarti` · 8 pages; Drik/BhaktiBharat collation, neutral diya art. Original Hindi/English meanings; no recorded audio. |
+| Jai Vaishno Mata | **Integrated 2026-10-15** | `vaishno-devi-aarti` · 8 pages; exact Jai Vaishnavi refrain matched. Original Hindi/English meanings; no recorded audio. |
+| Om Jai Ekadashi Mata | **Integrated 2026-10-15** | `ekadashi-mata-aarti` · 15 pages; all monthly name verses preserved. Original Hindi/English meanings; no recorded audio. |
+| Jai Jai Tulsi Mata | **Integrated 2026-10-15** | `tulsi-aarti` · 6 pages; complete Drik version; BhaktiBharat extra closing plea not mixed in. Original Hindi/English meanings; no recorded audio. |
+| Shri Shakambhari Amba Ji Ki Aarti | **Integrated 2026-10-15** | `shakambhari-aarti` · 5 pages; complete Drik text checked against BhaktiBharat. Original Hindi/English meanings; no recorded audio. |
 
-Current result: 8 covered, 1 added locally, 9 unresolved titles (some held for edition/rights rather than assumed publishable). Vedansh also has Gayatri and Khatu Shyam aartis absent from this competitor list.
+Current result (2026-10-15): all 18 competitor aarti compositions are covered: 8 previously present and 10 integrated in this branch. Current main also adds Jay Adhya Shakti, alongside the existing Gayatri and Khatu Shyam aartis: 21 registered payloads, plus the shared Ram Stuti aarti alias in the library. Integration is not an OTA/store release.
 
 ## Mantra titles (36)
 
@@ -77,6 +77,16 @@ The competitor groups japa, shlokas, stotras, kavach and even a non-text mnemoni
 | 35 | Shiva Bhakti Stotra | Stotra candidate, outside japa scope; provenance/attribution review needed. |
 | 36 | Om Gajakarṇakāya Namaḥ | Short japa candidate; two-source and meaning review needed. |
 
-## Release gate and next batch
+## Integration verification (2026-10-15)
 
-The two additions are local code and source records, not a store/OTA release. Before release, editorial review should confirm each selected aarti edition and both meaning languages in context; native reader review at Standard and Large text sizes should check line wrapping and counter use. A new audio recording requires a rights record and repetition calibration before attaching it to automated bead counting. The next likely aarti candidates are Shani and Tulsi; the next short-japa candidates are Budha and Krishna Naam, only after the same source checks.
+The nine remaining titles are integrated through the Aarti category, deity lists, Search,
+purpose discovery and existing reader. Ganga and Saraswati japa remain included from the
+first batch. The new nine contain 72 reader pages; Ganga adds five more. All recorded audio
+is absent from this batch. Aarti read-aloud continues to use the existing device TTS path.
+
+The source edition decisions, complete text/meaning review and test/device evidence are
+recorded in [the integration review](../../evaluations/aarti-expansion-2026-10-15/review.md).
+Gujarati and Kannada follow the app's existing runtime script conversion; they are not
+new independently translated meanings. Editorial review of the supplied meanings happens
+in the PR. The user deferred native checks to separate work on 2026-10-15; complete iOS/Android
+Standard/Large journeys and the japa smoke before merge/release. No app version, store build or OTA is part of this PR.

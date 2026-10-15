@@ -932,3 +932,11 @@ Added a reusable listing-to-prose mapping for category, deity, purpose, katha, o
 ## [2026-10-13] ingest | Aarti and japa content integration and competitor title audit
 
 The aarti registry is append-only because legacy `aarti-N` ids migrate by index; a library row and source background are separate discovery requirements. Japa JSON entries enter the library automatically; a new per-mantra source must roll into the top-level source URLs, and silent counting works without an audio asset. The offline Ishvar Vaani title audit lives in `docs/research/competitors/2026-10-13-aarti-japa-title-audit.md`; it distinguishes composition matches from title-only gaps and records the selected Ganga Aarti variant and Saraswati Moola Mantra sources.
+
+## [2026-10-15] ingest | Complete nine remaining aarti integrations
+
+Added the sourced Ambe Tu Hai Jagdambe Kali, Shani, Kubera, Santoshi, Ahoi, Vaishno, Ekadashi, Tulsi and Shakambhari compositions (72 pages) through the existing reader, library, purpose discovery and deity/background mappings. All 18 Ishvar aarti compositions are now covered in this branch, including the previously added Ganga aarti; Saraswati silent japa remains included. Preserved main’s separate lightweight aarti ID registry and Jay Adhya Shakti index 10, then appended Ganga at 11 and the nine additions at 12–20. Edition variants and original Hindi/English meaning review live in `docs/evaluations/aarti-expansion-2026-10-15/review.md`. No recorded audio, store build or OTA was added.
+
+## [2026-10-15] gap | Native aarti verification deferred
+
+The user requested the PR now and separate native checks. Full automated tests passed, but all-nine iOS/Android Standard/Large journeys and Saraswati japa remain incomplete; see `docs/evaluations/aarti-expansion-2026-10-15/review.md` for partial results and rerun commands.

@@ -1,0 +1,237 @@
+{
+  "titleHi": "सन्तोषी माता की आरती",
+  "titleEn": "Jai Santoshi Mata",
+  "subtitleHi": "सन्तोषी माता की आरती",
+  "subtitleEn": "Jai Santoshi Mata",
+  "deity": "durga",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Complete Drik Panchang twelve-stanza edition checked against BhaktiBharat. Variants include sevak jan ko/ki, shringar kinho/linho, tribhuvan man/jan, bhog/bhoj, hum balak/sevak, icchha/icchhit, dhyan dharyo jis jan ne/dhyan dhare jo tera and sharan/charan gahe. Retained Drik consistently, without combining editions. Complete stanza set; repeated refrains do not create extra reader pages. Hindi and English meanings are original editorial glosses. No recorded audio is attached.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/santoshi-mata/santoshi-mata-aarti.html?lang=hi",
+      "https://www.bhaktibharat.com/aarti/jai-santoshi-mata"
+    ],
+    "retrievedOn": "2026-10-15"
+  },
+  "counts": {
+    "totalVerses": 12
+  },
+  "verses": [
+    {
+      "id": "sma-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "जय सन्तोषी माता, मैया जय सन्तोषी माता।",
+        "अपने सेवक जन को, सुख सम्पत्ति दाता॥"
+      ],
+      "linesEn": [
+        "Jai Santoshi mata, maiya jai Santoshi mata.",
+        "Apne sevak jan ko, sukh sampatti data."
+      ],
+      "meaningHi": "सन्तोषी माता की जय हो। आरती में माँ को अपने भक्तों को सुख और सम्पत्ति देने वाली कहा गया है।",
+      "meaningEn": "Glory to Mother Santoshi. The hymn praises her as a giver of happiness and prosperity to her devotees."
+    },
+    {
+      "id": "sma-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · 1",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "सुन्दर चीर सुनहरी, माँ धारण कीन्हों।",
+        "हीरा पन्ना दमके, तन श्रृंगार कीन्हों॥"
+      ],
+      "linesEn": [
+        "Sundar cheer sunahri, maan dharan keenhon.",
+        "Heera panna damke, tan shringar keenhon."
+      ],
+      "meaningHi": "माँ सुन्दर सुनहरे वस्त्र पहने हुए हैं। हीरे और पन्ने उनके आभूषणों में दमकते हैं।",
+      "meaningEn": "The Mother wears beautiful golden garments, with diamonds and emeralds shining in her adornments."
+    },
+    {
+      "id": "sma-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · 2",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "गेरू लाल छटा छवि, बदन कमल सोहे।",
+        "मन्द हंसत करुणामयी, त्रिभुवन मन मोहे॥"
+      ],
+      "linesEn": [
+        "Geru lal chhata chhavi, badan kamal sohe.",
+        "Mand hansat karunamayi, tribhuvan man mohe."
+      ],
+      "meaningHi": "गेरुए-लाल रंग की आभा और कमल जैसा मुख सुशोभित है। उनकी करुणामयी मुस्कान तीनों लोकों के मन को आकर्षित करती है।",
+      "meaningEn": "An ochre-red radiance surrounds her lotus-like face. Her gentle, compassionate smile enchants the three worlds."
+    },
+    {
+      "id": "sma-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · 3",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "स्वर्ण सिंहासन बैठी, चंवर ढुरें प्यारे।",
+        "धूप दीप मधुमेवा, भोग धरें न्यारे॥"
+      ],
+      "linesEn": [
+        "Swarn sinhasan baithi, chanvar dhuren pyare.",
+        "Dhoop deep madhu-meva, bhog dharen nyare."
+      ],
+      "meaningHi": "माँ स्वर्ण सिंहासन पर बैठी हैं और उनके लिए चँवर डुलाए जाते हैं। धूप, दीप, मधु, मेवा और भोग अर्पित किए जाते हैं।",
+      "meaningEn": "She sits on a golden throne as attendants wave ceremonial fans. Incense, lamps, honey, dried fruits and food are offered."
+    },
+    {
+      "id": "sma-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · 4",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "गुड़ अरु चना परमप्रिय, तामे संतोष कियो।",
+        "सन्तोषी कहलाई, भक्तन वैभव दियो॥"
+      ],
+      "linesEn": [
+        "Gud aru chana parampriya, tame santosh kiyo.",
+        "Santoshi kahlai, bhaktan vaibhav diyo."
+      ],
+      "meaningHi": "गुड़ और चने के सरल अर्पण से माँ के सन्तुष्ट होने का भाव है। इसी सन्तोष से उनके नाम और भक्तों पर कृपा का स्मरण किया गया है।",
+      "meaningEn": "The Mother is described as content with the simple offering of jaggery and chickpeas. The stanza connects that contentment with her name and generosity toward devotees."
+    },
+    {
+      "id": "sma-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · 5",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "शुक्रवार प्रिय मानत, आज दिवस सोही।",
+        "भक्त मण्डली छाई, कथा सुनत मोही॥"
+      ],
+      "linesEn": [
+        "Shukravar priya manat, aaj divas sohi.",
+        "Bhakt mandali chhai, katha sunat mohi."
+      ],
+      "meaningHi": "शुक्रवार को माँ का प्रिय दिन मानते हुए भक्त एकत्र होकर उनकी कथा सुनते हैं और उसमें मन लगाते हैं।",
+      "meaningEn": "Honouring Friday as a day dear to the Mother, devotees gather and listen with absorbed attention to her katha."
+    },
+    {
+      "id": "sma-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · 6",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "मन्दिर जगमग ज्योति, मंगल ध्वनि छाई।",
+        "विनय करें हम बालक, चरनन सिर नाई॥"
+      ],
+      "linesEn": [
+        "Mandir jagmag jyoti, mangal dhvani chhai.",
+        "Vinay karen hum balak, charanan sir nai."
+      ],
+      "meaningHi": "मन्दिर दीपों और मंगलध्वनि से भरा है। भक्त स्वयं को माँ के बालक मानकर चरणों में सिर झुकाते हैं।",
+      "meaningEn": "The temple glows with lamps and auspicious sound. Seeing themselves as the Mother’s children, devotees bow at her feet."
+    },
+    {
+      "id": "sma-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद · 7",
+      "labelEn": "Stanza · 7",
+      "lines": [
+        "भक्ति भावमय पूजा, अंगीकृत कीजै।",
+        "जो मन बसै हमारे, इच्छा फल दीजै॥"
+      ],
+      "linesEn": [
+        "Bhakti bhavmay pooja, angeekrit keejai.",
+        "Jo man basai hamare, icchha phal deejai."
+      ],
+      "meaningHi": "भक्त प्रेम से की गई पूजा स्वीकार करने और हृदय की अभिलाषा पूरी करने की प्रार्थना करता है।",
+      "meaningEn": "The devotee asks the Mother to accept this loving worship and fulfil the longing held in the heart."
+    },
+    {
+      "id": "sma-09",
+      "type": "stanza",
+      "section": "body",
+      "number": 9,
+      "labelHi": "पद · 8",
+      "labelEn": "Stanza · 8",
+      "lines": [
+        "दुखी दरिद्री, रोग, संकट मुक्त किये।",
+        "बहु धन-धान्य भरे घर, सुख सौभाग्य दिये॥"
+      ],
+      "linesEn": [
+        "Dukhi daridri, rog, sankat mukt kiye.",
+        "Bahu dhan-dhanya bhare ghar, sukh saubhagya diye."
+      ],
+      "meaningHi": "पद माँ की कृपा को दुःख, दरिद्रता, रोग और संकट से राहत तथा घर में सुख-समृद्धि के रूप में गाता है। यह भक्तिपरक स्तुति है।",
+      "meaningEn": "The stanza celebrates the Mother’s grace through devotional images of relief from sorrow, poverty, illness and distress, and of flourishing households."
+    },
+    {
+      "id": "sma-10",
+      "type": "stanza",
+      "section": "body",
+      "number": 10,
+      "labelHi": "पद · 9",
+      "labelEn": "Stanza · 9",
+      "lines": [
+        "ध्यान धर्यो जिस जन ने, मनवांछित फल पायो।",
+        "पूजा कथा श्रवण कर, घर आनन्द आयो॥"
+      ],
+      "linesEn": [
+        "Dhyan dharyo jis jan ne, manvanchhit phal payo.",
+        "Pooja katha shravan kar, ghar anand aayo."
+      ],
+      "meaningHi": "माँ का ध्यान, पूजा और कथा-श्रवण करने वाले भक्त के जीवन में इच्छित फल और घर में आनन्द आने का विश्वास व्यक्त है।",
+      "meaningEn": "The hymn expresses faith that meditation, worship and listening to the Mother’s story bring fulfilment and joy to the home."
+    },
+    {
+      "id": "sma-11",
+      "type": "stanza",
+      "section": "body",
+      "number": 11,
+      "labelHi": "पद · 10",
+      "labelEn": "Stanza · 10",
+      "lines": [
+        "शरण गहे की लज्जा, राखियो जगदम्बे।",
+        "संकट तू ही निवारे, दयामयी अम्बे॥"
+      ],
+      "linesEn": [
+        "Sharan gahe ki lajja, rakhiyo Jagdambe.",
+        "Sankat tu hi nivare, dayamayi Ambe."
+      ],
+      "meaningHi": "भक्त जगदम्बा से अपनी शरण का मान रखने और संकट दूर करने की प्रार्थना करता है।",
+      "meaningEn": "The devotee asks the compassionate Mother of the world to honour the trust placed in her refuge and relieve distress."
+    },
+    {
+      "id": "sma-12",
+      "type": "stanza",
+      "section": "body",
+      "number": 12,
+      "labelHi": "पद · 11",
+      "labelEn": "Stanza · 11",
+      "lines": [
+        "सन्तोषी माता की आरती, जो कोई जन गावे।",
+        "ऋद्धि-सिद्धि, सुख-सम्पत्ति, जी भरकर पावे॥"
+      ],
+      "linesEn": [
+        "Santoshi mata ki aarti, jo koi jan gave.",
+        "Riddhi-siddhi, sukh-sampatti, jee bharkar pave."
+      ],
+      "meaningHi": "समापन फलश्रुति में आरती गाने वाले भक्त के लिए ऋद्धि, सिद्धि, सुख और सम्पत्ति की कामना की गई है।",
+      "meaningEn": "The closing promise invokes abundance, accomplishment, happiness and prosperity for those who sing this aarti."
+    }
+  ]
+}

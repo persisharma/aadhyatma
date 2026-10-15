@@ -356,6 +356,15 @@ Every religious text (aarti, chalisa, stotram, granth verse) must be verified ag
 
 **Maintainer-attested exception (single source).** The maintainer may accept one supplied source for a specific text when the second cannot be reached. This is an explicit product decision, never an authoring shortcut. Such a file keeps `referenceUrls` limited to pages actually read, and it must carry three things: `source.maintainerAttestation` (who accepted it and when), a `source.canonicalEditionStatus` that starts with `Pending` and says how to clear it, and the candidate pages in `source.canonicalEditionUrls`. Each such file is listed by path in `MAINTAINER_ATTESTED_SINGLE_SOURCE` in `contentCorrectness.test.ts` §14. That list may only shrink: the test fails once a listed file gains two `referenceUrls`, so a completed collation must remove its entry. Current entries: `khatu-shyam-chalisa`, `khatu-shyam-aarti`, `jay-adhya-shakti` (October 2026).
 
+**Per-mantra provenance.** New japa entries carry their own `source.baseText`,
+`source.referenceUrls` (two independent publications) and `source.retrievedOn`.
+Roll those URLs into the containing `japam.json` source list as well. A mantra may
+ship with manual counting and no recording; adding audio requires documented
+in-app distribution rights and a checked repetitions-per-clip value before
+connecting it to automated bead counting. For positional aarti readers, append
+IDs in `mobile/src/data/aarti/ids.ts` and matching payloads in `aarti/index.ts`;
+never insert ahead of an existing ID or change a saved legacy position.
+
 ### 11.2 Source citation in data
 Every content JSON file must have a `source.baseText` field naming the edition or website(s) verified against, and `source.retrievedOn` with the ISO date of verification. Example: `{"baseText": "brandbharat.com, vignanam.org", "retrievedOn": "2026-05-23"}`. A file without source citation is unverified and must not ship as `active`.
 

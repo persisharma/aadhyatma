@@ -1,0 +1,165 @@
+{
+  "titleHi": "वैष्णो देवी की आरती",
+  "titleEn": "Jai Vaishnavi Mata",
+  "subtitleHi": "वैष्णो देवी की आरती",
+  "subtitleEn": "Jai Vaishnavi Mata",
+  "deity": "durga",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Complete eight-stanza Drik Panchang edition, concordant with BhaktiBharat apart from spelling, punctuation and repeated refrain layout. Preserves the closing Dhyanu signature. Complete stanza set; repeated refrains do not create extra reader pages. Hindi and English meanings are original editorial glosses. No recorded audio is attached.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/vaishno-mata/vaishno-mata-aarti.html?lang=hi",
+      "https://www.bhaktibharat.com/aarti/vaishno-mata"
+    ],
+    "retrievedOn": "2026-10-15"
+  },
+  "counts": {
+    "totalVerses": 8
+  },
+  "verses": [
+    {
+      "id": "vda-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "जय वैष्णवी माता, मैया जय वैष्णवी माता।",
+        "हाथ जोड़ तेरे आगे, आरती मैं गाता॥"
+      ],
+      "linesEn": [
+        "Jai Vaishnavi mata, maiya jai Vaishnavi mata.",
+        "Hath jod tere aage, aarti main gata."
+      ],
+      "meaningHi": "वैष्णवी माता की जय हो। भक्त हाथ जोड़कर उनके सामने आरती गाता है।",
+      "meaningEn": "Glory to Mother Vaishnavi. With joined hands, the devotee sings aarti before her."
+    },
+    {
+      "id": "vda-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · 1",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "शीश पे छत्र विराजे, मूरतिया प्यारी।",
+        "गंगा बहती चरनन, ज्योति जगे न्यारी॥"
+      ],
+      "linesEn": [
+        "Sheesh pe chhatra viraje, mooratiya pyari.",
+        "Ganga bahti charanan, jyoti jage nyari."
+      ],
+      "meaningHi": "माँ के सुन्दर रूप पर छत्र शोभित है। चरणों में गंगा बहने और अनुपम ज्योति जगने की पवित्र छवि गाई गई है।",
+      "meaningEn": "A canopy crowns the Mother’s lovely form. The hymn evokes sacred water flowing at her feet and a unique divine radiance."
+    },
+    {
+      "id": "vda-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · 2",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "ब्रह्मा वेद पढ़े नित द्वारे, शंकर ध्यान धरे।",
+        "सेवक चंवर डुलावत, नारद नृत्य करे॥"
+      ],
+      "linesEn": [
+        "Brahma Ved padhe nit dvare, Shankar dhyan dhare.",
+        "Sevak chanvar dulavat, Narad nritya kare."
+      ],
+      "meaningHi": "द्वार पर ब्रह्मा वेदपाठ और शंकर ध्यान करते हैं। सेवक चँवर डुलाते हैं तथा नारद नृत्य करते हैं।",
+      "meaningEn": "Brahma recites the Vedas at her doorway and Shankara meditates. Attendants wave ceremonial fans while Narada dances."
+    },
+    {
+      "id": "vda-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · 3",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "सुन्दर गुफा तुम्हारी, मन को अति भावे।",
+        "बार-बार देखन को, ऐ माँ मन चावे॥"
+      ],
+      "linesEn": [
+        "Sundar gufa tumhari, man ko ati bhave.",
+        "Bar-bar dekhan ko, ai maan man chave."
+      ],
+      "meaningHi": "माँ की सुन्दर गुफा भक्त के मन को भाती है और वह बार-बार दर्शन करना चाहता है।",
+      "meaningEn": "The Mother’s beautiful cave delights the devotee, who longs to return for her darshan."
+    },
+    {
+      "id": "vda-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · 4",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "भवन पे झण्डे झूलें, घंटा ध्वनि बाजे।",
+        "ऊँचा पर्वत तेरा, माता प्रिय लागे॥"
+      ],
+      "linesEn": [
+        "Bhavan pe jhande jhoolen, ghanta dhvani baje.",
+        "Ooncha parvat tera, mata priya lage."
+      ],
+      "meaningHi": "भवन पर लहराते ध्वज, बजती घंटियाँ और ऊँचा पर्वत तीर्थ की प्रिय छवि बनाते हैं।",
+      "meaningEn": "Waving flags, ringing bells and the high mountain form the beloved scene of the shrine."
+    },
+    {
+      "id": "vda-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · 5",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "पान सुपारी ध्वजा नारियल, भेंट पुष्प मेवा।",
+        "दास खड़े चरणों में, दर्शन दो देवा॥"
+      ],
+      "linesEn": [
+        "Pan supari dhvaja nariyal, bhent pushp meva.",
+        "Das khade charanon mein, darshan do deva."
+      ],
+      "meaningHi": "पान, सुपारी, ध्वज, नारियल, पुष्प और मेवा अर्पित हैं। चरणों में खड़े भक्त दर्शन की विनती करते हैं।",
+      "meaningEn": "Betel, a flag, coconut, flowers and dried fruits are offered. Devotees stand at her feet asking for darshan."
+    },
+    {
+      "id": "vda-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · 6",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "जो जन निश्चय करके, द्वार तेरे आवे।",
+        "उसकी इच्छा पूरण, माता हो जावे॥"
+      ],
+      "linesEn": [
+        "Jo jan nishchay karke, dvar tere aave.",
+        "Uski icchha pooran, mata ho jave."
+      ],
+      "meaningHi": "पद दृढ़ श्रद्धा के साथ माँ के द्वार आने वाले भक्त की अभिलाषा पूर्ण होने का विश्वास व्यक्त करता है।",
+      "meaningEn": "The stanza expresses faith that the longing of one who approaches the Mother with resolve and devotion is fulfilled."
+    },
+    {
+      "id": "vda-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद · 7",
+      "labelEn": "Stanza · 7",
+      "lines": [
+        "इतनी स्तुति निश-दिन, जो नर भी गावे।",
+        "कहते सेवक ध्यानू, सुख सम्पत्ति पावे॥"
+      ],
+      "linesEn": [
+        "Itni stuti nish-din, jo nar bhi gave.",
+        "Kahte sevak Dhyanu, sukh sampatti pave."
+      ],
+      "meaningHi": "ध्यानू सेवक के नाम से समापन में कहा गया है कि नित्य यह स्तुति गाने वाला सुख और सम्पत्ति पाता है।",
+      "meaningEn": "In the closing verse signed by the devotee Dhyanu, the hymn promises happiness and prosperity to those who sing this praise daily."
+    }
+  ]
+}

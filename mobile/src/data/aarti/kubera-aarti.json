@@ -1,0 +1,165 @@
+{
+  "titleHi": "कुबेर जी की आरती",
+  "titleEn": "Om Jai Yaksha Kuber Hare",
+  "subtitleHi": "कुबेर जी की आरती",
+  "subtitleEn": "Om Jai Yaksha Kuber Hare",
+  "deity": "kubera",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Complete eight-stanza Drik Panchang text, concordant with BhaktiBharat after spelling and punctuation normalization. The closing signature Prempal is preserved as a textual attribution; no claim about the author’s identity or dates is made. Complete stanza set; repeated refrains do not create extra reader pages. Hindi and English meanings are original editorial glosses. No recorded audio is attached.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/lord-kubera/lord-kubera-aarti.html?lang=hi",
+      "https://www.bhaktibharat.com/aarti/shri-kuber-aarti"
+    ],
+    "retrievedOn": "2026-10-15"
+  },
+  "counts": {
+    "totalVerses": 8
+  },
+  "verses": [
+    {
+      "id": "kua-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "ॐ जै यक्ष कुबेर हरे, स्वामी जै यक्ष जै यक्ष कुबेर हरे।",
+        "शरण पड़े भगतों के, भण्डार कुबेर भरे॥"
+      ],
+      "linesEn": [
+        "Om jai Yaksh Kuber hare, swami jai Yaksh jai Yaksh Kuber hare.",
+        "Sharan pade bhagton ke, bhandar Kuber bhare."
+      ],
+      "meaningHi": "यक्षराज कुबेर की जय हो। आरती में भक्त आश्रय लेने वालों के भण्डार भरने वाले के रूप में उनका गुणगान करते हैं।",
+      "meaningEn": "Glory to Kubera, lord of the yakshas. The hymn praises him as one who fills the stores of devotees who seek his refuge."
+    },
+    {
+      "id": "kua-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · 1",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "शिव भक्तों में भक्त कुबेर बड़े, स्वामी भक्त कुबेर बड़े।",
+        "दैत्य दानव मानव से, कई-कई युद्ध लड़े॥"
+      ],
+      "linesEn": [
+        "Shiv bhakton mein bhakt Kuber bade, swami bhakt Kuber bade.",
+        "Daitya danav manav se, kai-kai yuddh lade."
+      ],
+      "meaningHi": "कुबेर को शिव का महान भक्त कहा गया है। पद दैत्यों, दानवों और मनुष्यों से उनके युद्धों का स्मरण करता है।",
+      "meaningEn": "Kubera is praised as a great devotee of Shiva. The stanza recalls battles with daityas, danavas and humans."
+    },
+    {
+      "id": "kua-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · 2",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "स्वर्ण सिंहासन बैठे, सिर पर छत्र फिरे, स्वामी सिर पर छत्र फिरे।",
+        "योगिनी मंगल गावैं, सब जय जय कार करैं॥"
+      ],
+      "linesEn": [
+        "Swarn sinhasan baithe, sir par chhatra phire, swami sir par chhatra phire.",
+        "Yogini mangal gaven, sab jai jai kar karen."
+      ],
+      "meaningHi": "वे स्वर्ण सिंहासन पर बैठे हैं और उनके ऊपर राजछत्र शोभित है। योगिनियाँ मंगलगीत गाती हैं और सभी जयकार करते हैं।",
+      "meaningEn": "He sits on a golden throne beneath a royal canopy. Yoginis sing auspicious songs and all acclaim him."
+    },
+    {
+      "id": "kua-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · 3",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "गदा त्रिशूल हाथ में, शस्त्र बहुत धरे, स्वामी शस्त्र बहुत धरे।",
+        "दुख भय संकट मोचन, धनुष टंकार करें॥"
+      ],
+      "linesEn": [
+        "Gada trishool hath mein, shastra bahut dhare, swami shastra bahut dhare.",
+        "Dukh bhay sankat mochan, dhanush tankar karen."
+      ],
+      "meaningHi": "पद में कुबेर गदा, त्रिशूल और अनेक शस्त्र धारण किए हुए हैं। धनुष की टंकार के साथ उन्हें दुःख, भय और संकट से रक्षा करने वाला कहा गया है।",
+      "meaningEn": "The hymn depicts Kubera bearing a mace, trident and other weapons. With the twang of his bow, he is praised as a protector from sorrow, fear and distress."
+    },
+    {
+      "id": "kua-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · 4",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "भाँति भाँति के व्यंजन बहुत बने, स्वामी व्यंजन बहुत बने।",
+        "मोहन भोग लगावैं, साथ में उड़द चने॥"
+      ],
+      "linesEn": [
+        "Bhanti bhanti ke vyanjan bahut bane, swami vyanjan bahut bane.",
+        "Mohan bhog lagaven, sath mein urad chane."
+      ],
+      "meaningHi": "भक्त अनेक प्रकार के पकवान बनाकर भोग अर्पित करते हैं। पद में मोहनभोग के साथ उड़द और चने का उल्लेख है।",
+      "meaningEn": "Devotees prepare many dishes as offerings. The stanza names mohanbhog along with black gram and chickpeas."
+    },
+    {
+      "id": "kua-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · 5",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "बल बुद्धि विद्या दाता, हम तेरी शरण पड़े, स्वामी हम तेरी शरण पड़े।",
+        "अपने भक्त जनों के, सारे काम संवारे॥"
+      ],
+      "linesEn": [
+        "Bal buddhi vidya data, hum teri sharan pade, swami hum teri sharan pade.",
+        "Apne bhakt janon ke, sare kam sanvare."
+      ],
+      "meaningHi": "भक्त बल, बुद्धि और विद्या देने वाले कुबेर की शरण लेते हैं और अपने कार्य सँवारने की प्रार्थना करते हैं।",
+      "meaningEn": "Devotees seek refuge in Kubera as a giver of strength, understanding and learning, and pray for help in their efforts."
+    },
+    {
+      "id": "kua-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · 6",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "मुकुट मणी की शोभा, मोतियन हार गले, स्वामी मोतियन हार गले।",
+        "अगर कपूर की बाती, घी की जोत जले॥"
+      ],
+      "linesEn": [
+        "Mukut mani ki shobha, motiyan har gale, swami motiyan har gale.",
+        "Agar kapoor ki bati, ghee ki jot jale."
+      ],
+      "meaningHi": "रत्नजटित मुकुट और मोतियों का हार उनके रूप को सुशोभित करते हैं। पूजा में अगर, कपूर और घी की ज्योति का वर्णन है।",
+      "meaningEn": "A jewelled crown and pearl necklace adorn him. The worship scene includes fragrant incense, camphor and a ghee flame."
+    },
+    {
+      "id": "kua-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद · 7",
+      "labelEn": "Stanza · 7",
+      "lines": [
+        "यक्ष कुबेर जी की आरती, जो कोई नर गावे, स्वामी जो कोई नर गावे।",
+        "कहत प्रेमपाल स्वामी, मनवांछित फल पावे॥"
+      ],
+      "linesEn": [
+        "Yaksh Kuber ji ki aarti, jo koi nar gave, swami jo koi nar gave.",
+        "Kahat Prempal swami, manvanchhit phal pave."
+      ],
+      "meaningHi": "समापन में प्रेमपाल नाम से कहा गया है कि श्रद्धापूर्वक कुबेर की आरती गाने वाला मनवांछित फल पाता है। यह आरती की फलश्रुति है।",
+      "meaningEn": "The closing verse, signed Prempal, expresses the hymn’s promise that one who sings Kubera’s aarti receives the desired fruit."
+    }
+  ]
+}

@@ -9,6 +9,15 @@ import gayatriAarti from './gayatri-aarti.json';
 import khatuShyamAarti from './khatu-shyam-aarti.json';
 import omJaiLakshmiMata from './om-jai-lakshmi-mata.json';
 import omJaiGangeMata from './om-jai-gange-mata.json';
+import ambeTuHaiJagdambeKali from './ambe-tu-hai-jagdambe-kali.json';
+import shaniAarti from './shani-aarti.json';
+import kuberaAarti from './kubera-aarti.json';
+import santoshiMataAarti from './santoshi-mata-aarti.json';
+import ahoiMataAarti from './ahoi-mata-aarti.json';
+import vaishnoDeviAarti from './vaishno-devi-aarti.json';
+import ekadashiMataAarti from './ekadashi-mata-aarti.json';
+import tulsiAarti from './tulsi-aarti.json';
+import shakambhariAarti from './shakambhari-aarti.json';
 import { aartiIdByIndex } from './ids';
 import jayAdhyaShakti from './jay-adhya-shakti.json';
 
@@ -54,6 +63,15 @@ export const aartiCollection: readonly AartiData[] = [
   omJaiLakshmiMata as AartiData,
   jayAdhyaShakti as AartiData,
   omJaiGangeMata as AartiData,
+  ambeTuHaiJagdambeKali as AartiData,
+  shaniAarti as AartiData,
+  kuberaAarti as AartiData,
+  santoshiMataAarti as AartiData,
+  ahoiMataAarti as AartiData,
+  vaishnoDeviAarti as AartiData,
+  ekadashiMataAarti as AartiData,
+  tulsiAarti as AartiData,
+  shakambhariAarti as AartiData,
 ];
 
 export const aartiTitleHi = 'आरती संग्रह';
@@ -71,7 +89,6 @@ export function getAarti(index: number): AartiData {
     throw new Error(`aarti: expected ${aartiIdByIndex.length} aartis, got ${aartiCollection.length}`);
   }
   const seenIds = new Set<string>();
-  let totalVerses = 0;
   for (const aarti of aartiCollection) {
     if (!aarti.titleHi.trim() || !aarti.titleEn.trim()) {
       throw new Error(`aarti: empty title in collection`);
@@ -89,6 +106,5 @@ export function getAarti(index: number): AartiData {
         throw new Error(`aarti: ${v.id} has empty meaning`);
       }
     }
-    totalVerses += aarti.verses.length;
   }
 })();

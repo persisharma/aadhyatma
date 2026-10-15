@@ -1,8 +1,7 @@
 # Japam Category Smoke Test
 #
-# Verifies the Japam category and its 5 active mantras (4 mantras + Radha naam) render correctly.
-# Mantras: Om Namah Shivaya, Hare Krishna Mahamantra, Gayatri Mantra,
-#          Om Namo Bhagavate Vasudevaya.
+# Verifies the existing five mantra cards and the new Saraswati manual counter.
+# The bundled registry has seven mantras; Durga is covered by the data suite.
 #
 # Japam routes to JapamCounterScreen (a counter UI with a 108-bead mala),
 # NOT a standard verse pager — per RULEBOOK §1 field 6. This flow opens the
@@ -27,7 +26,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Japa & Mantras. Tap to open."
 - waitForAnimationToEnd
 
-# Verify all 4 mantras appear in CategoryList
+# Verify the existing mantra cards and the new Saraswati counter
 - extendedWaitUntil:
     visible: "Om Namah Shivaya\\..*Tap to open\\."
     timeout: 15000
@@ -35,6 +34,25 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Gayatri Mantra\\..*Tap to open\\."
 - assertVisible: "Om Namo Bhagavate Vasudevaya\\..*Tap to open\\."
 - assertVisible: "Radha Naam Japa\\..*Tap to open\\."
+
+# Source-verified Saraswati japa works without a recording.
+- scrollUntilVisible:
+    element:
+      text: "Saraswati Moola Mantra\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Saraswati Moola Mantra\\..*Tap to open\\."
+- waitForAnimationToEnd
+- assertVisible: ".*0 of 108 on this mala.*"
+- tapOn: ".*Tap to count one bead.*"
+- assertVisible: ".*1 of 108 on this mala.*"
+- tapOn: "Back"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Gayatri Mantra\\..*Tap to open\\."
+    direction: UP
+    timeout: 10000
 
 # Open Gayatri Mantra counter
 - tapOn: "Gayatri Mantra\\..*Tap to open\\."

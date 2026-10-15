@@ -1831,6 +1831,26 @@ type LibraryEntry = {
 
 `verseCount` and counted subtitles are computed from the module's own exported totals (`sundarkandTotal`, `shivChalisaCounts.totalVerses`, …) so the card can never drift from the data (RULEBOOK §11.10). Japam entries are spread into the array from `japamMantras`, so a new mantra automatically becomes a catalog row.
 
+### Sourced aarti expansion (October 2026)
+
+The ten added compositions (Ganga plus Ambe Tu Hai Jagdambe Kali, Shani, Kubera,
+Santoshi, Ahoi, Vaishno Devi, Ekadashi, Tulsi and Shakambhari) use the existing Aarti
+category, deity lists, Search, purpose discovery and `AartiReaderScreen`; no separate
+navigation section is introduced. The payload order is `aarti/index.ts`; stable IDs
+and persisted legacy positions are append-only in `aarti/ids.ts`. Jay Adhya Shakti
+retains index 10 and Ganga follows at index 11. Each page keeps a complete stanza,
+pronunciation-based Latin text and original Hindi/English meaning. Published edition
+variants and both source URLs stay with each JSON. Generic Ahoi, Ekadashi and Tulsi
+surfaces use the neutral aarti diya rather than depicting another deity as that figure.
+Vishnu is a catalog association for Ekadashi and Tulsi. Existing Durga art accompanies
+the Durga-associated forms, and Shani/Kubera/Ganga retain their dedicated backgrounds.
+
+Saraswati Moola Mantra enters the existing Japa category and Saraswati deity list.
+It uses the current manual 108-bead counter and the audio-unavailable state (§35),
+with no recorded-audio playback or automatic bead progression. Source records are
+in `japam/japam.json`; original meanings use Hindi/English, while Gujarati/Kannada
+follow the existing runtime script-conversion contract (§34).
+
 ### Category set (`mobile/src/data/categories.ts`)
 
 Ten categories, all `active`: `granth` (ग्रन्थ · Sacred Books) · `stotram` (स्तोत्रम् · Hymns & Praise) · `chalisa` (चालीसा) · `japam` (जप · Japa & Mantras) · `aarti` (आरती) · `theerth` (तीर्थ · Pilgrimage) · `sanskar` (संस्कार · Good Habits) · `ashtakam` (अष्टकम् · Ashtakam — standalone Ashtak/Ashtakam texts; PRD-A rows use multi-instance `AshtakamReader`, while the pre-existing Sankat Mochan Hanuman Ashtak keeps its dedicated chaptered reader) · `suktam` (सूक्तम् · Suktam — PRD-A; multi-instance `SuktamReader`) · `kavacham` (कवच · Kavacham — PRD-A; multi-instance `KavachamReader`). Each PRD-A form dispatches its texts through one reader on an `<form>Id` route param. **Stuti** (स्तुति · Krishna Stuti, Durga Stuti) is a fourth PRD-A form that is **not a category** — its texts are filed under `stotram` (folded July 2026: स्तुति ≈ स्तोत्रम्, and Ram Stuti already lived there) yet still render through the multi-instance `StutiReader` (routed by `stutiId`). `HomeScreen` renders all category tiles from data (`coming` ones, when present, render as disabled "SOON" launchers) and appends a **hand-wired देवता · By Deity tile** that opens `DeityIndexScreen` (§42) instead of a category list. (This supersedes §18's "6 tiles" list.) `japam` tiles route to the counter UI, `theerth` to the map (§26); everything else goes through `CategoryListScreen` → `entryRoutes.ts`.

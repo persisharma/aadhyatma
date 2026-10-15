@@ -1,0 +1,287 @@
+# Source-verified aarti additions: category → own reader → closing stanza.
+appId: com.prashantsharma.vedansh
+env:
+  PLATFORM: ios
+  READING_SIZE: Standard
+---
+- runFlow: _launch.yaml
+- runFlow:
+    when:
+      true: ${READING_SIZE == 'Large'}
+    commands:
+      - runFlow: _open-settings.yaml
+      - scrollUntilVisible:
+          element: { text: "Reading size,.*" }
+          centerElement: true
+      - tapOn: "Reading size,.*"
+      - tapOn: "Large"
+      - tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+      - tapOn: { id: "tab-home" }
+      - waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element: { text: "Aarti\\..*Tap to open\\." }
+    direction: DOWN
+    timeout: 20000
+- tapOn: "Aarti\\..*Tap to open\\."
+- scrollUntilVisible:
+    element:
+      text: "Om\\ Jai\\ Gange\\ Mata\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Om\\ Jai\\ Gange\\ Mata\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "ॐ\\ जय\\ गंगे\\ माता,\\ मैया\\ जय\\ गंगे\\ माता।.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-om-jai-gange-mata
+- tapOn: "English"
+- assertVisible: "Om\\ jai\\ Gange\\ mata,\\ maiya\\ jai\\ Gange\\ mata\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "आरती\\ मातु\\ तुम्हारी,\\ जो\\ नर\\ नित\\ गाता।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element:
+      text: "Ambe\\ Tu\\ Hai\\ Jagdambe\\ Kali\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Ambe\\ Tu\\ Hai\\ Jagdambe\\ Kali\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "अम्बे\\ तू\\ है\\ जगदम्बे\\ काली,\\ जय\\ दुर्गे\\ खप्पर\\ वाली।.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-ambe-tu-hai-jagdambe-kali
+- tapOn: "English"
+- assertVisible: "Ambe\\ tu\\ hai\\ Jagdambe\\ Kali,\\ jai\\ Durge\\ khappar\\ wali\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "चरण\\ शरण\\ में\\ खड़े\\ तुम्हारी,\\ ले\\ पूजा\\ की\\ थाली।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element:
+      text: "Jai\\ Jai\\ Shri\\ Shanidev\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Jai\\ Jai\\ Shri\\ Shanidev\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "जय\\ जय\\ श्री\\ शनिदेव\\ भक्तन\\ हितकारी।.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-shani-aarti
+- tapOn: "English"
+- assertVisible: "Jai\\ jai\\ Shri\\ Shanidev\\ bhaktan\\ hitkari\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "देव\\ दनुज\\ ऋषि\\ मुनि,\\ सुमिरत\\ नर\\ नारी।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element:
+      text: "Om\\ Jai\\ Yaksha\\ Kuber\\ Hare\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Om\\ Jai\\ Yaksha\\ Kuber\\ Hare\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "ॐ\\ जै\\ यक्ष\\ कुबेर\\ हरे,\\ स्वामी\\ जै\\ यक्ष\\ जै\\ यक्ष\\ कुबेर\\ हरे।.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-kubera-aarti
+- tapOn: "English"
+- assertVisible: "Om\\ jai\\ Yaksh\\ Kuber\\ hare,\\ swami\\ jai\\ Yaksh\\ jai\\ Yaksh\\ Kuber\\ hare\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 7
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "यक्ष\\ कुबेर\\ जी\\ की\\ आरती,\\ जो\\ कोई\\ नर\\ गावे,\\ स्वामी\\ जो\\ कोई\\ नर\\ गावे।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element:
+      text: "Jai\\ Santoshi\\ Mata\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Jai\\ Santoshi\\ Mata\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "जय\\ सन्तोषी\\ माता,\\ मैया\\ जय\\ सन्तोषी\\ माता।.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-santoshi-mata-aarti
+- tapOn: "English"
+- assertVisible: "Jai\\ Santoshi\\ mata,\\ maiya\\ jai\\ Santoshi\\ mata\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 11
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "सन्तोषी\\ माता\\ की\\ आरती,\\ जो\\ कोई\\ जन\\ गावे।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element:
+      text: "Jai\\ Ahoi\\ Mata\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Jai\\ Ahoi\\ Mata\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "जय\\ अहोई\\ माता,\\ जय\\ अहोई\\ माता।.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-ahoi-mata-aarti
+- tapOn: "English"
+- assertVisible: "Jai\\ Ahoi\\ mata,\\ jai\\ Ahoi\\ mata\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 7
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "श्री\\ अहोई\\ माँ\\ की\\ आरती,\\ जो\\ कोई\\ गाता।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element:
+      text: "Jai\\ Vaishnavi\\ Mata\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Jai\\ Vaishnavi\\ Mata\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "जय\\ वैष्णवी\\ माता,\\ मैया\\ जय\\ वैष्णवी\\ माता।.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-vaishno-devi-aarti
+- tapOn: "English"
+- assertVisible: "Jai\\ Vaishnavi\\ mata,\\ maiya\\ jai\\ Vaishnavi\\ mata\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 7
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "इतनी\\ स्तुति\\ निश\\-दिन,\\ जो\\ नर\\ भी\\ गावे।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element:
+      text: "Om\\ Jai\\ Ekadashi\\ Mata\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Om\\ Jai\\ Ekadashi\\ Mata\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "ॐ\\ जय\\ एकादशी,\\ जय\\ एकादशी,\\ जय\\ एकादशी\\ माता।.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-ekadashi-mata-aarti
+- tapOn: "English"
+- assertVisible: "Om\\ jai\\ Ekadashi,\\ jai\\ Ekadashi,\\ jai\\ Ekadashi\\ mata\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 14
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "जो\\ कोई\\ आरती\\ एकादशी\\ की,\\ भक्ति\\ सहित\\ गावै।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element:
+      text: "Jai\\ Jai\\ Tulsi\\ Mata\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Jai\\ Jai\\ Tulsi\\ Mata\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "जय\\ जय\\ तुलसी\\ माता,\\ सबकी\\ सुखदाता\\ वर\\ माता॥.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-tulsi-aarti
+- tapOn: "English"
+- assertVisible: "Jai\\ jai\\ Tulsi\\ mata,\\ sabki\\ sukhdata\\ var\\ mata\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 5
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "हरि\\ को\\ तुम\\ अति\\ प्यारी,\\ श्याम\\ वर्ण\\ सुकुमारी।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element:
+      text: "Shri\\ Shakambhari\\ Amba\\ Ji\\ Ki\\ Aarti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Shri\\ Shakambhari\\ Amba\\ Ji\\ Ki\\ Aarti\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "हरि\\ ॐ\\ श्री\\ शाकम्भर\\ अम्बा\\ जी\\ की\\ आरती\\ कीजो।.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-shakambhari-aarti
+- tapOn: "English"
+- assertVisible: "Hari\\ Om\\ Shri\\ Shakambhar\\ Amba\\ ji\\ ki\\ aarti\\ keejo\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "जो\\ नर\\ आरती\\ पढ़े\\ पढ़ावे\\ माँ,\\ जो\\ नर\\ आरती\\ सुने\\ सुनावे\\ माँ।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- stopApp:
+    appId: com.prashantsharma.vedansh

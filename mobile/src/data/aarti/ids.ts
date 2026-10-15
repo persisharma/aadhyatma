@@ -21,6 +21,15 @@ export const aartiIdByIndex = [
   'om-jai-lakshmi-mata',
   'jay-adhya-shakti',
   'om-jai-gange-mata',
+  'ambe-tu-hai-jagdambe-kali',
+  'shani-aarti',
+  'kubera-aarti',
+  'santoshi-mata-aarti',
+  'ahoi-mata-aarti',
+  'vaishno-devi-aarti',
+  'ekadashi-mata-aarti',
+  'tulsi-aarti',
+  'shakambhari-aarti',
 ] as const satisfies readonly string[];
 
 export type AartiId = (typeof aartiIdByIndex)[number];
