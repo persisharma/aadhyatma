@@ -12,13 +12,13 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 }));
 
 const mockSelectCity = jest.fn();
-const mockSelectPincode = jest.fn((_pincode: string) => true);
+const mockSelectPincode = jest.fn((_pincode: string, _place?: string) => true);
 jest.mock('@/contexts/PanchangLocationContext', () => ({
   usePanchangLocation: () => ({
     location: { cityId: 'ujjain', labelHi: 'उज्जैन', labelEn: 'Ujjain' },
     gpsStatus: 'idle',
     selectCity: (id: string) => mockSelectCity(id),
-    selectPincode: (pin: string) => mockSelectPincode(pin),
+    selectPincode: (pin: string, place?: string) => (place === undefined ? mockSelectPincode(pin) : mockSelectPincode(pin, place)),
     requestDeviceLocation: () => Promise.resolve('granted'),
   }),
 }));
@@ -65,6 +65,8 @@ function rows(tree: TestRenderer.ReactTestRenderer) {
     | { kind: 'city'; city: City }
     | { kind: 'pincode'; entry: { pincode: string; districtEn: string; stateEn: string } }
     | { kind: 'pincode-missing'; query: string }
+    | { kind: 'place'; place: { name: string; entry: { pincode: string; districtEn: string; stateEn: string } } }
+    | { kind: 'no-match'; query: string }
   )[];
 }
 
@@ -103,10 +105,75 @@ describe('LocationPickerModal', () => {
     const tree = await renderPicker();
     await search(tree, 'nathdwara');
     const data = rows(tree);
-    expect(data.filter((r) => r.kind === 'header').map((r) => (r as { en: string }).en)).toEqual([
-      'Rajasthan · tehsils',
-    ]);
+    expect(data.filter((r) => r.kind === 'header').map((r) => (r as { en: string }).en)[0]).toBe(
+      'Rajasthan · tehsils'
+    );
     expect(data.filter((r) => r.kind === 'city')).toHaveLength(1);
+    // Nathdwara's own sub office IS the tehsil, so it is not repeated as a Latin row.
+    expect(
+      data.some((r) => r.kind === 'place' && r.place.name.toLowerCase() === 'nathdwara')
+    ).toBe(false);
+  });
+
+  test('a village the city list never had is found by name, below the city tiers', async () => {
+    const tree = await renderPicker();
+    await search(tree, 'kothimir');
+    const data = rows(tree);
+    expect(data.filter((r) => r.kind === 'city')).toHaveLength(0);
+    expect(data.filter((r) => r.kind === 'header').map((r) => (r as { en: string }).en)).toEqual([
+      'Towns & villages',
+    ]);
+    const place = data.find((r) => r.kind === 'place') as { place: { name: string; entry: { pincode: string } } };
+    expect(place.place.name).toBe('Kothimir');
+    expect(place.place.entry.pincode).toBe('504273');
+  });
+
+  test('picking a village selects its pincode and passes the name along', async () => {
+    const tree = await renderPicker();
+    await search(tree, 'shahupuri');
+    const row = tree.root.findAll(
+      (n) =>
+        typeof n.props.accessibilityLabel === 'string' &&
+        n.props.accessibilityLabel.startsWith('Shahupuri, Kolhapur') &&
+        typeof n.props.onPress === 'function'
+    )[0];
+    act(() => row.props.onPress());
+    expect(mockSelectPincode).toHaveBeenCalledWith('416001', 'Shahupuri');
+    expect(mockSelectCity).not.toHaveBeenCalled();
+  });
+
+  test('a place row is Latin on the title line and Devanagari digits + state in Hindi', async () => {
+    const tree = await renderPicker('hi');
+    await search(tree, 'kothimir');
+    const texts = tree.root
+      .findAllByType(Text)
+      .map((n) => n.props.children)
+      .filter((c): c is string => typeof c === 'string');
+    expect(texts).toContain('Kothimir · Kumuram Bheem Asifabad');
+    expect(texts).toContain('५०४२७३ · तेलंगाना');
+  });
+
+  test('a name that matches nothing says so instead of an empty sheet', async () => {
+    const tree = await renderPicker();
+    await search(tree, 'zzqqxx');
+    const data = rows(tree);
+    expect(data).toHaveLength(1);
+    expect(data[0].kind).toBe('no-match');
+    const texts = tree.root
+      .findAllByType(Text)
+      .map((n) => n.props.children)
+      .filter((c): c is string => typeof c === 'string');
+    expect(texts.some((t) => t.startsWith('No place found'))).toBe(true);
+  });
+
+  test('a Devanagari name with no city match is told to use English letters', async () => {
+    const tree = await renderPicker('hi');
+    await search(tree, 'कोठीमीर');
+    const texts = tree.root
+      .findAllByType(Text)
+      .map((n) => n.props.children)
+      .filter((c): c is string => typeof c === 'string');
+    expect(texts.some((t) => t.includes('अंग्रेज़ी अक्षरों में'))).toBe(true);
   });
 
   test('searching a district name surfaces every tehsil in it', async () => {
@@ -186,16 +253,16 @@ describe('LocationPickerModal', () => {
     expect(data[0].kind).toBe('pincode-missing');
   });
 
-  test('the pincode row shows district and taluka, and Devanagari digits in Hindi', async () => {
+  test('the pincode row shows district and the offices it serves, and Devanagari digits in Hindi', async () => {
     const tree = await renderPicker('hi');
     await search(tree, '781001');
     const texts = tree.root
       .findAllByType(Text)
       .map((n) => n.props.children)
       .filter((c): c is string => typeof c === 'string');
-    // Guwahati is a taluka of Kamrup district; both show, because neither alone is the
-    // name every user recognises.
-    expect(texts).toContain('Kamrup · Guwahati');
+    // The district is Kamrup Metro; the name users know, Guwahati, comes from the head
+    // office — which is why the served offices ride along.
+    expect(texts).toContain('Kamrup Metro · Guwahati GPO, Fancy Bazar, Uzanbazar');
     expect(texts).toContain('७८१००१ · असम');
   });
 });

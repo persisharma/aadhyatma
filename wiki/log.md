@@ -891,4 +891,26 @@ Screens that never had a plate keep the paper. Added a per-layout regression tes
 design.md §6/§23, RULEBOOK §11.8 and the readers/reading-artwork pages. Focused Jest suites,
 TypeScript and touched-file lint pass; native visual check not run.
 
+## [2026-10-14] ingest | Nationwide place-name search in the location picker
+
+"A lot of places not in the list": only 52 cities + 342 Rajasthan tehsils were findable by name;
+everything else needed an exact pincode. Rebuilt `scripts/build-pincodes.mjs` on the data.gov.in
+post-office directory (npm `india-pincode`): 19,654 pincodes (was 18,466; J&K 1 → 186, Ladakh 0 → 13)
+and a new lazily-loaded `pincodeOffices.json` of 165,192 town/village names. Office coordinates are
+noisy, so the generator gates snaps, broken columns, DMS typos and misfiled states, and votes by
+consensus with the old geocoder — median error 3.3 km vs 5.4 km before. Picker gains a
+"Towns & villages" group, a no-match line, and served-offices captions; a picked place stores its
+pincode with the name in `labelEn`. State labels now say "Jammu and Kashmir", matching `STATE_LENS`.
+Updated design.md Location Picker, [[panchang]] location sections/gotchas, the Maestro location flow
+(device run owed). Jest, engine, Ask and typecheck pass; `contentCorrectness` fails identically on main.
+
+## [2026-10-15] ingest | Spelling-variant and district search for places
+
+Report: Chhapra (Saran), Bhagalpur, Muzaffarpur, Darbhanga "not found". India Post spells Chhapra
+"Chapra", and Saran is a district, not an office. Added `foldPlaceName` (chh/ch → c, aspirate h
+dropped, w → v, doubled letters collapsed…), precomputed for all 165k names by the generator, plus
+district-name search over each district's head offices; literal spelling wins fold ties. Office
+table grows 1.9 → 3.4 MB (still lazy). Tests pin the four Bihar towns under common spellings and
+re-fold every shipped name against the runtime copy. See [[panchang]].
+
 - 2026-10-15 — Committed the accepted comic artwork/placement revision and reconciled origin/main through c05acdbd, preserving both comic and themed-background wiki history. No app release is implied by this branch push.
