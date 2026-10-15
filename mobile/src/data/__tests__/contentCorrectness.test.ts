@@ -100,7 +100,7 @@ assert.deepEqual(
 
 // Newly-added discoverable content must carry addedInVersion, or NewContentContext
 // seeds it as already-known for upgrading users and the NEW badge never shows.
-for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata', 'jay-adhya-shakti']) {
+for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata', 'jay-adhya-shakti', 'shani-aarti']) {
   const entry = library.find((e) => e.id === id);
   assert.ok(entry, `${id} should exist in library`);
   assert.ok(entry.addedInVersion, `${id} must set addedInVersion so upgraders see its NEW badge`);
@@ -627,6 +627,18 @@ assert.equal(
   'jay-adhya-shakti library verseCount matches the payload'
 );
 
+// ─── 10f. Shani Aarti two-source collation ───────────────────────────────────
+const shaniAarti = readJson('aarti/shani-aarti.json');
+assert.equal(shaniAarti.deity, 'shani');
+assert.equal(shaniAarti.verses.length, 5, 'Shani Aarti has the five published stanzas');
+assert.equal(shaniAarti.counts.totalVerses, shaniAarti.verses.length);
+assert.ok(shaniAarti.verses[0].lines[0].startsWith('जय जय श्री शनिदेव भक्तन हितकारी'));
+assert.ok(shaniAarti.verses.at(-1).lines[0].startsWith('देव दनुज ऋषि मुनि'));
+assert.ok(shaniAarti.source.referenceUrls.length >= 2);
+assert.deepEqual(library.find((e) => e.id === 'shani-aarti')?.deities, ['shani']);
+assert.equal(library.find((e) => e.id === 'shani-aarti')?.verseCount, 5);
+assert.equal(library.find((e) => e.id === 'shani-aarti')?.addedInVersion, '1.5.2');
+
 // ─── 11. Library labels are precise about excerpts and verse types ───────────
 
 const libraryById = new Map(library.map((entry) => [entry.id, entry]));
@@ -985,6 +997,7 @@ for (const file of [
   'aarti/gayatri-aarti.json',
   'aarti/khatu-shyam-aarti.json',
   'aarti/om-jai-lakshmi-mata.json',
+  'aarti/shani-aarti.json',
 ]) {
   const meaningsEn: string[] = readJson(file)
     .verses.map((v: any) => v.meaningEn)

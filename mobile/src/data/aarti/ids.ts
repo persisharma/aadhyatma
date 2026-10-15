@@ -20,6 +20,7 @@ export const aartiIdByIndex = [
   // Appended, never inserted: the index is persisted in legacy `aarti-N` ids.
   'om-jai-lakshmi-mata',
   'jay-adhya-shakti',
+  'shani-aarti',
 ] as const satisfies readonly string[];
 
 export type AartiId = (typeof aartiIdByIndex)[number];

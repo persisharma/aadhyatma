@@ -924,3 +924,11 @@ the widget ask (`@vedansh/daily-bhakti-nudge`). Android pins the verse widget di
 The widget ask is gated on the new `hasWidgetHost()` so an OTA never offers it to a binary without
 the extension, and it ends on a completed add flow because neither bridge can report placement.
 Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pages.
+
+## [2026-10-15] ingest | Shani Dev Aarti joins the reader collection
+
+Added the five-stanza Shani Aarti after line-by-line comparison of HinduNidhi and the aarti
+printed with SanskritDocuments' Shani Chalisa; Navbharat Times confirms the selected crown
+reading. Appended id/index 11, tagged `shani`, and updated source migration, tests, Maestro and
+reader counts. Drik Panchang returned HTTP 403; the Shani Chalisa remains unshipped because
+its closing doha differs across the reachable sources.
