@@ -61,4 +61,3 @@ export function comicBalloonPath(x: number, y: number, width: number, height: nu
   const bottom = edge === 'bottom' ? `H ${bx + 10} L ${tipX} ${tipY} L ${bx - 10} ${y + height}` : '';
   return `M ${x + r} ${y} ${top} H ${x + width - r} Q ${x + width} ${y} ${x + width} ${y + r} V ${y + height - r} Q ${x + width} ${y + height} ${x + width - r} ${y + height} ${bottom} H ${x + r} Q ${x} ${y + height} ${x} ${y + height - r} V ${y + r} Q ${x} ${y} ${x + r} ${y} Z`;
 }
-
