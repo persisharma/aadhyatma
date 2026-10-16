@@ -990,3 +990,13 @@ ASCII, registry/search/routine/library integration and Konark temple discovery.
 ## [2026-10-16] ingest | Reconcile PR 478 with merged Shani edition
 
 Preserved main’s sourced Shani payload at index 11 and Dattatreya at 12, removed duplicate Shani catalog/background records, and appended Ganga plus the other eight requested aartis at 13–21. The registry has 22 payloads and the category 23 entries including the Ram Stuti alias. Added regression checks for main’s persisted positions and adjusted native flow selectors/order. All nine requested titles remain covered; native verification stays deferred.
+
+## [2026-10-16] ingest | Bundled reading artwork moved to R2
+
+The Garud Puran paintings (9, ~1.4 MB) and the five 14 Oct artwork corrections (~1.1 MB) were the
+only reading art still bundled with `require()`. Uploaded all 14 to R2 with immutable caching and
+verified byte-identical public responses, then activated their hashes: Garud Puran became
+`garud-puran--*` background entries, the corrections replaced their slot sources, and the
+`artworkCorrections.ts` override was removed. Updated [[integrations/reading-artwork]] and
+[[subsystems/readers]]. Remaining bundled images are UI/offline by design (Storybook and More
+icons, widget gallery plates, celestial chakra, the paper fallback).

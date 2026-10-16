@@ -333,7 +333,7 @@ and cancel when the final viewer leaves. Completed valid artwork has no expiry, 
 automatic eviction. Text and controls never await artwork; native decode errors preserve the
 fallback and evict damaged files for recovery.
 
-Five reviewed correction WebPs are bundled in `mobile/assets/artwork-corrections/` within a 1.25 MiB budget. They correct Karni Mata's background and colored banner, remove the Hanuman–Sita corner mark, and recreate Rama blessing Hanuman and Rama Darbar. `artworkCorrections.ts` resolves these before stale CDN cache entries, including offline use; unpublished CDN hashes are not activated. Other artwork retains the existing remote delivery. The Vishnu background uses the published sepia Narayana plate; colored banners remain separate. Full-strength previews retain source detail while normal backgrounds receive the parchment overlay.
+Five reviewed corrections (14 Oct) correct Karni Mata's background and colored banner, remove the Hanuman–Sita corner mark, and recreate Rama blessing Hanuman and Rama Darbar. Since 16 Oct they are the publishing sources for their own slots (`backgrounds/theerth-karni-mata`, `backgrounds/deity-rama-darbar`, `chalisa/Hanuman_sita`, `chalisa/Ram_hanuman`, `reader-illustrations/theerth-karni-mata`) and ship from R2 like all other artwork; nothing is bundled. Their new hashes are new cache files, so a device that downloaded the old art fetches the correction once. `scripts/verify-artwork-corrections.mjs` checks the sources and manifest hashes against the approval record in `docs/evaluations/artwork-corrections-2026-10-14/`. The Vishnu background uses the published sepia Narayana plate; colored banners remain separate. Full-strength previews retain source detail while normal backgrounds receive the parchment overlay.
 
 Paged sections share a single screen-level paper image instead of duplicating it per list cell.
 
@@ -3714,7 +3714,7 @@ Nine bundled 960×480 WebP paintings follow current-main PR #449: fine warm outl
 
 The source comparison and illustration manifest live in `docs/content/garud-puran/`. `scripts/preview-garud-puran.py` builds `preview.html` from the exact bundled JSON for bilingual reading and artwork review; it is an editorial preview, not a replacement for screenshots of the native app. Technical test and device evidence belongs in `INTEGRATION.md` there. Content contract: RULEBOOK §31.
 
-The approved final set matches the saved Style 3 template and is recorded in `docs/content/garud-puran/design-review/style3-final/manifest.json`. The reader uses `BackgroundLayer(readingParchment)`; the index sits on plain parchment like every §82 listing; saved progress uses Reading / Page and sharing uses the shared prose export.
+The approved final set matches the saved Style 3 template and is recorded in `docs/content/garud-puran/design-review/style3-final/manifest.json`. The nine paintings ship from R2 as `reading-backgrounds` entries `garud-puran--<artId>` (sources in `mobile/assets/garud-puran/`, published by `prepare-reading-backgrounds.mjs`); none is bundled, and the paper shows until each one loads. The reader uses `BackgroundLayer(readingParchment)`; the index sits on plain parchment like every §82 listing; saved progress uses Reading / Page and sharing uses the shared prose export.
 
 ## 82. Content listing card (`ListingCard`)
 
@@ -3735,7 +3735,7 @@ The approved final set matches the saved Style 3 template and is recorded in `do
 ```
 
 - Shell: `cardActiveFrom → cardActiveTo` gradient, 1 px `cardActiveBorder`, radius `lg`, padding 14, gap 14, `elevation.lifted`; pressed opacity 0.86.
-- Thumb: 92 wide, `alignSelf: stretch`, minimum height 115 (4:5), radius `sm`, `parchmentSoft` while loading. The art fills it cover-cropped: `KidsStoryArt fill` (top-anchored so the reviewed blank band never shows), `ComicArt fill` (only the panel's own frame), `ListingThumbImage` (bundled image with a `focusX` focal point). Each unit shows its own key scene for its topic.
+- Thumb: 92 wide, `alignSelf: stretch`, minimum height 115 (4:5), radius `sm`, `parchmentSoft` while loading. The art fills it cover-cropped: `KidsStoryArt fill` (top-anchored so the reviewed blank band never shows), `ComicArt fill` (only the panel's own frame), `ListingThumbImage` (a bundled image or an R2 background with a `focusX` focal point; R2 art is cropped from its manifest width/height before it downloads, showing the paper fallback until then). Each unit shows its own key scene for its topic.
 - Eyebrow (optional): the sequence only — `प्रसंग N`, `पाठ N`, `दिन N`. `listingEyebrow` 13/18 bold script face in `saffronDeep`; English uses the uppercase Inter `sectionLabel` pill style (`EPISODE 1`).
 - Title: the reading language only, `numberOfLines={2}`, `ink`. `listingTitle` 17/25 bold script face; English `listingTitleLatin` 16/22 Cormorant italic.
 - Description (optional): one line, `inkSoft`, `listingBody` 12/18 (English `listingBodyLatin` 13/18), script body face. Copy is at most 32 characters per language and is written to fit a 360 dp phone's ~148 pt column; it is never left to truncation.

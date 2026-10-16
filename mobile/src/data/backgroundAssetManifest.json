@@ -116,10 +116,10 @@
       "height": 1024
     },
     "backgrounds--deity-rama-darbar": {
-      "hash": "16f1dedc12993d65",
+      "hash": "95f778f97a347752",
       "ext": "webp",
-      "width": 1024,
-      "height": 1024
+      "width": 1254,
+      "height": 1254
     },
     "backgrounds--deity-saraswati-veena": {
       "hash": "b105b8a731bbdf8f",
@@ -182,7 +182,7 @@
       "height": 1254
     },
     "backgrounds--theerth-karni-mata": {
-      "hash": "ed4d478e8538ea3c",
+      "hash": "cbc6e341abf4ae70",
       "ext": "webp",
       "width": 1254,
       "height": 1254
@@ -242,22 +242,76 @@
       "height": 1024
     },
     "chalisa--Hanuman_sita": {
-      "hash": "c8504accc316a850",
+      "hash": "86a24831c968f2da",
       "ext": "webp",
-      "width": 1024,
-      "height": 1024
+      "width": 1254,
+      "height": 1254
     },
     "chalisa--Ram_hanuman": {
-      "hash": "e6a01cec98734304",
+      "hash": "fd437b4aa05964ca",
       "ext": "webp",
-      "width": 1024,
-      "height": 1024
+      "width": 1254,
+      "height": 1254
     },
     "chalisa--hanuman_lankadahan": {
       "hash": "46b632c2de75bc74",
       "ext": "webp",
       "width": 1024,
       "height": 1024
+    },
+    "garud-puran--ancestors": {
+      "hash": "47b8cee3575f5435",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "garud-puran--babhruvahana": {
+      "hash": "bd1022c0c8165c32",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "garud-puran--cover": {
+      "hash": "1736a66536efe8f8",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "garud-puran--daan": {
+      "hash": "ae9113918da17ea0",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "garud-puran--five-pretas": {
+      "hash": "676fc775f8aa4dd9",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "garud-puran--sita-ancestors": {
+      "hash": "4e01fdc4674fa63a",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "garud-puran--vaitarani": {
+      "hash": "cdc5b91f6ea7ac27",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "garud-puran--viravahana": {
+      "hash": "831017832d6281e5",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "garud-puran--yama": {
+      "hash": "3dc3026d3dc0951a",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
     },
     "gita--krishna_arjuna_vishvarupa": {
       "hash": "18c31076600bfba8",

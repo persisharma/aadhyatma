@@ -1,16 +1,21 @@
 import type { GarudPuranArtId } from '../../src/data/garud-puran';
+import { backgroundAsset, type RemoteBackground } from '../../src/data/backgroundAsset';
 
-/** Each scene is pinned to its own story; no random rotation. */
-export const garudPuranImages: Record<GarudPuranArtId, number> = {
-  cover: require('./cover.webp'),
-  daan: require('./daan.webp'),
-  babhruvahana: require('./babhruvahana.webp'),
-  'five-pretas': require('./five-pretas.webp'),
-  viravahana: require('./viravahana.webp'),
-  'sita-ancestors': require('./sita-ancestors.webp'),
-  ancestors: require('./ancestors.webp'),
-  yama: require('./yama.webp'),
-  vaitarani: require('./vaitarani.webp'),
+/**
+ * Each scene is pinned to its own story; no random rotation. The paintings
+ * here are publishing sources for R2 (`prepare-reading-backgrounds.mjs`),
+ * resolved through the background manifest rather than bundled.
+ */
+export const garudPuranImages: Record<GarudPuranArtId, RemoteBackground> = {
+  cover: backgroundAsset('garud-puran--cover'),
+  daan: backgroundAsset('garud-puran--daan'),
+  babhruvahana: backgroundAsset('garud-puran--babhruvahana'),
+  'five-pretas': backgroundAsset('garud-puran--five-pretas'),
+  viravahana: backgroundAsset('garud-puran--viravahana'),
+  'sita-ancestors': backgroundAsset('garud-puran--sita-ancestors'),
+  ancestors: backgroundAsset('garud-puran--ancestors'),
+  yama: backgroundAsset('garud-puran--yama'),
+  vaitarani: backgroundAsset('garud-puran--vaitarani'),
 };
 
 /**

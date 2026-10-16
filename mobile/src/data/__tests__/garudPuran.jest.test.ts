@@ -59,3 +59,16 @@ test('bundled artwork exactly matches the approved Style 3 review set', () => {
     expect(asset.dimensions).toEqual([960, 480]);
   }
 });
+
+test('every Garud Puran painting ships from R2 through a published background entry, never the bundle', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../backgroundAssetManifest.json'), 'utf8'));
+  const index = fs.readFileSync(path.join(__dirname, '../../../assets/garud-puran/index.ts'), 'utf8');
+  expect(index).not.toMatch(/require\(/);
+  for (const [artId, image] of Object.entries(garudPuranImages)) {
+    expect(image).toEqual({ kind: 'remote-background', stem: `garud-puran--${artId}` });
+    const entry = manifest.assets[image.stem];
+    const source = fs.readFileSync(path.join(__dirname, `../../../assets/garud-puran/${artId}.webp`));
+    expect(entry.hash).toBe(createHash('sha256').update(source).digest('hex').slice(0, 16));
+    expect(entry.width / entry.height).toBe(2);
+  }
+});
