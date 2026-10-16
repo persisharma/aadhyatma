@@ -3,7 +3,7 @@ import { library, type LibraryEntry } from '@/data/texts';
 import type { RoutineItem } from '@/data/routine/types';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
-import { aartiIndexById } from '@/data/aarti';
+import { aartiIndexById } from '@/data/aarti/ids';
 import { ashtakamIds as ashtakamIdList } from '@/data/ashtakam';
 import { stutiIds as stutiIdList } from '@/data/stuti';
 import { shivaStrotamChaptersManifest } from '@/data/shiva-strotam';
@@ -113,6 +113,7 @@ const chalisaIds = new Set([
   'saraswati-chalisa',
   'khatu-shyam-chalisa',
   'lakshmi-chalisa',
+  'surya-chalisa',
 ]);
 
 // Ashtakam (अष्टकम्) multi-instance form — one AshtakamReader dispatches on

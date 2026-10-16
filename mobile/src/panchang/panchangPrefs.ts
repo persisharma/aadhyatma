@@ -33,7 +33,7 @@
  * with the rest of Home instead of two round trips later.
  *
  * DEPENDENCIES. AsyncStorage, `locations.ts`, and `pincodes.ts` for its `isPincodeCityId`
- * regex ONLY — that module's 566 KB table sits behind a lazy require and must never be
+ * regex ONLY — that module's 605 KB table sits behind a lazy require and must never be
  * touched from here, which is why a stored pincode is validated structurally rather than
  * looked up. It must stay importable by both `PanchangLocationContext` (which pulls in
  * `expo-location`) and the launch prefetch (which must not), so it can never import
@@ -62,7 +62,7 @@ function isFiniteInRange(value: unknown, min: number, max: number): value is num
  * Rebuild a stored PINCODE location from the record itself rather than from a lookup table.
  *
  * A city location is rebuilt from the bundled list so it always matches the running build.
- * A pincode cannot be: the table is 566 KB and lives behind a lazy require in `pincodes.ts`
+ * A pincode cannot be: the table is 605 KB and lives behind a lazy require in `pincodes.ts`
  * precisely so it never lands on the launch path, and this function IS the launch path. So a
  * `pin-` record is self-describing on disk and validated structurally here — every field is
  * range-checked, and anything malformed falls back to `DEFAULT_LOCATION` like any other

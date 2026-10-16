@@ -100,7 +100,7 @@ assert.deepEqual(
 
 // Newly-added discoverable content must carry addedInVersion, or NewContentContext
 // seeds it as already-known for upgrading users and the NEW badge never shows.
-for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata']) {
+for (const id of ['saraswati-stotram', 'saraswati-aarti', 'vidyarambha-prarthana', 'lakshmi-chalisa', 'om-jai-lakshmi-mata', 'jay-adhya-shakti', 'shani-aarti', 'dattatreya-aarti', 'surya-chalisa']) {
   const entry = library.find((e) => e.id === id);
   assert.ok(entry, `${id} should exist in library`);
   assert.ok(entry.addedInVersion, `${id} must set addedInVersion so upgraders see its NEW badge`);
@@ -497,6 +497,23 @@ for (const c of NEW_CHALISAS) {
 
 // ─── 10b. Gayatri Mata Aarti canonical structure & refrain ───────────────────
 
+// ─── Surya Chalisa: the two witnesses agree apart from a recorded reading ───
+{
+  const data = readJson('surya-chalisa/surya-chalisa.json');
+  const entry = library.find((e) => e.id === 'surya-chalisa');
+  assert.ok(entry, 'surya-chalisa should be in library');
+  assert.deepEqual(entry.deities, ['surya']);
+  assert.equal(entry.addedInVersion, '1.5.2');
+  assert.equal(data.verses.length, 42);
+  assert.equal(data.counts.totalVerses, 42);
+  assert.equal(data.verses.filter((v: any) => v.type === 'chaupai').length, 40);
+  assert.ok(data.verses[0].lines[0].startsWith('कनक बदन कुण्डल मकर'));
+  assert.ok(data.source.referenceUrls.length >= 2);
+  assert.ok(data.source.baseText.includes('जोजन याको'));
+  assert.ok(data.verses.every((v: any) => v.lines.length === v.linesEn.length && v.meaningHi && v.meaningEn));
+}
+
+
 const gayatriAarti = readJson('aarti/gayatri-aarti.json');
 assert.equal(
   gayatriAarti.verses.length,
@@ -586,6 +603,72 @@ assert.deepEqual(
   ['krishna'],
   'khatu-shyam-aarti must be tagged under the Krishna deity only'
 );
+
+// ─── 10e. Jay Adhya Shakti canonical structure ──────────────────────────────
+// Shivanand Swami's Gujarati Amba aarti, stored in Devanagari so the gu reading
+// language restores the supplied Gujarati exactly. Eighteen stanzas, each
+// printed with the cue ॥ ॐ जयो जयो मा जगदंबे ॥; the two later-addition stanzas
+// (भाव न जाणुं…, मानो मंडप…) are deliberately excluded (see source.baseText).
+
+const jayAdhyaShakti = readJson('aarti/jay-adhya-shakti.json');
+assert.equal(jayAdhyaShakti.verses.length, 18, 'Jay Adhya Shakti should have 18 stanzas');
+assert.ok(
+  jayAdhyaShakti.verses.every((v: any) => v.type === 'stanza' && v.lines.at(-1) === '॥ ॐ जयो जयो मा जगदंबे ॥'),
+  'every Jay Adhya Shakti stanza should end with its printed cue'
+);
+assert.ok(
+  jayAdhyaShakti.verses[0].lines[0].startsWith('जय आद्या शक्ति'),
+  `Jay Adhya Shakti should open with "जय आद्या शक्ति", got: "${jayAdhyaShakti.verses[0].lines[0]}"`
+);
+assert.ok(
+  jayAdhyaShakti.verses.at(-1).lines.join(' ').includes('भणे शिवानंद स्वामी'),
+  'Jay Adhya Shakti should close with its Shivanand Swami signature stanza'
+);
+assert.ok(
+  !jayAdhyaShakti.verses.some((v: any) => /वल्लभ भट्ट|मानो मंडप/.test(v.lines.join(' '))),
+  'Jay Adhya Shakti should not include the later-addition stanzas'
+);
+assert.ok(
+  jayAdhyaShakti.verses.every((v: any) => /[\u0A80-\u0AFF]/.test(v.meaningGu ?? '')),
+  'every Jay Adhya Shakti stanza should carry an authored Gujarati meaning'
+);
+assert.equal(jayAdhyaShakti.deity, 'durga', 'Jay Adhya Shakti deity should be durga (Amba)');
+assert.deepEqual(
+  library.find((e) => e.id === 'jay-adhya-shakti')?.deities,
+  ['durga'],
+  'jay-adhya-shakti must be tagged under the Durga deity only'
+);
+assert.equal(
+  library.find((e) => e.id === 'jay-adhya-shakti')?.verseCount,
+  jayAdhyaShakti.verses.length,
+  'jay-adhya-shakti library verseCount matches the payload'
+);
+
+// ─── 10f. Shani Aarti two-source collation ───────────────────────────────────
+const shaniAarti = readJson('aarti/shani-aarti.json');
+assert.equal(shaniAarti.deity, 'shani');
+assert.equal(shaniAarti.verses.length, 5, 'Shani Aarti has the five published stanzas');
+assert.equal(shaniAarti.counts.totalVerses, shaniAarti.verses.length);
+assert.ok(shaniAarti.verses[0].lines[0].startsWith('जय जय श्री शनिदेव भक्तन हितकारी'));
+assert.ok(shaniAarti.verses.at(-1).lines[0].startsWith('देव दनुज ऋषि मुनि'));
+assert.ok(shaniAarti.source.referenceUrls.length >= 2);
+assert.deepEqual(library.find((e) => e.id === 'shani-aarti')?.deities, ['shani']);
+assert.equal(library.find((e) => e.id === 'shani-aarti')?.verseCount, 5);
+assert.equal(library.find((e) => e.id === 'shani-aarti')?.addedInVersion, '1.5.2');
+
+// ─── 10g. Marathi Dattatreya Aarti two-source collation ──────────────────────
+const dattatreyaAarti = readJson('aarti/dattatreya-aarti.json');
+assert.equal(dattatreyaAarti.deity, 'dattatreya');
+assert.equal(dattatreyaAarti.language, 'mr-en', 'the source language must stay explicit');
+assert.equal(dattatreyaAarti.verses.length, 5, 'four stanzas and one refrain');
+assert.equal(dattatreyaAarti.counts.totalVerses, dattatreyaAarti.verses.length);
+assert.ok(dattatreyaAarti.verses[0].lines[0].startsWith('त्रिगुणात्मक त्रैमूर्ति दत्त हा जाणा'));
+assert.equal(dattatreyaAarti.verses[1].type, 'refrain');
+assert.ok(dattatreyaAarti.verses.at(-1).lines.at(-1).startsWith('एका जनार्दनी श्री दत्तध्यान'));
+assert.ok(dattatreyaAarti.source.referenceUrls.length >= 2);
+assert.deepEqual(library.find((e) => e.id === 'dattatreya-aarti')?.deities, ['dattatreya']);
+assert.equal(library.find((e) => e.id === 'dattatreya-aarti')?.verseCount, 5);
+assert.equal(library.find((e) => e.id === 'dattatreya-aarti')?.addedInVersion, '1.5.2');
 
 // ─── 11. Library labels are precise about excerpts and verse types ───────────
 
@@ -854,7 +937,9 @@ function collectJsonFiles(dirRel = ''): string[] {
       // `kidsStories` holds retold picture-book narratives (design.md §76), not
       // verse-level scripture — each carries a prose `sourceNote` rather than the
       // structured `source.referenceUrls` this §14 provenance rule checks for.
-      if (entry.name !== '__tests__' && entry.name !== 'kidsStories') {
+      // `comicBooks` is the same kind of retelling: its provenance is `baseText`
+      // + `sourceCoverage` (sargas), held by comics.jest.test.ts.
+      if (entry.name !== '__tests__' && entry.name !== 'kidsStories' && entry.name !== 'comicBooks') {
         files.push(...collectJsonFiles(rel));
       }
     } else if (
@@ -864,6 +949,7 @@ function collectJsonFiles(dirRel = ''): string[] {
       // `source` — the heavy art/audio they point to is served from R2, not here.
       entry.name !== 'audioAssetManifest.json' &&
       entry.name !== 'kidsStoryAssetManifest.json' &&
+      entry.name !== 'comicAssetManifest.json' &&
       entry.name !== 'backgroundAssetManifest.json' &&
       entry.name !== 'readerIllustrationManifest.json' &&
       // Art aliases are semantic asset mappings, not scripture. Their manifest
@@ -882,6 +968,7 @@ function collectJsonFiles(dirRel = ''): string[] {
 // honest pending block (no unread page in referenceUrls). This list may only
 // shrink: once a file is collated against two sources, remove it here.
 const MAINTAINER_ATTESTED_SINGLE_SOURCE = new Set([
+  'aarti/jay-adhya-shakti.json',
   'aarti/khatu-shyam-aarti.json',
   'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
 ]);
@@ -935,12 +1022,15 @@ for (const file of [
   'saraswati-chalisa/saraswati-chalisa.json',
   'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
   'lakshmi-chalisa/lakshmi-chalisa.json',
+  'surya-chalisa/surya-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',
   'aarti/gayatri-aarti.json',
   'aarti/khatu-shyam-aarti.json',
   'aarti/om-jai-lakshmi-mata.json',
+  'aarti/shani-aarti.json',
+  'aarti/dattatreya-aarti.json',
 ]) {
   const meaningsEn: string[] = readJson(file)
     .verses.map((v: any) => v.meaningEn)

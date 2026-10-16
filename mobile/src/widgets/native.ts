@@ -29,6 +29,14 @@ export async function writeWidgetPayload(payload: WidgetPayloadV1): Promise<'nat
   return 'native';
 }
 
+/**
+ * Does this binary carry the widget extension at all? False in Expo Go and in any
+ * build older than the widgets, where an OTA must not offer a widget that cannot exist.
+ */
+export function hasWidgetHost(): boolean {
+  return nativeModule() != null;
+}
+
 export async function isWidgetPinSupported(): Promise<boolean> {
   const mod = nativeModule();
   return Platform.OS === 'android' && !!mod?.isPinWidgetSupported && mod.isPinWidgetSupported();

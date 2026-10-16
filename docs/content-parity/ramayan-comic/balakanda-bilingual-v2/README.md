@@ -1,6 +1,6 @@
 # Bālakāṇḍa — bilingual comic review edition
 
-29 complete episode sequences, 140 illustrated panels, Hindi and English. This expands the user-accepted `lettering-pilot-v1/fitted.html` layout across the existing Bālakāṇḍa draft. It does not generate the other six kāṇḍas or publish a mobile story.
+29 complete episode sequences, 140 illustrated panels, Hindi and English. This expands the user-accepted `lettering-pilot-v1/fitted.html` layout across the existing Bālakāṇḍa draft. It does not generate the other six kāṇḍas. The native app integration now consumes this exact edition; see [native-integration-review.md](native-integration-review.md).
 
 ## Open
 
@@ -25,6 +25,8 @@ Narration reflows in a compact cream compartment **inside the panel border**, ab
 
 Both languages use the same text-free artwork. Original source sheets are displayed through measured painted-panel frames; full originals remain accessible under each panel. New standalone illustrations retain their entire 4:3 bounds. Frame geometry is independent of caption length.
 
+Every dialogue panel has a visually reviewed speaker position in `speaker-anchors.json`, measured within its displayed painted frame. Flowing balloon tails follow that position across Hindi/English, text sizes and viewport widths. The builder rejects missing or unused speaker positions. See `speaker-validation.json` for the 2026-10-13 attribution/layout review.
+
 ## Authoring and verification
 
 - `english.json`: original English adaptation aligned with the existing Hindi narrative, not copied publication translations.
@@ -36,4 +38,4 @@ Both languages use the same text-free artwork. Original source sheets are displa
 
 The original 137 panels remain in sequence; the approved Dasharatha close-up, post-Tataka night rest and hermitage-question bridge add three. Tataka’s former ambiguous final scene is replaced, not retained as a second outcome.
 
-**Not a production release:** independent Sanskrit/Hindi/English editorial approval, Gujarati/Kannada full narratives, rights clearance, native Standard/Large sequence review, production art/frame registration and CDN/offline delivery remain pending. No mobile registry, production manifest or CDN upload changed.
+**Release boundary:** the 2026-10-13 native integration adds the app book/frames and immutable CDN artwork without changing this authoring preview. Independent Sanskrit/Hindi/English editorial approval, Gujarati/Kannada full narratives, rights clearance and complete native sequence review remain separate gates. See the native review for executed checks and first-download limitations; no OTA/store release is implied.

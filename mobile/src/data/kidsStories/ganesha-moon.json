@@ -1,0 +1,143 @@
+{
+  "id": "ganesha-moon",
+  "deityId": "ganesha",
+  "ageMin": 6,
+  "coverArt": "gm01",
+  "title": {
+    "hi": "गणेश और चंद्रमा",
+    "en": "Ganesha and the Moon",
+    "gu": "ગણેશ અને ચંદ્ર",
+    "kn": "ಗಣೇಶ ಮತ್ತು ಚಂದ್ರ"
+  },
+  "description": {
+    "hi": "अभिमान, पछतावा और क्षमा",
+    "en": "Pride, remorse and mercy",
+    "gu": "અભિમાન, પસ્તાવો અને ક્ષમા",
+    "kn": "ಅಹಂಕಾರ, ಪಶ್ಚಾತ್ತಾಪ ಮತ್ತು ಕ್ಷಮೆ"
+  },
+  "takeaway": {
+    "hi": "संपादकीय सीख: रूप पर उपहास करने के बजाय सम्मान से व्यवहार करें।",
+    "en": "Editorial reflection: treat others with respect rather than mocking their appearance.",
+    "gu": "સંપાદકીય વિચાર: દેખાવની મજાક કરવાને બદલે આદરથી વર્તીએ.",
+    "kn": "ಸಂಪಾದಕೀಯ ಚಿಂತನೆ: ರೂಪವನ್ನು ಹಾಸ್ಯ ಮಾಡುವ ಬದಲು ಗೌರವದಿಂದ ನಡೆದುಕೊಳ್ಳೋಣ."
+  },
+  "sourceNote": {
+    "hi": "मुख्य क्रम दृक पंचांग की चंद्रलोक वाली कथा है। डिवाइन लाइफ सोसायटी में अवसर और उपाय अलग हैं; उन्हें इसमें नहीं मिलाया गया। चंद्र-दर्शन का प्रसंग पारंपरिक विश्वास है, वास्तविक हानि की भविष्यवाणी या निर्देश नहीं।",
+    "en": "The sequence follows Drik Panchang’s Chandra-loka telling. Divine Life Society corroborates the mockery, curse and appeal but differs on occasion and remedy; those details are not merged. Moon-viewing is presented as traditional belief, not a prediction of harm or a ritual instruction.",
+    "gu": "મુખ્ય ક્રમ દૃક પંચાંગની ચંદ્રલોક કથા છે. ડિવાઇન લાઇફ સોસાયટીમાં પ્રસંગ અને ઉપાય અલગ છે; અહીં ભેળવ્યા નથી. ચંદ્રદર્શનની વાત પરંપરાગત માન્યતા છે, હાનિની આગાહી કે સૂચના નથી.",
+    "kn": "ಕ್ರಮವು ದೃಕ್ ಪಂಚಾಂಗದ ಚಂದ್ರಲೋಕ ಕಥೆಯನ್ನು ಅನುಸರಿಸುತ್ತದೆ. ಡಿವೈನ್ ಲೈಫ್ ಸೊಸೈಟಿಯಲ್ಲಿ ಸಂದರ್ಭ ಮತ್ತು ಪರಿಹಾರ ಬೇರೆ; ಅವನ್ನು ಬೆರೆಸಿಲ್ಲ. ಚಂದ್ರದರ್ಶನದ ವಿಷಯ ಸಾಂಪ್ರದಾಯಿಕ ನಂಬಿಕೆ; ಹಾನಿಯ ಭವಿಷ್ಯವಾಣಿ ಅಥವಾ ಆಚರಣೆಯ ಸೂಚನೆ ಅಲ್ಲ."
+  },
+  "source": {
+    "baseText": "Ganesha Chaturthi traditional Chandra-loka account (Drik Panchang), compared with Divine Life Society",
+    "retrievedOn": "2026-10-15",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/vrat-katha/ganesha-chaturthi/ganesha-chaturthi-vrat-katha.html",
+      "https://www.dlshq.org/religions/lord-ganesa-the-remover-of-obstacles/"
+    ],
+    "notes": "The sequence follows Drik Panchang’s Chandra-loka telling. Divine Life Society corroborates the mockery, curse and appeal but differs on occasion and remedy; those details are not merged. Moon-viewing is presented as traditional belief, not a prediction of harm or a ritual instruction."
+  },
+  "pages": [
+    {
+      "id": "moon-pride",
+      "art": "gm01",
+      "source": "Ganesha Chaturthi traditional account, Drik Panchang, Chandra-loka episode",
+      "title": {
+        "hi": "चंद्रमा का अभिमान",
+        "en": "The Moon’s pride",
+        "gu": "ચંદ્રનું અભિમાન",
+        "kn": "ಚಂದ್ರನ ಅಹಂಕಾರ"
+      },
+      "text": {
+        "hi": "चंद्रमा को अपने सुंदर रूप पर बहुत अभिमान था। इस पारंपरिक कथा में गणेश चंद्रलोक पहुँचे। चंद्रमा ने गणेश के रूप को देखकर उनका उपहास किया। सुंदरता का गर्व उन्हें दूसरों का सम्मान भूलने लगा था।",
+        "en": "The Moon was proud of his beauty. In this traditional telling, Ganesha visited Chandra-loka. The Moon mocked Ganesha’s appearance, allowing pride in his own looks to overcome respect for another.",
+        "gu": "ચંદ્રને પોતાના સુંદર રૂપનું ઘણું અભિમાન હતું. આ પરંપરાગત કથામાં ગણેશ ચંદ્રલોક પહોંચ્યા. ચંદ્રે તેમના રૂપની મજાક કરી. દેખાવના ગર્વમાં તેઓ બીજાનો આદર ભૂલી ગયા.",
+        "kn": "ಚಂದ್ರನಿಗೆ ತನ್ನ ಸೌಂದರ್ಯದ ಬಗ್ಗೆ ಬಹಳ ಅಹಂಕಾರವಿತ್ತು. ಈ ಸಾಂಪ್ರದಾಯಿಕ ಕಥೆಯಲ್ಲಿ ಗಣೇಶ ಚಂದ್ರಲೋಕಕ್ಕೆ ಬಂದ. ಚಂದ್ರ ಗಣೇಶನ ರೂಪವನ್ನು ಹಾಸ್ಯ ಮಾಡಿದ. ತನ್ನ ಸೌಂದರ್ಯದ ಗರ್ವದಲ್ಲಿ ಪರರ ಗೌರವ ಮರೆತ."
+      }
+    },
+    {
+      "id": "hurt-and-anger",
+      "art": "gm02",
+      "source": "Ganesha Chaturthi traditional account, Drik Panchang",
+      "title": {
+        "hi": "उपहास का परिणाम",
+        "en": "The result of mockery",
+        "gu": "મજાકનું પરિણામ",
+        "kn": "ಹಾಸ್ಯದ ಪರಿಣಾಮ"
+      },
+      "text": {
+        "hi": "अपमान से गणेश क्रोधित हुए। कथा में उन्होंने कहा कि विशेष दिन चंद्रमा को देखने वाला मिथ्या दोष का भागी होगा। यह सुनकर चंद्रमा डर गए। उनके अभिमान ने गंभीर परिणाम खड़ा कर दिया था।",
+        "en": "Ganesha became angry at the insult. In the story, he declared that seeing the Moon on a particular day would bring false blame. The Moon was frightened: his mockery had led to a grave consequence.",
+        "gu": "અપમાનથી ગણેશ ગુસ્સે થયા. કથામાં તેમણે કહ્યું કે ખાસ દિવસે ચંદ્રને જોનાર પર ખોટો આક્ષેપ લાગશે. ચંદ્ર ડરી ગયા. અભિમાનનું ગંભીર પરિણામ સામે આવ્યું હતું.",
+        "kn": "ಅವಮಾನದಿಂದ ಗಣೇಶ ಕೋಪಗೊಂಡ. ಕಥೆಯಲ್ಲಿ ನಿರ್ದಿಷ್ಟ ದಿನ ಚಂದ್ರನನ್ನು ನೋಡಿದವರಿಗೆ ಸುಳ್ಳು ಆಪಾದನೆ ಬರುವುದೆಂದು ಹೇಳಿದ. ಚಂದ್ರ ಹೆದರಿದ. ಅಹಂಕಾರಕ್ಕೆ ಗಂಭೀರ ಪರಿಣಾಮ ಉಂಟಾಗಿತ್ತು."
+      }
+    },
+    {
+      "id": "gods-seek-help",
+      "art": "gm03",
+      "source": "Ganesha Chaturthi traditional account, Drik Panchang",
+      "title": {
+        "hi": "सहायता की खोज",
+        "en": "Seeking help",
+        "gu": "સહાયની શોધ",
+        "kn": "ನೆರವು ಹುಡುಕುವುದು"
+      },
+      "text": {
+        "hi": "चंद्रमा दुखी होकर छिप गए। देवताओं ने ब्रह्मा से सहायता माँगी। ब्रह्मा ने बताया कि गणेश की शरण में जाना होगा। बृहस्पति ने चंद्रमा को गणेश की उपासना करने का मार्ग समझाया।",
+        "en": "The Moon hid in sorrow. The gods asked Brahma for help and learned that they must turn to Ganesha. Brihaspati then guided the Moon to worship Ganesha and seek his mercy.",
+        "gu": "ચંદ્ર દુઃખી થઈ છુપાઈ ગયા. દેવોએ બ્રહ્મા પાસે સહાય માગી. બ્રહ્માએ ગણેશની શરણમાં જવા કહ્યું. બૃહસ્પતિએ ચંદ્રને ગણેશની ઉપાસના કરી કૃપા માગવાનો માર્ગ બતાવ્યો.",
+        "kn": "ಚಂದ್ರ ದುಃಖದಿಂದ ಅಡಗಿಕೊಂಡ. ದೇವತೆಗಳು ಬ್ರಹ್ಮನಲ್ಲಿ ನೆರವು ಕೇಳಿದರು. ಗಣೇಶನ ಮೊರೆ ಹೋಗಬೇಕೆಂದು ಬ್ರಹ್ಮ ತಿಳಿಸಿದ. ಬೃಹಸ್ಪತಿ ಚಂದ್ರನಿಗೆ ಗಣೇಶನನ್ನು ಆರಾಧಿಸಿ ಕರುಣೆ ಬೇಡುವ ಮಾರ್ಗ ತೋರಿದ."
+      }
+    },
+    {
+      "id": "sincere-remorse",
+      "art": "gm04",
+      "source": "Ganesha Chaturthi traditional account, Drik Panchang",
+      "title": {
+        "hi": "भूल का स्वीकार",
+        "en": "Sincere remorse",
+        "gu": "ભૂલનો સ્વીકાર",
+        "kn": "ತಪ್ಪಿನ ಒಪ್ಪಿಗೆ"
+      },
+      "text": {
+        "hi": "चंद्रमा ने गणेश की उपासना की और अपने व्यवहार पर पश्चात्ताप किया। अब वे अपने रूप का गर्व नहीं कर रहे थे। वे विनम्र होकर क्षमा और राहत की प्रार्थना कर रहे थे।",
+        "en": "The Moon worshipped Ganesha and regretted his behaviour. He no longer boasted of his beauty. With humility, he asked for forgiveness and relief from the consequence of his insult.",
+        "gu": "ચંદ્રે ગણેશની ઉપાસના કરી અને પોતાના વર્તન માટે પસ્તાવો કર્યો. હવે રૂપનો ગર્વ નહોતો. નમ્રતાથી ક્ષમા અને રાહત માટે પ્રાર્થના કરતા હતા.",
+        "kn": "ಚಂದ್ರ ಗಣೇಶನನ್ನು ಆರಾಧಿಸಿ ತನ್ನ ವರ್ತನೆಗೆ ಪಶ್ಚಾತ್ತಾಪಪಟ್ಟ. ಈಗ ಸೌಂದರ್ಯದ ಗರ್ವ ಇರಲಿಲ್ಲ. ವಿನಯದಿಂದ ಕ್ಷಮೆ ಮತ್ತು ಶಾಪದಿಂದ ಬಿಡುಗಡೆ ಬೇಡಿದ."
+      }
+    },
+    {
+      "id": "mercy-and-relief",
+      "art": "gm05",
+      "source": "Ganesha Chaturthi traditional account, Drik Panchang; Divine Life Society comparison",
+      "title": {
+        "hi": "क्षमा और राहत",
+        "en": "Mercy and relief",
+        "gu": "ક્ષમા અને રાહત",
+        "kn": "ಕ್ಷಮೆ ಮತ್ತು ಕರುಣೆ"
+      },
+      "text": {
+        "hi": "देवताओं ने भी चंद्रमा के लिए प्रार्थना की। गणेश ने दया करके शाप का प्रभाव सीमित किया। इसी से कथा चतुर्थी के चंद्र-दर्शन की परंपरा जोड़ती है। यह एक धार्मिक मान्यता का वर्णन है, किसी व्यक्ति के भविष्य का दावा नहीं।",
+        "en": "The gods also pleaded for the Moon. Ganesha showed mercy and limited the curse. The story connects this with a Chaturthi moon-viewing tradition. It describes a religious belief, not anyone’s future.",
+        "gu": "દેવોએ પણ ચંદ્ર માટે વિનંતી કરી. ગણેશે દયા કરીને શાપનો પ્રભાવ મર્યાદિત કર્યો. કથા આને ચતુર્થીના ચંદ્રદર્શનની પરંપરા સાથે જોડે છે. આ ધાર્મિક માન્યતા છે, કોઈના ભવિષ્યનો દાવો નહીં.",
+        "kn": "ದೇವತೆಗಳೂ ಚಂದ್ರನ ಪರವಾಗಿ ಬೇಡಿಕೊಂಡರು. ಗಣೇಶ ಕರುಣೆ ತೋರಿ ಶಾಪದ ಪರಿಣಾಮವನ್ನು ಸೀಮಿತಗೊಳಿಸಿದ. ಕಥೆ ಇದನ್ನು ಚತುರ್ಥಿಯ ಚಂದ್ರದರ್ಶನ ಪರಂಪರೆಗೆ ಜೋಡಿಸುತ್ತದೆ. ಇದು ಧಾರ್ಮಿಕ ನಂಬಿಕೆಯ ವಿವರಣೆ; ಯಾರ ಭವಿಷ್ಯದ ಹೇಳಿಕೆಯೂ ಅಲ್ಲ."
+      }
+    },
+    {
+      "id": "respectful-heart",
+      "art": "gm06",
+      "source": "Ganesha Chaturthi traditional account, Drik Panchang, editorial closing",
+      "title": {
+        "hi": "सम्मान की सीख",
+        "en": "A lesson in respect",
+        "gu": "આદરની શીખ",
+        "kn": "ಗೌರವದ ಪಾಠ"
+      },
+      "text": {
+        "hi": "कथा में चंद्रमा को राहत मिलती है और उनका अभिमान टूटता है। उपहास से शुरू हुआ प्रसंग पश्चात्ताप और दया तक पहुँचता है। पाठक के लिए इसकी सीख दूसरों के रूप का सम्मान करना है।",
+        "en": "The Moon receives relief, and his pride is humbled. A story that began with mockery turns toward remorse and mercy. For readers, it offers a reflection on respecting other people’s appearance.",
+        "gu": "કથામાં ચંદ્રને રાહત મળે છે અને અભિમાન તૂટે છે. મજાકથી શરૂ થયેલો પ્રસંગ પસ્તાવા અને દયા સુધી પહોંચે છે. વાચક માટે શીખ બીજાના રૂપનો આદર કરવાની છે.",
+        "kn": "ಕಥೆಯಲ್ಲಿ ಚಂದ್ರನಿಗೆ ಕರುಣೆ ದೊರೆತು ಅಹಂಕಾರ ತಗ್ಗುತ್ತದೆ. ಹಾಸ್ಯದಿಂದ ಆರಂಭವಾದ ಘಟನೆ ಪಶ್ಚಾತ್ತಾಪ ಮತ್ತು ಕ್ಷಮೆಯತ್ತ ಸಾಗುತ್ತದೆ. ಪರರ ರೂಪವನ್ನು ಗೌರವಿಸುವ ಚಿಂತನೆ ಓದುಗರಿಗೆ ಉಳಿಯುತ್ತದೆ."
+      }
+    }
+  ]
+}

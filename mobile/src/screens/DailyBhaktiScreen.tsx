@@ -19,13 +19,14 @@ import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
 import BackgroundLayer from '@/components/BackgroundLayer';
-import { readingParchment } from '@/data/backgroundAsset';
+import { getReaderBackground } from '@/data/backgrounds';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
 import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import RoutineBanner from '@/components/RoutineBanner';
+import DailyBhaktiNudge from '@/components/DailyBhaktiNudge';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { useTourTarget } from '@/components/tour/tourTargets';
 
@@ -89,6 +90,9 @@ export default function DailyBhaktiScreen() {
   const bookmarkId = verse
     ? `${verse.sourceId}:${verse.chapter ?? ''}:${verse.verseIndex}`
     : '';
+  const verseLines = verse
+    ? verseLinesByLang(lang, verse.textHi, verse.textEn.length > 0 ? verse.textEn : verse.textHi)
+    : [];
 
   if (!verse) {
     return (
@@ -152,9 +156,16 @@ export default function DailyBhaktiScreen() {
             </Text>
           </View>
 
-          {/* A daily verse starts with text; local paper adds warmth without a banner fetch. */}
+          {/* Setup strip (design.md §23): reminder first, then the verse widget —
+              one ask at a time, renders nothing once both are settled. */}
+          <DailyBhaktiNudge previewLines={verseLines} />
+
+          {/* Verse Card — carries the same faded source sketch as the verse's own
+              reader page (getReaderBackground). `chapter` doubles as the stanza/kāṇḍa
+              key for the sources whose plate varies per subsection. No banner: a
+              daily verse starts with text. */}
           <View ref={dailyVerseRef} collapsable={false} style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
-            <BackgroundLayer source={readingParchment} />
+            <BackgroundLayer source={getReaderBackground(verse.sourceId, { stanza: verse.chapter })} />
             {/* Top row: source pill + action icons */}
             <View style={styles.cardHeader}>
               <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
@@ -216,11 +227,7 @@ export default function DailyBhaktiScreen() {
                 marginTop: 14,
               }}
             >
-              {verseLinesByLang(
-                lang,
-                verse.textHi,
-                verse.textEn.length > 0 ? verse.textEn : verse.textHi
-              ).join('\n')}
+              {verseLines.join('\n')}
             </Text>
 
             {/* Ornament divider */}

@@ -4,6 +4,9 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ObservanceListRow from '@/components/ObservanceListRow';
+import ShareButton from '@/components/ShareButton';
+import { useShare } from '@/utils/shareVerse';
+import { buildListingShare } from '@/utils/listingShare';
 import TextField from '@/components/TextField';
 import AreaFilterChips, { areaName } from '@/components/AreaFilterChips';
 import { useTheme } from '@/theme/ThemeContext';
@@ -53,6 +56,7 @@ const TITLES: Record<BrowseCategory, { hi: string; en: string }> = {
 export default function ObservanceListScreen({ route, navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
+  const { share, busy: shareBusy } = useShare();
   // Feature-tour anchors (design.md §47): the first row (list) and its ★ follow.
   const isFocused = useIsFocused();
   const vratListRef = useTourTarget('vratList', undefined, isFocused);
@@ -119,7 +123,20 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
               {lang === 'en' ? title.hi : title.en} · {rows.length}
             </Text>
           </View>
-          <View style={{ width: 36 }} />
+          <ShareButton
+            busy={shareBusy || filtered.length === 0}
+            accessibilityLabel="Share observance listing"
+            accessibilityHint="Share the visible observances and next dates as post, Story, or Reel cards"
+            onPress={() => void share(buildListingShare({
+              sourceId: `observance-${category}`,
+              titleHi: title.hi, titleEn: title.en, background: null,
+              items: filtered.map(({ rule, next }) => ({
+                titleHi: rule.nameHi, titleEn: rule.nameEn,
+                detailHi: next?.date ? `${shortDate(next.date, 'hi')} ${next.date.getFullYear()}` : rule.deityEn,
+                detailEn: next?.date ? `${shortDate(next.date, 'en')} ${next.date.getFullYear()}` : rule.deityEn,
+              })),
+            }), lang)}
+          />
         </View>
 
         <ScrollView
@@ -251,7 +268,7 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 },
-  backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+  backButton: { width: 48, height: 48, borderWidth: 1, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 8, paddingBottom: 32 },
   search: { marginBottom: 8 },
   starBtn: { width: 36, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', marginRight: 4 },

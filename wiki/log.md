@@ -865,6 +865,117 @@ Compared PR #253 and current-main #429/#434/#449 after user rejected the older c
 
 User approved all nine final banners and requested a verified PR. Merged main while retaining shared reader components, lazy navigation, cooperative search and both wiki histories. Activated the approved local assets, corrected page/resume vocabulary and adopted prose sharing. Asset hashes, source boundaries and final verification are in the Garud integration review.
 
+## [2026-10-13] ingest | Bilingual comic speaker pointers
+
+Recorded explicit painted-frame speaker anchors for all 31 dialogue panels, build-time coverage validation, and the distinction between geometric containment and correct speaker attribution. Local browser checks cover all 140 panels at four widths in Hindi/English and Standard/Large; native/editorial checks remain pending. See [[decisions/ramayan-comic-character-continuity]].
+
+## [2026-10-13] ingest | Replace hosted comic WebView with the native reviewed reader
+
+The comic now uses native episode cards, shared reader controls and global reading size. All 140 bilingual-v2 panels and 31 reviewed speaker anchors are preserved. The 35 unchanged PNGs are hosted at content-hash CDN URLs and use the shared persistent asset cache; iOS/Android exports contain no comic artwork. App source/review chrome is removed; provenance remains in authoring files. See [[decisions/ramayan-comic-character-continuity]] and the bilingual-v2 native integration review for verified checks and remaining native/editorial/release boundaries.
+
+## [2026-10-13] ingest | Put comic dialogue on the illustrated scene
+
+Replaced the separate native speech gutter with 31 scene-specific on-image balloons. Short tails retain the reviewed speaker direction; measured sky/side slots fall back to the lower edge when text would cover faces. Narration, app text-size controls and original art frames remain intact. See [[decisions/ramayan-comic-character-continuity]] and the bilingual-v2 speech overlay review for evidence boundaries.
+
+- 2026-10-13 — Corrected the rejected fixed-top comic speech layout: 31 reviewed portrait scenes, measured bubbles beside the cast, uncapped speaker endpoints, inverted Trishanku special placement, full-width native reader and shared browser/native geometry. See [[decisions/ramayan-comic-character-continuity]] and `speech-overlay-review.md`; final native sequence review tracked separately from layout checks and release.
+
+- 2026-10-15 — User accepted corrected comic speaker placement. Both all-140 Hindi native sequences completed at Standard/Large; all captured panel compositions reviewed. Browser 2,240 states and dialogue 248 states passed, along with 15 focused tests/typecheck. Changes remain local and uncommitted; physical-device, full English native sequence, editorial and release checks are separate.
+
+## [2026-10-14] ingest | Themed reading backgrounds restored
+
+The 10 Oct banner rollout had also replaced the semantic `BackgroundLayer` plate with neutral
+paper on the seven canonical verse layouts (21 readers), Daan Punya and the Daily Bhakti card.
+After banners were gated to first verses (11 Oct) and removed from Daily Bhakti (12 Oct), those
+surfaces showed no thematic art. Restored the original plates; banner gating is unchanged.
+Screens that never had a plate keep the paper. Added a per-layout regression test. Updated
+design.md §6/§23, RULEBOOK §11.8 and the readers/reading-artwork pages. Focused Jest suites,
+TypeScript and touched-file lint pass; native visual check not run.
+
+## [2026-10-14] ingest | Nationwide place-name search in the location picker
+
+"A lot of places not in the list": only 52 cities + 342 Rajasthan tehsils were findable by name;
+everything else needed an exact pincode. Rebuilt `scripts/build-pincodes.mjs` on the data.gov.in
+post-office directory (npm `india-pincode`): 19,654 pincodes (was 18,466; J&K 1 → 186, Ladakh 0 → 13)
+and a new lazily-loaded `pincodeOffices.json` of 165,192 town/village names. Office coordinates are
+noisy, so the generator gates snaps, broken columns, DMS typos and misfiled states, and votes by
+consensus with the old geocoder — median error 3.3 km vs 5.4 km before. Picker gains a
+"Towns & villages" group, a no-match line, and served-offices captions; a picked place stores its
+pincode with the name in `labelEn`. State labels now say "Jammu and Kashmir", matching `STATE_LENS`.
+Updated design.md Location Picker, [[panchang]] location sections/gotchas, the Maestro location flow
+(device run owed). Jest, engine, Ask and typecheck pass; `contentCorrectness` fails identically on main.
+
+## [2026-10-15] ingest | Spelling-variant and district search for places
+
+Report: Chhapra (Saran), Bhagalpur, Muzaffarpur, Darbhanga "not found". India Post spells Chhapra
+"Chapra", and Saran is a district, not an office. Added `foldPlaceName` (chh/ch → c, aspirate h
+dropped, w → v, doubled letters collapsed…), precomputed for all 165k names by the generator, plus
+district-name search over each district's head offices; literal spelling wins fold ties. Office
+table grows 1.9 → 3.4 MB (still lazy). Tests pin the four Bihar towns under common spellings and
+re-fold every shipped name against the runtime copy. See [[panchang]].
+
+- 2026-10-15 — Committed the accepted comic artwork/placement revision and reconciled origin/main through c05acdbd, preserving both comic and themed-background wiki history. No app release is implied by this branch push.
+
+## [2026-10-15] ingest | Daily Bhakti reminder + widget setup strip
+
+Added a one-ask-at-a-time strip under the Daily Bhakti title: the daily-verse reminder while it is
+not set up (on + granted), a Settings link on a hard denial, then the verse widget once the
+reminder is set up or its ask is resting. "Not now" rests the reminder ask for 15 days and ends
+the widget ask (`@vedansh/daily-bhakti-nudge`). Android pins the verse widget directly; iOS gets a how-to sheet.
+The widget ask is gated on the new `hasWidgetHost()` so an OTA never offers it to a binary without
+the extension, and it ends on a completed add flow because neither bridge can report placement.
+Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pages.
+
+## [2026-10-15] ingest | Share public listing and chapter-index cards
+
+Added a reusable listing-to-prose mapping for category, deity, purpose, katha, observance and vidhi catalogs and chapter/theme/episode indexes. Three complete rows per card preserve titles and details in all four reading languages; long indexes use labelled scopes under the ten-card share limit. The existing post, Story/Reel and carousel picker handles export; Story/Reel files are static images. Typecheck and focused share tests passed; native visual and destination checks remain pending. See [[share]].
+
+## [2026-10-15] ingest | Shared listing card for comic, Garud Puran and kids-story lists
+The three section listings now render one `ListingCard` (design.md §82, RULEBOOK §3 "Listing cards"):
+reading-language title only, one-line description (≤32 chars), `N पृष्ठ` meta, a 92-wide thumb that
+fills the card height with cover-cropped art, `LanguageToggle` + scope line on every listing. Each
+comic prasang shows a curated key scene (`episodeCovers.ts`); Garud paintings crop around a focal
+point. All 28 kids-story descriptions were shortened. Updated [[kids-stories]] and [[languages]].
+
+
+## [2026-10-15] ingest | Shani Dev Aarti joins the reader collection
+
+Added the five-stanza Shani Aarti after line-by-line comparison of HinduNidhi and the aarti
+printed with SanskritDocuments' Shani Chalisa; Navbharat Times confirms the selected crown
+reading. Appended id/index 11, tagged `shani`, and updated source migration, tests, Maestro and
+reader counts. Drik Panchang returned HTTP 403; the Shani Chalisa remains unshipped because
+its closing doha differs across the reachable sources.
+
+## [2026-10-15] ingest | Marathi Datta Aarti added as a distinct reading
+
+Collated Sant Eknath's four stanzas and refrain (18 lines) across Hindu Janajagruti and
+BhajanUSA, with Sanatan Sanstha as a third check; recorded the one refrain spelling variant.
+Appended `dattatreya-aarti` at persisted index 12, kept the Marathi language explicit, and
+updated the reader/count tests and Maestro flow. The SanskritDocuments Marathi PDF was opened
+but yielded no extractable text, so it was not counted as a line-collated source.
+
+## [2026-10-15] gap | Remaining Chalisa and Aarti source gates
+
+Drik Panchang returned HTTP 403 for direct candidate URLs. Shani Chalisa's
+closing differs or is corrupted across reachable sources; Ganga Chalisa has
+substantive wording variants; Surya Chalisa still needs complete editorial
+collation and meanings. Other candidate gaps and HOLD identities are listed in
+`docs/content-parity/chalisa-aarti-existing-deities.md` under the 2026-10-15 audit.
+
+## [2026-10-15] ingest | Navagraha Chalisa candidate pair identified
+
+HinduNidhi and BhaktiBharat both serve the Sundardas-attributed opening and
+closing, while the Drik Panchang candidate returns HTTP 403. Added the pair
+to the acquisition manifest as 2C; full line collation, source-lineage review
+and editorial meanings are still required before reader integration.
+
+## [2026-10-15] ingest | Surya Chalisa enters the multi-instance reader
+
+Collated all 42 units of the Kanak-badan Surya Chalisa across HinduNidhi and
+Pavitra Granth. Only the chaupai-30 जोजन/योजन reading differs after punctuation
+and spelling normalization; the chosen HinduNidhi reading is noted in the source
+metadata. Added original per-verse Hindi/English meanings, pronunciation-based
+ASCII, registry/search/routine/library integration and Konark temple discovery.
+
 ## [2026-10-13] ingest | Share sheet: Send as text + card-language chips
 
 Added a no-image `Send as text` row (verse lines + meaning, or the selected prose pages rejoined across page breaks, plus the caption link lines) and hi/en/gu/kn card-language chips that re-language the card, caption, hashtags and text without changing the sheet chrome. OTA-only; no native module. Updated [[share]], design.md §39.1/§39.6/§39.7 and the share-target Maestro flow (not run — no simulator).

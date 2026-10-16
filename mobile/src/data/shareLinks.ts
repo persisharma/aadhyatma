@@ -64,7 +64,7 @@ function instagramLine(lang: Lang): string {
   return `${pick(lang, FOLLOW_IG_CTA)} ${INSTAGRAM_URL}`;
 }
 
-/** "Read on Vedansh: <link>" + the Instagram line — the tail of every text share (§39.7). */
+/** "Read on Vedansh: <link>" + the Instagram line — the tail of every text share (§39.8). */
 export function shareLinkLines(lang: Lang): string[] {
   return [`${pick(lang, SHARE_CTA)} ${SMART_LINK}`, instagramLine(lang)];
 }

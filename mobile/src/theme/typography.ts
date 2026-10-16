@@ -123,6 +123,37 @@ export const typography = {
     fontSize: 11,
     letterSpacing: 0.4,
   },
+  // Shared content-listing card (`ListingCard`, design.md §82). Sizes only: the
+  // face follows the script. Latin (Cormorant) title runs a step smaller and its
+  // body a step larger than the Indic sizes, matching their apparent size.
+  listingEyebrow: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  listingTitle: {
+    fontSize: 17,
+    lineHeight: 25,
+  },
+  listingTitleLatin: {
+    fontSize: 16,
+    lineHeight: 22,
+  },
+  listingBody: {
+    fontSize: 12,
+    lineHeight: 18,
+  },
+  listingBodyLatin: {
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  listingSection: {
+    fontSize: 18,
+    lineHeight: 26,
+  },
+  listingScope: {
+    fontSize: 14,
+    lineHeight: 22,
+  },
   thumb: {
     fontFamily: fontFamilies.devanagariBold,
     fontSize: 22,

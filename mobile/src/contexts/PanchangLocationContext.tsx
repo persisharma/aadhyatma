@@ -33,8 +33,11 @@ type PanchangLocationContextValue = {
   isLoading: boolean;
   gpsStatus: GpsStatus;
   selectCity: (cityId: string) => void;
-  /** Resolve a 6-digit pincode to its own coordinates. Returns false if unknown. */
-  selectPincode: (pincode: string) => boolean;
+  /**
+   * Resolve a 6-digit pincode to its own coordinates. Returns false if unknown.
+   * `place` is the post-office name the user picked it by, kept in the English label.
+   */
+  selectPincode: (pincode: string, place?: string) => boolean;
   requestDeviceLocation: () => Promise<'granted' | 'denied' | 'error'>;
 };
 
@@ -157,11 +160,11 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
   );
 
   const selectPincode = useCallback(
-    (pincode: string): boolean => {
+    (pincode: string, place?: string): boolean => {
       const entry = lookupPincode(pincode);
       if (!entry) return false;
       setGpsStatus('idle');
-      applyLocation(toPincodeLocation(entry, 'pincode'));
+      applyLocation(toPincodeLocation(entry, 'pincode', place));
       return true;
     },
     [applyLocation]

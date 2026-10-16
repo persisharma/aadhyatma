@@ -10,13 +10,19 @@ const assets = new Map([...component.matchAll(/(\w+): '([a-z]{2}-\d+)'/g)].map(m
 const ids = readdirSync(new URL('mobile/src/data/kidsStories/', root))
   .filter(name => name.endsWith('.json') && name !== 'krishna-janma.json')
   .map(name => name.slice(0, -5));
+// A story whose art is not yet wired into KidsStoryArt has no browser review copy
+// to sync; skip it rather than abort before the remaining prototypes refresh.
+const skipped = new Set();
 for (const id of ids) {
   const story = JSON.parse(readFileSync(new URL(`mobile/src/data/kidsStories/${id}.json`, root), 'utf8'));
-  const artwork = Object.fromEntries([story.coverArt, ...story.pages.map(page => page.art)].map(key => {
-    const path = assets.get(key);
-    if (!path) throw new Error(`Missing native artwork: ${key}`);
-    return [key, `assets/kids-stories/${path}.webp`];
-  }));
+  const keys = [story.coverArt, ...story.pages.map(page => page.art)];
+  const missing = keys.filter(key => !assets.has(key));
+  if (missing.length) {
+    console.warn(`Skipping ${id}: artwork not wired in KidsStoryArt (${[...new Set(missing)].join(', ')})`);
+    skipped.add(id);
+    continue;
+  }
+  const artwork = Object.fromEntries(keys.map(key => [key, `assets/kids-stories/${assets.get(key)}.webp`]));
   const html = template
     .replace(/const story = (\{.*?\});/, () => `const story = ${JSON.stringify(story)};`)
     .replace(/const artwork = (\{.*?\});/, () => `const artwork = ${JSON.stringify(artwork)};`)
@@ -34,7 +40,7 @@ const deityBlock = index.match(/storyDeities: readonly StoryDeity\[\] = \[([\s\S
 const deities = [...deityBlock.matchAll(/\{ id: '[^']+'.*?name: \{[^}]+\} \}/g)].map(match => parseLiteral(match[0]));
 const formBlock = index.match(/navadurgaReadings: readonly NavadurgaReading\[\] = \[([\s\S]*?)\n\];/)[1];
 const forms = [...formBlock.matchAll(/\{ id: '[^']+'.*?storyId: '[^']+' \}/g)].map(match => parseLiteral(match[0]));
-const catalog = ['krishna-janma', ...ids].map(id => {
+const catalog = ['krishna-janma', ...ids.filter(id => !skipped.has(id))].map(id => {
   const story = JSON.parse(readFileSync(new URL(`mobile/src/data/kidsStories/${id}.json`, root), 'utf8'));
   const stem = assets.get(story.coverArt);
   if (!stem) throw new Error(`Missing cover artwork: ${story.coverArt}`);

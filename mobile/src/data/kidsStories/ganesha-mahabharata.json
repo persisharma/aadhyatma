@@ -1,0 +1,144 @@
+{
+  "id": "ganesha-mahabharata",
+  "deityId": "ganesha",
+  "ageMin": 6,
+  "coverArt": "vw01",
+  "title": {
+    "hi": "व्यास और गणेश",
+    "en": "Vyasa and Ganesha",
+    "gu": "વ્યાસ અને ગણેશ",
+    "kn": "ವ್ಯಾಸ ಮತ್ತು ಗಣೇಶ"
+  },
+  "description": {
+    "hi": "महाभारत का लेखन और समझ",
+    "en": "Writing the Mahabharata",
+    "gu": "મહાભારતનું લેખન અને સમજ",
+    "kn": "ಮಹಾಭಾರತದ ಬರವಣಿಗೆ"
+  },
+  "takeaway": {
+    "hi": "संपादकीय सीख: समझकर सुनना अच्छे सहयोग का आधार है।",
+    "en": "Editorial reflection: careful understanding helps people work together.",
+    "gu": "સંપાદકીય વિચાર: સમજપૂર્વક સાંભળવું સહકારનો આધાર છે.",
+    "kn": "ಸಂಪಾದಕೀಯ ಚಿಂತನೆ: ಅರ್ಥಮಾಡಿಕೊಂಡು ಕೇಳುವುದು ಒಳ್ಳೆಯ ಸಹಕಾರದ ಆಧಾರ."
+  },
+  "sourceNote": {
+    "hi": "यह महाभारत के कुछ संस्करणों की आरंभिक लेखन-परंपरा है, सभी संस्करणों का समान पाठ नहीं। गांगुली का एक ही अनुवाद दो वेबसाइटों पर है; स्वतंत्र तुलना वेट्टम मणि के व्यास-लेख से की गई। टूटी लेखनी या दाँत तोड़ने का प्रसंग नहीं जोड़ा गया।",
+    "en": "A recension-specific scribal frame, not a passage shared by every Mahabharata edition. The two Ganguli hosts are one translation; Vettam Mani’s Vyasa entry provides independent comparison. No pen-breaking or tusk-sacrifice episode is added.",
+    "gu": "આ મહાભારતના કેટલાક સંસ્કરણોની આરંભિક લેખનપરંપરા છે, દરેકનું સમાન પાઠ નથી. બે સાઇટનો ગાંગુલી અનુવાદ એક જ છે; સ્વતંત્ર સરખામણી વેટ્ટમ મણિના વ્યાસ-લેખ સાથે છે. કલમ કે દાંત તોડવાનો પ્રસંગ નથી.",
+    "kn": "ಇದು ಕೆಲವು ಮಹಾಭಾರತ ಆವೃತ್ತಿಗಳ ಆರಂಭಿಕ ಲಿಪಿಕಾರ ಪರಂಪರೆ; ಎಲ್ಲ ಆವೃತ್ತಿಗಳ ಸಾಮಾನ್ಯ ಪಾಠವಲ್ಲ. ಎರಡು ತಾಣಗಳ ಗಾಂಗುಲಿ ಅನುವಾದ ಒಂದೇ; ಸ್ವತಂತ್ರ ಹೋಲಿಕೆ ವೆಟ್ಟಂ ಮಣಿಯ ವ್ಯಾಸ ಲೇಖನದೊಂದಿಗೆ. ಲೇಖನಿ ಅಥವಾ ದಂತ ಮುರಿಯುವ ಘಟನೆ ಸೇರಿಸಿಲ್ಲ."
+  },
+  "source": {
+    "baseText": "Mahabharata, Adi Parva, Section I, Ganguli edition, scribal frame; Vettam Mani, Puranic Encyclopaedia, Vyasa",
+    "retrievedOn": "2026-10-15",
+    "referenceUrls": [
+      "https://www.wisdomlib.org/hinduism/book/the-mahabharata-mohan/d/doc3860.html",
+      "https://sacred-texts.com/hin/m01/m01002.htm",
+      "https://www.wisdomlib.org/hinduism/compilation/puranic-encyclopaedia/d/doc242078.html"
+    ],
+    "notes": "A recension-specific scribal frame, not a passage shared by every Mahabharata edition. The two Ganguli hosts are one translation; Vettam Mani’s Vyasa entry provides independent comparison. No pen-breaking or tusk-sacrifice episode is added."
+  },
+  "pages": [
+    {
+      "id": "vyasas-work",
+      "art": "vw01",
+      "source": "Mahabharata, Adi Parva, Section I (Ganguli), scribal frame",
+      "title": {
+        "hi": "व्यास की रचना",
+        "en": "Vyasa’s great work",
+        "gu": "વ્યાસની રચના",
+        "kn": "ವ್ಯಾಸರ ಮಹಾಕೃತಿ"
+      },
+      "text": {
+        "hi": "ऋषि व्यास ने भारत वंश की कथा और धर्म की शिक्षाओं को एक विशाल काव्य में रचा था। अब वे उसे लिखवाने का उपाय सोच रहे थे, ताकि यह ज्ञान आगे पहुँच सके।",
+        "en": "Sage Vyasa had composed a great poem about the Bharata family and teachings on dharma. He now considered how to have it written down so that its knowledge could be passed on.",
+        "gu": "ઋષિ વ્યાસે ભરતવંશની કથા અને ધર્મની શિક્ષાઓનું વિશાળ કાવ્ય રચ્યું હતું. હવે આ જ્ઞાન આગળ પહોંચે તે માટે તેને લખાવવાનો ઉપાય વિચારતા હતા.",
+        "kn": "ವ್ಯಾಸ ಋಷಿಗಳು ಭರತ ವಂಶದ ಕಥೆ ಮತ್ತು ಧರ್ಮದ ಬೋಧನೆಗಳನ್ನು ಮಹಾಕಾವ್ಯವಾಗಿ ರಚಿಸಿದ್ದರು. ಆ ಜ್ಞಾನ ಮುಂದಿನವರಿಗೆ ತಲುಪಲು ಅದನ್ನು ಬರೆಸುವ ಬಗೆ ಯೋಚಿಸುತ್ತಿದ್ದರು."
+      }
+    },
+    {
+      "id": "brahmas-advice",
+      "art": "vw02",
+      "source": "Mahabharata, Adi Parva, Section I (Ganguli); Vettam Mani, Vyasa",
+      "title": {
+        "hi": "ब्रह्मा का सुझाव",
+        "en": "Brahma’s advice",
+        "gu": "બ્રહ્માનું સૂચન",
+        "kn": "ಬ್ರಹ್ಮನ ಸಲಹೆ"
+      },
+      "text": {
+        "hi": "ब्रह्मा व्यास के आश्रम आए। व्यास ने अपनी रचना और लिखवाने की चिंता बताई। ब्रह्मा ने गणेश को लेखक बनाने का सुझाव दिया। उनके जाने के बाद व्यास ने गणेश का स्मरण किया।",
+        "en": "Brahma visited Vyasa’s hermitage. Vyasa described his poem and his concern about recording it. Brahma suggested Ganesha as its scribe. After Brahma departed, Vyasa called Ganesha to mind.",
+        "gu": "બ્રહ્મા વ્યાસના આશ્રમમાં આવ્યા. વ્યાસે કાવ્ય અને તેને લખાવવાની ચિંતા જણાવી. બ્રહ્માએ ગણેશને લેખક બનાવવાનું સૂચવ્યું. તેમના ગયા પછી વ્યાસે ગણેશનું સ્મરણ કર્યું.",
+        "kn": "ಬ್ರಹ್ಮ ವ್ಯಾಸರ ಆಶ್ರಮಕ್ಕೆ ಬಂದ. ವ್ಯಾಸರು ಕಾವ್ಯ ಮತ್ತು ಅದನ್ನು ಬರೆಸುವ ಚಿಂತೆ ತಿಳಿಸಿದರು. ಗಣೇಶನನ್ನು ಲಿಪಿಕಾರನಾಗಿಸಿಕೊಳ್ಳಲು ಬ್ರಹ್ಮ ಸಲಹೆ ನೀಡಿದ. ಅವನು ಹೋದ ಬಳಿಕ ವ್ಯಾಸರು ಗಣೇಶನನ್ನು ಸ್ಮರಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ganeshas-condition",
+      "art": "vw03",
+      "source": "Mahabharata, Adi Parva, Section I (Ganguli), scribal frame",
+      "title": {
+        "hi": "लेखन की शर्त",
+        "en": "The scribe’s condition",
+        "gu": "લેખનની શરત",
+        "kn": "ಲಿಪಿಕಾರನ ಷರತ್ತು"
+      },
+      "text": {
+        "hi": "गणेश प्रकट हुए और व्यास ने उनसे काव्य लिखने का अनुरोध किया। गणेश तैयार हुए, पर उन्होंने एक शर्त रखी: लिखते समय उनकी लेखनी रुकनी नहीं चाहिए। व्यास को लगातार बोलना होगा।",
+        "en": "Ganesha appeared, and Vyasa asked him to write the poem. Ganesha agreed on one condition: his pen must not have to stop while he wrote. Vyasa would need to keep the narration flowing.",
+        "gu": "ગણેશ આવ્યા અને વ્યાસે કાવ્ય લખવા વિનંતી કરી. ગણેશ એક શરતે તૈયાર થયા: લખતી વખતે કલમ અટકવી ન જોઈએ. વ્યાસે કથન ચાલુ રાખવું પડશે.",
+        "kn": "ಗಣೇಶ ಪ್ರತ್ಯಕ್ಷನಾದಾಗ ವ್ಯಾಸರು ಕಾವ್ಯ ಬರೆಯಲು ಕೇಳಿದರು. ಬರೆಯುವಾಗ ತನ್ನ ಲೇಖನಿ ನಿಲ್ಲಬಾರದೆಂಬ ಷರತ್ತಿನೊಂದಿಗೆ ಗಣೇಶ ಒಪ್ಪಿದ. ವ್ಯಾಸರು ನಿರಂತರವಾಗಿ ಹೇಳಬೇಕಾಗಿತ್ತು."
+      }
+    },
+    {
+      "id": "vyasas-condition",
+      "art": "vw04",
+      "source": "Mahabharata, Adi Parva, Section I (Ganguli), scribal frame",
+      "title": {
+        "hi": "समझने की शर्त",
+        "en": "Understanding comes first",
+        "gu": "સમજવાની શરત",
+        "kn": "ಮೊದಲು ಅರ್ಥಗ್ರಹಣ"
+      },
+      "text": {
+        "hi": "व्यास ने भी एक शर्त रखी। गणेश कोई पंक्ति उसका अर्थ समझे बिना न लिखें। गणेश ने यह बात मान ली। अब दोनों की जिम्मेदारी तय थी—व्यास रचकर कहेंगे और गणेश समझकर लिखेंगे।",
+        "en": "Vyasa added a condition of his own: Ganesha must understand every passage before writing it. Ganesha accepted. Their responsibilities were clear: Vyasa would compose and speak, and Ganesha would understand and record.",
+        "gu": "વ્યાસે પોતાની શરત મૂકી: ગણેશ અર્થ સમજ્યા વિના કોઈ પંક્તિ ન લખે. ગણેશે સ્વીકાર્યું. હવે વ્યાસ રચીને કહેશે અને ગણેશ સમજીને લખશે, એમ બંનેની જવાબદારી નક્કી થઈ.",
+        "kn": "ವ್ಯಾಸರೂ ಒಂದು ಷರತ್ತು ಹೇಳಿದರು: ಪ್ರತಿ ಸಾಲಿನ ಅರ್ಥ ತಿಳಿದ ಬಳಿಕವೇ ಗಣೇಶ ಬರೆಯಬೇಕು. ಗಣೇಶ ಒಪ್ಪಿದ. ವ್ಯಾಸರು ರಚಿಸಿ ಹೇಳುವುದು, ಗಣೇಶ ಅರ್ಥಮಾಡಿಕೊಂಡು ಬರೆಯುವುದು ಎಂದು ಕೆಲಸ ನಿರ್ಧಾರವಾಯಿತು."
+      }
+    },
+    {
+      "id": "thoughtful-pause",
+      "art": "vw05",
+      "source": "Mahabharata, Adi Parva, Section I (Ganguli), scribal frame",
+      "title": {
+        "hi": "विचार का समय",
+        "en": "Time to think",
+        "gu": "વિચારનો સમય",
+        "kn": "ಯೋಚಿಸಲು ಸಮಯ"
+      },
+      "text": {
+        "hi": "व्यास कभी गहरे अर्थ वाली कठिन पंक्तियाँ कहते। उन्हें समझने के लिए गणेश को विचार करना पड़ता। उसी बीच व्यास आगे की रचना मन में तैयार कर लेते। इस तरह कथन और लेखन आगे बढ़ते रहे।",
+        "en": "Sometimes Vyasa spoke verses with a difficult, layered meaning. Ganesha needed time to consider them fully. During that thought, Vyasa prepared the next passage in his mind. Their narration and writing continued together.",
+        "gu": "ક્યારેક વ્યાસ ગહન અર્થવાળી અઘરી પંક્તિ કહેતા. ગણેશ તેને સમજવા વિચાર કરતા. એટલામાં વ્યાસ આગળની રચના મનમાં તૈયાર કરતા. આમ કથન અને લેખન આગળ વધ્યાં.",
+        "kn": "ಕೆಲವೊಮ್ಮೆ ವ್ಯಾಸರು ಗಾಢ ಅರ್ಥದ ಕಠಿಣ ಸಾಲುಗಳನ್ನು ಹೇಳುತ್ತಿದ್ದರು. ಗಣೇಶ ಅವನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ಯೋಚಿಸುತ್ತಿದ್ದ. ಆ ವೇಳೆಯಲ್ಲಿ ವ್ಯಾಸರು ಮುಂದಿನ ಭಾಗ ರಚಿಸುತ್ತಿದ್ದರು. ಹೀಗೆ ಕಥನ ಮತ್ತು ಬರವಣಿಗೆ ಮುಂದುವರಿದವು."
+      }
+    },
+    {
+      "id": "work-together",
+      "art": "vw06",
+      "source": "Mahabharata, Adi Parva, Section I (Ganguli), scribal frame",
+      "title": {
+        "hi": "साथ मिलकर रचना",
+        "en": "Working together",
+        "gu": "મળીને રચના",
+        "kn": "ಒಟ್ಟಾಗಿ ಮಾಡಿದ ಕೆಲಸ"
+      },
+      "text": {
+        "hi": "इस परंपरा में महाभारत का लेखन व्यास की रचना और गणेश की समझ का सहयोग बनता है। एक ध्यान से बोलते, दूसरे ध्यान से सुनकर लिखते। यह आरंभिक प्रसंग महाकाव्य की कथाओं का द्वार खोलता है।",
+        "en": "In this tradition, the writing of the Mahabharata joins Vyasa’s composition with Ganesha’s understanding. One speaks with care; the other listens, understands and writes. This opening account leads into the epic’s many stories.",
+        "gu": "આ પરંપરામાં મહાભારતનું લેખન વ્યાસની રચના અને ગણેશની સમજનો સહકાર બને છે. એક ધ્યાનથી બોલે, બીજા સમજીને લખે. આ આરંભિક પ્રસંગ મહાકાવ્યની કથાઓનું દ્વાર ખોલે છે.",
+        "kn": "ಈ ಪರಂಪರೆಯಲ್ಲಿ ಮಹಾಭಾರತದ ಬರವಣಿಗೆ ವ್ಯಾಸರ ರಚನೆ ಮತ್ತು ಗಣೇಶನ ಅರ್ಥಗ್ರಹಣದ ಸಹಕಾರವಾಗುತ್ತದೆ. ಒಬ್ಬರು ಗಮನದಿಂದ ಹೇಳುತ್ತಾರೆ; ಮತ್ತೊಬ್ಬನು ಕೇಳಿ, ಅರ್ಥಮಾಡಿಕೊಂಡು ಬರೆಯುತ್ತಾನೆ. ಈ ಆರಂಭಿಕ ಪ್ರಸಂಗ ಮಹಾಕಾವ್ಯದ ಕಥೆಗಳಿಗೆ ದಾರಿ ತೆಗೆಯುತ್ತದೆ."
+      }
+    }
+  ]
+}

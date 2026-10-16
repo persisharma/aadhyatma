@@ -1,0 +1,179 @@
+{
+  "id": "krishna-sudama",
+  "deityId": "krishna",
+  "ageMin": 6,
+  "coverArt": "sd01",
+  "title": {
+    "hi": "कृष्ण और सुदामा",
+    "en": "Krishna and Sudama",
+    "gu": "કૃષ્ણ અને સુદામા",
+    "kn": "ಕೃಷ್ಣ ಮತ್ತು ಸುದಾಮ"
+  },
+  "description": {
+    "hi": "एक पोटली और गहरी मित्रता",
+    "en": "A gift of rice, a true friend",
+    "gu": "ચોખાની પોટલી અને અતૂટ મિત્રતા",
+    "kn": "ಅವಲಕ್ಕಿ, ಅಳಿಯದ ಸ್ನೇಹ"
+  },
+  "takeaway": {
+    "hi": "संपादकीय सीख: मित्र का सम्मान उसकी संपत्ति से नहीं आँका जाता।",
+    "en": "Editorial reflection: a friend’s worth is never measured by wealth.",
+    "gu": "સંપાદકીય વિચાર: મિત્રનું મૂલ્ય સંપત્તિથી માપી શકાય નહીં.",
+    "kn": "ಸಂಪಾದಕೀಯ ಚಿಂತನೆ: ಸ್ನೇಹಿತನ ಬೆಲೆಯನ್ನು ಸಂಪತ್ತಿನಿಂದ ಅಳೆಯಲಾಗದು."
+  },
+  "sourceNote": {
+    "hi": "भागवत 10.80–81 का पुनर्कथन। सुदामा की पत्नी का नाम नहीं जोड़ा गया। धन मिलने को भक्ति का निश्चित फल नहीं बताया गया है।",
+    "en": "Original prose compared in Vedabase and Bhagavata.org, Bhagavata 10.80–81. No unsupported name is supplied for Sudama’s wife. The ending is not a promise that devotion brings wealth.",
+    "gu": "ભાગવત 10.80–81નું પુનર્કથન. સુદામાની પત્નીનું નામ ઉમેર્યું નથી. ભક્તિથી ધન મળે જ એવું વચન નથી.",
+    "kn": "ಭಾಗವತ 10.80–81ರ ಮರುಕಥನ. ಸುದಾಮನ ಪತ್ನಿಗೆ ಮೂಲದಲ್ಲಿಲ್ಲದ ಹೆಸರು ಸೇರಿಸಿಲ್ಲ. ಭಕ್ತಿಯಿಂದ ಸಂಪತ್ತು ಸಿಗುತ್ತದೆ ಎಂಬ ಭರವಸೆ ಅಲ್ಲ."
+  },
+  "source": {
+    "baseText": "Bhagavata Purana 10.80–81",
+    "retrievedOn": "2026-10-15",
+    "referenceUrls": [
+      "https://vedabase.io/en/library/sb/10/80/",
+      "https://vedabase.io/en/library/sb/10/81/",
+      "https://bhagavata.org/canto10/chapter80.html",
+      "https://bhagavata.org/canto10/chapter81.html"
+    ],
+    "notes": "Original prose compared in Vedabase and Bhagavata.org, Bhagavata 10.80–81. No unsupported name is supplied for Sudama’s wife. The ending is not a promise that devotion brings wealth."
+  },
+  "pages": [
+    {
+      "id": "old-friends",
+      "art": "sd01",
+      "source": "Bhagavata Purana 10.80.6–8,27–28",
+      "title": {
+        "hi": "गुरुकुल के मित्र",
+        "en": "Friends from school",
+        "gu": "ગુરુકુળના મિત્રો",
+        "kn": "ಗುರುಕುಲದ ಸ್ನೇಹಿತರು"
+      },
+      "text": {
+        "hi": "कृष्ण और सुदामा बचपन में एक ही गुरु के यहाँ पढ़े थे। अब कृष्ण द्वारका में रहते थे। सुदामा अपनी पत्नी के साथ अभाव में जीवन बिताते, पर उनका मन शांत और भगवान में लगा रहता।",
+        "en": "Krishna and Sudama had studied with the same teacher as boys. Krishna now lived in Dwaraka. Sudama and his wife lived in poverty, while Sudama remained peaceful and devoted to God.",
+        "gu": "કૃષ્ણ અને સુદામા બાળપણમાં એક જ ગુરુ પાસે ભણ્યા હતા. હવે કૃષ્ણ દ્વારકામાં રહેતા. સુદામા અને તેમની પત્ની ગરીબીમાં જીવતાં, છતાં સુદામાનું મન શાંત અને ભગવાનમાં લાગેલું હતું.",
+        "kn": "ಕೃಷ್ಣ ಮತ್ತು ಸುದಾಮ ಬಾಲ್ಯದಲ್ಲಿ ಒಬ್ಬರೇ ಗುರುವಿನ ಬಳಿ ಓದಿದ್ದರು. ಈಗ ಕೃಷ್ಣ ದ್ವಾರಕೆಯಲ್ಲಿ ವಾಸಿಸುತ್ತಿದ್ದ. ಸುದಾಮ ಮತ್ತು ಪತ್ನಿ ಬಡತನದಲ್ಲಿ ಬದುಕುತ್ತಿದ್ದರೂ ಅವನ ಮನಸ್ಸು ಶಾಂತವಾಗಿ ದೇವರಲ್ಲಿ ನೆಲೆಸಿತ್ತು."
+      }
+    },
+    {
+      "id": "humble-gift",
+      "art": "sd02",
+      "source": "Bhagavata Purana 10.80.9–15",
+      "title": {
+        "hi": "प्रेम की पोटली",
+        "en": "A humble gift",
+        "gu": "સ્નેહની પોટલી",
+        "kn": "ಪ್ರೀತಿಯ ಸಣ್ಣ ಕಾಣಿಕೆ"
+      },
+      "text": {
+        "hi": "पत्नी ने सुदामा को कृष्ण से मिलने के लिए प्रोत्साहित किया। भेंट के लिए उन्होंने पड़ोस से चार मुट्ठी चिवड़ा माँगा और कपड़े में बाँध दिया। वही छोटी पोटली लेकर सुदामा द्वारका चले।",
+        "en": "His wife encouraged Sudama to visit Krishna. For a gift, she gathered four handfuls of flattened rice from neighbours and tied them in a cloth. Sudama set out for Dwaraka carrying that small bundle.",
+        "gu": "પત્નીએ સુદામાને કૃષ્ણને મળવા જવા કહ્યું. ભેટ માટે પાડોશમાંથી ચાર મુઠ્ઠી પૌંઆ માગી કપડામાં બાંધ્યા. એ નાની પોટલી લઈને સુદામા દ્વારકા જવા નીકળ્યા.",
+        "kn": "ಪತ್ನಿ ಸುದಾಮನನ್ನು ಕೃಷ್ಣನ ಭೇಟಿಗೆ ಪ್ರೋತ್ಸಾಹಿಸಿದಳು. ಕಾಣಿಕೆಗಾಗಿ ನೆರೆಮನೆಯಿಂದ ನಾಲ್ಕು ಹಿಡಿ ಅವಲಕ್ಕಿ ಪಡೆದು ಬಟ್ಟೆಯಲ್ಲಿ ಕಟ್ಟಿದಳು. ಸುದಾಮ ಆ ಸಣ್ಣ ಗಂಟನ್ನು ಹಿಡಿದು ದ್ವಾರಕೆಗೆ ಹೊರಟ."
+      }
+    },
+    {
+      "id": "warm-welcome",
+      "art": "sd03",
+      "source": "Bhagavata Purana 10.80.15–19",
+      "title": {
+        "hi": "मित्र को पहचान लिया",
+        "en": "A joyful welcome",
+        "gu": "મિત્રને ઓળખ્યા",
+        "kn": "ಸಂತಸದ ಸ್ವಾಗತ"
+      },
+      "text": {
+        "hi": "द्वारका पहुँचकर सुदामा कृष्ण के निवास में गए। उन्हें दूर से देखते ही कृष्ण उठ खड़े हुए। उन्होंने सुदामा को गले लगाया। पुराने मित्र से मिलकर कृष्ण की आँखें आनंद से भर आईं।",
+        "en": "In Dwaraka, Sudama entered Krishna’s residence. Krishna saw him from a distance and rose at once. He embraced his old friend, his eyes filling with joy at their reunion.",
+        "gu": "દ્વારકામાં સુદામા કૃષ્ણના નિવાસમાં ગયા. દૂરથી જોતાં જ કૃષ્ણ ઊભા થયા અને તેમને ભેટી પડ્યા. જૂના મિત્રને મળતાં કૃષ્ણની આંખો આનંદથી છલકાઈ.",
+        "kn": "ದ್ವಾರಕೆಯಲ್ಲಿ ಸುದಾಮ ಕೃಷ್ಣನ ನಿವಾಸಕ್ಕೆ ಹೋದ. ದೂರದಿಂದ ಅವನನ್ನು ಕಂಡ ಕೃಷ್ಣ ತಕ್ಷಣ ಎದ್ದು ಬಂದು ಅಪ್ಪಿಕೊಂಡ. ಹಳೆಯ ಸ್ನೇಹಿತನನ್ನು ಕಂಡ ಸಂತಸದಲ್ಲಿ ಕೃಷ್ಣನ ಕಣ್ಣುಗಳು ತೇವವಾದವು."
+      }
+    },
+    {
+      "id": "honouring-a-friend",
+      "art": "sd04",
+      "source": "Bhagavata Purana 10.80.20–27",
+      "title": {
+        "hi": "स्नेह का सत्कार",
+        "en": "Honouring a friend",
+        "gu": "સ્નેહભર્યો સત્કાર",
+        "kn": "ಸ್ನೇಹಿತನಿಗೆ ಆದರ"
+      },
+      "text": {
+        "hi": "कृष्ण ने सुदामा को अपने आसन पर बैठाया और आदर से उनके पाँव धोए। रुक्मिणी पंखा झलने लगीं। दोनों मित्र अपने गुरु के घर बिताए दिनों को याद करने लगे।",
+        "en": "Krishna seated Sudama on his own couch and washed his feet with respect. Rukmini fanned their guest. The two friends began remembering the days they had spent in their teacher’s home.",
+        "gu": "કૃષ્ણે સુદામાને પોતાના આસન પર બેસાડ્યા અને આદરથી પગ ધોયા. રુક્મિણી પંખો ઝલવા લાગ્યાં. બંને મિત્રોએ ગુરુના ઘરમાં વિતાવેલા દિવસો યાદ કર્યા.",
+        "kn": "ಕೃಷ್ಣ ಸುದಾಮನನ್ನು ತನ್ನ ಆಸನದಲ್ಲಿ ಕುಳ್ಳಿರಿಸಿ ಗೌರವದಿಂದ ಪಾದಗಳನ್ನು ತೊಳೆದ. ರುಕ್ಮಿಣಿ ಅತಿಥಿಗೆ ಬೀಸಣಿಗೆ ಬೀಸಿದಳು. ಸ್ನೇಹಿತರು ಗುರುಗಳ ಮನೆಯಲ್ಲಿ ಕಳೆದ ದಿನಗಳನ್ನು ನೆನಪಿಸಿಕೊಂಡರು."
+      }
+    },
+    {
+      "id": "rice-offering",
+      "art": "sd05",
+      "source": "Bhagavata Purana 10.81.1–11",
+      "title": {
+        "hi": "छोटी भेंट, बड़ा प्रेम",
+        "en": "Rice offered with love",
+        "gu": "નાની ભેટ, મોટો પ્રેમ",
+        "kn": "ಚಿಕ್ಕ ಕಾಣಿಕೆ, ದೊಡ್ಡ ಪ್ರೀತಿ"
+      },
+      "text": {
+        "hi": "सुदामा अपनी साधारण भेंट देने में संकोच कर रहे थे। कृष्ण ने पोटली खोली और आनंद से एक मुट्ठी चिवड़ा खाया। वे दूसरी मुट्ठी लेने लगे, तो रुक्मिणी ने उन्हें रोक दिया।",
+        "en": "Sudama hesitated to offer his simple gift. Krishna opened the bundle and joyfully ate a handful of flattened rice. When he reached for a second handful, Rukmini gently stopped him.",
+        "gu": "સુદામા સાદી ભેટ આપતાં સંકોચાતા હતા. કૃષ્ણે પોટલી ખોલી આનંદથી એક મુઠ્ઠી પૌંઆ ખાધા. બીજી મુઠ્ઠી લેવા જતાં રુક્મિણીએ તેમને રોક્યા.",
+        "kn": "ಸರಳ ಕಾಣಿಕೆ ಕೊಡಲು ಸುದಾಮ ಸಂಕೋಚಪಟ್ಟ. ಕೃಷ್ಣ ಗಂಟು ತೆರೆದು ಸಂತೋಷದಿಂದ ಒಂದು ಹಿಡಿ ಅವಲಕ್ಕಿ ತಿಂದ. ಎರಡನೇ ಹಿಡಿ ತೆಗೆದುಕೊಳ್ಳುವಾಗ ರುಕ್ಮಿಣಿ ಮೃದುವಾಗಿ ತಡೆದಳು."
+      }
+    },
+    {
+      "id": "journey-home",
+      "art": "sd06",
+      "source": "Bhagavata Purana 10.81.12–20",
+      "title": {
+        "hi": "लौटते हुए",
+        "en": "The journey home",
+        "gu": "ઘર તરફ વળતાં",
+        "kn": "ಮನೆಗೆ ಮರಳುವ ದಾರಿ"
+      },
+      "text": {
+        "hi": "सुदामा ने वह रात कृष्ण के यहाँ बिताई। अगले दिन लौटते समय वे मिले हुए स्नेह को याद कर रहे थे। उन्होंने धन माँगा ही नहीं था। मित्र का अपनापन उनके लिए बहुत बड़ा सुख था।",
+        "en": "Sudama spent the night at Krishna’s home. As he returned the next day, he thought of the affection he had received. He had asked for no money. His friend’s warmth had given him deep happiness.",
+        "gu": "સુદામાએ રાત કૃષ્ણના ઘરે વિતાવી. બીજા દિવસે પાછા ફરતાં મળેલા સ્નેહને યાદ કરતા હતા. તેમણે ધન માગ્યું જ નહોતું. મિત્રનો પ્રેમ તેમને ઊંડો આનંદ આપતો હતો.",
+        "kn": "ಸುದಾಮ ಆ ರಾತ್ರಿ ಕೃಷ್ಣನ ಮನೆಯಲ್ಲಿ ತಂಗಿದ. ಮರುದಿನ ಹಿಂದಿರುಗುವಾಗ ತನಗೆ ದೊರೆತ ಪ್ರೀತಿಯನ್ನು ನೆನಸಿದ. ಅವನು ಹಣವನ್ನೇ ಕೇಳಿರಲಿಲ್ಲ. ಸ್ನೇಹಿತನ ಆತ್ಮೀಯತೆಯೇ ಅಪಾರ ಸಂತಸ ನೀಡಿತ್ತು."
+      }
+    },
+    {
+      "id": "unexpected-home",
+      "art": "sd07",
+      "source": "Bhagavata Purana 10.81.21–33",
+      "title": {
+        "hi": "घर का आश्चर्य",
+        "en": "A surprising homecoming",
+        "gu": "ઘરનું આશ્ચર્ય",
+        "kn": "ಮನೆಗೆ ಬಂದಾಗ ಅಚ್ಚರಿ"
+      },
+      "text": {
+        "hi": "घर पहुँचकर सुदामा चकित रह गए। कुटिया की जगह सुंदर घर और बगीचे थे। उनकी पत्नी प्रसन्न होकर उनका स्वागत करने आईं। सुदामा ने इस परिवर्तन में कृष्ण की कृपा देखी।",
+        "en": "At home, Sudama stopped in wonder. Beautiful buildings and gardens stood where his cottage had been. His wife came out happily to welcome him. Sudama understood the change as Krishna’s grace.",
+        "gu": "ઘરે આવી સુદામા આશ્ચર્ય પામ્યા. ઝૂંપડીની જગ્યાએ સુંદર ઘર અને બગીચા હતાં. પત્ની આનંદથી સ્વાગત કરવા આવ્યાં. સુદામાએ આ બદલાવમાં કૃષ્ણની કૃપા જોઈ.",
+        "kn": "ಮನೆಗೆ ಬಂದ ಸುದಾಮ ಅಚ್ಚರಿಗೊಂಡ. ಗುಡಿಸಲಿನ ಸ್ಥಳದಲ್ಲಿ ಸುಂದರ ಮನೆ ಮತ್ತು ಉದ್ಯಾನವಿತ್ತು. ಪತ್ನಿ ಸಂತೋಷದಿಂದ ಸ್ವಾಗತಿಸಲು ಬಂದಳು. ಈ ಬದಲಾವಣೆಯನ್ನು ಸುದಾಮ ಕೃಷ್ಣನ ಕೃಪೆಯೆಂದು ಅರಿತ."
+      }
+    },
+    {
+      "id": "humble-heart",
+      "art": "sd08",
+      "source": "Bhagavata Purana 10.81.34–41",
+      "title": {
+        "hi": "विनम्र मन",
+        "en": "A humble heart",
+        "gu": "નમ્ર હૃદય",
+        "kn": "ವಿನಯದ ಮನಸ್ಸು"
+      },
+      "text": {
+        "hi": "सुदामा का जीवन बदल गया, पर उनका मन धन में नहीं अटका। वे कृतज्ञ रहे और भगवान का स्मरण करते रहे। भागवत की कथा उनके प्रेम और विनम्रता के साथ पूरी होती है।",
+        "en": "Sudama’s circumstances changed, but he did not become attached to wealth. He remained grateful and kept his mind on God. The Bhagavata closes his story with enduring love and humility.",
+        "gu": "સુદામાનું જીવન બદલાયું, પણ મન ધનમાં અટવાયું નહીં. તેઓ કૃતજ્ઞ રહી ભગવાનનું સ્મરણ કરતા રહ્યા. કથા તેમના અડગ પ્રેમ અને નમ્રતા સાથે પૂરી થાય છે.",
+        "kn": "ಸುದಾಮನ ಬದುಕು ಬದಲಾಯಿತು; ಆದರೆ ಸಂಪತ್ತಿನ ಮೋಹಕ್ಕೆ ಒಳಗಾಗಲಿಲ್ಲ. ಕೃತಜ್ಞತೆಯಿಂದ ದೇವರನ್ನು ಸ್ಮರಿಸುತ್ತಿದ್ದ. ಕಥೆ ಅವನ ಪ್ರೀತಿ ಮತ್ತು ವಿನಯದೊಂದಿಗೆ ಮುಗಿಯುತ್ತದೆ."
+      }
+    }
+  ]
+}

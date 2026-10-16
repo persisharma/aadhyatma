@@ -104,7 +104,7 @@ function chainTo(file: string): string {
 const FORBIDDEN = [
   /^src\/data\/gita\/chapter-\d+\.json$/,
   /^src\/data\/valmiki-ramayan\/chapter-\d+\.json$/,
-  /^src\/panchang\/pincodeData\.json$/,
+  /^src\/panchang\/pincode(Data|Offices)\.json$/,
 ];
 
 test('no on-demand corpus payload is statically reachable from the app entry', () => {
@@ -177,6 +177,12 @@ test('no on-demand corpus payload is statically reachable from the app entry', (
  * `PanchangLocationContext`) — the next candidates, the same shape.
  *
  * ~90 KB of headroom, deliberately tight: that list is the work, not slack.
+ *
+ * LOWERED 4,280,000 -> 4,090,000 (Oct 2026). Every aarti payload (~215 KB)
+ * rode the launch path because `sourceIdMigration`, `entryRoutes` and
+ * `backgrounds` imported the id order from `aarti/index.ts`. They read the
+ * payload-free `aarti/ids.ts` now. 4,187,262 -> 4,000,339 with the
+ * Jay Adhya Shakti aarti added; the ~90 KB margin is kept.
  */
 /**
  * ORIGINAL NOTE — RAISED 7,000,000 -> 7,300,000 (PRD-42 W2, #345). Superseded
@@ -184,7 +190,7 @@ test('no on-demand corpus payload is statically reachable from the app entry', (
  * weakened is "no CORPUS on the launch path", every lazy option is taken FIRST,
  * and the budget is never raised merely to make a red test green.
  */
-const LAUNCH_GRAPH_BUDGET_BYTES = 4_280_000;
+const LAUNCH_GRAPH_BUDGET_BYTES = 4_090_000;
 
 test('the static launch graph stays inside its byte budget', () => {
   const sized = [...graph.keys()].map((file) => [fs.statSync(file).size, file] as const);

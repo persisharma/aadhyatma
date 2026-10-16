@@ -1,0 +1,224 @@
+{
+  "date": "2026-10-13",
+  "status": "Selected artwork and all 31 speaker placements visually reviewed; all 140 Hindi native panels reviewed at Standard/Large; user accepted corrected placement 2026-10-15",
+  "panels": {
+    "bk-01-01": {
+      "asset": "top-dialogue-art/assets/bk-01-01-top-v1.png",
+      "sha256": "3181e19b8958ca4ec8069ec722350d6a8f8db0f0595530c37e2ea9c9aa765109",
+      "speakerX": 0.24,
+      "review": "Valmiki identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-01-v2.png"
+    },
+    "bk-01-02": {
+      "asset": "top-dialogue-art/assets/bk-01-02-top-v1.png",
+      "sha256": "03c45d3f3004ce573e99741c975f3fa0b7972700b21cf69c0471739df10e7e3b",
+      "speakerX": 0.75,
+      "review": "Narada identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-01-v2.png"
+    },
+    "bk-01-04": {
+      "asset": "top-dialogue-art/assets/bk-01-04-top-v2.png",
+      "sha256": "0744249777e5f4a99fddf32de2f1bd5c8b9c62ea1ef1380814a0e81badc009bb",
+      "speakerX": 0.69,
+      "review": "Brahma identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-01-v2.png"
+    },
+    "bk-03-01": {
+      "asset": "top-dialogue-art/assets/bk-03-01-top-v1.png",
+      "sha256": "ce0a4b30785551c5f6141248a04210e7652edd698f4e8894b28bfef9296ebf09",
+      "speakerX": 0.16,
+      "review": "Sumantra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-03-v2.png"
+    },
+    "bk-05-03a": {
+      "asset": "top-dialogue-art/assets/bk-05-03a-top-v2.png",
+      "sha256": "e4f41573796c2554ac783f0ea366579d411c75e866ce3bdc8e9727512bb924b0",
+      "speakerX": 0.28,
+      "review": "Dasharatha identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../lettering-pilot-v1/bk-05-03a-welcome-v1.png"
+    },
+    "bk-06-01": {
+      "asset": "top-dialogue-art/assets/bk-06-01-top-v2.png",
+      "sha256": "df041e6b8dc84dc4d1fa3e7d892c34044343e8f4cfa91b7d62e95e7aeefd3f22",
+      "speakerX": 0.2,
+      "review": "Vishwamitra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-06-v1.png"
+    },
+    "bk-06-02": {
+      "asset": "top-dialogue-art/assets/bk-06-02-top-v2.png",
+      "sha256": "a45c193d0bf7e70de0e2318e842f8c18eef6fb89eaf2ae3bfa0e12353fd886eb",
+      "speakerX": 0.58,
+      "review": "Dasharatha identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-06-v1.png"
+    },
+    "bk-06-03": {
+      "asset": "top-dialogue-art/assets/bk-06-03-top-v2.png",
+      "sha256": "ba8d6b6e8d478cecb806764d1db540d38185ccaae29f76ee8c836f3a228e3d47",
+      "speakerX": 0.51,
+      "review": "Vashishtha identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-06-v1.png"
+    },
+    "bk-07-03": {
+      "asset": "top-dialogue-art/assets/bk-07-03-top-v1.png",
+      "sha256": "0ffc661cb8904cda0090292ef0e588ea2c16868e5d37f894afce3ec5da319f10",
+      "speakerX": 0.52,
+      "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-07-v1.png"
+    },
+    "bk-08-02": {
+      "asset": "top-dialogue-art/assets/bk-08-02-top-v1.png",
+      "sha256": "a0821bb42de8e9d1942ded4694e69bc3141f99f6f649eccacb03a102150f6e17",
+      "speakerX": 0.49,
+      "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-08-v1.png"
+    },
+    "bk-09-02": {
+      "asset": "top-dialogue-art/assets/bk-09-02-top-v3.png",
+      "sha256": "68a5b136745033d8cce573d5ba17e8465d6292f61f6e8fbe631f00e62441cf8e",
+      "speakerX": 0.61,
+      "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-09-v1.png"
+    },
+    "bk-09-02a": {
+      "asset": "top-dialogue-art/assets/bk-09-02a-top-v1.png",
+      "sha256": "2e9e1de1f5425376ed27f5eab5f2d1459cd82cb19bfed5664cbcb9b93ffe241a",
+      "speakerX": 0.51,
+      "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "assets/bk-09-02a-v1.png"
+    },
+    "bk-10-04": {
+      "asset": "top-dialogue-art/assets/bk-10-04-top-v1.png",
+      "sha256": "4c90978335f36403428cf4b79d868c4a9129a8603355a19bf2ee00bfa7b7cdb3",
+      "speakerX": 0.23,
+      "review": "Vishwamitra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-10-v2.png"
+    },
+    "bk-12-01": {
+      "asset": "top-dialogue-art/assets/bk-12-01-top-v1.png",
+      "sha256": "1e9e77d831f3ddc15c7f9f620f0e31359214e380fa4098eb1040149850d4740e",
+      "speakerX": 0.39,
+      "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-12-v3.png"
+    },
+    "bk-13-06": {
+      "asset": "top-dialogue-art/assets/bk-13-06-top-v1.png",
+      "sha256": "42c3579c515c022003f7e120625c88abc865d38fec1b7e02e2301cdec3f3ff91",
+      "speakerX": 0.74,
+      "review": "Garuda identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-13-v2.png"
+    },
+    "bk-14-02": {
+      "asset": "top-dialogue-art/assets/bk-14-02-top-v1.png",
+      "sha256": "b56966282f5b32b6979cfa055c938c7f5f4e5d7ee5416151f0101711364b817f",
+      "speakerX": 0.69,
+      "review": "Brahma identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-14-v1.png"
+    },
+    "bk-17-01": {
+      "asset": "top-dialogue-art/assets/bk-17-01-top-v1.png",
+      "sha256": "7c1e134be37751db92dfac3da5216c1ea8ec7b60b8dd58c31588c19f6efa80e8",
+      "speakerX": 0.44,
+      "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-17-v1.png"
+    },
+    "bk-18-02": {
+      "asset": "top-dialogue-art/assets/bk-18-02-top-v1.png",
+      "sha256": "38830af8045eb22ef83ea6d0c668b68b53e7e5446ec8f4518e5165b5703bd75e",
+      "speakerX": 0.18,
+      "review": "Shatananda identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-18-v2.png"
+    },
+    "bk-19-02": {
+      "asset": "top-dialogue-art/assets/bk-19-02-top-v1.png",
+      "sha256": "3b5aa04daff7927587543d5e92fce43c32080f6a5c615790304a0f78db6f2439",
+      "speakerX": 0.82,
+      "review": "Vashishtha identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-19-v1.png"
+    },
+    "bk-19-07": {
+      "asset": "top-dialogue-art/assets/bk-19-07-top-v2.png",
+      "sha256": "5d45bdcd29c810a412a62f5c6942ed71387a84f2853fe7e2adecb827bc7400c5",
+      "speakerX": 0.78,
+      "review": "Vishwamitra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-19-v1.png"
+    },
+    "bk-20-03": {
+      "asset": "top-dialogue-art/assets/bk-20-03-top-v1.png",
+      "sha256": "adb6b3d1ec48fe0abadd79496be6a0f07541100f4be141d1135c1e8ab7bcf0c8",
+      "speakerX": 0.34,
+      "review": "Trishanku identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-20-v2.png"
+    },
+    "bk-20-05": {
+      "asset": "top-dialogue-art/assets/bk-20-05-top-v2.png",
+      "sha256": "8ea4fd054937188c8610ab89f2685b383f879129bcf6a8abab16b7deed40cc6c",
+      "speakerX": 0.28,
+      "review": "Trishanku identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-20-v2.png"
+    },
+    "bk-21-03": {
+      "asset": "top-dialogue-art/assets/bk-21-03-top-v1.png",
+      "sha256": "a2f2ae978d6304626e8479e2feba0d58d08837668684a85210f77febd7f76252",
+      "speakerX": 0.46,
+      "review": "Shunahshepa identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-21-v2.png"
+    },
+    "bk-22-04": {
+      "asset": "top-dialogue-art/assets/bk-22-04-top-v1.png",
+      "sha256": "998a76c3eb6a5d5de1482623eee26ffaf0fc15f48fbde7c0f30c20f600e05975",
+      "speakerX": 0.43,
+      "review": "Vishwamitra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-22-v2.png"
+    },
+    "bk-23-04": {
+      "asset": "top-dialogue-art/assets/bk-23-04-top-v1.png",
+      "sha256": "556805de5b2040ae2e61f22e88592399ede470ba46577e157718e1c632a699a1",
+      "speakerX": 0.3,
+      "review": "Vishwamitra identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-23-v1.png"
+    },
+    "bk-23-06": {
+      "asset": "top-dialogue-art/assets/bk-23-06-top-v3.png",
+      "sha256": "41bd18d8f58b44bdd0a52b8012c99a0cbaa132f4e49d9a831129905fb9be5871",
+      "speakerX": 0.67,
+      "review": "Janaka identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-23-v1.png"
+    },
+    "bk-26-02": {
+      "asset": "top-dialogue-art/assets/bk-26-02-top-v1.png",
+      "sha256": "60c9ca4999358d39140869e82af528a460d91d8e3657f1c5c7e46d6d2b9e5c24",
+      "speakerX": 0.86,
+      "review": "Janaka identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-26-v2.png"
+    },
+    "bk-27-04": {
+      "asset": "top-dialogue-art/assets/bk-27-04-top-v1.png",
+      "sha256": "fb583b6805e8192ae0d280c7aa0e104a177642a4f5efaa1031090845a839032f",
+      "speakerX": 0.28,
+      "review": "Dasharatha identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-27-v3.png"
+    },
+    "bk-27-05": {
+      "asset": "top-dialogue-art/assets/bk-27-05-top-v1.png",
+      "sha256": "c8ca0b5f0a49b19657d52de81e6dd9246fc43164545c893eb10a0dfadf8adafe",
+      "speakerX": 0.27,
+      "review": "Parashurama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-27-v3.png"
+    },
+    "bk-28-01": {
+      "asset": "top-dialogue-art/assets/bk-28-01-top-v1.png",
+      "sha256": "ad0a4aade0c1dc4b173bd547b105dad9a5f7c6ac3c4ee89d64a0ba0928473ae3",
+      "speakerX": 0.74,
+      "review": "Rama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-28-v1.png"
+    },
+    "bk-28-03": {
+      "asset": "top-dialogue-art/assets/bk-28-03-top-v2.png",
+      "sha256": "a00d3a01e21eeb46035d9e46b40e7e93e759115fae7c9dd759b51e78e7c6a29f",
+      "speakerX": 0.24,
+      "review": "Parashurama identified in recomposed portrait; pointer targets the speaker, not listener. Full painted bounds retained; natural scenery above the cast.",
+      "originalAsset": "../balakanda-v1/assets/bk-28-v1.png"
+    }
+  },
+  "completionDate": "2026-10-15"
+}

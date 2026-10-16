@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-13",
+  "scope": "Local bilingual-v2 speaker attribution and layout; not a narrative revision or native/CDN release",
+  "panels": 140,
+  "dialoguePanels": 31,
+  "nonDialoguePanels": 109,
+  "manualReview": "All 31 speakers matched to framed artwork; all 62 bilingual dialogue renders inspected at Standard/390px and Large/320px.",
+  "anchorSource": "speaker-anchors.json",
+  "matrix": [
+    {
+      "width": 320,
+      "language": "hi",
+      "large": false,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 320,
+      "language": "hi",
+      "large": true,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 320,
+      "language": "en",
+      "large": false,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 320,
+      "language": "en",
+      "large": true,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 390,
+      "language": "hi",
+      "large": false,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 390,
+      "language": "hi",
+      "large": true,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "large": false,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 390,
+      "language": "en",
+      "large": true,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 768,
+      "language": "hi",
+      "large": false,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 768,
+      "language": "hi",
+      "large": true,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 768,
+      "language": "en",
+      "large": false,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 768,
+      "language": "en",
+      "large": true,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 1440,
+      "language": "hi",
+      "large": false,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 1440,
+      "language": "hi",
+      "large": true,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "large": false,
+      "panels": 140,
+      "failures": 0
+    },
+    {
+      "width": 1440,
+      "language": "en",
+      "large": true,
+      "panels": 140,
+      "failures": 0
+    }
+  ],
+  "panelStates": 2240,
+  "checks": [
+    "images loaded",
+    "panel and text horizontal containment",
+    "narration clear of artwork",
+    "closed continuous balloon outlines",
+    "flowing tail tips aligned to reviewed speaker x within 2px",
+    "tail and flowing speech clear of artwork"
+  ],
+  "narrativeAndArtworkIdenticalToBefore": true,
+  "evidenceDirectory": ".context/speaker-audit/",
+  "pending": [
+    "independent editorial approval",
+    "Gujarati/Kannada full narratives",
+    "native Standard/Large review",
+    "production publication"
+  ]
+}

@@ -1,0 +1,780 @@
+{
+  "titleHi": "श्री सूर्य चालीसा",
+  "titleEn": "Surya Chalisa",
+  "subtitleHi": "कनक बदन कुण्डल मकर",
+  "subtitleEn": "Kanak badan kundal makar",
+  "language": "hi-en",
+  "script": "Devanagari + Latin",
+  "source": {
+    "baseText": "Traditional Surya Chalisa ('Kanak badan kundal makar' recension), collated across all 42 verse units against HinduNidhi and Pavitra Granth on 2026-10-15. The witnesses agree after punctuation, spacing and सहस्त्र/सहस्र spelling normalization except chaupai 30's second line: HinduNidhi reads 'जोजन याको मन मंह जापै', Pavitra Granth reads 'योजन याको मन मंह जापै'. The HinduNidhi reading is used here as 'जो जन' in context. Other verse words are retained from Pavitra Granth; these editorial Hindi and English meanings are original, and traditional benefit claims are presented as claims of the verse, not medical advice.",
+    "referenceUrls": [
+      "https://hindunidhi.com/shri-surya-dev-chalisa-hindi/",
+      "https://pavitragranth.com/chalisa/shree-surya-chalisa"
+    ],
+    "retrievedOn": "2026-10-15"
+  },
+  "counts": {
+    "openingDohas": 1,
+    "chaupais": 40,
+    "closingDohas": 1,
+    "totalVerses": 42
+  },
+  "verses": [
+    {
+      "id": "opening-doha",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "कनक बदन कुण्डल मकर, मुक्ता माला अङ्ग।",
+        "पद्मासन स्थित ध्याइए, शंख चक्र के सङ्ग॥"
+      ],
+      "linesEn": [
+        "Kanak badan kundal makar, mukta mala ang.",
+        "Padmasan sthit dhyaiye, shankh chakra ke sang."
+      ],
+      "meaningHi": "स्वर्णिम शरीर, मकराकार कुण्डल और मोतियों की माला वाले सूर्य को पद्मासन में, शंख और चक्र के साथ ध्यान करता हूँ।",
+      "meaningEn": "I meditate on the golden-bodied Sun, adorned with makara earrings and pearls, seated on a lotus with conch and discus."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जय सविता जय जयति दिवाकर।",
+        "सहस्रांशु सप्ताश्व तिमिरहर॥"
+      ],
+      "linesEn": [
+        "Jai savita jai jayati divakar.",
+        "Sahasranshu saptashva timirahar."
+      ],
+      "meaningHi": "प्रकाश देने वाले सविता की जय हो; हजार किरणों और सात घोड़ों वाले सूर्य अँधेरा दूर करते हैं।",
+      "meaningEn": "Praise to Savita, the giver of light: the thousand-rayed Sun with seven horses dispels darkness."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "भानु पतंग मरीची भास्कर।",
+        "सविता हंस सुनूर विभाकर॥"
+      ],
+      "linesEn": [
+        "Bhanu patang marichi bhaskar.",
+        "Savita hans sunur vibhakar."
+      ],
+      "meaningHi": "भानु, पतंग, मरीचि और भास्कर जैसे नामों से उस प्रकाशमान सूर्य की स्तुति है।",
+      "meaningEn": "The shining Sun is praised by names such as Bhanu, Patanga, Marichi and Bhaskara."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "विवस्वान आदित्य विकर्तन।",
+        "मार्तण्ड हरिरूप विरोचन॥"
+      ],
+      "linesEn": [
+        "Vivasvan aditya vikartan.",
+        "Martand hariroop virochan."
+      ],
+      "meaningHi": "विवस्वान, आदित्य, विकर्तन, मार्तण्ड और विरोचन नाम सूर्य के विविध रूपों का स्मरण कराते हैं।",
+      "meaningEn": "Vivasvan, Aditya, Vikartana, Martanda and Virochana recall different names and forms of the Sun."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "अम्बरमणि खग रवि कहलाते।",
+        "वेद हिरण्यगर्भ कह गाते॥"
+      ],
+      "linesEn": [
+        "Ambaramani khag ravi kahlate.",
+        "Ved hiranyagarbh kah gate."
+      ],
+      "meaningHi": "आकाश के रत्न और दिन में विचरण करने वाले रवि को वेद हिरण्यगर्भ भी कहते हैं।",
+      "meaningEn": "The Sun, jewel of the sky and traveller of the day, is also called Hiranyagarbha in the Vedas."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "सहस्रांशु प्रद्योतन, कहिकहि।",
+        "मुनिगन होत प्रसन्न मोदलहि॥"
+      ],
+      "linesEn": [
+        "Sahasranshu pradyotan kahi kahi.",
+        "Munigan hot prasann modalahi."
+      ],
+      "meaningHi": "भक्त सूर्य की किरणों और प्रकाश का स्मरण करते हैं; ऐसा करते हुए मुनि प्रसन्न होते हैं।",
+      "meaningEn": "Devotees recall the Sun's rays and radiance; the sages rejoice in that praise."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "अरुण सदृश सारथी मनोहर।",
+        "हांकत हय साता चढ़ि रथ पर॥"
+      ],
+      "linesEn": [
+        "Arun sadrish sarathi manohar.",
+        "Hankat hay sata chadhi rath par."
+      ],
+      "meaningHi": "सूर्य के मनोहर सारथी अरुण हैं, जो सात घोड़ों को रथ पर हाँकते हैं।",
+      "meaningEn": "Aruna is the Sun's graceful charioteer, driving the seven horses of the chariot."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "मंडल की महिमा अति न्यारी।",
+        "तेज रूप केरी बलिहारी॥"
+      ],
+      "linesEn": [
+        "Mandal ki mahima ati nyari.",
+        "Tej roop keri balihari."
+      ],
+      "meaningHi": "सूर्य-मण्डल की महिमा अनूठी है; कवि उसके तेजस्वी स्वरूप को नमन करता है।",
+      "meaningEn": "The solar orb has a singular glory; the poet bows to its radiant form."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "उच्चैःश्रवा सदृश हय जोते।",
+        "देखि पुरन्दर लज्जित होते॥"
+      ],
+      "linesEn": [
+        "Uchchaihshrava sadrish hay jote.",
+        "Dekhi purandar lajjit hote."
+      ],
+      "meaningHi": "रथ के घोड़े उच्चैःश्रवा जैसे शोभते हैं; उन्हें देखकर इन्द्र भी विस्मित होते हैं।",
+      "meaningEn": "The horses resemble the splendid Uchchaihshravas, astonishing even Indra."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "मित्र मरीचि भानु अरुण भास्कर।",
+        "सविता सूर्य अर्क खग कलिकर॥"
+      ],
+      "linesEn": [
+        "Mitra marichi bhanu arun bhaskar.",
+        "Savita surya ark khag kalikar."
+      ],
+      "meaningHi": "मित्र, मरीचि, भानु, अरुण, भास्कर, सविता, सूर्य और अर्क—इन नामों से सूर्य का गुणगान है।",
+      "meaningEn": "Mitra, Marichi, Bhanu, Aruna, Bhaskara, Savita, Surya and Arka are names in the Sun's praise."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "पूषा रवि आदित्य नाम लै।",
+        "हिरण्यगर्भाय नमः कहिकै॥"
+      ],
+      "linesEn": [
+        "Pusha ravi aditya nam lai.",
+        "Hiranyagarbhaya namah kahi kai."
+      ],
+      "meaningHi": "पूषा, रवि और आदित्य के नाम लेकर भक्त 'हिरण्यगर्भाय नमः' कहता है।",
+      "meaningEn": "The devotee takes the names Pusha, Ravi and Aditya, and says, 'Salutations to Hiranyagarbha.'"
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "द्वादस नाम प्रेम सों गावैं।",
+        "मस्तक बारह बार नवावैं॥"
+      ],
+      "linesEn": [
+        "Dvadash nam prem son gaven.",
+        "Mastak barah bar navaven."
+      ],
+      "meaningHi": "सूर्य के बारह नाम प्रेम से गाकर भक्त बार-बार सिर झुकाता है।",
+      "meaningEn": "Singing the Sun's twelve names with love, the devotee repeatedly bows the head."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "चार पदारथ जन सो पावै।",
+        "दुःख दारिद्र अघ पुंज नसावै॥"
+      ],
+      "linesEn": [
+        "Char padarath jan so pave.",
+        "Dukh daridra agh punj nasave."
+      ],
+      "meaningHi": "कवि कहता है कि भक्त जीवन के चार पुरुषार्थ पाता है और दुःख, गरीबी तथा पाप का बोझ मिटता है।",
+      "meaningEn": "The poet says the devotee gains life's four aims and is freed from sorrow, poverty and accumulated wrongs."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "नमस्कार को चमत्कार यह।",
+        "विधि हरिहर को कृपासार यह॥"
+      ],
+      "linesEn": [
+        "Namaskar ko chamatkar yah.",
+        "Vidhi harihar ko kripasaar yah."
+      ],
+      "meaningHi": "सूर्य को नमस्कार की महिमा को कवि ब्रह्मा, विष्णु और शिव की कृपा के सार से जोड़ता है।",
+      "meaningEn": "The poet links the power of saluting the Sun to the grace of Brahma, Vishnu and Shiva."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "सेवै भानु तुमहिं मन लाई।",
+        "अष्टसिद्धि नवनिधि तेहिं पाई॥"
+      ],
+      "linesEn": [
+        "Seve bhanu tumahin man lai.",
+        "Ashtasiddhi navanidhi tehin pai."
+      ],
+      "meaningHi": "मन लगाकर भानु की सेवा करने वाले को आठ सिद्धियाँ और नौ निधियाँ मिलने की आशा व्यक्त है।",
+      "meaningEn": "Eight powers and nine treasures are hoped for by one who serves Bhanu with a devoted mind."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "बारह नाम उच्चारन करते।",
+        "सहस जनम के पातक टरते॥"
+      ],
+      "linesEn": [
+        "Barah nam uchcharan karte.",
+        "Sahas janam ke patak tarte."
+      ],
+      "meaningHi": "बारह नामों के उच्चारण को अनेक जन्मों के पापों से मुक्ति देने वाला बताया गया है।",
+      "meaningEn": "Reciting the twelve names is said to release the burden of wrongs from many lives."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "उपाख्यान जो करते तवजन।",
+        "रिपु सों जमलहते सोतेहि छन॥"
+      ],
+      "linesEn": [
+        "Upakhyan jo karte tav jan.",
+        "Ripu son jamalahate so tehi chhan."
+      ],
+      "meaningHi": "सूर्य की कथा कहने वाले भक्त के शत्रु पर उसी क्षण विजय की कामना की गई है।",
+      "meaningEn": "The verse wishes swift victory over adversaries for one who recounts the Sun's story."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "धन सुत जुत परिवार बढ़तु है।",
+        "प्रबल मोह को फंद कटतु है॥"
+      ],
+      "linesEn": [
+        "Dhan sut jut parivar badhatu hai.",
+        "Prabal moh ko phand katatu hai."
+      ],
+      "meaningHi": "कवि परिवार की समृद्धि और मोह के मजबूत बन्धन से मुक्ति का आशीष माँगता है।",
+      "meaningEn": "The poet seeks prosperity for the family and release from the strong snare of attachment."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "अर्क शीश को रक्षा करते।",
+        "रवि ललाट पर नित्य बिहरते॥"
+      ],
+      "linesEn": [
+        "Ark sheesh ko raksha karte.",
+        "Ravi lalat par nitya biharte."
+      ],
+      "meaningHi": "अर्क सिर की रक्षा करते हैं और रवि ललाट पर सदा विराजते हैं—यह रक्षा-स्तुति का आरम्भ है।",
+      "meaningEn": "Arka guards the head and Ravi abides at the forehead: the verse begins a prayer for protection."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "सूर्य नेत्र पर नित्य विराजत।",
+        "कर्ण देस पर दिनकर छाजत॥"
+      ],
+      "linesEn": [
+        "Surya netra par nitya virajat.",
+        "Karn des par dinkar chhajat."
+      ],
+      "meaningHi": "सूर्य आँखों में और दिनकर कानों के पास निवास कर उनकी रक्षा करते हैं।",
+      "meaningEn": "Surya is invoked at the eyes and Dinkara at the ears to guard them."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "भानु नासिका वासकरहुनित।",
+        "भास्कर करत सदा मुखको हित॥"
+      ],
+      "linesEn": [
+        "Bhanu nasika vas karahu nit.",
+        "Bhaskar karat sada mukh ko hit."
+      ],
+      "meaningHi": "भानु नाक में और भास्कर मुख में निवास कर भलाई करते हैं।",
+      "meaningEn": "Bhanu is invoked at the nose and Bhaskara at the face to bring well-being."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "ओंठ रहैं पर्जन्य हमारे।",
+        "रसना बीच तीक्ष्ण बस प्यारे॥"
+      ],
+      "linesEn": [
+        "Onth rahen parjanya hamare.",
+        "Rasna beech teekshna bas pyare."
+      ],
+      "meaningHi": "पर्जन्य होंठों पर और तीक्ष्ण सूर्य का रूप जीभ पर रहने की प्रार्थना है।",
+      "meaningEn": "The prayer places Parjanya at the lips and a fierce form of the Sun at the tongue."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "कंठ सुवर्ण रेत की शोभा।",
+        "तिग्म तेजसः कांधे लोभा॥"
+      ],
+      "linesEn": [
+        "Kanth suvarna ret ki shobha.",
+        "Tigma tejas kandhe lobha."
+      ],
+      "meaningHi": "सूर्य के सुवर्ण और प्रखर तेजस्वी रूपों से कंठ और कंधों की रक्षा माँगी गई है।",
+      "meaningEn": "Golden and intensely radiant forms of the Sun are invoked to guard the throat and shoulders."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "पूषां बाहू मित्र पीठहिं पर।",
+        "त्वष्टा वरुण रहत सुउष्णकर॥"
+      ],
+      "linesEn": [
+        "Pushan bahu mitra peethahin par.",
+        "Tvashta varun rahat su ushna kar."
+      ],
+      "meaningHi": "पूषा भुजाओं पर, मित्र पीठ पर, और त्वष्टा तथा वरुण अन्य अंगों पर रक्षक रूप में स्मरे जाते हैं।",
+      "meaningEn": "Pusha at the arms, Mitra at the back, and Tvashta and Varuna are remembered as guardians of the body."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "युगल हाथ पर रक्षा कारन।",
+        "भानुमान उरसर्म सुउदरचन॥"
+      ],
+      "linesEn": [
+        "Yugal hath par raksha karan.",
+        "Bhanuman ura sarma su udarachan."
+      ],
+      "meaningHi": "दोनों हाथों, छाती और उदर के लिए सूर्य के रक्षक रूपों का आह्वान है।",
+      "meaningEn": "Protective forms of the Sun are called upon for both hands, the chest and the abdomen."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "बसत नाभि आदित्य मनोहर।",
+        "कटिमंह, रहत मन मुदभर॥"
+      ],
+      "linesEn": [
+        "Basat nabhi aditya manohar.",
+        "Kati manh rahat man mudbhar."
+      ],
+      "meaningHi": "मनोहर आदित्य को नाभि और कमर के पास आनंदपूर्वक विराजने की प्रार्थना है।",
+      "meaningEn": "The lovely Aditya is asked to dwell at the navel and waist, filling the devotee with joy."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "जंघा गोपति सविता बासा।",
+        "गुप्त दिवाकर करत हुलासा॥"
+      ],
+      "linesEn": [
+        "Jangha gopati savita basa.",
+        "Gupt divakar karat hulasa."
+      ],
+      "meaningHi": "जंघाओं में सविता और गुप्त अंगों में दिवाकर के रक्षक निवास का स्मरण है।",
+      "meaningEn": "The verse places Savita at the thighs and Dinkara at the hidden parts as guardians."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "विवस्वान पद की रखवारी।",
+        "बाहर बसते नित तम हारी॥"
+      ],
+      "linesEn": [
+        "Vivasvan pad ki rakhvari.",
+        "Bahar baste nit tam hari."
+      ],
+      "meaningHi": "विवस्वान पैरों की रक्षा करते हैं और अँधेरा मिटाने वाला सूर्य बाहर भी रक्षा करता है।",
+      "meaningEn": "Vivasvan guards the feet, while the darkness-dispelling Sun guards the devotee outside."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "सहस्रांशु सर्वांग सम्हारै।",
+        "रक्षा कवच विचित्र विचारे॥"
+      ],
+      "linesEn": [
+        "Sahasranshu sarvang samhare.",
+        "Raksha kavach vichitra vichare."
+      ],
+      "meaningHi": "हजार किरणों वाले सूर्य से पूरे शरीर की रक्षा माँगी गई है; यह स्तुति कवच के समान मानी जाती है।",
+      "meaningEn": "The thousand-rayed Sun is asked to guard the entire body; the praise is imagined as a protective armour."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "अस जोजन अपने मन माहीं।",
+        "भय जगबीच करहुं तेहि नाहीं॥"
+      ],
+      "linesEn": [
+        "As jo jan apne man mahin.",
+        "Bhay jag beech karahun tehi nahin."
+      ],
+      "meaningHi": "जो भक्त इस प्रकार सूर्य को मन में बसाता है, उसके लिए संसार में भय न रहने की कामना है।",
+      "meaningEn": "For the devotee who holds the Sun in mind, the verse wishes freedom from fear in the world."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "दद्रु कुष्ठ तेहिं कबहु न व्यापै।",
+        "जोजन याको मन मंह जापै॥"
+      ],
+      "linesEn": [
+        "Dadru kushth tehin kabahu na vyapai.",
+        "Jo jan yako man manh japai."
+      ],
+      "meaningHi": "जो मन में सूर्य का जप करे, उसे दद्रु और कुष्ठ जैसे रोग न सताएँ—यह पाठ की पारम्परिक फलश्रुति है।",
+      "meaningEn": "The verse traditionally hopes that one who repeats the Sun's name inwardly will be spared skin diseases such as ringworm and leprosy."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "अंधकार जग का जो हरता।",
+        "नव प्रकाश से आनन्द भरता॥"
+      ],
+      "linesEn": [
+        "Andhakar jag ka jo harta.",
+        "Nav prakash se anand bharta."
+      ],
+      "meaningHi": "सूर्य जगत का अँधेरा हटाकर नए प्रकाश और आनंद से भर देते हैं।",
+      "meaningEn": "The Sun removes the world's darkness and fills it with fresh light and joy."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "ग्रह गन ग्रसि न मिटावत जाही।",
+        "कोटि बार मैं प्रनवौं ताही॥"
+      ],
+      "linesEn": [
+        "Grah gan grasi na mitavat jahi.",
+        "Koti bar main pranavaun tahi."
+      ],
+      "meaningHi": "कवि उस सूर्य को बार-बार प्रणाम करता है जिसे ग्रहों का समूह भी मिटा नहीं सकता।",
+      "meaningEn": "The poet repeatedly bows to the Sun, whom even the host of planets cannot extinguish."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "मंद सदृश सुत जग में जाके।",
+        "धर्मराज सम अद्भुत बांके॥"
+      ],
+      "linesEn": [
+        "Mand sadrish sut jag men jake.",
+        "Dharmaraj sam adbhut banke."
+      ],
+      "meaningHi": "सूर्य के पुत्रों में मंदगामी शनि और धर्मराज यम का स्मरण किया गया है।",
+      "meaningEn": "The Sun's sons, slow-moving Shani and the remarkable Dharmaraja Yama, are recalled."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "धन्य-धन्य तुम दिनमनि देवा।",
+        "किया करत सुरमुनि नर सेवा॥"
+      ],
+      "linesEn": [
+        "Dhanya dhanya tum dinmani deva.",
+        "Kiya karat sur muni nar seva."
+      ],
+      "meaningHi": "हे दिनमणि देव, आप धन्य हैं; देवता, मुनि और मनुष्य आपकी सेवा करते हैं।",
+      "meaningEn": "Blessed are you, O jewel of the day; gods, sages and people offer you service."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "भक्ति भावयुत पूर्ण नियम सों।",
+        "दूर हटतसो भवके भ्रम सों॥"
+      ],
+      "linesEn": [
+        "Bhakti bhavayut poorna niyam son.",
+        "Door hatat so bhav ke bhram son."
+      ],
+      "meaningHi": "भक्ति और नियम से सूर्य का स्मरण करने वाले के सांसारिक भ्रम दूर होने की प्रार्थना है।",
+      "meaningEn": "The verse prays that devotion and discipline in remembering the Sun dispel worldly confusion."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "परम धन्य सों नर तनधारी।",
+        "हैं प्रसन्न जेहि पर तम हारी॥"
+      ],
+      "linesEn": [
+        "Param dhanya so nar tanadhari.",
+        "Hain prasann jehi par tam hari."
+      ],
+      "meaningHi": "जिस मनुष्य पर अँधेरा हरने वाले सूर्य प्रसन्न हों, उसका जन्म धन्य कहा गया है।",
+      "meaningEn": "The life of one who receives the favour of the darkness-dispelling Sun is called blessed."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "अरुण माघ महं सूर्य फाल्गुन।",
+        "मधु वेदांग नाम रवि उदयन॥"
+      ],
+      "linesEn": [
+        "Arun magh manh surya phalgun.",
+        "Madhu vedang nam ravi udayan."
+      ],
+      "meaningHi": "कवि माघ, फाल्गुन और मधु मास के साथ सूर्य के क्रमशः अलग नामों का स्मरण करता है।",
+      "meaningEn": "The poet recalls different names of the Sun associated in order with Magha, Phalguna and the month Madhu."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "भानु उदय बैसाख गिनावै।",
+        "ज्येष्ठ इन्द्र आषाढ़ रवि गावै॥"
+      ],
+      "linesEn": [
+        "Bhanu uday baisakh ginave.",
+        "Jyeshth indra ashadh ravi gave."
+      ],
+      "meaningHi": "वैशाख में भानु और ज्येष्ठ तथा आषाढ़ में इन्द्र आदि नामों से सूर्य का स्मरण है।",
+      "meaningEn": "The Sun is remembered as Bhanu in Vaishakha and by names including Indra in Jyeshtha and Ashadha."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "यम भादों आश्विन हिमरेता।",
+        "कातिक होत दिवाकर नेता॥"
+      ],
+      "linesEn": [
+        "Yam bhadon ashvin himreta.",
+        "Katik hot divakar neta."
+      ],
+      "meaningHi": "भादों में यम, आश्विन में हिमरेता और कार्तिक में दिवाकर नाम गाए जाते हैं।",
+      "meaningEn": "The names Yama in Bhadon, Himareta in Ashvin and Divakara in Kartika are sung."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "अगहन भिन्न विष्णु हैं पूसहिं।",
+        "पुरुष नाम रवि हैं मलमासहिं॥"
+      ],
+      "linesEn": [
+        "Agahan bhinn vishnu hain pus hin.",
+        "Purush nam ravi hain malamas hin."
+      ],
+      "meaningHi": "अगहन, पूस और मलमास के लिए भी सूर्य के विष्णु और पुरुष आदि नाम बताए गए हैं।",
+      "meaningEn": "The Sun's names for Agahan, Pus and the intercalary month also include Vishnu and Purusha."
+    },
+    {
+      "id": "closing-doha",
+      "type": "doha",
+      "section": "closing",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "भानु चालीसा प्रेम युत, गावहिं जे नर नित्य।",
+        "सुख सम्पत्ति लहि बिबिध, होंहिं सदा कृतकृत्य॥"
+      ],
+      "linesEn": [
+        "Bhanu chalisa prem yut, gavahin je nar nitya.",
+        "Sukh sampatti lahi bibidh, honhin sada kritakritya."
+      ],
+      "meaningHi": "जो व्यक्ति प्रेम से प्रतिदिन भानु चालीसा गाता है, उसके लिए विविध सुख और समृद्धि की कामना है।",
+      "meaningEn": "For one who sings Bhanu Chalisa every day with love, the verse wishes varied happiness and prosperity."
+    }
+  ]
+}

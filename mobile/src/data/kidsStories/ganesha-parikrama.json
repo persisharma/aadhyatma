@@ -1,0 +1,143 @@
+{
+  "id": "ganesha-parikrama",
+  "deityId": "ganesha",
+  "ageMin": 6,
+  "coverArt": "gp01",
+  "title": {
+    "hi": "गणेश की परिक्रमा",
+    "en": "Ganesha’s Thoughtful Journey",
+    "gu": "ગણેશની પરિક્રમા",
+    "kn": "ಗಣೇಶನ ಪ್ರದಕ್ಷಿಣೆ"
+  },
+  "description": {
+    "hi": "माता-पिता के सम्मान में उत्तर",
+    "en": "An answer rooted in respect",
+    "gu": "માતા-પિતાના આદરમાં ઉત્તર",
+    "kn": "ತಂದೆತಾಯಿಯ ಗೌರವದಲ್ಲಿ ಉತ್ತರ"
+  },
+  "takeaway": {
+    "hi": "संपादकीय सीख: किसी काम से पहले उसके अर्थ पर विचार करना भी बुद्धिमानी है।",
+    "en": "Editorial reflection: wisdom includes thinking about what a task means.",
+    "gu": "સંપાદકીય વિચાર: કામ પહેલાં તેનો અર્થ સમજવો પણ બુદ્ધિ છે.",
+    "kn": "ಸಂಪಾದಕೀಯ ಚಿಂತನೆ: ಕೆಲಸದ ಅರ್ಥವನ್ನು ಮೊದಲು ಯೋಚಿಸುವುದೂ ಜಾಣ್ಮೆ."
+  },
+  "sourceNote": {
+    "hi": "शिवपुराण 2.4.19 में विवाह पहले करने की चुनौती और सात परिक्रमाएँ हैं। यह फल जीतने वाला अलग लोकप्रसंग नहीं है। कथा विवाह की व्यवस्था से पहले समाप्त होती है।",
+    "en": "Based on Shiva Purana 2.4.19, compared with its Sanskrit chapter. The challenge concerns who marries first; Ganesha makes seven rounds. This is not the separate fruit-contest telling. The episode ends before the wedding arrangements.",
+    "gu": "શિવપુરાણ 2.4.19માં પહેલાં લગ્ન કરવાની શરત અને સાત પરિક્રમા છે. આ ફળ જીતવાની અલગ લોકકથા નથી. કથા લગ્નની વ્યવસ્થા પહેલાં પૂરી થાય છે.",
+    "kn": "ಶಿವಪುರಾಣ 2.4.19ರಲ್ಲಿ ಮೊದಲು ಮದುವೆಯಾಗುವ ಸವಾಲು ಮತ್ತು ಏಳು ಪ್ರದಕ್ಷಿಣೆಗಳಿವೆ. ಇದು ಹಣ್ಣು ಗೆಲ್ಲುವ ಪ್ರತ್ಯೇಕ ಜನಪದ ಕಥೆಯಲ್ಲ. ಮದುವೆಯ ಸಿದ್ಧತೆಗೆ ಮೊದಲೇ ಈ ಕಥೆ ಮುಗಿಯುತ್ತದೆ."
+  },
+  "source": {
+    "baseText": "Shiva Purana, Rudra Samhita, Kumara Khanda 2.4.19.4–55",
+    "retrievedOn": "2026-10-15",
+    "referenceUrls": [
+      "https://www.wisdomlib.org/hinduism/book/shiva-purana-english/d/doc226139.html",
+      "https://sanskritdocuments.org/doc_purana/shivapurANam2rudrasaMhitA4kumArakhaNDaH.pdf"
+    ],
+    "notes": "Based on Shiva Purana 2.4.19, compared with its Sanskrit chapter. The challenge concerns who marries first; Ganesha makes seven rounds. This is not the separate fruit-contest telling. The episode ends before the wedding arrangements."
+  },
+  "pages": [
+    {
+      "id": "kailasa-family",
+      "art": "gp01",
+      "source": "Shiva Purana 2.4.19.4–14",
+      "title": {
+        "hi": "कैलास का परिवार",
+        "en": "The family on Kailasa",
+        "gu": "કૈલાસનો પરિવાર",
+        "kn": "ಕೈಲಾಸದ ಕುಟುಂಬ"
+      },
+      "text": {
+        "hi": "कैलास पर शिव और पार्वती अपने पुत्रों गणेश और कार्तिकेय के साथ रहते थे। दोनों पुत्र माता-पिता की सेवा करते थे। जब विवाह की बात आई, तो दोनों चाहते थे कि उनका विवाह पहले हो।",
+        "en": "On Kailasa, Shiva and Parvati lived with their sons Ganesha and Kartikeya. Both sons cared for their parents. When marriage was discussed, each wanted his own wedding to take place first.",
+        "gu": "કૈલાસ પર શિવ અને પાર્વતી પુત્રો ગણેશ અને કાર્તિકેય સાથે રહેતાં. બંને માતા-પિતાની સેવા કરતા. લગ્નની વાત આવી ત્યારે બંનેને પોતાના લગ્ન પહેલાં થાય એવી ઇચ્છા થઈ.",
+        "kn": "ಕೈಲಾಸದಲ್ಲಿ ಶಿವ ಮತ್ತು ಪಾರ್ವತಿ ಪುತ್ರರಾದ ಗಣೇಶ ಮತ್ತು ಕಾರ್ತಿಕೇಯರೊಂದಿಗೆ ವಾಸಿಸುತ್ತಿದ್ದರು. ಇಬ್ಬರೂ ತಂದೆತಾಯಿಯ ಸೇವೆ ಮಾಡುತ್ತಿದ್ದರು. ಮದುವೆಯ ಮಾತು ಬಂದಾಗ ಇಬ್ಬರೂ ತಮ್ಮ ಮದುವೆಯೇ ಮೊದಲು ಆಗಬೇಕೆಂದು ಬಯಸಿದರು."
+      }
+    },
+    {
+      "id": "the-challenge",
+      "art": "gp02",
+      "source": "Shiva Purana 2.4.19.15–22",
+      "title": {
+        "hi": "पृथ्वी की परिक्रमा",
+        "en": "A journey around the earth",
+        "gu": "પૃથ્વીની પરિક્રમા",
+        "kn": "ಭೂಮಿಯ ಸುತ್ತ ಪ್ರಯಾಣ"
+      },
+      "text": {
+        "hi": "माता-पिता ने कहा कि पृथ्वी की परिक्रमा करके जो पहले लौटेगा, उसका विवाह पहले होगा। कार्तिकेय यात्रा पर निकल पड़े। गणेश वहीं रुके और सोचने लगे कि इस कठिन कार्य को कैसे पूरा करें।",
+        "en": "Their parents said that whoever circled the earth and returned first would marry first. Kartikeya set out on his journey. Ganesha stayed behind, thinking carefully about how to fulfil the difficult task.",
+        "gu": "માતા-પિતાએ કહ્યું કે પૃથ્વીની પરિક્રમા કરીને જે પહેલાં પાછો આવે તેના લગ્ન પહેલાં થશે. કાર્તિકેય પ્રવાસે નીકળ્યા. ગણેશ અટકી આ અઘરું કામ કેવી રીતે કરવું તે વિચારવા લાગ્યા.",
+        "kn": "ಭೂಮಿಯನ್ನು ಸುತ್ತಿ ಮೊದಲು ಮರಳುವವನ ಮದುವೆ ಮೊದಲು ನಡೆಯಲಿ ಎಂದು ತಂದೆತಾಯಿ ಹೇಳಿದರು. ಕಾರ್ತಿಕೇಯ ಪ್ರಯಾಣ ಹೊರಟ. ಗಣೇಶ ಅಲ್ಲೇ ನಿಂತು ಈ ಕಷ್ಟದ ಕೆಲಸ ಪೂರೈಸುವ ಬಗೆ ಯೋಚಿಸಿದ."
+      }
+    },
+    {
+      "id": "parents-seated",
+      "art": "gp03",
+      "source": "Shiva Purana 2.4.19.23–25",
+      "title": {
+        "hi": "पूजन की तैयारी",
+        "en": "Preparing to honour them",
+        "gu": "પૂજનની તૈયારી",
+        "kn": "ಪೂಜೆಗೆ ಸಿದ್ಧತೆ"
+      },
+      "text": {
+        "hi": "गणेश ने स्नान किया और माता-पिता के लिए दो आसन तैयार किए। उन्होंने शिव और पार्वती को उन पर बैठने के लिए कहा। फिर श्रद्धा से उनका पूजन किया। गणेश ने अपने उत्तर का मार्ग खोज लिया था।",
+        "en": "Ganesha bathed and prepared two seats for his parents. He invited Shiva and Parvati to sit on them and worshipped them with devotion. He had found a thoughtful way to answer the challenge.",
+        "gu": "ગણેશે સ્નાન કરીને માતા-પિતા માટે બે આસન તૈયાર કર્યાં. શિવ અને પાર્વતીને તેના પર બેસવા કહ્યું અને શ્રદ્ધાથી પૂજન કર્યું. ગણેશને પડકારનો વિચારપૂર્વકનો જવાબ મળ્યો હતો.",
+        "kn": "ಗಣೇಶ ಸ್ನಾನ ಮಾಡಿ ತಂದೆತಾಯಿಗೆ ಎರಡು ಆಸನ ಸಿದ್ಧಪಡಿಸಿದ. ಶಿವ ಮತ್ತು ಪಾರ್ವತಿಯನ್ನು ಅವುಗಳಲ್ಲಿ ಕುಳ್ಳಿರಿಸಿ ಭಕ್ತಿಯಿಂದ ಪೂಜಿಸಿದ. ಸವಾಲಿಗೆ ಉತ್ತರಿಸುವ ಮಾರ್ಗ ಅವನಿಗೆ ಹೊಳೆದಿತ್ತು."
+      }
+    },
+    {
+      "id": "seven-rounds",
+      "art": "gp04",
+      "source": "Shiva Purana 2.4.19.26–36",
+      "title": {
+        "hi": "सात परिक्रमाएँ",
+        "en": "Seven rounds",
+        "gu": "સાત પરિક્રમા",
+        "kn": "ಏಳು ಪ್ರದಕ್ಷಿಣೆಗಳು"
+      },
+      "text": {
+        "hi": "गणेश ने शिव और पार्वती की सात बार परिक्रमा की और प्रणाम किया। फिर उन्होंने कहा कि उनकी परिक्रमा पूरी हुई। माता-पिता ने पूछा कि पृथ्वी की यात्रा किए बिना यह कैसे संभव हुआ।",
+        "en": "Ganesha walked around Shiva and Parvati seven times and bowed to them. He then said that his journey was complete. His parents asked how this could be so when he had not travelled around the earth.",
+        "gu": "ગણેશે શિવ અને પાર્વતીની સાત વાર પરિક્રમા કરી પ્રણામ કર્યા. પછી કહ્યું કે તેમની પરિક્રમા પૂરી થઈ. માતા-પિતાએ પૂછ્યું કે પૃથ્વી ફર્યા વિના આ કેવી રીતે થયું.",
+        "kn": "ಗಣೇಶ ಶಿವ ಮತ್ತು ಪಾರ್ವತಿಯ ಸುತ್ತ ಏಳು ಬಾರಿ ಪ್ರದಕ್ಷಿಣೆ ಮಾಡಿ ನಮಸ್ಕರಿಸಿದ. ತನ್ನ ಪ್ರಯಾಣ ಪೂರ್ಣವಾಯಿತೆಂದು ಹೇಳಿದ. ಭೂಮಿಯನ್ನು ಸುತ್ತದೆ ಇದು ಹೇಗೆ ಸಾಧ್ಯವೆಂದು ತಂದೆತಾಯಿ ಕೇಳಿದರು."
+      }
+    },
+    {
+      "id": "meaning-of-journey",
+      "art": "gp05",
+      "source": "Shiva Purana 2.4.19.37–47",
+      "title": {
+        "hi": "परिक्रमा का अर्थ",
+        "en": "The meaning of the journey",
+        "gu": "પરિક્રમાનો અર્થ",
+        "kn": "ಪ್ರದಕ್ಷಿಣೆಯ ಅರ್ಥ"
+      },
+      "text": {
+        "hi": "गणेश ने समझाया कि पवित्र शिक्षाओं में माता-पिता का पूजन और उनकी परिक्रमा पृथ्वी की परिक्रमा के समान पुण्य देती है। उन्होंने उसी शिक्षा के आधार पर यह कार्य किया था। शिव और पार्वती ने उनका तर्क सुना।",
+        "en": "Ganesha explained that sacred teachings honour worship and circumambulation of one’s parents as having the merit of a journey around the earth. He had acted on that teaching. Shiva and Parvati listened to his reasoning.",
+        "gu": "ગણેશે સમજાવ્યું કે પવિત્ર શિક્ષાઓમાં માતા-પિતાનું પૂજન અને પરિક્રમા પૃથ્વીની પરિક્રમા જેટલું પુણ્ય આપે છે. તેમણે એ શિક્ષાના આધારે કામ કર્યું હતું. શિવ અને પાર્વતીએ તેમનો વિચાર સાંભળ્યો.",
+        "kn": "ಪವಿತ್ರ ಬೋಧನೆಗಳ ಪ್ರಕಾರ ತಂದೆತಾಯಿಯ ಪೂಜೆ ಮತ್ತು ಪ್ರದಕ್ಷಿಣೆಗೆ ಭೂಪ್ರದಕ್ಷಿಣೆಯ ಪುಣ್ಯವಿದೆ ಎಂದು ಗಣೇಶ ವಿವರಿಸಿದ. ಅದನ್ನೇ ಆಧರಿಸಿ ತಾನು ನಡೆದುಕೊಂಡಿದ್ದಾಗಿ ಹೇಳಿದ. ಶಿವ ಮತ್ತು ಪಾರ್ವತಿ ಅವನ ವಿವರಣೆ ಕೇಳಿದರು."
+      }
+    },
+    {
+      "id": "wisdom-recognised",
+      "art": "gp06",
+      "source": "Shiva Purana 2.4.19.48–55",
+      "title": {
+        "hi": "बुद्धि का सम्मान",
+        "en": "Wisdom recognised",
+        "gu": "બુદ્ધિનો આદર",
+        "kn": "ಜಾಣ್ಮೆಗೆ ಮನ್ನಣೆ"
+      },
+      "text": {
+        "hi": "शिव और पार्वती ने गणेश की बात स्वीकार की और उनकी बुद्धि की प्रशंसा की। उन्होंने गणेश का विवाह पहले करने का निर्णय लिया। इस प्रसंग का उत्तर तेज़ यात्रा से नहीं, सोच और श्रद्धा से मिला।",
+        "en": "Shiva and Parvati accepted Ganesha’s reasoning and praised his wisdom. They decided that his marriage would take place first. In this episode, reflection and reverence had answered the challenge.",
+        "gu": "શિવ અને પાર્વતીએ ગણેશની વાત સ્વીકારી અને બુદ્ધિના વખાણ કર્યા. ગણેશના લગ્ન પહેલાં કરવાનું નક્કી કર્યું. આ પ્રસંગમાં વિચાર અને શ્રદ્ધાથી પડકારનો ઉત્તર મળ્યો.",
+        "kn": "ಶಿವ ಮತ್ತು ಪಾರ್ವತಿ ಗಣೇಶನ ತರ್ಕ ಒಪ್ಪಿ ಅವನ ಬುದ್ಧಿಯನ್ನು ಮೆಚ್ಚಿದರು. ಗಣೇಶನ ಮದುವೆ ಮೊದಲು ನಡೆಯಬೇಕೆಂದು ನಿರ್ಧರಿಸಿದರು. ಈ ಪ್ರಸಂಗದಲ್ಲಿ ಚಿಂತನೆ ಮತ್ತು ಶ್ರದ್ಧೆಯಿಂದ ಸವಾಲಿಗೆ ಉತ್ತರ ಸಿಕ್ಕಿತು."
+      }
+    }
+  ]
+}

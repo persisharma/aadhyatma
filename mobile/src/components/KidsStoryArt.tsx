@@ -5,6 +5,7 @@ import { assetBaseUrl, remoteAssetRequest, type RemoteAssetManifest } from '@/da
 import kidsStoryManifestJson from '@/data/kidsStoryAssetManifest.json';
 import { useCachedAsset } from '@/utils/useCachedAsset';
 import { kidsStoryArtRetainedHeight } from '@/utils/kidsStoryArtFrame';
+import { coverRect } from '@/utils/coverRect';
 
 export { kidsStoryArtRetainedHeight };
 
@@ -43,14 +44,26 @@ export function kidsStoryArtRequest(art: string) {
   const stem = ART_STEMS[art];
   return stem ? remoteAssetRequest(kidsStoryManifest, stem, assetBaseUrl()) : null;
 }
-export default function KidsStoryArt({ art, label, resolvedUri, onLoad, onError }: {
-  art: string; label: string; resolvedUri?: string; onLoad?: () => void; onError?: () => void;
+/**
+ * Placement of a 4:5 illustration that covers a box (the listing thumb) with its
+ * reviewed retained band: anchored at the top, so the trimmed blank band at the
+ * bottom never shows; any extra width is cropped evenly from the sides.
+ */
+export function kidsStoryArtCoverGeometry(art: string, boxWidth: number, boxHeight: number) {
+  const rect = coverRect(4, 5 * kidsStoryArtRetainedHeight(art), boxWidth, boxHeight, 0.5, 0);
+  return { width: 4 * rect.scale, height: 5 * rect.scale, left: rect.left, top: rect.top };
+}
+
+/** `fill` covers its parent (absolute fill) instead of sizing itself from the width. */
+export default function KidsStoryArt({ art, label, resolvedUri, onLoad, onError, fill = false }: {
+  art: string; label: string; resolvedUri?: string; onLoad?: () => void; onError?: () => void; fill?: boolean;
 }) {
   const { colors } = useTheme();
   const [width, setWidth] = useState(0);
   const retainedHeight = kidsStoryArtRetainedHeight(art);
   const cachedUri = useCachedAsset(resolvedUri ? null : kidsStoryArtRequest(art));
   const uri = resolvedUri ?? cachedUri;
+  if (fill) return <KidsStoryArtFill art={art} label={label} uri={uri} onLoad={onLoad} onError={onError} />;
   return (
     <View
       accessibilityRole="image"
@@ -63,6 +76,26 @@ export default function KidsStoryArt({ art, label, resolvedUri, onLoad, onError 
       ) : (
         <Text style={{ color: colors.ink, padding: 20 }}>{label}</Text>
       )}
+    </View>
+  );
+}
+
+function KidsStoryArtFill({ art, label, uri, onLoad, onError }: {
+  art: string; label: string; uri: string | null | undefined; onLoad?: () => void; onError?: () => void;
+}) {
+  const { colors } = useTheme();
+  const [box, setBox] = useState({ width: 0, height: 0 });
+  const geometry = box.width && box.height ? kidsStoryArtCoverGeometry(art, box.width, box.height) : null;
+  return (
+    <View
+      accessibilityRole="image"
+      accessibilityLabel={label}
+      onLayout={event => setBox({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
+      style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, overflow: 'hidden', backgroundColor: colors.parchmentSoft }}
+    >
+      {uri && geometry ? (
+        <Image onLoad={onLoad} onError={onError} accessible={false} source={{ uri }} resizeMode="stretch" style={{ position: 'absolute', ...geometry }} />
+      ) : null}
     </View>
   );
 }

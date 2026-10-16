@@ -33,7 +33,7 @@ import SharePagePreview from './SharePagePreview';
  * once; Instagram carousel) and relabels the three rows above as "this page". With a
  * single page none of that renders — a verse share is exactly the sheet it always was.
  *
- * **Card language and text (§39.7).** `lang` is the sheet's own chrome; `cardLang` is
+ * **Card language and text (§39.8).** `lang` is the sheet's own chrome; `cardLang` is
  * what the card, caption and hashtags are written in — the reader's language by default,
  * switchable per share so a Hindi reader can send English (or Gujarati) to a relative.
  * "Send as text" hands the same reading over as one plain message, no image.

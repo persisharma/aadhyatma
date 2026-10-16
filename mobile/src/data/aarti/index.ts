@@ -8,6 +8,11 @@ import saraswatiAarti from './saraswati-aarti.json';
 import gayatriAarti from './gayatri-aarti.json';
 import khatuShyamAarti from './khatu-shyam-aarti.json';
 import omJaiLakshmiMata from './om-jai-lakshmi-mata.json';
+import jayAdhyaShakti from './jay-adhya-shakti.json';
+import shaniAarti from './shani-aarti.json';
+import dattatreyaAarti from './dattatreya-aarti.json';
+
+export { aartiIdByIndex, aartiIndexById, type AartiId } from './ids';
 
 export type AartiVerse = {
   id: string;
@@ -47,35 +52,10 @@ export const aartiCollection: readonly AartiData[] = [
   gayatriAarti as AartiData,
   khatuShyamAarti as AartiData,
   omJaiLakshmiMata as AartiData,
+  jayAdhyaShakti as AartiData,
+  shaniAarti as AartiData,
+  dattatreyaAarti as AartiData,
 ];
-
-/**
- * Canonical aarti sourceIds in their fixed display order. The position in this
- * array is the value used by `AartiReader`'s `aartiIndex` route param, and is
- * also the suffix in the legacy `aarti-N` sourceId form (migrated on hydrate).
- */
-export const aartiIdByIndex = [
-  'om-jai-jagdish',
-  'hanuman-aarti',
-  'jai-ganesh-deva',
-  'om-jai-shiv-omkara',
-  'jai-ambe-gauri',
-  'aarti-kunj-bihari',
-  'saraswati-aarti',
-  'gayatri-aarti',
-  'khatu-shyam-aarti',
-  // Appended, never inserted: the index is persisted in legacy `aarti-N` ids.
-  'om-jai-lakshmi-mata',
-] as const satisfies readonly string[];
-
-export type AartiId = (typeof aartiIdByIndex)[number];
-
-export const aartiIndexById: Readonly<Record<AartiId, number>> = Object.freeze(
-  aartiIdByIndex.reduce<Record<string, number>>((acc, id, i) => {
-    acc[id] = i;
-    return acc;
-  }, {}) as Record<AartiId, number>
-);
 
 export const aartiTitleHi = 'आरती संग्रह';
 export const aartiTitleEn = 'Aarti Collection';
@@ -88,8 +68,8 @@ export function getAarti(index: number): AartiData {
 }
 
 (function assertAartiInvariants() {
-  if (aartiCollection.length !== 10) {
-    throw new Error(`aarti: expected 10 aartis, got ${aartiCollection.length}`);
+  if (aartiCollection.length !== 13) {
+    throw new Error(`aarti: expected 13 aartis, got ${aartiCollection.length}`);
   }
   const seenIds = new Set<string>();
   let totalVerses = 0;

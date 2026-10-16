@@ -132,6 +132,12 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'sunrise',
     source: `${SOURCE_BUNDLED} Surya Ashtakam source references in ashtakam/surya-ashtakam.json.`,
   },
+  'surya-chalisa': {
+    purposes: ['health', 'morning-practice', 'devotion'],
+    bestDays: [0],
+    bestTime: 'sunrise',
+    source: `${SOURCE_BUNDLED} Surya Chalisa source references in surya-chalisa/surya-chalisa.json.`,
+  },
   'surya-namaskar': {
     purposes: ['health', 'morning-practice'],
     bestDays: [0],

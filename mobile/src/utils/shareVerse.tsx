@@ -236,7 +236,7 @@ type PendingCapture = (
 
 type ProseChooser = {
   content: ShareableProse;
-  /** Card language (§39.7): pages, caption and hashtags. Starts as `uiLang`. */
+  /** Card language (§39.8): pages, caption and hashtags. Starts as `uiLang`. */
   lang: Lang;
   /** The reader's language — the sheet's own chrome and alerts. */
   uiLang: Lang;
@@ -303,7 +303,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     verse: ShareableVerse;
     /** The reader's language — the sheet's chrome and alerts. */
     lang: Lang;
-    /** What the card + caption are written in (§39.7); starts as `lang`. */
+    /** What the card + caption are written in (§39.8); starts as `lang`. */
     cardLang: Lang;
     opts?: ShareOptions;
   } | null>(null);
@@ -719,7 +719,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   }, [prose]);
 
   /**
-   * "Send as text" (§39.7): one plain message to the OS sheet. No capture, so the
+   * "Send as text" (§39.8): one plain message to the OS sheet. No capture, so the
    * sheet's dismissal has to be waited out explicitly before the OS sheet presents.
    */
   const sendText = useCallback(async (message: string, moment?: 'verse-shared') => {

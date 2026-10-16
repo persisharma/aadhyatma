@@ -10,8 +10,11 @@ assert.equal(canonicalSourceId('aarti-6'), 'saraswati-aarti');
 assert.equal(canonicalSourceId('aarti-7'), 'gayatri-aarti');
 assert.equal(canonicalSourceId('aarti-8'), 'khatu-shyam-aarti');
 assert.equal(canonicalSourceId('aarti-9'), 'om-jai-lakshmi-mata');
+assert.equal(canonicalSourceId('aarti-10'), 'jay-adhya-shakti');
+assert.equal(canonicalSourceId('aarti-11'), 'shani-aarti');
+assert.equal(canonicalSourceId('aarti-12'), 'dattatreya-aarti');
 // Out-of-range index falls through unchanged so the consumer can decide.
-assert.equal(canonicalSourceId('aarti-10'), 'aarti-10');
+assert.equal(canonicalSourceId('aarti-13'), 'aarti-13');
 assert.equal(canonicalSourceId('aarti-x'), 'aarti-x');
 // Already canonical, leave alone.
 assert.equal(canonicalSourceId('om-jai-jagdish'), 'om-jai-jagdish');

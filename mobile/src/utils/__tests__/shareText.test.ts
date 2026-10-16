@@ -3,7 +3,7 @@ import { SMART_LINK } from '@/data/shareLinks';
 import type { ProsePage } from '@/utils/shareCardPages';
 import type { ShareableVerse } from '@/utils/shareVerse';
 
-/** "Send as text" (design.md §39.7): the reading as one plain message, in the card's language. */
+/** "Send as text" (design.md §39.8): the reading as one plain message, in the card's language. */
 
 const VERSE: ShareableVerse = {
   sourceId: 'bhagavad-gita',

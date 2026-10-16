@@ -1,5 +1,5 @@
 /**
- * "Send as text" (design.md §39.7): the same reading the card shows, as one plain
+ * "Send as text" (design.md §39.8): the same reading the card shows, as one plain
  * message — for a family group on low data, a reader who wants to paste it into a
  * note, or a recipient whose phone renders images poorly.
  *

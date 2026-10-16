@@ -64,6 +64,8 @@ export const lightColors = {
   newBadgeBg: 'rgba(184, 98, 27, 0.16)',
   newBadgeText: '#8A3E0B',
 
+  // The themed artwork is the primary reading surface; the parchment veil only
+  // softens it enough to keep verse labels legible without washing it out.
   overlayTop: 'rgba(243, 231, 201, 0.85)',
   overlayUpper: 'rgba(243, 231, 201, 0.55)',
   overlayLower: 'rgba(243, 231, 201, 0.75)',

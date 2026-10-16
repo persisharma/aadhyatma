@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
-last_verified_date: 2026-10-12
+sources: [mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
+last_verified_date: 2026-10-15
 confidence: high
 status: current
 ---
@@ -107,7 +107,9 @@ physical performance remain open. Later Vidhi
 steps show the divider without repeating art. Semantic guide art follows declared deities and
 personal-tithi guides remain neutral. Individual reader paging/scroll logic is still separate.
 Daily Bhakti's rotating verse card omits the banner after the October 12 reading-space
-correction. Its bundled parchment needs no remote lookup, and `Ornament compact` replaces
+correction but keeps its verse's reader-page plate (restored 14 Oct). Every verse page keeps
+its semantic `BackgroundLayer` plate whether or not it shows the banner — the banner is
+additive, never a background replacement. `Ornament compact` replaces
 the nested 80pt vertical margins with 12pt total. Shared reading-size tokens and full text stay
 intact; long verses/meanings still scroll. Source-specific share backgrounds are unchanged.
 `ProseParagraph` preserves complete source strings while giving iOS Fabric one extra point of
@@ -122,6 +124,14 @@ registry in `data/ashtakam/index.ts` is the source of truth; the matching `data/
 makes an active entry discoverable through category, deity, search, routine, progress, and
 purpose surfaces. Rudrashtakam is the current reference addition: 8 hymn verses plus its
 phalashruti, represented as 9 reader pages without creating a new deity or category.
+
+The Aarti collection has thirteen payloads; its category also lists the `ram-aarti` alias to
+Ram Stuti. `aarti/ids.ts` is append-only because a legacy `aarti-N` progress/bookmark id
+persists its position. `shani-aarti` is index 11, a five-stanza reading tagged `shani`; its
+source JSON records the line-by-line HinduNidhi/SanskritDocuments collation and spelling
+variants. `dattatreya-aarti` is index 12, Sant Eknath's Marathi text with four stanzas and
+one refrain; its `language` and title mark the source language. The Drik Panchang candidate
+returned HTTP 403 during this authoring pass.
 
 **Tests:** `readerAutoAdvance.test.tsx` enforces the auto-advance contract for every
 multi-chapter reader (transition injected at chapter 1's tail, prev-transition at chapter 2's

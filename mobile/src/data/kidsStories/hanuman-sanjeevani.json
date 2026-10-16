@@ -1,0 +1,160 @@
+{
+  "id": "hanuman-sanjeevani",
+  "deityId": "hanuman",
+  "ageMin": 6,
+  "coverArt": "sj01",
+  "title": {
+    "hi": "हनुमान और संजीवनी",
+    "en": "Hanuman and the Healing Herbs",
+    "gu": "હનુમાન અને સંજીવની",
+    "kn": "ಹನುಮಂತ ಮತ್ತು ಸಂಜೀವಿನಿ"
+  },
+  "description": {
+    "hi": "लक्ष्मण के लिए त्वरित यात्रा",
+    "en": "A race to heal Lakshmana",
+    "gu": "લક્ષ્મણ માટે ઝડપી યાત્રા",
+    "kn": "ಲಕ್ಷ್ಮಣನಿಗಾಗಿ ತುರ್ತು ಪಯಣ"
+  },
+  "takeaway": {
+    "hi": "संपादकीय सीख: कठिन समय में साहस और जानकार सहयोग दोनों काम आते हैं।",
+    "en": "Editorial reflection: courage and skilled help work together in a crisis.",
+    "gu": "સંપાદકીય વિચાર: સંકટમાં હિંમત અને જાણકારની સહાય બંને કામ આવે છે.",
+    "kn": "ಸಂಪಾದಕೀಯ ಚಿಂತನೆ: ಸಂಕಟದಲ್ಲಿ ಧೈರ್ಯ ಮತ್ತು ಪರಿಣತರ ನೆರವು ಜೊತೆಯಾಗಿ ಕೆಲಸ ಮಾಡುತ್ತವೆ."
+  },
+  "sourceNote": {
+    "hi": "रावण की शक्ति से लक्ष्मण के घायल होने वाला बाद का प्रसंग। यहाँ युद्‌ध 101 और शास्त्री 102 एक ही क्रम हैं। इसे इंद्रजित के बाद की पहले वाली औषधि-यात्रा से नहीं मिलाया गया। चार औषधियाँ हैं; कालनेमि या सूर्योदय की समय-सीमा नहीं जोड़ी गई। यह चिकित्सा-निर्देश नहीं है।",
+    "en": "This is the later episode after Ravana’s weapon wounds Lakshmana: Yuddha 101 corresponds to Shastri 102. It is not merged with the earlier herb journey after Indrajit. Four herbs are requested; no Kalanemi or sunrise deadline is added. This story is not medical advice.",
+    "gu": "આ રાવણની શક્તિથી લક્ષ્મણ ઘાયલ થયા પછીનો પ્રસંગ છે; યુદ્ધ 101 અને શાસ્ત્રી 102નો ક્રમ એક છે. ઇન્દ્રજિત પછીની પહેલી ઔષધિયાત્રા સાથે ભેળવ્યું નથી. ચાર ઔષધિ છે; કાલનેમિ કે સૂર્યોદયની મર્યાદા નથી. આ સારવારની સૂચના નથી.",
+    "kn": "ಇದು ರಾವಣನ ಆಯುಧದಿಂದ ಲಕ್ಷ್ಮಣ ಗಾಯಗೊಂಡ ನಂತರದ ಘಟನೆ; ಯುದ್ಧ 101 ಶಾಸ್ತ್ರಿ 102ಕ್ಕೆ ಹೊಂದುತ್ತದೆ. ಇಂದ್ರಜಿತನ ನಂತರದ ಹಿಂದಿನ ಔಷಧಿ ಯಾನದೊಂದಿಗೆ ಬೆರೆಸಿಲ್ಲ. ನಾಲ್ಕು ಔಷಧಿಗಳು; ಕಾಲನೇಮಿ ಅಥವಾ ಸೂರ್ಯೋದಯದ ಗಡುವು ಸೇರಿಸಿಲ್ಲ. ಇದು ಚಿಕಿತ್ಸೆಯ ಸೂಚನೆಯಲ್ಲ."
+  },
+  "source": {
+    "baseText": "Valmiki Ramayana, Yuddha 101 (valmikiramayan.net); Shastri Yuddha 102",
+    "retrievedOn": "2026-10-15",
+    "referenceUrls": [
+      "https://www.valmikiramayan.net/utf8/yuddha/sarga101/yuddhaitrans101.htm",
+      "https://www.wisdomlib.org/hinduism/book/the-ramayana-of-valmiki/d/doc424731.html"
+    ],
+    "notes": "This is the later episode after Ravana’s weapon wounds Lakshmana: Yuddha 101 corresponds to Shastri 102. It is not merged with the earlier herb journey after Indrajit. Four herbs are requested; no Kalanemi or sunrise deadline is added. This story is not medical advice."
+  },
+  "pages": [
+    {
+      "id": "lakshmana-in-danger",
+      "art": "sj01",
+      "source": "Valmiki Ramayana, Yuddha 101.1–24 (Shastri 102)",
+      "title": {
+        "hi": "लक्ष्मण संकट में",
+        "en": "Lakshmana in danger",
+        "gu": "લક્ષ્મણ સંકટમાં",
+        "kn": "ಲಕ್ಷ್ಮಣ ಅಪಾಯದಲ್ಲಿ"
+      },
+      "text": {
+        "hi": "लंका के युद्ध में रावण की शक्ति लगने से लक्ष्मण मूर्छित हो गए। राम बहुत दुखी हुए और वैद्य सुषेण से सहायता माँगी। सुषेण ने लक्ष्मण को देखकर उनकी स्थिति जाँची।",
+        "en": "During the war in Lanka, Ravana’s weapon struck Lakshmana, leaving him unconscious. Rama was deeply distressed and asked the healer Sushena for help. Sushena examined Lakshmana carefully.",
+        "gu": "લંકાના યુદ્ધમાં રાવણની શક્તિ વાગતાં લક્ષ્મણ મૂર્છિત થયા. રામ ખૂબ દુઃખી થયા અને વૈદ્ય સુષેણની મદદ માગી. સુષેણે લક્ષ્મણને તપાસ્યા.",
+        "kn": "ಲಂಕೆಯ ಯುದ್ಧದಲ್ಲಿ ರಾವಣನ ಆಯುಧ ತಗುಲಿ ಲಕ್ಷ್ಮಣ ಪ್ರಜ್ಞೆ ಕಳೆದುಕೊಂಡ. ದುಃಖಿತ ರಾಮ ವೈದ್ಯ ಸುಷೇಣನ ನೆರವು ಕೇಳಿದ. ಸುಷೇಣ ಲಕ್ಷ್ಮಣನ ಸ್ಥಿತಿಯನ್ನು ಗಮನದಿಂದ ಪರೀಕ್ಷಿಸಿದ."
+      }
+    },
+    {
+      "id": "sushenas-instructions",
+      "art": "sj02",
+      "source": "Valmiki Ramayana, Yuddha 101.25–34 (Shastri 102)",
+      "title": {
+        "hi": "सुषेण का निर्देश",
+        "en": "Sushena’s instructions",
+        "gu": "સુષેણની સૂચના",
+        "kn": "ಸುಷೇಣನ ಸೂಚನೆ"
+      },
+      "text": {
+        "hi": "सुषेण ने कहा कि लक्ष्मण जीवित हैं। उन्होंने हनुमान से पर्वत पर उगने वाली चार विशेष औषधियाँ लाने को कहा। लक्ष्मण की सहायता का मार्ग जानकर हनुमान तुरंत यात्रा पर निकल पड़े।",
+        "en": "Sushena said that Lakshmana was still alive. He asked Hanuman to bring four special herbs from the mountain. With a way to help Lakshmana now clear, Hanuman set out without delay.",
+        "gu": "સુષેણે કહ્યું કે લક્ષ્મણ જીવિત છે. તેમણે પર્વત પર ઊગતી ચાર વિશેષ ઔષધિ લાવવા હનુમાનને કહ્યું. મદદનો માર્ગ જાણીને હનુમાન તરત નીકળ્યા.",
+        "kn": "ಲಕ್ಷ್ಮಣ ಜೀವಂತನಿದ್ದಾನೆಂದು ಸುಷೇಣ ಹೇಳಿದ. ಬೆಟ್ಟದಿಂದ ನಾಲ್ಕು ವಿಶೇಷ ಔಷಧಿಗಳನ್ನು ತರಲು ಹನುಮಂತನಿಗೆ ಸೂಚಿಸಿದ. ನೆರವಿನ ಮಾರ್ಗ ತಿಳಿದ ಹನುಮಂತ ತಕ್ಷಣ ಹೊರಟ."
+      }
+    },
+    {
+      "id": "searching-the-herbs",
+      "art": "sj03",
+      "source": "Valmiki Ramayana, Yuddha 101.34–37 (Shastri 102)",
+      "title": {
+        "hi": "औषधियों की खोज",
+        "en": "Searching for the herbs",
+        "gu": "ઔષધિઓની શોધ",
+        "kn": "ಔಷಧಿಗಳ ಹುಡುಕಾಟ"
+      },
+      "text": {
+        "hi": "पर्वत पहुँचकर हनुमान ने औषधियाँ खोजीं। पर वे सही पौधों को पहचान नहीं पाए। देर करना उचित नहीं था। उन्होंने सोचा कि ऐसा उपाय करें जिससे सुषेण स्वयं औषधियाँ चुन सकें।",
+        "en": "Hanuman reached the mountain and searched for the herbs, but could not identify the right plants. Delay would not help. He considered a way to let Sushena choose the herbs himself.",
+        "gu": "પર્વત પર હનુમાને ઔષધિઓ શોધી, પણ યોગ્ય છોડ ઓળખી શક્યા નહીં. મોડું કરવું યોગ્ય નહોતું. સુષેણ પોતે ઔષધિ પસંદ કરી શકે એવો ઉપાય વિચાર્યો.",
+        "kn": "ಬೆಟ್ಟ ತಲುಪಿದ ಹನುಮಂತ ಔಷಧಿಗಳನ್ನು ಹುಡುಕಿದರೂ ಸರಿಯಾದ ಗಿಡಗಳನ್ನು ಗುರುತಿಸಲಾಗಲಿಲ್ಲ. ತಡ ಮಾಡುವುದು ಸರಿಯಲ್ಲ. ಸುಷೇಣನೇ ಔಷಧಿ ಆಯ್ಕೆ ಮಾಡಲು ಸಾಧ್ಯವಾಗುವ ಉಪಾಯ ಯೋಚಿಸಿದ."
+      }
+    },
+    {
+      "id": "carrying-the-peak",
+      "art": "sj04",
+      "source": "Valmiki Ramayana, Yuddha 101.37–40 (Shastri 102)",
+      "title": {
+        "hi": "पर्वत का शिखर",
+        "en": "Carrying the peak",
+        "gu": "પર્વતનું શિખર",
+        "kn": "ಪರ್ವತ ಶಿಖರ ಹೊತ್ತು"
+      },
+      "text": {
+        "hi": "हनुमान ने औषधियों वाला पर्वत-शिखर उठा लिया। दोनों हाथों से उसे सँभालकर वे लंका की ओर लौटे। वे पहचान का अनुमान लगाने के बजाय वैद्य तक सभी आवश्यक पौधे पहुँचा रहे थे।",
+        "en": "Hanuman lifted the herb-bearing mountain peak. Supporting it with both hands, he flew back toward Lanka. Rather than guessing, he was bringing the plants to the healer who could recognise them.",
+        "gu": "હનુમાને ઔષધિવાળું પર્વતશિખર ઊંચક્યું. બંને હાથથી સાચવી લંકા તરફ ઊડ્યા. અંદાજ કરવાને બદલે ઓળખી શકે તેવા વૈદ્ય સુધી છોડ લઈ જતા હતા.",
+        "kn": "ಹನುಮಂತ ಔಷಧಿಗಳಿದ್ದ ಪರ್ವತ ಶಿಖರ ಎತ್ತಿದ. ಎರಡೂ ಕೈಗಳಿಂದ ಹಿಡಿದು ಲಂಕೆಯತ್ತ ಹಾರಿದ. ಊಹಿಸುವ ಬದಲು ಗುರುತಿಸಬಲ್ಲ ವೈದ್ಯನ ಬಳಿಗೆ ಗಿಡಗಳನ್ನು ತರುತ್ತಿದ್ದ."
+      }
+    },
+    {
+      "id": "return-to-the-healer",
+      "art": "sj05",
+      "source": "Valmiki Ramayana, Yuddha 101.40–44 (Shastri 102)",
+      "title": {
+        "hi": "वैद्य के पास वापसी",
+        "en": "Back to the healer",
+        "gu": "વૈદ્ય પાસે પાછા",
+        "kn": "ವೈದ್ಯನ ಬಳಿಗೆ ವಾಪಸು"
+      },
+      "text": {
+        "hi": "हनुमान ने लौटकर शिखर नीचे रखा और सुषेण को बताया कि वे औषधि पहचान नहीं सके। सुषेण ने पर्वत से सही औषधि चुनी। हनुमान का प्रयास अब वैद्य की जानकारी से जुड़ गया।",
+        "en": "Hanuman set the peak down and explained that he had been unable to identify the herbs. Sushena selected the right herb from it. Hanuman’s effort now joined the healer’s knowledge.",
+        "gu": "હનુમાને શિખર નીચે મૂકી સુષેણને કહ્યું કે ઔષધિ ઓળખી શક્યા નહોતા. સુષેણે યોગ્ય ઔષધિ પસંદ કરી. હનુમાનનો પ્રયત્ન હવે વૈદ્યના જ્ઞાન સાથે જોડાયો.",
+        "kn": "ಹನುಮಂತ ಶಿಖರ ಇಳಿಸಿ ಔಷಧಿಗಳನ್ನು ಗುರುತಿಸಲಾಗಲಿಲ್ಲವೆಂದು ಸುಷೇಣನಿಗೆ ತಿಳಿಸಿದ. ಸುಷೇಣ ಅದರಿಂದ ಸರಿಯಾದ ಔಷಧಿ ಆಯ್ದ. ಹನುಮಂತನ ಪ್ರಯತ್ನ ವೈದ್ಯನ ಜ್ಞಾನದೊಂದಿಗೆ ಸೇರಿತು."
+      }
+    },
+    {
+      "id": "lakshmana-recovers",
+      "art": "sj06",
+      "source": "Valmiki Ramayana, Yuddha 101.45–50 (Shastri 102)",
+      "title": {
+        "hi": "लक्ष्मण को चेतना",
+        "en": "Lakshmana wakes",
+        "gu": "લક્ષ્મણને ચેતના",
+        "kn": "ಲಕ್ಷ್ಮಣನಿಗೆ ಪ್ರಜ್ಞೆ"
+      },
+      "text": {
+        "hi": "कथा में सुषेण ने औषधि तैयार करके लक्ष्मण को उसकी सुगंध दी। लक्ष्मण को चेतना लौटी और वे उठ बैठे। राम और साथियों का भय राहत में बदल गया।",
+        "en": "In the story, Sushena prepared the herb and held its fragrance near Lakshmana. Lakshmana regained consciousness and sat up. Rama and the companions felt their fear turn to relief.",
+        "gu": "કથામાં સુષેણે ઔષધિ તૈયાર કરી લક્ષ્મણને તેની સુગંધ આપી. લક્ષ્મણને ચેતના આવી અને બેઠા થયા. રામ અને સાથીઓનો ભય રાહતમાં બદલાયો.",
+        "kn": "ಕಥೆಯಲ್ಲಿ ಸುಷೇಣ ಔಷಧಿ ಸಿದ್ಧಪಡಿಸಿ ಲಕ್ಷ್ಮಣನಿಗೆ ಅದರ ಸುಗಂಧ ನೀಡಿದ. ಲಕ್ಷ್ಮಣನಿಗೆ ಪ್ರಜ್ಞೆ ಮರಳಿ ಎದ್ದು ಕುಳಿತ. ರಾಮ ಮತ್ತು ಸಂಗಡಿಗರ ಭಯ ನಿವಾರಣೆಯಾಯಿತು."
+      }
+    },
+    {
+      "id": "brothers-reunited",
+      "art": "sj07",
+      "source": "Valmiki Ramayana, Yuddha 101.51–end (Shastri 102)",
+      "title": {
+        "hi": "भाइयों का मिलन",
+        "en": "The brothers reunited",
+        "gu": "ભાઈઓનું મિલન",
+        "kn": "ಸೋದರರ ಪುನರ್ಮಿಲನ"
+      },
+      "text": {
+        "hi": "राम ने स्वस्थ हुए लक्ष्मण को गले लगाया। संकट के बीच हनुमान की तत्परता और सुषेण की चिकित्सा से सहायता मिली। यह प्रसंग साथ मिलकर किए गए प्रयास और लौटती आशा पर ठहरता है।",
+        "en": "Rama embraced Lakshmana after his recovery. Hanuman’s prompt action and Sushena’s skilled care had helped in the crisis. The episode closes on their shared effort and renewed hope.",
+        "gu": "રામે સ્વસ્થ લક્ષ્મણને ભેટી લીધા. સંકટમાં હનુમાનની તત્પરતા અને સુષેણની સારવારથી સહાય મળી. કથા સૌના સહિયારા પ્રયત્ન અને નવી આશા પર પૂરી થાય છે.",
+        "kn": "ಚೇತರಿಸಿಕೊಂಡ ಲಕ್ಷ್ಮಣನನ್ನು ರಾಮ ಅಪ್ಪಿಕೊಂಡ. ಸಂಕಟದಲ್ಲಿ ಹನುಮಂತನ ತ್ವರಿತ ಪ್ರಯತ್ನ ಮತ್ತು ಸುಷೇಣನ ಚಿಕಿತ್ಸೆಯಿಂದ ನೆರವಾಯಿತು. ಒಗ್ಗಟ್ಟಿನ ಪ್ರಯತ್ನ ಮತ್ತು ಹೊಸ ಭರವಸೆಯೊಂದಿಗೆ ಪ್ರಸಂಗ ಮುಗಿಯುತ್ತದೆ."
+      }
+    }
+  ]
+}

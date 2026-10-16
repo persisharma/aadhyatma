@@ -65,6 +65,8 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   KidsStoryLibrary: undefined;
   KidsStoryDeity: { deityId: StoryDeityId };
   KidsStoryReader: { storyId: string; pageId?: string };
+  ComicChapters: { comicId: string };
+  ComicReader: { comicId: string; episodeId?: string; panelId?: string };
   /**
    * जिज्ञासा (PRD-41). `seed` is ask-from-context: the surface the user came
    * from names an entity so "iska bhog kya hai" resolves against it.
