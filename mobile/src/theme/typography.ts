@@ -128,7 +128,7 @@ export const typography = {
   // body a step larger than the Indic sizes, matching their apparent size.
   listingEyebrow: {
     fontSize: 13,
-    lineHeight: 18,
+    lineHeight: 20,
   },
   listingTitle: {
     fontSize: 17,

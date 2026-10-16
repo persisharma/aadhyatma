@@ -3736,7 +3736,7 @@ The approved final set matches the saved Style 3 template and is recorded in `do
 
 - Shell: `cardActiveFrom → cardActiveTo` gradient, 1 px `cardActiveBorder`, radius `lg`, padding 14, gap 14, `elevation.lifted`; pressed opacity 0.86.
 - Thumb: 92 wide, `alignSelf: stretch`, minimum height 115 (4:5), radius `sm`, `parchmentSoft` while loading. The art fills it cover-cropped: `KidsStoryArt fill` (top-anchored so the reviewed blank band never shows), `ComicArt fill` (only the panel's own frame), `ListingThumbImage` (bundled image with a `focusX` focal point). Each unit shows its own key scene for its topic.
-- Eyebrow (optional): the sequence only — `प्रसंग N`, `पाठ N`, `दिन N`. `listingEyebrow` 13/18 bold script face in `saffronDeep`; English uses the uppercase Inter `sectionLabel` pill style (`EPISODE 1`).
+- Eyebrow (optional): the sequence only — `प्रसंग N`, `पाठ N`, `दिन N`. `listingEyebrow` 13/20 bold script face (1.54× — the earlier 13/18 sat below the 1.45× Indic floor and sliced the top of ि in `दिन N`) in `saffronDeep`; English uses the uppercase Inter `sectionLabel` pill style (`EPISODE 1`).
 - Title: the reading language only, `numberOfLines={2}`, `ink`. `listingTitle` 17/25 bold script face; English `listingTitleLatin` 16/22 Cormorant italic.
 - Description (optional): one line, `inkSoft`, `listingBody` 12/18 (English `listingBodyLatin` 13/18), script body face. Copy is at most 32 characters per language and is written to fit a 360 dp phone's ~148 pt column; it is never left to truncation.
 - Meta: the unit count only (`4 पृष्ठ` / `4 pages`), `inkMuted`, body size.
