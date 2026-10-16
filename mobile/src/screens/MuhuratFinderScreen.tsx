@@ -8,6 +8,7 @@ import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ListCard, { CardThumb } from '@/components/ListCard';
+import StoryIcon from '@/components/StoryIcon';
 import { EVENT_RULES, GROUP_LABELS, GROUP_ORDER, type OccasionId } from '@/panchang/eventMuhurat';
 import { useMuhuratFinderWarmup } from '@/panchang/useMuhuratFinder';
 import type { PanchangStackParamList } from '@/navigation/types';
@@ -134,7 +135,7 @@ export default function MuhuratFinderScreen({ navigation }: Props) {
           testID="muhurat-abujh-door"
           accessibilityLabel={contentByLang(lang, 'विशेष शुभ दिन', 'Special auspicious days')}
           onPress={() => navigation.navigate('AbujhDays')}
-          leading={<CardThumb><Text style={glyphStyle}>॥</Text></CardThumb>}
+          leading={<CardThumb><StoryIcon name="muhurat" size={40} /></CardThumb>}
           style={{ marginTop: spacing.sm }}
         >
           <Text style={titleStyle}>{contentByLang(lang, 'विशेष शुभ दिन', 'Special auspicious days')}</Text>

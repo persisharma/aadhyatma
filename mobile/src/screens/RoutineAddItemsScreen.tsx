@@ -10,6 +10,9 @@ import { useRoutines } from '@/contexts/RoutineContext';
 import { library, type LibraryEntry } from '@/data/texts';
 import { deityForWeekday, WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
+import DeityIcon from '@/components/DeityIcon';
+import CategoryIcon from '@/components/CategoryIcon';
+import { deityIconKey } from '@/data/deities';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'RoutineAddItems'>;
@@ -119,9 +122,10 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
           return (
             <View key={entry.id} style={[styles.row, { borderBottomColor: colors.divider }]}>
               <View style={[styles.thumb, { backgroundColor: colors.saffronTint, borderRadius: radii.sm }]}>
-                <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 16, color: colors.saffronDeep }}>
-                  {entry.thumb}
-                </Text>
+                {/* Same art as the entry's library card: first deity, else its category. */}
+                {entry.deities[0]
+                  ? <DeityIcon iconKey={deityIconKey(entry.deities[0])} fallbackText={entry.thumb} size={28} />
+                  : <CategoryIcon iconKey={entry.category} size={30} />}
               </View>
               <View style={styles.info}>
                 <View style={styles.nameRow}>
