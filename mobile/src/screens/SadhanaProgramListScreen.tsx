@@ -9,6 +9,9 @@ import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { RoutineShell } from '@/components/RoutineShell';
+import DeityIcon from '@/components/DeityIcon';
+import StoryIcon from '@/components/StoryIcon';
+import { deityIconKeyFor } from '@/data/deities';
 import { getRandomDeityBackground } from '@/data/backgrounds';
 import { useSadhana } from '@/contexts/SadhanaContext';
 import { SADHANA_PROGRAMS } from '@/data/sadhana/programs';
@@ -85,11 +88,10 @@ function ProgramCard({
         end={{ x: 1, y: 1 }}
         style={[styles.thumb, { borderRadius: radii.md }]}
       >
-        <Text
-          style={{ color: colors.parchmentSoft, fontFamily: typography.thumb.fontFamily, fontSize: typography.thumb.fontSize }}
-        >
-          {program.thumb}
-        </Text>
+        {/* Painted deity art, as on library cards; the Sankalp art when a program has no deity. */}
+        {deityIconKeyFor(program.deity)
+          ? <DeityIcon iconKey={deityIconKeyFor(program.deity)} fallbackText={program.thumb} />
+          : <StoryIcon name="japam" size={36} />}
       </LinearGradient>
 
       <View style={styles.meta}>
