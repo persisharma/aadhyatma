@@ -77,32 +77,6 @@ env:
 - waitForAnimationToEnd: { timeout: 1000 }
 - scrollUntilVisible:
     element:
-      text: "Jai\\ Jai\\ Shri\\ Shanidev\\..*Tap to open\\."
-    direction: DOWN
-    visibilityPercentage: 60
-    timeout: 15000
-- tapOn: "Jai\\ Jai\\ Shri\\ Shanidev\\..*Tap to open\\."
-- waitForAnimationToEnd: { timeout: 1000 }
-- extendedWaitUntil:
-    visible: "जय\\ जय\\ श्री\\ शनिदेव\\ भक्तन\\ हितकारी।.*"
-    timeout: 90000
-- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-shani-aarti
-- tapOn: "English"
-- assertVisible: "Jai\\ jai\\ Shri\\ Shanidev\\ bhaktan\\ hitkari\\..*"
-- tapOn: "Hindi"
-- repeat:
-    times: 4
-    commands:
-      - swipe:
-          start: "80%, 45%"
-          end: "20%, 45%"
-          duration: 600
-      - waitForAnimationToEnd: { timeout: 1000 }
-- assertVisible: "देव\\ दनुज\\ ऋषि\\ मुनि,\\ सुमिरत\\ नर\\ नारी।.*"
-- tapOn: "Back"
-- waitForAnimationToEnd: { timeout: 1000 }
-- scrollUntilVisible:
-    element:
       text: "Om\\ Jai\\ Yaksha\\ Kuber\\ Hare\\..*Tap to open\\."
     direction: DOWN
     visibilityPercentage: 60
@@ -281,6 +255,32 @@ env:
           duration: 600
       - waitForAnimationToEnd: { timeout: 1000 }
 - assertVisible: "जो\\ नर\\ आरती\\ पढ़े\\ पढ़ावे\\ माँ,\\ जो\\ नर\\ आरती\\ सुने\\ सुनावे\\ माँ।.*"
+- tapOn: "Back"
+- waitForAnimationToEnd: { timeout: 1000 }
+- scrollUntilVisible:
+    element:
+      text: "Shani\\ Dev\\ Aarti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 15000
+- tapOn: "Shani\\ Dev\\ Aarti\\..*Tap to open\\."
+- waitForAnimationToEnd: { timeout: 1000 }
+- extendedWaitUntil:
+    visible: "जय\\ जय\\ श्री\\ शनिदेव\\ भक्तन\\ हितकारी\\ ।.*"
+    timeout: 90000
+- takeScreenshot: e2e-shots/aarti-expansion/${PLATFORM}-${READING_SIZE}-shani-aarti
+- tapOn: "English"
+- assertVisible: "Jai\\ jai\\ Shri\\ Shanidev\\ bhaktan\\ hitkari\\..*"
+- tapOn: "Hindi"
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "देव\\ दनुज\\ ऋषि\\ मुनि\\ सुमरिन\\ नर\\ नारी\\ ।.*"
 - tapOn: "Back"
 - waitForAnimationToEnd: { timeout: 1000 }
 - stopApp:

@@ -181,7 +181,7 @@ test.each([
   assert.ok(!renderedText.includes(firstVerse.lines[0]), 'no Om Jai Jagdish verse leaks in');
 });
 
-// All newly appended compositions must dispatch their own first and last pages.
+// All audited compositions, including main’s Shani edition, dispatch their first and last pages.
 test.each(["om-jai-gange-mata", "ambe-tu-hai-jagdambe-kali", "shani-aarti", "kubera-aarti", "santoshi-mata-aarti", "ahoi-mata-aarti", "vaishno-devi-aarti", "ekadashi-mata-aarti", "tulsi-aarti", "shakambhari-aarti"] as const)('renders the sourced aarti %s in both languages', (id) => {
   const index = getActualData.aartiIndexById[id];
   const aarti = getActualData.getAarti(index);
@@ -207,4 +207,52 @@ test.each(["om-jai-gange-mata", "ambe-tu-hai-jagdambe-kali", "shani-aarti", "kub
       trees.splice(trees.indexOf(tree!), 1);
     }
   }
+});
+
+test('opens Shani Dev Aarti by its appended aartiIndex', () => {
+  const index = getActualData.aartiIndexById['shani-aarti'];
+  assert.equal(index, 11, 'Shani Aarti is appended after Jay Adhya Shakti');
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+  act(() => {
+    tree = createReader(
+      <GitaLanguageProvider initialLang="hi">
+        <ShareProvider>
+          <AartiReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { aartiIndex: index, initialIndex: 0 } } as ReaderProps['route']}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  const renderedText = tree!.root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+  assert.ok(renderedText.includes('जय जय श्री शनिदेव भक्तन हितकारी'));
+  assert.ok(!renderedText.includes(firstVerse.lines[0]));
+});
+
+test('opens Marathi Dattatreya Aarti by its appended aartiIndex', () => {
+  const index = getActualData.aartiIndexById['dattatreya-aarti'];
+  assert.equal(index, 12, 'Dattatreya Aarti is appended after Shani Aarti');
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+  act(() => {
+    tree = createReader(
+      <GitaLanguageProvider initialLang="hi">
+        <ShareProvider>
+          <AartiReaderScreen
+            navigation={navigation}
+            route={{ ...route, params: { aartiIndex: index, initialIndex: 0 } } as ReaderProps['route']}
+          />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  const renderedText = tree!.root.findAllByType(Text)
+    .map((node) => node.props.children)
+    .flat(Number.POSITIVE_INFINITY)
+    .join(' ');
+  assert.ok(renderedText.includes('त्रिगुणात्मक त्रैमूर्ति दत्त हा जाणा'));
+  assert.ok(!renderedText.includes(firstVerse.lines[0]));
 });

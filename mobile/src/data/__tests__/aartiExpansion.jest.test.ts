@@ -37,7 +37,19 @@ test.each(editions)('%s is discoverable and routes to its complete edition', (id
   }
 });
 
-test('main-branch legacy position 10 still opens Jay Adhya Shakti', () => {
-  expect(canonicalSourceId('aarti-10')).toBe('jay-adhya-shakti');
-  expect(canonicalSourceId('aarti-11')).toBe('om-jai-gange-mata');
+// Production positions are pinned independently of this branch's registry.
+test('preserves main aarti positions and appends each new composition once', () => {
+  const preserved = [
+    ['jay-adhya-shakti', 10, 'जय आद्या शक्ति'],
+    ['shani-aarti', 11, 'जय जय श्री शनिदेव'],
+    ['dattatreya-aarti', 12, 'त्रिगुणात्मक त्रैमूर्ति'],
+  ] as const;
+  for (const [id, index, opening] of preserved) {
+    expect(aartiIndexById[id]).toBe(index);
+    expect(canonicalSourceId(`aarti-${index}`)).toBe(id);
+    expect(getAarti(index).verses[0].lines.join(' ')).toContain(opening);
+    expect(library.filter((entry) => entry.id === id)).toHaveLength(1);
+  }
+  expect(aartiIndexById['om-jai-gange-mata']).toBe(13);
+  expect(new Set(Object.values(aartiIndexById)).size).toBe(Object.keys(aartiIndexById).length);
 });

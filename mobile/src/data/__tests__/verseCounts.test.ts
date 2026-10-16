@@ -16,6 +16,7 @@ import { khatuShyamChalisaCounts } from '../khatu-shyam-chalisa';
 import { krishnaChalisaCounts } from '../krishna-chalisa';
 import { krishnaStotramTotal } from '../krishna-stotram';
 import { lakshmiChalisaCounts } from '../lakshmi-chalisa';
+import { suryaChalisaCounts } from '../surya-chalisa';
 import { ramChalisaCounts } from '../ram-chalisa';
 import { ramStutiTotal } from '../ram-stuti';
 import { ramcharitmanasTotal } from '../ramcharitmanas';
@@ -92,6 +93,7 @@ test('every generated verse count still matches its corpus', () => {
   ['subrahmanyaAshtakamTotal', subrahmanyaAshtakamTotal, generated.subrahmanyaAshtakamTotal],
   ['sundarkandTotal', sundarkandTotal, generated.sundarkandTotal],
   ['suryaAshtakamTotal', suryaAshtakamTotal, generated.suryaAshtakamTotal],
+  ['suryaChalisaCounts', suryaChalisaCounts, generated.suryaChalisaCounts],
   ['valmikiRamayanTotal', valmikiRamayanTotal, generated.valmikiRamayanTotal],
   ['vishnuChalisaCounts', vishnuChalisaCounts, generated.vishnuChalisaCounts],
   ['vishnuSahasranamaTotal', vishnuSahasranamaTotal, generated.vishnuSahasranamaTotal],
@@ -157,6 +159,7 @@ test('verseCounts exports exactly what texts.ts needs, and nothing stale', () =>
   ['subrahmanyaAshtakamTotal', subrahmanyaAshtakamTotal, generated.subrahmanyaAshtakamTotal],
   ['sundarkandTotal', sundarkandTotal, generated.sundarkandTotal],
   ['suryaAshtakamTotal', suryaAshtakamTotal, generated.suryaAshtakamTotal],
+  ['suryaChalisaCounts', suryaChalisaCounts, generated.suryaChalisaCounts],
   ['valmikiRamayanTotal', valmikiRamayanTotal, generated.valmikiRamayanTotal],
   ['vishnuChalisaCounts', vishnuChalisaCounts, generated.vishnuChalisaCounts],
   ['vishnuSahasranamaTotal', vishnuSahasranamaTotal, generated.vishnuSahasranamaTotal],

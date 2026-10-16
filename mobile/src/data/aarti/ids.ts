@@ -20,9 +20,10 @@ export const aartiIdByIndex = [
   // Appended, never inserted: the index is persisted in legacy `aarti-N` ids.
   'om-jai-lakshmi-mata',
   'jay-adhya-shakti',
+  'shani-aarti',
+  'dattatreya-aarti',
   'om-jai-gange-mata',
   'ambe-tu-hai-jagdambe-kali',
-  'shani-aarti',
   'kubera-aarti',
   'santoshi-mata-aarti',
   'ahoi-mata-aarti',

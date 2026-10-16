@@ -1,15 +1,16 @@
 {
-  "titleHi": "शनि देव की आरती",
-  "titleEn": "Jai Jai Shri Shanidev",
-  "subtitleHi": "शनि देव की आरती",
-  "subtitleEn": "Jai Jai Shri Shanidev",
+  "titleHi": "श्री शनिदेव की आरती",
+  "titleEn": "Shani Dev Aarti",
+  "subtitleHi": "जय जय श्री शनिदेव भक्तन हितकारी",
+  "subtitleEn": "Jai Jai Shri Shanidev Bhaktan Hitkari",
   "deity": "shani",
   "language": "hi-en",
   "source": {
-    "baseText": "Drik Panchang edition checked against BhaktiBharat. The publications vary in the crown line (sahaj/rajit), offerings line and closing refuge line; Drik stanza wording retained. Obvious spacing and nasalization normalized. Complete stanza set; repeated refrains do not create extra reader pages. Hindi and English meanings are original editorial glosses. No recorded audio is attached. Standard नीलाम्बर follows BhaktiBharat rather than the Drik spelling निलाम्बर.",
+    "baseText": "Traditional five-stanza Shani Dev Aarti beginning 'जय जय श्री शनिदेव भक्तन हितकारी'. Transcribed from HinduNidhi and compared line by line with the Aarti printed after the Shani Chalisa at SanskritDocuments. Navbharat Times independently confirms the five-stanza identity and the 'क्रीट मुकुट' reading. SanskritDocuments variants: 'प्रभू' for 'प्रभु', 'किरिट' for 'क्रीट', and 'ऋषी मुनी' for 'ऋषि मुनि'. Repeated जय cues are represented by the opening refrain verse, not silently treated as additional stanzas.",
     "referenceUrls": [
-      "https://www.drikpanchang.com/lyrics/aarti/lord-shanidev/shri-shanidev-aarti.html?lang=hi",
-      "https://www.bhaktibharat.com/aarti/shri-shani-dev-ji"
+      "https://hindunidhi.com/shanidev-aarti-hindi/",
+      "https://sanskritdocuments.org/doc_z_otherlang_hindi/shani40.html",
+      "https://navbharattimes.indiatimes.com/astro/religion-rituals/arti-bhajan/shanidev-aarti-in-hindi/articleshow/91101853.cms"
     ],
     "retrievedOn": "2026-10-15"
   },
@@ -18,94 +19,94 @@
   },
   "verses": [
     {
-      "id": "sha-01",
+      "id": "shani-aarti-01",
       "type": "refrain",
       "section": "body",
       "number": 1,
       "labelHi": "टेक",
       "labelEn": "Refrain",
       "lines": [
-        "जय जय श्री शनिदेव भक्तन हितकारी।",
-        "सूरज के पुत्र प्रभु, छाया महतारी॥"
+        "जय जय श्री शनिदेव भक्तन हितकारी ।",
+        "सूरज के पुत्र प्रभु छाया महतारी ॥"
       ],
       "linesEn": [
         "Jai jai Shri Shanidev bhaktan hitkari.",
-        "Sooraj ke putra prabhu, Chhaya mahtari."
+        "Suraj ke putra Prabhu, Chhaya mahatari."
       ],
-      "meaningHi": "भक्तों का हित करने वाले शनिदेव की जय हो। इस पद में सूर्य को उनके पिता और छाया को उनकी माता कहा गया है।",
-      "meaningEn": "Glory to Shanidev, benefactor of devotees. The stanza names Surya as his father and Chhaya as his mother."
+      "meaningHi": "हे भक्तों का हित करने वाले शनिदेव, आपकी जय हो। आप सूर्यदेव और माता छाया के पुत्र हैं। यह आरती की टेक है, जो प्रत्येक पद के बाद दोहराई जाती है।",
+      "meaningEn": "Glory to Shani Dev, who cares for his devotees. You are the son of Surya and Mother Chhaya. This is the refrain repeated after each stanza."
     },
     {
-      "id": "sha-02",
+      "id": "shani-aarti-02",
       "type": "stanza",
       "section": "body",
       "number": 2,
-      "labelHi": "पद · 1",
+      "labelHi": "पद · १",
       "labelEn": "Stanza · 1",
       "lines": [
-        "श्याम अंग वक्र-दृष्टि, चतुर्भुजा धारी।",
-        "नीलाम्बर धार नाथ, गज की असवारी॥"
+        "श्याम अंक वक्र दृष्ट चतुर्भुजा धारी ।",
+        "नीलाम्बर धार नाथ गज की असवारी ॥"
       ],
       "linesEn": [
-        "Shyam ang vakra-drishti, chaturbhuja dhari.",
-        "Neelambar dhar nath, gaj ki aswari."
+        "Shyam ank vakra drishti chaturbhuja dhari.",
+        "Neelambar dhar nath gaj ki asvari."
       ],
-      "meaningHi": "इस आरती के रूप-वर्णन में शनिदेव श्यामवर्ण, वक्रदृष्टि, चार भुजाओं वाले और नीले वस्त्र पहने हुए हैं; उनकी सवारी हाथी कही गई है।",
-      "meaningEn": "In this hymn’s imagery, Shani is dark in complexion, has an oblique gaze and four arms, wears blue garments and rides an elephant."
+      "meaningHi": "हे नाथ, आरती आपके श्याम स्वरूप, वक्र दृष्टि और चार भुजाओं का वर्णन करती है। आप नीले वस्त्र धारण करते हैं और गज पर सवार हैं।",
+      "meaningEn": "The aarti describes your dark form, angled gaze and four arms. O Lord, you wear blue garments and ride an elephant."
     },
     {
-      "id": "sha-03",
+      "id": "shani-aarti-03",
       "type": "stanza",
       "section": "body",
       "number": 3,
-      "labelHi": "पद · 2",
+      "labelHi": "पद · २",
       "labelEn": "Stanza · 2",
       "lines": [
-        "क्रीट मुकुट शीश सहज, दिपत है लिलारी।",
-        "मुक्तन की माल गले, शोभित बलिहारी॥"
+        "क्रीट मुकुट शीश रजित दिपत है लिलारी ।",
+        "मुक्तन की माला गले शोभित बलिहारी ॥"
       ],
       "linesEn": [
-        "Kreet mukut sheesh sahaj, dipat hai lilari.",
-        "Muktan ki mal gale, shobhit balihari."
+        "Kreet mukut sheesh rajit dipat hai lilari.",
+        "Muktan ki mala gale shobhit balihari."
       ],
-      "meaningHi": "सिर पर मुकुट, दमकता ललाट और गले में मोतियों की माला शोभित हैं। भक्त इस दिव्य रूप पर अपना समर्पण व्यक्त करता है।",
-      "meaningEn": "A crown adorns his head, his forehead shines and a pearl garland graces his neck. The devotee expresses loving admiration and surrender."
+      "meaningHi": "आपके शीश पर मुकुट सुशोभित है और ललाट दमकता है। गले की मोतियों की माला शोभा बढ़ाती है; भक्त इस रूप पर बलिहारी जाता है।",
+      "meaningEn": "A crown adorns your head and your forehead shines. A pearl garland graces your neck; the devotee marvels at this form."
     },
     {
-      "id": "sha-04",
+      "id": "shani-aarti-04",
       "type": "stanza",
       "section": "body",
       "number": 4,
-      "labelHi": "पद · 3",
+      "labelHi": "पद · ३",
       "labelEn": "Stanza · 3",
       "lines": [
-        "मोदक और मिष्ठान चढ़े, चढ़ती पान सुपारी।",
-        "लोहा, तिल, तेल, उड़द, महिषी है अति प्यारी॥"
+        "मोदक मिष्ठान पान चढ़त हैं सुपारी ।",
+        "लोहा तिल तेल उड़द महिषी अति प्यारी ॥"
       ],
       "linesEn": [
-        "Modak aur mishthan chadhe, chadhti pan supari.",
-        "Loha, til, tel, urad, mahishi hai ati pyari."
+        "Modak mishthan paan chadhat hain supari.",
+        "Loha til tel urad mahishi ati pyari."
       ],
-      "meaningHi": "पद में मोदक, मिठाई, पान, सुपारी, लोहा, तिल, तेल, उड़द और महिषी का पारम्परिक उल्लेख है। यह आरती के शब्दों का अर्थ है, अनिवार्य पूजा-सामग्री की सूची नहीं।",
-      "meaningEn": "The verse names modak, sweets, betel leaf and nut, iron, sesame, oil, black gram and a buffalo in its traditional offering imagery. It describes the hymn’s words rather than prescribing a required offering list."
+      "meaningHi": "भक्त मोदक, मिठाई, पान और सुपारी अर्पित करते हैं। इस पद में लोहा, तिल, तेल, उड़द और महिषी को भी शनिदेव से प्रिय बताया गया है।",
+      "meaningEn": "Devotees offer modak, sweets, betel leaf and areca nut. The verse also names iron, sesame, oil, black gram and a buffalo as dear to Shani Dev."
     },
     {
-      "id": "sha-05",
+      "id": "shani-aarti-05",
       "type": "stanza",
       "section": "body",
       "number": 5,
-      "labelHi": "पद · 4",
+      "labelHi": "पद · ४",
       "labelEn": "Stanza · 4",
       "lines": [
-        "देव दनुज ऋषि मुनि, सुमिरत नर नारी।",
-        "विश्वनाथ धरत ध्यान, हम हैं शरण तुम्हारी॥"
+        "देव दनुज ऋषि मुनि सुमरिन नर नारी ।",
+        "विश्वनाथ धरत ध्यान शरण हैं तुम्हारी ॥"
       ],
       "linesEn": [
-        "Dev danuj rishi muni, sumirat nar nari.",
-        "Vishwanath dharat dhyan, hum hain sharan tumhari."
+        "Dev danuj rishi muni sumarin nar nari.",
+        "Vishwanath dharat dhyan sharan hain tumhari."
       ],
-      "meaningHi": "देव, दानव, ऋषि, मुनि और स्त्री-पुरुष सभी उनका स्मरण करते हैं। विश्वनाथ के ध्यान का उल्लेख करते हुए भक्त शनिदेव की शरण स्वीकार करता है।",
-      "meaningEn": "Gods, asuras, sages and people remember him. Mentioning Vishwanath’s meditation, the worshippers declare that they seek Shani’s refuge."
+      "meaningHi": "देव, दानव, ऋषि, मुनि तथा स्त्री-पुरुष आपका स्मरण करते हैं। विश्वनाथ भी आपका ध्यान करते हैं; भक्त आपकी शरण में आता है।",
+      "meaningEn": "Gods, asuras, sages and people remember you. Vishwanath too meditates upon you; the devotee seeks your refuge."
     }
   ]
 }

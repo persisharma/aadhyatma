@@ -21,7 +21,7 @@ Audited 2026-10-13 against the offline Ishvar Vaani 1.0.8 SQLite snapshot at `/U
 | Aarti Kunjbihari Ki | Covered | `aarti-kunj-bihari` |
 | Om Jai Shiv Omkara | Covered | `om-jai-shiv-omkara` |
 | Om Jai Jagdish Hare | Covered | `om-jai-jagdish` |
-| Jai Jai Shri Shanidev | **Integrated 2026-10-15** | `shani-aarti` · 5 pages; Drik/BhaktiBharat collation. Original Hindi/English meanings; no recorded audio. |
+| Jai Jai Shri Shanidev | **Covered by main 2026-10-16** | `shani-aarti` · 5 pages; reuse the sourced HinduNidhi/SanskritDocuments edition merged in #476. No duplicate or replacement in this PR. |
 | Om Jai Yaksha Kuber Hare | **Integrated 2026-10-15** | `kubera-aarti` · 8 pages; Drik/BhaktiBharat concordance, Prempal signature retained. Original Hindi/English meanings; no recorded audio. |
 | Jai Santoshi Mata | **Integrated 2026-10-15** | `santoshi-mata-aarti` · 12 pages; complete Drik edition, variants recorded. Original Hindi/English meanings; no recorded audio. |
 | Om Jai Gange Mata | **Added locally** | `om-jai-gange-mata`: [Drik Panchang](https://www.drikpanchang.com/lyrics/aarti/ganga-mata/ganga-mata-aarti.html?lang=hi) refrain plus four stanzas, checked against [Aaj Tak](https://www.aajtak.in/religion/aarti/shri-ganga-aarti-2450477). The latter has `श्री जय` instead of `मैया जय`, a different stanza-3 first line, `एक ही बार जो तेरी / शरणागति आता`, and `दास वही` in the closing stanza. Kept one Drik edition intact. Original per-stanza meanings. No audio. |
@@ -32,7 +32,7 @@ Audited 2026-10-13 against the offline Ishvar Vaani 1.0.8 SQLite snapshot at `/U
 | Jai Jai Tulsi Mata | **Integrated 2026-10-15** | `tulsi-aarti` · 6 pages; complete Drik version; BhaktiBharat extra closing plea not mixed in. Original Hindi/English meanings; no recorded audio. |
 | Shri Shakambhari Amba Ji Ki Aarti | **Integrated 2026-10-15** | `shakambhari-aarti` · 5 pages; complete Drik text checked against BhaktiBharat. Original Hindi/English meanings; no recorded audio. |
 
-Current result (2026-10-15): all 18 competitor aarti compositions are covered: 8 previously present and 10 integrated in this branch. Current main also adds Jay Adhya Shakti, alongside the existing Gayatri and Khatu Shyam aartis: 21 registered payloads, plus the shared Ram Stuti aarti alias in the library. Integration is not an OTA/store release.
+Current result (2026-10-15): all 18 competitor aarti compositions are covered: 8 previously present, Shani now covered by main #476, and 9 added in this branch (Ganga plus the other eight requested titles). Current main also contains Jay Adhya Shakti and Dattatreya, alongside Gayatri and Khatu Shyam: 22 registered payloads, plus the shared Ram Stuti aarti alias in the library. Integration is not an OTA/store release.
 
 ## Mantra titles (36)
 
@@ -81,7 +81,7 @@ The competitor groups japa, shlokas, stotras, kavach and even a non-text mnemoni
 
 The nine remaining titles are integrated through the Aarti category, deity lists, Search,
 purpose discovery and existing reader. Ganga and Saraswati japa remain included from the
-first batch. The new nine contain 72 reader pages; Ganga adds five more. All recorded audio
+first batch. The eight newly added requested titles contain 67 pages; Ganga adds five, for 72 new pages in this PR. Shani reuses the five-page edition now in main. All recorded audio
 is absent from this batch. Aarti read-aloud continues to use the existing device TTS path.
 
 The source edition decisions, complete text/meaning review and test/device evidence are

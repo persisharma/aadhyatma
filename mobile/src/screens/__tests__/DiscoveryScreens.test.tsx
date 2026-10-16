@@ -40,7 +40,9 @@ function renderWithLanguage(node: React.ReactElement, initialLang: 'hi' | 'en' =
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang={initialLang}><ShareProvider>{node}</ShareProvider></GitaLanguageProvider>
+      <GitaLanguageProvider initialLang={initialLang}>
+        <ShareProvider>{node}</ShareProvider>
+      </GitaLanguageProvider>
     );
   });
   trees.push(tree);
