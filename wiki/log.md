@@ -929,6 +929,17 @@ Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pa
 
 Added a reusable listing-to-prose mapping for category, deity, purpose, katha, observance and vidhi catalogs and chapter/theme/episode indexes. Three complete rows per card preserve titles and details in all four reading languages; long indexes use labelled scopes under the ten-card share limit. The existing post, Story/Reel and carousel picker handles export; Story/Reel files are static images. Typecheck and focused share tests passed; native visual and destination checks remain pending. See [[share]].
 
+## [2026-10-13] ingest | Aarti and japa content integration and competitor title audit
+
+The aarti registry is append-only because legacy `aarti-N` ids migrate by index; a library row and source background are separate discovery requirements. Japa JSON entries enter the library automatically; a new per-mantra source must roll into the top-level source URLs, and silent counting works without an audio asset. The offline Ishvar Vaani title audit lives in `docs/research/competitors/2026-10-13-aarti-japa-title-audit.md`; it distinguishes composition matches from title-only gaps and records the selected Ganga Aarti variant and Saraswati Moola Mantra sources.
+
+## [2026-10-15] ingest | Complete nine remaining aarti integrations
+
+Added the sourced Ambe Tu Hai Jagdambe Kali, Shani, Kubera, Santoshi, Ahoi, Vaishno, Ekadashi, Tulsi and Shakambhari compositions (72 pages) through the existing reader, library, purpose discovery and deity/background mappings. All 18 Ishvar aarti compositions are now covered in this branch, including the previously added Ganga aarti; Saraswati silent japa remains included. Preserved main’s separate lightweight aarti ID registry and Jay Adhya Shakti index 10, then appended Ganga at 11 and the nine additions at 12–20. Edition variants and original Hindi/English meaning review live in `docs/evaluations/aarti-expansion-2026-10-15/review.md`. No recorded audio, store build or OTA was added.
+
+## [2026-10-15] gap | Native aarti verification deferred
+
+The user requested the PR now and separate native checks. Full automated tests passed, but all-nine iOS/Android Standard/Large journeys and Saraswati japa remain incomplete; see `docs/evaluations/aarti-expansion-2026-10-15/review.md` for partial results and rerun commands.
 ## [2026-10-15] ingest | Shared listing card for comic, Garud Puran and kids-story lists
 The three section listings now render one `ListingCard` (design.md §82, RULEBOOK §3 "Listing cards"):
 reading-language title only, one-line description (≤32 chars), `N पृष्ठ` meta, a 92-wide thumb that
@@ -975,6 +986,10 @@ Pavitra Granth. Only the chaupai-30 जोजन/योजन reading differs af
 and spelling normalization; the chosen HinduNidhi reading is noted in the source
 metadata. Added original per-verse Hindi/English meanings, pronunciation-based
 ASCII, registry/search/routine/library integration and Konark temple discovery.
+
+## [2026-10-16] ingest | Reconcile PR 478 with merged Shani edition
+
+Preserved main’s sourced Shani payload at index 11 and Dattatreya at 12, removed duplicate Shani catalog/background records, and appended Ganga plus the other eight requested aartis at 13–21. The registry has 22 payloads and the category 23 entries including the Ram Stuti alias. Added regression checks for main’s persisted positions and adjusted native flow selectors/order. All nine requested titles remain covered; native verification stays deferred.
 
 ## [2026-10-13] ingest | Share sheet: Send as text + card-language chips
 

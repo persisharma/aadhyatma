@@ -1,6 +1,7 @@
 # Aarti Category Smoke Test
 #
-# Verifies the Aarti category and its 14 active sections render correctly.
+# Verifies the 14 entries from main; aarti-expansion-smoke.yaml covers the
+# nine appended compositions plus the reused Shani aarti at Standard/Large.
 # Sections: Om Jai Jagdish Hare, Hanuman Ji Ki Aarti, Jai Ganesh Deva,
 #           Om Jai Shiv Omkara, Jai Ambe Gauri, Aarti Kunj Bihari Ki,
 #           Saraswati Mata Ki Aarti, Gayatri Mata Ki Aarti, Om Jai Lakshmi Mata,

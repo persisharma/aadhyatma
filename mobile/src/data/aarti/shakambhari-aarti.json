@@ -1,0 +1,117 @@
+{
+  "titleHi": "शाकम्भरी माता की आरती",
+  "titleEn": "Shri Shakambhari Amba Ji Ki Aarti",
+  "subtitleHi": "शाकम्भरी माता की आरती",
+  "subtitleEn": "Shri Shakambhari Amba Ji Ki Aarti",
+  "deity": "durga",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Complete five-stanza Drik Panchang edition checked against BhaktiBharat. Variants include Shakambhar/Shakumbhar, aisso/aisi, bakhani/bhakhni and the expanded hear-and-recite phrase. Retained Drik text and recorded pronunciation-based romanization. Complete stanza set; repeated refrains do not create extra reader pages. Hindi and English meanings are original editorial glosses. No recorded audio is attached.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/shakambhari-mata/shakambhari-mata-aarti.html?lang=hi",
+      "https://www.bhaktibharat.com/aarti/shakumbhari-devi-ki-aarti"
+    ],
+    "retrievedOn": "2026-10-15"
+  },
+  "counts": {
+    "totalVerses": 5
+  },
+  "verses": [
+    {
+      "id": "ska-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "हरि ॐ श्री शाकम्भर अम्बा जी की आरती कीजो।",
+        "ऐसो अद्भुत रूप हृदय धर लीजो, शताक्षी दयालु की आरती कीजो॥"
+      ],
+      "linesEn": [
+        "Hari Om Shri Shakambhar Amba ji ki aarti keejo.",
+        "Aiso adbhut roop hriday dhar leejo, Shatakshi dayalu ki aarti keejo."
+      ],
+      "meaningHi": "शाकम्भरी अम्बा की आरती करने और उनके अद्भुत रूप को हृदय में धारण करने का आह्वान है। शताक्षी अर्थात सौ नेत्रों वाली करुणामयी देवी का स्मरण है।",
+      "meaningEn": "The opening calls devotees to offer aarti to Shakambhari Amba and hold her wondrous form in the heart, remembering the compassionate Shatakshi, the hundred-eyed goddess."
+    },
+    {
+      "id": "ska-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · 1",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "तुम परिपूर्ण आदि भवानी माँ, सब घट तुम आप बखानी माँ।",
+        "श्री शाकम्भर अम्बा जी की आरती कीजो॥"
+      ],
+      "linesEn": [
+        "Tum paripoorn aadi Bhavani maan, sab ghat tum aap bakhani maan.",
+        "Shri Shakambhar Amba ji ki aarti keejo."
+      ],
+      "meaningHi": "माँ को पूर्ण आदि भवानी और हर हृदय में विद्यमान कहा गया है। भक्त उनकी आरती करते हैं।",
+      "meaningEn": "The Mother is praised as the complete, primordial Bhavani, present in every heart, and devotees offer her aarti."
+    },
+    {
+      "id": "ska-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · 2",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "तुम्हीं हो शाकम्भरी, तुम ही हो शताक्षी माँ।",
+        "शिव मूर्ति माया, तुम ही हो प्रकाशी माँ॥",
+        "श्री शाकम्भर अम्बा जी की आरती कीजो॥"
+      ],
+      "linesEn": [
+        "Tumhin ho Shakambhari, tum hi ho Shatakshi maan.",
+        "Shiv moorti maya, tum hi ho prakashi maan.",
+        "Shri Shakambhar Amba ji ki aarti keejo."
+      ],
+      "meaningHi": "शाकम्भरी और शताक्षी को एक ही माँ के रूप में स्मरण किया गया है। पद शिवमूर्ति, माया और प्रकाश की छवियों से उनकी महिमा गाता है।",
+      "meaningEn": "Shakambhari and Shatakshi are remembered as forms of the same Mother, whose greatness is praised through images of Shiva, divine manifestation and light."
+    },
+    {
+      "id": "ska-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · 3",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "नित जो नर-नारी, अम्बे आरती गावे माँ।",
+        "इच्छा पूरण कीजो, शाकम्भरी दर्शन पावे माँ॥",
+        "श्री शाकम्भर अम्बा जी की आरती कीजो॥"
+      ],
+      "linesEn": [
+        "Nit jo nar-nari, Ambe aarti gave maan.",
+        "Icchha pooran keejo, Shakambhari darshan pave maan.",
+        "Shri Shakambhar Amba ji ki aarti keejo."
+      ],
+      "meaningHi": "नित्य आरती गाने वाले स्त्री-पुरुष माँ से अभिलाषा की पूर्ति और शाकम्भरी के दर्शन की प्रार्थना करते हैं।",
+      "meaningEn": "Those who sing the aarti daily pray for fulfilment of their heartfelt wishes and darshan of Shakambhari."
+    },
+    {
+      "id": "ska-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · 4",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "जो नर आरती पढ़े पढ़ावे माँ, जो नर आरती सुने सुनावे माँ।",
+        "बसे बैकुण्ठ शाकम्भर दर्शन पावे॥",
+        "श्री शाकम्भर अम्बा जी की आरती कीजो॥"
+      ],
+      "linesEn": [
+        "Jo nar aarti padhe padhave maan, jo nar aarti sune sunave maan.",
+        "Base Baikunth Shakambhar darshan pave.",
+        "Shri Shakambhar Amba ji ki aarti keejo."
+      ],
+      "meaningHi": "समापन फलश्रुति में आरती पढ़ने, सिखाने, सुनने और सुनाने वाले के लिए वैकुण्ठ-वास तथा माँ के दर्शन की कामना है।",
+      "meaningEn": "The closing promise invokes a heavenly dwelling and the Mother’s darshan for those who read, teach, hear or share the aarti."
+    }
+  ]
+}

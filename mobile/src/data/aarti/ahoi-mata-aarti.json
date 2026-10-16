@@ -1,0 +1,165 @@
+{
+  "titleHi": "अहोई माता की आरती",
+  "titleEn": "Jai Ahoi Mata",
+  "subtitleHi": "अहोई माता की आरती",
+  "subtitleEn": "Jai Ahoi Mata",
+  "deity": "durga",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Complete Drik Panchang eight-stanza text checked against BhaktiBharat. The latter reads “man nahin ghabrata” instead of “man nahin dhadkata” and expands the refrain; retained Drik. Lakshmi-like imagery is part of this published Ahoi composition and is not silently rewritten. Complete stanza set; repeated refrains do not create extra reader pages. Hindi and English meanings are original editorial glosses. No recorded audio is attached.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/ahoi-mata/ahoi-mata-aarti.html?lang=hi",
+      "https://www.bhaktibharat.com/aarti/ahoi-mata-aarti"
+    ],
+    "retrievedOn": "2026-10-15"
+  },
+  "counts": {
+    "totalVerses": 8
+  },
+  "verses": [
+    {
+      "id": "aha-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "जय अहोई माता, जय अहोई माता।",
+        "तुमको निसदिन ध्यावत, हर विष्णु विधाता॥"
+      ],
+      "linesEn": [
+        "Jai Ahoi mata, jai Ahoi mata.",
+        "Tumko nisdin dhyavat, Har Vishnu vidhata."
+      ],
+      "meaningHi": "अहोई माता की जय हो। आरती में हर, विष्णु और विधाता को उनका नित्य ध्यान करने वाला कहा गया है।",
+      "meaningEn": "Glory to Mother Ahoi. The hymn describes Hara, Vishnu and the Creator as meditating on her continually."
+    },
+    {
+      "id": "aha-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · 1",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "ब्रह्माणी, रुद्राणी, कमला, तू ही है जगमाता।",
+        "सूर्य-चन्द्रमा ध्यावत, नारद ऋषि गाता॥"
+      ],
+      "linesEn": [
+        "Brahmani, Rudrani, Kamala, tu hi hai jagmata.",
+        "Surya-chandrama dhyavat, Narad rishi gata."
+      ],
+      "meaningHi": "माँ को ब्रह्माणी, रुद्राणी और कमला सहित जगन्माता के रूप में वन्दन है। सूर्य-चन्द्र उनका ध्यान करते और नारद गुणगान करते हैं।",
+      "meaningEn": "The Mother is honoured as Brahmani, Rudrani, Kamala and Mother of the world. Sun and Moon meditate on her, while Narada sings her praise."
+    },
+    {
+      "id": "aha-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · 2",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "माता रूप निरंजन, सुख-सम्पत्ति दाता।",
+        "जो कोई तुमको ध्यावत, नित मंगल पाता॥"
+      ],
+      "linesEn": [
+        "Mata roop niranjan, sukh-sampatti data.",
+        "Jo koi tumko dhyavat, nit mangal pata."
+      ],
+      "meaningHi": "माँ के निर्मल रूप को सुख और सम्पत्ति देने वाला कहा गया है। पद उनके ध्यान से नित्य मंगल मिलने का भक्तिपरक विश्वास व्यक्त करता है।",
+      "meaningEn": "Her pure form is praised as a source of happiness and prosperity. The verse expresses faith that remembering her brings auspiciousness."
+    },
+    {
+      "id": "aha-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · 3",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "तू ही पाताल बसंती, तू ही है शुभदाता।",
+        "कर्म-प्रभाव प्रकाशक, जगनिधि से त्राता॥"
+      ],
+      "linesEn": [
+        "Tu hi patal basanti, tu hi hai shubhdata.",
+        "Karma-prabhav prakashak, jagnidhi se trata."
+      ],
+      "meaningHi": "माँ को पाताल तक व्याप्त, शुभ देने वाली और कर्मों के प्रभाव को प्रकट करने वाली कहा गया है। भक्त संसार-सागर से रक्षा माँगता है।",
+      "meaningEn": "The Mother is described as present even in Patala, bestowing auspiciousness and revealing the effects of action. The devotee seeks protection across the ocean of worldly life."
+    },
+    {
+      "id": "aha-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · 4",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "जिस घर थारो वासा, वाहि में गुण आता।",
+        "कर न सके सोई कर ले, मन नहीं धड़काता॥"
+      ],
+      "linesEn": [
+        "Jis ghar tharo vasa, vahi mein gun aata.",
+        "Kar na sake soi kar le, man nahin dhadkata."
+      ],
+      "meaningHi": "जिस घर में माँ का वास माना जाता है, वहाँ सद्गुण और साहस आने की आशा है। कठिन कार्य करते हुए मन का भय दूर होने का भाव है।",
+      "meaningEn": "The stanza hopes that the Mother’s presence brings virtue and courage to a home, easing fear while facing difficult tasks."
+    },
+    {
+      "id": "aha-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · 5",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "तुम बिन सुख न होवे, न कोई पुत्र पाता।",
+        "खान-पान का वैभव, तुम बिन नहीं आता॥"
+      ],
+      "linesEn": [
+        "Tum bin sukh na hove, na koi putra pata.",
+        "Khan-pan ka vaibhav, tum bin nahin aata."
+      ],
+      "meaningHi": "पद परिवार, सन्तान, भोजन और सुख को माँ की कृपा से जोड़ता है। यह आरती की पारम्परिक आस्था का वर्णन है।",
+      "meaningEn": "The verse connects family, children, nourishment and happiness with the Mother’s grace, expressing the hymn’s traditional devotional belief."
+    },
+    {
+      "id": "aha-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · 6",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "शुभ गुण सुंदर युक्ता, क्षीर निधि जाता।",
+        "रतन चतुर्दश तोकू, कोई नहीं पाता॥"
+      ],
+      "linesEn": [
+        "Shubh gun sundar yukta, ksheer nidhi jata.",
+        "Ratan chaturdash toku, koi nahin pata."
+      ],
+      "meaningHi": "पद में सुन्दर शुभ गुणों, क्षीरसागर और समुद्रमन्थन के चौदह रत्नों की छवि है। माँ की महिमा को साधारण प्राप्ति से परे बताया गया है।",
+      "meaningEn": "The stanza uses images of auspicious qualities, the ocean of milk and its fourteen treasures to praise a divine greatness beyond ordinary attainment."
+    },
+    {
+      "id": "aha-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद · 7",
+      "labelEn": "Stanza · 7",
+      "lines": [
+        "श्री अहोई माँ की आरती, जो कोई गाता।",
+        "उर उमंग अति उपजे, पाप उतर जाता॥"
+      ],
+      "linesEn": [
+        "Shri Ahoi maan ki aarti, jo koi gata.",
+        "Ur umang ati upje, pap utar jata."
+      ],
+      "meaningHi": "समापन में आरती गाने से हृदय में उमंग जागने और पाप का भार उतरने का विश्वास व्यक्त किया गया है।",
+      "meaningEn": "The closing verse expresses faith that singing the aarti awakens joy in the heart and lifts the burden of wrongdoing."
+    }
+  ]
+}

@@ -74,3 +74,8 @@ export function getDeityMeta(id: Deity): DeityMeta {
 export function deityIconKey(id: Deity): DeityIconKey {
   return deityById[id].iconKey;
 }
+
+/** Icon key for a deity id held as a plain string (vidhi tags, optional fields); undefined when unknown. */
+export function deityIconKeyFor(id: string | undefined): DeityIconKey | undefined {
+  return id && id in deityById ? deityById[id as Deity].iconKey : undefined;
+}
