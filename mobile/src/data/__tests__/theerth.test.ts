@@ -335,8 +335,8 @@ const templesWithoutReadings = temples
   .sort();
 assert.deepEqual(
   templesWithoutReadings,
-  ['konark-sun'],
-  'only temples whose deity has no shipped chalisa/aarti may hide the block',
+  [],
+  'all mapped temple deities have a shipped chalisa or aarti',
 );
 const ramaReadings = relatedReadingsForDeity('rama').map((e) => e.id);
 assert.ok(

@@ -91,6 +91,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   // Commissioned Khatu Shyam temple plate (shared with khatu-shyam-aarti).
   'khatu-shyam-chalisa': backgroundImages.theerth_khatu_shyam,
   'lakshmi-chalisa': backgroundImages.deity_lakshmi,
+  'surya-chalisa': backgroundImages.deity_surya,
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,
@@ -117,6 +118,8 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'khatu-shyam-aarti': backgroundImages.theerth_khatu_shyam,
   'om-jai-lakshmi-mata': backgroundImages.deity_lakshmi,
   'jay-adhya-shakti': backgroundImages.deity_durga_lion,
+  'shani-aarti': backgroundImages.deity_shani,
+  'dattatreya-aarti': backgroundImages.deity_dattatreya,
   'vidyarambha-prarthana': backgroundImages.deity_saraswati_veena,
   'matribhumi-vandana': backgroundImages.category_stotram_hymn_scroll,
   lingashtakam: shivaStrotamImages.shiva,

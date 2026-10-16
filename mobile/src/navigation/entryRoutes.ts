@@ -113,6 +113,7 @@ const chalisaIds = new Set([
   'saraswati-chalisa',
   'khatu-shyam-chalisa',
   'lakshmi-chalisa',
+  'surya-chalisa',
 ]);
 
 // Ashtakam (अष्टकम्) multi-instance form — one AshtakamReader dispatches on

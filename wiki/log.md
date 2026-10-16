@@ -936,3 +936,42 @@ fills the card height with cover-cropped art, `LanguageToggle` + scope line on e
 comic prasang shows a curated key scene (`episodeCovers.ts`); Garud paintings crop around a focal
 point. All 28 kids-story descriptions were shortened. Updated [[kids-stories]] and [[languages]].
 
+
+## [2026-10-15] ingest | Shani Dev Aarti joins the reader collection
+
+Added the five-stanza Shani Aarti after line-by-line comparison of HinduNidhi and the aarti
+printed with SanskritDocuments' Shani Chalisa; Navbharat Times confirms the selected crown
+reading. Appended id/index 11, tagged `shani`, and updated source migration, tests, Maestro and
+reader counts. Drik Panchang returned HTTP 403; the Shani Chalisa remains unshipped because
+its closing doha differs across the reachable sources.
+
+## [2026-10-15] ingest | Marathi Datta Aarti added as a distinct reading
+
+Collated Sant Eknath's four stanzas and refrain (18 lines) across Hindu Janajagruti and
+BhajanUSA, with Sanatan Sanstha as a third check; recorded the one refrain spelling variant.
+Appended `dattatreya-aarti` at persisted index 12, kept the Marathi language explicit, and
+updated the reader/count tests and Maestro flow. The SanskritDocuments Marathi PDF was opened
+but yielded no extractable text, so it was not counted as a line-collated source.
+
+## [2026-10-15] gap | Remaining Chalisa and Aarti source gates
+
+Drik Panchang returned HTTP 403 for direct candidate URLs. Shani Chalisa's
+closing differs or is corrupted across reachable sources; Ganga Chalisa has
+substantive wording variants; Surya Chalisa still needs complete editorial
+collation and meanings. Other candidate gaps and HOLD identities are listed in
+`docs/content-parity/chalisa-aarti-existing-deities.md` under the 2026-10-15 audit.
+
+## [2026-10-15] ingest | Navagraha Chalisa candidate pair identified
+
+HinduNidhi and BhaktiBharat both serve the Sundardas-attributed opening and
+closing, while the Drik Panchang candidate returns HTTP 403. Added the pair
+to the acquisition manifest as 2C; full line collation, source-lineage review
+and editorial meanings are still required before reader integration.
+
+## [2026-10-15] ingest | Surya Chalisa enters the multi-instance reader
+
+Collated all 42 units of the Kanak-badan Surya Chalisa across HinduNidhi and
+Pavitra Granth. Only the chaupai-30 जोजन/योजन reading differs after punctuation
+and spelling normalization; the chosen HinduNidhi reading is noted in the source
+metadata. Added original per-verse Hindi/English meanings, pronunciation-based
+ASCII, registry/search/routine/library integration and Konark temple discovery.
