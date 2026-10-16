@@ -5,6 +5,9 @@ import { Text, View as mockView } from 'react-native';
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { ShareProvider } from '@/utils/shareVerse';
 
+const trees: TestRenderer.ReactTestRenderer[] = [];
+afterEach(() => { act(() => { for (const tree of trees.splice(0)) tree.unmount(); }); });
+
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
   setItem: jest.fn(() => Promise.resolve()),
@@ -42,6 +45,7 @@ function renderWithLanguage(node: React.ReactElement, initialLang: 'hi' | 'en' =
       </GitaLanguageProvider>
     );
   });
+  trees.push(tree);
   return tree;
 }
 

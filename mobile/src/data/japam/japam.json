@@ -127,14 +127,43 @@
       ],
       "meaningHi": "मर्यादा पुरुषोत्तम श्री राम की जय। ‘जय श्री राम’ राम-भक्तों का पावन जयघोष है — नाम जप में हर ‘जय श्री राम’ पर एक मनका आगे बढ़ता है; 108 बार, एक माला।",
       "meaningEn": "Glory to Shri Rama, the perfect embodiment of dharma. ‘Jai Shri Ram’ is the beloved victory-cry of Rama's devotees — in naam japa every ‘Jai Shri Ram’ moves one bead; 108 times, one mala."
+    },
+    {
+      "id": "saraswati-moola-mantra",
+      "nameHi": "सरस्वती मूल मंत्र",
+      "nameEn": "Saraswati Moola Mantra",
+      "sub": "सरस्वती जप · ऐं बीजाक्षर",
+      "subEn": "Saraswati japa · Aim seed syllable",
+      "thumb": "स",
+      "deities": [
+        "saraswati"
+      ],
+      "lines": [
+        "ॐ ऐं सरस्वत्यै नमः।"
+      ],
+      "linesEn": [
+        "Om Aim Saraswatyai Namah."
+      ],
+      "meaningHi": "ॐ — सरस्वती देवी को नमस्कार। ‘ऐं’ सरस्वती से जुड़ा बीजाक्षर है; यह विद्या और वाणी का स्मरण कराता है।",
+      "meaningEn": "Om — salutations to Goddess Saraswati. Aim is a seed syllable associated with her, evoking learning and speech.",
+      "source": {
+        "baseText": "Traditional Saraswati moola mantra. The exact mantra is attested in Drik Panchang and the Sri Matham Puja Sangraha, Saraswati Puja section (p. 76). The Hindi and English meanings are original editorial glosses of the salutation and seed syllable.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/goddesses/saraswati/mantra/saraswati-moola-mantra.html?lang=en",
+          "https://www.srimatham.com/uploads/5/5/4/9/5549439/puja_sangraha.pdf"
+        ],
+        "retrievedOn": "2026-10-13"
+      }
     }
   ],
   "source": {
-    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name).",
+    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name). Saraswati Moola Mantra cross-verified with Drik Panchang and Sri Matham Puja Sangraha.",
     "referenceUrls": [
       "https://sanskritdocuments.org/doc_deities_misc/sArthagAyatrI.html",
-      "https://vedabase.io/en/library/kb/90/"
+      "https://vedabase.io/en/library/kb/90/",
+      "https://www.drikpanchang.com/vedic-mantra/goddesses/saraswati/mantra/saraswati-moola-mantra.html?lang=en",
+      "https://www.srimatham.com/uploads/5/5/4/9/5549439/puja_sangraha.pdf"
     ],
-    "retrievedOn": "2026-05-30"
+    "retrievedOn": "2026-10-13"
   }
 }

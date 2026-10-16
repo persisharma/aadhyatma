@@ -1,0 +1,127 @@
+{
+  "titleHi": "अम्बे तू है जगदम्बे काली",
+  "titleEn": "Ambe Tu Hai Jagdambe Kali",
+  "subtitleHi": "अम्बे तू है जगदम्बे काली",
+  "subtitleEn": "Ambe Tu Hai Jagdambe Kali",
+  "deity": "durga",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Drik Panchang edition, checked against BhaktiBharat. Variants include gaven/gaye, utare/utaren and “dushton ko tu hi lalkarti” versus “dushton ko pal mein sanharti”; retained the Drik wording. BhaktiBharat marks the final charan-sharan stanza as an addition; it is included in full in Drik. Complete stanza set; repeated refrains do not create extra reader pages. Hindi and English meanings are original editorial glosses. No recorded audio is attached. Standard spellings सिंहों and करुणा normalize the Drik typos सिहों and करूणा; the second source also uses सिंह and करुणा forms.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/durga-mata/durga-mata-aarti.html?lang=hi",
+      "https://www.bhaktibharat.com/aarti/maa-durga-maa-kali"
+    ],
+    "retrievedOn": "2026-10-15"
+  },
+  "counts": {
+    "totalVerses": 5
+  },
+  "verses": [
+    {
+      "id": "atk-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "अम्बे तू है जगदम्बे काली, जय दुर्गे खप्पर वाली।",
+        "तेरे ही गुण गावें भारती, ओ मैया हम सब उतारे तेरी आरती॥"
+      ],
+      "linesEn": [
+        "Ambe tu hai Jagdambe Kali, jai Durge khappar wali.",
+        "Tere hi gun gaven Bharati, o maiya hum sab utare teri aarti."
+      ],
+      "meaningHi": "हे अम्बे, जगत की माता और काली, खप्पर धारण करने वाली दुर्गे, आपकी जय हो। भक्त आपके गुण गाते हुए मिलकर आरती उतारते हैं।",
+      "meaningEn": "Glory to Ambe, Mother of the world, Kali and Durga who bears the ritual bowl. The worshippers sing your praise and offer aarti together."
+    },
+    {
+      "id": "atk-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · 1",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "तेरे भक्त जनो पर माता, भीर पड़ी है भारी।",
+        "दानव दल पर टूट पड़ो माँ, करके सिंह सवारी॥",
+        "सौ-सौ सिंहों से बलशाली, है अष्ट भुजाओं वाली।",
+        "दुष्टों को तू ही ललकारती॥"
+      ],
+      "linesEn": [
+        "Tere bhakt jano par mata, bheer padi hai bhari.",
+        "Danav dal par toot pado maan, karke sinh sawari.",
+        "Sau-sau sinhon se balshali, hai asht bhujaon wali.",
+        "Dushton ko tu hi lalkarti."
+      ],
+      "meaningHi": "भक्त संकट में माँ को पुकारते हैं। पद उन्हें सिंह पर सवार, आठ भुजाओं वाली और असंख्य सिंहों से अधिक बलशाली रक्षक के रूप में स्मरण करता है, जो दुष्टों को चुनौती देती हैं।",
+      "meaningEn": "Devotees call to the Mother in distress. The stanza recalls her as a lion-riding, eight-armed protector, stronger than countless lions, who challenges harmful forces."
+    },
+    {
+      "id": "atk-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · 2",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "माँ-बेटे का है इस जग में बड़ा ही निर्मल नाता।",
+        "पूत-कपूत सुने है, पर ना माता सुनी कुमाता॥",
+        "सब पे करुणा दर्शाने वाली, अमृत बरसाने वाली।",
+        "दुखियों के दुखड़े निवारती॥"
+      ],
+      "linesEn": [
+        "Maan-bete ka hai is jag mein bada hi nirmal nata.",
+        "Poot-kapoot sune hai, par na mata suni kumata.",
+        "Sab pe karuna darshane wali, amrit barsane wali.",
+        "Dukhiyon ke dukhde nivarti."
+      ],
+      "meaningHi": "माँ और संतान का सम्बन्ध निर्मल बताया गया है। संतान भूल करे तब भी माँ की करुणा बनी रहती है; भक्त उसी करुणा को अमृत-वर्षा और दुःख हरने वाली शक्ति के रूप में गाते हैं।",
+      "meaningEn": "The bond between mother and child is praised as pure. Even when a child errs, maternal compassion endures; devotees compare that compassion to life-giving nectar and relief from sorrow."
+    },
+    {
+      "id": "atk-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · 3",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "नहीं मांगते धन और दौलत, न चांदी न सोना।",
+        "हम तो मांगें तेरे चरणों में छोटा सा कोना॥",
+        "सबकी बिगड़ी बनाने वाली, लाज बचाने वाली।",
+        "सतियों के सत को संवारती॥"
+      ],
+      "linesEn": [
+        "Nahin mangte dhan aur daulat, na chandi na sona.",
+        "Hum to mangen tere charanon mein chhota sa kona.",
+        "Sabki bigdi banane wali, laj bachane wali.",
+        "Satiyon ke sat ko sanvarti."
+      ],
+      "meaningHi": "भक्त धन, चाँदी या सोने के स्थान पर माँ के चरणों में आश्रय माँगता है। वह माँ को बिगड़े कार्य सँवारने वाली, मान रखने वाली और सत्यनिष्ठा की रक्षा करने वाली कहता है।",
+      "meaningEn": "The devotee asks for refuge at the Mother’s feet rather than wealth, silver or gold. She is praised as one who restores troubled lives, protects dignity and sustains integrity."
+    },
+    {
+      "id": "atk-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · 4",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "चरण शरण में खड़े तुम्हारी, ले पूजा की थाली।",
+        "वरद हस्त सर पर रख दो माँ, संकट हरने वाली॥",
+        "माँ भर दो भक्ति रस प्याली, अष्ट भुजाओं वाली।",
+        "भक्तों के कारज तू ही सारती॥"
+      ],
+      "linesEn": [
+        "Charan sharan mein khade tumhari, le pooja ki thali.",
+        "Varad hast sar par rakh do maan, sankat harne wali.",
+        "Maan bhar do bhakti ras pyali, asht bhujaon wali.",
+        "Bhakton ke karaj tu hi sarti."
+      ],
+      "meaningHi": "पूजा की थाली लेकर भक्त माँ की शरण में खड़ा है। वह आशीर्वाद देने वाला हाथ अपने सिर पर रखने, हृदय में भक्ति भरने और अपने कार्य सँवारने की प्रार्थना करता है।",
+      "meaningEn": "Holding the worship tray, the devotee stands in the Mother’s refuge and asks for her blessing, a heart filled with devotion and help in bringing worthy efforts to completion."
+    }
+  ]
+}

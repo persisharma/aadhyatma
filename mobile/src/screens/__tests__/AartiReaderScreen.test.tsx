@@ -181,6 +181,34 @@ test.each([
   assert.ok(!renderedText.includes(firstVerse.lines[0]), 'no Om Jai Jagdish verse leaks in');
 });
 
+// All audited compositions, including main’s Shani edition, dispatch their first and last pages.
+test.each(["om-jai-gange-mata", "ambe-tu-hai-jagdambe-kali", "shani-aarti", "kubera-aarti", "santoshi-mata-aarti", "ahoi-mata-aarti", "vaishno-devi-aarti", "ekadashi-mata-aarti", "tulsi-aarti", "shakambhari-aarti"] as const)('renders the sourced aarti %s in both languages', (id) => {
+  const index = getActualData.aartiIndexById[id];
+  const aarti = getActualData.getAarti(index);
+  for (const lang of ['hi', 'en'] as const) {
+    for (const initialIndex of [0, aarti.verses.length - 1]) {
+      let tree: TestRenderer.ReactTestRenderer | undefined;
+      act(() => {
+        tree = createReader(
+          <GitaLanguageProvider initialLang={lang}>
+            <ShareProvider>
+              <AartiReaderScreen navigation={navigation}
+                route={{ ...route, params: { aartiIndex: index, initialIndex } }} />
+            </ShareProvider>
+          </GitaLanguageProvider>
+        );
+      });
+      const text = tree!.root.findAllByType(Text).map((node) => node.props.children)
+        .flat(Number.POSITIVE_INFINITY).join(' ');
+      const verse = aarti.verses[initialIndex];
+      assert.ok(text.includes(lang === 'hi' ? verse.lines[0] : verse.linesEn[0]));
+      assert.ok(!text.includes(firstVerse.lines[0]), 'must not fall back to Jagdish');
+      act(() => tree!.unmount());
+      trees.splice(trees.indexOf(tree!), 1);
+    }
+  }
+});
+
 test('opens Shani Dev Aarti by its appended aartiIndex', () => {
   const index = getActualData.aartiIndexById['shani-aarti'];
   assert.equal(index, 11, 'Shani Aarti is appended after Jay Adhya Shakti');

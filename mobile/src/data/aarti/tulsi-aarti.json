@@ -1,0 +1,127 @@
+{
+  "titleHi": "तुलसी माता की आरती",
+  "titleEn": "Jai Jai Tulsi Mata",
+  "subtitleHi": "तुलसी माता की आरती",
+  "subtitleEn": "Jai Jai Tulsi Mata",
+  "deity": "vishnu",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Complete Drik Panchang six-page text checked against BhaktiBharat. Variants include bahu-putri/batu-putri, sur-valli spelling, ruj/raj and the expanded refrain and extra closing plea at BhaktiBharat. Retained Drik wording without the separately marked extra. Vishnu is the catalog association, not the identity of Tulsi. Complete stanza set; repeated refrains do not create extra reader pages. Hindi and English meanings are original editorial glosses. No recorded audio is attached.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/tulasi-mata/tulasi-mata-aarti.html?lang=hi",
+      "https://www.bhaktibharat.com/aarti/jai-jai-tulsi-mata"
+    ],
+    "retrievedOn": "2026-10-15"
+  },
+  "counts": {
+    "totalVerses": 6
+  },
+  "verses": [
+    {
+      "id": "tua-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "जय जय तुलसी माता, सबकी सुखदाता वर माता॥"
+      ],
+      "linesEn": [
+        "Jai jai Tulsi mata, sabki sukhdata var mata."
+      ],
+      "meaningHi": "तुलसी माता की जय हो। भक्त उन्हें सबको सुख और वर देने वाली माता कहकर वन्दन करते हैं।",
+      "meaningEn": "Glory to Mother Tulsi, praised as a mother who bestows happiness and blessings."
+    },
+    {
+      "id": "tua-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · 1",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "सब योगों के ऊपर, सब रोगों के ऊपर।",
+        "रुज से रक्षा करके, भव त्राता॥"
+      ],
+      "linesEn": [
+        "Sab yogon ke oopar, sab rogon ke oopar.",
+        "Ruj se raksha karke, bhav trata."
+      ],
+      "meaningHi": "पद तुलसी की महिमा को योग और रोग से ऊपर कहता है तथा पीड़ा से रक्षा और भवसागर से पार कराने की प्रार्थना करता है। यह आरती का भक्तिपरक भाव है।",
+      "meaningEn": "The hymn extols Tulsi above disciplines and ailments and prays for protection from pain and worldly suffering. This expresses the devotional language of the aarti."
+    },
+    {
+      "id": "tua-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · 2",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "बहु पुत्री है श्यामा, सूर वल्ली है ग्राम्या।",
+        "विष्णु प्रिय जो तुमको सेवे, सो नर तर जाता॥"
+      ],
+      "linesEn": [
+        "Bahu putri hai Shyama, Sur valli hai Gramya.",
+        "Vishnu priya jo tumko seve, so nar tar jata."
+      ],
+      "meaningHi": "पद बहुपुत्री, श्यामा, सूरवल्ली और ग्राम्या जैसे पारम्परिक नामों से तुलसी का स्मरण करता है। विष्णु की प्रिय तुलसी की सेवा को आध्यात्मिक उद्धार से जोड़ा गया है।",
+      "meaningEn": "The verse recalls Tulsi through traditional names including Bahuputri, Shyama, Survalli and Gramya. Service to Tulsi, beloved of Vishnu, is praised as a path of spiritual deliverance."
+    },
+    {
+      "id": "tua-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · 3",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "हरि के शीश विराजत, त्रिभुवन से हो वंदित।",
+        "पतित जनों की तारिणि, तुम हो विख्याता॥"
+      ],
+      "linesEn": [
+        "Hari ke sheesh virajat, tribhuvan se ho vandit.",
+        "Patit janon ki tarini, tum ho vikhyata."
+      ],
+      "meaningHi": "तुलसी हरि के मस्तक पर शोभित और तीनों लोकों में वन्दित कही गई हैं। उन्हें पतितों का उद्धार करने वाली के रूप में प्रणाम है।",
+      "meaningEn": "Tulsi is described as adorning Hari’s head and being honoured throughout the three worlds, renowned for uplifting those who have fallen."
+    },
+    {
+      "id": "tua-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · 4",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "लेकर जन्म बिजन में, आई दिव्य भवन में।",
+        "मानव लोक तुम्हीं से, सुख सम्पत्ति पाता॥"
+      ],
+      "linesEn": [
+        "Lekar janm bijan mein, aai divya bhavan mein.",
+        "Manav lok tumhin se, sukh sampatti pata."
+      ],
+      "meaningHi": "वन में जन्म लेकर दिव्य भवन तक पहुँचने की छवि के माध्यम से तुलसी की महिमा गाई गई है। पद मानव जीवन में सुख-समृद्धि की कामना करता है।",
+      "meaningEn": "Through an image of growth in the wild and entry into a divine dwelling, the verse honours Tulsi and invokes happiness and prosperity for human life."
+    },
+    {
+      "id": "tua-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · 5",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "हरि को तुम अति प्यारी, श्याम वर्ण सुकुमारी।",
+        "प्रेम अजब है श्री हरि का, तुम से नाता॥"
+      ],
+      "linesEn": [
+        "Hari ko tum ati pyari, shyam varn sukumari.",
+        "Prem ajab hai Shri Hari ka, tum se nata."
+      ],
+      "meaningHi": "श्यामवर्ण और कोमल तुलसी को हरि की अत्यन्त प्रिय कहा गया है। पद उनके और श्रीहरि के अनुपम प्रेम-सम्बन्ध का गुणगान करता है।",
+      "meaningEn": "Tender, dark-hued Tulsi is praised as especially dear to Hari. The stanza celebrates the wondrous bond of love between them."
+    }
+  ]
+}
