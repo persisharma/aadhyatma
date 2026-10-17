@@ -117,6 +117,34 @@ describe('ShareTargetSheet', () => {
     expect(byLabel(tree, 'Share as Instagram story or reel').props.disabled).toBe(true);
   });
 
+  test('Send as text appears only when offered, and calls its handler', async () => {
+    const without = await renderSheet();
+    expect(byLabel(without, 'Send as text')).toBeUndefined();
+    const onShareText = jest.fn();
+    const tree = await renderSheet({ fullVerseImage: true, onShareText });
+    await act(async () => byLabel(tree, 'Send as text').props.onPress());
+    expect(onShareText).toHaveBeenCalledTimes(1);
+    expect(tree.root.findAll(n => n.props.children === 'Full verse and meaning — no image').length).toBeGreaterThan(0);
+  });
+
+  test('card-language chips: four languages, current one selected, a tap reports the pick', async () => {
+    const onCardLang = jest.fn();
+    const tree = await renderSheet({ cardLang: 'hi', onCardLang });
+    const chips = tree.root.findAll(
+      n => typeof n.props.testID === 'string' && n.props.testID.startsWith('share-card-lang-') && typeof n.props.onPress === 'function'
+    );
+    expect(chips.map(c => c.props.testID)).toEqual(['share-card-lang-hi', 'share-card-lang-en', 'share-card-lang-gu', 'share-card-lang-kn']);
+    expect(byLabel(tree, 'Card language: Hindi').props.accessibilityState).toEqual({ selected: true });
+    expect(byLabel(tree, 'Card language: Hindi').props.disabled).toBe(true);
+    await act(async () => byLabel(tree, 'Card language: Gujarati').props.onPress());
+    expect(onCardLang).toHaveBeenCalledWith('gu');
+  });
+
+  test('no chips without a card-language handler', async () => {
+    const tree = await renderSheet({ cardLang: 'hi' });
+    expect(byLabel(tree, 'Card language: Hindi')).toBeUndefined();
+  });
+
   test('cancel closes without sharing', async () => {
     const onClose = jest.fn();
     const onShareSystem = jest.fn();
