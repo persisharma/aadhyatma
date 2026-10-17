@@ -1,3 +1,4 @@
+import StoryIcon from '@/components/StoryIcon';
 import AppIcon from '@/components/AppIcon';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
@@ -2362,7 +2363,7 @@ function CatalogLanding({
                 style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.8 }]}
               >
                 <View style={[styles.tileGlyph, { backgroundColor: colors.saffronTint }]}>
-                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.saffron }}>॥</Text>
+                  <StoryIcon name="sanskar" size={34} />
                 </View>
                 <View style={styles.tileInfo}>
                   <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
@@ -2387,7 +2388,7 @@ function CatalogLanding({
                 style={({ pressed }) => [styles.tile, styles.finalTile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.8 }]}
               >
                 <View style={[styles.tileGlyph, { backgroundColor: colors.saffronTint }]}>
-                  <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.saffron }}>॥</Text>
+                  <StoryIcon name="vrat" size={34} />
                 </View>
                 <View style={styles.tileInfo}>
                   <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>

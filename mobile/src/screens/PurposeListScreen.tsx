@@ -1,3 +1,4 @@
+import StoryIcon from '@/components/StoryIcon';
 import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -147,7 +148,7 @@ export default function PurposeListScreen({ navigation, route }: Props) {
                 pressed && { opacity: 0.8 },
               ]}
             >
-              <Text style={{ fontSize: 20, color: colors.saffron, marginRight: 12 }}>दा</Text>
+              <View style={{ marginRight: 12 }}><StoryIcon name="daan" size={36} /></View>
               <View style={{ flex: 1 }}>
                 <Text style={{ fontFamily: scriptTitleFont(lang, fontFamilies.devanagari), fontSize: 14.5, color: colors.ink }}>
                   {contentByLang(lang, `${daanCause.nameHi} — इसका दान`, `${daanCause.nameEn} — the daan for it`)}

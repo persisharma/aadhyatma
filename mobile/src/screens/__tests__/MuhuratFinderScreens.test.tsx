@@ -131,7 +131,8 @@ test('MuhuratFinderScreen lists every occasion and the abujh door', () => {
     <MuhuratFinderScreen navigation={nav} route={{ key: 'k', name: 'MuhuratFinder' } as never} />
   );
   for (const rule of EVENT_RULES) {
-    r.root.findByProps({ testID: `muhurat-occasion-${rule.id}` });
+    const row = r.root.findByProps({ testID: `muhurat-occasion-${rule.id}` });
+    expect(row.findByProps({ testID: `storybook-occasion-${rule.id}` }).props.accessible).toBe(false);
   }
   act(() => {
     r.root.findByProps({ testID: 'muhurat-occasion-griha-pravesh' }).props.onPress();
@@ -196,6 +197,8 @@ test('MuhuratResultsScreen: the वास्तु दिशा door renders for
     griha.root.findByProps({ testID: 'muhurat-vastu-door' }).props.onPress();
   });
   expect(mockNavigation.navigate).toHaveBeenCalledWith('VastuDisha');
+  expect(griha.root.findByProps({ testID: 'storybook-vastu-disha' }).props.accessible).toBe(false);
+  expect(griha.root.findByProps({ testID: 'storybook-ghar' }).props.accessible).toBe(false);
   act(() => griha.unmount());
 });
 

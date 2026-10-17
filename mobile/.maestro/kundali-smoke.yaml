@@ -224,6 +224,7 @@ appId: com.prashantsharma.vedansh
     visible: "Kundali result"
     timeout: 60000
 - assertVisible: "Understand your chart first"
+- takeScreenshot: e2e-shots/kundali-overview-painted
 - assertVisible: "Overview tab"
 - assertVisible: "Chart tab"
 - assertVisible: "Grahas tab"

@@ -20,6 +20,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Katha library,.*"
     timeout: 15000
+- takeScreenshot: e2e-shots/panchang-reading-doors-large
 - tapOn: "Katha library,.*"
 - tapOn: "Search stories…"
 - inputText: "Satyanarayana"

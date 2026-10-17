@@ -1,3 +1,4 @@
+import StoryIcon from '@/components/StoryIcon';
 import AppIcon from '@/components/AppIcon';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -556,7 +557,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                     pressed && { opacity: 0.8 },
                   ]}
                 >
-                  <Text style={{ fontSize: 22, color: colors.saffron, marginRight: 12 }}>दा</Text>
+                  <View style={{ marginRight: 12 }}><StoryIcon name="daan" size={36} /></View>
                   <View style={{ flex: 1 }}>
                     <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
                       {contentByLang(lang, daan.titleHi, daan.titleEn)}
