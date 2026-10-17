@@ -998,3 +998,13 @@ Added a no-image `Send as text` row (verse lines + meaning, or the selected pros
 ## [2026-10-13] ingest | More → Share the App invite copy refreshed
 
 Rewrote `APP_SHARE_INVITE` (hi/en/gu/kn) from five launch-era bullets to seven covering shipped surfaces: Ramayan, kids' stories, vrat katha/puja vidhi/tirth, Ask Vedansh. Store-gated Vastu and widgets deliberately omitted. design.md §37 synced; `shareLinks.test.ts` pins seven bullets per language and the link line.
+
+## [2026-10-16] ingest | Bundled reading artwork moved to R2
+
+The Garud Puran paintings (9, ~1.4 MB) and the five 14 Oct artwork corrections (~1.1 MB) were the
+only reading art still bundled with `require()`. Uploaded all 14 to R2 with immutable caching and
+verified byte-identical public responses, then activated their hashes: Garud Puran became
+`garud-puran--*` background entries, the corrections replaced their slot sources, and the
+`artworkCorrections.ts` override was removed. Updated [[integrations/reading-artwork]] and
+[[subsystems/readers]]. Remaining bundled images are UI/offline by design (Storybook and More
+icons, widget gallery plates, celestial chakra, the paper fallback).

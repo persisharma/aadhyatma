@@ -8,13 +8,8 @@ import { ArtworkCaptureContext, createArtworkPaintBarrier } from '../ArtworkCapt
 import { readerIllustrationAsset } from '@/data/readerIllustrationAsset';
 import { backgroundAsset, bundledReadingFallback } from '@/data/backgroundAsset';
 import { evictBackgroundAsset, subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
-import { bundledArtworkCorrection } from '@/data/artworkCorrections';
-
-jest.mock('@assets/artwork-corrections/theerth-karni-mata-background.webp', () => 101);
-jest.mock('@assets/artwork-corrections/theerth-karni-mata-banner.webp', () => 102);
-jest.mock('@assets/artwork-corrections/hanuman-sita-background.webp', () => 103);
-jest.mock('@assets/artwork-corrections/ram-hanuman-background.webp', () => 104);
-jest.mock('@assets/artwork-corrections/rama-darbar-background.webp', () => 105);
+import { readFileSync } from 'fs';
+import path from 'path';
 
 jest.mock('@/utils/backgroundAssetCache', () => ({
   subscribeBackgroundAsset: jest.fn(),
@@ -26,6 +21,8 @@ jest.mock('@/data/readerIllustrationManifest.json', () => ({
   assets: { 'deity-krishna-bansuri': { hash: 'krishna-fixture', ext: 'webp', width: 960, height: 480 } },
 }));
 
+const approvedCorrections: { assets: Record<string, { sha256: string }> } = JSON.parse(readFileSync(
+  path.join(__dirname, '../../../../docs/evaluations/artwork-corrections-2026-10-14/approved.json'), 'utf8'));
 const source = backgroundAsset('backgrounds--source-vishnu-narayana');
 const other = backgroundAsset('backgrounds--deity-durga-lion');
 const neutral = backgroundAsset('backgrounds--reading-parchment-option2');
@@ -156,38 +153,19 @@ test('reader illustrations share deferred work and keep fallback until native de
   expect(StyleSheet.flatten(remote.props.style).opacity).toBe(1);
 });
 
+// The reviewed 14 Oct refinements ship from R2 under their own hashes: a new hash
+// is a new cache file, so stale downloads of the old art are never reused.
 test.each([
-  backgroundAsset('backgrounds--theerth-karni-mata'),
-  backgroundAsset('chalisa--Hanuman_sita'),
-  backgroundAsset('chalisa--Ram_hanuman'),
-  backgroundAsset('backgrounds--deity-rama-darbar'),
-  readerIllustrationAsset('theerth-karni-mata'),
-])('reviewed correction %s paints immediately without requesting stale cached art', corrected => {
-  act(() => { tree = TestRenderer.create(<CachedArtwork source={corrected} fallback={<Image source={99} />} />); });
-  expect(tree.root.findByType(Image).props.source).toBe(bundledArtworkCorrection(corrected));
-  expect(deferred).toHaveLength(0);
-  expect(subscribeBackgroundAsset).not.toHaveBeenCalled();
-});
-
-test('sharing a bundled correction waits for native paint, including after changing the source', async () => {
-  const capture = createArtworkPaintBarrier();
-  const corrected = backgroundAsset('backgrounds--theerth-karni-mata');
-  act(() => { tree = TestRenderer.create(<ArtworkCaptureContext.Provider value={capture}><CachedArtwork source={corrected} /></ArtworkCaptureContext.Provider>); });
-  let painted = false;
-  const waiting = capture.wait(1000).then(result => { painted = true; return result; });
-  await Promise.resolve();
-  expect(painted).toBe(false);
-  act(() => tree.root.findByType(Image).props.onLoad());
-  await expect(waiting).resolves.toBe(true);
-  const oldEvents = tree.root.findByType(Image).props;
-  act(() => tree.update(<ArtworkCaptureContext.Provider value={capture}><CachedArtwork source={readerIllustrationAsset('theerth-karni-mata')} /></ArtworkCaptureContext.Provider>));
-  painted = false;
-  const changed = capture.wait(1000).then(result => { painted = true; return result; });
-  await Promise.resolve();
-  expect(painted).toBe(false);
-  act(() => { oldEvents.onLoad(); oldEvents.onError(); });
-  await Promise.resolve();
-  expect(painted).toBe(false);
-  act(() => tree.root.findByType(Image).props.onLoad());
-  await expect(changed).resolves.toBe(true);
+  ['backgrounds--theerth-karni-mata', 'theerth-karni-mata-background.webp'],
+  ['chalisa--Hanuman_sita', 'hanuman-sita-background.webp'],
+  ['chalisa--Ram_hanuman', 'ram-hanuman-background.webp'],
+  ['backgrounds--deity-rama-darbar', 'rama-darbar-background.webp'],
+] as const)('reviewed correction %s is requested from R2 at its approved hash', (stem, file) => {
+  const hash = approvedCorrections.assets[file].sha256.slice(0, 16);
+  act(() => { tree = TestRenderer.create(<CachedArtwork source={backgroundAsset(stem)} />); });
+  expect(tree.root.findByType(Image).props.source).toBe(bundledReadingFallback);
+  act(() => deferred[0]());
+  expect(subscribeBackgroundAsset).toHaveBeenCalledWith(expect.objectContaining({
+    key: hash, subdir: 'reading-backgrounds', remoteUrl: expect.stringContaining(`/reading-backgrounds/${hash}.webp`),
+  }), expect.any(Function));
 });

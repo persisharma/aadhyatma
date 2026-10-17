@@ -407,6 +407,9 @@ in a compact banner; never crop a deity's attributes to force a portrait into th
 Keep source WebPs, exact prompts/provenance and visually approved SHA-256 hashes under
 `mobile/assets/reader-illustrations/`. Verify both manifests with the preparation scripts,
 publish approved objects before activating their hashes, and preserve semantic deity mappings.
+Reading artwork is never bundled: a corrected painting replaces the source file in its own slot
+(new hash, new cache file), and a new section's paintings get their own folder in
+`prepare-reading-backgrounds.mjs` (as `garud-puran` does) instead of `require()` imports.
 Paged verse readers show the banner only on the first actual verse of each reading/chapter/theme,
 excluding navigation transition cards; section-based Katha/Pitru readers show it only on section
 zero. Later cards keep their themed background and divider with no banner frame, placeholder
