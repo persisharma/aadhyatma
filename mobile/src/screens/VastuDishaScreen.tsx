@@ -1,3 +1,4 @@
+import StoryIcon from '@/components/StoryIcon';
 /**
  * वास्तु दिशा (PRD-24, design.md §66) — the disha chakra + room-by-room
  * classical guidance + घर-का-मंदिर upkeep. Honest-accuracy contract:
@@ -264,7 +265,7 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
             variant="flat"
             leading={
               <CardThumb>
-                <Text style={{ color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>घ</Text>
+                <StoryIcon name="ghar" size={44} />
               </CardThumb>
             }
             right={

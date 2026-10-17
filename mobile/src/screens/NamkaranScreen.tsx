@@ -1,3 +1,4 @@
+import StoryIcon from '@/components/StoryIcon';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Dimensions, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -112,11 +113,11 @@ export default function NamkaranScreen({ navigation }: Props) {
               {message ? <Text accessibilityLiveRegion="polite" style={[styles.message, { color: colors.inkMuted }]}>{message}</Text> : null}
               <Pressable onPress={calculate} accessibilityRole="button" accessibilityLabel="Calculate Namkaran syllable" style={({ pressed }) => [styles.primary, { backgroundColor: colors.saffronDeep, borderRadius: radii.pill }, pressed && { opacity: 0.72 }]}><Text style={[styles.primaryText, { color: colors.onPrimary }]}>{contentByLang(lang, 'नामाक्षर निकालें', 'Find namakshar')}</Text></Pressable>
               <Text style={[styles.section, microLabel, { color: colors.inkMuted }]}>{contentByLang(lang, 'बिना जन्म विवरण', 'WITHOUT BIRTH DETAILS')}</Text>
-              <BrowseDoor glyph="न" titleHi="नक्षत्र से चुनें" titleEn="Choose by nakshatra" bodyHi="नक्षत्र और पद पहले से जानते हैं तो सीधे नाम देखें।" bodyEn="If you know the nakshatra and pada, go straight to names." onPress={() => setBrowseMode('nakshatra')} />
+              <BrowseDoor icon="nakshatra" titleHi="नक्षत्र से चुनें" titleEn="Choose by nakshatra" bodyHi="नक्षत्र और पद पहले से जानते हैं तो सीधे नाम देखें।" bodyEn="If you know the nakshatra and pada, go straight to names." onPress={() => setBrowseMode('nakshatra')} />
               {/* Rashi is a peer door, not a second answer: many families are
                   told the Moon sign rather than the charana, and a rashi is
                   exactly nine charanas of the same table (convention §4). */}
-              <BrowseDoor glyph="रा" titleHi="राशि से चुनें" titleEn="Choose by rashi" bodyHi="चन्द्र राशि पता है तो उसके नौ चरण और अक्षर देखें।" bodyEn="Know the Moon rashi? See its nine charanas and their sounds." onPress={() => setBrowseMode('rashi')} />
+              <BrowseDoor icon="rashi" titleHi="राशि से चुनें" titleEn="Choose by rashi" bodyHi="चन्द्र राशि पता है तो उसके नौ चरण और अक्षर देखें।" bodyEn="Know the Moon rashi? See its nine charanas and their sounds." onPress={() => setBrowseMode('rashi')} />
               <BrowseDoor glyph="१०८" titleHi="सभी नामाक्षर" titleEn="Browse all 108" bodyHi="पूरी नक्षत्र-पद तालिका से कोई भी अक्षर चुनें।" bodyEn="Choose any sound from the complete nakshatra-pada index." onPress={() => setBrowseMode('all')} />
             </>
           ) : browseMode === 'nakshatra' ? (
@@ -183,10 +184,14 @@ export default function NamkaranScreen({ navigation }: Props) {
   );
 }
 
-function BrowseDoor({ glyph, titleHi, titleEn, bodyHi, bodyEn, onPress }: { glyph: string; titleHi: string; titleEn: string; bodyHi: string; bodyEn: string; onPress: () => void }) {
+type BrowseDoorProps = { titleHi: string; titleEn: string; bodyHi: string; bodyEn: string; onPress: () => void } & (
+  { icon: 'nakshatra' | 'rashi'; glyph?: never } | { glyph: string; icon?: never }
+);
+
+function BrowseDoor({ glyph, icon, titleHi, titleEn, bodyHi, bodyEn, onPress }: BrowseDoorProps) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  return <ListCard leading={<CardThumb><Text maxFontSizeMultiplier={1.25} style={{ color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold, fontSize: glyph.length > 2 ? 12 : 18 }}>{glyph}</Text></CardThumb>} onPress={onPress} accessibilityLabel={`${titleEn}. ${bodyEn}`}><Text maxFontSizeMultiplier={1.25} style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16 }}>{contentByLang(lang, titleHi, titleEn)}</Text><Text maxFontSizeMultiplier={1.25} numberOfLines={2} style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17, marginTop: 3 }}>{meaningByLang(lang, bodyHi, bodyEn)}</Text></ListCard>;
+  return <ListCard leading={<CardThumb>{icon ? <StoryIcon name={icon} size={40} /> : <Text maxFontSizeMultiplier={1.25} style={{ color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold, fontSize: glyph.length > 2 ? 12 : 18 }}>{glyph}</Text>}</CardThumb>} onPress={onPress} accessibilityLabel={`${titleEn}. ${bodyEn}`}><Text maxFontSizeMultiplier={1.25} style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16 }}>{contentByLang(lang, titleHi, titleEn)}</Text><Text maxFontSizeMultiplier={1.25} numberOfLines={2} style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17, marginTop: 3 }}>{meaningByLang(lang, bodyHi, bodyEn)}</Text></ListCard>;
 }
 
 const GANA_LABELS: Record<'dev' | 'manushya' | 'rakshasa', { hi: string; en: string }> = {

@@ -515,6 +515,380 @@
         104,
         471
       ]
+    },
+    {
+      "name": "occasion-griha-pravesh",
+      "file": "occasion-griha-pravesh.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 53377,
+      "sha256": "583f6674f170a7a2df4e9314600f4f33b4ae0aa7949111b0969ee52c4356297d",
+      "masterSha256": "a02ad0837040ba19d800acfce1621c983706a63788b497f223db8d9208e982aa",
+      "sourceSha256": "a02ad0837040ba19d800acfce1621c983706a63788b497f223db8d9208e982aa",
+      "visibleBounds": [
+        68,
+        40,
+        444,
+        472
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-griha-pravesh.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-bhumi-pujan",
+      "file": "occasion-bhumi-pujan.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 45720,
+      "sha256": "4206d451768a20f07ad2c8fc9eff83f434e230f41b4aeb6b1fdd0044b805efe1",
+      "masterSha256": "7b8172d4655f93a73ef59aaf6dff746d6f3a4170819501b52d16ccc365e78b41",
+      "sourceSha256": "7b8172d4655f93a73ef59aaf6dff746d6f3a4170819501b52d16ccc365e78b41",
+      "visibleBounds": [
+        40,
+        82,
+        472,
+        430
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-bhumi-pujan.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-vahan",
+      "file": "occasion-vahan.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 42848,
+      "sha256": "699248e668cbf68b19cff855c069b2259cd83fe4b3ddb570560e0dd5b3403abf",
+      "masterSha256": "171430e38897b2d1f7a24ca205377a94aca57288a6aecef1c58a6f07cc084a67",
+      "sourceSha256": "171430e38897b2d1f7a24ca205377a94aca57288a6aecef1c58a6f07cc084a67",
+      "visibleBounds": [
+        40,
+        125,
+        472,
+        386
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-vahan.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-vyapar",
+      "file": "occasion-vyapar.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 45221,
+      "sha256": "5c927d821408687f8097d3d4c191d75511b932fc26bed62f5aff8dbe01d23abc",
+      "masterSha256": "5321b3b61e771a1561839a67eb45d64cc9c60f8010e09040ed4efaa88c120f06",
+      "sourceSha256": "5321b3b61e771a1561839a67eb45d64cc9c60f8010e09040ed4efaa88c120f06",
+      "visibleBounds": [
+        40,
+        108,
+        472,
+        404
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-vyapar.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-sampatti",
+      "file": "occasion-sampatti.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 31575,
+      "sha256": "dfec34c3952c4b6a992b43cbe97c20c57c6ed67870eb880bf3fae1d8ae41d959",
+      "masterSha256": "0666f71852175dd06537dfd2b6014521f3079885e8df5b5d35b03cf625c91590",
+      "sourceSha256": "0666f71852175dd06537dfd2b6014521f3079885e8df5b5d35b03cf625c91590",
+      "visibleBounds": [
+        40,
+        96,
+        472,
+        415
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-sampatti.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-swarna",
+      "file": "occasion-swarna.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 27920,
+      "sha256": "27c453de0dc649d9db17cc953b2a1ff8e18d1584bf6f0a84618044aae6dc57a3",
+      "masterSha256": "dfa74081da92f8b79ea49bf117541fb310a6d988af450b1bd08eab9ded584dd1",
+      "sourceSha256": "dfa74081da92f8b79ea49bf117541fb310a6d988af450b1bd08eab9ded584dd1",
+      "visibleBounds": [
+        40,
+        144,
+        472,
+        367
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-swarna.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-yatra",
+      "file": "occasion-yatra.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 33001,
+      "sha256": "e5ba18da1b955f524cb20c7733126173448a6d7e897a49eaec039b1cec738d1e",
+      "masterSha256": "9ffeb01bb3b5f7d4ebee5a91a69085bb160f35f9baeb0dd61d77387ac50067be",
+      "sourceSha256": "9ffeb01bb3b5f7d4ebee5a91a69085bb160f35f9baeb0dd61d77387ac50067be",
+      "visibleBounds": [
+        111,
+        40,
+        401,
+        472
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-yatra.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-namkaran",
+      "file": "occasion-namkaran.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 46258,
+      "sha256": "6cdeb480a5c032e6ccbd70eca10ffe14fcc20e8422c7851e0300369d7fb25331",
+      "masterSha256": "a9cfe1daf6940586784f06adcba9c3fdfae36b928452957785e430ffab93f49f",
+      "sourceSha256": "a9cfe1daf6940586784f06adcba9c3fdfae36b928452957785e430ffab93f49f",
+      "visibleBounds": [
+        40,
+        92,
+        472,
+        420
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-namkaran.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-vidyarambh",
+      "file": "occasion-vidyarambh.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 45111,
+      "sha256": "6b304d74811335ebe0e70c651eba4615eba265d68d9415015d3ecb9643237502",
+      "masterSha256": "262e57abaf5f8c22d4ff1d738890e3e5c24851dc13dac6c3bff4f84ba533fbf2",
+      "sourceSha256": "262e57abaf5f8c22d4ff1d738890e3e5c24851dc13dac6c3bff4f84ba533fbf2",
+      "visibleBounds": [
+        40,
+        118,
+        472,
+        393
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-vidyarambh.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-mundan",
+      "file": "occasion-mundan.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 48661,
+      "sha256": "4a841b1bd1f51a280e5d5a2d6ed04ab624d62fdf4d5f42f978833f3a0800bd20",
+      "masterSha256": "f3b8dd99f1187a792abf49e430690cd3e654a62c367e3cbf27a3e2e382a1c827",
+      "sourceSha256": "f3b8dd99f1187a792abf49e430690cd3e654a62c367e3cbf27a3e2e382a1c827",
+      "visibleBounds": [
+        40,
+        68,
+        472,
+        443
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-mundan.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-annaprashan",
+      "file": "occasion-annaprashan.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 44576,
+      "sha256": "82ee05bf1784e633118e19e470da2e5635ed81c5efe4f4966bb608c62a79a959",
+      "masterSha256": "95aba2540e29a17461168a8cab20aa2f71f5d6fd280f8cb6070ee0ab24fbf693",
+      "sourceSha256": "95aba2540e29a17461168a8cab20aa2f71f5d6fd280f8cb6070ee0ab24fbf693",
+      "visibleBounds": [
+        40,
+        101,
+        472,
+        411
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-annaprashan.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-karnavedha",
+      "file": "occasion-karnavedha.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 51136,
+      "sha256": "26688fd888c90e18abd93277b1d58ddc5735b5182e5d87beda2992d414b99334",
+      "masterSha256": "60f34a338a95a909a5380512c3a86a905df009d0a23ba47315e799b4193e9261",
+      "sourceSha256": "60f34a338a95a909a5380512c3a86a905df009d0a23ba47315e799b4193e9261",
+      "visibleBounds": [
+        40,
+        67,
+        472,
+        445
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-karnavedha.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "occasion-upanayana",
+      "file": "occasion-upanayana.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 67228,
+      "sha256": "eb69dbf709253ae7ff677fb3605eb1dbd41758c36651b03e963a9544b18cc9d9",
+      "masterSha256": "789218b2e6e44288e3488e98a07e4fe2ddbe6c9372d9a7bb5c08059ac5856d84",
+      "sourceSha256": "789218b2e6e44288e3488e98a07e4fe2ddbe6c9372d9a7bb5c08059ac5856d84",
+      "visibleBounds": [
+        40,
+        45,
+        472,
+        467
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/occasion-upanayana.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "vastu-disha",
+      "file": "vastu-disha.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 40701,
+      "sha256": "52bad019b15cc3750b3402b0dd53a5bdf0fecdcb853eeed8c3cf6adcaff00fc5",
+      "masterSha256": "6b172baf391b7cb348789e66b83db9ac9758d9d3d136ee03ac1ba1d503dd9902",
+      "sourceSha256": "6b172baf391b7cb348789e66b83db9ac9758d9d3d136ee03ac1ba1d503dd9902",
+      "visibleBounds": [
+        47,
+        40,
+        465,
+        472
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/vastu-disha.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "ghar",
+      "file": "ghar.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 48132,
+      "sha256": "54bd796d15799d0561ac2b009d88a5ab202569588cd6ab8c057cf8fb6d16cff4",
+      "masterSha256": "e9f96bf59c97ab3fca438c91f9424d079364bed34f7d52ce32dbadbf0c25dee0",
+      "sourceSha256": "e9f96bf59c97ab3fca438c91f9424d079364bed34f7d52ce32dbadbf0c25dee0",
+      "visibleBounds": [
+        52,
+        40,
+        459,
+        472
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/ghar.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "nakshatra",
+      "file": "nakshatra.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 16789,
+      "sha256": "2824f330a6dd5de1670da4f282ab3f819eea9948e53d36ddaaa2b509c901e3df",
+      "masterSha256": "be7626b8ee413f9ceba10ebb06236baec879559bae3828f8062b7dbfb3483d61",
+      "sourceSha256": "be7626b8ee413f9ceba10ebb06236baec879559bae3828f8062b7dbfb3483d61",
+      "visibleBounds": [
+        40,
+        69,
+        472,
+        443
+      ],
+      "alphaExtrema": [
+        0,
+        254
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/nakshatra.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "rashi",
+      "file": "rashi.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 49728,
+      "sha256": "ab5993ab0f26ed557c5626689cb548e435307f54278c0779ef7d81918cab64e6",
+      "masterSha256": "da10643ff720d73fafd3967d95dab8ddb68e8ba42b64fc17934e809356f142d0",
+      "sourceSha256": "da10643ff720d73fafd3967d95dab8ddb68e8ba42b64fc17934e809356f142d0",
+      "visibleBounds": [
+        40,
+        41,
+        472,
+        471
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/rashi.png",
+      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
     }
   ],
   "correctedDate": "2026-10-06",

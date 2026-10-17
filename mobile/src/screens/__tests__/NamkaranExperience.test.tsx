@@ -60,6 +60,8 @@ test('child mode reuses BirthDetailsForm without collecting a name, city, or Kun
     await Promise.resolve();
   });
   assert.ok(tree.root.findByProps({ accessibilityLabel: 'Child birth details, time in IST' }));
+  for (const subject of ['nakshatra', 'rashi']) assert.equal(tree.root.findByProps({ testID: `storybook-${subject}` }).props.accessible, false);
+  assert.ok(textOf(tree).includes('१०८'));
   assert.equal(tree.root.findAllByProps({ accessibilityLabel: 'Child name, optional' }).length, 0);
   assert.equal(textOf(tree).includes('birth place is required'), false);
   assert.equal(textOf(tree).includes('Calculation stays on this device'), false);
