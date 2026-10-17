@@ -103,6 +103,29 @@ appId: com.prashantsharma.vedansh
     text: "Start over from the beginning"
     optional: true
 - assertVisible: "जय आद्या शक्ति, मा जय आद्या शक्ति.*"
+# Reach the preserved signature, then all three restored closing pages.
+- repeat:
+    times: 17
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "शिवशक्तिनी आरती.*"
+- swipe: { start: "80%, 45%", end: "20%, 45%", duration: 600 }
+- waitForAnimationToEnd
+- assertVisible: "एकमे एक स्वरूप.*"
+- swipe: { start: "80%, 45%", end: "20%, 45%", duration: 600 }
+- waitForAnimationToEnd
+- assertVisible: "भाव न जाणुं.*"
+- swipe: { start: "80%, 45%", end: "20%, 45%", duration: 600 }
+- waitForAnimationToEnd
+- assertVisible: "मानो मंडप लाल गुलाल.*"
+- tapOn: "English"
+- assertVisible: "Maano mandap laal gulaal.*"
+- tapOn: "Hindi"
+- takeScreenshot: e2e-shots/jay-adhya-shakti-complete-ending
 - tapOn: "Back"
 - waitForAnimationToEnd
 # Shani Dev Aarti is appended at index 11. Verify its own five-stanza payload.
