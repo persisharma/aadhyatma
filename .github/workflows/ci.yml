@@ -21,6 +21,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # The suite finishes in a few minutes; cap the job so a hung step fails fast
+    # instead of burning the runner's full 6h ceiling (see the 2026-10-16 stall).
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: mobile
