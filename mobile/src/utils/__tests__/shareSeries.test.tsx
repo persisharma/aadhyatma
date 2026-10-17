@@ -245,6 +245,40 @@ describe('series share flow', () => {
     expect(byLabel(tree, 'Share to other apps').props.disabled).toBeFalsy();
   });
 
+  test('Send as text joins the selected pages into one message, without capturing', async () => {
+    const tree = await open(LONG);
+    const pages = pageButtons(tree);
+    expect(byLabel(tree, 'Send as text').props.disabled).toBeFalsy();
+    await act(async () => byLabel(tree, 'Send as text').props.onPress());
+    await settle(600);
+    expect(mockCaptureRef).not.toHaveBeenCalled();
+    expect(mockShareFiles).not.toHaveBeenCalled();
+    expect(rnShare).toHaveBeenCalledTimes(1);
+    const { message } = rnShare.mock.calls[0][0] as { message: string };
+    expect(message.startsWith('Vrat Katha · ')).toBe(true);
+    expect(message).toContain('https://vedansh.app/get');
+    expect(pages.length).toBeGreaterThan(1);
+  });
+
+  test('Send as text stays available on a binary without the multi-image module', async () => {
+    mockMultiAvailable = false;
+    const tree = await open(LONG);
+    expect(byLabel(tree, 'Send as text').props.disabled).toBeFalsy();
+  });
+
+  test('switching the card language re-paginates the series but keeps the sheet in the reader language', async () => {
+    const tree = await open(LONG);
+    await act(async () => byLabel(tree, 'Card language: Hindi').props.onPress());
+    expect(byLabel(tree, 'Share all pages')).toBeDefined();
+    const card = tree.root.findAllByType('ProseShareCard' as never)[0];
+    expect(card.props.lang).toBe('hi');
+    expect(card.props.header).toMatch(/^व्रत कथा · /);
+    await act(async () => byLabel(tree, 'Share to other apps').props.onPress());
+    await settle();
+    const { message } = rnShare.mock.calls[0][0] as { message: string };
+    expect(message).toMatch(/^व्रत कथा · /);
+  });
+
   test('switching scope re-paginates', async () => {
     const tree = await open(LONG);
     const before = pageButtons(tree).length;

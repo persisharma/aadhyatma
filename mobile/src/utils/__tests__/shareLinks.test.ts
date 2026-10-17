@@ -72,4 +72,22 @@ describe('buildAppShareMessage', () => {
     expect(message).toContain('Follow on Instagram:');
     expect(message).toContain(INSTAGRAM_URL);
   });
+
+  test('every language lists the same seven features, link on the download line', () => {
+    for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+      const lines = buildAppShareMessage(lang).split('\n');
+      expect(lines.filter((l) => l.startsWith('• '))).toHaveLength(7);
+      expect(lines[lines.length - 2].endsWith(`: ${SMART_LINK}`)).toBe(true);
+      // Emoji-free per design.md §5.
+      expect(lines.join('\n')).not.toMatch(/\p{Extended_Pictographic}/u);
+    }
+  });
+
+  test('names the features shipped since launch', () => {
+    const en = buildAppShareMessage('en');
+    expect(en).toContain('Ramayan');
+    expect(en).toContain('stories for kids');
+    expect(en).toContain('tirth');
+    expect(en).toContain('Ask Vedansh');
+  });
 });

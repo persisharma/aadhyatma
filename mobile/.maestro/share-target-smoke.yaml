@@ -2,8 +2,9 @@
 #
 # Covers design.md §39.1: tapping a reader's Share button no longer opens the OS
 # share sheet directly, it opens the in-app target picker with three destinations
-# (Share / Instagram post 4:5 / Instagram story or reel 9:16) and a live hashtag
-# preview built from the verse (§39.2). The post/story split exists because a 4:5
+# (Share / Instagram post 4:5 / Instagram story or reel 9:16), a "Send as text"
+# row and card-language chips (§39.8), and a live hashtag preview built from the
+# verse (§39.2). The post/story split exists because a 4:5
 # image posted to a story or reel gets cropped top and bottom (§39.3), so both
 # rows must be present — a picker that offers only the post aspect is the bug.
 #
@@ -59,6 +60,15 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Cancel"
 - assertVisible: ".*Hashtags: .*#HanumanChalisa.*"
 - assertVisible: ".*Hashtags: .*#JaiHanuman.*"
+
+# §39.8: the plain-text row and the card-language chips. Switching the card to
+# English must keep the sheet open with the same verse's tags (they follow the card
+# language, and Hanuman Chalisa's text tag exists in every language).
+- assertVisible: "Send as text"
+- assertVisible: "Card language: English"
+- tapOn: "Card language: English"
+- assertVisible: "Share on Instagram"
+- assertVisible: ".*Hashtags: .*#HanumanChalisa.*"
 
 # Cancel closes the picker and leaves the reader intact — no native sheet opened.
 - tapOn: "Cancel"

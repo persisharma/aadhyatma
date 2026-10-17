@@ -2,7 +2,7 @@ import AppIcon, { type AppIconName } from './AppIcon';
 import React from 'react';
 import { Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
-import type { Lang } from '@/data/gita/language';
+import { LANGUAGES, type Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import { cardFontByLang, eyebrowTextStyle, indicSafeTag } from '@/utils/langType';
 import { MAX_SHARE_PAGES, cardMetricsFor, type ShareCardLayout } from '@/utils/shareCardPages';
@@ -32,6 +32,11 @@ import SharePagePreview from './SharePagePreview';
  * the sheet grows a pages strip, two all-pages rows (share every selected page at
  * once; Instagram carousel) and relabels the three rows above as "this page". With a
  * single page none of that renders — a verse share is exactly the sheet it always was.
+ *
+ * **Card language and text (§39.8).** `lang` is the sheet's own chrome; `cardLang` is
+ * what the card, caption and hashtags are written in — the reader's language by default,
+ * switchable per share so a Hindi reader can send English (or Gujarati) to a relative.
+ * "Send as text" hands the same reading over as one plain message, no image.
  */
 
 export type ShareSeriesView = 'targets' | 'preview' | 'progress' | 'carouselReady';
@@ -82,6 +87,11 @@ type Props = {
   cardLayout?: ShareCardLayout;
   /** Verse images grow vertically to preserve the complete reading. */
   fullVerseImage?: boolean;
+  /** Language the card + caption are written in; with `onCardLang`, shows the chips. */
+  cardLang?: Lang;
+  onCardLang?: (lang: Lang) => void;
+  /** The reading as one plain message (verse, or every selected page). Absent → no row. */
+  onShareText?: () => void;
 };
 
 type RowProps = {
@@ -149,6 +159,9 @@ export default function ShareTargetSheet({
   series,
   cardLayout,
   fullVerseImage,
+  cardLang,
+  onCardLang,
+  onShareText,
 }: Props) {
   const { colors, spacing, radii } = useTheme();
   const cardSize = cardMetricsFor(cardLayout);
@@ -171,6 +184,60 @@ export default function ShareTargetSheet({
         pick(lang, { hi: 'श्लोक साझा करें', en: 'Share this verse', gu: 'શ્લોક શેર કરો', kn: 'ಶ್ಲೋಕ ಹಂಚಿಕೊಳ್ಳಿ' })}
     </Text>
   );
+
+  const textRow = onShareText ? (
+    <TargetRow
+      lang={lang}
+      icon="text"
+      title={pick(lang, { hi: 'टेक्स्ट में भेजें', en: 'Send as text', gu: 'લખાણ તરીકે મોકલો', kn: 'ಪಠ್ಯವಾಗಿ ಕಳುಹಿಸಿ' })}
+      sub={multi
+        ? pick(lang, { hi: 'चुने पृष्ठ एक संदेश में — बिना चित्र', en: 'Selected pages as one message — no image', gu: 'પસંદ પૃષ્ઠ એક સંદેશમાં — ચિત્ર વિના', kn: 'ಆಯ್ಕೆಯ ಪುಟಗಳು ಒಂದು ಸಂದೇಶದಲ್ಲಿ — ಚಿತ್ರವಿಲ್ಲ' })
+        : fullVerseImage
+        ? pick(lang, { hi: 'पूरा श्लोक और अर्थ — बिना चित्र', en: 'Full verse and meaning — no image', gu: 'સંપૂર્ણ શ્લોક અને અર્થ — ચિત્ર વિના', kn: 'ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ — ಚಿತ್ರವಿಲ್ಲ' })
+        : pick(lang, { hi: 'पूरा पाठ एक संदेश में — बिना चित्र', en: 'The full text as one message — no image', gu: 'આખું લખાણ એક સંદેશમાં — ચિત્ર વિના', kn: 'ಸಂಪೂರ್ಣ ಪಠ್ಯ ಒಂದು ಸಂದೇಶದಲ್ಲಿ — ಚಿತ್ರವಿಲ್ಲ' })}
+      chips={multi ? [String(selectedCount)] : undefined}
+      onPress={onShareText}
+      disabled={busy}
+      divider={false}
+      accessibilityLabel="Send as text"
+      accessibilityHint="Opens the share sheet with the reading as a plain message, without an image"
+    />
+  ) : null;
+
+  const langChips = cardLang && onCardLang ? (
+    <View style={styles.langWrap}>
+      <Text style={[indicSafeTag(lang, 1.6), { fontSize: 10, color: colors.inkMuted }]}>
+        {pick(lang, { hi: 'कार्ड की भाषा', en: 'CARD LANGUAGE', gu: 'કાર્ડની ભાષા', kn: 'ಕಾರ್ಡ್ ಭಾಷೆ' })}
+      </Text>
+      <View style={styles.langRow} accessibilityRole="radiogroup" accessibilityLabel="Card language">
+        {LANGUAGES.map((opt) => {
+          const on = opt.value === cardLang;
+          return (
+            <Pressable
+              key={opt.value}
+              onPress={() => onCardLang(opt.value)}
+              disabled={busy || on}
+              accessibilityRole="radio"
+              accessibilityState={{ selected: on }}
+              accessibilityLabel={`Card language: ${opt.a11yLabel}`}
+              testID={`share-card-lang-${opt.value}`}
+              hitSlop={6}
+              style={({ pressed }) => [
+                styles.langChip,
+                { borderRadius: radii.pill, borderColor: on ? colors.cardActiveBorder : colors.divider },
+                on && { backgroundColor: colors.saffronTint },
+                pressed && !on && { opacity: 0.7 },
+              ]}
+            >
+              <Text style={{ fontFamily: cardFontByLang(opt.value), fontSize: 14, color: on ? colors.saffronDeep : colors.inkMuted }}>
+                {opt.nativeLabel}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  ) : null;
 
   let body: React.ReactNode;
   if (multi && multi.view === 'preview') {
@@ -301,10 +368,11 @@ export default function ShareTargetSheet({
               hotChip
               onPress={multi.onInstagramCarousel}
               disabled={allDisabled}
-              divider={false}
+              divider={!!textRow}
               accessibilityLabel="Share as Instagram carousel"
               accessibilityHint="Renders every selected page, copies the caption, then opens the share sheet"
             />
+            {textRow}
             <Text style={eyebrow}>
               {pick(lang, { hi: `केवल यह पृष्ठ · ${multi.highlighted + 1}`, en: `JUST THIS PAGE · ${multi.highlighted + 1}`, gu: `માત્ર આ પૃષ્ઠ · ${multi.highlighted + 1}`, kn: `ಈ ಪುಟ ಮಾತ್ರ · ${multi.highlighted + 1}` })}
             </Text>
@@ -344,10 +412,11 @@ export default function ShareTargetSheet({
           chips={fullVerseImage ? pageChip : [...pageChip, '9:16']}
           onPress={onShareInstagramStory}
           disabled={busy}
-          divider={false}
+          divider={!multi && !!textRow}
           accessibilityLabel="Share as Instagram story or reel"
           accessibilityHint={fullVerseImage ? 'Complete verse image in a story frame. Copies the caption and hashtags, then opens the share sheet' : 'Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens the share sheet'}
         />
+        {multi ? null : textRow}
 
         {fullVerseImage ? (
           <Text style={[subLabel, styles.copyNote, { color: colors.inkMuted }]}>
@@ -415,13 +484,12 @@ export default function ShareTargetSheet({
         >
           <View style={[styles.grabber, { backgroundColor: colors.divider }]} />
           {multi?.view === 'preview' ? null : heading}
-          {multi ? (
-            <ScrollView style={styles.body} bounces={false} showsVerticalScrollIndicator={false}>
-              {body}
-            </ScrollView>
-          ) : (
-            body
-          )}
+          {/* Always scrollable: the language chips and text row make even the verse
+              sheet taller than a small phone's 92 %. */}
+          <ScrollView style={styles.body} bounces={false} showsVerticalScrollIndicator={false}>
+            {!multi || multi.view === 'targets' ? langChips : null}
+            {body}
+          </ScrollView>
           {showCancel ? (
             <Pressable
               onPress={onClose}
@@ -469,4 +537,7 @@ const styles = StyleSheet.create({
   step: { flexDirection: 'row', gap: 10, alignItems: 'flex-start' },
   stepNo: { width: 22, height: 22, borderRadius: 11, textAlign: 'center', lineHeight: 22, fontSize: 11, fontWeight: '600', overflow: 'hidden' },
   primary: { minHeight: 44, alignItems: 'center', justifyContent: 'center', marginTop: 4 },
+  langWrap: { alignItems: 'center', gap: 8, marginBottom: 12 },
+  langRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 8 },
+  langChip: { borderWidth: 1, paddingHorizontal: 12, minHeight: 36, justifyContent: 'center' },
 });

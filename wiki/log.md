@@ -991,6 +991,14 @@ ASCII, registry/search/routine/library integration and Konark temple discovery.
 
 Preserved main’s sourced Shani payload at index 11 and Dattatreya at 12, removed duplicate Shani catalog/background records, and appended Ganga plus the other eight requested aartis at 13–21. The registry has 22 payloads and the category 23 entries including the Ram Stuti alias. Added regression checks for main’s persisted positions and adjusted native flow selectors/order. All nine requested titles remain covered; native verification stays deferred.
 
+## [2026-10-13] ingest | Share sheet: Send as text + card-language chips
+
+Added a no-image `Send as text` row (verse lines + meaning, or the selected prose pages rejoined across page breaks, plus the caption link lines) and hi/en/gu/kn card-language chips that re-language the card, caption, hashtags and text without changing the sheet chrome. OTA-only; no native module. Updated [[share]], design.md §39.1/§39.6/§39.7 and the share-target Maestro flow (not run — no simulator).
+
+## [2026-10-13] ingest | More → Share the App invite copy refreshed
+
+Rewrote `APP_SHARE_INVITE` (hi/en/gu/kn) from five launch-era bullets to seven covering shipped surfaces: Ramayan, kids' stories, vrat katha/puja vidhi/tirth, Ask Vedansh. Store-gated Vastu and widgets deliberately omitted. design.md §37 synced; `shareLinks.test.ts` pins seven bullets per language and the link line.
+
 ## [2026-10-16] ingest | Bundled reading artwork moved to R2
 
 The Garud Puran paintings (9, ~1.4 MB) and the five 14 Oct artwork corrections (~1.1 MB) were the

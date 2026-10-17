@@ -12,6 +12,9 @@ import { contentByLang } from '@/utils/localize';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { VIDHI_ENTRIES, type VidhiEntry } from '@/data/vidhi';
 import ReaderHeader from '@/components/ReaderHeader';
+import DeityIcon from '@/components/DeityIcon';
+import StoryIcon from '@/components/StoryIcon';
+import { deityIconKeyFor } from '@/data/deities';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
 import { buildListingShare } from '@/utils/listingShare';
@@ -74,6 +77,7 @@ function VidhiCard({ entry, onPress }: { entry: VidhiEntry; onPress: () => void 
     latPrimary: 19,
     latSecondary: 12,
   });
+  const iconKey = entry.deities.map(deityIconKeyFor).find(Boolean);
   const hasKatha = entry.steps.some((step) => step.ref?.kind === 'katha');
   const sub = contentByLang(
     lang,
@@ -110,15 +114,10 @@ function VidhiCard({ entry, onPress }: { entry: VidhiEntry; onPress: () => void 
         end={{ x: 1, y: 1 }}
         style={[styles.thumb, { borderRadius: radii.md }]}
       >
-        <Text
-          style={{
-            color: colors.parchmentSoft,
-            fontFamily: typography.thumb.fontFamily,
-            fontSize: typography.thumb.fontSize,
-          }}
-        >
-          {entry.titleHi.replace(/^श्री\s*/, '').charAt(0)}
-        </Text>
+        {/* The first tagged deity's painted art; the Puja Vidhi art for an untagged vidhi. */}
+        {iconKey
+          ? <DeityIcon iconKey={iconKey} fallbackText="" />
+          : <StoryIcon name="vrat" size={36} />}
       </LinearGradient>
       <View style={styles.meta}>
         <Text

@@ -1,3 +1,5 @@
+import AppIcon from '@/components/AppIcon';
+import StoryIcon from '@/components/StoryIcon';
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
@@ -84,9 +86,7 @@ export default function KundaliOverview({
               { backgroundColor: colors.saffronTint, borderRadius: radii.md },
             ]}
           >
-            <Text style={[styles.iconText, { color: colors.saffronDeep }]}>
-              {insight.id === 'lagna' ? '1' : insight.id === 'moon' ? '☾' : '◷'}
-            </Text>
+            {insight.id === 'lagna' ? <StoryIcon name="kundali" size={30} /> : <AppIcon name={insight.id === 'moon' ? 'moon' : 'gochar'} size={23} color={colors.iconInk} weight="duotone" />}
           </View>
           <View style={styles.cardCopy}>
             <Text
@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   icon: { width: 30, height: 30, alignItems: 'center', justifyContent: 'center' },
-  iconText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   cardCopy: { flex: 1 },
   eyebrow: { fontSize: 12 },
   learn: { fontFamily: fontFamilies.interSemiBold, fontSize: 12, marginTop: 8 },
