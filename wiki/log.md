@@ -990,3 +990,5 @@ ASCII, registry/search/routine/library integration and Konark temple discovery.
 ## [2026-10-16] ingest | Reconcile PR 478 with merged Shani edition
 
 Preserved main’s sourced Shani payload at index 11 and Dattatreya at 12, removed duplicate Shani catalog/background records, and appended Ganga plus the other eight requested aartis at 13–21. The registry has 22 payloads and the category 23 entries including the Ram Stuti alias. Added regression checks for main’s persisted positions and adjusted native flow selectors/order. All nine requested titles remain covered; native verification stays deferred.
+
+## [2026-10-17] ingest | languages: English verse display respelling (readableRomanization) + Tiro Devanagari Sanskrit reading tokens

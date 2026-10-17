@@ -196,7 +196,7 @@ function makeRule(overrides: Partial<ObservanceRule> & { id: string }): Observan
   // en: romanized verse + English source/label/title.
   const enC = formatNotificationContent(verse, 'en');
   assert.equal(enC.title, 'Daily Verse');
-  assert.ok(enC.body.includes('karmaṇy evādhikāras'));
+  assert.ok(enC.body.includes('karmany evādhikāras')); // respelled for reading (design.md §3.1)
   assert.ok(enC.body.includes('Bhagavad Gītā'));
   assert.ok(enC.body.includes('Shloka 2.47'));
 

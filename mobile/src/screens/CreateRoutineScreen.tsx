@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { fontFamilies } from '@/theme/typography';
 import { pick, type LocalizedStrings } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
@@ -368,7 +369,7 @@ function PrimaryButton({
         style={{
           fontFamily:
             lang === 'en'
-              ? typography.verseLatin.fontFamily
+              ? fontFamilies.latinSemiBold
               : scriptTitleFont(lang, typography.cardHindi.fontFamily),
           fontSize: 16,
           // ≥1.5× — RN clips Devanagari top matras (ें ैं) below ~1.45×.

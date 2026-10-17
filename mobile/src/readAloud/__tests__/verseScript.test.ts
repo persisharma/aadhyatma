@@ -162,7 +162,7 @@ describe('buildVerseScript', () => {
   it('speaks the romanization for en', () => {
     const chunks = buildVerseScript(toReadableVerse(gitaVerse), 'en', OPTS);
     const verse = chunks.filter((c) => c.part === 'verse');
-    expect(verse[0].text).toContain('dhṛitarāśhtra');
+    expect(verse[0].text).toContain('dhritarāshtra'); // the respelled form readers see
     expect(chunks.find((c) => c.part === 'meaning')?.text).toBe('Dhritarashtra said.');
   });
 

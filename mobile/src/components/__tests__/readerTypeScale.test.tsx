@@ -4,13 +4,15 @@ import { StyleSheet, Text } from 'react-native';
 import GarudPuranPage from '../GarudPuranPage';
 import { getGarudPuranChapter } from '@/data/garud-puran';
 import { typography } from '@/theme/typography';
+import { readableRomanization } from '@/utils/readableRomanization';
 
 /**
  * Reader type-scale guard (verse ↔ meaning, both languages).
  *
  * The intended scale:
- *   - English meaning (meaningEnglish) and Hindi meaning (meaning) are the SAME size,
- *     so the two languages read at one consistent meaning scale.
+ *   - English meaning (meaningEnglish) reads at the Hindi meaning (meaning) scale. The
+ *     sizes differ in points because Tiro Devanagari Sanskrit's x-height is ~24% taller
+ *     than the Cormorant it replaced: 17 pt Tiro matches the old 20 pt by eye.
  *   - The verse/transliteration sits ABOVE the meaning in both languages, mirroring
  *     the Hindi verse↔meaning hierarchy.
  *
@@ -96,19 +98,19 @@ function fontSizeOf(
 }
 
 describe('reader type scale — tokens', () => {
-  test('Hindi and English meaning are the same size', () => {
-    expect(MEANING_EN).toBe(20);
-    expect(MEANING_HI).toBe(MEANING_EN);
+  test('Hindi and English meaning read at one scale (x-height matched)', () => {
+    expect(MEANING_HI).toBe(20);
+    expect(MEANING_EN).toBe(17);
   });
 
   test('the transliteration sits above the meaning', () => {
-    expect(VERSE_LATIN).toBe(24);
+    expect(VERSE_LATIN).toBe(20);
     expect(VERSE_LATIN).toBeGreaterThan(MEANING_EN);
   });
 });
 
 describe('reader type scale — rendered per component', () => {
-  test('VersePage (Aarti / Chalisa): verse 24 > meaning 20; Hindi meaning 20', () => {
+  test('VersePage (Aarti / Chalisa): verse above meaning at the token sizes', () => {
     const verse = {
       id: 'test-1',
       labelHi: 'परीक्षा',
@@ -124,75 +126,75 @@ describe('reader type scale — rendered per component', () => {
     expect(fontSizeOf(el, 'hi', 'हिन्दी अर्थ परीक्षण')).toBe(MEANING_HI);
   });
 
-  test('GitaVersePage: verse 24 > meaning 20; Hindi meaning 20', () => {
+  test('GitaVersePage: verse above meaning at the token sizes', () => {
     const verse = getGitaChapter(1).verses.find(
       (v) => v.meaningEn?.trim() && v.meaningHi?.trim() && v.transliteration?.[0]?.trim()
     );
     if (!verse) throw new Error('no suitable Gita verse fixture');
     const el = <GitaVersePage verse={verse} sourceId="bhagavad-gita" width={375} />;
-    expect(fontSizeOf(el, 'en', verse.transliteration[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', readableRomanization(verse.transliteration)[0])).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });
 
-  test('GitaSaarVersePage: verse 24 > meaning 20; Hindi meaning 20', () => {
+  test('GitaSaarVersePage: verse above meaning at the token sizes', () => {
     const verse = getGitaSaarChapter(1).verses[0];
     const el = <GitaSaarVersePage verse={verse} sourceId="gita-saar" width={375} />;
-    expect(fontSizeOf(el, 'en', verse.transliteration[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', readableRomanization(verse.transliteration)[0])).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });
 
-  test('ShivaStrotamVersePage (+ re-export Krishna): verse 24 > meaning 20; Hindi meaning 20', () => {
+  test('ShivaStrotamVersePage (+ re-export Krishna): verse above meaning at the token sizes', () => {
     const verse = getShivaStrotamChapter(1).verses.find(
       (v) => v.meaningEn?.trim() && v.meaningHi?.trim() && v.linesEn?.[0]?.trim()
     );
     if (!verse) throw new Error('no suitable Shiva verse fixture');
     const el = <ShivaStrotamVersePage verse={verse} sourceId="shiva-strotam" width={375} />;
-    expect(fontSizeOf(el, 'en', verse.linesEn[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', readableRomanization(verse.linesEn)[0])).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });
 
-  test('SundarkandVersePage (+ re-export Ramcharitmanas): verse 24 > meaning 20; Hindi meaning 20', () => {
+  test('SundarkandVersePage (+ re-export Ramcharitmanas): verse above meaning at the token sizes', () => {
     const verse = getSundarkandChapter(1).verses.find(
       (v) => v.meaningEn?.trim() && v.meaningHi?.trim() && v.linesEn?.[0]?.trim()
     );
     if (!verse) throw new Error('no suitable Sundarkand verse fixture');
     const el = <SundarkandVersePage verse={verse} sourceId="sundarkand" width={375} />;
-    expect(fontSizeOf(el, 'en', verse.linesEn[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', readableRomanization(verse.linesEn)[0])).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });
 
-  test('BajrangBaanVersePage: verse 24 > meaning 20; Hindi meaning 20', () => {
+  test('BajrangBaanVersePage: verse above meaning at the token sizes', () => {
     const verse = getBajrangBaanChapter(1).verses.find(
       (v) => v.meaningEn?.trim() && v.meaningHi?.trim() && v.linesEn?.[0]?.trim()
     );
     if (!verse) throw new Error('no suitable Bajrang Baan verse fixture');
     const el = <BajrangBaanVersePage verse={verse} sourceId="bajrang-baan" width={375} />;
-    expect(fontSizeOf(el, 'en', verse.linesEn[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', readableRomanization(verse.linesEn)[0])).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });
 
-  test('ValmikiRamayanVersePage (Sundarkand re-export): verse 24 > meaning 20; Hindi meaning 20', () => {
+  test('ValmikiRamayanVersePage (Sundarkand re-export): verse above meaning at the token sizes', () => {
     const verse = getValmikiRamayanChapter(1).verses[0];
     const el = (
       <ValmikiRamayanVersePage verse={verse} sourceId="valmiki-ramayan" width={375} />
     );
-    expect(fontSizeOf(el, 'en', verse.linesEn[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', readableRomanization(verse.linesEn)[0])).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });
 
-  test('SanskarVersePage: verse 24 > meaning 20; Hindi meaning 20', () => {
+  test('SanskarVersePage: verse above meaning at the token sizes', () => {
     const verse = getSanskar('prabhati-shloka').verses.find(
       (v) => v.meaningEn?.trim() && v.meaningHi?.trim() && v.linesEn?.[0]?.trim()
     );
     if (!verse) throw new Error('no suitable Sanskar verse fixture');
     const el = <SanskarVersePage verse={verse} sourceId="prabhati-shloka" width={375} />;
-    expect(fontSizeOf(el, 'en', verse.linesEn[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', readableRomanization(verse.linesEn)[0])).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });

@@ -6,6 +6,10 @@ export const fontFamilies = {
   latinBold: 'CormorantGaramond_700Bold',
   latinSemiBoldItalic: 'CormorantGaramond_600SemiBold_Italic',
   latin: 'CormorantGaramond_500Medium',
+  // English reading text: romanized verse lines and English meaning/commentary.
+  // Tiro Devanagari Sanskrit (Tiro Typeworks) is drawn for romanized Sanskrit and
+  // carries every IAST letter; it ships one weight, so hierarchy comes from size.
+  sanskritLatin: 'TiroDevanagariSanskrit_400Regular',
   // Sister-script serifs for the gu/kn reading languages — same Noto Serif family,
   // same weights as the Devanagari cuts so the reading scale carries over unchanged.
   gujarati: 'NotoSerifGujarati_500Medium',
@@ -36,19 +40,18 @@ export const typography = {
   },
   meaning: {
     fontFamily: fontFamilies.devanagari,
-    // Hindi meaning matches the English meaning size (meaningEnglish) so the two
-    // languages read at the same scale; Devanagari's larger x-height needs a touch
-    // more leading.
+    // Devanagari's larger x-height needs a touch more leading. English meaning
+    // (meaningEnglish) is sized by x-height, not points, so it reads at this scale.
     fontSize: 20,
     lineHeight: 34,
   },
   verseLatin: {
-    fontFamily: fontFamilies.latinSemiBold,
-    // English transliteration sits above the meaning (20) to mirror the Hindi
-    // verse↔meaning hierarchy. Cormorant's small x-height reads smaller than
-    // Devanagari, so it takes a few extra points to feel dominant.
-    fontSize: 24,
-    lineHeight: 35,
+    fontFamily: fontFamilies.sanskritLatin,
+    // Sized to the x-height of the Cormorant SemiBold 24 it replaced, so the
+    // apparent size is unchanged; sits above the meaning (17) to mirror the Hindi
+    // verse↔meaning hierarchy.
+    fontSize: 20,
+    lineHeight: 29,
   },
   // gu/kn verse bodies share the Devanagari metrics — same x-height class, so the
   // verse↔meaning hierarchy carries over without per-script tuning.
@@ -63,9 +66,10 @@ export const typography = {
     lineHeight: 39,
   },
   meaningEnglish: {
-    fontFamily: fontFamilies.latin,
-    fontSize: 20,
-    lineHeight: 33,
+    // x-height match for the Cormorant Medium 20 it replaced.
+    fontFamily: fontFamilies.sanskritLatin,
+    fontSize: 17,
+    lineHeight: 28,
   },
   meaningGujarati: {
     fontFamily: fontFamilies.gujarati,

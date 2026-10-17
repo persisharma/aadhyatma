@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang, pick } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
@@ -134,7 +135,7 @@ export default function RoutineTodayScreen({ navigation }: Props) {
                 style={{
                   fontFamily:
                     lang === 'en'
-                      ? typography.verseLatin.fontFamily
+                      ? fontFamilies.latinSemiBold
                       : scriptTitleFont(lang, typography.screenTitle.fontFamily),
                   fontSize: 26,
                   color: colors.ink,
