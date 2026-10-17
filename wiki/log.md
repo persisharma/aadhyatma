@@ -998,3 +998,7 @@ Added a no-image `Send as text` row (verse lines + meaning, or the selected pros
 ## [2026-10-13] ingest | More → Share the App invite copy refreshed
 
 Rewrote `APP_SHARE_INVITE` (hi/en/gu/kn) from five launch-era bullets to seven covering shipped surfaces: Ramayan, kids' stories, vrat katha/puja vidhi/tirth, Ask Vedansh. Store-gated Vastu and widgets deliberately omitted. design.md §37 synced; `shareLinks.test.ts` pins seven bullets per language and the link line.
+
+## [2026-10-17] ingest | Language toggle on the Daily Bhakti card
+
+Daily Bhakti now carries the full-size §16 `LanguageToggle`, centred directly above the verse card (below the setup strip), so the reading language flips in place without a trip to More. Placed above the card rather than in its header row: header actions plus a compact toggle would leave the source pill ~100pt on a 375pt phone. Same global `lang`, so it also drives the share card. Updated design.md §16/§23, `DailyBhaktiScreen.test.tsx` (toggle re-languages the card) and `daily-bhakti-smoke.yaml` Step 4b (not run — no simulator).
