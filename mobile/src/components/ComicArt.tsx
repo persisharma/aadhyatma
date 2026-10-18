@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Svg, { ClipPath, Defs, Polygon, Image as SvgImage } from 'react-native-svg';
 import { ActivityIndicator, Image, Pressable, Text, View } from 'react-native';
 import type { ComicPanel } from '@/data/comicBooks';
 import manifest from '@/data/comicAssetManifest.json';
@@ -47,19 +48,27 @@ export default function ComicArt({ panel, label, compact = false, fill = false, 
     if (!req) { setState({ art: panel.art, failed: true }); return; }
     cachedAssetUri(req).then(uri => {
       if (active) setState({ art: panel.art, uri });
-    }).catch(() => {
-      if (active) setState({ art: panel.art, failed: true });
+    }).catch(error => {
+      if (active) {
+        if (__DEV__) console.warn(`[comic-art] ${panel.art} download failed`, String(error));
+        setState({ art: panel.art, failed: true });
+      }
     });
     return () => { active = false; };
   }, [panel.art, attempt]);
   const current = state.art === panel.art ? state : { art: panel.art };
-  const geometry = fill ? comicArtCoverGeometry(panel, box.width, box.height, focusX) : comicArtGeometry(panel, width);
+  const frameGeometry = comicArtGeometry(panel, width);
+  const geometry = fill ? comicArtCoverGeometry(panel, box.width, box.height, focusX) : frameGeometry;
   return (
     <View testID={`comic-art-${panel.id}`} onLayout={event => setBox({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
       style={fill
         ? { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, overflow: 'hidden', backgroundColor: colors.parchmentSoft }
         : { width: '100%', aspectRatio: panel.dimensions.width * panel.frame.width / (panel.dimensions.height * panel.frame.height), overflow: 'hidden', backgroundColor: colors.parchmentSoft }}>
-      {current.uri && width > 0 && (!fill || box.height > 0) ? <Image testID={`comic-image-${panel.id}`} source={{ uri: current.uri }} accessibilityLabel={label}
+      {current.uri && width > 0 && (!fill || box.height > 0) ? panel.mask && !fill ? <Svg width={width} height={frameGeometry.height} accessible accessibilityLabel={label}>
+        <Defs><ClipPath id={`frame-${panel.id}`}><Polygon points={panel.mask.map(([x,y]) => `${x * width},${y * frameGeometry.height}`).join(' ')} /></ClipPath></Defs>
+        <SvgImage testID={`comic-image-${panel.id}`} href={{ uri: current.uri }} clipPath={`url(#frame-${panel.id})`}
+          x={geometry.left} y={geometry.top} width={geometry.sheetWidth} height={geometry.sheetHeight} preserveAspectRatio="none" />
+      </Svg> : <Image testID={`comic-image-${panel.id}`} source={{ uri: current.uri }} accessibilityLabel={label}
         onError={() => setState({ art: panel.art, failed: true })} resizeMode="stretch"
         style={{ position: 'absolute', width: geometry.sheetWidth, height: geometry.sheetHeight, left: geometry.left, top: geometry.top }} />
         : <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 12 }}>

@@ -1,27 +1,25 @@
 #!/usr/bin/env node
-// Preserve the reviewed bilingual edition verbatim; native screens consume data,
-// never the authoring website or its navigation/review chrome.
+// Copy the approved illustrated edition; never import artwork into Metro.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 const root = fileURLToPath(new URL('../../', import.meta.url));
-const source = path.join(root, 'docs/content-parity/ramayan-comic/balakanda-bilingual-v2');
+const source = path.join(root, 'docs/content-parity/ramayan-comic/balakanda-illustrated-v3');
 const book = JSON.parse(readFileSync(path.join(source, 'book.json'), 'utf8'));
-const manifest = JSON.parse(readFileSync(path.join(root, 'mobile/src/data/comicAssetManifest.json'), 'utf8'));
-const episodes = book.episodes.map(episode => ({
-  ...episode,
-  panels: episode.panels.map(panel => {
-    const art = path.basename(panel.asset, '.png');
-    const hash = createHash('sha256').update(readFileSync(path.resolve(source, panel.asset))).digest('hex');
-    if (manifest.assets[art]?.hash !== hash.slice(0, 16)) throw new Error(`Unreviewed art: ${panel.id}`);
-    const { asset, ...rest } = panel;
-    return { ...rest, art, sha256: hash };
-  }),
-}));
-const output = JSON.stringify({ ...book, episodes }, null, 2) + '\n';
-const destination = path.join(root, 'mobile/src/data/comicBooks/balakanda.json');
-if (process.argv.includes('--check')) {
-  if (readFileSync(destination, 'utf8') !== output) throw new Error('Run node mobile/scripts/sync-comic-book.mjs');
-} else writeFileSync(destination, output);
-console.log(`Native comic: ${episodes.length} episodes, ${episodes.flatMap(e => e.panels).length} panels, reviewed text/frames/anchors preserved`);
+const manifest = JSON.parse(readFileSync(path.join(source, 'asset-manifest.json'), 'utf8'));
+for (const panel of book.episodes.flatMap(e => e.panels)) {
+  const hash = createHash('sha256').update(readFileSync(path.join(source, 'assets', panel.art + '.png'))).digest('hex');
+  if (hash !== panel.sha256 || manifest.assets[panel.art]?.hash !== hash.slice(0, 16)) throw new Error(`Unreviewed art: ${panel.id}`);
+}
+const outputs = [
+  ['mobile/src/data/comicBooks/balakanda.json', book],
+  ['mobile/src/data/comicAssetManifest.json', manifest],
+];
+for (const [relative, data] of outputs) {
+  const file = path.join(root, relative), output = JSON.stringify(data, null, 2) + '\n';
+  if (process.argv.includes('--check')) {
+    if (readFileSync(file, 'utf8') !== output) throw new Error(`Out of sync: ${relative}`);
+  } else writeFileSync(file, output);
+}
+console.log(`Native comic: ${book.episodes.length} episodes, ${book.pages.length} pages, ${book.panelCount} shots, four languages`);

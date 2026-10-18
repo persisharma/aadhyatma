@@ -1,0 +1,181 @@
+{
+  "reviewedOn": "2026-10-16",
+  "scope": "28 current-book sheets, six proposed-page overview batches and a dialogue detail view; all opened and inspected. Browser/plan evidence, not native or final-art certification.",
+  "captures": [
+    {
+      "file": "evidence/current-en-large-1.png",
+      "sha256": "310ee9369f18355b88880a0062b39fde614eb38818da314a3acee80cb02b5235",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-large-2.png",
+      "sha256": "ab3b15ac254d3fe1461e5528566ba75c679b347fba4a6f663da7f754aac13fa6",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-large-3.png",
+      "sha256": "db764d954c2676d5d1c0e4e9033516c3995102d7fa73b2e5d26051fe41cd465a",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-large-4.png",
+      "sha256": "f8ff277459d54ab04bfdfb607a6132491d187fa84aa58c510b968d5e04fbea80",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-large-5.png",
+      "sha256": "050519ef46b1d56c310847001c4c7841100ab06edc397444b9ec01d53a36deec",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-large-6.png",
+      "sha256": "b4073166f3794f0475f2ff437d2d97df9c18ca084c027e6559976fadb1fc3ff7",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-large-7.png",
+      "sha256": "863728486a7376d98b59512e075a09c3a3477c90e9de9035f06ebdf6b3d08d77",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-standard-1.png",
+      "sha256": "ce9275d511c8c2eab423412ed2c899767206f32944558be889b1fca3caf96c12",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-standard-2.png",
+      "sha256": "8685fcefb681e93a442615a40f249e000dd0d9b2f5e449701853eef3fecb74a8",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-standard-3.png",
+      "sha256": "852bc3f5af49df8f402a5de120b281a04eb4366884159d49d80a67abd6cdcbb1",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-standard-4.png",
+      "sha256": "ee05cb7515f27034265a23adfe99f083fbe8e4788eddda72c447dd9b439b0bb2",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-standard-5.png",
+      "sha256": "8a143992edf97a40b4c396563a902beac9c30c8f95609ca7efb4bd03e9998961",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-standard-6.png",
+      "sha256": "cb310c101e4984882468241c60e3d4b3f3cd9f00fedf1c952727cb9154263e43",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-en-standard-7.png",
+      "sha256": "202f20cd38fe38f432812e7b5dc316ecdcca99fdaee2bb2a198bf48070c877ed",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-large-1.png",
+      "sha256": "6e8a44e3133b667b06825c7c103f55e8b10df8fef6e30d9355c1824398d03543",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-large-2.png",
+      "sha256": "59f119828e412aa6332a6cbfa7594b75ff4971710a38f3d60b998774e35b3054",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-large-3.png",
+      "sha256": "01748fb74af4748f2da194e00b3b0cd004c2310dad9fce3011b239d124139553",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-large-4.png",
+      "sha256": "8fc3a0220ca5ffd4cfc04889c240fdf9091d531e31fbdb56bbbf9b93ef8cf6e5",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-large-5.png",
+      "sha256": "cc8f636f5cd241ea3c3dfa6026f65c52a13dd3f2f7f3977d2b25e4b70b2d5a8c",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-large-6.png",
+      "sha256": "7ce445999bde1a436763643ec31c0a790772a69410e0f40f315f3e3c68933fb5",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-large-7.png",
+      "sha256": "e83036420af58b91df06112cc1d7df23d194aa636c7168b45bfc89f00ff3a0b7",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-standard-1.png",
+      "sha256": "7727a6001936e3486060792b30497cf653ff7c9c182c488b99c73f4b17b09eb4",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-standard-2.png",
+      "sha256": "52958acc260fdc16c0963b145eec0d273bccdcb197525057fbad14b3a91190b6",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-standard-3.png",
+      "sha256": "f5662fc7fca4e8cebd18780271205189feeb65bf35573b605c2cd6dd63e0baa7",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-standard-4.png",
+      "sha256": "d1c1e33f793c37e70f20f33758bf42d68a2b8717fe8a772cfe800a9db90ef26e",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-standard-5.png",
+      "sha256": "23a599c10306f68f12d6e3a119fea4433fa29b77bccdbaf0d88ca40a36f61a03",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-standard-6.png",
+      "sha256": "c87451cfa2a4a62fe49986325b07bea150cb021d5bb70143185ca48b298ed8b8",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/current-hi-standard-7.png",
+      "sha256": "a8dfdbb8d3338f70b98f11ba31c1e01e38df01b96b39e299376321dbbabbd29b",
+      "kind": "current-book-browser-model"
+    },
+    {
+      "file": "evidence/page-59-detail.png",
+      "sha256": "64a149989ddab8857c3e0d88dc9794aae56a9074be4adfdb3ec3e689bab8b6dc",
+      "kind": "proposed-storyboard-view"
+    },
+    {
+      "file": "evidence/proposed-pages-01-12.png",
+      "sha256": "67b88ebb17a6ac38faccddfb3e43a828c52853f15704abe2cab9e8e54c54fc21",
+      "kind": "proposed-storyboard-view"
+    },
+    {
+      "file": "evidence/proposed-pages-13-24.png",
+      "sha256": "aeb0692ad6d7ebc83d2c54004c879c9e50f305682ee88aafc430f353ad52d5bf",
+      "kind": "proposed-storyboard-view"
+    },
+    {
+      "file": "evidence/proposed-pages-25-36.png",
+      "sha256": "c96de52198b9f607d6126229886cf615b32c135e90064756eaca36ed488f24ed",
+      "kind": "proposed-storyboard-view"
+    },
+    {
+      "file": "evidence/proposed-pages-37-48.png",
+      "sha256": "eb0d30992fb622d6bafee82a571c6d007237949872ff0e5558be7e634327d40d",
+      "kind": "proposed-storyboard-view"
+    },
+    {
+      "file": "evidence/proposed-pages-49-60.png",
+      "sha256": "58969d8e0b10f447ac26b289007fd9ff9da52bc2640211719b43b7537b0ff235",
+      "kind": "proposed-storyboard-view"
+    },
+    {
+      "file": "evidence/proposed-pages-61-62.png",
+      "sha256": "f4347d8099474178ef0166d24596f75ab6bcdc9813cd454c876f78d7fc0c6c7c",
+      "kind": "proposed-storyboard-view"
+    }
+  ]
+}
