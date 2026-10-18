@@ -45,3 +45,20 @@ test('every original scene and chapter routes to its containing grouped page', (
   expect(getComicBook('missing')).toBeUndefined();
   expect(['hi','en','gu','kn'].map(l => comicLanguage(l as any))).toEqual(['hi','en','gu','kn']);
 });
+test('Siddhashrama question is answered before the Vamana story, then returns to the present', () => {
+  const episode = book.episodes.find(item => item.id === 'bk-09')!;
+  const answer = episode.panels.find(panel => panel.id === 'bk-09-02a')!;
+  const vamana = episode.panels.find(panel => panel.id === 'bk-09-03')!;
+  const returnToPresent = episode.panels.find(panel => panel.id === 'bk-09-04')!;
+  const page = book.pages.find(item => item.number === 17)!;
+
+  expect(page.rows.flat()).toEqual(['bk-09-02a', 'bk-09-03', 'bk-09-03-shot-2', 'bk-09-04']);
+  for (const language of ['hi', 'en', 'gu', 'kn'] as const) {
+    expect(answer[language].dialogue).toBeTruthy();
+    expect(answer[language].narration).toBeTruthy();
+    expect(answer[language].narration).toMatch(/सिद्धाश्रम|Siddhashrama|સિદ્ધાશ્રમ|ಸಿದ್ಧಾಶ್ರಮ/);
+    expect(answer[language].narration).toMatch(/वामन|Vamana|વામન|ವಾಮನ/);
+    expect(vamana[language].dialogue).toBeTruthy();
+    expect(returnToPresent[language].narration).toMatch(/सिद्धाश्रम|Siddhashrama|સિદ્ધાશ્રમ|ಸಿದ್ಧಾಶ್ರಮ/);
+  }
+});

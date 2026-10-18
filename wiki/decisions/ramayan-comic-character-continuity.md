@@ -1,8 +1,8 @@
 ---
 title: Ramayan comic character continuity
 type: decision
-sources: [docs/content-parity/ramayan-comic/README.md, docs/content-parity/ramayan-comic/character-bible.md, docs/content-parity/ramayan-comic/appearance-timeline.json, docs/content-parity/ramayan-comic/source-manifest.json, docs/content-parity/ramayan-comic/asset-review.json, docs/content-parity/ramayan-comic/balakanda-v1/README.md, docs/content-parity/ramayan-comic/balakanda-v1/book.json, docs/content-parity/ramayan-comic/balakanda-v1/asset-review.json, RULEBOOK.md]
-last_verified_date: 2026-10-16
+sources: [docs/content-parity/ramayan-comic/README.md, docs/content-parity/ramayan-comic/character-bible.md, docs/content-parity/ramayan-comic/appearance-timeline.json, docs/content-parity/ramayan-comic/source-manifest.json, docs/content-parity/ramayan-comic/asset-review.json, docs/content-parity/ramayan-comic/balakanda-v1/README.md, docs/content-parity/ramayan-comic/balakanda-v1/book.json, docs/content-parity/ramayan-comic/balakanda-v1/asset-review.json, docs/content-parity/ramayan-comic/balakanda-illustrated-v3/book.json, docs/content-parity/ramayan-comic/balakanda-illustrated-v3/script.json, docs/content-parity/ramayan-comic/balakanda-illustrated-v3/continuity-audit-2026-10-19.md, RULEBOOK.md]
+last_verified_date: 2026-10-19
 confidence: high
 status: needs-review
 ---
@@ -80,6 +80,10 @@ Gujarati/Kannada narratives remain pending. Those app locales show an explicit E
 The user rejected the separate parchment speech gutter, then rejected fixed-top bubbles whose capped tails stopped above the cast. All 31 dialogue scenes now use fully painted portraits, with body edges anchored near the cast and explicit speaker endpoints in `mobile/src/data/comicSpeechLayouts.ts`. Text grows away from faces; tails reach their reviewed points. Trishanku's inverted scene places speech below his head. Narration remains above the artwork. The remaining 109 panels, both narratives and sourced transitions are unchanged.
 
 The native reader uses 8-point gutters and compact shared controls while retaining vertical scrolling, complete artwork and global Standard/Large sizing. The standalone browser consumes generated copies of the native geometry functions (`sync-comic-speech-layouts.ts`). All selected portrait hashes/prompts and the 31 identity checks are in the bilingual package's `top-dialogue-art/` and `speech-overlay-review.md`. Earlier lower-edge fallback and fixed-top/30-point tail experiments are superseded. Native all-panel/device/editorial evidence must be stated separately; no OTA/store release is implied.
+
+## Integrated illustrated edition continuity follow-up — 2026-10-19
+
+The integrated 62-page edition was re-read in page and panel order after a missing answer was found in its Siddhashrama flashback. Page 17 now answers Rama's hermitage question, identifies Siddhashrama, frames the Vamana–Bali sequence as Vishwamitra's recollection, and returns to the present arrival. A full 62-page/199-panel continuity audit found no other high-confidence unanswered question or broken cause/response transition; the remaining episode changes are cued by page titles or narration. See `docs/content-parity/ramayan-comic/balakanda-illustrated-v3/continuity-audit-2026-10-19.md` and the four-language regression in `mobile/src/data/__tests__/comics.jest.test.ts`. This does not close human Gujarati/Kannada review, independent two-publication collation, human editorial approval, or full native Standard/Large review.
 
 
 ## Whole-book layout planning review — 2026-10-16

@@ -16,3 +16,7 @@ The test network performs TLS inspection with its Netskope root. For visual vali
 ## Remaining review
 
 The previous full-book browser review covers all 62 pages in Hindi, English, Gujarati and Kannada at Standard and Large. The native device pass here samples the key layouts and book endpoints; it is not a manual review of all 62 native pages at both sizes. Human editorial approval of all four full narratives and complete independent source collation also remain open, as recorded in the preview review. These checks should be completed before merging or publishing the comic.
+
+## Follow-up narrative continuity correction — 2026-10-19
+
+Page 17 now answers Rama's hermitage question in Vishwamitra's voice before the Vamana–Bali panels, and the last panel explicitly returns to their present-day arrival at Siddhashrama. Hindi, English, Gujarati and Kannada copy is updated in the source book and native data. The existing artwork, 62-page count and 1–3-row layout are unchanged. A focused regression test verifies the answer → flashback → present order. Native visual review of the added caption and human editorial approval remain pending; do not treat the copy update as final publication approval.
