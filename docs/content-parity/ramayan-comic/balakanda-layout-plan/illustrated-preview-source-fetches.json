@@ -1,0 +1,1542 @@
+[
+  {
+    "language": "en",
+    "sarga": 1,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga1/balaroman1.htm",
+    "retrievedOn": "2026-10-16T13:29:49.648074+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-01.txt",
+    "sha256": "6596bbe3da991c941b18f4d56a0d0456337990505107625ad10a1cc05d6199f6",
+    "characters": 86253,
+    "devanagariCharacters": 68,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 1,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-1-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:49.648592+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 2,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga2/balaroman2.htm",
+    "retrievedOn": "2026-10-16T13:29:49.648685+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-02.txt",
+    "sha256": "fe5ab38bcd80fe381f41fb30cd6d3ac4b58a7c886f9cd7bf0f23c687054610e4",
+    "characters": 34830,
+    "devanagariCharacters": 7,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 2,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-2-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:49.648743+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 3,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga3/balaroman3.htm",
+    "retrievedOn": "2026-10-16T13:29:49.648797+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-03.txt",
+    "sha256": "6dfe770017ce2d4f98ad29b5542028ea41f19488cdffaad7577b4da2003f3805",
+    "characters": 27712,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 3,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-3-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:49.648857+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 4,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga4/balaroman4.htm",
+    "retrievedOn": "2026-10-16T13:29:49.648920+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-04.txt",
+    "sha256": "d71c57be847e45deba1995ad80ebf5340c4794747bdfe2090f642f51c381c899",
+    "characters": 27349,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 4,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-4-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:49.648968+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 5,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga5/balaroman5.htm",
+    "retrievedOn": "2026-10-16T13:29:51.287231+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-05.txt",
+    "sha256": "69677db65851fa848d35830bfa7a9a7e56faf00b4ab57bcec8455fa7196dfbb5",
+    "characters": 17094,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 5,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-5-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:51.301773+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 6,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga6/balaroman6.htm",
+    "retrievedOn": "2026-10-16T13:29:51.309418+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-06.txt",
+    "sha256": "e38911c785fb75a56e1457401dd59564a05901c8f5d63e902652a361c7cfb3ca",
+    "characters": 24409,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 6,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-6-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:51.338997+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 7,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga7/balaroman7.htm",
+    "retrievedOn": "2026-10-16T13:29:51.853898+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-07.txt",
+    "sha256": "214f316af21ec037879ed301e9f579e1a9b109bfdd8d449286a1b5f8194220c5",
+    "characters": 15960,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 7,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-7-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:51.873453+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 8,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga8/balaroman8.htm",
+    "retrievedOn": "2026-10-16T13:29:51.896688+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-08.txt",
+    "sha256": "94055283e497eca0283cf2fa9a69d47aaf21ab347b1918059cce27f28b54527b",
+    "characters": 15325,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 8,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-8-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:52.058456+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 9,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga9/balaroman9.htm",
+    "retrievedOn": "2026-10-16T13:29:52.106404+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-09.txt",
+    "sha256": "08c0b23d73bf12082461cd8711b8a8bd58b9ffac2352b2c7b085ec2d5ecaaf05",
+    "characters": 14070,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 9,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-9-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:52.131747+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 10,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga10/balaroman10.htm",
+    "retrievedOn": "2026-10-16T13:29:52.379808+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-10.txt",
+    "sha256": "a37658065533fd6f9b5dda02dc55906e2a75ba54e765b2a065502dfa95e22c8c",
+    "characters": 21820,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 10,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-10-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:52.408246+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 11,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga11/balaroman11.htm",
+    "retrievedOn": "2026-10-16T13:29:52.549196+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-11.txt",
+    "sha256": "268ee680ba99071affc6ff0b96d50107f2d11f3141f4a3b88d9915ff076eceb7",
+    "characters": 25418,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 11,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-11-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:52.732123+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 12,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga12/balaroman12.htm",
+    "retrievedOn": "2026-10-16T13:29:52.849519+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-12.txt",
+    "sha256": "eb7f22e5a7bebc97605a7131830ca44db6e972875b9b72777bb5a4a4bacb49da",
+    "characters": 14617,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 12,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-12-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:52.887906+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 13,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga13/balaroman13.htm",
+    "retrievedOn": "2026-10-16T13:29:52.888342+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-13.txt",
+    "sha256": "f6f926f1d7a09a779f7042dd9b364663c44a07adb50bd307a58054b3921ee948",
+    "characters": 26280,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 13,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-13-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:53.103194+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 14,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga14/balaroman14.htm",
+    "retrievedOn": "2026-10-16T13:29:53.112006+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-14.txt",
+    "sha256": "3099b4487ad6e8c79f577c54701f4d043be5ee242b3b2d17b95213c001f38a12",
+    "characters": 50707,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 14,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-14-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:53.406172+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 15,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga15/balaroman15.htm",
+    "retrievedOn": "2026-10-16T13:29:53.427623+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-15.txt",
+    "sha256": "01403e9e1cc1d49e285b2778abc0e3ba6c615bc2a4eb93e83b6d71d2a9ca0026",
+    "characters": 31197,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 15,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-15-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:53.559420+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 16,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga16/balaroman16.htm",
+    "retrievedOn": "2026-10-16T13:29:53.561144+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-16.txt",
+    "sha256": "06c5a34206726891c0420ccfb60ef43d8ec646dd01feb0d501731cee36b51f81",
+    "characters": 23018,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 16,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-16-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:53.805776+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 17,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga17/balaroman17.htm",
+    "retrievedOn": "2026-10-16T13:29:53.893435+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-17.txt",
+    "sha256": "5c34d14acb02cdf190098800a02842b0e455e6291ffb44080bb1b41563a34f76",
+    "characters": 24786,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 17,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-17-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:54.105277+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 18,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga18/balaroman18.htm",
+    "retrievedOn": "2026-10-16T13:29:54.163193+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-18.txt",
+    "sha256": "12fed6d4dee420fee6a7abe627dd68f3c6343e9ce92c1d2684343472e0e88832",
+    "characters": 44319,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 18,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-18-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:54.261107+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 19,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga19/balaroman19.htm",
+    "retrievedOn": "2026-10-16T13:29:54.373895+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-19.txt",
+    "sha256": "55c9f8d62439278822e18999bb22d747cdecf8e41f7503ec4acc669d6ef26d04",
+    "characters": 17610,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 19,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-19-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:54.516909+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 20,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga20/balaroman20.htm",
+    "retrievedOn": "2026-10-16T13:29:54.581592+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-20.txt",
+    "sha256": "c961a321bcf240885bc99b31149c6d7f477ba17b96259ab6445ff18156a4f16e",
+    "characters": 21452,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 20,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-20-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:54.647341+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 21,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga21/balaroman21.htm",
+    "retrievedOn": "2026-10-16T13:29:54.775638+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-21.txt",
+    "sha256": "079d8ab3c19d0bec9df60258405028938995a3f1944136c65a0c7a0d8b9482a2",
+    "characters": 15359,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 21,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-21-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:54.932104+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 22,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga22/balaroman22.htm",
+    "retrievedOn": "2026-10-16T13:29:55.092682+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-22.txt",
+    "sha256": "29e1b988eed1f16f5b217d3994f8a894bf15d4778a11c92654f46fe3d5032e13",
+    "characters": 20565,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 22,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-22-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:55.201500+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 23,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga23/balaroman23.htm",
+    "retrievedOn": "2026-10-16T13:29:55.346102+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-23.txt",
+    "sha256": "7a11438ca0a4ae3629a3c54ee91970ac0d7c28ab32181e2626a837dad0258e00",
+    "characters": 18941,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 23,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-23-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:55.358696+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 24,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga24/balaroman24.htm",
+    "retrievedOn": "2026-10-16T13:29:55.416359+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-24.txt",
+    "sha256": "baaa9a4786e2001dc3bb640f0bccbf803bb24aa99c044f1a86a1a85057fa34c2",
+    "characters": 22949,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 24,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-24-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:55.596600+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 25,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga25/balaroman25.htm",
+    "retrievedOn": "2026-10-16T13:29:55.621112+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-25.txt",
+    "sha256": "bdec4595fdbc98744163e70dd83b191c4b43d3c58f61bf2fae565ccf135aeed0",
+    "characters": 15267,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 25,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-25-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:55.793459+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 26,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga26/balaroman26.htm",
+    "retrievedOn": "2026-10-16T13:29:55.917194+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-26.txt",
+    "sha256": "3f1559ad22011c5ebce2567f628eadf886e4eb7427fe0f3d0d251dcbe1ede862",
+    "characters": 24159,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 26,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-26-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:56.086543+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 27,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga27/balaroman27.htm",
+    "retrievedOn": "2026-10-16T13:29:56.132123+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-27.txt",
+    "sha256": "320125d89d92d06e095daf0444e0160151d1093e2dcf9a89fa45ec6e929a671a",
+    "characters": 20968,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 27,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-27-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:56.324483+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 28,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga28/balaroman28.htm",
+    "retrievedOn": "2026-10-16T13:29:56.325442+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-28.txt",
+    "sha256": "f435337ab9c706cb551f28f0f21e720f688b42f8ddc705c42b0f0b2a691b2fda",
+    "characters": 13324,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 28,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-28-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:56.411494+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 29,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga29/balaroman29.htm",
+    "retrievedOn": "2026-10-16T13:29:56.458342+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-29.txt",
+    "sha256": "791d451f29b5602693259f8cd4a56c5b4bafd524b80ea6c7435ddba9a0d21eea",
+    "characters": 27211,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 29,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-29-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:56.614328+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 30,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga30/balaroman30.htm",
+    "retrievedOn": "2026-10-16T13:29:56.780720+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-30.txt",
+    "sha256": "fcfc7a5e866e964ef8338a3f7d539cc1676d88486ba19928d6484f594a3c8b56",
+    "characters": 18724,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 30,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-30-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:56.929694+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 31,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga31/balaroman31.htm",
+    "retrievedOn": "2026-10-16T13:29:57.011572+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-31.txt",
+    "sha256": "0af8f8387ab12a5bec657cc3bd12952511f544402228ec322bc54e2b72d7a7a1",
+    "characters": 18394,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 31,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-31-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:57.128402+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 32,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga32/balaroman32.htm",
+    "retrievedOn": "2026-10-16T13:29:57.138817+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-32.txt",
+    "sha256": "2811f351c2b85c2cd04e6c6d4df8a53fbde5ee6ef847776a5a985c720a53a2d4",
+    "characters": 17869,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 32,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-32-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:57.348250+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 33,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga33/balaroman33.htm",
+    "retrievedOn": "2026-10-16T13:29:57.366700+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-33.txt",
+    "sha256": "1115328ab6ec12746a030ea0e5b09d7d70b068ec214f559652098d5cbcdfece4",
+    "characters": 19456,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 33,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-33-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:57.732418+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 34,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga34/balaroman34.htm",
+    "retrievedOn": "2026-10-16T13:29:57.793327+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-34.txt",
+    "sha256": "f5f6ce7091bef83a7a6358db4a4b35b1c15180d03dc703e5f6ef10f436f21040",
+    "characters": 15845,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 34,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-34-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:57.845282+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 35,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga35/balaroman35.htm",
+    "retrievedOn": "2026-10-16T13:29:57.849974+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-35.txt",
+    "sha256": "4ccf96dcb77dfd51630e806e598576271fa842566bf1599bc6d00c30a5ef86f9",
+    "characters": 17102,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 35,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-35-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:58.046770+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 36,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga36/balaroman36.htm",
+    "retrievedOn": "2026-10-16T13:29:58.066194+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-36.txt",
+    "sha256": "19ae1ac0d0b0afbde5e2722cd6b397ac695d8cd551e4cafca6689d0750c6b4a2",
+    "characters": 21536,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 36,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-36-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:58.112777+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 37,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga37/balaroman37.htm",
+    "retrievedOn": "2026-10-16T13:29:58.371918+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-37.txt",
+    "sha256": "c6c512420c7548707c13ff21590ab6c8c2ff65c25b0c4fc72b7edad8dbea1ae5",
+    "characters": 23641,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 37,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-37-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:58.405640+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 38,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga38/balaroman38.htm",
+    "retrievedOn": "2026-10-16T13:29:58.540780+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-38.txt",
+    "sha256": "937bab8198a0ba5a0abf82c819fcd93bb69c56f7537b82fcd8bf205d6eb02d03",
+    "characters": 15958,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 38,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-38-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:58.726923+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 39,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga39/balaroman39.htm",
+    "retrievedOn": "2026-10-16T13:29:58.775627+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-39.txt",
+    "sha256": "3c74d55864734f924ec036d6e98f42af7928ae580db51bea90da18e3ee44f2c0",
+    "characters": 18399,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 39,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-39-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:58.780777+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 40,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga40/balaroman40.htm",
+    "retrievedOn": "2026-10-16T13:29:58.829555+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-40.txt",
+    "sha256": "98757249bab138915e53ddb7ee3d7d727eb89dce88b585c0c63c3107cbf2c19c",
+    "characters": 21377,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 40,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-40-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:59.080319+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 41,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga41/balaroman41.htm",
+    "retrievedOn": "2026-10-16T13:29:59.095927+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-41.txt",
+    "sha256": "1b0d9a7f231312b090360fceb6f34f76b85f5ec24aaf4c509cf8d712942cdf4c",
+    "characters": 18866,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 41,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-41-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:59.366439+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 42,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga42/balaroman42.htm",
+    "retrievedOn": "2026-10-16T13:29:59.407766+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-42.txt",
+    "sha256": "c52bc8b2d03705758518efc0ea68b94a2b66b86b76189b138b233c93fca9582c",
+    "characters": 17667,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 42,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-42-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:59.551403+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 43,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga43/balaroman43.htm",
+    "retrievedOn": "2026-10-16T13:29:59.555414+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-43.txt",
+    "sha256": "1bb0f42745ccf627cf24c6b6c74cc56359dce6201079539b8a101c3e29617688",
+    "characters": 30088,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 43,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-43-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:59.778868+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 44,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga44/balaroman44.htm",
+    "retrievedOn": "2026-10-16T13:29:59.809420+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-44.txt",
+    "sha256": "f1c4b76bdb2ca66e5e007d707e61410862c1a5e0aaf90e9f50e928f91d0fe58c",
+    "characters": 21924,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 44,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-44-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:29:59.867622+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 45,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga45/balaroman45.htm",
+    "retrievedOn": "2026-10-16T13:30:00.050472+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-45.txt",
+    "sha256": "1b41d8d4968e466f9b409b46ff8be80c423607ac46b0924668fadc5906e601e5",
+    "characters": 34887,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 45,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-45-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:00.128859+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 46,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga46/balaroman46.htm",
+    "retrievedOn": "2026-10-16T13:30:00.264532+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-46.txt",
+    "sha256": "a619dbfe8f5aa82b3e966c1ce2916d434426611dd9ebf574c61290b3198c84d7",
+    "characters": 17545,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 46,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-46-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:00.389973+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 47,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga47/balaroman47.htm",
+    "retrievedOn": "2026-10-16T13:30:00.453321+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-47.txt",
+    "sha256": "579c69bdea83d020660165c89ad5e5568f321741aca727207b9025a1c1170eef",
+    "characters": 16095,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 47,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-47-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:00.557338+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 48,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga48/balaroman48.htm",
+    "retrievedOn": "2026-10-16T13:30:00.805179+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-48.txt",
+    "sha256": "89fd9a0dd875187e6526c29bc0e072496c244bf673dfd5d143d183deabc4e61d",
+    "characters": 24200,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 48,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-48-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:00.812357+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 49,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga49/balaroman49.htm",
+    "retrievedOn": "2026-10-16T13:30:00.831224+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-49.txt",
+    "sha256": "7b984eae2148ab13c66b11585a8b4ae269780385c8474c583ceb1a935834ec69",
+    "characters": 21730,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 49,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-49-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:01.077244+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 50,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga50/balaroman50.htm",
+    "retrievedOn": "2026-10-16T13:30:01.279179+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-50.txt",
+    "sha256": "50a021663a9689b5587f9651eb579e2509e5310f5e9144ffc43b338f8ab3751c",
+    "characters": 17393,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 50,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-50-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:01.300443+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 51,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga51/balaroman51.htm",
+    "retrievedOn": "2026-10-16T13:30:01.337868+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-51.txt",
+    "sha256": "7c81ca2f216786714a93e58709899f87970c12a9c3778f6234353279ded44abc",
+    "characters": 20609,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 51,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-51-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:01.466481+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 52,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga52/balaroman52.htm",
+    "retrievedOn": "2026-10-16T13:30:01.526747+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-52.txt",
+    "sha256": "dd00c61e489bc1c862cabc28d409ff424a1d9f97d34c5ba1e1a148ee78accdd5",
+    "characters": 18349,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 52,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-52-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:01.761573+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 53,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga53/balaroman53.htm",
+    "retrievedOn": "2026-10-16T13:30:01.811263+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-53.txt",
+    "sha256": "81fa850e5a26d125c8e9c6c04ba7cdbd1c6eac6886bb88b3d2b3e6c1854540b3",
+    "characters": 21162,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 53,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-53-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:01.848791+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 54,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga54/balaroman54.htm",
+    "retrievedOn": "2026-10-16T13:30:01.973912+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-54.txt",
+    "sha256": "8158624eb158d80f5b36b1c880283a88d573385dd55c8e5f8a2596487d42ac45",
+    "characters": 18332,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 54,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-54-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:02.145140+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 55,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga55/balaroman55.htm",
+    "retrievedOn": "2026-10-16T13:30:02.332493+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-55.txt",
+    "sha256": "ebec2d465c921ba8e9257065153a3a15a967d72931527f8a14ae132c555f17ab",
+    "characters": 19924,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 55,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-55-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:02.396624+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 56,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga56/balaroman56.htm",
+    "retrievedOn": "2026-10-16T13:30:02.435562+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-56.txt",
+    "sha256": "afdabf131c0c57c0ad7a84f962c1ab614a5e8f75e5150bca1d205b567bccea7b",
+    "characters": 17868,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 56,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-56-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:02.545531+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 57,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga57/balaroman57.htm",
+    "retrievedOn": "2026-10-16T13:30:02.577524+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-57.txt",
+    "sha256": "1d75938fd24a29a21a4f0e611bd9a5206fe0f3bd58bcefb2c760ab648f18e8ac",
+    "characters": 14065,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 57,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-57-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:02.825126+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 58,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga58/balaroman58.htm",
+    "retrievedOn": "2026-10-16T13:30:02.825901+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-58.txt",
+    "sha256": "9b5470cb1bc22917fbb957453f71c767f3b29c4ce9f8007f01ec43ad9339bf3d",
+    "characters": 19016,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 58,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-58-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:03.002429+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 59,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga59/balaroman59.htm",
+    "retrievedOn": "2026-10-16T13:30:03.118367+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-59.txt",
+    "sha256": "7e34b784f1ee1ad7c0828f43673ae3024f2143350568a5d21abcf5083f173c97",
+    "characters": 15466,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 59,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-59-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:03.219100+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 60,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga60/balaroman60.htm",
+    "retrievedOn": "2026-10-16T13:30:03.320488+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-60.txt",
+    "sha256": "c4005f8e07b10397d6d658708dcc5a6abc10af4c7dc9850dd1f0e461bfc89ef5",
+    "characters": 26149,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 60,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-60-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:03.438809+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 61,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga61/balaroman61.htm",
+    "retrievedOn": "2026-10-16T13:30:03.536133+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-61.txt",
+    "sha256": "52c9826ada08a3d0df804304cd8a3a4c7cc1eea8111f545f3bc0f70641d0d28f",
+    "characters": 16878,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 61,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-61-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:03.564977+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 62,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga62/balaroman62.htm",
+    "retrievedOn": "2026-10-16T13:30:03.673875+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-62.txt",
+    "sha256": "509b742f55124893af929392c077a81382919b294ad65b1370d0f39b6dbd4cc5",
+    "characters": 19223,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 62,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-62-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:03.844005+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 63,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga63/balaroman63.htm",
+    "retrievedOn": "2026-10-16T13:30:03.890740+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-63.txt",
+    "sha256": "67ad785ccc4f83ff20ee558558e446fe6d2d6c5ca4966be8c269a2eed43e1b6d",
+    "characters": 17086,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 63,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-63-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:04.101749+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 64,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga64/balaroman64.htm",
+    "retrievedOn": "2026-10-16T13:30:04.132290+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-64.txt",
+    "sha256": "329206e0c35c718c2b7748f5172d77b18a377e01e7e602b78d92ead36ab40b1e",
+    "characters": 14285,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 64,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-64-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:04.254212+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 65,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga65/balaroman65.htm",
+    "retrievedOn": "2026-10-16T13:30:04.316127+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-65.txt",
+    "sha256": "afd45b566b86a52bf1362cf174ea5f42d9678901d0b9bdb95c13cb3502a8a812",
+    "characters": 25992,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 65,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-65-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:04.569119+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 66,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga66/balaroman66.htm",
+    "retrievedOn": "2026-10-16T13:30:04.603817+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-66.txt",
+    "sha256": "b8bd4afe6ddc1397d6b3966e061874f28a7bfacefdf99e0ad49b47ed83548a3c",
+    "characters": 33509,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 66,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-66-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:04.680130+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 67,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga67/balaroman67.htm",
+    "retrievedOn": "2026-10-16T13:30:04.842492+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-67.txt",
+    "sha256": "743b134233ca6456c13c31de163595191dec6aaad2ac5b82ed3a832d1dbbeafd",
+    "characters": 25712,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 67,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-67-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:04.927349+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 68,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga68/balaroman68.htm",
+    "retrievedOn": "2026-10-16T13:30:04.976043+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-68.txt",
+    "sha256": "3463992644c95f6dc05e43f1e6bc72746a6584f4611e47a3b615a1d1eb5ee3f5",
+    "characters": 15269,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 68,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-68-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:05.119237+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 69,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga69/balaroman69.htm",
+    "retrievedOn": "2026-10-16T13:30:05.240006+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-69.txt",
+    "sha256": "184f096d8ea1e1908081303825ec4095ebf617198d797710de0947a778d2d34e",
+    "characters": 19922,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 69,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-69-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:05.387922+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 70,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga70/balaroman70.htm",
+    "retrievedOn": "2026-10-16T13:30:05.538492+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-70.txt",
+    "sha256": "e679366ac59dc817dd24ff47d7fe5eabfd46e3626e7e251f5cd7d0dec3bbb231",
+    "characters": 33936,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 70,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-70-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:05.615127+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 71,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga71/balaroman71.htm",
+    "retrievedOn": "2026-10-16T13:30:05.793001+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-71.txt",
+    "sha256": "29f4610c66d4fe1737c68af60ebe1e3b6415459ec7bfb300079eaf276890da66",
+    "characters": 16825,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 71,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-71-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:05.825862+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 72,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga72/balaroman72.htm",
+    "retrievedOn": "2026-10-16T13:30:05.839037+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-72.txt",
+    "sha256": "c059c8bcb84bfe9c28771dbf0564048f596b08fb7964d8c750d077064e48ab09",
+    "characters": 19292,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 72,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-72-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:05.958539+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 73,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga73/balaroman73.htm",
+    "retrievedOn": "2026-10-16T13:30:06.110755+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-73.txt",
+    "sha256": "527c32e8b33043eebcf5ed4170789c1be5176a2b68763336040fdb2dcff8a479",
+    "characters": 54133,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 73,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-73-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:06.239325+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 74,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga74/balaroman74.htm",
+    "retrievedOn": "2026-10-16T13:30:06.291880+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-74.txt",
+    "sha256": "36416876a59f4be2bf12943c5f54f304bbcfd350bb842b111277f25b167c68ad",
+    "characters": 19417,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 74,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-74-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:06.496412+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 75,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga75/balaroman75.htm",
+    "retrievedOn": "2026-10-16T13:30:06.709420+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-75.txt",
+    "sha256": "1fb029decb2396110146f953863c49ae8fa9d31b75668ead1b85dcf5a5d7c95a",
+    "characters": 31463,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 75,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-75-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:06.780771+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 76,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga76/balaroman76.htm",
+    "retrievedOn": "2026-10-16T13:30:06.818222+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-76.txt",
+    "sha256": "0be56b75a92adc050295bb4a1032c6eb551b23387bf7cdefb3f0e8359a704d19",
+    "characters": 24422,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 76,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-76-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:06.842394+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  },
+  {
+    "language": "en",
+    "sarga": 77,
+    "url": "https://www.valmikiramayan.net/utf8/baala/sarga77/balaroman77.htm",
+    "retrievedOn": "2026-10-16T13:30:06.989696+00:00",
+    "httpStatus": 200,
+    "cacheText": "/Users/prashant/.codex/visualizations/2026/10/15/01a140bd-70ab-7c12-9ecd-fa9a2489d1e7/balakanda-comic-preview/review/full-book/sources/en-77.txt",
+    "sha256": "de1ec23bb3606e16e67b7ddbd40ddd49cb650c2a03860cc3c71b94c7a939634f",
+    "characters": 26655,
+    "devanagariCharacters": 0,
+    "status": "retrieved; complete-passage editorial comparison pending"
+  },
+  {
+    "language": "hi",
+    "sarga": 77,
+    "url": "https://www.ramcharit.in/valmiki-ramayana-balakanda-sarga-chapter-77-slokas-with-hindi-meaning/",
+    "retrievedOn": "2026-10-16T13:30:07.187595+00:00",
+    "status": "unavailable",
+    "error": "HTTP Error 406: Not Acceptable"
+  }
+]

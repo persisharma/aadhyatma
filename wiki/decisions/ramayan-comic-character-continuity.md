@@ -2,7 +2,7 @@
 title: Ramayan comic character continuity
 type: decision
 sources: [docs/content-parity/ramayan-comic/README.md, docs/content-parity/ramayan-comic/character-bible.md, docs/content-parity/ramayan-comic/appearance-timeline.json, docs/content-parity/ramayan-comic/source-manifest.json, docs/content-parity/ramayan-comic/asset-review.json, docs/content-parity/ramayan-comic/balakanda-v1/README.md, docs/content-parity/ramayan-comic/balakanda-v1/book.json, docs/content-parity/ramayan-comic/balakanda-v1/asset-review.json, RULEBOOK.md]
-last_verified_date: 2026-10-13
+last_verified_date: 2026-10-16
 confidence: high
 status: needs-review
 ---
@@ -80,3 +80,27 @@ Gujarati/Kannada narratives remain pending. Those app locales show an explicit E
 The user rejected the separate parchment speech gutter, then rejected fixed-top bubbles whose capped tails stopped above the cast. All 31 dialogue scenes now use fully painted portraits, with body edges anchored near the cast and explicit speaker endpoints in `mobile/src/data/comicSpeechLayouts.ts`. Text grows away from faces; tails reach their reviewed points. Trishanku's inverted scene places speech below his head. Narration remains above the artwork. The remaining 109 panels, both narratives and sourced transitions are unchanged.
 
 The native reader uses 8-point gutters and compact shared controls while retaining vertical scrolling, complete artwork and global Standard/Large sizing. The standalone browser consumes generated copies of the native geometry functions (`sync-comic-speech-layouts.ts`). All selected portrait hashes/prompts and the 31 identity checks are in the bilingual package's `top-dialogue-art/` and `speech-overlay-review.md`. Earlier lower-edge fallback and fixed-top/30-point tail experiments are superseded. Native all-panel/device/editorial evidence must be stated separately; no OTA/store release is implied.
+
+
+## Whole-book layout planning review — 2026-10-16
+
+The approved four-language Parashurama sample established the user’s preferred inked comic direction and allowance for natural scrolling. It did not rebuild the book. The subsequent full review is now recorded in [balakanda-layout-plan/README.md](../../docs/content-parity/ramayan-comic/balakanda-layout-plan/README.md): all 140 current panels,29 episodes and77 sarga arcs were inventoried; complete hi/en narratives and every adjacent transition were read, and28 current-run browser-model sheets cover560 Standard/Large states. Hindi Standard in the 390×604 reference model leaves at least30% unused on 81 pages and at least50% on 7. These are browser-model measurements, not native-device results.
+
+The review draft proposes 62 pages:8 with one row,19 with two and35 with three. Its199 frames include 59 additional shots separating existing actions and responses; all 140 original panel IDs remain mapped in source order.70 draft dialogue frames and9 named teller captions are planning paraphrases, not verified scripture quotations. [PAGE-PLAN.md](../../docs/content-parity/ramayan-comic/balakanda-layout-plan/PAGE-PLAN.md), [current-panel-inventory.json](../../docs/content-parity/ramayan-comic/balakanda-layout-plan/current-panel-inventory.json) and [panel-to-page.csv](../../docs/content-parity/ramayan-comic/balakanda-layout-plan/panel-to-page.csv) contain every row, source fact, transition and proposed destination. The interactive storyboard wall shows existing reference art; repeated references are not approved new shots or balloon placements.
+
+Before full-book generation: review the page grouping, compare changed speech in two publications, finalise all four complete language scripts, then review every new art frame/hash and the full native Standard/Large sequence. The historical154 source fetch records point to a missing /tmp cache and do not establish current editorial collation. Derive coverage from panel sarga unions: bk-06 includes 1.22 and bk-16 includes 1.48 despite their narrower heading labels. Chapter jumps inside a shared page need a stable frame anchor. No production reader, book payload, image manifest, CDN or OTA change was made by this planning review.
+
+
+## Complete illustrated multilingual preview — 2026-10-16
+
+The user rejected the reference-image storyboard because it repeated paintings, and requested every screen to match the accepted Parashurama comic. The local prototype now contains62 selected page sheets/199 distinct framed shots:59 newly generated built-in ImageGen sheets plus three accepted Parashurama sheets used once each. All140 original panel IDs remain in order across77 sarga arcs. The62-page grouping is8 one-row/19 two-row/35 three-row;70 dialogue frames, concise captions and silent reactions retain full narrative causes and consequences.
+
+`docs/content-parity/ramayan-comic/balakanda-layout-plan/illustrated-preview-review.md` records every page/transition and evidence boundaries. `illustrated-preview-script.json` contains196 live text blocks and62 titles in Hindi, English, Gujarati and Kannada. `illustrated-preview-assets.json` retains selected hashes, measured frames, visual findings, exact prompts/reference provenance and the absolute saved project/artwork paths. No preview art was registered in production.
+
+Reader: http://127.0.0.1:8745/?book=full . Actual illustrated overview: http://127.0.0.1:8745/full-book/index.html . Include `index.html`: the directory-only URL falls through to the Vite app. `?book=sample` preserves the accepted four-page Parashurama preview. The default root now opens the full book.
+
+Measure actual selected-language fonts and permit natural scroll; do not force paired panels to equal heights with blank paper/sky padding. Excessively tall narrow balloons can widen and flow above the complete painting while retaining the speaker pointer. Asset frames follow inspected ink boundaries and never caption length. Original generation dimensions may differ from requested dimensions; metadata records measured output.
+
+Final agent/browser checks cover496 reader states (62×4 languages×2 sizes,393×852) and48 overview captures. All selected paintings loaded, text stayed contained, and no horizontal overflow occurred; all overview ranges were visually inspected, with focused1:1 Parashurama comparison. Maximum Large page height was2.71 reader viewports. The shortest page content still exceeded the613px reader viewport, eliminating the original short-page bottom band without stretching art. Preview build and28-file runtime-integrity checks passed; Pixel427×952 was a browser smoke check only.
+
+All four full narrative translations are now authored preview drafts, superseding the earlier Gujarati/Kannada-authoring gap. Human editorial approval, complete independent two-publication collation, rights/release clearance and full native Standard/Large sequence inspection remain pending. Fresh English77-sarga fetches succeeded; Hindi raw requests returnedHTTP406. This is source-access evidence, not complete collation. Production mobile source, app asset/frame registries, CDN and OTA were untouched; no commit, upload or release was performed.

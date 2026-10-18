@@ -1,0 +1,4193 @@
+{
+  "status": "source-based adapted preview drafts; human editorial review pending",
+  "languages": [
+    "hi",
+    "en",
+    "gu",
+    "kn"
+  ],
+  "pages": [
+    {
+      "number": 1,
+      "title": {
+        "hi": "आदर्श मनुष्य कौन?",
+        "en": "Who lives these qualities?",
+        "gu": "આદર્શ મનુષ્ય કોણ?",
+        "kn": "ಆದರ್ಶ ಮನುಷ್ಯ ಯಾರು?"
+      },
+      "sourceSargas": [
+        1
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-01-01",
+            "source": "1.1",
+            "mode": "dialogue",
+            "copy": "bk-01-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-01-02",
+            "source": "1.1",
+            "mode": "dialogue",
+            "copy": "bk-01-02",
+            "noteCopy": "bk-01-02-note"
+          }
+        ]
+      ]
+    },
+    {
+      "number": 2,
+      "title": {
+        "hi": "शोक से श्लोक",
+        "en": "Grief becomes poetry",
+        "gu": "શોકથી શ્લોક",
+        "kn": "ಶೋಕದಿಂದ ಶ್ಲೋಕ"
+      },
+      "sourceSargas": [
+        2,
+        3
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-01-03",
+            "source": "1.2",
+            "mode": "caption",
+            "copy": "bk-01-03",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-01-03-shot-2",
+            "source": "1.2",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-01-04",
+            "source": "1.2-3",
+            "mode": "dialogue",
+            "copy": "bk-01-04",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-01-04-shot-2",
+            "source": "1.2-3",
+            "mode": "caption",
+            "copy": "bk-01-04-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 3,
+      "title": {
+        "hi": "रामकथा का गायन",
+        "en": "The poem is heard",
+        "gu": "રામકથાનું ગાન",
+        "kn": "ರಾಮಕಥೆಯ ಗಾನ"
+      },
+      "sourceSargas": [
+        4
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-01-05",
+            "source": "1.4",
+            "mode": "caption",
+            "copy": "bk-01-05",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-01-05-shot-2",
+            "source": "1.4",
+            "mode": "caption",
+            "copy": "bk-01-05-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 4,
+      "title": {
+        "hi": "अयोध्या और उसके राजा",
+        "en": "Ayodhya and its king",
+        "gu": "અયોધ્યા અને તેના રાજા",
+        "kn": "ಅಯೋಧ್ಯೆ ಮತ್ತು ಅದರ ರಾಜ"
+      },
+      "sourceSargas": [
+        5,
+        6,
+        7
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-02-01",
+            "source": "1.5-6",
+            "mode": "caption",
+            "copy": "bk-02-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-02-02",
+            "source": "1.7",
+            "mode": "caption",
+            "copy": "bk-02-02",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 5,
+      "title": {
+        "hi": "ऋष्यशृंग को निमन्त्रण",
+        "en": "Why invite Rishyasringa?",
+        "gu": "ઋષ્યશૃંગને આમંત્રણ",
+        "kn": "ಋಷ್ಯಶೃಂಗರಿಗೆ ಆಹ್ವಾನ"
+      },
+      "sourceSargas": [
+        8,
+        9,
+        10
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-03-01",
+            "source": "1.8-9",
+            "mode": "caption",
+            "copy": "bk-03-01",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-03-01-shot-2",
+            "source": "1.8-9",
+            "mode": "dialogue",
+            "copy": "bk-03-01-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-03-02",
+            "source": "1.10",
+            "mode": "teller-caption",
+            "copy": "bk-03-02",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-03-03",
+            "source": "1.10",
+            "mode": "caption",
+            "copy": "bk-03-03",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 6,
+      "title": {
+        "hi": "वर्षा और स्वागत",
+        "en": "Rain, marriage and invitation",
+        "gu": "વર્ષા અને સ્વાગત",
+        "kn": "ಮಳೆ ಮತ್ತು ಸ್ವಾಗತ"
+      },
+      "sourceSargas": [
+        10,
+        11
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-03-04",
+            "source": "1.10",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-03-05",
+            "source": "1.10",
+            "mode": "caption",
+            "copy": "bk-03-05",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-03-05-shot-2",
+            "source": "1.10",
+            "mode": "caption",
+            "copy": "bk-03-05-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-03-06",
+            "source": "1.11",
+            "mode": "caption",
+            "copy": "bk-03-06",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-03-06-shot-2",
+            "source": "1.11",
+            "mode": "caption",
+            "copy": "bk-03-06-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 7,
+      "title": {
+        "hi": "रावण के विरुद्ध संकल्प",
+        "en": "The human answer to Ravana",
+        "gu": "રાવણ સામે સંકલ્પ",
+        "kn": "ರಾವಣನ ವಿರುದ್ಧ ಸಂಕಲ್ಪ"
+      },
+      "sourceSargas": [
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-04-01",
+            "source": "1.12-14",
+            "mode": "caption",
+            "copy": "bk-04-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-04-02",
+            "source": "1.15",
+            "mode": "caption",
+            "copy": "bk-04-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-04-02-shot-2",
+            "source": "1.15",
+            "mode": "dialogue",
+            "copy": "bk-04-02-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-04-03",
+            "source": "1.15-16",
+            "mode": "dialogue",
+            "copy": "bk-04-03",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 8,
+      "title": {
+        "hi": "पायस और भावी सहायक",
+        "en": "The gift and future allies",
+        "gu": "પાયસ અને ભાવિ સહાયકો",
+        "kn": "ಪಾಯಸ ಮತ್ತು ಭವಿಷ್ಯದ ಸಹಾಯಕರು"
+      },
+      "sourceSargas": [
+        16,
+        17
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-04-04",
+            "source": "1.16",
+            "mode": "dialogue",
+            "copy": "bk-04-04",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-04-04-shot-2",
+            "source": "1.16",
+            "mode": "caption",
+            "copy": "bk-04-04-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-04-05",
+            "source": "1.17",
+            "mode": "dialogue",
+            "copy": "bk-04-05",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 9,
+      "title": {
+        "hi": "चार राजकुमारों का जन्म",
+        "en": "Four princes are born",
+        "gu": "ચાર રાજકુમારોનો જન્મ",
+        "kn": "ನಾಲ್ವರು ರಾಜಕುಮಾರರ ಜನನ"
+      },
+      "sourceSargas": [
+        18
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-05-01",
+            "source": "1.18",
+            "mode": "caption",
+            "copy": "bk-05-01",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 10,
+      "title": {
+        "hi": "राजकुमार और ऋषि",
+        "en": "Growing up; a visitor arrives",
+        "gu": "રાજકુમારો અને ઋષિ",
+        "kn": "ರಾಜಕುಮಾರರು ಮತ್ತು ಋಷಿ"
+      },
+      "sourceSargas": [
+        18
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-05-02",
+            "source": "1.18",
+            "mode": "caption",
+            "copy": "bk-05-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-05-02-shot-2",
+            "source": "1.18",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-05-03",
+            "source": "1.18",
+            "mode": "caption",
+            "copy": "bk-05-03",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-05-03a",
+            "source": "1.18",
+            "mode": "dialogue",
+            "copy": "bk-05-03a",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 11,
+      "title": {
+        "hi": "वचन की परीक्षा",
+        "en": "A promise tested",
+        "gu": "વચનની પરીક્ષા",
+        "kn": "ಮಾತಿನ ಪರೀಕ್ಷೆ"
+      },
+      "sourceSargas": [
+        19,
+        20,
+        21
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-06-01",
+            "source": "1.19",
+            "mode": "dialogue",
+            "copy": "bk-06-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-06-02",
+            "source": "1.20",
+            "mode": "dialogue",
+            "copy": "bk-06-02",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-06-03",
+            "source": "1.21",
+            "mode": "caption",
+            "copy": "bk-06-03",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-06-03-shot-2",
+            "source": "1.21",
+            "mode": "dialogue",
+            "copy": "bk-06-03-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 12,
+      "title": {
+        "hi": "पिता का आशीर्वाद",
+        "en": "The father lets them go",
+        "gu": "પિતાના આશીર્વાદ",
+        "kn": "ತಂದೆಯ ಆಶೀರ್ವಾದ"
+      },
+      "sourceSargas": [
+        21,
+        22
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-06-04",
+            "source": "1.21-22",
+            "mode": "caption",
+            "copy": "bk-06-04",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 13,
+      "title": {
+        "hi": "नदी के मार्ग पर शिक्षा",
+        "en": "Learning on the river road",
+        "gu": "નદીના માર્ગે શિક્ષા",
+        "kn": "ನದಿಯ ದಾರಿಯಲ್ಲಿ ಕಲಿಕೆ"
+      },
+      "sourceSargas": [
+        22,
+        23,
+        24
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-07-01",
+            "source": "1.22",
+            "mode": "dialogue",
+            "copy": "bk-07-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-07-02",
+            "source": "1.23",
+            "mode": "teller-caption",
+            "copy": "bk-07-02",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-07-03",
+            "source": "1.24",
+            "mode": "dialogue",
+            "copy": "bk-07-03",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-07-03-shot-2",
+            "source": "1.24",
+            "mode": "dialogue",
+            "copy": "bk-07-03-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 14,
+      "title": {
+        "hi": "उजड़ा हुआ वन",
+        "en": "Why the forest is deserted",
+        "gu": "ઉજ્જડ વન",
+        "kn": "ನಿರ್ಜನವಾದ ಕಾಡು"
+      },
+      "sourceSargas": [
+        24,
+        25,
+        26
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-07-03-shot-3",
+            "source": "1.24",
+            "mode": "caption",
+            "copy": "bk-07-03-shot-3",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-08-01",
+            "source": "1.25",
+            "mode": "teller-caption",
+            "copy": "bk-08-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-08-02",
+            "source": "1.25-26",
+            "mode": "dialogue",
+            "copy": "bk-08-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-08-02-shot-2",
+            "source": "1.25-26",
+            "mode": "dialogue",
+            "copy": "bk-08-02-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 15,
+      "title": {
+        "hi": "आक्रमण और परिणाम",
+        "en": "Attack, consequence, rest",
+        "gu": "હુમલો અને પરિણામ",
+        "kn": "ದಾಳಿ ಮತ್ತು ಪರಿಣಾಮ"
+      },
+      "sourceSargas": [
+        26
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-08-03",
+            "source": "1.26",
+            "mode": "caption",
+            "copy": "bk-08-03",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-08-04",
+            "source": "1.26",
+            "mode": "caption",
+            "copy": "bk-08-04",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-08-04-shot-2",
+            "source": "1.26",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-08-04a",
+            "source": "1.26",
+            "mode": "caption",
+            "copy": "bk-08-04a",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 16,
+      "title": {
+        "hi": "शक्ति और संयम",
+        "en": "Power includes restraint",
+        "gu": "શક્તિ અને સંયમ",
+        "kn": "ಶಕ್ತಿ ಮತ್ತು ಸಂಯಮ"
+      },
+      "sourceSargas": [
+        27,
+        28
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-09-01",
+            "source": "1.27",
+            "mode": "caption",
+            "copy": "bk-09-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-09-02",
+            "source": "1.28",
+            "mode": "dialogue",
+            "copy": "bk-09-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-09-02-shot-2",
+            "source": "1.28",
+            "mode": "caption",
+            "copy": "bk-09-02-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 17,
+      "title": {
+        "hi": "यह किसका आश्रम है?",
+        "en": "Whose hermitage?",
+        "gu": "આ આશ્રમ કોનો છે?",
+        "kn": "ಈ ಆಶ್ರಮ ಯಾರದು?"
+      },
+      "sourceSargas": [
+        28,
+        29
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-09-02a",
+            "source": "1.28",
+            "mode": "dialogue",
+            "copy": "bk-09-02a",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-09-03",
+            "source": "1.29",
+            "mode": "dialogue",
+            "copy": "bk-09-03",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-09-03-shot-2",
+            "source": "1.29",
+            "mode": "teller-caption",
+            "copy": "bk-09-03-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-09-04",
+            "source": "1.29",
+            "mode": "caption",
+            "copy": "bk-09-04",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 18,
+      "title": {
+        "hi": "छह दिन की रक्षा",
+        "en": "Six days of watch",
+        "gu": "છ દિવસની રક્ષા",
+        "kn": "ಆರು ದಿನಗಳ ಕಾವಲು"
+      },
+      "sourceSargas": [
+        30
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-10-01",
+            "source": "1.30",
+            "mode": "caption",
+            "copy": "bk-10-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-10-02",
+            "source": "1.30",
+            "mode": "caption",
+            "copy": "bk-10-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-10-02-shot-2",
+            "source": "1.30",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-10-03",
+            "source": "1.30",
+            "mode": "caption",
+            "copy": "bk-10-03",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 19,
+      "title": {
+        "hi": "यज्ञ की पूर्णता",
+        "en": "The sacrifice is complete",
+        "gu": "યજ્ઞની પૂર્ણતા",
+        "kn": "ಯಜ್ಞ ಪೂರ್ಣವಾಯಿತು"
+      },
+      "sourceSargas": [
+        30
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-10-04",
+            "source": "1.30",
+            "mode": "dialogue",
+            "copy": "bk-10-04",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 20,
+      "title": {
+        "hi": "मिथिला की ओर",
+        "en": "Toward Mithila",
+        "gu": "મિથિલા તરફ",
+        "kn": "ಮಿಥಿಲೆಯತ್ತ"
+      },
+      "sourceSargas": [
+        31,
+        32
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-11-01",
+            "source": "1.31",
+            "mode": "caption",
+            "copy": "bk-11-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-11-02",
+            "source": "1.31-32",
+            "mode": "teller-caption",
+            "copy": "bk-11-02",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 21,
+      "title": {
+        "hi": "पुत्रियाँ और पिता",
+        "en": "The daughters and their father",
+        "gu": "પુત્રીઓ અને પિતા",
+        "kn": "ಪುತ್ರಿಯರು ಮತ್ತು ತಂದೆ"
+      },
+      "sourceSargas": [
+        32,
+        33
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-11-03",
+            "source": "1.32",
+            "mode": "dialogue",
+            "copy": "bk-11-03",
+            "noteCopy": "bk-11-03-note"
+          },
+          {
+            "id": "bk-11-03-shot-2",
+            "source": "1.32",
+            "mode": "caption",
+            "copy": "bk-11-03-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-11-04",
+            "source": "1.33",
+            "mode": "dialogue",
+            "copy": "bk-11-04",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-11-05",
+            "source": "1.33",
+            "mode": "caption",
+            "copy": "bk-11-05",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 22,
+      "title": {
+        "hi": "ऋषि का वंश और गंगा",
+        "en": "The sage’s family; Rama’s question",
+        "gu": "ઋષિનો વંશ અને ગંગા",
+        "kn": "ಋಷಿಯ ವಂಶ ಮತ್ತು ಗಂಗೆ"
+      },
+      "sourceSargas": [
+        34,
+        35
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-11-06",
+            "source": "1.34",
+            "mode": "teller-caption",
+            "copy": "bk-11-06",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-12-01",
+            "source": "1.35",
+            "mode": "dialogue",
+            "copy": "bk-12-01",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 23,
+      "title": {
+        "hi": "गंगा, उमा और कार्तिकेय",
+        "en": "Ganga, Uma and Kartikeya",
+        "gu": "ગંગા, ઉમા અને કાર્તિકેય",
+        "kn": "ಗಂಗೆ, ಉಮೆ ಮತ್ತು ಕಾರ್ತಿಕೇಯ"
+      },
+      "sourceSargas": [
+        35,
+        36,
+        37
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-12-02",
+            "source": "1.35-36",
+            "mode": "caption",
+            "copy": "bk-12-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-12-02-shot-2",
+            "source": "1.35-36",
+            "mode": "caption",
+            "copy": "bk-12-02-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-12-03",
+            "source": "1.37",
+            "mode": "caption",
+            "copy": "bk-12-03",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-12-04",
+            "source": "1.37",
+            "mode": "caption",
+            "copy": "bk-12-04",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 24,
+      "title": {
+        "hi": "सगर का खोया अश्व",
+        "en": "Sagara’s missing horse",
+        "gu": "સગરનો ખોવાયેલો અશ્વ",
+        "kn": "ಸಗರನ ಕಾಣೆಯಾದ ಕುದುರೆ"
+      },
+      "sourceSargas": [
+        38,
+        39,
+        40
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-13-01",
+            "source": "1.38",
+            "mode": "caption",
+            "copy": "bk-13-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-13-02",
+            "source": "1.39",
+            "mode": "caption",
+            "copy": "bk-13-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-13-02-shot-2",
+            "source": "1.39",
+            "mode": "dialogue",
+            "copy": "bk-13-02-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-13-03",
+            "source": "1.39-40",
+            "mode": "caption",
+            "copy": "bk-13-03",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 25,
+      "title": {
+        "hi": "आरोप और आशा",
+        "en": "A mistaken accusation; a way forward",
+        "gu": "આરોપ અને આશા",
+        "kn": "ಆರೋಪ ಮತ್ತು ಆಶೆ"
+      },
+      "sourceSargas": [
+        40,
+        41
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-13-04",
+            "source": "1.40",
+            "mode": "caption",
+            "copy": "bk-13-04",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-13-04-shot-2",
+            "source": "1.40",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-13-05",
+            "source": "1.41",
+            "mode": "caption",
+            "copy": "bk-13-05",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-13-06",
+            "source": "1.41",
+            "mode": "dialogue",
+            "copy": "bk-13-06",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-13-06-shot-2",
+            "source": "1.41",
+            "mode": "caption",
+            "copy": "bk-13-06-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 26,
+      "title": {
+        "hi": "भगीरथ का संकल्प",
+        "en": "Bhagiratha takes up the task",
+        "gu": "ભગીરથનો સંકલ્પ",
+        "kn": "ಭಗೀರಥನ ಸಂಕಲ್ಪ"
+      },
+      "sourceSargas": [
+        42
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-14-01",
+            "source": "1.42",
+            "mode": "caption",
+            "copy": "bk-14-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-14-02",
+            "source": "1.42",
+            "mode": "dialogue",
+            "copy": "bk-14-02",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 27,
+      "title": {
+        "hi": "गंगा का अवतरण",
+        "en": "Ganga descends",
+        "gu": "ગંગાનું અવતરણ",
+        "kn": "ಗಂಗೆಯ ಅವತರಣ"
+      },
+      "sourceSargas": [
+        43
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-14-03",
+            "source": "1.43",
+            "mode": "caption",
+            "copy": "bk-14-03",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 28,
+      "title": {
+        "hi": "प्रवाह रुकता और लौटता है",
+        "en": "The river is stopped and released",
+        "gu": "પ્રવાહ અટકે અને ફરી વહે",
+        "kn": "ಹರಿವು ನಿಂತು ಮತ್ತೆ ಹರಿಯಿತು"
+      },
+      "sourceSargas": [
+        43
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-14-04",
+            "source": "1.43",
+            "mode": "dialogue",
+            "copy": "bk-14-04",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-14-04-shot-2",
+            "source": "1.43",
+            "mode": "caption",
+            "copy": "bk-14-04-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-14-05",
+            "source": "1.43",
+            "mode": "caption",
+            "copy": "bk-14-05",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-14-06",
+            "source": "1.43",
+            "mode": "dialogue",
+            "copy": "bk-14-06",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-14-06-shot-2",
+            "source": "1.43",
+            "mode": "caption",
+            "copy": "bk-14-06-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 29,
+      "title": {
+        "hi": "पितरों की मुक्ति",
+        "en": "The ancestral task is fulfilled",
+        "gu": "પિતૃઓની મુક્તિ",
+        "kn": "ಪೂರ್ವಜರ ಉದ್ಧಾರ"
+      },
+      "sourceSargas": [
+        43,
+        44
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-14-07",
+            "source": "1.43-44",
+            "mode": "caption",
+            "copy": "bk-14-07",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-14-08",
+            "source": "1.44",
+            "mode": "caption",
+            "copy": "bk-14-08",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 30,
+      "title": {
+        "hi": "समुद्र मन्थन",
+        "en": "The ocean is churned",
+        "gu": "સમુદ્રમંથન",
+        "kn": "ಸಮುದ್ರ ಮಥನ"
+      },
+      "sourceSargas": [
+        45
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-15-01",
+            "source": "1.45",
+            "mode": "teller-caption",
+            "copy": "bk-15-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-15-02",
+            "source": "1.45",
+            "mode": "caption",
+            "copy": "bk-15-02",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 31,
+      "title": {
+        "hi": "विष और अमृत",
+        "en": "Poison, nectar and conflict",
+        "gu": "વિષ અને અમૃત",
+        "kn": "ವಿಷ ಮತ್ತು ಅಮೃತ"
+      },
+      "sourceSargas": [
+        45
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-15-03",
+            "source": "1.45",
+            "mode": "caption",
+            "copy": "bk-15-03",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-15-03-shot-2",
+            "source": "1.45",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-15-04",
+            "source": "1.45",
+            "mode": "caption",
+            "copy": "bk-15-04",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-15-04-shot-2",
+            "source": "1.45",
+            "mode": "caption",
+            "copy": "bk-15-04-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-15-05",
+            "source": "1.45",
+            "mode": "caption",
+            "copy": "bk-15-05",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 32,
+      "title": {
+        "hi": "दिति और मरुत",
+        "en": "Diti and the Maruts",
+        "gu": "દિતિ અને મરુત",
+        "kn": "ದಿತಿ ಮತ್ತು ಮರುತ್ ದೇವತೆಗಳು"
+      },
+      "sourceSargas": [
+        46,
+        47
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-16-01",
+            "source": "1.46",
+            "mode": "dialogue",
+            "copy": "bk-16-01",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-16-01-shot-2",
+            "source": "1.46",
+            "mode": "caption",
+            "copy": "bk-16-01-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-16-02",
+            "source": "1.46",
+            "mode": "caption",
+            "copy": "bk-16-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-16-02-shot-2",
+            "source": "1.46",
+            "mode": "caption",
+            "copy": "bk-16-02-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-16-03",
+            "source": "1.47",
+            "mode": "dialogue",
+            "copy": "bk-16-03",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-16-03-shot-2",
+            "source": "1.47",
+            "mode": "dialogue",
+            "copy": "bk-16-03-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 33,
+      "title": {
+        "hi": "फिर यात्रा पर",
+        "en": "Back on the road",
+        "gu": "ફરી યાત્રા પર",
+        "kn": "ಮತ್ತೆ ಪ್ರಯಾಣದಲ್ಲಿ"
+      },
+      "sourceSargas": [
+        47,
+        48
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-16-04",
+            "source": "1.47-48",
+            "mode": "caption",
+            "copy": "bk-16-04",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-17-01",
+            "source": "1.48",
+            "mode": "dialogue",
+            "copy": "bk-17-01",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 34,
+      "title": {
+        "hi": "अहल्या का अदृश्य तप",
+        "en": "Why Ahalya is unseen",
+        "gu": "અહલ્યાનું અદૃશ્ય તપ",
+        "kn": "ಅಹಲ್ಯೆಯ ಅಗೋಚರ ತಪಸ್ಸು"
+      },
+      "sourceSargas": [
+        48,
+        49
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-17-02",
+            "source": "1.48",
+            "mode": "caption",
+            "copy": "bk-17-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-17-02-shot-2",
+            "source": "1.48",
+            "mode": "caption",
+            "copy": "bk-17-02-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-17-03",
+            "source": "1.48-49",
+            "mode": "caption",
+            "copy": "bk-17-03",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 35,
+      "title": {
+        "hi": "आतिथ्य और पुनर्मिलन",
+        "en": "A welcome restored",
+        "gu": "આતિથ્ય અને પુનર્મિલન",
+        "kn": "ಆತಿಥ್ಯ ಮತ್ತು ಪುನರ್ಮಿಲನ"
+      },
+      "sourceSargas": [
+        49,
+        50
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-17-04",
+            "source": "1.49",
+            "mode": "caption",
+            "copy": "bk-17-04",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-17-04-shot-2",
+            "source": "1.49",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-17-05",
+            "source": "1.49",
+            "mode": "caption",
+            "copy": "bk-17-05",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-18-01",
+            "source": "1.50",
+            "mode": "caption",
+            "copy": "bk-18-01",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 36,
+      "title": {
+        "hi": "शतानन्द की कथा",
+        "en": "Shatananda introduces his teacher",
+        "gu": "શતાનંદની કથા",
+        "kn": "ಶತಾನಂದನ ಕಥೆ"
+      },
+      "sourceSargas": [
+        51
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-18-02",
+            "source": "1.51",
+            "mode": "dialogue",
+            "copy": "bk-18-02",
+            "noteCopy": "bk-18-02-note"
+          },
+          {
+            "id": "bk-18-02-shot-2",
+            "source": "1.51",
+            "mode": "dialogue",
+            "copy": "bk-18-02-shot-2",
+            "noteCopy": "bk-18-02-shot-2-note"
+          }
+        ],
+        [
+          {
+            "id": "bk-18-03",
+            "source": "1.51",
+            "mode": "dialogue",
+            "copy": "bk-18-03",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 37,
+      "title": {
+        "hi": "आतिथ्य से आग्रह तक",
+        "en": "Hospitality becomes a demand",
+        "gu": "આતિથ્યથી આગ્રહ સુધી",
+        "kn": "ಆತಿಥ್ಯದಿಂದ ಒತ್ತಾಯದವರೆಗೆ"
+      },
+      "sourceSargas": [
+        52,
+        53,
+        54
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-19-01",
+            "source": "1.52",
+            "mode": "caption",
+            "copy": "bk-19-01",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-19-01-shot-2",
+            "source": "1.52",
+            "mode": "dialogue",
+            "copy": "bk-19-01-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-19-02",
+            "source": "1.53",
+            "mode": "dialogue",
+            "copy": "bk-19-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-19-02-shot-2",
+            "source": "1.53",
+            "mode": "dialogue",
+            "copy": "bk-19-02-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-19-03",
+            "source": "1.54",
+            "mode": "caption",
+            "copy": "bk-19-03",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-19-03-shot-2",
+            "source": "1.54",
+            "mode": "dialogue",
+            "copy": "bk-19-03-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 38,
+      "title": {
+        "hi": "अस्त्र और ब्रह्मदण्ड",
+        "en": "Force meets the Brahmadanda",
+        "gu": "અસ્ત્ર અને બ્રહ્મદંડ",
+        "kn": "ಅಸ್ತ್ರ ಮತ್ತು ಬ್ರಹ್ಮದಂಡ"
+      },
+      "sourceSargas": [
+        54,
+        55,
+        56
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-19-04",
+            "source": "1.54-55",
+            "mode": "caption",
+            "copy": "bk-19-04",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-19-05",
+            "source": "1.55",
+            "mode": "caption",
+            "copy": "bk-19-05",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-19-05-shot-2",
+            "source": "1.55",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-19-06",
+            "source": "1.56",
+            "mode": "caption",
+            "copy": "bk-19-06",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 39,
+      "title": {
+        "hi": "तप का मार्ग",
+        "en": "A different path",
+        "gu": "તપનો માર્ગ",
+        "kn": "ತಪಸ್ಸಿನ ಮಾರ್ಗ"
+      },
+      "sourceSargas": [
+        56
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-19-07",
+            "source": "1.56",
+            "mode": "dialogue",
+            "copy": "bk-19-07",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 40,
+      "title": {
+        "hi": "त्रिशंकु की शरण",
+        "en": "Trishanku seeks refuge",
+        "gu": "ત્રિશંકુની શરણ",
+        "kn": "ತ್ರಿಶಂಕುವಿನ ಆಶ್ರಯ"
+      },
+      "sourceSargas": [
+        57,
+        58
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-20-01",
+            "source": "1.57",
+            "mode": "dialogue",
+            "copy": "bk-20-01",
+            "noteCopy": "bk-20-01-note"
+          }
+        ],
+        [
+          {
+            "id": "bk-20-02",
+            "source": "1.57-58",
+            "mode": "dialogue",
+            "copy": "bk-20-02",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-20-02-shot-2",
+            "source": "1.57-58",
+            "mode": "caption",
+            "copy": "bk-20-02-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-20-03",
+            "source": "1.58",
+            "mode": "dialogue",
+            "copy": "bk-20-03",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-20-03-shot-2",
+            "source": "1.58",
+            "mode": "dialogue",
+            "copy": "bk-20-03-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 41,
+      "title": {
+        "hi": "धरती और स्वर्ग के बीच",
+        "en": "Falling between earth and heaven",
+        "gu": "ધરતી અને સ્વર્ગ વચ્ચે",
+        "kn": "ಭೂಮಿ ಮತ್ತು ಸ್ವರ್ಗದ ನಡುವೆ"
+      },
+      "sourceSargas": [
+        59,
+        60
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-20-04",
+            "source": "1.59",
+            "mode": "caption",
+            "copy": "bk-20-04",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-20-04-shot-2",
+            "source": "1.59",
+            "mode": "caption",
+            "copy": "bk-20-04-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-20-05",
+            "source": "1.60",
+            "mode": "caption",
+            "copy": "bk-20-05",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-20-05-shot-2",
+            "source": "1.60",
+            "mode": "dialogue",
+            "copy": "bk-20-05-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-20-06",
+            "source": "1.60",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          },
+          {
+            "id": "bk-20-06-shot-2",
+            "source": "1.60",
+            "mode": "caption",
+            "copy": "bk-20-06-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 42,
+      "title": {
+        "hi": "शुनःशेप का संकट",
+        "en": "A child with nowhere to turn",
+        "gu": "શુનઃશેપનું સંકટ",
+        "kn": "ಶುನಃಶೇಪನ ಸಂಕಟ"
+      },
+      "sourceSargas": [
+        61,
+        62
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-21-01",
+            "source": "1.61",
+            "mode": "caption",
+            "copy": "bk-21-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-21-02",
+            "source": "1.61",
+            "mode": "caption",
+            "copy": "bk-21-02",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-21-03",
+            "source": "1.62",
+            "mode": "dialogue",
+            "copy": "bk-21-03",
+            "noteCopy": "bk-21-03-note"
+          }
+        ]
+      ]
+    },
+    {
+      "number": 43,
+      "title": {
+        "hi": "प्रार्थना से जीवनदान",
+        "en": "The prayers and the reprieve",
+        "gu": "પ્રાર્થનાથી જીવનદાન",
+        "kn": "ಪ್ರಾರ್ಥನೆಯಿಂದ ಜೀವರಕ್ಷಣೆ"
+      },
+      "sourceSargas": [
+        62
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-21-04",
+            "source": "1.62",
+            "mode": "dialogue",
+            "copy": "bk-21-04",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-21-04-shot-2",
+            "source": "1.62",
+            "mode": "dialogue",
+            "copy": "bk-21-04-shot-2",
+            "noteCopy": "bk-21-04-shot-2-note"
+          }
+        ],
+        [
+          {
+            "id": "bk-21-05",
+            "source": "1.62",
+            "mode": "caption",
+            "copy": "bk-21-05",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-21-05-shot-2",
+            "source": "1.62",
+            "mode": "dialogue",
+            "copy": "bk-21-05-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 44,
+      "title": {
+        "hi": "भटकाव और क्रोध",
+        "en": "Distraction and anger",
+        "gu": "ભટકાવ અને ક્રોધ",
+        "kn": "ಗುರಿ ತಪ್ಪುವಿಕೆ ಮತ್ತು ಕೋಪ"
+      },
+      "sourceSargas": [
+        63,
+        64
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-22-01",
+            "source": "1.63",
+            "mode": "caption",
+            "copy": "bk-22-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-22-02",
+            "source": "1.63",
+            "mode": "caption",
+            "copy": "bk-22-02",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-22-03",
+            "source": "1.64",
+            "mode": "caption",
+            "copy": "bk-22-03",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-22-03-shot-2",
+            "source": "1.64",
+            "mode": "caption",
+            "copy": "bk-22-03-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 45,
+      "title": {
+        "hi": "संयम और सम्मान",
+        "en": "Mastery and acknowledgement",
+        "gu": "સંયમ અને સન્માન",
+        "kn": "ಸಂಯಮ ಮತ್ತು ಮಾನ್ಯತೆ"
+      },
+      "sourceSargas": [
+        64,
+        65
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-22-04",
+            "source": "1.64",
+            "mode": "dialogue",
+            "copy": "bk-22-04",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-22-05",
+            "source": "1.65",
+            "mode": "dialogue",
+            "copy": "bk-22-05",
+            "noteCopy": "bk-22-05-note"
+          },
+          {
+            "id": "bk-22-05-shot-2",
+            "source": "1.65",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-22-06",
+            "source": "1.65",
+            "mode": "dialogue",
+            "copy": "bk-22-06",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-22-06-shot-2",
+            "source": "1.65",
+            "mode": "caption",
+            "copy": "bk-22-06-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 46,
+      "title": {
+        "hi": "जनक, सीता और धनुष",
+        "en": "Janaka explains the bow and Sita",
+        "gu": "જનક, સીતા અને ધનુષ",
+        "kn": "ಜನಕ, ಸೀತೆ ಮತ್ತು ಧನುಸ್ಸು"
+      },
+      "sourceSargas": [
+        66
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-23-01",
+            "source": "1.66",
+            "mode": "teller-caption",
+            "copy": "bk-23-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-23-02",
+            "source": "1.66",
+            "mode": "teller-caption",
+            "copy": "bk-23-02",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-23-03",
+            "source": "1.66",
+            "mode": "dialogue",
+            "copy": "bk-23-03",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-23-03-shot-2",
+            "source": "1.66",
+            "mode": "caption",
+            "copy": "bk-23-03-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 47,
+      "title": {
+        "hi": "अनुमति और प्रत्यंचा",
+        "en": "Permission, lift, draw",
+        "gu": "અનુમતિ અને પ્રત્યંચા",
+        "kn": "ಅನುಮತಿ ಮತ್ತು ಹೆದೆ"
+      },
+      "sourceSargas": [
+        67
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-23-04",
+            "source": "1.67",
+            "mode": "dialogue",
+            "copy": "bk-23-04",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-23-04-shot-2",
+            "source": "1.67",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-23-05",
+            "source": "1.67",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 48,
+      "title": {
+        "hi": "धनुष भंग",
+        "en": "The bow breaks",
+        "gu": "ધનુષભંગ",
+        "kn": "ಧನುರ್ಭಂಗ"
+      },
+      "sourceSargas": [
+        67
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-23-05-shot-2",
+            "source": "1.67",
+            "mode": "caption",
+            "copy": "bk-23-05-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 49,
+      "title": {
+        "hi": "विवाह का सन्देश",
+        "en": "A proposal; a message home",
+        "gu": "લગ્નનો સંદેશ",
+        "kn": "ವಿವಾಹದ ಸಂದೇಶ"
+      },
+      "sourceSargas": [
+        67,
+        68
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-23-06",
+            "source": "1.67",
+            "mode": "dialogue",
+            "copy": "bk-23-06",
+            "noteCopy": "bk-23-06-note"
+          }
+        ],
+        [
+          {
+            "id": "bk-24-01",
+            "source": "1.68",
+            "mode": "dialogue",
+            "copy": "bk-24-01",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 50,
+      "title": {
+        "hi": "परिवारों का मिलन",
+        "en": "The families meet",
+        "gu": "પરિવારોનું મિલન",
+        "kn": "ಕುಟುಂಬಗಳ ಭೇಟಿ"
+      },
+      "sourceSargas": [
+        68,
+        69
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-24-02",
+            "source": "1.68-69",
+            "mode": "caption",
+            "copy": "bk-24-02",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-24-03",
+            "source": "1.69",
+            "mode": "caption",
+            "copy": "bk-24-03",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 51,
+      "title": {
+        "hi": "चार सम्बन्धों की सहमति",
+        "en": "Four agreed relationships",
+        "gu": "ચાર સંબંધોની સંમતિ",
+        "kn": "ನಾಲ್ಕು ಸಂಬಂಧಗಳಿಗೆ ಒಪ್ಪಿಗೆ"
+      },
+      "sourceSargas": [
+        70,
+        71,
+        72
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-25-01",
+            "source": "1.70",
+            "mode": "dialogue",
+            "copy": "bk-25-01",
+            "noteCopy": "bk-25-01-note"
+          }
+        ],
+        [
+          {
+            "id": "bk-25-02",
+            "source": "1.71",
+            "mode": "dialogue",
+            "copy": "bk-25-02",
+            "noteCopy": "bk-25-02-note"
+          }
+        ],
+        [
+          {
+            "id": "bk-25-03",
+            "source": "1.72",
+            "mode": "dialogue",
+            "copy": "bk-25-03",
+            "noteCopy": "bk-25-03-note"
+          }
+        ]
+      ]
+    },
+    {
+      "number": 52,
+      "title": {
+        "hi": "विवाह की तैयारी",
+        "en": "Preparations and the maternal uncle",
+        "gu": "લગ્નની તૈયારી",
+        "kn": "ವಿವಾಹದ ಸಿದ್ಧತೆ"
+      },
+      "sourceSargas": [
+        71,
+        72,
+        73
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-25-04",
+            "source": "1.71-72",
+            "mode": "caption",
+            "copy": "bk-25-04",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-26-01",
+            "source": "1.73",
+            "mode": "caption",
+            "copy": "bk-26-01",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 53,
+      "title": {
+        "hi": "राम और सीता",
+        "en": "Rama and Sita",
+        "gu": "રામ અને સીતા",
+        "kn": "ರಾಮ ಮತ್ತು ಸೀತೆ"
+      },
+      "sourceSargas": [
+        73
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-26-02",
+            "source": "1.73",
+            "mode": "dialogue",
+            "copy": "bk-26-02",
+            "noteCopy": "bk-26-02-note"
+          }
+        ]
+      ]
+    },
+    {
+      "number": 54,
+      "title": {
+        "hi": "तीन और विवाह",
+        "en": "Three more weddings",
+        "gu": "વધુ ત્રણ લગ્ન",
+        "kn": "ಇನ್ನೂ ಮೂರು ವಿವಾಹಗಳು"
+      },
+      "sourceSargas": [
+        73
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-26-03",
+            "source": "1.73",
+            "mode": "caption",
+            "copy": "bk-26-03",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-26-04",
+            "source": "1.73",
+            "mode": "caption",
+            "copy": "bk-26-04",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-26-05",
+            "source": "1.73",
+            "mode": "caption",
+            "copy": "bk-26-05",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 55,
+      "title": {
+        "hi": "चार युगल, एक उत्सव",
+        "en": "Four couples, one celebration",
+        "gu": "ચાર યુગલ, એક ઉત્સવ",
+        "kn": "ನಾಲ್ಕು ಜೋಡಿಗಳು, ಒಂದು ಸಂಭ್ರಮ"
+      },
+      "sourceSargas": [
+        73
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-26-06",
+            "source": "1.73",
+            "mode": "caption",
+            "copy": "bk-26-06",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 56,
+      "title": {
+        "hi": "विदाई और आँधी",
+        "en": "Farewell and the storm",
+        "gu": "વિદાય અને આંધી",
+        "kn": "ವಿದಾಯ ಮತ್ತು ಬಿರುಗಾಳಿ"
+      },
+      "sourceSargas": [
+        74
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-27-01",
+            "source": "1.74",
+            "mode": "caption",
+            "copy": "bk-27-01",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-27-02",
+            "source": "1.74",
+            "mode": "caption",
+            "copy": "bk-27-02",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 57,
+      "title": {
+        "hi": "दो धनुष और चुनौती",
+        "en": "The two bows and the challenge",
+        "gu": "બે ધનુષ અને પડકાર",
+        "kn": "ಎರಡು ಧನುಸ್ಸುಗಳು ಮತ್ತು ಸವಾಲು"
+      },
+      "sourceSargas": [
+        75
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-27-03",
+            "source": "1.75",
+            "mode": "dialogue",
+            "copy": "bk-27-03",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-27-03-shot-2",
+            "source": "1.75",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          },
+          {
+            "id": "bk-27-04",
+            "source": "1.75",
+            "mode": "dialogue",
+            "copy": "bk-27-04",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-27-05",
+            "source": "1.75",
+            "mode": "dialogue",
+            "copy": "bk-27-05",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 58,
+      "title": {
+        "hi": "सम्मान और सामर्थ्य",
+        "en": "Respect, strength and action",
+        "gu": "સન્માન અને સામર્થ્ય",
+        "kn": "ಗೌರವ ಮತ್ತು ಸಾಮರ್ಥ್ಯ"
+      },
+      "sourceSargas": [
+        76
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-28-01",
+            "source": "1.76",
+            "mode": "dialogue",
+            "copy": "bk-28-01",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-28-01-shot-2",
+            "source": "1.76",
+            "mode": "dialogue",
+            "copy": "bk-28-01-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-28-02",
+            "source": "1.76",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-28-02-shot-2",
+            "source": "1.76",
+            "mode": "caption",
+            "copy": "bk-28-02-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 59,
+      "title": {
+        "hi": "विकल्प और उत्तर",
+        "en": "The choice and the answer",
+        "gu": "વિકલ્પ અને ઉત્તર",
+        "kn": "ಆಯ್ಕೆ ಮತ್ತು ಉತ್ತರ"
+      },
+      "sourceSargas": [
+        76
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-28-03",
+            "source": "1.76",
+            "mode": "dialogue",
+            "copy": "bk-28-03",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-28-03-shot-2",
+            "source": "1.76",
+            "mode": "dialogue",
+            "copy": "bk-28-03-shot-2",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-28-03-shot-3",
+            "source": "1.76",
+            "mode": "dialogue",
+            "copy": "bk-28-03-shot-3",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 60,
+      "title": {
+        "hi": "बाण और प्रस्थान",
+        "en": "Release, departure and the bow",
+        "gu": "બાણ અને પ્રસ્થાન",
+        "kn": "ಬಾಣ ಮತ್ತು ನಿರ್ಗಮನ"
+      },
+      "sourceSargas": [
+        76,
+        77
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-28-04",
+            "source": "1.76",
+            "mode": "caption",
+            "copy": "bk-28-04",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-28-04-shot-2",
+            "source": "1.76",
+            "mode": "dialogue",
+            "copy": "bk-28-04-shot-2",
+            "noteCopy": null
+          },
+          {
+            "id": "bk-28-04-shot-3",
+            "source": "1.76",
+            "mode": "caption",
+            "copy": "bk-28-04-shot-3",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-29-01",
+            "source": "1.77",
+            "mode": "caption",
+            "copy": "bk-29-01",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 61,
+      "title": {
+        "hi": "घर वापसी और विदाई",
+        "en": "Homecoming and another farewell",
+        "gu": "ઘરવાપસી અને વિદાય",
+        "kn": "ಮನೆಗೆ ಮರಳುವಿಕೆ ಮತ್ತು ವಿದಾಯ"
+      },
+      "sourceSargas": [
+        77
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-29-01-shot-2",
+            "source": "1.77",
+            "mode": "silent",
+            "copy": null,
+            "noteCopy": null
+          },
+          {
+            "id": "bk-29-01-shot-3",
+            "source": "1.77",
+            "mode": "caption",
+            "copy": "bk-29-01-shot-3",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-29-02",
+            "source": "1.77",
+            "mode": "caption",
+            "copy": "bk-29-02",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-29-03",
+            "source": "1.77",
+            "mode": "caption",
+            "copy": "bk-29-03",
+            "noteCopy": null
+          }
+        ]
+      ]
+    },
+    {
+      "number": 62,
+      "title": {
+        "hi": "अयोध्या में शान्ति",
+        "en": "Peace in Ayodhya",
+        "gu": "અયોધ્યામાં શાંતિ",
+        "kn": "ಅಯೋಧ್ಯೆಯಲ್ಲಿ ಶಾಂತಿ"
+      },
+      "sourceSargas": [
+        77
+      ],
+      "rows": [
+        [
+          {
+            "id": "bk-29-04",
+            "source": "1.77",
+            "mode": "caption",
+            "copy": "bk-29-04",
+            "noteCopy": null
+          }
+        ],
+        [
+          {
+            "id": "bk-29-04-shot-2",
+            "source": "1.77",
+            "mode": "caption",
+            "copy": "bk-29-04-shot-2",
+            "noteCopy": null
+          }
+        ]
+      ]
+    }
+  ],
+  "copies": [
+    {
+      "id": "bk-01-01",
+      "speaker": "Valmiki",
+      "hi": "गुण, साहस और सत्य का आदर्श कौन है?",
+      "en": "Who embodies virtue, courage and truth?",
+      "gu": "ગુણ, સાહસ અને સત્યનો આદર્શ કોણ છે?",
+      "kn": "ಗುಣ, ಧೈರ್ಯ ಮತ್ತು ಸತ್ಯದ ಆದರ್ಶ ಯಾರು?"
+    },
+    {
+      "id": "bk-01-02",
+      "speaker": "Narada",
+      "hi": "राम। सुनिए, मैं उनकी कथा कहता हूँ।",
+      "en": "Rama. Listen as I tell his story.",
+      "gu": "રામ. સાંભળો, હું તેમની કથા કહું છું.",
+      "kn": "ರಾಮ. ಕೇಳಿ, ಅವರ ಕಥೆಯನ್ನು ಹೇಳುತ್ತೇನೆ."
+    },
+    {
+      "id": "bk-01-02-note",
+      "speaker": "narrator",
+      "hi": "नारद ने जन्म, वनवास, सीता की खोज, रावण से युद्ध और अयोध्या वापसी का संक्षिप्त परिचय दिया। यह आगे की कथा की झलक थी।",
+      "en": "Narada outlined Rama’s birth, exile, search for Sita, war with Ravana and return to Ayodhya—a glimpse of the story to come.",
+      "gu": "નારદે રામના જન્મ, વનવાસ, સીતાની શોધ, રાવણ સાથેના યુદ્ધ અને અયોધ્યા વાપસીની ઝલક આપી. આ આગળની કથાનો સંક્ષિપ્ત પરિચય હતો.",
+      "kn": "ನಾರದರು ರಾಮನ ಜನನ, ವನವಾಸ, ಸೀತೆಯ ಹುಡುಕಾಟ, ರಾವಣನೊಡನೆ ಯುದ್ಧ ಮತ್ತು ಅಯೋಧ್ಯೆಗೆ ಮರಳುವ ಕಥೆಯ ಮುನ್ನೋಟ ನೀಡಿದರು."
+    },
+    {
+      "id": "bk-01-03",
+      "speaker": "narrator",
+      "hi": "तमसा तट पर शिकारी ने एक क्रौंच मार दिया। साथी पक्षी का विलाप सुन वाल्मीकि का शोक छन्द बन गया।",
+      "en": "On the Tamasa, a hunter killed a crane. Its mate’s cries turned Valmiki’s grief into verse.",
+      "gu": "તમસા તટે શિકારીએ એક ક્રૌંચને માર્યો. તેના સાથીના વિલાપથી વાલ્મીકિનો શોક છંદ બની ગયો.",
+      "kn": "ತಮಸಾ ತೀರದಲ್ಲಿ ಬೇಟೆಗಾರನು ಒಂದು ಕ್ರೌಂಚ ಪಕ್ಷಿಯನ್ನು ಕೊಂದನು. ಅದರ ಸಂಗಾತಿಯ ಅಳಲು ಕೇಳಿ ವಾಲ್ಮೀಕಿಯ ಶೋಕ ಪದ್ಯವಾಯಿತು."
+    },
+    {
+      "id": "bk-01-04",
+      "speaker": "Brahma",
+      "hi": "राम का चरित्र काव्य में कहो।",
+      "en": "Tell Rama’s life in poetry.",
+      "gu": "રામનું ચરિત્ર કાવ્યમાં કહો.",
+      "kn": "ರಾಮನ ಜೀವನವನ್ನು ಕಾವ್ಯದಲ್ಲಿ ಹೇಳಿರಿ."
+    },
+    {
+      "id": "bk-01-04-shot-2",
+      "speaker": "narrator",
+      "hi": "ध्यान में घटनाएँ स्पष्ट हुईं। वाल्मीकि ने काव्य रचना आरम्भ की।",
+      "en": "In meditation, the events became clear. Valmiki began the poem.",
+      "gu": "ધ્યાનમાં ઘટનાઓ સ્પષ્ટ થઈ. વાલ્મીકિએ કાવ્યરચના શરૂ કરી.",
+      "kn": "ಧ್ಯಾನದಲ್ಲಿ ಘಟನೆಗಳು ಸ್ಪಷ್ಟವಾದವು. ವಾಲ್ಮೀಕಿ ಕಾವ್ಯ ರಚನೆ ಆರಂಭಿಸಿದರು."
+    },
+    {
+      "id": "bk-01-05",
+      "speaker": "narrator",
+      "hi": "वाल्मीकि ने लव और कुश को रामकथा सिखाई।",
+      "en": "Valmiki taught Rama’s story to Lava and Kusha.",
+      "gu": "વાલ્મીકિએ લવ અને કુશને રામકથા શીખવી.",
+      "kn": "ವಾಲ್ಮೀಕಿ ಲವ ಮತ್ತು ಕುಶರಿಗೆ ರಾಮಕಥೆ ಕಲಿಸಿದರು."
+    },
+    {
+      "id": "bk-01-05-shot-2",
+      "speaker": "narrator",
+      "hi": "बाद में, अयोध्या में राजा राम की सभा में दोनों ने वह काव्य सुनाया।",
+      "en": "Later, the twins recited the poem in King Rama’s court at Ayodhya.",
+      "gu": "પછી અયોધ્યામાં રાજા રામની સભામાં બંનેએ તે કાવ્ય સંભળાવ્યું.",
+      "kn": "ನಂತರ ಅಯೋಧ್ಯೆಯ ರಾಜ ರಾಮನ ಸಭೆಯಲ್ಲಿ ಅವಳಿಗಳು ಆ ಕಾವ್ಯವನ್ನು ಹಾಡಿದರು."
+    },
+    {
+      "id": "bk-02-01",
+      "speaker": "narrator",
+      "hi": "अब मुख्य कथा आरम्भ होती है। सरयू किनारे दशरथ की अयोध्या में बाजार, गलियाँ और घर समृद्ध थे।",
+      "en": "The main story begins. Beside the Sarayu, streets, markets and homes flourished in Dasharatha’s Ayodhya.",
+      "gu": "હવે મુખ્ય કથા શરૂ થાય છે. સરયૂ કિનારે દશરથની અયોધ્યાની શેરીઓ, બજારો અને ઘરો સમૃદ્ધ હતાં.",
+      "kn": "ಈಗ ಮುಖ್ಯ ಕಥೆ ಆರಂಭವಾಗುತ್ತದೆ. ಸರಯೂ ತೀರದ ದಶರಥನ ಅಯೋಧ್ಯೆಯಲ್ಲಿ ಬೀದಿಗಳು, ಮಾರುಕಟ್ಟೆಗಳು ಮತ್ತು ಮನೆಗಳು ಸಮೃದ್ಧವಾಗಿದ್ದವು."
+    },
+    {
+      "id": "bk-02-02",
+      "speaker": "narrator",
+      "hi": "दशरथ मन्त्रीगण और गुरु वसिष्ठ से प्रजा के हित और राज्य की व्यवस्था पर परामर्श लेते थे।",
+      "en": "Dasharatha consulted his ministers and Vashishtha on good government and his people’s welfare.",
+      "gu": "દશરથ મંત્રીઓ અને ગુરુ વસિષ્ઠ સાથે રાજ્યવ્યવસ્થા અને પ્રજાના હિત વિશે સલાહ લેતા.",
+      "kn": "ದಶರಥನು ಮಂತ್ರಿಗಳು ಮತ್ತು ವಸಿಷ್ಠರೊಡನೆ ರಾಜ್ಯದ ಆಡಳಿತ ಹಾಗೂ ಪ್ರಜೆಗಳ ಹಿತದ ಕುರಿತು ಸಮಾಲೋಚಿಸುತ್ತಿದ್ದನು."
+    },
+    {
+      "id": "bk-03-01",
+      "speaker": "narrator",
+      "hi": "वंश के भविष्य से चिन्तित दशरथ ने यज्ञ का निश्चय किया। मन्त्री सुमन्त्र ने सलाह दी…",
+      "en": "Concerned for his family’s future, Dasharatha decided on a sacrifice. Minister Sumantra advised…",
+      "gu": "વંશના ભવિષ્યની ચિંતાથી દશરથે યજ્ઞનો નિર્ણય કર્યો. મંત્રી સુમંત્રે સલાહ આપી…",
+      "kn": "ವಂಶದ ಭವಿಷ್ಯದ ಚಿಂತೆಯಿಂದ ದಶರಥನು ಯಜ್ಞ ಮಾಡಲು ನಿರ್ಧರಿಸಿದನು. ಮಂತ್ರಿ ಸುಮಂತ್ರನು ಸಲಹೆ ನೀಡಿದನು…"
+    },
+    {
+      "id": "bk-03-01-shot-2",
+      "speaker": "Sumantra",
+      "hi": "ऋष्यशृंग को आमन्त्रित कीजिए।",
+      "en": "Invite Rishyasringa.",
+      "gu": "ઋષ્યશૃંગને આમંત્રિત કરો.",
+      "kn": "ಋಷ್ಯಶೃಂಗರನ್ನು ಆಹ್ವಾನಿಸಿರಿ."
+    },
+    {
+      "id": "bk-03-02",
+      "speaker": "Sumantra",
+      "hi": "अंग में वर्षा नहीं हुई थी। राजा रोमपाद ने वन में पले ऋष्यशृंग को बुलाने का उपाय किया।",
+      "en": "There had been no rain in Anga. King Romapada planned to invite the forest-raised sage Rishyasringa.",
+      "gu": "અંગમાં વરસાદ પડ્યો નહોતો. રાજા રોમપાદે વનમાં ઉછરેલા ઋષ્યશૃંગને બોલાવવાનો ઉપાય કર્યો.",
+      "kn": "ಅಂಗದಲ್ಲಿ ಮಳೆ ಬಂದಿರಲಿಲ್ಲ. ರಾಜ ರೋಮಪಾದನು ಕಾಡಿನಲ್ಲಿ ಬೆಳೆದ ಋಷ್ಯಶೃಂಗರನ್ನು ಆಹ್ವಾನಿಸಲು ಉಪಾಯ ಮಾಡಿದನು."
+    },
+    {
+      "id": "bk-03-03",
+      "speaker": "narrator",
+      "hi": "राजा की दूत बनकर नगर की स्त्रियाँ वन गईं। फल-मिठाई देकर उन्होंने ऋष्यशृंग से मित्रता की।",
+      "en": "Women from the city went as the king’s envoys. They befriended Rishyasringa with fruit and sweets.",
+      "gu": "રાજાની દૂત બની નગરની સ્ત્રીઓ વનમાં ગઈ. ફળ અને મીઠાઈ આપી તેમણે ઋષ્યશૃંગ સાથે મિત્રતા કરી.",
+      "kn": "ನಗರದ ಮಹಿಳೆಯರು ರಾಜನ ದೂತರಾಗಿ ಕಾಡಿಗೆ ಹೋದರು. ಹಣ್ಣು, ಸಿಹಿ ನೀಡಿ ಋಷ್ಯಶೃಂಗರೊಡನೆ ಸ್ನೇಹ ಬೆಳೆಸಿದರು."
+    },
+    {
+      "id": "bk-03-05",
+      "speaker": "narrator",
+      "hi": "दूतों को खोजते ऋष्यशृंग उनके साथ अंग पहुँचे। उनके आते ही वर्षा हुई।",
+      "en": "Seeking the envoys, Rishyasringa followed them to Anga. Rain fell on his arrival.",
+      "gu": "દૂતોને શોધતાં ઋષ્યશૃંગ તેમની સાથે અંગ પહોંચ્યા. તેમના આવતાં જ વરસાદ પડ્યો.",
+      "kn": "ದೂತರನ್ನು ಹುಡುಕುತ್ತಾ ಋಷ್ಯಶೃಂಗರು ಅವರೊಡನೆ ಅಂಗಕ್ಕೆ ಬಂದರು. ಅವರು ಬಂದಾಗ ಮಳೆ ಸುರಿಯಿತು."
+    },
+    {
+      "id": "bk-03-05-shot-2",
+      "speaker": "narrator",
+      "hi": "रोमपाद ने उनका सम्मान किया। शान्ता का विवाह ऋष्यशृंग से हुआ।",
+      "en": "Romapada honoured him. Shanta married Rishyasringa.",
+      "gu": "રોમપાદે તેમનું સન્માન કર્યું. શાંતાનાં લગ્ન ઋષ્યશૃંગ સાથે થયાં.",
+      "kn": "ರೋಮಪಾದನು ಅವರನ್ನು ಗೌರವಿಸಿದನು. ಶಾಂತೆಯ ವಿವಾಹ ಋಷ್ಯಶೃಂಗರೊಡನೆ ನಡೆಯಿತು."
+    },
+    {
+      "id": "bk-03-06",
+      "speaker": "narrator",
+      "hi": "यह कथा सुनकर दशरथ स्वयं अंग गए। रोमपाद की सहमति से ऋष्यशृंग और शान्ता उनके साथ चले।",
+      "en": "After hearing this account, Dasharatha went to Anga. With Romapada’s consent, Rishyasringa and Shanta joined him.",
+      "gu": "આ કથા સાંભળીને દશરથ પોતે અંગ ગયા. રોમપાદની સંમતિથી ઋષ્યશૃંગ અને શાંતા તેમની સાથે ચાલ્યાં.",
+      "kn": "ಈ ಕಥೆ ಕೇಳಿ ದಶರಥನು ಸ್ವತಃ ಅಂಗಕ್ಕೆ ಹೋದನು. ರೋಮಪಾದನ ಒಪ್ಪಿಗೆಯಿಂದ ಋಷ್ಯಶೃಂಗ ಮತ್ತು ಶಾಂತೆ ಅವನೊಡನೆ ಹೊರಟರು."
+    },
+    {
+      "id": "bk-03-06-shot-2",
+      "speaker": "narrator",
+      "hi": "अयोध्या में दोनों का स्वागत हुआ।",
+      "en": "Ayodhya welcomed them both.",
+      "gu": "અયોધ્યામાં બંનેનું સ્વાગત થયું.",
+      "kn": "ಅಯೋಧ್ಯೆಯಲ್ಲಿ ಇಬ್ಬರಿಗೂ ಸ್ವಾಗತ ದೊರೆಯಿತು."
+    },
+    {
+      "id": "bk-04-01",
+      "speaker": "narrator",
+      "hi": "ऋष्यशृंग और वसिष्ठ की देखरेख में सरयू के उत्तर में अश्वमेध सम्पन्न हुआ। अतिथियों और सेवकों की व्यवस्था की गई।",
+      "en": "Rishyasringa and Vashishtha oversaw the Ashvamedha north of the Sarayu, with care for guests and attendants.",
+      "gu": "ઋષ્યશૃંગ અને વસિષ્ઠની દેખરેખમાં સરયૂની ઉત્તરે અશ્વમેધ પૂર્ણ થયો. મહેમાનો અને સેવકોની વ્યવસ્થા થઈ.",
+      "kn": "ಋಷ್ಯಶೃಂಗ ಮತ್ತು ವಸಿಷ್ಠರ ನೇತೃತ್ವದಲ್ಲಿ ಸರಯೂವಿನ ಉತ್ತರದಲ್ಲಿ ಅಶ್ವಮೇಧ ನಡೆಯಿತು. ಅತಿಥಿ, ಸೇವಕರಿಗೆ ವ್ಯವಸ್ಥೆ ಮಾಡಲಾಯಿತು."
+    },
+    {
+      "id": "bk-04-02",
+      "speaker": "narrator",
+      "hi": "ऋष्यशृंग ने पुत्रेष्टि आरम्भ की। उधर देवताओं ने राक्षस-राज रावण के अत्याचार की बात उठाई।",
+      "en": "Rishyasringa began the Putreshti for sons. Meanwhile, the gods spoke of the rakshasa king Ravana’s oppression.",
+      "gu": "ઋષ્યશૃંગે પુત્રેષ્ટિ શરૂ કરી. ત્યાં દેવોએ રાક્ષસરાજ રાવણના અત્યાચારની વાત કરી.",
+      "kn": "ಋಷ್ಯಶೃಂಗರು ಪುತ್ರೇಷ್ಟಿ ಆರಂಭಿಸಿದರು. ಅತ್ತ ದೇವತೆಗಳು ರಾಕ್ಷಸ ರಾಜ ರಾವಣನ ದೌರ್ಜನ್ಯದ ಕುರಿತು ಹೇಳಿದರು."
+    },
+    {
+      "id": "bk-04-02-shot-2",
+      "speaker": "Gods",
+      "hi": "रावण ने मनुष्यों से सुरक्षा का वर नहीं माँगा था।",
+      "en": "Ravana did not ask for protection from humans.",
+      "gu": "રાવણે મનુષ્યોથી સુરક્ષાનું વરદાન માગ્યું નહોતું.",
+      "kn": "ರಾವಣನು ಮನುಷ್ಯರಿಂದ ರಕ್ಷಣೆಯ ವರವನ್ನು ಕೇಳಿರಲಿಲ್ಲ."
+    },
+    {
+      "id": "bk-04-03",
+      "speaker": "Vishnu",
+      "hi": "मैं दशरथ के घर मनुष्य रूप में जन्म लेकर रावण का आतंक समाप्त करूँगा।",
+      "en": "I will be born as a human in Dasharatha’s household and end Ravana’s terror.",
+      "gu": "હું દશરથના ઘરે મનુષ્યરૂપે જન્મ લઈ રાવણનો આતંક સમાપ્ત કરીશ.",
+      "kn": "ನಾನು ದಶರಥನ ಮನೆಯಲ್ಲಿ ಮನುಷ್ಯನಾಗಿ ಹುಟ್ಟಿ ರಾವಣನ ಭೀತಿಯನ್ನು ಕೊನೆಗೊಳಿಸುವೆನು."
+    },
+    {
+      "id": "bk-04-04",
+      "speaker": "Divine messenger",
+      "hi": "यह पायस रानियों को दीजिए।",
+      "en": "Give this payasa to the queens.",
+      "gu": "આ પાયસ રાણીઓને આપો.",
+      "kn": "ಈ ಪಾಯಸವನ್ನು ರಾಣಿಯರಿಗೆ ನೀಡಿರಿ."
+    },
+    {
+      "id": "bk-04-04-shot-2",
+      "speaker": "narrator",
+      "hi": "अग्नि से प्रकट दिव्य पुरुष का पायस दशरथ ने तीन रानियों में बाँटा। सुमित्रा को दो भाग मिले।",
+      "en": "Dasharatha shared the fire-born messenger’s payasa among three queens. Sumitra received two portions.",
+      "gu": "અગ્નિમાંથી પ્રગટ દિવ્ય પુરુષનું પાયસ દશરથે ત્રણ રાણીઓમાં વહેંચ્યું. સુમિત્રાને બે ભાગ મળ્યા.",
+      "kn": "ಅಗ್ನಿಯಿಂದ ಬಂದ ದಿವ್ಯ ಪುರುಷನ ಪಾಯಸವನ್ನು ದಶರಥನು ಮೂವರು ರಾಣಿಯರಿಗೆ ಹಂಚಿದನು. ಸುಮಿತ್ರೆಗೆ ಎರಡು ಪಾಲು ದೊರೆಯಿತು."
+    },
+    {
+      "id": "bk-04-05",
+      "speaker": "Brahma",
+      "hi": "राम की सहायता के लिए वानर वीरों को जन्म दो।",
+      "en": "Bring forth vanara heroes to help Rama.",
+      "gu": "રામની સહાય માટે વાનર વીરોને જન્મ આપો.",
+      "kn": "ರಾಮನಿಗೆ ನೆರವಾಗಲು ವಾನರ ವೀರರನ್ನು ಹುಟ್ಟಿಸಿರಿ."
+    },
+    {
+      "id": "bk-05-01",
+      "speaker": "narrator",
+      "hi": "कौशल्या से राम, कैकेयी से भरत, सुमित्रा से लक्ष्मण और शत्रुघ्न जन्मे। महल में उत्सव हुआ।",
+      "en": "Kaushalya bore Rama; Kaikeyi, Bharata; Sumitra, Lakshmana and Shatrughna. The palace celebrated.",
+      "gu": "કૌશલ્યાથી રામ, કૈકેયીથી ભરત અને સુમિત્રાથી લક્ષ્મણ તથા શત્રુઘ્ન જન્મ્યા. મહેલમાં ઉત્સવ થયો.",
+      "kn": "ಕೌಸಲ್ಯೆಗೆ ರಾಮ, ಕೈಕೇಯಿಗೆ ಭರತ, ಸುಮಿತ್ರೆಗೆ ಲಕ್ಷ್ಮಣ ಮತ್ತು ಶತ್ರುಘ್ನ ಜನಿಸಿದರು. ಅರಮನೆಯಲ್ಲಿ ಸಂಭ್ರಮ ಮೂಡಿತು."
+    },
+    {
+      "id": "bk-05-02",
+      "speaker": "narrator",
+      "hi": "भाई शिक्षा और शस्त्रविद्या सीखते बड़े हुए। राम–लक्ष्मण और भरत–शत्रुघ्न विशेष निकट थे।",
+      "en": "The brothers grew up studying and training in arms. Rama–Lakshmana and Bharata–Shatrughna were especially close.",
+      "gu": "ભાઈઓ શિક્ષણ અને શસ્ત્રવિદ્યા શીખતાં મોટા થયા. રામ–લક્ષ્મણ અને ભરત–શત્રુઘ્ન ખાસ નજીક હતા.",
+      "kn": "ಸಹೋದರರು ವಿದ್ಯೆ ಮತ್ತು ಶಸ್ತ್ರವಿದ್ಯೆ ಕಲಿಯುತ್ತಾ ಬೆಳೆದರು. ರಾಮ–ಲಕ್ಷ್ಮಣ ಮತ್ತು ಭರತ–ಶತ್ರುಘ್ನ ಬಹಳ ಆತ್ಮೀಯರಾಗಿದ್ದರು."
+    },
+    {
+      "id": "bk-05-03",
+      "speaker": "narrator",
+      "hi": "राजकुमार किशोर हुए। ऋषि विश्वामित्र दरबार आए। दशरथ ने उनका आदर किया।",
+      "en": "The princes were now adolescents. Sage Vishwamitra arrived, and Dasharatha welcomed him respectfully.",
+      "gu": "રાજકુમારો કિશોર થયા. ઋષિ વિશ્વામિત્ર દરબારમાં આવ્યા. દશરથે તેમનું આદરથી સ્વાગત કર્યું.",
+      "kn": "ರಾಜಕುಮಾರರು ಕಿಶೋರರಾದರು. ವಿಶ್ವಾಮಿತ್ರ ಋಷಿಗಳು ಸಭೆಗೆ ಬಂದರು. ದಶರಥನು ಅವರನ್ನು ಗೌರವದಿಂದ ಸ್ವಾಗತಿಸಿದನು."
+    },
+    {
+      "id": "bk-05-03a",
+      "speaker": "Dasharatha",
+      "hi": "मुनिवर, मैं आपकी क्या सेवा करूँ?",
+      "en": "Revered sage, how may I serve you?",
+      "gu": "મુનિવર, હું તમારી શી સેવા કરું?",
+      "kn": "ಮುನಿವರೇ, ನಾನು ನಿಮ್ಮ ಸೇವೆ ಹೇಗೆ ಮಾಡಲಿ?"
+    },
+    {
+      "id": "bk-06-01",
+      "speaker": "Vishwamitra",
+      "hi": "मारीच और सुबाहु यज्ञ में बाधा डालते हैं। रक्षा के लिए राम को भेजिए।",
+      "en": "Maricha and Subahu disrupt the sacrifice. Send Rama to guard it.",
+      "gu": "મારીચ અને સુબાહુ યજ્ઞમાં વિઘ્ન કરે છે. રક્ષા માટે રામને મોકલો.",
+      "kn": "ಮಾರೀಚ ಮತ್ತು ಸುಬಾಹು ಯಜ್ಞಕ್ಕೆ ಅಡ್ಡಿ ಮಾಡುತ್ತಾರೆ. ರಕ್ಷಣೆಗೆ ರಾಮನನ್ನು ಕಳುಹಿಸಿರಿ."
+    },
+    {
+      "id": "bk-06-02",
+      "speaker": "Dasharatha",
+      "hi": "राम अभी सोलह के भी नहीं! मैं सेना लेकर चलूँगा।",
+      "en": "Rama is not even sixteen! I will go with my army.",
+      "gu": "રામ હજી સોળના પણ નથી! હું સૈન્ય લઈને જઈશ.",
+      "kn": "ರಾಮನಿಗೆ ಇನ್ನೂ ಹದಿನಾರೂ ಆಗಿಲ್ಲ! ನಾನು ಸೈನ್ಯದೊಡನೆ ಬರುವೆನು."
+    },
+    {
+      "id": "bk-06-03",
+      "speaker": "narrator",
+      "hi": "राजा के पीछे हटने से विश्वामित्र अप्रसन्न हुए। वसिष्ठ ने समझाया…",
+      "en": "Vishwamitra was displeased when the king drew back. Vashishtha counselled him…",
+      "gu": "રાજા પાછા હઠતાં વિશ્વામિત્ર અપ્રસન્ન થયા. વસિષ્ઠે સમજાવ્યું…",
+      "kn": "ರಾಜನು ಹಿಂದೆ ಸರಿದಾಗ ವಿಶ್ವಾಮಿತ್ರರು ಅಸಮಾಧಾನಗೊಂಡರು. ವಸಿಷ್ಠರು ಸಲಹೆ ನೀಡಿದರು…"
+    },
+    {
+      "id": "bk-06-03-shot-2",
+      "speaker": "Vashishtha",
+      "hi": "वचन निभाइए। विश्वामित्र राम की रक्षा और शिक्षा कर सकते हैं।",
+      "en": "Keep your promise. Vishwamitra can protect and teach Rama.",
+      "gu": "વચન નિભાવો. વિશ્વામિત્ર રામની રક્ષા અને શિક્ષા કરી શકે છે.",
+      "kn": "ಮಾತನ್ನು ಉಳಿಸಿರಿ. ವಿಶ್ವಾಮಿತ್ರರು ರಾಮನನ್ನು ರಕ್ಷಿಸಿ ಕಲಿಸಬಲ್ಲರು."
+    },
+    {
+      "id": "bk-06-04",
+      "speaker": "narrator",
+      "hi": "दशरथ ने आशीर्वाद देकर दोनों भाइयों को विश्वामित्र के साथ भेजा।",
+      "en": "Dasharatha blessed the brothers and sent them with Vishwamitra.",
+      "gu": "દશરથે આશીર્વાદ આપી બંને ભાઈઓને વિશ્વામિત્ર સાથે મોકલ્યા.",
+      "kn": "ದಶರಥನು ಸಹೋದರರಿಗೆ ಆಶೀರ್ವದಿಸಿ ವಿಶ್ವಾಮಿತ್ರರೊಡನೆ ಕಳುಹಿಸಿದನು."
+    },
+    {
+      "id": "bk-07-01",
+      "speaker": "Vishwamitra",
+      "hi": "बला और अतिबला भूख, थकान और दुर्बलता से रक्षा करती हैं।",
+      "en": "Bala and Atibala protect against hunger, fatigue and weakness.",
+      "gu": "બલા અને અતિબલા ભૂખ, થાક અને નબળાઈથી રક્ષા કરે છે.",
+      "kn": "ಬಲಾ ಮತ್ತು ಅತಿಬಲಾ ಹಸಿವು, ದಣಿವು ಮತ್ತು ದೌರ್ಬಲ್ಯದಿಂದ ರಕ್ಷಿಸುತ್ತವೆ."
+    },
+    {
+      "id": "bk-07-02",
+      "speaker": "Vishwamitra",
+      "hi": "संगम पर ऋषियों ने स्वागत किया। यहाँ कामदेव ने शिव का ध्यान भंग करना चाहा। शिव के क्रोध से उनका शरीर भस्म हुआ; इसीलिए क्षेत्र अंग कहलाया।",
+      "en": "Sages welcomed us at the confluence. Here Kamadeva tried to disturb Shiva’s meditation. Shiva’s anger burnt his body; thus the region was called Anga.",
+      "gu": "સંગમ પર ઋષિઓએ સ્વાગત કર્યું. અહીં કામદેવે શિવનું ધ્યાન ભંગ કરવા પ્રયત્ન કર્યો. શિવના ક્રોધથી તેમનું શરીર ભસ્મ થયું; તેથી પ્રદેશ અંગ કહેવાયો.",
+      "kn": "ಸಂಗಮದಲ್ಲಿ ಋಷಿಗಳು ಸ್ವಾಗತಿಸಿದರು. ಇಲ್ಲಿ ಕಾಮದೇವನು ಶಿವನ ಧ್ಯಾನ ಭಂಗ ಮಾಡಲು ಯತ್ನಿಸಿದನು. ಶಿವನ ಕೋಪದಿಂದ ಅವನ ದೇಹ ಭಸ್ಮವಾಯಿತು; ಹೀಗಾಗಿ ಈ ಪ್ರದೇಶ ಅಂಗವೆಂದಾಯಿತು."
+    },
+    {
+      "id": "bk-07-03",
+      "speaker": "Rama",
+      "hi": "मुनिवर, यह गर्जना कैसी है?",
+      "en": "What is that roaring sound, revered sage?",
+      "gu": "મુનિવર, આ ગર્જના શેની છે?",
+      "kn": "ಮುನಿವರೇ, ಈ ಗರ್ಜನೆಯ ಶಬ್ದವೇನು?"
+    },
+    {
+      "id": "bk-07-03-shot-2",
+      "speaker": "Vishwamitra",
+      "hi": "यह सरयू और गंगा के मिलने का स्वर है।",
+      "en": "It is the sound of the Sarayu meeting the Ganga.",
+      "gu": "આ સરયૂ અને ગંગાના મિલનનો સ્વર છે.",
+      "kn": "ಅದು ಸರಯೂ ಮತ್ತು ಗಂಗಾ ಸೇರುವ ಶಬ್ದ."
+    },
+    {
+      "id": "bk-07-03-shot-3",
+      "speaker": "narrator",
+      "hi": "पार उतरकर उजड़े मलद और करूष मिले। विश्वामित्र ने ताटका का आतंक बताया।",
+      "en": "Across the river lay ruined Malada and Karusha. Vishwamitra explained Tataka’s terror.",
+      "gu": "પાર ઊતરતાં ઉજ્જડ મલદ અને કરૂષ મળ્યા. વિશ્વામિત્રે તાટકાનો આતંક જણાવ્યો.",
+      "kn": "ನದಿಯಾಚೆ ಹಾಳಾದ ಮಲದ ಮತ್ತು ಕರೂಷ ಪ್ರದೇಶಗಳಿದ್ದವು. ವಿಶ್ವಾಮಿತ್ರರು ತಾಟಕೆಯ ಭೀತಿಯ ಕುರಿತು ಹೇಳಿದರು."
+    },
+    {
+      "id": "bk-08-01",
+      "speaker": "Vishwamitra",
+      "hi": "यक्ष-कन्या ताटका, सुन्द की पत्नी और मारीच की माता थी। शाप के बाद वह वन में हिंसा फैलाने लगी।",
+      "en": "Tataka was a yaksha maiden, Sunda’s wife and Maricha’s mother. After a curse, she spread violence here.",
+      "gu": "યક્ષકન્યા તાટકા સુન્દની પત્ની અને મારીચની માતા હતી. શાપ પછી તે વનમાં હિંસા ફેલાવવા લાગી.",
+      "kn": "ತಾಟಕೆ ಯಕ್ಷಕನ್ಯೆ, ಸುಂದನ ಪತ್ನಿ ಮತ್ತು ಮಾರೀಚನ ತಾಯಿ. ಶಾಪದ ನಂತರ ಅವಳು ಇಲ್ಲಿ ಹಿಂಸೆ ಹರಡಿದಳು."
+    },
+    {
+      "id": "bk-08-02",
+      "speaker": "Rama",
+      "hi": "पहले मैं उसकी शक्ति रोकूँगा।",
+      "en": "First, I will restrain her power.",
+      "gu": "પહેલાં હું તેની શક્તિ રોકીશ.",
+      "kn": "ಮೊದಲು ಅವಳ ಶಕ್ತಿಯನ್ನು ತಡೆಯುವೆನು."
+    },
+    {
+      "id": "bk-08-02-shot-2",
+      "speaker": "Vishwamitra",
+      "hi": "तुम्हारा कर्तव्य प्रजा की रक्षा करना है।",
+      "en": "Your duty is to protect the people.",
+      "gu": "તમારું કર્તવ્ય પ્રજાની રક્ષા કરવાનું છે.",
+      "kn": "ನಿನ್ನ ಕರ್ತವ್ಯ ಪ್ರಜೆಗಳನ್ನು ರಕ್ಷಿಸುವುದು."
+    },
+    {
+      "id": "bk-08-03",
+      "speaker": "narrator",
+      "hi": "प्रत्यंचा सुन ताटका धूल और पत्थर फेंकती दौड़ी। दोनों भाइयों ने उसका सामना किया।",
+      "en": "Hearing the bowstring, Tataka rushed at them, hurling dust and stones. Both brothers defended themselves.",
+      "gu": "પ્રત્યંચાનો અવાજ સાંભળી તાટકા ધૂળ અને પથ્થર ફેંકતી ધસી આવી. બંને ભાઈઓએ સામનો કર્યો.",
+      "kn": "ಬಿಲ್ಲಿನ ಶಬ್ದ ಕೇಳಿ ತಾಟಕೆ ಧೂಳು, ಕಲ್ಲು ಎಸೆಯುತ್ತಾ ಧಾವಿಸಿದಳು. ಇಬ್ಬರೂ ಸಹೋದರರು ಎದುರಿಸಿದರು."
+    },
+    {
+      "id": "bk-08-04",
+      "speaker": "narrator",
+      "hi": "सन्ध्या निकट थी। विश्वामित्र ने संकट समाप्त करने को कहा। राम के बाण से ताटका गिरी और मारी गई।",
+      "en": "Dusk approached. Vishwamitra urged Rama to end the danger. Rama’s arrow struck; Tataka fell and died.",
+      "gu": "સંધ્યા નજીક હતી. વિશ્વામિત્રે સંકટ સમાપ્ત કરવા કહ્યું. રામના બાણથી તાટકા પડી અને મારાઈ ગઈ.",
+      "kn": "ಸಂಜೆ ಸಮೀಪಿಸಿತು. ಅಪಾಯ ಕೊನೆಗೊಳಿಸಲು ವಿಶ್ವಾಮಿತ್ರರು ಹೇಳಿದರು. ರಾಮನ ಬಾಣ ತಗುಲಿ ತಾಟಕೆ ಬಿದ್ದು ಸತ್ತಳು."
+    },
+    {
+      "id": "bk-08-04a",
+      "speaker": "narrator",
+      "hi": "वन भय से मुक्त हुआ। तीनों ने वहीं रात बिताई।",
+      "en": "The forest was free of terror. The travellers rested there that night.",
+      "gu": "વન ભયથી મુક્ત થયું. ત્રણેયે ત્યાં રાત વિતાવી.",
+      "kn": "ಕಾಡು ಭೀತಿಯಿಂದ ಮುಕ್ತವಾಯಿತು. ಮೂವರೂ ಅಲ್ಲಿ ಆ ರಾತ್ರಿ ವಿಶ್ರಾಂತಿ ಪಡೆದರು."
+    },
+    {
+      "id": "bk-09-01",
+      "speaker": "narrator",
+      "hi": "अगली सुबह विश्वामित्र ने दिव्य अस्त्रविद्या सिखाई। राम ने विनय से ग्रहण की।",
+      "en": "Next morning, Vishwamitra taught the divine weapons. Rama received the knowledge humbly.",
+      "gu": "બીજે દિવસે વિશ્વામિત્રે દિવ્ય અસ્ત્રવિદ્યા શીખવી. રામે વિનયથી ગ્રહણ કરી.",
+      "kn": "ಮರುದಿನ ಬೆಳಿಗ್ಗೆ ವಿಶ್ವಾಮಿತ್ರರು ದಿವ್ಯಾಸ್ತ್ರಗಳ ವಿದ್ಯೆ ಕಲಿಸಿದರು. ರಾಮನು ವಿನಯದಿಂದ ಸ್ವೀಕರಿಸಿದನು."
+    },
+    {
+      "id": "bk-09-02",
+      "speaker": "Rama",
+      "hi": "इन अस्त्रों को वापस कैसे बुलाऊँ?",
+      "en": "How can these weapons be recalled?",
+      "gu": "આ અસ્ત્રોને પાછાં કેવી રીતે બોલાવું?",
+      "kn": "ಈ ಅಸ್ತ್ರಗಳನ್ನು ಹಿಂದಕ್ಕೆ ಹೇಗೆ ಕರೆಸುವುದು?"
+    },
+    {
+      "id": "bk-09-02-shot-2",
+      "speaker": "narrator",
+      "hi": "ऋषि ने शक्ति वापस लेने की विद्या भी सिखाई। फिर यात्रा आगे बढ़ी।",
+      "en": "The sage also taught how to withdraw their power. Then the journey continued.",
+      "gu": "ઋષિએ શક્તિ પાછી લેવાની વિદ્યા પણ શીખવી. પછી યાત્રા આગળ વધી.",
+      "kn": "ಋಷಿಗಳು ಅಸ್ತ್ರಗಳ ಶಕ್ತಿಯನ್ನು ಹಿಂತೆಗೆದುಕೊಳ್ಳುವುದನ್ನೂ ಕಲಿಸಿದರು. ಬಳಿಕ ಪ್ರಯಾಣ ಮುಂದುವರಿಯಿತು."
+    },
+    {
+      "id": "bk-09-02a",
+      "speaker": "Rama",
+      "hi": "मुनिवर, यह आश्रम किसका है?",
+      "en": "Whose hermitage is this, revered sage?",
+      "gu": "મુનિવર, આ આશ્રમ કોનો છે?",
+      "kn": "ಮುನಿವರೇ, ಈ ಆಶ್ರಮ ಯಾರದು?"
+    },
+    {
+      "id": "bk-09-03",
+      "speaker": "Vamana",
+      "hi": "मुझे तीन पग भूमि दीजिए।",
+      "en": "Grant me three paces of land.",
+      "gu": "મને ત્રણ પગલાં જમીન આપો.",
+      "kn": "ನನಗೆ ಮೂರು ಹೆಜ್ಜೆ ಭೂಮಿ ನೀಡಿರಿ."
+    },
+    {
+      "id": "bk-09-03-shot-2",
+      "speaker": "Vishwamitra",
+      "hi": "यहीं विष्णु ने वामन रूप में बलि से भूमि माँगी, फिर विराट रूप से लोकों को नापा।",
+      "en": "Here Vishnu, as Vamana, asked Bali for land, then measured the worlds in a vast form.",
+      "gu": "અહીં વિષ્ણુએ વામનરૂપે બલિ પાસે ભૂમિ માગી, પછી વિરાટરૂપે લોક માપ્યા.",
+      "kn": "ಇಲ್ಲಿ ವಿಷ್ಣು ವಾಮನನಾಗಿ ಬಲಿಯಿಂದ ಭೂಮಿ ಬೇಡಿದನು; ನಂತರ ವಿರಾಟ್ ರೂಪದಲ್ಲಿ ಲೋಕಗಳನ್ನು ಅಳೆದನು."
+    },
+    {
+      "id": "bk-09-04",
+      "speaker": "narrator",
+      "hi": "कथा सुनकर वे सिद्धाश्रम पहुँचे। ऋषियों के स्वागत के बाद यज्ञ की रक्षा की तैयारी हुई।",
+      "en": "They reached Siddhashrama. After the sages’ welcome, the brothers prepared to guard the sacrifice.",
+      "gu": "કથા સાંભળી તેઓ સિદ્ધાશ્રમ પહોંચ્યા. ઋષિઓના સ્વાગત પછી યજ્ઞની રક્ષાની તૈયારી થઈ.",
+      "kn": "ಕಥೆ ಕೇಳಿ ಅವರು ಸಿದ್ಧಾಶ್ರಮ ತಲುಪಿದರು. ಋಷಿಗಳ ಸ್ವಾಗತದ ಬಳಿಕ ಸಹೋದರರು ಯಜ್ಞರಕ್ಷಣೆಗೆ ಸಿದ್ಧರಾದರು."
+    },
+    {
+      "id": "bk-10-01",
+      "speaker": "narrator",
+      "hi": "विश्वामित्र मौनव्रत में थे। छह दिन और रात दोनों भाई सतर्क रहे।",
+      "en": "Vishwamitra observed silence. For six days and nights, the brothers kept watch.",
+      "gu": "વિશ્વામિત્ર મૌનવ્રતમાં હતા. છ દિવસ અને રાત બંને ભાઈઓ સતર્ક રહ્યા.",
+      "kn": "ವಿಶ್ವಾಮಿತ್ರರು ಮೌನವ್ರತದಲ್ಲಿದ್ದರು. ಆರು ಹಗಲು ಮತ್ತು ರಾತ್ರಿ ಸಹೋದರರು ಕಾವಲು ಕಾಯ್ದರು."
+    },
+    {
+      "id": "bk-10-02",
+      "speaker": "narrator",
+      "hi": "अन्तिम दिन मारीच और सुबाहु आए। राम के मानवास्त्र ने मारीच को समुद्र की ओर फेंका; वह जीवित बचा।",
+      "en": "On the final day, Maricha and Subahu attacked. Rama’s Manava weapon hurled Maricha toward the sea; he survived.",
+      "gu": "છેલ્લા દિવસે મારીચ અને સુબાહુ આવ્યા. રામના માનવાસ્ત્રે મારીચને સમુદ્ર તરફ ફેંક્યો; તે જીવતો બચ્યો.",
+      "kn": "ಕೊನೆಯ ದಿನ ಮಾರೀಚ ಮತ್ತು ಸುಬಾಹು ದಾಳಿ ಮಾಡಿದರು. ರಾಮನ ಮಾನವಾಸ್ತ್ರ ಮಾರೀಚನನ್ನು ಸಮುದ್ರದತ್ತ ಎಸೆಯಿತು; ಅವನು ಬದುಕುಳಿದನು."
+    },
+    {
+      "id": "bk-10-03",
+      "speaker": "narrator",
+      "hi": "सुबाहु आक्रमण करता रहा। राम ने उसे मारकर शेष हमलावरों को भगा दिया।",
+      "en": "Subahu kept attacking. Rama killed him and drove away the remaining attackers.",
+      "gu": "સુબાહુ હુમલો કરતો રહ્યો. રામે તેને મારીને બાકીના હુમલાખોરોને ભગાડ્યા.",
+      "kn": "ಸುಬಾಹು ದಾಳಿ ಮುಂದುವರಿಸಿದನು. ರಾಮನು ಅವನನ್ನು ಕೊಂದು ಉಳಿದ ದಾಳಿಕೋರರನ್ನು ಓಡಿಸಿದನು."
+    },
+    {
+      "id": "bk-10-04",
+      "speaker": "Vishwamitra",
+      "hi": "तुमने यज्ञ की रक्षा की।",
+      "en": "You have protected the sacrifice.",
+      "gu": "તમે યજ્ઞની રક્ષા કરી.",
+      "kn": "ನೀವು ಯಜ್ಞವನ್ನು ರಕ್ಷಿಸಿದಿರಿ."
+    },
+    {
+      "id": "bk-11-01",
+      "speaker": "narrator",
+      "hi": "यज्ञ निर्विघ्न पूरा हुआ। ऋषि मिथिला के राजा जनक के यज्ञ को चले; राम–लक्ष्मण शिवधनुष देखने साथ गए।",
+      "en": "The sacrifice was completed. The sages set out for King Janaka’s rite in Mithila; the brothers joined them to see Shiva’s bow.",
+      "gu": "યજ્ઞ નિર્વિઘ્ન પૂરો થયો. ઋષિઓ મિથિલાના રાજા જનકના યજ્ઞે ચાલ્યા; રામ–લક્ષ્મણ શિવધનુષ જોવા સાથે ગયા.",
+      "kn": "ಯಜ್ಞ ನಿರ್ವಿಘ್ನವಾಗಿ ಪೂರ್ಣವಾಯಿತು. ಋಷಿಗಳು ಮಿಥಿಲೆಯ ರಾಜ ಜನಕನ ಯಜ್ಞಕ್ಕೆ ಹೊರಟರು; ಶಿವಧನುಸ್ಸು ನೋಡಲು ಸಹೋದರರೂ ಸೇರಿದರು."
+    },
+    {
+      "id": "bk-11-02",
+      "speaker": "Vishwamitra",
+      "hi": "शोण के तट पर सुनो—कुश के चार पुत्र थे। उनमें कुशनाभ एक राजा थे।",
+      "en": "Here by the Shona, hear this: Kusha had four sons. One was King Kushanabha.",
+      "gu": "શોણના તટે સાંભળો—કુશને ચાર પુત્રો હતા. તેમાં કુશનાભ રાજા હતા.",
+      "kn": "ಶೋಣ ತೀರದಲ್ಲಿ ಕೇಳಿರಿ—ಕುಶನಿಗೆ ನಾಲ್ವರು ಪುತ್ರರಿದ್ದರು. ಅವರಲ್ಲಿ ಒಬ್ಬ ರಾಜ ಕುಶನಾಭ."
+    },
+    {
+      "id": "bk-11-03",
+      "speaker": "Daughters",
+      "hi": "पिता की सहमति के बिना हम विवाह स्वीकार नहीं करेंगी।",
+      "en": "We will not marry without our father’s agreement.",
+      "gu": "પિતાની સંમતિ વિના અમે લગ્ન સ્વીકારશું નહીં.",
+      "kn": "ತಂದೆಯ ಒಪ್ಪಿಗೆಯಿಲ್ಲದೆ ನಾವು ಮದುವೆಯಾಗುವುದಿಲ್ಲ."
+    },
+    {
+      "id": "bk-11-03-note",
+      "speaker": "narrator",
+      "hi": "वायु ने कुशनाभ की सौ पुत्रियों से विवाह चाहा।",
+      "en": "Vayu sought marriage with Kushanabha’s hundred daughters.",
+      "gu": "વાયુએ કુશનાભની સો પુત્રીઓ સાથે લગ્ન કરવા ઇચ્છ્યું.",
+      "kn": "ವಾಯು ಕುಶನಾಭನ ನೂರು ಪುತ್ರಿಯರನ್ನು ವಿವಾಹವಾಗಲು ಬಯಸಿದನು."
+    },
+    {
+      "id": "bk-11-03-shot-2",
+      "speaker": "narrator",
+      "hi": "कुशनाभ की सौ पुत्रियों के उत्तर से वायु क्रुद्ध हुए और उनके शरीर विकृत कर दिए। यह उन पर अन्याय था।",
+      "en": "Angered by Kushanabha’s hundred daughters, Vayu distorted their bodies. This was an injustice done to them.",
+      "gu": "કુશનાભની સો પુત્રીઓના જવાબથી વાયુ ક્રોધિત થયા અને તેમનાં શરીર વિકૃત કર્યાં. આ તેમના પર અન્યાય હતો.",
+      "kn": "ಕುಶನಾಭನ ನೂರು ಪುತ್ರಿಯರ ಉತ್ತರದಿಂದ ವಾಯು ಕೋಪಗೊಂಡು ಅವರ ದೇಹಗಳನ್ನು ವಿಕೃತಗೊಳಿಸಿದನು. ಇದು ಅವರ ಮೇಲಾದ ಅನ್ಯಾಯ."
+    },
+    {
+      "id": "bk-11-04",
+      "speaker": "Kushanabha",
+      "hi": "तुमने धैर्य रखा। तुम्हारा आचरण प्रशंसनीय है।",
+      "en": "You have shown patience; your conduct is worthy of praise.",
+      "gu": "તમે ધીરજ રાખી. તમારું આચરણ પ્રશંસનીય છે.",
+      "kn": "ನೀವು ತಾಳ್ಮೆ ತೋರಿದ್ದೀರಿ. ನಿಮ್ಮ ನಡೆ ಪ್ರಶಂಸನೀಯ."
+    },
+    {
+      "id": "bk-11-05",
+      "speaker": "narrator",
+      "hi": "पिता ने स्नेह और सहारा दिया। धर्मात्मा ब्रह्मदत्त से विवाह के समय, कथा के अनुसार, पुत्रियाँ फिर स्वस्थ हुईं।",
+      "en": "Their father supported them. At their marriage to the righteous Brahmadatta, the story says they became healthy again.",
+      "gu": "પિતાએ સ્નેહ અને સહારો આપ્યો. ધર્માત્મા બ્રહ્મદત્ત સાથેનાં લગ્ન વખતે, કથા મુજબ, પુત્રીઓ ફરી સ્વસ્થ થઈ.",
+      "kn": "ತಂದೆ ಅವರಿಗೆ ಪ್ರೀತಿ ಮತ್ತು ಬೆಂಬಲ ನೀಡಿದನು. ಧರ್ಮಾತ್ಮ ಬ್ರಹ್ಮದತ್ತನೊಡನೆ ವಿವಾಹವಾದಾಗ, ಕಥೆಯ ಪ್ರಕಾರ, ಪುತ್ರಿಯರು ಮತ್ತೆ ಆರೋಗ್ಯವಂತರಾದರು."
+    },
+    {
+      "id": "bk-11-06",
+      "speaker": "Vishwamitra",
+      "hi": "कुशनाभ के पुत्र गाधि मेरे पिता थे। मेरी बहन सत्यवती कौशिकी नदी बनीं।",
+      "en": "Kushanabha’s son Gadhi was my father. My sister Satyavati became the Kaushiki river.",
+      "gu": "કુશનાભના પુત્ર ગાધિ મારા પિતા હતા. મારી બહેન સત્યવતી કૌશિકી નદી બની.",
+      "kn": "ಕುಶನಾಭನ ಪುತ್ರ ಗಾಧಿ ನನ್ನ ತಂದೆ. ನನ್ನ ಸಹೋದರಿ ಸತ್ಯವತಿ ಕೌಶಿಕಿ ನದಿಯಾದಳು."
+    },
+    {
+      "id": "bk-12-01",
+      "speaker": "Rama",
+      "hi": "गंगा तीनों लोकों में कैसे बहती हैं?",
+      "en": "How does Ganga flow through all three worlds?",
+      "gu": "ગંગા ત્રણેય લોકમાં કેવી રીતે વહે છે?",
+      "kn": "ಗಂಗೆಯು ಮೂರು ಲೋಕಗಳಲ್ಲೂ ಹೇಗೆ ಹರಿಯುತ್ತಾಳೆ?"
+    },
+    {
+      "id": "bk-12-02",
+      "speaker": "narrator",
+      "hi": "विश्वामित्र ने हिमवान की पुत्रियों की कथा कही। गंगा देवलोक गईं; उमा का शिव से विवाह हुआ।",
+      "en": "Vishwamitra told of Himavan’s daughters. Ganga went to the gods’ realm; Uma married Shiva.",
+      "gu": "વિશ્વામિત્રે હિમવાનની પુત્રીઓની કથા કહી. ગંગા દેવલોક ગયાં; ઉમાનાં લગ્ન શિવ સાથે થયાં.",
+      "kn": "ವಿಶ್ವಾಮಿತ್ರರು ಹಿಮವಂತನ ಪುತ್ರಿಯರ ಕಥೆ ಹೇಳಿದರು. ಗಂಗೆ ದೇವಲೋಕಕ್ಕೆ ಹೋದಳು; ಉಮೆ ಶಿವನನ್ನು ವಿವಾಹವಾದಳು."
+    },
+    {
+      "id": "bk-12-02-shot-2",
+      "speaker": "narrator",
+      "hi": "देवताओं के हस्तक्षेप से उमा दुःखी हुईं। अग्नि ने दिव्य तेज धारण किया।",
+      "en": "The gods’ intervention distressed Uma. Agni bore the divine energy.",
+      "gu": "દેવોના હસ્તક્ષેપથી ઉમા દુઃખી થયાં. અગ્નિએ દિવ્ય તેજ ધારણ કર્યું.",
+      "kn": "ದೇವತೆಗಳ ಹಸ್ತಕ್ಷೇಪದಿಂದ ಉಮೆ ದುಃಖಿತಳಾದಳು. ಅಗ್ನಿಯು ದಿವ್ಯ ತೇಜಸ್ಸನ್ನು ಹೊತ್ತನು."
+    },
+    {
+      "id": "bk-12-03",
+      "speaker": "narrator",
+      "hi": "अग्नि और गंगा से तेज शरवण पहुँचा। वहाँ कुमार जन्मे; छह कृत्तिकाओं ने उनका पालन किया।",
+      "en": "Through Agni and Ganga, the energy reached Sharavana. Kumara was born, and six Krittikas cared for him.",
+      "gu": "અગ્નિ અને ગંગા દ્વારા તેજ શરવણ પહોંચ્યું. ત્યાં કુમાર જન્મ્યા; છ કૃત્તિકાઓએ તેમનું પાલન કર્યું.",
+      "kn": "ಅಗ್ನಿ ಮತ್ತು ಗಂಗೆಯ ಮೂಲಕ ತೇಜಸ್ಸು ಶರವಣ ತಲುಪಿತು. ಅಲ್ಲಿ ಕುಮಾರ ಜನಿಸಿದನು; ಆರು ಕೃತ್ತಿಕೆಯರು ಅವನನ್ನು ಸಾಕಿದರು."
+    },
+    {
+      "id": "bk-12-04",
+      "speaker": "narrator",
+      "hi": "छहमुखी षण्मुख, कार्तिकेय नाम से प्रसिद्ध हुए। देवताओं ने उन्हें सेनापति बनाया।",
+      "en": "The six-faced Shanmukha became known as Kartikeya. The gods appointed him their commander.",
+      "gu": "છમુખી ષણ્મુખ કાર્તિકેય નામે પ્રસિદ્ધ થયા. દેવોએ તેમને સેનાપતિ બનાવ્યા.",
+      "kn": "ಆರು ಮುಖಗಳ ಷಣ್ಮುಖನು ಕಾರ್ತಿಕೇಯನೆಂದು ಪ್ರಸಿದ್ಧನಾದನು. ದೇವತೆಗಳು ಅವನನ್ನು ಸೇನಾಪತಿಯನ್ನಾಗಿ ನೇಮಿಸಿದರು."
+    },
+    {
+      "id": "bk-13-01",
+      "speaker": "narrator",
+      "hi": "सगर की केशिनी से असमंजस, सुमति से साठ हजार पुत्र हुए। क्रूर आचरण के कारण असमंजस निर्वासित हुआ।",
+      "en": "Sagara’s queens bore Asamanjasa to Keshini and sixty thousand sons to Sumati. Asamanjasa was exiled for cruelty.",
+      "gu": "સગરની કેશિનીથી અસમંજસ અને સુમતિથી સાઠ હજાર પુત્રો થયા. ક્રૂર વર્તનને કારણે અસમંજસ દેશનિકાલ પામ્યો.",
+      "kn": "ಸಗರನ ರಾಣಿ ಕೇಶಿನಿಗೆ ಅಸಮಂಜಸ, ಸುಮತಿಗೆ ಅರವತ್ತು ಸಾವಿರ ಪುತ್ರರು ಜನಿಸಿದರು. ಕ್ರೂರ ವರ್ತನೆಯಿಂದ ಅಸಮಂಜಸನು ದೇಶಭ್ರಷ್ಟನಾದನು."
+    },
+    {
+      "id": "bk-13-02",
+      "speaker": "narrator",
+      "hi": "इन्द्र यज्ञ का घोड़ा ले गए। यज्ञ पूरा करने के लिए सगर ने पुत्रों को भेजा।",
+      "en": "Indra took the sacrificial horse. To complete the rite, Sagara sent his sons to find it.",
+      "gu": "ઇન્દ્ર યજ્ઞનો ઘોડો લઈ ગયા. યજ્ઞ પૂર્ણ કરવા સગરે પુત્રોને શોધવા મોકલ્યા.",
+      "kn": "ಇಂದ್ರನು ಯಜ್ಞದ ಕುದುರೆಯನ್ನು ಕೊಂಡೊಯ್ದನು. ಯಜ್ಞ ಪೂರ್ಣಗೊಳಿಸಲು ಸಗರನು ಪುತ್ರರನ್ನು ಹುಡುಕಲು ಕಳುಹಿಸಿದನು."
+    },
+    {
+      "id": "bk-13-02-shot-2",
+      "speaker": "Sagara",
+      "hi": "यज्ञ का घोड़ा खोजकर वापस लाओ।",
+      "en": "Find and bring back the sacrificial horse.",
+      "gu": "યજ્ઞનો ઘોડો શોધીને પાછો લાવો.",
+      "kn": "ಯಜ್ಞದ ಕುದುರೆಯನ್ನು ಹುಡುಕಿ ಮರಳಿ ತನ್ನಿರಿ."
+    },
+    {
+      "id": "bk-13-03",
+      "speaker": "narrator",
+      "hi": "घोड़ा न मिला तो पुत्रों ने धरती खोदी। जीवों को कष्ट पहुँचाते वे कपिल के आश्रम पहुँचे।",
+      "en": "Unable to find the horse, the sons dug into the earth, distressing creatures. They reached Kapila’s hermitage.",
+      "gu": "ઘોડો ન મળતાં પુત્રોએ ધરતી ખોદી. જીવોને કષ્ટ પહોંચાડતાં તેઓ કપિલના આશ્રમે પહોંચ્યા.",
+      "kn": "ಕುದುರೆ ಸಿಗದೆ ಪುತ್ರರು ಭೂಮಿಯನ್ನು ಅಗೆದರು. ಜೀವಿಗಳಿಗೆ ತೊಂದರೆ ನೀಡುತ್ತಾ ಕಪಿಲರ ಆಶ್ರಮ ತಲುಪಿದರು."
+    },
+    {
+      "id": "bk-13-04",
+      "speaker": "narrator",
+      "hi": "कपिल को चोर समझ पुत्र आक्रमण को दौड़े। ऋषि के क्रोध के तेज से वे भस्म हुए।",
+      "en": "Mistaking Kapila for the thief, the sons rushed to attack. His angry radiance reduced them to ashes.",
+      "gu": "કપિલને ચોર સમજી પુત્રો હુમલો કરવા ધસ્યા. ઋષિના ક્રોધના તેજથી તેઓ ભસ્મ થયા.",
+      "kn": "ಕಪಿಲರನ್ನು ಕಳ್ಳನೆಂದು ಭಾವಿಸಿ ಪುತ್ರರು ದಾಳಿಗೆ ಧಾವಿಸಿದರು. ಅವರ ಕೋಪದ ತೇಜಸ್ಸಿನಿಂದ ಭಸ್ಮವಾದರು."
+    },
+    {
+      "id": "bk-13-05",
+      "speaker": "narrator",
+      "hi": "बहुत प्रतीक्षा के बाद सगर ने पौत्र अंशुमान को भेजा। उसने घोड़ा और चाचाओं की भस्म पाई, फिर तर्पण का जल खोजा।",
+      "en": "After a long wait, Sagara sent his grandson Anshuman. He found the horse and his uncles’ ashes, then sought water for their rites.",
+      "gu": "ઘણી રાહ પછી સગરે પૌત્ર અંશુમાનને મોકલ્યો. તેણે ઘોડો અને કાકાઓની ભસ્મ શોધી, પછી તર્પણ માટે પાણી શોધ્યું.",
+      "kn": "ಬಹಳ ಕಾದ ಬಳಿಕ ಸಗರನು ಮೊಮ್ಮಗ ಅಂಶುಮಾನನನ್ನು ಕಳುಹಿಸಿದನು. ಅವನು ಕುದುರೆ, ಚಿಕ್ಕಪ್ಪಂದಿರ ಬೂದಿ ಕಂಡು ಅವರ ವಿಧಿಗಳಿಗೆ ನೀರು ಹುಡುಕಿದನು."
+    },
+    {
+      "id": "bk-13-06",
+      "speaker": "Garuda",
+      "hi": "इनकी मुक्ति के लिए गंगा का जल चाहिए।",
+      "en": "They need Ganga’s water for deliverance.",
+      "gu": "તેમની મુક્તિ માટે ગંગાનું જળ જોઈએ.",
+      "kn": "ಅವರ ಉದ್ಧಾರಕ್ಕೆ ಗಂಗೆಯ ನೀರು ಬೇಕು."
+    },
+    {
+      "id": "bk-13-06-shot-2",
+      "speaker": "narrator",
+      "hi": "गरुड़ की बात सुन अंशुमान घोड़ा लेकर लौटा। सगर ने यज्ञ पूरा किया।",
+      "en": "Hearing Garuda’s counsel, Anshuman returned with the horse. Sagara completed the sacrifice.",
+      "gu": "ગરુડની વાત સાંભળી અંશુમાન ઘોડો લઈને પાછો આવ્યો. સગરે યજ્ઞ પૂર્ણ કર્યો.",
+      "kn": "ಗರುಡನ ಸಲಹೆ ಕೇಳಿ ಅಂಶುಮಾನ ಕುದುರೆಯೊಡನೆ ಹಿಂದಿರುಗಿದನು. ಸಗರನು ಯಜ್ಞ ಪೂರ್ಣಗೊಳಿಸಿದನು."
+    },
+    {
+      "id": "bk-14-01",
+      "speaker": "narrator",
+      "hi": "अंशुमान और दिलीप गंगा को न ला सके। दिलीप के पुत्र भगीरथ ने यह कार्य पूरा करने का संकल्प किया।",
+      "en": "Neither Anshuman nor Dilipa could bring Ganga down. Dilipa’s son Bhagiratha resolved to finish the task.",
+      "gu": "અંશુમાન અને દિલીપ ગંગાને લાવી ન શક્યા. દિલીપના પુત્ર ભગીરથે આ કાર્ય પૂર્ણ કરવાનો સંકલ્પ કર્યો.",
+      "kn": "ಅಂಶುಮಾನ ಮತ್ತು ದಿಲೀಪ ಗಂಗೆಯನ್ನು ತರಲಾಗಲಿಲ್ಲ. ದಿಲೀಪನ ಪುತ್ರ ಭಗೀರಥನು ಕಾರ್ಯ ಪೂರ್ಣಗೊಳಿಸಲು ಸಂಕಲ್ಪ ಮಾಡಿದನು."
+    },
+    {
+      "id": "bk-14-02",
+      "speaker": "Brahma",
+      "hi": "पृथ्वी गंगा का वेग नहीं सह सकेगी। केवल शिव उसे सँभाल सकते हैं।",
+      "en": "Earth cannot withstand Ganga’s force. Only Shiva can bear it.",
+      "gu": "પૃથ્વી ગંગાનો વેગ સહન નહીં કરી શકે. માત્ર શિવ તેને સંભાળી શકે.",
+      "kn": "ಭೂಮಿಯು ಗಂಗೆಯ ವೇಗ ತಾಳಲಾರದು. ಶಿವನು ಮಾತ್ರ ಅದನ್ನು ತಡೆಯಬಲ್ಲನು."
+    },
+    {
+      "id": "bk-14-03",
+      "speaker": "narrator",
+      "hi": "तप से भगीरथ ने ब्रह्मा और शिव को प्रसन्न किया। गंगा उतरीं तो शिव ने प्रबल धार जटाओं में रोक ली।",
+      "en": "Bhagiratha’s austerities won Brahma’s and Shiva’s favour. As Ganga descended, Shiva caught her mighty flow in his locks.",
+      "gu": "તપથી ભગીરથે બ્રહ્મા અને શિવને પ્રસન્ન કર્યા. ગંગા ઊતર્યાં ત્યારે શિવે પ્રબળ પ્રવાહ જટામાં રોક્યો.",
+      "kn": "ಭಗೀರಥನ ತಪಸ್ಸಿಗೆ ಬ್ರಹ್ಮ ಮತ್ತು ಶಿವ ಒಲಿದರು. ಗಂಗೆ ಇಳಿದಾಗ ಶಿವನು ಅವಳ ಪ್ರಬಲ ಹರಿವನ್ನು ಜಟೆಯಲ್ಲಿ ಹಿಡಿದನು."
+    },
+    {
+      "id": "bk-14-04",
+      "speaker": "Bhagiratha",
+      "hi": "प्रभु, कृपा कर गंगा को छोड़िए।",
+      "en": "Lord, please release Ganga.",
+      "gu": "પ્રભુ, કૃપા કરીને ગંગાને છોડો.",
+      "kn": "ಪ್ರಭುವೇ, ದಯವಿಟ್ಟು ಗಂಗೆಯನ್ನು ಬಿಡುಗಡೆ ಮಾಡಿರಿ."
+    },
+    {
+      "id": "bk-14-04-shot-2",
+      "speaker": "narrator",
+      "hi": "प्रार्थना पर शिव ने गंगा छोड़ीं। सात धाराएँ बनीं; एक भगीरथ के पीछे चली।",
+      "en": "At his prayer, Shiva released Ganga into seven streams. One followed Bhagiratha.",
+      "gu": "પ્રાર્થનાથી શિવે ગંગાને છોડ્યાં. સાત ધારાઓ થઈ; એક ભગીરથ પાછળ ચાલી.",
+      "kn": "ಪ್ರಾರ್ಥನೆಗೆ ಶಿವನು ಗಂಗೆಯನ್ನು ಬಿಟ್ಟನು. ಏಳು ಧಾರೆಗಳಾದವು; ಒಂದು ಭಗೀರಥನನ್ನು ಹಿಂಬಾಲಿಸಿತು."
+    },
+    {
+      "id": "bk-14-05",
+      "speaker": "narrator",
+      "hi": "वेगवान गंगा ने जह्नु की यज्ञभूमि डुबो दी। क्रुद्ध ऋषि ने नदी पीकर प्रवाह रोक दिया।",
+      "en": "Ganga flooded Jahnu’s sacrificial ground. The angry sage drank up the river, stopping her flow.",
+      "gu": "વેગવાન ગંગાએ જહ્નુની યજ્ઞભૂમિ ડુબાડી. ક્રોધિત ઋષિએ નદી પી જઈ પ્રવાહ રોક્યો.",
+      "kn": "ಗಂಗೆಯು ಜಹ್ನುವಿನ ಯಜ್ಞಭೂಮಿ ಮುಳುಗಿಸಿದಳು. ಕೋಪಗೊಂಡ ಋಷಿಯು ನದಿಯನ್ನು ಕುಡಿದು ಹರಿವು ನಿಲ್ಲಿಸಿದನು."
+    },
+    {
+      "id": "bk-14-06",
+      "speaker": "Gods",
+      "hi": "कृपा कर गंगा को फिर बहने दें।",
+      "en": "Please let Ganga flow again.",
+      "gu": "કૃપા કરીને ગંગાને ફરી વહેવા દો.",
+      "kn": "ದಯವಿಟ್ಟು ಗಂಗೆಯನ್ನು ಮತ್ತೆ ಹರಿಯಲು ಬಿಡಿರಿ."
+    },
+    {
+      "id": "bk-14-06-shot-2",
+      "speaker": "narrator",
+      "hi": "देवताओं के अनुरोध पर जह्नु ने गंगा को छोड़ा। इसलिए वे जाह्नवी भी कहलाईं।",
+      "en": "At the gods’ request, Jahnu released Ganga. Thus she also became known as Jahnavi.",
+      "gu": "દેવોના અનુરોધથી જહ્નુએ ગંગાને છોડ્યાં. તેથી તેઓ જાહ્નવી પણ કહેવાયાં.",
+      "kn": "ದೇವತೆಗಳ ಕೋರಿಕೆಗೆ ಜಹ್ನು ಗಂಗೆಯನ್ನು ಬಿಟ್ಟನು. ಹೀಗಾಗಿ ಅವಳು ಜಾಹ್ನವಿ ಎಂದೂ ಹೆಸರಾದಳು."
+    },
+    {
+      "id": "bk-14-07",
+      "speaker": "narrator",
+      "hi": "गंगाजल सगर-पुत्रों की भस्म तक पहुँचा और उन्हें मुक्ति मिली। भगीरथ ने पितरों के संस्कार किए।",
+      "en": "Ganga reached the ashes of Sagara’s sons and brought deliverance. Bhagiratha performed his ancestors’ rites.",
+      "gu": "ગંગાજળ સગરપુત્રોની ભસ્મ સુધી પહોંચ્યું અને તેમને મુક્તિ મળી. ભગીરથે પિતૃઓના સંસ્કાર કર્યા.",
+      "kn": "ಗಂಗಾಜಲ ಸಗರಪುತ್ರರ ಬೂದಿ ತಲುಪಿ ಅವರಿಗೆ ಉದ್ಧಾರ ದೊರೆಯಿತು. ಭಗೀರಥನು ಪೂರ್ವಜರ ವಿಧಿಗಳನ್ನು ನೆರವೇರಿಸಿದನು."
+    },
+    {
+      "id": "bk-14-08",
+      "speaker": "narrator",
+      "hi": "ब्रह्मा ने भगीरथ को सराहा। कथा समाप्त हुई; राम–लक्ष्मण आगे चलने को तैयार हुए।",
+      "en": "Brahma praised Bhagiratha. Vishwamitra’s tale ended; Rama and Lakshmana prepared to continue.",
+      "gu": "બ્રહ્માએ ભગીરથને બિરદાવ્યા. કથા પૂરી થઈ; રામ–લક્ષ્મણ આગળ ચાલવા તૈયાર થયા.",
+      "kn": "ಬ್ರಹ್ಮನು ಭಗೀರಥನನ್ನು ಹೊಗಳಿದನು. ವಿಶ್ವಾಮಿತ್ರರ ಕಥೆ ಮುಗಿಯಿತು; ರಾಮ–ಲಕ್ಷ್ಮಣರು ಮುಂದೆ ಹೊರಡಲು ಸಿದ್ಧರಾದರು."
+    },
+    {
+      "id": "bk-15-01",
+      "speaker": "Vishwamitra",
+      "hi": "विशाला के पास सुनो—अमृत के लिए देव और दैत्य मिलकर समुद्र मथने लगे।",
+      "en": "Near Vishala, hear this: gods and daityas joined to churn the ocean for the nectar of immortality.",
+      "gu": "વિશાલા પાસે સાંભળો—અમૃત માટે દેવ અને દૈત્ય મળીને સમુદ્રમંથન કરવા લાગ્યા.",
+      "kn": "ವಿಶಾಲಾ ಬಳಿ ಕೇಳಿರಿ—ಅಮೃತಕ್ಕಾಗಿ ದೇವತೆಗಳು ಮತ್ತು ದೈತ್ಯರು ಸೇರಿ ಸಮುದ್ರ ಮಥಿಸಿದರು."
+    },
+    {
+      "id": "bk-15-02",
+      "speaker": "narrator",
+      "hi": "मन्दर पर्वत मथानी, वासुकि रस्सी बने। पर्वत डूबने लगा तो विष्णु ने कूर्म रूप में सहारा दिया।",
+      "en": "Mandara was the churning rod; Vasuki, the rope. When the mountain sank, Vishnu supported it as a tortoise.",
+      "gu": "મંદર પર્વત મથાની અને વાસુકિ દોરી બન્યા. પર્વત ડૂબવા લાગતાં વિષ્ણુએ કૂર્મરૂપે ટેકો આપ્યો.",
+      "kn": "ಮಂದರ ಪರ್ವತ ಮಥನದ ಕಡ್ಡಿ, ವಾಸುಕಿ ಹಗ್ಗವಾಯಿತು. ಪರ್ವತ ಮುಳುಗಲು ಆರಂಭಿಸಿದಾಗ ವಿಷ್ಣು ಆಮೆಯಾಗಿ ಆಧಾರ ನೀಡಿದನು."
+    },
+    {
+      "id": "bk-15-03",
+      "speaker": "narrator",
+      "hi": "हलाहल विष निकला। लोकों को संकट में देख शिव ने विष धारण कर विनाश रोका।",
+      "en": "Halahala poison emerged. Seeing the worlds in danger, Shiva bore it and averted destruction.",
+      "gu": "હલાહલ વિષ નીકળ્યું. લોકને સંકટમાં જોઈ શિવે વિષ ધારણ કરી વિનાશ રોક્યો.",
+      "kn": "ಹಾಲಾಹಲ ವಿಷ ಹೊರಬಂದಿತು. ಲೋಕಗಳಿಗೆ ಅಪಾಯ ಕಂಡು ಶಿವನು ವಿಷವನ್ನು ಧರಿಸಿ ವಿನಾಶ ತಡೆದನು."
+    },
+    {
+      "id": "bk-15-04",
+      "speaker": "narrator",
+      "hi": "धन्वन्तरि, अप्सराएँ, वारुणी और अमृत प्रकट हुए।",
+      "en": "Dhanvantari, the apsaras, Varuni and the nectar emerged.",
+      "gu": "ધન્વંતરિ, અપ્સરાઓ, વારુણી અને અમૃત પ્રગટ થયાં.",
+      "kn": "ಧನ್ವಂತರಿ, ಅಪ್ಸರೆಯರು, ವಾರುಣಿ ಮತ್ತು ಅಮೃತ ಹೊರಹೊಮ್ಮಿದರು."
+    },
+    {
+      "id": "bk-15-04-shot-2",
+      "speaker": "narrator",
+      "hi": "अमृत को लेकर दोनों पक्षों में विवाद हुआ।",
+      "en": "The two sides quarrelled over the nectar.",
+      "gu": "અમૃતને લઈને બંને પક્ષે વિવાદ થયો.",
+      "kn": "ಅಮೃತಕ್ಕಾಗಿ ಎರಡು ಕಡೆಯವರೂ ಜಗಳವಾಡಿದರು."
+    },
+    {
+      "id": "bk-15-05",
+      "speaker": "narrator",
+      "hi": "विष्णु की सहायता से देवों को अमृत मिला और वे जीते। अब कथा दिति के शोक की ओर मुड़ी।",
+      "en": "With Vishnu’s help, the gods obtained the nectar and prevailed. The story turned to Diti’s grief.",
+      "gu": "વિષ્ણુની સહાયથી દેવોને અમૃત મળ્યું અને તેઓ જીત્યા. હવે કથા દિતિના શોક તરફ વળી.",
+      "kn": "ವಿಷ್ಣುವಿನ ನೆರವಿನಿಂದ ದೇವತೆಗಳು ಅಮೃತ ಪಡೆದು ಗೆದ್ದರು. ಕಥೆ ದಿತಿಯ ದುಃಖದತ್ತ ತಿರುಗಿತು."
+    },
+    {
+      "id": "bk-16-01",
+      "speaker": "Diti",
+      "hi": "मैं ऐसा पुत्र चाहती हूँ जो इन्द्र को हरा सके।",
+      "en": "I wish for a son who can defeat Indra.",
+      "gu": "હું એવો પુત્ર ઇચ્છું છું જે ઇન્દ્રને હરાવી શકે.",
+      "kn": "ಇಂದ್ರನನ್ನು ಸೋಲಿಸಬಲ್ಲ ಪುತ್ರನು ನನಗೆ ಬೇಕು."
+    },
+    {
+      "id": "bk-16-01-shot-2",
+      "speaker": "narrator",
+      "hi": "पुत्रों को खोकर दुःखी दिति से कश्यप ने कठोर व्रत का नियम कहा।",
+      "en": "Diti grieved for her lost sons. Kashyapa prescribed a strict vow.",
+      "gu": "પુત્રો ગુમાવવાથી દુઃખી દિતિને કશ્યપે કઠોર વ્રતનો નિયમ કહ્યો.",
+      "kn": "ಪುತ್ರರನ್ನು ಕಳೆದುಕೊಂಡ ದಿತಿಗೆ ದುಃಖವಾಗಿತ್ತು. ಕಶ್ಯಪನು ಕಠಿಣ ವ್ರತ ವಿಧಿಸಿದನು."
+    },
+    {
+      "id": "bk-16-02",
+      "speaker": "narrator",
+      "hi": "अपने प्राणों के भय से इन्द्र सेवा करते अवसर देखते रहे। दिति के व्रत में चूक हुई…",
+      "en": "Fearing for his life, Indra served her while awaiting an opportunity. Diti faltered in her vow…",
+      "gu": "પોતાના પ્રાણના ભયથી ઇન્દ્ર સેવા કરતાં તક જોતા રહ્યા. દિતિના વ્રતમાં ચૂક થઈ…",
+      "kn": "ತನ್ನ ಜೀವದ ಭಯದಿಂದ ಇಂದ್ರನು ಸೇವೆ ಮಾಡುತ್ತಾ ಅವಕಾಶ ಕಾಯುತ್ತಿದ್ದನು. ದಿತಿಯ ವ್ರತದಲ್ಲಿ ಲೋಪವಾಯಿತು…"
+    },
+    {
+      "id": "bk-16-02-shot-2",
+      "speaker": "narrator",
+      "hi": "इन्द्र ने अजन्मे बालक को सात भागों में बाँटा।",
+      "en": "Indra divided the unborn child into seven parts.",
+      "gu": "ઇન્દ્રે અજન્મા બાળકને સાત ભાગમાં વહેંચ્યું.",
+      "kn": "ಇಂದ್ರನು ಹುಟ್ಟದ ಮಗುವನ್ನು ಏಳು ಭಾಗಗಳಾಗಿ ಮಾಡಿದನು."
+    },
+    {
+      "id": "bk-16-03",
+      "speaker": "Diti",
+      "hi": "इन सातों को मरुत देवताओं का स्थान मिले।",
+      "en": "Let these seven have a place as the Marut deities.",
+      "gu": "આ સાતને મરુત દેવોનું સ્થાન મળે.",
+      "kn": "ಈ ಏಳಕ್ಕೂ ಮರುತ್ ದೇವತೆಗಳ ಸ್ಥಾನ ಸಿಗಲಿ."
+    },
+    {
+      "id": "bk-16-03-shot-2",
+      "speaker": "Indra",
+      "hi": "ऐसा ही होगा।",
+      "en": "It shall be so.",
+      "gu": "એમ જ થશે.",
+      "kn": "ಹಾಗೆಯೇ ಆಗಲಿ."
+    },
+    {
+      "id": "bk-16-04",
+      "speaker": "narrator",
+      "hi": "दिति और इन्द्र में मेल हुआ। वर्तमान में, विशाला के वंशज राजा सुमति ने यात्रियों का स्वागत किया।",
+      "en": "Diti and Indra reconciled. Back on the journey, Sumati, descendant of Vishala’s founder, welcomed the travellers.",
+      "gu": "દિતિ અને ઇન્દ્રમાં સમાધાન થયું. વર્તમાનમાં, વિશાલાના સ્થાપકના વંશજ રાજા સુમતિએ યાત્રીઓનું સ્વાગત કર્યું.",
+      "kn": "ದಿತಿ ಮತ್ತು ಇಂದ್ರರು ಹೊಂದಾಣಿಕೆಗೆ ಬಂದರು. ಮತ್ತೆ ಪ್ರಯಾಣದಲ್ಲಿ, ವಿಶಾಲೆಯ ಸ್ಥಾಪಕನ ವಂಶಜ ಸುಮತಿ ಪ್ರಯಾಣಿಕರನ್ನು ಸ್ವಾಗತಿಸಿದನು."
+    },
+    {
+      "id": "bk-17-01",
+      "speaker": "Rama",
+      "hi": "यह आश्रम इतना सूना क्यों है?",
+      "en": "Why is this hermitage so deserted?",
+      "gu": "આ આશ્રમ આટલો સૂનો કેમ છે?",
+      "kn": "ಈ ಆಶ್ರಮ ಇಷ್ಟು ನಿರ್ಜನವಾಗಿರುವುದೇಕೆ?"
+    },
+    {
+      "id": "bk-17-02",
+      "speaker": "narrator",
+      "hi": "यह गौतम और अहल्या का आश्रम था। इन्द्र गौतम का वेश बनाकर आए; अहल्या ने उन्हें पहचानकर भी स्वीकार किया।",
+      "en": "Gautama and Ahalya once lived here. Indra approached disguised as Gautama; Ahalya recognised him but accepted him.",
+      "gu": "અહીં ગૌતમ અને અહલ્યા રહેતાં. ઇન્દ્ર ગૌતમનો વેશ લઈને આવ્યા; અહલ્યાએ તેમને ઓળખીને પણ સ્વીકાર્યા.",
+      "kn": "ಇಲ್ಲಿ ಗೌತಮ ಮತ್ತು ಅಹಲ್ಯೆ ವಾಸಿಸುತ್ತಿದ್ದರು. ಇಂದ್ರನು ಗೌತಮನ ವೇಷದಲ್ಲಿ ಬಂದನು; ಅಹಲ್ಯೆ ಗುರುತಿಸಿದರೂ ಅವನನ್ನು ಒಪ್ಪಿಕೊಂಡಳು."
+    },
+    {
+      "id": "bk-17-02-shot-2",
+      "speaker": "narrator",
+      "hi": "गौतम लौटे तो क्रोध में दोनों को शाप दिया।",
+      "en": "When Gautama returned, he angrily cursed them both.",
+      "gu": "ગૌતમ પાછા આવ્યા ત્યારે ક્રોધમાં બંનેને શાપ આપ્યો.",
+      "kn": "ಗೌತಮನು ಮರಳಿದಾಗ ಕೋಪದಿಂದ ಇಬ್ಬರಿಗೂ ಶಾಪ ನೀಡಿದನು."
+    },
+    {
+      "id": "bk-17-03",
+      "speaker": "narrator",
+      "hi": "अहल्या अदृश्य रहकर तप करती रहीं। राम के आने पर शाप समाप्त होना था।",
+      "en": "Ahalya remained unseen in penance. Rama’s arrival would end the curse.",
+      "gu": "અહલ્યા અદૃશ્ય રહી તપ કરતાં રહ્યાં. રામના આગમનથી શાપ સમાપ્ત થવાનો હતો.",
+      "kn": "ಅಹಲ್ಯೆ ಕಾಣಿಸದೆ ತಪಸ್ಸಿನಲ್ಲಿದ್ದಳು. ರಾಮನ ಆಗಮನದಿಂದ ಶಾಪ ಕೊನೆಗೊಳ್ಳಬೇಕಿತ್ತು."
+    },
+    {
+      "id": "bk-17-04",
+      "speaker": "narrator",
+      "hi": "राम–लक्ष्मण आश्रम में आए तो अहल्या दिखाई दीं।",
+      "en": "When Rama and Lakshmana entered, Ahalya became visible.",
+      "gu": "રામ–લક્ષ્મણ આશ્રમે આવ્યા ત્યારે અહલ્યા દેખાયાં.",
+      "kn": "ರಾಮ–ಲಕ್ಷ್ಮಣರು ಆಶ್ರಮ ಪ್ರವೇಶಿಸಿದಾಗ ಅಹಲ್ಯೆ ಗೋಚರಿಸಿದಳು."
+    },
+    {
+      "id": "bk-17-05",
+      "speaker": "narrator",
+      "hi": "भाइयों ने उनका आदर किया; अहल्या ने आतिथ्य दिया। गौतम से उनका पुनर्मिलन हुआ। आशीर्वाद लेकर तीनों मिथिला चले।",
+      "en": "The brothers honoured her; Ahalya offered hospitality. Reunited with Gautama, she blessed the travellers, who continued to Mithila.",
+      "gu": "ભાઈઓએ તેમનો આદર કર્યો; અહલ્યાએ આતિથ્ય આપ્યું. ગૌતમ સાથે પુનર્મિલન થયું. આશીર્વાદ લઈ ત્રણેય મિથિલા ચાલ્યા.",
+      "kn": "ಸಹೋದರರು ಅಹಲ್ಯೆಯನ್ನು ಗೌರವಿಸಿದರು; ಅವಳು ಆತಿಥ್ಯ ನೀಡಿದಳು. ಗೌತಮನೊಡನೆ ಪುನರ್ಮಿಲನವಾಯಿತು. ಆಶೀರ್ವಾದ ಪಡೆದು ಮೂವರೂ ಮಿಥಿಲೆಗೆ ಹೊರಟರು."
+    },
+    {
+      "id": "bk-18-01",
+      "speaker": "narrator",
+      "hi": "मिथिला में राजा जनक ने स्वागत किया। विश्वामित्र ने राजकुमारों और उनके यज्ञ-रक्षा कार्य का परिचय दिया।",
+      "en": "In Mithila, King Janaka welcomed them. Vishwamitra introduced the princes and their defence of the sacrifice.",
+      "gu": "મિથિલામાં રાજા જનકે સ્વાગત કર્યું. વિશ્વામિત્રે રાજકુમારો અને તેમના યજ્ઞરક્ષાના કાર્યનો પરિચય આપ્યો.",
+      "kn": "ಮಿಥಿಲೆಯಲ್ಲಿ ರಾಜ ಜನಕನು ಸ್ವಾಗತಿಸಿದನು. ವಿಶ್ವಾಮಿತ್ರರು ರಾಜಕುಮಾರರನ್ನು ಮತ್ತು ಅವರ ಯಜ್ಞರಕ್ಷಣೆಯ ಕಾರ್ಯವನ್ನು ಪರಿಚಯಿಸಿದರು."
+    },
+    {
+      "id": "bk-18-02",
+      "speaker": "Shatananda",
+      "hi": "मेरी माता का आतिथ्य स्वीकार हुआ?",
+      "en": "Was my mother’s hospitality accepted?",
+      "gu": "મારી માતાનું આતિથ્ય સ્વીકારાયું?",
+      "kn": "ನನ್ನ ತಾಯಿಯ ಆತಿಥ್ಯವನ್ನು ಸ್ವೀಕರಿಸಿದಿರಾ?"
+    },
+    {
+      "id": "bk-18-02-note",
+      "speaker": "narrator",
+      "hi": "जनक के पुरोहित शतानन्द, गौतम और अहल्या के पुत्र थे।",
+      "en": "Janaka’s priest Shatananda was Gautama and Ahalya’s son.",
+      "gu": "જનકના પુરોહિત શતાનંદ ગૌતમ અને અહલ્યાના પુત્ર હતા.",
+      "kn": "ಜನಕನ ಪುರೋಹಿತ ಶತಾನಂದನು ಗೌತಮ ಮತ್ತು ಅಹಲ್ಯೆಯ ಪುತ್ರ."
+    },
+    {
+      "id": "bk-18-02-shot-2",
+      "speaker": "Vishwamitra",
+      "hi": "राम–लक्ष्मण ने आपकी माता का आतिथ्य स्वीकार किया।",
+      "en": "Rama and Lakshmana accepted your mother’s hospitality.",
+      "gu": "રામ–લક્ષ્મણે તમારી માતાનું આતિથ્ય સ્વીકાર્યું.",
+      "kn": "ರಾಮ–ಲಕ್ಷ್ಮಣರು ನಿಮ್ಮ ತಾಯಿಯ ಆತಿಥ್ಯ ಸ್ವೀಕರಿಸಿದರು."
+    },
+    {
+      "id": "bk-18-02-shot-2-note",
+      "speaker": "narrator",
+      "hi": "माता का शाप समाप्त होने की खबर से शतानन्द प्रसन्न हुए।",
+      "en": "Shatananda rejoiced that his mother’s curse had ended.",
+      "gu": "માતાનો શાપ પૂરો થયાના સમાચારથી શતાનંદ પ્રસન્ન થયા.",
+      "kn": "ತಾಯಿಯ ಶಾಪ ಮುಗಿದ ಸುದ್ದಿ ಕೇಳಿ ಶತಾನಂದ ಸಂತೋಷಪಟ್ಟನು."
+    },
+    {
+      "id": "bk-18-03",
+      "speaker": "Shatananda",
+      "hi": "विश्वामित्र पहले राजा थे। तप और संयम से महर्षि बने। मैं उनका अतीत सुनाता हूँ।",
+      "en": "Vishwamitra was once a king. Through austerity and restraint he became a great sage. Let me tell you his past.",
+      "gu": "વિશ્વામિત્ર પહેલાં રાજા હતા. તપ અને સંયમથી મહર્ષિ બન્યા. હું તેમનો ભૂતકાળ કહું છું.",
+      "kn": "ವಿಶ್ವಾಮಿತ್ರರು ಮೊದಲು ರಾಜರಾಗಿದ್ದರು. ತಪಸ್ಸು ಮತ್ತು ಸಂಯಮದಿಂದ ಮಹರ್ಷಿಯಾದರು. ಅವರ ಹಿಂದಿನ ಕಥೆ ಹೇಳುತ್ತೇನೆ."
+    },
+    {
+      "id": "bk-19-01",
+      "speaker": "narrator",
+      "hi": "पहले की बात है। राजा विश्वामित्र अपनी सेना सहित वसिष्ठ के आश्रम पहुँचे।",
+      "en": "Long before, King Vishwamitra reached Vashishtha’s hermitage with his army.",
+      "gu": "પહેલાંની વાત છે. રાજા વિશ્વામિત્ર સૈન્ય સાથે વસિષ્ઠના આશ્રમે પહોંચ્યા.",
+      "kn": "ಬಹಳ ಹಿಂದೆ, ರಾಜ ವಿಶ್ವಾಮಿತ್ರನು ಸೈನ್ಯದೊಡನೆ ವಸಿಷ್ಠರ ಆಶ್ರಮ ತಲುಪಿದನು."
+    },
+    {
+      "id": "bk-19-01-shot-2",
+      "speaker": "Vashishtha",
+      "hi": "शबला आपके और पूरी सेना के लिए भोजन देगी।",
+      "en": "Shabala will provide food for you and your whole army.",
+      "gu": "શબલા તમારા અને આખા સૈન્ય માટે ભોજન આપશે.",
+      "kn": "ಶಬಲೆ ನಿಮಗೆ ಮತ್ತು ಇಡೀ ಸೈನ್ಯಕ್ಕೆ ಊಟ ಒದಗಿಸುವಳು."
+    },
+    {
+      "id": "bk-19-02",
+      "speaker": "King Vishwamitra",
+      "hi": "शबला के बदले मेरा धन स्वीकार कीजिए।",
+      "en": "Accept my wealth in exchange for Shabala.",
+      "gu": "શબલાના બદલામાં મારું ધન સ્વીકારો.",
+      "kn": "ಶಬಲೆಗೆ ಬದಲಾಗಿ ನನ್ನ ಸಂಪತ್ತನ್ನು ಸ್ವೀಕರಿಸಿರಿ."
+    },
+    {
+      "id": "bk-19-02-shot-2",
+      "speaker": "Vashishtha",
+      "hi": "शबला मेरा आश्रम चलाती है। मैं उसे नहीं दे सकता।",
+      "en": "Shabala sustains my hermitage. I cannot give her away.",
+      "gu": "શબલા મારો આશ્રમ ચલાવે છે. હું તેને આપી શકતો નથી.",
+      "kn": "ಶಬಲೆ ನನ್ನ ಆಶ್ರಮವನ್ನು ಪೋಷಿಸುತ್ತಾಳೆ. ಅವಳನ್ನು ಕೊಡಲಾರೆನು."
+    },
+    {
+      "id": "bk-19-03",
+      "speaker": "narrator",
+      "hi": "शबला की शक्ति से सबको भोजन मिला था। राजा ने उसे बलपूर्वक ले जाना चाहा; वह वसिष्ठ के पास लौट आई।",
+      "en": "Shabala’s power had fed everyone. The king tried to take her by force; she returned to Vashishtha.",
+      "gu": "શબલાની શક્તિથી સૌને ભોજન મળ્યું હતું. રાજાએ તેને બળપૂર્વક લઈ જવા માગી; તે વસિષ્ઠ પાસે પાછી આવી.",
+      "kn": "ಶಬಲೆಯ ಶಕ್ತಿಯಿಂದ ಎಲ್ಲರಿಗೂ ಊಟ ಸಿಕ್ಕಿತ್ತು. ರಾಜನು ಅವಳನ್ನು ಬಲವಂತವಾಗಿ ತೆಗೆದುಕೊಂಡು ಹೋಗಲು ಯತ್ನಿಸಿದನು; ಅವಳು ವಸಿಷ್ಠರ ಬಳಿಗೆ ಮರಳಿದಳು."
+    },
+    {
+      "id": "bk-19-03-shot-2",
+      "speaker": "Shabala",
+      "hi": "मेरी रक्षा कीजिए।",
+      "en": "Please protect me.",
+      "gu": "મારી રક્ષા કરો.",
+      "kn": "ನನ್ನನ್ನು ರಕ್ಷಿಸಿರಿ."
+    },
+    {
+      "id": "bk-19-04",
+      "speaker": "narrator",
+      "hi": "वसिष्ठ ने शबला को अपनी रक्षा करने दी। उसकी सेनाओं ने राजा को हराया; कई पुत्र मारे गए। राजा शोक और क्रोध से भर गया।",
+      "en": "Vashishtha allowed Shabala to defend herself. Her armies defeated the king; many of his sons died, leaving him grief-stricken and angry.",
+      "gu": "વસિષ્ઠે શબલાને પોતાની રક્ષા કરવા દીધી. તેના સૈન્યે રાજાને હરાવ્યો; ઘણા પુત્રો મર્યા. રાજા શોક અને ક્રોધથી ભરાયો.",
+      "kn": "ವಸಿಷ್ಠರು ಶಬಲೆಗೆ ತನ್ನನ್ನು ರಕ್ಷಿಸಿಕೊಳ್ಳಲು ಅನುಮತಿಸಿದರು. ಅವಳ ಸೈನ್ಯ ರಾಜನನ್ನು ಸೋಲಿಸಿತು; ಅನೇಕ ಪುತ್ರರು ಸತ್ತರು. ರಾಜನು ದುಃಖ ಮತ್ತು ಕೋಪದಿಂದ ತುಂಬಿದನು."
+    },
+    {
+      "id": "bk-19-05",
+      "speaker": "narrator",
+      "hi": "तप करके विश्वामित्र ने शिव से दिव्य अस्त्र पाए। फिर बदला लेने आश्रम पर चढ़ आए।",
+      "en": "Through austerity Vishwamitra obtained divine weapons from Shiva, then returned to attack the hermitage in revenge.",
+      "gu": "તપ કરીને વિશ્વામિત્રે શિવ પાસેથી દિવ્ય અસ્ત્ર મેળવ્યાં. પછી વેર લેવા આશ્રમ પર ચડી આવ્યા.",
+      "kn": "ತಪಸ್ಸಿನಿಂದ ವಿಶ್ವಾಮಿತ್ರನು ಶಿವನಿಂದ ದಿವ್ಯಾಸ್ತ್ರಗಳನ್ನು ಪಡೆದನು. ನಂತರ ಸೇಡು ತೀರಿಸಲು ಆಶ್ರಮದ ಮೇಲೆ ದಾಳಿ ಮಾಡಿದನು."
+    },
+    {
+      "id": "bk-19-06",
+      "speaker": "narrator",
+      "hi": "वसिष्ठ के ब्रह्मदण्ड ने हर अस्त्र निष्फल किया। राजा ने जाना—आध्यात्मिक अनुशासन शस्त्रबल से बड़ा है।",
+      "en": "Vashishtha’s Brahmadanda neutralised every weapon. The king recognised a power greater than force of arms.",
+      "gu": "વસિષ્ઠના બ્રહ્મદંડે દરેક અસ્ત્ર નિષ્ફળ કર્યું. રાજાએ જાણ્યું—આધ્યાત્મિક અનુશાસન શસ્ત્રબળ કરતાં મોટું છે.",
+      "kn": "ವಸಿಷ್ಠರ ಬ್ರಹ್ಮದಂಡವು ಎಲ್ಲ ಅಸ್ತ್ರಗಳನ್ನು ನಿಷ್ಫಲಗೊಳಿಸಿತು. ಶಸ್ತ್ರಬಲಕ್ಕಿಂತ ದೊಡ್ಡ ಶಕ್ತಿಯನ್ನು ರಾಜನು ಅರಿತನು."
+    },
+    {
+      "id": "bk-19-07",
+      "speaker": "Vishwamitra",
+      "hi": "तप और संयम से मैं ब्रह्मर्षि बनने का प्रयास करूँगा।",
+      "en": "Through austerity and restraint, I will seek to become a Brahmarshi.",
+      "gu": "તપ અને સંયમથી હું બ્રહ્મર્ષિ બનવાનો પ્રયત્ન કરીશ.",
+      "kn": "ತಪಸ್ಸು ಮತ್ತು ಸಂಯಮದಿಂದ ಬ್ರಹ್ಮರ್ಷಿಯಾಗಲು ಪ್ರಯತ್ನಿಸುವೆನು."
+    },
+    {
+      "id": "bk-20-01",
+      "speaker": "Trishanku",
+      "hi": "मैं अपने शरीर सहित स्वर्ग जाना चाहता हूँ।",
+      "en": "I wish to enter heaven in my own body.",
+      "gu": "હું મારા શરીર સહિત સ્વર્ગ જવા ઇચ્છું છું.",
+      "kn": "ನನ್ನ ದೇಹದೊಡನೆಯೇ ಸ್ವರ್ಗ ಪ್ರವೇಶಿಸಲು ಬಯಸುತ್ತೇನೆ."
+    },
+    {
+      "id": "bk-20-01-note",
+      "speaker": "narrator",
+      "hi": "विश्वामित्र राजर्षि कहलाए, पर ब्रह्मर्षि बनने की इच्छा बनी रही। इसी बीच राजा त्रिशंकु ने यह इच्छा रखी।",
+      "en": "Vishwamitra was named a Rajarshi but still aspired to be a Brahmarshi. Meanwhile, King Trishanku sought bodily entry to heaven.",
+      "gu": "વિશ્વામિત્ર રાજર્ષિ કહેવાયા, પણ બ્રહ્મર્ષિ બનવાની ઇચ્છા રહી. એ દરમિયાન રાજા ત્રિશંકુએ શરીર સહિત સ્વર્ગ જવાની ઇચ્છા કરી.",
+      "kn": "ವಿಶ್ವಾಮಿತ್ರನು ರಾಜರ್ಷಿಯಾದರೂ ಬ್ರಹ್ಮರ್ಷಿಯಾಗಲು ಬಯಸಿದನು. ಈ ನಡುವೆ ರಾಜ ತ್ರಿಶಂಕು ದೇಹಸಹಿತ ಸ್ವರ್ಗ ಸೇರಲು ಬಯಸಿದನು."
+    },
+    {
+      "id": "bk-20-02",
+      "speaker": "Vashishtha",
+      "hi": "मैं यह यज्ञ नहीं करूँगा।",
+      "en": "I will not perform this rite.",
+      "gu": "હું આ યજ્ઞ નહીં કરું.",
+      "kn": "ನಾನು ಈ ಯಜ್ಞವನ್ನು ಮಾಡುವುದಿಲ್ಲ."
+    },
+    {
+      "id": "bk-20-02-shot-2",
+      "speaker": "narrator",
+      "hi": "वसिष्ठ के मना करने पर त्रिशंकु उनके पुत्रों के पास गया। उनके शाप से राजा का रूप बदल गया।",
+      "en": "After Vashishtha refused, Trishanku approached his sons. Their curse changed the king’s appearance.",
+      "gu": "વસિષ્ઠના ઇનકાર પછી ત્રિશંકુ તેમના પુત્રો પાસે ગયો. તેમના શાપથી રાજાનું રૂપ બદલાઈ ગયું.",
+      "kn": "ವಸಿಷ್ಠರು ನಿರಾಕರಿಸಿದ ಬಳಿಕ ತ್ರಿಶಂಕು ಅವರ ಪುತ್ರರ ಬಳಿ ಹೋದನು. ಅವರ ಶಾಪದಿಂದ ರಾಜನ ರೂಪ ಬದಲಾಯಿತು."
+    },
+    {
+      "id": "bk-20-03",
+      "speaker": "Trishanku",
+      "hi": "मैं आपकी शरण आया हूँ।",
+      "en": "I have come to you for refuge.",
+      "gu": "હું તમારી શરણે આવ્યો છું.",
+      "kn": "ನಾನು ನಿಮ್ಮ ಆಶ್ರಯಕ್ಕೆ ಬಂದಿದ್ದೇನೆ."
+    },
+    {
+      "id": "bk-20-03-shot-2",
+      "speaker": "Vishwamitra",
+      "hi": "मैं तुम्हारी सहायता करूँगा।",
+      "en": "I will help you.",
+      "gu": "હું તમારી સહાય કરીશ.",
+      "kn": "ನಾನು ನಿನಗೆ ನೆರವಾಗುವೆನು."
+    },
+    {
+      "id": "bk-20-04",
+      "speaker": "narrator",
+      "hi": "सहारा खो चुके त्रिशंकु की बात सुन विश्वामित्र ने यज्ञ का निमन्त्रण भेजा। कुछ ऋषियों ने उपहास कर आने से मना किया।",
+      "en": "Hearing the unsupported king’s plight, Vishwamitra invited sages to the sacrifice. Some mocked it and refused.",
+      "gu": "સહારો ગુમાવેલા ત્રિશંકુની વાત સાંભળી વિશ્વામિત્રે યજ્ઞનું નિમંત્રણ મોકલ્યું. કેટલાક ઋષિઓએ ઉપહાસ કરી આવવાની ના પાડી.",
+      "kn": "ಆಶ್ರಯ ಕಳೆದುಕೊಂಡ ರಾಜನ ಸ್ಥಿತಿ ಕೇಳಿ ವಿಶ್ವಾಮಿತ್ರನು ಋಷಿಗಳನ್ನು ಯಜ್ಞಕ್ಕೆ ಆಹ್ವಾನಿಸಿದನು. ಕೆಲವರು ಹಾಸ್ಯ ಮಾಡಿ ನಿರಾಕರಿಸಿದರು."
+    },
+    {
+      "id": "bk-20-04-shot-2",
+      "speaker": "narrator",
+      "hi": "क्रोधित विश्वामित्र ने उन्हें भी शाप दिया।",
+      "en": "In anger, Vishwamitra cursed them too.",
+      "gu": "ક્રોધિત વિશ્વામિત્રે તેમને પણ શાપ આપ્યો.",
+      "kn": "ಕೋಪದಿಂದ ವಿಶ್ವಾಮಿತ್ರನು ಅವರಿಗೂ ಶಾಪ ನೀಡಿದನು."
+    },
+    {
+      "id": "bk-20-05",
+      "speaker": "narrator",
+      "hi": "यज्ञ से त्रिशंकु ऊपर उठा, पर इन्द्र ने लौटा दिया। वह सिर के बल गिरने लगा।",
+      "en": "The rite raised Trishanku upward, but Indra rejected him. He fell headfirst.",
+      "gu": "યજ્ઞથી ત્રિશંકુ ઉપર ઊઠ્યો, પણ ઇન્દ્રે પાછો ધકેલ્યો. તે માથા તરફથી પડવા લાગ્યો.",
+      "kn": "ಯಜ್ಞದಿಂದ ತ್ರಿಶಂಕು ಮೇಲೇರಿದನು, ಆದರೆ ಇಂದ್ರನು ತಿರಸ್ಕರಿಸಿದನು. ಅವನು ತಲೆಕೆಳಗಾಗಿ ಬೀಳತೊಡಗಿದನು."
+    },
+    {
+      "id": "bk-20-05-shot-2",
+      "speaker": "Trishanku",
+      "hi": "मुनिवर, मेरी रक्षा कीजिए!",
+      "en": "Revered sage, protect me!",
+      "gu": "મુનિવર, મારી રક્ષા કરો!",
+      "kn": "ಮುನಿವರೇ, ನನ್ನನ್ನು ರಕ್ಷಿಸಿರಿ!"
+    },
+    {
+      "id": "bk-20-06-shot-2",
+      "speaker": "narrator",
+      "hi": "विश्वामित्र ने पतन रोका और नए तारे रचे। देवों से समझौते पर त्रिशंकु उसी स्वर्गीय स्थिति में रहा।",
+      "en": "Vishwamitra stopped his fall and created new stars. An agreement with the gods preserved Trishanku’s heavenly position.",
+      "gu": "વિશ્વામિત્રે પડતો રોક્યો અને નવા તારા રચ્યા. દેવો સાથે સમાધાનથી ત્રિશંકુ એ જ સ્વર્ગીય સ્થિતિમાં રહ્યો.",
+      "kn": "ವಿಶ್ವಾಮಿತ್ರನು ಅವನ ಪತನ ತಡೆದು ಹೊಸ ನಕ್ಷತ್ರಗಳನ್ನು ಸೃಷ್ಟಿಸಿದನು. ದೇವತೆಗಳೊಡನೆ ಒಪ್ಪಂದವಾಗಿ ತ್ರಿಶಂಕು ಅದೇ ಸ್ವರ್ಗೀಯ ಸ್ಥಾನದಲ್ಲಿದ್ದನು."
+    },
+    {
+      "id": "bk-21-01",
+      "speaker": "narrator",
+      "hi": "इन्द्र अम्बरीष का यज्ञ-पशु ले गए। पुरोहितों ने विकल्प माँगा; एक बालक का जीवन संकट में पड़ा।",
+      "en": "Indra took Ambarisha’s sacrificial animal. The priests demanded a substitute, placing a boy’s life in danger.",
+      "gu": "ઇન્દ્ર અંબરીષનો યજ્ઞપશુ લઈ ગયા. પુરોહિતોએ વિકલ્પ માગ્યો; એક બાળકનું જીવન સંકટમાં પડ્યું.",
+      "kn": "ಇಂದ್ರನು ಅಂಬರೀಷನ ಯಜ್ಞಪಶುವನ್ನು ಕೊಂಡೊಯ್ದನು. ಪುರೋಹಿತರು ಬದಲಿ ಬೇಡಿದರು; ಒಂದು ಬಾಲಕನ ಜೀವ ಅಪಾಯಕ್ಕೆ ಬಿತ್ತು."
+    },
+    {
+      "id": "bk-21-02",
+      "speaker": "narrator",
+      "hi": "ऋचीक के परिवार से बात कर अम्बरीष उनके मँझले पुत्र शुनःशेप को ले चले। बलि के भय से बालक व्याकुल था।",
+      "en": "After a bargain with Richika’s family, Ambarisha took their middle son Shunahshepa. The boy feared being sacrificed.",
+      "gu": "ઋચીકના પરિવાર સાથે વાત કરીને અંબરીષ તેમના વચલા પુત્ર શુનઃશેપને લઈ ચાલ્યા. બલિના ભયથી બાળક વ્યાકુળ હતો.",
+      "kn": "ಋಚೀಕನ ಕುಟುಂಬದೊಡನೆ ಒಪ್ಪಂದ ಮಾಡಿಕೊಂಡು ಅಂಬರೀಷನು ಮಧ್ಯಮ ಪುತ್ರ ಶುನಃಶೇಪನನ್ನು ಕರೆದೊಯ್ದನು. ಬಲಿಯ ಭಯದಿಂದ ಬಾಲಕ ತಲ್ಲಣಗೊಂಡನು."
+    },
+    {
+      "id": "bk-21-03",
+      "speaker": "Shunahshepa",
+      "hi": "मुनिवर, मेरा जीवन बचाइए।",
+      "en": "Revered sage, please save my life.",
+      "gu": "મુનિવર, મારું જીવન બચાવો.",
+      "kn": "ಮುನಿವರೇ, ದಯವಿಟ್ಟು ನನ್ನ ಜೀವ ಉಳಿಸಿರಿ."
+    },
+    {
+      "id": "bk-21-03-note",
+      "speaker": "narrator",
+      "hi": "पुष्कर में शुनःशेप अपने सम्बन्धी विश्वामित्र की शरण गया। माता-पिता और राजा के निर्णय के बीच वह असहाय था।",
+      "en": "At Pushkara, Shunahshepa sought his relative Vishwamitra’s refuge, helpless between his parents’ and the king’s decisions.",
+      "gu": "પુષ્કરમાં શુનઃશેપ પોતાના સંબંધી વિશ્વામિત્રની શરણે ગયો. માતાપિતા અને રાજાના નિર્ણય વચ્ચે તે લાચાર હતો.",
+      "kn": "ಪುಷ್ಕರದಲ್ಲಿ ಶುನಃಶೇಪನು ತನ್ನ ಸಂಬಂಧಿ ವಿಶ್ವಾಮಿತ್ರನ ಆಶ್ರಯ ಬೇಡಿದನು. ಪೋಷಕರು ಮತ್ತು ರಾಜನ ನಿರ್ಧಾರಗಳ ನಡುವೆ ಅವನು ಅಸಹಾಯಕನಾಗಿದ್ದನು."
+    },
+    {
+      "id": "bk-21-04",
+      "speaker": "Vishwamitra’s sons",
+      "hi": "हम उसका स्थान नहीं लेंगे।",
+      "en": "We will not take his place.",
+      "gu": "અમે તેનું સ્થાન નહીં લઈએ.",
+      "kn": "ನಾವು ಅವನ ಸ್ಥಾನವನ್ನು ತೆಗೆದುಕೊಳ್ಳುವುದಿಲ್ಲ."
+    },
+    {
+      "id": "bk-21-04-shot-2",
+      "speaker": "Vishwamitra",
+      "hi": "इन प्रार्थनाओं को स्मरण रखना।",
+      "en": "Remember these prayers.",
+      "gu": "આ પ્રાર્થનાઓ યાદ રાખજે.",
+      "kn": "ಈ ಪ್ರಾರ್ಥನೆಗಳನ್ನು ನೆನಪಿಟ್ಟುಕೋ."
+    },
+    {
+      "id": "bk-21-04-shot-2-note",
+      "speaker": "narrator",
+      "hi": "पुत्रों के इन्कार पर विश्वामित्र ने क्रोध में उन्हें शाप दिया। फिर बालक को रक्षा की प्रार्थनाएँ सिखाईं।",
+      "en": "Angered by his sons’ refusal, Vishwamitra cursed them, then taught the boy prayers for protection.",
+      "gu": "પુત્રોના ઇનકારથી ક્રોધિત વિશ્વામિત્રે તેમને શાપ આપ્યો. પછી બાળકને રક્ષાની પ્રાર્થનાઓ શીખવી.",
+      "kn": "ಪುತ್ರರ ನಿರಾಕರಣೆಗೆ ಕೋಪಗೊಂಡ ವಿಶ್ವಾಮಿತ್ರನು ಅವರನ್ನು ಶಪಿಸಿದನು. ನಂತರ ಬಾಲಕನಿಗೆ ರಕ್ಷಣೆಯ ಪ್ರಾರ್ಥನೆಗಳನ್ನು ಕಲಿಸಿದನು."
+    },
+    {
+      "id": "bk-21-05",
+      "speaker": "narrator",
+      "hi": "यज्ञ में शुनःशेप ने प्रार्थनाएँ कहीं। इन्द्र प्रसन्न हुए; अम्बरीष का यज्ञ पूरा हुआ और बालक बच गया।",
+      "en": "Shunahshepa recited the prayers at the rite. Indra was pleased; Ambarisha’s sacrifice ended and the boy was saved.",
+      "gu": "યજ્ઞમાં શુનઃશેપે પ્રાર્થનાઓ કહી. ઇન્દ્ર પ્રસન્ન થયા; અંબરીષનો યજ્ઞ પૂરો થયો અને બાળક બચી ગયો.",
+      "kn": "ಯಜ್ಞದಲ್ಲಿ ಶುನಃಶೇಪನು ಪ್ರಾರ್ಥನೆಗಳನ್ನು ಪಠಿಸಿದನು. ಇಂದ್ರನು ಪ್ರಸನ್ನನಾದನು; ಅಂಬರೀಷನ ಯಜ್ಞ ಮುಗಿದು ಬಾಲಕ ಉಳಿದನು."
+    },
+    {
+      "id": "bk-21-05-shot-2",
+      "speaker": "Indra",
+      "hi": "तुम दीर्घायु होओ।",
+      "en": "May you have a long life.",
+      "gu": "તું દીર્ઘાયુ થા.",
+      "kn": "ನೀನು ದೀರ್ಘಾಯುಷಿಯಾಗು."
+    },
+    {
+      "id": "bk-22-01",
+      "speaker": "narrator",
+      "hi": "पुष्कर में मेनका आईं। विश्वामित्र ने तप छोड़ उनके साथ वर्षों बिताए, फिर लक्ष्य से भटकना समझा।",
+      "en": "Menaka came to Pushkara. Vishwamitra spent years with her, then realised he had strayed from his goal.",
+      "gu": "પુષ્કરમાં મેનકા આવ્યાં. વિશ્વામિત્રે તપ છોડી તેમની સાથે વર્ષો વિતાવ્યાં, પછી લક્ષ્યથી ભટક્યાનું સમજાયું.",
+      "kn": "ಮೇನಕೆ ಪುಷ್ಕರಕ್ಕೆ ಬಂದಳು. ವಿಶ್ವಾಮಿತ್ರನು ತಪಸ್ಸು ಬಿಟ್ಟು ಅವಳೊಡನೆ ವರ್ಷಗಳನ್ನು ಕಳೆದನು; ಬಳಿಕ ಗುರಿಯಿಂದ ದೂರವಾದುದನ್ನು ಅರಿತನು."
+    },
+    {
+      "id": "bk-22-02",
+      "speaker": "narrator",
+      "hi": "उन्होंने मेनका को शान्ति से विदा किया और तप फिर आरम्भ किया। महर्षि बने, पर इन्द्रिय-संयम की साधना बाकी थी।",
+      "en": "He peacefully sent Menaka away and resumed austerity. Though a Maharshi, he still sought mastery of his senses.",
+      "gu": "તેમણે મેનકાને શાંતિથી વિદાય આપી અને તપ ફરી શરૂ કર્યું. મહર્ષિ બન્યા, પણ ઇન્દ્રિયસંયમની સાધના બાકી હતી.",
+      "kn": "ಮೇನಕೆಯನ್ನು ಶಾಂತಿಯಿಂದ ಕಳುಹಿಸಿ ಮತ್ತೆ ತಪಸ್ಸು ಆರಂಭಿಸಿದನು. ಮಹರ್ಷಿಯಾದರೂ ಇಂದ್ರಿಯಗಳ ಮೇಲಿನ ಹಿಡಿತವನ್ನು ಇನ್ನೂ ಸಾಧಿಸಬೇಕಿತ್ತು."
+    },
+    {
+      "id": "bk-22-03",
+      "speaker": "narrator",
+      "hi": "इन्द्र ने रम्भा को तप भंग करने भेजा। विश्वामित्र ने पहचानकर शाप दे दिया।",
+      "en": "Indra sent Rambha to disturb the penance. Vishwamitra recognised the attempt and cursed her.",
+      "gu": "ઇન્દ્રે રંભાને તપ ભંગ કરવા મોકલ્યાં. વિશ્વામિત્રે ઓળખીને શાપ આપ્યો.",
+      "kn": "ಇಂದ್ರನು ರಂಭೆಯನ್ನು ತಪಸ್ಸು ಭಂಗ ಮಾಡಲು ಕಳುಹಿಸಿದನು. ವಿಶ್ವಾಮಿತ್ರನು ಯತ್ನವನ್ನು ಗುರುತಿಸಿ ಅವಳನ್ನು ಶಪಿಸಿದನು."
+    },
+    {
+      "id": "bk-22-03-shot-2",
+      "speaker": "narrator",
+      "hi": "लेकिन उनके अपने क्रोध ने तप का फल घटा दिया।",
+      "en": "But his own anger diminished his spiritual merit.",
+      "gu": "પણ તેમના પોતાના ક્રોધે તપનું ફળ ઘટાડ્યું.",
+      "kn": "ಆದರೆ ತನ್ನದೇ ಕೋಪವು ಅವನ ತಪಸ್ಸಿನ ಫಲವನ್ನು ಕುಗ್ಗಿಸಿತು."
+    },
+    {
+      "id": "bk-22-04",
+      "speaker": "Vishwamitra",
+      "hi": "मुझे अपने क्रोध पर भी विजय पानी होगी।",
+      "en": "I must overcome my anger too.",
+      "gu": "મારે મારા ક્રોધ પર પણ વિજય મેળવવો પડશે.",
+      "kn": "ನನ್ನ ಕೋಪವನ್ನೂ ನಾನು ಜಯಿಸಬೇಕು."
+    },
+    {
+      "id": "bk-22-05",
+      "speaker": "Brahmin (Indra in disguise)",
+      "hi": "कृपा कर मुझे भोजन दीजिए।",
+      "en": "Please give me food.",
+      "gu": "કૃપા કરીને મને ભોજન આપો.",
+      "kn": "ದಯವಿಟ್ಟು ನನಗೆ ಆಹಾರ ನೀಡಿರಿ."
+    },
+    {
+      "id": "bk-22-05-note",
+      "speaker": "narrator",
+      "hi": "मौन और धैर्य का व्रत चल रहा था। ब्राह्मण-वेश में इन्द्र आए तो विश्वामित्र ने पूरा भोजन दे दिया और बिना क्रोध तप जारी रखा।",
+      "en": "During his vow of silence and patience, Indra came disguised as a Brahmin. Vishwamitra gave him his entire meal and continued without anger.",
+      "gu": "મૌન અને ધૈર્યના વ્રત દરમિયાન ઇન્દ્ર બ્રાહ્મણવેશે આવ્યા. વિશ્વામિત્રે આખું ભોજન આપી દીધું અને ક્રોધ વિના તપ ચાલુ રાખ્યું.",
+      "kn": "ಮೌನ ಮತ್ತು ತಾಳ್ಮೆಯ ವ್ರತದಲ್ಲಿದ್ದಾಗ ಇಂದ್ರನು ಬ್ರಾಹ್ಮಣನ ವೇಷದಲ್ಲಿ ಬಂದನು. ವಿಶ್ವಾಮಿತ್ರನು ಇಡೀ ಊಟವನ್ನು ನೀಡಿ ಕೋಪವಿಲ್ಲದೆ ತಪಸ್ಸು ಮುಂದುವರಿಸಿದನು."
+    },
+    {
+      "id": "bk-22-06",
+      "speaker": "Brahma",
+      "hi": "तुम ब्रह्मर्षि हो।",
+      "en": "You are a Brahmarshi.",
+      "gu": "તમે બ્રહ્મર્ષિ છો.",
+      "kn": "ನೀನು ಬ್ರಹ್ಮರ್ಷಿ."
+    },
+    {
+      "id": "bk-22-06-shot-2",
+      "speaker": "narrator",
+      "hi": "ब्रह्मा ने घोषणा की; वसिष्ठ ने भी स्वीकार किया। मिथिला में शतानन्द की कथा पूरी हुई। अब राम शिवधनुष देखेंगे।",
+      "en": "Brahma declared it; Vashishtha acknowledged it too. Back in Mithila, Shatananda’s tale ended. Now Rama would see Shiva’s bow.",
+      "gu": "બ્રહ્માએ ઘોષણા કરી; વસિષ્ઠે પણ સ્વીકાર્યું. મિથિલામાં શતાનંદની કથા પૂરી થઈ. હવે રામ શિવધનુષ જોશે.",
+      "kn": "ಬ್ರಹ್ಮನು ಘೋಷಿಸಿದನು; ವಸಿಷ್ಠರೂ ಒಪ್ಪಿದರು. ಮಿಥಿಲೆಯಲ್ಲಿ ಶತಾನಂದನ ಕಥೆ ಮುಗಿಯಿತು. ಈಗ ರಾಮ ಶಿವಧನುಸ್ಸನ್ನು ನೋಡುವನು."
+    },
+    {
+      "id": "bk-23-01",
+      "speaker": "Janaka",
+      "hi": "देवताओं ने शिव का यह धनुष हमारे पूर्वज देवरात को सौंपा था। तब से यह वंश की धरोहर है।",
+      "en": "The gods entrusted Shiva’s bow to our ancestor Devarata. It has remained our family’s heirloom.",
+      "gu": "દેવોએ શિવનું આ ધનુષ અમારા પૂર્વજ દેવરાતને સોંપ્યું હતું. ત્યારથી તે વંશની ધરોહર છે.",
+      "kn": "ದೇವತೆಗಳು ಶಿವನ ಈ ಧನುಸ್ಸನ್ನು ನಮ್ಮ ಪೂರ್ವಜ ದೇವರಾತನಿಗೆ ಒಪ್ಪಿಸಿದರು. ಅಂದಿನಿಂದ ಇದು ನಮ್ಮ ವಂಶದ ಅಮೂಲ್ಯ ಸಂಪತ್ತು."
+    },
+    {
+      "id": "bk-23-02",
+      "speaker": "Janaka",
+      "hi": "यज्ञभूमि जोतते समय मुझे सीता मिलीं। मैंने उन्हें पुत्री बनाया और सीता नाम दिया।",
+      "en": "I found Sita while ploughing the sacrificial ground. I raised her as my daughter and named her Sita.",
+      "gu": "યજ્ઞભૂમિ ખેડતાં મને સીતા મળ્યાં. મેં તેમને પુત્રી બનાવી અને સીતા નામ આપ્યું.",
+      "kn": "ಯಜ್ಞಭೂಮಿ ಉಳುವಾಗ ನನಗೆ ಸೀತೆ ಸಿಕ್ಕಳು. ಅವಳನ್ನು ಮಗಳಾಗಿ ಬೆಳೆಸಿ ಸೀತೆ ಎಂದು ಹೆಸರಿಟ್ಟೆ."
+    },
+    {
+      "id": "bk-23-03",
+      "speaker": "Janaka",
+      "hi": "जो इस धनुष पर प्रत्यंचा चढ़ा सकेगा, उससे सीता का विवाह होगा।",
+      "en": "Sita will marry the one who can string this bow.",
+      "gu": "જે આ ધનુષ પર પ્રત્યંચા ચઢાવી શકશે, તેની સાથે સીતાનાં લગ્ન થશે.",
+      "kn": "ಈ ಧನುಸ್ಸಿಗೆ ಹೆದೆಯೇರಿಸಬಲ್ಲವನೊಡನೆ ಸೀತೆಯ ವಿವಾಹ ನಡೆಯುವುದು."
+    },
+    {
+      "id": "bk-23-03-shot-2",
+      "speaker": "narrator",
+      "hi": "पहले आए राजा असफल हुए। उनका बाद का आक्रमण भी विफल रहा।",
+      "en": "Earlier kings had failed. Their later attack also failed.",
+      "gu": "પહેલાં આવેલા રાજાઓ નિષ્ફળ ગયા. તેમનો પછીનો હુમલો પણ નિષ્ફળ રહ્યો.",
+      "kn": "ಹಿಂದೆ ಬಂದ ರಾಜರು ವಿಫಲರಾದರು. ನಂತರ ಅವರ ದಾಳಿಯೂ ವಿಫಲವಾಯಿತು."
+    },
+    {
+      "id": "bk-23-04",
+      "speaker": "Vishwamitra",
+      "hi": "वत्स राम, यह धनुष देखो।",
+      "en": "Rama, my child, look at this bow.",
+      "gu": "વત્સ રામ, આ ધનુષ જુઓ.",
+      "kn": "ವತ್ಸ ರಾಮ, ಈ ಧನುಸ್ಸನ್ನು ನೋಡು."
+    },
+    {
+      "id": "bk-23-05-shot-2",
+      "speaker": "narrator",
+      "hi": "राम ने प्रत्यंचा खींची—धनुष टूटा। गर्जना से सभा स्तब्ध हुई।",
+      "en": "As Rama drew, the bow broke. The crash stunned the assembly.",
+      "gu": "રામે પ્રત્યંચા ખેંચી—ધનુષ તૂટ્યું. ગર્જનાથી સભા સ્તબ્ધ થઈ.",
+      "kn": "ರಾಮನು ಹೆದೆ ಎಳೆದಾಗ ಧನುಸ್ಸು ಮುರಿಯಿತು. ಭಾರೀ ಶಬ್ದಕ್ಕೆ ಸಭೆ ಬೆಚ್ಚಿತು."
+    },
+    {
+      "id": "bk-23-06",
+      "speaker": "Janaka",
+      "hi": "मैं सीता का विवाह राम से करूँगा।",
+      "en": "I will give Sita in marriage to Rama.",
+      "gu": "હું સીતાનાં લગ્ન રામ સાથે કરીશ.",
+      "kn": "ಸೀತೆಯ ವಿವಾಹವನ್ನು ರಾಮನೊಡನೆ ಮಾಡುವೆನು."
+    },
+    {
+      "id": "bk-23-06-note",
+      "speaker": "narrator",
+      "hi": "विश्वामित्र की सहमति से जनक ने दशरथ को बुलाने दूत भेजे।",
+      "en": "With Vishwamitra’s consent, Janaka sent messengers to invite Dasharatha.",
+      "gu": "વિશ્વામિત્રની સંમતિથી જનકે દશરથને બોલાવવા દૂત મોકલ્યા.",
+      "kn": "ವಿಶ್ವಾಮಿತ್ರರ ಒಪ್ಪಿಗೆಯಿಂದ ಜನಕನು ದಶರಥನನ್ನು ಆಹ್ವಾನಿಸಲು ದೂತರನ್ನು ಕಳುಹಿಸಿದನು."
+    },
+    {
+      "id": "bk-24-01",
+      "speaker": "Messenger",
+      "hi": "दोनों राजकुमार सकुशल हैं। राम ने धनुष तोड़ा। जनक आपको विवाह में बुलाते हैं।",
+      "en": "Both princes are well. Rama broke the bow. Janaka invites you to the wedding.",
+      "gu": "બંને રાજકુમાર સકુશળ છે. રામે ધનુષ તોડ્યું. જનક તમને લગ્નમાં બોલાવે છે.",
+      "kn": "ಇಬ್ಬರು ರಾಜಕುಮಾರರೂ ಕ್ಷೇಮವಾಗಿದ್ದಾರೆ. ರಾಮನು ಧನುಸ್ಸು ಮುರಿದನು. ಜನಕನು ನಿಮ್ಮನ್ನು ವಿವಾಹಕ್ಕೆ ಆಹ್ವಾನಿಸಿದ್ದಾನೆ."
+    },
+    {
+      "id": "bk-24-02",
+      "speaker": "narrator",
+      "hi": "गुरुओं और मन्त्रियों से सहमति लेकर दशरथ भरत, शत्रुघ्न और परिवार सहित मिथिला चले।",
+      "en": "With his teachers’ and ministers’ agreement, Dasharatha left for Mithila with Bharata, Shatrughna and the royal family.",
+      "gu": "ગુરુઓ અને મંત્રીઓની સંમતિથી દશરથ ભરત, શત્રુઘ્ન અને પરિવાર સાથે મિથિલા ચાલ્યા.",
+      "kn": "ಗುರುಗಳು ಮತ್ತು ಮಂತ್ರಿಗಳ ಒಪ್ಪಿಗೆಯೊಂದಿಗೆ ದಶರಥನು ಭರತ, ಶತ್ರುಘ್ನ ಮತ್ತು ಕುಟುಂಬದೊಡನೆ ಮಿಥಿಲೆಗೆ ಹೊರಟನು."
+    },
+    {
+      "id": "bk-24-03",
+      "speaker": "narrator",
+      "hi": "जनक ने स्वागत किया। दशरथ राम–लक्ष्मण से मिले और विवाह की तैयारी आगे बढ़ी।",
+      "en": "Janaka welcomed them. Dasharatha reunited with Rama and Lakshmana, and wedding preparations advanced.",
+      "gu": "જનકે સ્વાગત કર્યું. દશરથ રામ–લક્ષ્મણને મળ્યા અને લગ્નની તૈયારી આગળ વધી.",
+      "kn": "ಜನಕನು ಸ್ವಾಗತಿಸಿದನು. ದಶರಥನು ರಾಮ–ಲಕ್ಷ್ಮಣರನ್ನು ಮತ್ತೆ ಭೇಟಿಯಾದನು; ವಿವಾಹದ ಸಿದ್ಧತೆ ಮುಂದುವರಿಯಿತು."
+    },
+    {
+      "id": "bk-25-01",
+      "speaker": "Vashishtha",
+      "hi": "राम इक्ष्वाकु वंश में जन्मे हैं।",
+      "en": "Rama was born in the lineage of Ikshvaku.",
+      "gu": "રામ ઇક્ષ્વાકુ વંશમાં જન્મ્યા છે.",
+      "kn": "ರಾಮ ಇಕ್ಷ್ವಾಕು ವಂಶದಲ್ಲಿ ಜನಿಸಿದನು."
+    },
+    {
+      "id": "bk-25-01-note",
+      "speaker": "narrator",
+      "hi": "जनक ने भाई कुशध्वज को बुलाया। वसिष्ठ ने इक्ष्वाकु से दशरथ तक वंश सुनाया।",
+      "en": "Janaka summoned his brother Kushadhvaja. Vashishtha traced the lineage from Ikshvaku to Dasharatha.",
+      "gu": "જનકે ભાઈ કુશધ્વજને બોલાવ્યા. વસિષ્ઠે ઇક્ષ્વાકુથી દશરથ સુધીનો વંશ સંભળાવ્યો.",
+      "kn": "ಜನಕನು ತನ್ನ ಸಹೋದರ ಕುಶಧ್ವಜನನ್ನು ಕರೆಸಿದನು. ವಸಿಷ್ಠರು ಇಕ್ಷ್ವಾಕುವಿನಿಂದ ದಶರಥನವರೆಗಿನ ವಂಶ ಹೇಳಿದರು."
+    },
+    {
+      "id": "bk-25-02",
+      "speaker": "Janaka",
+      "hi": "सीता राम के लिए, और उर्मिला लक्ष्मण के लिए।",
+      "en": "Sita for Rama, and Urmila for Lakshmana.",
+      "gu": "સીતા રામ માટે, અને ઊર્મિલા લક્ષ્મણ માટે.",
+      "kn": "ರಾಮನಿಗೆ ಸೀತೆ, ಲಕ್ಷ್ಮಣನಿಗೆ ಊರ್ಮಿಳೆ."
+    },
+    {
+      "id": "bk-25-02-note",
+      "speaker": "narrator",
+      "hi": "जनक ने निमि से अपना वंश बताया और अपनी दोनों पुत्रियों का प्रस्ताव रखा।",
+      "en": "Janaka traced his family from Nimi and proposed the marriages of his two daughters.",
+      "gu": "જનકે નિમિથી પોતાનો વંશ કહ્યો અને પોતાની બંને પુત્રીઓનાં લગ્નનો પ્રસ્તાવ મૂક્યો.",
+      "kn": "ಜನಕನು ನಿಮಿಯಿಂದ ತನ್ನ ವಂಶ ಹೇಳಿ ಇಬ್ಬರು ಪುತ್ರಿಯರ ವಿವಾಹ ಪ್ರಸ್ತಾಪಿಸಿದನು."
+    },
+    {
+      "id": "bk-25-03",
+      "speaker": "Vishwamitra",
+      "hi": "माण्डवी भरत के लिए, श्रुतकीर्ति शत्रुघ्न के लिए।",
+      "en": "Mandavi for Bharata, and Shrutakirti for Shatrughna.",
+      "gu": "માંડવી ભરત માટે, શ્રુતકીર્તિ શત્રુઘ્ન માટે.",
+      "kn": "ಭರತನಿಗೆ ಮಾಂಡವಿ, ಶತ್ರುಘ್ನನಿಗೆ ಶ್ರುತಕೀರ್ತಿ."
+    },
+    {
+      "id": "bk-25-03-note",
+      "speaker": "narrator",
+      "hi": "विश्वामित्र और वसिष्ठ ने कुशध्वज की पुत्रियों के सम्बन्ध सुझाए। दोनों परिवार सहमत हुए।",
+      "en": "Vishwamitra and Vashishtha proposed Kushadhvaja’s daughters. Both families agreed.",
+      "gu": "વિશ્વામિત્ર અને વસિષ્ઠે કુશધ્વજની પુત્રીઓના સંબંધ સૂચવ્યા. બંને પરિવાર સંમત થયા.",
+      "kn": "ವಿಶ್ವಾಮಿತ್ರ ಮತ್ತು ವಸಿಷ್ಠರು ಕುಶಧ್ವಜನ ಪುತ್ರಿಯರ ವಿವಾಹ ಪ್ರಸ್ತಾಪಿಸಿದರು. ಎರಡೂ ಕುಟುಂಬಗಳು ಒಪ್ಪಿದವು."
+    },
+    {
+      "id": "bk-25-04",
+      "speaker": "narrator",
+      "hi": "शुभ समय चुना गया। दशरथ ने पुत्रों के संस्कार कराकर गाय, वस्त्र और धन के दान दिए।",
+      "en": "An auspicious time was chosen. Dasharatha arranged his sons’ rites and gave cows, clothing and wealth.",
+      "gu": "શુભ સમય પસંદ થયો. દશરથે પુત્રોના સંસ્કાર કરાવી ગાયો, વસ્ત્રો અને ધનનું દાન આપ્યું.",
+      "kn": "ಶುಭ ಮುಹೂರ್ತ ಆರಿಸಲಾಯಿತು. ದಶರಥನು ಪುತ್ರರ ವಿಧಿಗಳನ್ನು ಏರ್ಪಡಿಸಿ ಗೋವು, ವಸ್ತ್ರ ಮತ್ತು ಸಂಪತ್ತನ್ನು ದಾನ ಮಾಡಿದನು."
+    },
+    {
+      "id": "bk-26-01",
+      "speaker": "narrator",
+      "hi": "भरत के मामा युधाजित भी आए। अयोध्या में समाचार पाकर वे विवाह के लिए मिथिला पहुँचे।",
+      "en": "Bharata’s maternal uncle Yudhajit arrived too. Hearing the news in Ayodhya, he came to Mithila for the weddings.",
+      "gu": "ભરતના મામા યુધાજિત પણ આવ્યા. અયોધ્યામાં સમાચાર મેળવી તેઓ લગ્ન માટે મિથિલા પહોંચ્યા.",
+      "kn": "ಭರತನ ಮಾವ ಯುಧಾಜಿತನೂ ಬಂದನು. ಅಯೋಧ್ಯೆಯಲ್ಲಿ ಸುದ್ದಿ ಕೇಳಿ ವಿವಾಹಕ್ಕಾಗಿ ಮಿಥಿಲೆಗೆ ಬಂದನು."
+    },
+    {
+      "id": "bk-26-02",
+      "speaker": "Janaka",
+      "hi": "सीता धर्म में तुम्हारी सहचरी होंगी।",
+      "en": "Sita will be your companion in dharma.",
+      "gu": "સીતા ધર્મમાં તમારી સહચરી થશે.",
+      "kn": "ಸೀತೆ ಧರ್ಮದಲ್ಲಿ ನಿನ್ನ ಸಹಚರಿಯಾಗುವಳು."
+    },
+    {
+      "id": "bk-26-02-note",
+      "speaker": "narrator",
+      "hi": "राम और सीता ने विवाह-संस्कार किए।",
+      "en": "Rama and Sita performed the marriage rites.",
+      "gu": "રામ અને સીતાએ લગ્નના સંસ્કાર કર્યા.",
+      "kn": "ರಾಮ ಮತ್ತು ಸೀತೆಯ ವಿವಾಹದ ವಿಧಿಗಳು ನೆರವೇರಿದವು."
+    },
+    {
+      "id": "bk-26-03",
+      "speaker": "narrator",
+      "hi": "लक्ष्मण और उर्मिला का विवाह हुआ।",
+      "en": "Lakshmana married Urmila.",
+      "gu": "લક્ષ્મણ અને ઊર્મિલાનાં લગ્ન થયાં.",
+      "kn": "ಲಕ್ಷ್ಮಣ ಮತ್ತು ಊರ್ಮಿಳೆಯ ವಿವಾಹ ನಡೆಯಿತು."
+    },
+    {
+      "id": "bk-26-04",
+      "speaker": "narrator",
+      "hi": "भरत और माण्डवी का विवाह हुआ।",
+      "en": "Bharata married Mandavi.",
+      "gu": "ભરત અને માંડવીનાં લગ્ન થયાં.",
+      "kn": "ಭರತ ಮತ್ತು ಮಾಂಡವಿಯ ವಿವಾಹ ನಡೆಯಿತು."
+    },
+    {
+      "id": "bk-26-05",
+      "speaker": "narrator",
+      "hi": "शत्रुघ्न और श्रुतकीर्ति का विवाह हुआ।",
+      "en": "Shatrughna married Shrutakirti.",
+      "gu": "શત્રુઘ્ન અને શ્રુતકીર્તિનાં લગ્ન થયાં.",
+      "kn": "ಶತ್ರುಘ್ನ ಮತ್ತು ಶ್ರುತಕೀರ್ತಿಯ ವಿವಾಹ ನಡೆಯಿತು."
+    },
+    {
+      "id": "bk-26-06",
+      "speaker": "narrator",
+      "hi": "चारों युगलों ने अग्नि और बड़ों की परिक्रमा कर आशीर्वाद लिए। मंगल ध्वनियों में दोनों परिवारों ने उत्सव मनाया।",
+      "en": "The four couples circled the fire and elders, receiving blessings. Both families celebrated amid auspicious sounds.",
+      "gu": "ચારે યુગલોએ અગ્નિ અને વડીલોની પ્રદક્ષિણા કરી આશીર્વાદ લીધા. મંગળધ્વનિ વચ્ચે બંને પરિવારે ઉત્સવ મનાવ્યો.",
+      "kn": "ನಾಲ್ಕೂ ಜೋಡಿಗಳು ಅಗ್ನಿ ಮತ್ತು ಹಿರಿಯರನ್ನು ಸುತ್ತಿ ಆಶೀರ್ವಾದ ಪಡೆದರು. ಮಂಗಳಧ್ವನಿಗಳ ನಡುವೆ ಎರಡೂ ಕುಟುಂಬಗಳು ಸಂಭ್ರಮಿಸಿದವು."
+    },
+    {
+      "id": "bk-27-01",
+      "speaker": "narrator",
+      "hi": "अगली सुबह विश्वामित्र आशीर्वाद देकर हिमालय चले। दशरथ का दल अयोध्या लौटने लगा।",
+      "en": "Next morning, Vishwamitra blessed them and left for the Himalayas. Dasharatha’s party began the return to Ayodhya.",
+      "gu": "બીજે દિવસે વિશ્વામિત્ર આશીર્વાદ આપી હિમાલય ગયા. દશરથનો સમૂહ અયોધ્યા પાછો ફરવા લાગ્યો.",
+      "kn": "ಮರುದಿನ ವಿಶ್ವಾಮಿತ್ರರು ಆಶೀರ್ವದಿಸಿ ಹಿಮಾಲಯಕ್ಕೆ ಹೊರಟರು. ದಶರಥನ ಬಳಗ ಅಯೋಧ್ಯೆಗೆ ಮರಳತೊಡಗಿತು."
+    },
+    {
+      "id": "bk-27-02",
+      "speaker": "narrator",
+      "hi": "अशुभ संकेत और धूलभरी आँधी आई। धनुष और परशु लिए जमदग्नि-पुत्र परशुराम प्रकट हुए।",
+      "en": "Ominous signs and a dust storm arose. Jamadagni’s son Parashurama appeared with his bow and axe.",
+      "gu": "અશુભ સંકેત અને ધૂળની આંધી આવી. ધનુષ અને પરશુ સાથે જમદગ્નિપુત્ર પરશુરામ પ્રગટ થયા.",
+      "kn": "ಅಶುಭ ಸೂಚನೆಗಳು ಮತ್ತು ಧೂಳಿನ ಬಿರುಗಾಳಿ ಎದ್ದವು. ಬಿಲ್ಲು, ಕೊಡಲಿ ಹಿಡಿದ ಜಮದಗ್ನಿಯ ಪುತ್ರ ಪರಶುರಾಮರು ಕಾಣಿಸಿಕೊಂಡರು."
+    },
+    {
+      "id": "bk-27-03",
+      "speaker": "Parashurama",
+      "hi": "मिथिला में तुमने शिव का धनुष तोड़ा। यह दूसरा, विष्णु का धनुष है।",
+      "en": "At Mithila you broke Shiva’s bow. This other bow belongs to Vishnu.",
+      "gu": "મિથિલામાં તમે શિવનું ધનુષ તોડ્યું. આ બીજું, વિષ્ણુનું ધનુષ છે.",
+      "kn": "ಮಿಥಿಲೆಯಲ್ಲಿ ನೀನು ಶಿವನ ಧನುಸ್ಸು ಮುರಿದೆ. ಈ ಬೇರೆ ಧನುಸ್ಸು ವಿಷ್ಣುವಿನದು."
+    },
+    {
+      "id": "bk-27-04",
+      "speaker": "Dasharatha",
+      "hi": "मेरे पुत्रों को अभय दीजिए।",
+      "en": "Please grant my sons safety.",
+      "gu": "મારા પુત્રોને અભય આપો.",
+      "kn": "ನನ್ನ ಪುತ್ರರಿಗೆ ಅಭಯ ನೀಡಿರಿ."
+    },
+    {
+      "id": "bk-27-05",
+      "speaker": "Parashurama",
+      "hi": "इस धनुष पर बाण चढ़ाकर अपना बल दिखाओ। फिर मुझसे द्वन्द्व करो।",
+      "en": "Fit an arrow to this bow and show your strength. Then face me in a duel.",
+      "gu": "આ ધનુષ પર બાણ ચઢાવી તમારું બળ બતાવો. પછી મારી સાથે દ્વંદ્વ કરો.",
+      "kn": "ಈ ಬಿಲ್ಲಿಗೆ ಬಾಣ ಹೂಡಿ ನಿನ್ನ ಬಲ ತೋರಿಸು. ನಂತರ ನನ್ನೊಡನೆ ದ್ವಂದ್ವ ಮಾಡು."
+    },
+    {
+      "id": "bk-28-01",
+      "speaker": "Rama",
+      "hi": "पिता के सम्मान में मौन था। आपका आदर करता हूँ, पर मुझे निर्बल न समझिए।",
+      "en": "I was silent out of respect for my father. I honour you, but do not take me for powerless.",
+      "gu": "પિતાના માનમાં મૌન હતો. તમારો આદર કરું છું, પણ મને નિર્બળ ન સમજો.",
+      "kn": "ತಂದೆಯ ಗೌರವಕ್ಕಾಗಿ ಮೌನವಾಗಿದ್ದೆ. ನಿಮ್ಮನ್ನು ಗೌರವಿಸುತ್ತೇನೆ, ಆದರೆ ನನ್ನನ್ನು ಬಲಹೀನನೆಂದು ತಿಳಿಯಬೇಡಿ."
+    },
+    {
+      "id": "bk-28-01-shot-2",
+      "speaker": "Rama",
+      "hi": "अब मेरा बल देखिए।",
+      "en": "Now see my strength.",
+      "gu": "હવે મારું બળ જુઓ.",
+      "kn": "ಈಗ ನನ್ನ ಬಲ ನೋಡಿ."
+    },
+    {
+      "id": "bk-28-02-shot-2",
+      "speaker": "narrator",
+      "hi": "राम ने वैष्णव धनुष लेकर प्रत्यंचा और बाण चढ़ाया। उनका तेज देख परशुराम शान्त होने लगे।",
+      "en": "Rama took the Vaishnava bow, strung it and fitted an arrow. Recognising his radiance, Parashurama grew calm.",
+      "gu": "રામે વૈષ્ણવ ધનુષ લઈ પ્રત્યંચા અને બાણ ચઢાવ્યાં. તેમનું તેજ જોઈ પરશુરામ શાંત થવા લાગ્યા.",
+      "kn": "ರಾಮನು ವೈಷ್ಣವ ಧನುಸ್ಸು ಪಡೆದು ಹೆದೆ ಮತ್ತು ಬಾಣ ಹೂಡಿದನು. ಅವನ ತೇಜಸ್ಸು ಕಂಡು ಪರಶುರಾಮರು ಶಾಂತರಾಗತೊಡಗಿದರು."
+    },
+    {
+      "id": "bk-28-03",
+      "speaker": "Rama",
+      "hi": "आप ब्राह्मण और विश्वामित्र के सम्बन्धी हैं। मैं आपको हानि नहीं पहुँचाऊँगा।",
+      "en": "You are a Brahmin and Vishwamitra’s relative. I will not harm you.",
+      "gu": "તમે બ્રાહ્મણ અને વિશ્વામિત્રના સંબંધી છો. હું તમને હાનિ નહીં પહોંચાડું.",
+      "kn": "ನೀವು ಬ್ರಾಹ್ಮಣರು ಮತ್ತು ವಿಶ್ವಾಮಿತ್ರರ ಸಂಬಂಧಿ. ನಿಮಗೆ ಹಾನಿ ಮಾಡುವುದಿಲ್ಲ."
+    },
+    {
+      "id": "bk-28-03-shot-2",
+      "speaker": "Rama",
+      "hi": "बाण का लक्ष्य आपकी तीव्र गति हो, या तप से अर्जित लोक?",
+      "en": "Shall the arrow target your swift movement or the worlds earned through austerity?",
+      "gu": "બાણનું લક્ષ્ય તમારી તીવ્ર ગતિ હોય કે તપથી મેળવેલા લોક?",
+      "kn": "ಬಾಣವು ನಿಮ್ಮ ವೇಗದ ಸಂಚಾರವನ್ನು ಗುರಿಯಾಗಿಸಲಿ, ಅಥವಾ ತಪಸ್ಸಿನಿಂದ ಗಳಿಸಿದ ಲೋಕಗಳನ್ನೇ?"
+    },
+    {
+      "id": "bk-28-03-shot-3",
+      "speaker": "Parashurama",
+      "hi": "मेरे तप से अर्जित लोकों को लक्ष्य बनाइए।",
+      "en": "Let the worlds I have earned be your target.",
+      "gu": "મારા તપથી મેળવેલા લોકને લક્ષ્ય બનાવો.",
+      "kn": "ನಾನು ತಪಸ್ಸಿನಿಂದ ಗಳಿಸಿದ ಲೋಕಗಳನ್ನೇ ಗುರಿಯಾಗಿಸಿರಿ."
+    },
+    {
+      "id": "bk-28-04",
+      "speaker": "narrator",
+      "hi": "राम ने बाण छोड़ा। किसी मनुष्य को चोट नहीं लगी।",
+      "en": "Rama released the arrow. No person was struck.",
+      "gu": "રામે બાણ છોડ્યું. કોઈ મનુષ્યને ઈજા થઈ નહીં.",
+      "kn": "ರಾಮನು ಬಾಣ ಬಿಟ್ಟನು. ಯಾರಿಗೂ ಏಟು ಬೀಳಲಿಲ್ಲ."
+    },
+    {
+      "id": "bk-28-04-shot-2",
+      "speaker": "Parashurama",
+      "hi": "मैं आपकी महानता पहचान गया।",
+      "en": "I recognise your greatness.",
+      "gu": "હું તમારી મહાનતા ઓળખી ગયો.",
+      "kn": "ನಿಮ್ಮ ಮಹತ್ವವನ್ನು ಅರಿತೆನು."
+    },
+    {
+      "id": "bk-28-04-shot-3",
+      "speaker": "narrator",
+      "hi": "परशुराम ने सम्मान से परिक्रमा की और महेन्द्र पर्वत चले गए।",
+      "en": "Parashurama circled Rama respectfully and left for Mount Mahendra.",
+      "gu": "પરશુરામે આદરથી પ્રદક્ષિણા કરી અને મહેન્દ્ર પર્વત ચાલ્યા ગયા.",
+      "kn": "ಪರಶುರಾಮರು ಗೌರವದಿಂದ ಪ್ರದಕ್ಷಿಣೆ ಮಾಡಿ ಮಹೇಂದ್ರ ಪರ್ವತಕ್ಕೆ ಹೊರಟರು."
+    },
+    {
+      "id": "bk-29-01",
+      "speaker": "narrator",
+      "hi": "राम ने वैष्णव धनुष वरुण को सौंपा।",
+      "en": "Rama entrusted the Vaishnava bow to Varuna.",
+      "gu": "રામે વૈષ્ણવ ધનુષ વરુણને સોંપ્યું.",
+      "kn": "ರಾಮನು ವೈಷ್ಣವ ಧನುಸ್ಸನ್ನು ವರುಣನಿಗೆ ಒಪ್ಪಿಸಿದನು."
+    },
+    {
+      "id": "bk-29-01-shot-3",
+      "speaker": "narrator",
+      "hi": "दशरथ ने राहत पाकर राम को गले लगाया। दल फिर अयोध्या की ओर चला।",
+      "en": "Relieved, Dasharatha embraced Rama. The party resumed its journey to Ayodhya.",
+      "gu": "રાહત પામેલા દશરથે રામને ગળે લગાવ્યા. સમૂહ ફરી અયોધ્યા તરફ ચાલ્યો.",
+      "kn": "ನಿರಾಳನಾದ ದಶರಥನು ರಾಮನನ್ನು ಅಪ್ಪಿಕೊಂಡನು. ಬಳಗ ಮತ್ತೆ ಅಯೋಧ್ಯೆಯತ್ತ ಹೊರಟಿತು."
+    },
+    {
+      "id": "bk-29-02",
+      "speaker": "narrator",
+      "hi": "सजी अयोध्या में कौशल्या, सुमित्रा और कैकेयी ने सीता, उर्मिला, माण्डवी और श्रुतकीर्ति का स्वागत किया।",
+      "en": "In decorated Ayodhya, Kaushalya, Sumitra and Kaikeyi welcomed Sita, Urmila, Mandavi and Shrutakirti.",
+      "gu": "શણગારેલી અયોધ્યામાં કૌશલ્યા, સુમિત્રા અને કૈકેયીએ સીતા, ઊર્મિલા, માંડવી અને શ્રુતકીર્તિનું સ્વાગત કર્યું.",
+      "kn": "ಅಲಂಕರಿಸಿದ ಅಯೋಧ್ಯೆಯಲ್ಲಿ ಕೌಸಲ್ಯೆ, ಸುಮಿತ್ರೆ ಮತ್ತು ಕೈಕೇಯಿ ಸೀತೆ, ಊರ್ಮಿಳೆ, ಮಾಂಡವಿ ಮತ್ತು ಶ್ರುತಕೀರ್ತಿಯನ್ನು ಸ್ವಾಗತಿಸಿದರು."
+    },
+    {
+      "id": "bk-29-03",
+      "speaker": "narrator",
+      "hi": "कुछ समय बाद, माता-पिता की अनुमति से भरत और शत्रुघ्न मामा युधाजित के साथ ननिहाल गए।",
+      "en": "Some time later, with their parents’ permission, Bharata and Shatrughna left with Yudhajit for their maternal family’s home.",
+      "gu": "થોડા સમય પછી માતાપિતાની અનુમતિથી ભરત અને શત્રુઘ્ન મામા યુધાજિત સાથે મોસાળ ગયા.",
+      "kn": "ಸ್ವಲ್ಪ ಕಾಲದ ಬಳಿಕ ಪೋಷಕರ ಅನುಮತಿಯಿಂದ ಭರತ ಮತ್ತು ಶತ್ರುಘ್ನರು ಮಾವ ಯುಧಾಜಿತನೊಡನೆ ತಾಯಿಯ ತವರು ಮನೆಗೆ ಹೋದರು."
+    },
+    {
+      "id": "bk-29-04",
+      "speaker": "narrator",
+      "hi": "पिता के मार्गदर्शन में राम–लक्ष्मण प्रजा की सेवा करने लगे।",
+      "en": "Under their father’s guidance, Rama and Lakshmana served the people.",
+      "gu": "પિતાના માર્ગદર્શનમાં રામ–લક્ષ્મણ પ્રજાની સેવા કરવા લાગ્યા.",
+      "kn": "ತಂದೆಯ ಮಾರ್ಗದರ್ಶನದಲ್ಲಿ ರಾಮ–ಲಕ್ಷ್ಮಣರು ಪ್ರಜೆಗಳ ಸೇವೆ ಮಾಡಿದರು."
+    },
+    {
+      "id": "bk-29-04-shot-2",
+      "speaker": "narrator",
+      "hi": "राम और सीता का स्नेह गहराता गया। यहाँ बालकाण्ड की कथा पूर्ण होती है।",
+      "en": "Rama and Sita’s affection deepened. Here the story of Balakanda ends.",
+      "gu": "રામ અને સીતાનો સ્નેહ વધતો ગયો. અહીં બાલકાંડની કથા પૂર્ણ થાય છે.",
+      "kn": "ರಾಮ ಮತ್ತು ಸೀತೆಯ ಪ್ರೀತಿ ಗಾಢವಾಯಿತು. ಇಲ್ಲಿ ಬಾಲಕಾಂಡದ ಕಥೆ ಮುಗಿಯುತ್ತದೆ."
+    }
+  ]
+}

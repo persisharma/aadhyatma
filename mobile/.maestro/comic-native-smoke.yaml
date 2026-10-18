@@ -21,23 +21,18 @@ appId: com.prashantsharma.vedansh
     element: { id: "comic-episode-bk-06" }
     centerElement: true
 - tapOn: { id: "comic-episode-bk-06" }
-- assertVisible: { id: "comic-page-bk-06-01" }
+- assertVisible: { id: "comic-page-bala-plan-011" }
 - swipe:
     start: 85%, 45%
     end: 15%, 45%
     duration: 400
-- assertVisible: { id: "comic-page-bk-06-02" }
-- swipe:
-    start: 85%, 45%
-    end: 15%, 45%
-    duration: 400
-- assertVisible: { id: "comic-page-bk-06-03" }
+- assertVisible: { id: "comic-page-bala-plan-012" }
 - extendedWaitUntil:
-    visible: { id: "comic-image-bk-06-03" }
+    visible: { id: "comic-image-bk-06-04" }
     timeout: 30000
 - takeScreenshot: comic-native-vashishtha-hi
 - tapOn: { id: "lang-toggle-en" }
-- assertVisible: { id: "comic-page-bk-06-03" }
+- assertVisible: { id: "comic-page-bala-plan-012" }
 - takeScreenshot: comic-native-vashishtha-en
 - tapOn: "Back"
 - assertVisible: { id: "comic-episodes" }

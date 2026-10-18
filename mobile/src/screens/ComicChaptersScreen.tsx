@@ -9,7 +9,6 @@ import { useShare } from '@/utils/shareVerse';
 import { buildListingShare } from '@/utils/listingShare';
 import LanguageToggle from '@/components/LanguageToggle';
 import ComicArt from '@/components/ComicArt';
-import ComicLanguageNotice from '@/components/ComicLanguageNotice';
 import { comicById } from '@/data/comics';
 import { getComicBook, comicLanguage } from '@/data/comicBooks';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -43,7 +42,6 @@ export default function ComicChaptersScreen({ navigation, route }: NativeStackSc
       right={listingShare ? <ShareButton busy={shareBusy} accessibilityLabel="Share episode listing" accessibilityHint="Share the complete episode list as post, Story, or Reel cards" onPress={() => void share(listingShare, lang)} /> : null}
     />
     <View style={{ paddingBottom: spacing.md }}><LanguageToggle /></View>
-    <ComicLanguageNotice />
     <FlatList testID="comic-episodes" data={book?.episodes ?? []} extraData={lang} keyExtractor={episode => episode.id}
       contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.md, gap: spacing.md }}
       initialNumToRender={4} maxToRenderPerBatch={4} windowSize={5}
@@ -56,7 +54,7 @@ export default function ComicChaptersScreen({ navigation, route }: NativeStackSc
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
           <View style={{ width: 100, borderRadius: radii.sm, overflow: 'hidden' }}><ComicArt compact panel={episode.panels[0]} label={episode[language].title} /></View>
           <View style={{ flex: 1, gap: 5 }}>
-            <Text style={{ color: colors.saffronDeep, fontFamily: titleFontByLang(language), fontSize: typography.meaningLabel.fontSize }}>{language === 'hi' ? 'प्रसंग' : 'Episode'} {index + 1}</Text>
+            <Text style={{ color: colors.saffronDeep, fontFamily: titleFontByLang(language), fontSize: typography.meaningLabel.fontSize }}>{pick(language, { hi: 'प्रसंग', en: 'Episode', gu: 'પ્રસંગ', kn: 'ಪ್ರಸಂಗ' })} {index + 1}</Text>
             <Text style={{ color: colors.ink, fontFamily: titleFontByLang(language), fontSize: typography.cardHindi.fontSize }}>{episode[language].title}</Text>
             <Text style={{ color: colors.inkMuted, fontFamily: titleFontByLang(language === 'hi' ? 'en' : 'hi'), fontSize: typography.cardLatin.fontSize }}>{episode[language === 'hi' ? 'en' : 'hi'].title}</Text>
           </View>

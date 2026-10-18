@@ -1,41 +1,38 @@
 import type { Lang } from '@/data/gita/language';
 
-export type ComicLanguage = 'hi' | 'en';
-export type ComicCopy = { narration: string; speaker: string | null; dialogue: string | null };
-export type ComicPanel = {
-  id: string;
-  source: string;
-  hi: ComicCopy;
-  en: ComicCopy;
-  art: string;
-  sha256: string;
+export type ComicLanguage = Lang;
+export type ComicCopy = { narration: string; speaker: string | null; dialogue: string | null; note?: string };
+export type ComicPanel = Record<Lang, ComicCopy> & {
+  id: string; sourcePanel: string; source: string;
+  art: string; sha256: string;
   dimensions: { width: number; height: number };
   frame: { x: number; y: number; width: number; height: number };
-  speakerAnchor?: { x: number; review: string };
-  overlaySpeech?: boolean;
+  zone: [number, number, number, number, number];
+  mode: 'dialogue' | 'caption' | 'silent';
+  mask?: [number, number][];
 };
-export type ComicEpisode = {
-  id: string;
-  hi: { title: string; framing: string };
-  en: { title: string; framing: string };
-  panels: ComicPanel[];
-};
-export type ComicBook = { episodes: ComicEpisode[]; panelCount: number };
-
-// gu/kn have no reviewed translation. Show explicitly labelled English fallback,
-// never relabel Hindi transliteration as a translated narrative.
-export const comicLanguage = (lang: Lang): ComicLanguage => lang === 'hi' ? 'hi' : 'en';
+export type ComicEpisode = Record<Lang, { title: string; framing: string }> & { id: string; panels: ComicPanel[] };
+export type ComicReadingPage = { id: string; number: number; title: Record<Lang, string>; rows: string[][]; sourceSargas: number[] };
+export type ComicBook = { title: Record<Lang, string>; episodes: ComicEpisode[]; pages: ComicReadingPage[]; panelCount: number };
+export const comicLanguage = (lang: Lang): ComicLanguage => lang;
 export function getComicBook(id: string): ComicBook | undefined {
   if (id === 'balakanda-v1') return require('./balakanda.json') as ComicBook;
   return undefined;
 }
 export function comicPages(book: ComicBook) {
-  return book.episodes.flatMap(episode => episode.panels.map((panel, episodeIndex) => ({ panel, episode, episodeIndex })));
+  const panels = new Map(book.episodes.flatMap(episode => episode.panels.map(panel => [panel.id, { panel, episode }] as const)));
+  return book.pages.map(page => {
+    const rows = page.rows.map(row => row.map(id => {
+      const entry = panels.get(id);
+      if (!entry) throw new Error(`Unknown comic scene: ${id}`);
+      return entry.panel;
+    }));
+    const first = panels.get(page.rows[0][0])!;
+    return { ...page, rows, panel: first.panel, episode: first.episode };
+  });
 }
 export function comicPageIndex(book: ComicBook, episodeId?: string, panelId?: string): number {
-  const pages = comicPages(book);
-  const index = panelId
-    ? pages.findIndex(page => page.panel.id === panelId)
-    : pages.findIndex(page => page.episode.id === episodeId);
-  return Math.max(0, index);
+  const episode = book.episodes.find(e => e.id === episodeId);
+  const target = panelId ?? episode?.panels[0]?.id;
+  return Math.max(0, book.pages.findIndex(page => page.rows.some(row => row.includes(target ?? ''))));
 }

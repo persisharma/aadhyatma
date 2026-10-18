@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Svg, { ClipPath, Defs, Polygon, Image as SvgImage } from 'react-native-svg';
 import { ActivityIndicator, Image, Pressable, Text, View } from 'react-native';
 import type { ComicPanel } from '@/data/comicBooks';
 import manifest from '@/data/comicAssetManifest.json';
@@ -31,8 +32,11 @@ export default function ComicArt({ panel, label, compact = false }: { panel: Com
     if (!req) { setState({ art: panel.art, failed: true }); return; }
     cachedAssetUri(req).then(uri => {
       if (active) setState({ art: panel.art, uri });
-    }).catch(() => {
-      if (active) setState({ art: panel.art, failed: true });
+    }).catch(error => {
+      if (active) {
+        if (__DEV__) console.warn(`[comic-art] ${panel.art} download failed`, String(error));
+        setState({ art: panel.art, failed: true });
+      }
     });
     return () => { active = false; };
   }, [panel.art, attempt]);
@@ -41,7 +45,11 @@ export default function ComicArt({ panel, label, compact = false }: { panel: Com
   return (
     <View testID={`comic-art-${panel.id}`} onLayout={event => setWidth(event.nativeEvent.layout.width)}
       style={{ width: '100%', aspectRatio: panel.dimensions.width * panel.frame.width / (panel.dimensions.height * panel.frame.height), overflow: 'hidden', backgroundColor: colors.parchmentSoft }}>
-      {current.uri && width > 0 ? <Image testID={`comic-image-${panel.id}`} source={{ uri: current.uri }} accessibilityLabel={label}
+      {current.uri && width > 0 ? panel.mask ? <Svg width={width} height={geometry.height} accessible accessibilityLabel={label}>
+        <Defs><ClipPath id={`frame-${panel.id}`}><Polygon points={panel.mask.map(([x,y]) => `${x * width},${y * geometry.height}`).join(' ')} /></ClipPath></Defs>
+        <SvgImage testID={`comic-image-${panel.id}`} href={{ uri: current.uri }} clipPath={`url(#frame-${panel.id})`}
+          x={geometry.left} y={geometry.top} width={geometry.sheetWidth} height={geometry.sheetHeight} preserveAspectRatio="none" />
+      </Svg> : <Image testID={`comic-image-${panel.id}`} source={{ uri: current.uri }} accessibilityLabel={label}
         onError={() => setState({ art: panel.art, failed: true })} resizeMode="stretch"
         style={{ position: 'absolute', width: geometry.sheetWidth, height: geometry.sheetHeight, left: geometry.left, top: geometry.top }} />
         : <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 12 }}>

@@ -928,3 +928,16 @@ Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pa
 ## [2026-10-15] ingest | Share public listing and chapter-index cards
 
 Added a reusable listing-to-prose mapping for category, deity, purpose, katha, observance and vidhi catalogs and chapter/theme/episode indexes. Three complete rows per card preserve titles and details in all four reading languages; long indexes use labelled scopes under the ten-card share limit. The existing post, Story/Reel and carousel picker handles export; Story/Reel files are static images. Typecheck and focused share tests passed; native visual and destination checks remain pending. See [[share]].
+
+## [2026-10-16] ingest | Complete Bālakāṇḍa layout audit and pre-build storyboard
+
+Recorded140-panel/29-episode coverage,28 fresh hi/en browser-model sheets, the 62-page1–3-row planning draft, source-ID mapping and pending four-language/source/native gates in [[decisions/ramayan-comic-character-continuity]]. Planning artifacts only; no full-book art or reader implementation.
+
+
+## [2026-10-16] ingest | Complete illustrated four-language Bālakāṇḍa preview
+
+Recorded62 actual illustrated page sheets/199 distinct frames,196 live text blocks in hi/en/gu/kn,70 dialogue frames, full140-panel source ordering and per-asset prompt/hash/frame provenance in [[decisions/ramayan-comic-character-continuity]]. Browser evidence covers496 reader states and48 overview states with focused accepted-sample comparison. Repeated reference art, forced paired-panel padding and cold artwork readiness were corrected. Human editorial, independent source collation and native Standard/Large remain pending; production assets/CDN/OTA unchanged.
+
+## [2026-10-18] ingest | Integrate Bālakāṇḍa comic into the native reader
+
+Integrated the approved 62-page, 199-shot hi/en/gu/kn edition into the existing reader with grouped rows, dialog layouts, natural vertical scrolling, remote hash-cached artwork, and asset verification. iOS sampled Standard/Large flows, production asset-map exclusions, CDN object hashes, typecheck, and focused Jest suites are recorded in `docs/content-parity/ramayan-comic/balakanda-illustrated-v3/native-integration-validation.md`. Full native page-by-page review and human narrative/source approval remain open; do not merge or publish before those gates.

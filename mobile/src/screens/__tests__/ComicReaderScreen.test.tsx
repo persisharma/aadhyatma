@@ -25,7 +25,7 @@ jest.mock('@/components/ShareButton', () => ({ __esModule: true, default: 'Share
 jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, busy: false }) }));
 jest.mock('@/components/ReadingProgressBar', () => ({ __esModule: true, default: 'ReadingProgressBar' }));
 jest.mock('@/components/LanguageToggle', () => ({ __esModule: true, default: 'LanguageToggle' }));
-jest.mock('@/components/ComicPanel', () => ({ __esModule: true, default: 'ComicPanel' }));
+jest.mock('@/components/ComicPage', () => ({ __esModule: true, default: 'ComicPage' }));
 jest.mock('@/components/ComicArt', () => ({ __esModule: true, default: 'ComicArt' }));
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: mockLang }) }));
 jest.mock('@/theme/ThemeContext', () => ({ useTheme: () => ({
@@ -60,13 +60,13 @@ test('the episode index sends all 29 titles to the listing share picker', () => 
   expect(content.scopes.flatMap((scope: any) => scope.prepared.en.pages)
     .flatMap((page: any) => page.blocks.filter((block: any) => block.kind === 'heading'))).toHaveLength(29);
 });
-test('140 panels use swipe paging and unrestricted vertical scrolling without source/web controls', () => {
+test('62 grouped pages use swipe paging and unrestricted vertical scrolling without source/web controls', () => {
   const { tree, find } = mount();
-  expect(find('comic-pager').props.data).toHaveLength(140);
+  expect(find('comic-pager').props.data).toHaveLength(62);
   expect(find('comic-pager').props.horizontal).toBe(true);
   expect(find('comic-pager').props.pagingEnabled).toBe(true);
   expect(find('comic-native-reader').props.edges).toEqual(['top', 'left', 'right']);
-  for (const { panel } of comicPages(book)) expect(find(`comic-page-${panel.id}`).type).toBe('ScrollView');
+  expect(tree.root.findAllByType('ComicPage' as any)).toHaveLength(62);
   expect(tree.root.findAllByType('WebView' as any)).toHaveLength(0);
   expect(tree.root.findAllByType('Pressable' as any)).toHaveLength(0);
 });
@@ -89,11 +89,11 @@ test('swiping, language/size changes, rotation and route changes keep the intend
   act(() => tree.update(<Screen {...next} />));
   expect(find('comic-progress').props.children[0]).toBe(comicPageIndex(book, 'bk-29') + 1);
 });
-test('unknown comic is handled and regional-language fallback does not reset app language', () => {
+test('unknown comic is handled and authored regional text preserves app language', () => {
   expect(mount({ comicId: 'missing' }).find('comic-reader-error')).toBeTruthy();
   mockLang = 'gu';
   const { tree, find } = mount();
-  expect(find('comic-language-fallback')).toBeTruthy();
-  expect(tree.root.findAllByType('ComicPanel' as any).every(node => node.props.language === 'en')).toBe(true);
+  expect(tree.root.findAllByProps({testID:'comic-language-fallback'})).toHaveLength(0);
+  expect(tree.root.findAllByType('ComicPage' as any).every(node => node.props.language === 'gu')).toBe(true);
   expect(mockLang).toBe('gu');
 });
