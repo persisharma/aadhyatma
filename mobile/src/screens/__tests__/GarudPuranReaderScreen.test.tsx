@@ -21,6 +21,15 @@ jest.mock('expo-sharing', () => ({
   shareAsync: jest.fn(() => Promise.resolve()),
 }));
 
+// This suite asserts text, source disclosure and progress clamping — not the R2
+// background download. Keep the real cache (InteractionManager-deferred fetch +
+// its timers) out of these synchronous renders: its async would otherwise outlive
+// the tests. The download path itself is covered by BackgroundArtwork/shareBackgroundReady.
+jest.mock('@/utils/backgroundAssetCache', () => ({
+  subscribeBackgroundAsset: jest.fn(() => jest.fn()),
+  evictBackgroundAsset: jest.fn(() => Promise.resolve()),
+}));
+
 jest.mock('expo-linear-gradient', () => {
   return {
     LinearGradient: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>

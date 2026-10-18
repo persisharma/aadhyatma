@@ -367,7 +367,14 @@ describe('share target flow', () => {
     await act(async () => byLabel(tree, 'Card language: Kannada').props.onPress());
     await act(async () => byLabel(tree, 'Share to other apps').props.onPress());
     await settle();
-    expect(tree.root.findByType('ShareCard' as never).props.lang).toBe('kn');
+    const card = tree.root.findByType('ShareCard' as never);
+    expect(card.props.lang).toBe('kn');
+    // Finish the measurement so the capture completes. Leaving it pending keeps a
+    // 5 s timeout alive whose "could not share" Alert fires after the Jest env is
+    // torn down — a ReferenceError that fails this suite on CI's slower runner.
+    act(() => card.props.onHeight(675));
+    await settle();
+    await settle();
   });
 
   test('the Instagram-without-image error path does NOT report the moment', async () => {
