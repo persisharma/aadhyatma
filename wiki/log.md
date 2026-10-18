@@ -1025,3 +1025,7 @@ Recorded62 actual illustrated page sheets/199 distinct frames,196 live text bloc
 ## [2026-10-18] ingest | Integrate Bālakāṇḍa comic into the native reader
 
 Integrated the approved 62-page, 199-shot hi/en/gu/kn edition into the existing reader with grouped rows, dialog layouts, natural vertical scrolling, remote hash-cached artwork, and asset verification. iOS sampled Standard/Large flows, production asset-map exclusions, CDN object hashes, typecheck, and focused Jest suites are recorded in `docs/content-parity/ramayan-comic/balakanda-illustrated-v3/native-integration-validation.md`. Full native page-by-page review and human narrative/source approval remain open; do not merge or publish before those gates.
+
+## [2026-10-19] ingest | Bālakāṇḍa integrated-edition continuity audit
+
+Re-read all 62 pages/199 panel placements after the integrated edition left Rama's Siddhashrama question unanswered before the Vamana–Bali recollection. Added Vishwamitra's answer and explicit recollection/return framing in all four language drafts, with a four-language regression test. The full audit found no other high-confidence broken question/answer or cause/response transition; see `docs/content-parity/ramayan-comic/balakanda-illustrated-v3/continuity-audit-2026-10-19.md`. Human Gujarati/Kannada review, independent source collation, editorial approval, and native Standard/Large review remain open.
