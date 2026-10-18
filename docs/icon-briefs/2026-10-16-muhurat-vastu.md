@@ -39,7 +39,11 @@ Fifteen painted icons are needed to replace the last letter tiles in the app (�
 4. The palette matches the current icons placed side by side: matte burnt ochre, muted brass, warm brown outlines. No shiny yellow, vivid orange, glossy 3D or drop shadows.
 5. Deliver for each file: the master PNG and the exact prompt used. The app team exports it to the house format (512 × 512 PNG, 256-colour alpha palette, longest visible side 432 px, equal margins, alpha below 8 cleared) and records it in `mobile/assets/icons/storybook/manifest.json`.
 
-## Wiring (app team, after delivery)
+## Integration status
+
+All fifteen subjects are bundled and integrated, alongside two naming browse paintings. See [retained masters and review](../evaluations/remaining-icons-2026-10-16/README.md). Muhurat/Vastu screen-level letter exceptions have been removed; only actual numeric date content is allowed. Native Standard/Large visual review remains pending.
+
+## Wiring (completed)
 
 - Add the files to `mobile/assets/icons/storybook/` and `storybookSources.ts`.
 - `MuhuratFinderScreen`: replace `OCCASION_GLYPH` with an occasion → icon map rendering `StoryIcon`.

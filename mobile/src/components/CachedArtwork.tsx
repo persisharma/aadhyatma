@@ -3,7 +3,6 @@ import { Image, InteractionManager, StyleSheet, View, type ImageResizeMode, type
 import { NavigationContext } from '@react-navigation/native';
 import { bundledReadingFallback } from '@/data/backgroundAsset';
 import { artworkRequest, type ArtworkImage } from '@/data/artworkAsset';
-import { bundledArtworkCorrection } from '@/data/artworkCorrections';
 import { evictBackgroundAsset, subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
 import { ArtworkCaptureContext } from './ArtworkCaptureContext';
 
@@ -25,7 +24,7 @@ export default function CachedArtwork({ source, style, resizeMode = 'cover', fal
   const captureDone = useRef<(() => void) | undefined>(undefined);
   const fallbackLoaded = useRef(false);
   const remoteFailed = useRef(false);
-  const bundledSource = bundledArtworkCorrection(source) ?? (typeof source === 'number' ? source : null);
+  const bundledSource = typeof source === 'number' ? source : null;
   const visibleBundledSource = useRef(bundledSource);
   visibleBundledSource.current = bundledSource;
   const request = bundledSource === null ? artworkRequest(source) : null;

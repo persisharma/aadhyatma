@@ -1,3 +1,4 @@
+import StoryIcon from '@/components/StoryIcon';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -274,7 +275,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
         testID="muhurat-empty-reason"
         style={[styles.empty, { borderColor: colors.border, backgroundColor: colors.surface, borderRadius: radii.lg }, elevation.card]}
       >
-        <Text style={{ fontFamily: typography.thumb.fontFamily, fontSize: 20, color: colors.gold, textAlign: 'center', lineHeight: 30 }}>॥</Text>
+        <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 20, color: colors.gold, textAlign: 'center', lineHeight: 30 }}>॥</Text>
         <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.ink, textAlign: 'center', lineHeight: 24, marginTop: 4 }}>
           {contentByLang(lang, 'अगले 3 महीनों में कोई शुभ मुहूर्त नहीं', 'No auspicious muhurat in the next 3 months')}
         </Text>
@@ -376,7 +377,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
                 testID="muhurat-vastu-door"
                 leading={
                   <CardThumb>
-                    <Text style={{ color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>दि</Text>
+                    <StoryIcon name="vastu-disha" size={44} />
                   </CardThumb>
                 }
                 onPress={() => navigation.navigate('VastuDisha')}
@@ -398,7 +399,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
                   variant="flat"
                   leading={
                     <CardThumb>
-                      <Text style={{ color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily, fontSize: 18 }}>घ</Text>
+                      <StoryIcon name="ghar" size={44} />
                     </CardThumb>
                   }
                   onPress={() => {
