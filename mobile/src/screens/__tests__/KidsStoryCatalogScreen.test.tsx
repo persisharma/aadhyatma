@@ -9,9 +9,9 @@ jest.mock('react-native', () => ({
 jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: 'SafeAreaView' }));
 jest.mock('@/components/ReaderHeader', () => ({ __esModule: true, default: 'ReaderHeader' }));
 jest.mock('@/components/DeityIcon', () => ({ __esModule: true, default: 'DeityIcon' }));
-jest.mock('@/components/DeityCard', () => ({ __esModule: true, default: ({ testID, onPress }: { testID: string; onPress: () => void }) => {
+jest.mock('@/components/DeityCard', () => ({ __esModule: true, default: ({ testID, onPress, iconKey }: { testID: string; onPress: () => void; iconKey?: string }) => {
   const React = require('react');
-  return React.createElement('Pressable', { testID, onPress });
+  return React.createElement('Pressable', { testID, onPress, iconKey });
 } }));
 jest.mock('@/components/KidsStoryArt', () => ({ __esModule: true, default: 'KidsStoryArt' }));
 jest.mock('@/components/LanguageToggle', () => ({ __esModule: true, default: 'LanguageToggle' }));
@@ -52,6 +52,8 @@ test('library shows the Ramayana comic card and opens the native comic shelf', (
   act(() => { tree = TestRenderer.create(<Library navigation={navigation} />); });
   const card = tree.root.findAllByType('Pressable' as any).find(node => node.props.testID === 'kids-story-comic-balakanda-v1');
   expect(card).toBeTruthy();
+  // RULEBOOK §3: the comic card shows painted art (Rama's bow-arrow), not a Devanagari letter tile.
+  expect(card!.props.iconKey).toBe('bowArrow');
   act(() => card!.props.onPress());
   expect(navigation.navigate).toHaveBeenCalledWith('ComicChapters', { comicId: 'balakanda-v1' });
   act(() => tree.unmount());
