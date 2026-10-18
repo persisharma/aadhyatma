@@ -10,6 +10,8 @@ In the draft, `bk-09-02` teaches withdrawal of weapons (1.28), then `bk-09-03` i
 
 Proposed correction, awaiting content review: show the resumed journey and Rama's question; establish Vishwamitra as the narrator of a past event; then enter the Vamana scene; return explicitly to the present-day hermitage. Allocate additional panels rather than compressing the bridge into unrelated artwork. Inspect whether the one-panel Vamana retelling itself adequately conveys the requested land, action and consequence.
 
+**Follow-up, 2026-10-19:** The integrated four-language edition still left Rama's question unanswered before showing Vamana. Page 17 now gives Vishwamitra's answer and introduces the Vamana–Bali account in a caption on the existing approach scene, then returns to the present with the Siddhashrama arrival panel. The same bridge is authored in Hindi, English, Gujarati and Kannada; the art, panel count and row order are unchanged. A text/order regression test covers the transition. The new wording remains an adaptation draft pending human editorial review; independent source collation is still open.
+
 ## Tataka: the decisive action and outcome are not visually established
 
 `bk-08-03` shows an ongoing attack. `bk-08-04` says Rama's arrow killed Tataka, but its art brief requests only an aftermath with Tataka obscured. The selected `bk-08-v1.png` goes straight to the sage and princes standing in a calm forest; Tataka's fall is not visible. The reader must infer the entire decisive action from the caption.
