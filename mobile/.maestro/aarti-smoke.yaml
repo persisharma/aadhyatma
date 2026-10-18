@@ -103,7 +103,7 @@ appId: com.prashantsharma.vedansh
     text: "Start over from the beginning"
     optional: true
 - assertVisible: "जय आद्या शक्ति, मा जय आद्या शक्ति.*"
-# Reach the preserved signature, then all three restored closing pages.
+# Reach stanza 18 (unity), then signature, service and mandap in order.
 - repeat:
     times: 17
     commands:
@@ -112,10 +112,10 @@ appId: com.prashantsharma.vedansh
           end: "20%, 45%"
           duration: 600
       - waitForAnimationToEnd: { timeout: 1000 }
-- assertVisible: "शिवशक्तिनी आरती.*"
+- assertVisible: "एकमे एक स्वरूप.*"
 - swipe: { start: "80%, 45%", end: "20%, 45%", duration: 600 }
 - waitForAnimationToEnd
-- assertVisible: "एकमे एक स्वरूप.*"
+- assertVisible: "शिवशक्तिनी आरती.*"
 - swipe: { start: "80%, 45%", end: "20%, 45%", duration: 600 }
 - waitForAnimationToEnd
 - assertVisible: "भाव न जाणुं.*"

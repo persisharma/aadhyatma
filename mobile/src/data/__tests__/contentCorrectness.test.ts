@@ -606,8 +606,8 @@ assert.deepEqual(
 
 // ─── 10e. Jay Adhya Shakti canonical structure ──────────────────────────────
 // Shivanand Swami's Gujarati Amba aarti, stored in Devanagari so the gu reading
-// language restores the Gujarati exactly. The original eighteen stanzas stay
-// in place; three sourced closing stanzas extend the familiar sung edition.
+// language restores the Gujarati exactly. Closing positions 18–21 follow
+// the maintainer's order: unity, signature, service, mandap.
 
 const jayAdhyaShakti = readJson('aarti/jay-adhya-shakti.json');
 assert.equal(jayAdhyaShakti.verses.length, 21, 'Jay Adhya Shakti should have 21 stanzas');
@@ -620,14 +620,14 @@ assert.ok(
   `Jay Adhya Shakti should open with "जय आद्या शक्ति", got: "${jayAdhyaShakti.verses[0].lines[0]}"`
 );
 assert.ok(
-  jayAdhyaShakti.verses[17].lines.join(' ').includes('भणे शिवानंद स्वामी'),
-  'Jay Adhya Shakti preserves its Shivanand Swami signature at jas-18'
+  jayAdhyaShakti.verses[18].lines.join(' ').includes('भणे शिवानंद स्वामी'),
+  'Jay Adhya Shakti displays its jas-18 signature at position 19'
 );
 assert.ok(
-  jayAdhyaShakti.verses.slice(18).map((v: any) => v.lines[0]).every(
-    (line: string, i: number) => line.startsWith(['एकमे एक स्वरूप', 'भाव न जाणुं', 'मानो मंडप लाल गुलाल'][i])
+  jayAdhyaShakti.verses.slice(17).map((v: any) => v.lines[0]).every(
+    (line: string, i: number) => line.startsWith(['एकमे एक स्वरूप', 'शिवशक्तिनी आरती', 'भाव न जाणुं', 'मानो मंडप लाल गुलाल'][i])
   ),
-  'Jay Adhya Shakti includes all three sourced closing stanzas in order'
+  'Jay Adhya Shakti closing order is unity, signature, service, mandap'
 );
 assert.ok(
   jayAdhyaShakti.verses.every((v: any) => /[\u0A80-\u0AFF]/.test(v.meaningGu ?? '')),
