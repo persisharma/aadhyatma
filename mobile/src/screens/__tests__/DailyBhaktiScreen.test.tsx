@@ -1,6 +1,6 @@
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { View as mockView } from 'react-native';
+import { Text, View as mockView } from 'react-native';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import ReadingArtwork from '@/components/ReadingArtwork';
 import ReadingBanner from '@/components/ReadingBanner';
@@ -88,5 +88,33 @@ test('verse card keeps the source background and a compact divider without a ban
   expect(tree!.root.findAllByType(ReadingArtwork)).toHaveLength(0);
   expect(tree!.root.findAllByType(ReadingBanner)).toHaveLength(0);
   expect(tree!.root.findByType(Ornament).props.compact).toBe(true);
+  act(() => tree!.unmount());
+});
+
+test('the language toggle re-languages the verse card in place', () => {
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="hi">
+        <ShareProvider>
+          <DailyBhaktiScreen />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+
+  const texts = () =>
+    tree!.root.findAllByType(Text).map((node) => [node.props.children].flat().join(''));
+  const toggle = (value: string) =>
+    tree!.root.find((node) => node.props.testID === `lang-toggle-${value}` && !!node.props.onPress);
+
+  expect(toggle('hi').props.accessibilityState).toEqual({ selected: true });
+  expect(texts()).toContain('· Meaning');
+
+  act(() => toggle('en').props.onPress());
+
+  expect(toggle('en').props.accessibilityState).toEqual({ selected: true });
+  expect(texts()).toContain('· अर्थ');
   act(() => tree!.unmount());
 });

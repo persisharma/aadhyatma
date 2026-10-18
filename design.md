@@ -839,7 +839,7 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 ## 16. Component: Language Toggle
 
-**Purpose.** Single source of truth for the app-wide reading language. Used on the Chapters Index (Section 15) and in every reader's persistent toggle row (Section 9).
+**Purpose.** Single source of truth for the app-wide reading language. Used on the Chapters Index (Section 15), in every reader's persistent toggle row (Section 9), and directly above the Daily Bhakti verse card (Section 23).
 
 **Shape.** A deliberate **two-segment** pill (`LanguageToggle.tsx`): the left segment is the user's **chosen regional language** — Hindi by default, or Gujarati/Kannada if picked in the More-tab **language picker sheet** (`regionalLang`) — the right segment is always **English**. The segments come from `[regionalMeta, EN_META]` over the `LANGUAGES` metadata array; all four languages never render at once in the reader — gu/kn are chosen in More and then occupy the regional slot. The active segment is tinted with `saffron-tint` and typed in `saffron-deep`; the inactive segment is transparent and typed in `ink-muted`. Pressed (inactive) drops opacity to 0.7.
 
@@ -1010,7 +1010,8 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
    - **"Not now" (✕, 36×44 target)** rests the reminder ask for `NUDGE_SNOOZE_DAYS = 15` (the §38 cadence) and ends the widget ask for good — the app cannot see a placed widget, so a re-offer would keep nagging people who already have one (the gallery stays in More); the other ask takes the slot. **Widget add:** Android pins via `requestPinWidget('verse')` (a launcher that cannot pin → `MoreTab → WidgetGallery`); iOS opens a **how-to sheet** — transparent `Modal`, `rgba(26,14,3,0.45)` backdrop, `parchmentSoft` sheet with 24 top radius, the verse widget facsimile on its wide sketch plate in `WIDGET_TEXT_TOKENS` (§59), three numbered WidgetKit steps naming "Vedansh · Verse" and the recommended size, a `saffronDeep` pill **Got it**, and a *See all widgets* link to the gallery. A completed add flow (Android pin accepted, iOS Got it / See all widgets) ends the widget ask for good — the OS never reports placement.
    - **Spec.** Row, `parchmentSoft` with a 1px `goldChipBg` border, `radii.md`, 8 vertical / 12 left padding, 12 below. 34px disc (`saffronTint`; `goldTint` + `inkMuted` icon when blocked) holding `AppIcon` `bell` / `widgets` at 18. Title 14/20 (`cardHindi` face, script serif for gu/kn), subtitle 12 script serif or 14 Cormorant italic for en, both `ink`/`inkMuted`. Action: `saffronDeep` pill, `onPrimary` 13 text, min-height 40. Persisted under `@vedansh/daily-bhakti-nudge` (`reminderDismissedAt`, `widgetDismissedAt`, `widgetAddedAt`).
    - **Test ids.** `daily-bhakti-nudge-{reminder|reminderBlocked|widget}` plus `-action` / `-dismiss`; sheet `daily-bhakti-widget-sheet`, `-done`, `-gallery`.
-4. **Verse card** (centered, 28px side margins):
+4. **Language toggle** (Oct 2026) — the full-size §16 `LanguageToggle`, centred, 12px above the verse card (below the setup strip when one is up). Same global, persisted `lang` as the readers' toggle row, so a flip re-languages the card in place (pill, verse script, meaning, footer) and carries to the share card and every reader. Test ids `lang-toggle-{hi|en|gu|kn}`.
+5. **Verse card** (centered, 28px side margins):
    - Background: `parchment-soft` base + the verse's own reader-page plate through `BackgroundLayer` (`getReaderBackground(sourceId, { stanza: chapter })`, with the parchment overlay), clipped with `overflow: hidden` — the same plate as its reader page and share card. No illustration banner on the daily reading card.
    - Border: 1px `divider`
    - Shadow: `md` (runtime: **`elevation.raised`** — was an inline `0.14/24` shadow until July 2026)
@@ -1023,7 +1024,7 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
      - Meaning label: single-language `भावार्थ` / `Meaning` (same treatment as Section 9)
      - Meaning body: meaning token for the reading language, `ink-soft`
      - **Card footer row**: source name on the left (Cormorant 12 400 italic / script serif, `ink-muted` — no "From" prefix) · an inline **`↻ next`** text pressable on the right (14px, `saffron`) that picks a new random verse. There is no separate 40px refresh circle or attribution line below the card
-5. **Routine banner** (§30) docked above the tab bar. This is now the **only** screen that docks it — Home moved its banner inline (July 2026) to de-clutter its scroll, but Daily Bhakti's single centred verse card has no comparable inline seam, so the docked chip stays here.
+6. **Routine banner** (§30) docked above the tab bar. This is now the **only** screen that docks it — Home moved its banner inline (July 2026) to de-clutter its scroll, but Daily Bhakti's single centred verse card has no comparable inline seam, so the docked chip stays here.
 
 **Gradient background:** same as Home.
 

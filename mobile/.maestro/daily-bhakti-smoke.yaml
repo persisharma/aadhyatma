@@ -20,7 +20,9 @@
 #   4. Global reading-language switching reflects on the screen.
 #   5. A pinned Gita verse exposes its meaning immediately at Standard size,
 #      without spending the viewport on an illustration; Large remains scrollable.
-#   6. The setup strip (design.md §23), when up, rests on "Not now". It is
+#   6. The in-screen reading-language toggle (design.md §16/§23) re-languages
+#      the card: Hindi hides the English meaning, English brings it back.
+#   7. The setup strip (design.md §23), when up, rests on "Not now". It is
 #      state-dependent: _launch.yaml grants notifications (no reminder ask) and
 #      Expo Go has no widget extension (no widget ask), so it is usually absent;
 #      a dev build shows the widget ask. Both branches are conditional so either
@@ -109,6 +111,14 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Share verse"
 - assertVisible: "Share to other apps"
 - tapOn: "Cancel"
+
+# ── Step 4b: The card's own language toggle flips the reading in place ──
+- tapOn: { id: "lang-toggle-hi" }
+- waitForAnimationToEnd
+- assertNotVisible: "Your right is only to work.*"
+- tapOn: { id: "lang-toggle-en" }
+- waitForAnimationToEnd
+- assertVisible: "Your right is only to work.*"
 
 # ── Step 5: Large keeps the whole reading reachable at the same type scale ──
 - runFlow: _open-settings.yaml

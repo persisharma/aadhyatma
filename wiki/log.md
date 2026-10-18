@@ -1008,3 +1008,7 @@ verified byte-identical public responses, then activated their hashes: Garud Pur
 `artworkCorrections.ts` override was removed. Updated [[integrations/reading-artwork]] and
 [[subsystems/readers]]. Remaining bundled images are UI/offline by design (Storybook and More
 icons, widget gallery plates, celestial chakra, the paper fallback).
+
+## [2026-10-17] ingest | Language toggle on the Daily Bhakti card
+
+Daily Bhakti now carries the full-size §16 `LanguageToggle`, centred directly above the verse card (below the setup strip), so the reading language flips in place without a trip to More. Placed above the card rather than in its header row: header actions plus a compact toggle would leave the source pill ~100pt on a 375pt phone. Same global `lang`, so it also drives the share card. Updated design.md §16/§23, `DailyBhaktiScreen.test.tsx` (toggle re-languages the card) and `daily-bhakti-smoke.yaml` Step 4b (not run — no simulator).
