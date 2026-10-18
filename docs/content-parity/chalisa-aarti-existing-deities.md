@@ -1,6 +1,6 @@
 # Chalisa and Aarti content parity — existing deities only
 
-Research snapshot: **2026-07-31**
+Research snapshot: **2026-07-31** · status updated **2026-10-15**
 
 ## Scope
 
@@ -21,7 +21,7 @@ Status legend:
 - **HOLD** — identity, variant, provenance, or copyright requires a human
   editorial decision before transcription.
 
-The two Khatu Shyam rows (`khatu-shyam-chalisa`, `khatu-shyam-aarti`) are wired into the reader (October 2026), and the two Lakshmi rows marked **SHIPPED** ship in 1.5.0 from their two-source June collation. The maintainer accepted each on one supplied source (RULEBOOK §11.1 exception), so their second-source collation is still pending. No other row is `active`. RULEBOOK §10 still requires a complete two-source
+The two Khatu Shyam rows (`khatu-shyam-chalisa`, `khatu-shyam-aarti`) are wired into the reader (October 2026), the two Lakshmi rows ship in 1.5.0, and Shani Aarti, Marathi Dattatreya Aarti and Surya Chalisa are marked **SHIPPED** in 1.5.2. The maintainer accepted the Khatu Shyam rows on one supplied source (RULEBOOK §11.1 exception), so their second-source collation is still pending. RULEBOOK §10 still requires a complete two-source
 comparison, source metadata, clean romanization, and per-verse Hindi and English
 meanings before reader integration.
 
@@ -40,17 +40,18 @@ meanings before reader integration.
 | `lakshminarayan-chalisa` | लक्ष्मीनारायण चालीसा · Lakshminarayan Chalisa | `vishnu`, `lakshmi` | To be fixed after variant review | No acceptable independent pair found | **HOLD** — prove it is distinct from Vishnu Chalisa before adding. |
 | `kartikeya-chalisa` | कार्तिकेय चालीसा · Kartikeya Chalisa | `kartikeya` | Variant-dependent | [Sri Mandir](https://www.srimandir.com/articles/chalisa/kartikeya-chalisa) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-kartikeya-chalisa) | **HOLD** — the sources publish different compositions/openings. Select an attributed traditional edition first. |
 | `narasimha-chalisa` | नरसिंह चालीसा · Narasimha Chalisa | `narasimha` | `मास वैशाख कृतिका युत, हरण मही को भार` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/lord-narasimha/narasimha-chalisa.html?lang=hi) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-narsingh-chalisa) | **2C** |
+| `navagraha-chalisa` | नवग्रह चालीसा · Navagraha Chalisa | `navagraha` | `श्री गणपति गुरुपद कमल, प्रेम सहित सिरनाय` | [HinduNidhi](https://hindunidhi.com/navgrah-chalisa-hindi/) · [BhaktiBharat](https://www.bhaktibharat.com/chalisa/shri-navgrah-chalisa) · [DrikPanchang, blocked](https://www.drikpanchang.com/lyrics/chalisa/navagraha/navagraha-chalisa.html?lang=hi) | **2C** — two reachable HTML candidates share the opening and closing, including the सुन्दरदास signature; full line-by-line collation, source independence and meanings are pending. Added 2026-10-15; Drik returned HTTP 403. |
 | `parvati-chalisa` | पार्वती चालीसा · Parvati Chalisa | `parvati` | `जय गिरि तनये दक्षजे, शम्भु प्रिये गुणखानि` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/parvati-mata/parvati-mata-chalisa.html?lang=hi) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-parvati-chalisa) | **2C** |
 | `radha-chalisa` | राधा चालीसा · Radha Chalisa | `radha` | Fix to the Drik/Pavitra shared opening during collation | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/shri-radha/shri-radha-chalisa.html?lang=hi) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-radha-chalisa) | **2C** |
 | `santoshi-mata-chalisa` | संतोषी माता चालीसा · Santoshi Mata Chalisa | `durga` | `श्री गणपति पद नाय सिर, धरि हिय शारदा ध्यान` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/santoshi-mata/santoshi-mata-chalisa.html?lang=hi) · [Ved Puran scan](https://vedpuran.net/wp-content/uploads/2021/05/santoshi-maa-chalisa.pdf) | **2C** — other sites publish a different opening; keep this composition isolated. |
 | `satyanarayan-chalisa` | सत्यनारायण चालीसा · Satyanarayan Chalisa | `vishnu` | To be fixed after variant review | [Bhakti Pulse](https://www.bhaktipulse.com/post-96.html) | **HOLD** — only one weak source found; check whether it is merely Vishnu Chalisa retitled. |
 | `shani-chalisa` | शनि चालीसा · Shani Chalisa | `shani` | `जयति जयति शनिदेव दयाला` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/lord-shani/other/shani-dev-chalisa.html?lang=hi) · [Sanskrit Documents](https://sanskritdocuments.org/doc_z_otherlang_hindi/shani40.html) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-shani-chalisa) | **2C** — strongest first-batch candidate. There is also a second Shani Chalisa; do not merge versions. |
 | `shrinathji-chalisa` | श्रीनाथजी चालीसा · Shrinathji Chalisa | `krishna` | Unresolved | No acceptable public-domain text pair found | **HOLD** — search results point to commercial recordings with named modern lyricists. Obtain permission or a clearly public-domain temple edition. |
-| `surya-chalisa` | सूर्य चालीसा · Surya Chalisa | `surya` | `कनक बदन कुण्डल मकर, मुक्ता माला अंग` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/lord-surya/surya-deva-chalisa.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/shri-surya-dev-chalisa-hindi/) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-surya-chalisa) | **2C** — strongest first-batch candidate. |
+| `surya-chalisa` | सूर्य चालीसा · Surya Chalisa | `surya` | `कनक बदन कुण्डल मकर, मुक्ता माला अंग` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/lord-surya/surya-deva-chalisa.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/shri-surya-dev-chalisa-hindi/) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-surya-chalisa) | **SHIPPED 1.5.2** — 42 verses (opening doha, 40 chaupais, closing doha), collated against HinduNidhi and Pavitra Granth. The one जोजन/योजन variant is recorded in the JSON. |
 | `vaishno-devi-chalisa` | वैष्णो देवी चालीसा · Vaishno Devi Chalisa | `durga` | `गरुड़ वाहिनी वैष्णवी, त्रिकुटा पर्वत धाम` | [DrikPanchang](https://www.drikpanchang.com/lyrics/chalisa/vaishno-mata/vaishno-mata-chalisa.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/mata-vashno-devi-chalisa-hindi/) · [Pavitra Granth](https://pavitragranth.com/chalisa/shree-vaishno-chalisa) | **2C** — tag `durga`; no Vaishno deity id. |
 | `vindhyeshwari-chalisa` | विन्ध्येश्वरी चालीसा · Vindhyeshwari Chalisa | `durga` | `नमो नमो विन्ध्येश्वरी, नमो नमो जगदम्ब` | [Sanskrit Documents](https://sanskritdocuments.org/doc_devii/vindhyeshvarIchAlIsA.html) · [HinduNidhi](https://hindunidhi.com/vindhyeshvari-chalisa-hindi/) · [Sri Mandir](https://www.srimandir.com/articles/chalisa/vindhyeshwari-chalisa) | **2C** — strongest first-batch candidate. |
 
-Chalisa acquisition result: **14 `2C`, 6 `HOLD`, 0 `1C`**.
+Chalisa status: **12 `2C`, 6 `HOLD`, 1 `WIRED · collation pending`, 2 `SHIPPED`**.
 
 ## Aartis
 
@@ -58,7 +59,7 @@ Chalisa acquisition result: **14 `2C`, 6 `HOLD`, 0 `1C`**.
 |---|---|---|---|---|---|
 | `badrinath-aarti` | बद्रीनाथ आरती · Badrinath Aarti | `vishnu` | `जय जय श्री बदरीनाथ जयति योग ध्यानी` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/lord-narayan/lord-badarinatha-aarti.html?lang=hi) | **1C** — obtain a Badrinath temple/trust or second established source. |
 | `banke-bihari-aarti` | बाँके बिहारी आरती · Banke Bihari Aarti | `krishna` | `श्री बाँकेबिहारी तेरी आरती गाऊँ` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/lord-krishna/shri-banke-bihari-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/bankebihari-aarti-hindi/) | **2C** — distinct from the existing Aarti Kunj Bihari Ki. |
-| `dattatreya-aarti` | दत्तात्रेय आरती · Dattatreya Aarti | `dattatreya` | `त्रिगुणात्मक त्रैमूर्ति दत्त हा जाणा` | [Sanskrit Documents Marathi Aarti collection](https://sanskritdocuments.org/marathi/documents/maaratii.pdf) · [Sanatan Sanstha](https://www.sanatan.org/en/a/129.html) · [Hindu Janajagruti](https://www.hindujagruti.org/hindi/hinduism/hindu-gods/dattatreya/shri-dattas-arati) | **2C** — Marathi in Devanagari, attributed to Sant Eknath; meanings must explicitly preserve the source language. |
+| `dattatreya-aarti` | दत्तात्रेय आरती · Dattatreya Aarti | `dattatreya` | `त्रिगुणात्मक त्रैमूर्ति दत्त हा जाणा` | [Hindu Janajagruti](https://www.hindujagruti.org/hindi/hinduism/hindu-gods/dattatreya/shri-dattas-arati) · [BhajanUSA](https://www.bhajanusa.com/bhajans/trigunatmaktrimurtidatta/) · [Sanatan Sanstha](https://www.sanatan.org/en/a/129.html) · [Sanskrit Documents Marathi Aarti collection, not collated](https://sanskritdocuments.org/marathi/documents/maaratii.pdf) | **SHIPPED 1.5.2** — Sant Eknath's Marathi aarti; 18 lines, four stanzas and a refrain. Three HTML hosts checked on 2026-10-15; the PDF has no extractable text and is not cited as a checked edition in the JSON. |
 | `dwarkadhish-aarti` | द्वारकाधीश आरती · Dwarkadhish Aarti | `krishna` | `जय द्वारकाधीश हरे, प्रभु जय द्वारकाधीश हरे` | No acceptable source outside the parity site found | **HOLD** — do not transcribe the competitor's unattributed composition. |
 | `ganga-aarti` | गंगा आरती · Ganga Aarti | `ganga` | `ॐ जय गंगे माता, मैया जय गंगे माता` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/ganga-mata/ganga-mata-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/deities/ganga/) | **2C** |
 | `kali-aarti` | काली आरती · Kali Aarti | `kali` | `मंगल की सेवा, सुन मेरी देवा` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/kali-mata/mahakali-mata-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/shri-kali-mata-ki-aarti-hindi/) | **2C** — HinduNidhi also labels it a bhajan; retain the Aarti identity used by Drik. |
@@ -69,16 +70,16 @@ Chalisa acquisition result: **14 `2C`, 6 `HOLD`, 0 `1C`**.
 | `ramayan-aarti` | रामायणजी की आरती · Ramayanji Aarti | `rama` | `आरती श्री रामायण जी की, कीरति कलित ललित सिया-पी की` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/shree-ramayan/shree-ramayan-aarti.html?lang=hi) · [HinduNidhi Aarti Sangrah](https://hindunidhi.com/aarti-sangrah/) | **2C** — this is not the app's current `ram-aarti` alias to Ram Stuti. Use a new canonical id and migrate/rename the misleading alias separately. |
 | `santoshi-mata-aarti` | संतोषी माता आरती · Santoshi Mata Aarti | `durga` | `जय सन्तोषी माता, मैया जय सन्तोषी माता` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/santoshi-mata/santoshi-mata-aarti.html?lang=hi) · [HinduNidhi Aarti Sangrah](https://hindunidhi.com/aarti-sangrah/) | **2C** |
 | `satyanarayan-aarti` | सत्यनारायण आरती · Satyanarayan Aarti | `vishnu` | `जय लक्ष्मीरमणा श्री जय लक्ष्मीरमणा` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/lord-narayan/shree-satyanarayan-aarti.html?lang=hi) · [HinduNidhi Aarti Sangrah](https://hindunidhi.com/aarti-sangrah/) | **2C** — preserve the Satyanarayan narrative stanzas; do not merge with an unattributed generic Vishnu variant. |
-| `shani-aarti` | शनि आरती · Shani Aarti | `shani` | `जय जय श्री शनिदेव भक्तन हितकारी` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/lord-shanidev/shri-shanidev-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/shanidev-aarti-hindi/) | **2C** |
+| `shani-aarti` | शनि आरती · Shani Aarti | `shani` | `जय जय श्री शनिदेव भक्तन हितकारी` | [HinduNidhi](https://hindunidhi.com/shanidev-aarti-hindi/) · [Sanskrit Documents, appended after Shani Chalisa](https://sanskritdocuments.org/doc_z_otherlang_hindi/shani40.html) · [Navbharat Times](https://navbharattimes.indiatimes.com/astro/religion-rituals/arti-bhajan/shanidev-aarti-in-hindi/articleshow/91101853.cms) | **SHIPPED 1.5.2** — five stanzas, collated line by line on 2026-10-15; source variants recorded in JSON. DrikPanchang returned HTTP 403 in the authoring environment. |
 | `sheetala-mata-aarti` | शीतला माता आरती · Sheetala Mata Aarti | `durga` | `जय शीतला माता, मैया जय शीतला माता` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/shitala-mata/shitala-mata-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/sheetla-mata-aarti-hindi/) | **2C** — tag `durga`; no Sheetala deity id. |
 | `shrinathji-aarti` | श्रीनाथजी आरती · Shrinathji Aarti | `krishna` | Competitor begins `जय श्रीनाथजी प्रभु` | No acceptable temple/tradition edition matching that composition found | **HOLD** — the parity text looks like a modern unattributed synthesis. Obtain a Nathdwara/Pushtimarg edition and rights confirmation. |
 | `tulsi-aarti` | तुलसी आरती · Tulsi Aarti | `vishnu` | `जय जय तुलसी माता, सबकी सुखदाता वर माता` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/tulasi-mata/tulasi-mata-aarti.html?lang=hi) · [HinduNidhi](https://hindunidhi.com/tulasi-mata-ki-aarti-hindi/) | **2C** — `vishnu` is a catalog association, not a new Tulsi deity. |
 | `vaishno-devi-aarti` | वैष्णो देवी आरती · Vaishno Devi Aarti | `durga` | `जय वैष्णवी माता, मैया जय वैष्णवी माता` | [DrikPanchang](https://www.drikpanchang.com/lyrics/aarti/vaishno-mata/vaishno-mata-aarti.html?lang=hi) · [HinduNidhi Aarti Sangrah](https://hindunidhi.com/aarti-sangrah/) | **2C** |
 | `vishnu-lakshmi-ramana-aarti` | विष्णु आरती · Vishnu Aarti (Om Jai Lakshmi Ramana) | `vishnu` | Competitor begins `ॐ जय लक्ष्मी रमणा, स्वामी जय लक्ष्मी रमणा` | No independent source matching the competitor's generic eight-stanza version found | **HOLD** — the established Satyanarayan Aarti has a similar refrain but different narrative. Do not create a duplicate/composite. |
 
-Aarti acquisition result: **14 `2C`, 2 `1C`, 3 `HOLD`**.
+Aarti status: **10 `2C`, 2 `1C`, 3 `HOLD`, 1 `WIRED · collation pending`, 3 `SHIPPED`**.
 
-## What is ready to gather first
+## Original gathering order (historical)
 
 The first transcription batch should be small enough for line-by-line review:
 
@@ -91,9 +92,36 @@ The first transcription batch should be small enough for line-by-line review:
 7. `shani-aarti`
 8. `dattatreya-aarti`
 
-These have the clearest source identity and at least two independent candidates.
-This ordering does not imply devotional importance; it minimizes variant and
-rights risk.
+This was the July 2026 acquisition order, not the current ship queue. Row statuses
+above show which texts are now wired or shipped. The order does not imply devotional
+importance; it reflected the source and rights risk at the time.
+
+## 2026-10-15 source-access audit for the eleven missing deities
+
+- `www.drikpanchang.com` returned HTTP 403 for every direct candidate probed.
+  SanskritDocuments, Pavitra Granth, HinduNidhi, Sanatan Sanstha and Hindu
+  Janajagruti returned HTTP 200 with usable text on their HTML candidate pages.
+- `shani-chalisa` remains out: the reachable SanskritDocuments closing doha is
+  visibly corrupted and differs from Pavitra Granth/HinduNidhi's closing;
+  the independent full ending is unresolved.
+- `ganga-chalisa` has reachable HinduNidhi and Pavitra Granth text, but their
+  opening chaupais already have several substantive word variants. The full
+  recension and per-verse editorial meanings remain unapproved. `surya-chalisa`
+  has now passed its 42-unit collation and is shipped with the one recorded variant.
+  `navagraha-chalisa` has reachable HinduNidhi and
+  BhaktiBharat candidates with matching opening and closing; its full collation
+  and source-lineage review are pending. Ganga and Navagraha Chalisa have not been wired.
+- `kali-chalisa`, `kali-aarti`, `ganga-aarti`, `parvati-chalisa`,
+  `radha-chalisa`, `kubera-chalisa`, `narasimha-chalisa`, and
+  `annapurna-chalisa` each lose a required manifest source to Drik's 403.
+  `narasimha-aarti` also has only the blocked Drik candidate in this manifest.
+- `dattatreya-chalisa`, `kartikeya-chalisa`, and `gauri-chalisa` remain HOLD
+  under the editorial-identity rule; the other HOLD rows outside these eleven
+  deities remain unchanged.
+- Searches for Surya, Radha, Kartikeya, Kubera, Parvati and Navagraha aartis
+  surfaced different openings or poorly attributed/modern texts. None passed
+  the complete, independent two-source identity gate in this pass. This is a
+  research outcome, not a claim that no such traditional aarti exists.
 
 ## Acquisition-to-reader gate
 

@@ -142,6 +142,16 @@ describe('KulParamparaScreen', () => {
   });
 });
 
+test('custom Kuldevta keeps the entered name and uses decorative shared deity art', async () => {
+  await saveKulRecord({ kuldev: { kind: 'kuldevta', customName: 'Shri Jwala Dev' } });
+  const nav = { navigate: jest.fn(), goBack: jest.fn() };
+  const tree = await render(<KulParamparaScreen navigation={nav as never} route={{ key: 'custom', name: 'KulParampara' } as never} />);
+  expect(allText(tree)).toContain('Shri Jwala Dev');
+  expect(tree.root.findByProps({ testID: 'storybook-deity' }).props.accessible).toBe(false);
+  act(() => byLabel(tree, 'Edit kul parampara').props.onPress());
+  expect(nav.navigate).toHaveBeenCalledWith('KulParamparaEdit');
+});
+
 describe('KulParamparaEditScreen', () => {
   const route = { key: 'e', name: 'KulParamparaEdit' } as never;
 

@@ -38,7 +38,7 @@ export default function ComicReaderScreen({ route, navigation }: NativeStackScre
       <Text testID="comic-progress" style={{ ...typography.pageCounter, color: colors.inkMuted, textAlign: 'right', minWidth: 48 }}>{index + 1} / {pages.length}</Text>} />
     {book ? <>
       <ReadingProgressBar current={index + 1} total={pages.length} />
-      <View style={{ paddingVertical: 8 }}><LanguageToggle compact /></View>
+      <View style={{ paddingVertical: 8 }}><LanguageToggle /></View>
       <View style={{ flex: 1 }} onLayout={event => { if (event.nativeEvent.layout.width > 0) setPageWidth(event.nativeEvent.layout.width); }}>
         <FlatList testID="comic-pager" key={pageWidth} ref={pager} data={pages} extraData={{ language, typography }} keyExtractor={page => page.id}
           horizontal pagingEnabled directionalLockEnabled showsHorizontalScrollIndicator={false} initialScrollIndex={index}

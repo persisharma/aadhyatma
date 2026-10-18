@@ -1,11 +1,13 @@
 # Aarti Category Smoke Test
 #
-# Verifies the Aarti category and its 12 active sections render correctly.
+# Verifies the 14 entries from main; aarti-expansion-smoke.yaml covers the
+# nine appended compositions plus the reused Shani aarti at Standard/Large.
 # Sections: Om Jai Jagdish Hare, Hanuman Ji Ki Aarti, Jai Ganesh Deva,
 #           Om Jai Shiv Omkara, Jai Ambe Gauri, Aarti Kunj Bihari Ki,
 #           Saraswati Mata Ki Aarti, Gayatri Mata Ki Aarti, Om Jai Lakshmi Mata,
 #           Shri Ram Chandra Ji Ki Aarti (reuses the Ram Stuti content),
-#           Shri Khatu Shyam Ji Ki Aarti, Jay Adhya Shakti.
+#           Shri Khatu Shyam Ji Ki Aarti, Jay Adhya Shakti, Shani Dev Aarti,
+#           Dattatreya Aarti (Marathi).
 #
 # Aartis share AartiReaderScreen (multi-instance, dispatched by route param).
 # Opens Om Jai Jagdish to verify the dispatch resolves correctly.
@@ -19,7 +21,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Aarti\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 12 sections appear in CategoryList
+# Verify all 14 sections appear in CategoryList
 # (Sankat Mochan Hanumanashtak now lives in the Ashtakam category.)
 - extendedWaitUntil:
     visible: "Om Jai Jagdish Hare\\..*Tap to open\\."
@@ -86,8 +88,8 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "ॐ जय श्री श्याम हरे.*"
 - tapOn: "Back"
 - waitForAnimationToEnd
-# Jay Adhya Shakti is the last card (addedInVersion 1.5.2, NEW badge absorbed by
-# `.*`). Open it to prove the appended index 10 dispatches its own payload.
+# Jay Adhya Shakti (addedInVersion 1.5.2, NEW badge absorbed by `.*`). Open it
+# to prove the appended index 10 dispatches its own payload.
 - scrollUntilVisible:
     element:
       text: "Jay Adhya Shakti\\..*Tap to open\\."
@@ -101,6 +103,61 @@ appId: com.prashantsharma.vedansh
     text: "Start over from the beginning"
     optional: true
 - assertVisible: "जय आद्या शक्ति, मा जय आद्या शक्ति.*"
+# Reach stanza 18 (unity), then signature, service and mandap in order.
+- repeat:
+    times: 17
+    commands:
+      - swipe:
+          start: "80%, 45%"
+          end: "20%, 45%"
+          duration: 600
+      - waitForAnimationToEnd: { timeout: 1000 }
+- assertVisible: "एकमे एक स्वरूप.*"
+- swipe: { start: "80%, 45%", end: "20%, 45%", duration: 600 }
+- waitForAnimationToEnd
+- assertVisible: "शिवशक्तिनी आरती.*"
+- swipe: { start: "80%, 45%", end: "20%, 45%", duration: 600 }
+- waitForAnimationToEnd
+- assertVisible: "भाव न जाणुं.*"
+- swipe: { start: "80%, 45%", end: "20%, 45%", duration: 600 }
+- waitForAnimationToEnd
+- assertVisible: "मानो मंडप लाल गुलाल.*"
+- tapOn: "English"
+- assertVisible: "Maano mandap laal gulaal.*"
+- tapOn: "Hindi"
+- takeScreenshot: e2e-shots/jay-adhya-shakti-complete-ending
+- tapOn: "Back"
+- waitForAnimationToEnd
+# Shani Dev Aarti is appended at index 11. Verify its own five-stanza payload.
+- scrollUntilVisible:
+    element:
+      text: "Shani Dev Aarti\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Shani Dev Aarti\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "जय जय श्री शनिदेव भक्तन हितकारी.*"
+- tapOn: "Back"
+- waitForAnimationToEnd
+# Dattatreya Aarti is Marathi and appended at index 12.
+- scrollUntilVisible:
+    element:
+      text: "Dattatreya Aarti \\(Marathi\\)\\..*Tap to open\\."
+    direction: DOWN
+    visibilityPercentage: 60
+    timeout: 10000
+- tapOn: "Dattatreya Aarti \\(Marathi\\)\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "त्रिगुणात्मक त्रैमूर्ति दत्त हा जाणा.*"
 - tapOn: "Back"
 - waitForAnimationToEnd
 

@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, RULEBOOK.md]
-last_verified_date: 2026-10-12
+sources: [mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
+last_verified_date: 2026-10-16
 confidence: high
 status: current
 ---
@@ -125,6 +125,30 @@ makes an active entry discoverable through category, deity, search, routine, pro
 purpose surfaces. Rudrashtakam is the current reference addition: 8 hymn verses plus its
 phalashruti, represented as 9 reader pages without creating a new deity or category.
 
+The Aarti collection has twenty-two payloads; its category also lists the `ram-aarti` alias to
+Ram Stuti. `aarti/ids.ts` is append-only because a legacy `aarti-N` progress/bookmark id
+persists its position. `shani-aarti` is index 11, a five-stanza reading tagged `shani`; its
+source JSON records the line-by-line HinduNidhi/SanskritDocuments collation and spelling
+variants. `dattatreya-aarti` is index 12, Sant Eknath's Marathi text with four stanzas and
+one refrain; its `language` and title mark the source language. The Drik Panchang candidate
+returned HTTP 403 during that authoring pass.
+
+**Aarti and japa content additions:** an aarti requires a complete JSON record in
+`data/aarti/`, an appended payload in `data/aarti/index.ts` and stable id in `data/aarti/ids.ts`
+(legacy `aarti-N` ids are position-based), a separate discoverable `data/texts.ts` row, and a semantic
+`data/backgrounds.ts` mapping. Japa records in `data/japam/japam.json` become library entries
+automatically, but a newly sourced mantra needs per-record source metadata rolled up into
+the file's top-level source URL list; the data correctness suite enforces that. The japa
+counter works without a recording and shows the audio-unavailable state, so a source-verified
+silent mantra does not need a newly licensed audio file. If audio is later attached, its loop
+needs a verified repetition count to keep the 108-bead counter accurate. The 2026-10-13
+[title audit](../../docs/research/competitors/2026-10-13-aarti-japa-title-audit.md) records
+composition-level deduplication and edition variants. The October 15 batch completes
+all nine requested aartis: eight additions plus Shani reused from main. Ganga and
+the eight other additions contribute 72 pages. Jay Adhya Shakti stays at index 10,
+Shani at 11 and Dattatreya at 12; this PR appends nine IDs at positions 13–21.
+Native/test evidence is kept in the integration review linked by the audit.
+
 **Tests:** `readerAutoAdvance.test.tsx` enforces the auto-advance contract for every
 multi-chapter reader (transition injected at chapter 1's tail, prev-transition at chapter 2's
 head, no trailing transition on the final chapter, and `navigation.replace` fires on the
@@ -206,4 +230,4 @@ User review corrected the initial portrait layout against current-main PR #449 (
 
 ### Garud Puran final Style 3 integration (2026-10-12)
 
-After user approval, nine exact Style 3 WebPs (1,433,814 bytes total) were bundled locally; the approval and hashes are pinned in `docs/content/garud-puran/artwork/manifest.json`. Current-main `ReadingArtwork` and `BackgroundLayer(readingParchment)` provide the common banner/divider/paper treatment. `HomeStackNavigator` registers both routes lazily, the generated route graph warms the reader from the index, and search yields per reading. Prose sharing carries source context without truncating the explanation; saved progress is labelled Reading / Page. See `docs/content/garud-puran/INTEGRATION.md` for final verification. No R2 or OTA publication.
+After user approval, nine exact Style 3 WebPs (1,433,814 bytes total) were bundled locally; the approval and hashes are pinned in `docs/content/garud-puran/artwork/manifest.json`. Current-main `ReadingArtwork` and `BackgroundLayer(readingParchment)` provide the common banner/divider/paper treatment. `HomeStackNavigator` registers both routes lazily, the generated route graph warms the reader from the index, and search yields per reading. Prose sharing carries source context without truncating the explanation; saved progress is labelled Reading / Page. See `docs/content/garud-puran/INTEGRATION.md` for final verification. **Since 16 Oct the nine paintings ship from R2**, not the bundle: they are `reading-backgrounds` entries `garud-puran--<artId>` (folder added to `prepare-reading-backgrounds.mjs`), `garudPuranImages` holds `RemoteBackground` descriptors, and `ListingThumbImage` crops R2 art from manifest dimensions. See [[integrations/reading-artwork]].

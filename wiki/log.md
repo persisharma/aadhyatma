@@ -929,6 +929,90 @@ Updated design.md §23/§38/§59 and the [[notifications]] / [[home-widgets]] pa
 
 Added a reusable listing-to-prose mapping for category, deity, purpose, katha, observance and vidhi catalogs and chapter/theme/episode indexes. Three complete rows per card preserve titles and details in all four reading languages; long indexes use labelled scopes under the ten-card share limit. The existing post, Story/Reel and carousel picker handles export; Story/Reel files are static images. Typecheck and focused share tests passed; native visual and destination checks remain pending. See [[share]].
 
+## [2026-10-13] ingest | Aarti and japa content integration and competitor title audit
+
+The aarti registry is append-only because legacy `aarti-N` ids migrate by index; a library row and source background are separate discovery requirements. Japa JSON entries enter the library automatically; a new per-mantra source must roll into the top-level source URLs, and silent counting works without an audio asset. The offline Ishvar Vaani title audit lives in `docs/research/competitors/2026-10-13-aarti-japa-title-audit.md`; it distinguishes composition matches from title-only gaps and records the selected Ganga Aarti variant and Saraswati Moola Mantra sources.
+
+## [2026-10-15] ingest | Complete nine remaining aarti integrations
+
+Added the sourced Ambe Tu Hai Jagdambe Kali, Shani, Kubera, Santoshi, Ahoi, Vaishno, Ekadashi, Tulsi and Shakambhari compositions (72 pages) through the existing reader, library, purpose discovery and deity/background mappings. All 18 Ishvar aarti compositions are now covered in this branch, including the previously added Ganga aarti; Saraswati silent japa remains included. Preserved main’s separate lightweight aarti ID registry and Jay Adhya Shakti index 10, then appended Ganga at 11 and the nine additions at 12–20. Edition variants and original Hindi/English meaning review live in `docs/evaluations/aarti-expansion-2026-10-15/review.md`. No recorded audio, store build or OTA was added.
+
+## [2026-10-15] gap | Native aarti verification deferred
+
+The user requested the PR now and separate native checks. Full automated tests passed, but all-nine iOS/Android Standard/Large journeys and Saraswati japa remain incomplete; see `docs/evaluations/aarti-expansion-2026-10-15/review.md` for partial results and rerun commands.
+## [2026-10-15] ingest | Shared listing card for comic, Garud Puran and kids-story lists
+The three section listings now render one `ListingCard` (design.md §82, RULEBOOK §3 "Listing cards"):
+reading-language title only, one-line description (≤32 chars), `N पृष्ठ` meta, a 92-wide thumb that
+fills the card height with cover-cropped art, `LanguageToggle` + scope line on every listing. Each
+comic prasang shows a curated key scene (`episodeCovers.ts`); Garud paintings crop around a focal
+point. All 28 kids-story descriptions were shortened. Updated [[kids-stories]] and [[languages]].
+
+
+## [2026-10-15] ingest | Shani Dev Aarti joins the reader collection
+
+Added the five-stanza Shani Aarti after line-by-line comparison of HinduNidhi and the aarti
+printed with SanskritDocuments' Shani Chalisa; Navbharat Times confirms the selected crown
+reading. Appended id/index 11, tagged `shani`, and updated source migration, tests, Maestro and
+reader counts. Drik Panchang returned HTTP 403; the Shani Chalisa remains unshipped because
+its closing doha differs across the reachable sources.
+
+## [2026-10-15] ingest | Marathi Datta Aarti added as a distinct reading
+
+Collated Sant Eknath's four stanzas and refrain (18 lines) across Hindu Janajagruti and
+BhajanUSA, with Sanatan Sanstha as a third check; recorded the one refrain spelling variant.
+Appended `dattatreya-aarti` at persisted index 12, kept the Marathi language explicit, and
+updated the reader/count tests and Maestro flow. The SanskritDocuments Marathi PDF was opened
+but yielded no extractable text, so it was not counted as a line-collated source.
+
+## [2026-10-15] gap | Remaining Chalisa and Aarti source gates
+
+Drik Panchang returned HTTP 403 for direct candidate URLs. Shani Chalisa's
+closing differs or is corrupted across reachable sources; Ganga Chalisa has
+substantive wording variants; Surya Chalisa still needs complete editorial
+collation and meanings. Other candidate gaps and HOLD identities are listed in
+`docs/content-parity/chalisa-aarti-existing-deities.md` under the 2026-10-15 audit.
+
+## [2026-10-15] ingest | Navagraha Chalisa candidate pair identified
+
+HinduNidhi and BhaktiBharat both serve the Sundardas-attributed opening and
+closing, while the Drik Panchang candidate returns HTTP 403. Added the pair
+to the acquisition manifest as 2C; full line collation, source-lineage review
+and editorial meanings are still required before reader integration.
+
+## [2026-10-15] ingest | Surya Chalisa enters the multi-instance reader
+
+Collated all 42 units of the Kanak-badan Surya Chalisa across HinduNidhi and
+Pavitra Granth. Only the chaupai-30 जोजन/योजन reading differs after punctuation
+and spelling normalization; the chosen HinduNidhi reading is noted in the source
+metadata. Added original per-verse Hindi/English meanings, pronunciation-based
+ASCII, registry/search/routine/library integration and Konark temple discovery.
+
+## [2026-10-16] ingest | Reconcile PR 478 with merged Shani edition
+
+Preserved main’s sourced Shani payload at index 11 and Dattatreya at 12, removed duplicate Shani catalog/background records, and appended Ganga plus the other eight requested aartis at 13–21. The registry has 22 payloads and the category 23 entries including the Ram Stuti alias. Added regression checks for main’s persisted positions and adjusted native flow selectors/order. All nine requested titles remain covered; native verification stays deferred.
+
+## [2026-10-13] ingest | Share sheet: Send as text + card-language chips
+
+Added a no-image `Send as text` row (verse lines + meaning, or the selected prose pages rejoined across page breaks, plus the caption link lines) and hi/en/gu/kn card-language chips that re-language the card, caption, hashtags and text without changing the sheet chrome. OTA-only; no native module. Updated [[share]], design.md §39.1/§39.6/§39.7 and the share-target Maestro flow (not run — no simulator).
+
+## [2026-10-13] ingest | More → Share the App invite copy refreshed
+
+Rewrote `APP_SHARE_INVITE` (hi/en/gu/kn) from five launch-era bullets to seven covering shipped surfaces: Ramayan, kids' stories, vrat katha/puja vidhi/tirth, Ask Vedansh. Store-gated Vastu and widgets deliberately omitted. design.md §37 synced; `shareLinks.test.ts` pins seven bullets per language and the link line.
+
+## [2026-10-16] ingest | Bundled reading artwork moved to R2
+
+The Garud Puran paintings (9, ~1.4 MB) and the five 14 Oct artwork corrections (~1.1 MB) were the
+only reading art still bundled with `require()`. Uploaded all 14 to R2 with immutable caching and
+verified byte-identical public responses, then activated their hashes: Garud Puran became
+`garud-puran--*` background entries, the corrections replaced their slot sources, and the
+`artworkCorrections.ts` override was removed. Updated [[integrations/reading-artwork]] and
+[[subsystems/readers]]. Remaining bundled images are UI/offline by design (Storybook and More
+icons, widget gallery plates, celestial chakra, the paper fallback).
+
+## [2026-10-17] ingest | Language toggle on the Daily Bhakti card
+
+Daily Bhakti now carries the full-size §16 `LanguageToggle`, centred directly above the verse card (below the setup strip), so the reading language flips in place without a trip to More. Placed above the card rather than in its header row: header actions plus a compact toggle would leave the source pill ~100pt on a 375pt phone. Same global `lang`, so it also drives the share card. Updated design.md §16/§23, `DailyBhaktiScreen.test.tsx` (toggle re-languages the card) and `daily-bhakti-smoke.yaml` Step 4b (not run — no simulator).
+
 ## [2026-10-16] ingest | Complete Bālakāṇḍa layout audit and pre-build storyboard
 
 Recorded140-panel/29-episode coverage,28 fresh hi/en browser-model sheets, the 62-page1–3-row planning draft, source-ID mapping and pending four-language/source/native gates in [[decisions/ramayan-comic-character-continuity]]. Planning artifacts only; no full-book art or reader implementation.

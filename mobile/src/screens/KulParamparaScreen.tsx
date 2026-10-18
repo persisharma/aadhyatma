@@ -1,3 +1,4 @@
+import StoryIcon from '@/components/StoryIcon';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, type NavigationProp } from '@react-navigation/native';
@@ -175,9 +176,7 @@ export default function KulParamparaScreen({ navigation }: Props) {
                   <DeityIcon iconKey={deityIconKey(record.kuldev.deityId)} fallbackText={kuldevDisplayName(record.kuldev, 'hi').slice(0, 2)} size={54} />
                 ) : (
                   <View style={[styles.customGlyph, { borderColor: colors.goldTint, backgroundColor: colors.parchmentHighlight }]}>
-                    <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 20, color: colors.saffronDeep }}>
-                      {(record.kuldev.customName ?? '॥').slice(0, 2)}
-                    </Text>
+                    <StoryIcon name="deity" size={44} />
                   </View>
                 )}
                 <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink, marginTop: 9, textAlign: 'center' }}>

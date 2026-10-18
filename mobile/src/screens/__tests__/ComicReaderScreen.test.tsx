@@ -7,7 +7,9 @@ const mockShare = jest.fn();
 jest.mock('react-native', () => {
   const React = require('react');
   return {
-    Pressable: 'Pressable', ScrollView: 'ScrollView', Text: 'Text', View: 'View',
+    Pressable: 'Pressable', ScrollView: 'ScrollView', Text: 'Text', View: 'View', Image: 'Image',
+    StyleSheet: { create: (x: unknown) => x, absoluteFillObject: {} },
+    Platform: { OS: 'ios', select: (options: Record<string, unknown>) => options.ios ?? options.default },
     useWindowDimensions: () => ({ width: 390, height: 844 }),
     FlatList: React.forwardRef(function MockList(props: any, ref: any) {
       React.useImperativeHandle(ref, () => ({ scrollToIndex: mockScroll }));
@@ -49,9 +51,28 @@ afterEach(() => { trees.splice(0).forEach(tree => act(() => tree.unmount())); mo
 test('29 native episode cards open the selected scene in the reader', () => {
   const { tree, find, navigation } = mount(undefined, Shelf);
   expect(find('comic-episodes').props.data).toHaveLength(29);
-  act(() => find('comic-episode-bk-06').props.onPress());
+  act(() => tree.root.find(node => node.type === ('Pressable' as any) && node.props.testID === 'comic-episode-bk-06').props.onPress());
   expect(navigation.navigate).toHaveBeenCalledWith('ComicReader', { comicId: 'balakanda-v1', episodeId: 'bk-06' });
   expect(tree.root.findAllByType('WebView' as any)).toHaveLength(0);
+});
+test('each prasang card shows its curated key scene, filled into the shared listing thumb', () => {
+  const { comicEpisodeCovers } = require('@/data/comicBooks/episodeCovers');
+  const { tree, find } = mount(undefined, Shelf);
+  const arts = tree.root.findAllByType('ComicArt' as any);
+  expect(arts).toHaveLength(29);
+  book.episodes.forEach((episode: any, index: number) => {
+    const cover = comicEpisodeCovers[episode.id];
+    expect(cover).toBeTruthy();
+    expect(episode.panels.map((panel: any) => panel.id)).toContain(cover.panelId);
+    expect(arts[index].props.panel.id).toBe(cover.panelId);
+    expect(arts[index].props.fill).toBe(true);
+  });
+  const visible = tree.root.findAllByType('Text' as any).map(node => [].concat(node.props.children).join(''));
+  expect(visible).toContain('प्रसंग 1');
+  expect(visible).toContain(book.episodes[0].hi.title);
+  expect(visible).not.toContain(book.episodes[0].en.title);
+  expect(visible).toContain(`${book.episodes[0].panels.length} पृष्ठ`);
+  expect(find('comic-episodes').props.ListHeaderComponent.props.children.startsWith('29 प्रसंग · ')).toBe(true);
 });
 test('the episode index sends all 29 titles to the listing share picker', () => {
   const { tree } = mount(undefined, Shelf);

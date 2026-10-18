@@ -2,16 +2,18 @@
 title: Shared Storybook Icon System
 type: concept
 sources: [mobile/src/components/FeatureIcon.tsx, mobile/src/components/HomeWordmark.tsx, docs/evaluations/home-gutter-2026-10-06/README.md, mobile/src/components/CelestialChakra.tsx, mobile/assets/decorations/celestial-chakra/manifest.json, docs/evaluations/celestial-chakra-2026-10-06/README.md, mobile/src/components/MoreIcon.tsx, mobile/src/screens/MoreScreen.tsx, mobile/assets/icons/more-storybook/manifest.json, docs/evaluations/storybook-icons-2026-10-06/more-alignment/README.md, mobile/src/components/DeityIcon.tsx, mobile/src/components/deityArtwork.ts, mobile/src/components/storybookSources.ts, mobile/src/components/StoryIcon.tsx, mobile/src/components/AppIcon.tsx, mobile/assets/icons/storybook/manifest.json, mobile/src/navigation/tabBarIcons.tsx, design.md, docs/evaluations/storybook-icons-2026-10-06/README.md, design-qa.md, mobile/src/screens/HomeScreen.tsx, mobile/src/components/CategoryCard.tsx, mobile/src/utils/homeLayout.ts, mobile/src/components/ReaderHeader.tsx, mobile/src/components/BookmarkButton.tsx, mobile/src/components/ShareButton.tsx, mobile/src/components/HomeWordmark.tsx, mobile/src/components/TodayRecommendationsRow.tsx, docs/evaluations/storybook-icons-2026-10-06/size-audit/README.md]
-last_verified_date: 2026-10-06
+last_verified_date: 2026-10-17
 confidence: high
 status: current
 ---
 
 ## Summary
 
-The native app uses 39 bundled transparent Storybook assets for Home/deity subjects and 17 additional painted utility assets for More/Discover (56 total). Shared Phosphor glyphs remain for reader and navigation controls. This replaces the View-composition deity registry and font/emoji approximations on the changed surfaces.
+The native app uses 56 bundled transparent Storybook assets for Home/deity/Muhurat/Vastu/naming subjects and 17 additional painted utility assets for More/Discover (73 total). Shared Phosphor glyphs remain for reader and navigation controls. This replaces the View-composition deity registry and font/emoji approximations on the changed surfaces.
 
 ## Details
+
+- Thirteen Muhurat occasions use distinct `occasion-*` paintings through a total typed map. Vastu doors share `vastu-disha` and `ghar`; Namkaran browse uses `nakshatra` and `rashi`. Existing art also replaces the Namkaran Muhurat link, both Daan bridges, custom Kuldevta initials, Panchang Katha/Puja Vidhi marks, and Kundali Lagna. Actual syllables, name-index initials, 108 and dates remain content. Muhurat/Vastu screen-level letter exceptions are removed. Retained original masters and reproducible normalization live in `docs/evaluations/remaining-icons-2026-10-16/`; native Standard/Large review and recovery of the two late naming prompt strings remain pending.
 
 - `storybookSources.ts` statically requires local PNGs; `StoryIcon` displays them as decorative images. No remote icon fetches or duplicate accessible labels.
 - `deityArtwork.ts` covers all 21 existing keys with a total typed mapping. `deities.icon-contract.ts` still pins deity IDs to semantic attributes.

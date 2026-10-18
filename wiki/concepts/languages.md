@@ -69,7 +69,7 @@ it runs *before* a language exists.
 **Noto Serif Gujarati / Kannada** (`fontFamilies.gujarati(Bold)`/`kannada(Bold)`,
 `verse/meaningGujarati/Kannada` tokens) at the Devanagari size class; loaded in `App.tsx`.
 `titleByLanguage.orderTitlesByLanguage` returns gu/kn primary = re-scripted `nameHi` in the
-script serif, secondary = English (listing cards stay bilingual; RULEBOOK §3).
+script serif, secondary = English (Home/CategoryList/DeityList cards stay bilingual; RULEBOOK §3). Section listings — comic episodes, Garud Puran readings, kids-story shelves — use `ListingCard` and show the reading language only, with the toggle above the list (RULEBOOK §3 "Listing cards"). Daily Bhakti carries the same toggle directly above its verse card (design.md §23).
 
 **Why fallback transliteration still exists:** Gujarati/Kannada are sister Brahmi scripts with
 ~1:1 Devanagari correspondence; devotional verse text is printed that way regionally, so script

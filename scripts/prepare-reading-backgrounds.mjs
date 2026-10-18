@@ -15,7 +15,7 @@ const stage = path.join(root, 'scripts/.cache/reading-backgrounds');
 // stale entries into a later manifest publication.
 rmSync(stage, { recursive: true, force: true });
 mkdirSync(stage, { recursive: true });
-for (const folder of ['backgrounds', 'gita', 'chalisa', 'shiva-strotam']) {
+for (const folder of ['backgrounds', 'gita', 'chalisa', 'shiva-strotam', 'garud-puran']) {
   const directory = path.join(root, 'mobile/assets', folder);
   for (const name of readdirSync(directory).filter(name => /\.(webp|jpeg|jpg|png)$/.test(name))) {
     copyFileSync(path.join(directory, name), path.join(stage, `${folder}--${name}`));

@@ -30,6 +30,61 @@ const SOURCE_BUNDLED =
   'Curated from bundled source provenance for this text; associations are devotional browse metadata, not prescriptions.';
 
 export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
+  'om-jai-gange-mata': {
+    purposes: ['devotion', 'moksha'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/om-jai-gange-mata.json.`,
+  },
+  'saraswati-moola-mantra': {
+    purposes: ['knowledge', 'devotion'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} japam/japam.json.`,
+  },
+  'ambe-tu-hai-jagdambe-kali': {
+    purposes: ['devotion', 'courage'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/ambe-tu-hai-jagdambe-kali.json.`,
+  },
+  'shani-aarti': {
+    purposes: ['devotion', 'peace'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/shani-aarti.json.`,
+  },
+  'kubera-aarti': {
+    purposes: ['devotion', 'prosperity'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/kubera-aarti.json.`,
+  },
+  'santoshi-mata-aarti': {
+    purposes: ['devotion', 'family-welfare'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/santoshi-mata-aarti.json.`,
+  },
+  'ahoi-mata-aarti': {
+    purposes: ['devotion', 'family-welfare'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/ahoi-mata-aarti.json.`,
+  },
+  'vaishno-devi-aarti': {
+    purposes: ['devotion', 'peace'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/vaishno-devi-aarti.json.`,
+  },
+  'ekadashi-mata-aarti': {
+    purposes: ['devotion', 'moksha'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/ekadashi-mata-aarti.json.`,
+  },
+  'tulsi-aarti': {
+    purposes: ['devotion', 'peace'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/tulsi-aarti.json.`,
+  },
+  'shakambhari-aarti': {
+    purposes: ['devotion', 'family-welfare'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/shakambhari-aarti.json.`,
+  },
   'hanuman-chalisa': {
     purposes: ['protection', 'courage', 'obstacles', 'devotion'],
     bestDays: [2, 6],
@@ -131,6 +186,12 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestDays: [0],
     bestTime: 'sunrise',
     source: `${SOURCE_BUNDLED} Surya Ashtakam source references in ashtakam/surya-ashtakam.json.`,
+  },
+  'surya-chalisa': {
+    purposes: ['health', 'morning-practice', 'devotion'],
+    bestDays: [0],
+    bestTime: 'sunrise',
+    source: `${SOURCE_BUNDLED} Surya Chalisa source references in surya-chalisa/surya-chalisa.json.`,
   },
   'surya-namaskar': {
     purposes: ['health', 'morning-practice'],

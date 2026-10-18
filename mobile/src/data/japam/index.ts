@@ -13,6 +13,7 @@ export type JapamMantra = {
   linesEn: string[];
   meaningHi: string;
   meaningEn: string;
+  source?: { baseText: string; referenceUrls: string[]; retrievedOn: string };
   /** Naam japa: the line is a single divine name, chanted and counted one name per bead. */
   naam?: boolean;
 };
@@ -27,6 +28,7 @@ const validDeities: ReadonlySet<Deity> = new Set([
   'ganesha',
   'savitr',
   'radha',
+  'saraswati',
 ]);
 
 function assertMantra(m: unknown, i: number): asserts m is JapamMantra {
@@ -60,6 +62,15 @@ function assertMantra(m: unknown, i: number): asserts m is JapamMantra {
   }
   if (obj.naam !== undefined && typeof obj.naam !== 'boolean') {
     throw new Error(`japam[${i}].naam: must be a boolean when present`);
+  }
+  if (obj.source !== undefined) {
+    const source = obj.source as Record<string, unknown>;
+    if (!source || typeof source.baseText !== 'string' || !source.baseText.trim() ||
+        typeof source.retrievedOn !== 'string' ||
+        !Array.isArray(source.referenceUrls) || source.referenceUrls.length < 2 ||
+        !source.referenceUrls.every((url) => typeof url === 'string' && url.startsWith('https://'))) {
+      throw new Error(`japam[${i}].source: requires description, date and two URLs`);
+    }
   }
   const deities = obj.deities;
   if (!Array.isArray(deities) || deities.length === 0) {

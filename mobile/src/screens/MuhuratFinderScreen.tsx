@@ -8,27 +8,28 @@ import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ListCard, { CardThumb } from '@/components/ListCard';
+import StoryIcon, { type StoryIconName } from '@/components/StoryIcon';
 import { EVENT_RULES, GROUP_LABELS, GROUP_ORDER, type OccasionId } from '@/panchang/eventMuhurat';
 import { useMuhuratFinderWarmup } from '@/panchang/useMuhuratFinder';
 import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratFinder'>;
 
-/** Short Devanagari glyph for each occasion's thumb (the library-card letter-thumb grammar). */
-const OCCASION_GLYPH: Record<OccasionId, string> = {
-  'griha-pravesh': 'गृ',
-  vahan: 'वा',
-  namkaran: 'ना',
-  vidyarambh: 'वि',
-  'bhumi-pujan': 'भू',
-  vyapar: 'व्या',
-  mundan: 'मुं',
-  annaprashan: 'अ',
-  karnavedha: 'क',
-  upanayana: 'उ',
-  sampatti: 'सं',
-  swarna: 'स्व',
-  yatra: 'या',
+/** Every occasion has its own bundled painting. */
+const OCCASION_ICON: Record<OccasionId, StoryIconName> = {
+  'griha-pravesh': 'occasion-griha-pravesh',
+  'bhumi-pujan': 'occasion-bhumi-pujan',
+  'vahan': 'occasion-vahan',
+  'vyapar': 'occasion-vyapar',
+  'sampatti': 'occasion-sampatti',
+  'swarna': 'occasion-swarna',
+  'yatra': 'occasion-yatra',
+  'namkaran': 'occasion-namkaran',
+  'vidyarambh': 'occasion-vidyarambh',
+  'mundan': 'occasion-mundan',
+  'annaprashan': 'occasion-annaprashan',
+  'karnavedha': 'occasion-karnavedha',
+  'upanayana': 'occasion-upanayana',
 };
 
 /**
@@ -67,7 +68,6 @@ export default function MuhuratFinderScreen({ navigation }: Props) {
     lineHeight: 19,
     marginTop: 2,
   };
-  const glyphStyle = { fontFamily: titleFont, fontSize: 22, color: colors.parchmentSoft };
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: colors.background }]} edges={['top']}>
@@ -118,7 +118,7 @@ export default function MuhuratFinderScreen({ navigation }: Props) {
                   testID={`muhurat-occasion-${rule.id}`}
                   accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
                   onPress={() => navigation.navigate('MuhuratResults', { occasionId: rule.id })}
-                  leading={<CardThumb><Text style={glyphStyle}>{OCCASION_GLYPH[rule.id]}</Text></CardThumb>}
+                  leading={<CardThumb><StoryIcon name={OCCASION_ICON[rule.id]} size={44} /></CardThumb>}
                 >
                   <Text style={titleStyle}>{contentByLang(lang, rule.nameHi, rule.nameEn)}</Text>
                   <Text style={captionStyle}>
@@ -134,7 +134,7 @@ export default function MuhuratFinderScreen({ navigation }: Props) {
           testID="muhurat-abujh-door"
           accessibilityLabel={contentByLang(lang, 'विशेष शुभ दिन', 'Special auspicious days')}
           onPress={() => navigation.navigate('AbujhDays')}
-          leading={<CardThumb><Text style={glyphStyle}>॥</Text></CardThumb>}
+          leading={<CardThumb><StoryIcon name="muhurat" size={40} /></CardThumb>}
           style={{ marginTop: spacing.sm }}
         >
           <Text style={titleStyle}>{contentByLang(lang, 'विशेष शुभ दिन', 'Special auspicious days')}</Text>

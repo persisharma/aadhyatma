@@ -6,7 +6,7 @@
   "deity": "durga",
   "language": "gu-hi-en",
   "source": {
-    "baseText": "Jay Adhya Shakti (જય આદ્યા શક્તિ), the Gujarati Amba aarti signed by Shivanand Swami. Gujarati text supplied by the maintainer on 2026-10-14: eighteen stanzas, each followed by the cue ॥ ૐ જયો જયો મા જગદંબે ॥. It is stored in Devanagari through a one-to-one Gujarati-to-Devanagari codepoint mapping (offset -0x180), so the app's Gujarati reading language reproduces the supplied text letter for letter. The maintainer then supplied the same text in Devanagari, identical word for word, which ends each stanza's second line with a danda (।) where the Gujarati copy had a full stop; the danda is used, so the Gujarati view shows it too. No word or spelling was changed, and the cue stays on every page as printed. Two stanzas the maintainer marked as later additions are not included: ભાવ ન જાણું, ભક્તિ ન જાણું (it names Vallabh Bhatt) and માનો મંડપ લાલ ગુલાલ. The aarti's own signature stanza (ભણે શિવાનંદ સ્વામી) closes Shivanand Swami's composition. Meanings and romanization are Aadhyatma editorial.",
+    "baseText": "Jay Adhya Shakti (જય આદ્યા શક્તિ), the Gujarati Amba aarti signed by Shivanand Swami. Gujarati text supplied by the maintainer on 2026-10-14: eighteen stanzas, each followed by the cue ॥ ૐ જયો જયો મા જગદંબે ॥. It is stored in Devanagari through a one-to-one Gujarati-to-Devanagari codepoint mapping (offset -0x180), so the app's Gujarati reading language reproduces the supplied text letter for letter. The maintainer then supplied the same text in Devanagari, identical word for word, which ends each stanza's second line with a danda (।) where the Gujarati copy had a full stop; the danda is used, so the Gujarati view shows it too. No word or spelling was changed, and the cue stays on every page as printed. On 2026-10-18 the maintainer requested the familiar extended ending. Three published stanzas were added as jas-19 through jas-21: એકમે એક સ્વરૂપ; ભાવ ન જાણું, ભક્તિ ન જાણું; and માનો મંડપ લાલ ગુલાલ. These belong to the extended sung tradition and are not all attributed here to Shivanand Swami. Per the maintainer's order correction on 2026-10-18, the unity stanza (jas-19) is displayed as stanza 18 before the signature (jas-18), displayed as stanza 19. Stanzas 20 and 21 remain the service and mandap stanzas. Verse IDs stay attached to their existing text; display numbers and labels follow the corrected order. Closing text follows Hindu Community Center, NJ, Daily Prayers Hindi, printed page 17 (PDF page 19), with spacing and punctuation aligned to the existing script-conversion contract; see closingStanzas for the comparison and variants. Meanings and romanization are Aadhyatma editorial.",
     "referenceUrls": [],
     "canonicalEdition": "Shubh Panchang Amba aarti (Gujarati); Swargarohan Ambama Aarti - Jay Adhya Shakti; Pujasthan Jay Aadhya Shakti",
     "canonicalEditionUrls": [
@@ -16,10 +16,21 @@
     ],
     "canonicalEditionStatus": "Pending (2026-10-14): the RULEBOOK §11.1 two-source line collation is not done. The authoring session's network policy refused every lyric host it tried (shubhpanchang.com, swargarohan.org, bhajansangrah.in and others), so no page was opened. One unconfirmed variant: a web search for the reading દ્વિતીયા બેય સ્વરૂપ matched the Shubh Panchang Gujarati page, where the supplied stanza 2 reads બેઉ. To clear: collate every line against two of the pages listed, record each variant here, move those URLs into referenceUrls, and replace this status with a dated verified line.",
     "maintainerAttestation": "On 2026-10-14 the maintainer supplied this text and accepted it for release without the second-source collation. The pending status stays until that collation is done (RULEBOOK §11.1, maintainer-attested exception).",
-    "retrievedOn": "2026-10-14"
+    "retrievedOn": "2026-10-14",
+    "closingStanzas": {
+      "retrievedOn": "2026-10-18",
+      "referenceUrls": [
+        "https://hindumandirnj.org/doc/Daily_Prayers_Hindi.pdf",
+        "https://www.swargarohan.org/aarti-stuti/001",
+        "https://bharatlyrics.com/jay-adhyashakti-lyrics/",
+        "https://www.sundhamata.in/index.php"
+      ],
+      "verificationNote": "Read the NJ booklet's printed page 17, including its rendered page image, and the comparison pages on 2026-10-18. NJ supplies all three appended stanzas in this order. Swargarohan independently confirms the unity and bhavsagar stanza, with એ બે એક સ્વરૂપ / અંતર નવ ગણશો instead of NJ's એકમે એક સ્વરૂપ / અંતર નવ ધરશો. BharatLyrics (Prakash Barot/Rekha Prajapati edition) confirms all three stanza themes and order, but reads વલ્લભ ભટ્ટને રાખ્યા / ચરણોની સેવા where NJ reads વલ્લભ ભટ્ટને આપિ/આપી / ચરણોની સેવા, and ends the mandap stanza જય બહુચરી બાળા rather than NJ's જય બહુચર વાળી. Sundha Mata Temple independently prints the Vallabh Bhatt service stanza, adding એવો અમને આપો, and uses a different mandap stanza. The NJ readings are retained as one coherent closing edition rather than mixing variant lines. NJ also prints a separate માની ચુંદડી stanza; it is a documented optional extension, not silently merged into the three requested stanzas. The original wording and meanings remain unchanged. The maintainer explicitly corrected the displayed order on 2026-10-18 to unity, signature, service, mandap (positions 18–21), rather than the NJ order. IDs remain attached to their text; display numbers and labels were updated; the full original-body collation remains Pending in canonicalEditionStatus.",
+      "orderNote": "Maintainer-directed order correction, 2026-10-18: display jas-19 (एकमे एक स्वरूप) at 18, jas-18 (शिवशक्तिनी आरती) at 19, jas-20 at 20 and jas-21 at 21. Published versions vary; this order is the maintainer's chosen app recension, not a claim that the NJ booklet uses it."
+    }
   },
   "counts": {
-    "totalVerses": 18
+    "totalVerses": 21
   },
   "verses": [
     {
@@ -380,12 +391,33 @@
       "meaningGu": "ત્રાંબાવટી નગરી, આઈની રૂપાવટી નગરી, માની મંછાવટી નગરી: ત્યાં સોળ હજાર શોભે છે. હે ગૌરી, ક્ષમા કરો; હે મા ગૌરી, દયા કરો."
     },
     {
-      "id": "jas-18",
+      "id": "jas-19",
       "type": "stanza",
       "section": "body",
       "number": 18,
       "labelHi": "पद · १८",
       "labelEn": "Stanza · 18",
+      "lines": [
+        "एकमे एक स्वरूप, अंतर नव धरशो, मा अंतर नव धरशो,",
+        "भोळा भवानीने भजतां, भोळा अंबेमाने भजतां, भवसागर तरशो।",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Ekame ek swaroop, antar nav dharsho, Ma antar nav dharsho,",
+        "Bhola Bhavanine bhajtaan, Bhola Ambemaane bhajtaan, bhavsaagar tarsho.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "शिव और शक्ति एक ही स्वरूप हैं; उनमें भेद मत मानिए। भोले शिव और भवानी, माँ अम्बा की भक्ति करने से आप भवसागर पार करेंगे।",
+      "meaningEn": "Shiva and Shakti are one form; do not regard them as separate. Worshipping Bhola and Bhavani, Mother Amba, you will cross the ocean of worldly existence.",
+      "meaningGu": "શિવ અને શક્તિ એક જ સ્વરૂપ છે; તેમનામાં ભેદ ન માનશો. ભોળા અને ભવાની, મા અંબાને ભજતાં તમે ભવસાગર તરશો."
+    },
+    {
+      "id": "jas-18",
+      "type": "stanza",
+      "section": "body",
+      "number": 19,
+      "labelHi": "पद · १९",
+      "labelEn": "Stanza · 19",
       "lines": [
         "शिवशक्तिनी आरती, जे कोई गाशे, मा जे भावे गाशे,",
         "भणे शिवानंद स्वामी, सुख संपत्ति थाशे, हर कैलासे जाशे, मा अंबा दुःख हरशे।",
@@ -399,6 +431,48 @@
       "meaningHi": "शिव-शक्ति की यह आरती जो कोई गाएगा, हे माँ, जो भाव से गाएगा, उसके लिए शिवानंद स्वामी कहते हैं: उसे सुख और सम्पत्ति मिलेगी, वह हर (शिव) के कैलास जाएगा, और माँ अम्बा उसका दुःख हर लेंगी। यह कवि का नाम-उल्लेख और आरती गाने का फल है।",
       "meaningEn": "Whoever sings this aarti of Shiva and Shakti, Mother, whoever sings it with feeling, says Shivanand Swami, will gain happiness and prosperity, will go to Hara's Kailasa, and Mother Amba will take away their sorrow. This closing names the poet and the fruit of singing the aarti.",
       "meaningGu": "શિવ-શક્તિની આ આરતી જે કોઈ ગાશે, હે મા, જે ભાવથી ગાશે, તેના માટે શિવાનંદ સ્વામી કહે છે: તેને સુખ અને સંપત્તિ મળશે, તે હર (શિવ)ના કૈલાસે જશે, અને મા અંબા તેનું દુઃખ હરશે. આ કવિના નામનો ઉલ્લેખ અને આરતી ગાવાનું ફળ છે."
+    },
+    {
+      "id": "jas-20",
+      "type": "stanza",
+      "section": "body",
+      "number": 20,
+      "labelHi": "पद · २०",
+      "labelEn": "Stanza · 20",
+      "lines": [
+        "भाव न जाणुं, भक्ति न जाणुं, नव जाणुं सेवा, मा नव जाणुं सेवा,",
+        "वल्लभ भट्टने आपी, चरणोनी सेवा।",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Bhaav na jaanun, bhakti na jaanun, nav jaanun seva, Ma nav jaanun seva,",
+        "Vallabh Bhattne aapi, charanoni seva.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "हे माँ, मैं न भाव जानता हूँ, न भक्ति, न आपकी सेवा करना जानता हूँ। आपने वल्लभ भट्ट को अपने चरणों की सेवा दी।",
+      "meaningEn": "Mother, I know neither devotional feeling nor devotion, nor do I know how to serve you. You granted Vallabh Bhatt the service of your feet.",
+      "meaningGu": "હે મા, હું ન ભાવ જાણું, ન ભક્તિ જાણું, ન તમારી સેવા જાણું. તમે વલ્લભ ભટ્ટને તમારા ચરણોની સેવા આપી."
+    },
+    {
+      "id": "jas-21",
+      "type": "stanza",
+      "section": "body",
+      "number": 21,
+      "labelHi": "पद · २१",
+      "labelEn": "Stanza · 21",
+      "lines": [
+        "मानो मंडप लाल गुलाल, शोभा बहु सारी, मा शोभा बहु सारी,",
+        "अबील उडे आनंदे, गुलाल उडे आनंदे, जय बहुचर वाळी।",
+        "॥ ॐ जयो जयो मा जगदंबे ॥"
+      ],
+      "linesEn": [
+        "Maano mandap laal gulaal, shobha bahu saari, Ma shobha bahu saari,",
+        "Abeel ude aanande, gulaal ude aanande, jay Bahuchar vaali.",
+        "Om jayo jayo Ma Jagdambe."
+      ],
+      "meaningHi": "माँ का मंडप लाल गुलाल से सुशोभित है; उसकी शोभा बहुत सुंदर है। आनंद में अबीर और गुलाल उड़ते हैं। बहुचर माँ की जय हो।",
+      "meaningEn": "Mother's pavilion is adorned with red gulal; its splendour is beautiful. Abir and gulal fly in joy. Victory to Mother Bahuchar.",
+      "meaningGu": "માનો મંડપ લાલ ગુલાલથી શોભે છે; તેની શોભા બહુ સુંદર છે. આનંદમાં અબીલ અને ગુલાલ ઊડે છે. બહુચર માનો જય હો."
     }
   ]
 }

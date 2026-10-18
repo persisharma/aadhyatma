@@ -1,0 +1,111 @@
+{
+  "titleHi": "ॐ जय गंगे माता",
+  "titleEn": "Om Jai Gange Mata",
+  "subtitleHi": "गंगा माता की आरती",
+  "subtitleEn": "Aarti of Mother Ganga",
+  "deity": "ganga",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Traditional Om Jai Gange Mata aarti; complete Drik Panchang edition (refrain and four stanzas), line-checked against the independent Aaj Tak edition. Aaj Tak reads “श्री जय” in the refrain, “एक ही बार जो तेरी / शरणागति आता” and “दास वही” in the last stanzas; this record preserves the complete Drik reading rather than blending versions. Hindi and English meanings are original editorial glosses. No audio is attached.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/ganga-mata/ganga-mata-aarti.html?lang=hi",
+      "https://www.aajtak.in/religion/aarti/shri-ganga-aarti-2450477"
+    ],
+    "retrievedOn": "2026-10-13"
+  },
+  "counts": {
+    "totalVerses": 5
+  },
+  "verses": [
+    {
+      "id": "og-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "ॐ जय गंगे माता, मैया जय गंगे माता।",
+        "जो नर तुमको ध्याता, मनवांछित फल पाता॥"
+      ],
+      "linesEn": [
+        "Om jai Gange mata, maiya jai Gange mata.",
+        "Jo nar tumko dhyata, manvanchhit phal pata."
+      ],
+      "meaningHi": "माँ गंगा की जय हो। आरती में कहा गया है कि जो उनका ध्यान करता है, वह अपनी मनोकामना का फल पाता है।",
+      "meaningEn": "Glory to Mother Ganga. The hymn says that those who meditate on her receive the fruit they seek."
+    },
+    {
+      "id": "og-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · 1",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "चन्द्र-सी ज्योति तुम्हारी, जल निर्मल आता।",
+        "शरण पड़े जो तेरी, सो नर तर जाता॥"
+      ],
+      "linesEn": [
+        "Chandra-si jyoti tumhari, jal nirmal aata.",
+        "Sharan pade jo teri, so nar tar jata."
+      ],
+      "meaningHi": "आपकी ज्योति चन्द्रमा जैसी है और आपका जल निर्मल बहता है। जो आपकी शरण लेता है, वह भवसागर से पार होने की प्रार्थना करता है।",
+      "meaningEn": "Your radiance is compared to the moon and your water flows clear. The devotee seeks refuge in you and passage across worldly suffering."
+    },
+    {
+      "id": "og-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · 2",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "पुत्र सगर के तारे, सब जग को ज्ञाता।",
+        "कृपा दृष्टि हो तुम्हारी, त्रिभुवन सुख दाता॥"
+      ],
+      "linesEn": [
+        "Putra Sagar ke tare, sab jag ko gyata.",
+        "Kripa drishti ho tumhari, tribhuvan sukh data."
+      ],
+      "meaningHi": "सगर के पुत्रों के उद्धार की कथा संसार में प्रसिद्ध है। भक्त आपकी कृपादृष्टि माँगता है और आपको तीनों लोकों में सुख देने वाली कहता है।",
+      "meaningEn": "The story of your deliverance of Sagara’s sons is known widely. The devotee asks for your compassionate gaze and praises you as a giver of joy to the three worlds."
+    },
+    {
+      "id": "og-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · 3",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "एक बार जो प्राणी, शरण तेरी आता।",
+        "यम की त्रास मिटाकर, परमगति पाता॥"
+      ],
+      "linesEn": [
+        "Ek bar jo prani, sharan teri aata.",
+        "Yam ki tras mitakar, paramgati pata."
+      ],
+      "meaningHi": "आरती कहती है कि जो एक बार भी आपकी शरण आता है, उसका मृत्यु का भय दूर होता है और वह परम गति की आशा करता है।",
+      "meaningEn": "The hymn says that one who seeks your refuge, even once, is freed from fear of death and hopes for the highest spiritual state."
+    },
+    {
+      "id": "og-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · 4",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "आरती मातु तुम्हारी, जो नर नित गाता।",
+        "सेवक वही सहज में, मुक्ति को पाता॥"
+      ],
+      "linesEn": [
+        "Aarti matu tumhari, jo nar nit gata.",
+        "Sevak vahi sahaj mein, mukti ko pata."
+      ],
+      "meaningHi": "अंतिम पद में नित्य आरती गाने वाले भक्त के लिए सहज मुक्ति की प्रार्थना और विश्वास व्यक्त होता है।",
+      "meaningEn": "The closing stanza expresses the devotee’s faith and prayer that singing this aarti daily leads toward liberation."
+    }
+  ]
+}

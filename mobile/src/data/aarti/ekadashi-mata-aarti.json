@@ -1,0 +1,291 @@
+{
+  "titleHi": "एकादशी माता की आरती",
+  "titleEn": "Om Jai Ekadashi Mata",
+  "subtitleHi": "एकादशी माता की आरती",
+  "subtitleEn": "Om Jai Ekadashi Mata",
+  "deity": "vishnu",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Complete fifteen-stanza Drik Panchang edition checked against BhaktiBharat, including all monthly name verses and the closing Gurdita signature. Varuthini/Baruthini is an orthographic variant. The month names follow the hymn’s Purnimanta convention; they are not generated dates or fasting instructions. Complete stanza set; repeated refrains do not create extra reader pages. Hindi and English meanings are original editorial glosses. No recorded audio is attached.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/aarti/ekadashi/ekadashi-aarti.html?lang=hi",
+      "https://www.bhaktibharat.com/aarti/ekadashi-mata-ki-aarti"
+    ],
+    "retrievedOn": "2026-10-15"
+  },
+  "counts": {
+    "totalVerses": 15
+  },
+  "verses": [
+    {
+      "id": "eka-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "ॐ जय एकादशी, जय एकादशी, जय एकादशी माता।",
+        "विष्णु पूजा व्रत को धारण कर, शक्ति मुक्ति पाता॥"
+      ],
+      "linesEn": [
+        "Om jai Ekadashi, jai Ekadashi, jai Ekadashi mata.",
+        "Vishnu pooja vrat ko dharan kar, shakti mukti pata."
+      ],
+      "meaningHi": "एकादशी माता की जय हो। आरती विष्णु-पूजा और व्रत को आध्यात्मिक बल तथा मुक्ति की साधना के रूप में गाती है।",
+      "meaningEn": "Glory to Mother Ekadashi. The hymn praises worship of Vishnu and the observance as a path of spiritual strength and liberation."
+    },
+    {
+      "id": "eka-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · 1",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "तेरे नाम गिनाऊं देवी, भक्ति प्रदान करनी।",
+        "गण गौरव की देनी माता, शास्त्रों में वरनी॥"
+      ],
+      "linesEn": [
+        "Tere nam ginaoon devi, bhakti pradan karni.",
+        "Gan gaurav ki deni mata, shastron mein varni."
+      ],
+      "meaningHi": "भक्त देवी के विविध नाम गिनाता है। उन्हें भक्ति और गौरव देने वाली तथा शास्त्रों में वर्णित माता कहता है।",
+      "meaningEn": "The devotee begins to enumerate the goddess’s names, praising her as a giver of devotion and honour, described in sacred texts."
+    },
+    {
+      "id": "eka-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · 2",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "मार्गशीर्ष के कृष्णपक्ष की उत्पन्ना, विश्वतारनी जन्मी।",
+        "शुक्ल पक्ष में हुई मोक्षदा, मुक्तिदाता बन आई॥"
+      ],
+      "linesEn": [
+        "Margasheersh ke krishnapaksh ki Utpanna, vishvatarni janmi.",
+        "Shukl paksh mein hui Mokshada, muktidata ban aai."
+      ],
+      "meaningHi": "पूर्णिमान्त मास-क्रम में मार्गशीर्ष कृष्णपक्ष की उत्पन्ना और शुक्लपक्ष की मोक्षदा का स्मरण है। नामों को संसार से पार कराने और मुक्ति देने के भाव से जोड़ा गया है।",
+      "meaningEn": "Following the hymn’s Purnimanta month sequence, this stanza names Utpanna in Margashirsha’s dark fortnight and Mokshada in its bright fortnight, associating them with deliverance and liberation."
+    },
+    {
+      "id": "eka-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · 3",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "पौष के कृष्णपक्ष की, सफला नामक है।",
+        "शुक्लपक्ष में होय पुत्रदा, आनन्द अधिक रहै॥"
+      ],
+      "linesEn": [
+        "Paush ke krishnapaksh ki, Saphala namak hai.",
+        "Shuklapaksh mein hoy Putrada, anand adhik rahai."
+      ],
+      "meaningHi": "पौष कृष्णपक्ष की सफला और शुक्लपक्ष की पुत्रदा एकादशी का स्मरण करते हुए आनन्द की कामना है।",
+      "meaningEn": "The stanza remembers Saphala in Pausha’s dark fortnight and Putrada in its bright fortnight, invoking joy."
+    },
+    {
+      "id": "eka-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · 4",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "नाम षटतिला माघ मास में, कृष्णपक्ष आवै।",
+        "शुक्लपक्ष में जया कहावै, विजय सदा पावै॥"
+      ],
+      "linesEn": [
+        "Nam Shattila Magh mas mein, krishnapaksh aavai.",
+        "Shuklapaksh mein Jaya kahavai, vijay sada pavai."
+      ],
+      "meaningHi": "माघ कृष्णपक्ष में षटतिला और शुक्लपक्ष में जया का नाम लिया गया है। जया के नाम में विजय का भक्तिपरक भाव है।",
+      "meaningEn": "Shattila is named for Magha’s dark fortnight and Jaya for its bright fortnight. Jaya’s name is celebrated through the idea of victory."
+    },
+    {
+      "id": "eka-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · 5",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "विजया फागुन कृष्णपक्ष में, शुक्ला आमलकी।",
+        "पापमोचनी कृष्ण पक्ष में, चैत्र महाबलि की॥"
+      ],
+      "linesEn": [
+        "Vijaya Phagun krishnapaksh mein, shukla Amalaki.",
+        "Papmochani krishna paksh mein, Chaitra mahabali ki."
+      ],
+      "meaningHi": "फाल्गुन कृष्णपक्ष की विजया, शुक्लपक्ष की आमलकी तथा चैत्र कृष्णपक्ष की पापमोचनी का स्मरण है।",
+      "meaningEn": "The verse names Vijaya in Phalguna’s dark fortnight, Amalaki in its bright fortnight and Papamochani in Chaitra’s dark fortnight."
+    },
+    {
+      "id": "eka-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · 6",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "चैत्र शुक्ल में नाम कामदा, धन देने वाली।",
+        "नाम वरूथिनी कृष्णपक्ष में, वैसाख माह वाली॥"
+      ],
+      "linesEn": [
+        "Chaitra shukl mein nam Kamada, dhan dene wali.",
+        "Nam Varuthini krishnapaksh mein, Vaisakh mah wali."
+      ],
+      "meaningHi": "चैत्र शुक्लपक्ष की कामदा और वैशाख कृष्णपक्ष की वरूथिनी का स्मरण है। पद में कामदा को समृद्धि देने वाली कहा गया है।",
+      "meaningEn": "Kamada is named for Chaitra’s bright fortnight and Varuthini for Vaishakha’s dark fortnight. The hymn praises Kamada as a giver of prosperity."
+    },
+    {
+      "id": "eka-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद · 7",
+      "labelEn": "Stanza · 7",
+      "lines": [
+        "शुक्ल पक्ष में होय मोहिनी, अपरा ज्येष्ठ कृष्णपक्षी।",
+        "नाम निर्जला सब सुख करनी, शुक्लपक्ष रखी॥"
+      ],
+      "linesEn": [
+        "Shukl paksh mein hoy Mohini, Apara Jyeshth krishnapakshi.",
+        "Nam Nirjala sab sukh karni, shuklapaksh rakhi."
+      ],
+      "meaningHi": "वैशाख शुक्लपक्ष की मोहिनी, ज्येष्ठ कृष्णपक्ष की अपरा और शुक्लपक्ष की निर्जला का नाम है। यह नाम-स्मरण है; उपवास की व्यक्तिगत विधि नहीं।",
+      "meaningEn": "The stanza names Mohini in Vaishakha’s bright fortnight, Apara in Jyeshtha’s dark fortnight and Nirjala in its bright fortnight. It is devotional naming, not a personal fasting prescription."
+    },
+    {
+      "id": "eka-09",
+      "type": "stanza",
+      "section": "body",
+      "number": 9,
+      "labelHi": "पद · 8",
+      "labelEn": "Stanza · 8",
+      "lines": [
+        "योगिनी नाम आषाढ में जानों, कृष्णपक्ष करनी।",
+        "देवशयनी नाम कहायो, शुक्लपक्ष धरनी॥"
+      ],
+      "linesEn": [
+        "Yogini nam Ashadh mein jano, krishnapaksh karni.",
+        "Devshayani nam kahayo, shuklapaksh dharni."
+      ],
+      "meaningHi": "आषाढ़ कृष्णपक्ष की योगिनी और शुक्लपक्ष की देवशयनी एकादशी का स्मरण है।",
+      "meaningEn": "The verse remembers Yogini in Ashadha’s dark fortnight and Devshayani in its bright fortnight."
+    },
+    {
+      "id": "eka-10",
+      "type": "stanza",
+      "section": "body",
+      "number": 10,
+      "labelHi": "पद · 9",
+      "labelEn": "Stanza · 9",
+      "lines": [
+        "कामिका श्रावण मास में आवै, कृष्णपक्ष कहिए।",
+        "श्रावण शुक्ला होय पवित्रा, आनन्द से रहिए॥"
+      ],
+      "linesEn": [
+        "Kamika Shravan mas mein aavai, krishnapaksh kahiye.",
+        "Shravan shukla hoy Pavitra, anand se rahiye."
+      ],
+      "meaningHi": "श्रावण कृष्णपक्ष की कामिका और शुक्लपक्ष की पवित्रा का नाम लेकर आनन्द से रहने की कामना है।",
+      "meaningEn": "Kamika is named for Shravana’s dark fortnight and Pavitra for its bright fortnight, with a wish for a joyful life."
+    },
+    {
+      "id": "eka-11",
+      "type": "stanza",
+      "section": "body",
+      "number": 11,
+      "labelHi": "पद · 10",
+      "labelEn": "Stanza · 10",
+      "lines": [
+        "अजा भाद्रपद कृष्णपक्ष की, परिवर्तिनी शुक्ला।",
+        "इन्द्रा आश्चिन कृष्णपक्ष में, व्रत से भवसागर निकला॥"
+      ],
+      "linesEn": [
+        "Aja Bhadrapad krishnapaksh ki, Parivartini shukla.",
+        "Indra Ashchin krishnapaksh mein, vrat se bhavsagar nikla."
+      ],
+      "meaningHi": "भाद्रपद कृष्णपक्ष की अजा, शुक्लपक्ष की परिवर्तिनी और आश्विन कृष्णपक्ष की इन्दिरा का स्मरण है। व्रत को भवसागर पार करने की साधना कहा गया है।",
+      "meaningEn": "The stanza recalls Aja in Bhadrapada’s dark fortnight, Parivartini in its bright fortnight and Indira in Ashvina’s dark fortnight, praising the observance as a means of crossing worldly suffering."
+    },
+    {
+      "id": "eka-12",
+      "type": "stanza",
+      "section": "body",
+      "number": 12,
+      "labelHi": "पद · 11",
+      "labelEn": "Stanza · 11",
+      "lines": [
+        "पापांकुशा है शुक्ल पक्ष में, आप हरनहारी।",
+        "रमा मास कार्तिक में आवै, सुखदायक भारी॥"
+      ],
+      "linesEn": [
+        "Papankusha hai shukl paksh mein, aap harnahari.",
+        "Rama mas Kartik mein aavai, sukhdayak bhari."
+      ],
+      "meaningHi": "आश्विन शुक्लपक्ष की पापांकुशा और कार्तिक कृष्णपक्ष की रमा का स्मरण है। आरती इन्हें दुःख हरने और सुख देने वाली कहती है।",
+      "meaningEn": "The verse names Papankusha in Ashvina’s bright fortnight and Rama in Kartika’s dark fortnight, praising them through images of relief and happiness."
+    },
+    {
+      "id": "eka-13",
+      "type": "stanza",
+      "section": "body",
+      "number": 13,
+      "labelHi": "पद · 12",
+      "labelEn": "Stanza · 12",
+      "lines": [
+        "देवोत्थानी शुक्लपक्ष की, दुखनाशक मैया।",
+        "पावन मास में करूं विनती, पार करो नैया॥"
+      ],
+      "linesEn": [
+        "Devotthani shuklapaksh ki, dukhnashak maiya.",
+        "Pavan mas mein karoon vinti, par karo naiya."
+      ],
+      "meaningHi": "कार्तिक शुक्लपक्ष की देवोत्थानी माता को प्रणाम कर भक्त अपनी जीवन-नैया पार कराने की प्रार्थना करता है।",
+      "meaningEn": "Honouring Devotthani in Kartika’s bright fortnight, the devotee asks the Mother to guide the boat of life safely across."
+    },
+    {
+      "id": "eka-14",
+      "type": "stanza",
+      "section": "body",
+      "number": 14,
+      "labelHi": "पद · 13",
+      "labelEn": "Stanza · 13",
+      "lines": [
+        "परमा कृष्णपक्ष में होती, जन मंगल करनी।",
+        "शुक्ल मास में होय पद्मिनी, दुख दारिद्र हरनी॥"
+      ],
+      "linesEn": [
+        "Parama krishnapaksh mein hoti, jan mangal karni.",
+        "Shukl mas mein hoy Padmini, dukh daridra harni."
+      ],
+      "meaningHi": "अधिक मास की कृष्णपक्ष की परमा और शुक्लपक्ष की पद्मिनी का स्मरण है। आरती में उनके लिए मंगल, दुःख-निवारण और दरिद्रता से मुक्ति के भाव हैं।",
+      "meaningEn": "The stanza names Parama and Padmini in the dark and bright fortnights of an intercalary month, praising them through hopes of auspiciousness and relief from sorrow and poverty."
+    },
+    {
+      "id": "eka-15",
+      "type": "stanza",
+      "section": "body",
+      "number": 15,
+      "labelHi": "पद · 14",
+      "labelEn": "Stanza · 14",
+      "lines": [
+        "जो कोई आरती एकादशी की, भक्ति सहित गावै।",
+        "जन गुरदिता स्वर्ग का वासा, निश्चय वह पावै॥"
+      ],
+      "linesEn": [
+        "Jo koi aarti Ekadashi ki, bhakti sahit gavai.",
+        "Jan Gurdita swarg ka vasa, nishchay vah pavai."
+      ],
+      "meaningHi": "गुरदिता नाम से समापन में श्रद्धापूर्वक आरती गाने वाले के लिए स्वर्ग-प्राप्ति का भक्तिपरक विश्वास व्यक्त किया गया है।",
+      "meaningEn": "The closing verse, signed Gurdita, expresses devotional faith that one who sings this aarti with devotion attains a heavenly dwelling."
+    }
+  ]
+}

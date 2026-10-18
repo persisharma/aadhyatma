@@ -14,6 +14,9 @@ appId: com.prashantsharma.vedansh
     visible: { id: "comic-episodes" }
     timeout: 60000
 - assertVisible: { id: "comic-episode-bk-01" }
+# Shared listing card (design.md §82): scope line + each prasang's key-scene thumb.
+- assertVisible: { id: "comic-scope" }
+- assertVisible: { id: "comic-episode-bk-01-thumb" }
 - assertNotVisible: { id: "comic-reader-webview" }
 - tapOn: { id: "lang-toggle-hi" }
 - takeScreenshot: comic-native-shelf

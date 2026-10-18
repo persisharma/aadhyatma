@@ -127,6 +127,26 @@ test('VidhiCatalogScreen lists all seven cards without publishing provenance and
   });
 });
 
+test('VidhiCatalogScreen thumbs are painted art: the first tagged deity, else the Puja Vidhi art', () => {
+  /* eslint-disable @typescript-eslint/no-require-imports */
+  const DeityIcon = require('@/components/DeityIcon').default;
+  const StoryIcon = require('@/components/StoryIcon').default;
+  const { deityIconKeyFor } = require('@/data/deities');
+  /* eslint-enable @typescript-eslint/no-require-imports */
+  const r = render(<VidhiCatalogScreen navigation={nav} route={{ key: 'k', name: 'VidhiCatalog' } as never} />);
+  for (const vidhi of VIDHI_ENTRIES) {
+    const card = r.root.findByProps({ testID: `vidhi-card-${vidhi.id}` });
+    const deityArt = card.findAllByType(DeityIcon);
+    if (vidhi.deities.length) {
+      expect(deityArt[0].props.iconKey).toBe(deityIconKeyFor(vidhi.deities[0]));
+    } else {
+      expect(deityArt).toHaveLength(0);
+      expect(card.findAllByType(StoryIcon)[0].props.name).toBe('vrat');
+    }
+  }
+  expect(shraddhaTarpanVidhi.deities).toHaveLength(0);
+});
+
 test('VidhiDetailScreen: routine-style samagri checklist, private provenance, share, and steps mode', async () => {
   const shareSpy = jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.dismissedAction });
   const r = render(

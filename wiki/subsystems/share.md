@@ -1,8 +1,8 @@
 ---
 title: Share Cards (verse, prose, series)
 type: subsystem
-sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareContent.ts, mobile/src/utils/listingShare.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
-last_verified_date: 2026-10-15
+sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareText.ts, mobile/src/utils/shareContent.ts, mobile/src/utils/listingShare.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
+last_verified_date: 2026-10-16
 confidence: high
 status: current
 ---
@@ -41,6 +41,8 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
 - **Multi-file share** (`utils/multiShare.ts`): `react-native-share` `open({ urls })`,
   probed via `TurboModuleRegistry.get('RNShare')` then lazily required.
 
+- **Send as text + card language** (design.md §39.8, `utils/shareText.ts`): a `Send as text` row hands the verse (lines + meaning) or the *selected* prose pages to `Share.share({ message })` with the caption's link lines — no capture, so no native gate and no 10-page cap. Card-language chips let the card, caption, hashtags and text go out in hi/en/gu/kn while the sheet chrome and alerts stay in the reader's language (`chooser.cardLang`; prose keeps `lang` = card, `uiLang` = chrome). Switching on a series re-paginates and resets selection.
+
 - **Illustrated kids stories** (`kidsStoryShareable`, exported by `shareContent.ts`): `layout: 'picture'` — every page on the 540×960 (9:16) picture card, captured at 1080×1920 for every target (`isPictureCapture` in the provider; no `ShareStoryFrame`). One card per scene: complete art at the body's full width when the caption allows (never under 400 dp), then the reader's caption box with title, narration and dialogue as a `quote` block in its tinted box. Closing card: cover art (≥260 dp), takeaway, source note and a `link` block printing `vedansh.app/get` (the share message carries the tappable URL). `paginateProse({ layout, firstPageReservedDp })` budgets the taller body, the caption-box padding and the 452 dp text column. Every published caption fits its scene card in all four languages. The sheet hides the 4:5 Instagram-post row for picture content. Numbered parts pack whole scene groups using the maximum count across all four locales, never silently truncating the story at ten cards.
 - **Illustrated capture readiness.** Only illustrated exports load the cache module, resolve the existing hashed R2 request, then wait for native `Image.onLoad` on a fresh capture mount. Fetch/decode timeout or errors return failure: a series aborts before hand-off and a single scene refuses the text-only fallback. Preview may show loading UI, but exported files never deliberately contain a placeholder. The same provider, paginator, branded card, preview and native multi-share adapter remain in use.
 
@@ -75,6 +77,7 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   third-party crop behavior. Prose/picture picker geometry is unchanged.
 - **No-share surfaces.** Pitru Smaran, the पितृ पक्ष परिचय layer and the personal-tithi
   Vidhi carry no share button — design.md §63/§74 lock it.
+- **Text share must wait out the sheet dismissal.** Image paths spend capture time after closing the modal; the text path has none, so `sendText` waits `SHEET_DISMISS_MS` (350 ms) before `Share.share`, or iOS refuses to present over the dismissing modal.
 - **Tests that mount a share surface** must wrap it in `ShareProvider` (`useShare()`
   throws outside it). `jest.setup.js` stubs `react-native-view-shot`, `expo-sharing` and
   `expo-linear-gradient` globally for this reason; suites asserting on capture override.
