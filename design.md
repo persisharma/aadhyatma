@@ -3759,3 +3759,15 @@ The approved final set matches the saved Style 3 template and is recorded in `do
 - Accessibility: `button`, label `"<eyebrow>. <title>. <meta>. Tap to open."` by default (Maestro selects on this shape); a caller may pass its own (the Durga shelf keeps the form name).
 
 Files: `mobile/src/components/ListingCard.tsx` (card, `ListingSectionHeader`, `ListingScope`, `ListingThumbImage`), `mobile/src/utils/coverRect.ts`, `mobile/src/data/comicBooks/episodeCovers.ts`, `garudPuranThumbFocus` in `mobile/assets/garud-puran/index.ts`. Tests: `components/__tests__/ListingCard.test.tsx` (including the guard that every listing screen renders this card), `utils/__tests__/coverRect.test.ts`, `components/__tests__/ComicArt.test.tsx`, `screens/__tests__/{KidsStoryCatalogScreen,ComicReaderScreen,GarudPuranChaptersScreen}.test.tsx`, `data/__tests__/kidsStories.test.ts`.
+
+## 83. "A fresh update is ready" prompt (`UpdateReadyModal`)
+
+**Purpose.** expo-updates downloads a new OTA bundle in the background and, by default, applies it only on the *next* cold start — so users see new content only after they happen to relaunch. This modal closes that gap: when `Updates.useUpdates().isUpdatePending` flips true (a background download has finished and is staged), it offers a one-tap apply without blocking startup. Mounted once, app-wide, in `App.tsx`.
+
+**Structure.** Centred parchment card over `colors.modalBackdrop` (same frame as `RatingPromptSheet`), `radii.lg`, `spacing.xxl` padding, `maxWidth` 360. Title `नया अपडेट तैयार है` (readerTitle face / script-serif in gu·kn). Body: new content has downloaded; apply now or it applies automatically next launch. **A single CTA** — `अभी अपडेट करें` / "Update now", `saffron` fill — calls `Updates.reloadAsync()` to apply the staged bundle immediately (busy-latched, dims to 0.6 while reloading).
+
+**Dismissal (Oct 2026).** There is **no "Later" button** — the single action keeps the choice unambiguous (RULEBOOK §0.1 / "a line earns its place", §16 above). The user who isn't ready dismisses by tapping outside the card (the backdrop is a `Pressable`, `accessibilityLabel` "Dismiss"; the card absorbs its own taps) or the Android back button (`onRequestClose`). Dismissal is session-only (`useState`, non-destructive) and per-pending-update — the latch resets when a *newer* update is staged — and the staged bundle still applies on the next natural relaunch.
+
+**Guards.** Never shown when `Updates.isEnabled` is false (dev clients / Expo Go, where `reloadAsync()` throws).
+
+Files: `mobile/src/components/UpdateReadyModal.tsx`, mounted in `mobile/App.tsx`. Tests: `components/__tests__/UpdateReadyModal.test.tsx` (pending-visibility, dev-client guard, Update-now reloads, no-Later guard, backdrop dismiss).

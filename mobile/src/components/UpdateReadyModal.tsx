@@ -17,9 +17,11 @@ import { fontFamilies } from '@/theme/typography';
  * This modal closes that gap without blocking startup. `useUpdates()` exposes
  * `isUpdatePending`, which flips true once a background download has finished
  * and is staged for the next launch. When that happens we offer a one-tap
- * `reloadAsync()` so the user gets the new content immediately. Tapping
- * "Later" simply falls back to the default behaviour — the staged update still
- * applies on the next natural relaunch.
+ * `reloadAsync()` so the user gets the new content immediately.
+ *
+ * There is a single CTA. Dismissing — tapping outside the card or the Android
+ * back button — simply falls back to the default behaviour: the staged update
+ * still applies on the next natural relaunch.
  *
  * Guards:
  *  - `Updates.isEnabled` is false in dev clients / Expo Go, where
@@ -63,8 +65,14 @@ export default function UpdateReadyModal() {
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onLater}>
-      <View style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}>
-        <View
+      <Pressable
+        onPress={busy ? undefined : onLater}
+        accessibilityLabel={pick(lang, { hi: 'बंद करें', en: 'Dismiss', gu: 'બંધ કરો', kn: 'ಮುಚ್ಚಿ' })}
+        style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}
+      >
+        {/* Absorb taps on the card so only backdrop presses dismiss. */}
+        <Pressable
+          onPress={() => {}}
           style={[
             styles.card,
             {
@@ -124,31 +132,8 @@ export default function UpdateReadyModal() {
               {pick(lang, { hi: 'अभी अपडेट करें', en: 'Update now', gu: 'હમણાં અપડેટ કરો', kn: 'ಈಗ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ' })}
             </Text>
           </Pressable>
-
-          <Pressable
-            onPress={onLater}
-            accessibilityRole="button"
-            accessibilityLabel={pick(lang, { hi: 'बाद में', en: 'Later', gu: 'પછી', kn: 'ನಂತರ' })}
-            disabled={busy}
-            style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.6 : 1 }]}
-          >
-            <Text
-              style={[
-                styles.secondaryText,
-                {
-                  color: colors.inkMuted,
-                  // hi must not fall back to Cormorant (no Devanagari glyphs)
-                  fontFamily: scriptSerif ?? (lang === 'hi' ? typography.meaning.fontFamily : typography.cardLatin.fontFamily),
-                },
-                // tracking splits the shirorekha on Indic labels
-                lang !== 'en' && { letterSpacing: 0 },
-              ]}
-            >
-              {pick(lang, { hi: 'बाद में', en: 'Later', gu: 'પછી', kn: 'ನಂತರ' })}
-            </Text>
-          </Pressable>
-        </View>
-      </View>
+        </Pressable>
+      </Pressable>
     </Modal>
   );
 }
@@ -183,18 +168,6 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     fontSize: 16,
-    includeFontPadding: false,
-  },
-  secondary: {
-    paddingVertical: 12,
-    minHeight: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  secondaryText: {
-    fontSize: 13,
-    letterSpacing: 1.4,
-    textTransform: 'uppercase',
     includeFontPadding: false,
   },
 });
