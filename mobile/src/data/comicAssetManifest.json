@@ -1,268 +1,252 @@
 {
-  "prefix": "comics/balakanda-bilingual-v2",
+  "prefix": "comics/balakanda-illustrated-v3",
   "assets": {
-    "bk-01-v2": {
-      "hash": "e7d0e879c6fa9245",
+    "page-01": {
+      "hash": "47859f6ae251bd2d",
       "ext": "png"
     },
-    "bk-02-v1": {
-      "hash": "5f5dda931fc9fe70",
+    "page-02": {
+      "hash": "9fcea94c4c0b1097",
       "ext": "png"
     },
-    "bk-03-v2": {
-      "hash": "7ae23b30248f8b30",
+    "page-03": {
+      "hash": "1388947b531738bc",
       "ext": "png"
     },
-    "bk-04-v3": {
-      "hash": "7fd51d0e007f7da3",
+    "page-04": {
+      "hash": "3f75c71ed498a87f",
       "ext": "png"
     },
-    "bk-05-01-compact-v1": {
-      "hash": "b7aaf018a7206fbf",
+    "page-05": {
+      "hash": "2936b4250ead25ae",
       "ext": "png"
     },
-    "bk-05-02-compact-v1": {
-      "hash": "e9b6578a638ab04b",
+    "page-06": {
+      "hash": "31ef6901c0411770",
       "ext": "png"
     },
-    "bk-05-03-compact-v1": {
-      "hash": "a9dd440506ff75b8",
+    "page-07": {
+      "hash": "e9b9f4b6a2e1c3ee",
       "ext": "png"
     },
-    "bk-05-03a-welcome-v1": {
-      "hash": "46cccdf45d6777aa",
+    "page-08": {
+      "hash": "6f8b24c2085a01a8",
       "ext": "png"
     },
-    "bk-06-v1": {
-      "hash": "4936827efa2e3c82",
+    "page-09": {
+      "hash": "b5df9b946a4fe44c",
       "ext": "png"
     },
-    "bk-07-v1": {
-      "hash": "9e1d44e1b0d31b50",
+    "page-10": {
+      "hash": "23bfc3fc9b819685",
       "ext": "png"
     },
-    "bk-08-04-v2": {
-      "hash": "4a54a39580dba8aa",
+    "page-11": {
+      "hash": "1e9edeece233937c",
       "ext": "png"
     },
-    "bk-08-04a-v1": {
-      "hash": "52b196da11ee2ee7",
+    "page-12": {
+      "hash": "f75d0f3ce9e5f2aa",
       "ext": "png"
     },
-    "bk-08-v1": {
-      "hash": "0afde018ef1c9b6c",
+    "page-13": {
+      "hash": "a7372a750500cb36",
       "ext": "png"
     },
-    "bk-09-02a-v1": {
-      "hash": "016e601d0be516c0",
+    "page-14": {
+      "hash": "466d0a1395fbf181",
       "ext": "png"
     },
-    "bk-09-v1": {
-      "hash": "9c8f47ffd4fcc7cd",
+    "page-15": {
+      "hash": "ec3710cb5171b519",
       "ext": "png"
     },
-    "bk-10-v2": {
-      "hash": "b671aaf5789a02bc",
+    "page-16": {
+      "hash": "e0523857c18d5942",
       "ext": "png"
     },
-    "bk-11-v1": {
-      "hash": "87cbad97634c8fad",
+    "page-17": {
+      "hash": "ada6ac8b5a2f6d82",
       "ext": "png"
     },
-    "bk-12-v3": {
-      "hash": "22b793d11dfb0091",
+    "page-18": {
+      "hash": "c9bb83116996b1cb",
       "ext": "png"
     },
-    "bk-13-v2": {
-      "hash": "89e1d0e157ea8c55",
+    "page-19": {
+      "hash": "ee19849eb61545f6",
       "ext": "png"
     },
-    "bk-14-v1": {
-      "hash": "c0f2103a3e6752c5",
+    "page-20": {
+      "hash": "869ba0f6e2166821",
       "ext": "png"
     },
-    "bk-15-v2": {
-      "hash": "aa00d0ec05ffdf98",
+    "page-21": {
+      "hash": "9ab25d2b74b07f0a",
       "ext": "png"
     },
-    "bk-16-v2": {
-      "hash": "d878e8d84c201271",
+    "page-22": {
+      "hash": "a3831f280d882a9d",
       "ext": "png"
     },
-    "bk-17-v1": {
-      "hash": "db40d6eccf2346aa",
+    "page-23": {
+      "hash": "40da02519259b2a8",
       "ext": "png"
     },
-    "bk-18-v2": {
-      "hash": "e05d6eb7bc62af14",
+    "page-24": {
+      "hash": "fc47f1d70b0b345e",
       "ext": "png"
     },
-    "bk-19-v1": {
-      "hash": "2b6a9b6fde8d2323",
+    "page-25": {
+      "hash": "8594db68112212fa",
       "ext": "png"
     },
-    "bk-20-v2": {
-      "hash": "24e6770a8d2550bd",
+    "page-26": {
+      "hash": "36ecbd99e9d38827",
       "ext": "png"
     },
-    "bk-21-v2": {
-      "hash": "2de274de848802fc",
+    "page-27": {
+      "hash": "f99c1b38846edec2",
       "ext": "png"
     },
-    "bk-22-v2": {
-      "hash": "1a137d79130e3cc8",
+    "page-28": {
+      "hash": "76c23d107cabb3a0",
       "ext": "png"
     },
-    "bk-23-v1": {
-      "hash": "199cc1fcf0dea119",
+    "page-29": {
+      "hash": "68d5a41b3c410f7f",
       "ext": "png"
     },
-    "bk-24-v1": {
-      "hash": "d61202f55891544d",
+    "page-30": {
+      "hash": "098e1c63730d4684",
       "ext": "png"
     },
-    "bk-25-v2": {
-      "hash": "5286ee6dd007177d",
+    "page-31": {
+      "hash": "23dc6a28533f3c28",
       "ext": "png"
     },
-    "bk-26-v2": {
-      "hash": "18fb585aaa53903d",
+    "page-32": {
+      "hash": "0ed14e709fa2d427",
       "ext": "png"
     },
-    "bk-27-v3": {
-      "hash": "46f558fda0e0a60b",
+    "page-33": {
+      "hash": "554d3df9d692154a",
       "ext": "png"
     },
-    "bk-28-v1": {
-      "hash": "ad9776ddcf540685",
+    "page-34": {
+      "hash": "ef737cb61dce656d",
       "ext": "png"
     },
-    "bk-29-v2": {
-      "hash": "47c6e6d8f1d92f03",
+    "page-35": {
+      "hash": "94987fe7e001db25",
       "ext": "png"
     },
-    "bk-01-01-top-v1": {
-      "hash": "3181e19b8958ca4e",
+    "page-36": {
+      "hash": "ca6f967465cf7d74",
       "ext": "png"
     },
-    "bk-01-02-top-v1": {
-      "hash": "03c45d3f3004ce57",
+    "page-37": {
+      "hash": "fa2a5e60dfa99589",
       "ext": "png"
     },
-    "bk-01-04-top-v2": {
-      "hash": "0744249777e5f4a9",
+    "page-38": {
+      "hash": "90c7d39ea4ab15f2",
       "ext": "png"
     },
-    "bk-03-01-top-v1": {
-      "hash": "ce0a4b30785551c5",
+    "page-39": {
+      "hash": "cbc252b5e45b1a98",
       "ext": "png"
     },
-    "bk-05-03a-top-v2": {
-      "hash": "e4f41573796c2554",
+    "page-40": {
+      "hash": "6d55e0ed2a690526",
       "ext": "png"
     },
-    "bk-06-01-top-v2": {
-      "hash": "df041e6b8dc84dc4",
+    "page-41": {
+      "hash": "8a640876209d9d16",
       "ext": "png"
     },
-    "bk-06-02-top-v2": {
-      "hash": "a45c193d0bf7e70d",
+    "page-42": {
+      "hash": "e160a9eb6d630e41",
       "ext": "png"
     },
-    "bk-06-03-top-v2": {
-      "hash": "ba8d6b6e8d478cec",
+    "page-43": {
+      "hash": "98449ca57120aabe",
       "ext": "png"
     },
-    "bk-07-03-top-v1": {
-      "hash": "0ffc661cb8904cda",
+    "page-44": {
+      "hash": "5d66866c2ceceb76",
       "ext": "png"
     },
-    "bk-08-02-top-v1": {
-      "hash": "a0821bb42de8e9d1",
+    "page-45": {
+      "hash": "085f492368b71fca",
       "ext": "png"
     },
-    "bk-09-02-top-v3": {
-      "hash": "68a5b136745033d8",
+    "page-46": {
+      "hash": "c6ae3eaec5cab94b",
       "ext": "png"
     },
-    "bk-09-02a-top-v1": {
-      "hash": "2e9e1de1f5425376",
+    "page-47": {
+      "hash": "f8a22037b21580c0",
       "ext": "png"
     },
-    "bk-10-04-top-v1": {
-      "hash": "4c90978335f36403",
+    "page-48": {
+      "hash": "c64277c3e4197070",
       "ext": "png"
     },
-    "bk-12-01-top-v1": {
-      "hash": "1e9e77d831f3ddc1",
+    "page-49": {
+      "hash": "8583d9ef5672bb22",
       "ext": "png"
     },
-    "bk-13-06-top-v1": {
-      "hash": "42c3579c515c0220",
+    "page-50": {
+      "hash": "74a834231e95aa27",
       "ext": "png"
     },
-    "bk-14-02-top-v1": {
-      "hash": "b56966282f5b32b6",
+    "page-51": {
+      "hash": "08308d8e42729d59",
       "ext": "png"
     },
-    "bk-17-01-top-v1": {
-      "hash": "7c1e134be37751db",
+    "page-52": {
+      "hash": "298af1649123cbf3",
       "ext": "png"
     },
-    "bk-18-02-top-v1": {
-      "hash": "38830af8045eb22e",
+    "page-53": {
+      "hash": "0596f81884329751",
       "ext": "png"
     },
-    "bk-19-02-top-v1": {
-      "hash": "3b5aa04daff79275",
+    "page-54": {
+      "hash": "082549227c02cfc7",
       "ext": "png"
     },
-    "bk-19-07-top-v2": {
-      "hash": "5d45bdcd29c810a4",
+    "page-55": {
+      "hash": "e316ea0a4e942ffa",
       "ext": "png"
     },
-    "bk-20-03-top-v1": {
-      "hash": "adb6b3d1ec48fe0a",
+    "page-56": {
+      "hash": "1c63b8ab25e614ef",
       "ext": "png"
     },
-    "bk-20-05-top-v2": {
-      "hash": "8ea4fd054937188c",
+    "page-57": {
+      "hash": "9f3d487f0f1fcb68",
       "ext": "png"
     },
-    "bk-21-03-top-v1": {
-      "hash": "a2f2ae978d630462",
+    "page-58": {
+      "hash": "1e65030a4ce567e5",
       "ext": "png"
     },
-    "bk-22-04-top-v1": {
-      "hash": "998a76c3eb6a5d5d",
+    "page-59": {
+      "hash": "e972dd4e22a36b21",
       "ext": "png"
     },
-    "bk-23-04-top-v1": {
-      "hash": "556805de5b2040ae",
+    "page-60": {
+      "hash": "71e77ebd6fd3ac73",
       "ext": "png"
     },
-    "bk-23-06-top-v3": {
-      "hash": "41bd18d8f58b44bd",
+    "page-61": {
+      "hash": "34755605948ac2ab",
       "ext": "png"
     },
-    "bk-26-02-top-v1": {
-      "hash": "60c9ca4999358d39",
-      "ext": "png"
-    },
-    "bk-27-04-top-v1": {
-      "hash": "fb583b6805e8192a",
-      "ext": "png"
-    },
-    "bk-27-05-top-v1": {
-      "hash": "c8ca0b5f0a49b196",
-      "ext": "png"
-    },
-    "bk-28-01-top-v1": {
-      "hash": "ad0a4aade0c1dc4b",
-      "ext": "png"
-    },
-    "bk-28-03-top-v2": {
-      "hash": "a00d3a01e21eeb46",
+    "page-62": {
+      "hash": "ea312131d30ab0a1",
       "ext": "png"
     }
   }

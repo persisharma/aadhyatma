@@ -3,11 +3,12 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { getComicBook, comicPages } from '@/data/comicBooks';
 const mockCache = jest.fn();
 jest.mock('react-native', () => ({ Text: 'Text', View: 'View', Pressable: 'Pressable', Image: 'Image', ActivityIndicator: 'ActivityIndicator' }));
+jest.mock('react-native-svg', () => ({ __esModule: true, default: 'Svg', Defs: 'Defs', ClipPath: 'ClipPath', Polygon: 'Polygon', Image: 'SvgImage' }));
 jest.mock('@/utils/assetCache', () => ({ cachedAssetUri: (...args: unknown[]) => mockCache(...args) }));
 jest.mock('@/theme/ThemeContext', () => ({ useTheme: () => ({ colors: {} }) }));
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'en' }) }));
 const { default: Art, comicArtGeometry, comicArtRequest } = require('../ComicArt');
-const panels = comicPages(getComicBook('balakanda-v1')!).map(p => p.panel);
+const panels = getComicBook('balakanda-v1')!.episodes.flatMap(e => e.panels);
 const trees: TestRenderer.ReactTestRenderer[] = [];
 afterEach(() => { trees.splice(0).forEach(tree => act(() => tree.unmount())); mockCache.mockReset(); });
 test('every frame uses the exact aspect-preserving reviewed sheet rectangle', () => {
@@ -19,7 +20,7 @@ test('every frame uses the exact aspect-preserving reviewed sheet rectangle', ()
     expect(g.left).toBeCloseTo(-g.sheetWidth * panel.frame.x);
     expect(g.top).toBeCloseTo(-g.sheetHeight * panel.frame.y);
     const request = comicArtRequest(panel.art);
-    expect(request.remoteUrl).toContain(`/comics/balakanda-bilingual-v2/${panel.sha256.slice(0, 16)}.png`);
+    expect(request.remoteUrl).toContain(`/comics/balakanda-illustrated-v3/${panel.sha256.slice(0, 16)}.png`);
   }
 });
 test('failed first download keeps its geometry and offers a working retry', async () => {

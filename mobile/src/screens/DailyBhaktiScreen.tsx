@@ -1,3 +1,4 @@
+import { dailyBhaktiShareable } from '@/utils/dailyBhaktiShare';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -27,6 +28,7 @@ import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import RoutineBanner from '@/components/RoutineBanner';
 import DailyBhaktiNudge from '@/components/DailyBhaktiNudge';
+import LanguageToggle from '@/components/LanguageToggle';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { useTourTarget } from '@/components/tour/tourTargets';
 
@@ -160,6 +162,12 @@ export default function DailyBhaktiScreen() {
               one ask at a time, renders nothing once both are settled. */}
           <DailyBhaktiNudge previewLines={verseLines} />
 
+          {/* Reading-language toggle (design.md §16) — the readers' toggle row,
+              sat directly on the card it re-languages. */}
+          <View style={styles.toggleRow}>
+            <LanguageToggle />
+          </View>
+
           {/* Verse Card — carries the same faded source sketch as the verse's own
               reader page (getReaderBackground). `chapter` doubles as the stanza/kāṇḍa
               key for the sources whose plate varies per subsection. No banner: a
@@ -197,18 +205,7 @@ export default function DailyBhaktiScreen() {
                     busy={shareBusy}
                     onPress={() => {
                       share(
-                        {
-                          sourceId: verse.sourceId,
-                          stanza: verse.chapter,
-                          sectionNameHi: verse.sourceNameHi,
-                          sectionNameEn: verse.sourceNameEn,
-                          verseLabelHi: verse.labelHi ?? '',
-                          verseLabelEn: verse.labelEn ?? '',
-                          linesHi: verse.textHi,
-                          linesEn: verse.textEn,
-                          meaningHi: verse.meaningHi,
-                          meaningEn: verse.meaningEn,
-                        },
+                        dailyBhaktiShareable(verse),
                         lang
                       );
                     }}
@@ -288,6 +285,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroll: { paddingTop: 20, paddingBottom: 80 },
   titleArea: { marginBottom: 20, alignItems: 'center' },
+  toggleRow: { marginBottom: 12 },
   card: {
     width: '100%',
     borderRadius: 18,

@@ -23,16 +23,16 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "comic-episode-bk-05" }
 - repeat:
-    times: 3
+    times: 1
     commands:
       - swipe:
           start: 85%, 45%
           end: 15%, 45%
           duration: 400
-- assertVisible: { id: "comic-page-bk-05-03a" }
+- assertVisible: { id: "comic-page-bala-plan-010" }
 - takeScreenshot: comic-native-large-dasharatha-en
 - tapOn: { id: "lang-toggle-hi" }
-- assertVisible: { id: "comic-page-bk-05-03a" }
+- assertVisible: { id: "comic-page-bala-plan-010" }
 - takeScreenshot: comic-native-large-dasharatha-hi
 - scrollUntilVisible:
     element: { id: "comic-image-bk-05-03a" }
@@ -44,17 +44,22 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
     centerElement: true
 - tapOn: { id: "comic-episode-bk-29" }
-- assertVisible: { id: "comic-page-bk-29-01" }
+- assertVisible: { id: "comic-page-bala-plan-060" }
 - repeat:
-    times: 3
+    times: 2
     commands:
       - swipe:
           start: 85%, 45%
           end: 15%, 45%
           duration: 400
-- assertVisible: { id: "comic-page-bk-29-04" }
-- assertVisible: "140 / 140"
+- assertVisible: { id: "comic-page-bala-plan-062" }
+- assertVisible: "62 / 62"
 - takeScreenshot: comic-native-last-large-hi
 - tapOn: { id: "lang-toggle-en" }
-- assertVisible: "140 / 140"
+- assertVisible: "62 / 62"
 - takeScreenshot: comic-native-last-large-en
+- scrollUntilVisible:
+    element: { id: "comic-image-bk-29-04-shot-2" }
+    centerElement: true
+- assertVisible: { id: "comic-image-bk-29-04-shot-2" }
+- takeScreenshot: comic-native-last-large-scrolled

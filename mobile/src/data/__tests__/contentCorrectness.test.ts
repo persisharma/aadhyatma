@@ -606,12 +606,11 @@ assert.deepEqual(
 
 // ─── 10e. Jay Adhya Shakti canonical structure ──────────────────────────────
 // Shivanand Swami's Gujarati Amba aarti, stored in Devanagari so the gu reading
-// language restores the supplied Gujarati exactly. Eighteen stanzas, each
-// printed with the cue ॥ ॐ जयो जयो मा जगदंबे ॥; the two later-addition stanzas
-// (भाव न जाणुं…, मानो मंडप…) are deliberately excluded (see source.baseText).
+// language restores the Gujarati exactly. Closing positions 18–21 follow
+// the maintainer's order: unity, signature, service, mandap.
 
 const jayAdhyaShakti = readJson('aarti/jay-adhya-shakti.json');
-assert.equal(jayAdhyaShakti.verses.length, 18, 'Jay Adhya Shakti should have 18 stanzas');
+assert.equal(jayAdhyaShakti.verses.length, 21, 'Jay Adhya Shakti should have 21 stanzas');
 assert.ok(
   jayAdhyaShakti.verses.every((v: any) => v.type === 'stanza' && v.lines.at(-1) === '॥ ॐ जयो जयो मा जगदंबे ॥'),
   'every Jay Adhya Shakti stanza should end with its printed cue'
@@ -621,12 +620,14 @@ assert.ok(
   `Jay Adhya Shakti should open with "जय आद्या शक्ति", got: "${jayAdhyaShakti.verses[0].lines[0]}"`
 );
 assert.ok(
-  jayAdhyaShakti.verses.at(-1).lines.join(' ').includes('भणे शिवानंद स्वामी'),
-  'Jay Adhya Shakti should close with its Shivanand Swami signature stanza'
+  jayAdhyaShakti.verses[18].lines.join(' ').includes('भणे शिवानंद स्वामी'),
+  'Jay Adhya Shakti displays its jas-18 signature at position 19'
 );
 assert.ok(
-  !jayAdhyaShakti.verses.some((v: any) => /वल्लभ भट्ट|मानो मंडप/.test(v.lines.join(' '))),
-  'Jay Adhya Shakti should not include the later-addition stanzas'
+  jayAdhyaShakti.verses.slice(17).map((v: any) => v.lines[0]).every(
+    (line: string, i: number) => line.startsWith(['एकमे एक स्वरूप', 'शिवशक्तिनी आरती', 'भाव न जाणुं', 'मानो मंडप लाल गुलाल'][i])
+  ),
+  'Jay Adhya Shakti closing order is unity, signature, service, mandap'
 );
 assert.ok(
   jayAdhyaShakti.verses.every((v: any) => /[\u0A80-\u0AFF]/.test(v.meaningGu ?? '')),

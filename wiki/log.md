@@ -991,4 +991,43 @@ ASCII, registry/search/routine/library integration and Konark temple discovery.
 
 Preserved main’s sourced Shani payload at index 11 and Dattatreya at 12, removed duplicate Shani catalog/background records, and appended Ganga plus the other eight requested aartis at 13–21. The registry has 22 payloads and the category 23 entries including the Ram Stuti alias. Added regression checks for main’s persisted positions and adjusted native flow selectors/order. All nine requested titles remain covered; native verification stays deferred.
 
+## [2026-10-13] ingest | Share sheet: Send as text + card-language chips
+
+Added a no-image `Send as text` row (verse lines + meaning, or the selected prose pages rejoined across page breaks, plus the caption link lines) and hi/en/gu/kn card-language chips that re-language the card, caption, hashtags and text without changing the sheet chrome. OTA-only; no native module. Updated [[share]], design.md §39.1/§39.6/§39.7 and the share-target Maestro flow (not run — no simulator).
+
+## [2026-10-13] ingest | More → Share the App invite copy refreshed
+
+Rewrote `APP_SHARE_INVITE` (hi/en/gu/kn) from five launch-era bullets to seven covering shipped surfaces: Ramayan, kids' stories, vrat katha/puja vidhi/tirth, Ask Vedansh. Store-gated Vastu and widgets deliberately omitted. design.md §37 synced; `shareLinks.test.ts` pins seven bullets per language and the link line.
+
+## [2026-10-16] ingest | Bundled reading artwork moved to R2
+
+The Garud Puran paintings (9, ~1.4 MB) and the five 14 Oct artwork corrections (~1.1 MB) were the
+only reading art still bundled with `require()`. Uploaded all 14 to R2 with immutable caching and
+verified byte-identical public responses, then activated their hashes: Garud Puran became
+`garud-puran--*` background entries, the corrections replaced their slot sources, and the
+`artworkCorrections.ts` override was removed. Updated [[integrations/reading-artwork]] and
+[[subsystems/readers]]. Remaining bundled images are UI/offline by design (Storybook and More
+icons, widget gallery plates, celestial chakra, the paper fallback).
+
+## [2026-10-17] ingest | Language toggle on the Daily Bhakti card
+
+Daily Bhakti now carries the full-size §16 `LanguageToggle`, centred directly above the verse card (below the setup strip), so the reading language flips in place without a trip to More. Placed above the card rather than in its header row: header actions plus a compact toggle would leave the source pill ~100pt on a 375pt phone. Same global `lang`, so it also drives the share card. Updated design.md §16/§23, `DailyBhaktiScreen.test.tsx` (toggle re-languages the card) and `daily-bhakti-smoke.yaml` Step 4b (not run — no simulator).
+
+## [2026-10-16] ingest | Complete Bālakāṇḍa layout audit and pre-build storyboard
+
+Recorded140-panel/29-episode coverage,28 fresh hi/en browser-model sheets, the 62-page1–3-row planning draft, source-ID mapping and pending four-language/source/native gates in [[decisions/ramayan-comic-character-continuity]]. Planning artifacts only; no full-book art or reader implementation.
+
+
+## [2026-10-16] ingest | Complete illustrated four-language Bālakāṇḍa preview
+
+Recorded62 actual illustrated page sheets/199 distinct frames,196 live text blocks in hi/en/gu/kn,70 dialogue frames, full140-panel source ordering and per-asset prompt/hash/frame provenance in [[decisions/ramayan-comic-character-continuity]]. Browser evidence covers496 reader states and48 overview states with focused accepted-sample comparison. Repeated reference art, forced paired-panel padding and cold artwork readiness were corrected. Human editorial, independent source collation and native Standard/Large remain pending; production assets/CDN/OTA unchanged.
+
+## [2026-10-18] ingest | Integrate Bālakāṇḍa comic into the native reader
+
+Integrated the approved 62-page, 199-shot hi/en/gu/kn edition into the existing reader with grouped rows, dialog layouts, natural vertical scrolling, remote hash-cached artwork, and asset verification. iOS sampled Standard/Large flows, production asset-map exclusions, CDN object hashes, typecheck, and focused Jest suites are recorded in `docs/content-parity/ramayan-comic/balakanda-illustrated-v3/native-integration-validation.md`. Full native page-by-page review and human narrative/source approval remain open; do not merge or publish before those gates.
+
+## [2026-10-19] ingest | Bālakāṇḍa integrated-edition continuity audit
+
+Re-read all 62 pages/199 panel placements after the integrated edition left Rama's Siddhashrama question unanswered before the Vamana–Bali recollection. Added Vishwamitra's answer and explicit recollection/return framing in all four language drafts, with a four-language regression test. The full audit found no other high-confidence broken question/answer or cause/response transition; see `docs/content-parity/ramayan-comic/balakanda-illustrated-v3/continuity-audit-2026-10-19.md`. Human Gujarati/Kannada review, independent source collation, editorial approval, and native Standard/Large review remain open.
+
 ## [2026-10-17] ingest | languages: English verse display respelling (readableRomanization) + Tiro Devanagari Sanskrit reading tokens

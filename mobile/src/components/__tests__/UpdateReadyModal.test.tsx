@@ -92,11 +92,17 @@ describe('UpdateReadyModal', () => {
     expect(mockReloadAsync).toHaveBeenCalledTimes(1);
   });
 
-  test('"Later" dismisses the modal without reloading', () => {
+  test('there is no "Later" button — only the Update CTA', () => {
+    mockUseUpdates.mockReturnValue({ isUpdatePending: true });
+    const tree = render();
+    expect(() => pressableByLabel(tree, 'Later')).toThrow();
+  });
+
+  test('tapping the backdrop dismisses the modal without reloading', () => {
     mockUseUpdates.mockReturnValue({ isUpdatePending: true });
     const tree = render();
     act(() => {
-      pressableByLabel(tree, 'Later').props.onPress();
+      pressableByLabel(tree, 'Dismiss').props.onPress();
     });
     expect(mockReloadAsync).not.toHaveBeenCalled();
     expect(modalVisible(tree)).toBe(false);

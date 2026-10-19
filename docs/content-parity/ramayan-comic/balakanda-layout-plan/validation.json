@@ -1,0 +1,56 @@
+{
+  "status": "passed planning coverage and browser checks; not production/native/editorial sign-off",
+  "reviewedOn": "2026-10-16",
+  "checks": {
+    "all140SourcesCovered": true,
+    "sourceReadingOrderPreserved": true,
+    "allFrameIdsUnique": true,
+    "allPagesHave1To3Rows": true,
+    "allRowsHave1Or2Panels": true,
+    "nativeAndAuthoringCopyMatch": true,
+    "original31DialogueScenesRetainedAsSpeech": true,
+    "all77SargasMapped": true,
+    "all29ChapterAnchorsMapped": true,
+    "changedSpeechHasDraftBoundary": true,
+    "all560CurrentStateMetrics": true,
+    "allImagesLoadedAtCapture": true,
+    "allSourceArtHashesMatchAuthoringManifest": true
+  },
+  "counts": {
+    "currentPanels": 140,
+    "currentEpisodes": 29,
+    "sourceSargas": 77,
+    "currentDialoguePanels": 31,
+    "proposedPages": 62,
+    "proposedFrames": 199,
+    "additionalShots": 59,
+    "rowDistribution": {
+      "2": 19,
+      "3": 35,
+      "1": 8
+    },
+    "dialogueFrames": 70,
+    "tellerCaptionFrames": 9,
+    "silentFrames": 16,
+    "sourcePanelCoverage": 140,
+    "omittedSourcePanels": [],
+    "sourceOrderPreserved": true
+  },
+  "browserChecks": [
+    "62-page wall and199 reference frames render",
+    "8 one-row pages filtered",
+    "Source-panel search bk-28-03 finds page59 only",
+    "Page59 detail opens with3 visible draft speeches; close works",
+    "Detailed English wall renders84 speech/teller/draft-caption blocks",
+    "All6 overview batches captured and opened for visual review",
+    "Current140-page tab renders7 sheets and changes size/language evidence",
+    "No warning/error logs at final check"
+  ],
+  "pending": [
+    "User review of page grouping",
+    "Complete two-publication source comparison for changed speech/scene staging",
+    "Full Gujarati and Kannada scripts (current book has only hi/en)",
+    "Complete Standard/Large native sequence after implementation",
+    "Every newly generated/recomposed scene and cover visually reviewed with its own frame/hash"
+  ]
+}

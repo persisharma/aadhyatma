@@ -19,6 +19,7 @@
  * Pure: no React, no native deps.
  */
 
+import type { DevotionalPage } from './devotionalShareLayout';
 import type { Lang } from '@/data/gita/language';
 import { charsPerLine } from '@/utils/shareCardType';
 
@@ -184,6 +185,7 @@ export type ProsePageBlock = {
 };
 
 export type ProsePage = {
+  devotional?: DevotionalPage;
   /**
    * An illustrated scene above this page's title and caption. `heightDp` is the box the
    * art fills: the body left after `usedDp` and `illustrationGap`, never below the

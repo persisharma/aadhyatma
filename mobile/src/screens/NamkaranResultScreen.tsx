@@ -1,3 +1,4 @@
+import StoryIcon from '@/components/StoryIcon';
 import React, { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -196,7 +197,7 @@ function NamkaranResultContent({ navigation, route, result }: Props & { result: 
           <Pressable onPress={() => setShareVisible(true)} accessibilityRole="button" accessibilityLabel="Preview privacy-safe Namkaran share card" style={[styles.primary, { backgroundColor: colors.saffronDeep, borderRadius: radii.pill }]}><Text style={[styles.primaryText, { color: colors.onPrimary }]}>{contentByLang(lang, 'शेयर कार्ड देखें', 'Preview share card')}</Text></Pressable>
         </>
       ) : null}
-      <ListCard leading={<CardThumb><Text style={[styles.thumbText, { color: colors.saffronDeep }]}>मु</Text></CardThumb>} onPress={() => navigation.navigate('MuhuratResults', { occasionId: 'namkaran' })} accessibilityLabel="Open Namkaran Muhurat"><Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16 }}>{contentByLang(lang, 'नामकरण मुहूर्त', 'Namkaran Muhurat')}</Text><Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17 }}>{meaningByLang(lang, 'शुभ नामकरण-समारोह दिन देखें।', 'Browse suitable naming-ceremony days.')}</Text></ListCard>
+      <ListCard leading={<CardThumb><StoryIcon name="muhurat" size={40} /></CardThumb>} onPress={() => navigation.navigate('MuhuratResults', { occasionId: 'namkaran' })} accessibilityLabel="Open Namkaran Muhurat"><Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16 }}>{contentByLang(lang, 'नामकरण मुहूर्त', 'Namkaran Muhurat')}</Text><Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, lineHeight: 17 }}>{meaningByLang(lang, 'शुभ नामकरण-समारोह दिन देखें।', 'Browse suitable naming-ceremony days.')}</Text></ListCard>
       <Pressable onPress={() => navigation.goBack()} accessibilityRole="button" accessibilityLabel="Edit Namkaran details" style={[styles.secondary, { borderColor: colors.divider, borderRadius: radii.pill }]}><Text style={[styles.primaryText, { color: colors.saffronDeep }]}>{contentByLang(lang, 'विवरण बदलें', 'Edit details')}</Text></Pressable>
       {shortlistError ? <Text style={[styles.empty, { color: colors.avoidDeep }]}>{contentByLang(lang, 'चुने नाम सहेजे नहीं जा सके।', 'The shortlist could not be saved.')}</Text> : null}
     </View>

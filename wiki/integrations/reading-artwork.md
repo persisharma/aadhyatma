@@ -1,16 +1,20 @@
 ---
 title: Reading artwork on R2
 type: integration
-sources: [mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md, docs/content-parity/reader-illustration-style3-prompt.md]
-last_verified_date: 2026-10-14
+sources: [mobile/assets/garud-puran/index.ts, scripts/verify-artwork-corrections.mjs, mobile/src/data/__tests__/artworkDelivery.jest.test.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md, docs/content-parity/reader-illustration-style3-prompt.md]
+last_verified_date: 2026-10-16
 confidence: high
 status: current
 ---
 
 ## Summary
 
-Forty-five reading assets (43 original paintings and two approved Option 2 assets) are published
-to R2 under content-hashed keys. The app bundles only the 3,102-byte neutral paper from this set. Prose, navigation and controls
+Fifty-four reading assets (43 original paintings, two approved Option 2 assets and the nine Garud
+Puran paintings added 16 Oct) are published to R2 under content-hashed keys. The five reviewed
+14 Oct corrections (four backgrounds plus the Karni Mata banner) were bundled overrides until
+16 Oct; they now replace the source files in their own slots and ship from R2 under new hashes,
+so stale downloads of the old art are never reused. `scripts/verify-artwork-corrections.mjs`
+checks them; `artworkDelivery.jest.test.ts` fails if any reading artwork is `require()`d again. The app bundles only the 3,102-byte neutral paper from this set. Prose, navigation and controls
 render immediately; artwork resolves independently after interactions.
 
 Reader illustrations are now a separate local asset category with their own typed descriptors,

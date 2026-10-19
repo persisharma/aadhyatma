@@ -59,6 +59,7 @@ appId: com.prashantsharma.vedansh
     element: "Choose by nakshatra.*"
     direction: DOWN
     timeout: 10000
+- takeScreenshot: e2e-shots/namkaran-browse-painted
 - tapOn: "Choose by nakshatra.*"
 - assertVisible: "Ashwini.*Tap to open.*"
 - tapOn: "Punarvasu.*Tap to open.*"

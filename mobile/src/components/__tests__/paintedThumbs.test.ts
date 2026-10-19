@@ -6,10 +6,6 @@ import path from 'path';
 // StoryIcon), never a Devanagari letter in a tile. Subjects with no painting
 // yet are listed in docs/icon-briefs/ and are the only allowed exceptions.
 const LETTER_TILE_EXCEPTIONS = new Set([
-  // Muhurat occasions and the Vastu doors wait on new art (docs/icon-briefs/2026-10-16-muhurat-vastu.md).
-  'screens/MuhuratFinderScreen.tsx',
-  'screens/MuhuratResultsScreen.tsx',
-  'screens/VastuDishaScreen.tsx',
   // Not icons: the first syllable is the subject of a name search, and a date tile is data.
   'screens/NamkaranScreen.tsx',
   'screens/NamkaranResultScreen.tsx',
@@ -31,7 +27,11 @@ test('no card renders a data letter-thumb (`.thumb`) or the thumb type size as t
   for (const file of [...sources(path.join(root, 'screens')), ...sources(path.join(root, 'components'))]) {
     const relative = path.relative(root, file);
     if (LETTER_TILE_EXCEPTIONS.has(relative)) continue;
-    const source = fs.readFileSync(file, 'utf8');
+    const source = fs.readFileSync(file, 'utf8').replace(
+      // Only the rendered civil date is data; other CardThumb text remains guarded.
+      /<CardThumb>\s*<Text\b[^>]*>\s*\{d\.getDate\(\)\}\s*<\/Text>\s*<\/CardThumb>/g,
+      '<CardThumb />',
+    );
     if (/<Text\b[^>]*>\s*\{\s*[\w.?]+\.thumb\s*\}\s*<\/Text>/s.test(source)) offenders.push(`${relative}: renders .thumb as text`);
     if (/typography\.thumb\.fontSize/.test(source)) offenders.push(`${relative}: sizes a letter tile`);
     if (/\.charAt\(0\)\s*\}\s*<\/Text>/.test(source)) offenders.push(`${relative}: renders a first letter`);

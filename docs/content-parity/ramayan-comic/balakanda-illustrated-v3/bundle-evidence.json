@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-10-18T17:33:38.099Z",
+  "assets": 62,
+  "panels": 199,
+  "exports": [
+    {
+      "assetmap": "docs/content-parity/ramayan-comic/balakanda-illustrated-v3/ios-assetmap.json",
+      "sha256": "1af2e3224b08eeab0e6788d166fca255a49f1b262bb26840771c750a815d2767",
+      "groups": 102,
+      "imageFiles": 100,
+      "comicArtworkBundled": false
+    },
+    {
+      "assetmap": "docs/content-parity/ramayan-comic/balakanda-illustrated-v3/android-assetmap.json",
+      "sha256": "b9031f484088d3b9f8797f18a60e53a1d67fe5e521e147184cc16a852d93d450",
+      "groups": 102,
+      "imageFiles": 100,
+      "comicArtworkBundled": false
+    }
+  ],
+  "cdn": []
+}

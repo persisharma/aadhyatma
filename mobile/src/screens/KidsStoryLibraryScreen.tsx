@@ -51,6 +51,7 @@ export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreen
             nameEn={comic.title.en}
             nameGu={comic.title.gu}
             nameKn={comic.title.kn}
+            iconKey="bowArrow"
             itemCount={pick(lang, {
               hi: '29 प्रसंग · सचित्र',
               en: '29 episodes · illustrated',

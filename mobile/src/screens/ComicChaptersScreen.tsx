@@ -8,7 +8,6 @@ import { useShare } from '@/utils/shareVerse';
 import { buildListingShare } from '@/utils/listingShare';
 import LanguageToggle from '@/components/LanguageToggle';
 import ComicArt from '@/components/ComicArt';
-import ComicLanguageNotice from '@/components/ComicLanguageNotice';
 import ListingCard, { ListingScope } from '@/components/ListingCard';
 import { comicById } from '@/data/comics';
 import { getComicBook, comicLanguage } from '@/data/comicBooks';
@@ -48,7 +47,6 @@ export default function ComicChaptersScreen({ navigation, route }: NativeStackSc
       right={listingShare ? <ShareButton busy={shareBusy} accessibilityLabel="Share episode listing" accessibilityHint="Share the complete episode list as post, Story, or Reel cards" onPress={() => void share(listingShare, lang)} /> : null}
     />
     <View style={{ paddingBottom: spacing.md }}><LanguageToggle /></View>
-    <ComicLanguageNotice />
     <FlatList testID="comic-episodes" data={episodes} extraData={lang} keyExtractor={episode => episode.id}
       contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.md, gap: spacing.md }}
       initialNumToRender={4} maxToRenderPerBatch={4} windowSize={5}

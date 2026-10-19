@@ -2,11 +2,13 @@ import React from 'react';
 import fs from 'fs';
 import path from 'path';
 import TestRenderer, { act } from 'react-test-renderer';
+import CachedArtwork from '../CachedArtwork';
 
 let mockLang = 'hi';
 jest.mock('react-native', () => ({
   Image: Object.assign((props: object) => require('react').createElement('Image', props), { resolveAssetSource: () => ({ width: 960, height: 480 }) }),
   Pressable: 'Pressable', Text: 'Text', View: 'View',
+  InteractionManager: { runAfterInteractions: () => ({ cancel: () => undefined }) },
   StyleSheet: { create: (x: unknown) => x, absoluteFillObject: { position: 'absolute' } },
   Platform: { OS: 'ios', select: (options: Record<string, unknown>) => options.ios ?? options.default },
 }));
@@ -86,6 +88,18 @@ test('a wide painting is cover-cropped around its focal point once the thumb is 
   const image = tree.root.findByType('Image' as any);
   expect(image.props.style).toMatchObject({ width: 230, height: 115 });
   expect(image.props.style.left).toBeCloseTo(46 - 0.68 * 230);
+});
+
+test('a published R2 painting is cropped from its manifest size before it downloads', () => {
+  const remote = { kind: 'remote-background', stem: 'garud-puran--cover' } as const;
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<ListingThumbImage source={remote} focusX={0.68} />); });
+  trees.push(tree);
+  act(() => tree.root.findAllByType('View' as any)[0].props.onLayout({ nativeEvent: { layout: { width: 92, height: 115 } } }));
+  const art = tree.root.findByType(CachedArtwork);
+  expect(art.props.source).toBe(remote);
+  expect(art.props.imageStyle).toMatchObject({ width: 230, height: 115, right: 'auto', bottom: 'auto' });
+  expect(art.props.imageStyle.left).toBeCloseTo(46 - 0.68 * 230);
 });
 
 test('every story cover fills a listing thumb without showing its reviewed blank band', () => {

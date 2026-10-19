@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View, type ImageSourcePropType } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
@@ -7,6 +7,8 @@ import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import { isLatinLang, meaningToken, pillTextStyle, titleFontByLang } from '@/utils/langType';
 import { coverRect } from '@/utils/coverRect';
+import { backgroundAspectRatio, type BackgroundImage } from '@/data/backgroundAsset';
+import CachedArtwork from './CachedArtwork';
 
 /**
  * The one content-listing card (design.md §82, RULEBOOK §3 "Listing cards").
@@ -136,25 +138,30 @@ export function ListingScope({ children, testID }: { children: string; testID?: 
 }
 
 /**
- * A bundled image cover-cropped into the listing thumb, keeping `focusX` (0–1
+ * A painting cover-cropped into the listing thumb, keeping `focusX` (0–1
  * across the painting) in view — wide paintings put their subject off-centre.
+ * Bundled images use their intrinsic size; published R2 paintings use the
+ * manifest dimensions, so the crop is known before anything downloads.
  */
-export function ListingThumbImage({ source, focusX = 0.5 }: { source: ImageSourcePropType; focusX?: number }) {
+export function ListingThumbImage({ source, focusX = 0.5 }: { source: BackgroundImage; focusX?: number }) {
   const [box, setBox] = useState({ width: 0, height: 0 });
-  const asset = Image.resolveAssetSource(source);
-  const rect = box.width && asset?.width ? coverRect(asset.width, asset.height, box.width, box.height, focusX) : null;
+  const asset = typeof source === 'number' ? Image.resolveAssetSource(source) : undefined;
+  const remoteRatio = backgroundAspectRatio(source);
+  const size = asset?.width && asset.height ? { width: asset.width, height: asset.height }
+    : remoteRatio ? { width: remoteRatio, height: 1 } : null;
+  const rect = box.width && size ? coverRect(size.width, size.height, box.width, box.height, focusX) : null;
+  // right/bottom 'auto' so the cached image's absolute-fill base cannot stretch it back to the box.
+  const placement = rect ? { position: 'absolute' as const, width: rect.width, height: rect.height, left: rect.left, top: rect.top, right: 'auto' as const, bottom: 'auto' as const } : null;
   return (
     <View
       style={StyleSheet.absoluteFillObject}
       onLayout={event => setBox({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
     >
-      {rect ? (
-        <Image
-          source={source}
-          accessible={false}
-          resizeMode="stretch"
-          style={{ position: 'absolute', width: rect.width, height: rect.height, left: rect.left, top: rect.top }}
-        />
+      {placement && typeof source === 'number' ? (
+        <Image source={source} accessible={false} resizeMode="stretch" style={placement} />
+      ) : null}
+      {placement && typeof source !== 'number' ? (
+        <CachedArtwork source={source} style={StyleSheet.absoluteFill} imageStyle={placement} resizeMode="stretch" />
       ) : null}
     </View>
   );

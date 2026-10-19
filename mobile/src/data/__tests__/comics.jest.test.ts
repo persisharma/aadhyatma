@@ -3,44 +3,62 @@ import path from 'node:path';
 import { comics, comicById } from '../comics';
 import { getComicBook, comicPageIndex, comicPages, comicLanguage } from '../comicBooks';
 import manifest from '../comicAssetManifest.json';
-import balakandaSource from '../comicBooks/balakanda.json';
-
+import source from '../comicBooks/balakanda.json';
 const book = getComicBook('balakanda-v1')!;
-// contentCorrectness's verse-provenance rule skips comicBooks (a retelling, like
-// kidsStories); this is where the comic's own provenance is held instead.
-test('the retelling declares its base text and covers every Bāla Kāṇḍa sarga', () => {
-  expect(balakandaSource.baseText).toMatch(/Valmiki Ramayana, Bala Kanda/);
-  expect(balakandaSource.scope).toMatch(/retelling/);
-  expect(balakandaSource.sourceCoverage).toEqual(Array.from({ length: 77 }, (_, i) => i + 1));
-});
-test('native reader uses the complete reviewed edition with no website URL', () => {
+const panels = book.episodes.flatMap(e => e.panels);
+test('complete four-language illustrated edition covers the sourced arc without duplicate shots', () => {
+  expect(source.baseText).toMatch(/Valmiki Ramayana, Bala Kanda/);
+  expect(source.scope).toMatch(/retelling/);
+  expect(source.sourceCoverage).toEqual(Array.from({ length: 77 }, (_, i) => i + 1));
   expect(comicById('balakanda-v1')).not.toHaveProperty('url');
-  expect(book.episodes).toHaveLength(29);
-  expect(comicPages(book)).toHaveLength(140);
-  expect(comics[0].episodeCount).toBe(book.episodes.length);
-  expect(getComicBook('nope')).toBeUndefined();
-  expect(comicById('nope')).toBeUndefined();
+  expect(book.episodes).toHaveLength(comics[0].episodeCount);
+  expect(comicPages(book)).toHaveLength(62);
+  expect(panels).toHaveLength(199);
+  expect(new Set(panels.map(p => p.id)).size).toBe(199);
+  expect(new Set(panels.map(p => p.sourcePanel)).size).toBe(140);
+  expect(new Set(panels.map(p => p.sha256)).size).toBe(62);
+  expect(panels.filter(p => p.hi.dialogue)).toHaveLength(70);
+  expect(book.pages.filter(p => p.rows.length === 1)).toHaveLength(8);
+  expect(book.pages.filter(p => p.rows.length === 2)).toHaveLength(19);
+  expect(book.pages.filter(p => p.rows.length === 3)).toHaveLength(35);
 });
-test('all reviewed text, frames and speaker identities survive the native migration', () => {
-  const reviewed = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../../../docs/content-parity/ramayan-comic/balakanda-bilingual-v2/book.json'), 'utf8'));
-  expect(book.episodes.map(e => e.id)).toEqual(reviewed.episodes.map((e: any) => e.id));
-  for (const [i, page] of comicPages(book).entries()) {
-    const original = reviewed.episodes.flatMap((e: any) => e.panels)[i];
-    for (const field of ['id', 'hi', 'en', 'frame', 'dimensions', 'speakerAnchor', 'overlaySpeech'] as const) {
-      expect(page.panel[field]).toEqual(original[field]);
+test('native data preserves the exact approved text, measured frames and per-language copy', () => {
+  const approved = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../../../docs/content-parity/ramayan-comic/balakanda-illustrated-v3/book.json'), 'utf8'));
+  expect(book).toEqual(approved);
+  for (const panel of panels) {
+    for (const lang of ['hi','en','gu','kn'] as const) {
+      expect((panel[lang].narration + (panel[lang].dialogue ?? '') + (panel[lang].note ?? '')).length > 0).toBe(panel.mode !== 'silent');
     }
-    const asset = manifest.assets[page.panel.art as keyof typeof manifest.assets];
-    expect(page.panel.sha256.startsWith(asset.hash)).toBe(true);
-    expect(asset.ext).toBe('png');
+    const asset = manifest.assets[panel.art as keyof typeof manifest.assets];
+    expect(panel.sha256.startsWith(asset.hash)).toBe(true);
+    expect(panel.frame.x + panel.frame.width).toBeLessThanOrEqual(1.00001);
+    expect(panel.frame.y + panel.frame.height).toBeLessThanOrEqual(1.00001);
   }
-  expect(comicPages(book).filter(p => p.panel.hi.dialogue)).toHaveLength(31);
 });
-test('episode/panel routes retain stable positions and unsupported translations are explicit', () => {
+test('every original scene and chapter routes to its containing grouped page', () => {
+  const pages = comicPages(book);
   for (const episode of book.episodes) {
-    expect(comicPages(book)[comicPageIndex(book, episode.id)].panel.id).toBe(episode.panels[0].id);
+    expect(pages[comicPageIndex(book, episode.id)].rows.flat().some(p => p.id === episode.panels[0].id)).toBe(true);
+    for (const panel of episode.panels) expect(pages[comicPageIndex(book, undefined, panel.id)].rows.flat().some(p => p.id === panel.id)).toBe(true);
   }
-  expect(comicPages(book)[comicPageIndex(book, undefined, 'bk-06-03')].panel.speakerAnchor?.x).toBe(0.51);
-  expect(comicPageIndex(book, 'missing')).toBe(0);
-  expect(comicPageIndex(book, undefined, 'missing')).toBe(0);
-  expect(['hi', 'en', 'gu', 'kn'].map(lang => comicLanguage(lang as any))).toEqual(['hi', 'en', 'en', 'en']);
+  expect(comicPageIndex(book,'missing')).toBe(0);
+  expect(getComicBook('missing')).toBeUndefined();
+  expect(['hi','en','gu','kn'].map(l => comicLanguage(l as any))).toEqual(['hi','en','gu','kn']);
+});
+test('Siddhashrama question is answered before the Vamana story, then returns to the present', () => {
+  const episode = book.episodes.find(item => item.id === 'bk-09')!;
+  const answer = episode.panels.find(panel => panel.id === 'bk-09-02a')!;
+  const vamana = episode.panels.find(panel => panel.id === 'bk-09-03')!;
+  const returnToPresent = episode.panels.find(panel => panel.id === 'bk-09-04')!;
+  const page = book.pages.find(item => item.number === 17)!;
+
+  expect(page.rows.flat()).toEqual(['bk-09-02a', 'bk-09-03', 'bk-09-03-shot-2', 'bk-09-04']);
+  for (const language of ['hi', 'en', 'gu', 'kn'] as const) {
+    expect(answer[language].dialogue).toBeTruthy();
+    expect(answer[language].narration).toBeTruthy();
+    expect(answer[language].narration).toMatch(/सिद्धाश्रम|Siddhashrama|સિદ્ધાશ્રમ|ಸಿದ್ಧಾಶ್ರಮ/);
+    expect(answer[language].narration).toMatch(/वामन|Vamana|વામન|ವಾಮನ/);
+    expect(vamana[language].dialogue).toBeTruthy();
+    expect(returnToPresent[language].narration).toMatch(/सिद्धाश्रम|Siddhashrama|સિદ્ધાશ્રમ|ಸಿದ್ಧಾಶ್ರಮ/);
+  }
 });
