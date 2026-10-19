@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PRD-46 · बाल प्रश्नोत्तरी — Interactive Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* Mirrors mobile/src/theme/colors.ts (verified Aug 2026; re-check at build time) */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-hi:#F6ECD0;
+    --gradient-end:#F1E3BF; --gold:#A67C34; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --card-from:#FFF5E0; --card-to:#F5DEAC; --card-border:rgba(184,98,27,0.4);
+    --new-badge-bg:rgba(184,98,27,0.16); --new-badge-text:#8A3E0B;
+    --shadow-subtle:0 1px 4px rgba(60,30,10,0.06);
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10);
+    --shadow-raised:0 4px 10px rgba(60,30,10,0.14);
+    --sans:'Inter',system-ui,sans-serif;
+    --serif:'Cormorant Garamond',serif;
+    --deva:'Noto Serif Devanagari',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:#1a140c;color:#e9d9b1;padding:24px;line-height:1.5}
+  h1{font-family:var(--serif);font-weight:600;font-size:28px;color:#fff5e0;margin-bottom:2px}
+  .sub{font-style:italic;color:var(--gold-soft);font-size:14px;margin-bottom:6px;max-width:920px}
+  .legend{font-size:12.5px;color:#b7a377;margin-bottom:20px;max-width:920px}
+  .legend b{color:#e9d9b1}
+  .phaselabel{font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--saffron);background:var(--saffron-tint);display:inline-block;padding:4px 12px;border-radius:20px;margin:26px 0 4px}
+  .phasedesc{font-size:12.5px;color:#b7a377;margin-bottom:14px;max-width:920px}
+  .wrap{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap}
+  .cap{width:340px;font-size:12px;color:#b7a377;margin-top:10px;text-align:left;line-height:1.55}
+  .cap b{color:#e9d9b1}
+  .cap .n{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .col{display:flex;flex-direction:column;align-items:center}
+
+  /* ---- phone frame ---- */
+  .phone{width:340px;height:720px;background:var(--parchment);border-radius:38px;
+    border:10px solid #0d0804;box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden;flex:none}
+  .phone .statusbar{height:32px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);background:linear-gradient(var(--parchment-hi),var(--parchment))}
+  .screen{position:absolute;top:32px;left:0;right:0;bottom:0;overflow-y:auto;
+    background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:16px 16px 26px}
+  .topbar{display:flex;align-items:center;gap:12px;padding:6px 2px 14px}
+  .back{width:44px;height:44px;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:18px}
+  .toptitle{font-family:var(--deva);font-size:16px;color:var(--ink);flex:1}
+  .topaction{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--saffron)}
+  .deva{font-family:var(--deva)}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#1a140c;
+    font-weight:700;font-size:11px;font-family:var(--sans);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:5}
+  .tag{font-size:10px;font-weight:600;color:var(--new-badge-text);background:var(--new-badge-bg);padding:3px 10px;border-radius:999px;font-family:var(--sans);letter-spacing:.4px}
+  .note{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);text-align:center;margin-top:12px;line-height:1.6}
+
+  /* painted-art placeholders (ComicArt / KidsStoryArt in the app) */
+  .art{background:linear-gradient(145deg,#e8c27a,#b97b3c 55%,#7d4a22);display:flex;align-items:center;justify-content:center;
+    color:#fff6e4;font-family:var(--deva)}
+  .art.b{background:linear-gradient(145deg,#9fb3c8,#5b7a9d 55%,#2e4a6b)}
+  .art.c{background:linear-gradient(145deg,#c9a7d8,#8b5e9e 55%,#4e3360)}
+
+  /* kids library app cards (painted-art thumb, no letter tiles) */
+  .appcard{display:flex;align-items:center;gap:12px;border:1px solid var(--card-border);
+    background:linear-gradient(120deg,var(--card-from),var(--card-to));border-radius:18px;padding:12px;margin-bottom:12px;
+    box-shadow:var(--shadow-raised)}
+  .appcard .thumb{width:56px;height:70px;border-radius:14px;overflow:hidden;flex:none;font-size:24px}
+  .appcard .ac{flex:1;min-width:0}
+  .appcard .at{font-family:var(--deva);font-weight:600;font-size:17px;color:var(--ink)}
+  .appcard .ae{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted);margin-top:1px}
+  .appcard .am{font-family:var(--sans);font-size:11px;letter-spacing:.4px;color:var(--ink-muted);margin-top:3px}
+  .appcard .chev{color:var(--saffron);font-size:18px;flex:none}
+
+  /* §82 ListingCard */
+  .scope{font-family:var(--serif);font-style:italic;font-size:12px;color:var(--ink-muted);margin:2px 2px 10px}
+  .lcard{display:flex;gap:12px;border:1px solid var(--divider);background:var(--parchment-soft);border-radius:14px;
+    padding:10px;margin-bottom:11px;box-shadow:var(--shadow-card)}
+  .lcard .lthumb{width:52px;height:65px;border-radius:10px;overflow:hidden;flex:none;font-size:20px}
+  .lcard .li{flex:1;min-width:0}
+  .lcard .eyebrow{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--saffron-deep)}
+  .lcard .lt{font-family:var(--deva);font-weight:600;font-size:15px;color:var(--ink);margin-top:1px}
+  .lcard .ld{font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);margin-top:2px}
+  .lcard .lm{font-family:var(--sans);font-size:10.5px;letter-spacing:.3px;color:var(--ink-muted);margin-top:4px}
+  .lcard .pbar{height:4px;border-radius:2px;background:var(--divider);margin-top:7px;overflow:hidden}
+  .lcard .pbar>i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--saffron))}
+  .lcard.teaser{opacity:.55}
+  .lcard .chev{color:var(--saffron);font-size:16px;align-self:center}
+
+  /* question screen */
+  .qdots{display:flex;gap:5px;justify-content:center;margin:6px 0 14px}
+  .qdots i{width:6px;height:6px;border-radius:50%;background:var(--divider)}
+  .qdots i.on{background:var(--saffron);width:16px;border-radius:3px}
+  .qdots i.pearl{background:var(--gold)}
+  .qprompt{font-family:var(--deva);font-size:19px;color:var(--ink);text-align:center;line-height:1.8;padding:0 6px}
+  .qpromptEn{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted);text-align:center;margin-top:4px}
+  .optgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:18px}
+  .opt{border:1.5px solid var(--divider);border-radius:14px;overflow:hidden;background:var(--parchment-soft);min-height:44px}
+  .opt .oa{height:96px;font-size:26px}
+  .opt .ol{font-family:var(--deva);font-size:12px;color:var(--ink);text-align:center;padding:7px 4px}
+  .opt.sel{border-color:var(--saffron);box-shadow:var(--shadow-card)}
+  .toptrow{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .topt{border:1.5px solid var(--divider);border-radius:14px;background:var(--parchment-soft);padding:13px 14px;
+    font-family:var(--deva);font-size:14.5px;color:var(--ink);min-height:48px}
+  .skip{font-family:var(--deva);font-size:13px;color:var(--ink-muted);text-align:center;margin-top:18px;text-decoration:underline;text-underline-offset:3px}
+
+  /* reveal */
+  .srcecard{border:1px solid var(--gold);background:var(--parchment-hi);border-radius:18px;overflow:hidden;margin-top:14px}
+  .srcecard .sa{height:150px;font-size:34px}
+  .srcecard .sq{font-family:var(--deva);font-size:14.5px;color:var(--ink);line-height:1.9;padding:13px 14px 4px;text-align:center}
+  .srcecard .sm{font-family:var(--serif);font-style:italic;font-size:11.5px;color:var(--ink-muted);text-align:center;padding:0 14px 13px}
+  .gentle{font-family:var(--deva);font-size:15px;color:var(--saffron-deep);text-align:center;margin-top:4px}
+  .reveal-exp{font-family:var(--deva);font-size:13.5px;color:var(--ink-soft);line-height:1.9;text-align:center;margin-top:12px;padding:0 8px}
+  .btn{display:block;width:100%;text-align:center;background:var(--saffron);color:#fff8ec;border:none;
+    border-radius:14px;padding:14px;font-size:15px;font-family:var(--deva);margin-top:12px;min-height:48px}
+  .btn.ghost{background:transparent;border:1px solid var(--gold-tint);color:var(--saffron)}
+
+  /* completion */
+  .seal{width:84px;height:84px;border-radius:50%;margin:24px auto 10px;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 50% 40%,var(--parchment-hi),var(--gold-tint));border:2px solid var(--gold);
+    font-family:var(--deva);font-size:36px;color:var(--saffron-deep)}
+  .donet{font-family:var(--deva);font-size:20px;color:var(--ink);text-align:center}
+  .pearls{display:flex;gap:9px;justify-content:center;margin:14px 0 4px}
+  .pearl{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff6e0,var(--gold));
+    border:1px solid var(--gold);box-shadow:var(--shadow-subtle)}
+  .pearl.empty{background:var(--parchment-soft);border:1px dashed var(--gold-soft)}
+  .dones{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted);text-align:center;margin-top:4px;line-height:1.7}
+
+  /* comic end-card invite */
+  .endcard{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:18px;padding:16px;text-align:center;margin-top:12px;box-shadow:var(--shadow-card)}
+  .endcard .et{font-family:var(--deva);font-size:16px;color:var(--ink)}
+  .invite{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--gold);background:var(--parchment-hi);
+    border-radius:20px;padding:9px 16px;font-family:var(--deva);font-size:13px;color:var(--saffron-deep);margin-top:12px;min-height:40px}
+</style>
+</head>
+<body>
+  <h1>बाल प्रश्नोत्तरी — Shastra &amp; Granth Quiz for Kids</h1>
+  <div class="sub">PRD-46 · Interactive UI prototype. Static mockups in the app's parchment system — not the live build. Art placeholders stand in for the shipped ComicArt / KidsStoryArt renders.</div>
+  <div class="legend"><b>A quiz that is a door back into the text.</b> Every question anchors to a shipped artifact (comic panel · story page · shloka) and every answer — right or wrong — ends at the source with a one-tap <b>पढ़ें ›</b> hand-off into the real reader route (ComicReader/KidsStoryReader/Gita). No timers, no lives, no leaderboards, no child profiles. Packs list on the shipped <b>§82 ListingCard</b>; entry sits in the Kids library beside the comic.</div>
+
+  <!-- ============ 1 · ENTRY + SHELF ============ -->
+  <div class="phaselabel">1 · Entry &amp; the pack shelf</div>
+  <div class="phasedesc">A प्रश्नोत्तरी card in the Kids library (painted-art thumb, same treatment as the comic card), opening a §82 listing of packs.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">बच्चों की कहानियाँ · Kids</div></div>
+
+        <div class="appcard">
+          <div class="thumb art">🏹</div>
+          <div class="ac"><div class="at">रामायण चित्रकथा</div><div class="ae">Balakanda comic</div><div class="am">29 प्रसंग · 140 पृष्ठ</div></div>
+          <div class="chev">›</div>
+        </div>
+        <div class="appcard">
+          <div class="thumb art b">☸</div>
+          <div class="ac"><div class="at">कृष्ण कथाएँ</div><div class="ae">Krishna stories</div><div class="am">आयु 6+ · 4 चित्र-पाठ</div></div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="appcard" style="position:relative;border-width:1.5px"><div class="dot" style="right:-8px;top:-8px">1</div>
+          <div class="thumb art c">?</div>
+          <div class="ac"><div class="at">प्रश्नोत्तरी <span class="tag">NEW</span></div><div class="ae">Story &amp; shastra quiz</div><div class="am">हर उत्तर कहानी तक ले जाता है</div></div>
+          <div class="chev">›</div>
+        </div>
+
+        <div class="note">कार्ड वही चित्र-शैली — letter tiles नहीं, जहाँ कला है वहाँ कला<br/>(RULEBOOK §3 no-letter-tile rule)</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Kids library — the entry card.</b><br/>
+      <span class="n">1</span><b>The प्रश्नोत्तरी card sits beside the comic and story shelves</b>, in the library's own painted-art card treatment. Its subtitle states the product promise ("हर उत्तर कहानी तक ले जाता है" — every answer leads to the story). Standard NEW badge, one release. <b>Tap → the pack shelf.</b> Routes (`PrashnottariShelf`, `PrashnottariPack`) load lazily beside the kids routes.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">प्रश्नोत्तरी</div></div>
+        <div class="scope">5 पैक · आयु 5–12 · हर उत्तर कहानी तक</div>
+
+        <div class="lcard" style="position:relative"><div class="dot" style="right:-8px;top:-8px">2</div>
+          <div class="lthumb art">🪶</div>
+          <div class="li">
+            <div class="eyebrow">पैक 1 · आयु 5–8</div>
+            <div class="lt">वाल्मीकि और क्रौंच</div>
+            <div class="ld">प्रसंग 1–2 की चित्र-प्रश्नावली</div>
+            <div class="lm">6 प्रश्न · 4/6 मोती</div>
+            <div class="pbar"><i style="width:66%"></i></div>
+          </div>
+          <div class="chev">›</div>
+        </div>
+        <div class="lcard">
+          <div class="lthumb art b">👑</div>
+          <div class="li">
+            <div class="eyebrow">पैक 2 · आयु 5–8</div>
+            <div class="lt">राम का जन्म</div>
+            <div class="ld">प्रसंग 3–5 · अयोध्या में उत्सव</div>
+            <div class="lm">7 प्रश्न · 0/7 मोती</div>
+            <div class="pbar"><i style="width:0%"></i></div>
+          </div>
+          <div class="chev">›</div>
+        </div>
+        <div class="lcard">
+          <div class="lthumb art c">🏹</div>
+          <div class="li">
+            <div class="eyebrow">पैक 3 · आयु 8–12</div>
+            <div class="lt">विश्वामित्र के साथ वन में</div>
+            <div class="ld">कथा-प्रश्न — क्यों और कैसे</div>
+            <div class="lm">8 प्रश्न · 0/8 मोती</div>
+            <div class="pbar"><i style="width:0%"></i></div>
+          </div>
+          <div class="chev">›</div>
+        </div>
+        <div class="lcard teaser" style="position:relative"><div class="dot" style="right:-8px;top:-8px">3</div>
+          <div class="lthumb art">॥</div>
+          <div class="li">
+            <div class="eyebrow">पैक · आयु 8–12</div>
+            <div class="lt">हनुमान चालीसा</div>
+            <div class="ld">शीघ्र आ रहा है</div>
+            <div class="lm">— प्रश्न</div>
+          </div>
+        </div>
+
+        <div class="note">मोती = एकत्रित ज्ञान — किसी से होड़ नहीं ·<br/>pearls are a collection, never a score</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Pack shelf — a §82 listing.</b><br/>
+      <span class="n">2</span><b>One ListingCard per pack</b>, exactly per the shipped spec: the episode's curated key-scene art filling the 4:5 thumb (`episodeCovers.ts` where the pack tracks a comic प्रसंग), eyebrow `पैक N · आयु band`, title, one-line description, meta `N प्रश्न · N मोती`, and the ListingCard's thin progress bar showing pearls collected. <b>Tap → the pack.</b><br/>
+      <span class="n">3</span><b>Planned packs are §82 subdued teasers</b> — visible, non-tappable, exactly like planned kids stories.</div>
+    </div>
+  </div>
+
+  <!-- ============ 2 · PLAY ============ -->
+  <div class="phaselabel">2 · Play — question, gentle reveal, quiet completion</div>
+  <div class="phasedesc">Picture rounds for 5–8, story rounds for 8–12. Right or wrong, the reveal shows the source and offers the hand-off. No timers anywhere.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">×</div><div class="toptitle">वाल्मीकि और क्रौंच</div><div class="topaction">4/6</div></div>
+        <div class="qdots"><i class="pearl"></i><i class="pearl"></i><i class="pearl"></i><i class="on"></i><i></i><i></i></div>
+
+        <div class="qprompt" style="position:relative"><span class="dot" style="right:-4px;top:-10px">4</span>क्रौंच पक्षी को देखकर<br/>वाल्मीकि जी के मुख से क्या निकला?</div>
+        <div class="qpromptEn">What rose from Valmiki's lips on seeing the krauncha pair?</div>
+
+        <div class="optgrid" style="position:relative"><div class="dot" style="left:-8px;bottom:-8px">5</div>
+          <div class="opt"><div class="oa art">🪶</div><div class="ol">पहला श्लोक</div></div>
+          <div class="opt sel"><div class="oa art b">🏹</div><div class="ol">एक वरदान</div></div>
+          <div class="opt"><div class="oa art c">☸</div><div class="ol">एक मंत्र</div></div>
+        </div>
+
+        <div class="skip">छोड़ें · Skip</div>
+        <div class="note">कोई घड़ी नहीं, कोई अंक नहीं — केवल कहानी ·<br/>no timer, no score pressure, 44pt+ targets</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Question — a picture round (आयु 5–8).</b><br/>
+      <span class="n">4</span><b>Hindi-led bilingual prompt</b> at reader-grade type (reading-size setting respected).<br/>
+      <span class="n">5</span><b>Three art options</b> rendered by the shipped ComicArt/KidsStoryArt components from the asset manifest — pre-readers play by recognition; each tile carries a text label (and screen-reader equivalent — never art alone, §12). Pack progress rides the §5 pager dots: gold = pearl earned, saffron = current. छोड़ें is always available and judgment-free.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">×</div><div class="toptitle">वाल्मीकि और क्रौंच</div><div class="topaction">4/6</div></div>
+
+        <div class="gentle" style="position:relative"><span class="dot" style="right:14px;top:-6px">6</span>फिर से देखें —</div>
+
+        <div class="srcecard">
+          <div class="sa art">🪶</div>
+          <div class="sq">"मा निषाद प्रतिष्ठां त्वम्…" —<br/>शोक से छंद फूटा, और वही <b>पहला श्लोक</b> बना।</div>
+          <div class="sm">रामायण चित्रकथा · प्रसंग 1, पृष्ठ 4</div>
+        </div>
+
+        <div class="reveal-exp">वाल्मीकि जी के शोक (करुणा) से ही कविता जन्मी —<br/>इसीलिए उन्हें आदिकवि कहते हैं।</div>
+
+        <div style="position:relative"><div class="dot" style="left:-8px;top:6px">7</div>
+        <button class="btn ghost">कहानी में देखें · Read in the comic ›</button></div>
+        <button class="btn">आगे · Next ›</button>
+        <div class="note">यह प्रश्न पैक में बाद में एक बार फिर आएगा —<br/>लाल ✗ कभी नहीं (spaced re-ask, never marked wrong)</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Reveal — the gentle wrong-answer state (the feature's heart).</b><br/>
+      <span class="n">6</span><b>"फिर से देखें"</b> — let's look again. Never a red ✗, never a sad sound; the warm chrome rules (§2) hold. The source card shows the actual panel + the line, with its citation (प्रसंग · पृष्ठ).<br/>
+      <span class="n">7</span><b>The hand-off is the point</b>: "कहानी में देखें ›" deep-links `ComicReader { comicId, episodeId, panelId }` to that exact panel, and returns. Hand-off taps are the feature's primary local metric. The question quietly returns once later in the pack. A right answer shows the same reveal + one ज्ञान-मोती.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">×</div><div class="toptitle">वाल्मीकि और क्रौंच</div></div>
+
+        <div class="seal">ॐ</div>
+        <div class="donet">पैक पूर्ण</div>
+        <div class="pearls" style="position:relative"><div class="dot" style="right:60px;top:-8px">8</div>
+          <span class="pearl"></span><span class="pearl"></span><span class="pearl"></span><span class="pearl"></span><span class="pearl"></span><span class="pearl empty"></span>
+        </div>
+        <div class="dones">5 ज्ञान-मोती · एक प्रश्न फिर कभी —<br/>मोती किसी से होड़ नहीं, आपकी अपनी माला है</div>
+
+        <div style="margin-top:20px">
+          <button class="btn ghost">कहानी फिर पढ़ें · Read the story again</button>
+          <button class="btn">अगला पैक: राम का जन्म ›</button>
+        </div>
+        <div class="note">शांत समापन — कोई कंफ़ेटी नहीं, रूटीन-सेलिब्रेशन नहीं</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Completion — quiet by design.</b><br/>
+      <span class="n">8</span><b>Pearls collected, one left open</b> (the re-ask the child skipped rests for next time — shown honestly as an empty pearl, not a failure). The static ॐ seal, "कहानी फिर पढ़ें", and the next pack. The routine celebration animation is deliberately not wired; pearls unlock nothing and convert to nothing.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">रामायण चित्रकथा</div><div class="topaction">प्रसंग 1 · समाप्त</div></div>
+
+        <div class="srcecard" style="margin-top:6px"><div class="sa art" style="height:200px">🪶</div></div>
+
+        <div class="endcard" style="position:relative"><div class="dot" style="right:-8px;top:-8px">9</div>
+          <div class="et">प्रसंग 1 पूर्ण — वाल्मीकि और क्रौंच</div>
+          <span class="invite">? &nbsp;इस कहानी के 6 प्रश्न खेलें?</span>
+          <div class="note" style="margin-top:8px">अगला प्रसंग स्वतः आगे — यह निमंत्रण बीच में नहीं आता</div>
+        </div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Post-reader invite (Phase 2) — opt-in, never a modal.</b><br/>
+      <span class="n">9</span><b>One quiet chip on the episode's end card</b> when a pack exists for what was just read — the highest-intent moment to confirm comprehension. Dismissing it once silences it for that story permanently; it never interrupts the auto-advance to the next प्रसंग.</div>
+    </div>
+  </div>
+
+  <div class="phaselabel" style="margin-top:34px">Interaction inventory</div>
+  <div class="legend" style="max-width:920px">
+    ① Kids library → प्रश्नोत्तरी card (painted-art treatment) → pack shelf.
+    ② §82 ListingCard per pack (episode key-scene art, eyebrow, meta, pearl progress bar) → pack.
+    ③ Planned packs = §82 subdued teasers, non-tappable.
+    ④ Hindi-led bilingual prompt at reader-grade type.
+    ⑤ Art option tiles (ComicArt/KidsStoryArt) with text labels + a11y equivalents; story rounds use text rows; छोड़ें always available.
+    ⑥ Wrong answer → "फिर से देखें" reveal — source panel + line + citation, never red, never ✗.
+    ⑦ पढ़ें › hand-off deep-links the exact ComicReader/KidsStoryReader/verse route and returns — the primary metric.
+    ⑧ Completion: pearls (collection, not score), quiet ॐ seal, re-read + next pack.
+    ⑨ Post-reader invite chip (Phase 2): opt-in, one dismissal silences per story.
+    No timers, lives, leaderboards, child profiles, or PII anywhere. State = one anonymous AsyncStorage key.
+  </div>
+</body>
+</html>
