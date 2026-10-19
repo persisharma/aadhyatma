@@ -68,6 +68,7 @@ const { getSanskar } = jest.requireActual<typeof import('@/data/sanskar')>('@/da
 
 const VERSE = typography.verse.fontSize; // 23 (Devanagari verse line)
 const MEANING = typography.meaning.fontSize; // 20
+const MEANING_EN = typography.meaningEnglish.fontSize; // 17 (Tiro, x-height matched)
 const SCREEN_TITLE = typography.screenTitle.fontSize; // chrome
 const PAGE_COUNTER = typography.pageCounter.fontSize; // chrome
 const L = 1.15;
@@ -220,6 +221,7 @@ describe('reader render matrix × L (no missed surface)', () => {
   ];
 
   test.each(cases)('%s scales meaning text at L', async (_name, element, meaningText) => {
-    expect(await meaningSizeAtL(element, meaningText)).toBe(Math.round(MEANING * L)); // 23
+    // The matrix renders in English, so the English meaning token is the base.
+    expect(await meaningSizeAtL(element, meaningText)).toBe(Math.round(MEANING_EN * L)); // 20
   });
 });

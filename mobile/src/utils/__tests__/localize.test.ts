@@ -89,9 +89,11 @@ describe('verseLinesByLang (recitation text — gu/kn always from the Devanagari
   const deva = ['धर्मक्षेत्रे कुरुक्षेत्रे', 'मामकाः पाण्डवाश्चैव'];
   const latin = ['dharma-kṣhetre kuru-kṣhetre', 'māmakāḥ pāṇḍavāśhchaiva'];
 
-  test('hi shows Devanagari, en shows the curated romanization', () => {
+  test('hi shows Devanagari, en shows the romanization respelled for reading', () => {
     expect(verseLinesByLang('hi', deva, latin)).toBe(deva);
-    expect(verseLinesByLang('en', deva, latin)).toBe(latin);
+    expect(verseLinesByLang('en', deva, latin)).toEqual(['dharma-kshetre kuru-kshetre', 'māmakāh pāndavāshchaiva']);
+    // Same array back on re-render (FlatList data stability).
+    expect(verseLinesByLang('en', deva, latin)).toBe(verseLinesByLang('en', deva, latin));
   });
 
   test('gu/kn transliterate each Devanagari line', () => {
