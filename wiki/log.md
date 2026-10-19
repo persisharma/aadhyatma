@@ -1033,3 +1033,5 @@ Re-read all 62 pages/199 panel placements after the integrated edition left Rama
 ## [2026-10-19] ingest | Daily Bhakti complete single-image share
 
 Corrected the reported Hanuman Ashtak 1.5 split meaning and blank/grey header strip. The builder retains the complete verse and meaning in one native-measured image, with a continuous artwork header, full-height picker preview and growing Story frame. Corpus/capture tests and browser review distinguish source/measurement evidence from pending installed-device checks.
+
+## [2026-10-17] ingest | languages: English verse display respelling (readableRomanization) + Tiro Devanagari Sanskrit reading tokens

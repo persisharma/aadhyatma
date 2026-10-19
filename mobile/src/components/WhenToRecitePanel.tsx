@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle } from '@/utils/langType';
@@ -151,7 +152,10 @@ function MetaRow({ label, value }: { label: string; value: string }) {
       <Text
         style={{
           color: colors.ink,
-          fontFamily: typography.meaningEnglish.fontFamily,
+          // Pinned to Cormorant Medium (meaningEnglish's face before Oct 2026) so this
+          // row looks as it did; it renders hi/gu/kn values too, which fall back to
+          // the system face exactly as before.
+          fontFamily: fontFamilies.latin,
           fontSize: 14,
         }}
       >

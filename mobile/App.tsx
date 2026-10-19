@@ -20,6 +20,7 @@ import { NotoSerifKannada_500Medium } from '@expo-google-fonts/noto-serif-kannad
 import { NotoSerifKannada_600SemiBold } from '@expo-google-fonts/noto-serif-kannada/600SemiBold';
 import { Inter_500Medium } from '@expo-google-fonts/inter/500Medium';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
+import { TiroDevanagariSanskrit_400Regular } from '@expo-google-fonts/tiro-devanagari-sanskrit/400Regular';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider, useFontScale } from '@/contexts/FontScaleContext';
 import { lightColors } from '@/theme/colors';
@@ -154,6 +155,7 @@ export default function App() {
     NotoSerifKannada_600SemiBold,
     Inter_500Medium,
     Inter_600SemiBold,
+    TiroDevanagariSanskrit_400Regular,
   });
 
   if (fontsReady) launchMarkOnce('fonts-ready');

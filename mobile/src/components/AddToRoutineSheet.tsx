@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, pick } from '@/utils/localize';
 import { scriptTitleFont, cardFontByLang, pillTextStyle } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
@@ -207,7 +208,7 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
                 style={{
                   fontFamily:
                     lang === 'en'
-                      ? typography.verseLatin.fontFamily
+                      ? fontFamilies.latinSemiBold
                       : scriptTitleFont(lang, typography.cardHindi.fontFamily),
                   fontSize: 15,
                   lineHeight: 23,

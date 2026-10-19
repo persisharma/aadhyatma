@@ -9,6 +9,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, pick } from '@/utils/localize';
+import { readableRomanization } from '@/utils/readableRomanization';
 import { useBookmarks, type BookmarkRef } from '@/contexts/BookmarksContext';
 import { library } from '@/data/texts';
 import { aartiCollection, aartiIndexById } from '@/data/aarti';
@@ -163,7 +164,7 @@ export default function WishlistScreen({ navigation }: Props) {
                     style={{ fontFamily: scriptSerif ?? typography.verse.fontFamily, fontSize: 14, color: colors.ink, lineHeight: 22 }}
                     numberOfLines={2}
                   >
-                    {contentByLang(lang, bm.previewHi, bm.previewEn)}
+                    {contentByLang(lang, bm.previewHi, readableRomanization([bm.previewEn])[0])}
                   </Text>
                   <View style={styles.bmMeta}>
                     <View style={[styles.bmPillWrap, { backgroundColor: 'rgba(184, 98, 27, 0.14)' }]}>

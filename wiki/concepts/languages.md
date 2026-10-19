@@ -2,7 +2,7 @@
 title: Reading Languages (hi/en/gu/kn)
 type: concept
 sources: [mobile/src/data/gita/language.tsx, mobile/src/components/OnboardingSetupSheet.tsx, mobile/src/contexts/TourContext.tsx, mobile/src/utils/transliterate.ts, mobile/src/utils/localize.ts, mobile/src/utils/langType.ts, mobile/src/utils/titleByLanguage.ts, mobile/src/components/LanguageToggle.tsx, mobile/src/theme/typography.ts, mobile/src/data/__tests__/contentCorrectness.test.ts, mobile/.translations/, docs/superpowers/specs/2026-06-13-gujarati-kannada-language-support-design.md, docs/superpowers/specs/2026-06-25-native-gukn-scaleout-progress.md]
-last_verified_date: 2026-07-30
+last_verified_date: 2026-10-17
 confidence: high
 status: current
 ---
@@ -86,6 +86,13 @@ fallback rather than treating generated prose as verified native translation.
   the repo is blind to it by construction. Canonical validator: `data/devanagariWellFormed.ts`;
   gates and the debt ledger in RULEBOOK §11.14. 205 instances sat in the corpus undetected from the
   first Gita import until 2026-08-10 because §11.12 only ever gated the romanization direction.
+- **English verse lines are respelled at render, not in data.** `verseLinesByLang('en')` passes the
+  romanization through `readableRomanization()` (design.md §3.1 "Display respelling"): macrons stay,
+  dotted letters go plain (`śhiṣhyaste` → `shishyaste`), strict-IAST verses (bare `c`, no `śh/ṣh/ṛi/chh`)
+  get `c/ch → ch/chh`. Content keeps IAST and search indexes it; any surface that renders a
+  `linesEn`/`transliteration` field directly, skipping `verseLinesByLang`, shows the raw scholarly form.
+  English reading tokens (`verseLatin` 20/29, `meaningEnglish` 17/28) use Tiro Devanagari Sanskrit,
+  x-height matched to the Cormorant 24/20 they replaced.
 - **No two-way ternaries for user-facing strings.** `lang === 'hi' ? hi : en` silently shows
   English for gu/kn — a correctness bug tsc cannot catch. Always route through the helpers.
 - **Verse lines use `verseToken(lang)`; meaning uses `meaningToken(meaningSourceLang(lang))`** —

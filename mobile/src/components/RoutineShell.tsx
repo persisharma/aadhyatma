@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { fontFamilies } from '@/theme/typography';
 import { contentByLang, pick } from '@/utils/localize';
 import { titleFontByLang, scriptTitleFont } from '@/utils/langType';
 import BackgroundLayer from '@/components/BackgroundLayer';
@@ -90,7 +91,7 @@ export function RoutineButton({
         style={{
           fontFamily:
             lang === 'en'
-              ? typography.verseLatin.fontFamily
+              ? fontFamilies.latinSemiBold
               : scriptTitleFont(lang, typography.cardHindi.fontFamily),
           fontSize: 16,
           // ≥1.5× — RN clips Devanagari top matras (ें ैं) below ~1.45×.

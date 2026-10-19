@@ -24,6 +24,7 @@
  */
 
 import type { Lang } from '@/data/gita/language';
+import { readableRomanization } from './readableRomanization';
 import { transliterateDevanagari } from './transliterate';
 
 export type LocalizedStrings = { hi: string; en: string; gu: string; kn: string };
@@ -84,8 +85,9 @@ export function commentaryByLang(
 
 /**
  * Verse/recitation lines. `devaLines` is the Devanagari source (`lines`/`sanskrit`),
- * `latinLines` the curated romanization (`linesEn`/`transliteration`). Returns the
- * input arrays untouched for hi/en (referential stability for FlatList data).
+ * `latinLines` the curated romanization (`linesEn`/`transliteration`). en shows the
+ * romanization respelled for reading (`readableRomanization`, design.md §3.1). Arrays
+ * stay referentially stable per input for hi/en (FlatList data).
  */
 export function verseLinesByLang(
   lang: Lang,
@@ -93,6 +95,6 @@ export function verseLinesByLang(
   latinLines: readonly string[]
 ): readonly string[] {
   if (lang === 'hi') return devaLines;
-  if (lang === 'en') return latinLines;
+  if (lang === 'en') return readableRomanization(latinLines);
   return devaLines.map((l) => transliterateDevanagari(l, lang));
 }

@@ -1,5 +1,6 @@
 import { buildProseShareText, buildVerseShareText } from '@/utils/shareText';
 import { SMART_LINK } from '@/data/shareLinks';
+import { readableRomanization } from '@/utils/readableRomanization';
 import type { ProsePage } from '@/utils/shareCardPages';
 import type { ShareableVerse } from '@/utils/shareVerse';
 
@@ -39,7 +40,7 @@ describe('buildVerseShareText', () => {
   test('English uses the romanized lines and English meaning', () => {
     const text = buildVerseShareText(VERSE, 'en');
     expect(text).toContain('Bhagavad Gita · Chapter 2 · Verse 47');
-    expect(text).toContain(VERSE.linesEn[1]);
+    expect(text).toContain(readableRomanization(VERSE.linesEn)[1]); // respelled for reading (design.md §3.1)
     expect(text).toContain(VERSE.meaningEn);
     expect(text).not.toContain('कर्मण्येवाधिकारस्ते');
   });

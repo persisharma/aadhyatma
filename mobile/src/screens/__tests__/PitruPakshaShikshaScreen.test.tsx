@@ -262,7 +262,7 @@ describe('PitruPakshaShikshaScreen', () => {
     expect(allText(tree)).not.toContain('फिर स्मरण, फिर विधि');
   });
 
-  test('English reading language renders the English copy and IAST verse lines', async () => {
+  test('English reading language renders the English copy and romanized verse lines', async () => {
     const nav = makeNav();
     const tree = await render(
       <PitruPakshaShikshaScreen navigation={nav as never} route={{ key: 's', name: 'PitruPakshaShiksha' } as never} />,
@@ -270,7 +270,8 @@ describe('PitruPakshaShikshaScreen', () => {
     );
     const text = allText(tree);
     expect(text).toContain('What Pitru Paksha is');
-    expect(text).toContain('patanti pitaro hy eṣāṁ lupta-piṇḍodaka-kriyāḥ');
+    // Stored IAST `hy eṣāṁ lupta-piṇḍodaka-kriyāḥ`, respelled for reading (design.md §3.1).
+    expect(text).toContain('patanti pitaro hy eshām lupta-pindodaka-kriyāh');
     expect(text).toContain('Read in the Gita ›');
   });
 });
