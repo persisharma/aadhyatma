@@ -124,3 +124,26 @@ test('the language toggle re-languages the verse card in place', () => {
   expect(texts()).toContain('· अर्थ');
   act(() => tree!.unmount());
 });
+
+test.each([
+  ['om-namah-shivaya', 0, 'shiva'],
+  ['vidyarambha-prarthana', 1, 'ganesha'],
+  ['gayatri-mantra', 0, 'surya'],
+  ['unknown-prayer', 0, 'prayer'],
+] as const)('next verse updates the reading artwork for %s', (sourceId, verseIndex, art) => {
+  const pool = jest.requireActual<typeof import('@/data/versePool')>('@/data/versePool');
+  const next = jest.spyOn(pool, 'getRandomVerse').mockReturnValue({
+    sourceId, verseIndex, sourceNameHi: 'प्रार्थना', sourceNameEn: 'Prayer',
+    textHi: ['ॐ'], textEn: ['Om'], meaningHi: 'सम्पूर्ण अर्थ।', meaningEn: 'The complete meaning.',
+  });
+  let tree: TestRenderer.ReactTestRenderer | undefined;
+  try {
+    act(() => { tree = TestRenderer.create(<GitaLanguageProvider initialLang="en"><ShareProvider><DailyBhaktiScreen /></ShareProvider></GitaLanguageProvider>); });
+    act(() => tree!.root.find(n => n.props.accessibilityLabel === 'Next verse' && typeof n.props.onPress === 'function').props.onPress());
+    expect(tree!.root.findByType(Image).props.source).toBe(devotionalArtAsset(art));
+    expect(tree!.root.findAllByType(Text).some(n => n.props.children === 'The complete meaning.')).toBe(true);
+  } finally {
+    if (tree) act(() => tree!.unmount());
+    next.mockRestore();
+  }
+});

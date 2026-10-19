@@ -18,8 +18,8 @@
 #   2. The verse card renders (the "Daily Verse" subtitle + "Meaning" section).
 #   3. The "↻ next" control fetches another verse and the screen stays intact.
 #   4. Global reading-language switching reflects on the screen.
-#   5. A pinned Gita verse exposes its meaning immediately at Standard size,
-#      without spending the viewport on an illustration; Large remains scrollable.
+#   5. A pinned Gita verse exposes its deity artwork at Standard size; its full meaning stays reachable
+#      by scrolling. Large remains scrollable.
 #   6. The in-screen reading-language toggle (design.md §16/§23) re-languages
 #      the card: Hindi hides the English meaning, English brings it back.
 #   7. The setup strip (design.md §23), when up, rests on "Not now". It is
@@ -102,15 +102,27 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Daily Verse"
     timeout: 15000
-- assertVisible: "Meaning.*"
+- assertVisible: { id: "daily-bhakti-deity-image" }
+- scrollUntilVisible:
+    element: { text: "Meaning.*" }
+    direction: DOWN
+    timeout: 10000
 # Pin layout verification to a known complete verse rather than assuming a
 # random long verse/meaning must fit. This exercises the widget landing route,
 # not an OS notification tap.
 - assertVisible: "Your right is only to work.*"
 - takeScreenshot: e2e-shots/daily-reading-standard
+- scrollUntilVisible:
+    element: { text: "Share verse" }
+    direction: UP
+    timeout: 10000
 - tapOn: "Share verse"
 - assertVisible: "Share to other apps"
 - tapOn: "Cancel"
+- scrollUntilVisible:
+    element: { id: "lang-toggle-hi" }
+    direction: UP
+    timeout: 10000
 
 # ── Step 4b: The card's own language toggle flips the reading in place ──
 - tapOn: { id: "lang-toggle-hi" }

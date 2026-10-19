@@ -407,19 +407,23 @@ in a compact banner; never crop a deity's attributes to force a portrait into th
 Keep source WebPs, exact prompts/provenance and visually approved SHA-256 hashes under
 `mobile/assets/reader-illustrations/`. Verify both manifests with the preparation scripts,
 publish approved objects before activating their hashes, and preserve semantic deity mappings.
-Reading artwork is never bundled: a corrected painting replaces the source file in its own slot
+General reader artwork is never bundled: a corrected painting replaces the source file in its own slot
 (new hash, new cache file), and a new section's paintings get their own folder in
 `prepare-reading-backgrounds.mjs` (as `garud-puran` does) instead of `require()` imports.
 Paged verse readers show the banner only on the first actual verse of each reading/chapter/theme,
 excluding navigation transition cards; section-based Katha/Pitru readers show it only on section
 zero. Later cards keep their themed background and divider with no banner frame, placeholder
 or banner request. Adding or gating a banner never changes a surface's `BackgroundLayer`
-source: verse pages, the Daily Bhakti card and Daan Punya keep their semantic plate.
+source: verse pages and Daan Punya keep their semantic plate. Daily Bhakti uses its dedicated devotional card below.
 Direct links to later cards do not promote them to cover cards. Continuous prose and standalone
-detail/guide screens may keep one opening image. Daily Bhakti is a quick rotating verse card:
-keep the verse's reader-page background without an illustration banner, placeholder or banner
-request, and the compact verse-to-meaning ornament. Keep reading-size tokens and complete text intact;
-long content still scrolls. Its shared export retains the existing themed background.
+detail/guide screens may keep one opening image. Daily Bhakti is the bounded exception approved
+19 Oct: its reading card and share export use the ten local devotional WebPs (nine deities plus
+neutral prayer) in `mobile/assets/devotional-share/`, combined <2MiB, with hash/provenance manifest.
+Both select through `devotionalArtForVerse`; do not copy or generate a second asset set. Keep the
+reading header at 180dp with contained artwork, script-appropriate source text, compact ornament,
+reading-size tokens and complete naturally scrolling verse/meaning. Sharing uses fixed readable
+pagination, exact source slices and image-decode/native-fit readiness. This exception does not
+permit bundling Kids Stories artwork or changing other reader delivery. See design.md §23/§39.9.
 
 Use the shared deferred asynchronous loader and persistent Documents content-hash cache.
 Reading/navigation must render immediately with a bundled neutral fallback. Completed valid
