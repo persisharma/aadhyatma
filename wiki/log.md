@@ -1030,4 +1030,8 @@ Integrated the approved 62-page, 199-shot hi/en/gu/kn edition into the existing 
 
 Re-read all 62 pages/199 panel placements after the integrated edition left Rama's Siddhashrama question unanswered before the Vamana–Bali recollection. Added Vishwamitra's answer and explicit recollection/return framing in all four language drafts, with a four-language regression test. The full audit found no other high-confidence broken question/answer or cause/response transition; see `docs/content-parity/ramayan-comic/balakanda-illustrated-v3/continuity-audit-2026-10-19.md`. Human Gujarati/Kannada review, independent source collation, editorial approval, and native Standard/Large review remain open.
 
+## [2026-10-19] ingest | Daily Bhakti complete single-image share
+
+Corrected the reported Hanuman Ashtak 1.5 split meaning and blank/grey header strip. The builder retains the complete verse and meaning in one native-measured image, with a continuous artwork header, full-height picker preview and growing Story frame. Corpus/capture tests and browser review distinguish source/measurement evidence from pending installed-device checks.
+
 ## [2026-10-17] ingest | languages: English verse display respelling (readableRomanization) + Tiro Devanagari Sanskrit reading tokens

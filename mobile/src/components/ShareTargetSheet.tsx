@@ -1,4 +1,3 @@
-import ScaledShareCard from './ScaledShareCard';
 import AppIcon, { type AppIconName } from './AppIcon';
 import React from 'react';
 import { Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -491,7 +490,7 @@ export default function ShareTargetSheet({
               sheet taller than a small phone's 92 %. */}
           <ScrollView style={styles.body} bounces={false} showsVerticalScrollIndicator={false}>
             {!multi || multi.view === 'targets' ? langChips : null}
-            {!multi && singleCardPreview ? <View style={{ alignItems: 'center', marginVertical: 12 }}><ScaledShareCard width={216}>{singleCardPreview}</ScaledShareCard></View> : null}
+            {!multi && singleCardPreview ? <View style={{ alignItems: 'center', marginVertical: 12 }}>{singleCardPreview}</View> : null}
             {body}
           </ScrollView>
           {showCancel ? (

@@ -1790,6 +1790,14 @@ Category, deity, purpose, katha, observance and puja-vidhi listings, plus the ch
 
 ---
 
+### §39.9 Daily Bhakti: one complete devotional share image
+
+Daily Bhakti prepares exactly one page per reading language with the complete stored verse and meaning. Do not put the first meaning sentence on one card and continue it on another to force a fixed 4:5 frame. `DevotionalShareCard` retains fixed readable 25/43 verse + 21/35 meaning type (Latin 26/35 + 23/32), measures the native body and root, then grows the image. Short cards retain a 540×675dp minimum (1080×1350 PNG); long cards retain 1080px output width with proportional full height. Reserve 67dp after the complete body for the footer.
+
+The artwork fills a continuous 540×270dp header, showing the upper 75% of the approved 3:2 plate and removing its lower parchment band after reviewing all ten painted subjects. There is no blank left column or solid brand rectangle. Transparent gradient stops use the parchment RGB at zero alpha instead of transparent black. Artwork files and source/verse mapping remain unchanged.
+
+Capture waits for decoded artwork and the final measured card height. Story framing adds its 120/165dp insets and grows around long cards. The single-card picker preview scales the measured whole card, never a clipped 675dp box. Daily Bhakti uses the existing full-verse-image copy, explaining long images and possible Instagram framing adjustments rather than promising fixed 4:5/9:16 dimensions. Send as text contains the same complete reading. Native iOS/Android image and WhatsApp checks remain required before merge.
+
 ## 40. Reading Progress & Resume
 
 **Purpose.** Remember where the reader stopped in every text — and every chapter of every text — so a returning reader lands back mid-verse instead of at page 1. Powers the thin progress bar in readers, the resume sheet on the listing screens, silent per-chapter auto-jump, and the routine engine's auto-completion (§31). `mobile/src/contexts/ReadingProgressContext.tsx`.

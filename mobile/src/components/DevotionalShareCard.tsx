@@ -6,34 +6,37 @@ import { devotionalArtAsset } from '@/data/devotionalShareArt';
 import { lightColors as colors } from '@/theme/colors';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, pick } from '@/utils/localize';
-import { devotionalMetrics as m, type DevotionalPage } from '@/utils/devotionalShareLayout';
+import { devotionalMetrics as m, devotionalCardGeometry, type DevotionalPage } from '@/utils/devotionalShareLayout';
 
 export type DevotionalShareCardProps = {
   header: string; page: DevotionalPage; lang: Lang; pageIndex: number; pageCount: number;
   onReady?: (ready: boolean) => void;
+  onHeight?: (height: number) => void;
 };
 /** Export-only parchment: readable fixed type, full artwork and a native fit/decode gate. */
-const DevotionalShareCard = React.forwardRef<View, DevotionalShareCardProps>(function DevotionalShareCard({ header, page, lang, pageIndex, pageCount, onReady }, ref) {
+const DevotionalShareCard = React.forwardRef<View, DevotionalShareCardProps>(function DevotionalShareCard({ header, page, lang, pageIndex, pageCount, onReady, onHeight }, ref) {
   const [painted, setPainted] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
   const [bodyHeight, setBodyHeight] = React.useState<number | null>(null);
-  const heroHeight = bodyHeight === null ? page.heroHeight
-    : m.heroHeights.find(h => h + bodyHeight <= m.contentBottom - m.bottomSlack) ?? 90;
-  const contentFits = bodyHeight === null ? null : heroHeight + bodyHeight <= m.contentBottom;
+  const [nativeHeight, setNativeHeight] = React.useState<number | null>(null);
+  const validBody = bodyHeight !== null && Number.isFinite(bodyHeight) && bodyHeight > 0;
+  const geometry = validBody ? devotionalCardGeometry(bodyHeight) : { heroHeight: page.heroHeight, height: m.height };
+  const heroHeight = geometry.heroHeight;
+  const laidOut = validBody && nativeHeight === geometry.height;
   React.useEffect(() => {
-    if (failed || contentFits === false) onReady?.(false);
-    else if (painted && contentFits === true) onReady?.(true);
-  }, [painted, failed, contentFits, onReady]);
+    if (failed || (bodyHeight !== null && !validBody)) onReady?.(false);
+    else if (laidOut && painted) { onHeight?.(geometry.height); onReady?.(true); }
+  }, [painted, failed, bodyHeight, validBody, laidOut, geometry.height, onReady, onHeight]);
   const latin = lang === 'en';
   const face = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : latin ? fontFamilies.latin : fontFamilies.devanagari;
   const hasVerse = !!page.verse.trim();
-  return <View ref={ref} collapsable={false} testID="devotional-share-card" style={styles.card}>
+  return <View ref={ref} collapsable={false} testID="devotional-share-card" style={[styles.card, validBody && { height: geometry.height }]} onLayout={e => setNativeHeight(Math.ceil(e.nativeEvent.layout.height))}>
     <LinearGradient colors={[colors.parchmentHighlight, colors.parchment]} style={StyleSheet.absoluteFill} />
-    <View style={{ height: heroHeight }}>
+    <View testID="devotional-share-artwork" style={{ height: heroHeight, overflow: 'hidden' }}>
       <Image source={devotionalArtAsset(page.art)} resizeMode="contain" accessibilityIgnoresInvertColors
-        style={{ position: 'absolute', right: 0, width: heroHeight * 1.5, height: heroHeight }}
+        style={{ position: 'absolute', left: 0, top: 0, width: m.width, height: m.width / 1.5 }}
         onLoad={() => setPainted(true)} onError={() => setFailed(true)} />
-      <LinearGradient colors={['transparent', colors.parchmentHighlight]} style={styles.fade} />
+      <LinearGradient colors={['rgba(246, 236, 208, 0)', colors.parchmentHighlight]} style={styles.fade} />
       <Text allowFontScaling={false} style={[styles.brand, { fontFamily: face }]}>
         {latin ? <><Text style={{ fontFamily: fontFamilies.devanagari }}>ॐ</Text>{' Vedansh'}</> : contentByLang(lang, 'ॐ वेदांश', 'ॐ Vedansh')}
       </Text>
@@ -59,9 +62,9 @@ const DevotionalShareCard = React.forwardRef<View, DevotionalShareCardProps>(fun
 });
 export default DevotionalShareCard;
 const styles = StyleSheet.create({
-  card: { width: m.width, height: m.height, overflow: 'hidden', backgroundColor: colors.parchment },
+  card: { width: m.width, minHeight: m.height, paddingBottom: 67, backgroundColor: colors.parchment },
   fade: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 28 },
-  brand: { position: 'absolute', left: 28, top: 24, fontSize: 20, color: colors.saffronDeep, backgroundColor: colors.parchmentHighlight, paddingHorizontal: 6, paddingVertical: 2 },
+  brand: { position: 'absolute', left: 28, top: 24, fontSize: 20, color: colors.saffronDeep, textShadowColor: colors.parchmentHighlight, textShadowRadius: 4, textShadowOffset: { width: 0, height: 0 }, paddingHorizontal: 6, paddingVertical: 2 },
   content: { paddingTop: m.contentTop, paddingHorizontal: m.inset },
   source: { fontSize: m.sourceSize, lineHeight: m.sourceLeading, textAlign: 'center', color: colors.saffronDeep, marginBottom: m.sourceGap, includeFontPadding: false },
   divider: { height: m.meaningGap, alignItems: 'center', justifyContent: 'center' },
