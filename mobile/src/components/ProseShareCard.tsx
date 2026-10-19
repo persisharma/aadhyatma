@@ -32,6 +32,7 @@ export type ProseShareCardProps = {
   lang: Lang;
   illustrationUri?: string;
   onIllustrationReady?: (ready: boolean) => void;
+  onHeight?: (height: number) => void;
   /** `picture` → the 540×960 picture-story card; defaults to the 540×675 prose card. */
   layout?: ShareCardLayout;
 };
@@ -83,7 +84,7 @@ const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function Pros
   if (props.page.devotional) return <DevotionalShareCard ref={ref}
     key={`${props.lang}:${props.header}:${JSON.stringify(props.page.devotional)}`}
     header={props.header} page={props.page.devotional} lang={props.lang}
-    pageIndex={props.pageIndex} pageCount={props.pageCount} onReady={props.onIllustrationReady} />;
+    pageIndex={props.pageIndex} pageCount={props.pageCount} onReady={props.onIllustrationReady} onHeight={props.onHeight} />;
 
   return (
     <View
