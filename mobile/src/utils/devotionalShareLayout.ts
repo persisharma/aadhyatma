@@ -8,7 +8,7 @@ export const devotionalMetrics = {
   sourceSize: 16, sourceLeading: 26, sourceGap: 11,
   verseSize: 25, verseLeading: 43, meaningSize: 21, meaningLeading: 35,
   latinVerseSize: 26, latinVerseLeading: 35, latinMeaningSize: 23, latinMeaningLeading: 32,
-  meaningLabelSize: 15, meaningLabelLeading: 25, meaningGap: 20, bottomSlack: 18,
+  meaningLabelSize: 15, meaningLabelLeading: 25, meaningGap: 20, bottomSlack: 18, footerSpace: 100,
   heroHeights: [270] as readonly number[],
 } as const;
 const advances: Record<Lang, number> = { hi: .44, en: .47, gu: .47, kn: .60 };
@@ -23,23 +23,34 @@ function wrappedLines(text: string, perLine: number): number {
   }
   return lines;
 }
-export function devotionalTextHeight(text: string, lang: Lang, size: number, leading: number): number {
+export function devotionalTextHeight(text: string, lang: Lang, size: number, leading: number, width = 464): number {
   if (!text.trim()) return 0;
-  const perLine = charsPerLine(464, size, advances[lang]);
+  const perLine = charsPerLine(width, size, advances[lang]);
   return text.trim().split('\n').reduce((sum, line) => sum + wrappedLines(line, perLine) * leading, 0);
+}
+/** Preserve every stored paragraph; only its presentation changes. */
+export function splitDevotionalMeaning(text: string): { meaning: string; commentary: string } {
+  const trimmed = text.trim();
+  const separator = /\n\s*\n/.exec(trimmed);
+  if (!separator) return { meaning: trimmed, commentary: '' };
+  return { meaning: trimmed.slice(0, separator.index), commentary: trimmed.slice(separator.index + separator[0].length) };
 }
 export function devotionalBodyHeight(header: string, verse: string, meaning: string, lang: Lang): number {
   const m = devotionalMetrics, latin = lang === 'en';
-  return m.contentTop + devotionalTextHeight(header, lang, m.sourceSize, m.sourceLeading) + m.sourceGap
+  const parts = splitDevotionalMeaning(meaning);
+  const size = latin ? m.latinMeaningSize : m.meaningSize;
+  const leading = latin ? m.latinMeaningLeading : m.meaningLeading;
+  return m.contentTop + 16 + devotionalTextHeight(header, lang, m.sourceSize, m.sourceLeading) + 38
     + devotionalTextHeight(verse, lang, latin ? m.latinVerseSize : m.verseSize, latin ? m.latinVerseLeading : m.verseLeading)
-    + (meaning.trim() ? m.meaningGap + m.meaningLabelLeading + devotionalTextHeight(meaning, lang, latin ? m.latinMeaningSize : m.meaningSize, latin ? m.latinMeaningLeading : m.meaningLeading) : 0);
+    + (parts.meaning ? 48 + 32 + m.meaningLabelLeading + 8 + devotionalTextHeight(parts.meaning, lang, size, leading, 420) : 0)
+    + (parts.commentary ? 42 + devotionalTextHeight(parts.commentary, lang, size, leading) : 0);
 }
 /** One complete devotional image. A wide artwork header; native text sets height. */
 export function devotionalCardGeometry(bodyHeight: number): { heroHeight: number; height: number } {
   // The approved plates paint the deity in the upper three quarters. A wide
   // header removes only the empty lower parchment, not a side of the scene.
   const heroHeight = 270;
-  return { heroHeight, height: Math.max(devotionalMetrics.height, heroHeight + bodyHeight + 67) };
+  return { heroHeight, height: Math.max(devotionalMetrics.height, heroHeight + bodyHeight + devotionalMetrics.footerSpace) };
 }
 export function paginateDevotional(input: { art: DevotionalArt; header: string; verse: string; meaning: string; lang: Lang }): DevotionalPage[] {
   const geometry = devotionalCardGeometry(devotionalBodyHeight(input.header, input.verse, input.meaning, input.lang));

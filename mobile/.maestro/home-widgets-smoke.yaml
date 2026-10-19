@@ -39,7 +39,7 @@ appId: com.prashantsharma.vedansh
 - openLink: "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=1&verseIndex=0"
 - tapOn: { text: "Open", optional: true }
 - extendedWaitUntil:
-    visible: "दैनिक भक्ति|Daily Verse"
+    visible: { id: "daily-bhakti-card" }
     timeout: 15000
 - openLink: "vedansh://widget/panchang?date=2030-01-15"
 - tapOn: { text: "Open", optional: true }
