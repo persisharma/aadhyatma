@@ -1,6 +1,6 @@
 import { dailyBhaktiShareable } from '@/utils/dailyBhaktiShare';
 import React, { useState, useCallback, useEffect } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, type RouteProp } from '@react-navigation/native';
@@ -19,8 +19,7 @@ import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
-import BackgroundLayer from '@/components/BackgroundLayer';
-import { getReaderBackground } from '@/data/backgrounds';
+import { devotionalArtAsset, devotionalArtForVerse } from '@/data/devotionalShareArt';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -168,16 +167,21 @@ export default function DailyBhaktiScreen() {
             <LanguageToggle />
           </View>
 
-          {/* Verse Card — carries the same faded source sketch as the verse's own
-              reader page (getReaderBackground). `chapter` doubles as the stanza/kāṇḍa
-              key for the sources whose plate varies per subsection. No banner: a
-              daily verse starts with text. */}
-          <View ref={dailyVerseRef} collapsable={false} style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
-            <BackgroundLayer source={getReaderBackground(verse.sourceId, { stanza: verse.chapter })} />
+          {/* Match the devotional share design on the reading surface too. The
+              artwork is bounded; verse and meaning keep their normal reading scale
+              and natural ScrollView height. */}
+          <View ref={dailyVerseRef} collapsable={false} style={[styles.card, { backgroundColor: colors.parchmentHighlight, borderColor: colors.divider }]}>
+            <View testID="daily-bhakti-artwork" pointerEvents="none" accessible={false} style={[styles.artwork, { backgroundColor: colors.parchmentHighlight }]}>
+              <Image testID="daily-bhakti-deity-image"
+                source={devotionalArtAsset(devotionalArtForVerse(verse))}
+                resizeMode="contain" accessible={false} accessibilityIgnoresInvertColors
+                style={styles.deityImage} />
+              <LinearGradient colors={['transparent', colors.parchmentHighlight]} style={styles.artworkFade} />
+            </View>
             {/* Top row: source pill + action icons */}
             <View style={styles.cardHeader}>
               <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
-                <Text style={[styles.pillText, { color: colors.saffronDeep }]}>
+                <Text style={[styles.pillText, { color: colors.saffronDeep, fontFamily: verseToken(lang, typography).fontFamily }]}>
                   {contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn)} · {contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')}
                 </Text>
               </View>
@@ -291,11 +295,13 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: 1,
     padding: 20,
-    // Clips the BackgroundLayer sketch to the rounded corners; the card's own
-    // backgroundColor keeps the iOS shadow rendering despite the clip.
+    // Clip the header art to the card corners; reading text grows naturally.
     overflow: 'hidden',
     ...elevation.raised,
   },
+  artwork: { height: 180, marginTop: -20, marginHorizontal: -20, marginBottom: 16, overflow: 'hidden' },
+  deityImage: { position: 'absolute', right: 0, width: 270, maxWidth: '100%', height: 180 },
+  artworkFade: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 30 },
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -315,7 +321,6 @@ const styles = StyleSheet.create({
   pillText: {
     fontFamily: fontFamilies.latinSemiBold,
     fontSize: 13,
-    letterSpacing: 0.3,
   },
   meaningLabel: {
     fontFamily: fontFamilies.devanagariBold,
