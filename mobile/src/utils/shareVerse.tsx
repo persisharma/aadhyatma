@@ -353,6 +353,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           spec = { ...spec, captureId: id };
           verseMeasured = new Promise(resolve => { verseLayout.current = { id, resolve }; });
         }
+        if (spec.kind === 'prose' && spec.card.page.devotional) {
+          const id = ++captureSequence.current;
+          painted = new Promise<boolean>(resolve => { imageReady.current = { id, resolve }; });
+          spec = { ...spec, captureId: id };
+        }
         if (spec.kind === 'prose' && spec.card.page.illustration) {
           // Load the asset cache only for illustrated captures. Verse/prose-only tests and startup stay light.
           // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -628,10 +633,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       try {
         const spec = cardSpec(content, scope, lang, highlighted);
         const fileUri = await capture({ kind: 'prose', card: spec, format }, 'card');
-        if (spec.page.illustration && !fileUri) { alertCouldNotShare(uiLang); return; }
+        if ((spec.page.illustration || spec.page.devotional) && !fileUri) { alertCouldNotShare(uiLang); return; }
         const label = spec.pageCount > 1 ? pageWord(highlighted + 1, spec.pageCount) : null;
         const caption = proseCaption(content, scope, lang, target, label);
-        await deliver(fileUri, caption, target, format, uiLang);
+        const dispatched = await deliver(fileUri, caption, target, format, uiLang);
+        if (dispatched && spec.page.devotional) requestRatingAskRef.current('verse-shared');
       } catch {
         // Dismissal or failure: swallow, as the verse path does.
       } finally {
@@ -689,7 +695,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         }
         setProse(null);
         await wait(SHEET_DISMISS_MS);
-        await shareFiles(uris, { message: caption, title: 'Share pages' });
+        const dispatched = await shareFiles(uris, { message: caption, title: 'Share pages' });
+        if (dispatched && scope.pagination.pages[0]?.devotional) requestRatingAskRef.current('verse-shared');
       } catch {
         // Dismissal or failure: swallow.
       } finally {
@@ -709,7 +716,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     setProse(null);
     try {
       await wait(SHEET_DISMISS_MS);
-      await shareFiles(uris, { title: 'Share on Instagram' });
+      const dispatched = await shareFiles(uris, { title: 'Share on Instagram' });
+      if (dispatched && prose?.content.scopes[prose.scopeIndex]?.prepared?.[prose.lang].pages[0]?.devotional) requestRatingAskRef.current('verse-shared');
     } catch {
       // Dismissal or failure: swallow.
     } finally {
@@ -747,7 +755,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       lang: prose.lang,
     });
     setProse(null);
-    void sendText(message);
+    void sendText(message, activeScope.pagination.pages[0]?.devotional ? 'verse-shared' : undefined);
   }, [prose, activeScope, sendText]);
 
   const share = useCallback(
@@ -954,6 +962,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           }}
           series={series}
           cardLayout={prose.content.layout}
+          singleCardPreview={activeScope?.pagination.pages.length === 1 && activeScope.pagination.pages[0].devotional ? renderProsePage(0) : undefined}
         />
       ) : null}
       {pending ? (

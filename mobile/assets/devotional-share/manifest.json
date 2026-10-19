@@ -1,0 +1,84 @@
+{
+  "assets": {
+    "krishna": {
+      "file": "krishna.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 177484,
+      "sha256": "344712fdfc404956662203e42c8c182de2a4d3c6bd91d8c620af12b65a269c9c",
+      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+    },
+    "shiva": {
+      "file": "shiva.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 159928,
+      "sha256": "dd51fb9ad95637bd2239d3d68a0d2fb6aafe06913302aecb583f0666d205285b",
+      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+    },
+    "durga": {
+      "file": "durga.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 173408,
+      "sha256": "5be47085afcbaef8cf812d9d50ee1cd3b212188431315cf8b7ce673293c807a2",
+      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+    },
+    "saraswati": {
+      "file": "saraswati.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 152684,
+      "sha256": "20672ef2b1057090f9ae8af64a31046fb049597b82af05f4b8dd58e68a596777",
+      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+    },
+    "ganesha": {
+      "file": "ganesha.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 154554,
+      "sha256": "fde65c62169f0a6b110717a92d9c4b179770c8f0c0d15505366bc203e5676e23",
+      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+    },
+    "vishnu": {
+      "file": "vishnu.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 180744,
+      "sha256": "4d7bc9f655fb62db40b9c24b76a081a2459885077f9c96cff8ada8b8b1587ac2",
+      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+    },
+    "hanuman": {
+      "file": "hanuman.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 156910,
+      "sha256": "6a2f0fc22bca4047229a06b83869b7be79f68c9ac2571957de79a63131162453",
+      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+    },
+    "rama": {
+      "file": "rama.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 174084,
+      "sha256": "16819c776d203c70f8b979e9c7a3ae44c5b2b8f0d7cebd626fd7969f53dc9c42",
+      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+    },
+    "prayer": {
+      "file": "prayer.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 171502,
+      "sha256": "f0039a88ac310b2cb6ad56bf00c501676e1a5897617a0585c765e617bece4438",
+      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+    },
+    "surya": {
+      "file": "surya.webp",
+      "width": 1200,
+      "height": 800,
+      "bytes": 173134,
+      "sha256": "7d5fe5ee3100c4546f7e03b7ead286d54bbe53116ecf5d315b5f82d16d82d91c",
+      "provenance": "Recovered corrected seven-horse Surya with Aruna, 2026-10-18"
+    }
+  }
+}

@@ -18,6 +18,7 @@ import {
 } from '@/utils/shareCardPages';
 import { kidsStoryArtRetainedHeight } from '@/utils/kidsStoryArtFrame';
 import BackgroundLayer from './BackgroundLayer';
+import DevotionalShareCard from './DevotionalShareCard';
 import ShareBrandFooter from './ShareBrandFooter';
 
 export type ProseShareCardProps = {
@@ -78,6 +79,11 @@ const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function Pros
   const latin = props.lang === 'en';
   const series = props.pageCount > 1;
   const isLast = props.pageIndex === props.pageCount - 1;
+
+  if (props.page.devotional) return <DevotionalShareCard ref={ref}
+    key={`${props.lang}:${props.header}:${JSON.stringify(props.page.devotional)}`}
+    header={props.header} page={props.page.devotional} lang={props.lang}
+    pageIndex={props.pageIndex} pageCount={props.pageCount} onReady={props.onIllustrationReady} />;
 
   return (
     <View

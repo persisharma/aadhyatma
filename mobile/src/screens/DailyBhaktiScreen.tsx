@@ -1,3 +1,4 @@
+import { dailyBhaktiShareable } from '@/utils/dailyBhaktiShare';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -204,18 +205,7 @@ export default function DailyBhaktiScreen() {
                     busy={shareBusy}
                     onPress={() => {
                       share(
-                        {
-                          sourceId: verse.sourceId,
-                          stanza: verse.chapter,
-                          sectionNameHi: verse.sourceNameHi,
-                          sectionNameEn: verse.sourceNameEn,
-                          verseLabelHi: verse.labelHi ?? '',
-                          verseLabelEn: verse.labelEn ?? '',
-                          linesHi: verse.textHi,
-                          linesEn: verse.textEn,
-                          meaningHi: verse.meaningHi,
-                          meaningEn: verse.meaningEn,
-                        },
+                        dailyBhaktiShareable(verse),
                         lang
                       );
                     }}

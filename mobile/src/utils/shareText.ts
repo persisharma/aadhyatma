@@ -8,7 +8,7 @@
 
 import type { Lang } from '@/data/gita/language';
 import { shareLinkLines } from '@/data/shareLinks';
-import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
+import { contentByLang, meaningByLang, pick, verseLinesByLang } from '@/utils/localize';
 import type { ProsePage, ProsePageBlock } from '@/utils/shareCardPages';
 import type { ShareableVerse } from '@/utils/shareVerse';
 
@@ -43,6 +43,19 @@ export function buildProseShareText(p: {
   const paras: string[] = [];
   const picked = new Set(p.indices);
   const order = [...picked].filter((i) => p.pages[i]).sort((a, b) => a - b);
+  if (order.length && order.every(i => p.pages[i].devotional)) {
+    const collect = (field: 'verse' | 'meaning') => order.map((i, index) => {
+      const text = p.pages[i].devotional![field];
+      if (!text) return '';
+      const earlier = p.pages.slice(0, i).some(page => page.devotional?.[field]);
+      const later = p.pages.slice(i + 1).some(page => page.devotional?.[field]);
+      const gapBefore = earlier && (index === 0 || order[index - 1] !== i - 1);
+      const gapAfter = later && order[index + 1] !== i + 1;
+      return `${gapBefore ? '…' : ''}${text}${gapAfter ? '…' : ''}`;
+    }).join('').trim();
+    const verse = collect('verse'), meaning = collect('meaning');
+    return [p.header, '', verse, ...(meaning ? ['', pick(p.lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' }), meaning] : []), '', ...shareLinkLines(p.lang)].join('\n');
+  }
   for (const i of order) {
     const page = p.pages[i];
     if (page.title) paras.push(page.title);
