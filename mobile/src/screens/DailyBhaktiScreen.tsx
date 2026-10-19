@@ -1,17 +1,14 @@
 import { dailyBhaktiShareable } from '@/utils/dailyBhaktiShare';
 import React, { useState, useCallback, useEffect } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, type RouteProp } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
-import { elevation } from '@/theme/elevation';
-import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import {
   verseLinesByLang,
   meaningByLang,
-  meaningSourceLang,
   contentByLang,
   pick,
 } from '@/utils/localize';
@@ -19,9 +16,8 @@ import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
-import BackgroundLayer from '@/components/BackgroundLayer';
-import { getReaderBackground } from '@/data/backgrounds';
-import Ornament from '@/components/Ornament';
+import { DevotionalBorder, DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
+import { devotionalArtForVerse } from '@/data/devotionalShareArt';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
 import { useShare } from '@/utils/shareVerse';
@@ -29,7 +25,6 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import RoutineBanner from '@/components/RoutineBanner';
 import DailyBhaktiNudge from '@/components/DailyBhaktiNudge';
 import LanguageToggle from '@/components/LanguageToggle';
-import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { useTourTarget } from '@/components/tour/tourTargets';
 
 /**
@@ -56,12 +51,8 @@ export default function DailyBhaktiScreen() {
   const dailyVerseRef = useTourTarget('dailyVerse');
   const shareButtonRef = useTourTarget('shareButton');
   const { lang } = useGitaLanguage();
-  const screenTitle = orderTitlesByLanguage(lang, 'दैनिक भक्ति', 'Daily Verse', {
-    devPrimary: 22,
-    devSecondary: 14,
-    latPrimary: 22,
-    latSecondary: 14,
-  });
+  const { width: windowWidth } = useWindowDimensions();
+  const [cardWidth, setCardWidth] = useState(Math.min(540, Math.max(240, windowWidth - 32)));
   const route = useRoute<RouteProp<TabParamList, 'DailyBhaktiTab'>>();
   const { sourceId, chapter, verseIndex } = route.params ?? {};
   const [verse, setVerse] = useState<UniformVerse | null>(() =>
@@ -128,150 +119,44 @@ export default function DailyBhaktiScreen() {
       />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ScrollView
-          contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
+          contentContainerStyle={[styles.scroll, { paddingHorizontal: 16 }]}
           showsVerticalScrollIndicator={false}
         >
-          {/* Title */}
-          <View style={styles.titleArea}>
-            <Text
-              style={{
-                fontFamily: screenTitle.primary.fontFamily,
-                fontSize: screenTitle.primary.fontSize,
-                fontStyle: screenTitle.primary.fontStyle,
-                color: colors.ink,
-                textAlign: 'center',
-              }}
-            >
-              {screenTitle.primary.text}
-            </Text>
-            <Text
-              style={{
-                fontFamily: screenTitle.secondary.fontFamily,
-                fontSize: screenTitle.secondary.fontSize,
-                fontStyle: screenTitle.secondary.fontStyle,
-                color: colors.inkMuted,
-                textAlign: 'center',
-                marginTop: 4,
-              }}
-            >
-              {screenTitle.secondary.text}
-            </Text>
-          </View>
-
           {/* Setup strip (design.md §23): reminder first, then the verse widget —
               one ask at a time, renders nothing once both are settled. */}
           <DailyBhaktiNudge previewLines={verseLines} />
 
-          {/* Reading-language toggle (design.md §16) — the readers' toggle row,
-              sat directly on the card it re-languages. */}
-          <View style={styles.toggleRow}>
-            <LanguageToggle />
-          </View>
-
-          {/* Verse Card — carries the same faded source sketch as the verse's own
-              reader page (getReaderBackground). `chapter` doubles as the stanza/kāṇḍa
-              key for the sources whose plate varies per subsection. No banner: a
-              daily verse starts with text. */}
-          <View ref={dailyVerseRef} collapsable={false} style={[styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
-            <BackgroundLayer source={getReaderBackground(verse.sourceId, { stanza: verse.chapter })} />
-            {/* Top row: source pill + action icons */}
-            <View style={styles.cardHeader}>
-              <View style={[styles.pill, { backgroundColor: 'rgba(184, 98, 27, 0.1)' }]}>
-                <Text style={[styles.pillText, { color: colors.saffronDeep }]}>
-                  {contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn)} · {contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')}
-                </Text>
+          {/* Compact controls leave the illustrated reading free of duplicated headings. */}
+          <View style={styles.controls}>
+            <LanguageToggle compact />
+            <View style={styles.headerActions}>
+              <BookmarkButton isBookmarked={isBookmarked(bookmarkId)} onToggle={() => {
+                if (isBookmarked(bookmarkId)) removeBookmark(bookmarkId);
+                else addBookmark({ id: bookmarkId, sourceId: verse.sourceId, chapter: verse.chapter,
+                  verseIndex: verse.verseIndex, savedAt: Date.now(),
+                  previewHi: verse.textHi.slice(0, 2).join(' '), previewEn: verse.textEn.slice(0, 2).join(' ') });
+              }} />
+              <View ref={shareButtonRef} collapsable={false}>
+                <ShareButton busy={shareBusy} onPress={() => share(dailyBhaktiShareable(verse), lang)} />
               </View>
-              <View style={styles.headerActions}>
-                <BookmarkButton
-                  isBookmarked={isBookmarked(bookmarkId)}
-                  onToggle={() => {
-                    if (isBookmarked(bookmarkId)) {
-                      removeBookmark(bookmarkId);
-                    } else {
-                      addBookmark({
-                        id: bookmarkId,
-                        sourceId: verse.sourceId,
-                        chapter: verse.chapter,
-                        verseIndex: verse.verseIndex,
-                        savedAt: Date.now(),
-                        previewHi: verse.textHi.slice(0, 2).join(' '),
-                        previewEn: verse.textEn.slice(0, 2).join(' '),
-                      });
-                    }
-                  }}
-                />
-                <View ref={shareButtonRef} collapsable={false}>
-                  <ShareButton
-                    busy={shareBusy}
-                    onPress={() => {
-                      share(
-                        dailyBhaktiShareable(verse),
-                        lang
-                      );
-                    }}
-                  />
-                </View>
-              </View>
-            </View>
-
-            {/* Verse text — script follows the reading language (gu/kn re-script the Devanagari) */}
-            <Text
-              style={{
-                fontFamily: verseToken(lang, typography).fontFamily,
-                fontSize: verseToken(lang, typography).fontSize,
-                color: colors.ink,
-                lineHeight: verseToken(lang, typography).lineHeight,
-                marginTop: 14,
-              }}
-            >
-              {verseLines.join('\n')}
-            </Text>
-
-            {/* Ornament divider */}
-            <Ornament compact />
-
-            {/* Meaning section */}
-            <Text style={[styles.meaningLabel, { color: colors.saffronDeep }]}>
-              {contentByLang(lang, 'अर्थ', 'Meaning')}{' '}
-              <Text style={{ fontFamily: fontFamilies.latinItalic, color: colors.inkMuted }}>
-                · {contentByLang(lang, 'Meaning', 'अर्थ')}
-              </Text>
-            </Text>
-
-            {/* Meaning text — styled by the meaning's source language (kn meaning is English) */}
-            <Text
-              style={{
-                fontFamily: meaningToken(meaningSourceLang(lang), typography).fontFamily,
-                fontSize: meaningToken(meaningSourceLang(lang), typography).fontSize,
-                color: meaningSourceLang(lang) === 'en' ? colors.ink : colors.inkSoft,
-                lineHeight: meaningToken(meaningSourceLang(lang), typography).lineHeight,
-                marginTop: 6,
-              }}
-            >
-              {meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
-            </Text>
-
-            {/* Card footer: source label | next */}
-            <View style={styles.cardFooter}>
-              <Text
-                style={{
-                  fontFamily: fontFamilies.latinItalic,
-                  fontSize: 11,
-                  color: colors.inkMuted,
-                }}
-              >
-                {contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn)}
-              </Text>
-              <Pressable
-                onPress={refresh}
-                accessibilityRole="button"
+              <Pressable onPress={refresh} accessibilityRole="button"
                 accessibilityLabel={pick(lang, { hi: 'अगला श्लोक', en: 'Next verse', gu: 'આગળનો શ્લોક', kn: 'ಮುಂದಿನ ಶ್ಲೋಕ' })}
-                hitSlop={16}
-                style={({ pressed }) => [styles.nextBtn, pressed && { opacity: 0.7 }]}
-              >
-                <Text style={{ fontSize: 14, color: colors.saffron }}>↻ next</Text>
+                testID="daily-bhakti-next" style={styles.nextBtn}>
+                <Text style={{ fontSize: 24, color: colors.saffronDeep }}>↻</Text>
               </Pressable>
             </View>
+          </View>
+          <View ref={dailyVerseRef} collapsable={false} testID="daily-bhakti-card" style={[styles.card, { backgroundColor: colors.parchmentHighlight }]}
+            onLayout={e => { const width = e.nativeEvent.layout.width; if (Number.isFinite(width) && width > 0) setCardWidth(width); }}>
+            <DevotionalHero art={devotionalArtForVerse(verse)} lang={lang} width={cardWidth} />
+            <DevotionalVerseBody
+              header={[contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn), contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')].filter(Boolean).join(' · ')}
+              verse={verseLines.join('\n')} meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
+              lang={lang} art={devotionalArtForVerse(verse)}
+              verseStyle={{ ...verseToken(lang, typography), color: colors.ink }}
+              meaningStyle={{ ...meaningToken(lang, typography), color: colors.inkSoft }} />
+            <DevotionalFooter art={devotionalArtForVerse(verse)} width={cardWidth} />
+            <DevotionalBorder inset={6} />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -283,61 +168,11 @@ export default function DailyBhaktiScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  scroll: { paddingTop: 20, paddingBottom: 80 },
-  titleArea: { marginBottom: 20, alignItems: 'center' },
-  toggleRow: { marginBottom: 12 },
-  card: {
-    width: '100%',
-    borderRadius: 18,
-    borderWidth: 1,
-    padding: 20,
-    // Clips the BackgroundLayer sketch to the rounded corners; the card's own
-    // backgroundColor keeps the iOS shadow rendering despite the clip.
-    overflow: 'hidden',
-    ...elevation.raised,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  headerActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  pill: {
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 999,
-    flexShrink: 1,
-  },
-  pillText: {
-    fontFamily: fontFamilies.latinSemiBold,
-    fontSize: 13,
-    letterSpacing: 0.3,
-  },
-  meaningLabel: {
-    fontFamily: fontFamilies.devanagariBold,
-    fontSize: 12,
-  },
-  cardFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 18,
-    paddingTop: 12,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(138, 62, 11, 0.15)',
-  },
-  nextBtn: {
-    minWidth: 68,
-    minHeight: 44,
-    paddingVertical: 10,
-    paddingHorizontal: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  scroll: { paddingTop: 8, paddingBottom: 100, alignItems: 'center' },
+  controls: { width: '100%', maxWidth: 540, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8, marginBottom: 8 },
+  card: { width: '100%', maxWidth: 540, borderRadius: 12, overflow: 'hidden' },
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  nextBtn: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   empty: {
     flex: 1,
     alignItems: 'center',

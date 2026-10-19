@@ -13,37 +13,13 @@
 # This flow covers the LANDING SCREEN itself: that it renders a verse and the
 # "next" control swaps to another verse without breaking.
 #
-# Verifies:
-#   1. The Bhakti tab is reachable from the bottom tab bar.
-#   2. The verse card renders (the "Daily Verse" subtitle + "Meaning" section).
-#   3. The "↻ next" control fetches another verse and the screen stays intact.
-#   4. Global reading-language switching reflects on the screen.
-#   5. A pinned Gita verse exposes its meaning immediately at Standard size,
-#      without spending the viewport on an illustration; Large remains scrollable.
-#   6. The in-screen reading-language toggle (design.md §16/§23) re-languages
-#      the card: Hindi hides the English meaning, English brings it back.
-#   7. The setup strip (design.md §23), when up, rests on "Not now". It is
-#      state-dependent: _launch.yaml grants notifications (no reminder ask) and
-#      Expo Go has no widget extension (no widget ask), so it is usually absent;
-#      a dev build shows the widget ask. Both branches are conditional so either
-#      runtime passes; the gate itself is unit-tested in
-#      src/components/__tests__/dailyBhaktiNudgeView.test.ts.
-#
-# Why we switch to English first:
-#   The screen reads the GLOBAL reading language (useGitaLanguage); the default
-#   is Hindi, so most on-screen text is Devanagari, which Maestro's iOS
-#   accessibility tree can't reliably read (see README "Element selection
-#   rules"). We flip the default to English on the More tab, then assert real
-#   content in English. We restore Hindi at the end (best-effort).
-#
-# Selector notes (mirroring panchang-smoke.yaml, verified conventions):
-#   - Bottom tabs expose accessibilityText "<Label>, tab, N of 4", so we match
-#     "Bhakti, tab.*". Bare "Bhakti" is avoided to stay anchored to the tab.
-#   - "Daily Verse" is a constant Latin subtitle rendered in both languages →
-#     reliable anchor regardless of reading language.
-#   - "Meaning" is the section label in English mode (isHindi ? 'अर्थ' : 'Meaning').
-#   - The next control exposes accessibilityLabel "Next verse" in English mode
-#     (isHindi ? 'अगला श्लोक' : 'Next verse') — reliable, unlike the "↻ next" glyph.
+# Verifies Design 2 on Bhakti and its existing share path:
+# - Compact selected-language controls and illustrated deity header, no repeated title.
+# - Complete framed meaning is reachable by scrolling at Standard and Large sizes.
+# - Language toggle changes reading in place; share retains a single complete image.
+# - Widget deep link still pins the verse; next remains available above the card.
+# Installed native execution and OS-share image inspection are required; YAML parsing
+# and web previews alone are not device verification.
 
 appId: com.prashantsharma.vedansh
 ---
@@ -100,25 +76,41 @@ appId: com.prashantsharma.vedansh
 
 # ── Step 4: Assert the verse card rendered ──
 - extendedWaitUntil:
-    visible: "Daily Verse"
+    visible: { id: "daily-bhakti-card" }
     timeout: 15000
-- assertVisible: "Meaning.*"
 # Pin layout verification to a known complete verse rather than assuming a
 # random long verse/meaning must fit. This exercises the widget landing route,
 # not an OS notification tap.
-- assertVisible: "Your right is only to work.*"
-- takeScreenshot: e2e-shots/daily-reading-standard
+- takeScreenshot: e2e-shots/daily-design-two-header
 - tapOn: "Share verse"
 - assertVisible: "Share to other apps"
 - assertNotVisible: "Share all pages"
 - tapOn: "Cancel"
+- scrollUntilVisible:
+    element: { id: "devotional-share-meaning" }
+    direction: DOWN
+    centerElement: true
+- assertVisible: "Your right is only to work.*"
+- takeScreenshot: e2e-shots/daily-design-two-meaning
+- scrollUntilVisible:
+    element: { id: "lang-toggle-hi" }
+    direction: UP
+    centerElement: true
 
 # ── Step 4b: The card's own language toggle flips the reading in place ──
 - tapOn: { id: "lang-toggle-hi" }
 - waitForAnimationToEnd
-- assertNotVisible: "Your right is only to work.*"
+- assertNotVisible: "Meaning"
+- scrollUntilVisible:
+    element: { id: "lang-toggle-en" }
+    direction: UP
+    centerElement: true
 - tapOn: { id: "lang-toggle-en" }
 - waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "devotional-share-meaning" }
+    direction: DOWN
+    centerElement: true
 - assertVisible: "Your right is only to work.*"
 
 # ── Step 5: Large keeps the whole reading reachable at the same type scale ──
@@ -136,16 +128,20 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - takeScreenshot: e2e-shots/daily-reading-large
 - scrollUntilVisible:
-    element: { text: "Next verse" }
+    element: { id: "devotional-share-meaning" }
     direction: DOWN
     centerElement: true
     timeout: 10000
 - assertVisible: "Your right is only to work.*"
 
 # ── Step 6: "next" swaps to another verse; the screen stays intact ──
-- tapOn: "Next verse"
+- scrollUntilVisible:
+    element: { id: "daily-bhakti-next" }
+    direction: UP
+    centerElement: true
+- tapOn: { id: "daily-bhakti-next" }
 - waitForAnimationToEnd
-- assertVisible: "Daily Verse"
+- assertVisible: { id: "daily-bhakti-card" }
 
 # ── Step 7: Restore Hindi / Standard (best-effort language restore) ──
 - runFlow: _open-settings.yaml

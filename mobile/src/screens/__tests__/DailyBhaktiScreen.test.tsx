@@ -1,12 +1,9 @@
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
-import BackgroundLayer from '@/components/BackgroundLayer';
-import ReadingArtwork from '@/components/ReadingArtwork';
-import ReadingBanner from '@/components/ReadingBanner';
-import Ornament from '@/components/Ornament';
-import { readingParchment } from '@/data/backgroundAsset';
-import { getReaderBackground } from '@/data/backgrounds';
+import { DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
+import { devotionalArtForVerse } from '@/data/devotionalShareArt';
+import { findVerse } from '@/data/versePool';
 
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
@@ -64,30 +61,18 @@ const DailyBhaktiScreen = jest.requireActual<typeof import('../DailyBhaktiScreen
   '../DailyBhaktiScreen'
 ).default;
 
-/**
- * The daily verse keeps its source's themed background without making each
- * random verse a cover card (no banner).
- */
-test('verse card keeps the source background and a compact divider without a banner', () => {
-  let tree: TestRenderer.ReactTestRenderer | undefined;
-
-  act(() => {
-    tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="hi">
-        <ShareProvider>
-          <DailyBhaktiScreen />
-        </ShareProvider>
-      </GitaLanguageProvider>
-    );
-  });
-
-  const backgrounds = tree!.root.findAllByType(BackgroundLayer);
-  expect(backgrounds).toHaveLength(1);
-  expect(backgrounds[0].props.source).toEqual(getReaderBackground('bhagavad-gita', { stanza: 1 }));
-  expect(backgrounds[0].props.source).not.toBe(readingParchment);
-  expect(tree!.root.findAllByType(ReadingArtwork)).toHaveLength(0);
-  expect(tree!.root.findAllByType(ReadingBanner)).toHaveLength(0);
-  expect(tree!.root.findByType(Ornament).props.compact).toBe(true);
+test('Bhakti uses the same deity artwork, framed meaning and footer as export', () => {
+  let tree: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<GitaLanguageProvider initialLang="hi"><ShareProvider><DailyBhaktiScreen /></ShareProvider></GitaLanguageProvider>); });
+  const verse = findVerse('bhagavad-gita', 0, 1)!;
+  const art = devotionalArtForVerse(verse);
+  expect(tree!.root.findByType(DevotionalHero).props.art).toBe(art);
+  expect(tree!.root.findByType(DevotionalFooter).props.art).toBe(art);
+  expect(tree!.root.findByType(DevotionalVerseBody).props.meaning).toBe(verse.meaningHi);
+  expect(tree!.root.findAllByProps({ testID: 'devotional-meaning-frame' }).length).toBeGreaterThan(0);
+  const strings = tree!.root.findAllByType(Text).map(n => n.props.children);
+  expect(strings).not.toContain('Daily Verse');
+  expect(strings).not.toContain('दैनिक भक्ति');
   act(() => tree!.unmount());
 });
 
@@ -110,11 +95,13 @@ test('the language toggle re-languages the verse card in place', () => {
     tree!.root.find((node) => node.props.testID === `lang-toggle-${value}` && !!node.props.onPress);
 
   expect(toggle('hi').props.accessibilityState).toEqual({ selected: true });
-  expect(texts()).toContain('· Meaning');
+  expect(texts()).toContain('अर्थ');
+  expect(texts()).not.toContain('Meaning');
 
   act(() => toggle('en').props.onPress());
 
   expect(toggle('en').props.accessibilityState).toEqual({ selected: true });
-  expect(texts()).toContain('· अर्थ');
+  expect(texts()).toContain('Meaning');
+  expect(texts()).not.toContain('अर्थ');
   act(() => tree!.unmount());
 });
