@@ -1,3 +1,4 @@
+import ScaledShareCard from '@/components/ScaledShareCard';
 import type { BackgroundImage } from '@/data/backgroundAsset';
 import React, {
   createContext,
@@ -26,6 +27,7 @@ import {
   STORY_OUTPUT_HEIGHT,
   STORY_OUTPUT_WIDTH,
   storyCanvas,
+  storySafeInsets,
 } from '@/utils/shareStoryLayout';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
 import {
@@ -226,12 +228,20 @@ type ProseCardSpec = {
   layout?: ShareCardLayout;
 };
 
+/** Preview uses the measured complete card, so a long meaning is never clipped. */
+function DevotionalPreview({ card }: { card: ProseCardSpec }) {
+  const [height, setHeight] = useState(CARD_HEIGHT);
+  return <ScaledShareCard width={216} metrics={{ width: CARD_WIDTH, height }}>
+    <ProseShareCard {...card} onHeight={setHeight} />
+  </ScaledShareCard>;
+}
+
 /** The picture card is already 9:16: it is captured at the story size and never framed. */
 const isPictureCapture = (spec: PendingCapture) => spec.kind === 'prose' && spec.card.layout === 'picture';
 
 type PendingCapture = (
   | { kind: 'verse'; verse: ShareableVerse; lang: Lang; format: ShareFormat; captureId?: number; measuredHeight?: number }
-  | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat; captureId?: number }
+  | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat; captureId?: number; measuredHeight?: number }
 ) & { backgroundPaint?: ArtworkPaintBarrier };
 
 type ProseChooser = {
@@ -356,6 +366,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         if (spec.kind === 'prose' && spec.card.page.devotional) {
           const id = ++captureSequence.current;
           painted = new Promise<boolean>(resolve => { imageReady.current = { id, resolve }; });
+          verseMeasured = new Promise(resolve => { verseLayout.current = { id, resolve }; });
           spec = { ...spec, captureId: id };
         }
         if (spec.kind === 'prose' && spec.card.page.illustration) {
@@ -382,11 +393,9 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         if (verseMeasured) {
           try {
             const measuredHeight = await withTimeout(verseMeasured, 5000);
-            if (spec.kind === 'verse') {
-              spec = { ...spec, measuredHeight };
-              setPending(spec);
-            }
-          } catch { return null; }
+            spec = { ...spec, measuredHeight };
+            setPending(spec);
+          } catch { imageReady.current = null; return null; }
           finally { verseLayout.current = null; }
           await waitForLayout();
         }
@@ -403,7 +412,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       }
       const tall = spec.format === 'story' || isPictureCapture(spec);
       const outWidth = tall ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH;
-      const outHeight = spec.kind === 'verse' && spec.measuredHeight
+      const outHeight = spec.measuredHeight
         ? spec.measuredHeight * (OUTPUT_WIDTH / CARD_WIDTH)
         : tall ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
       // UIKit captures point dimensions at the screen's scale; Android uses pixels.
@@ -905,13 +914,13 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       : undefined;
 
   const pendingSize = (spec: PendingCapture) =>
-    spec.kind === 'verse' && !spec.measuredHeight
+    (spec.kind === 'verse' || spec.card.page.devotional) && !spec.measuredHeight
       ? { width: CARD_WIDTH } // Let native text measure without a fixed-height ancestor.
       : isPictureCapture(spec)
       ? { width: cardMetricsFor('picture').width, height: cardMetricsFor('picture').height }
       : {
           width: spec.format === 'story' ? storyCanvas.width : CARD_WIDTH,
-          height: spec.kind === 'verse' && spec.measuredHeight
+          height: spec.measuredHeight
             ? spec.measuredHeight
             : spec.format === 'story' ? storyCanvas.height : CARD_HEIGHT,
         };
@@ -962,7 +971,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           }}
           series={series}
           cardLayout={prose.content.layout}
-          singleCardPreview={activeScope?.pagination.pages.length === 1 && activeScope.pagination.pages[0].devotional ? renderProsePage(0) : undefined}
+          fullVerseImage={!!activeScope?.pagination.pages[0]?.devotional}
+          singleCardPreview={activeScope?.pagination.pages.length === 1 && activeScope.pagination.pages[0].devotional ? <DevotionalPreview key={prose.lang} card={cardSpec(prose.content, activeScope, prose.lang, 0)} /> : undefined}
         />
       ) : null}
       {pending ? (
@@ -974,8 +984,9 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           <View ref={cardRef} collapsable={false} style={pendingSize(pending)}>
             {pending.kind === 'prose' ? (
               pending.format === 'story' && !isPictureCapture(pending) ? (
-                <ShareStoryFrame background={pending.card.background}>
+                <ShareStoryFrame background={pending.card.background} contentSized={!!pending.card.page.devotional}>
                   <ProseShareCard key={pending.captureId ?? 'prose'} {...pending.card}
+                    onHeight={height => onVerseHeight(pending.captureId, Math.max(storyCanvas.height, height + storySafeInsets.top + storySafeInsets.bottom))}
                     onIllustrationReady={(ready) => {
                       const current = imageReady.current;
                       if (current && current.id === pending.captureId) current.resolve(ready);
@@ -983,6 +994,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
                 </ShareStoryFrame>
               ) : (
                 <ProseShareCard key={pending.captureId ?? 'prose'} {...pending.card}
+                    onHeight={height => onVerseHeight(pending.captureId, height)}
                     onIllustrationReady={(ready) => {
                       const current = imageReady.current;
                       if (current && current.id === pending.captureId) current.resolve(ready);

@@ -3,13 +3,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import BackgroundLayer from './BackgroundLayer';
-import { placeStoryCard, storyCanvas } from '@/utils/shareStoryLayout';
+import { placeStoryCard, storyCanvas, storySafeInsets } from '@/utils/shareStoryLayout';
 
 type Props = {
   /** The plate behind the card, full-bleed. */
   background: BackgroundImage | null;
   /** A native 540×675 card; placed unscaled inside the Story/Reel safe band. */
   children: React.ReactNode;
+  contentSized?: boolean;
 };
 
 /**
@@ -17,7 +18,7 @@ type Props = {
  * card uses it through `ShareStoryCanvas`; the prose card (§39.4) mounts it directly.
  * Geometry is `placeStoryCard` at scale 1 — no transform on the captured view.
  */
-export default function ShareStoryFrame({ background, children }: Props) {
+export default function ShareStoryFrame({ background, children, contentSized }: Props) {
   const { colors } = useTheme();
   const place = placeStoryCard(540, 675);
   return (
@@ -25,11 +26,11 @@ export default function ShareStoryFrame({ background, children }: Props) {
       collapsable={false}
       style={[
         styles.canvas,
-        { width: storyCanvas.width, height: storyCanvas.height, backgroundColor: colors.parchment },
+        { width: storyCanvas.width, ...(contentSized ? { minHeight: storyCanvas.height, paddingTop: storySafeInsets.top, paddingBottom: storySafeInsets.bottom } : { height: storyCanvas.height }), backgroundColor: colors.parchment },
       ]}
     >
       <BackgroundLayer source={background} />
-      <View style={{ position: 'absolute', left: place.left, top: place.top }}>{children}</View>
+      <View style={contentSized ? undefined : { position: 'absolute', left: place.left, top: place.top }}>{children}</View>
     </View>
   );
 }
