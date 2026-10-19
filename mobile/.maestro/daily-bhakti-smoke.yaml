@@ -110,6 +110,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: e2e-shots/daily-reading-standard
 - tapOn: "Share verse"
 - assertVisible: "Share to other apps"
+- assertNotVisible: "Share all pages"
 - tapOn: "Cancel"
 
 # ── Step 4b: The card's own language toggle flips the reading in place ──

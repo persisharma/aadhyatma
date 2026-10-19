@@ -1,0 +1,40 @@
+{
+  "codeCommit": "0c9c208ddca3407488261591b08759be7a83e26c",
+  "ci": {
+    "run": 39235260389,
+    "conclusion": "success"
+  },
+  "typecheck": "passed",
+  "touchedFileLint": "passed",
+  "nativeDeviceVerified": false,
+  "corpus": {
+    "candidates": 1367,
+    "languages": 4,
+    "completeSingleImages": 5468
+  },
+  "browserCorpusAudit": {
+    "summaryRestoredFromRecordedRun": true,
+    "maxHeightDp": 1617,
+    "textFooterOverlaps": 0,
+    "missingImages": 0,
+    "javascriptErrors": 0
+  },
+  "representativeRerender": {
+    "hanumanHi": {
+      "width": 540,
+      "height": 821
+    },
+    "hanumanEn": {
+      "width": 540,
+      "height": 967
+    },
+    "gitaHi": {
+      "width": 540,
+      "height": 675
+    },
+    "longKn": {
+      "width": 540,
+      "height": 1531
+    }
+  }
+}
