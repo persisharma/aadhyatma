@@ -65,6 +65,11 @@
   try { counted = sessionStorage.getItem(key) === '1'; } catch (e) { /* private mode */ }
 
   var url = '/api/hits?p=' + encodeURIComponent(location.pathname);
+  // The landing visit carries its campaign tag (?utm_source=instagram), so the
+  // stats page can say where visitors came from. Only the counted POST sends it.
+  var source = '';
+  try { source = (new URLSearchParams(location.search).get('utm_source') || '').toLowerCase(); } catch (e) { /* old browser */ }
+  if (!counted && source) url += '&src=' + encodeURIComponent(source);
   fetch(url, { method: counted ? 'GET' : 'POST', cache: 'no-store' })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (data) {

@@ -34,7 +34,7 @@ export async function onRequest({ request, env }) {
     const pick = (prefix) => results.filter((r) => r.k.startsWith(prefix))
       .map((r) => ({ name: r.k.slice(prefix.length), count: Number(r.n) }));
     const total = Number((results.find((r) => r.k === 'total') || { n: 0 }).n);
-    return new Response(JSON.stringify({ total, pages: pick('page:'), sources: pick('src:') }), { status: 200, headers: HEADERS });
+    return new Response(JSON.stringify({ total, pages: pick('page:'), sources: pick('src:'), siteSources: pick('site:') }), { status: 200, headers: HEADERS });
   }
 
   const raw = params.get('p') || '/';
@@ -42,10 +42,12 @@ export async function onRequest({ request, env }) {
   const keys = page ? ['total', `page:${page}`] : ['total'];
   const sql = request.method === 'POST' ? BUMP : READ;
 
-  // Campaign source of a /get/ visit (its utm_source), counted on its own row.
-  // Short slugs only, so a stray link cannot fill the table with junk keys.
+  // Campaign source (utm_source) of a counted visit, on its own row: `src:` for
+  // the /get/ download link, `site:` for a landing on any other page, so the two
+  // stay separate on /stats/. Short slugs only, so a stray link cannot fill the
+  // table with junk keys.
   const src = (params.get('src') || '').toLowerCase();
-  if (page === '/get/' && request.method === 'POST' && SOURCE.test(src)) keys.push(`src:${src}`);
+  if (page && request.method === 'POST' && SOURCE.test(src)) keys.push(`${page === '/get/' ? 'src' : 'site'}:${src}`);
 
   const results = await env.DB.batch(keys.map((k) => env.DB.prepare(sql).bind(k)));
   const [total, count] = results.map((r) => (r.results[0] ? Number(r.results[0].n) : 0));

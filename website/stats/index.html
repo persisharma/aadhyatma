@@ -36,6 +36,10 @@
   <p class="hint">Visits to <code>/get/</code> tagged <code>?utm_source=…</code> — one row per source.</p>
   <table id="sources"></table>
 
+  <h2>Website visits by source</h2>
+  <p class="hint">Landings on any other page tagged <code>?utm_source=…</code> (e.g. <code>vedansh.app/?utm_source=instagram</code>) — counted once per browser session.</p>
+  <table id="site-sources"></table>
+
   <h2>By page</h2>
   <table id="pages"></table>
 </main>
@@ -59,6 +63,7 @@
     .then(function (d) {
       document.getElementById('total').textContent = d.total.toLocaleString('en-IN') + ' visits';
       fill('sources', d.sources);
+      fill('site-sources', d.siteSources || []);
       fill('pages', d.pages);
     })
     .catch(function (e) { document.getElementById('total').textContent = 'Could not load (' + e.message + ')'; });
