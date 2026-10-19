@@ -37,7 +37,6 @@ const DevotionalShareCard = React.forwardRef<View, DevotionalShareCardProps>(fun
         style={{ position: 'absolute', left: 0, top: 0, width: m.width, height: m.width / 1.5 }}
         onLoad={() => setPainted(true)} onError={() => setFailed(true)} />
       <LinearGradient colors={['rgba(246, 236, 208, 0)', colors.parchmentHighlight]} style={styles.fade} />
-      <LinearGradient colors={[colors.parchmentHighlight, 'rgba(246, 236, 208, 0)']} style={styles.brandWash} />
       <Text allowFontScaling={false} style={[styles.brand, { fontFamily: face }]}>
         {latin ? <><Text style={{ fontFamily: fontFamilies.devanagari }}>ॐ</Text>{' Vedansh'}</> : contentByLang(lang, 'ॐ वेदांश', 'ॐ Vedansh')}
       </Text>
@@ -65,8 +64,7 @@ export default DevotionalShareCard;
 const styles = StyleSheet.create({
   card: { width: m.width, minHeight: m.height, paddingBottom: 67, backgroundColor: colors.parchment },
   fade: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 28 },
-  brandWash: { position: 'absolute', left: 0, top: 0, width: 180, height: 80 },
-  brand: { position: 'absolute', left: 28, top: 24, fontSize: 20, color: colors.saffronDeep, paddingHorizontal: 6, paddingVertical: 2 },
+  brand: { position: 'absolute', left: 28, top: 24, fontSize: 20, color: colors.saffronDeep, textShadowColor: colors.parchmentHighlight, textShadowRadius: 4, textShadowOffset: { width: 0, height: 0 }, paddingHorizontal: 6, paddingVertical: 2 },
   content: { paddingTop: m.contentTop, paddingHorizontal: m.inset },
   source: { fontSize: m.sourceSize, lineHeight: m.sourceLeading, textAlign: 'center', color: colors.saffronDeep, marginBottom: m.sourceGap, includeFontPadding: false },
   divider: { height: m.meaningGap, alignItems: 'center', justifyContent: 'center' },
