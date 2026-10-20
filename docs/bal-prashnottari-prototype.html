@@ -136,6 +136,29 @@
   .endcard .et{font-family:var(--deva);font-size:16px;color:var(--ink)}
   .invite{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--gold);background:var(--parchment-hi);
     border-radius:20px;padding:9px 16px;font-family:var(--deva);font-size:13px;color:var(--saffron-deep);margin-top:12px;min-height:40px}
+
+  /* गीता परीक्षा — ladder, paper, certificate */
+  .lvl{border:1px solid var(--divider);background:var(--parchment-soft);border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow-card)}
+  .lvl.open{border:1.5px solid var(--card-border);background:linear-gradient(120deg,var(--card-from),var(--card-to));box-shadow:var(--shadow-raised)}
+  .lvl.locked{opacity:.55}
+  .lvl .lk{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--saffron-deep)}
+  .lvl .lt2{font-family:var(--deva);font-weight:600;font-size:16.5px;color:var(--ink);margin-top:2px}
+  .lvl .syl{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);margin-top:5px;line-height:1.7}
+  .lvl .lrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+  .lvl .lpill{display:inline-flex;align-items:center;font-family:var(--deva);font-size:12px;border-radius:20px;padding:7px 13px;min-height:34px;
+    color:var(--saffron);border:1px solid var(--gold-tint);background:var(--parchment-hi)}
+  .lvl .lpill.go{color:#fff8ec;background:var(--saffron);border-color:transparent}
+  .gradechip{display:inline-block;font-family:var(--deva);font-size:11px;color:var(--saffron-deep);background:var(--gold-tint);
+    border-radius:10px;padding:3px 10px}
+  .paperhead{display:flex;justify-content:space-between;align-items:center;font-family:var(--sans);font-size:11px;color:var(--ink-muted);margin:2px 2px 10px}
+  .sect{font-family:var(--serif);font-style:italic;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-muted);text-align:center;margin-bottom:8px}
+  .cert{border:2px solid var(--gold);border-radius:18px;overflow:hidden;background:linear-gradient(160deg,var(--card-from),var(--parchment));box-shadow:var(--shadow-raised);margin-top:14px}
+  .cert .corn{text-align:center;font-family:var(--deva);color:var(--gold);font-size:14px;letter-spacing:6px;padding-top:13px}
+  .cert .ct1{font-family:var(--deva);font-weight:600;font-size:17px;color:var(--ink);text-align:center;margin-top:3px}
+  .cert .cname{font-family:var(--deva);font-size:21px;color:var(--saffron-deep);text-align:center;margin-top:9px}
+  .cert .cline{font-family:var(--deva);font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:5px;line-height:1.8;padding:0 14px}
+  .cert .cgrade{font-family:var(--deva);font-size:14px;color:var(--saffron-deep);text-align:center;margin-top:8px}
+  .cert .cfoot{border-top:1px solid var(--gold-tint);margin-top:12px;padding:9px 0;text-align:center;font-family:var(--deva);font-size:11.5px;color:var(--saffron-deep);background:var(--parchment-soft)}
 </style>
 </head>
 <body>
@@ -338,6 +361,102 @@
     </div>
   </div>
 
+  <!-- ============ 3 · गीता परीक्षा ============ -->
+  <div class="phaselabel">3 · गीता परीक्षा — the formal exam mode (Phase 2)</div>
+  <div class="phasedesc">Modeled on India's school Gita parikshas: a level ladder taken in succession, a declared adhyaya syllabus, a fixed deterministic paper (no hints, no reveals mid-paper), ~50% pass with graded bands, and a certificate for every child — pass or attempt.</div>
+  <div class="wrap">
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">गीता परीक्षा</div></div>
+        <div class="scope">स्तर क्रम से खुलते हैं · हर स्तर का पाठ्यक्रम पहले घोषित</div>
+
+        <div class="lvl open" style="position:relative"><div class="dot" style="right:-8px;top:-8px">10</div>
+          <div class="lk">स्तर 1 · आयु 8+</div>
+          <div class="lt2">प्रवेश परीक्षा</div>
+          <div class="syl">पाठ्यक्रम: अध्याय 12 (भक्तियोग) · अध्याय 15 (पुरुषोत्तमयोग)<br/>25 प्रश्न · उत्तीर्ण 50% · ~30 min</div>
+          <div class="lrow">
+            <span class="lpill">पाठ्यक्रम पढ़ें ›</span>
+            <span class="lpill go">परीक्षा आरम्भ करें</span>
+          </div>
+        </div>
+
+        <div class="lvl">
+          <div class="lk">स्तर 1 · पिछला फल</div>
+          <div class="lt2">प्रथम श्रेणी <span class="gradechip">19/25 · 76%</span></div>
+          <div class="syl">प्रमाणपत्र देखें › · पुनः परीक्षा कभी भी — सर्वश्रेष्ठ फल ही दिखता है</div>
+        </div>
+
+        <div class="lvl locked">
+          <div class="lk">स्तर 2 · स्तर 1 उत्तीर्ण होने पर</div>
+          <div class="lt2">अध्याय 2 — सांख्ययोग</div>
+          <div class="syl">30 प्रश्न · श्लोकार्थ · प्रसंग · सिद्धांत</div>
+        </div>
+
+        <div class="note">गीता जयंती (मोक्षदा एकादशी) के दिनों में यह द्वार<br/>"गीता जयंती परीक्षा" कहलाता है — पंचांग इंजन से</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>The ladder — levels in succession, syllabus declared first.</b><br/>
+      <span class="n">10</span><b>Each स्तर card states its full syllabus, paper length, and pass mark before enrolling</b> — the exam tradition's honesty. "पाठ्यक्रम पढ़ें ›" deep-links the shipped Gita reader chapters (and PRD-42's अभ्यास mode for recitation prep, when shipped). Previous best grade shows on the level — retakes are unlimited and only the best is displayed. स्तर syllabi are placeholders pending the peeth's published booklet (PRD §10 open decision).</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">×</div><div class="toptitle">स्तर 1 · प्रश्नपत्र</div><div class="topaction">12/25</div></div>
+        <div class="paperhead"><span>खण्ड: श्लोकार्थ</span><span style="position:relative"><span class="dot" style="right:-10px;top:-10px">11</span>समय: 14:32</span></div>
+
+        <div class="qprompt">"अनन्याश्चिन्तयन्तो मां…" —<br/>इस श्लोक में भगवान किनका योगक्षेम वहन करते हैं?</div>
+
+        <div class="toptrow">
+          <div class="topt">जो धन अर्पित करते हैं</div>
+          <div class="topt" style="border-color:var(--saffron);box-shadow:var(--shadow-card)">जो अनन्य भाव से चिंतन करते हैं</div>
+          <div class="topt">जो वन में तप करते हैं</div>
+        </div>
+
+        <button class="btn" style="margin-top:20px">अगला प्रश्न ›</button>
+        <div class="note" style="position:relative"><span class="dot" style="left:28px;top:-4px">12</span>परीक्षा में कोई संकेत, कोई उत्तर-दर्शन नहीं —<br/>समीक्षा submit के बाद · समय कटता नहीं, केवल दिखता है</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>The paper — honest, but fearless.</b><br/>
+      <span class="n">11</span><b>Elapsed time is shown, never enforced</b> — the declared 30 min frames the sitting; no cutoff, no ticking pressure. Paper is drawn deterministically (level + attempt seed), so a retake is a fresh paper.<br/>
+      <span class="n">12</span><b>No reveals, hints, or hand-offs mid-paper</b> — the exam is real. Sections follow the tradition (श्लोकार्थ · प्रसंग · सिद्धांत). × saves and exits; the sitting resumes.</div>
+    </div>
+
+    <div class="col">
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>●●● ▓</span></div>
+      <div class="screen"><div class="pad">
+        <div class="topbar"><div class="back">‹</div><div class="toptitle">परीक्षाफल</div></div>
+
+        <div class="donet" style="margin-top:6px">21 / 25 · 84%</div>
+        <div class="dones">प्रथम श्रेणी · उत्तीर्ण</div>
+
+        <div class="cert" style="position:relative"><div class="dot" style="right:-8px;top:-8px">13</div>
+          <div class="corn">॥ ॐ ॥</div>
+          <div class="ct1">गीता परीक्षा प्रमाणपत्र</div>
+          <div class="cname">आरव शर्मा</div>
+          <div class="cline">स्तर 1 · प्रवेश परीक्षा — अध्याय 12 व 15<br/>21/25 (84%)</div>
+          <div class="cgrade">प्रथम श्रेणी में उत्तीर्ण</div>
+          <div class="cline" style="margin-top:6px">गीता जयंती, मोक्षदा एकादशी · वि.सं. 2083</div>
+          <div class="cfoot">ॐ वेदांश़</div>
+        </div>
+
+        <button class="btn">प्रमाणपत्र साझा करें · Share</button>
+        <div style="position:relative"><div class="dot" style="left:-8px;top:6px">14</div>
+        <button class="btn ghost">उत्तर-समीक्षा — हर प्रश्न का स्रोत ›</button></div>
+        <div class="note">50% से कम पर भी प्रयास-पत्र मिलता है —<br/>इस परम्परा में कोई बालक खाली हाथ नहीं लौटता</div>
+      </div></div>
+    </div>
+    <div class="cap"><b>Result — the certificate every child gets.</b><br/>
+      <span class="n">13</span><b>The प्रमाणपत्र card</b> rides the shipped share-card pipeline: name (typed at generation, stored only in the local result, deletable), level + syllabus, score, grade band — and the <b>panchang date line</b> ("गीता जयंती, मोक्षदा एकादशी · वि.सं.") no competing exam app can produce. Below 50% the same card renders as a <b>प्रयास-पत्र</b> with encouragement copy. Shared only by the parent's explicit action.<br/>
+      <span class="n">14</span><b>उत्तर-समीक्षा</b> replays the paper through the grace reveals — source + पढ़ें › hand-off per question — so even the exam ends as reading.</div>
+    </div>
+  </div>
+
   <div class="phaselabel" style="margin-top:34px">Interaction inventory</div>
   <div class="legend" style="max-width:920px">
     ① Kids library → प्रश्नोत्तरी card (painted-art treatment) → pack shelf.
@@ -349,7 +468,12 @@
     ⑦ पढ़ें › hand-off deep-links the exact ComicReader/KidsStoryReader/verse route and returns — the primary metric.
     ⑧ Completion: pearls (collection, not score), quiet ॐ seal, re-read + next pack.
     ⑨ Post-reader invite chip (Phase 2): opt-in, one dismissal silences per story.
-    No timers, lives, leaderboards, child profiles, or PII anywhere. State = one anonymous AsyncStorage key.
+    ⑩ गीता परीक्षा ladder: levels in succession, syllabus + paper length + pass mark declared before enrolling; पाठ्यक्रम पढ़ें deep-links the Gita reader; best grade shown, retakes unlimited.
+    ⑪ Paper: elapsed time displayed, never enforced; deterministic draw per level+attempt.
+    ⑫ No hints/reveals/hand-offs mid-paper; × saves the sitting.
+    ⑬ Result → certificate card (share pipeline; name typed at generation, local-only, deletable; panchang date line; प्रयास-पत्र below 50%).
+    ⑭ उत्तर-समीक्षा replays every paper question through the grace reveals + hand-offs.
+    No timers-as-pressure, lives, leaderboards, child profiles, or PII anywhere. State = one anonymous AsyncStorage key.
   </div>
 </body>
 </html>
