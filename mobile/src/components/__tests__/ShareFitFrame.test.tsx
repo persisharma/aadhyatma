@@ -3,7 +3,8 @@ import { Text, View, StyleSheet } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import ShareFitFrame from '../ShareFitFrame';
 import { ThemeProvider } from '@/theme/ThemeContext';
-import { feedCanvas, storyCanvas, placeFeedCard, placeStoryCard } from '@/utils/shareStoryLayout';
+import { storyCanvas, placeStoryCard } from '@/utils/shareStoryLayout';
+import { feedCanvas, placeFeedCard } from '@/utils/shareFeedLayout';
 
 jest.mock('../BackgroundLayer', () => 'BackgroundLayer');
 

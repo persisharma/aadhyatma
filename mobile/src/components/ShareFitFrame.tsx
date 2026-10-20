@@ -3,15 +3,11 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import BackgroundLayer from './BackgroundLayer';
-import {
-  feedCanvas,
-  placeFeedCard,
-  placeStoryCard,
-  storyCanvas,
-} from '@/utils/shareStoryLayout';
+import { placeStoryCard, storyCanvas } from '@/utils/shareStoryLayout';
+import { feedCanvas, placeFeedCard } from '@/utils/shareFeedLayout';
 import type { ShareFormat } from '@/utils/shareVerse';
 
-type Props = {
+export type ShareFitFrameProps = {
   /** `post` → 4:5 feed canvas; `story` → 9:16 Story/Reel canvas. */
   format: ShareFormat;
   /** The plate behind the card, full-bleed. */
@@ -34,7 +30,7 @@ type Props = {
  * lays out at its native size; a `scale` transform shrinks it about its centre, so
  * no type sizes or the meaning-fit budget change — only the rasterised result.
  */
-export default function ShareFitFrame({ format, background, cardWidth, cardHeight, children }: Props) {
+export default function ShareFitFrame({ format, background, cardWidth, cardHeight, children }: ShareFitFrameProps) {
   const { colors } = useTheme();
   const canvas = format === 'story' ? storyCanvas : feedCanvas;
   const place = format === 'story' ? placeStoryCard(cardWidth, cardHeight) : placeFeedCard(cardWidth, cardHeight);

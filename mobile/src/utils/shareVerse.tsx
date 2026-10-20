@@ -14,10 +14,11 @@ import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
 import ShareStoryCanvas from '@/components/ShareStoryCanvas';
 import ShareStoryFrame from '@/components/ShareStoryFrame';
-import ShareFitFrame from '@/components/ShareFitFrame';
+import type { ShareFitFrameProps } from '@/components/ShareFitFrame';
 import { ArtworkCaptureContext, createArtworkPaintBarrier, type ArtworkPaintBarrier } from '@/components/ArtworkCaptureContext';
 import ProseShareCard from '@/components/ProseShareCard';
-import ShareTargetSheet, { type ShareSeriesView } from '@/components/ShareTargetSheet';
+import type ShareTargetSheetComponent from '@/components/ShareTargetSheet';
+import type { ShareSeriesView } from '@/components/ShareTargetSheet';
 import { buildInstagramCaption, buildShareCaption } from '@/data/shareLinks';
 import {
   buildVerseHashtags,
@@ -25,10 +26,8 @@ import {
   type TimelyContext,
 } from '@/data/shareHashtags';
 import {
-  FEED_OUTPUT_HEIGHT,
   STORY_OUTPUT_HEIGHT,
   STORY_OUTPUT_WIDTH,
-  feedCanvas,
   storyCanvas,
   storySafeInsets,
 } from '@/utils/shareStoryLayout';
@@ -217,6 +216,39 @@ function TimelyTagsResolver(props: TimelyResolverProps) {
   }
   const Resolver = resolverComponent;
   return <Resolver {...props} />;
+}
+
+/**
+ * Deferred-require wrapper for the Instagram fit frame. It is only mounted while a
+ * share is in flight, so a static import would pull it (and its deps) into every
+ * screen's launch graph — `data/__tests__/launchGraph.test.ts` fails if it does.
+ * The `require` keeps it in Metro's graph (ships over OTA) but off the cold start.
+ */
+let shareFitFrameComponent: React.ComponentType<ShareFitFrameProps> | null = null;
+function ShareFitFrame(props: ShareFitFrameProps) {
+  if (!shareFitFrameComponent) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    shareFitFrameComponent = require('@/components/ShareFitFrame').default as React.ComponentType<ShareFitFrameProps>;
+  }
+  const Frame = shareFitFrameComponent;
+  return <Frame {...props} />;
+}
+
+/**
+ * Deferred-require wrapper for the share target picker. The sheet (~30 KB) is only
+ * mounted after the reader taps share, so a static import would put it on every
+ * screen's cold start — `data/__tests__/launchGraph.test.ts` guards against that.
+ * `m.default ?? m` tolerates both the real ES module and the bare-string jest mocks.
+ */
+let shareTargetSheet: typeof ShareTargetSheetComponent | null = null;
+function ShareTargetSheet(props: React.ComponentProps<typeof ShareTargetSheetComponent>) {
+  if (!shareTargetSheet) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const m = require('@/components/ShareTargetSheet');
+    shareTargetSheet = (m.default ?? m) as typeof ShareTargetSheetComponent;
+  }
+  const Sheet = shareTargetSheet;
+  return <Sheet {...props} />;
 }
 
 /** One prose page, resolved for capture: everything `ProseShareCard` needs. */
@@ -422,7 +454,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       const outWidth = tall || isDevotionalFit(spec) ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH; // all 1080
       const outHeight = isDevotionalFit(spec)
         // Instagram: fixed-aspect frame, card scaled to fit — never cropped.
-        ? spec.format === 'story' ? STORY_OUTPUT_HEIGHT : FEED_OUTPUT_HEIGHT
+        // Feed is 4:5 — the same 1080×1350 as OUTPUT_WIDTH×OUTPUT_HEIGHT.
+        ? spec.format === 'story' ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT
         : spec.measuredHeight
         ? spec.measuredHeight * (OUTPUT_WIDTH / CARD_WIDTH)
         : tall ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
@@ -933,7 +966,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       // Instagram: the card is scaled to fit the fixed-aspect frame (ShareFitFrame).
       ? spec.format === 'story'
         ? { width: storyCanvas.width, height: storyCanvas.height }
-        : { width: feedCanvas.width, height: feedCanvas.height }
+        : { width: CARD_WIDTH, height: CARD_HEIGHT } // 4:5 feed canvas (540×675)
       : {
           width: spec.format === 'story' ? storyCanvas.width : CARD_WIDTH,
           height: spec.measuredHeight
