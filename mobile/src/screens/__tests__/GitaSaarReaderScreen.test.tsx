@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { FlatList, Text, View as mockView } from 'react-native';
+import { FlatList, StyleSheet, Text, View as mockView } from 'react-native';
 
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
@@ -83,6 +83,30 @@ test('renders the first Gita Saar page without throwing: corpus shloka + saar + 
   assert.ok(renderedText.includes(firstVerse.meaningHi));
   assert.ok(renderedText.includes(firstVerse.groupTitleHi));
   assert.ok(renderedText.includes(`श्लोक · ${firstVerse.gitaChapter}.${firstVerse.gitaVerse}`));
+});
+
+test('opening artwork overrides intrinsic image dimensions and preserves its complete 2:1 canvas', () => {
+  const { tree } = render();
+  const artwork = tree.root.findAll((node) => node.props.testID === 'gita-saar-opening-artwork')[0];
+  assert.ok(artwork, 'opening artwork must render');
+  const style = StyleSheet.flatten(artwork.props.style);
+  assert.equal(typeof style.width, 'number');
+  assert.equal(style.height, style.width / 2);
+  assert.equal(artwork.props.resizeMode, 'contain');
+  act(() => tree.unmount());
+});
+
+test('reader pages receive the measured viewport so long vertical content stays bounded', () => {
+  const { tree } = render();
+  const viewport = tree.root.findAll((node) =>
+    typeof node.props.onLayout === 'function' && node.findAllByType(FlatList).length > 0
+  )[0];
+  assert.ok(viewport, 'the pager must measure its available height');
+  act(() => viewport.props.onLayout({ nativeEvent: { layout: { height: 460 } } }));
+  const pages = tree.root.findAll((node) => node.props.sourceId === 'gita-saar' && node.props.verse);
+  assert.ok(pages.length > 0);
+  assert.ok(pages.every((page) => page.props.height === 460));
+  act(() => tree.unmount());
 });
 
 test('English mode shows the saar in English and the pill in English (no Devanagari leak)', () => {

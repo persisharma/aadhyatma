@@ -490,3 +490,30 @@ instruction endpoint are captured in October 10 images 20–21. Kannada Large Ka
 (image 22) retains the full painting. The complete Kannada endpoint and horizontal gesture
 coverage remain unverified. This extends scoped evidence without changing the Standard
 visual pass above. English/Standard QA preferences were restored.
+
+---
+
+# Gita Saar visual refresh — 2026-10-20
+
+## Target and accepted corrections
+
+- Index: selected editorial option 2; reader: selected inner option 1.
+- Retain the existing regional-language/English toggle, audio, routine, bookmark/share controls, progress, and native navigation.
+- User correction supersedes the mockup's etched artwork: reuse the app's approved rich `krishna-arjuna-vishvarupa.webp` reader banner on both screens.
+- Render the full 2:1 composition with explicit numeric dimensions and `contain`; do not crop subjects or inherit the asset's intrinsic height.
+
+## Evidence
+
+- Native iOS index and first reader page inspected: existing rich artwork, both figures, masthead, language toggle, reader controls, and source verse are visible.
+- TypeScript: passed.
+- Focused reader and shared reading-scale tests: 18 passed. Regression checks cover explicit 2:1 image dimensions and measured pager-height propagation.
+- Full prose is retained. Multiline verse, introduction, Saar, and conclusion use the existing `ProseParagraph` wrapper to avoid Fabric final-line clipping. Theme titles have no line limit.
+- Vertical readers receive the measured pager viewport; clipped-subview removal is disabled, axis locking is enabled, and bottom padding clears the pager indicators.
+- User confirmed on 2026-10-21 that vertical scrolling reaches the complete content and full-Gita handoff.
+- Restored the existing source-specific Krishna–Arjuna content background through `getReaderBackground` and the shared `BackgroundLayer` readability overlay; native appearance of this restoration remains pending.
+
+## Pending
+
+- Repeat the long-content inspection with the Large reading size and regional languages. Focused type-scale tests are not device visual proof.
+
+final result: blocked
