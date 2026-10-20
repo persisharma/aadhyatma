@@ -14,6 +14,7 @@ import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
 import ShareStoryCanvas from '@/components/ShareStoryCanvas';
 import ShareStoryFrame from '@/components/ShareStoryFrame';
+import ShareFitFrame from '@/components/ShareFitFrame';
 import { ArtworkCaptureContext, createArtworkPaintBarrier, type ArtworkPaintBarrier } from '@/components/ArtworkCaptureContext';
 import ProseShareCard from '@/components/ProseShareCard';
 import ShareTargetSheet, { type ShareSeriesView } from '@/components/ShareTargetSheet';
@@ -24,8 +25,10 @@ import {
   type TimelyContext,
 } from '@/data/shareHashtags';
 import {
+  FEED_OUTPUT_HEIGHT,
   STORY_OUTPUT_HEIGHT,
   STORY_OUTPUT_WIDTH,
+  feedCanvas,
   storyCanvas,
   storySafeInsets,
 } from '@/utils/shareStoryLayout';
@@ -242,7 +245,12 @@ const isPictureCapture = (spec: PendingCapture) => spec.kind === 'prose' && spec
 type PendingCapture = (
   | { kind: 'verse'; verse: ShareableVerse; lang: Lang; format: ShareFormat; captureId?: number; measuredHeight?: number }
   | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat; captureId?: number; measuredHeight?: number }
-) & { backgroundPaint?: ArtworkPaintBarrier };
+) & { target?: ShareTarget; backgroundPaint?: ArtworkPaintBarrier };
+
+/** A long devotional card is scaled whole into the 4:5 / 9:16 frame for Instagram so
+ *  Instagram never crops it. System/WhatsApp keep the full tall image (shown whole). */
+const isDevotionalFit = (spec: PendingCapture) =>
+  spec.kind === 'prose' && !!spec.card.page.devotional && spec.target === 'instagram' && !isPictureCapture(spec);
 
 type ProseChooser = {
   content: ShareableProse;
@@ -411,8 +419,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         captureTarget = cardRef as React.RefObject<View | null>;
       }
       const tall = spec.format === 'story' || isPictureCapture(spec);
-      const outWidth = tall ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH;
-      const outHeight = spec.measuredHeight
+      const outWidth = tall || isDevotionalFit(spec) ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH; // all 1080
+      const outHeight = isDevotionalFit(spec)
+        // Instagram: fixed-aspect frame, card scaled to fit — never cropped.
+        ? spec.format === 'story' ? STORY_OUTPUT_HEIGHT : FEED_OUTPUT_HEIGHT
+        : spec.measuredHeight
         ? spec.measuredHeight * (OUTPUT_WIDTH / CARD_WIDTH)
         : tall ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
       // UIKit captures point dimensions at the screen's scale; Android uses pixels.
@@ -641,7 +652,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       setBusy(true);
       try {
         const spec = cardSpec(content, scope, lang, highlighted);
-        const fileUri = await capture({ kind: 'prose', card: spec, format }, 'card');
+        const fileUri = await capture({ kind: 'prose', card: spec, format, target }, 'card');
         if ((spec.page.illustration || spec.page.devotional) && !fileUri) { alertCouldNotShare(uiLang); return; }
         const label = spec.pageCount > 1 ? pageWord(highlighted + 1, spec.pageCount) : null;
         const caption = proseCaption(content, scope, lang, target, label);
@@ -918,6 +929,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       ? { width: CARD_WIDTH } // Let native text measure without a fixed-height ancestor.
       : isPictureCapture(spec)
       ? { width: cardMetricsFor('picture').width, height: cardMetricsFor('picture').height }
+      : isDevotionalFit(spec)
+      // Instagram: the card is scaled to fit the fixed-aspect frame (ShareFitFrame).
+      ? spec.format === 'story'
+        ? { width: storyCanvas.width, height: storyCanvas.height }
+        : { width: feedCanvas.width, height: feedCanvas.height }
       : {
           width: spec.format === 'story' ? storyCanvas.width : CARD_WIDTH,
           height: spec.measuredHeight
@@ -983,8 +999,19 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         >
           <View ref={cardRef} collapsable={false} style={pendingSize(pending)}>
             {pending.kind === 'prose' ? (
-              pending.format === 'story' && !isPictureCapture(pending) ? (
-                <ShareStoryFrame background={pending.card.background} contentSized={!!pending.card.page.devotional}>
+              // Instagram: once measured, scale the whole devotional card to fit the
+              // 4:5 / 9:16 frame so Instagram never crops it (design.md §39.3).
+              isDevotionalFit(pending) && pending.measuredHeight ? (
+                <ShareFitFrame format={pending.format} background={pending.card.background}
+                  cardWidth={CARD_WIDTH} cardHeight={pending.measuredHeight}>
+                  <ProseShareCard key={pending.captureId ?? 'prose'} {...pending.card}
+                    onIllustrationReady={(ready) => {
+                      const current = imageReady.current;
+                      if (current && current.id === pending.captureId) current.resolve(ready);
+                    }} />
+                </ShareFitFrame>
+              ) : pending.format === 'story' && !isPictureCapture(pending) && !pending.card.page.devotional ? (
+                <ShareStoryFrame background={pending.card.background} contentSized={false}>
                   <ProseShareCard key={pending.captureId ?? 'prose'} {...pending.card}
                     onHeight={height => onVerseHeight(pending.captureId, Math.max(storyCanvas.height, height + storySafeInsets.top + storySafeInsets.bottom))}
                     onIllustrationReady={(ready) => {
