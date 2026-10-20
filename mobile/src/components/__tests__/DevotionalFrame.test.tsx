@@ -46,3 +46,38 @@ it('grows the meaning box without distorting decorative caps or hiding scripture
   const before = caps(); act(() => frame.findAllByType(View).find(n => n.props.onLayout)!.props.onLayout({ nativeEvent: { layout: { height: 1200 } } }));
   expect(caps()).toEqual(before); expect(tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.numberOfLines).toBeUndefined(); act(() => tree!.unmount());
 });
+it('grows the commentary on flat paper, keeping the whole scenic band intact', () => {
+  const meaning = 'The meaning.\n\n' + 'A long explanation that keeps going. '.repeat(60);
+  let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header="Test" verse="Om" meaning={meaning} lang="en" art="hanuman" verseStyle={{}} meaningStyle={{}} exportMode />); });
+  const panel = tree!.root.findByProps({ testID: 'devotional-commentary-panel' });
+  // The growing middle is a flat paper View (no master image) so the scenery can
+  // never smear; the scenic foot is the single intact capless slice.
+  const mid = panel.findByProps({ testID: 'devotional-commentary-panel-image' });
+  expect(mid.type).toBe(View);
+  expect(StyleSheet.flatten(mid.props.style).backgroundColor).toBe('#FAE7BE');
+  const caps = () => panel.findAllByType(Image).filter(n => !n.props.testID).map(n => StyleSheet.flatten(n.props.style));
+  expect(caps()).toHaveLength(1);
+  const before = caps(); act(() => panel.findAllByType(View).find(n => n.props.onLayout)!.props.onLayout({ nativeEvent: { layout: { height: 900 } } }));
+  expect(caps()).toEqual(before); act(() => tree!.unmount());
+});
+it('keeps the source header one calibrated size and script-correct face, long or short', () => {
+  const render = (header: string) => {
+    let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header={header} verse="Om" meaning="A meaning." lang="hi" art="krishna" verseStyle={{}} meaningStyle={{}} exportMode />); });
+    const source = tree!.root.findByProps({ testID: 'devotional-share-source' }); const style = StyleSheet.flatten(source.props.style);
+    const out = { size: style.fontSize, face: style.fontFamily, fit: source.props.adjustsFontSizeToFit, lines: source.props.numberOfLines };
+    act(() => tree!.unmount()); return out;
+  };
+  const short = render('श्रीकृष्ण'), long = render('श्रीमद्भगवद्गीता · अध्याय २, श्लोक ४७');
+  expect(short.size).toBe(long.size); expect(short.face).toBe(long.face);
+  expect(long.fit).toBe(true); expect(long.lines).toBe(2);
+});
+it.each(['hi', 'en', 'gu', 'kn'] as const)('gives every %s first line room for the marks above it', lang => {
+  const meaning = 'हे लक्ष्मण! धनुष-बाण लाओ, मैं अग्निबाण से समुद्र को सोख डालूँ। '.repeat(3) + '\n\nमूर्ख से विनय।';
+  let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header="सुंदरकाण्ड · चौपाई ६०·१" verse="लछिमन बान सरासन आनू।" meaning={meaning} lang={lang} art="hanuman" verseStyle={{}} meaningStyle={{}} exportMode />); });
+  for (const id of ['source', 'verse', 'meaning', 'commentary'].map(k => `devotional-share-${k}`).concat('devotional-meaning-label')) {
+    const s = StyleSheet.flatten(tree!.root.findByProps({ testID: id }).props.style);
+    expect(s.paddingTop ?? 0).toBeGreaterThanOrEqual(1.53 * s.fontSize - s.lineHeight);
+    expect((s.paddingTop ?? 0) + (s.marginTop ?? 0)).toBe(0);
+  }
+  act(() => tree!.unmount());
+});
