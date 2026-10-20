@@ -19,7 +19,7 @@ it('preserves every Daily Bhakti verse and meaning in all four languages in one 
       expect(pages).toHaveLength(1);
       for (const { devotional: p } of pages) {
         const body = devotionalBodyHeight(header, p!.verse, p!.meaning, lang);
-        expect(devotionalCardGeometry(body).height).toBeGreaterThanOrEqual(p!.heroHeight + body + 67);
+        expect(devotionalCardGeometry(body, p!.art).height).toBeGreaterThanOrEqual(p!.heroHeight + body + 67);
         expect(p!.art).toBe(devotionalArtForVerse(v));
       }
     }

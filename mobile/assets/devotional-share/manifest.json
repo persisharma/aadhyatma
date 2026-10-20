@@ -2,67 +2,375 @@
   "assets": {
     "krishna": {
       "file": "krishna.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 177484,
-      "sha256": "344712fdfc404956662203e42c8c182de2a4d3c6bd91d8c620af12b65a269c9c",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 1456,
+      "bytes": 2101850,
+      "sha256": "6c40d1bb006803e73c5ef9330b633a997c4544f6f77d5b9a24b447299fa42bfd",
+      "sourceImage": "Krishna Devotional Card by the Yamuna.png",
+      "sourceSha256": "0bbe336bac3550fca9d7fd71bc91f8768c9f6ec043f12121ed320d4dd45a1278",
+      "editedSource": "exec-a7824a75-8afe-4f9d-9a3b-81d6a3f684d0.png",
+      "editedSourceSha256": "2915486d9dea56ceae188e43ebd4a9dad6ff8521685ebe090c38ed04e78d2c2d",
+      "textRects": [
+        [
+          350,
+          600,
+          390,
+          66
+        ],
+        [
+          180,
+          710,
+          730,
+          140
+        ],
+        [
+          500,
+          924,
+          80,
+          65
+        ],
+        [
+          290,
+          990,
+          500,
+          68
+        ],
+        [
+          260,
+          1150,
+          570,
+          70
+        ]
+      ],
+      "protectedPixelChanges": 0,
+      "provenance": "Lossless approved full master. Only editable text fields are composited from the text-cleared image; original pixels outside these fields remain unchanged."
     },
     "shiva": {
       "file": "shiva.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 159928,
-      "sha256": "dd51fb9ad95637bd2239d3d68a0d2fb6aafe06913302aecb583f0666d205285b",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 1456,
+      "bytes": 2000426,
+      "sha256": "273fd179b1f9ab2f111ef5030bd6be8199d36913c17f6fd66d40a80bafb1d2cf",
+      "sourceImage": "Shiva mantra card in Himalayan dawn.png",
+      "sourceSha256": "f6a03c958a694d39f8da8042b7a96d85bbff32abcad536c4b7f9d309a97bf379",
+      "editedSource": "exec-15eb7ac3-23f1-4d6a-a6c9-d505dcf6d5c0.png",
+      "editedSourceSha256": "cf0e80831c6b61f14582ae7c2540cb912f87120a2cd13bf29223fc8af44cb03d",
+      "textRects": [
+        [
+          395,
+          550,
+          305,
+          65
+        ],
+        [
+          215,
+          640,
+          655,
+          150
+        ],
+        [
+          500,
+          867,
+          80,
+          65
+        ],
+        [
+          285,
+          943,
+          520,
+          78
+        ],
+        [
+          280,
+          1138,
+          520,
+          65
+        ]
+      ],
+      "protectedPixelChanges": 0,
+      "provenance": "Lossless approved full master. Only editable text fields are composited from the text-cleared image; original pixels outside these fields remain unchanged."
     },
     "durga": {
       "file": "durga.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 173408,
-      "sha256": "5be47085afcbaef8cf812d9d50ee1cd3b212188431315cf8b7ce673293c807a2",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 1456,
+      "bytes": 2107912,
+      "sha256": "7afdf5dd707562d677bbb9f1ef61f9219a017fce64431bc4dedebc14cf118594",
+      "sourceImage": "Durga devotional card with temple diyas.png",
+      "sourceSha256": "04ddc6d7d32acc586fe96c61c357d15323c045db63513e15be4ad4b920907487",
+      "editedSource": "exec-111528e7-5cd5-4c61-929c-5ca49d71aefb.png",
+      "editedSourceSha256": "9f50a1a92f11dcb78cdb7f00fa1780581f8f09a962a6c369fb2b7bdf7063457a",
+      "textRects": [
+        [
+          345,
+          585,
+          390,
+          105
+        ],
+        [
+          215,
+          715,
+          660,
+          160
+        ],
+        [
+          500,
+          946,
+          80,
+          65
+        ],
+        [
+          285,
+          1000,
+          510,
+          115
+        ],
+        [
+          250,
+          1190,
+          590,
+          64
+        ]
+      ],
+      "protectedPixelChanges": 0,
+      "provenance": "Lossless approved full master. Only editable text fields are composited from the text-cleared image; original pixels outside these fields remain unchanged."
     },
     "saraswati": {
       "file": "saraswati.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 152684,
-      "sha256": "20672ef2b1057090f9ae8af64a31046fb049597b82af05f4b8dd58e68a596777",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 1456,
+      "bytes": 2026362,
+      "sha256": "6f3fb5927ae597bdc8083a1bdce737538e5e9eb807c398222fde8cae9d67be3c",
+      "sourceImage": "Saraswati Devotional Card with Veena.png",
+      "sourceSha256": "0cbd1bf8b66072230e4a1a7eda99491842892a192c632ef1a2aa505bf9808f1a",
+      "editedSource": "exec-9b327794-c94c-4dda-a110-ea8e7a05c36c.png",
+      "editedSourceSha256": "d3e8c0d216cb80155d742c8af5da9805b1dbcb0fcbe6f9ce0523b513e0152d6b",
+      "textRects": [
+        [
+          340,
+          575,
+          410,
+          80
+        ],
+        [
+          165,
+          670,
+          765,
+          145
+        ],
+        [
+          500,
+          890,
+          80,
+          65
+        ],
+        [
+          295,
+          955,
+          500,
+          76
+        ],
+        [
+          250,
+          1140,
+          590,
+          64
+        ]
+      ],
+      "protectedPixelChanges": 0,
+      "provenance": "Lossless approved full master. Only editable text fields are composited from the text-cleared image; original pixels outside these fields remain unchanged."
     },
     "ganesha": {
       "file": "ganesha.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 154554,
-      "sha256": "fde65c62169f0a6b110717a92d9c4b179770c8f0c0d15505366bc203e5676e23",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 1456,
+      "bytes": 1999782,
+      "sha256": "e818179daea4b63c3c926cebe73e4c9ce504421e09c9f9f59eb6e505a0c5cca2",
+      "sourceImage": "Ganesha prayer card with diyas.png",
+      "sourceSha256": "0c506fb517f286f3890f9f1288c18ca5b4079f0058b7602d89fb9f11f25a94ed",
+      "editedSource": "exec-0fb41cc4-5f2b-43e9-9a75-f17ac0a14951.png",
+      "editedSourceSha256": "3e21a9eb98e92c23909eefe652062caa15bd5aeaf3ce1e09888ea023e5802158",
+      "textRects": [
+        [
+          355,
+          570,
+          380,
+          77
+        ],
+        [
+          190,
+          690,
+          700,
+          120
+        ],
+        [
+          500,
+          898,
+          80,
+          65
+        ],
+        [
+          285,
+          977,
+          510,
+          77
+        ],
+        [
+          255,
+          1165,
+          570,
+          65
+        ]
+      ],
+      "protectedPixelChanges": 0,
+      "provenance": "Lossless approved full master. Only editable text fields are composited from the text-cleared image; original pixels outside these fields remain unchanged."
     },
     "vishnu": {
       "file": "vishnu.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 180744,
-      "sha256": "4d7bc9f655fb62db40b9c24b76a081a2459885077f9c96cff8ada8b8b1587ac2",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 1456,
+      "bytes": 1827970,
+      "sha256": "9f3c09c8e9523cd0161e000547b2e8d92ad731c841bb8a524ece3f2a613a33ca",
+      "sourceImage": "Vishnu Lotus River Devotional Card.png",
+      "sourceSha256": "7948e7881f71aa0e860ef7cca781300132fb842619c68c6a01828ae0d4e07206",
+      "editedSource": "exec-7e16216b-f173-4f70-a1ba-577d6cdb3c5b.png",
+      "editedSourceSha256": "a96b5896c2601b014c43e11313468932ba27ab890d36bc5e3871891cff7f15a9",
+      "textRects": [
+        [
+          300,
+          535,
+          485,
+          49
+        ],
+        [
+          145,
+          607,
+          800,
+          177
+        ],
+        [
+          500,
+          862,
+          80,
+          65
+        ],
+        [
+          85,
+          922,
+          918,
+          116
+        ],
+        [
+          140,
+          1120,
+          820,
+          58
+        ],
+        [
+          133,
+          1175,
+          843,
+          50
+        ],
+        [
+          290,
+          1228,
+          510,
+          65
+        ]
+      ],
+      "protectedPixelChanges": 0,
+      "provenance": "Lossless approved full master. Only editable text fields are composited from the text-cleared image; original pixels outside these fields remain unchanged."
     },
     "hanuman": {
       "file": "hanuman.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 156910,
-      "sha256": "6a2f0fc22bca4047229a06b83869b7be79f68c9ac2571957de79a63131162453",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 1456,
+      "bytes": 2049084,
+      "sha256": "6fc1a388cd95278e347d5f499166d7e60b39e1b02109ebfd95c49e7730475665",
+      "sourceImage": "Hanuman Devotional Card with Golden Diyas.png",
+      "sourceSha256": "b2077ecc491128fc92a72cd9058504afe79c12388a03a41fa25c06e034061d47",
+      "editedSource": "exec-59ab7709-b18d-435f-bf98-a2715244bb62.png",
+      "editedSourceSha256": "98a68c7a2c400d9ff8d03ab28742184334c3bc28d2d1b44a1f4d33084af1ed15",
+      "textRects": [
+        [
+          380,
+          545,
+          320,
+          70
+        ],
+        [
+          180,
+          635,
+          720,
+          171
+        ],
+        [
+          500,
+          872,
+          80,
+          65
+        ],
+        [
+          290,
+          950,
+          500,
+          75
+        ],
+        [
+          270,
+          1138,
+          550,
+          70
+        ]
+      ],
+      "protectedPixelChanges": 0,
+      "provenance": "Lossless approved full master. Only editable text fields are composited from the text-cleared image; original pixels outside these fields remain unchanged."
     },
     "rama": {
       "file": "rama.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 174084,
-      "sha256": "16819c776d203c70f8b979e9c7a3ae44c5b2b8f0d7cebd626fd7969f53dc9c42",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 1456,
+      "bytes": 2095066,
+      "sha256": "a74d87589a57d05f0296adc1d14c4210e8a56d114c385deca74d4b4d9ac39268",
+      "sourceImage": "Lord Rama Mantra Card.png",
+      "sourceSha256": "3d8d75ac8c9c90fe27241cdb7c1a6d4fc3dde02e00216930daab34a5a0c010a5",
+      "editedSource": "exec-6313e6e7-caa5-4b2a-97f6-326612178325.png",
+      "editedSourceSha256": "aba0d69fe749f2b1fa4235af89394c7877df3d66e7b557b23374d33fc9e9585d",
+      "textRects": [
+        [
+          365,
+          620,
+          370,
+          73
+        ],
+        [
+          165,
+          710,
+          745,
+          140
+        ],
+        [
+          500,
+          934,
+          80,
+          65
+        ],
+        [
+          235,
+          1010,
+          610,
+          78
+        ],
+        [
+          245,
+          1184,
+          590,
+          66
+        ]
+      ],
+      "protectedPixelChanges": 0,
+      "provenance": "Lossless approved full master. Only editable text fields are composited from the text-cleared image; original pixels outside these fields remain unchanged."
     },
     "prayer": {
       "file": "prayer.webp",
@@ -74,11 +382,48 @@
     },
     "surya": {
       "file": "surya.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 173134,
-      "sha256": "7d5fe5ee3100c4546f7e03b7ead286d54bbe53116ecf5d315b5f82d16d82d91c",
-      "provenance": "Recovered corrected seven-horse Surya with Aruna, 2026-10-18"
+      "width": 1080,
+      "height": 1456,
+      "bytes": 1898902,
+      "sha256": "1df75c8491ea24a3e31946217e42e2979fa8e8e1ab71b5367cf283451a43018e",
+      "sourceImage": "Surya’s Seven-Horse Chariot.png",
+      "sourceSha256": "c898d342e3210d0159d573f17da0dd8f8f4ca255416ccddf5544221c8c088a86",
+      "editedSource": "exec-c9ce5728-93d2-4014-886a-fa4505e8af08.png",
+      "editedSourceSha256": "f2f83f20e3c76e678da31881e2ecad9e279101d80c3805bc191f5b57513f0c7b",
+      "textRects": [
+        [
+          340,
+          605,
+          420,
+          110
+        ],
+        [
+          225,
+          755,
+          635,
+          130
+        ],
+        [
+          500,
+          951,
+          80,
+          65
+        ],
+        [
+          325,
+          1015,
+          430,
+          100
+        ],
+        [
+          240,
+          1194,
+          610,
+          68
+        ]
+      ],
+      "protectedPixelChanges": 0,
+      "provenance": "Lossless approved full master. Only editable text fields are composited from the text-cleared image; original pixels outside these fields remain unchanged."
     }
   }
 }

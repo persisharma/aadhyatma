@@ -16,7 +16,8 @@ import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
-import { DevotionalBorder, DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
+import { DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
+import { devotionalFrameColors } from '@/theme/devotionalFrame';
 import { devotionalArtForVerse } from '@/data/devotionalShareArt';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -146,17 +147,17 @@ export default function DailyBhaktiScreen() {
               </Pressable>
             </View>
           </View>
-          <View ref={dailyVerseRef} collapsable={false} testID="daily-bhakti-card" style={[styles.card, { backgroundColor: colors.parchmentHighlight }]}
-            onLayout={e => { const width = e.nativeEvent.layout.width; if (Number.isFinite(width) && width > 0) setCardWidth(width); }}>
+          <View ref={dailyVerseRef} collapsable={false} testID="daily-bhakti-card" style={[styles.card, { backgroundColor: devotionalFrameColors.paper }]}
+            onLayout={e => { const { width } = e.nativeEvent.layout; if (Number.isFinite(width) && width > 0) setCardWidth(width); }}>
             <DevotionalHero art={devotionalArtForVerse(verse)} lang={lang} width={cardWidth} />
             <DevotionalVerseBody
+              width={cardWidth} inset={cardWidth * 55 / 1080}
               header={[contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn), contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')].filter(Boolean).join(' · ')}
               verse={verseLines.join('\n')} meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
               lang={lang} art={devotionalArtForVerse(verse)}
               verseStyle={{ ...verseToken(lang, typography), color: colors.ink }}
               meaningStyle={{ ...meaningToken(lang, typography), color: colors.inkSoft }} />
             <DevotionalFooter art={devotionalArtForVerse(verse)} width={cardWidth} />
-            <DevotionalBorder inset={6} />
           </View>
         </ScrollView>
       </SafeAreaView>

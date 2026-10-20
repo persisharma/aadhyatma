@@ -142,6 +142,7 @@ export default function App() {
   // so the retry loop below does not dispatch the same tap a second time.
   const coldNotificationConsumedRef = useRef(false);
   const [fontsReady] = useFonts({
+    VedanshDevotionalText: require('./assets/fonts/VedanshDevotionalText.ttf'),
     NotoSerifDevanagari_500Medium,
     NotoSerifDevanagari_600SemiBold,
     CormorantGaramond_400Regular_Italic,
