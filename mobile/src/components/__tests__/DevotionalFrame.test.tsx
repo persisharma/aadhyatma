@@ -30,7 +30,7 @@ it('keeps footer scenery in its own flow box rather than behind content', () => 
   let tree: ReactTestRenderer;
   act(() => { tree = create(<DevotionalFooter art="durga" width={324} />); });
   const style = StyleSheet.flatten(tree!.root.findByProps({ testID: 'devotional-footer' }).props.style);
-  expect(style.height).toBe(48);
+  expect(style.height).toBe(84);
   expect(style.position).toBeUndefined();
   act(() => tree!.unmount());
 });
@@ -41,7 +41,7 @@ it.each([288, 358, 540])('scales the complete native artwork at width %s', width
     let tree: ReactTestRenderer;
     act(() => { tree = create(<><DevotionalHero art={art} lang="hi" width={width} /><DevotionalFooter art={art} width={width} /></>); });
     const footer = StyleSheet.flatten(tree!.root.findByProps({ testID: 'devotional-footer-image' }).props.style);
-    expect(footer.width).toBe(width); expect(footer.height).toBe(width * 160 / 1080);
+    expect(footer.width).toBe(width); expect(footer.height).toBe(width * 280 / 1080);
     const hero = StyleSheet.flatten(tree!.root.findByProps({ testID: 'devotional-hero-image' }).props.style);
     expect(hero.width).toBe(width);
     expect(hero.height).toBe(width * manifest.assets[art].height / manifest.assets[art].width);

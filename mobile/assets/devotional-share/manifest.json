@@ -157,8 +157,8 @@
     "file": "parchment.webp",
     "width": 1080,
     "height": 2145,
-    "bytes": 5258,
-    "sha256": "111ed4dff3cfde075afd268a8a8cce574d5cd0b65afd2bf6fe9d1c19e284d0a0",
+    "bytes": 18150,
+    "sha256": "dfad770b8bd0c72d54da635505d054991d4d43d95eea15db9c8028ea4f41cbcc",
     "sourceImage": "exec-bf2a6376-eb41-48b2-b3ee-95f0e8653c30.png",
     "sourceSha256": "7948e7881f71aa0e860ef7cca781300132fb842619c68c6a01828ae0d4e07206",
     "crop": {
@@ -167,6 +167,6 @@
       "width": 90,
       "height": 165
     },
-    "provenance": "Fine paper grain extracted from the text-free approved crop; low-frequency lighting removed before tiling over the sampled golden paper shade. Native center highlight is separate."
+    "provenance": "Lossless fine paper grain from approved text-free crop; low-frequency lighting normalized before tiling, preserving visible texture."
   }
 }

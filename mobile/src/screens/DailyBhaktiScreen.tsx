@@ -153,13 +153,14 @@ export default function DailyBhaktiScreen() {
             <DevotionalPaper width={cardWidth} height={cardHeight} />
             <DevotionalHero art={devotionalArtForVerse(verse)} lang={lang} width={cardWidth} />
             <DevotionalVerseBody
+              width={cardWidth} inset={cardWidth * 55 / 1080}
               header={[contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn), contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')].filter(Boolean).join(' · ')}
               verse={verseLines.join('\n')} meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
               lang={lang} art={devotionalArtForVerse(verse)}
               verseStyle={{ ...verseToken(lang, typography), color: colors.ink }}
               meaningStyle={{ ...meaningToken(lang, typography), color: colors.inkSoft }} />
             <DevotionalFooter art={devotionalArtForVerse(verse)} width={cardWidth} />
-            <DevotionalBorder inset={6} />
+            <DevotionalBorder inset={6} art={devotionalArtForVerse(verse)} scale={cardWidth / 540} />
           </View>
         </ScrollView>
       </SafeAreaView>

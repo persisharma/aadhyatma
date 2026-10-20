@@ -5,11 +5,11 @@ import { charsPerLine } from './shareCardType';
 export type DevotionalArt = 'krishna' | 'shiva' | 'durga' | 'saraswati' | 'ganesha' | 'vishnu' | 'hanuman' | 'rama' | 'surya' | 'prayer';
 export type DevotionalPage = { art: DevotionalArt; verse: string; meaning: string; heroHeight: number; continuation: boolean };
 export const devotionalMetrics = {
-  width: 540, height: 675, inset: 38, contentBottom: 608, contentTop: 12,
-  sourceSize: 16, sourceLeading: 26, sourceGap: 11,
+  width: 540, height: 675, inset: 28, contentBottom: 608, contentTop: 12,
+  sourceSize: 15, sourceLeading: 26, sourceGap: 11,
   verseSize: 25, verseLeading: 43, meaningSize: 21, meaningLeading: 35,
   latinVerseSize: 26, latinVerseLeading: 35, latinMeaningSize: 23, latinMeaningLeading: 32,
-  meaningLabelSize: 15, meaningLabelLeading: 25, meaningGap: 20, bottomSlack: 18, footerSpace: 100,
+  meaningLabelSize: 18, meaningLabelLeading: 28, meaningGap: 20, bottomSlack: 18, footerSpace: 160,
   heroHeights: [270] as readonly number[],
 } as const;
 const advances: Record<Lang, number> = { hi: .44, en: .47, gu: .47, kn: .60 };
@@ -43,7 +43,7 @@ export function devotionalBodyHeight(header: string, verse: string, meaning: str
   const leading = latin ? m.latinMeaningLeading : m.meaningLeading;
   return m.contentTop + 16 + devotionalTextHeight(header, lang, m.sourceSize, m.sourceLeading) + 38
     + devotionalTextHeight(verse, lang, latin ? m.latinVerseSize : m.verseSize, latin ? m.latinVerseLeading : m.verseLeading)
-    + (parts.meaning ? 48 + 32 + m.meaningLabelLeading + 8 + devotionalTextHeight(parts.meaning, lang, size, leading, 412) : 0)
+    + (parts.meaning ? 48 + 32 + m.meaningLabelLeading + 8 + devotionalTextHeight(parts.meaning, lang, size, leading, 420) : 0)
     + (parts.commentary ? 42 + devotionalTextHeight(parts.commentary, lang, size, leading) : 0);
 }
 /** One complete devotional image. A wide artwork header; native text sets height. */

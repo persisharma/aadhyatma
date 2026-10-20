@@ -3,146 +3,146 @@
     "vishnu": {
       "file": "vishnu.webp",
       "width": 1080,
-      "height": 160,
-      "bytes": 44226,
-      "sha256": "4cd0c88ccbd489b9542d7d37fbb13d7aa652de1ed99622282c27464dd889673b",
+      "height": 280,
+      "bytes": 67606,
+      "sha256": "4ee296a6360a825e89e6bcc7d882cadec45e552ada91a4f790e95cb68ac647aa",
       "sourceSha256": "7948e7881f71aa0e860ef7cca781300132fb842619c68c6a01828ae0d4e07206",
       "sourceImage": "exec-bf2a6376-eb41-48b2-b3ee-95f0e8653c30.png",
       "crop": {
         "left": 0,
-        "top": 1296,
+        "top": 1176,
         "width": 1080,
-        "height": 160
+        "height": 280
       },
-      "provenance": "Footer slice of user-approved Design 2 imagegen preview, 19 October 2026. Contains only scenery, decoration and the fixed Vedansh.app wordmark; scripture and meaning remain native text."
+      "provenance": "Approved scenic footer with taller floral corners. Upper center is transparent to exclude preview commentary; fixed Vedansh.app wordmark preserved."
     },
     "shiva": {
       "file": "shiva.webp",
       "width": 1080,
-      "height": 160,
-      "bytes": 56040,
-      "sha256": "2110cac7cadc222ba4fd91a9e83e59518632ff98ba6aad725157f8515edeb213",
+      "height": 280,
+      "bytes": 87216,
+      "sha256": "96a29f256efff86d3d0648b3b9fc554ea526eb3a103b460360659c8fa5a9097d",
       "sourceSha256": "f6a03c958a694d39f8da8042b7a96d85bbff32abcad536c4b7f9d309a97bf379",
       "sourceImage": "exec-3aac5c61-16b4-4332-8b59-26f820733a6a.png",
       "crop": {
         "left": 0,
-        "top": 1296,
+        "top": 1176,
         "width": 1080,
-        "height": 160
+        "height": 280
       },
-      "provenance": "Footer slice of user-approved Design 2 imagegen preview, 19 October 2026. Contains only scenery, decoration and the fixed Vedansh.app wordmark; scripture and meaning remain native text."
+      "provenance": "Approved scenic footer with taller floral corners. Upper center is transparent to exclude preview commentary; fixed Vedansh.app wordmark preserved."
     },
     "hanuman": {
       "file": "hanuman.webp",
       "width": 1080,
-      "height": 160,
-      "bytes": 51536,
-      "sha256": "5e67e08474e2265a0b76921e263b849a3b891aa219da3e376c387f1561e9ea9e",
+      "height": 280,
+      "bytes": 85074,
+      "sha256": "d047ca7e12547febe56056078a758e3961533e7dc5e6cdabb54a070ceae2dd93",
       "sourceSha256": "b2077ecc491128fc92a72cd9058504afe79c12388a03a41fa25c06e034061d47",
       "sourceImage": "exec-814017cb-f20e-42dc-8c18-ecaafad18eda.png",
       "crop": {
         "left": 0,
-        "top": 1296,
+        "top": 1176,
         "width": 1080,
-        "height": 160
+        "height": 280
       },
-      "provenance": "Footer slice of user-approved Design 2 imagegen preview, 19 October 2026. Contains only scenery, decoration and the fixed Vedansh.app wordmark; scripture and meaning remain native text."
+      "provenance": "Approved scenic footer with taller floral corners. Upper center is transparent to exclude preview commentary; fixed Vedansh.app wordmark preserved."
     },
     "krishna": {
       "file": "krishna.webp",
       "width": 1080,
-      "height": 160,
-      "bytes": 52256,
-      "sha256": "cafed223fb6cbf9c686879534cc2d9cbcff50237fc5d29f0782dcf89755846dc",
+      "height": 280,
+      "bytes": 86888,
+      "sha256": "51637c85878dc6ad7500dabf6217514b218625fa87dd8cc5896cbb883bf5a6de",
       "sourceSha256": "0bbe336bac3550fca9d7fd71bc91f8768c9f6ec043f12121ed320d4dd45a1278",
       "sourceImage": "exec-c8ac0d27-007c-40b8-a6e9-d8ddd6480538.png",
       "crop": {
         "left": 0,
-        "top": 1296,
+        "top": 1176,
         "width": 1080,
-        "height": 160
+        "height": 280
       },
-      "provenance": "Footer slice of user-approved Design 2 imagegen preview, 19 October 2026. Contains only scenery, decoration and the fixed Vedansh.app wordmark; scripture and meaning remain native text."
+      "provenance": "Approved scenic footer with taller floral corners. Upper center is transparent to exclude preview commentary; fixed Vedansh.app wordmark preserved."
     },
     "durga": {
       "file": "durga.webp",
       "width": 1080,
-      "height": 160,
-      "bytes": 54150,
-      "sha256": "fa21a7172fc733be304b8bd808224f7d110b8c3d07ee1d8d7e82c51db3d3081e",
+      "height": 280,
+      "bytes": 86426,
+      "sha256": "ab62dec73f3bb9c3883420f5fc12a6220866b97d8ff262832771e5595b10e612",
       "sourceSha256": "04ddc6d7d32acc586fe96c61c357d15323c045db63513e15be4ad4b920907487",
       "sourceImage": "exec-f4feed3b-4dde-43d5-9daa-17b69326f364.png",
       "crop": {
         "left": 0,
-        "top": 1296,
+        "top": 1176,
         "width": 1080,
-        "height": 160
+        "height": 280
       },
-      "provenance": "Footer slice of user-approved Design 2 imagegen preview, 19 October 2026. Contains only scenery, decoration and the fixed Vedansh.app wordmark; scripture and meaning remain native text."
+      "provenance": "Approved scenic footer with taller floral corners. Upper center is transparent to exclude preview commentary; fixed Vedansh.app wordmark preserved."
     },
     "saraswati": {
       "file": "saraswati.webp",
       "width": 1080,
-      "height": 160,
-      "bytes": 52966,
-      "sha256": "09304ec7866cdc760a028c4b3bafed7dfbd511b99e28b854fd51682ae62dd756",
+      "height": 280,
+      "bytes": 85926,
+      "sha256": "45b8c7ee0c48c4d6640177d80827d2d17afc4b555110aeb2ea6fd05d14598e21",
       "sourceSha256": "0cbd1bf8b66072230e4a1a7eda99491842892a192c632ef1a2aa505bf9808f1a",
       "sourceImage": "exec-21d5bfe4-1dd0-4f05-84cb-c072f99db5cb.png",
       "crop": {
         "left": 0,
-        "top": 1296,
+        "top": 1176,
         "width": 1080,
-        "height": 160
+        "height": 280
       },
-      "provenance": "Footer slice of user-approved Design 2 imagegen preview, 19 October 2026. Contains only scenery, decoration and the fixed Vedansh.app wordmark; scripture and meaning remain native text."
+      "provenance": "Approved scenic footer with taller floral corners. Upper center is transparent to exclude preview commentary; fixed Vedansh.app wordmark preserved."
     },
     "ganesha": {
       "file": "ganesha.webp",
       "width": 1080,
-      "height": 160,
-      "bytes": 49660,
-      "sha256": "7ee78d57f12a838e86661d53fdbf88d381d1bba58d23ce1f2f61bdd9a66d51fb",
+      "height": 280,
+      "bytes": 81586,
+      "sha256": "0c00ab2523cbd62677ead6fa98f51b16cdc2299cafaa5191b8d77e6073acf4c3",
       "sourceSha256": "0c506fb517f286f3890f9f1288c18ca5b4079f0058b7602d89fb9f11f25a94ed",
       "sourceImage": "exec-dea8323e-904c-4d26-a26b-1b049995a927.png",
       "crop": {
         "left": 0,
-        "top": 1296,
+        "top": 1176,
         "width": 1080,
-        "height": 160
+        "height": 280
       },
-      "provenance": "Footer slice of user-approved Design 2 imagegen preview, 19 October 2026. Contains only scenery, decoration and the fixed Vedansh.app wordmark; scripture and meaning remain native text."
+      "provenance": "Approved scenic footer with taller floral corners. Upper center is transparent to exclude preview commentary; fixed Vedansh.app wordmark preserved."
     },
     "rama": {
       "file": "rama.webp",
       "width": 1080,
-      "height": 160,
-      "bytes": 54790,
-      "sha256": "e4e2e2c8679dd74da6ead9bb0b6510acba8eba3ac31f26f7cc4aad30c820045a",
+      "height": 280,
+      "bytes": 88588,
+      "sha256": "fef8ff03a2ea06075c6432f07fdc5a8d5d4e799c8f9ac6a8572ac7b183638458",
       "sourceSha256": "3d8d75ac8c9c90fe27241cdb7c1a6d4fc3dde02e00216930daab34a5a0c010a5",
       "sourceImage": "exec-b22d752d-cfc4-4cd9-972f-ad4885464d0a.png",
       "crop": {
         "left": 0,
-        "top": 1296,
+        "top": 1176,
         "width": 1080,
-        "height": 160
+        "height": 280
       },
-      "provenance": "Footer slice of user-approved Design 2 imagegen preview, 19 October 2026. Contains only scenery, decoration and the fixed Vedansh.app wordmark; scripture and meaning remain native text."
+      "provenance": "Approved scenic footer with taller floral corners. Upper center is transparent to exclude preview commentary; fixed Vedansh.app wordmark preserved."
     },
     "surya": {
       "file": "surya.webp",
       "width": 1080,
-      "height": 160,
-      "bytes": 45694,
-      "sha256": "a1552de84e752f6f5d4dedfd442563b8d358a338290f1e2a8334746af0f05f28",
+      "height": 280,
+      "bytes": 73578,
+      "sha256": "0eb2f0dfd4c4bde7fd1d7b965d357cd173c4155901c86593cfb2e489b537a353",
       "sourceSha256": "c898d342e3210d0159d573f17da0dd8f8f4ca255416ccddf5544221c8c088a86",
       "sourceImage": "exec-ea19c9ac-e2ad-4237-b4e4-cb9f88aa739e.png",
       "crop": {
         "left": 0,
-        "top": 1296,
+        "top": 1176,
         "width": 1080,
-        "height": 160
+        "height": 280
       },
-      "provenance": "Footer slice of user-approved Design 2 imagegen preview, 19 October 2026. Contains only scenery, decoration and the fixed Vedansh.app wordmark; scripture and meaning remain native text."
+      "provenance": "Approved scenic footer with taller floral corners. Upper center is transparent to exclude preview commentary; fixed Vedansh.app wordmark preserved."
     }
   }
 }

@@ -6,7 +6,7 @@ const page = { art: 'krishna' as const, verse: 'Om', meaning: 'Peace', heroHeigh
 let tree: ReactTestRenderer;
 const height = jest.fn();
 afterEach(() => { if (tree) act(() => tree.unmount()); height.mockClear(); });
-function mount(onReady: jest.Mock) { act(() => { tree = create(<DevotionalShareCard header="Gita" page={page} lang="en" pageIndex={0} pageCount={1} onReady={onReady} onHeight={height} />); }); }
+function mount(onReady: jest.Mock, paintOrnaments = true) { act(() => { tree = create(<DevotionalShareCard header="Gita" page={page} lang="en" pageIndex={0} pageCount={1} onReady={onReady} onHeight={height} />); }); if (paintOrnaments) act(() => tree.root.findByProps({ testID: 'devotional-ornament-image' }).props.onLoad()); }
 it('waits for decoded artwork and actual native text layout', () => {
   const ready = jest.fn(); mount(ready);
   act(() => tree.root.findByProps({ testID: 'devotional-paper-image' }).props.onLoad());
@@ -15,9 +15,9 @@ it('waits for decoded artwork and actual native text layout', () => {
   expect(ready).not.toHaveBeenCalled();
   act(() => tree.root.findByProps({ testID: 'devotional-share-content' }).props.onLayout({ nativeEvent: { layout: { height: 250 } } }));
   expect(ready).not.toHaveBeenCalled();
-  act(() => tree.root.findByProps({ testID: 'devotional-share-card' }).props.onLayout({ nativeEvent: { layout: { height: 675 } } }));
+  act(() => tree.root.findByProps({ testID: 'devotional-share-card' }).props.onLayout({ nativeEvent: { layout: { height: 703 } } }));
   expect(ready).toHaveBeenLastCalledWith(true);
-  expect(height).toHaveBeenLastCalledWith(675);
+  expect(height).toHaveBeenLastCalledWith(703);
 });
 it('grows one card to its actual full body height before allowing capture', () => {
   const ready = jest.fn(); mount(ready);
@@ -26,11 +26,11 @@ it('grows one card to its actual full body height before allowing capture', () =
   act(() => tree.root.findByProps({ testID: 'devotional-footer-image' }).props.onLoad());
   act(() => tree.root.findByProps({ testID: 'devotional-share-content' }).props.onLayout({ nativeEvent: { layout: { height: 800 } } }));
   const card = tree.root.findByProps({ testID: 'devotional-share-card' });
-  expect(StyleSheet.flatten(card.props.style).height).toBe(1193);
+  expect(StyleSheet.flatten(card.props.style).height).toBe(1253);
   expect(ready).not.toHaveBeenCalled();
-  act(() => card.props.onLayout({ nativeEvent: { layout: { height: 1193 } } }));
+  act(() => card.props.onLayout({ nativeEvent: { layout: { height: 1253 } } }));
   expect(ready).toHaveBeenLastCalledWith(true);
-  expect(height).toHaveBeenLastCalledWith(1193);
+  expect(height).toHaveBeenLastCalledWith(1253);
 });
 it('rejects invalid native layout rather than guessing a short frame', () => {
   const ready = jest.fn(); mount(ready);
@@ -47,7 +47,7 @@ it('does not capture until the deity footer has decoded too', () => {
   act(() => tree.root.findByProps({ testID: 'devotional-paper-image' }).props.onLoad());
   act(() => tree.root.findByProps({ testID: 'devotional-hero-image' }).props.onLoad());
   act(() => tree.root.findByProps({ testID: 'devotional-share-content' }).props.onLayout({ nativeEvent: { layout: { height: 250 } } }));
-  act(() => tree.root.findByProps({ testID: 'devotional-share-card' }).props.onLayout({ nativeEvent: { layout: { height: 675 } } }));
+  act(() => tree.root.findByProps({ testID: 'devotional-share-card' }).props.onLayout({ nativeEvent: { layout: { height: 703 } } }));
   expect(ready).not.toHaveBeenCalled();
   act(() => tree.root.findByProps({ testID: 'devotional-footer-image' }).props.onLoad());
   expect(ready).toHaveBeenLastCalledWith(true);
@@ -63,8 +63,25 @@ it('waits for the paper and refuses its decode failure', () => {
   act(() => tree.root.findByProps({ testID: 'devotional-hero-image' }).props.onLoad());
   act(() => tree.root.findByProps({ testID: 'devotional-footer-image' }).props.onLoad());
   act(() => tree.root.findByProps({ testID: 'devotional-share-content' }).props.onLayout({ nativeEvent: { layout: { height: 250 } } }));
-  act(() => tree.root.findByProps({ testID: 'devotional-share-card' }).props.onLayout({ nativeEvent: { layout: { height: 675 } } }));
+  act(() => tree.root.findByProps({ testID: 'devotional-share-card' }).props.onLayout({ nativeEvent: { layout: { height: 703 } } }));
   expect(ready).not.toHaveBeenCalled();
   act(() => tree.root.findByProps({ testID: 'devotional-paper-image' }).props.onError());
+  expect(ready).toHaveBeenLastCalledWith(false);
+});
+
+it('waits for the shared ornament atlas before allowing capture', () => {
+  const ready = jest.fn(); mount(ready, false);
+  for (const id of ['devotional-paper-image', 'devotional-hero-image', 'devotional-footer-image']) {
+    act(() => tree.root.findByProps({ testID: id }).props.onLoad());
+  }
+  act(() => tree.root.findByProps({ testID: 'devotional-share-content' }).props.onLayout({ nativeEvent: { layout: { height: 250 } } }));
+  act(() => tree.root.findByProps({ testID: 'devotional-share-card' }).props.onLayout({ nativeEvent: { layout: { height: 703 } } }));
+  expect(ready).not.toHaveBeenCalled();
+  act(() => tree.root.findByProps({ testID: 'devotional-ornament-image' }).props.onLoad());
+  expect(ready).toHaveBeenLastCalledWith(true);
+});
+it('refuses a missing ornament atlas', () => {
+  const ready = jest.fn(); mount(ready, false);
+  act(() => tree.root.findByProps({ testID: 'devotional-ornament-image' }).props.onError());
   expect(ready).toHaveBeenLastCalledWith(false);
 });
