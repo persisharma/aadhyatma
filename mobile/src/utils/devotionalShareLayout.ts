@@ -1,15 +1,15 @@
 import type { Lang } from '@/data/gita/language';
-import artManifest from '../../assets/devotional-share/manifest.json';
+import { devotionalFrameSpec } from '@/data/devotionalFrameSpec';
 import { charsPerLine } from './shareCardType';
 
 export type DevotionalArt = 'krishna' | 'shiva' | 'durga' | 'saraswati' | 'ganesha' | 'vishnu' | 'hanuman' | 'rama' | 'surya' | 'prayer';
 export type DevotionalPage = { art: DevotionalArt; verse: string; meaning: string; heroHeight: number; continuation: boolean };
 export const devotionalMetrics = {
-  width: 540, height: 675, inset: 28, contentBottom: 608, contentTop: 12,
+  width: 540, height: 728, inset: 28, contentBottom: 608, contentTop: 12,
   sourceSize: 15, sourceLeading: 26, sourceGap: 11,
-  verseSize: 25, verseLeading: 43, meaningSize: 21, meaningLeading: 35,
+  verseSize: 28.5, verseLeading: 42, meaningSize: 22.5, meaningLeading: 29,
   latinVerseSize: 26, latinVerseLeading: 35, latinMeaningSize: 23, latinMeaningLeading: 32,
-  meaningLabelSize: 18, meaningLabelLeading: 28, meaningGap: 20, bottomSlack: 18, footerSpace: 160,
+  meaningLabelSize: 18, meaningLabelLeading: 28, meaningGap: 20, bottomSlack: 18, footerSpace: 80,
   heroHeights: [270] as readonly number[],
 } as const;
 const advances: Record<Lang, number> = { hi: .44, en: .47, gu: .47, kn: .60 };
@@ -48,10 +48,8 @@ export function devotionalBodyHeight(header: string, verse: string, meaning: str
 }
 /** One complete devotional image. A wide artwork header; native text sets height. */
 export function devotionalHeroGeometry(art: DevotionalArt, width: number): { height: number; imageHeight: number } {
-  const plate = artManifest.assets[art];
-  const imageHeight = width * plate.height / plate.width;
-  // Only the neutral legacy plate has an empty lower paper band.
-  return { imageHeight, height: art === 'prayer' ? width / 2 : imageHeight };
+  const imageHeight = devotionalFrameSpec(art).hero * width / 1080;
+  return { imageHeight, height: imageHeight };
 }
 export function devotionalCardGeometry(bodyHeight: number, art: DevotionalArt = 'vishnu'): { heroHeight: number; height: number } {
   const heroHeight = devotionalHeroGeometry(art, devotionalMetrics.width).height;

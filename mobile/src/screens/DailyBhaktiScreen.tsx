@@ -16,7 +16,7 @@ import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
-import { DevotionalPaper, DevotionalBorder, DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
+import { DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
 import { devotionalFrameColors } from '@/theme/devotionalFrame';
 import { devotionalArtForVerse } from '@/data/devotionalShareArt';
 import ShareButton from '@/components/ShareButton';
@@ -54,7 +54,6 @@ export default function DailyBhaktiScreen() {
   const { lang } = useGitaLanguage();
   const { width: windowWidth } = useWindowDimensions();
   const [cardWidth, setCardWidth] = useState(Math.min(540, Math.max(240, windowWidth - 32)));
-  const [cardHeight, setCardHeight] = useState(900);
   const route = useRoute<RouteProp<TabParamList, 'DailyBhaktiTab'>>();
   const { sourceId, chapter, verseIndex } = route.params ?? {};
   const [verse, setVerse] = useState<UniformVerse | null>(() =>
@@ -149,8 +148,7 @@ export default function DailyBhaktiScreen() {
             </View>
           </View>
           <View ref={dailyVerseRef} collapsable={false} testID="daily-bhakti-card" style={[styles.card, { backgroundColor: devotionalFrameColors.paper }]}
-            onLayout={e => { const { width, height } = e.nativeEvent.layout; if (Number.isFinite(width) && width > 0) setCardWidth(width); if (Number.isFinite(height) && height > 0) setCardHeight(height); }}>
-            <DevotionalPaper width={cardWidth} height={cardHeight} />
+            onLayout={e => { const { width } = e.nativeEvent.layout; if (Number.isFinite(width) && width > 0) setCardWidth(width); }}>
             <DevotionalHero art={devotionalArtForVerse(verse)} lang={lang} width={cardWidth} />
             <DevotionalVerseBody
               width={cardWidth} inset={cardWidth * 55 / 1080}
@@ -160,7 +158,6 @@ export default function DailyBhaktiScreen() {
               verseStyle={{ ...verseToken(lang, typography), color: colors.ink }}
               meaningStyle={{ ...meaningToken(lang, typography), color: colors.inkSoft }} />
             <DevotionalFooter art={devotionalArtForVerse(verse)} width={cardWidth} />
-            <DevotionalBorder inset={6} art={devotionalArtForVerse(verse)} scale={cardWidth / 540} />
           </View>
         </ScrollView>
       </SafeAreaView>

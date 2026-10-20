@@ -1,144 +1,101 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View, type TextStyle } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { Image, StyleSheet, Text, View, type TextStyle, type ViewStyle } from 'react-native';
 import type { Lang } from '@/data/gita/language';
 import { devotionalArtAsset } from '@/data/devotionalShareArt';
-import { devotionalFooterAsset, devotionalOrnamentAsset } from '@/data/devotionalFrameArt';
-import { devotionalFrameColors as colors } from '@/theme/devotionalFrame';
+import { devotionalFrameSpec, devotionalFrameCanvas as canvas } from '@/data/devotionalFrameSpec';
+import { devotionalFrameType as type } from '@/theme/devotionalFrame';
 import { fontFamilies } from '@/theme/typography';
 import { pick } from '@/utils/localize';
-import { devotionalHeroGeometry, splitDevotionalMeaning, type DevotionalArt } from '@/utils/devotionalShareLayout';
+import { splitDevotionalMeaning, type DevotionalArt } from '@/utils/devotionalShareLayout';
 
 export function devotionalFace(lang: Lang): string {
-  return lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada
-    : lang === 'en' ? fontFamilies.sanskritLatin : fontFamilies.devanagari;
+  return lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : fontFamilies.sanskritLatin;
 }
-
-/** Display a clipped, unwarped part of the approved ornament atlas. */
-function DevotionalSprite({ art, part, width, onLoad, onError, testID }: {
-  art: DevotionalArt; part: 'source' | 'verse' | 'comment' | 'corner' | 'labelLeft' | 'labelRight' | 'shoulders'; width: number;
-  onLoad?: () => void; onError?: () => void; testID?: string;
+function plate(art: DevotionalArt) { return devotionalArtAsset(art === 'prayer' ? 'ganesha' : art); }
+/** Clip the full lossless master. Stretch only a specified plain-paper band. */
+export function DevotionalSlice({ art, width, top, bottom, height, testID, onLoad, onError }: {
+  art: DevotionalArt; width: number; top: number; bottom: number; height?: number;
+  testID?: string; onLoad?: () => void; onError?: () => void;
 }) {
-  const rect = part === 'shoulders' ? { x: 0, y: 224, w: 1080, h: 130 } : part === 'source' ? { x: 120, y: 0, w: 480, h: 40 }
-    : part === 'verse' ? { x: 0, y: 40, w: 720, h: 80 }
-      : part === 'comment' ? { x: 150, y: 120, w: 420, h: 40 } : part === 'labelLeft' ? { x: 80, y: 160, w: 160, h: 32 } : part === 'labelRight' ? { x: 260, y: 160, w: 160, h: 32 } : { x: 0, y: 160, w: 64, h: 64 };
-  const scale = width / rect.w;
-  return <View pointerEvents="none" accessible={false} style={{ width, height: rect.h * scale, overflow: 'hidden' }}>
-    <Image testID={testID} source={devotionalOrnamentAsset(art)} accessible={false} resizeMode="stretch"
-      style={{ position: 'absolute', left: -rect.x * scale, top: -rect.y * scale, width: 1080 * scale, height: 354 * scale }}
+  const displayHeight = height ?? (bottom - top) * width / canvas.width;
+  const verticalScale = displayHeight / (bottom - top);
+  return <View pointerEvents="none" accessible={false} style={{ width, height: displayHeight, overflow: 'hidden' }}>
+    <Image testID={testID} source={plate(art)} accessible={false} resizeMode="stretch"
+      style={{ position: 'absolute', left: 0, top: -top * verticalScale, width, height: canvas.height * verticalScale }}
       onLoad={onLoad} onError={onError} />
   </View>;
 }
-
-/** Source scroll corners stay outside padded text as the frame grows. */
-export function DevotionalBorder({ inset = 8, art = 'ganesha', meaning = false, scale = 1 }: {
-  inset?: number; art?: DevotionalArt; meaning?: boolean; scale?: number;
-}) {
-  return <View pointerEvents="none" accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"
-    style={[styles.border, { top: inset, left: inset, right: inset, bottom: inset }, !meaning && { borderLeftWidth: 1, borderRightWidth: 1 }]}>
-    {meaning ? <>
-      {[0, 2].map(offset => <React.Fragment key={offset}>
-        <View style={{ position: 'absolute', top: offset, left: 26 * scale, right: 26 * scale, borderTopWidth: offset ? 0.5 : 1, borderColor: colors.gold }} />
-        <View style={{ position: 'absolute', bottom: offset, left: 26 * scale, right: 26 * scale, borderTopWidth: offset ? 0.5 : 1, borderColor: colors.gold }} />
-        <View style={{ position: 'absolute', left: offset, top: 26 * scale, bottom: 26 * scale, borderLeftWidth: offset ? 0.5 : 1, borderColor: colors.gold }} />
-        <View style={{ position: 'absolute', right: offset, top: 26 * scale, bottom: 26 * scale, borderLeftWidth: offset ? 0.5 : 1, borderColor: colors.gold }} />
-      </React.Fragment>)}
-      {(['tl', 'tr', 'bl', 'br'] as const).map(corner => <View key={corner}
-        style={{ position: 'absolute', ...(corner.includes('t') ? { top: -4 * scale } : { bottom: -4 * scale }),
-          ...(corner.includes('l') ? { left: -4 * scale } : { right: -4 * scale }),
-          transform: [{ rotate: corner === 'tr' ? '90deg' : corner === 'br' ? '180deg' : corner === 'bl' ? '270deg' : '0deg' }] }}>
-        <DevotionalSprite art={art} part="corner" width={32 * scale} />
-      </View>)}
-    </> : null}
-  </View>;
-}
-
 export function DevotionalHero({ art, width, onLoad, onError }: {
   art: DevotionalArt; lang: Lang; width: number; onLoad?: () => void; onError?: () => void;
 }) {
-  const geometry = devotionalHeroGeometry(art, width);
-  return <View testID="devotional-share-artwork" style={{ height: geometry.height, overflow: 'hidden' }}>
-    <Image testID="devotional-hero-image" source={devotionalArtAsset(art)} resizeMode="contain" accessible={false}
-      accessibilityIgnoresInvertColors style={{ position: 'absolute', left: 0, top: 0, width, height: geometry.imageHeight }} onLoad={onLoad} onError={onError} />
-    <LinearGradient pointerEvents="none" colors={[colors.paperClear, colors.paper]} style={styles.heroFade} />
+  const h = devotionalFrameSpec(art).hero;
+  if (art === 'prayer') return <View testID="devotional-share-artwork" style={{ height: h * width / canvas.width, overflow: 'hidden' }}>
+    <Image testID="devotional-hero-image" source={devotionalArtAsset('prayer')} resizeMode="cover" accessible={false}
+      style={{ width, height: h * width / canvas.width }} onLoad={onLoad} onError={onError} />
   </View>;
+  return <View testID="devotional-share-artwork"><DevotionalSlice art={art} width={width} top={0} bottom={h}
+    testID="devotional-hero-image" onLoad={onLoad} onError={onError} /></View>;
 }
-
-/** Fine approved paper grain, explicitly sized for native Image layout. */
-export function DevotionalPaper({ width, height, onLoad, onError }: {
-  width: number; height: number; onLoad?: () => void; onError?: () => void;
+/** Both decorated caps stay intact while the middle paper/vertical rules grow. */
+function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, children, overlay, testID, contentStyle, onLoad, onError }: {
+  art: DevotionalArt; width: number; top: number; bottom: number; topCap?: number; bottomCap?: number;
+  children?: React.ReactNode; overlay?: React.ReactNode; testID: string; contentStyle?: ViewStyle; onLoad?: () => void; onError?: () => void;
 }) {
-  return <View pointerEvents="none" accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={StyleSheet.absoluteFill}>
-    <Image testID="devotional-paper-image" source={require('@assets/devotional-share/parchment.webp')} resizeMode="stretch" accessible={false}
-      style={{ position: 'absolute', left: 0, top: 0, width, height }} onLoad={onLoad} onError={onError} />
-    <LinearGradient pointerEvents="none" start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-      colors={[colors.centerClear, colors.center, colors.centerClear]} style={StyleSheet.absoluteFill} />
+  const scale = width / canvas.width, minimum = (bottom - top) * scale;
+  const [height, setHeight] = React.useState(minimum);
+  const painted = React.useRef(new Set<string>());
+  const paintedPart = (part: string) => { painted.current.add(part); if (painted.current.size === 1 + Number(topCap > 0) + Number(bottomCap > 0)) onLoad?.(); };
+  return <View testID={testID} onLayout={e => setHeight(e.nativeEvent.layout.height)} style={{ minHeight: minimum }}>
+    <View pointerEvents="none" accessible={false} style={StyleSheet.absoluteFill}>
+      {topCap ? <DevotionalSlice art={art} width={width} top={top} bottom={top + topCap} onLoad={() => paintedPart('top')} onError={onError} /> : null}
+      <DevotionalSlice art={art} width={width} top={top + topCap} bottom={bottom - bottomCap}
+        height={Math.max(0, height - (topCap + bottomCap) * scale)} testID={`${testID}-image`} onLoad={() => paintedPart('middle')} onError={onError} />
+      {bottomCap ? <DevotionalSlice art={art} width={width} top={bottom - bottomCap} bottom={bottom} onLoad={() => paintedPart('bottom')} onError={onError} /> : null}
+    </View>
+    <View style={contentStyle}>{children}</View>{overlay}
   </View>;
 }
-
-/** Exact approved deity motif, with separate source and commentary ornaments. */
-export function DevotionalDivider({ art, compact = false, commentary = false, scale = 0.5, onLoad, onError }: {
-  art: DevotionalArt; compact?: boolean; commentary?: boolean; scale?: number; onLoad?: () => void; onError?: () => void;
-}) {
-  return <View pointerEvents="none" accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"
-    style={[styles.divider, compact && { marginTop: 6, marginBottom: 10 }]}>
-    <DevotionalSprite art={art} part={commentary ? 'comment' : compact ? 'source' : 'verse'}
-      width={(commentary ? 420 : compact ? 480 : 720) * scale} testID={onLoad ? 'devotional-ornament-image' : undefined} onLoad={onLoad} onError={onError} />
-  </View>;
-}
-
-export function DevotionalVerseBody({ header, verse, meaning, lang, art, verseStyle, meaningStyle, inset = 28, exportMode = false, width = 540, onLoad, onError }: {
+export function DevotionalVerseBody({ header, verse, meaning, lang, art, verseStyle, meaningStyle, width = 540, exportMode = false, onLoad, onError }: {
   header: string; verse: string; meaning: string; lang: Lang; art: DevotionalArt;
-  verseStyle: TextStyle; meaningStyle: TextStyle; inset?: number; exportMode?: boolean; width?: number; onLoad?: () => void; onError?: () => void;
+  verseStyle: TextStyle; meaningStyle: TextStyle; width?: number; inset?: number; exportMode?: boolean;
+  onLoad?: () => void; onError?: () => void;
 }) {
-  const parts = splitDevotionalMeaning(meaning);
-  const face = devotionalFace(lang);
-  return <View style={{ paddingHorizontal: inset, paddingTop: 12, paddingBottom: 16 }}>
-    <View pointerEvents="none" style={{ position: 'absolute', left: 0, top: 0 }}><DevotionalSprite art={art} part="shoulders" width={width} /></View>
-    <Text allowFontScaling={!exportMode} style={[styles.source, { fontFamily: face }]}>{header}</Text>
-    <DevotionalDivider scale={width / 1080} art={art} compact onLoad={onLoad} onError={onError} />
-    {verse.trim() ? <Text testID="devotional-share-verse" allowFontScaling={!exportMode}
-      style={[styles.reading, verseStyle, { color: colors.ink }]}>{verse.trim()}</Text> : null}
-    {parts.meaning ? <>
-      <DevotionalDivider scale={width / 1080} art={art} />
-      <View testID="devotional-meaning-frame" style={styles.meaningFrame}>
-        <DevotionalBorder inset={0} art={art} meaning scale={width / 540} />
-        <View style={styles.meaningHeading}>
-          <DevotionalSprite art={art} part="labelLeft" width={80 * width / 540} />
-          <Text allowFontScaling={!exportMode} style={[styles.meaningLabel, { fontFamily: face }]}>{pick(lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' })}</Text>
-          <DevotionalSprite art={art} part="labelRight" width={80 * width / 540} />
-        </View>
-        <Text testID="devotional-share-meaning" allowFontScaling={!exportMode}
-          style={[styles.reading, meaningStyle, { color: colors.meaning }]}>{parts.meaning}</Text>
-      </View>
-    </> : null}
-    {parts.commentary ? <>
-      <DevotionalDivider scale={width / 1080} art={art} compact commentary />
-      <Text testID="devotional-share-commentary" allowFontScaling={!exportMode}
-        style={[styles.reading, meaningStyle, styles.commentary, { color: colors.meaning }]}>{parts.commentary}</Text>
-    </> : null}
+  const spec = devotionalFrameSpec(art), scale = width / canvas.width;
+  const parts = splitDevotionalMeaning(meaning), face = devotionalFace(lang);
+  const decoded = React.useRef(new Set<string>());
+  const mark = (id: string) => { decoded.current.add(id); if (decoded.current.size === 6) onLoad?.(); };
+  const shortVerse = lang === 'hi' && !verse.includes('\n') && Array.from(verse).length <= 32;
+  const shortMeaning = Array.from(parts.meaning).length < 55, shortSource = Array.from(header).length <= 24;
+  const sourceSize = (shortSource ? spec.sourceFont : type.sourceSize) * width / 540;
+  const reading = { fontFamily: face, textAlign: 'center' as const, includeFontPadding: false };
+  const bodyFace = lang === 'hi' ? shortMeaning ? fontFamilies.devanagari : type.bodyFace : face;
+  return <View>
+    <Panel art={art} width={width} top={spec.hero} bottom={spec.sourceEnd} bottomCap={28} testID="devotional-source-panel"
+      contentStyle={{ paddingTop: spec.sourceTop * scale, paddingHorizontal: 120 * scale, paddingBottom: 22 * scale }} onLoad={() => mark('source')} onError={onError}>
+      <Text testID="devotional-share-source" allowFontScaling={!exportMode} style={[reading, { fontSize: sourceSize, lineHeight: sourceSize * 1.3, color: '#7C210D', fontFamily: lang === 'hi' && shortSource ? type.verseFace : face }]}>{header}</Text>
+    </Panel>
+    <Panel art={art} width={width} top={spec.sourceEnd} bottom={spec.verseEnd} testID="devotional-verse-panel"
+      contentStyle={{ paddingHorizontal: 92 * scale }} onLoad={() => mark('verse')} onError={onError}>
+      <Text testID="devotional-share-verse" allowFontScaling={!exportMode}
+        style={[reading, verseStyle, exportMode && { fontSize: shortVerse ? 52 : lang === 'en' ? 27 : type.verseSize, lineHeight: shortVerse ? (spec.verseEnd - spec.sourceEnd) / 2 : lang === 'kn' ? 48 : lang === 'gu' ? 46 : type.verseLeading }, { color: '#2D1005', fontFamily: lang === 'hi' ? type.verseFace : face, transform: [{ translateY: shortVerse ? 16 * scale : 9 * scale }] }]}>{verse.trim()}</Text>
+    </Panel>
+    <DevotionalSlice art={art} width={width} top={spec.verseEnd} bottom={spec.meaningTop} testID="devotional-divider-image" onLoad={() => mark('divider')} onError={onError} />
+    <Panel art={art} width={width} top={spec.meaningTop} bottom={spec.meaningBottom} topCap={68} bottomCap={48} testID="devotional-meaning-frame"
+      overlay={<Text testID="devotional-meaning-label" allowFontScaling={!exportMode} adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1}
+        style={[reading, { position: 'absolute', top: (art === 'vishnu' ? 31 : 30) * scale, left: 490 * scale, width: 100 * scale, fontSize: (lang === 'en' ? 21 : art === 'vishnu' ? 30 : 42) * scale, lineHeight: 44 * scale, color: '#7C210D' }]}>{pick(lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' })}</Text>}
+      onLoad={() => mark('meaning')} onError={onError} contentStyle={{ paddingTop: spec.meaningPad * scale, paddingBottom: 22 * scale, paddingHorizontal: 86 * scale }}>
+      <Text testID="devotional-share-meaning" allowFontScaling={!exportMode}
+        style={[reading, meaningStyle, exportMode && { fontSize: shortMeaning ? 28 : lang === 'en' ? 23 : type.meaningSize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : shortMeaning ? 34 : type.meaningLeading }, { color: '#602D0E', fontFamily: bodyFace }]}>{parts.meaning}</Text>
+    </Panel>
+    <DevotionalSlice art={art} width={width} top={spec.meaningBottom} bottom={spec.commentTop} testID="devotional-comment-divider-image" onLoad={() => mark('commentDivider')} onError={onError} />
+    <Panel art={art} width={width} top={spec.commentTop} bottom={canvas.footerTop} testID="devotional-commentary-panel"
+      onLoad={() => mark('comment')} onError={onError} contentStyle={{ paddingHorizontal: 124 * scale, paddingTop: 11 * scale }}>
+      {parts.commentary ? <Text testID="devotional-share-commentary" allowFontScaling={!exportMode}
+        style={[reading, meaningStyle, exportMode && { fontSize: shortMeaning || lang === 'en' ? 23 : type.commentarySize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : type.commentaryLeading }, { color: '#602D0E', fontFamily: bodyFace }]}>{parts.commentary}</Text> : null}
+    </Panel>
   </View>;
 }
-
-/** Separate footer in document flow: scenery cannot ever overlap reading text. */
-export function DevotionalFooter({ art, width, onLoad, onError }: {
-  art: DevotionalArt; width: number; onLoad?: () => void; onError?: () => void;
-}) {
-  return <View testID="devotional-footer" accessible accessibilityLabel="Vedansh.app" style={{ width, height: width * 280 / 1080 }}>
-    <Image testID="devotional-footer-image" accessible={false} accessibilityIgnoresInvertColors
-      source={devotionalFooterAsset(art)} resizeMode="stretch" style={{ position: 'absolute', left: 0, top: 0, width, height: width * 280 / 1080 }}
-      onLoad={onLoad} onError={onError} />
-  </View>;
+export function DevotionalFooter({ art, width, onLoad, onError }: { art: DevotionalArt; width: number; onLoad?: () => void; onError?: () => void }) {
+  return <View testID="devotional-footer" accessible accessibilityLabel="Vedansh.app"><DevotionalSlice art={art} width={width} top={canvas.footerTop} bottom={canvas.height}
+    testID="devotional-footer-image" onLoad={onLoad} onError={onError} /></View>;
 }
-
-const styles = StyleSheet.create({
-  border: { position: 'absolute', borderColor: colors.gold },
-  heroFade: { position: 'absolute', bottom: 0, left: '20%', right: '20%', height: 6 },
-  source: { alignSelf: 'center', maxWidth: '62%', fontSize: 15, lineHeight: 26, textAlign: 'center', color: colors.maroon, includeFontPadding: false },
-  divider: { alignItems: 'center', marginVertical: 8 },
-  reading: { textAlign: 'center', includeFontPadding: false },
-  meaningFrame: { position: 'relative', paddingHorizontal: 32, paddingTop: 18, paddingBottom: 24, backgroundColor: 'transparent' },
-  meaningHeading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 10 },
-  meaningLabel: { fontSize: 18, lineHeight: 28, textAlign: 'center', color: colors.maroon, includeFontPadding: false },
-  commentary: { marginTop: 4 },
-});

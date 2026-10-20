@@ -1,0 +1,12 @@
+{
+  "file": "VedanshDevotionalText.ttf",
+  "family": "VedanshDevotionalText",
+  "sourceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/notoserifdevanagari/NotoSerifDevanagari%5Bwdth%2Cwght%5D.ttf",
+  "sourceSha256": "1191e07bfeb062d80e252eb85b0eafdfbda1e350707a2a60628668e8f677dbbb",
+  "axes": {
+    "wdth": 85,
+    "wght": 400
+  },
+  "sha256": "6486ce1ebd8c5a3a8ca5f600e4432ef1aaf37f48fd52d1cc48fe65543cda13bd",
+  "license": "NotoSerifDevanagari-OFL.txt"
+}
