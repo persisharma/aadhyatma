@@ -66,6 +66,15 @@ export function storySafeBox(): { x: number; y: number; width: number; height: n
   };
 }
 
+/**
+ * Feed (4:5) canvas. A short devotional card is already 4:5 and fills it; a long
+ * one is scaled down to fit whole (never cropped to 4:5 by Instagram, which is
+ * what a taller-than-4:5 export triggers). Output is 2× = 1080×1350.
+ */
+export const feedCanvas = { width: 540, height: 675 } as const;
+export const FEED_OUTPUT_WIDTH = 1080;
+export const FEED_OUTPUT_HEIGHT = 1350;
+
 export type StoryCardPlacement = {
   /** Uniform scale. 1 at the shipped card size — the canvas is sized to make it so. */
   scale: number;
@@ -97,5 +106,23 @@ export function placeStoryCard(cardWidth: number, cardHeight: number): StoryCard
     height,
     left: safe.x + (safe.width - width) / 2,
     top: safe.y + (safe.height - height) / 2,
+  };
+}
+
+/**
+ * Place a card inside the 4:5 feed canvas, scaled to fit whole and centred. A card
+ * at or under 540×675 lands at scale 1; a taller one shrinks so nothing is cropped
+ * when Instagram shows the post. Same contract as {@link placeStoryCard}.
+ */
+export function placeFeedCard(cardWidth: number, cardHeight: number): StoryCardPlacement {
+  const scale = Math.min(1, feedCanvas.width / cardWidth, feedCanvas.height / cardHeight);
+  const width = cardWidth * scale;
+  const height = cardHeight * scale;
+  return {
+    scale,
+    width,
+    height,
+    left: (feedCanvas.width - width) / 2,
+    top: (feedCanvas.height - height) / 2,
   };
 }
