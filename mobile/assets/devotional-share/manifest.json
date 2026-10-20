@@ -2,67 +2,131 @@
   "assets": {
     "krishna": {
       "file": "krishna.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 177484,
-      "sha256": "344712fdfc404956662203e42c8c182de2a4d3c6bd91d8c620af12b65a269c9c",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 585,
+      "bytes": 257586,
+      "sha256": "b5cb425bf35ee27c9171ebae0a6697f69342cc0506d0c17ba392bb52abc2abe6",
+      "sourceSha256": "0bbe336bac3550fca9d7fd71bc91f8768c9f6ec043f12121ed320d4dd45a1278",
+      "sourceImage": "exec-c8ac0d27-007c-40b8-a6e9-d8ddd6480538.png",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 1080,
+        "height": 585
+      },
+      "provenance": "Full approved Design 2 header including its original Vedansh plaque, 19 October 2026; crop ends before sample scripture title. No verse/meaning baked in."
     },
     "shiva": {
       "file": "shiva.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 159928,
-      "sha256": "dd51fb9ad95637bd2239d3d68a0d2fb6aafe06913302aecb583f0666d205285b",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 550,
+      "bytes": 213784,
+      "sha256": "1414b3706ac96216378453f2d57cc692c0e121647a74d4ace3396d0478060397",
+      "sourceSha256": "f6a03c958a694d39f8da8042b7a96d85bbff32abcad536c4b7f9d309a97bf379",
+      "sourceImage": "exec-3aac5c61-16b4-4332-8b59-26f820733a6a.png",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 1080,
+        "height": 550
+      },
+      "provenance": "Full approved Design 2 header including its original Vedansh plaque, 19 October 2026; crop ends before sample scripture title. No verse/meaning baked in."
     },
     "durga": {
       "file": "durga.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 173408,
-      "sha256": "5be47085afcbaef8cf812d9d50ee1cd3b212188431315cf8b7ce673293c807a2",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 585,
+      "bytes": 248624,
+      "sha256": "99010174c6019ce9cb133f78bc8df78670f9cc57e9d20da71062084d6f702064",
+      "sourceSha256": "04ddc6d7d32acc586fe96c61c357d15323c045db63513e15be4ad4b920907487",
+      "sourceImage": "exec-f4feed3b-4dde-43d5-9daa-17b69326f364.png",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 1080,
+        "height": 585
+      },
+      "provenance": "Full approved Design 2 header including its original Vedansh plaque, 19 October 2026; crop ends before sample scripture title. No verse/meaning baked in."
     },
     "saraswati": {
       "file": "saraswati.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 152684,
-      "sha256": "20672ef2b1057090f9ae8af64a31046fb049597b82af05f4b8dd58e68a596777",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 575,
+      "bytes": 232224,
+      "sha256": "29c731d3309e4b066ec42ba7e7505651cf768f6a9be4bfd578117cd96306f5a3",
+      "sourceSha256": "0cbd1bf8b66072230e4a1a7eda99491842892a192c632ef1a2aa505bf9808f1a",
+      "sourceImage": "exec-21d5bfe4-1dd0-4f05-84cb-c072f99db5cb.png",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 1080,
+        "height": 575
+      },
+      "provenance": "Full approved Design 2 header including its original Vedansh plaque, 19 October 2026; crop ends before sample scripture title. No verse/meaning baked in."
     },
     "ganesha": {
       "file": "ganesha.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 154554,
-      "sha256": "fde65c62169f0a6b110717a92d9c4b179770c8f0c0d15505366bc203e5676e23",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 560,
+      "bytes": 235680,
+      "sha256": "f9b332a2332ca9ab04c549a36f60a659fc632236a63dac8f57e1627410757786",
+      "sourceSha256": "0c506fb517f286f3890f9f1288c18ca5b4079f0058b7602d89fb9f11f25a94ed",
+      "sourceImage": "exec-dea8323e-904c-4d26-a26b-1b049995a927.png",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 1080,
+        "height": 560
+      },
+      "provenance": "Full approved Design 2 header including its original Vedansh plaque, 19 October 2026; crop ends before sample scripture title. No verse/meaning baked in."
     },
     "vishnu": {
       "file": "vishnu.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 180744,
-      "sha256": "4d7bc9f655fb62db40b9c24b76a081a2459885077f9c96cff8ada8b8b1587ac2",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 520,
+      "bytes": 177116,
+      "sha256": "f60622dd702df6d9e315bfc16691c93107b34622fe20f4df5260e8649ea3b336",
+      "sourceSha256": "7948e7881f71aa0e860ef7cca781300132fb842619c68c6a01828ae0d4e07206",
+      "sourceImage": "exec-bf2a6376-eb41-48b2-b3ee-95f0e8653c30.png",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 1080,
+        "height": 520
+      },
+      "provenance": "Full approved Design 2 header including its original Vedansh plaque, 19 October 2026; crop ends before sample scripture title. No verse/meaning baked in."
     },
     "hanuman": {
       "file": "hanuman.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 156910,
-      "sha256": "6a2f0fc22bca4047229a06b83869b7be79f68c9ac2571957de79a63131162453",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 550,
+      "bytes": 238348,
+      "sha256": "8bcd7945574c9f1f39d5985eb7af14c1e608c030af38ac0bda29e4338ee3333c",
+      "sourceSha256": "b2077ecc491128fc92a72cd9058504afe79c12388a03a41fa25c06e034061d47",
+      "sourceImage": "exec-814017cb-f20e-42dc-8c18-ecaafad18eda.png",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 1080,
+        "height": 550
+      },
+      "provenance": "Full approved Design 2 header including its original Vedansh plaque, 19 October 2026; crop ends before sample scripture title. No verse/meaning baked in."
     },
     "rama": {
       "file": "rama.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 174084,
-      "sha256": "16819c776d203c70f8b979e9c7a3ae44c5b2b8f0d7cebd626fd7969f53dc9c42",
-      "provenance": "Recovered from approved Daily Bhakti preview, 2026-10-18"
+      "width": 1080,
+      "height": 615,
+      "bytes": 254586,
+      "sha256": "6f8943835f9a0acd498ea4f3a1e0d9c0a3d92ffe0c5942f6577d9062745f16d4",
+      "sourceSha256": "3d8d75ac8c9c90fe27241cdb7c1a6d4fc3dde02e00216930daab34a5a0c010a5",
+      "sourceImage": "exec-b22d752d-cfc4-4cd9-972f-ad4885464d0a.png",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 1080,
+        "height": 615
+      },
+      "provenance": "Full approved Design 2 header including its original Vedansh plaque, 19 October 2026; crop ends before sample scripture title. No verse/meaning baked in."
     },
     "prayer": {
       "file": "prayer.webp",
@@ -74,11 +138,35 @@
     },
     "surya": {
       "file": "surya.webp",
-      "width": 1200,
-      "height": 800,
-      "bytes": 173134,
-      "sha256": "7d5fe5ee3100c4546f7e03b7ead286d54bbe53116ecf5d315b5f82d16d82d91c",
-      "provenance": "Recovered corrected seven-horse Surya with Aruna, 2026-10-18"
+      "width": 1080,
+      "height": 620,
+      "bytes": 216366,
+      "sha256": "01a052285745bb047e47eb3b8e490dda579dd55bb63e4c4c363dd5fcfb27bbd3",
+      "sourceSha256": "c898d342e3210d0159d573f17da0dd8f8f4ca255416ccddf5544221c8c088a86",
+      "sourceImage": "exec-ea19c9ac-e2ad-4237-b4e4-cb9f88aa739e.png",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 1080,
+        "height": 620
+      },
+      "provenance": "Full approved Design 2 header including its original Vedansh plaque, 19 October 2026; crop ends before sample scripture title. No verse/meaning baked in."
     }
+  },
+  "paper": {
+    "file": "parchment.webp",
+    "width": 1080,
+    "height": 2145,
+    "bytes": 5258,
+    "sha256": "111ed4dff3cfde075afd268a8a8cce574d5cd0b65afd2bf6fe9d1c19e284d0a0",
+    "sourceImage": "exec-bf2a6376-eb41-48b2-b3ee-95f0e8653c30.png",
+    "sourceSha256": "7948e7881f71aa0e860ef7cca781300132fb842619c68c6a01828ae0d4e07206",
+    "crop": {
+      "left": 65,
+      "top": 605,
+      "width": 90,
+      "height": 165
+    },
+    "provenance": "Fine paper grain extracted from the text-free approved crop; low-frequency lighting removed before tiling over the sampled golden paper shade. Native center highlight is separate."
   }
 }

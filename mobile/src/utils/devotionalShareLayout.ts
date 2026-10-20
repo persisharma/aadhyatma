@@ -1,4 +1,5 @@
 import type { Lang } from '@/data/gita/language';
+import artManifest from '../../assets/devotional-share/manifest.json';
 import { charsPerLine } from './shareCardType';
 
 export type DevotionalArt = 'krishna' | 'shiva' | 'durga' | 'saraswati' | 'ganesha' | 'vishnu' | 'hanuman' | 'rama' | 'surya' | 'prayer';
@@ -42,17 +43,21 @@ export function devotionalBodyHeight(header: string, verse: string, meaning: str
   const leading = latin ? m.latinMeaningLeading : m.meaningLeading;
   return m.contentTop + 16 + devotionalTextHeight(header, lang, m.sourceSize, m.sourceLeading) + 38
     + devotionalTextHeight(verse, lang, latin ? m.latinVerseSize : m.verseSize, latin ? m.latinVerseLeading : m.verseLeading)
-    + (parts.meaning ? 48 + 32 + m.meaningLabelLeading + 8 + devotionalTextHeight(parts.meaning, lang, size, leading, 420) : 0)
+    + (parts.meaning ? 48 + 32 + m.meaningLabelLeading + 8 + devotionalTextHeight(parts.meaning, lang, size, leading, 412) : 0)
     + (parts.commentary ? 42 + devotionalTextHeight(parts.commentary, lang, size, leading) : 0);
 }
 /** One complete devotional image. A wide artwork header; native text sets height. */
-export function devotionalCardGeometry(bodyHeight: number): { heroHeight: number; height: number } {
-  // The approved plates paint the deity in the upper three quarters. A wide
-  // header removes only the empty lower parchment, not a side of the scene.
-  const heroHeight = 270;
-  return { heroHeight, height: Math.max(devotionalMetrics.height, heroHeight + bodyHeight + devotionalMetrics.footerSpace) };
+export function devotionalHeroGeometry(art: DevotionalArt, width: number): { height: number; imageHeight: number } {
+  const plate = artManifest.assets[art];
+  const imageHeight = width * plate.height / plate.width;
+  // Only the neutral legacy plate has an empty lower paper band.
+  return { imageHeight, height: art === 'prayer' ? width / 2 : imageHeight };
+}
+export function devotionalCardGeometry(bodyHeight: number, art: DevotionalArt = 'vishnu'): { heroHeight: number; height: number } {
+  const heroHeight = devotionalHeroGeometry(art, devotionalMetrics.width).height;
+  return { heroHeight, height: Math.ceil(Math.max(devotionalMetrics.height, heroHeight + bodyHeight + devotionalMetrics.footerSpace)) };
 }
 export function paginateDevotional(input: { art: DevotionalArt; header: string; verse: string; meaning: string; lang: Lang }): DevotionalPage[] {
-  const geometry = devotionalCardGeometry(devotionalBodyHeight(input.header, input.verse, input.meaning, input.lang));
+  const geometry = devotionalCardGeometry(devotionalBodyHeight(input.header, input.verse, input.meaning, input.lang), input.art);
   return [{ art: input.art, verse: input.verse, meaning: input.meaning, heroHeight: geometry.heroHeight, continuation: false }];
 }

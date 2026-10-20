@@ -16,7 +16,8 @@ import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
-import { DevotionalBorder, DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
+import { DevotionalPaper, DevotionalBorder, DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
+import { devotionalFrameColors } from '@/theme/devotionalFrame';
 import { devotionalArtForVerse } from '@/data/devotionalShareArt';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -53,6 +54,7 @@ export default function DailyBhaktiScreen() {
   const { lang } = useGitaLanguage();
   const { width: windowWidth } = useWindowDimensions();
   const [cardWidth, setCardWidth] = useState(Math.min(540, Math.max(240, windowWidth - 32)));
+  const [cardHeight, setCardHeight] = useState(900);
   const route = useRoute<RouteProp<TabParamList, 'DailyBhaktiTab'>>();
   const { sourceId, chapter, verseIndex } = route.params ?? {};
   const [verse, setVerse] = useState<UniformVerse | null>(() =>
@@ -146,8 +148,9 @@ export default function DailyBhaktiScreen() {
               </Pressable>
             </View>
           </View>
-          <View ref={dailyVerseRef} collapsable={false} testID="daily-bhakti-card" style={[styles.card, { backgroundColor: colors.parchmentHighlight }]}
-            onLayout={e => { const width = e.nativeEvent.layout.width; if (Number.isFinite(width) && width > 0) setCardWidth(width); }}>
+          <View ref={dailyVerseRef} collapsable={false} testID="daily-bhakti-card" style={[styles.card, { backgroundColor: devotionalFrameColors.paper }]}
+            onLayout={e => { const { width, height } = e.nativeEvent.layout; if (Number.isFinite(width) && width > 0) setCardWidth(width); if (Number.isFinite(height) && height > 0) setCardHeight(height); }}>
+            <DevotionalPaper width={cardWidth} height={cardHeight} />
             <DevotionalHero art={devotionalArtForVerse(verse)} lang={lang} width={cardWidth} />
             <DevotionalVerseBody
               header={[contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn), contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')].filter(Boolean).join(' · ')}
