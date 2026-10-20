@@ -46,3 +46,13 @@ it('grows the meaning box without distorting decorative caps or hiding scripture
   const before = caps(); act(() => frame.findAllByType(View).find(n => n.props.onLayout)!.props.onLayout({ nativeEvent: { layout: { height: 1200 } } }));
   expect(caps()).toEqual(before); expect(tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.numberOfLines).toBeUndefined(); act(() => tree!.unmount());
 });
+it.each(['hi', 'en', 'gu', 'kn'] as const)('gives every %s first line room for the marks above it', lang => {
+  const meaning = 'हे लक्ष्मण! धनुष-बाण लाओ, मैं अग्निबाण से समुद्र को सोख डालूँ। '.repeat(3) + '\n\nमूर्ख से विनय।';
+  let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header="सुंदरकाण्ड · चौपाई ६०·१" verse="लछिमन बान सरासन आनू।" meaning={meaning} lang={lang} art="hanuman" verseStyle={{}} meaningStyle={{}} exportMode />); });
+  for (const id of ['source', 'verse', 'meaning', 'commentary'].map(k => `devotional-share-${k}`).concat('devotional-meaning-label')) {
+    const s = StyleSheet.flatten(tree!.root.findByProps({ testID: id }).props.style);
+    expect(s.paddingTop ?? 0).toBeGreaterThanOrEqual(1.53 * s.fontSize - s.lineHeight);
+    expect((s.paddingTop ?? 0) + (s.marginTop ?? 0)).toBe(0);
+  }
+  act(() => tree!.unmount());
+});
