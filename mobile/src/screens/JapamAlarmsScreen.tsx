@@ -548,6 +548,12 @@ export function AlarmEditorSheet({
 
   const visible = state !== null;
   const lockedMantra = presetMantraId != null;
+  // A stotra-paath alarm (§35.1) is not in the mantra list; edit it with its
+  // own chip leading the row so the selection stays visible.
+  const pickerMantras = useMemo(() => {
+    const own = findJapamMantra(initial.mantraId);
+    return own && !japamMantras.includes(own) ? [own, ...japamMantras] : japamMantras;
+  }, [initial.mantraId]);
   const nowMs = useNowTick(30_000, visible);
   const use12h = useMemo(() => prefers12HourClock(), []);
 
@@ -758,7 +764,7 @@ export function AlarmEditorSheet({
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.mantraChipsRow}
               >
-                {japamMantras.map((m) => {
+                {pickerMantras.map((m) => {
                   const selected = m.id === mantraId;
                   const hasAudio = getJapamAudioSource(m.id) != null;
                   return (

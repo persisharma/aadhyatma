@@ -10,6 +10,11 @@
 # Opens Bajrang Baan as the representative reader — it has a smoke test
 # (BajrangBaanReaderScreen.test.tsx) which validates first-verse render,
 # matching this Maestro flow's check.
+#
+# Then starts Bajrang Baan as japa (design.md §35.1): the reader's left-pinned
+# "Start as japa" pill opens the JapaMala counter in paath mode, where one bead
+# is one complete recitation — read the text in the sheet, mark it complete,
+# and the mala turns one bead.
 
 appId: com.prashantsharma.vedansh
 ---
@@ -95,6 +100,25 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     id: "lang-toggle-hi"
 - waitForAnimationToEnd
+
+# Start as japa — one bead per complete paath.
+- tapOn: "Start as japa"
+- waitForAnimationToEnd
+- assertVisible: ".*Tap to count one complete recitation.*"
+# Counts persist across runs; clear them so the bead assertions are exact.
+- tapOn:
+    text: "Reset or clear the count"
+    optional: true
+- tapOn:
+    text: "Clear bead count and rounds"
+    optional: true
+- waitForAnimationToEnd
+- assertVisible: ".*complete recitation\\. 0 of 108 on this mala.*"
+- tapOn: "Read the paath"
+- waitForAnimationToEnd
+- tapOn: "Paath complete, count one bead"
+- waitForAnimationToEnd
+- assertVisible: ".*complete recitation\\. 1 of 108 on this mala.*"
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:

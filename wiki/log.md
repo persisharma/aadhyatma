@@ -1035,3 +1035,7 @@ Re-read all 62 pages/199 panel placements after the integrated edition left Rama
 Corrected the reported Hanuman Ashtak 1.5 split meaning and blank/grey header strip. The builder retains the complete verse and meaning in one native-measured image, with a continuous artwork header, full-height picker preview and growing Story frame. Corpus/capture tests and browser review distinguish source/measurement evidence from pending installed-device checks.
 
 ## [2026-10-17] ingest | languages: English verse display respelling (readableRomanization) + Tiro Devanagari Sanskrit reading tokens
+
+## [2026-10-20] ingest | Stotra paath as japa: any stotram-category text (22 stotras across 12 sources) can be started on the JapaMala, one bead per complete recitation. New `data/japam/paath.ts` registry resolved through `findJapamMantra` (lazy `require()` corpora — data/japam is on the launch graph), `StartJapaButton` left-pinned on 9 stotram readers' toggle rows, counter paath mode (name head, `पाठ पढ़ें` row → full-text sheet with `पाठ पूर्ण` bead button), Profile/alarm-picker id fixes. New page subsystems/japam.md; readers.md toggle-row note. design.md §35.1, RULEBOOK §3.
+
+## [2026-10-20] gap | Stotra paath Maestro step in stotram-smoke.yaml is authored and YAML-parsed but not yet run on a simulator; no on-device visual check of the paath sheet or the left `japaSlot` on a 320 pt (SE) width.
