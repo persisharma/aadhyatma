@@ -2,7 +2,7 @@
 title: Share Cards (verse, prose, series)
 type: subsystem
 sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareText.ts, mobile/src/utils/shareContent.ts, mobile/src/utils/listingShare.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
-last_verified_date: 2026-10-19
+last_verified_date: 2026-10-20
 confidence: high
 status: current
 ---
@@ -70,6 +70,7 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   native height callback, then resizes the capture container and PNG height. A late callback
   from an older capture is ignored; missing layout takes the existing failure path instead
   of capturing a guessed short frame. This work runs only on share.
+- **First-line marks clip natively, not on web.** A `lineHeight` below ~1.53× font size (Noto Devanagari/Kannada, VedanshDevotionalText) makes iOS and Android trim the first line's box from the top; the Text then clips matras, reph and anusvara (हे→ह, चौपाई→चापाइ, अर्थ→अथ). React Native Web shows nothing wrong. `withMarkHeadroom` in `DevotionalFrame.tsx` adds padding plus an equal negative margin; reuse it for any tight Indic leading.
 - **Optional title line.** `meaningTitleHi/En` renders the complete theme title above the
   meaning at 18/27; actual wrapping contributes naturally to the measured image height.
 - **Tall images and Instagram.** The verse picker explains one taller image for long text

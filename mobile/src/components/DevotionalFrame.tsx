@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View, type TextStyle, type ViewStyle } from 'react-native';
+import { Image, PixelRatio, StyleSheet, Text, View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 import type { Lang } from '@/data/gita/language';
 import { devotionalArtAsset } from '@/data/devotionalShareArt';
 import { devotionalFrameSpec, devotionalFrameCanvas as canvas } from '@/data/devotionalFrameSpec';
@@ -10,6 +10,17 @@ import { splitDevotionalMeaning, type DevotionalArt } from '@/utils/devotionalSh
 
 export function devotionalFace(lang: Lang): string {
   return lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : fontFamilies.sanskritLatin;
+}
+/** Tallest above-base mark + descent, in em, over the card faces: Noto Devanagari/Kannada and
+ * VedanshDevotionalText 1.53, Noto Gujarati 1.37, Tiro 1.21 (shaped hhea/glyf, plus margin). */
+const GLYPH_EXTENT = 1.55;
+/** iOS and Android cut a line box shorter than its glyphs from the top, and the Text clips there:
+ * the first line lost matras, reph and anusvara (हे→ह, चौपाई→चापाइ, अर्थ→अथ). Pad the Text by the
+ * shortfall and pull it up by the same amount, so the marks paint while layout stays unchanged. */
+export function withMarkHeadroom(style: StyleProp<TextStyle>, fontScale = 1): StyleProp<TextStyle> {
+  const { fontSize = 14, lineHeight } = StyleSheet.flatten(style) ?? {};
+  const room = lineHeight ? Math.max(0, Math.ceil((GLYPH_EXTENT * fontSize - lineHeight) * fontScale)) : 0;
+  return room ? [style, { paddingTop: room, marginTop: -room }] : style;
 }
 function plate(art: DevotionalArt) { return devotionalArtAsset(art === 'prayer' ? 'ganesha' : art); }
 /** Clip the full lossless master. Stretch only a specified plain-paper band. */
@@ -81,30 +92,31 @@ export function DevotionalVerseBody({ header, verse, meaning, lang, art, verseSt
   const sourceSize = spec.sourceFont * width / 540;
   const reading = { fontFamily: face, textAlign: 'center' as const, includeFontPadding: false };
   const bodyFace = lang === 'hi' ? shortMeaning ? fontFamilies.devanagari : type.bodyFace : face;
+  const fit = (style: StyleProp<TextStyle>) => withMarkHeadroom(style, exportMode ? 1 : PixelRatio.getFontScale());
   return <View>
     <Panel art={art} width={width} top={spec.hero} bottom={spec.sourceEnd} bottomCap={28} testID="devotional-source-panel"
       contentStyle={{ paddingTop: spec.sourceTop * scale, paddingHorizontal: 120 * scale, paddingBottom: 22 * scale }} onLoad={() => mark('source')} onError={onError}>
-      <Text testID="devotional-share-source" allowFontScaling={!exportMode} adjustsFontSizeToFit numberOfLines={2} minimumFontScale={0.6} style={[reading, { fontSize: sourceSize, lineHeight: sourceSize * 1.4, color: '#7C210D', fontFamily: lang === 'hi' ? type.verseFace : face }]}>{header}</Text>
+      <Text testID="devotional-share-source" allowFontScaling={!exportMode} adjustsFontSizeToFit numberOfLines={2} minimumFontScale={0.6} style={fit([reading, { fontSize: sourceSize, lineHeight: sourceSize * 1.3, color: '#7C210D', fontFamily: lang === 'hi' ? type.verseFace : face }])}>{header}</Text>
     </Panel>
     <Panel art={art} width={width} top={spec.sourceEnd} bottom={spec.verseEnd} testID="devotional-verse-panel"
       contentStyle={{ paddingHorizontal: 92 * scale }} onLoad={() => mark('verse')} onError={onError}>
       <Text testID="devotional-share-verse" allowFontScaling={!exportMode}
-        style={[reading, verseStyle, exportMode && { fontSize: shortVerse ? 52 : lang === 'en' ? 27 : type.verseSize, lineHeight: shortVerse ? (spec.verseEnd - spec.sourceEnd) / 2 : lang === 'kn' ? 48 : lang === 'gu' ? 46 : type.verseLeading }, { color: '#2D1005', fontFamily: lang === 'hi' ? type.verseFace : face, transform: [{ translateY: shortVerse ? 16 * scale : 9 * scale }] }]}>{verse.trim()}</Text>
+        style={fit([reading, verseStyle, exportMode && { fontSize: shortVerse ? 52 : lang === 'en' ? 27 : type.verseSize, lineHeight: shortVerse ? (spec.verseEnd - spec.sourceEnd) / 2 : lang === 'kn' ? 48 : lang === 'gu' ? 46 : type.verseLeading }, { color: '#2D1005', fontFamily: lang === 'hi' ? type.verseFace : face, transform: [{ translateY: shortVerse ? 16 * scale : 9 * scale }] }])}>{verse.trim()}</Text>
     </Panel>
     <DevotionalSlice art={art} width={width} top={spec.verseEnd} bottom={spec.meaningTop} testID="devotional-divider-image" onLoad={() => mark('divider')} onError={onError} />
     <Panel art={art} width={width} top={spec.meaningTop} bottom={spec.meaningBottom} topCap={68} bottomCap={48} testID="devotional-meaning-frame"
       overlay={<Text testID="devotional-meaning-label" allowFontScaling={!exportMode} adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1}
-        style={[reading, { position: 'absolute', top: (art === 'vishnu' ? 31 : 30) * scale, left: 490 * scale, width: 100 * scale, fontSize: (lang === 'en' ? 21 : art === 'vishnu' ? 30 : 42) * scale, lineHeight: 44 * scale, color: '#7C210D' }]}>{pick(lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' })}</Text>}
+        style={fit([reading, { position: 'absolute', top: (art === 'vishnu' ? 31 : 30) * scale, left: 490 * scale, width: 100 * scale, fontSize: (lang === 'en' ? 21 : art === 'vishnu' ? 30 : 42) * scale, lineHeight: 44 * scale, color: '#7C210D' }])}>{pick(lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' })}</Text>}
       onLoad={() => mark('meaning')} onError={onError} contentStyle={{ paddingTop: spec.meaningPad * scale, paddingBottom: 22 * scale, paddingHorizontal: 86 * scale }}>
       <Text testID="devotional-share-meaning" allowFontScaling={!exportMode}
-        style={[reading, meaningStyle, exportMode && { fontSize: shortMeaning ? 28 : lang === 'en' ? 23 : type.meaningSize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : shortMeaning ? 34 : type.meaningLeading }, { color: '#602D0E', fontFamily: bodyFace }]}>{parts.meaning}</Text>
+        style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning ? 28 : lang === 'en' ? 23 : type.meaningSize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : shortMeaning ? 34 : type.meaningLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.meaning}</Text>
     </Panel>
     <DevotionalSlice art={art} width={width} top={spec.meaningBottom} bottom={spec.commentTop} testID="devotional-comment-divider-image" onLoad={() => mark('commentDivider')} onError={onError} />
     <Panel art={art} width={width} top={spec.commentTop} bottom={canvas.footerTop} bottomCap={canvas.footerTop - spec.commentTop}
       solidMiddle={devotionalFrameColors.paper} testID="devotional-commentary-panel"
       onLoad={() => mark('comment')} onError={onError} contentStyle={{ paddingHorizontal: 124 * scale, paddingTop: 11 * scale }}>
       {parts.commentary ? <Text testID="devotional-share-commentary" allowFontScaling={!exportMode}
-        style={[reading, meaningStyle, exportMode && { fontSize: shortMeaning || lang === 'en' ? 23 : type.commentarySize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : type.commentaryLeading }, { color: '#602D0E', fontFamily: bodyFace }]}>{parts.commentary}</Text> : null}
+        style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning || lang === 'en' ? 23 : type.commentarySize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : type.commentaryLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.commentary}</Text> : null}
     </Panel>
   </View>;
 }
