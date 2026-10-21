@@ -4,7 +4,6 @@
 
 import { getObservanceCatalog, OBSERVANCE_RULES } from './festivals';
 import { resolveObservancesForYear } from './festivalEngine';
-import { KATHA_CONTENT } from './kathaContent';
 import { LENS_IDS, type ObservanceLens } from './lenses';
 import type {
   CalendarSystem,
@@ -110,13 +109,22 @@ export function getLensAdditions(lenses: ReadonlySet<ObservanceLens>): LensAddit
     .map((lens) => ({ lens, rules: getRulesForLens(lens) }));
 }
 
+// The 90-entry katha corpus (~1.4 MB of prose) is required() lazily, not imported
+// at module top: this module is on the launch path (VratReminderScheduler → here
+// for vrat dates), and a static import would drag the whole library into the
+// cold-start graph. It loads the first time the Katha tile is opened instead.
+// See data/__tests__/launchGraph.test.ts.
+function kathaContent(): typeof import('./kathaContent') {
+  return require('./kathaContent') as typeof import('./kathaContent');
+}
+
 /** The bundled bilingual katha library (the "Katha" tile target). */
 export function getKathaLibrary(): readonly KathaContentEntry[] {
-  return KATHA_CONTENT;
+  return kathaContent().KATHA_CONTENT;
 }
 
 export function getKathaCount(): number {
-  return KATHA_CONTENT.length;
+  return kathaContent().KATHA_CONTENT.length;
 }
 
 /** The next `count` occurrences of a single rule on/after `fromDate`, ascending. */
