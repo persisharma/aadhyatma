@@ -2,6 +2,12 @@ import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import DevotionalShareCard from '../DevotionalShareCard';
+
+// The masters come from R2 through the download-once cache; tests resolve them to a local file.
+jest.mock('@/utils/backgroundAssetCache', () => ({
+  subscribeBackgroundAsset: (request: { key: string; ext: string }, listener: (uri: string | null) => void) => { listener(`file:///cache/${request.key}.${request.ext}`); return () => undefined; },
+  evictBackgroundAsset: jest.fn(async () => undefined),
+}));
 const page = { art: 'krishna' as const, verse: 'Om', meaning: 'Peace', heroHeight: 90, continuation: false };
 let tree: ReactTestRenderer;
 const height = jest.fn();

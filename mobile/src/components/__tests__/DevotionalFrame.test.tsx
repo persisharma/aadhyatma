@@ -6,6 +6,12 @@ import manifest from '../../../assets/devotional-share/manifest.json';
 import { devotionalFrameSpec } from '@/data/devotionalFrameSpec';
 import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 import { splitDevotionalMeaning } from '@/utils/devotionalShareLayout';
+
+// The masters come from R2 through the download-once cache; tests resolve them to a local file.
+jest.mock('@/utils/backgroundAssetCache', () => ({
+  subscribeBackgroundAsset: (request: { key: string; ext: string }, listener: (uri: string | null) => void) => { listener(`file:///cache/${request.key}.${request.ext}`); return () => undefined; },
+  evictBackgroundAsset: jest.fn(async () => undefined),
+}));
 it.each([288, 358, 540])('keeps readable verse type and lets the full paper width wrap at %s', width => {
   const verse = 'आशापाशशतैर्बद्धाः कामक्रोधपरायणाः। ईहन्ते कामभोगार्थमन्यायेनार्थसञ्चयान्।।16.12।।';
   let tree: ReactTestRenderer;
@@ -39,7 +45,8 @@ it('does not invent commentary', () => {
 it('keeps the scenic footer after content', () => {
   let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalFooter art="durga" width={324} />); });
   const footer = tree!.root.findByProps({ testID: 'devotional-footer' }), image = footer.findAllByType(Image)[0];
-  expect(StyleSheet.flatten(image.parent!.props.style).height).toBe(48);
+  let clip = image.parent!; while (clip.type !== View) clip = clip.parent!; // the slice's clipping box, above the R2 image wrapper
+  expect(StyleSheet.flatten(clip.props.style).height).toBe(48);
   expect((StyleSheet.flatten(footer.props.style) ?? {}).position).toBeUndefined(); act(() => tree!.unmount());
 });
 it.each([288, 358, 540])('uses explicit full-master dimensions at width %s', width => {
@@ -96,4 +103,29 @@ it.each(['hi', 'en', 'gu', 'kn'] as const)('gives every %s first line room for t
     expect((s.paddingTop ?? 0) + (s.marginTop ?? 0)).toBe(0);
   }
   act(() => tree!.unmount());
+});
+
+describe('R2 master states', () => {
+  const cache = jest.requireMock('@/utils/backgroundAssetCache') as { subscribeBackgroundAsset: unknown };
+  const original = cache.subscribeBackgroundAsset;
+  afterEach(() => { cache.subscribeBackgroundAsset = original; });
+  it('shows paper and reports nothing while the master downloads', () => {
+    cache.subscribeBackgroundAsset = () => () => undefined;
+    const onLoad = jest.fn(), onError = jest.fn();
+    let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalFooter art="durga" width={324} onLoad={onLoad} onError={onError} />); });
+    expect(tree!.root.findAllByType(Image)).toHaveLength(0);
+    expect(StyleSheet.flatten(tree!.root.findAllByType(View).find(n => n.props.testID === 'devotional-footer-image')!.props.style).backgroundColor).toBe('#FAE7BE');
+    expect(onLoad).not.toHaveBeenCalled(); expect(onError).not.toHaveBeenCalled(); act(() => tree!.unmount());
+  });
+  it('reports an error when the master cannot be downloaded, so capture refuses', () => {
+    cache.subscribeBackgroundAsset = (_: unknown, listener: (uri: string | null) => void) => { listener(null); return () => undefined; };
+    const onError = jest.fn();
+    let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalFooter art="durga" width={324} onError={onError} />); });
+    expect(onError).toHaveBeenCalledTimes(1); act(() => tree!.unmount());
+  });
+  it('paints the cached local file once downloaded', () => {
+    let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalFooter art="durga" width={324} />); });
+    expect(tree!.root.findByType(Image).props.source).toEqual({ uri: expect.stringMatching(/^file:\/\/\/cache\/[0-9a-f]{16}\.webp$/) });
+    act(() => tree!.unmount());
+  });
 });

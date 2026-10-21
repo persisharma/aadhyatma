@@ -961,6 +961,9 @@ function collectJsonFiles(dirRel = ''): string[] {
       // mapping and exact instruction/art review; keep these exclusions root-only.
       rel !== 'vidhiArtworkManifest.json' &&
       rel !== 'vidhiArtworkSources.json' &&
+      // Daily Bhakti share masters on R2 (stem → hash/size); their reviewed
+      // provenance is assets/devotional-share/manifest.json, checked by devotionalShareArt tests.
+      rel !== 'devotionalShareManifest.json' &&
       rel !== 'valmiki-ramayan/daily-selection.json'
     ) {
       files.push(rel);

@@ -1,0 +1,65 @@
+{
+  "prefix": "devotional-share",
+  "assets": {
+    "durga": {
+      "hash": "7afdf5dd707562d6",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "ganesha": {
+      "hash": "e818179daea4b63c",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "hanuman": {
+      "hash": "6fc1a388cd95278e",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "krishna": {
+      "hash": "6c40d1bb006803e7",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "prayer": {
+      "hash": "f0039a88ac310b2c",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "rama": {
+      "hash": "a74d87589a57d05f",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "saraswati": {
+      "hash": "6f3fb5927ae597bd",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "shiva": {
+      "hash": "273fd179b1f9ab2f",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "surya": {
+      "hash": "1df75c8491ea24a3",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "vishnu": {
+      "hash": "9f3c09c8e9523cd0",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    }
+  }
+}
