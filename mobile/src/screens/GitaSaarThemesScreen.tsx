@@ -165,7 +165,7 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                     accessibilityLabel={a11yLabel}
                     style={({ pressed }) => [styles.themeRow, pressed && styles.pressed]}
                   >
-                    <View style={[styles.themeIcon, { backgroundColor: colors.saffronTint }]}>
+                    <View style={styles.themeIcon}>
                       <GitaSaarThemeIcon themeId={theme.id} />
                     </View>
                     <View style={[styles.rowDivider, { backgroundColor: colors.divider }]} />

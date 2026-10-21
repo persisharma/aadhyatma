@@ -532,3 +532,10 @@ The first iteration was blocked on native background and Large/regional review. 
 No exhaustive 170-page visual audit, Android/physical-device review, or OS accessibility enlargement beyond the app's Large preset was performed. These are open coverage items, not claimed by this scoped iOS correction pass. The dedicated 27-step Maestro flow passes (exit 0) on the existing isolated iOS profile after restarting unresponsive Metro and handling the debug overlay. It verifies physical scrolling and the full-Gita handoff. Fresh-install setup is not covered. The final automated run was repeated after merging current main. Evidence and earlier failed attempts are recorded in the linked review.
 
 final result: passed
+
+
+## Latest correction — illustrated icons and background-only Saar reader
+
+The user rejected the outline theme icons and the banner inserted into the reader. The latest implementation replaces them with the app's bundled StoryIcon artwork and removes every in-content reader banner, keeping the devotional background. The index cover banner is retained. Earlier screenshots and banner-placement approval describe the superseded iteration; they do not verify this latest change. Updated reader/banner-policy and four-language icon regressions cover the new contract. Latest native iOS review confirms the illustrated listing icons and reader without an inserted banner. TypeScript and 29 focused tests pass; the 27-step native smoke passes, including scrolling to the full Saar and the Gita 6.32 handoff. Current screenshots and logs are in `docs/evaluations/gita-saar-2026-10-21/background-only/`. The earlier full-suite and Large/regional screenshots apply to the previous iteration.
+
+latest correction result: passed for the scoped iOS review; Android, physical-device and exhaustive page review remain unverified

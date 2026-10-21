@@ -1,6 +1,17 @@
 # Gita Saar correction review — 21 October 2026
 
-## Review input
+## Latest correction — current implementation
+
+The inserted reader banner has been removed; the existing devotional background remains. Theme rows use bundled StoryIcon illustrations instead of outline icons. The index cover and existing language toggle/controls remain.
+
+- TypeScript: passed.
+- Focused regression tests: 29 passed across 3 suites, including four-language icon mapping and the background-only reader policy.
+- Native iOS: 27-step existing-profile smoke passed, covering index, English first Saar, scrolling and Gita 6.32 handoff. The listing and opening reader screenshots were visually inspected.
+- [Current illustrated icons](background-only/gita-saar-theme-icons.png) · [Current reader](background-only/gita-saar-en-opening.png) · [Complete Saar](background-only/gita-saar-en-complete-saar.png) · [Run log](background-only/run.log).
+
+The remaining sections document the previous iteration. Its full 3,512-test run and Large/regional captures were not repeated after this correction. Android, physical-device and exhaustive page coverage remain unverified.
+
+## Previous iteration — review input
 
 PR #502 has no issue comments, reviews, or inline review comments at inspection time.
 Its CI failed two tests: reader banner placement and the artwork delivery contract.

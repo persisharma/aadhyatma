@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
+import StoryIcon from '@/components/StoryIcon';
 import ProseParagraph from '@/components/ProseParagraph';
 import GitaSaarThemeIcon, { gitaSaarThemeIcons } from '@/components/GitaSaarThemeIcon';
 import ReadingBanner from '@/components/ReadingBanner';
@@ -89,14 +90,10 @@ test('renders the first Gita Saar page without throwing: corpus shloka + saar + 
   assert.ok(renderedText.includes(`श्लोक · ${firstVerse.gitaChapter}.${firstVerse.gitaVerse}`));
 });
 
-test('opening artwork overrides intrinsic image dimensions and preserves its complete 2:1 canvas', () => {
+test('Saar reader keeps its devotional background without an inserted artwork banner', () => {
   const { tree } = render();
-  const artwork = tree.root.findAll((node) => node.props.testID === 'gita-saar-opening-artwork')[0];
-  assert.ok(artwork, 'opening artwork must render');
-  const style = StyleSheet.flatten(artwork.props.style);
-  assert.equal(typeof style.width, 'number');
-  assert.equal(style.height, style.width / 2);
-  assert.equal(artwork.findByType(CachedArtwork).props.resizeMode, 'contain');
+  assert.equal(tree.root.findAllByType(ReadingBanner).length, 0);
+  assert.equal(tree.root.findAll(node => node.props.testID === 'gita-saar-opening-artwork').length, 0);
   act(() => tree.unmount());
 });
 
@@ -173,6 +170,7 @@ test.each(['hi', 'en', 'gu', 'kn'] as const)('%s listing keeps complete titles a
   const icons = tree.root.findAllByType(GitaSaarThemeIcon);
   assert.deepEqual(icons.map(node => node.props.themeId), gitaSaarChaptersManifest.map(theme => theme.id));
   assert.ok(gitaSaarChaptersManifest.every(theme => gitaSaarThemeIcons[theme.id]));
+  assert.ok(icons.every(node => node.findByType(StoryIcon).props.name === gitaSaarThemeIcons[node.props.themeId]));
   const paragraphs = tree.root.findAllByType(ProseParagraph);
   assert.ok(paragraphs.length > gitaSaarChaptersManifest.length);
   assert.ok(paragraphs.every(node => node.props.numberOfLines === undefined));

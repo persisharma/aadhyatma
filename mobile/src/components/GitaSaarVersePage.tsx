@@ -18,10 +18,8 @@ import {
   pillTextStyle,
 } from '@/utils/langType';
 import type { GitaSaarVerse } from '@/data/gita-saar';
-import { readingParchment } from '@/data/backgroundAsset';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
-import ReadingBanner from './ReadingBanner';
 import GitaSaarDivider from './GitaSaarDivider';
 import ProseParagraph from './ProseParagraph';
 
@@ -32,8 +30,6 @@ type Props = {
   width: number;
   /** Measured pager viewport: bounds the nested vertical reader on native. */
   height?: number;
-  /** One opening banner per theme; continuation pages have no image frame. */
-  showIllustration?: boolean;
   topActions?: React.ReactNode;
   /** Rendered under the saar on the theme's last page — the one-line essence. */
   closing?: { hi: string; en: string };
@@ -53,7 +49,6 @@ export default function GitaSaarVersePage({
   chapterTitle,
   width,
   height,
-  showIllustration = false,
   topActions,
   closing,
   onOpenInGita,
@@ -163,12 +158,6 @@ export default function GitaSaarVersePage({
           ) : null}
 
         </View>
-        {showIllustration ? (
-          <ReadingBanner source={getReaderBackground(sourceId, verse)!}
-            testID="gita-saar-opening-artwork"
-            fallback={<BackgroundLayer source={readingParchment} />}
-            style={[styles.hero, { width, height: width / 2, maxWidth: width, maxHeight: width / 2 }]} />
-        ) : null}
         <View style={{ paddingHorizontal: spacing.screenGutter }}>
           <View style={styles.headerRow}>
             <View
@@ -275,7 +264,6 @@ const styles = StyleSheet.create({
     paddingBottom: 64,
   },
   chapterTitle: { lineHeight: 54, paddingVertical: 8, marginBottom: 6 },
-  hero: { alignSelf: 'center', marginTop: 8, marginBottom: 18 },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',

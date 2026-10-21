@@ -48,5 +48,25 @@
     "scope": "Existing isolated iOS simulator profile; launch, index, English reader, vertical scrolling and Gita 6.32 handoff. Fresh-install setup is not covered.",
     "recovery": "Restarted unresponsive Metro; handled the development warning overlay; explicitly swiped the first listing row clear of the tab bar before tapping.",
     "evidence": "maestro/run.log"
+  },
+  "latest_correction": {
+    "change": "Bundled StoryIcon theme illustrations; no inserted reader banner; devotional background retained",
+    "typecheck": "passed",
+    "focused_tests": {
+      "suites": 3,
+      "tests": 29,
+      "result": "passed"
+    },
+    "native": {
+      "result": "passed",
+      "exit_code": 0,
+      "scope": "Existing iOS simulator profile: Hindi index, illustrated icons, English first Saar, scroll and Gita 6.32 handoff",
+      "visually_inspected": [
+        "theme icons",
+        "opening reader without inserted banner"
+      ],
+      "evidence": "background-only/"
+    },
+    "prior_evidence": "Full test run and Large/regional manual captures above refer to the previous iteration."
   }
 }
