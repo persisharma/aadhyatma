@@ -686,7 +686,7 @@ function SearchLibraryArtwork({ entry }: { entry?: LibraryEntry }) {
   const firstDeity = entry?.deities?.[0];
   return <View style={{ width: 36, height: 36, alignItems: 'center', justifyContent: 'center' }}>
     {firstDeity
-      ? <DeityIcon iconKey={deityIconKey(firstDeity)} fallbackText={entry?.thumb ?? ''} size={32} />
+      ? <DeityIcon iconKey={deityIconKey(firstDeity)} size={32} />
       : entry ? <CategoryIcon iconKey={entry.category} /> : <StoryIcon name="sanskar" size={32} />}
   </View>;
 }
@@ -886,7 +886,7 @@ function ResultsList({
                 },
               ]}
             >
-              <DeityIcon iconKey={deities.find((deity) => deity.id === d.deityId)?.iconKey} fallbackText="ॐ" size={32} />
+              <DeityIcon iconKey={deities.find((deity) => deity.id === d.deityId)?.iconKey} size={32} />
               <View style={styles.resultBody}>
                 <Text
                   style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}

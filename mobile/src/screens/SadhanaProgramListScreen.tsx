@@ -90,7 +90,7 @@ function ProgramCard({
       >
         {/* Painted deity art, as on library cards; the Sankalp art when a program has no deity. */}
         {deityIconKeyFor(program.deity)
-          ? <DeityIcon iconKey={deityIconKeyFor(program.deity)} fallbackText={program.thumb} />
+          ? <DeityIcon iconKey={deityIconKeyFor(program.deity)} />
           : <StoryIcon name="japam" size={36} />}
       </LinearGradient>
 

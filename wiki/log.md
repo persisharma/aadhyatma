@@ -1053,3 +1053,11 @@ Reviewed all 106 published bilingual step/image assignments; updated 52 with act
 ## [2026-10-21] ingest | PR #507 CI artwork metadata classification
 
 Reproduced the data-test failure that treated the new root Vidhi artwork manifest/source ledger as scripture. Excluded only those two metadata paths from the `source.referenceUrls` scan, matching the existing R2 manifest boundary; `vidhiVisuals.test.ts` retains source-byte, mapping and exact text/art review checks. Ritual content provenance requirements remain in force. R2 upload and current native walkthrough are still pending.
+
+## [2026-10-21] ingest | Mahamrityunjaya Mantra joins the japam list (`mahamrityunjaya-mantra`, Rigveda 7.59.12, Shiva; same collation as Shiva Stotram ch. 3). `LIST_MANTRA` in `sloka.ts` routes that chapter's जप pill to the list entry so one chant keeps one count. Silent manual counter (Audio-library take is CDN-only). design.md §35/§35.1, RULEBOOK §3, subsystems/japam.md updated.
+
+## [2026-10-21] ingest | Japam list grows to 22: Ganesh (ॐ गं गणपतये नमः), Om Namo Narayanaya, Hanuman moola, Shri Ram Jai Ram, Durga beej, and the nine Navagraha beej mantras (text = jyotishi-approved `GRAHA_UPAY`, pinned by `grahaBeejJapa.test.ts`). Kundali upay panel gets a `Chant on the mala` pill; Dasha tab opens the Mahadasha lord's beej counter. Mahalakshmi short form held (one source only).
+
+## [2026-10-21] gap | The 14 new mantras were checked through web-search results only — the environment's network policy blocks opening drikpanchang/bhaktibharat/sanskritdocuments pages — so each `source.baseText` says to re-read the pages before release. Maestro steps (japam-smoke Shani beej, kundali-smoke `dasha-beej-japa`) are authored but not run on a simulator.
+
+## [2026-10-21] ingest | Painted art only: `DeityIcon` drops its text fallback (unknown key → painted `deity` seal), all 16 `fallbackText` call sites removed, Now Playing's 96 pt ॐ text fallback replaced. RULEBOOK §3 rule + row 5, design.md §42/§35, `paintedIconsOnly.test.ts` guard (no `<x>.thumb` render, no `fallbackText` in UI). The 14 new japam entries draw their first deity's art; Chandra…Ketu share the Navagraha seal.

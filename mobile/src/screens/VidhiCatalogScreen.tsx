@@ -116,7 +116,7 @@ function VidhiCard({ entry, onPress }: { entry: VidhiEntry; onPress: () => void 
       >
         {/* The first tagged deity's painted art; the Puja Vidhi art for an untagged vidhi. */}
         {iconKey
-          ? <DeityIcon iconKey={iconKey} fallbackText="" />
+          ? <DeityIcon iconKey={iconKey} />
           : <StoryIcon name="vrat" size={36} />}
       </LinearGradient>
       <View style={styles.meta}>

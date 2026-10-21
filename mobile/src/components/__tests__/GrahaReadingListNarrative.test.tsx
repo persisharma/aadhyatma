@@ -79,3 +79,16 @@ test('the learn link appears only when onLearnGraha is provided', () => {
     'learn link renders when the callback is set',
   );
 });
+
+test('the upay mantra row opens the graha\'s beej mantra on the japam counter', () => {
+  const opened: string[] = [];
+  const tree = render(
+    <GrahaReadingList cards={[saturn]} introHi={[]} introEn={[]} lang="en" onPractice={(id) => opened.push(id)} />,
+    true,
+  );
+  const row = tree.root.find((node) => node.props?.testID === 'graha-row-saturn');
+  act(() => row.props.onPress());
+  const chant = tree.root.find((node) => node.props?.accessibilityLabel === 'Chant Shani Beej Mantra on the mala');
+  act(() => chant.props.onPress());
+  assert.deepEqual(opened, ['shani-beej-mantra']);
+});

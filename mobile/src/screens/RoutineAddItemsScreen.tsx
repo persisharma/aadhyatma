@@ -124,7 +124,7 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
               <View style={[styles.thumb, { backgroundColor: colors.saffronTint, borderRadius: radii.sm }]}>
                 {/* Same art as the entry's library card: first deity, else its category. */}
                 {entry.deities[0]
-                  ? <DeityIcon iconKey={deityIconKey(entry.deities[0])} fallbackText={entry.thumb} size={28} />
+                  ? <DeityIcon iconKey={deityIconKey(entry.deities[0])} size={28} />
                   : <CategoryIcon iconKey={entry.category} size={30} />}
               </View>
               <View style={styles.info}>
