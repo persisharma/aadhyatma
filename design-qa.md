@@ -564,6 +564,58 @@ instruction endpoint are captured in October 10 images 20–21. Kannada Large Ka
 (image 22) retains the full painting. The complete Kannada endpoint and horizontal gesture
 coverage remain unverified. This extends scoped evidence without changing the Standard
 visual pass above. English/Standard QA preferences were restored.
+
+---
+
+# Gita Saar visual refresh — 2026-10-20
+
+## Target and accepted corrections
+
+- Index: selected editorial option 2; reader: selected inner option 1.
+- Retain the existing regional-language/English toggle, audio, routine, bookmark/share controls, progress, and native navigation.
+- User correction supersedes the mockup's etched artwork: reuse the app's approved rich `krishna-arjuna-vishvarupa.webp` reader banner on both screens.
+- Render the full 2:1 composition with explicit numeric dimensions and `contain`; do not crop subjects or inherit the asset's intrinsic height.
+
+## Evidence
+
+- Native iOS index and first reader page inspected: existing rich artwork, both figures, masthead, language toggle, reader controls, and source verse are visible.
+- TypeScript: passed.
+- Focused reader and shared reading-scale tests: 18 passed. Regression checks cover explicit 2:1 image dimensions and measured pager-height propagation.
+- Full prose is retained. Multiline verse, introduction, Saar, and conclusion use the existing `ProseParagraph` wrapper to avoid Fabric final-line clipping. Theme titles have no line limit.
+- Vertical readers receive the measured pager viewport; clipped-subview removal is disabled, axis locking is enabled, and bottom padding clears the pager indicators.
+- User confirmed on 2026-10-21 that vertical scrolling reaches the complete content and full-Gita handoff.
+- Restored the existing source-specific Krishna–Arjuna content background through `getReaderBackground` and the shared `BackgroundLayer` readability overlay; native appearance of this restoration remains pending.
+
+## Initial result
+
+The first iteration was blocked on native background and Large/regional review. The 21 October correction review below supersedes that status.
+
+## Correction review — 21 October 2026
+
+- P2: clipped index title at the artwork boundary. Fixed with a padded 64 dp title line box and `ProseParagraph`; native Hindi and regional index captures show the complete title below the image.
+- P2: plain numerals in the listing. Replaced by topic-specific Phosphor icons keyed to all 16 stable IDs. Native Hindi captures cover the listing from start through final theme; Gujarati/Kannada captures retain their existing language toggle.
+- P2: some headings/labels still used raw Text. All Saar page and index prose now use the existing Fabric-safe paragraph wrapper without line limits. The verse reference/actions row can wrap.
+- P2: artwork bypassed the delivery contract. Both surfaces now use `ReadingBanner`, approved remote aliases and a full-width parchment fallback. Existing banner placement and artwork delivery checks pass.
+- Post-fix comparison: reopened the selected index/reader designs and native captures together. The rich full-color painting, existing two-segment language toggle/control row, native navigation chrome, background and scrollable page are accepted user constraints that supersede the generated mockup. Matched the title → context → painting → reference → shloka → lotus → Saar → handoff hierarchy. Full text extends below the native viewport and remains scrollable; it is not compressed to fit the tall generated image.
+- Fidelity surfaces inspected: parchment/gold palette; script/Latin font families; title and row wrapping; complete 2:1 subjects; lotus/icon language; existing controls and their positions; paragraph endings and handoff reachability. Screenshots and precise scope: [21 October review](docs/evaluations/gita-saar-2026-10-21/review.md).
+- Automated: TypeScript and all 3,512 tests pass via `npm test`. New listing regression covers Hindi, English, Gujarati and Kannada, all icons, unrestricted title wrapping and final-theme navigation.
+- Native iOS: Hindi Standard opening/full first Saar, complete listing, English Standard full first Saar and long theme-10 heading, correct handoff to Gita 6.32; Large first Saar in English/Gujarati/Kannada. The existing devotional content background and approved rich banner render together.
+
+### Coverage limits
+
+No exhaustive 170-page visual audit, Android/physical-device review, or OS accessibility enlargement beyond the app's Large preset was performed. These are open coverage items, not claimed by this scoped iOS correction pass. The dedicated 27-step Maestro flow passes (exit 0) on the existing isolated iOS profile after restarting unresponsive Metro and handling the debug overlay. It verifies physical scrolling and the full-Gita handoff. Fresh-install setup is not covered. The final automated run was repeated after merging current main. Evidence and earlier failed attempts are recorded in the linked review.
+
+final result: passed
+
+
+## Latest correction — illustrated icons and background-only Saar reader
+
+The user rejected the outline theme icons and the banner inserted into the reader. The latest implementation replaces them with the app's bundled StoryIcon artwork and removes every in-content reader banner, keeping the devotional background. The index cover banner is retained. Earlier screenshots and banner-placement approval describe the superseded iteration; they do not verify this latest change. Updated reader/banner-policy and four-language icon regressions cover the new contract. Latest native iOS review confirms the illustrated listing icons and reader without an inserted banner. TypeScript and 29 focused tests pass; the 27-step native smoke passes, including scrolling to the full Saar and the Gita 6.32 handoff. Current screenshots and logs are in `docs/evaluations/gita-saar-2026-10-21/background-only/`. The earlier full-suite and Large/regional screenshots apply to the previous iteration.
+
+latest correction result: passed for the scoped iOS review; Android, physical-device and exhaustive page review remain unverified
+
+---
+
 # Ganesh snana illustration correction — 2026-10-21
 
 Follow-up: the combined Diwali step now pairs its two unchanged instruction clauses with ordered snana and durva/flower/akshat offering paintings. The overview thumbnail also shows durva offerings. Native review includes both the upper snana clause and lower durva clause after scrolling (`ganesha-upachara-snana-top.png`, `ganesha-upachara-durva.png` in the same evidence folder). This supersedes the single-image Diwali correction described below. All remaining listed offerings remain in the original text; the second image illustrates durva/flowers/akshat specifically. No automated tests run for this follow-up.

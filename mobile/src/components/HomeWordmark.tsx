@@ -8,7 +8,7 @@ import { useTheme } from '@/theme/ThemeContext';
  * Replaces the old stacked crest + 34px title, reclaiming ~50dp of hero height
  * without losing the reverent, centered essence (design.md §5/§18).
  */
-export default function HomeWordmark({ compact = false }: { compact?: boolean }) {
+export default function HomeWordmark({ compact = false, showTagline = true }: { compact?: boolean; showTagline?: boolean }) {
   const { colors, typography } = useTheme();
 
   const renderMark = () => (
@@ -41,7 +41,7 @@ export default function HomeWordmark({ compact = false }: { compact?: boolean })
         {renderMark()}
         {!compact && <View style={[styles.rule, { backgroundColor: colors.iconAccent }]} />}
       </View>
-      <Text
+      {showTagline && <Text
         style={[
           styles.subtitle,
           {
@@ -52,7 +52,7 @@ export default function HomeWordmark({ compact = false }: { compact?: boolean })
         ]}
       >
         Sacred Texts · Daily Reading
-      </Text>
+      </Text>}
     </View>
   );
 }
