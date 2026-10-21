@@ -66,7 +66,7 @@ export default function DeityCard({ nameHi, nameEn, nameGu, nameKn, itemCount, i
         end={{ x: 1, y: 1 }}
         style={styles.avatar}
       >
-        <DeityIcon iconKey={iconKey} fallbackText={nameHi.slice(0, 2)} />
+        <DeityIcon iconKey={iconKey} />
       </LinearGradient>
 
       <View style={styles.meta}>
