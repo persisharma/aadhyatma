@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, PixelRatio, StyleSheet, Text, View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 import type { Lang } from '@/data/gita/language';
-import { devotionalArtAsset } from '@/data/devotionalShareArt';
+import { devotionalArtRequest } from '@/data/devotionalShareArt';
+import { evictBackgroundAsset, subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
 import { devotionalFrameSpec, devotionalFrameCanvas as canvas } from '@/data/devotionalFrameSpec';
 import { devotionalFrameType as type, devotionalFrameColors } from '@/theme/devotionalFrame';
 import { fontFamilies } from '@/theme/typography';
@@ -22,7 +23,38 @@ export function withMarkHeadroom(style: StyleProp<TextStyle>, fontScale = 1): St
   const room = lineHeight ? Math.max(0, Math.ceil((GLYPH_EXTENT * fontSize - lineHeight) * fontScale)) : 0;
   return room ? [style, { paddingTop: room, marginTop: -room }] : style;
 }
-function plate(art: DevotionalArt) { return devotionalArtAsset(art === 'prayer' ? 'ganesha' : art); }
+/**
+ * Resolve a master from R2 through the shared download-once cache. Every slice of one
+ * card subscribes to the same content hash, so a card costs one download. `failed`
+ * reports a download that could not complete, so capture refuses instead of sharing
+ * a card with missing artwork.
+ */
+function useDevotionalArt(art: DevotionalArt): { uri: string | null; failed: boolean } {
+  const request = devotionalArtRequest(art);
+  const url = request?.remoteUrl ?? null;
+  const [state, setState] = useState<{ url: string | null; uri: string | null; failed: boolean }>({ url: null, uri: null, failed: false });
+  useEffect(() => {
+    if (!request) { setState({ url, uri: null, failed: true }); return; }
+    let active = true;
+    const unsubscribe = subscribeBackgroundAsset(request, local => { if (active) setState({ url, uri: local, failed: !local }); });
+    return () => { active = false; unsubscribe(); };
+    // The manifest URL identifies the master; request objects are rebuilt per render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
+  return state.url === url ? state : { uri: null, failed: false };
+}
+/** One master image (or the paper colour while it downloads), reporting paint or failure. */
+function MasterImage({ art, testID, style, resizeMode, onLoad, onError }: {
+  art: DevotionalArt; testID?: string; style: { [key: string]: number | string };
+  resizeMode: 'stretch' | 'cover'; onLoad?: () => void; onError?: () => void;
+}) {
+  const { uri, failed } = useDevotionalArt(art);
+  useEffect(() => { if (failed) onError?.(); }, [failed]); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!uri) return <View testID={testID} accessible={false} style={[style, { backgroundColor: devotionalFrameColors.paper }]} />;
+  return <Image testID={testID} source={{ uri }} accessible={false} resizeMode={resizeMode} style={style} onLoad={onLoad}
+    onError={() => { const request = devotionalArtRequest(art); if (request) void evictBackgroundAsset(request); onError?.(); }} />;
+}
+const plateArt = (art: DevotionalArt): DevotionalArt => (art === 'prayer' ? 'ganesha' : art);
 /** Clip the full lossless master. Stretch only a specified plain-paper band. */
 export function DevotionalSlice({ art, width, top, bottom, height, testID, onLoad, onError }: {
   art: DevotionalArt; width: number; top: number; bottom: number; height?: number;
@@ -31,7 +63,7 @@ export function DevotionalSlice({ art, width, top, bottom, height, testID, onLoa
   const displayHeight = height ?? (bottom - top) * width / canvas.width;
   const verticalScale = displayHeight / (bottom - top);
   return <View pointerEvents="none" accessible={false} style={{ width, height: displayHeight, overflow: 'hidden' }}>
-    <Image testID={testID} source={plate(art)} accessible={false} resizeMode="stretch"
+    <MasterImage art={plateArt(art)} testID={testID} resizeMode="stretch"
       style={{ position: 'absolute', left: 0, top: -top * verticalScale, width, height: canvas.height * verticalScale }}
       onLoad={onLoad} onError={onError} />
   </View>;
@@ -41,7 +73,7 @@ export function DevotionalHero({ art, width, onLoad, onError }: {
 }) {
   const h = devotionalFrameSpec(art).hero;
   if (art === 'prayer') return <View testID="devotional-share-artwork" style={{ height: h * width / canvas.width, overflow: 'hidden' }}>
-    <Image testID="devotional-hero-image" source={devotionalArtAsset('prayer')} resizeMode="cover" accessible={false}
+    <MasterImage art="prayer" testID="devotional-hero-image" resizeMode="cover"
       style={{ width, height: h * width / canvas.width }} onLoad={onLoad} onError={onError} />
   </View>;
   return <View testID="devotional-share-artwork"><DevotionalSlice art={art} width={width} top={0} bottom={h}

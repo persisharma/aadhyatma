@@ -1,4 +1,9 @@
 import type { DevotionalArt } from '@/utils/devotionalShareLayout';
+import type { CachedAssetRequest } from '@/utils/assetCache';
+import { assetBaseUrl, remoteAssetRequest, type RemoteAssetManifest } from './assetManifest';
+import devotionalShareManifestJson from './devotionalShareManifest.json';
+
+const devotionalShareManifest: RemoteAssetManifest = devotionalShareManifestJson;
 
 export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   'bhagavad-gita': 'krishna', 'krishna-stotram': 'krishna',
@@ -51,17 +56,11 @@ const verseArt: Readonly<Record<string, DevotionalArt>> = {
 export function devotionalArtForVerse(v: { sourceId: string; verseIndex: number }): DevotionalArt {
   return verseArt[`${v.sourceId}:${v.verseIndex}`] ?? devotionalSourceArt[v.sourceId] ?? 'prayer';
 }
-export function devotionalArtAsset(art: DevotionalArt): number {
-  switch (art) {
-    case 'krishna': return require('@assets/devotional-share/krishna.webp');
-    case 'shiva': return require('@assets/devotional-share/shiva.webp');
-    case 'durga': return require('@assets/devotional-share/durga.webp');
-    case 'saraswati': return require('@assets/devotional-share/saraswati.webp');
-    case 'ganesha': return require('@assets/devotional-share/ganesha.webp');
-    case 'vishnu': return require('@assets/devotional-share/vishnu.webp');
-    case 'hanuman': return require('@assets/devotional-share/hanuman.webp');
-    case 'rama': return require('@assets/devotional-share/rama.webp');
-    case 'surya': return require('@assets/devotional-share/surya.webp');
-    default: return require('@assets/devotional-share/prayer.webp');
-  }
+/**
+ * The full lossless masters ship from R2 (prefix `devotional-share`), not the bundle.
+ * `mobile/assets/devotional-share/` keeps the reviewed sources and their provenance;
+ * `scripts/prepare-devotional-share.mjs` publishes them and writes this manifest.
+ */
+export function devotionalArtRequest(art: DevotionalArt): CachedAssetRequest | null {
+  return remoteAssetRequest(devotionalShareManifest, art, assetBaseUrl());
 }
