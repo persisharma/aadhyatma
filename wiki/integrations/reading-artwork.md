@@ -2,7 +2,7 @@
 title: Reading artwork on R2
 type: integration
 sources: [mobile/assets/garud-puran/index.ts, scripts/verify-artwork-corrections.mjs, mobile/src/data/__tests__/artworkDelivery.jest.test.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md, docs/content-parity/reader-illustration-style3-prompt.md]
-last_verified_date: 2026-10-16
+last_verified_date: 2026-10-21
 confidence: high
 status: current
 ---
@@ -46,6 +46,24 @@ template, `$artifact-template-vedansh-style-3-reader-banner`, retains the origin
 PNG and the same guide for reuse outside this checkout. The style can be reused in other
 formats; actual kids-story layout and source gates still follow their own contracts.
 
+## Daily Bhakti offline artwork (PR #508)
+
+`mobile/src/data/devotionalShareArt.ts` and `mobile/assets/devotional-share/manifest.json`
+are a separate bounded offline set. Nine full deity masters and neutral prayer retain their
+existing bytes. Eighteen new 960×480 subject headers cover all 330 previously neutral verses
+among the 1,014 added candidates. Eleven reuse exact approved reader-painting bytes in this
+local category; seven (Gayatri, Santoshi, Ahoi, Vaishno, Ekadashi, Tulsi, Shakambhari) were
+newly generated. This does not activate or upload any new reader CDN asset.
+
+`DevotionalHero` uses `contain` for these complete paintings. `devotionalPlateArt` selects only
+Ganesha’s cleared reading body/footer, excluding its deity hero; `devotionalFrameSpec` keeps
+the body coordinates in that plate. Screen and captured share use the same components.
+`manifest.heroes` records source/generated hashes, exact prompt keys and the body plate.
+Added artwork is 2,454,670 bytes; the complete local set is 20,733,526 bytes (19.77MiB),
+under the 22MiB ceiling. General prayers and unknown sources retain neutral fallback.
+Regression tests pin all 1,014 mappings and all four scripts; native/physical-device evidence
+is recorded separately in `docs/evaluations/daily-bhakti-art-508/README.md`.
+
 ## Details
 
 1. The four asset indexes (`backgrounds`, `chalisa`, `gita`, `shiva-strotam`) export
@@ -87,18 +105,17 @@ formats; actual kids-story layout and source gates still follow their own contra
    screens pass their actual verse index (after chapter transition offsets), and
    KathaSectionPage gates both Vrat Katha and Pitru introduction artwork to section zero.
    Direct links to later verses/sections remain text-first. Single continuous prose and
-   standalone detail/guide screens keep their one opening image. Daily Bhakti's quick rotating
-   verse card is text-first following the October 12 correction: no banner frame/placeholder/
-   request, and the compact ornament between verse and meaning.
+   standalone detail/guide screens keep their one opening image. Daily Bhakti now uses its
+   separate offline Design 2 frame, described below; it does not fetch a reader banner.
    **Gotcha — a banner never replaces the background.** The 10 Oct rollout had swapped the seven
    verse layouts, Daan Punya and the Daily Bhakti card from their semantic plate to the neutral
    paper; once banners were gated, later verses and the daily card showed no thematic art.
    Restored 14 Oct: verse pages use `BackgroundLayer source={bg}` (`getReaderBackground`) on
-   every card, Daily Bhakti uses `getReaderBackground(sourceId, { stanza: chapter })`, Daan
+   every card. Daily Bhakti subsequently moved to its own offline frame; Daan
    Punya uses `getDaanBackground()`. Neutral paper is only the offline fallback and the surface
    for screens that never had a plate (prose folios, Pitru, Vidhi, Daan journey/Katha, Garud Puran).
    `readerArtworkPlacement.test.tsx` pins this per layout.
-   The themed share-card background remains separate and unchanged.
+   Daily Bhakti’s separate offline frame now serves its screen and single-image share together.
    Approved dedicated illustrations replace the rejected focal crops for all mapped reading
    slots. The legacy crop registry remains only for unmapped art. Manifest dimensions determine geometry before fetching;
    no network dimension probe, layout callback or native decode changes the frame size.

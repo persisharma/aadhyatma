@@ -1,3 +1,4 @@
+import { devotionalPlateArt } from './devotionalShareArt';
 import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 /** Measured coordinates in the approved 1080×1456 masters. */
 export const devotionalFrameSpecs = {
@@ -11,5 +12,5 @@ export const devotionalFrameSpecs = {
   rama: { hero: 630, sourceEnd: 727, verseEnd: 852, meaningTop: 922, meaningBottom: 1136, commentTop: 1188, sourceFont: 28, sourceTop: 0, meaningPad: 96 },
   surya: { hero: 640, sourceEnd: 752, verseEnd: 878, meaningTop: 939, meaningBottom: 1137, commentTop: 1192, sourceFont: 28, sourceTop: 13, meaningPad: 96 },
 } as const;
-export function devotionalFrameSpec(art: DevotionalArt) { return devotionalFrameSpecs[art === 'prayer' ? 'ganesha' : art]; }
+export function devotionalFrameSpec(art: DevotionalArt) { return devotionalFrameSpecs[devotionalPlateArt(art)]; }
 export const devotionalFrameCanvas = { width: 1080, height: 1456, footerTop: 1296 } as const;

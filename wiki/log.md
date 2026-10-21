@@ -1035,3 +1035,8 @@ Re-read all 62 pages/199 panel placements after the integrated edition left Rama
 Corrected the reported Hanuman Ashtak 1.5 split meaning and blank/grey header strip. The builder retains the complete verse and meaning in one native-measured image, with a continuous artwork header, full-height picker preview and growing Story frame. Corpus/capture tests and browser review distinguish source/measurement evidence from pending installed-device checks.
 
 ## [2026-10-17] ingest | languages: English verse display respelling (readableRomanization) + Tiro Devanagari Sanskrit reading tokens
+
+
+## [2026-10-21] ingest | Daily Bhakti PR 508 painted subject coverage
+
+Mapped all 330 formerly neutral additions to eighteen distinct subject paintings. Reused eleven approved local reader paintings and generated seven missing scenes; the new offline headers share the cleared parchment body/footer, preserving all nine original deity masters. Recorded manifests, prompt provenance, separate 3MiB header and 22MiB combined budgets, exhaustive 2,381-verse/four-script tests and native verification evidence in `docs/evaluations/daily-bhakti-art-508/`. Corrected stale wiki claims that Daily Bhakti still used reader backgrounds and the RULEBOOK’s incorrect combined <2MiB claim.
