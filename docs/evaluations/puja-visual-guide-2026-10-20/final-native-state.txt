@@ -1,0 +1,32 @@
+Window: "Vedansh-Puja-Visuals", App: Simulator.
+0 standard window Vedansh-Puja-Visuals – iOS 26.4, Secondary Actions: Raise
+	1 container
+		2 button Description: पूजा विवरण पर वापस जाएँ, Secondary Actions: Cancel
+		3 text Description: दीपावली लक्ष्मी-गणेश पूजन, Secondary Actions: Cancel
+		4 text Description: 13 / 20, Secondary Actions: Cancel
+		5 text Description: मुख्य पूजा, Secondary Actions: Cancel
+		6 button Description: Read aloud, Secondary Actions: Cancel
+		7 button Description: चरण 12: वस्त्र व शृंगार, Help: इस चरण पर जाएँ, ID: vidhi-timeline-step-11, Secondary Actions: Cancel
+		8 heading Description: पुष्प व अक्षत, Secondary Actions: Cancel
+		9 text Description: कमल, लाल पुष्प या उपलब्ध शुभ पुष्प, माला और अक्षत अर्पित करें।, Secondary Actions: Cancel
+		10 button Description: चरण 14: धूप व दीप, Help: इस चरण पर जाएँ, ID: vidhi-timeline-step-13, Secondary Actions: Cancel
+		11 text Description: मुख्य पूजा, Secondary Actions: Cancel
+	12 toolbar
+		13 button Description: Home, Secondary Actions: Move previous, Move next, Remove from toolbar
+		14 button Description: Save Screen, Secondary Actions: Move previous, Move next, Remove from toolbar
+		15 button Description: Rotate, Secondary Actions: Move previous, Move next, Remove from toolbar
+	16 close button
+	17 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	18 minimize button
+	19 text Vedansh-Puja-Visuals – iOS 26.4
+20 menu bar
+	21 Simulator
+	22 File
+	23 Edit
+	24 Device
+	25 I/O
+	26 Features
+	27 Window
+	28 Help
+
+The focused UI element is 0 standard window Vedansh-Puja-Visuals – iOS 26.4, Secondary Actions: Raise

@@ -1,8 +1,8 @@
 ---
 title: Puja Vidhi
 type: subsystem
-sources: [mobile/src/data/vidhi/types.ts, mobile/src/data/vidhi/index.ts, mobile/src/data/vidhi/ganesh-visarjan-uttar-puja.ts, mobile/src/data/vidhi/durga-visarjan.ts, mobile/src/data/vidhi/satyanarayan-puja.ts, mobile/src/data/vidhi/diwali-lakshmi-ganesh-puja.ts, mobile/src/data/vidhi/ganesh-chaturthi-sthapana.ts, mobile/src/data/vidhi/navratri-ghatasthapana.ts, mobile/src/data/vidhi/karwa-chauth-puja.ts, mobile/src/data/vidhi/maha-shivaratri-puja.ts, mobile/src/data/vidhi/shraddha-tarpan-vidhi.ts, mobile/src/data/vidhi/checklistStore.ts, mobile/src/screens/VidhiCatalogScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/screens/VidhiConductScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/screens/PitruSmaranDetailScreen.tsx, mobile/src/screens/PitruPakshaOverviewScreen.tsx, mobile/src/components/PitruPakshaDayChip.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/data/searchIndex.ts, mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/components/AddToRoutineSheet.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/navigation/types.ts, mobile/src/navigation/HomeStackNavigator.tsx, mobile/src/navigation/PanchangStackNavigator.tsx, mobile/src/navigation/MoreStackNavigator.tsx, mobile/src/navigation/__tests__/vidhiBackNavigation.test.ts, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/src/screens/__tests__/PitruSmaranScreens.test.tsx, mobile/src/components/__tests__/PitruPakshaDayChip.test.tsx, mobile/src/data/__tests__/vidhiContent.test.ts, mobile/.maestro/pitru-smaran.yaml, docs/roadmap/prds/19-puja-vidhi.md, docs/roadmap/prds/19-shraddha-vidhi-phase3.md, docs/roadmap/conventions/shraddha-tarpan-source-dossier.md, design.md]
-last_verified_date: 2026-09-03
+sources: [mobile/src/data/vidhiArtworkAsset.ts, mobile/src/data/vidhiArtworkManifest.json, mobile/src/data/vidhiArtworkSources.json, scripts/prepare-vidhi-artwork.mjs, mobile/src/data/vidhi/stepVisuals.ts, mobile/src/components/VidhiStepArtwork.tsx, mobile/src/navigation/TabNavigator.tsx, mobile/src/data/vidhi/types.ts, mobile/src/data/vidhi/index.ts, mobile/src/data/vidhi/ganesh-visarjan-uttar-puja.ts, mobile/src/data/vidhi/durga-visarjan.ts, mobile/src/data/vidhi/satyanarayan-puja.ts, mobile/src/data/vidhi/diwali-lakshmi-ganesh-puja.ts, mobile/src/data/vidhi/ganesh-chaturthi-sthapana.ts, mobile/src/data/vidhi/navratri-ghatasthapana.ts, mobile/src/data/vidhi/karwa-chauth-puja.ts, mobile/src/data/vidhi/maha-shivaratri-puja.ts, mobile/src/data/vidhi/shraddha-tarpan-vidhi.ts, mobile/src/data/vidhi/checklistStore.ts, mobile/src/screens/VidhiCatalogScreen.tsx, mobile/src/screens/VidhiDetailScreen.tsx, mobile/src/screens/VidhiConductScreen.tsx, mobile/src/screens/ObservanceDetailScreen.tsx, mobile/src/screens/PitruSmaranDetailScreen.tsx, mobile/src/screens/PitruPakshaOverviewScreen.tsx, mobile/src/components/PitruPakshaDayChip.tsx, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/SearchScreen.tsx, mobile/src/data/searchIndex.ts, mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/components/AddToRoutineSheet.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/navigation/types.ts, mobile/src/navigation/HomeStackNavigator.tsx, mobile/src/navigation/PanchangStackNavigator.tsx, mobile/src/navigation/MoreStackNavigator.tsx, mobile/src/navigation/__tests__/vidhiBackNavigation.test.ts, mobile/src/screens/__tests__/VidhiScreens.test.tsx, mobile/src/screens/__tests__/PitruSmaranScreens.test.tsx, mobile/src/components/__tests__/PitruPakshaDayChip.test.tsx, mobile/src/data/__tests__/vidhiContent.test.ts, mobile/.maestro/pitru-smaran.yaml, docs/roadmap/prds/19-puja-vidhi.md, docs/roadmap/prds/19-shraddha-vidhi-phase3.md, docs/roadmap/conventions/shraddha-tarpan-source-dossier.md, design.md]
+last_verified_date: 2026-10-21
 confidence: high
 status: current
 ---
@@ -81,19 +81,46 @@ Vidhi-linked profile renders its read-only food/offerings panel above the accord
 kitchen purchases render in a separately headed checklist/share section. Grocery keys share the
 occurrence-scoped record but are namespaced and excluded from the samagri progress calculation.
 
-**Conduct.** `VidhiConductScreen` is a horizontal, `pagingEnabled` FlatList with one Daily
-Bhakti-style reading card per step. The screen holds `useKeepAwake()` (`expo-keep-awake`,
-added Phase 2B) for the whole session and announces it for screen readers once on entry. Cards contain a phase pill, step number, title, instruction,
-the shared reader ornament, and either an inline Devanagari + IAST mantra section or a hand-off to
-an already-shipped katha/section reader. The read-aloud control is mounted once at screen level.
-Left/right swipe is the only page-turn interaction: there are no previous/next buttons and no
-swipe-helper text. Reader dots sit at the bottom, with the current dot stretched; the terminal
-completion page has no dots, does not repeat already-completed katha/aarti actions, and shows only
-the quiet static ॐ seal with the completed-step count.
+**Conduct.** `VidhiConductScreen` retains a horizontal, `pagingEnabled` FlatList with one step
+per page, but each page now presents the user-selected illustrated timeline (option 3, 20 October
+2026). A fine gold rail connects a compact previous row, the expanded active step and a compact
+upcoming row. Neighbouring rows open their exact steps; swiping also turns pages. Numbered
+markers indicate position without claiming previous steps were completed. The current step
+shows its complete painting, full instruction and any verified mantra or shipped-reader hand-off.
+A thin `ReadingProgressBar` replaces pager dots. The last step has a quiet conclude action;
+completion remains the static ॐ seal and clears saved progress.
+
+`data/vidhi/stepVisuals.ts` explicitly maps every published step to relevant action/material art;
+`VidhiStepArtwork` resolves `vidhiArtworkManifest.json` descriptors through `CachedArtwork` and the
+existing persistent R2 cache, with complete-canvas `contain` frames derived from manifest dimensions.
+No step painting is bundled; unavailable art leaves neutral paper and usable text. The 21 October
+audit reviewed all 106 instructions, updated imagery/sequences for 52 steps, and prepared 63 selected
+R2 paintings for the user's later upload. `prepare-vidhi-artwork.mjs` stages/rechecks source hashes;
+upload and public-CDN verification remain pending. There is no title-based inference or unrelated-deity fallback.
+The two root artwork JSON files are delivery/review metadata, so `contentCorrectness.test.ts`
+excludes them from the scripture provenance scan. `vidhiVisuals.test.ts` independently checks
+the selected source bytes, mappings and exact text/art review hashes; ritual text keeps its source gates.
+The shared `artworkAsset` loader requires the Vidhi request module only for a Vidhi descriptor,
+keeping its manifest off the static startup graph. The launch budget stays fixed and a dedicated
+forbidden-path regression protects this boundary; shared-loader request tests cover the deferred route.
+Preparation's step overview shows the same per-step thumbnails. Tila-tarpana has a separate
+flame-free assignment set with no ancestor portraits, fixed ritual directions/counts or thread
+positions. Artwork, instructions and translations remain separate. Local art provenance,
+prompts and hashes live in `docs/content-parity/puja-visual-guide/`. Its `step-review.json` pins exact
+instruction and image hashes plus observed subjects and depiction limits. Flowers/leaves are reviewed
+per deity, including incidental flowers in shared lamp/water images. Ordered scenes and exact authored
+clauses cover selected combined actions and material-dependent alternatives. Tests require re-review
+after bytes, text or assignments change; they do not establish liturgical correctness.
+
+The screen holds `useKeepAwake()` throughout the session and announces it once on entry.
+The single screen-level `ReadAloudButton`, opposite the current phase below the progress bar,
+uses the existing reader adapter. Mantra source URLs are stripped before conduct pages are
+constructed. Long text scrolls vertically without cropping art, and resizing preserves the
+active step. Native evidence and remaining delivery checks are recorded with the visual review.
 
 ## Dependencies
 
-- [[readers]] — horizontal paging, bottom dots, reading typography, shared header and read-aloud.
+- [[readers]] — horizontal paging, progress bar, reading typography, shared header and read-aloud.
 - [[routine]] — summary accordion, progress treatment and checklist-row language.
 - [[panchang]] — festival observance entry and `vidhiId` lookup.
 
@@ -110,7 +137,7 @@ the quiet static ॐ seal with the completed-step count.
   `conventionLineHi` or `conventionLineEn` into renderable conduct-page objects.
 - The FlatList data includes a completion sentinel after the final step. Clamp initial indices
   against `pages.length`, not `steps.length`, or a direct completion route opens the last step and
-  incorrectly leaves the dots visible.
+  incorrectly shows the last step instead of completion.
 - Completion clears saved conduct progress. Leaving on a step persists that step for the current
   civil day; samagri completion is separately keyed by occurrence date.
 - Shipped kathas and sections are linked by reference and never copied into vidhi data. The
