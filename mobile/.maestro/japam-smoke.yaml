@@ -1,7 +1,7 @@
 # Japam Category Smoke Test
 #
-# Verifies the existing five mantra cards and the Saraswati and Mahamrityunjaya manual counters.
-# The bundled registry has eight mantras.
+# Verifies the existing five mantra cards and the Saraswati, Mahamrityunjaya and
+# Shani beej manual counters. The bundled registry has twenty-two mantras.
 #
 # Japam routes to JapamCounterScreen (a counter UI with a 108-bead mala),
 # NOT a standard verse pager — per RULEBOOK §1 field 6. This flow opens the
@@ -62,11 +62,25 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*1 of 108 on this mala.*"
 - tapOn: "Back"
 - waitForAnimationToEnd
+
+# The nine Navagraha beej mantras close the list (Kundali upay / Dasha open them too).
+- scrollUntilVisible:
+    element:
+      text: "Shani Beej Mantra\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Shani Beej Mantra\\..*Tap to open\\."
+- waitForAnimationToEnd
+- assertVisible: ".*0 of 108 on this mala.*"
+- tapOn: ".*Tap to count one bead.*"
+- assertVisible: ".*1 of 108 on this mala.*"
+- tapOn: "Back"
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
       text: "Gayatri Mantra\\..*Tap to open\\."
     direction: UP
-    timeout: 10000
+    timeout: 20000
 
 # Open Gayatri Mantra counter
 - tapOn: "Gayatri Mantra\\..*Tap to open\\."

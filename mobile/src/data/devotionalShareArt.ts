@@ -10,6 +10,9 @@ export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   sundarkand: 'hanuman', 'bajrang-baan': 'hanuman', 'ram-stuti': 'rama',
   ramcharitmanas: 'rama', 'valmiki-ramayan': 'rama', 'hare-krishna-mahamantra': 'krishna',
   'gayatri-mantra': 'surya', 'surya-namaskar': 'surya', 'bhojan-mantra': 'krishna',
+  'ganapati-gam-mantra': 'ganesha', 'om-namo-narayanaya': 'vishnu',
+  'hanuman-moola-mantra': 'hanuman', 'shri-ram-jai-ram': 'rama', 'durga-beej-mantra': 'durga',
+  'surya-beej-mantra': 'surya',
   'gau-seva': 'prayer', 'matribhumi-vandana': 'prayer', 'prabhati-shloka': 'prayer',
   'sandhya-deepam': 'prayer', 'tulsi-puja': 'prayer', 'ratri-shloka': 'rama',
 };

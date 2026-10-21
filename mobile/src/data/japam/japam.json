@@ -183,17 +183,425 @@
         ],
         "retrievedOn": "2026-10-13"
       }
+    },
+    {
+      "id": "ganapati-gam-mantra",
+      "nameHi": "ॐ गं गणपतये नमः",
+      "nameEn": "Om Gam Ganapataye Namah",
+      "sub": "गणेश अष्टाक्षर मंत्र · गं बीजाक्षर",
+      "subEn": "Ganesha Ashtakshara mantra · Gam seed syllable",
+      "thumb": "ग",
+      "deities": [
+        "ganesha"
+      ],
+      "lines": [
+        "ॐ गं गणपतये नमः"
+      ],
+      "linesEn": [
+        "oṁ gaṁ gaṇapataye namaḥ"
+      ],
+      "meaningHi": "ॐ — गणपति को नमस्कार। ‘गं’ गणेश का बीजाक्षर है; यही मंत्र गणपति अथर्वशीर्ष के सातवें मंत्र के अन्त में आता है।",
+      "meaningEn": "Om — salutations to Ganapati. Gam is Ganesha's seed syllable; the same mantra closes the seventh mantra of the Ganapati Atharvashirsha.",
+      "source": {
+        "baseText": "Ganesha Ashtakshara mantra; closes Ganapati Atharvashirsha mantra 7 (ganesh-stotram). Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/lord-ganesha/mantra/ganesha-ashtakshara-mantra.html",
+          "https://shubhpanchang.com/hi/mantra/ganesha"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "om-namo-narayanaya",
+      "nameHi": "ॐ नमो नारायणाय",
+      "nameEn": "Om Namo Narayanaya",
+      "sub": "अष्टाक्षर मंत्र · 8-syllable",
+      "subEn": "Ashtakshara mantra · 8-syllable",
+      "thumb": "ना",
+      "deities": [
+        "vishnu"
+      ],
+      "lines": [
+        "ॐ नमो नारायणाय"
+      ],
+      "linesEn": [
+        "oṁ namo nārāyaṇāya"
+      ],
+      "meaningHi": "ॐ — भगवान् नारायण को नमस्कार। आठ अक्षरों का यह मंत्र वैष्णव परम्परा का प्रधान मंत्र है; नारायण उपनिषद् में इसका उल्लेख है।",
+      "meaningEn": "Om — salutations to Lord Narayana. This eight-syllable mantra is the principal mantra of the Vaishnava tradition and is named in the Narayana Upanishad.",
+      "source": {
+        "baseText": "Ashtakshara Narayana mantra. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://sanskritdocuments.org/doc_vishhnu/OMnamonArAyaNAyaaShTAksharamantramAhAtmya.html",
+          "https://en.wikipedia.org/wiki/Om_Namo_Narayanaya"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "hanuman-moola-mantra",
+      "nameHi": "हनुमान मूल मंत्र",
+      "nameEn": "Hanuman Moola Mantra",
+      "sub": "हनुमान जप · मूल मंत्र",
+      "subEn": "Hanuman japa · root mantra",
+      "thumb": "ह",
+      "deities": [
+        "hanuman"
+      ],
+      "lines": [
+        "ॐ श्री हनुमते नमः"
+      ],
+      "linesEn": [
+        "oṁ śhrī hanumate namaḥ"
+      ],
+      "meaningHi": "ॐ — श्री हनुमान जी को नमस्कार, जो वायुपुत्र और श्री राम के प्रिय भक्त हैं।",
+      "meaningEn": "Om — salutations to Shri Hanuman, son of Vayu and beloved devotee of Shri Rama.",
+      "source": {
+        "baseText": "Hanuman moola mantra. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/lord-hanuman/mantra/hanuman-moola-mantra.html",
+          "https://www.bhaktibharat.com/en/mantra/shri-hanuman-mantra"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "shri-ram-jai-ram",
+      "nameHi": "श्री राम जय राम",
+      "nameEn": "Shri Ram Jai Ram",
+      "sub": "राम नाम मंत्र",
+      "subEn": "Rama naam mantra",
+      "thumb": "रा",
+      "deities": [
+        "rama"
+      ],
+      "lines": [
+        "श्री राम जय राम जय जय राम"
+      ],
+      "linesEn": [
+        "Shri Ram Jai Ram Jai Jai Ram"
+      ],
+      "meaningHi": "श्री राम की जय, राम की जय-जयकार। राम नाम का यह मंत्र निरन्तर राम-स्मरण के लिए जपा जाता है।",
+      "meaningEn": "Glory to Shri Rama, glory, glory to Rama. This Rama-naam mantra is chanted for unbroken remembrance of Rama.",
+      "source": {
+        "baseText": "Shri Ram Jai Ram Jai Jai Ram mantra. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://sanskritdocuments.org/doc_raama/rAmajayarAmajayajayarAmamantramahAtmyam.html",
+          "https://www.bhaktibharat.com/amp/mantra/shri-ram-mantra"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "durga-beej-mantra",
+      "nameHi": "दुर्गा बीज मंत्र",
+      "nameEn": "Durga Beej Mantra",
+      "sub": "दुर्गा जप · दुं बीजाक्षर",
+      "subEn": "Durga japa · Dum seed syllable",
+      "thumb": "दु",
+      "deities": [
+        "durga"
+      ],
+      "lines": [
+        "ॐ दुं दुर्गायै नमः"
+      ],
+      "linesEn": [
+        "oṁ duṁ durgāyai namaḥ"
+      ],
+      "meaningHi": "ॐ — माँ दुर्गा को नमस्कार। ‘दुं’ दुर्गा का बीजाक्षर है।",
+      "meaningEn": "Om — salutations to Maa Durga. Dum is Durga's seed syllable.",
+      "source": {
+        "baseText": "Durga beej mantra. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/goddesses/durga/mantra/durga-beej-mantra.html",
+          "https://shubhpanchang.com/hi/mantra/durga/durga-beeja-mantra"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "surya-beej-mantra",
+      "nameHi": "सूर्य बीज मंत्र",
+      "nameEn": "Surya Beej Mantra",
+      "sub": "नवग्रह बीज मंत्र · रविवार",
+      "subEn": "Navagraha beej mantra · Sunday",
+      "thumb": "सू",
+      "deities": [
+        "surya",
+        "navagraha"
+      ],
+      "lines": [
+        "ॐ ह्रां ह्रीं ह्रौं सः सूर्याय नमः"
+      ],
+      "linesEn": [
+        "oṁ hrāṁ hrīṁ hrauṁ saḥ sūryāya namaḥ"
+      ],
+      "meaningHi": "ॐ — सूर्य देव को नमस्कार। ‘ह्रां ह्रीं ह्रौं सः’ इस ग्रह के बीजाक्षर हैं; नवग्रह परम्परा में इसका जप रविवार को होता है, एक माला (108)। यह स्थिरता की साधना है, कोई उपचार या गारंटी नहीं।",
+      "meaningEn": "Om — salutations to Surya, the Sun. Hrāṁ hrīṁ hrauṁ saḥ are this graha's seed syllables; Navagraha practice chants it on Sunday, one mala (108). It is a practice for steadiness, not a fix or a guarantee.",
+      "source": {
+        "baseText": "Navagraha beej mantra, as in GRAHA_UPAY. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-surya/mantra/surya-beej-mantra.html",
+          "https://shubhpanchang.com/hi/mantra/surya/surya-beej-mantra"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "chandra-beej-mantra",
+      "nameHi": "चन्द्र बीज मंत्र",
+      "nameEn": "Chandra Beej Mantra",
+      "sub": "नवग्रह बीज मंत्र · सोमवार",
+      "subEn": "Navagraha beej mantra · Monday",
+      "thumb": "च",
+      "deities": [
+        "navagraha"
+      ],
+      "lines": [
+        "ॐ श्रां श्रीं श्रौं सः चन्द्रमसे नमः"
+      ],
+      "linesEn": [
+        "oṁ śhrāṁ śhrīṁ śhrauṁ saḥ chandramase namaḥ"
+      ],
+      "meaningHi": "ॐ — चन्द्र देव को नमस्कार। ‘श्रां श्रीं श्रौं सः’ इस ग्रह के बीजाक्षर हैं; नवग्रह परम्परा में इसका जप सोमवार को होता है, एक माला (108)। यह स्थिरता की साधना है, कोई उपचार या गारंटी नहीं।",
+      "meaningEn": "Om — salutations to Chandra, the Moon. Śhrāṁ śhrīṁ śhrauṁ saḥ are this graha's seed syllables; Navagraha practice chants it on Monday, one mala (108). It is a practice for steadiness, not a fix or a guarantee.",
+      "source": {
+        "baseText": "Navagraha beej mantra, as in GRAHA_UPAY. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-chandra/chandra-mantras.html",
+          "https://stotranidhi.com/hi/chandra-graha-beeja-mantra-in-sanskrit/"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "mangal-beej-mantra",
+      "nameHi": "मंगल बीज मंत्र",
+      "nameEn": "Mangal Beej Mantra",
+      "sub": "नवग्रह बीज मंत्र · मंगलवार",
+      "subEn": "Navagraha beej mantra · Tuesday",
+      "thumb": "मं",
+      "deities": [
+        "navagraha"
+      ],
+      "lines": [
+        "ॐ क्रां क्रीं क्रौं सः भौमाय नमः"
+      ],
+      "linesEn": [
+        "oṁ krāṁ krīṁ krauṁ saḥ bhaumāya namaḥ"
+      ],
+      "meaningHi": "ॐ — भौम (मंगल) को नमस्कार। ‘क्रां क्रीं क्रौं सः’ इस ग्रह के बीजाक्षर हैं; नवग्रह परम्परा में इसका जप मंगलवार को होता है, एक माला (108)। यह स्थिरता की साधना है, कोई उपचार या गारंटी नहीं।",
+      "meaningEn": "Om — salutations to Bhauma (Mangal), Mars. Krāṁ krīṁ krauṁ saḥ are this graha's seed syllables; Navagraha practice chants it on Tuesday, one mala (108). It is a practice for steadiness, not a fix or a guarantee.",
+      "source": {
+        "baseText": "Navagraha beej mantra, as in GRAHA_UPAY. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-mangala/mangala-mantras.html?lang=hi",
+          "https://www.bhaktibharat.com/mantra/mangal-dev-mantra"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "budh-beej-mantra",
+      "nameHi": "बुध बीज मंत्र",
+      "nameEn": "Budh Beej Mantra",
+      "sub": "नवग्रह बीज मंत्र · बुधवार",
+      "subEn": "Navagraha beej mantra · Wednesday",
+      "thumb": "बु",
+      "deities": [
+        "navagraha"
+      ],
+      "lines": [
+        "ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः"
+      ],
+      "linesEn": [
+        "oṁ brāṁ brīṁ brauṁ saḥ budhāya namaḥ"
+      ],
+      "meaningHi": "ॐ — बुध देव को नमस्कार। ‘ब्रां ब्रीं ब्रौं सः’ इस ग्रह के बीजाक्षर हैं; नवग्रह परम्परा में इसका जप बुधवार को होता है, एक माला (108)। यह स्थिरता की साधना है, कोई उपचार या गारंटी नहीं।",
+      "meaningEn": "Om — salutations to Budha, Mercury. Brāṁ brīṁ brauṁ saḥ are this graha's seed syllables; Navagraha practice chants it on Wednesday, one mala (108). It is a practice for steadiness, not a fix or a guarantee.",
+      "source": {
+        "baseText": "Navagraha beej mantra, as in GRAHA_UPAY. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-budha/budha-mantras.html",
+          "https://dekhopanchang.com/mr/calendar/graha-shanti-budha"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "guru-beej-mantra",
+      "nameHi": "गुरु बीज मंत्र",
+      "nameEn": "Guru Beej Mantra",
+      "sub": "नवग्रह बीज मंत्र · गुरुवार",
+      "subEn": "Navagraha beej mantra · Thursday",
+      "thumb": "गु",
+      "deities": [
+        "navagraha"
+      ],
+      "lines": [
+        "ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः"
+      ],
+      "linesEn": [
+        "oṁ grāṁ grīṁ grauṁ saḥ gurave namaḥ"
+      ],
+      "meaningHi": "ॐ — देवगुरु बृहस्पति को नमस्कार। ‘ग्रां ग्रीं ग्रौं सः’ इस ग्रह के बीजाक्षर हैं; नवग्रह परम्परा में इसका जप गुरुवार को होता है, एक माला (108)। यह स्थिरता की साधना है, कोई उपचार या गारंटी नहीं।",
+      "meaningEn": "Om — salutations to Devaguru Brihaspati, Jupiter. Grāṁ grīṁ grauṁ saḥ are this graha's seed syllables; Navagraha practice chants it on Thursday, one mala (108). It is a practice for steadiness, not a fix or a guarantee.",
+      "source": {
+        "baseText": "Navagraha beej mantra, as in GRAHA_UPAY. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-brihaspati/brihaspati-mantras.html",
+          "https://www.bhaktibharat.com/mantra/brihaspati-grah"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "shukra-beej-mantra",
+      "nameHi": "शुक्र बीज मंत्र",
+      "nameEn": "Shukra Beej Mantra",
+      "sub": "नवग्रह बीज मंत्र · शुक्रवार",
+      "subEn": "Navagraha beej mantra · Friday",
+      "thumb": "शु",
+      "deities": [
+        "navagraha"
+      ],
+      "lines": [
+        "ॐ द्रां द्रीं द्रौं सः शुक्राय नमः"
+      ],
+      "linesEn": [
+        "oṁ drāṁ drīṁ drauṁ saḥ śhukrāya namaḥ"
+      ],
+      "meaningHi": "ॐ — शुक्र देव को नमस्कार। ‘द्रां द्रीं द्रौं सः’ इस ग्रह के बीजाक्षर हैं; नवग्रह परम्परा में इसका जप शुक्रवार को होता है, एक माला (108)। यह स्थिरता की साधना है, कोई उपचार या गारंटी नहीं।",
+      "meaningEn": "Om — salutations to Shukra, Venus. Drāṁ drīṁ drauṁ saḥ are this graha's seed syllables; Navagraha practice chants it on Friday, one mala (108). It is a practice for steadiness, not a fix or a guarantee.",
+      "source": {
+        "baseText": "Navagraha beej mantra, as in GRAHA_UPAY. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.bhaktibharat.com/mantra/shukra-beej",
+          "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-shukra/shukra-mantras.html"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "shani-beej-mantra",
+      "nameHi": "शनि बीज मंत्र",
+      "nameEn": "Shani Beej Mantra",
+      "sub": "नवग्रह बीज मंत्र · शनिवार",
+      "subEn": "Navagraha beej mantra · Saturday",
+      "thumb": "श",
+      "deities": [
+        "shani",
+        "navagraha"
+      ],
+      "lines": [
+        "ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः"
+      ],
+      "linesEn": [
+        "oṁ prāṁ prīṁ prauṁ saḥ śhanaiśhcharāya namaḥ"
+      ],
+      "meaningHi": "ॐ — शनैश्चर (शनि देव) को नमस्कार। ‘प्रां प्रीं प्रौं सः’ इस ग्रह के बीजाक्षर हैं; नवग्रह परम्परा में इसका जप शनिवार को होता है, एक माला (108)। यह स्थिरता की साधना है, कोई उपचार या गारंटी नहीं।",
+      "meaningEn": "Om — salutations to Shanaishchara (Shani Dev), Saturn. Prāṁ prīṁ prauṁ saḥ are this graha's seed syllables; Navagraha practice chants it on Saturday, one mala (108). It is a practice for steadiness, not a fix or a guarantee.",
+      "source": {
+        "baseText": "Navagraha beej mantra, as in GRAHA_UPAY. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-shani/shani-mantras.html",
+          "https://dekhopanchang.com/en/puja/graha-shanti-shani"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "rahu-beej-mantra",
+      "nameHi": "राहु बीज मंत्र",
+      "nameEn": "Rahu Beej Mantra",
+      "sub": "नवग्रह बीज मंत्र · शनिवार",
+      "subEn": "Navagraha beej mantra · Saturday",
+      "thumb": "रा",
+      "deities": [
+        "navagraha"
+      ],
+      "lines": [
+        "ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः"
+      ],
+      "linesEn": [
+        "oṁ bhrāṁ bhrīṁ bhrauṁ saḥ rāhave namaḥ"
+      ],
+      "meaningHi": "ॐ — राहु को नमस्कार। ‘भ्रां भ्रीं भ्रौं सः’ इस ग्रह के बीजाक्षर हैं; नवग्रह परम्परा में इसका जप शनिवार को होता है, एक माला (108)। यह स्थिरता की साधना है, कोई उपचार या गारंटी नहीं।",
+      "meaningEn": "Om — salutations to Rahu, the Moon's north node. Bhrāṁ bhrīṁ bhrauṁ saḥ are this graha's seed syllables; Navagraha practice chants it on Saturday, one mala (108). It is a practice for steadiness, not a fix or a guarantee.",
+      "source": {
+        "baseText": "Navagraha beej mantra, as in GRAHA_UPAY. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://dekhopanchang.com/mr/calendar/graha-shanti-rahu",
+          "https://www.bhaktibharat.com/mantra/rahu-mantra"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "ketu-beej-mantra",
+      "nameHi": "केतु बीज मंत्र",
+      "nameEn": "Ketu Beej Mantra",
+      "sub": "नवग्रह बीज मंत्र · मंगलवार",
+      "subEn": "Navagraha beej mantra · Tuesday",
+      "thumb": "के",
+      "deities": [
+        "navagraha"
+      ],
+      "lines": [
+        "ॐ स्रां स्रीं स्रौं सः केतवे नमः"
+      ],
+      "linesEn": [
+        "oṁ srāṁ srīṁ srauṁ saḥ ketave namaḥ"
+      ],
+      "meaningHi": "ॐ — केतु को नमस्कार। ‘स्रां स्रीं स्रौं सः’ इस ग्रह के बीजाक्षर हैं; नवग्रह परम्परा में इसका जप मंगलवार को होता है, एक माला (108)। यह स्थिरता की साधना है, कोई उपचार या गारंटी नहीं।",
+      "meaningEn": "Om — salutations to Ketu, the Moon's south node. Srāṁ srīṁ srauṁ saḥ are this graha's seed syllables; Navagraha practice chants it on Tuesday, one mala (108). It is a practice for steadiness, not a fix or a guarantee.",
+      "source": {
+        "baseText": "Navagraha beej mantra, as in GRAHA_UPAY. Search-verified; re-read pages before release.",
+        "referenceUrls": [
+          "https://www.bhaktibharat.com/mantra/ketu-mantra",
+          "https://dekhopanchang.com/en/puja/graha-shanti-ketu"
+        ],
+        "retrievedOn": "2026-10-21"
+      }
     }
   ],
   "source": {
-    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name). Saraswati Moola Mantra cross-verified with Drik Panchang and Sri Matham Puja Sangraha. Mahamrityunjaya Mantra (Rigveda 7.59.12) shares the Shiva Stotram reading's collation.",
+    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name). Saraswati Moola Mantra cross-verified with Drik Panchang and Sri Matham Puja Sangraha. Mahamrityunjaya Mantra (Rigveda 7.59.12) shares the Shiva Stotram reading's collation. Ganesha Ashtakshara, Om Namo Narayanaya, Hanuman moola, Shri Ram Jai Ram and Durga beej mantras, and the nine Navagraha beej mantras (same text as the jyotishi-approved GRAHA_UPAY table), each with its own two reference pages. The 2026-10-21 additions were checked through web-search results only (the build environment's network policy blocked opening the pages); their meanings are original editorial glosses.",
     "referenceUrls": [
       "https://sanskritdocuments.org/doc_deities_misc/sArthagAyatrI.html",
       "https://vedabase.io/en/library/kb/90/",
       "https://www.drikpanchang.com/vedic-mantra/goddesses/saraswati/mantra/saraswati-moola-mantra.html?lang=en",
       "https://www.srimatham.com/uploads/5/5/4/9/5549439/puja_sangraha.pdf",
       "https://rigveda.sanatana.in/describe/rikMandala/007.059.012",
-      "https://lrc.la.utexas.edu/books/rigveda/RV07"
+      "https://lrc.la.utexas.edu/books/rigveda/RV07",
+      "https://www.drikpanchang.com/vedic-mantra/gods/lord-ganesha/mantra/ganesha-ashtakshara-mantra.html",
+      "https://shubhpanchang.com/hi/mantra/ganesha",
+      "https://sanskritdocuments.org/doc_vishhnu/OMnamonArAyaNAyaaShTAksharamantramAhAtmya.html",
+      "https://en.wikipedia.org/wiki/Om_Namo_Narayanaya",
+      "https://www.drikpanchang.com/vedic-mantra/gods/lord-hanuman/mantra/hanuman-moola-mantra.html",
+      "https://www.bhaktibharat.com/en/mantra/shri-hanuman-mantra",
+      "https://sanskritdocuments.org/doc_raama/rAmajayarAmajayajayarAmamantramahAtmyam.html",
+      "https://www.bhaktibharat.com/amp/mantra/shri-ram-mantra",
+      "https://www.drikpanchang.com/vedic-mantra/goddesses/durga/mantra/durga-beej-mantra.html",
+      "https://shubhpanchang.com/hi/mantra/durga/durga-beeja-mantra",
+      "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-surya/mantra/surya-beej-mantra.html",
+      "https://shubhpanchang.com/hi/mantra/surya/surya-beej-mantra",
+      "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-chandra/chandra-mantras.html",
+      "https://stotranidhi.com/hi/chandra-graha-beeja-mantra-in-sanskrit/",
+      "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-mangala/mangala-mantras.html?lang=hi",
+      "https://www.bhaktibharat.com/mantra/mangal-dev-mantra",
+      "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-budha/budha-mantras.html",
+      "https://dekhopanchang.com/mr/calendar/graha-shanti-budha",
+      "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-brihaspati/brihaspati-mantras.html",
+      "https://www.bhaktibharat.com/mantra/brihaspati-grah",
+      "https://www.bhaktibharat.com/mantra/shukra-beej",
+      "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-shukra/shukra-mantras.html",
+      "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-shani/shani-mantras.html",
+      "https://dekhopanchang.com/en/puja/graha-shanti-shani",
+      "https://dekhopanchang.com/mr/calendar/graha-shanti-rahu",
+      "https://www.bhaktibharat.com/mantra/rahu-mantra",
+      "https://www.bhaktibharat.com/mantra/ketu-mantra",
+      "https://dekhopanchang.com/en/puja/graha-shanti-ketu"
     ],
     "retrievedOn": "2026-10-13"
   }

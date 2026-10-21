@@ -1,7 +1,7 @@
 ---
 title: Japam Counter & Sloka Japa
 type: subsystem
-sources: [mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, mobile/src/data/devotionalShareArt.ts, mobile/src/data/discoveryMeta.ts, mobile/.maestro/japam-smoke.yaml, mobile/src/data/japam/sloka.ts, mobile/src/data/japam/japam.json, mobile/src/contexts/JapamCounterContext.tsx, mobile/src/screens/JapamCounterScreen.tsx, mobile/src/components/StartJapaButton.tsx, mobile/src/components/JapamMala.tsx, mobile/src/components/JapamAudioPlayer.tsx, mobile/src/data/__tests__/slokaJapa.test.ts, mobile/src/screens/__tests__/JapamCounterMala.test.tsx, design.md, RULEBOOK.md]
+sources: [mobile/src/data/japam/index.ts, mobile/src/data/japam/grahaBeej.ts, mobile/src/components/GrahaReadingList.tsx, mobile/src/screens/KundaliScreen.tsx, mobile/src/data/backgrounds.ts, mobile/src/data/devotionalShareArt.ts, mobile/src/data/discoveryMeta.ts, mobile/.maestro/japam-smoke.yaml, mobile/src/data/japam/sloka.ts, mobile/src/data/japam/japam.json, mobile/src/contexts/JapamCounterContext.tsx, mobile/src/screens/JapamCounterScreen.tsx, mobile/src/components/StartJapaButton.tsx, mobile/src/components/JapamMala.tsx, mobile/src/components/JapamAudioPlayer.tsx, mobile/src/data/__tests__/slokaJapa.test.ts, mobile/src/screens/__tests__/JapamCounterMala.test.tsx, design.md, RULEBOOK.md]
 last_verified_date: 2026-10-21
 confidence: high
 status: current
@@ -10,7 +10,7 @@ status: current
 ## Summary
 
 The JapaMala counter (`JapamCounterScreen`, Home stack, route `JapamCounter { mantraId, autoPlay? }`)
-counts 108-bead rounds of one counter entry. An entry is either a **mantra** (`japam.json`, 8 today)
+counts 108-bead rounds of one counter entry. An entry is either a **mantra** (`japam.json`, 22 today, incl. the nine Navagraha beej mantras)
 or, since Oct 2026, a **sloka** — any shloka of a `category: 'stotram'` text, chanted exactly like a
 mantra (one bead per recitation of that shloka). Both are `JapamMantra` objects resolved by
 `findJapamMantra(id)`, so every id-keyed consumer treats them alike. design.md §35 / §35.1,
@@ -42,10 +42,13 @@ RULEBOOK §3 "Every stotram shloka is startable as japa".
 
 ## Dependencies
 
-[[readers]] · [[japam-alarms]] · [[audio]] · [[home-widgets]] · [[routine]] · [[notifications]]
+[[readers]] · [[panchang]] · [[japam-alarms]] · [[audio]] · [[home-widgets]] · [[routine]] · [[notifications]]
 
 ## Gotchas
 
+- **`japam.json` bytes count against the launch-graph budget** (`launchGraph.test.ts`, 4,090,000). The
+  Oct 2026 batch of 14 mantras left only ~3 KB headroom; keep per-mantra `baseText` short and put shared notes
+  in the file-level `source`. Never raise the budget to fit content.
 - **`data/japam` is on the launch graph** (`texts.ts` → `japam`). `sloka.ts` reaches the stotram
   corpora only through `require()` thunks inside functions; a static import of any stotram
   `index.ts` (stuti's imports four JSON payloads eagerly) would put them on every cold start —
@@ -61,9 +64,17 @@ RULEBOOK §3 "Every stotram shloka is startable as japa".
 - **New stotram-category text** → add it to `SOURCES` and render `StartJapaButton` (with
   `verseIndex`) in its reader; `slokaJapa.test.ts` fails while the registry and the library
   category disagree.
+- **Navagraha beej japa.** `GRAHA_BEEJ_JAPA_ID` (`data/japam/grahaBeej.ts`, type-only import of `Graha`)
+  maps each graha to its beej entry; the entry's line must equal the `GRAHA_UPAY` mantra
+  (`grahaBeejJapa.test.ts`). `GrahaReadingList`'s upay panel (`Chant on the mala`) and the Kundali Dasha tab
+  (`dasha-beej-japa`, Mahadasha lord only) open them via `buildEntryStartTarget`. Beej entries are skipped by `versePool.ts`
+  (never a verse of the day / Daily Bhakti card). Don't import `GRAHA_UPAY`
+  into `data/japam` — that file is the whole Kundali copy and `data/japam` is on the launch graph.
 - **Adding a mantra** touches `japam.json` (per-mantra `source`, URLs rolled into the file's list),
   `backgrounds.ts` `sourceBackgrounds` (a module-load throw if missing), `devotionalShareArt.ts`,
-  optionally `discoveryMeta.ts`, and `japam-smoke.yaml`. If its text is also a stotram shloka, add it to
+  optionally `discoveryMeta.ts`, and `japam-smoke.yaml`. A new deity tag must be in `validDeities`
+  (`japam/index.ts`). Ids/`nameEn` must not contain "ashtak" — `contentCorrectness` reads that as an
+  Ashtakam text (why Ganesh's is `ganapati-gam-mantra`), and must not reuse an Audio-library track id. If its text is also a stotram shloka, add it to
   `LIST_MANTRA`. The Audio-library `mahamrityunjay-mantra` recording is CDN-only, so the japam entry is
   a silent manual counter (bundling it would grow the binary).
 - The audio row shows the generic "इस मंत्र की ध्वनि उपलब्ध नहीं है" notice for slokas (no recordings).

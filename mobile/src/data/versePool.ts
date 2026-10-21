@@ -13,7 +13,10 @@ import { getBajrangBaanChapter, bajrangBaanChaptersManifest } from './bajrang-ba
 import { getRamcharitmanasChapter, ramcharitmanasChaptersManifest } from './ramcharitmanas';
 import { valmikiRamayanDailySelection } from './valmiki-ramayan';
 import { japamMantras } from './japam';
+import { GRAHA_BEEJ_JAPA_ID } from './japam/grahaBeej';
 import { sanskarIds, getSanskar } from './sanskar';
+
+const grahaBeejJapaIds: ReadonlySet<string> = new Set(Object.values(GRAHA_BEEJ_JAPA_ID));
 
 export type UniformVerse = {
   sourceId: string;
@@ -263,6 +266,9 @@ function buildPoolSegments(): PoolSegment[] {
     if (!isActive(mantra.id)) continue;
     // A naam-japa line is a single name, not a verse to surface on its own.
     if (mantra.naam) continue;
+    // A graha beej mantra is Kundali upaya (RULEBOOK §14.3.5): it stays on the
+    // surfaces the person opened, never pushed as a verse of the day.
+    if (grahaBeejJapaIds.has(mantra.id)) continue;
     const getAt = (offset: number): UniformVerse | null =>
       offset === 0
         ? {
