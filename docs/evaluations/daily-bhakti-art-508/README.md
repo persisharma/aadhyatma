@@ -1,4 +1,10 @@
-# Daily Bhakti subject coverage — follow-up PR #509
+> **Superseded after user visual rejection.** The rectangular header treatment below looked
+> pasted onto the card. Its green tests did not establish an accepted design.
+> Current full portrait masters and new verification are documented in
+> [daily-bhakti-full-masters](../daily-bhakti-full-masters/README.md).
+> Historical captures/logs below describe the earlier implementation.
+
+# Superseded: Daily Bhakti rectangular subject headers
 
 Follow-up to merged PR #508, on the requested `claude/daily-bhakti-more-sources` branch.
 

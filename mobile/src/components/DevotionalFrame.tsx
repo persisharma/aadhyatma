@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, PixelRatio, StyleSheet, Text, View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 import type { Lang } from '@/data/gita/language';
-import { devotionalArtAsset, devotionalPlateArt, isDevotionalHeroArt } from '@/data/devotionalShareArt';
+import { devotionalArtAsset, devotionalPlateArt } from '@/data/devotionalShareArt';
 import { devotionalFrameSpec, devotionalFrameCanvas as canvas } from '@/data/devotionalFrameSpec';
 import { devotionalFrameType as type, devotionalFrameColors } from '@/theme/devotionalFrame';
 import { fontFamilies } from '@/theme/typography';
@@ -23,7 +23,7 @@ export function withMarkHeadroom(style: StyleProp<TextStyle>, fontScale = 1): St
   return room ? [style, { paddingTop: room, marginTop: -room }] : style;
 }
 function plate(art: DevotionalArt) { return devotionalArtAsset(devotionalPlateArt(art)); }
-/** Clip the full lossless master. Stretch only a specified plain-paper band. */
+/** Clip the complete portrait master. Stretch only a specified plain-paper band. */
 export function DevotionalSlice({ art, width, top, bottom, height, testID, onLoad, onError }: {
   art: DevotionalArt; width: number; top: number; bottom: number; height?: number;
   testID?: string; onLoad?: () => void; onError?: () => void;
@@ -41,16 +41,16 @@ export function DevotionalHero({ art, width, onLoad, onError }: {
 }) {
   const h = devotionalFrameSpec(art).hero;
   const [paintedArt, setPaintedArt] = React.useState<DevotionalArt | null>(null);
-  if (art === 'prayer' || isDevotionalHeroArt(art)) return <View testID="devotional-share-artwork" style={{ height: h * width / canvas.width, overflow: 'hidden', backgroundColor: devotionalFrameColors.paper }}>
+  if (art === 'prayer') return <View testID="devotional-share-artwork" style={{ height: h * width / canvas.width, overflow: 'hidden', backgroundColor: devotionalFrameColors.paper }}>
     <View testID={`devotional-subject-${paintedArt === art ? art : `loading-${art}`}`} collapsable={false}>
-      <Image key={art} testID="devotional-hero-image" source={devotionalArtAsset(art)} resizeMode={art === 'prayer' ? 'cover' : 'contain'} accessible={false}
+      <Image key={art} testID="devotional-hero-image" source={devotionalArtAsset(art)} resizeMode="cover" accessible={false}
         style={{ width, height: h * width / canvas.width }}
         onLoad={() => { setPaintedArt(art); onLoad?.(); }}
         onError={() => { setPaintedArt(null); onError?.(); }} />
     </View>
   </View>;
-  return <View testID="devotional-share-artwork"><DevotionalSlice art={art} width={width} top={0} bottom={h}
-    testID="devotional-hero-image" onLoad={onLoad} onError={onError} /></View>;
+  return <View testID="devotional-share-artwork"><View testID={`devotional-subject-${paintedArt === art ? art : `loading-${art}`}`} collapsable={false}><DevotionalSlice key={art} art={art} width={width} top={0} bottom={h}
+    testID="devotional-hero-image" onLoad={() => { setPaintedArt(art); onLoad?.(); }} onError={() => { setPaintedArt(null); onError?.(); }} /></View></View>;
 }
 /** Both decorated caps stay intact while the middle paper/vertical rules grow. */
 function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, children, overlay, testID, contentStyle, onLoad, onError }: {

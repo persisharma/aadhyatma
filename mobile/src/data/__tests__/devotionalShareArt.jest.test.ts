@@ -2,30 +2,28 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import manifest from '../../../assets/devotional-share/manifest.json';
-import { devotionalHeroArt } from '../devotionalShareArt';
-it('ships eighteen bounded subject paintings with provenance and no duplicate full masters', () => {
-  expect(Object.keys(manifest.heroes).sort()).toEqual(Object.keys(devotionalHeroArt).sort());
+import { devotionalSubjectArt } from '../devotionalShareArt';
+import { devotionalFrameSpec } from '../devotionalFrameSpec';
+import type { DevotionalSubjectArt } from '../devotionalShareArt';
+it('ships eighteen complete portrait masters with pinned provenance within the combined budget', () => {
+  expect(Object.keys(manifest.subjects).sort()).toEqual(Object.keys(devotionalSubjectArt).sort());
+  const prompts = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../../docs/evaluations/daily-bhakti-full-masters/prompts.json'), 'utf8'));
   let bytes = 0;
-  for (const [art, a] of Object.entries(manifest.heroes)) {
+  for (const [art, a] of Object.entries(manifest.subjects)) {
     const b = fs.readFileSync(path.join(__dirname, '../../../assets/devotional-share', a.file));
-    expect(a.file).toBe(`hero-${art}.webp`);
+    expect(a.file).toBe(`master-${art}.webp`);
     expect(b.length).toBe(a.bytes);
     expect(crypto.createHash('sha256').update(b).digest('hex')).toBe(a.sha256);
-    expect([a.width, a.height]).toEqual([960, 480]);
-    expect(a.bodyPlate).toBe('ganesha');
+    expect([a.width, a.height]).toEqual([1080, 1456]);
+    expect(a.bodyPlate).toBe(art);
+    expect(devotionalFrameSpec(art as DevotionalSubjectArt)).toEqual(a.frameSpec);
+    const f = a.frameSpec;
+    expect([0, f.hero, f.sourceEnd, f.verseEnd, f.meaningTop, f.meaningBottom, f.commentTop, 1296, 1456]).toEqual([0, 560, 683, 815, 886, 1106, 1164, 1296, 1456]);
     expect(a.sourceSha256).toMatch(/^[0-9a-f]{64}$/);
-    if (a.kind === 'reused-approved-painting') {
-      const source = fs.readFileSync(path.join(__dirname, '../../../..', a.sourceImage));
-      expect(source.equals(b)).toBe(true);
-      const approved = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../assets/reader-illustrations/approved.json'), 'utf8'));
-      expect(approved.assets[path.basename(a.sourceImage, '.webp')]).toBe(a.sha256);
-    } else {
-      const prompts = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../../docs/evaluations/daily-bhakti-art-508/prompts.json'), 'utf8'));
-      expect(prompts.prompts[art].length).toBeGreaterThan(100);
-    }
+    expect(prompts.prompts[art].length).toBeGreaterThan(100);
+    expect(fs.existsSync(path.join(__dirname, '../../../assets/devotional-share', `hero-${art}.webp`))).toBe(false);
     bytes += b.length;
   }
-  expect(bytes).toBeLessThan(3 * 1024 * 1024);
   expect(bytes + Object.values(manifest.assets).reduce((sum, a) => sum + a.bytes, 0)).toBeLessThan(22 * 1024 * 1024);
 });
 it('ships ten hashed offline plates under 22MiB', () => {

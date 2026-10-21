@@ -49,20 +49,22 @@ formats; actual kids-story layout and source gates still follow their own contra
 ## Daily Bhakti offline artwork (PR #508)
 
 `mobile/src/data/devotionalShareArt.ts` and `mobile/assets/devotional-share/manifest.json`
-are a separate bounded offline set. Nine full deity masters and neutral prayer retain their
-existing bytes. Eighteen new 960×480 subject headers cover all 330 previously neutral verses
-among the 1,014 added candidates. Eleven reuse exact approved reader-painting bytes in this
-local category; seven (Gayatri, Santoshi, Ahoi, Vaishno, Ekadashi, Tulsi, Shakambhari) were
-newly generated. This does not activate or upload any new reader CDN asset.
+are a separate bounded offline set. Nine original full deity masters and neutral prayer retain
+their existing bytes. Eighteen new complete 1080×1456 portrait masters cover all 330
+previously neutral verses among the 1,014 added candidates. The initial landscape-header
+implementation was rejected by the user for looking pasted onto the card.
 
-`DevotionalHero` uses `contain` for these complete paintings. `devotionalPlateArt` selects only
-Ganesha’s cleared reading body/footer, excluding its deity hero; `devotionalFrameSpec` keeps
-the body coordinates in that plate. Screen and captured share use the same components.
-`manifest.heroes` records source/generated hashes, exact prompt keys and the body plate.
-Added artwork is 2,454,670 bytes; the complete local set is 20,733,526 bytes (19.77MiB),
-under the 22MiB ceiling. General prayers and unknown sources retain neutral fallback.
-Regression tests pin all 1,014 mappings and all four scripts; native/physical-device evidence
-is recorded separately in `docs/evaluations/daily-bhakti-art-508/README.md`.
+Each replacement uses the original Ganesha layout as the full-card reference, repainted for
+the subject with its own brand plaque, scene-to-paper transition, gold frame and scenic
+footer. `DevotionalHero`, reading bands and footer slice the same subject master.
+`manifest.subjects` records shipped/generated hashes, exact prompt keys and matching body
+identity; `devotionalFrameSpec` keeps the contiguous reading coordinates.
+The eighteen compressed paintings add 4,288,786 bytes; the complete offline set is
+22,567,642 bytes (21.52MiB), below the unchanged 22MiB ceiling. General prayers and unknown
+sources retain neutral fallback. No reader CDN assets are activated or uploaded.
+Tests pin all 1,014 mappings and all four scripts; current native evidence is in
+`docs/evaluations/daily-bhakti-full-masters/README.md`. The previous
+`daily-bhakti-art-508` evaluation documents the superseded rectangular treatment.
 
 ## Details
 

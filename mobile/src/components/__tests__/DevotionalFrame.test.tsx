@@ -3,7 +3,7 @@ import { Image, View, StyleSheet } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import { DevotionalVerseBody, DevotionalFooter, DevotionalHero } from '../DevotionalFrame';
 import manifest from '../../../assets/devotional-share/manifest.json';
-import { devotionalArtAsset, devotionalHeroArt, devotionalPlateArt, isDevotionalHeroArt } from '@/data/devotionalShareArt';
+import { devotionalArtAsset, devotionalSubjectArt, devotionalPlateArt } from '@/data/devotionalShareArt';
 import { devotionalFrameSpec } from '@/data/devotionalFrameSpec';
 import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 import { splitDevotionalMeaning } from '@/utils/devotionalShareLayout';
@@ -31,13 +31,13 @@ it('keeps the scenic footer after content', () => {
   expect((StyleSheet.flatten(footer.props.style) ?? {}).position).toBeUndefined(); act(() => tree!.unmount());
 });
 it.each([288, 358, 540])('uses explicit full-master dimensions at width %s', width => {
-  for (const art of [...Object.keys(manifest.assets), ...Object.keys(manifest.heroes)] as DevotionalArt[]) {
+  for (const art of [...Object.keys(manifest.assets), ...Object.keys(manifest.subjects)] as DevotionalArt[]) {
     let tree: ReactTestRenderer; act(() => { tree = create(<><DevotionalHero art={art} lang="hi" width={width} /><DevotionalFooter art={art} width={width} /></>); });
     const images = tree!.root.findAllByType(Image);
     const footer = StyleSheet.flatten(images.find(n => n.props.testID === 'devotional-footer-image')!.props.style);
     expect(footer.width).toBe(width); expect(footer.height).toBe(width * 1456 / 1080); expect(footer.top).toBe(-width * 1296 / 1080);
     const hero = StyleSheet.flatten(images.find(n => n.props.testID === 'devotional-hero-image')!.props.style);
-    expect(hero.width).toBe(width); expect(hero.height).toBe(art === 'prayer' || isDevotionalHeroArt(art) ? devotionalFrameSpec(art).hero * width / 1080 : width * 1456 / 1080); act(() => tree!.unmount());
+    expect(hero.width).toBe(width); expect(hero.height).toBe(art === 'prayer' ? devotionalFrameSpec(art).hero * width / 1080 : width * 1456 / 1080); act(() => tree!.unmount());
   }
 });
 it('grows the meaning box without distorting decorative caps or hiding scripture', () => {
@@ -86,15 +86,17 @@ it.each(['hi', 'en', 'gu', 'kn'] as const)('gives every %s first line room for t
   act(() => tree!.unmount());
 });
 
-it.each(Object.keys(devotionalHeroArt) as (keyof typeof devotionalHeroArt)[])('renders the complete %s painting with the cleared body plate', art => {
+it.each(Object.keys(devotionalSubjectArt) as (keyof typeof devotionalSubjectArt)[])('uses the same complete %s master for scene, reading areas and footer', art => {
   let tree: ReactTestRenderer;
   act(() => { tree = create(<><DevotionalHero art={art} lang="hi" width={324} /><DevotionalVerseBody header="Source" verse="Om" meaning="Complete meaning." lang="hi" art={art} width={324} verseStyle={{}} meaningStyle={{}} /><DevotionalFooter art={art} width={324} /></>); });
   const hero = tree!.root.findAllByType(Image).find(n => n.props.testID === 'devotional-hero-image')!;
   expect(hero.props.source).toEqual(devotionalArtAsset(art));
-  expect(hero.props.resizeMode).toBe('contain'); // No face, weapon or mount cropped away.
-  expect(devotionalPlateArt(art)).toBe('ganesha');
+  expect(hero.props.resizeMode).toBe('stretch');
+  expect(StyleSheet.flatten(hero.props.style).height).toBe(1456 * 324 / 1080);
+  expect(StyleSheet.flatten(hero.parent!.props.style).height).toBe(devotionalFrameSpec(art).hero * 324 / 1080);
+  expect(devotionalPlateArt(art)).toBe(art);
   for (const image of tree!.root.findAllByType(Image).filter(n => n !== hero)) {
-    expect(image.props.source).toEqual(devotionalArtAsset('ganesha'));
+    expect(image.props.source).toEqual(devotionalArtAsset(art));
   }
   act(() => tree!.unmount());
 });

@@ -1,32 +1,32 @@
 import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 
-/** Full 2:1 paintings; the native reading body reuses the cleared Ganesha plate. */
-export const devotionalHeroArt = {
-  'lakshmi': () => require('@assets/devotional-share/hero-lakshmi.webp'),
-  'khatu-shyam': () => require('@assets/devotional-share/hero-khatu-shyam.webp'),
-  'shani': () => require('@assets/devotional-share/hero-shani.webp'),
-  'dattatreya': () => require('@assets/devotional-share/hero-dattatreya.webp'),
-  'ganga': () => require('@assets/devotional-share/hero-ganga.webp'),
-  'kali': () => require('@assets/devotional-share/hero-kali.webp'),
-  'kubera': () => require('@assets/devotional-share/hero-kubera.webp'),
-  'radha': () => require('@assets/devotional-share/hero-radha.webp'),
-  'kartikeya': () => require('@assets/devotional-share/hero-kartikeya.webp'),
-  'narasimha': () => require('@assets/devotional-share/hero-narasimha.webp'),
-  'navagraha': () => require('@assets/devotional-share/hero-navagraha.webp'),
-  'gayatri': () => require('@assets/devotional-share/hero-gayatri.webp'),
-  'santoshi': () => require('@assets/devotional-share/hero-santoshi.webp'),
-  'ahoi': () => require('@assets/devotional-share/hero-ahoi.webp'),
-  'vaishno': () => require('@assets/devotional-share/hero-vaishno.webp'),
-  'ekadashi': () => require('@assets/devotional-share/hero-ekadashi.webp'),
-  'tulsi': () => require('@assets/devotional-share/hero-tulsi.webp'),
-  'shakambhari': () => require('@assets/devotional-share/hero-shakambhari.webp'),
+/** Complete portrait paintings; every card slice uses its own master. */
+export const devotionalSubjectArt = {
+  'lakshmi': () => require('@assets/devotional-share/master-lakshmi.webp'),
+  'khatu-shyam': () => require('@assets/devotional-share/master-khatu-shyam.webp'),
+  'shani': () => require('@assets/devotional-share/master-shani.webp'),
+  'dattatreya': () => require('@assets/devotional-share/master-dattatreya.webp'),
+  'ganga': () => require('@assets/devotional-share/master-ganga.webp'),
+  'kali': () => require('@assets/devotional-share/master-kali.webp'),
+  'kubera': () => require('@assets/devotional-share/master-kubera.webp'),
+  'radha': () => require('@assets/devotional-share/master-radha.webp'),
+  'kartikeya': () => require('@assets/devotional-share/master-kartikeya.webp'),
+  'narasimha': () => require('@assets/devotional-share/master-narasimha.webp'),
+  'navagraha': () => require('@assets/devotional-share/master-navagraha.webp'),
+  'gayatri': () => require('@assets/devotional-share/master-gayatri.webp'),
+  'santoshi': () => require('@assets/devotional-share/master-santoshi.webp'),
+  'ahoi': () => require('@assets/devotional-share/master-ahoi.webp'),
+  'vaishno': () => require('@assets/devotional-share/master-vaishno.webp'),
+  'ekadashi': () => require('@assets/devotional-share/master-ekadashi.webp'),
+  'tulsi': () => require('@assets/devotional-share/master-tulsi.webp'),
+  'shakambhari': () => require('@assets/devotional-share/master-shakambhari.webp'),
 } as const;
-export type DevotionalHeroArt = keyof typeof devotionalHeroArt;
-export function isDevotionalHeroArt(art: DevotionalArt): art is DevotionalHeroArt {
-  return Object.prototype.hasOwnProperty.call(devotionalHeroArt, art);
+export type DevotionalSubjectArt = keyof typeof devotionalSubjectArt;
+export function isDevotionalSubjectArt(art: DevotionalArt): art is DevotionalSubjectArt {
+  return Object.prototype.hasOwnProperty.call(devotionalSubjectArt, art);
 }
 export function devotionalPlateArt(art: DevotionalArt) {
-  return art === 'prayer' || isDevotionalHeroArt(art) ? 'ganesha' : art;
+  return art === 'prayer' ? 'ganesha' : art;
 }
 
 export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
@@ -81,7 +81,7 @@ export function devotionalArtForVerse(v: { sourceId: string; verseIndex: number 
   return verseArt[`${v.sourceId}:${v.verseIndex}`] ?? devotionalSourceArt[v.sourceId] ?? 'prayer';
 }
 export function devotionalArtAsset(art: DevotionalArt): number {
-  if (isDevotionalHeroArt(art)) return devotionalHeroArt[art]();
+  if (isDevotionalSubjectArt(art)) return devotionalSubjectArt[art]();
   switch (art) {
     case 'krishna': return require('@assets/devotional-share/krishna.webp');
     case 'shiva': return require('@assets/devotional-share/shiva.webp');

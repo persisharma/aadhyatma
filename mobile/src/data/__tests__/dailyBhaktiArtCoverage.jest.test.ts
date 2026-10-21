@@ -1,5 +1,5 @@
 import { getVersePool } from '../versePool';
-import { devotionalArtForVerse, devotionalHeroArt } from '../devotionalShareArt';
+import { devotionalArtForVerse, devotionalSubjectArt } from '../devotionalShareArt';
 
 const sourceGroups = {
   lakshmi: ['lakshmi-chalisa', 'om-jai-lakshmi-mata', 'mahalakshmi-ashtakam'],
@@ -20,7 +20,7 @@ const sourceGroups = {
 it('gives every formerly neutral verse its named subject, including distinct Devi forms', () => {
   const pool = getVersePool();
   let covered = 0;
-  expect(Object.keys(devotionalHeroArt).sort()).toEqual(Object.keys(sourceGroups).sort());
+  expect(Object.keys(devotionalSubjectArt).sort()).toEqual(Object.keys(sourceGroups).sort());
   for (const [art, sources] of Object.entries(sourceGroups)) {
     for (const sourceId of sources) {
       const verses = pool.filter(v => v.sourceId === sourceId);
