@@ -97,6 +97,9 @@ No step painting is bundled; unavailable art leaves neutral paper and usable tex
 audit reviewed all 106 instructions, updated imagery/sequences for 52 steps, and prepared 63 selected
 R2 paintings for the user's later upload. `prepare-vidhi-artwork.mjs` stages/rechecks source hashes;
 upload and public-CDN verification remain pending. There is no title-based inference or unrelated-deity fallback.
+The two root artwork JSON files are delivery/review metadata, so `contentCorrectness.test.ts`
+excludes them from the scripture provenance scan. `vidhiVisuals.test.ts` independently checks
+the selected source bytes, mappings and exact text/art review hashes; ritual text keeps its source gates.
 Preparation's step overview shows the same per-step thumbnails. Tila-tarpana has a separate
 flame-free assignment set with no ancestor portraits, fixed ritual directions/counts or thread
 positions. Artwork, instructions and translations remain separate. Local art provenance,

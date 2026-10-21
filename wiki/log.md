@@ -1049,3 +1049,7 @@ Corrected the reported Hanuman Ashtak 1.5 split meaning and blank/grey header st
 ## [2026-10-21] ingest | Full Puja Vidhi image/text audit and R2 integration
 
 Reviewed all 106 published bilingual step/image assignments; updated 52 with action-specific scenes, material-dependent alternatives and deity-appropriate flower/leaf choices. Saved 35 new paintings and reviewed all 63 selected R2 source images. Added exact text/art hash review gates and full audit/gallery under `docs/content-parity/puja-visual-guide/`. Per user instruction, all step paintings now use the shared R2 artwork cache with neutral-paper fallback; source files are publishing inputs, never bundled requires. Local staging/manifest checks pass; the app is wired for the user's later object push. No upload, public-CDN verification, release or full new native walkthrough is claimed. See [[subsystems/puja-vidhi]].
+
+## [2026-10-21] ingest | PR #507 CI artwork metadata classification
+
+Reproduced the data-test failure that treated the new root Vidhi artwork manifest/source ledger as scripture. Excluded only those two metadata paths from the `source.referenceUrls` scan, matching the existing R2 manifest boundary; `vidhiVisuals.test.ts` retains source-byte, mapping and exact text/art review checks. Ritual content provenance requirements remain in force. R2 upload and current native walkthrough are still pending.
