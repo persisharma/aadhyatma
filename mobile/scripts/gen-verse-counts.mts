@@ -1,4 +1,5 @@
 import { garudPuranTotal, garudPuranReadingCount } from '../src/data/garud-puran';
+import { aartiIdByIndex, getAarti } from '../src/data/aarti';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -43,6 +44,7 @@ import { vishnuSahasranamaTotal } from '../src/data/vishnu-sahasranama';
  * Run: npx tsx scripts/gen-verse-counts.mts
  */
 const VALUES: readonly (readonly [string, number | Record<string, number>])[] = [
+  ['aartiVerseCounts', Object.fromEntries(aartiIdByIndex.map((id, index) => [id, getAarti(index).verses.length]))],
   ['achyutashtakamTotal', achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal],
   ['bhavaniAshtakamTotal', bhavaniAshtakamTotal],

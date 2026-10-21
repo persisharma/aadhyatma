@@ -14,6 +14,7 @@ import {
 } from '@/utils/localize';
 import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
+import { aartiIndexById } from '@/data/aarti/ids';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
 import { DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
@@ -79,11 +80,14 @@ export default function DailyBhaktiScreen() {
   }, []);
 
   // Mirror each reader's bookmark-id convention: chaptered sources use
-  // `id:chapter:idx`; chapterless ones (sanskar, japam) use `id::idx`, so an
-  // empty chapter segment keeps Daily Bhakti bookmarks in sync with the reader.
-  const bookmarkId = verse
-    ? `${verse.sourceId}:${verse.chapter ?? ''}:${verse.verseIndex}`
-    : '';
+  // `id:chapter:idx`; chapterless ones (sanskar, japam, chalisa, …) use
+  // `id::idx`, so an empty chapter segment keeps Daily Bhakti bookmarks in sync
+  // with the reader. The Aarti reader alone uses `id:idx`.
+  const bookmarkId = !verse
+    ? ''
+    : verse.sourceId in aartiIndexById
+      ? `${verse.sourceId}:${verse.verseIndex}`
+      : `${verse.sourceId}:${verse.chapter ?? ''}:${verse.verseIndex}`;
   const verseLines = verse
     ? verseLinesByLang(lang, verse.textHi, verse.textEn.length > 0 ? verse.textEn : verse.textHi)
     : [];
