@@ -6,6 +6,7 @@
 // `src/data/__tests__/verseCounts.test.ts`, so a corpus edit that changes a
 // count fails the build until this file is regenerated.
 
+export const aartiVerseCounts = {"om-jai-jagdish":9,"hanuman-aarti":14,"jai-ganesh-deva":7,"om-jai-shiv-omkara":12,"jai-ambe-gauri":14,"aarti-kunj-bihari":6,"saraswati-aarti":8,"gayatri-aarti":12,"khatu-shyam-aarti":8,"om-jai-lakshmi-mata":8,"jay-adhya-shakti":21,"shani-aarti":5,"dattatreya-aarti":5,"om-jai-gange-mata":5,"ambe-tu-hai-jagdambe-kali":5,"kubera-aarti":8,"santoshi-mata-aarti":12,"ahoi-mata-aarti":8,"vaishno-devi-aarti":8,"ekadashi-mata-aarti":15,"tulsi-aarti":6,"shakambhari-aarti":5} as const;
 export const achyutashtakamTotal = 8 as const;
 export const bajrangBaanTotal = 20 as const;
 export const bhavaniAshtakamTotal = 8 as const;
