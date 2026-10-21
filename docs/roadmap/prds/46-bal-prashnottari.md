@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Draft for review — prototype attached; exam-syllabus source = open decision §10 |
+| **Status** | **Question book built** (data + CI gate, RULEBOOK §32) — 94 questions in 7 draft packs, every answer grounded in shipped content: गीता परीक्षा स्तर 1 bank (48, अध्याय 12 + 15), Balakanda प्रसंग 1–5 (24 across 3 packs), Krishna Janma / Ganesha / Hanuman stories (22 across 3 packs). Screens not yet built; packs await editorial review (`draft`); exam syllabus = open decision §10 |
 | **T-shirt size** | M–L (quiz engine + 3 screens small; परीक्षा mode adds the ladder/paper/certificate layer; recurring cost is question authoring — editorial, not liturgical) |
 | **Prototype** | [`docs/bal-prashnottari-prototype.html`](../../bal-prashnottari-prototype.html) — Kids-library entry, pack shelf, picture-question, gentle reveal with read-the-source hand-off, quiet completion, post-reader invite, **and the गीता परीक्षा mode: level ladder, exam paper, result + certificate**; every interaction annotated |
 | **Feasibility** | ✅ Confirmed against current main — questions anchor to **stable shipped route params** (`ComicReader { comicId, episodeId, panelId }`, `KidsStoryReader { storyId, pageId }`, Gita/chalisa section ids), the pack shelf is the shipped §82 `ListingCard`, picture options reuse the comic/story art pipeline, the certificate rides the shipped share-card pipeline, and Gita Jayanti comes from the festival engine. Question text is bundled JS — OTA-shippable. |
