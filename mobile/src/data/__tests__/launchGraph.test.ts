@@ -105,6 +105,9 @@ const FORBIDDEN = [
   /^src\/data\/gita\/chapter-\d+\.json$/,
   /^src\/data\/valmiki-ramayan\/chapter-\d+\.json$/,
   /^src\/panchang\/pincode(Data|Offices)\.json$/,
+  // The shared artwork loader is eager, but puja metadata is needed only when
+  // opening a guide. Keep that category behind its request-time require().
+  /^src\/data\/vidhiArtworkManifest\.json$/,
 ];
 
 test('no on-demand corpus payload is statically reachable from the app entry', () => {

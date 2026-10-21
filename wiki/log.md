@@ -1061,3 +1061,7 @@ Reproduced the data-test failure that treated the new root Vidhi artwork manifes
 ## [2026-10-21] gap | The 14 new mantras were checked through web-search results only — the environment's network policy blocks opening drikpanchang/bhaktibharat/sanskritdocuments pages — so each `source.baseText` says to re-read the pages before release. Maestro steps (japam-smoke Shani beej, kundali-smoke `dasha-beej-japa`) are authored but not run on a simulator.
 
 ## [2026-10-21] ingest | Painted art only: `DeityIcon` drops its text fallback (unknown key → painted `deity` seal), all 16 `fallbackText` call sites removed, Now Playing's 96 pt ॐ text fallback replaced. RULEBOOK §3 rule + row 5, design.md §42/§35, `paintedIconsOnly.test.ts` guard (no `<x>.thumb` render, no `fallbackText` in UI). The 14 new japam entries draw their first deity's art; Chandra…Ketu share the Navagraha seal.
+
+## [2026-10-21] ingest | PR #507 startup budget after current-main reconciliation
+
+The complete local test run passed 272 reader/component suites and the engine checks, then detected a combined launch graph of 4,095,731 bytes against the unchanged 4,090,000-byte ceiling. Deferred the Vidhi request module at the shared loader's descriptor branch, keeping the artwork manifest off the static startup graph. Added a forbidden-path regression plus shared-loader request coverage; no artwork, ritual copy or budget changed.

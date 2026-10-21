@@ -29,6 +29,13 @@ test('unpublished artwork cannot trigger speculative requests or replace existin
   expect(artworkRequest(null)).toBeNull();
 });
 
+test('the deferred vidhi category still resolves through the shared artwork loader', () => {
+  expect(artworkRequest({ kind: 'vidhi-artwork', stem: 'ganesha-upachara' })).toMatchObject({
+    subdir: 'vidhi-steps',
+    remoteUrl: expect.stringMatching(/\/vidhi-steps\/[a-f0-9]{16}\.webp$/),
+  });
+});
+
 test('the separate category preserves all semantic slots and aliases both Vishnu paintings', () => {
   expect(Object.keys(aliases)).toHaveLength(44);
   expect(new Set(Object.values(aliases)).size).toBe(43);

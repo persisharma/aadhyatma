@@ -100,6 +100,9 @@ upload and public-CDN verification remain pending. There is no title-based infer
 The two root artwork JSON files are delivery/review metadata, so `contentCorrectness.test.ts`
 excludes them from the scripture provenance scan. `vidhiVisuals.test.ts` independently checks
 the selected source bytes, mappings and exact text/art review hashes; ritual text keeps its source gates.
+The shared `artworkAsset` loader requires the Vidhi request module only for a Vidhi descriptor,
+keeping its manifest off the static startup graph. The launch budget stays fixed and a dedicated
+forbidden-path regression protects this boundary; shared-loader request tests cover the deferred route.
 Preparation's step overview shows the same per-step thumbnails. Tila-tarpana has a separate
 flame-free assignment set with no ancestor portraits, fixed ritual directions/counts or thread
 positions. Artwork, instructions and translations remain separate. Local art provenance,
