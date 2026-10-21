@@ -460,7 +460,7 @@ function BrowseCard({
             lotus…); the grouping rows (category/state), which span many
             deities, keep the illustrated temple miniature (design.md §26/§47). */}
         {deityKey
-          ? <DeityIcon iconKey={deityKey} fallbackText="" size={34} />
+          ? <DeityIcon iconKey={deityKey} size={34} />
           : <StoryIcon name="theerth" size={34} />}
       </LinearGradient>
       <View style={rowStyles.textColumn}>

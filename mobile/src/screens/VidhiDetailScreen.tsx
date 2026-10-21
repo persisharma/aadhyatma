@@ -23,6 +23,7 @@ import {
 } from '@/data/vidhi/checklistStore';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import ReadingArtwork from '@/components/ReadingArtwork';
+import VidhiStepArtwork from '@/components/VidhiStepArtwork';
 import { readingParchment } from '@/data/backgroundAsset';
 import { getVidhiReadingBackground } from '@/data/backgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -556,6 +557,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
                           </Text>
                         )}
                       </View>
+                      <VidhiStepArtwork vidhiId={vidhi.id} stepId={step.id} compact style={{ width: 62, height: 52 }} />
                       <Text style={{ color: actionColor, fontSize: 17 }}>›</Text>
                     </Pressable>
                   ))}

@@ -1,0 +1,446 @@
+{
+  "prefix": "vidhi-steps",
+  "assets": {
+    "aarti-neutral": {
+      "file": "mobile/assets/vidhi-steps/aarti-neutral.webp",
+      "sha256": "4792f1ad501033e216d2805e8790eeed030c4fda35c07161b259fefa11e12277",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "altar-preparation": {
+      "file": "mobile/assets/vidhi-steps/altar-preparation.webp",
+      "sha256": "c23e1771c498b20e3dd95c05e6a18038d1eb819491992487422fe6c3253ba77b",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "asana-five-flowers": {
+      "file": "mobile/assets/vidhi-steps/asana-five-flowers.webp",
+      "sha256": "c156eb2898085cef831419f48a2165cf003791d89fa0f12b30c0fd6a6c99df41",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "chandan-akshat": {
+      "file": "mobile/assets/vidhi-steps/chandan-akshat.webp",
+      "sha256": "bfd6e3579526188d54188302524cfd93199e37214fc7bad1f86614e0902c4291",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "clean-clothes": {
+      "file": "mobile/assets/vidhi-steps/clean-clothes.webp",
+      "sha256": "b32993cffa3f4a309f431648013f6e05df9edfeacf9aa6130c198a3e86f509bd",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "coconut": {
+      "file": "mobile/assets/vidhi-steps/coconut.webp",
+      "sha256": "c87036bc8afedabe62e3f7fbf6038c8d5c71cbc9d8f2e3ae6c9455fb9d24ba2f",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "covered-ganesha-kalash": {
+      "file": "mobile/assets/vidhi-steps/covered-ganesha-kalash.webp",
+      "sha256": "2da0a92d2643c18190ff71493057ed797b6f76ca6f031695dbd0ad775732ae5a",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "deepmala": {
+      "file": "mobile/assets/vidhi-steps/deepmala.webp",
+      "sha256": "4cdfc8e9d392bcf67abf80341205575d4f73a9b4a66e8c6e8e5f44968be4ad5f",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "dhoop-deep-neutral": {
+      "file": "mobile/assets/vidhi-steps/dhoop-deep-neutral.webp",
+      "sha256": "7adfc5689a8759910b29624c2f0ee2c2ab84828b0213a264bbf655d0e136cc3d",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "dhoop-only": {
+      "file": "mobile/assets/vidhi-steps/dhoop-only.webp",
+      "sha256": "66e1d794016709f02cf0424d02737d124f3cf36d5e1f819c6a29648a8a64a8ca",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "diwali-naivedya": {
+      "file": "mobile/assets/vidhi-steps/diwali-naivedya.webp",
+      "sha256": "1e981b2bb7a7a0eb5a8ea80c5ff5f83e849d7466869de29885aa9d61a1b5a19f",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "flowers-akshat": {
+      "file": "mobile/assets/vidhi-steps/flowers-akshat.webp",
+      "sha256": "7fb6481546fe5cb9f0aa42471b7dcff941a3f0012c7e13383e7a0d613cd313b6",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "gandha": {
+      "file": "mobile/assets/vidhi-steps/gandha.webp",
+      "sha256": "d59f19ec3a5fdfe91095bc7ea2d7fd89bdc959777bdbc337cb2f3d5769524814",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "ganesha-offering": {
+      "file": "mobile/assets/vidhi-steps/ganesha-offering.webp",
+      "sha256": "c588134d9e0e354cefd477c2739318270641c9403aa33a669fa6ac1d6b9f8864",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "ganesha-puja": {
+      "file": "mobile/assets/vidhi-steps/ganesha-puja.webp",
+      "sha256": "e8b21b8126fc38a2c7c546941f67745e1c273501d6c83d15406a3fcc7978afde",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "ganesha-snana": {
+      "file": "mobile/assets/vidhi-steps/ganesha-snana.webp",
+      "sha256": "ea8268beb36871600d8cff030bae1de3c86b07a3ec375da11d3672639203ccce",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "ganesha-sthapana": {
+      "file": "mobile/assets/vidhi-steps/ganesha-sthapana.webp",
+      "sha256": "ca88fe1053ebc5d1a50adb014c17d38be66da9fc5f7b55ab06036f6c85176df4",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "ganesha-upachara": {
+      "file": "mobile/assets/vidhi-steps/ganesha-upachara.webp",
+      "sha256": "74a55850bb385719f9b99e72c21d4b98076adf78c3134cdbaf53b0c5d4737795",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "ghata-grain-bed": {
+      "file": "mobile/assets/vidhi-steps/ghata-grain-bed.webp",
+      "sha256": "9f3e4b20bbe78560e64d9de79b1949034ee5d4e51ae08f83426b142570880633",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "grain-bed-water": {
+      "file": "mobile/assets/vidhi-steps/grain-bed-water.webp",
+      "sha256": "1bf8bf65ea6d45ee0a45d67e54c1a9277d5901eb36ee1750a419567c109ae643",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "kalash": {
+      "file": "mobile/assets/vidhi-steps/kalash.webp",
+      "sha256": "83d4475592cc1a6ae330fdb6798062f165b7326cd0c35d6c906ee365893ec676",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "kalash-leaves": {
+      "file": "mobile/assets/vidhi-steps/kalash-leaves.webp",
+      "sha256": "61c0d0562d759d26b5032f7611db7199b4f2b79655440dea3e28c345e60e1ecb",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "kalash-water": {
+      "file": "mobile/assets/vidhi-steps/kalash-water.webp",
+      "sha256": "d48bec123b09f0e634dc62000b429aef70c81efce638f4eca92b1a41b6d0e893",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "karwa": {
+      "file": "mobile/assets/vidhi-steps/karwa.webp",
+      "sha256": "5b81b895f1ea674aceebbe2657a19a454b661211799fad655f7de83bba59cb3d",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "karwa-dana": {
+      "file": "mobile/assets/vidhi-steps/karwa-dana.webp",
+      "sha256": "dfad0388a68265d27e9399503138152d723623593035085f09bf9b5f7f1a5caf",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "lakshmi-ganesha-sthapana": {
+      "file": "mobile/assets/vidhi-steps/lakshmi-ganesha-sthapana.webp",
+      "sha256": "f4ef04a2162f4cda8cee3f8472c02bbf7e4dfe159d45749b5ad7666eafd07ace",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "lakshmi-lotus": {
+      "file": "mobile/assets/vidhi-steps/lakshmi-lotus.webp",
+      "sha256": "79032b80ff53ec433994bd7a6288c877bf72c3a0048367f1389d7c587cb76060",
+      "width": 1254,
+      "height": 1254,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "lakshmi-metal-snana": {
+      "file": "mobile/assets/vidhi-steps/lakshmi-metal-snana.webp",
+      "sha256": "c215f1c26b9a883b11cc7885e7dea75f7bce121bbe49e04f0bbefe316cd28cfc",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "lakshmi-symbolic-snana": {
+      "file": "mobile/assets/vidhi-steps/lakshmi-symbolic-snana.webp",
+      "sha256": "df8f2e825d19c04e1c80c4e3fb497bd65e7e502dfd432b0d7953676e3acea17a",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "moon-arghya": {
+      "file": "mobile/assets/vidhi-steps/moon-arghya.webp",
+      "sha256": "dfc9c8f292b18d75bc39640748f6d538f098261e0f9976290c717cc39cff842a",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "naivedya": {
+      "file": "mobile/assets/vidhi-steps/naivedya.webp",
+      "sha256": "038e20f66c98e43c69d2c491342de7b16ced8bc1a31e7be71955038f8821cecc",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "navratri-samagri": {
+      "file": "mobile/assets/vidhi-steps/navratri-samagri.webp",
+      "sha256": "32651474583f3f9b7d138a0524974731cd17cadd0c3a257ecc5b4f6f103fe3dc",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "panchang": {
+      "file": "mobile/assets/reader-illustrations/panchang-celestial-almanac.webp",
+      "sha256": "3476f2fc731e40a215257674245b2b8c29f4c897f444c98857b06719a3be5f67",
+      "width": 960,
+      "height": 480,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "panchopachara": {
+      "file": "mobile/assets/vidhi-steps/panchopachara.webp",
+      "sha256": "28bc51c513ed90e1e8cb1b07780a983a47ca650f2cec884ab46146caefc9f2ac",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "prasad": {
+      "file": "mobile/assets/vidhi-steps/prasad.webp",
+      "sha256": "19f7a175c5d863d2f201bd5ae5c43da87987d99181089808baa0871b50d2f882",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "prayer": {
+      "file": "mobile/assets/vidhi-steps/prayer.webp",
+      "sha256": "6b951bae026329d69f90dba4827597944b5be9afb6efa61b98f420d730ed7a57",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "remembrance-vessels": {
+      "file": "mobile/assets/vidhi-steps/remembrance-vessels.webp",
+      "sha256": "f1722c5a1bea064dd946c76b5734adad0933b78e67a9866df5761257bbc79312",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "sankalp": {
+      "file": "mobile/assets/vidhi-steps/sankalp.webp",
+      "sha256": "68b4497c5bd261a850cc05d6ab5d37aa3e1f1cda232e1b0a8697babab823def6",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "sankalp-lotus": {
+      "file": "mobile/assets/vidhi-steps/sankalp-lotus.webp",
+      "sha256": "57604d8f2e79624be24053c015cfdeb795fe1f2d2a6ca8140f9fa2f503de5143",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "sankalp-white": {
+      "file": "mobile/assets/vidhi-steps/sankalp-white.webp",
+      "sha256": "f0dee81d8713d9ae41d79a70989940e2723cc922a61907ba234690746fe48e55",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "satyanarayan-naivedya": {
+      "file": "mobile/assets/vidhi-steps/satyanarayan-naivedya.webp",
+      "sha256": "85e348f07e99461ac634400b1280971fbfe9121fcba5882c1b59361848e4a3cc",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "satyanarayan-snana": {
+      "file": "mobile/assets/vidhi-steps/satyanarayan-snana.webp",
+      "sha256": "11b8acb6b39b64a85d99200d27448a64fbd623ff4168f61bdd07049e121ce669",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "scripture": {
+      "file": "mobile/assets/vidhi-steps/scripture.webp",
+      "sha256": "34c0d266398bdfab2a5b7c0d30c043d0ea740b6732e510a180da2c129383e4c7",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "seed-bed": {
+      "file": "mobile/assets/vidhi-steps/seed-bed.webp",
+      "sha256": "787af9644897994082ff9b2acbc8cdb578efa3af2d2dc6a61f204560ca1b10aa",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "self-water-sprinkling": {
+      "file": "mobile/assets/vidhi-steps/self-water-sprinkling.webp",
+      "sha256": "ca33afe08003ce094ced8b0ce656f8bac329b182c5eacd54c71e76989e9d2f47",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "sesame-water": {
+      "file": "mobile/assets/vidhi-steps/sesame-water.webp",
+      "sha256": "d6297ed3d8f318231df38209e9a82ce37cf9a2aeed12eac29f7b14be09b68cd5",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "shiva-abhishek": {
+      "file": "mobile/assets/vidhi-steps/shiva-abhishek.webp",
+      "sha256": "bf6e97f3d4824daab1c5014457ad34b8c8eebf448d8bfd740071541a4d337a92",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "shiva-bilva-datura": {
+      "file": "mobile/assets/vidhi-steps/shiva-bilva-datura.webp",
+      "sha256": "7a59032586319399f374313b7d0d3952b23614c07e25ba6b19969c5e82796cf0",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "shiva-flower": {
+      "file": "mobile/assets/vidhi-steps/shiva-flower.webp",
+      "sha256": "06ef106e01952d7bf31dd2bf234481f2e6b764aa016607db3b2af5322e2c211e",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "shiva-gandha": {
+      "file": "mobile/assets/vidhi-steps/shiva-gandha.webp",
+      "sha256": "440e0f0635e60794009ec9789ea206ec9ff705e6bb1f6769ca9292a6a7534b3d",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "shiva-linga": {
+      "file": "mobile/assets/vidhi-steps/shiva-linga.webp",
+      "sha256": "4d6172d56db3162663ff7b5e6d406ef360108658ca3e97c15b84bff73c2d1d6d",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "shiva-panchamrit": {
+      "file": "mobile/assets/vidhi-steps/shiva-panchamrit.webp",
+      "sha256": "5013931578b43d5ec40a8c8a2009f980468a73a2261d32dc8183efa97428803d",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "soil-layer": {
+      "file": "mobile/assets/vidhi-steps/soil-layer.webp",
+      "sha256": "c86dfc424e4d1afff766ff6673091615a18d68bc53ef6feb5c8e223d24d539b4",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "sprouts": {
+      "file": "mobile/assets/vidhi-steps/sprouts.webp",
+      "sha256": "3a8b355312f3dce5b0d204b748ed32bbcac6c6ebb9645e216fc7e29658eb460b",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "tarpana": {
+      "file": "mobile/assets/vidhi-steps/tarpana.webp",
+      "sha256": "fedd660c96614cb665e031dd50a638a0878c8c67d32615517da7c4623945457e",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "thali-phera": {
+      "file": "mobile/assets/vidhi-steps/thali-phera.webp",
+      "sha256": "b278fa804b898cb26364277fe6f7aef19ee789d782f8dd98e8e546bcded789ed",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "vastra-shringar": {
+      "file": "mobile/assets/vidhi-steps/vastra-shringar.webp",
+      "sha256": "96473da26477f6a6e9105e24be9505019fab13d7c91d4fb8bf04f2878746883c",
+      "width": 1200,
+      "height": 800,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "vastra-yajnopavita": {
+      "file": "mobile/assets/vidhi-steps/vastra-yajnopavita.webp",
+      "sha256": "1c1d5632b760f350b0c175e5743fbf08c9ce741964a2fa960d1c75dae678983d",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "vishnu-asana-flowers": {
+      "file": "mobile/assets/vidhi-steps/vishnu-asana-flowers.webp",
+      "sha256": "0c9001907a654db771d952744d4ab27307f314be1b7e63fff0de85bcfd958c25",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "vishnu-flowers": {
+      "file": "mobile/assets/vidhi-steps/vishnu-flowers.webp",
+      "sha256": "52d469b24517119386138d68627c0df3c4ad8c7ea3861f04ec4b6633ec898d1c",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "vishnu-vastra-yajnopavita": {
+      "file": "mobile/assets/vidhi-steps/vishnu-vastra-yajnopavita.webp",
+      "sha256": "844996094591fd6271a4f59d5ed353af3508e652db91169e90bf89c92d408215",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "vrat-naivedya": {
+      "file": "mobile/assets/vidhi-steps/vrat-naivedya.webp",
+      "sha256": "d05f9fff70097a888abe64fa3cdce3c6febf97bc1fdf23580f8936cb071e4d9c",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    },
+    "water-offering-neutral": {
+      "file": "mobile/assets/vidhi-steps/water-offering-neutral.webp",
+      "sha256": "a4d76ca3aa0562b27ad79754c4a4988c2fde3178fd09c3ff85998239b55ddb31",
+      "width": 1536,
+      "height": 1024,
+      "review": "docs/content-parity/puja-visual-guide/semantic-audit.md"
+    }
+  }
+}

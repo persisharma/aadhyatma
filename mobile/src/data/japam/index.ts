@@ -32,6 +32,9 @@ const validDeities: ReadonlySet<Deity> = new Set([
   'savitr',
   'radha',
   'saraswati',
+  'surya',
+  'shani',
+  'navagraha',
 ]);
 
 function assertMantra(m: unknown, i: number): asserts m is JapamMantra {

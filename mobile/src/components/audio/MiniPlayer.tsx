@@ -75,7 +75,6 @@ export default function MiniPlayer() {
           >
             <DeityIcon
               iconKey={currentTrack.deity ? deityIconKey(currentTrack.deity) : undefined}
-              fallbackText={currentTrack.thumb}
               size={26}
             />
           </LinearGradient>

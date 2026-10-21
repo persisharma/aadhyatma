@@ -1,0 +1,383 @@
+{
+  "prefix": "vidhi-steps",
+  "assets": {
+    "aarti-neutral": {
+      "hash": "4792f1ad501033e2",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "altar-preparation": {
+      "hash": "c23e1771c498b20e",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "asana-five-flowers": {
+      "hash": "c156eb2898085cef",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "chandan-akshat": {
+      "hash": "bfd6e3579526188d",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "clean-clothes": {
+      "hash": "b32993cffa3f4a30",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "coconut": {
+      "hash": "c87036bc8afedabe",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "covered-ganesha-kalash": {
+      "hash": "2da0a92d2643c181",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "deepmala": {
+      "hash": "4cdfc8e9d392bcf6",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "dhoop-deep-neutral": {
+      "hash": "7adfc5689a875991",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "dhoop-only": {
+      "hash": "66e1d794016709f0",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "diwali-naivedya": {
+      "hash": "1e981b2bb7a7a0eb",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "flowers-akshat": {
+      "hash": "7fb6481546fe5cb9",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "gandha": {
+      "hash": "d59f19ec3a5fdfe9",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "ganesha-offering": {
+      "hash": "c588134d9e0e354c",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "ganesha-puja": {
+      "hash": "e8b21b8126fc38a2",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "ganesha-snana": {
+      "hash": "ea8268beb3687160",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "ganesha-sthapana": {
+      "hash": "ca88fe1053ebc5d1",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "ganesha-upachara": {
+      "hash": "74a55850bb385719",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "ghata-grain-bed": {
+      "hash": "9f3e4b20bbe78560",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "grain-bed-water": {
+      "hash": "1bf8bf65ea6d45ee",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "kalash": {
+      "hash": "83d4475592cc1a6a",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "kalash-leaves": {
+      "hash": "61c0d0562d759d26",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "kalash-water": {
+      "hash": "d48bec123b09f0e6",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "karwa": {
+      "hash": "5b81b895f1ea674a",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "karwa-dana": {
+      "hash": "dfad0388a68265d2",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "lakshmi-ganesha-sthapana": {
+      "hash": "f4ef04a2162f4cda",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "lakshmi-lotus": {
+      "hash": "79032b80ff53ec43",
+      "ext": "webp",
+      "width": 1254,
+      "height": 1254
+    },
+    "lakshmi-metal-snana": {
+      "hash": "c215f1c26b9a883b",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "lakshmi-symbolic-snana": {
+      "hash": "df8f2e825d19c04e",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "moon-arghya": {
+      "hash": "dfc9c8f292b18d75",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "naivedya": {
+      "hash": "038e20f66c98e43c",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "navratri-samagri": {
+      "hash": "32651474583f3f9b",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "panchang": {
+      "hash": "3476f2fc731e40a2",
+      "ext": "webp",
+      "width": 960,
+      "height": 480
+    },
+    "panchopachara": {
+      "hash": "28bc51c513ed90e1",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "prasad": {
+      "hash": "19f7a175c5d863d2",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "prayer": {
+      "hash": "6b951bae026329d6",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "remembrance-vessels": {
+      "hash": "f1722c5a1bea064d",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "sankalp": {
+      "hash": "68b4497c5bd261a8",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "sankalp-lotus": {
+      "hash": "57604d8f2e79624b",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "sankalp-white": {
+      "hash": "f0dee81d8713d9ae",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "satyanarayan-naivedya": {
+      "hash": "85e348f07e99461a",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "satyanarayan-snana": {
+      "hash": "11b8acb6b39b64a8",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "scripture": {
+      "hash": "34c0d266398bdfab",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "seed-bed": {
+      "hash": "787af96448979940",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "self-water-sprinkling": {
+      "hash": "ca33afe08003ce09",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "sesame-water": {
+      "hash": "d6297ed3d8f31823",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "shiva-abhishek": {
+      "hash": "bf6e97f3d4824daa",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "shiva-bilva-datura": {
+      "hash": "7a59032586319399",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "shiva-flower": {
+      "hash": "06ef106e01952d7b",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "shiva-gandha": {
+      "hash": "440e0f0635e60794",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "shiva-linga": {
+      "hash": "4d6172d56db31626",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "shiva-panchamrit": {
+      "hash": "5013931578b43d5e",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "soil-layer": {
+      "hash": "c86dfc424e4d1aff",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "sprouts": {
+      "hash": "3a8b355312f3dce5",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "tarpana": {
+      "hash": "fedd660c96614cb6",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "thali-phera": {
+      "hash": "b278fa804b898cb2",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "vastra-shringar": {
+      "hash": "96473da26477f6a6",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "vastra-yajnopavita": {
+      "hash": "1c1d5632b760f350",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "vishnu-asana-flowers": {
+      "hash": "0c9001907a654db7",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "vishnu-flowers": {
+      "hash": "52d469b245171193",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "vishnu-vastra-yajnopavita": {
+      "hash": "844996094591fd62",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "vrat-naivedya": {
+      "hash": "d05f9fff70097a88",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "water-offering-neutral": {
+      "hash": "a4d76ca3aa0562b2",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    }
+  }
+}

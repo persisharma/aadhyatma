@@ -57,6 +57,17 @@ test('the reader page maps to the shloka on screen; a title card starts the firs
   assert.equal(slokaJapaId('hanuman-chalisa', 1, 0), null);
 });
 
+test('a shloka that is also a list mantra opens that mantra, so one chant keeps one count', () => {
+  // Shiva Stotram ch. 3 is the Mahamrityunjaya mantra: its title card and shloka both open the list entry.
+  assert.equal(slokaJapaId('shiva-strotam', 3, 1), 'mahamrityunjaya-mantra');
+  assert.equal(slokaJapaId('shiva-strotam', 3, 0), 'mahamrityunjaya-mantra');
+  const mantra = getJapamMantra('mahamrityunjaya-mantra');
+  const sloka = findJapamMantra('sloka.shiva-strotam.3.1');
+  assert.ok(sloka, 'the sloka id still resolves for counts and alarms made before the alias');
+  assert.deepEqual(mantra.lines, sloka.lines);
+  assert.deepEqual(mantra.linesEn, sloka.linesEn);
+});
+
 test('sloka ids are URL-safe (the Japam widget deep link carries them)', () => {
   for (const id of allSlokaJapaIds()) assert.equal(encodeURIComponent(id), id);
 });
