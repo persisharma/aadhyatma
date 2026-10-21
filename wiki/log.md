@@ -1069,3 +1069,8 @@ Reproduced the data-test failure that treated the new root Vidhi artwork manifes
 ## [2026-10-21] ingest | PR #507 startup budget after current-main reconciliation
 
 The complete local test run passed 272 reader/component suites and the engine checks, then detected a combined launch graph of 4,095,731 bytes against the unchanged 4,090,000-byte ceiling. Deferred the Vidhi request module at the shared loader's descriptor branch, keeping the artwork manifest off the static startup graph. Added a forbidden-path regression plus shared-loader request coverage; no artwork, ritual copy or budget changed.
+
+
+## [2026-10-21] ingest | Daily Bhakti final artwork verification
+
+Reconciled current main, including six additional eligible verses (2,387 pool total), and made the Bhakti screen a literal on-demand tab route to preserve the unchanged 4,090,000-byte launch budget. All 3,546 local tests passed. The installed iOS artwork smoke passed all eighteen decoded subjects and every capture was visually reviewed; iOS/Android exports contain all 28 matching artwork hashes. Native share export, four-script preview and Standard/Large smoke reruns remain pending after the final simulator launch stalled under severe host load; no WhatsApp, Android-device or physical-device delivery is claimed. See `docs/evaluations/daily-bhakti-art-508/README.md`.

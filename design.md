@@ -1809,7 +1809,7 @@ Category, deity, purpose, katha, observance and puja-vidhi listings, plus the ch
 
 ### §39.9 Daily Bhakti: one complete devotional share image
 
-Daily Bhakti prepares one complete stored verse/meaning per language. Both screen and share use `DevotionalFrame.tsx`. Short cards preserve the approved 540×728dp baseline (1080×1456 PNG); long cards grow vertically with complete text at 1080px output width. Standard/Large reading sizes remain supported. Verse, meaning and commentary have no line cap or shrink-to-fit.
+Daily Bhakti prepares one complete stored verse/meaning per language. The Bhakti tab resolves its screen with a literal `getComponent` loader when opened, including widget deep links, keeping the expanded card implementation out of Home’s static launch graph. Both screen and share use `DevotionalFrame.tsx`. Short cards preserve the approved 540×728dp baseline (1080×1456 PNG); long cards grow vertically with complete text at 1080px output width. Standard/Large reading sizes remain supported. Verse, meaning and commentary have no line cap or shrink-to-fit.
 
 Nine lossless full masters in `assets/devotional-share/` retain the approved deity, brand plaque, continuous paper shade, floral footer, motifs and meaning frame. Only recorded editable body-letter fields are composited from text-cleared references. Manifest hashes, field bounds and zero protected-pixel changes are checked; `scripts/build-devotional-master.cjs` reproduces the composite and checks protected pixels after decoding. Full masters cost about 18MiB, with a 22MiB regression ceiling, replacing independent header/footer/ornament/paper assets. Neutral prayer keeps its existing non-deity hero and reuses the Ganesh text-cleared body treatment.
 

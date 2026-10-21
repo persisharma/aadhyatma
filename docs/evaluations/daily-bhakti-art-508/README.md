@@ -5,6 +5,17 @@ neutral additions now select one of eighteen distinct subject paintings; the oth
 retain their existing deity plates. Exact counts and source mappings are in `coverage.json`.
 General prayers and unknown sources retain the neutral fallback.
 
+## How the paintings fit
+
+The painting occupies a wide header above the existing parchment source/verse/meaning frame.
+Its full 2:1 canvas is contained inside the header; no deity face, hand, mount or shrine is
+cropped. At a 370pt card width, the scene is 185pt tall inside a roughly 192pt parchment slot.
+The artwork never stretches with the reading: native text expands the body and the footer
+moves down. Share uses this same layout at 1080px output width.
+
+Examples from the installed iOS app: [Lakshmi](native/lakshmi.jpg), [Gayatri](native/gayatri.jpg),
+[Khatu Shyam](native/khatu-shyam.jpg), [Kali](native/kali.jpg).
+
 ## Artwork and integration
 
 - Eleven subject paintings reuse the exact approved Style 3 reader-illustration bytes,
@@ -26,19 +37,32 @@ General prayers and unknown sources retain the neutral fallback.
 
 ## Verification
 
-- `npm test`: passed (typecheck, 37 widget tests, 2,639 Jest tests across 273 suites,
-  617 engine tests, 178 data tests, 49 Ask tests). A subsequent decode-readiness regression
-  also passed its focused frame/card/screen suites; final reconciliation validation is recorded below.
+- Final `npm test`: passed after reconciling `main` (typecheck, 37 widget tests,
+  2,649 Jest tests across 273 suites, 617 engine tests, 194 data tests, 49 Ask tests;
+  3,546 tests total). Final typecheck, changed-file lint, launch-graph checks and whitespace checks passed.
 - Exhaustive mapping checks cover all 330 former fallbacks, all 1,014 additions and all
   2,387 verses in four scripts. Asset checks pin original masters, new bytes/hashes,
   approved source identity, prompt provenance and growth budgets.
-- Typecheck, changed-file lint, Maestro YAML parsing and whitespace checks passed.
-- Native verification uses isolated iOS 26.5 simulator `BD91E840-482E-4816-838A-9C5247E401DA`,
-  an existing development shell and this checkout’s Metro on port 8093. The branch bundle
-  contains `hero-gayatri.webp` and the native decode-readiness selectors. No cloud build or OTA was used.
-- The initial visual review rejected blank-header captures after Metro exhausted its default
-  4 GiB heap. They are superseded by a rerun with a 12 GiB local server heap and assertions
-  that wait for every image to decode. Final native review/export evidence is still being collected.
+- The complete `daily-bhakti-art-smoke.yaml` passed on isolated iOS 26.5 simulator
+  `BD91E840-482E-4816-838A-9C5247E401DA`. All eighteen subject assertions waited for
+  successful native image decode. Every native subject capture in `native/` was visually
+  reviewed for matching identity, complete faces/hands/mounts, legible text and frame integration.
+- Both iOS and Android production exports passed. All 28 Daily Bhakti artwork files in
+  both asset maps match their manifest SHA-256; see `export-verification.json` and `export.log`.
+  This proves packaging, not Android device rendering.
+- Verification used an existing development shell and this checkout’s Metro on port 8093.
+  The branch bundle contains `hero-gayatri.webp` and the native decode-readiness selectors.
+  The Bhakti route is now loaded on demand to keep the combined launch graph below the
+  existing 4,090,000-byte ceiling. No budget was raised.
+- The initial visual review rejected blank headers after Metro exhausted its default
+  4 GiB heap. Those captures were replaced by the successful decoded-artwork run with a
+  12 GiB local server heap. A later XCTest hierarchy query on a modal returned
+  `kAXErrorInvalidUIElement`; subject coverage and share-modal verification were split.
+- **Pending:** the final four-script share-preview/real PNG export run stalled at app
+  launch during severe host load (load average above 250), and was stopped. The subsequent
+  existing Standard/Large Daily Bhakti smoke did not start. These are not claimed as passes.
+  The dedicated share flow remains authored and YAML-parsed for rerun. Android device QA,
+  physical devices and WhatsApp delivery are also unverified. No PR merge/release was performed.
 
 Reproduce native checks from `mobile/` with a dedicated simulator and this checkout’s Metro:
 

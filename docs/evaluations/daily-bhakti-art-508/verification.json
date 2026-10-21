@@ -1,0 +1,38 @@
+{
+  "poolTotal": 2387,
+  "addedVerses": 1014,
+  "formerlyNeutralCovered": 330,
+  "subjects": 18,
+  "newPaintings": 7,
+  "reusedPaintings": 11,
+  "additionalArtworkBytes": 2454670,
+  "totalArtworkBytes": 20733526,
+  "localTests": {
+    "exitCode": 0,
+    "total": 3546,
+    "jestSuites": 273,
+    "jestTests": 2649,
+    "widgets": 37,
+    "engine": 617,
+    "data": 194,
+    "ask": 49
+  },
+  "nativeArtSmoke": {
+    "exitCode": 0,
+    "platform": "iOS 26.5",
+    "subjectsDecoded": 18,
+    "allSubjectScreenshotsVisuallyReviewed": true
+  },
+  "productionAssetExports": {
+    "ios": "28 matching SHA-256 files",
+    "android": "28 matching SHA-256 files"
+  },
+  "pending": [
+    "four-script native share previews",
+    "real native PNG export",
+    "Standard/Large native smoke rerun",
+    "Android device rendering",
+    "physical devices",
+    "WhatsApp delivery"
+  ]
+}

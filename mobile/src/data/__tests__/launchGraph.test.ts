@@ -102,6 +102,8 @@ function chainTo(file: string): string {
  * text a reader screen opens on demand; none of them is needed to paint Home.
  */
 const FORBIDDEN = [
+  // The illustrated Daily Bhakti surface is needed only when its tab/deep link opens.
+  /^src\/screens\/DailyBhaktiScreen\.tsx$/,
   /^src\/data\/gita\/chapter-\d+\.json$/,
   /^src\/data\/valmiki-ramayan\/chapter-\d+\.json$/,
   /^src\/panchang\/pincode(Data|Offices)\.json$/,

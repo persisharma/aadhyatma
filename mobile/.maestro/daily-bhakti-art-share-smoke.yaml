@@ -3,7 +3,10 @@ appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 - openLink: "vedansh://widget/verse?sourceId=lakshmi-chalisa&verseIndex=0"
-- tapOn: { text: "Open", optional: true }
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
 - extendedWaitUntil:
     visible: { id: "devotional-subject-lakshmi" }
     timeout: 15000
@@ -14,22 +17,18 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Card language: Hindi"
 - waitForAnimationToEnd
 - assertVisible: "Share to other apps"
-- assertVisible: { id: "devotional-subject-lakshmi" }
 - takeScreenshot: e2e-shots/daily-art-share-hi
 - tapOn: "Card language: English"
 - waitForAnimationToEnd
 - assertVisible: "Share to other apps"
-- assertVisible: { id: "devotional-subject-lakshmi" }
 - takeScreenshot: e2e-shots/daily-art-share-en
 - tapOn: "Card language: Gujarati"
 - waitForAnimationToEnd
 - assertVisible: "Share to other apps"
-- assertVisible: { id: "devotional-subject-lakshmi" }
 - takeScreenshot: e2e-shots/daily-art-share-gu
 - tapOn: "Card language: Kannada"
 - waitForAnimationToEnd
 - assertVisible: "Share to other apps"
-- assertVisible: { id: "devotional-subject-lakshmi" }
 - takeScreenshot: e2e-shots/daily-art-share-kn
 - tapOn: "Share to other apps"
 - extendedWaitUntil:

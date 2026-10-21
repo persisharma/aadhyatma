@@ -118,8 +118,8 @@ The eighteen paintings cover all 330 previously neutral new verses, with distinc
 Khatu Shyam and Devi forms. Eleven copy approved reader illustration bytes into this local
 asset set; seven are new generated scenes. The new headers use `contain` with the cleared
 Ganesha body/footer (no Ganesha hero) and add 2.34MiB, for a 19.77MiB total under the 22MiB
-contract. All scripture and meanings remain native, unrestricted text. Share waits for every
-image section and the final measured layout; long readings grow instead of splitting.
+contract. All scripture and meanings remain native, unrestricted text. The Bhakti tab uses a literal `getComponent` loader, keeping its expanded screen off Home’s
+static launch graph. Share waits for every image section and the final measured layout; long readings grow instead of splitting.
 See [[integrations/reading-artwork]] for the separate reader CDN pipeline.
 `ProseParagraph` preserves complete source strings while giving iOS Fabric one extra point of
 drawing height after natural layout, avoiding observed Kannada final-line clipping. Measurement
