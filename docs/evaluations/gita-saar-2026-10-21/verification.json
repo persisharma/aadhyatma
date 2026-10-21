@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-21",
+  "pr": 502,
+  "review_comments": {
+    "issue_comments": 0,
+    "reviews": 0,
+    "inline_comments": 0
+  },
+  "full_test": {
+    "command": "cd mobile && npm test",
+    "exit_code": 0,
+    "typecheck": "passed",
+    "widgets": 37,
+    "jest": {
+      "suites": 270,
+      "tests": 2616
+    },
+    "engine": 617,
+    "data": 178,
+    "ask": 49,
+    "total_tests": 3497
+  },
+  "native": {
+    "platform": "iOS 26.4 simulator",
+    "device": "575E0F9E-245D-477B-A9A7-9F93DDB2622B",
+    "scope": [
+      "Hindi Standard title, icon listing from start to end, opening reader and complete first Saar",
+      "English Standard complete first Saar, long theme-10 title, handoff to Gita 6.32",
+      "English Large complete first Saar",
+      "Gujarati Large index title and complete first Saar",
+      "Kannada Large index title/icons and complete first Saar"
+    ],
+    "exhaustive_170_page_audit": false,
+    "android": false
+  },
+  "maestro": "running"
+}

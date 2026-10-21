@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
+import ProseParagraph from '@/components/ProseParagraph';
+import GitaSaarThemeIcon, { gitaSaarThemeIcons } from '@/components/GitaSaarThemeIcon';
+import ReadingBanner from '@/components/ReadingBanner';
+import CachedArtwork from '@/components/CachedArtwork';
 import { FlatList, StyleSheet, Text, View as mockView } from 'react-native';
 
 jest.mock('expo-haptics', () => ({
@@ -92,7 +96,7 @@ test('opening artwork overrides intrinsic image dimensions and preserves its com
   const style = StyleSheet.flatten(artwork.props.style);
   assert.equal(typeof style.width, 'number');
   assert.equal(style.height, style.width / 2);
-  assert.equal(artwork.props.resizeMode, 'contain');
+  assert.equal(artwork.findByType(CachedArtwork).props.resizeMode, 'contain');
   act(() => tree.unmount());
 });
 
@@ -148,4 +152,38 @@ test('the list holds exactly the theme pages (no transition cards while one them
 test('the last page carries the closing line', () => {
   const { renderedText } = render(chapter.verseCount - 1);
   assert.ok(renderedText.includes(chapter.closingHi));
+});
+
+const GitaSaarThemesScreen = jest.requireActual<typeof import('../GitaSaarThemesScreen')>(
+  '../GitaSaarThemesScreen'
+).default;
+
+test.each(['hi', 'en', 'gu', 'kn'] as const)('%s listing keeps complete titles and uses an icon for every theme', (lang) => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  const navigate = jest.fn();
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang={lang}>
+        <ShareProvider>
+          <GitaSaarThemesScreen navigation={{ goBack: jest.fn(), navigate } as never} route={{ key: 'themes', name: 'GitaSaarChapters' }} />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  const icons = tree.root.findAllByType(GitaSaarThemeIcon);
+  assert.deepEqual(icons.map(node => node.props.themeId), gitaSaarChaptersManifest.map(theme => theme.id));
+  assert.ok(gitaSaarChaptersManifest.every(theme => gitaSaarThemeIcons[theme.id]));
+  const paragraphs = tree.root.findAllByType(ProseParagraph);
+  assert.ok(paragraphs.length > gitaSaarChaptersManifest.length);
+  assert.ok(paragraphs.every(node => node.props.numberOfLines === undefined));
+  const title = paragraphs[0];
+  const style = StyleSheet.flatten(title.props.style);
+  assert.ok(style.paddingTop >= 8, 'title needs space for script ascenders below the banner');
+  assert.ok(style.lineHeight >= style.fontSize * 1.5);
+  const banner = tree.root.findByType(ReadingBanner);
+  assert.equal(banner.findByType(CachedArtwork).props.resizeMode, 'contain');
+  const buttons = tree.root.findAll(node => typeof node.props.onPress === 'function' && node.props.accessibilityRole === 'button' && String(node.props.accessibilityLabel).endsWith('Tap to open.'));
+  act(() => buttons[buttons.length - 1].props.onPress());
+  expect(navigate).toHaveBeenCalledWith('GitaSaarReader', { chapter: 16, initialIndex: 0 });
+  act(() => tree.unmount());
 });

@@ -512,8 +512,23 @@ visual pass above. English/Standard QA preferences were restored.
 - User confirmed on 2026-10-21 that vertical scrolling reaches the complete content and full-Gita handoff.
 - Restored the existing source-specific Krishna–Arjuna content background through `getReaderBackground` and the shared `BackgroundLayer` readability overlay; native appearance of this restoration remains pending.
 
-## Pending
+## Initial result
 
-- Repeat the long-content inspection with the Large reading size and regional languages. Focused type-scale tests are not device visual proof.
+The first iteration was blocked on native background and Large/regional review. The 21 October correction review below supersedes that status.
 
-final result: blocked
+## Correction review — 21 October 2026
+
+- P2: clipped index title at the artwork boundary. Fixed with a padded 64 dp title line box and `ProseParagraph`; native Hindi and regional index captures show the complete title below the image.
+- P2: plain numerals in the listing. Replaced by topic-specific Phosphor icons keyed to all 16 stable IDs. Native Hindi captures cover the listing from start through final theme; Gujarati/Kannada captures retain their existing language toggle.
+- P2: some headings/labels still used raw Text. All Saar page and index prose now use the existing Fabric-safe paragraph wrapper without line limits. The verse reference/actions row can wrap.
+- P2: artwork bypassed the delivery contract. Both surfaces now use `ReadingBanner`, approved remote aliases and a full-width parchment fallback. Existing banner placement and artwork delivery checks pass.
+- Post-fix comparison: reopened the selected index/reader designs and native captures together. The rich full-color painting, existing two-segment language toggle/control row, native navigation chrome, background and scrollable page are accepted user constraints that supersede the generated mockup. Matched the title → context → painting → reference → shloka → lotus → Saar → handoff hierarchy. Full text extends below the native viewport and remains scrollable; it is not compressed to fit the tall generated image.
+- Fidelity surfaces inspected: parchment/gold palette; script/Latin font families; title and row wrapping; complete 2:1 subjects; lotus/icon language; existing controls and their positions; paragraph endings and handoff reachability. Screenshots and precise scope: [21 October review](docs/evaluations/gita-saar-2026-10-21/review.md).
+- Automated: TypeScript and all 3,497 tests pass via `npm test`. New listing regression covers Hindi, English, Gujarati and Kannada, all icons, unrestricted title wrapping and final-theme navigation.
+- Native iOS: Hindi Standard opening/full first Saar, complete listing, English Standard full first Saar and long theme-10 heading, correct handoff to Gita 6.32; Large first Saar in English/Gujarati/Kannada. The existing devotional content background and approved rich banner render together.
+
+### Coverage limits
+
+No exhaustive 170-page visual audit, Android/physical-device review, or OS accessibility enlargement beyond the app's Large preset was performed. These are open coverage items, not claimed by this scoped iOS correction pass. Maestro is recorded separately in the linked verification record.
+
+final result: passed

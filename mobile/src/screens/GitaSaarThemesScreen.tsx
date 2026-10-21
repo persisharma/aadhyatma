@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Pressable, ScrollView, StatusBar, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, ScrollView, StatusBar, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
@@ -11,6 +11,12 @@ import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getSourceBackground } from '@/data/backgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
 import HomeWordmark from '@/components/HomeWordmark';
+import BackgroundLayer from '@/components/BackgroundLayer';
+import { readingParchment } from '@/data/backgroundAsset';
+import ReadingBanner from '@/components/ReadingBanner';
+import ProseParagraph from '@/components/ProseParagraph';
+import AppIcon from '@/components/AppIcon';
+import GitaSaarThemeIcon from '@/components/GitaSaarThemeIcon';
 import GitaSaarDivider from '@/components/GitaSaarDivider';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
@@ -74,17 +80,16 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
           showsVerticalScrollIndicator={false}
         >
           <View style={[styles.hero, { height: heroHeight }]}>
-            <Image
-              source={require('@assets/reader-illustrations/krishna-arjuna-vishvarupa.webp')}
-              style={{ width, height: heroHeight }}
-              resizeMode="contain"
-              accessible={false}
-              accessibilityElementsHidden
+            <ReadingBanner
+              source={getSourceBackground('gita-saar')!}
+              testID="gita-saar-index-artwork"
+              fallback={<BackgroundLayer source={readingParchment} />}
+              style={{ width, height: heroHeight, maxWidth: width, maxHeight: heroHeight }}
             />
           </View>
 
           <View style={[styles.content, { paddingHorizontal: spacing.screenGutter }]}>
-            <Text
+            <ProseParagraph
               style={[
                 styles.title,
                 {
@@ -96,8 +101,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
               ]}
             >
               {title}
-            </Text>
-            <Text
+            </ProseParagraph>
+            <ProseParagraph
               style={[
                 styles.total,
                 {
@@ -107,8 +112,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
               ]}
             >
               {totalLabel}
-            </Text>
-            <Text
+            </ProseParagraph>
+            <ProseParagraph
               style={[
                 styles.lede,
                 {
@@ -119,7 +124,7 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
               ]}
             >
               {lede}
-            </Text>
+            </ProseParagraph>
 
             <View style={styles.toggleRow}>
               <LanguageToggle />
@@ -127,7 +132,7 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
 
             <GitaSaarDivider />
             <View style={[styles.sectionHeading, { borderBottomColor: colors.divider }]}>
-              <Text
+              <ProseParagraph
                 style={[
                   styles.sectionTitle,
                   {
@@ -137,7 +142,7 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                 ]}
               >
                 {themeLabel}
-              </Text>
+              </ProseParagraph>
               <View style={[styles.ornament, { backgroundColor: colors.gold }]} />
             </View>
 
@@ -160,12 +165,12 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                     accessibilityLabel={a11yLabel}
                     style={({ pressed }) => [styles.themeRow, pressed && styles.pressed]}
                   >
-                    <Text style={[styles.number, { color: colors.gold, fontFamily: fontFamilies.latin }]}>
-                      {String(theme.chapter).padStart(2, '0')}
-                    </Text>
+                    <View style={[styles.themeIcon, { backgroundColor: colors.saffronTint }]}>
+                      <GitaSaarThemeIcon themeId={theme.id} />
+                    </View>
                     <View style={[styles.rowDivider, { backgroundColor: colors.divider }]} />
                     <View style={styles.themeMeta}>
-                      <Text
+                      <ProseParagraph
                         style={[
                           styles.themeTitle,
                           {
@@ -175,10 +180,10 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                         ]}
                       >
                         {themeTitle}
-                      </Text>
-                      <Text style={[styles.verseMeta, { color: colors.inkMuted }]}>{verseMeta}</Text>
+                      </ProseParagraph>
+                      <ProseParagraph style={[styles.verseMeta, { color: colors.inkMuted }]}>{verseMeta}</ProseParagraph>
                     </View>
-                    <Text accessibilityElementsHidden style={[styles.chevron, { color: colors.saffronDeep }]}>›</Text>
+                    <AppIcon name="next" size={22} color={colors.saffronDeep} />
                     {index < gitaSaarChaptersManifest.length - 1 && (
                       <View style={[styles.separator, { backgroundColor: colors.divider }]} />
                     )}
@@ -199,8 +204,8 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   scrollContent: { paddingBottom: 28 },
   hero: { width: '100%', overflow: 'hidden' },
-  content: { paddingTop: 20 },
-  title: { includeFontPadding: true, lineHeight: 52 },
+  content: { paddingTop: 24 },
+  title: { includeFontPadding: true, lineHeight: 64, paddingTop: 8, paddingBottom: 8 },
   total: { marginTop: 2, fontSize: 17, lineHeight: 25 },
   lede: { marginTop: 8, fontSize: 15, lineHeight: 23 },
   toggleRow: { alignItems: 'flex-end', marginTop: 16, marginBottom: 12 },
@@ -221,11 +226,10 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   pressed: { opacity: 0.72 },
-  number: { width: 58, fontSize: 32, lineHeight: 40, includeFontPadding: false },
-  rowDivider: { width: 1, height: 40, marginRight: 16 },
+  themeIcon: { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center', marginRight: 14 },
+  rowDivider: { width: 1, alignSelf: 'stretch', marginVertical: 4, marginRight: 16 },
   themeMeta: { flex: 1, minWidth: 0, gap: 2 },
-  themeTitle: { fontSize: 19, lineHeight: 27 },
+  themeTitle: { fontSize: 19, lineHeight: 32, paddingVertical: 3 },
   verseMeta: { fontSize: 14, lineHeight: 20 },
-  chevron: { fontSize: 28, marginLeft: 12, includeFontPadding: false },
   separator: { position: 'absolute', bottom: 0, left: 74, right: 0, height: StyleSheet.hairlineWidth },
 });

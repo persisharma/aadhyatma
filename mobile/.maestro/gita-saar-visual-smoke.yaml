@@ -1,0 +1,74 @@
+# Gita Saar title, wrapping, vertical reading, and full-Gita handoff.
+# Screenshots complement assertions: text presence alone cannot detect glyph clipping.
+appId: com.prashantsharma.vedansh
+---
+# Reuse this isolated simulator's profile. The shared fresh-install boot flow
+# currently taps Begin behind the native LogBox overlay; handle that explicitly.
+- launchApp:
+    clearState: false
+    arguments:
+      RCT_jsLocation: "127.0.0.1:8084"
+- extendedWaitUntil:
+    visible: "Skip tour|Begin|.*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 90000
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- tapOn:
+    id: logbox_dismiss_button_warn
+    optional: true
+- tapOn:
+    text: "Begin"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 30000
+- scrollUntilVisible:
+    element:
+      text: "Sacred Books.*Tap to open."
+    direction: DOWN
+- tapOn: "Sacred Books.*Tap to open."
+- scrollUntilVisible:
+    element:
+      text: "Gita Saar\\..*Tap to open\\."
+    direction: DOWN
+- tapOn: "Gita Saar\\..*Tap to open\\."
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: lang-toggle-en
+    timeout: 30000
+- takeScreenshot: gita-saar-hi-title
+- tapOn:
+    id: lang-toggle-en
+- scrollUntilVisible:
+    element:
+      text: "True Prema\\. 19 verses\\. Tap to open\\."
+    direction: DOWN
+- takeScreenshot: gita-saar-theme-icons
+- tapOn: "True Prema\\. 19 verses\\. Tap to open\\."
+- extendedWaitUntil:
+    visible: "Before love is a feeling.*"
+    timeout: 30000
+- takeScreenshot: gita-saar-en-opening
+- scrollUntilVisible:
+    element:
+      id: gita-saar-open-in-gita
+      index: 0
+    direction: DOWN
+    centerElement: true
+    visibilityPercentage: 100
+- takeScreenshot: gita-saar-en-complete-saar
+- tapOn:
+    id: gita-saar-open-in-gita
+    index: 0
+- extendedWaitUntil:
+    visible: "Chapter 6.*Path of Meditation"
+    timeout: 30000
+- assertVisible: "32 / 47"
+- takeScreenshot: gita-saar-full-gita-handoff

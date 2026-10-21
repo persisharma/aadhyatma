@@ -80,6 +80,7 @@ Tuning via env: `E2E_VISUAL_THRESH` (default 0.10 %), `E2E_DIFF_TOL` (default 10
 | Flow | Purpose |
 |---|---|
 | `_launch.yaml` | **Shared subflow** — boots Expo Go, opens Vedansh, waits for Home, and dismisses the first-launch feature tour if it auto-appeared (optional `Skip` tap — a no-op once the tour has been seen). Used by every category smoke via `runFlow: _launch.yaml`. |
+| `gita-saar-visual-smoke.yaml` | Gita Saar: title, themed icon listing, complete Saar scrolling, and handoff to Gita 6.32. |
 | `granth-smoke.yaml` | Granth: 5 sections (Bhagavad Gītā, Gita Saar, Sundarkand, Ramcharitmanas, Valmiki Ramayan). Verifies all 7 Valmiki kāṇḍas and opens Uttara Kāṇḍa. |
 | `gita-smoke.yaml` | Bhagavad Gītā **chaptered reader** — the path `granth-smoke` skips. Home → Sacred Books → Bhagavad Gītā → chapter index → Chapter 1 reader; exercises horizontal verse paging and the `JumpToStartButton` "back to verse 1" pill (PR #97). Auto-advance to the next chapter (PR #29) is scroll-velocity driven (~47 swipes), so it's unit-tested in `src/screens/__tests__/gitaAutoAdvance.test.tsx` instead. |
 | `stotram-smoke.yaml` | Stotram: 7 sections. Opens Bajrang Baan (matches the jest smoke test). |

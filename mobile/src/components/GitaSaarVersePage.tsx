@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -18,8 +18,10 @@ import {
   pillTextStyle,
 } from '@/utils/langType';
 import type { GitaSaarVerse } from '@/data/gita-saar';
+import { readingParchment } from '@/data/backgroundAsset';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
+import ReadingBanner from './ReadingBanner';
 import GitaSaarDivider from './GitaSaarDivider';
 import ProseParagraph from './ProseParagraph';
 
@@ -126,14 +128,14 @@ export default function GitaSaarVersePage({
       >
         <View style={{ paddingHorizontal: spacing.screenGutter }}>
           {chapterTitle ? (
-            <Text style={[styles.chapterTitle, {
+            <ProseParagraph style={[styles.chapterTitle, {
               color: colors.ink,
               fontFamily: lang === 'en' ? fontFamilies.latinBold : scriptTitleFont(lang, typography.screenTitle.fontFamily),
               fontSize: typography.screenTitle.fontSize,
-            }]}>{chapterTitle}</Text>
+            }]}>{chapterTitle}</ProseParagraph>
           ) : null}
           {/* Group eyebrow: which section of the reading order this page belongs to. */}
-          <Text
+          <ProseParagraph
             testID="gita-saar-group"
             style={[
               styles.eyebrow,
@@ -142,7 +144,7 @@ export default function GitaSaarVersePage({
             ]}
           >
             {groupTitle}
-          </Text>
+          </ProseParagraph>
           {verse.isGroupStart ? (
             <ProseParagraph
               style={[
@@ -162,10 +164,10 @@ export default function GitaSaarVersePage({
 
         </View>
         {showIllustration ? (
-          <Image source={require('@assets/reader-illustrations/krishna-arjuna-vishvarupa.webp')}
+          <ReadingBanner source={getReaderBackground(sourceId, verse)!}
             testID="gita-saar-opening-artwork"
-            style={[styles.hero, { width, height: width / 2 }]}
-            resizeMode="contain" accessible={false} accessibilityElementsHidden />
+            fallback={<BackgroundLayer source={readingParchment} />}
+            style={[styles.hero, { width, height: width / 2, maxWidth: width, maxHeight: width / 2 }]} />
         ) : null}
         <View style={{ paddingHorizontal: spacing.screenGutter }}>
           <View style={styles.headerRow}>
@@ -174,11 +176,11 @@ export default function GitaSaarVersePage({
               accessibilityLabel={a11yLabel}
               style={[styles.pill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}
             >
-              <Text
+              <ProseParagraph
                 style={[styles.pillText, pillTextStyle(lang, typography.versePill), { color: colors.saffronDeep }]}
               >
                 {pillText}
-              </Text>
+              </ProseParagraph>
             </View>
             {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
           </View>
@@ -202,8 +204,8 @@ export default function GitaSaarVersePage({
 
           <GitaSaarDivider />
 
-          <Text style={[styles.sectionLabel, labelStyle]}>{saarLabel}</Text>
-          <Text
+          <ProseParagraph style={[styles.sectionLabel, labelStyle]}>{saarLabel}</ProseParagraph>
+          <ProseParagraph
             style={[
               styles.themeLine,
               {
@@ -216,7 +218,7 @@ export default function GitaSaarVersePage({
             ]}
           >
             {themeLine}
-          </Text>
+          </ProseParagraph>
           <ProseParagraph style={[styles.body, bodyStyle]}>{saar}</ProseParagraph>
 
           {onOpenInGita ? (
@@ -232,7 +234,7 @@ export default function GitaSaarVersePage({
                 pressed && { opacity: 0.86 },
               ]}
             >
-              <Text
+              <ProseParagraph
                 style={{
                   color: colors.saffronDeep,
                   fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.readerTitle.fontFamily),
@@ -242,14 +244,14 @@ export default function GitaSaarVersePage({
                 }}
               >
                 {openInGitaLabel}
-              </Text>
+              </ProseParagraph>
             </Pressable>
           ) : null}
 
           {closingText ? (
             <>
               <GitaSaarDivider />
-              <Text style={[styles.sectionLabel, labelStyle]}>{closingLabel}</Text>
+              <ProseParagraph style={[styles.sectionLabel, labelStyle]}>{closingLabel}</ProseParagraph>
               <ProseParagraph style={[styles.body, styles.closing, bodyStyle]}>{closingText}</ProseParagraph>
             </>
           ) : null}
@@ -272,12 +274,14 @@ const styles = StyleSheet.create({
     // Clears the pager-dots overlay and the screen/tab-bar seam (design.md B2).
     paddingBottom: 64,
   },
-  chapterTitle: { lineHeight: 48, marginBottom: 6 },
+  chapterTitle: { lineHeight: 54, paddingVertical: 8, marginBottom: 6 },
   hero: { alignSelf: 'center', marginTop: 8, marginBottom: 18 },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: 8,
     marginBottom: 14,
   },
   headerActions: {
@@ -286,12 +290,14 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   pill: {
+    maxWidth: '100%',
+    flexShrink: 1,
     paddingHorizontal: 12,
     paddingVertical: 4,
   },
   pillText: {
     textTransform: 'uppercase',
-    includeFontPadding: false,
+    includeFontPadding: true,
   },
   eyebrow: {
     marginBottom: 6,
@@ -314,6 +320,7 @@ const styles = StyleSheet.create({
   },
   themeLine: {
     textAlign: 'left',
+    paddingVertical: 4,
     marginBottom: 10,
   },
   body: {
