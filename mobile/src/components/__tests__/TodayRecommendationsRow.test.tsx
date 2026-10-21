@@ -145,16 +145,58 @@ describe('TodayRecommendationsRow', () => {
     const cards = tree.root
       .findAllByType(View)
       .filter((node) => node.props.accessibilityLabel?.startsWith('recommendation-'));
-    expect(cards).toHaveLength(2);
-    expect(renderedFeatureCardProps.map((props) => props.width)).toEqual([196, 196]);
+    // गीता सार is pinned to the lead on an ordinary day, ahead of the engine's
+    // two recommendations.
+    expect(cards).toHaveLength(3);
+    expect(renderedFeatureCardProps.map((props) => props.width)).toEqual([196, 196, 196]);
     // The FOR TODAY row is a name-only strip, not the taller DISCOVER
     // spotlight: every card must opt into `compact`.
     expect(renderedFeatureCardProps.every((props) => props.compact === true)).toBe(true);
     expect(renderedFeatureCardProps.map((props) => props.item.titleEn)).toEqual([
+      'Gita Saar',
       'Vishnu Sahasranama Excerpt',
       'Vishnu Chalisa',
     ]);
     expect(renderedFeatureCardProps.every((props) => props.item.descEn === 'Recommended for today')).toBe(true);
+  });
+
+  // गीता सार is a standing door into the themed Gita readings, pinned to the
+  // lead of the FOR TODAY row on every ordinary day (design.md §50).
+  test('गीता सार leads the row on an ordinary day', () => {
+    act(() => {
+      mountRow();
+    });
+    expect(renderedFeatureCardProps[0].item.titleEn).toBe('Gita Saar');
+    expect(renderedFeatureCardProps[0].item.key).toBe('gita-saar');
+  });
+
+  // The pin must never double the card if the engine already surfaced गीता सार
+  // (it is a Krishna text, so it rides Krishna's weekday on its own).
+  test('does not duplicate गीता सार when the engine already includes it', () => {
+    mockRecommendations = [
+      { entry: { id: 'gita-saar', nameHi: 'गीता सार', nameEn: 'Gita Saar', thumb: 'सा', category: 'granth', status: 'active', hidden: false } },
+      { entry: entries[0] },
+    ];
+    act(() => {
+      mountRow();
+    });
+    const gitaCards = renderedFeatureCardProps.filter((p) => p.item.key === 'gita-saar');
+    expect(gitaCards).toHaveLength(1);
+    expect(renderedFeatureCardProps[0].item.titleEn).toBe('Gita Saar');
+  });
+
+  // On a festival day the festival reading must still lead — गीता सार is not
+  // pinned ahead of it (keeps the festive-reminder ⇄ FOR TODAY contract).
+  test('does not pin गीता सार ahead of a festival card', () => {
+    mockRecommendations = [
+      { entry: entries[0], festivalHi: 'दीपावली', festivalEn: 'Diwali' },
+      { entry: entries[1] },
+    ];
+    act(() => {
+      mountRow();
+    });
+    expect(renderedFeatureCardProps[0].item.titleEn).toBe('Vishnu Sahasranama Excerpt');
+    expect(renderedFeatureCardProps.some((p) => p.item.key === 'gita-saar')).toBe(false);
   });
 
   test('enlarged text widens the recommendation without exceeding the phone gutter', () => {
