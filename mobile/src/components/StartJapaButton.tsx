@@ -5,34 +5,41 @@ import AppIcon from '@/components/AppIcon';
 import { useTheme } from '@/theme/ThemeContext';
 import { radii } from '@/theme/spacing';
 import { useGitaLanguage } from '@/data/gita/language';
-import { stotramPaathId } from '@/data/japam';
+import { isSlokaJapaSource, slokaJapaId } from '@/data/japam';
 import { pick } from '@/utils/localize';
 import type { RootStackParamList } from '@/navigation/types';
 
 /**
  * "Start as japa" for a stotram reader (design.md §35.1): opens the JapaMala
- * counter on this stotra, one bead per complete recitation. Pinned to the LEFT
- * edge of the language-toggle row, mirroring the read-aloud pill on the right,
- * so the centred toggle + add-to-routine group keeps its room (§56.2).
- * Renders nothing for a source that is not a stotram.
+ * counter on the shloka on screen, chanted like a mantra — one bead per
+ * recitation of that shloka. Pinned to the LEFT edge of the language-toggle
+ * row, mirroring the read-aloud pill on the right, so the centred toggle +
+ * add-to-routine group keeps its room (§56.2). Renders nothing for a source
+ * that is not a stotram.
  */
 export default function StartJapaButton({
   sourceId,
-  chapter,
+  chapter = 1,
+  verseIndex,
   navigation,
 }: {
   sourceId: string;
+  /** Omitted by single-chapter readers (the stuti registry). */
   chapter?: number;
+  /** The reader's current page in `chapter`; a title card starts its first shloka. */
+  verseIndex: number;
   /** The reader's own navigation — both screens live on the Home stack. */
   navigation: Pick<NativeStackNavigationProp<RootStackParamList>, 'navigate'>;
 }) {
   const { colors } = useTheme();
   const { lang } = useGitaLanguage();
-  const mantraId = stotramPaathId(sourceId, chapter);
-  if (!mantraId) return null;
+  if (!isSlokaJapaSource(sourceId)) return null;
   return (
     <Pressable
-      onPress={() => navigation.navigate('JapamCounter', { mantraId })}
+      onPress={() => {
+        const mantraId = slokaJapaId(sourceId, chapter, verseIndex);
+        if (mantraId) navigation.navigate('JapamCounter', { mantraId });
+      }}
       accessibilityRole="button"
       // English and un-localized, like the read-aloud pill: Maestro taps it literally.
       accessibilityLabel="Start as japa"

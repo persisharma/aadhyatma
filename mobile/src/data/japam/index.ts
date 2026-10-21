@@ -1,6 +1,6 @@
 import type { Deity } from '../texts';
 import raw from './japam.json';
-import { findStotramPaath, type JapamPaath } from './paath';
+import { findSlokaJapa, type JapamSloka } from './sloka';
 
 export type JapamMantra = {
   id: string;
@@ -17,8 +17,8 @@ export type JapamMantra = {
   source?: { baseText: string; referenceUrls: string[]; retrievedOn: string };
   /** Naam japa: the line is a single divine name, chanted and counted one name per bead. */
   naam?: boolean;
-  /** Stotra paath (`./paath.ts`): one bead is one complete recitation of the stotra. */
-  paath?: JapamPaath;
+  /** Sloka japa (`./sloka.ts`): one shloka of a stotram, chanted like a mantra. */
+  sloka?: JapamSloka;
 };
 
 const validDeities: ReadonlySet<Deity> = new Set([
@@ -104,14 +104,14 @@ export function getJapamMantra(id: string): JapamMantra {
 
 /**
  * Like `getJapamMantra` but returns null for unknown ids instead of throwing.
- * Resolves stotra paath ids too, so every id-keyed consumer (counter, alarms,
+ * Resolves sloka-japa ids too, so every id-keyed consumer (counter, alarms,
  * widgets, deep links) accepts them; lists of mantras stay `japamMantras`.
  */
 export function findJapamMantra(id: string): JapamMantra | null {
-  return japamMantras.find((m) => m.id === id) ?? findStotramPaath(id);
+  return japamMantras.find((m) => m.id === id) ?? findSlokaJapa(id);
 }
 
-export { allStotramPaathIds, paathSourceIds, stotramPaathId, type JapamPaath } from './paath';
+export { allSlokaJapaIds, isSlokaJapaSource, slokaJapaId, slokaJapaSourceIds, type JapamSloka } from './sloka';
 
 /** Beads per round in a traditional japa mala. */
 export const JAPAM_BEADS_PER_ROUND = 108;

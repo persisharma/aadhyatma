@@ -101,10 +101,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   // Naam japa (a single divine name, e.g. राधा): the name reads large and gives
   // a small pulse on every bead, so each name visibly lands on the mala.
   const naam = mantra?.naam === true;
-  // Stotra paath (§35.1): one bead is one complete recitation, so the head names
-  // the stotra and its full text opens in a sheet instead of filling the surface.
-  const paath = mantra?.paath ?? null;
-  const [paathSheetOpen, setPaathSheetOpen] = useState(false);
+  // Sloka japa (§35.1): one shloka of a stotram, chanted like a mantra. Its
+  // name (stotra · shloka N) sits under the lines, as naam japa's does.
+  const sloka = mantra?.sloka ?? null;
   const reduceMotion = useReducedMotion();
   const nameBeat = useRef(new Animated.Value(1)).current;
   const beatPrimedRef = useRef(false);
@@ -186,12 +185,12 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const screenTitle = pick(lang, { hi: 'जपमाला', en: 'JapaMala', gu: 'જપમાળા', kn: 'ಜಪಮಾಲೆ' });
 
   const todayBeads = activity[toDateKey(new Date())]?.japa[mantra.id]?.beads ?? 0;
-  const todayLabel = paath
+  const todayLabel = sloka
     ? pick(lang, {
-        hi: `आज ${todayBeads} पाठ`,
-        en: `${todayBeads} paath today`,
-        gu: `આજે ${todayBeads} પાઠ`,
-        kn: `ಇಂದು ${todayBeads} ಪಾರಾಯಣ`,
+        hi: `आज ${todayBeads} श्लोक`,
+        en: `${todayBeads} shloka today`,
+        gu: `આજે ${todayBeads} શ્લોક`,
+        kn: `ಇಂದು ${todayBeads} ಶ್ಲೋಕ`,
       })
     : naam
     ? pick(lang, {
@@ -226,12 +225,12 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         gu: 'સાંભળો · મંત્ર સાથે મણકા આગળ વધે છે',
         kn: 'ಆಲಿಸಿ · ಮಂತ್ರದೊಂದಿಗೆ ಮಣಿಗಳು ಮುಂದುವರಿಯುತ್ತವೆ',
       })
-    : paath
+    : sloka
       ? pick(lang, {
-          hi: 'स्पर्श करें · हर पाठ एक मनका',
-          en: 'Tap · one bead per paath',
-          gu: 'સ્પર્શ કરો · દરેક પાઠે એક મણકો',
-          kn: 'ಸ್ಪರ್ಶಿಸಿ · ಪ್ರತಿ ಪಾರಾಯಣಕ್ಕೆ ಒಂದು ಮಣಿ',
+          hi: 'स्पर्श करें · हर श्लोक एक मनका',
+          en: 'Tap · one bead per shloka',
+          gu: 'સ્પર્શ કરો · દરેક શ્લોકે એક મણકો',
+          kn: 'ಸ್ಪರ್ಶಿಸಿ · ಪ್ರತಿ ಶ್ಲೋಕಕ್ಕೆ ಒಂದು ಮಣಿ',
         })
     : naam
       ? pick(lang, {
@@ -251,7 +250,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      <BackgroundLayer source={getSourceBackground(paath?.sourceId ?? mantra.id)} />
+      <BackgroundLayer source={getSourceBackground(sloka?.sourceId ?? mantra.id)} />
       {/* The visible bottom tab bar already owns the bottom safe-area inset. */}
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={styles.topBar}>
@@ -324,12 +323,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                     sourceId: mantra.id,
                     sectionNameHi: mantra.nameHi,
                     sectionNameEn: mantra.nameEn,
-                    verseLabelHi: paath
-                      ? `पाठ जप · ${entry.rounds * JAPAM_BEADS_PER_ROUND + entry.count} पाठ`
-                      : `जप · ${entry.rounds} आवृत्ति`,
-                    verseLabelEn: paath
-                      ? `Paath japa · ${entry.rounds * JAPAM_BEADS_PER_ROUND + entry.count} recitations`
-                      : `Japa · ${entry.rounds} rounds`,
+                    verseLabelHi: `जप · ${entry.rounds} आवृत्ति`,
+                    verseLabelEn: `Japa · ${entry.rounds} rounds`,
                     linesHi: [...mantra.lines],
                     linesEn: [...mantra.linesEn],
                     meaningHi: mantra.meaningHi,
@@ -351,7 +346,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <Pressable
             onPress={handleTap}
             accessibilityRole="button"
-            accessibilityLabel={`${titleEn}. Tap to count ${paath ? 'one complete recitation' : 'one bead'}. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this mala, ${entry.rounds} malas completed.`}
+            accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this mala, ${entry.rounds} malas completed.`}
             style={({ pressed }) => [
               styles.tapContent,
               { paddingHorizontal: spacing.xxl },
@@ -360,10 +355,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           >
             <View style={styles.headBlock} onLayout={(e) => setHeadH(e.nativeEvent.layout.height)}>
               <Animated.View style={[styles.mantraBlock, { transform: [{ scale: nameBeat }] }]}>
-                {(paath
-                  ? [contentByLang(lang, mantra.nameHi, mantra.nameEn)]
-                  : verseLinesByLang(lang, mantra.lines, mantra.linesEn)
-                ).map((line, i) => (
+                {verseLinesByLang(lang, mantra.lines, mantra.linesEn).map((line, i) => (
                   <Text
                     key={`${lang}-${i}`}
                     style={[
@@ -387,27 +379,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                   </Text>
                 ))}
               </Animated.View>
-              {paath ? (
-                <Text
-                  style={[
-                    styles.naamCaption,
-                    {
-                      color: colors.inkMuted,
-                      fontFamily: isLatinLang(lang)
-                        ? typography.cardLatin.fontFamily
-                        : scriptSerif ?? typography.verse.fontFamily,
-                    },
-                  ]}
-                >
-                  {pick(lang, {
-                    hi: `${paath.verseCount} पद · सम्पूर्ण पाठ`,
-                    en: `${paath.verseCount} verses · full recitation`,
-                    gu: `${paath.verseCount} પદ · સંપૂર્ણ પાઠ`,
-                    kn: `${paath.verseCount} ಪದ್ಯ · ಸಂಪೂರ್ಣ ಪಾರಾಯಣ`,
-                  })}
-                </Text>
-              ) : null}
-              {naam ? (
+              {naam || sloka ? (
                 <Text
                   style={[
                     styles.naamCaption,
@@ -490,179 +462,15 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             { borderTopColor: colors.divider },
           ]}
         >
-          {paath ? (
-            // A stotra has no chant loop; its row opens the text instead.
-            <Pressable
-              onPress={() => setPaathSheetOpen(true)}
-              accessibilityRole="button"
-              accessibilityLabel="Read the paath"
-              style={({ pressed }) => [
-                styles.paathReadBtn,
-                {
-                  backgroundColor: colors.saffronTint,
-                  borderColor: colors.cardActiveBorder,
-                  borderRadius: radii.md,
-                },
-                pressed && { opacity: 0.7 },
-              ]}
-            >
-              <Text
-                style={[
-                  styles.paathReadLabel,
-                  {
-                    color: colors.saffronDeep,
-                    fontFamily: isLatinLang(lang)
-                      ? typography.cardLatin.fontFamily
-                      : scriptSerifBold ?? typography.readerTitle.fontFamily,
-                  },
-                ]}
-              >
-                {pick(lang, { hi: 'पाठ पढ़ें', en: 'Read the paath', gu: 'પાઠ વાંચો', kn: 'ಪಾರಾಯಣ ಓದಿ' })}
-              </Text>
-            </Pressable>
-          ) : (
-            <JapamAudioPlayer
-              mantraId={mantra.id}
-              lang={lang}
-              onIteration={registerBead}
-              onPlayingChange={setAudioPlaying}
-              autoPlay={route.params.autoPlay === true}
-            />
-          )}
+          <JapamAudioPlayer
+            mantraId={mantra.id}
+            lang={lang}
+            onIteration={registerBead}
+            onPlayingChange={setAudioPlaying}
+            autoPlay={route.params.autoPlay === true}
+          />
         </View>
       </SafeAreaView>
-
-      {paath ? (
-        <Modal
-          visible={paathSheetOpen}
-          transparent
-          animationType="slide"
-          onRequestClose={() => setPaathSheetOpen(false)}
-        >
-          <View style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}>
-            <View
-              style={[
-                styles.sheet,
-                styles.paathSheet,
-                {
-                  backgroundColor: colors.parchment,
-                  borderColor: colors.cardActiveBorder,
-                  borderTopLeftRadius: radii.lg,
-                  borderTopRightRadius: radii.lg,
-                },
-              ]}
-            >
-              <SafeAreaView edges={['bottom']} style={styles.paathSheetInner}>
-                <View style={styles.paathSheetHeader}>
-                  <Text
-                    style={[
-                      styles.paathSheetTitle,
-                      {
-                        color: colors.ink,
-                        fontFamily: isLatinLang(lang)
-                          ? typography.cardLatin.fontFamily
-                          : scriptSerifBold ?? typography.readerTitle.fontFamily,
-                      },
-                    ]}
-                    numberOfLines={1}
-                  >
-                    {contentByLang(lang, mantra.nameHi, mantra.nameEn)}
-                  </Text>
-                  <Pressable
-                    onPress={() => setPaathSheetOpen(false)}
-                    accessibilityRole="button"
-                    accessibilityLabel="Close"
-                    hitSlop={12}
-                  >
-                    <AppIcon name="close" size={22} color={colors.inkMuted} />
-                  </Pressable>
-                </View>
-                <ScrollView style={styles.paathScroll} contentContainerStyle={styles.paathScrollContent}>
-                  {paath.parts.map((part, p) => (
-                    <View key={`${lang}-part-${p}`}>
-                      {paath.parts.length > 1 ? (
-                        <Text
-                          style={[
-                            styles.paathPartTitle,
-                            {
-                              color: colors.saffronDeep,
-                              fontFamily: isLatinLang(lang)
-                                ? typography.cardLatin.fontFamily
-                                : scriptSerifBold ?? typography.readerTitle.fontFamily,
-                            },
-                          ]}
-                        >
-                          {contentByLang(lang, part.titleHi, part.titleEn)}
-                        </Text>
-                      ) : null}
-                      {part.verses.map((verse, v) => (
-                        <View key={v} style={styles.paathVerse}>
-                          {verseLinesByLang(lang, verse.lines, verse.linesEn).map((line, i) => (
-                            <Text
-                              key={i}
-                              style={[
-                                isLatinLang(lang) ? styles.mantraLineEn : styles.mantraLine,
-                                isLatinLang(lang)
-                                  ? {
-                                      color: colors.ink,
-                                      fontFamily: typography.cardLatin.fontFamily,
-                                      fontSize: verseFontSizeEn,
-                                      lineHeight: verseLineHeightEn,
-                                    }
-                                  : {
-                                      color: colors.ink,
-                                      fontFamily: scriptSerif ?? typography.verse.fontFamily,
-                                      fontSize: verseFontSize,
-                                      lineHeight: verseLineHeight,
-                                    },
-                              ]}
-                            >
-                              {line}
-                            </Text>
-                          ))}
-                        </View>
-                      ))}
-                    </View>
-                  ))}
-                </ScrollView>
-                {/* Finishing the text is the natural moment to count it. */}
-                <Pressable
-                  onPress={() => {
-                    registerBead(1);
-                    setPaathSheetOpen(false);
-                  }}
-                  accessibilityRole="button"
-                  accessibilityLabel="Paath complete, count one bead"
-                  style={({ pressed }) => [
-                    styles.paathDoneBtn,
-                    { backgroundColor: colors.saffron, borderRadius: radii.md },
-                    pressed && { opacity: 0.85 },
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.paathDoneLabel,
-                      {
-                        color: colors.onPrimary,
-                        fontFamily: isLatinLang(lang)
-                          ? typography.cardLatin.fontFamily
-                          : scriptSerifBold ?? typography.readerTitle.fontFamily,
-                      },
-                    ]}
-                  >
-                    {pick(lang, {
-                      hi: 'पाठ पूर्ण · एक मनका',
-                      en: 'Paath complete · one bead',
-                      gu: 'પાઠ પૂર્ણ · એક મણકો',
-                      kn: 'ಪಾರಾಯಣ ಪೂರ್ಣ · ಒಂದು ಮಣಿ',
-                    })}
-                  </Text>
-                </Pressable>
-              </SafeAreaView>
-            </View>
-          </View>
-        </Modal>
-      ) : null}
 
       {/* The ↺ icon opens both choices; picking one is the confirmation. */}
       <Modal
@@ -977,62 +785,6 @@ const styles = StyleSheet.create({
   audioRow: {
     borderTopWidth: 1,
     paddingVertical: 8,
-  },
-  paathReadBtn: {
-    alignSelf: 'center',
-    minHeight: 44,
-    minWidth: 160,
-    paddingHorizontal: 20,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paathReadLabel: {
-    fontSize: 15,
-    includeFontPadding: false,
-  },
-  paathSheet: {
-    maxHeight: '88%',
-  },
-  paathSheetInner: {
-    flexShrink: 1,
-  },
-  paathSheetHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    paddingBottom: 10,
-  },
-  paathSheetTitle: {
-    flex: 1,
-    fontSize: 17,
-    includeFontPadding: false,
-  },
-  paathScroll: {
-    flexShrink: 1,
-  },
-  paathScrollContent: {
-    paddingBottom: 12,
-  },
-  paathPartTitle: {
-    fontSize: 15,
-    textAlign: 'center',
-    marginTop: 8,
-    marginBottom: 10,
-  },
-  paathVerse: {
-    marginBottom: 18,
-  },
-  paathDoneBtn: {
-    minHeight: 48,
-    marginTop: 8,
-    marginBottom: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paathDoneLabel: {
-    fontSize: 16,
-    includeFontPadding: false,
   },
   backdrop: {
     flex: 1,

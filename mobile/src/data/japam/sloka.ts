@@ -2,28 +2,23 @@ import type { Deity } from '../texts';
 import type { JapamMantra } from './index';
 
 /**
- * Stotra paath as japa (design.md §35.1): every text in the स्तोत्रम् category
- * can be counted on the mala, ONE BEAD PER COMPLETE RECITATION. A paath is
- * served as a `JapamMantra` carrying a `paath` block, so the counter, alarms,
- * widgets and activity log key it by id exactly like a mantra.
+ * Sloka japa (design.md §35.1): any shloka of a स्तोत्रम्-category text can be
+ * chanted on the mala exactly like a mantra — the reader's जप pill hands the
+ * shloka on screen to the counter, one bead per recitation of that shloka.
+ * A sloka is served as a `JapamMantra` carrying a `sloka` block, so the
+ * counter, alarms, widgets and activity log key it by id like any mantra.
  *
  * Corpora load through `require()` thunks: `data/japam` sits on the launch
  * graph (texts.ts → japam) and the stotram payloads must not
- * (`launchGraph.test.ts`). Nothing here runs until a paath id is resolved.
+ * (`launchGraph.test.ts`). Nothing here runs until a sloka id is resolved.
  */
 
-export type PaathVerse = { lines: readonly string[]; linesEn: readonly string[] };
-
-export type PaathPart = { titleHi: string; titleEn: string; verses: readonly PaathVerse[] };
-
-export type JapamPaath = {
-  /** Library entry the text belongs to (the reader it was started from). */
+export type JapamSloka = {
+  /** Library entry the shloka belongs to (the reader it was started from). */
   sourceId: string;
-  /** Set when one chapter of a multi-hymn section is the stotra. */
-  chapter?: number;
-  verseCount: number;
-  /** The full recitation, in order. More than one part only when a stotra spans chapters. */
-  parts: readonly PaathPart[];
+  chapter: number;
+  /** The verse's own `number` in its chapter — stable across content edits, unlike its index. */
+  number: number;
 };
 
 type CorpusVerse = {
@@ -33,6 +28,8 @@ type CorpusVerse = {
   /** Bajrang Baan / stuti shape — every verse is recited. */
   lines?: readonly string[];
   linesEn: readonly string[];
+  labelHi?: string;
+  labelEn?: string;
   meaningHi: string;
   meaningEn: string;
 };
@@ -46,12 +43,13 @@ type Corpus = {
   chapter: (n: number) => CorpusChapter;
 };
 
-type PaathSource = {
+type SlokaSource = {
   sourceId: string;
   deities: Deity[];
   /**
-   * `each`: every chapter is a stotra of its own (Shiva Stotram's four hymns).
-   * `whole`: the chapters are parts of ONE stotra, recited end to end.
+   * Names the hymn a shloka belongs to. `each`: every chapter is a stotra of
+   * its own (Shiva Stotram's four hymns) — the chapter title. `whole`: the
+   * section is one stotra — its title (plus the part, when it spans chapters).
    */
   unit: 'each' | 'whole';
   corpus: () => Corpus;
@@ -67,9 +65,9 @@ function stuti(id: string): () => Corpus {
 
 /**
  * Every `category: 'stotram'` library entry, in library order
- * (`stotramPaath.test.ts` keeps this list and the library in step).
+ * (`slokaJapa.test.ts` keeps this list and the library in step).
  */
-const SOURCES: readonly PaathSource[] = [
+const SOURCES: readonly SlokaSource[] = [
   {
     sourceId: 'shiva-strotam',
     deities: ['shiva'],
@@ -149,84 +147,85 @@ const SOURCES: readonly PaathSource[] = [
 ];
 /* eslint-enable @typescript-eslint/no-require-imports */
 
-const PREFIX = 'paath.';
+const PREFIX = 'sloka.';
 
 /** Source ids whose readers offer "start as japa". */
-export const paathSourceIds: readonly string[] = SOURCES.map((s) => s.sourceId);
+export const slokaJapaSourceIds: readonly string[] = SOURCES.map((s) => s.sourceId);
 
-/**
- * The paath id a reader opens the counter with — `paath.<sourceId>.<chapter>`
- * for a hymn that is one chapter of its section, `paath.<sourceId>` when the
- * whole section is one stotra. Ids use only URL-safe characters because the
- * widget deep link carries them. Null when the source is not a stotram.
- */
-export function stotramPaathId(sourceId: string, chapter?: number): string | null {
-  const source = SOURCES.find((s) => s.sourceId === sourceId);
-  if (!source) return null;
-  if (source.unit === 'whole') return `${PREFIX}${sourceId}`;
-  return chapter != null && Number.isInteger(chapter) && chapter >= 1 ? `${PREFIX}${sourceId}.${chapter}` : null;
-}
-
-/** Every paath id, in library order (one per hymn). Loads the stotram manifests. */
-export function allStotramPaathIds(): string[] {
-  return SOURCES.flatMap((s) =>
-    s.unit === 'whole'
-      ? [`${PREFIX}${s.sourceId}`]
-      : s.corpus().chapters.map((c) => `${PREFIX}${s.sourceId}.${c.chapter}`)
-  );
+export function isSlokaJapaSource(sourceId: string): boolean {
+  return SOURCES.some((s) => s.sourceId === sourceId);
 }
 
 const isTitleCard = (v: CorpusVerse) => v.number === 0 && v.sanskrit !== undefined;
 
+/**
+ * The sloka id for the reader page at `verseIndex` of `chapter` —
+ * `sloka.<sourceId>.<chapter>.<number>`. A chapter's title card is not a
+ * shloka, so it resolves to the chapter's first recited one. URL-safe because
+ * the widget deep link carries it. Null when the source is not a stotram.
+ */
+export function slokaJapaId(sourceId: string, chapter: number, verseIndex: number): string | null {
+  const source = SOURCES.find((s) => s.sourceId === sourceId);
+  if (!source) return null;
+  const verses = source.corpus().chapter(chapter).verses;
+  const at = verses[Math.max(0, Math.min(verses.length - 1, verseIndex))];
+  const verse = at && !isTitleCard(at) ? at : verses.find((v) => !isTitleCard(v));
+  return verse ? `${PREFIX}${sourceId}.${chapter}.${verse.number}` : null;
+}
+
+/** Every sloka id, in library order. Loads every stotram chapter — tests only. */
+export function allSlokaJapaIds(): string[] {
+  return SOURCES.flatMap((s) => {
+    const corpus = s.corpus();
+    return corpus.chapters.flatMap((c) =>
+      corpus
+        .chapter(c.chapter)
+        .verses.filter((v) => !isTitleCard(v))
+        .map((v) => `${PREFIX}${s.sourceId}.${c.chapter}.${v.number}`)
+    );
+  });
+}
+
 const cache = new Map<string, JapamMantra>();
 
-function build(id: string, source: PaathSource, chapter: number | undefined): JapamMantra | null {
+function build(id: string, source: SlokaSource, chapterNo: number, number: number): JapamMantra | null {
   const corpus = source.corpus();
-  const chapterNos = chapter == null ? corpus.chapters.map((c) => c.chapter) : [chapter];
-  if (chapter != null && !corpus.chapters.some((c) => c.chapter === chapter)) return null;
-  const loaded = chapterNos.map((n) => corpus.chapter(n));
-  const recited = loaded.map((ch) => ch.verses.filter((v) => !isTitleCard(v)));
-  const first = recited.flat()[0];
-  if (!first) return null;
-  const parts: PaathPart[] = loaded.map((ch, i) => ({
-    titleHi: ch.titleHi,
-    titleEn: ch.titleEn,
-    verses: recited[i].map((v) => ({ lines: v.sanskrit ?? v.lines ?? [], linesEn: v.linesEn })),
-  }));
-  const verseCount = recited.reduce((sum, verses) => sum + verses.length, 0);
-  const nameHi = chapter == null ? corpus.titleHi : loaded[0].titleHi;
-  const nameEn = chapter == null ? corpus.titleEn : loaded[0].titleEn;
+  if (!corpus.chapters.some((c) => c.chapter === chapterNo)) return null;
+  const chapter = corpus.chapter(chapterNo);
+  const verse = chapter.verses.find((v) => v.number === number && !isTitleCard(v));
+  if (!verse) return null;
+  const spansChapters = corpus.chapters.length > 1;
+  const hymnHi = source.unit === 'each' ? chapter.titleHi : spansChapters ? `${corpus.titleHi} · ${chapter.titleHi}` : corpus.titleHi;
+  const hymnEn = source.unit === 'each' ? chapter.titleEn : spansChapters ? `${corpus.titleEn} · ${chapter.titleEn}` : corpus.titleEn;
+  const nameHi = `${hymnHi} · ${verse.labelHi ?? `श्लोक ${number}`}`;
+  const nameEn = `${hymnEn} · ${verse.labelEn ?? `Shloka ${number}`}`;
   return {
     id,
     nameHi,
     nameEn,
-    sub: `${verseCount} पद · हर मनका एक पाठ`,
-    subEn: `${verseCount} verses · one bead per paath`,
-    thumb: Array.from(nameHi)[0] ?? 'ॐ',
+    sub: 'श्लोक जप',
+    subEn: 'Shloka japa',
+    thumb: Array.from(hymnHi)[0] ?? 'ॐ',
     deities: source.deities,
-    lines: [...(first.sanskrit ?? first.lines ?? [])],
-    linesEn: [...first.linesEn],
-    meaningHi: first.meaningHi,
-    meaningEn: first.meaningEn,
-    paath: { sourceId: source.sourceId, ...(chapter == null ? {} : { chapter }), verseCount, parts },
+    lines: [...(verse.sanskrit ?? verse.lines ?? [])],
+    linesEn: [...verse.linesEn],
+    meaningHi: verse.meaningHi,
+    meaningEn: verse.meaningEn,
+    sloka: { sourceId: source.sourceId, chapter: chapterNo, number },
   };
 }
 
-/** Resolves a paath id to its counter entry; null for anything else. Memoised, so the identity is stable. */
-export function findStotramPaath(id: string): JapamMantra | null {
+/** Resolves a sloka id to its counter entry; null for anything else. Memoised, so the identity is stable. */
+export function findSlokaJapa(id: string): JapamMantra | null {
   if (!id.startsWith(PREFIX)) return null;
   const hit = cache.get(id);
   if (hit) return hit;
   const rest = id.slice(PREFIX.length);
   for (const source of SOURCES) {
-    if (source.unit === 'whole' ? rest !== source.sourceId : !rest.startsWith(`${source.sourceId}.`)) continue;
-    let chapter: number | undefined;
-    if (source.unit === 'each') {
-      const tail = rest.slice(source.sourceId.length + 1);
-      if (!/^[1-9]\d*$/.test(tail)) return null;
-      chapter = Number(tail);
-    }
-    const mantra = build(id, source, chapter);
+    if (!rest.startsWith(`${source.sourceId}.`)) continue;
+    const match = /^([1-9]\d*)\.(0|[1-9]\d*)$/.exec(rest.slice(source.sourceId.length + 1));
+    if (!match) return null;
+    const mantra = build(id, source, Number(match[1]), Number(match[2]));
     if (mantra) cache.set(id, mantra);
     return mantra;
   }

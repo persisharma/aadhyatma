@@ -102,7 +102,7 @@ function tapSurface(tree: TestRenderer.ReactTestRenderer) {
   return tree.root.findAll(
     (n) =>
       typeof n.props.onPress === 'function' &&
-      /Tap to count (one bead|one complete recitation)/.test(String(n.props.accessibilityLabel ?? ''))
+      String(n.props.accessibilityLabel ?? '').includes('Tap to count one bead')
   )[0];
 }
 
@@ -167,31 +167,17 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(beadLabel(tree)).toContain('1 of 108');
   });
 
-  test('a stotram counts one bead per complete paath (§35.1)', async () => {
-    const tree = await renderJapam('paath.shiva-strotam.4');
+  test('a stotram shloka is chanted like a mantra (§35.1)', async () => {
+    const tree = await renderJapam('sloka.shiva-strotam.4.5');
     const t = texts(tree);
-    // The head names the stotra; its 16 shlokas stay in the sheet until opened.
-    expect(t).toContain('शिव ताण्डव स्तोत्रम्');
-    expect(t).toContain('16 पद · सम्पूर्ण पाठ');
-    expect(t).toContain('स्पर्श करें · हर पाठ एक मनका');
-    expect(t.some((x) => /^आज \d+ पाठ$/.test(x))).toBe(true);
-    expect(beadLabel(tree)).toContain('Tap to count one complete recitation');
-    expect(t.some((x) => x.startsWith('जटाटवीगलज्जलप्रवाहपावितस्थले'))).toBe(false);
-
-    // A tap on the surface counts one recitation, like a mantra bead.
+    // The shloka itself, named under its lines so the counter says which one.
+    expect(t.some((x) => x.startsWith('सहस्रलोचनप्रभृत्यशेषलेखशेखर'))).toBe(true);
+    expect(t).toContain('शिव ताण्डव स्तोत्रम् · श्लोक 5');
+    expect(t).toContain('स्पर्श करें · हर श्लोक एक मनका');
+    expect(t.some((x) => /^आज \d+ श्लोक$/.test(x))).toBe(true);
     await act(async () => {
       tapSurface(tree).props.onPress();
     });
     expect(beadLabel(tree)).toContain('1 of 108');
-
-    // Read the paath, then finish it from the sheet: one more bead.
-    await act(async () => {
-      byLabel(tree, 'Read the paath').props.onPress();
-    });
-    expect(texts(tree).some((x) => x.startsWith('जटाटवीगलज्जलप्रवाहपावितस्थले'))).toBe(true);
-    await act(async () => {
-      byLabel(tree, 'Paath complete, count one bead').props.onPress();
-    });
-    expect(beadLabel(tree)).toContain('2 of 108');
   });
 });

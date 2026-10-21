@@ -202,7 +202,7 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
           <AddToRoutineButton sourceId="vishnu-sahasranama" chapter={chapter.chapter} />
           {/* Pinned left, mirroring read-aloud on the right (design.md §35.1). */}
           <View style={styles.japaSlot}>
-            <StartJapaButton navigation={navigation} sourceId="vishnu-sahasranama" chapter={chapter.chapter} />
+            <StartJapaButton navigation={navigation} sourceId="vishnu-sahasranama" chapter={chapter.chapter} verseIndex={currentIndex} />
           </View>
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
           <View style={styles.readAloudSlot}>
