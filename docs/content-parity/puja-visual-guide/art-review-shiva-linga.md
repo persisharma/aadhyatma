@@ -23,4 +23,3 @@ Constraints: no poured liquid, water stream or ablution yet; no leaves, flowers,
 ## Visual review
 
 Inspected original and saved final WebP. Plain dark stone linga and its complete yoni base with spout sit entirely within clean brass receiving tray; natural hands gently hold outer tray rim on a low wooden surface. Full tray, stone form, drainage spout and fingertips are within frame. No liquid being poured, ablution, leaves, powders, flowers, deity figures, flames, letters, UI, compass directions or arrows observed. White area near linga top is painted stone light reflection rather than applied marking. Scene depicts only preparation of a receiving setup. Warm brass, cream sleeves and feathered parchment painting match option 3; no lower caption band. Native active/thumbnail readability and device sequence review remain pending in parent implementation task.
-

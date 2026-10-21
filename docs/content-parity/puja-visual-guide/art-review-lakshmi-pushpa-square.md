@@ -59,4 +59,3 @@ Lighting/mood: soft warm golden household lamplight, serene and welcoming.
 Text: none.
 Constraints: No UI, no typography, no watermark, no decorative frame or border, no extra fingers or arms, no cropped crown or lotus, no photoreal human goddess standing in place of the household murti. No elephants or outdoor palace background.
 ```
-

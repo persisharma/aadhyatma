@@ -23,4 +23,3 @@ Constraints: no deity/idol/linga, no figures or face, no compass, direction arro
 ## Visual review
 
 Inspected generated original and final saved WebP. Two complete naturally cupped hands hold red flowers and visibly white intact rice grains above a complete brass plate; full red/white garland rests in a curved arrangement alongside. Fingers appear coherent with natural overlap; all fingertips remain within frame. Sleeves feather into parchment on left, and plate and garland have clear visible boundaries. No deity, compass, direction/count instruction, flame, text, UI, border or blank lower caption band observed. Colours and detailed traditional painting match option 3. Rice grains are stylized plump oval shapes; their identity is supported by the accompanying source step text. Fine rice/finger detail and readability at actual tiny native size remain pending; parent implementation owns native active/thumbnail sequence and device checks.
-

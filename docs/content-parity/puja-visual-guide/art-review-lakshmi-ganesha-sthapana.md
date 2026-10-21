@@ -41,4 +41,3 @@ Lighting/mood: Soft warm household daylight, calm and respectful.
 Text: none.
 Constraints: No flame, lamp, pouring water, extra deity, faces other than murtis, extra hands/fingers, text, labels, mantras, UI, direction arrows, watermark, frame, border or caption band.
 ```
-

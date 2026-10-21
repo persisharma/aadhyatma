@@ -27,4 +27,3 @@ Composition/framing: Compact balanced 3:2 landscape vignette, three-quarter view
 Lighting/mood: Quiet warm indoor light, reflective and welcoming.
 Constraints: No readable text or invented mantras, no legible Devanagari or English, no titles, symbols, numbers or logos. No people, ancestor image, deity, statue, lamp, flame, incense, mala, flowers, offerings, or objects suggesting a specific count. No UI, frame, border, watermark or collage. Suitable for flame-free remembrance and generic reading.
 ```
-

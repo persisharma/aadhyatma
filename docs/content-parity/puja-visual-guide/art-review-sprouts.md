@@ -23,4 +23,3 @@ Constraints: no flame, lamp, incense, deity/idol/linga, extra ritual objects, co
 ## Visual review
 
 Inspected original and final saved WebP. Full wide earthen pot contains dark damp soil and healthy short grain sprouts around a central prepared brass kalash with mauli, mango leaves and whole coconut. Natural hand gently sprinkles a little clear water as separated droplets; no heavy stream, pooling or flooding. Complete pot/base, plants, coconut and visible fingers remain inside frame. Wrist enters naturally from upper right. No lamp, unattended flame, deity, text, UI, count marks or blank lower caption band observed. Warm terracotta/brass/green painting and feathered parchment edges match option 3. Art shows generic young grain sprouts consistent with barley shape; fine botanical species identification is limited at thumbnail scale. Native contain/thumbnail sequence and device review remain pending in parent implementation task.
-

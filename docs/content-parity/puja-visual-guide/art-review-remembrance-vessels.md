@@ -27,4 +27,3 @@ Composition/framing: Compact balanced 3:2 landscape still life. Every vessel rim
 Lighting/mood: Soft natural daylight, quiet, restrained and practical.
 Constraints: No humans, deities, ancestor portraits, flames, lamps, incense, ghee, flowers, rice, pinda, food, kusha grass, sacred thread, compass or directional symbols. Sesame must be visibly black, not white or golden. No text, labels, mantras, UI, arrows, lettering, numbers, borders, frame, watermark or collage.
 ```
-

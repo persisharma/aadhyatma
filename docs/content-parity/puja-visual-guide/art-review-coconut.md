@@ -27,4 +27,3 @@ Composition/framing: Compact balanced 3:2 landscape vignette. Entire coconut inc
 Lighting/mood: Warm gentle indoor light, calm and practical.
 Constraints: No deity, flame, lamp, incense, water vessel, full kalash or extra ritual objects. No text, UI, labels, mantras, numbers, arrows, symbols, borders, frame, watermark or collage. No extra hands/fingers. No halved coconut.
 ```
-

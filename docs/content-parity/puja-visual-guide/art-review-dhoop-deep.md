@@ -23,4 +23,3 @@ Constraints: exactly one diya and one incense holder; no hands, figures or deiti
 ## Visual review
 
 Inspected original and saved final WebP during generation. Complete brass ghee diya with one lit wick and flame sits beside a complete compact brass incense holder containing three slender sticks and delicate smoke. No vessel, base, flame or stick tip is cropped. A red hibiscus with small petal accents sits at the base. Brass detail, warm gold/brown/red palette and feathered painted parchment match option 3. Flame is more prominent and flower larger than the prompt's suggested tiny accent, but the quiet still life remains clear and uncluttered. No hands, figures, deities, text, UI, borders, watermark or empty lower caption band observed. Native active/thumbnail readability and device sequence review remain pending in parent implementation task.
-

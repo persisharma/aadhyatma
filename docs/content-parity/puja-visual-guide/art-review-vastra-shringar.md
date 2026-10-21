@@ -27,4 +27,3 @@ Composition/framing: Small balanced complete arrangement centered across a 3:2 l
 Lighting/mood: Warm gentle devotional light, calm and inviting.
 Constraints: Objects only. No deities, people, hands, text, lettering, numbers, UI, borders, icons, watermark, frame or collage. All objects remain complete and uncropped. Do not recreate any interface text or timeline from the reference.
 ```
-

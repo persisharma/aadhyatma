@@ -27,4 +27,3 @@ Composition/framing: Compact balanced still life on a 3:2 landscape canvas, slig
 Lighting/mood: Gentle warm indoor light, careful and calm.
 Constraints: No sprouted plants, seedlings, leaves, kalash, coconut, water vessel, flame, lamp, incense, deity or other ritual objects. No layer numbers, counts, text, labels, mantras, lettering, UI, frame, border, watermark or collage. Only one natural hand; no extra fingers.
 ```
-

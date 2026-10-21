@@ -37,4 +37,3 @@ Lighting/mood: Soft golden daylight, warm, respectful and welcoming.
 Text: none.
 Constraints: No deity, faces, mouth, eating gesture, flames, incense, lamps, text, UI, labels, numbers, count markers, watermark, borders, or caption area. No fasting obligation or prescribed quantities implied.
 ```
-

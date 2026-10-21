@@ -36,4 +36,3 @@ Lighting/mood: Soft warm daylight, calm.
 Text: none.
 Constraints: No labels, no text, no mantras, no UI, no deity, no human, no pouring, no flame, no watermark, no decorative frame or border, no blank lower caption band, no extra ingredient bowls or ritual objects.
 ```
-

@@ -51,4 +51,3 @@ Change ONLY the black seeds: reduce every black seed to realistic sesame size, a
 Preserve exactly the composition, natural single hand anatomy, brass water vessel with clear water, separate empty receiving bowl, warm parchment painting, illumination and full objects.
 No text, labels, UI, extra objects, flames, deity or caption band.
 ```
-

@@ -30,4 +30,3 @@ Refine this illustration only for botanical clarity: the kalash must contain exa
 ## Visual review
 
 Initial generation had extra ambiguous dark green blade shapes behind central leaf, so a targeted refinement removed them. Inspected refined original and final saved WebP: exactly five distinct visible mango leaf blades and tips, a full brass kalash with mauli, complete bowl of intact white rice held above by two natural hands, coherent fingers and complete vessel base. Leaf arrangement remains visible beneath lifted lid bowl. No coconut, deity, flame, arrows, count marks, lettering or UI observed. Warm brass and feathered cream parchment match option 3; vessel bears floral ornament. Sleeve outer edges feather into parchment. All key objects and fingers remain inside frame. Actual native tiny-size leaf/rice readability and device sequence review remain pending in parent implementation task.
-

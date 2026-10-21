@@ -36,4 +36,3 @@ Lighting/mood: Soft warm natural light, calm welcoming household puja setting.
 Text: none.
 Constraints: No deity, person, hands, flames, lamp, tasted or bitten food, labels, text, UI, watermark, frame, border or caption band. Do not make a panjiri-only scene.
 ```
-

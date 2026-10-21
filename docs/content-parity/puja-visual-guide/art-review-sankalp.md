@@ -35,4 +35,3 @@ Lighting/mood: Soft warm daylight, calm and welcoming.
 Text: none.
 Constraints: No deity, no religious figure, no flames, no lamp, no UI, no text, no border, no watermark, no extra hands or fingers, no cropped fingertips or vessel, no blank caption band.
 ```
-

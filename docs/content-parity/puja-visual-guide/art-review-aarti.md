@@ -23,4 +23,3 @@ Constraints: exactly one tray and one small lit diya; no extra lamps/flames, no 
 ## Visual review
 
 Inspected generated original and saved final WebP. Complete brass thali is naturally supported from beneath by a visible hand, with one complete small brass diya, one wick/flame and red flowers. All fingertips, plate rim and flame remain inside frame. Flame has ample clearance from sleeve, hand and flowers. Sleeve fades into parchment at left; no blank lower caption band. Painted warm brass and red palette with feathered parchment matches option 3. No deity, direction/count, arrows, text, UI or border observed. Flame is prominent but steady and remains fully within image. Fine hand detail and native contain/thumbnail readability remain pending in parent implementation task.
-

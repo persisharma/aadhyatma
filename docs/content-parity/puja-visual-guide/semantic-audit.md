@@ -195,4 +195,3 @@ Default staging is local-only. The upload uses the existing uploader; `--cdn` GE
 | 8. Optional Gita reading — Chapter 15 | Open book on a stand. | Optional exact Gita 15 hand-off; no generated substitute verse. |
 | 9. Optional Gita reading — Chapter 2 | Open book on a stand. | Optional exact Gita 2 hand-off; no new mandatory rite. |
 | 10. Conclude and clean up | Clean separated vessels and cloth. | Conclusion/cleanup materials cue; disposal method and hygiene remain text. |
-

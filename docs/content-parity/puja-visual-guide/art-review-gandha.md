@@ -27,4 +27,3 @@ Composition/framing: Compact balanced still life on a 3:2 landscape canvas. Full
 Lighting/mood: Soft warm indoor light, calm and precise.
 Constraints: No deity, statue, portrait, linga, flames, lamp, incense or extra ritual objects. No text, labels, lettering, numbers, UI, border, frame, watermark or collage. No extra hands/fingers. Do not depict applying powders to skin.
 ```
-

@@ -23,4 +23,3 @@ Constraints: exactly two water vessels plus one small spoon; no deity, linga, id
 ## Visual review
 
 Inspected original and final saved WebP. One complete natural hand holds the small brass spoon; transparent clear water flows into a complete receiving bowl with ripples. Second rounded brass vessel and one red flower rest beside it on a low wooden surface. Water is transparent with reflected brass colour and highlights, not opaque milk. Vessels and spoon are fully visible, with feathered parchment edges and complete fingers. No deity, linga, flame, body posture, deity bathing, lettering, ritual symbols, UI, border or caption band observed. Palette and painted detail match option 3. Spoon-to-bowl action reads clearly; thin water stream and finger detail need actual native thumbnail review. Native active/thumbnail sequence and device checks remain pending in the parent implementation task.
-

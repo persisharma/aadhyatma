@@ -37,4 +37,3 @@ Lighting/mood: Soft warm daylight, calm and respectful.
 Text: none.
 Constraints: No other deity, face, extra hands/fingers, kumkum, turmeric, colored powder, milk, flowers obscuring the linga, flames, text, UI, label, mantra, watermark, frame, border or caption band. No overflowing or splashing water.
 ```
-

@@ -27,4 +27,3 @@ Composition/framing: Balanced compact central arrangement on a 3:2 landscape can
 Lighting/mood: Gentle warm devotional indoor light, calm and practical.
 Constraints: No deity, statue, portrait, lamps, bowls, incense, flowers, vessels or other ritual objects. No text, lettering, numbers, symbols resembling text, UI, borders, watermark, frame or collage. Complete furniture, no cropped legs. No extra hands or fingers.
 ```
-

@@ -27,4 +27,3 @@ Composition/framing: Compact balanced 3:2 landscape vignette. Entire tray rim, b
 Lighting/mood: Soft warm indoor light, calm and practical.
 Constraints: No red kumkum, turmeric, sindoor, red powder, yellow powder or other ingredients. No people, hands, deity, Shiva-linga, statue, clay, flame, lamp or incense. No text, labels, mantras, letters, numbers, UI, arrows, borders, frame, watermark or collage.
 ```
-

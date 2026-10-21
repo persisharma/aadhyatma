@@ -27,4 +27,3 @@ Composition/framing: Compact balanced three-quarter landscape vignette. Full lin
 Lighting/mood: Gentle warm indoor devotional light, calm and respectful.
 Constraints: No kumkum, turmeric or red powder, no red marks, no lamp, flame, incense, water pouring, deity figure or extra ritual objects. No text, mantras, UI, arrows, labels, lettering, numbers, borders, frame, watermark or collage. Natural anatomically correct single hand, no extra fingers.
 ```
-

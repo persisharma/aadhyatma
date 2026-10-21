@@ -27,4 +27,3 @@ Composition/framing: Compact balanced 3:2 landscape vignette. Joined hands clear
 Lighting/mood: Soft warm light, serene and welcoming.
 Constraints: Generic remembrance, dhyana and prayer only. No specific ritual formula, specialized mudra or count. No deity, statue, portrait, lamps, flames, incense, bowls, flowers, ingredients or offering objects. No text, UI, lettering, numbers, symbols, borders, watermark or collage. No extra fingers, arms or people.
 ```
-

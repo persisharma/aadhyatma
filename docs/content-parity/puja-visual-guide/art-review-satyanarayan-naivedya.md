@@ -28,4 +28,3 @@ Composition/framing: Compact balanced 3:2 landscape still life. Full tray rim, e
 Lighting/mood: Gentle warm indoor devotional light, fresh and inviting.
 Constraints: No modak, laddoo, dumplings, round sweets, deity, flame, lamp, incense, hands or people. No text, labels, mantras, numbers, UI, borders, frames, watermark, arrows or collage. Do not communicate a prescribed offering count.
 ```
-

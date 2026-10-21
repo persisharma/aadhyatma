@@ -27,4 +27,3 @@ Composition/framing: Compact 3:2 landscape vignette, full murti, all four arms a
 Lighting/mood: Soft gentle warm devotional indoor light.
 Constraints: No poured water, no wet or dissolving clay, no flames, lamps or incense, no extra deity or human, no extra limbs/trunks/fingers. No text, labels, mantras, symbols, numbers, UI, frame, border, watermark or collage.
 ```
-

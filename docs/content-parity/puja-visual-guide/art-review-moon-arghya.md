@@ -37,4 +37,3 @@ Lighting/mood: Calm moonlit household devotion, soft warm lamp accent and gentle
 Text: none.
 Constraints: No sieve, faces, deity, extra hands/fingers, arrows, count markers, mantras, text, labels, UI, watermark, decorative border or reserved caption area.
 ```
-

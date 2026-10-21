@@ -23,4 +23,3 @@ Constraints: no deity, no figures beyond the two hands, no flames, no incense, n
 ## Visual review
 
 Inspected generated original and saved final WebP. Brass kalash, tied red/yellow mauli, mango leaves, whole coconut, red cloth and low wooden chowki are complete. Two natural hands hold the sides to show placement; sleeves feather into parchment at side edges. No deity, flame, letters, ritual symbols, UI, border, watermark or blank caption band observed. Rich gold/red/green painting and parchment fade match option 3. Coconut fibres approach the top margin but remain fully visible. Red cloth has ornamental floral decoration; vessel has no symbol. Kalash silhouette is clear at thumbnail scale; fine thread/hand detail will need native viewing at intended sizes. Native active/thumbnail sequence and device checks remain pending in the parent implementation task.
-

@@ -37,4 +37,3 @@ Lighting/mood: Soft warm daylight, quiet and welcoming.
 Text: none.
 Constraints: No leaves at the kalash neck, no coconut, no lid, no top covering, no flame, no deity, no extra hands or fingers, no labels, text, mantras, UI, watermark, frame, border or caption area.
 ```
-
