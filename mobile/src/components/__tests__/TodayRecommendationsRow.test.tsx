@@ -185,9 +185,9 @@ describe('TodayRecommendationsRow', () => {
     expect(renderedFeatureCardProps[0].item.titleEn).toBe('Gita Saar');
   });
 
-  // On a festival day the festival reading must still lead — गीता सार is not
-  // pinned ahead of it (keeps the festive-reminder ⇄ FOR TODAY contract).
-  test('does not pin गीता सार ahead of a festival card', () => {
+  // गीता सार leads the FOR TODAY row every day, festival days included — the
+  // festival reading follows it at slot 1 (design.md §50).
+  test('pins गीता सार ahead of a festival card too', () => {
     mockRecommendations = [
       { entry: entries[0], festivalHi: 'दीपावली', festivalEn: 'Diwali' },
       { entry: entries[1] },
@@ -195,8 +195,8 @@ describe('TodayRecommendationsRow', () => {
     act(() => {
       mountRow();
     });
-    expect(renderedFeatureCardProps[0].item.titleEn).toBe('Vishnu Sahasranama Excerpt');
-    expect(renderedFeatureCardProps.some((p) => p.item.key === 'gita-saar')).toBe(false);
+    expect(renderedFeatureCardProps[0].item.key).toBe('gita-saar');
+    expect(renderedFeatureCardProps[1].item.titleEn).toBe('Vishnu Sahasranama Excerpt');
   });
 
   test('enlarged text widens the recommendation without exceeding the phone gutter', () => {
@@ -220,10 +220,11 @@ describe('TodayRecommendationsRow', () => {
 
   // A festive reminder lands the user on Home, so the card that its message
   // named carries the occasion rather than the generic "Recommended for today"
-  // line. Since the row went name-only (§50), this attribution is no longer
-  // painted on the card — it reaches the user through the card's accessibility
-  // label and the festive toran above the row — but the row must still hand it
-  // to FeatureCard, or both of those lose it too.
+  // line. गीता सार leads the row (§50), so the festival card sits at slot 1 —
+  // but it must still carry the occasion. Since the row went name-only, this
+  // attribution is no longer painted on the card — it reaches the user through
+  // the card's accessibility label and the festive toran above the row — but the
+  // row must still hand it to FeatureCard, or both of those lose it too.
   test('a festival-day card carries the occasion instead of the generic line', () => {
     mockRecommendations = [
       { entry: entries[0], festivalHi: 'दीपावली', festivalEn: 'Diwali' },
@@ -235,6 +236,7 @@ describe('TodayRecommendationsRow', () => {
     });
 
     expect(renderedFeatureCardProps.map((props) => props.item.descEn)).toEqual([
+      'Recommended for today',
       'Today is Diwali',
       'Recommended for today',
     ]);
