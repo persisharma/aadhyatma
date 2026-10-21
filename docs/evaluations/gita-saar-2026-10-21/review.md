@@ -18,7 +18,7 @@ The user also reported clipped titles/content and requested theme icons instead 
 
 | Layer | Evidence | Result |
 | --- | --- | --- |
-| Full automated run | `cd mobile && npm test`; counts in verification.json | TypeScript and 3,497 tests passed |
+| Full automated run | `cd mobile && npm test`; counts in verification.json | TypeScript and 3,512 tests passed |
 | Original CI failures | `readerArtworkPlacement.test.tsx`, `artworkDelivery.jest.test.ts` | Passed in the full run |
 | Four-language listing regression | Icons cover all 16 themes; no text line limits; padded title; final theme navigation | Passed |
 | Native Hindi Standard | Index title, complete icon listing, first theme opening and complete Saar | Inspected; screenshots below |
@@ -42,4 +42,8 @@ Android, physical devices, OS accessibility text enlargement beyond the app's La
 and every possible page/language combination were not visually checked.
 Some captures include the computer-use pointer overlay. Screenshots of a scrolled viewport may show partial preceding/following content at its edges; the saved complete-Saar states establish the paragraph ending and handoff are reachable.
 
-Maestro result is recorded separately in verification.json once the run completes.
+## Maestro result
+
+The new 26-step YAML parses. The native smoke run did **not** pass: the shared first-install setup stalled with the development warning overlay covering Begin. A second launch then showed `No script URL provided` / `unsanitizedScriptURLString = (null)` before the app could reach Home. This installed simulator dev client's bundle connection needs repair before rerunning the flow. Manual native captures above were taken before that relaunch and are separate evidence.
+
+The final full automated run was repeated after merging current main at code revision `685821ac`: TypeScript plus 3,512 tests passed (37 widget, 2,625 Jest across 272 suites, 617 engine, 184 data, 49 Ask tests).

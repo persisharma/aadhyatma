@@ -1,4 +1,5 @@
 # Gita Saar title, wrapping, vertical reading, and full-Gita handoff.
+# Prerequisite: installed native dev client configured to this worktree Metro on 8084.
 # Screenshots complement assertions: text presence alone cannot detect glyph clipping.
 appId: com.prashantsharma.vedansh
 ---
