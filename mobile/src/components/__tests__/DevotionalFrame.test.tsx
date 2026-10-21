@@ -46,19 +46,22 @@ it('grows the meaning box without distorting decorative caps or hiding scripture
   const before = caps(); act(() => frame.findAllByType(View).find(n => n.props.onLayout)!.props.onLayout({ nativeEvent: { layout: { height: 1200 } } }));
   expect(caps()).toEqual(before); expect(tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.numberOfLines).toBeUndefined(); act(() => tree!.unmount());
 });
-it('grows the commentary on flat paper, keeping the whole scenic band intact', () => {
+it('puts a long explanation on plain paper with no baked scenery to stretch', () => {
   const meaning = 'The meaning.\n\n' + 'A long explanation that keeps going. '.repeat(60);
   let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header="Test" verse="Om" meaning={meaning} lang="en" art="hanuman" verseStyle={{}} meaningStyle={{}} exportMode />); });
   const panel = tree!.root.findByProps({ testID: 'devotional-commentary-panel' });
-  // The growing middle is a flat paper View (no master image) so the scenery can
-  // never smear; the scenic foot is the single intact capless slice.
-  const mid = panel.findByProps({ testID: 'devotional-commentary-panel-image' });
-  expect(mid.type).toBe(View);
-  expect(StyleSheet.flatten(mid.props.style).backgroundColor).toBe('#FAE7BE');
-  const caps = () => panel.findAllByType(Image).filter(n => !n.props.testID).map(n => StyleSheet.flatten(n.props.style));
-  expect(caps()).toHaveLength(1);
-  const before = caps(); act(() => panel.findAllByType(View).find(n => n.props.onLayout)!.props.onLayout({ nativeEvent: { layout: { height: 900 } } }));
-  expect(caps()).toEqual(before); act(() => tree!.unmount());
+  // Flat paper box (card bg), never a master image — so nothing stretches as it grows.
+  expect(panel.type).toBe(View);
+  expect(StyleSheet.flatten(panel.props.style).backgroundColor).toBe('#FAE7BE');
+  expect(panel.findAllByType(Image)).toHaveLength(0);
+  expect(tree!.root.findByProps({ testID: 'devotional-share-commentary' }).props.children).toContain('A long explanation');
+  act(() => tree!.unmount());
+});
+it('collapses the explanation box to nothing when the verse has meaning only', () => {
+  let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header="Test" verse="Om" meaning="Just a meaning, no explanation." lang="en" art="krishna" verseStyle={{}} meaningStyle={{}} exportMode />); });
+  // No empty band before the footer scenery — the box is simply not rendered.
+  expect(tree!.root.findAllByProps({ testID: 'devotional-commentary-panel' })).toHaveLength(0);
+  act(() => tree!.unmount());
 });
 it('keeps the source header one calibrated size and script-correct face, long or short', () => {
   const render = (header: string) => {

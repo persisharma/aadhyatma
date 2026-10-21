@@ -15,7 +15,7 @@ import {
   type ActivityTotals,
 } from '@/contexts/UserActivityContext';
 import { library } from '@/data/texts';
-import { japamMantras } from '@/data/japam';
+import { findJapamMantra } from '@/data/japam';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { MoreStackParamList } from '@/navigation/types';
 
@@ -63,7 +63,7 @@ function sourceLabel(sourceId: string, lang: Lang): string {
 }
 
 function mantraLabel(mantraId: string, lang: Lang): string {
-  const m = japamMantras.find((j) => j.id === mantraId);
+  const m = findJapamMantra(mantraId);
   if (m) return contentByLang(lang, m.nameHi, m.nameEn);
   return mantraId;
 }

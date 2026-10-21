@@ -18,16 +18,16 @@ let tree: TestRenderer.ReactTestRenderer;
 const pause = async () => { await act(async () => { await new Promise(r => setTimeout(r, 170)); }); };
 beforeEach(() => { mockCapture.mockClear(); jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction }); });
 afterEach(() => { if (tree) act(() => tree.unmount()); jest.restoreAllMocks(); });
-async function open(story = false) {
+async function open(mode: 'system' | 'igPost' | 'igStory' = 'system') {
   await act(async () => { tree = TestRenderer.create(<ThemeProvider><ShareProvider><Trigger /></ShareProvider></ThemeProvider>); });
   await act(async () => { tree.root.findByProps({ testID: 'trigger' }).props.onPress(); });
   const sheet = tree.root.findByType('ShareTargetSheet' as React.ElementType);
   expect(sheet.props.series.pageCount).toBe(1); expect(sheet.props.fullVerseImage).toBe(true);
-  act(() => { void (story ? sheet.props.onShareInstagramStory() : sheet.props.onShareSystem()); });
+  act(() => { void (mode === 'igStory' ? sheet.props.onShareInstagramStory() : mode === 'igPost' ? sheet.props.onShareInstagramPost() : sheet.props.onShareSystem()); });
   await pause();
   return tree.root.findAllByType('ProseShareCard' as React.ElementType).find(n => n.props.onIllustrationReady)!;
 }
-it('waits for native height and paint, then exports the complete Hanuman verse and meaning as one tall image', async () => {
+it('system share: waits for native height and paint, then exports the complete verse as one tall image', async () => {
   const card = await open();
   expect(card.props.pageCount).toBe(1); expect(card.props.page.devotional.meaning).toBe(verse.meaningHi);
   act(() => card.props.onHeight(1000)); await pause(); expect(mockCapture).not.toHaveBeenCalled();
@@ -35,9 +35,15 @@ it('waits for native height and paint, then exports the complete Hanuman verse a
   expect(mockCapture).toHaveBeenCalledTimes(1);
   expect(mockCapture.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 2000 / PixelRatio.get() });
 });
-it('preserves the full height plus story insets without clipping to 1920px', async () => {
-  const card = await open(true);
+it('Instagram post: scales a tall card into the 4:5 frame so nothing is cropped', async () => {
+  const card = await open('igPost');
   act(() => { card.props.onHeight(1000); card.props.onIllustrationReady(true); }); await pause(); await pause();
   expect(mockCapture).toHaveBeenCalledTimes(1);
-  expect(mockCapture.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 2570 / PixelRatio.get() });
+  expect(mockCapture.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 1350 / PixelRatio.get() });
+});
+it('Instagram story: scales a tall card into the 9:16 frame so nothing is cropped', async () => {
+  const card = await open('igStory');
+  act(() => { card.props.onHeight(1000); card.props.onIllustrationReady(true); }); await pause(); await pause();
+  expect(mockCapture).toHaveBeenCalledTimes(1);
+  expect(mockCapture.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 1920 / PixelRatio.get() });
 });

@@ -32,6 +32,9 @@ parse the complete epic during startup; the platform bundle still carries every 
 - Current page tracked via `onViewableItemsChanged` (60% threshold) + `handleScroll`.
 - The toggle row hosts `LanguageToggle` **and** (since #87) an `AddToRoutineButton` — every
   reader has one; chaptered readers pass the current `chapter` (see [[routine]]).
+  The nine stotram readers also pin a `StartJapaButton` (`जप` pill) to the row's **left** edge
+  (`japaSlot`, absolute left 16), passing `currentIndex` so the counter opens on the shloka on
+  screen (see [[japam]]).
 - The top bar is `ReaderHeader` (`variant="reader"`; chapters/index screens pass
   `variant="index"` for the larger 22/20 title). Screens pass `title` / `onBack` / `right` and
   never geometry — RULEBOOK §3 makes a hand-rolled `topBar` block a hard reject.

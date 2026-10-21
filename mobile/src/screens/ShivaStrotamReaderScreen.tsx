@@ -30,6 +30,7 @@ import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
+import StartJapaButton from '@/components/StartJapaButton';
 import { clampIndex } from '@/utils/clamp';
 import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -249,6 +250,10 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
           <AddToRoutineButton sourceId="shiva-strotam" chapter={chapter.chapter} />
+          {/* Pinned left, mirroring read-aloud on the right (design.md §35.1). */}
+          <View style={styles.japaSlot}>
+            <StartJapaButton navigation={navigation} sourceId="shiva-strotam" chapter={chapter.chapter} verseIndex={currentIndex} />
+          </View>
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
           <View style={styles.readAloudSlot}>
             <ReadAloudButton control={readAloud} />
@@ -390,6 +395,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     alignItems: 'center',
   },
+  japaSlot: { position: 'absolute', left: 16, top: 6, bottom: 12, justifyContent: 'center' },
   readAloudSlot: {
     position: 'absolute',
     right: 16,

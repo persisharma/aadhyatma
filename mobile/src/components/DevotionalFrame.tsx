@@ -47,29 +47,20 @@ export function DevotionalHero({ art, width, onLoad, onError }: {
   return <View testID="devotional-share-artwork"><DevotionalSlice art={art} width={width} top={0} bottom={h}
     testID="devotional-hero-image" onLoad={onLoad} onError={onError} /></View>;
 }
-/** Both decorated caps stay intact while the middle paper/vertical rules grow.
- *  `solidMiddle` fills the growing middle with a flat paper colour instead of
- *  stretching the master — for bands (the commentary foot) whose master has no
- *  plain-paper strip to stretch, so any image stretch would smear the scenery. */
-function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, solidMiddle, children, overlay, testID, contentStyle, onLoad, onError }: {
-  art: DevotionalArt; width: number; top: number; bottom: number; topCap?: number; bottomCap?: number; solidMiddle?: string;
+/** Both decorated caps stay intact while the middle paper/vertical rules grow. */
+function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, children, overlay, testID, contentStyle, onLoad, onError }: {
+  art: DevotionalArt; width: number; top: number; bottom: number; topCap?: number; bottomCap?: number;
   children?: React.ReactNode; overlay?: React.ReactNode; testID: string; contentStyle?: ViewStyle; onLoad?: () => void; onError?: () => void;
 }) {
   const scale = width / canvas.width, minimum = (bottom - top) * scale;
   const [height, setHeight] = React.useState(minimum);
   const painted = React.useRef(new Set<string>());
   const paintedPart = (part: string) => { painted.current.add(part); if (painted.current.size === 1 + Number(topCap > 0) + Number(bottomCap > 0)) onLoad?.(); };
-  const middleHeight = Math.max(0, height - (topCap + bottomCap) * scale);
-  // A flat-colour middle has no image decode to await, so mark it painted on mount.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(() => { if (solidMiddle) paintedPart('middle'); }, []);
   return <View testID={testID} onLayout={e => setHeight(e.nativeEvent.layout.height)} style={{ minHeight: minimum }}>
     <View pointerEvents="none" accessible={false} style={StyleSheet.absoluteFill}>
       {topCap ? <DevotionalSlice art={art} width={width} top={top} bottom={top + topCap} onLoad={() => paintedPart('top')} onError={onError} /> : null}
-      {solidMiddle
-        ? <View testID={`${testID}-image`} style={{ width, height: middleHeight, backgroundColor: solidMiddle }} />
-        : <DevotionalSlice art={art} width={width} top={top + topCap} bottom={bottom - bottomCap}
-            height={middleHeight} testID={`${testID}-image`} onLoad={() => paintedPart('middle')} onError={onError} />}
+      <DevotionalSlice art={art} width={width} top={top + topCap} bottom={bottom - bottomCap}
+        height={Math.max(0, height - (topCap + bottomCap) * scale)} testID={`${testID}-image`} onLoad={() => paintedPart('middle')} onError={onError} />
       {bottomCap ? <DevotionalSlice art={art} width={width} top={bottom - bottomCap} bottom={bottom} onLoad={() => paintedPart('bottom')} onError={onError} /> : null}
     </View>
     <View style={contentStyle}>{children}</View>{overlay}
@@ -84,6 +75,10 @@ export function DevotionalVerseBody({ header, verse, meaning, lang, art, verseSt
   const parts = splitDevotionalMeaning(meaning), face = devotionalFace(lang);
   const decoded = React.useRef(new Set<string>());
   const mark = (id: string) => { decoded.current.add(id); if (decoded.current.size === 6) onLoad?.(); };
+  // Commentary sits on plain paper (its own flow box, no baked scenery), so there is
+  // no image to await — clear its paint barrier on mount.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  React.useEffect(() => { mark('comment'); }, []);
   const shortVerse = lang === 'hi' && !verse.includes('\n') && Array.from(verse).length <= 32;
   const shortMeaning = Array.from(parts.meaning).length < 55;
   // One calibrated size + one script-correct face for every header; long source
@@ -112,12 +107,16 @@ export function DevotionalVerseBody({ header, verse, meaning, lang, art, verseSt
         style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning ? 28 : lang === 'en' ? 23 : type.meaningSize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : shortMeaning ? 34 : type.meaningLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.meaning}</Text>
     </Panel>
     <DevotionalSlice art={art} width={width} top={spec.meaningBottom} bottom={spec.commentTop} testID="devotional-comment-divider-image" onLoad={() => mark('commentDivider')} onError={onError} />
-    <Panel art={art} width={width} top={spec.commentTop} bottom={canvas.footerTop} bottomCap={canvas.footerTop - spec.commentTop}
-      solidMiddle={devotionalFrameColors.paper} testID="devotional-commentary-panel"
-      onLoad={() => mark('comment')} onError={onError} contentStyle={{ paddingHorizontal: 124 * scale, paddingTop: 11 * scale }}>
-      {parts.commentary ? <Text testID="devotional-share-commentary" allowFontScaling={!exportMode}
-        style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning || lang === 'en' ? 23 : type.commentarySize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : type.commentaryLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.commentary}</Text> : null}
-    </Panel>
+    {/* Explanation on plain paper, its own flow box — no baked scenery to stretch,
+        and it collapses to nothing when absent so the footer scenery rises to meet
+        the reading instead of a large empty band (design.md §23). */}
+    {parts.commentary ? (
+      <View testID="devotional-commentary-panel"
+        style={{ paddingHorizontal: 124 * scale, paddingTop: 11 * scale, paddingBottom: 18 * scale, backgroundColor: devotionalFrameColors.paper }}>
+        <Text testID="devotional-share-commentary" allowFontScaling={!exportMode}
+          style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning || lang === 'en' ? 23 : type.commentarySize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : type.commentaryLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.commentary}</Text>
+      </View>
+    ) : null}
   </View>;
 }
 export function DevotionalFooter({ art, width, onLoad, onError }: { art: DevotionalArt; width: number; onLoad?: () => void; onError?: () => void }) {
