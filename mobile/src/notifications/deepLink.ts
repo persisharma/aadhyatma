@@ -159,10 +159,10 @@ export function resolveNotificationTarget(data: unknown): StartTarget | null {
   }
 
   // A return-reminder tap (वापसी स्मरण, §38) lands on Home for the same reasons
-  // as the festive tap: the weekday deity's texts the message named are the
-  // FOR TODAY row's tier-4 lead on an ordinary day, and a notice armed up to
-  // fifteen days ago must not pin the user to stale content — Home recomputes
-  // today from today.
+  // as the festive tap: the weekday deity's texts the message named sit in the
+  // FOR TODAY row on an ordinary day (behind the pinned गीता सार lead, §50), and
+  // a notice armed up to fifteen days ago must not pin the user to stale content
+  // — Home recomputes today from today.
   if (isReturnReminderPayload(data)) {
     return { tab: 'HomeTab', screen: 'Home' };
   }

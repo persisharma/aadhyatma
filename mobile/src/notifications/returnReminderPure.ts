@@ -12,7 +12,8 @@
  * deity from `data/routine/vaar.ts` and an invitation to a bundled text for that
  * deity — because "आज मंगलवार, हनुमान चालीसा का दिन" is a reason to open the app
  * today, whereas a generic "come back" is spam. A tap lands on Home, whose
- * FOR TODAY row leads with the same weekday deity's texts on an ordinary day.
+ * FOR TODAY row carries the same weekday deity's texts on an ordinary day
+ * (behind the pinned गीता सार lead — the named reading is still one tap away).
  *
  * Deterministic and dependency-free — no `expo-notifications`, no astronomy, no
  * `Date.now()` — so it can be unit-tested via `tsx` without bootstrapping React
