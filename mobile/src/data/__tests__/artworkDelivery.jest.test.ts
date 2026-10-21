@@ -3,7 +3,7 @@ import path from 'node:path';
 
 // RULEBOOK §11.8: reading artwork ships from R2. These folders are publishing
 // sources for the manifests; only the neutral paper is a bundled fallback.
-const R2_ART = /(?:^|\/)(?:backgrounds|chalisa|gita|shiva-strotam|garud-puran|reader-illustrations|kids-stories|artwork-corrections)\/[^'"]+\.(?:webp|png|jpe?g)$/;
+const R2_ART = /(?:^|\/)(?:backgrounds|chalisa|gita|shiva-strotam|garud-puran|reader-illustrations|vidhi-steps|kids-stories|artwork-corrections)\/[^'"]+\.(?:webp|png|jpe?g)$/;
 const ALLOWED = new Set(['@assets/backgrounds/reading-parchment-option2.webp']);
 const mobile = path.join(__dirname, '../../..');
 
