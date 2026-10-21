@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, PixelRatio, StyleSheet, Text, View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 import type { Lang } from '@/data/gita/language';
-import { devotionalArtAsset, devotionalPlateArt } from '@/data/devotionalShareArt';
+import { devotionalArtRequest, devotionalPlateArt } from '@/data/devotionalShareArt';
+import { evictBackgroundAsset, subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
 import { devotionalFrameSpec, devotionalFrameCanvas as canvas } from '@/data/devotionalFrameSpec';
 import { devotionalFrameType as type, devotionalFrameColors } from '@/theme/devotionalFrame';
 import { fontFamilies } from '@/theme/typography';
@@ -22,7 +23,37 @@ export function withMarkHeadroom(style: StyleProp<TextStyle>, fontScale = 1): St
   const room = lineHeight ? Math.max(0, Math.ceil((GLYPH_EXTENT * fontSize - lineHeight) * fontScale)) : 0;
   return room ? [style, { paddingTop: room, marginTop: -room }] : style;
 }
-function plate(art: DevotionalArt) { return devotionalArtAsset(devotionalPlateArt(art)); }
+/**
+ * Resolve a master from R2 through the shared download-once cache. Every slice of one
+ * card subscribes to the same content hash, so a card costs one download. `failed`
+ * reports a download that could not complete, so capture refuses instead of sharing
+ * a card with missing artwork.
+ */
+function useDevotionalArt(art: DevotionalArt): { uri: string | null; failed: boolean } {
+  const request = devotionalArtRequest(art);
+  const url = request?.remoteUrl ?? null;
+  const [state, setState] = useState<{ url: string | null; uri: string | null; failed: boolean }>({ url: null, uri: null, failed: false });
+  useEffect(() => {
+    if (!request) { setState({ url, uri: null, failed: true }); return; }
+    let active = true;
+    const unsubscribe = subscribeBackgroundAsset(request, local => { if (active) setState({ url, uri: local, failed: !local }); });
+    return () => { active = false; unsubscribe(); };
+    // The manifest URL identifies the master; request objects are rebuilt per render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
+  return state.url === url ? state : { uri: null, failed: false };
+}
+/** One master image (or the paper colour while it downloads), reporting paint or failure. */
+function MasterImage({ art, testID, style, resizeMode, onLoad, onError }: {
+  art: DevotionalArt; testID?: string; style: { [key: string]: number | string };
+  resizeMode: 'stretch' | 'cover'; onLoad?: () => void; onError?: () => void;
+}) {
+  const { uri, failed } = useDevotionalArt(art);
+  useEffect(() => { if (failed) onError?.(); }, [failed]); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!uri) return <View testID={testID} accessible={false} style={[style, { backgroundColor: devotionalFrameColors.paper }]} />;
+  return <Image testID={testID} source={{ uri }} accessible={false} resizeMode={resizeMode} style={style} onLoad={onLoad}
+    onError={() => { const request = devotionalArtRequest(art); if (request) void evictBackgroundAsset(request); onError?.(); }} />;
+}
 /** Clip the complete portrait master. Stretch only a specified plain-paper band. */
 export function DevotionalSlice({ art, width, top, bottom, height, testID, onLoad, onError }: {
   art: DevotionalArt; width: number; top: number; bottom: number; height?: number;
@@ -31,7 +62,7 @@ export function DevotionalSlice({ art, width, top, bottom, height, testID, onLoa
   const displayHeight = height ?? (bottom - top) * width / canvas.width;
   const verticalScale = displayHeight / (bottom - top);
   return <View pointerEvents="none" accessible={false} style={{ width, height: displayHeight, overflow: 'hidden' }}>
-    <Image testID={testID} source={plate(art)} accessible={false} resizeMode="stretch"
+    <MasterImage art={devotionalPlateArt(art)} testID={testID} resizeMode="stretch"
       style={{ position: 'absolute', left: 0, top: -top * verticalScale, width, height: canvas.height * verticalScale }}
       onLoad={onLoad} onError={onError} />
   </View>;
@@ -40,17 +71,18 @@ export function DevotionalHero({ art, width, onLoad, onError }: {
   art: DevotionalArt; lang: Lang; width: number; onLoad?: () => void; onError?: () => void;
 }) {
   const h = devotionalFrameSpec(art).hero;
-  const [paintedArt, setPaintedArt] = React.useState<DevotionalArt | null>(null);
-  if (art === 'prayer') return <View testID="devotional-share-artwork" style={{ height: h * width / canvas.width, overflow: 'hidden', backgroundColor: devotionalFrameColors.paper }}>
+  const [paintedArt, setPaintedArt] = useState<DevotionalArt | null>(null);
+  const loaded = () => { setPaintedArt(art); onLoad?.(); };
+  const failed = () => { setPaintedArt(null); onError?.(); };
+  return <View testID="devotional-share-artwork">
     <View testID={`devotional-subject-${paintedArt === art ? art : `loading-${art}`}`} collapsable={false}>
-      <Image key={art} testID="devotional-hero-image" source={devotionalArtAsset(art)} resizeMode="cover" accessible={false}
-        style={{ width, height: h * width / canvas.width }}
-        onLoad={() => { setPaintedArt(art); onLoad?.(); }}
-        onError={() => { setPaintedArt(null); onError?.(); }} />
+      {art === 'prayer' ? <View style={{ height: h * width / canvas.width, overflow: 'hidden' }}>
+        <MasterImage key={art} art={art} testID="devotional-hero-image" resizeMode="cover"
+          style={{ width, height: h * width / canvas.width }} onLoad={loaded} onError={failed} />
+      </View> : <DevotionalSlice key={art} art={art} width={width} top={0} bottom={h}
+        testID="devotional-hero-image" onLoad={loaded} onError={failed} />}
     </View>
   </View>;
-  return <View testID="devotional-share-artwork"><View testID={`devotional-subject-${paintedArt === art ? art : `loading-${art}`}`} collapsable={false}><DevotionalSlice key={art} art={art} width={width} top={0} bottom={h}
-    testID="devotional-hero-image" onLoad={() => { setPaintedArt(art); onLoad?.(); }} onError={() => { setPaintedArt(null); onError?.(); }} /></View></View>;
 }
 /** Both decorated caps stay intact while the middle paper/vertical rules grow. */
 function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, children, overlay, testID, contentStyle, onLoad, onError }: {
@@ -99,7 +131,10 @@ export function DevotionalVerseBody({ header, verse, meaning, lang, art, verseSt
       <Text testID="devotional-share-source" allowFontScaling={!exportMode} adjustsFontSizeToFit numberOfLines={2} minimumFontScale={0.6} style={fit([reading, { fontSize: sourceSize, lineHeight: sourceSize * 1.3, color: '#7C210D', fontFamily: lang === 'hi' ? type.verseFace : face }])}>{header}</Text>
     </Panel>
     <Panel art={art} width={width} top={spec.sourceEnd} bottom={spec.verseEnd} testID="devotional-verse-panel"
-      contentStyle={{ paddingHorizontal: 92 * scale }} onLoad={() => mark('verse')} onError={onError}>
+      // Use the paper inside the ornamental rules; extra inset here needlessly
+      // wraps verses even when the surrounding card has room. Keep the reading
+      // size and let Panel grow vertically rather than shrinking scripture.
+      contentStyle={{ paddingHorizontal: 55 * scale }} onLoad={() => mark('verse')} onError={onError}>
       <Text testID="devotional-share-verse" allowFontScaling={!exportMode}
         style={fit([reading, verseStyle, exportMode && { fontSize: shortVerse ? 52 : lang === 'en' ? 27 : type.verseSize, lineHeight: shortVerse ? (spec.verseEnd - spec.sourceEnd) / 2 : lang === 'kn' ? 48 : lang === 'gu' ? 46 : type.verseLeading }, { color: '#2D1005', fontFamily: lang === 'hi' ? type.verseFace : face, transform: [{ translateY: shortVerse ? 16 * scale : 9 * scale }] }])}>{verse.trim()}</Text>
     </Panel>

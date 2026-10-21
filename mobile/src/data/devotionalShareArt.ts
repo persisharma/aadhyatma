@@ -1,25 +1,30 @@
 import type { DevotionalArt } from '@/utils/devotionalShareLayout';
+import type { CachedAssetRequest } from '@/utils/assetCache';
+import { assetBaseUrl, remoteAssetRequest, type RemoteAssetManifest } from './assetManifest';
+import devotionalShareManifestJson from './devotionalShareManifest.json';
+
+const devotionalShareManifest: RemoteAssetManifest = devotionalShareManifestJson;
 
 /** Complete portrait paintings; every card slice uses its own master. */
 export const devotionalSubjectArt = {
-  'lakshmi': () => require('@assets/devotional-share/master-lakshmi.webp'),
-  'khatu-shyam': () => require('@assets/devotional-share/master-khatu-shyam.webp'),
-  'shani': () => require('@assets/devotional-share/master-shani.webp'),
-  'dattatreya': () => require('@assets/devotional-share/master-dattatreya.webp'),
-  'ganga': () => require('@assets/devotional-share/master-ganga.webp'),
-  'kali': () => require('@assets/devotional-share/master-kali.webp'),
-  'kubera': () => require('@assets/devotional-share/master-kubera.webp'),
-  'radha': () => require('@assets/devotional-share/master-radha.webp'),
-  'kartikeya': () => require('@assets/devotional-share/master-kartikeya.webp'),
-  'narasimha': () => require('@assets/devotional-share/master-narasimha.webp'),
-  'navagraha': () => require('@assets/devotional-share/master-navagraha.webp'),
-  'gayatri': () => require('@assets/devotional-share/master-gayatri.webp'),
-  'santoshi': () => require('@assets/devotional-share/master-santoshi.webp'),
-  'ahoi': () => require('@assets/devotional-share/master-ahoi.webp'),
-  'vaishno': () => require('@assets/devotional-share/master-vaishno.webp'),
-  'ekadashi': () => require('@assets/devotional-share/master-ekadashi.webp'),
-  'tulsi': () => require('@assets/devotional-share/master-tulsi.webp'),
-  'shakambhari': () => require('@assets/devotional-share/master-shakambhari.webp'),
+  'lakshmi': 'lakshmi',
+  'khatu-shyam': 'khatu-shyam',
+  'shani': 'shani',
+  'dattatreya': 'dattatreya',
+  'ganga': 'ganga',
+  'kali': 'kali',
+  'kubera': 'kubera',
+  'radha': 'radha',
+  'kartikeya': 'kartikeya',
+  'narasimha': 'narasimha',
+  'navagraha': 'navagraha',
+  'gayatri': 'gayatri',
+  'santoshi': 'santoshi',
+  'ahoi': 'ahoi',
+  'vaishno': 'vaishno',
+  'ekadashi': 'ekadashi',
+  'tulsi': 'tulsi',
+  'shakambhari': 'shakambhari',
 } as const;
 export type DevotionalSubjectArt = keyof typeof devotionalSubjectArt;
 export function isDevotionalSubjectArt(art: DevotionalArt): art is DevotionalSubjectArt {
@@ -80,18 +85,11 @@ const verseArt: Readonly<Record<string, DevotionalArt>> = {
 export function devotionalArtForVerse(v: { sourceId: string; verseIndex: number }): DevotionalArt {
   return verseArt[`${v.sourceId}:${v.verseIndex}`] ?? devotionalSourceArt[v.sourceId] ?? 'prayer';
 }
-export function devotionalArtAsset(art: DevotionalArt): number {
-  if (isDevotionalSubjectArt(art)) return devotionalSubjectArt[art]();
-  switch (art) {
-    case 'krishna': return require('@assets/devotional-share/krishna.webp');
-    case 'shiva': return require('@assets/devotional-share/shiva.webp');
-    case 'durga': return require('@assets/devotional-share/durga.webp');
-    case 'saraswati': return require('@assets/devotional-share/saraswati.webp');
-    case 'ganesha': return require('@assets/devotional-share/ganesha.webp');
-    case 'vishnu': return require('@assets/devotional-share/vishnu.webp');
-    case 'hanuman': return require('@assets/devotional-share/hanuman.webp');
-    case 'rama': return require('@assets/devotional-share/rama.webp');
-    case 'surya': return require('@assets/devotional-share/surya.webp');
-    default: return require('@assets/devotional-share/prayer.webp');
-  }
+/**
+ * The full lossless masters ship from R2 (prefix `devotional-share`), not the bundle.
+ * `mobile/assets/devotional-share/` keeps the reviewed sources and their provenance;
+ * `scripts/prepare-devotional-share.mjs` publishes them and writes this manifest.
+ */
+export function devotionalArtRequest(art: DevotionalArt): CachedAssetRequest | null {
+  return remoteAssetRequest(devotionalShareManifest, art, assetBaseUrl());
 }

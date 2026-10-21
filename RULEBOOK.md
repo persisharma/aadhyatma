@@ -412,6 +412,9 @@ publish approved objects before activating their hashes, and preserve semantic d
 Reading artwork is never bundled: a corrected painting replaces the source file in its own slot
 (new hash, new cache file), and a new section's paintings get their own folder in
 `prepare-reading-backgrounds.mjs` (as `garud-puran` does) instead of `require()` imports.
+Share-card art follows the same rule: the Daily Bhakti devotional masters are R2 objects under
+`devotional-share`, resolved through the download-once cache, and capture refuses until every slice
+has painted.
 Paged verse readers show the banner only on the first actual verse of each reading/chapter/theme,
 excluding navigation transition cards; section-based Katha/Pitru readers show it only on section
 zero. Later cards keep their themed background and divider with no banner frame, placeholder

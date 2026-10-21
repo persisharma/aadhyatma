@@ -2,10 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import manifest from '../../../assets/devotional-share/manifest.json';
-import { devotionalSubjectArt } from '../devotionalShareArt';
+import { devotionalArtRequest, devotionalSubjectArt, type DevotionalSubjectArt } from '../devotionalShareArt';
+import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 import { devotionalFrameSpec } from '../devotionalFrameSpec';
-import type { DevotionalSubjectArt } from '../devotionalShareArt';
-it('ships eighteen complete portrait masters with pinned provenance within the combined budget', () => {
+it('retains eighteen complete portrait masters with pinned provenance within the combined budget', () => {
   expect(Object.keys(manifest.subjects).sort()).toEqual(Object.keys(devotionalSubjectArt).sort());
   const prompts = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../../docs/evaluations/daily-bhakti-full-masters/prompts.json'), 'utf8'));
   let bytes = 0;
@@ -26,13 +26,29 @@ it('ships eighteen complete portrait masters with pinned provenance within the c
   }
   expect(bytes + Object.values(manifest.assets).reduce((sum, a) => sum + a.bytes, 0)).toBeLessThan(22 * 1024 * 1024);
 });
-it('ships ten hashed offline plates under 22MiB', () => {
-  expect(Object.keys(manifest.assets)).toHaveLength(10); let total = 0;
-  for (const a of Object.values(manifest.assets)) {
+
+it('keeps all 28 hashed reviewed masters as sources and publishes each to R2, not the bundle', () => {
+  const r2 = JSON.parse(fs.readFileSync(path.join(__dirname, '../devotionalShareManifest.json'), 'utf8'));
+  expect(r2.prefix).toBe('devotional-share');
+  expect(Object.keys(manifest.assets)).toHaveLength(10);
+  for (const [art, a] of Object.entries({ ...manifest.assets, ...manifest.subjects })) {
     const b = fs.readFileSync(path.join(__dirname, '../../../assets/devotional-share', a.file));
-    expect(b.length).toBe(a.bytes); expect(crypto.createHash('sha256').update(b).digest('hex')).toBe(a.sha256); total += b.length;
+    expect(b.length).toBe(a.bytes);
+    const sha = crypto.createHash('sha256').update(b).digest('hex');
+    expect(sha).toBe(a.sha256);
+    expect(r2.assets[art]).toEqual({ hash: sha.slice(0, 16), ext: 'webp', width: a.width, height: a.height });
   }
-  expect(total).toBeLessThan(22 * 1024 * 1024);
+  const loader = fs.readFileSync(path.join(__dirname, '../devotionalShareArt.ts'), 'utf8');
+  expect(loader).not.toMatch(/require\(/);
+});
+it('resolves every art to its hashed R2 object', () => {
+  const r2 = JSON.parse(fs.readFileSync(path.join(__dirname, '../devotionalShareManifest.json'), 'utf8'));
+  for (const art of Object.keys(r2.assets) as DevotionalArt[]) {
+    expect(devotionalArtRequest(art)).toMatchObject({
+      key: r2.assets[art].hash, subdir: 'devotional-share',
+      remoteUrl: `https://cdn.vedansh.app/devotional-share/${r2.assets[art].hash}.webp`,
+    });
+  }
 });
 it('retains nine full masters with bounded text-only editing fields', () => {
   let verified = 0;

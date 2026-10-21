@@ -1079,3 +1079,7 @@ Reconciled current main, including six additional eligible verses (2,387 pool to
 ## [2026-10-21] ingest | Daily Bhakti artwork follow-up PR 509
 
 PR #508 merged during the artwork work. Preserved its new `versePoolFlat.ts` lazy registry and reconciled current main, including the Gita Saar design refresh. The artwork follow-up remains on `claude/daily-bhakti-more-sources` as draft PR #509. Final local `npm test` passed all 3,552 tests (2,655 Jest tests); native subject/asset export evidence and pending share/device QA are recorded in the evaluation README.
+
+## [2026-10-21] ingest | Vidhi step art uploaded; Daily Bhakti share masters moved to R2
+
+PR #507's `vidhiArtworkManifest.json` (63 reviewed step paintings, prefix `vidhi-steps`) had been merged without its R2 upload; uploaded all 63 with immutable caching and verified with `prepare-vidhi-artwork.mjs --verify --cdn`. The Daily Bhakti share masters added by #494/#499 were bundled (~18MiB, a deliberate offline tradeoff in #499); at the user's direction they now ship from R2 under `devotional-share` through the download-once cache, with `prepare-devotional-share.mjs` publishing/verifying and the bundling guard covering the folder. Updated [[subsystems/share]].

@@ -157,7 +157,9 @@ export default function DailyBhaktiScreen() {
             <DevotionalVerseBody
               width={cardWidth} inset={cardWidth * 55 / 1080}
               header={[contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn), contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')].filter(Boolean).join(' · ')}
-              verse={verseLines.join('\n')} meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
+              // Stored recitation lines are not fixed display rows on a phone.
+              // Flow them together so a short fragment can use the previous row.
+              verse={verseLines.join(' ')} meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
               lang={lang} art={devotionalArtForVerse(verse)}
               verseStyle={{ ...verseToken(lang, typography), color: colors.ink }}
               meaningStyle={{ ...meaningToken(lang, typography), color: colors.inkSoft }} />
