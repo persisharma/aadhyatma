@@ -15,8 +15,6 @@ import { valmikiRamayanDailySelection } from './valmiki-ramayan';
 import { japamMantras } from './japam';
 import { GRAHA_BEEJ_JAPA_ID } from './japam/grahaBeej';
 import { sanskarIds, getSanskar } from './sanskar';
-import { aartiIdByIndex } from './aarti/ids';
-import * as verseCounts from './verseCounts';
 
 const grahaBeejJapaIds: ReadonlySet<string> = new Set(Object.values(GRAHA_BEEJ_JAPA_ID));
 
@@ -45,13 +43,7 @@ export type UniformVerse = {
  * - **Sanskar**: a flat verse list per ritual, no chapter; the first `intro`
  *   verse is a section descriptor and is excluded from the random pool.
  * - **Flat** sources: one verse list per text, no chapter (chalisas, aartis,
- *   ashtakams, suktams, kavachs, stutis). Counts come from `verseCounts.ts`
- *   and the payload loads through a `require()` thunk on first pick, so none
- *   of these corpora sit on the launch path.
- *
- * Deliberately left out: Garud Puran (rites after death — not a morning
- * devotional card), Gita Saar (re-presents Gita verses already pooled) and
- * `ram-aarti` (reuses the Ram Stuti content already pooled).
+ *   ashtakams, suktams, kavachs, stutis), registered in `versePoolFlat.ts`.
  *
  * Each new section must be registered below — membership is explicit rather
  * than inferred from a category, so the pool only surfaces content with a
@@ -108,92 +100,7 @@ const PADA_SOURCES: readonly PadaSource[] = [
   { id: 'ramcharitmanas', manifest: ramcharitmanasChaptersManifest, getChapter: getRamcharitmanasChapter },
 ];
 
-type FlatVerse = {
-  labelHi: string;
-  labelEn: string;
-  lines: string[];
-  linesEn: string[];
-  meaningHi: string;
-  meaningEn: string;
-};
-type FlatSource = {
-  id: string;
-  length: number;
-  load: () => readonly FlatVerse[];
-};
-
-const chalisa = (id: string, length: number): FlatSource => ({
-  id,
-  length,
-  load: () => (require('./chalisaRegistry') as typeof import('./chalisaRegistry')).getChalisa(id).verses,
-});
-const ashtakam = (id: string, length: number): FlatSource => ({
-  id,
-  length,
-  load: () => (require('./ashtakam') as typeof import('./ashtakam')).getAshtakam(id).verses,
-});
-const suktam = (id: string, length: number): FlatSource => ({
-  id,
-  length,
-  load: () => (require('./suktam') as typeof import('./suktam')).getSuktam(id).verses,
-});
-const kavacham = (id: string, length: number): FlatSource => ({
-  id,
-  length,
-  load: () => (require('./kavacham') as typeof import('./kavacham')).getKavacham(id).verses,
-});
-const stuti = (id: string, length: number): FlatSource => ({
-  id,
-  length,
-  load: () => (require('./stuti') as typeof import('./stuti')).getStuti(id).verses,
-});
-
-const FLAT_SOURCES: readonly FlatSource[] = [
-  chalisa('hanuman-chalisa', verseCounts.hanumanChalisaTotal),
-  chalisa('shiv-chalisa', verseCounts.shivChalisaCounts.totalVerses),
-  chalisa('durga-chalisa', verseCounts.durgaChalisaCounts.totalVerses),
-  chalisa('ganesh-chalisa', verseCounts.ganeshChalisaCounts.totalVerses),
-  chalisa('gayatri-chalisa', verseCounts.gayatriChalisaCounts.totalVerses),
-  chalisa('ram-chalisa', verseCounts.ramChalisaCounts.totalVerses),
-  chalisa('krishna-chalisa', verseCounts.krishnaChalisaCounts.totalVerses),
-  chalisa('vishnu-chalisa', verseCounts.vishnuChalisaCounts.totalVerses),
-  chalisa('saraswati-chalisa', verseCounts.saraswatiChalisaCounts.totalVerses),
-  chalisa('khatu-shyam-chalisa', verseCounts.khatuShyamChalisaCounts.totalVerses),
-  chalisa('lakshmi-chalisa', verseCounts.lakshmiChalisaCounts.totalVerses),
-  chalisa('surya-chalisa', verseCounts.suryaChalisaCounts.totalVerses),
-  ...aartiIdByIndex.map((id, index): FlatSource => ({
-    id,
-    length: verseCounts.aartiVerseCounts[id],
-    load: () => (require('./aarti') as typeof import('./aarti')).getAarti(index).verses,
-  })),
-  ashtakam('lingashtakam', verseCounts.lingashtakamTotal),
-  ashtakam('madhurashtakam', verseCounts.madhurashtakamTotal),
-  ashtakam('achyutashtakam', verseCounts.achyutashtakamTotal),
-  ashtakam('mahalakshmi-ashtakam', verseCounts.mahalakshmiAshtakamTotal),
-  ashtakam('surya-ashtakam', verseCounts.suryaAshtakamTotal),
-  ashtakam('radhashtakam', verseCounts.radhashtakamTotal),
-  ashtakam('subrahmanya-ashtakam', verseCounts.subrahmanyaAshtakamTotal),
-  ashtakam('gangashtakam', verseCounts.gangashtakamTotal),
-  ashtakam('bhavani-ashtakam', verseCounts.bhavaniAshtakamTotal),
-  ashtakam('narasimha-ashtakam', verseCounts.narasimhaAshtakamTotal),
-  ashtakam('datta-ashtakam', verseCounts.dattaAshtakamTotal),
-  ashtakam('shani-ashtakam', verseCounts.shaniAshtakamTotal),
-  ashtakam('kalika-ashtakam', verseCounts.kalikaAshtakamTotal),
-  ashtakam('rudrashtakam', verseCounts.rudrashtakamTotal),
-  suktam('devi-suktam', verseCounts.deviSuktamTotal),
-  suktam('purusha-suktam', verseCounts.purushaSuktamTotal),
-  suktam('narayana-suktam', verseCounts.narayanaSuktamTotal),
-  kavacham('rama-raksha-stotra', verseCounts.ramaRakshaStotraTotal),
-  kavacham('ganesha-kavacham', verseCounts.ganeshaKavachamTotal),
-  kavacham('shiva-kavacham', verseCounts.shivaKavachamTotal),
-  kavacham('durga-kavach', verseCounts.durgaKavachTotal),
-  stuti('krishna-stuti', verseCounts.krishnaStutiTotal),
-  stuti('durga-stuti-arjuna', verseCounts.durgaStutiArjunaTotal),
-  stuti('kubera-stotram', verseCounts.kuberaStotramTotal),
-  stuti('navagraha-stotram', verseCounts.navagrahaStotramTotal),
-];
-
-type PoolSegment = {
+export type PoolSegment = {
   sourceId: string;
   length: number;
   lastPositions: readonly { chapter: number; verseIndex: number }[];
@@ -423,38 +330,26 @@ function buildPoolSegments(): PoolSegment[] {
   }
 
   // Appended after the existing sources so earlier pool indices keep their verse.
-  for (const src of FLAT_SOURCES) {
-    if (!isActive(src.id)) continue;
-    const getAt = (offset: number): UniformVerse | null => {
-      const verse = src.load()[offset];
-      if (!verse) return null;
-      return {
-        sourceId: src.id,
-        sourceNameHi: nameHi(src.id),
-        sourceNameEn: nameEn(src.id),
-        verseIndex: offset,
-        textHi: verse.lines,
-        textEn: verse.linesEn,
-        meaningHi: verse.meaningHi,
-        meaningEn: verse.meaningEn,
-        labelHi: verse.labelHi,
-        labelEn: verse.labelEn,
-      };
-    };
-    segments.push({
-      sourceId: src.id,
-      length: src.length,
-      lastPositions: [{ chapter: 1, verseIndex: src.length - 1 }],
-      getAt,
-      find: (verseIndex, chapter) => (chapter == null ? getAt(verseIndex) : null),
-    });
-  }
+  // Required, not imported: the registry and its counts stay off the launch path.
+  segments.push(
+    ...(require('./versePoolFlat') as typeof import('./versePoolFlat')).flatPoolSegments({ isActive, nameHi, nameEn })
+  );
 
   return segments;
 }
 
-const poolSegments = buildPoolSegments();
-const poolSize = poolSegments.reduce((total, segment) => total + segment.length, 0);
+// Built on first use, not at import: the flat registry it requires stays off
+// the launch path until something asks for a verse.
+let poolSegments: PoolSegment[] | null = null;
+let poolSize = 0;
+
+function segments(): PoolSegment[] {
+  if (!poolSegments) {
+    poolSegments = buildPoolSegments();
+    poolSize = poolSegments.reduce((total, segment) => total + segment.length, 0);
+  }
+  return poolSegments;
+}
 
 export type VersePoolLastPositions = {
   chapters: Record<number, number>;
@@ -464,7 +359,7 @@ export type VersePoolLastPositions = {
 /** Completion boundaries derived from manifests, without loading verse data. */
 export function getVersePoolLastPositions(): Record<string, VersePoolLastPositions> {
   const positions: Record<string, VersePoolLastPositions> = {};
-  for (const segment of poolSegments) {
+  for (const segment of segments()) {
     for (const last of segment.lastPositions) {
       const source = positions[segment.sourceId] ?? { chapters: {}, lastChapter: last.chapter };
       const current = source.chapters[last.chapter];
@@ -477,13 +372,14 @@ export function getVersePoolLastPositions(): Record<string, VersePoolLastPositio
 }
 
 export function getVersePoolSize(): number {
+  segments();
   return poolSize;
 }
 
 export function getVerseAtPoolIndex(index: number): UniformVerse | null {
-  if (!Number.isInteger(index) || index < 0 || index >= poolSize) return null;
+  if (!Number.isInteger(index) || index < 0 || index >= getVersePoolSize()) return null;
   let offset = index;
-  for (const segment of poolSegments) {
+  for (const segment of segments()) {
     if (offset < segment.length) return segment.getAt(offset);
     offset -= segment.length;
   }
@@ -492,7 +388,7 @@ export function getVerseAtPoolIndex(index: number): UniformVerse | null {
 
 function buildPool(): UniformVerse[] {
   const pool: UniformVerse[] = [];
-  for (let index = 0; index < poolSize; index += 1) {
+  for (let index = 0; index < getVersePoolSize(); index += 1) {
     const verse = getVerseAtPoolIndex(index);
     if (verse) pool.push(verse);
   }
@@ -509,8 +405,9 @@ export function getVersePool(): UniformVerse[] {
 }
 
 export function getRandomVerse(): UniformVerse | null {
-  if (poolSize === 0) return null;
-  return getVerseAtPoolIndex(Math.floor(Math.random() * poolSize));
+  const size = getVersePoolSize();
+  if (size === 0) return null;
+  return getVerseAtPoolIndex(Math.floor(Math.random() * size));
 }
 
 /**
@@ -525,7 +422,7 @@ export function findVerse(
   verseIndex: number,
   chapter?: number
 ): UniformVerse | null {
-  for (const segment of poolSegments) {
+  for (const segment of segments()) {
     if (segment.sourceId !== sourceId) continue;
     const verse = segment.find(verseIndex, chapter);
     if (verse) return verse;
