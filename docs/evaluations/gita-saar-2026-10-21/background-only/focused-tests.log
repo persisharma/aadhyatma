@@ -1,0 +1,9 @@
+PASS src/screens/__tests__/GitaSaarReaderScreen.test.tsx
+PASS src/components/__tests__/readerArtworkPlacement.test.tsx
+PASS src/data/__tests__/artworkDelivery.jest.test.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       29 passed, 29 total
+Snapshots:   0 total
+Time:        1.972 s, estimated 2 s
+Ran all test suites matching /src\/screens\/__tests__\/GitaSaarReaderScreen.test.tsx|src\/components\/__tests__\/readerArtworkPlacement.test.tsx|src\/data\/__tests__\/artworkDelivery.jest.test.ts/i.

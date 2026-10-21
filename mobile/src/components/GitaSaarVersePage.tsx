@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -16,22 +16,20 @@ import {
   scriptBodyFont,
   scriptTitleFont,
   pillTextStyle,
-  eyebrowTextStyle,
-  titleFontByLang,
 } from '@/utils/langType';
 import type { GitaSaarVerse } from '@/data/gita-saar';
 import { getReaderBackground } from '@/data/backgrounds';
 import BackgroundLayer from './BackgroundLayer';
-import ReadingArtwork from './ReadingArtwork';
+import GitaSaarDivider from './GitaSaarDivider';
 import ProseParagraph from './ProseParagraph';
-import Ornament from './Ornament';
 
 type Props = {
   verse: GitaSaarVerse;
   sourceId: string;
+  chapterTitle?: string;
   width: number;
-  /** One opening banner per theme; continuation pages have no image frame. */
-  showIllustration?: boolean;
+  /** Measured pager viewport: bounds the nested vertical reader on native. */
+  height?: number;
   topActions?: React.ReactNode;
   /** Rendered under the saar on the theme's last page — the one-line essence. */
   closing?: { hi: string; en: string };
@@ -48,15 +46,15 @@ type Props = {
 export default function GitaSaarVersePage({
   verse,
   sourceId,
+  chapterTitle,
   width,
-  showIllustration = false,
+  height,
   topActions,
   closing,
   onOpenInGita,
 }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const bg = getReaderBackground(sourceId, verse);
 
   const saar = meaningByLang(lang, verse.meaningHi, verse.meaningEn);
   const groupTitle = contentByLang(lang, verse.groupTitleHi, verse.groupTitleEn);
@@ -112,129 +110,141 @@ export default function GitaSaarVersePage({
   ].join('. ');
 
   return (
-    <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
-      <BackgroundLayer source={bg} />
+    <View style={[styles.page, { width, height, backgroundColor: colors.parchment }]}>
+      <BackgroundLayer source={getReaderBackground(sourceId, verse)} />
 
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={[styles.scrollContent, { paddingHorizontal: spacing.screenGutter }]}
-        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator
+        nestedScrollEnabled
+        directionalLockEnabled
         accessible={false}
       >
-        <View style={styles.headerRow}>
-          <View
-            accessible
-            accessibilityLabel={a11yLabel}
-            style={[styles.pill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}
-          >
-            <Text
-              style={[styles.pillText, pillTextStyle(lang, typography.versePill), { color: colors.saffronDeep }]}
-            >
-              {pillText}
-            </Text>
-          </View>
-          {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
-        </View>
-
-        {/* Group eyebrow: which section of the reading order this page belongs to. */}
-        <Text
-          testID="gita-saar-group"
-          style={[
-            styles.eyebrow,
-            eyebrowTextStyle(lang, typography.sectionLabel.fontSize),
-            { color: colors.inkMuted },
-          ]}
-        >
-          {groupTitle}
-        </Text>
-        {verse.isGroupStart ? (
-          <Text
+        <View style={{ paddingHorizontal: spacing.screenGutter }}>
+          {chapterTitle ? (
+            <ProseParagraph style={[styles.chapterTitle, {
+              color: colors.ink,
+              fontFamily: lang === 'en' ? fontFamilies.latinBold : scriptTitleFont(lang, typography.screenTitle.fontFamily),
+              fontSize: typography.screenTitle.fontSize,
+            }]}>{chapterTitle}</ProseParagraph>
+          ) : null}
+          {/* Group eyebrow: which section of the reading order this page belongs to. */}
+          <ProseParagraph
+            testID="gita-saar-group"
             style={[
-              styles.groupIntro,
+              styles.eyebrow,
+              { fontFamily: lang === 'en' ? typography.subtitle.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 16, lineHeight: 25 },
+              { color: colors.inkMuted },
+            ]}
+          >
+            {groupTitle}
+          </ProseParagraph>
+          {verse.isGroupStart ? (
+            <ProseParagraph
+              style={[
+                styles.groupIntro,
+                {
+                  color: colors.inkSoft,
+                  fontFamily: lang === 'en' ? typography.subtitle.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
+                  fontSize: 15,
+                  lineHeight: 23,
+                  fontStyle: lang === 'en' ? 'italic' : 'normal',
+                },
+              ]}
+            >
+              {groupIntro}
+            </ProseParagraph>
+          ) : null}
+
+        </View>
+        <View style={{ paddingHorizontal: spacing.screenGutter }}>
+          <View style={styles.headerRow}>
+            <View
+              accessible
+              accessibilityLabel={a11yLabel}
+              style={[styles.pill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}
+            >
+              <ProseParagraph
+                style={[styles.pillText, pillTextStyle(lang, typography.versePill), { color: colors.saffronDeep }]}
+              >
+                {pillText}
+              </ProseParagraph>
+            </View>
+            {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
+          </View>
+
+          <View style={styles.verseBlock}>
+            {verseLinesByLang(lang, verse.sanskrit, verse.transliteration).map((line, idx) => {
+              const tok = verseToken(lang, typography);
+              return (
+                <ProseParagraph
+                  key={`v-${idx}`}
+                  style={[
+                    styles.verseLine,
+                    { color: colors.ink, fontFamily: tok.fontFamily, fontSize: tok.fontSize, lineHeight: tok.lineHeight },
+                  ]}
+                >
+                  {line}
+                </ProseParagraph>
+              );
+            })}
+          </View>
+
+          <GitaSaarDivider />
+
+          <ProseParagraph style={[styles.sectionLabel, labelStyle]}>{saarLabel}</ProseParagraph>
+          <ProseParagraph
+            style={[
+              styles.themeLine,
               {
-                color: colors.inkSoft,
-                fontFamily: lang === 'en' ? typography.subtitle.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
-                fontSize: 15,
-                lineHeight: 23,
+                color: colors.ink,
+                fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.screenTitle.fontFamily),
+                fontSize: meaningTok.fontSize + 3,
+                lineHeight: meaningTok.lineHeight + 2,
                 fontStyle: lang === 'en' ? 'italic' : 'normal',
               },
             ]}
           >
-            {groupIntro}
-          </Text>
-        ) : null}
+            {themeLine}
+          </ProseParagraph>
+          <ProseParagraph style={[styles.body, bodyStyle]}>{saar}</ProseParagraph>
 
-        <ReadingArtwork source={showIllustration ? bg : undefined} />
-
-        <View style={styles.verseBlock}>
-          {verseLinesByLang(lang, verse.sanskrit, verse.transliteration).map((line, idx) => {
-            const tok = verseToken(lang, typography);
-            return (
-              <Text
-                key={`v-${idx}`}
-                style={[
-                  styles.verseLine,
-                  { color: colors.ink, fontFamily: tok.fontFamily, fontSize: tok.fontSize, lineHeight: tok.lineHeight },
-                ]}
-              >
-                {line}
-              </Text>
-            );
-          })}
-        </View>
-
-        <Ornament />
-
-        <Text style={[styles.sectionLabel, labelStyle]}>{saarLabel}</Text>
-        <Text
-          style={[
-            styles.themeLine,
-            {
-              color: colors.saffronDeep,
-              fontFamily: titleFontByLang(lang),
-              fontSize: 17,
-              lineHeight: 25,
-              fontStyle: lang === 'en' ? 'italic' : 'normal',
-            },
-          ]}
-        >
-          {themeLine}
-        </Text>
-        <ProseParagraph style={[styles.body, bodyStyle]}>{saar}</ProseParagraph>
-
-        {onOpenInGita ? (
-          <Pressable
-            onPress={onOpenInGita}
-            accessibilityRole="button"
-            accessibilityLabel={`Open Gita reader for ${verse.gitaChapter}.${verse.gitaVerse}`}
-            testID="gita-saar-open-in-gita"
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.handoff,
-              { borderColor: colors.divider, borderRadius: radii.pill, backgroundColor: colors.parchmentSoft },
-              pressed && { opacity: 0.86 },
-            ]}
-          >
-            <Text
-              style={{
-                color: colors.saffronDeep,
-                fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.readerTitle.fontFamily),
-                fontSize: 14,
-                includeFontPadding: false,
-              }}
+          {onOpenInGita ? (
+            <Pressable
+              onPress={onOpenInGita}
+              accessibilityRole="button"
+              accessibilityLabel={`Open Gita reader for ${verse.gitaChapter}.${verse.gitaVerse}`}
+              testID="gita-saar-open-in-gita"
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.handoff,
+                { borderColor: colors.gold, borderRadius: radii.pill, backgroundColor: colors.parchmentSoft },
+                pressed && { opacity: 0.86 },
+              ]}
             >
-              {openInGitaLabel}
-            </Text>
-          </Pressable>
-        ) : null}
+              <ProseParagraph
+                style={{
+                  color: colors.saffronDeep,
+                  fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                  fontSize: 14,
+                  textAlign: 'center',
+                  flexShrink: 1,
+                }}
+              >
+                {openInGitaLabel}
+              </ProseParagraph>
+            </Pressable>
+          ) : null}
 
-        {closingText ? (
-          <>
-            <Ornament />
-            <Text style={[styles.sectionLabel, labelStyle]}>{closingLabel}</Text>
-            <Text style={[styles.body, styles.closing, bodyStyle]}>{closingText}</Text>
-          </>
-        ) : null}
+          {closingText ? (
+            <>
+              <GitaSaarDivider />
+              <ProseParagraph style={[styles.sectionLabel, labelStyle]}>{closingLabel}</ProseParagraph>
+              <ProseParagraph style={[styles.body, styles.closing, bodyStyle]}>{closingText}</ProseParagraph>
+            </>
+          ) : null}
+        </View>
       </ScrollView>
     </View>
   );
@@ -253,10 +263,13 @@ const styles = StyleSheet.create({
     // Clears the pager-dots overlay and the screen/tab-bar seam (design.md B2).
     paddingBottom: 64,
   },
+  chapterTitle: { lineHeight: 54, paddingVertical: 8, marginBottom: 6 },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: 8,
     marginBottom: 14,
   },
   headerActions: {
@@ -265,12 +278,14 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   pill: {
+    maxWidth: '100%',
+    flexShrink: 1,
     paddingHorizontal: 12,
     paddingVertical: 4,
   },
   pillText: {
     textTransform: 'uppercase',
-    includeFontPadding: false,
+    includeFontPadding: true,
   },
   eyebrow: {
     marginBottom: 6,
@@ -283,15 +298,17 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   verseLine: {
+    textAlign: 'center',
     // Devanagari verse body — keep Android's font padding so top matras aren't clipped.
   },
   sectionLabel: {
     textTransform: 'uppercase',
     marginBottom: 10,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
   },
   themeLine: {
-    textAlign: 'center',
+    textAlign: 'left',
+    paddingVertical: 4,
     marginBottom: 10,
   },
   body: {
@@ -302,8 +319,11 @@ const styles = StyleSheet.create({
   },
   handoff: {
     alignSelf: 'center',
-    marginTop: 18,
-    paddingHorizontal: 16,
+    maxWidth: '100%',
+    marginTop: 24,
+    minHeight: 44,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
     paddingVertical: 10,
     borderWidth: 1,
   },

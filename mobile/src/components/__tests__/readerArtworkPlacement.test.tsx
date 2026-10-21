@@ -35,7 +35,7 @@ const linesVerse = {
 const cases: [string, (showIllustration: boolean) => React.ReactElement][] = [
   ['Chalisa/Aarti', show => <VersePage verse={linesVerse} sourceId="hanuman-chalisa" width={375} showIllustration={show} />],
   ['Gita', show => <GitaVersePage verse={getGitaChapter(1).verses[0]} sourceId="bhagavad-gita" width={375} showIllustration={show} />],
-  ['Gita Saar', show => <GitaSaarVersePage verse={getGitaSaarChapter(1).verses[0]} sourceId="gita-saar" width={375} showIllustration={show} />],
+  ['Gita Saar', show => <GitaSaarVersePage verse={getGitaSaarChapter(1).verses[0]} sourceId="gita-saar" width={375} />],
   ['Stotram', show => <ShivaStrotamVersePage verse={getShivaStrotamChapter(1).verses[0]} sourceId="shiva-strotam" width={375} showIllustration={show} />],
   ['Ramayan', show => <SundarkandVersePage verse={getSundarkandChapter(1).verses[0]} sourceId="sundarkand" width={375} showIllustration={show} />],
   ['Bajrang Baan', show => <BajrangBaanVersePage verse={getBajrangBaanChapter(1).verses[0]} sourceId="bajrang-baan" width={375} showIllustration={show} />],
@@ -45,10 +45,10 @@ const cases: [string, (showIllustration: boolean) => React.ReactElement][] = [
 const wrap = (element: React.ReactElement) => <GitaLanguageProvider initialLang="en">{element}</GitaLanguageProvider>;
 const text = (tree: TestRenderer.ReactTestRenderer) => tree.root.findAllByType(Text).map(node => node.props.children);
 
-test.each(cases)('%s: later cards remove the banner frame while keeping all reading text', (_, page) => {
+test.each(cases)('%s: opening artwork follows the reader policy and preserves continuation text', (name, page) => {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => { tree = TestRenderer.create(wrap(page(true))); });
-  expect(tree.root.findAllByType(ReadingBanner)).toHaveLength(1);
+  expect(tree.root.findAllByType(ReadingBanner)).toHaveLength(name === 'Gita Saar' ? 0 : 1);
   const reading = text(tree);
   act(() => { tree.update(wrap(page(false))); });
   expect(tree.root.findAllByType(ReadingBanner)).toHaveLength(0);

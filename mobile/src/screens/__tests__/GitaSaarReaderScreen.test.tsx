@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { FlatList, Text, View as mockView } from 'react-native';
+import StoryIcon from '@/components/StoryIcon';
+import ProseParagraph from '@/components/ProseParagraph';
+import GitaSaarThemeIcon, { gitaSaarThemeIcons } from '@/components/GitaSaarThemeIcon';
+import ReadingBanner from '@/components/ReadingBanner';
+import CachedArtwork from '@/components/CachedArtwork';
+import { FlatList, StyleSheet, Text, View as mockView } from 'react-native';
 
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
@@ -85,6 +90,26 @@ test('renders the first Gita Saar page without throwing: corpus shloka + saar + 
   assert.ok(renderedText.includes(`श्लोक · ${firstVerse.gitaChapter}.${firstVerse.gitaVerse}`));
 });
 
+test('Saar reader keeps its devotional background without an inserted artwork banner', () => {
+  const { tree } = render();
+  assert.equal(tree.root.findAllByType(ReadingBanner).length, 0);
+  assert.equal(tree.root.findAll(node => node.props.testID === 'gita-saar-opening-artwork').length, 0);
+  act(() => tree.unmount());
+});
+
+test('reader pages receive the measured viewport so long vertical content stays bounded', () => {
+  const { tree } = render();
+  const viewport = tree.root.findAll((node) =>
+    typeof node.props.onLayout === 'function' && node.findAllByType(FlatList).length > 0
+  )[0];
+  assert.ok(viewport, 'the pager must measure its available height');
+  act(() => viewport.props.onLayout({ nativeEvent: { layout: { height: 460 } } }));
+  const pages = tree.root.findAll((node) => node.props.sourceId === 'gita-saar' && node.props.verse);
+  assert.ok(pages.length > 0);
+  assert.ok(pages.every((page) => page.props.height === 460));
+  act(() => tree.unmount());
+});
+
 test('English mode shows the saar in English and the pill in English (no Devanagari leak)', () => {
   const { renderedText } = render(0, 'en');
   assert.ok(renderedText.includes(firstVerse.meaningEn));
@@ -124,4 +149,39 @@ test('the list holds exactly the theme pages (no transition cards while one them
 test('the last page carries the closing line', () => {
   const { renderedText } = render(chapter.verseCount - 1);
   assert.ok(renderedText.includes(chapter.closingHi));
+});
+
+const GitaSaarThemesScreen = jest.requireActual<typeof import('../GitaSaarThemesScreen')>(
+  '../GitaSaarThemesScreen'
+).default;
+
+test.each(['hi', 'en', 'gu', 'kn'] as const)('%s listing keeps complete titles and uses an icon for every theme', (lang) => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  const navigate = jest.fn();
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang={lang}>
+        <ShareProvider>
+          <GitaSaarThemesScreen navigation={{ goBack: jest.fn(), navigate } as never} route={{ key: 'themes', name: 'GitaSaarChapters' }} />
+        </ShareProvider>
+      </GitaLanguageProvider>
+    );
+  });
+  const icons = tree.root.findAllByType(GitaSaarThemeIcon);
+  assert.deepEqual(icons.map(node => node.props.themeId), gitaSaarChaptersManifest.map(theme => theme.id));
+  assert.ok(gitaSaarChaptersManifest.every(theme => gitaSaarThemeIcons[theme.id]));
+  assert.ok(icons.every(node => node.findByType(StoryIcon).props.name === gitaSaarThemeIcons[node.props.themeId]));
+  const paragraphs = tree.root.findAllByType(ProseParagraph);
+  assert.ok(paragraphs.length > gitaSaarChaptersManifest.length);
+  assert.ok(paragraphs.every(node => node.props.numberOfLines === undefined));
+  const title = paragraphs[0];
+  const style = StyleSheet.flatten(title.props.style);
+  assert.ok(style.paddingTop >= 8, 'title needs space for script ascenders below the banner');
+  assert.ok(style.lineHeight >= style.fontSize * 1.5);
+  const banner = tree.root.findByType(ReadingBanner);
+  assert.equal(banner.findByType(CachedArtwork).props.resizeMode, 'contain');
+  const buttons = tree.root.findAll(node => typeof node.props.onPress === 'function' && node.props.accessibilityRole === 'button' && String(node.props.accessibilityLabel).endsWith('Tap to open.'));
+  act(() => buttons[buttons.length - 1].props.onPress());
+  expect(navigate).toHaveBeenCalledWith('GitaSaarReader', { chapter: 16, initialIndex: 0 });
+  act(() => tree.unmount());
 });

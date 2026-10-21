@@ -1,0 +1,51 @@
+WARNING: Final field parent in class maestro.cli.command.TestCommand has been mutated reflectively by class picocli.CommandLine$Model$FieldBinding in unnamed module @41e68d87 (file:/Users/prashant/.maestro/lib/picocli-4.6.3.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/prashant/.maestro/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Running on Vedansh-Comic-Integration - iOS 26.4 - 575E0F9E-245D-477B-A9A7-9F93DDB2622B
+ > Flow gita-saar-visual-smoke
+Launch app "com.prashantsharma.vedansh" (launch arguments: {RCT_jsLocation=127.0.0.1:8084})... COMPLETED
+Assert that "Skip tour|Begin|.*Today.s Panchang.*|.*आज का पंचांग.*|.*Open debugger.*" is visible... COMPLETED
+Tap on (Optional) "Skip tour"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Skip tour
+Run flow when ".*Open debugger.*" is visible...
+  Tap on point (92%,93%)... COMPLETED
+Run flow when ".*Open debugger.*" is visible... COMPLETED
+Tap on (Optional) "Begin"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Begin
+Tap on (Optional) "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ
+Assert that ".*Today.s Panchang.*|.*आज का पंचांग.*" is visible... COMPLETED
+Scrolling DOWN until "Sacred Books.*Tap to open." is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Sacred Books.*Tap to open."... COMPLETED
+Scrolling DOWN until "Gita Saar\..*Tap to open\." is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Gita Saar\..*Tap to open\."... COMPLETED
+Tap on (Optional) "Start over from the beginning"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Start over from the beginning
+Assert that id: lang-toggle-en is visible... COMPLETED
+Take screenshot gita-saar-hi-title... COMPLETED
+Tap on id: lang-toggle-en... COMPLETED
+Swipe from (50%,82%) to (50%,45%) in 600 ms... COMPLETED
+Scrolling DOWN until "True Prema\. 19 verses\. Tap to open\." is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Take screenshot gita-saar-theme-icons... COMPLETED
+Tap on "True Prema\. 19 verses\. Tap to open\."... COMPLETED
+Assert that "Before love is a feeling.*" is visible... COMPLETED
+Take screenshot gita-saar-en-opening... COMPLETED
+Scrolling DOWN until id: gita-saar-open-in-gita, Index: 0 is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Take screenshot gita-saar-en-complete-saar... COMPLETED
+Tap on id: gita-saar-open-in-gita, Index: 0... COMPLETED
+Assert that "Chapter 6.*Path of Meditation" is visible... COMPLETED
+Assert that "32 / 47" is visible... COMPLETED
+Take screenshot gita-saar-full-gita-handoff... COMPLETED
