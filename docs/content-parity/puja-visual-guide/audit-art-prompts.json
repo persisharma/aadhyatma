@@ -1,0 +1,220 @@
+{
+  "date": "2026-10-21",
+  "mode": "built-in imagegen",
+  "assets": [
+    {
+      "key": "asana-five-flowers",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint two cupped human hands holding EXACTLY five separate fresh red flowers, each flower clearly visible and countable, poised above a simple complete empty brass offering plate on a low wood surface. The palms offer flowers as a symbolic seat. No rice grains, grass, garland, deity or extra flowers.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-81f7fbd7-9a33-48cf-a941-750d5e436ff5.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "vastra-yajnopavita",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a simple materials still-life: one small folded red angavastram cloth, one clearly distinct loose white cotton sacred-thread loop (yajnopavita), and one red-yellow mauli spool. The white thread must be highly visible next to the cloth, not tied onto a deity or person. No powders, food, flowers or other objects.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-1bc780c2-a540-49ae-adaf-39d36a39e1b1.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "chandan-akshat",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a hand taking a little beige sandalwood paste with the fingertip from a shallow brass bowl on a small brass tray; alongside are only a tiny bowl of red roli and a tiny bowl of uncooked white rice (akshat). Clear distinct beige paste/red roli/white grains. No yellow turmeric, ash, food, incense or deity.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-b61e1539-304b-4df5-8839-e6e11c2e67ea.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "clean-clothes",
+      "prompt": "Use case: precise-object-edit. Edit target: attached generated puja illustration. Remove the entire basket, all fruit, all flowers and all leaves. Keep only the clean folded white kurta, white towel and brass water pot. Rebalance these three complete objects to fill the same landscape composition. Preserve the warm storybook style and parchment. Absolutely no red hibiscus, other flowers, foliage, ritual shringar cloth, powders or flame.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-922d9a72-7bb4-4611-8595-188b4ba8521b.png",
+      "reference": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-7319e2a8-ff67-4ac9-a49b-a42b2cc5d9e5.png",
+      "rejectedPrior": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-7319e2a8-ff67-4ac9-a49b-a42b2cc5d9e5.png"
+    },
+    {
+      "key": "diwali-naivedya",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a carefully arranged Diwali naivedya brass tray: a clearly visible heap of white puffed rice (kheel), several white round porous sugar batasha discs, a small group of almonds/cashews/raisins, a few plain mithai squares and laddoos, one banana and apple, plus a small separate complete cup of clear water. Make kheel and batasha the largest distinctive items, not modaks or coconut. No five milk/curd ingredient bowls, no deity, flames or cloth covering food.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-4a9562bf-f460-4e42-9250-f8e2dcec045b.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "vrat-naivedya",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a modest fasting naivedya brass tray with fresh apple, banana, grapes, a few plain white milk-sweet squares and a small bowl of dry fruits, alongside a separate small cup of clean water. Clear fruit-and-fasting-sweets still-life. No modaks, flour pastries, wheat puris, cereals, garlic, onion, salt jar, meat or deity.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-558d0934-9268-4b74-b2ec-7ccefda555fc.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "panchopachara",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint five clearly distinct offering groups arranged from left to right across a compact two-row setup: (1) small shallow bowl of beige sandalwood paste representing fragrance, (2) a group of fresh flowers, (3) a small stable incense holder with smoking dhoop, (4) a brass diya with one modest flame, (5) a small plate of fruit and mithai sweets. No numbering or labels. Keep flame well clear of flowers and incense. Only these five offering groups, no grass, rice, sacred thread, deity or extra containers.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-6ea766d6-9202-4ada-80b8-2e7ac28cc5dd.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "vishnu-flowers",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a close view of natural cupped hands holding one pink lotus blossom and a little white akshat, offering them above a brass plate. Beside the plate lies a complete garland made of white fragrant blossoms. This is Satyanarayan/Vishnu flower offering art: lotus and white garland, no hibiscus, durva, bilva or other leaves. No deity, flame or extra flowers.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-c966be20-0ddd-4ab4-8e6e-5a946abef787.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "vishnu-asana-flowers",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint two cupped hands holding EXACTLY five individual small pink lotus blossoms, each complete with a distinct visible centre so exactly five can be counted, above a simple brass plate. These five flowers illustrate the authored asana offering for Satyanarayan/Vishnu. No hibiscus, grass, rice, extra flowers, deity or flame.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-5d61f7a4-2ef7-4453-9ff9-272d8af8c335.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "sankalp-white",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint an adult RIGHT palm facing upward, holding a little visibly clear water, uncooked white rice grains and a single clean white aak/calotropis flower with five pointed waxy petals and a pale lavender centre. A brass water vessel sits beside the hand. This is a Shiva sankalp materials action. No red hibiscus, ketaki, champaka, tulsi or extra leaves, no deity or flame.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-4c462685-9da0-4570-bde5-fd1c3681b96f.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "aarti-neutral",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a natural adult hand supporting a complete brass aarti plate with one small brass ghee diya burning modestly at centre. The plate contains no flowers or leaves. Simple warm parchment surroundings, no deity, powders, incense, food or cloth near flame. Entire plate, diya, fingers and flame in frame.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-72597aa0-7837-4f4d-9134-5bae5fc7688a.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "dhoop-deep-neutral",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint exactly one stable brass incense holder with smoking dhoop and, at a clearly safe distance, one stable brass ghee diya with a modest flame. Both sit on a clean stone slab with warm parchment behind. STILL LIFE ONLY: absolutely no humans, no hands, no fingers touching incense or lamp. No flowers, leaves, fabric, food or deity. Complete objects and smoke in frame.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-266b20db-aa82-415f-8bc0-45e3c942f90c.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "sankalp-lotus",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint an adult RIGHT palm facing upward holding a little visibly clear water, white uncooked akshat grains and one small pink lotus blossom. A complete brass water vessel rests beside it. No hibiscus, grass, bilva, tulsi, other leaves, deity or flame.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-2d026b46-cbeb-4d2a-b26d-12ca82baf8bb.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/lakshmi-pushpa-square.webp"
+    },
+    {
+      "key": "lakshmi-lotus",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint Maa Lakshmi as a small seated red-and-gold adorned murti on her complete lotus pedestal. Natural adult hands in front offer one unmistakable pink lotus blossom and white akshat toward her feet; a complete fresh pink/red rose garland lies alongside ready for offering. Four complete arms with upper hands holding pink lotuses, calm respectful face. No red hibiscus as the offered flower, no durva, tulsi or bilva. Square composition requested 1024 x 1024, complete crown, pedestal, fingers and garland with no crop.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-3ee531fb-b598-46c2-816f-017a8c649186.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/lakshmi-pushpa-square.webp"
+    },
+    {
+      "key": "navratri-samagri",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a neatly grouped Ghatasthapana preparation still-life: a wide empty earthen bowl with a small heap of clean soil, separate small bowl of barley seeds, an empty brass kalash, a clean-water vessel, five mango leaves, a whole coconut, folded red cloth with mauli, and a small group of sandal paste, red flowers, unlit dhoop, an unlit diya and fruit. Everything still unassembled, no sprouts, no installed kalash and no people.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-5152d670-d677-4a7a-89c3-b7dcc2aa6cd0.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "soil-layer",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a natural hand using a small scoop to spread a final layer of dark clean soil in a wide terracotta grain-bed bowl; a few barley seeds remain visible near the rim while most seeds are being covered. Show real soil covering, not sowing seeds, not green sprouts. No kalash or deity.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-08282b83-0b1c-4729-87b4-9b592316760b.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "grain-bed-water",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a hand gently sprinkling a few clear-water droplets from fingertips onto a newly prepared flat soil-filled wide terracotta grain-bed bowl. Only soil, no standing water, no sprouts, no kalash, no flowers. A small clean-water vessel stands alongside. Clear settling/moistening action.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-11c97a92-b067-41c1-9531-b886ba3469ba.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "ghata-grain-bed",
+      "prompt": "Use case: precise-object-edit. Edit target: attached generated puja illustration. Change only the painted tilak on the kalash front: replace the three horizontal white lines and pointed red mark with ONE simple small round red kumkum dot beside ONE small round beige sandalwood dot. Do not render any tripundra, sectarian symbol or text. Keep the complete kalash, cloth-wrapped coconut, leaves, flower garland, hands and unsprouted soil/grain bowl exactly as in reference.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-5f28dcb7-5294-40ee-9970-6c5b2d37a2cc.png",
+      "reference": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-e050d1ee-48d8-431a-bcb2-4fc2a60d61e6.png",
+      "rejectedPrior": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-e050d1ee-48d8-431a-bcb2-4fc2a60d61e6.png"
+    },
+    {
+      "key": "deepmala",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a natural adult hand setting a small lit clay diya onto a wide clean stone ledge among a short row of spaced clay lamps. A calm home doorway is softly visible behind. Flames modest and well apart, no hanging fabric, paper, flowers, leaves or incense nearby. Illustrate arranging a deepmala safely, not a hand-held aarti plate. No prescribed lamp count.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-0ef7067a-453b-4f51-9ad7-7740431544c2.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "thali-phera",
+      "prompt": "Use case: precise-object-edit. Edit target: attached generated puja illustration. Correct only the earthen vessel at lower left: make it an unmistakable complete terracotta KARWA with a short lateral pouring spout and fitted removable lid. Keep the exact brass thali-passing action, hands, rose, powders, food, colors and style. No new ritual items or lettering.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-0c008111-f509-45cd-a2b6-16245deaff1a.png",
+      "reference": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-406f48a8-752a-4aaf-9ab2-a3b00999d37a.png",
+      "rejectedPrior": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-406f48a8-752a-4aaf-9ab2-a3b00999d37a.png"
+    },
+    {
+      "key": "karwa-dana",
+      "prompt": "Use case: precise-object-edit. Edit target: attached generated puja illustration. Correct only the earthen vessel: it must be an unmistakable complete terracotta KARWA with a short lateral pouring spout and a fitted removable lid. Keep the exact respectful giving-and-receiving hands, folded red cloth, coin, palette, style and composition. Do not add flowers, deity or flame.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-98286681-9411-4e50-ae14-ec9c5135824d.png",
+      "reference": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-8e493f17-c947-4c7b-8e70-2c93951f1a6d.png",
+      "rejectedPrior": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-8e493f17-c947-4c7b-8e70-2c93951f1a6d.png"
+    },
+    {
+      "key": "covered-ganesha-kalash",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a clean low chowki with red cloth and a small bed of akshat, a complete prepared water kalash with leaves and coconut beside it. A small terracotta Ganesh murti is entirely and respectfully covered by a clean red cloth beside the chowki, its seated silhouette gently visible beneath cloth. It has not been installed on the rice yet. No pouring, bathing, wetness, flame or flowers.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-27e01814-9e01-4490-b4a4-c04ce50a1593.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "ganesha-sthapana",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint two natural adult hands carefully placing a complete seated terracotta Ganesh murti onto a small bed of uncooked white akshat on a red-covered chowki. Recognizable elephant head, crown, complete trunk, ears, four arms and intact pedestal. Installation action, no flower offering, no durva, no bath, no food, flames or extra deities.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-f23ce135-b64e-4bbe-96ec-ce55f39150dd.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "shiva-flower",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a hand holding one white aak/calotropis flower (five waxy pointed petals and pale lavender centre) next to the base of a complete dark stone Shiva-linga in a clean receiving tray, as a flower invocation. No red hibiscus, ketaki, champaka, tulsi, kumkum, turmeric, other leaves, fruit or pouring. Full linga, base, channel and fingers visible.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-d4d12698-3466-46ac-abb8-29fefad6f3e0.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "self-water-sprinkling",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a modest adult devotee in plain clean cream clothing seated at a low puja surface, gently sprinkling a few transparent clean-water droplets from the right hand toward their own head and nearby clean puja vessels. A small clean-water bowl sits on the surface. Side view with respectful ordinary face, natural hands. This shows self and materials purification, not deity bathing. No flowers, leaves, deity, drinking stream or white liquid.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-f6d92b5c-c166-4519-922e-680b35a0f25b.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "satyanarayan-snana",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a small complete golden BRASS/metal murti of Shri Satyanarayan/Vishnu, recognizable four-armed crowned form with conch, discus, mace and lotus, respectfully standing inside a complete shallow brass receiving tray. A natural adult hand pours a thin modest stream of pale creamy panchamrit from a small brass vessel over the metal murti; a separate clean-water cup sits beside the tray for the final rinse. Metal texture unmistakable, not a clay idol or framed picture. No flowers placed as offerings, no red hibiscus, no extra deities or flames.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-1fdac177-1468-482d-a278-9d2f807ace7e.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "lakshmi-metal-snana",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a complete small golden METAL Lakshmi murti seated on her lotus pedestal inside a complete shallow receiving tray. Crown, four arms and upper-hand lotus symbols visible, all a single metallic sculpture, not a living goddess or clay. A natural adult hand pours a small thin stream of creamy panchamrit over it from a brass vessel; a separate clear-water cup alongside indicates rinse. No flower offerings, grass, flames or food bowls. The metal material and receiving tray must be clear.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-7d1a83ba-d896-4cbb-a58b-cf64528dd1a6.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "lakshmi-symbolic-snana",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a complete terracotta/clay Lakshmi murti seated on lotus pedestal, four arms with upper lotus symbols. A natural hand above holds a small pink lotus blossom with a few transparent clean-water droplets falling toward the murti for symbolic snana. A small bowl of clear water rests beside her. No milk, no stream pouring, no soaking or immersion. No red hibiscus, grass, incense, flame or other deity.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-688f26c5-f860-4730-9348-f9a08e035d74.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "shiva-panchamrit",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a complete dark stone Shiva-linga with full yoni base and drainage channel inside a broad complete brass receiving tray. A natural hand pours a SMALL thin milky-white stream onto the linga top from a small brass vessel, illustrating a milk/panchamrit bath. A little white liquid collects neatly in the tray, no overflow. No clear-water stream, flowers, leaves, powders, flames or other deity. Entire linga, tray, vessel and fingers visible.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-14822427-8feb-495b-837e-9add31bd7280.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "water-offering-neutral",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint one natural adult hand holding a small brass spoon and gently pouring a little CLEAR clean water into a complete brass receiving bowl. A second complete rounded brass water vessel stands beside it. Thin transparent stream, natural fingers. Exactly two water containers and one spoon. NO flowers, leaves, deity, white liquid, flames, powders or food. Warm parchment, complete canvas.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-3525c88b-a48a-420d-a590-bf35fcdb94d3.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "vishnu-vastra-yajnopavita",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint one folded clean YELLOW silk angavastram with a restrained gold edge, one distinct loose WHITE cotton sacred-thread loop (yajnopavita), and one small red-yellow mauli spool. Full simple materials still-life with no tying position demonstrated. NO red dressing cloth, flowers, leaves, deity, bowls, flame or other ritual items.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-d0090807-f76b-444c-b55b-cb7b7965071c.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "dhoop-only",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint exactly one complete stable brass incense burner with smoking dhoop on a clean stone surface. STILL LIFE ONLY. No lamp, flame, hands, fingers, flowers, leaves, cloth, food, deity or other ritual item. Clear incense-only action/material illustration.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-02976bd5-a7bf-4b33-9462-dd1a38b3b0f8.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "shiva-bilva-datura",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a complete dark stone Shiva-linga with its full yoni base. A natural hand offers an intact trifoliate bilva sprig with three green leaflets toward the linga. Beside the base lie two white datura trumpet flowers, recognizable long white flared trumpet form, not jasmine. No red hibiscus, ketaki, champaka, tulsi, other flowers, red/yellow powders or flame. Whole leaves, flowers, fingers and linga within frame.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-7c9396f6-6699-4bb7-9ca9-94a5065f00bd.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "ganesha-upachara",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a seated complete terracotta Ganesh murti. A natural hand offers a prominent fresh green bundle of durva grass and a red hibiscus at his feet; white akshat grains visibly nearby. Arrange at the foreground one small folded red cloth, red-yellow mauli, one bowl beige chandan, and one bowl orange-red sindoor. Include a complete flower garland beside the murti. Exactly these upachara materials. NO food, modak plate, fruit, panchamrit ingredients, tulsi, bilva, water pouring or flames. Main action is durva offering, with the other text-named upachara materials clearly visible.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-9e6d7012-f6e0-46ec-a9b7-31c0cb5f1042.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    },
+    {
+      "key": "ganesha-puja",
+      "prompt": "Use case: illustration-story. Asset type: one standalone instructional painting for an existing Hindu puja guide. Reference image supplies ONLY the warm cream parchment palette, fine traditional Indian storybook brushwork and feathered edges. Landscape 3:2, requested 1200 x 800. Complete subjects, vessels and all fingers within frame; compact readable action at phone size. No text, labels, UI, watermarks, borders or blank caption band. Do not add unrequested ritual items, counts or obligations. Paint a small complete seated terracotta Ganesh murti on a simple low red-covered altar. A natural hand offers a fresh red hibiscus and white akshat at his feet. In front are a small bowl beige chandan fragrance, a small plate of fruit and mithai, and one small ghee diya on a stable brass plate a safe distance from cloth and flowers. No durva, tulsi, bilva, panchamrit bowls or incense. This represents the Karwa Chauth step naming fragrance, flowers, akshat, naivedya and lamp.",
+      "original": "/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-58a1df40-202c-4347-847c-09f1ba9fe142.png",
+      "reference": "/Users/prashant/.codex/worktrees/8c72/Aadhyatma/mobile/assets/vidhi-steps/ganesha-snana.webp"
+    }
+  ]
+}

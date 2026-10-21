@@ -101,6 +101,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   // Naam japa (a single divine name, e.g. राधा): the name reads large and gives
   // a small pulse on every bead, so each name visibly lands on the mala.
   const naam = mantra?.naam === true;
+  // Sloka japa (§35.1): one shloka of a stotram, chanted like a mantra. Its
+  // name (stotra · shloka N) sits under the lines, as naam japa's does.
+  const sloka = mantra?.sloka ?? null;
   const reduceMotion = useReducedMotion();
   const nameBeat = useRef(new Animated.Value(1)).current;
   const beatPrimedRef = useRef(false);
@@ -182,7 +185,14 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const screenTitle = pick(lang, { hi: 'जपमाला', en: 'JapaMala', gu: 'જપમાળા', kn: 'ಜಪಮಾಲೆ' });
 
   const todayBeads = activity[toDateKey(new Date())]?.japa[mantra.id]?.beads ?? 0;
-  const todayLabel = naam
+  const todayLabel = sloka
+    ? pick(lang, {
+        hi: `आज ${todayBeads} श्लोक`,
+        en: `${todayBeads} shloka today`,
+        gu: `આજે ${todayBeads} શ્લોક`,
+        kn: `ಇಂದು ${todayBeads} ಶ್ಲೋಕ`,
+      })
+    : naam
     ? pick(lang, {
         hi: `आज ${todayBeads} नाम`,
         en: `${todayBeads} names today`,
@@ -215,6 +225,13 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         gu: 'સાંભળો · મંત્ર સાથે મણકા આગળ વધે છે',
         kn: 'ಆಲಿಸಿ · ಮಂತ್ರದೊಂದಿಗೆ ಮಣಿಗಳು ಮುಂದುವರಿಯುತ್ತವೆ',
       })
+    : sloka
+      ? pick(lang, {
+          hi: 'स्पर्श करें · हर श्लोक एक मनका',
+          en: 'Tap · one bead per shloka',
+          gu: 'સ્પર્શ કરો · દરેક શ્લોકે એક મણકો',
+          kn: 'ಸ್ಪರ್ಶಿಸಿ · ಪ್ರತಿ ಶ್ಲೋಕಕ್ಕೆ ಒಂದು ಮಣಿ',
+        })
     : naam
       ? pick(lang, {
           hi: 'स्पर्श करें · हर नाम एक मनका',
@@ -233,7 +250,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      <BackgroundLayer source={getSourceBackground(mantra.id)} />
+      <BackgroundLayer source={getSourceBackground(sloka?.sourceId ?? mantra.id)} />
       {/* The visible bottom tab bar already owns the bottom safe-area inset. */}
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={styles.topBar}>
@@ -362,7 +379,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                   </Text>
                 ))}
               </Animated.View>
-              {naam ? (
+              {naam || sloka ? (
                 <Text
                   style={[
                     styles.naamCaption,

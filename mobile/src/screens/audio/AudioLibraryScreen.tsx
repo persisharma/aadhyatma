@@ -164,7 +164,7 @@ function DeityChip({
           style={[styles.chipDisc, { borderRadius: radii.pill }]}
         >
           {iconKey
-            ? <DeityIcon iconKey={iconKey} fallbackText="" />
+            ? <DeityIcon iconKey={iconKey} />
             : <StoryIcon name="stotram" size={36} />}
         </LinearGradient>
       </View>

@@ -1,5 +1,6 @@
 import type { Deity } from '../texts';
 import raw from './japam.json';
+import { findSlokaJapa, type JapamSloka } from './sloka';
 
 export type JapamMantra = {
   id: string;
@@ -16,6 +17,8 @@ export type JapamMantra = {
   source?: { baseText: string; referenceUrls: string[]; retrievedOn: string };
   /** Naam japa: the line is a single divine name, chanted and counted one name per bead. */
   naam?: boolean;
+  /** Sloka japa (`./sloka.ts`): one shloka of a stotram, chanted like a mantra. */
+  sloka?: JapamSloka;
 };
 
 const validDeities: ReadonlySet<Deity> = new Set([
@@ -29,6 +32,9 @@ const validDeities: ReadonlySet<Deity> = new Set([
   'savitr',
   'radha',
   'saraswati',
+  'surya',
+  'shani',
+  'navagraha',
 ]);
 
 function assertMantra(m: unknown, i: number): asserts m is JapamMantra {
@@ -92,17 +98,23 @@ export const japamTitleHi = 'जप';
 export const japamTitleEn = 'Japa & Mantras';
 
 export function getJapamMantra(id: string): JapamMantra {
-  const found = japamMantras.find((m) => m.id === id);
+  const found = findJapamMantra(id);
   if (!found) {
     throw new Error(`Unknown japam mantra: ${id}`);
   }
   return found;
 }
 
-/** Like `getJapamMantra` but returns null for unknown ids instead of throwing. */
+/**
+ * Like `getJapamMantra` but returns null for unknown ids instead of throwing.
+ * Resolves sloka-japa ids too, so every id-keyed consumer (counter, alarms,
+ * widgets, deep links) accepts them; lists of mantras stay `japamMantras`.
+ */
 export function findJapamMantra(id: string): JapamMantra | null {
-  return japamMantras.find((m) => m.id === id) ?? null;
+  return japamMantras.find((m) => m.id === id) ?? findSlokaJapa(id);
 }
+
+export { allSlokaJapaIds, isSlokaJapaSource, slokaJapaId, slokaJapaSourceIds, type JapamSloka } from './sloka';
 
 /** Beads per round in a traditional japa mala. */
 export const JAPAM_BEADS_PER_ROUND = 108;

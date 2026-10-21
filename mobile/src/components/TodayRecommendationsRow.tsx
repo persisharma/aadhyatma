@@ -210,7 +210,7 @@ function spotlightForEntry(
     ctaEn: 'Read',
     icon: (
       entry.deities?.[0]
-        ? <DeityIcon iconKey={deityIconKey(entry.deities[0])} fallbackText={entry.thumb} size={32} />
+        ? <DeityIcon iconKey={deityIconKey(entry.deities[0])} size={32} />
         : <CategoryIcon iconKey={entry.category} />
     ),
   };
