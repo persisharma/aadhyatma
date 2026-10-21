@@ -50,7 +50,7 @@ export default function LibraryCard({ entry, onPress, style, variant = 'default'
 
   const firstDeity = entry.deities?.[0];
   const thumbnail = firstDeity
-    ? <DeityIcon iconKey={deityIconKey(firstDeity)} fallbackText={entry.thumb} />
+    ? <DeityIcon iconKey={deityIconKey(firstDeity)} />
     : <CategoryIcon iconKey={entry.category} />;
 
   const body = (

@@ -86,11 +86,7 @@ export default function NowPlayingScreen() {
               { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
             ]}
           >
-            {deity ? (
-              <DeityIcon iconKey={deity.iconKey} fallbackText="ॐ" size={150} />
-            ) : (
-              <Text style={[styles.artworkGlyph, { color: colors.saffron }]}>ॐ</Text>
-            )}
+            <DeityIcon iconKey={deity?.iconKey} size={150} />
           </View>
         </View>
 
@@ -218,7 +214,6 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: 13, letterSpacing: 0.5, textTransform: 'uppercase' },
   artworkWrap: { alignItems: 'center', marginTop: 24, marginBottom: 28 },
   artwork: { width: 220, height: 220, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  artworkGlyph: { fontSize: 96, includeFontPadding: false },
   title: { fontSize: 26, textAlign: 'center', includeFontPadding: false },
   subtitle: { fontSize: 14, textAlign: 'center', marginTop: 6 },
   seekBlock: { marginTop: 28 },
