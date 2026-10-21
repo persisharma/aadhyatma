@@ -22,6 +22,7 @@ jest.mock('@react-navigation/native', () => ({
 }));
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: mockLang }) }));
 jest.mock('@/data/routine/useRoutineToday', () => ({ useRoutineToday: () => mockToday }));
+jest.mock('@/data/sadhana/useSadhanaToday', () => ({ useSadhanaToday: () => [] }));
 
 function render(variant?: 'docked' | 'inline'): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
