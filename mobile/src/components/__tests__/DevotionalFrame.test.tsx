@@ -12,6 +12,19 @@ jest.mock('@/utils/backgroundAssetCache', () => ({
   subscribeBackgroundAsset: (request: { key: string; ext: string }, listener: (uri: string | null) => void) => { listener(`file:///cache/${request.key}.${request.ext}`); return () => undefined; },
   evictBackgroundAsset: jest.fn(async () => undefined),
 }));
+it.each([288, 358, 540])('keeps readable verse type and lets the full paper width wrap at %s', width => {
+  const verse = 'आशापाशशतैर्बद्धाः कामक्रोधपरायणाः। ईहन्ते कामभोगार्थमन्यायेनार्थसञ्चयान्।।16.12।।';
+  let tree: ReactTestRenderer;
+  act(() => { tree = create(<DevotionalVerseBody header="गीता · 16.12" verse={verse} meaning="अर्थ" lang="hi" art="krishna" width={width} verseStyle={{ fontSize: 22, lineHeight: 36 }} meaningStyle={{}} />); });
+  const text = tree!.root.findByProps({ testID: 'devotional-share-verse' });
+  expect(text.props.children).toBe(verse);
+  expect(StyleSheet.flatten(text.props.style).fontSize).toBe(22);
+  expect(StyleSheet.flatten(text.parent!.props.style).paddingHorizontal).toBe(55 * width / 1080);
+  expect(text.props.adjustsFontSizeToFit).toBeUndefined();
+  expect(text.props.numberOfLines).toBeUndefined();
+  expect(text.props.allowFontScaling).toBe(true);
+  act(() => tree!.unmount());
+});
 it('retains the complete long meaning and all commentary paragraphs', () => {
   const meaning = 'A complete meaning. '.repeat(100) + '\n\nFirst commentary.\n\nSecond commentary.';
   let tree: ReactTestRenderer;
