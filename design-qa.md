@@ -1,3 +1,77 @@
+# Full Puja Vidhi image/text review and R2 integration — 21 October 2026
+
+Result: saved-image correspondence review and local R2 integration passed. R2 publication/CDN delivery and a full new native walkthrough remain pending.
+
+- All seven published guides / 106 complete Hindi and English instructions compared with their assigned saved paintings. All 63 selected final WebPs visually inspected in eight contact sheets; all 35 new originals were also inspected during generation/editing.
+- Updated images or sequences for 52 steps. Fixed bath-versus-ingredients, durva/upachara, deity-specific and incidental flower reuse, Diwali kheel/batasha, sacred-thread materials, Navratri preparation/layering/installation, Karwa passing/donation, and Shiva personal preparation/offerings.
+- Nine two-image sequences pair exact original bilingual clauses with their respective actions or alternatives, before language derivation. All 106 instruction texts and all 12 transcribed mantras remain unchanged.
+- Full visual/text gallery: `docs/content-parity/puja-visual-guide/full-review.html`. Per-step observations and depiction limits: `semantic-audit.md` / `step-review.json`. New prompts, retained originals and edit references: `audit-art-prompts.json`. Flower comparison: `flower-review-preview.jpg`.
+- Per user instruction, all 63 selected paintings use R2 descriptors and the existing persistent `CachedArtwork` cache; there are no bundled step-painting requires. Manifest-derived contain frames preserve complete canvases. Unavailable images leave neutral paper, full instructions, captions and hand-offs usable. Prepared upload sources total 20.32 MiB.
+- Typecheck and focused ESLint passed. Five Jest suites / 72 tests passed, including shared reader artwork and no-bundled-art guards. Five reported pure checks passed, including all-step source/image hashes, deity-specific assignments, conditional caption preservation and existing ritual-content gates. The existing language-provider act warnings remain.
+- Local R2 source/manifest verification and staging passed. Upload is intentionally pending for the user's later push. No public-CDN delivery, commit, git push, release, physical-device verification or complete new 106-page native/language walkthrough is claimed. Earlier native screenshots below predate this full audit and the R2 conversion; they are historical evidence, not proof of the new remote bytes.
+- Some paintings illustrate named materials or the central act, not every prayer, spoken formula, conditional option or physical movement. Every such boundary is recorded per step. This review does not certify universal religious rules or replace human liturgical/editorial review.
+
+---
+
+# Puja Vidhi — option 3 native implementation, 21 October 2026
+
+final result: passed
+
+Current scope: local native implementation and visual comparison. No release or physical-device certification is implied.
+
+## Visual truth and captures
+
+- Selected reference: `/Users/prashant/.codex/generated_images/01a15291-2167-7273-a723-7e43c8ea58a5/exec-dc90286d-b736-47fd-be6f-994722381880.png` (853 × 1844, app-only concept for 390 × 844).
+- Native state: Diwali, step 13/20, Hindi, Standard; device `Vedansh-Puja-Visuals`, iPhone 17 Pro, iOS 26.4, 402 × 874 points. CUA window capture is 702 × 1675 pixels, including the 153-pixel Simulator toolbar.
+- Main capture: `docs/evaluations/puja-visual-guide-2026-10-20/diwali-standard.png`.
+- Content crop: `diwali-standard-content.png` in that folder: 702 × 1356 pixels; removes toolbar, OS status area and bottom safe inset. Native scale is approximately 1.746 captured pixels per point.
+- Full-view comparison: `comparison-full.jpg`. Both content columns are normalized to 390-pixel width with aspect preserved. Reference height is approximately 843 pixels; native app-owned content is approximately 753 pixels because the reference omits OS insets. The shorter native column is padded, never stretched. Safe-inset differences were excluded from findings.
+- Focused action/text comparison: `comparison-focus.jpg`, actual current-step regions from the reference and native screenshot, normalized to 325-pixel width with aspect preserved. Both inputs were opened together before judgment.
+- Additional captures: `diwali-large.png`, `step-overview-large.png`, `remembrance-large.png`, `remembrance-english-large.png`, `mantra-english-large-top.png`, `mantra-english-large-bottom.png`, `completion.png`.
+
+## Findings and resolution history
+
+1. **P1, resolved — intrinsic image size overrode the intended scene frame.** `diwali-standard-before.png` showed a very large corner of the source painting and pushed the instruction beyond the viewport. Fixed `VidhiStepArtwork` to measure a width-derived wrapper and explicitly size its contained Image to 100% width and height. The square hero now preserves the full crown, lotus and offering hands. `diwali-standard.png` and `diwali-large.png` show the full action and instruction.
+2. **P2, resolved — persistent tab navigation consumed conduct space.** Added `VidhiConduct` to the existing tab-level immersive routing on all hosting tab paths. Native Home-path captures show the full timeline and the tab bar restores on returning to the overview. Other hosting registrations are covered by the existing navigation suite; their full native journeys remain a coverage gap.
+3. **P2, resolved — direct thumbnail entry did not save resume until a subsequent turn.** Opening a step directly now persists the initial position; direct completion clears old progress. A regression test and the native remembrance overview confirm resume is offered immediately after returning from direct entry.
+4. **P2, resolved — accessibility exposed offscreen pager content.** Only the active step/completion page is now exposed. Native accessibility snapshots contain the active step and its two contextual neighbours, rather than later pages and completion.
+5. **P3 — supporting paintings have opaque parchment canvas edges.** All frames preserve the complete reviewed paintings and use no clip/crop. The vignette backgrounds differ slightly from the shared textured app parchment. Optional future alpha refinements may improve blending; no text/action is obscured.
+
+## Required fidelity surfaces
+
+- **Typography:** shipped Noto Serif Devanagari and Cormorant faces retain the reference's serif hierarchy. Active title is 23; instructions use the existing meaning token, including Large size. The full existing guide title and step counter remain in the shared header. The app's reader typography is slightly larger than the generated mock; complete copy remains readable and scrollable. Native Hindi Standard/Large and English Large were inspected. Mantra Devanagari and IAST remain present and reachable.
+- **Spacing/layout:** fine rail, 36-point filled active marker, outlined contextual markers, expanded current action and two compact neighbours match the selected hierarchy. Standard and Large selected-step captures show complete imagery/text. The reference's inline listen pill is intentionally implemented once in the screen-level phase row, preserving the existing single audio controller. The previous marker omits the mock's tick so a direct jump does not falsely mark earlier rites complete.
+- **Colors/tokens:** existing parchment, brown ink, saffron and antique gold tokens are used. Remembrance uses the existing quiet brown active marker. No text overlays the busy artwork. Material contrast is sufficient in the observed states.
+- **Image quality:** built-in imagegen produced real standalone action/material paintings matching the selected style. No SVG/CSS/emoji stand-ins. Full crowns, hands, containers and materials remain visible with `contain`. The source/implementation focused comparison verifies the active scene. All generated paintings were separately inspected and then reviewed in the full contact sheet. The selected square hero was generated by recomposition, not cropping/stretching the landscape image.
+- **Copy/content:** all 106 published steps and 12 verified mantras pass existing content gates. Full authored instructions remain authoritative; source URLs and tradition metadata remain private. All 106 visual assignments are explicit. Satyanarayan food art shows its panjiri/semolina and panchamrit rather than the generic modak plate. The remembrance assignment set is flame-free and adds no fixed counts/directions/thread positions.
+
+## Interactions and verification
+
+- Native Home → catalog → Diwali overview → direct step 13.
+- Native neighbour selection advances 13 → 14; overview shows resume at 14.
+- Native last-step conclude opens quiet completion and clears the resume row.
+- Native Hindi Standard/Large selected step; overview thumbnails are visible.
+- Native remembrance offering at Large; optional Gita chapter 15 opens and Back returns to step 8. Switching the reader to English updates the guide.
+- Native long Satyanarayan dhyana page: accessibility focus scrolled to the lower section; all Devanagari, IAST and upcoming row remain visible. Captures record top and lower states.
+- TypeScript and focused ESLint passed. Three focused Jest suites passed 46 tests. Existing content, new visual-coverage/personal-boundary tests and entry-route checks passed. Existing async language hydration act warnings remain in Jest output.
+- Development bundler initially exhausted its default 4 GiB heap during app-wide screen preload. Restarted on the bundled Node runtime with a 12 GiB heap. Transient edit/refresh errors were corrected before the final captures and successful typecheck; they are not open product findings.
+
+## Remaining coverage
+
+Physical Android/iOS devices, every one of 106 native pages in all four languages/sizes, audible TTS quality, and release delivery are not verified. Simulator mouse/scroll routing reported `noWindowsAvailable`; native accessibility scrolling and actual control presses were used for the observed journeys. These are evidence limits, not a claim of full-device certification.
+
+## Implementation checklist
+
+- [x] Selected option resolved from the third displayed generation.
+- [x] All 106 published steps have explicit relevant artwork assignments.
+- [x] Full paintings/instructions/mantras remain available; image errors do not block readers.
+- [x] Native source/implementation full and focused comparisons inspected; P1/P2 findings corrected.
+- [x] Focused checks passed and existing report history preserved below.
+
+---
+
+# Earlier visual reviews (retained history)
+
 # Reader illustrations — 11 October 2026, approved integration
 
 Integrated: all 43 detailed Style 3 banners cover 44 reading slots. The user accepted the set
@@ -490,3 +564,8 @@ instruction endpoint are captured in October 10 images 20–21. Kannada Large Ka
 (image 22) retains the full painting. The complete Kannada endpoint and horizontal gesture
 coverage remain unverified. This extends scoped evidence without changing the Standard
 visual pass above. English/Standard QA preferences were restored.
+# Ganesh snana illustration correction — 2026-10-21
+
+Follow-up: the combined Diwali step now pairs its two unchanged instruction clauses with ordered snana and durva/flower/akshat offering paintings. The overview thumbnail also shows durva offerings. Native review includes both the upper snana clause and lower durva clause after scrolling (`ganesha-upachara-snana-top.png`, `ganesha-upachara-durva.png` in the same evidence folder). This supersedes the single-image Diwali correction described below. All remaining listed offerings remain in the original text; the second image illustrates durva/flowers/akshat specifically. No automated tests run for this follow-up.
+
+User-reported mismatch confirmed: the Diwali Ganesh snana illustration showed panchamrit ingredients. Replaced that assignment and Ganesh Chaturthi snana's generic water illustration with `ganesha-snana.webp`, depicting the existing symbolic water-with-flower instruction. Full bilingual text unchanged. Original and final art visually reviewed. Native Diwali step 8 shows the complete painting, complete Hindi instruction and adjacent timeline rows; evidence: `docs/evaluations/puja-visual-guide-2026-10-20/ganesha-snana-corrected.png`. Ganesh Chaturthi uses the same asset but was not separately walked through. No automated tests run for this correction; prior results below predate it. Local only, not released.

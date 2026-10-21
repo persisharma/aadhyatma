@@ -1,6 +1,6 @@
 # Daily Bhakti subject coverage — PR #508
 
-The 59 added sources contribute 1,014 verses to the 2,381-verse pool. All 330 previously
+The 59 added sources contribute 1,014 verses to the 2,387-verse pool. All 330 previously
 neutral additions now select one of eighteen distinct subject paintings; the other 684
 retain their existing deity plates. Exact counts and source mappings are in `coverage.json`.
 General prayers and unknown sources retain the neutral fallback.
@@ -30,7 +30,7 @@ General prayers and unknown sources retain the neutral fallback.
   617 engine tests, 178 data tests, 49 Ask tests). A subsequent decode-readiness regression
   also passed its focused frame/card/screen suites; final reconciliation validation is recorded below.
 - Exhaustive mapping checks cover all 330 former fallbacks, all 1,014 additions and all
-  2,381 verses in four scripts. Asset checks pin original masters, new bytes/hashes,
+  2,387 verses in four scripts. Asset checks pin original masters, new bytes/hashes,
   approved source identity, prompt provenance and growth budgets.
 - Typecheck, changed-file lint, Maestro YAML parsing and whitespace checks passed.
 - Native verification uses isolated iOS 26.5 simulator `BD91E840-482E-4816-838A-9C5247E401DA`,

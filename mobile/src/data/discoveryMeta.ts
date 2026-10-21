@@ -224,6 +224,12 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'brahma-muhurta',
     source: `${SOURCE_BUNDLED} Vishnu Sahasranama source references in vishnu-sahasranama/*.json.`,
   },
+  'mahamrityunjaya-mantra': {
+    purposes: ['protection', 'moksha', 'devotion'],
+    bestDays: [1],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} japam/japam.json; release from death and not from amrita are the verse's own words.`,
+  },
   'shiva-strotam': {
     purposes: ['peace', 'moksha', 'devotion'],
     bestDays: [1],

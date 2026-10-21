@@ -26,6 +26,7 @@ import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
+import StartJapaButton from '@/components/StartJapaButton';
 import VersePage from '@/components/VersePage';
 import WhenToRecitePanel from '@/components/WhenToRecitePanel';
 import { clampIndex } from '@/utils/clamp';
@@ -182,6 +183,10 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={stutiId} />
+          {/* Pinned left, mirroring read-aloud on the right (design.md §35.1). */}
+          <View style={styles.japaSlot}>
+            <StartJapaButton navigation={navigation} sourceId={stutiId} verseIndex={currentIndex} />
+          </View>
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
           <View style={styles.readAloudSlot}>
             <ReadAloudButton control={readAloud} />
@@ -298,6 +303,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     alignItems: 'center',
   },
+  japaSlot: { position: 'absolute', left: 16, top: 6, bottom: 12, justifyContent: 'center' },
   readAloudSlot: {
     position: 'absolute',
     right: 16,

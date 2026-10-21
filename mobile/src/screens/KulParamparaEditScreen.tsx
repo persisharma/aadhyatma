@@ -283,7 +283,7 @@ export default function KulParamparaEditScreen({ navigation }: Props) {
                     pressed && { opacity: 0.7 },
                   ]}
                 >
-                  <DeityIcon iconKey={deity.iconKey} fallbackText={deity.nameHi.slice(0, 2)} size={34} />
+                  <DeityIcon iconKey={deity.iconKey} size={34} />
                   <Text
                     numberOfLines={1}
                     maxFontSizeMultiplier={CHROME_FONT_CAP}

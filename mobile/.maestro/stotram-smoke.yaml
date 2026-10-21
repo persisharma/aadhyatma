@@ -10,6 +10,10 @@
 # Opens Bajrang Baan as the representative reader — it has a smoke test
 # (BajrangBaanReaderScreen.test.tsx) which validates first-verse render,
 # matching this Maestro flow's check.
+#
+# Then starts sloka japa (design.md §35.1): the reader's left-pinned "Start as
+# japa" pill opens the JapaMala counter on the shloka on screen (Bajrang Baan's
+# opening doha), chanted like a mantra — one tap, one bead.
 
 appId: com.prashantsharma.vedansh
 ---
@@ -95,6 +99,22 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     id: "lang-toggle-hi"
 - waitForAnimationToEnd
+
+# Start as japa — the shloka on screen, one bead per recitation.
+- tapOn: "Start as japa"
+- waitForAnimationToEnd
+- assertVisible: "Bajrang Baan · Doha\\. Tap to count one bead.*"
+# Counts persist across runs; clear them so the bead assertions are exact.
+- tapOn:
+    text: "Reset or clear the count"
+    optional: true
+- tapOn:
+    text: "Clear bead count and rounds"
+    optional: true
+- waitForAnimationToEnd
+- assertVisible: ".*0 of 108 on this mala.*"
+- tapOn: ".*Tap to count one bead.*"
+- assertVisible: ".*1 of 108 on this mala.*"
 
 # Clean up — Expo Go termination resets navigation stack for the next flow.
 - stopApp:

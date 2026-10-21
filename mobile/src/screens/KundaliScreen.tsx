@@ -27,6 +27,7 @@ import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
 import NorthIndianChart from '@/components/NorthIndianChart';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
@@ -459,6 +460,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
                 lang={lang}
                 onChangeTab={handleTabChange}
                 onOpenPractice={() => openPractice()}
+                onOpenJapa={openPractice}
                 onManageDetails={() => setEditing(true)}
                 onOpenReport={() => navigation.navigate('KundaliReport')}
                 onOpenGrahaReference={() => navigation.navigate('GrahaReference')}
@@ -830,6 +832,7 @@ function KundaliResult({
   lang,
   onChangeTab,
   onOpenPractice,
+  onOpenJapa,
   onManageDetails,
   onOpenReport,
   onOpenGrahaReference,
@@ -844,6 +847,8 @@ function KundaliResult({
   lang: Lang;
   onChangeTab: (tab: KundaliResultTab) => void;
   onOpenPractice: () => void;
+  /** Opens a japam counter by its library id (the Mahadasha lord's beej mantra). */
+  onOpenJapa: (sourceId: string) => void;
   onManageDetails: () => void;
   onOpenReport: () => void;
   onOpenGrahaReference: () => void;
@@ -1245,6 +1250,29 @@ function KundaliResult({
               </View>
             </View>
           )}
+          {currentDasha && (() => {
+            // The Mahadasha lord's beej mantra — its GRAHA_UPAY text — on the
+            // japam counter. Outside the grouped card so it stays a button.
+            const beej = library.find((entry) => entry.id === GRAHA_BEEJ_JAPA_ID[currentDasha.maha.lord]);
+            if (!beej) return null;
+            return (
+              <Pressable
+                testID="dasha-beej-japa"
+                onPress={() => onOpenJapa(beej.id)}
+                accessibilityRole="button"
+                accessibilityLabel={`Chant ${beej.nameEn} on the mala, for the ${GRAHA_NAMES_EN[currentDasha.maha.lord]} Mahadasha`}
+                style={({ pressed }) => [
+                  styles.beejJapaLink,
+                  { borderColor: colors.cardActiveBorder, backgroundColor: colors.saffronTint, borderRadius: radii.pill },
+                  pressed && { opacity: 0.7 },
+                ]}
+              >
+                <Text style={[styles.beejJapaText, { color: colors.saffronDeep }]}>
+                  {contentByLang(lang, `${beej.nameHi} · माला पर जप करें`, `${beej.nameEn} · Chant on the mala`)} ›
+                </Text>
+              </Pressable>
+            );
+          })()}
           {(() => {
             const reading = buildDashaReading(chart, now);
             if (!reading) return null;
@@ -1657,6 +1685,8 @@ const styles = StyleSheet.create({
   dashaReading: { borderWidth: 1, padding: 14, marginBottom: 14 },
   dashaReadingBody: { fontSize: 12, lineHeight: 19, marginTop: 6 },
   currentDashaTitle: { fontFamily: fontFamilies.interSemiBold, fontSize: 14, marginTop: 5 },
+  beejJapaLink: { minHeight: 44, marginBottom: 14, paddingHorizontal: 14, borderWidth: 1, alignSelf: 'flex-start', justifyContent: 'center' },
+  beejJapaText: { fontFamily: fontFamilies.interSemiBold, fontSize: 13 },
   progressTrack: { height: 6, marginTop: 10, overflow: 'hidden' },
   progressFill: { height: '100%' },
   progressCaptions: { marginTop: 5, flexDirection: 'row', justifyContent: 'space-between', gap: 8 },

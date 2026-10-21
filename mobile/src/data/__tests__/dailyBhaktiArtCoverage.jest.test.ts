@@ -34,8 +34,10 @@ it('gives every formerly neutral verse its named subject, including distinct Dev
 
 it('covers all 1,014 additions without changing the neutral fallback for general prayers', () => {
   const pool = getVersePool();
-  expect(pool).toHaveLength(2381);
-  const added = pool.slice(1367);
+  expect(pool).toHaveLength(2387);
+  // Pin this PR's sources rather than a prefix that unrelated new japam entries can move.
+  const addedSourceIds = new Set(["hanuman-chalisa", "shiv-chalisa", "durga-chalisa", "ganesh-chalisa", "gayatri-chalisa", "ram-chalisa", "krishna-chalisa", "vishnu-chalisa", "saraswati-chalisa", "khatu-shyam-chalisa", "lakshmi-chalisa", "surya-chalisa", "om-jai-jagdish", "hanuman-aarti", "jai-ganesh-deva", "om-jai-shiv-omkara", "jai-ambe-gauri", "aarti-kunj-bihari", "saraswati-aarti", "gayatri-aarti", "khatu-shyam-aarti", "om-jai-lakshmi-mata", "jay-adhya-shakti", "shani-aarti", "dattatreya-aarti", "om-jai-gange-mata", "ambe-tu-hai-jagdambe-kali", "kubera-aarti", "santoshi-mata-aarti", "ahoi-mata-aarti", "vaishno-devi-aarti", "ekadashi-mata-aarti", "tulsi-aarti", "shakambhari-aarti", "lingashtakam", "madhurashtakam", "achyutashtakam", "mahalakshmi-ashtakam", "surya-ashtakam", "radhashtakam", "subrahmanya-ashtakam", "gangashtakam", "bhavani-ashtakam", "narasimha-ashtakam", "datta-ashtakam", "shani-ashtakam", "kalika-ashtakam", "rudrashtakam", "devi-suktam", "purusha-suktam", "narayana-suktam", "rama-raksha-stotra", "ganesha-kavacham", "shiva-kavacham", "durga-kavach", "krishna-stuti", "durga-stuti-arjuna", "kubera-stotram", "navagraha-stotram"]);
+  const added = pool.filter(v => addedSourceIds.has(v.sourceId));
   expect(added).toHaveLength(1014);
   expect(new Set(added.map(v => v.sourceId)).size).toBe(59);
   for (const verse of added) expect(devotionalArtForVerse(verse)).not.toBe('prayer');

@@ -25,15 +25,16 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { meaningToken, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getVidhiById, type VidhiPhase, type VidhiStep } from '@/data/vidhi';
+import { getVidhiVisualInstructionParts } from '@/data/vidhi/stepVisuals';
 import { clearConductStep, saveConductStep, vidhiDateKey } from '@/data/vidhi/checklistStore';
 import { library } from '@/data/texts';
 import { gitaChaptersManifest } from '@/data/gita';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { buildEntryStartTarget, navigateToHomeStackTarget } from '@/navigation/entryRoutes';
 import BackgroundLayer from '@/components/BackgroundLayer';
-import ReadingArtwork from '@/components/ReadingArtwork';
+import VidhiStepArtwork from '@/components/VidhiStepArtwork';
+import ReadingProgressBar from '@/components/ReadingProgressBar';
 import { readingParchment } from '@/data/backgroundAsset';
-import { getVidhiReadingBackground } from '@/data/backgrounds';
 import ReaderHeader from '@/components/ReaderHeader';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
@@ -81,10 +82,10 @@ type ConductPage =
 
 /**
  * पूजा conduct mode (PRD-19 §5.2, design.md §61.3): full-screen, one step per
- * page, paged horizontally like the readers. Each step reuses the Daily Bhakti
- * reading-card shell, with a phase pill, instruction, ornament, mantra/IAST or
- * shipped-text hand-off. Navigation is swipe-only, with the standard reader
- * dots at the bottom; completion is a quiet static ॐ seal.
+ * page, paged horizontally like the readers. Each page is an illustrated
+ * timeline: the current action is expanded between its compact neighbours.
+ * Swiping or selecting a neighbour turns the page. Full instructions, verified
+ * mantras and reader hand-offs remain scrollable; completion is a quiet ॐ seal.
  *
  * The screen keeps the display awake for the whole conduct session (Phase 2B —
  * wet hands cannot re-wake a locked phone mid-puja) and announces this to
@@ -166,18 +167,22 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
     [vidhi, steps.length, todayKey]
   );
 
+  // Persist the active position on entry and on turns. If the civil day changes
+  // during a long session, keep the current step rather than the initial one.
+  const previousIndex = useRef(currentIndex);
+  useEffect(() => {
+    if (previousIndex.current !== currentIndex) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
+      previousIndex.current = currentIndex;
+    }
+    persistIndex(currentIndex);
+  }, [currentIndex, persistIndex]);
+
   const setIndex = useCallback(
     (index: number) => {
-      setCurrentIndex((prev) => {
-        if (prev !== index && index >= 0 && index < pages.length) {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
-          persistIndex(index);
-          return index;
-        }
-        return prev;
-      });
+      if (index >= 0 && index < pages.length) setCurrentIndex(index);
     },
-    [pages.length, persistIndex]
+    [pages.length]
   );
 
   const setIndexRef = useRef(setIndex);
@@ -200,6 +205,23 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
     [width]
   );
 
+  const goToStep = useCallback((index: number) => {
+    if (index < 0 || index >= pages.length) return;
+    listRef.current?.scrollToIndex({ index, animated: true });
+    setIndex(index);
+  }, [pages.length, setIndex]);
+
+  // A window resize changes every page's offset. Preserve the active step.
+  const previousWidth = useRef(width);
+  useEffect(() => {
+    if (previousWidth.current === width) return;
+    previousWidth.current = width;
+    const frame = requestAnimationFrame(() => {
+      listRef.current?.scrollToIndex({ index: currentIndex, animated: false });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [width, currentIndex]);
+
   if (!vidhi) {
     navigation.goBack();
     return null;
@@ -207,6 +229,7 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
 
   const onStepPage = currentIndex < steps.length;
   const counterIndex = Math.min(currentIndex + 1, steps.length);
+  const activePhase = steps[Math.min(currentIndex, steps.length - 1)]?.phase ?? 'closing';
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -235,11 +258,23 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
           sideWidth={60}
         />
 
+        <ReadingProgressBar current={counterIndex} total={steps.length} />
+
         {/* Read-aloud renders ONCE at screen level (RULEBOOK §3 — never a copy
             per page): it speaks the current page, mantra + instruction. The
             lenient hook renders nothing without a provider/voice. */}
         <View style={styles.readAloudSlot}>
-          <ReadAloudButton control={readAloud} />
+          {onStepPage && (
+            <>
+              <Text style={[styles.phase, { color: colors.inkMuted, fontFamily: scriptBodyFont(lang, fontFamilies.devanagari) }]}>
+                {contentByLang(lang,
+                  isPersonalTithi && activePhase === 'main' ? 'तर्पण व स्मरण' : PHASE_LABELS[activePhase].hi,
+                  isPersonalTithi && activePhase === 'main' ? 'Tarpana & remembrance' : PHASE_LABELS[activePhase].en
+                )}
+              </Text>
+              <ReadAloudButton control={readAloud} />
+            </>
+          )}
         </View>
 
         <View style={styles.listContainer}>
@@ -256,7 +291,10 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
             onMomentumScrollEnd={handleScroll}
             onViewableItemsChanged={onViewableItemsChanged}
             viewabilityConfig={viewabilityConfig}
-            extraData={lang}
+            extraData={`${lang}-${width}-${currentIndex}`}
+            onScrollToIndexFailed={({ index }) => {
+              listRef.current?.scrollToOffset({ offset: width * index, animated: false });
+            }}
             renderItem={({ item }) =>
               item.kind === 'completion' ? (
                 <CompletionPage
@@ -265,35 +303,23 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
                   vidhiTitleEn={vidhi.titleEn}
                   stepCount={steps.length}
                   isPersonalTithi={isPersonalTithi}
+                  active={currentIndex === steps.length}
                 />
               ) : (
-                <StepPage width={width} page={item} isPersonalTithi={isPersonalTithi} vidhi={vidhi} />
+                <StepPage
+                  width={width}
+                  page={item}
+                  active={currentIndex === item.stepIndex}
+                  previous={pages[item.stepIndex - 1]}
+                  next={pages[item.stepIndex + 1]}
+                  onMove={goToStep}
+                  isPersonalTithi={isPersonalTithi}
+                  vidhi={vidhi}
+                />
               )
             }
           />
 
-          {onStepPage && (
-            <View
-              testID="vidhi-pager-dots"
-              pointerEvents="none"
-              style={styles.dotsOverlay}
-              accessibilityElementsHidden
-              importantForAccessibility="no-hide-descendants"
-            >
-              <View style={styles.dots}>
-                {steps.map((step, i) => (
-                  <View
-                    key={step.id}
-                    style={
-                      i === currentIndex
-                        ? [styles.dotActive, { backgroundColor: isPersonalTithi ? colors.inkSoft : colors.saffronDeep }]
-                        : [styles.dot, { backgroundColor: colors.dotRest }]
-                    }
-                  />
-                ))}
-              </View>
-            </View>
-          )}
         </View>
 
       </SafeAreaView>
@@ -304,11 +330,19 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
 function StepPage({
   width,
   page,
+  active,
+  previous,
+  next,
+  onMove,
   isPersonalTithi,
   vidhi,
 }: {
   width: number;
   page: Extract<ConductPage, { kind: 'step' }>;
+  active: boolean;
+  previous?: ConductPage;
+  next?: ConductPage;
+  onMove: (index: number) => void;
   isPersonalTithi: boolean;
   vidhi: { id: string; titleHi: string; titleEn: string; deities: string[]; anchor?: string };
 }) {
@@ -319,52 +353,51 @@ function StepPage({
   const bodyFont = scriptBodyFont(lang, fontFamilies.devanagari);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const instructionToken = meaningToken(lang, typography);
+  const tint = isPersonalTithi ? colors.inkSoft : colors.saffron;
+  const instruction = meaningByLang(lang, step.instructionHi, step.instructionEn);
+  // Split the original bilingual copy before localization, preserving gu/kn derivation.
+  const actionInstructions = getVidhiVisualInstructionParts(vidhi.id, step.id, step.instructionHi, step.instructionEn)
+    ?.map(part => meaningByLang(lang, part.hi, part.en));
+  const renderInstruction = (text: string) => (
+    <Text style={{
+      color: colors.inkSoft,
+      fontFamily: instructionToken.fontFamily,
+      fontSize: instructionToken.fontSize,
+      lineHeight: instructionToken.lineHeight,
+    }}>{text}</Text>
+  );
 
   return (
-    <View style={{ width }}>
+    <View testID={`vidhi-timeline-page-${step.id}`} style={{ width }} accessibilityElementsHidden={!active} importantForAccessibility={active ? 'auto' : 'no-hide-descendants'}>
       <ScrollView
-        contentContainerStyle={[styles.pageScroll, { paddingHorizontal: spacing.readingGutter + 6 }]}
+        contentContainerStyle={[styles.pageScroll, { paddingHorizontal: spacing.readingGutter }]}
         showsVerticalScrollIndicator={false}
       >
+        <View style={[styles.timelineLine, { backgroundColor: colors.gold }]} />
+        {previous?.kind === 'step' && (
+          <TimelineNeighbour page={previous} vidhiId={vidhi.id} onPress={() => onMove(previous.stepIndex)} />
+        )}
         <View
           testID={`vidhi-reading-card-${step.id}`}
           style={styles.readingCard}
         >
-          <View style={styles.cardHeader}>
-            <View style={[styles.phasePill, { backgroundColor: isPersonalTithi ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
-              <Text style={[styles.phase, { color: isPersonalTithi ? colors.inkSoft : colors.saffronDeep, fontFamily: titleFont }]}>
-                {contentByLang(
-                  lang,
-                  isPersonalTithi && step.phase === 'main' ? 'तर्पण व स्मरण' : PHASE_LABELS[step.phase].hi,
-                  isPersonalTithi && step.phase === 'main' ? 'Tarpana & remembrance' : PHASE_LABELS[step.phase].en
-                )}
+          <View style={styles.stepHeading}>
+            <View style={[styles.activeMarker, { backgroundColor: tint }]} accessibilityElementsHidden>
+              <Text style={[styles.markerNumber, { color: colors.parchmentSoft, fontFamily: fontFamilies.latinSemiBold }]}>
+                {page.stepIndex + 1}
               </Text>
             </View>
-            <Text
-              style={{
-                fontFamily: lang === 'en' ? fontFamilies.latinItalic : bodyFont,
-                fontStyle: lang === 'en' ? 'italic' : 'normal',
-                fontSize: 12,
-                color: colors.inkMuted,
-              }}
-            >
-              {contentByLang(lang, `चरण ${page.stepIndex + 1}`, `Step ${page.stepIndex + 1}`)}
+            <Text accessibilityRole="header" style={[styles.stepTitle, { color: colors.ink, fontFamily: titleFont }]}>
+              {contentByLang(lang, step.titleHi, step.titleEn)}
             </Text>
           </View>
-          <Text style={[styles.stepTitle, { color: colors.ink, fontFamily: titleFont }]}>
-            {contentByLang(lang, step.titleHi, step.titleEn)}
-          </Text>
-          <ReadingArtwork source={page.stepIndex === 0 ? getVidhiReadingBackground(vidhi) : undefined} />
-          <Text
-            style={{
-              color: colors.inkSoft,
-              fontFamily: instructionToken.fontFamily,
-              fontSize: instructionToken.fontSize,
-              lineHeight: instructionToken.lineHeight,
-            }}
-          >
-            {meaningByLang(lang, step.instructionHi, step.instructionEn)}
-          </Text>
+          <View style={styles.stepContent}>
+          <VidhiStepArtwork
+            vidhiId={vidhi.id}
+            stepId={step.id}
+            renderCaption={actionInstructions ? (index) => renderInstruction(actionInstructions[index]) : undefined}
+          />
+          {!actionInstructions && renderInstruction(instruction)}
 
           {(step.mantra || step.ref) && <Ornament />}
 
@@ -425,9 +458,60 @@ function StepPage({
           )}
 
           {step.ref && <StepHandoffCard step={step} muted={isPersonalTithi} />}
+          </View>
+        </View>
+        {next?.kind === 'step' ? (
+          <TimelineNeighbour page={next} vidhiId={vidhi.id} onPress={() => onMove(next.stepIndex)} />
+        ) : (
+          <Pressable
+            testID="vidhi-timeline-finish"
+            accessibilityRole="button"
+            onPress={() => onMove(page.stepIndex + 1)}
+            style={[styles.finish, { borderColor: colors.divider }]}
+          >
+            <Text style={{ color: tint, fontFamily: titleFont, fontSize: 16 }}>
+              {contentByLang(lang, isPersonalTithi ? 'स्मरण पूर्ण करें' : 'पूजा पूर्ण करें', isPersonalTithi ? 'Conclude remembrance' : 'Conclude puja')}
+            </Text>
+          </Pressable>
+        )}
+        <View style={styles.phaseFooter}>
+          <View style={[styles.footerRule, { backgroundColor: colors.divider }]} />
+          <Text style={[styles.phase, { fontFamily: bodyFont, color: colors.inkMuted }]}>
+            {contentByLang(lang,
+              isPersonalTithi && step.phase === 'main' ? 'तर्पण व स्मरण' : PHASE_LABELS[step.phase].hi,
+              isPersonalTithi && step.phase === 'main' ? 'Tarpana & remembrance' : PHASE_LABELS[step.phase].en
+            )}
+          </Text>
+          <View style={[styles.footerRule, { backgroundColor: colors.divider }]} />
         </View>
       </ScrollView>
     </View>
+  );
+}
+
+function TimelineNeighbour({ page, vidhiId, onPress }: {
+  page: Extract<ConductPage, { kind: 'step' }>;
+  vidhiId: string;
+  onPress: () => void;
+}) {
+  const { colors, typography } = useTheme();
+  const { lang } = useGitaLanguage();
+  const title = contentByLang(lang, page.step.titleHi, page.step.titleEn);
+  return (
+    <Pressable
+      testID={`vidhi-timeline-step-${page.stepIndex}`}
+      accessibilityRole="button"
+      accessibilityLabel={contentByLang(lang, `चरण ${page.stepIndex + 1}: ${title}`, `Step ${page.stepIndex + 1}: ${title}`)}
+      accessibilityHint={contentByLang(lang, 'इस चरण पर जाएँ', 'Open this step')}
+      onPress={onPress}
+      style={({ pressed }) => [styles.neighbour, pressed && { opacity: 0.7 }]}
+    >
+      <View style={[styles.restMarker, { borderColor: colors.divider, backgroundColor: colors.parchmentSoft }]}>
+        <Text style={[styles.restNumber, { color: colors.inkSoft, fontFamily: fontFamilies.latin }]}>{page.stepIndex + 1}</Text>
+      </View>
+      <Text style={[styles.neighbourTitle, { color: colors.inkSoft, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>{title}</Text>
+      <VidhiStepArtwork vidhiId={vidhiId} stepId={page.step.id} compact />
+    </Pressable>
   );
 }
 
@@ -527,12 +611,14 @@ function CompletionPage({
   vidhiTitleEn,
   stepCount,
   isPersonalTithi,
+  active,
 }: {
   width: number;
   vidhiTitleHi: string;
   vidhiTitleEn: string;
   stepCount: number;
   isPersonalTithi: boolean;
+  active: boolean;
 }) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
@@ -540,7 +626,7 @@ function CompletionPage({
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
 
   return (
-    <View style={{ width }}>
+    <View style={{ width }} accessibilityElementsHidden={!active} importantForAccessibility={active ? 'auto' : 'no-hide-descendants'}>
       <ScrollView
         contentContainerStyle={[styles.pageScroll, { paddingHorizontal: spacing.readingGutter + 6 }]}
         showsVerticalScrollIndicator={false}
@@ -583,26 +669,28 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   listContainer: { flex: 1 },
-  pageScroll: { paddingTop: 6, paddingBottom: 52 },
-  readingCard: { paddingVertical: 20 },
-  cardHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
-  phasePill: { paddingHorizontal: 10, paddingVertical: 4 },
-  dotsOverlay: { position: 'absolute', bottom: 4, left: 0, right: 0, alignItems: 'center' },
-  dots: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  dot: { width: 6, height: 6, borderRadius: 3 }, // circle = half its box (design.md §4)
-  dotActive: { width: 18, height: 6, borderRadius: 999 },
-  phase: { fontSize: 11, textTransform: 'uppercase' },
-  stepTitle: { fontSize: 21, marginTop: 14, marginBottom: 6 },
+  pageScroll: { paddingTop: 16, paddingBottom: 26 },
+  timelineLine: { position: 'absolute', left: spacing.readingGutter + 17, top: 32, bottom: 68, width: 1 },
+  readingCard: { paddingVertical: 14 },
+  stepHeading: { flexDirection: 'row', gap: 12, alignItems: 'flex-start' },
+  activeMarker: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+  markerNumber: { fontSize: 23 },
+  stepTitle: { flex: 1, fontSize: 23, paddingTop: 3 },
+  stepContent: { marginLeft: 48 },
+  neighbour: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 80, paddingVertical: 7 },
+  restMarker: { width: 34, height: 34, borderRadius: 17, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  restNumber: { fontSize: 21 },
+  neighbourTitle: { fontSize: 16, flex: 1 },
+  finish: { marginLeft: 48, marginTop: 10, paddingVertical: 15, borderTopWidth: 1, minHeight: 48 },
+  phase: { fontSize: 12 },
+  phaseFooter: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 20 },
+  footerRule: { height: 1, flex: 1 },
   mantraSection: { alignItems: 'center' },
   // Label centred; the share circle pinned right so it never shifts the label.
   mantraLabelRow: { alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', minHeight: 34 },
   mantraShare: { position: 'absolute', right: 0, top: 0, bottom: 0, justifyContent: 'center' },
   sectionLabel: { fontSize: 11, textAlign: 'center', textTransform: 'uppercase' },
-  readAloudSlot: { marginTop: 12, alignItems: 'center' },
+  readAloudSlot: { minHeight: 46, paddingHorizontal: spacing.readingGutter, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   handoffCard: { borderWidth: 1.4, padding: 15, marginTop: 14 },
   seal: {
     width: 84,

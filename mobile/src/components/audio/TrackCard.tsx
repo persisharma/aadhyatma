@@ -82,7 +82,6 @@ export default function TrackCard({ track, onPress, onPressIn, playing }: Props)
       >
         <DeityIcon
           iconKey={track.deity ? deityIconKey(track.deity) : undefined}
-          fallbackText={track.thumb}
         />
       </LinearGradient>
 

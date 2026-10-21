@@ -166,4 +166,18 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     });
     expect(beadLabel(tree)).toContain('1 of 108');
   });
+
+  test('a stotram shloka is chanted like a mantra (§35.1)', async () => {
+    const tree = await renderJapam('sloka.shiva-strotam.4.5');
+    const t = texts(tree);
+    // The shloka itself, named under its lines so the counter says which one.
+    expect(t.some((x) => x.startsWith('सहस्रलोचनप्रभृत्यशेषलेखशेखर'))).toBe(true);
+    expect(t).toContain('शिव ताण्डव स्तोत्रम् · श्लोक 5');
+    expect(t).toContain('स्पर्श करें · हर श्लोक एक मनका');
+    expect(t.some((x) => /^आज \d+ श्लोक$/.test(x))).toBe(true);
+    await act(async () => {
+      tapSurface(tree).props.onPress();
+    });
+    expect(beadLabel(tree)).toContain('1 of 108');
+  });
 });

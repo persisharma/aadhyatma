@@ -32,6 +32,9 @@ parse the complete epic during startup; the platform bundle still carries every 
 - Current page tracked via `onViewableItemsChanged` (60% threshold) + `handleScroll`.
 - The toggle row hosts `LanguageToggle` **and** (since #87) an `AddToRoutineButton` — every
   reader has one; chaptered readers pass the current `chapter` (see [[routine]]).
+  The nine stotram readers also pin a `StartJapaButton` (`जप` pill) to the row's **left** edge
+  (`japaSlot`, absolute left 16), passing `currentIndex` so the counter opens on the shloka on
+  screen (see [[japam]]).
 - The top bar is `ReaderHeader` (`variant="reader"`; chapters/index screens pass
   `variant="index"` for the larger 22/20 title). Screens pass `title` / `onBack` / `right` and
   never geometry — RULEBOOK §3 makes a hand-rolled `topBar` block a hard reject.
@@ -108,7 +111,7 @@ steps show the divider without repeating art. Semantic guide art follows declare
 personal-tithi guides remain neutral. Individual reader paging/scroll logic is still separate.
 Daily Bhakti now uses the separate offline Design 2 `DevotionalFrame` for both its screen
 and single-image export (`design.md` §39.9). It does not use the Home icon registry or reader
-CDN paintings at runtime. `versePool.ts` exposes 2,381 candidates; 59 lazy flat sources add
+CDN paintings at runtime. `versePool.ts` exposes 2,387 candidates; 59 lazy flat sources add
 1,014 verses without moving the existing pool indices. `devotionalShareArt.ts` selects nine
 full deity plates, eighteen 960×480 subject paintings, or the neutral prayer fallback.
 The eighteen paintings cover all 330 previously neutral new verses, with distinct Gayatri,

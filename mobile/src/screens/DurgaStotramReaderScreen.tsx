@@ -19,6 +19,7 @@ import ShivaStrotamVersePage from '@/components/ShivaStrotamVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
+import StartJapaButton from '@/components/StartJapaButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
@@ -199,6 +200,10 @@ export default function DurgaStotramReaderScreen({ navigation, route }: Props) {
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
           <AddToRoutineButton sourceId="durga-stotram" chapter={chapter.chapter} />
+          {/* Pinned left, mirroring read-aloud on the right (design.md §35.1). */}
+          <View style={styles.japaSlot}>
+            <StartJapaButton navigation={navigation} sourceId="durga-stotram" chapter={chapter.chapter} verseIndex={currentIndex} />
+          </View>
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
           <View style={styles.readAloudSlot}>
             <ReadAloudButton control={readAloud} />
@@ -297,6 +302,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   counter: { includeFontPadding: false, minWidth: 48, textAlign: 'right' },
   toggleRow: { paddingVertical: 6, paddingBottom: 12, alignItems: 'center' },
+  japaSlot: { position: 'absolute', left: 16, top: 6, bottom: 12, justifyContent: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 12, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },

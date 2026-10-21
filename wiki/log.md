@@ -1040,3 +1040,32 @@ Corrected the reported Hanuman Ashtak 1.5 split meaning and blank/grey header st
 ## [2026-10-21] ingest | Daily Bhakti PR 508 painted subject coverage
 
 Mapped all 330 formerly neutral additions to eighteen distinct subject paintings. Reused eleven approved local reader paintings and generated seven missing scenes; the new offline headers share the cleared parchment body/footer, preserving all nine original deity masters. Recorded manifests, prompt provenance, separate 3MiB header and 22MiB combined budgets, exhaustive 2,381-verse/four-script tests and native verification evidence in `docs/evaluations/daily-bhakti-art-508/`. Corrected stale wiki claims that Daily Bhakti still used reader backgrounds and the RULEBOOK’s incorrect combined <2MiB claim.
+## [2026-10-20] ingest | Stotra paath as japa: any stotram-category text (22 stotras across 12 sources) can be started on the JapaMala, one bead per complete recitation. New `data/japam/paath.ts` registry resolved through `findJapamMantra` (lazy `require()` corpora — data/japam is on the launch graph), `StartJapaButton` left-pinned on 9 stotram readers' toggle rows, counter paath mode (name head, `पाठ पढ़ें` row → full-text sheet with `पाठ पूर्ण` bead button), Profile/alarm-picker id fixes. New page subsystems/japam.md; readers.md toggle-row note. design.md §35.1, RULEBOOK §3.
+
+## [2026-10-20] gap | Stotra paath Maestro step in stotram-smoke.yaml is authored and YAML-parsed but not yet run on a simulator; no on-device visual check of the paath sheet or the left `japaSlot` on a 320 pt (SE) width.
+
+## [2026-10-21] ingest | Stotram japa switched from paath to sloka: after an interactive A/B prototype the user chose "repeat the shloka on screen". `data/japam/paath.ts` → `sloka.ts` (ids `sloka.<source>.<chapter>.<number>`, keyed on verse number; title card → first shloka), `StartJapaButton` now takes the reader's `verseIndex`, and the counter's paath mode (name head, `पाठ पढ़ें` row, full-text sheet) is gone — a shloka renders like a mantra with its name as the caption. design.md §35.1, RULEBOOK §3, subsystems/japam.md updated.
+
+## [2026-10-20] ingest | Puja Vidhi option 3 illustrated timeline: explicit artwork assignments for all 106 published steps, offline complete-canvas paintings, contextual neighbour navigation, step overview thumbnails and progress bar. Source privacy, hand-offs, manual completion and personal remembrance boundaries retained; native evidence and checks recorded in the puja visual review.
+
+## [2026-10-21] ingest | Puja visual review closeout: native Diwali Standard/Large, full mantra/IAST scrolling, flame-free remembrance, Gita hand-off/return, resume and completion observed. Fixed intrinsic Image sizing and direct-entry resume; isolated offscreen accessibility and hid conduct tab bars. See design-qa.md and docs/content-parity/puja-visual-guide for evidence and remaining delivery gaps.
+
+## [2026-10-21] ingest | Full Puja Vidhi image/text audit and R2 integration
+
+Reviewed all 106 published bilingual step/image assignments; updated 52 with action-specific scenes, material-dependent alternatives and deity-appropriate flower/leaf choices. Saved 35 new paintings and reviewed all 63 selected R2 source images. Added exact text/art hash review gates and full audit/gallery under `docs/content-parity/puja-visual-guide/`. Per user instruction, all step paintings now use the shared R2 artwork cache with neutral-paper fallback; source files are publishing inputs, never bundled requires. Local staging/manifest checks pass; the app is wired for the user's later object push. No upload, public-CDN verification, release or full new native walkthrough is claimed. See [[subsystems/puja-vidhi]].
+
+## [2026-10-21] ingest | PR #507 CI artwork metadata classification
+
+Reproduced the data-test failure that treated the new root Vidhi artwork manifest/source ledger as scripture. Excluded only those two metadata paths from the `source.referenceUrls` scan, matching the existing R2 manifest boundary; `vidhiVisuals.test.ts` retains source-byte, mapping and exact text/art review checks. Ritual content provenance requirements remain in force. R2 upload and current native walkthrough are still pending.
+
+## [2026-10-21] ingest | Mahamrityunjaya Mantra joins the japam list (`mahamrityunjaya-mantra`, Rigveda 7.59.12, Shiva; same collation as Shiva Stotram ch. 3). `LIST_MANTRA` in `sloka.ts` routes that chapter's जप pill to the list entry so one chant keeps one count. Silent manual counter (Audio-library take is CDN-only). design.md §35/§35.1, RULEBOOK §3, subsystems/japam.md updated.
+
+## [2026-10-21] ingest | Japam list grows to 22: Ganesh (ॐ गं गणपतये नमः), Om Namo Narayanaya, Hanuman moola, Shri Ram Jai Ram, Durga beej, and the nine Navagraha beej mantras (text = jyotishi-approved `GRAHA_UPAY`, pinned by `grahaBeejJapa.test.ts`). Kundali upay panel gets a `Chant on the mala` pill; Dasha tab opens the Mahadasha lord's beej counter. Mahalakshmi short form held (one source only).
+
+## [2026-10-21] gap | The 14 new mantras were checked through web-search results only — the environment's network policy blocks opening drikpanchang/bhaktibharat/sanskritdocuments pages — so each `source.baseText` says to re-read the pages before release. Maestro steps (japam-smoke Shani beej, kundali-smoke `dasha-beej-japa`) are authored but not run on a simulator.
+
+## [2026-10-21] ingest | Painted art only: `DeityIcon` drops its text fallback (unknown key → painted `deity` seal), all 16 `fallbackText` call sites removed, Now Playing's 96 pt ॐ text fallback replaced. RULEBOOK §3 rule + row 5, design.md §42/§35, `paintedIconsOnly.test.ts` guard (no `<x>.thumb` render, no `fallbackText` in UI). The 14 new japam entries draw their first deity's art; Chandra…Ketu share the Navagraha seal.
+
+## [2026-10-21] ingest | PR #507 startup budget after current-main reconciliation
+
+The complete local test run passed 272 reader/component suites and the engine checks, then detected a combined launch graph of 4,095,731 bytes against the unchanged 4,090,000-byte ceiling. Deferred the Vidhi request module at the shared loader's descriptor branch, keeping the artwork manifest off the static startup graph. Added a forbidden-path regression plus shared-loader request coverage; no artwork, ritual copy or budget changed.
