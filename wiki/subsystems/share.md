@@ -2,7 +2,7 @@
 title: Share Cards (verse, prose, series)
 type: subsystem
 sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareText.ts, mobile/src/utils/shareContent.ts, mobile/src/utils/listingShare.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
-last_verified_date: 2026-10-20
+last_verified_date: 2026-10-21
 confidence: high
 status: current
 ---
@@ -40,6 +40,11 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   bitmaps at once). Single-page rows reuse the verse path's `deliver()` exactly.
 - **Multi-file share** (`utils/multiShare.ts`): `react-native-share` `open({ urls })`,
   probed via `TurboModuleRegistry.get('RNShare')` then lazily required.
+- **Rating ask after a share** (design.md §54). Every dispatched card reports a moment via
+  `useRatingAsk()`: verse cards and devotional prose pages → `verse-shared`; every other prose
+  card (katha, Theerth, story, listing, Ask) → `prose-shared` (`proseShareMoment`). Dismissed
+  sheets, failed captures and the Instagram carousel's hand-off pause report nothing. The gate,
+  once-per-session guard and 1200 ms settle delay live in `RatingPromptContext`, not here.
 
 - **Send as text + card language** (design.md §39.8, `utils/shareText.ts`): a `Send as text` row hands the verse (lines + meaning) or the *selected* prose pages to `Share.share({ message })` with the caption's link lines — no capture, so no native gate and no 10-page cap. Card-language chips let the card, caption, hashtags and text go out in hi/en/gu/kn while the sheet chrome and alerts stay in the reader's language (`chooser.cardLang`; prose keeps `lang` = card, `uiLang` = chrome). Switching on a series re-paginates and resets selection.
 

@@ -32,6 +32,10 @@ jest.mock('@/utils/multiShare', () => ({
   shareFiles: (...args: unknown[]) => mockShareFiles(...args),
 }));
 
+// The rating ask (§54): every dispatched prose card reports `prose-shared`.
+const mockRequestAsk = jest.fn();
+jest.mock('@/contexts/ratingAsk', () => ({ useRatingAsk: () => mockRequestAsk }));
+
 jest.mock('@/components/ShareCard', () => 'ShareCard');
 jest.mock('@/components/ShareStoryCanvas', () => 'ShareStoryCanvas');
 jest.mock('@/components/ProseShareCard', () => 'ProseShareCard');
@@ -135,6 +139,7 @@ describe('series share flow', () => {
     mockShareFiles.mockClear();
     setString.mockClear();
     rnShare.mockClear();
+    mockRequestAsk.mockClear();
   });
   afterEach(() => {
     for (const tree of trees.splice(0)) act(() => tree.unmount());
@@ -179,6 +184,7 @@ describe('series share flow', () => {
     expect(payload.url).toBe('file:///tmp/page-1.png');
     expect(payload.message).toContain(`page 2/${total}`);
     expect(mockShareFiles).not.toHaveBeenCalled();
+    expect(mockRequestAsk).toHaveBeenCalledWith('prose-shared');
   });
 
   test('the highlighted page is what gets mounted for capture', async () => {
@@ -208,6 +214,7 @@ describe('series share flow', () => {
     expect(uris).toEqual(Array.from({ length: total - 1 }, (_, i) => `file:///tmp/page-${i + 1}.png`));
     expect(opts.message).toContain(`${total - 1} pages`);
     expect(setString).not.toHaveBeenCalled();
+    expect(mockRequestAsk).toHaveBeenCalledWith('prose-shared');
   });
 
   test('Instagram carousel copies the caption, pauses on the hand-off steps, then shares all pages', async () => {
@@ -218,12 +225,24 @@ describe('series share flow', () => {
     expect(setString).toHaveBeenCalledTimes(1);
     expect(setString.mock.calls[0][0]).toContain('#');
     expect(mockShareFiles).not.toHaveBeenCalled();
+    // Pausing on the hand-off steps is not a share yet.
+    expect(mockRequestAsk).not.toHaveBeenCalled();
     const next = byLabel(tree, 'Continue to Instagram');
     expect(next).toBeDefined();
     await act(async () => next.props.onPress());
     await settle(600);
     expect(mockShareFiles).toHaveBeenCalledTimes(1);
     expect((mockShareFiles.mock.calls[0][0] as string[]).length).toBe(total);
+    expect(mockRequestAsk).toHaveBeenCalledWith('prose-shared');
+  });
+
+  test('a dismissed prose share reports no rating moment', async () => {
+    mockShareFiles.mockResolvedValueOnce(false);
+    const tree = await open(LONG);
+    await act(async () => byLabel(tree, 'Share all pages').props.onPress());
+    await settle(1500);
+    expect(mockShareFiles).toHaveBeenCalledTimes(1);
+    expect(mockRequestAsk).not.toHaveBeenCalled();
   });
 
   test('the last page cannot be deselected', async () => {
@@ -258,6 +277,7 @@ describe('series share flow', () => {
     expect(message.startsWith('Vrat Katha · ')).toBe(true);
     expect(message).toContain('https://vedansh.app/get');
     expect(pages.length).toBeGreaterThan(1);
+    expect(mockRequestAsk).toHaveBeenCalledWith('prose-shared');
   });
 
   test('Send as text stays available on a binary without the multi-image module', async () => {

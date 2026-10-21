@@ -1792,7 +1792,7 @@ Category, deity, purpose, katha, observance and puja-vidhi listings, plus the ch
 **Send as text.** One plain message through RN `Share.share({ message })` — no capture, so it works when image capture fails, on low data, and for a recipient who wants to copy a line. Because nothing is captured, the provider waits the same 350 ms sheet-dismiss delay as §39.6 before presenting the OS sheet. Builders are pure (`shareText.ts`, guarded by `utils/__tests__/shareText.test.ts`):
 
 - **Verse** (`buildVerseShareText`) — `<SECTION> · <VERSE LABEL>`, blank, every verse line (`verseLinesByLang`), blank, the optional theme title + complete meaning (`meaningByLang`, honouring `meaningGu/Kn`), blank, then `shareLinkLines(lang)` — the caption's *Read on Vedansh* link and the Instagram line (`shareLinks.ts`). Dispatch (`sharedAction`) reports the §54 `verse-shared` moment; a dismissal does not.
-- **Prose** (`buildProseShareText`) — the scope header, then the **selected** pages' title + blocks in page order, paragraphs separated by a blank line. A paragraph the paginator split across two selected pages is rejoined; one cut by an unselected page keeps the card's `…`. A `quote` is `Speaker: words`; the card-only `link` block is dropped (the footer carries the tappable link).
+- **Prose** (`buildProseShareText`) — the scope header, then the **selected** pages' title + blocks in page order, paragraphs separated by a blank line. A paragraph the paginator split across two selected pages is rejoined; one cut by an unselected page keeps the card's `…`. A `quote` is `Speaker: words`; the card-only `link` block is dropped (the footer carries the tappable link). Dispatch reports the §54 `prose-shared` moment (`verse-shared` for devotional pages); a dismissal does not.
 
 **Card language.** The chooser keeps two languages: the **reader's** (`lang`/`uiLang` — sheet chrome and error alerts) and the **card's** (`cardLang` / prose `lang`), which starts equal and drives the captured card, caption, hashtag preview and text message. Changing it on a series re-paginates (page counts differ by script) and resets highlight + selection to the default. Prose scope labels come from the content, so they follow the card language. Guarded by `shareVerseTarget.test.tsx` and `shareSeries.test.tsx`; picker steps in `.maestro/share-target-smoke.yaml`.
 
@@ -2729,16 +2729,18 @@ transliterated), and Indic labels drop Latin tracking/uppercase per §3.
 
 **Trigger — when the card may open** (`contexts/ratingAsk.ts` + the host). The card never
 opens on its own. A surface where the user has just finished something calls
-`requestAsk('<moment>')`; the gate below then decides. Three moments ship — `routine-complete`
+`requestAsk('<moment>')`; the gate below then decides. Four moments ship — `routine-complete`
 shipped first (Sept 2026: "ask when a routine is completed"); `verse-shared` and `mala-complete`
 were added because that single moment reaches only routine users and ratings were coming in too low,
 so the two moments that had been cut only to keep one are back, reaching readers and japa users who
-never build a routine:
+never build a routine; `prose-shared` (Oct 2026) extends the share moment from verse cards to every
+share card, since katha, Theerth, kids-story, listing and Ask shares dispatched without asking:
 
 | Trigger | Reported by | Exactly when | Why here |
 |---|---|---|---|
 | `routine-complete` | `components/RoutineCelebrationOverlay.tsx` | The pushpa-varsha's `onDone`, i.e. after the petals and caption have faded — **not** on completion itself | Today's practice is done; the best moment in the app. Riding on `onDone` keeps the card off the shower (§11) |
-| `verse-shared` | `utils/shareVerse.tsx` | After the OS/Instagram share sheet the `run()` dispatched has closed (the `Share`/`Sharing` await resolved) — **not** the Instagram-without-image error path | The user just endorsed the app to someone; a warm moment, and it reaches every reader/Daily-Bhakti screen with a share button, not only routine users |
+| `verse-shared` | `utils/shareVerse.tsx` | After the OS/Instagram share sheet the `run()` dispatched has closed (the `Share`/`Sharing` await resolved) — **not** the Instagram-without-image error path. Devotional prose pages (Daily Bhakti) report this moment too | The user just endorsed the app to someone; a warm moment, and it reaches every reader/Daily-Bhakti screen with a share button, not only routine users |
+| `prose-shared` | `utils/shareVerse.tsx` (`proseShareMoment`) | After any non-devotional prose card is dispatched: single-page row (`runProsePage`), all pages (`runSeries`), the carousel's **Continue** (`continueCarousel` — not the hand-off pause), and Send as text on `sharedAction`. A dismissed sheet or failed capture reports nothing | Same warm moment as a verse share, from the katha/Theerth/story/listing/Ask cards; kept a separate literal so `asksByTrigger` shows which share surface earns the rating |
 | `mala-complete` | `screens/JapamCounterScreen.tsx` | On screen **blur** (`useFocusEffect` cleanup), and only if ≥1 full round was completed during the visit — **never** a card over the beads mid-japa | Leaving the counter after finishing a mala is the settle point; a card during japa would break the count (the reason this was cut before) |
 
 Considered and **not** shipped, so nobody re-proposes them by accident: chapter completion
@@ -2812,7 +2814,7 @@ provider: importing `RatingPromptContext` directly would drag `NotificationPrefe
 `mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/contexts/ratingAsk.ts`,
 `mobile/src/components/RatingPromptSheet.tsx`, hosts in
 `mobile/src/components/RoutineCelebrationOverlay.tsx` (`routine-complete`),
-`mobile/src/utils/shareVerse.tsx` (`verse-shared`) and
+`mobile/src/utils/shareVerse.tsx` (`verse-shared`, `prose-shared`) and
 `mobile/src/screens/JapamCounterScreen.tsx` (`mala-complete`), row in
 `mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
 Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundary,
