@@ -13,3 +13,5 @@ Run _launch.yaml...
 WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.oracle.truffle.api.dsl.InlineSupport$UnsafeField (file:/Users/prashant/.maestro/lib/truffle-api-24.2.0.jar)
 WARNING: Please consider reporting this to the maintainers of class com.oracle.truffle.api.dsl.InlineSupport$UnsafeField
 WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+ FAILED
+Run _launch.yaml... FAILED

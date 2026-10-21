@@ -1,4 +1,6 @@
-# Daily Bhakti subject coverage — PR #508
+# Daily Bhakti subject coverage — follow-up PR #509
+
+Follow-up to merged PR #508, on the requested `claude/daily-bhakti-more-sources` branch.
 
 The 59 added sources contribute 1,014 verses to the 2,387-verse pool. All 330 previously
 neutral additions now select one of eighteen distinct subject paintings; the other 684
@@ -37,9 +39,9 @@ Examples from the installed iOS app: [Lakshmi](native/lakshmi.jpg), [Gayatri](na
 
 ## Verification
 
-- Final `npm test`: passed after reconciling `main` (typecheck, 37 widget tests,
-  2,649 Jest tests across 273 suites, 617 engine tests, 194 data tests, 49 Ask tests;
-  3,546 tests total). Final typecheck, changed-file lint, launch-graph checks and whitespace checks passed.
+- Final `npm test`: passed after reconciling the updated source branch and current `main` (typecheck, 37 widget tests,
+  2,655 Jest tests across 273 suites, 617 engine tests, 194 data tests, 49 Ask tests;
+  3,552 tests total). Final typecheck, changed-file lint, launch-graph checks and whitespace checks passed.
 - Exhaustive mapping checks cover all 330 former fallbacks, all 1,014 additions and all
   2,387 verses in four scripts. Asset checks pin original masters, new bytes/hashes,
   approved source identity, prompt provenance and growth budgets.
@@ -62,7 +64,7 @@ Examples from the installed iOS app: [Lakshmi](native/lakshmi.jpg), [Gayatri](na
   launch during severe host load (load average above 250), and was stopped. The subsequent
   existing Standard/Large Daily Bhakti smoke did not start. These are not claimed as passes.
   The dedicated share flow remains authored and YAML-parsed for rerun. Android device QA,
-  physical devices and WhatsApp delivery are also unverified. No PR merge/release was performed.
+  physical devices and WhatsApp delivery are also unverified. The follow-up PR remains draft.
 
 Reproduce native checks from `mobile/` with a dedicated simulator and this checkout’s Metro:
 

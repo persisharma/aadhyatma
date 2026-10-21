@@ -1074,3 +1074,8 @@ The complete local test run passed 272 reader/component suites and the engine ch
 ## [2026-10-21] ingest | Daily Bhakti final artwork verification
 
 Reconciled current main, including six additional eligible verses (2,387 pool total), and made the Bhakti screen a literal on-demand tab route to preserve the unchanged 4,090,000-byte launch budget. All 3,546 local tests passed. The installed iOS artwork smoke passed all eighteen decoded subjects and every capture was visually reviewed; iOS/Android exports contain all 28 matching artwork hashes. Native share export, four-script preview and Standard/Large smoke reruns remain pending after the final simulator launch stalled under severe host load; no WhatsApp, Android-device or physical-device delivery is claimed. See `docs/evaluations/daily-bhakti-art-508/README.md`.
+
+
+## [2026-10-21] ingest | Daily Bhakti artwork follow-up PR 509
+
+PR #508 merged during the artwork work. Preserved its new `versePoolFlat.ts` lazy registry and reconciled current main, including the Gita Saar design refresh. The artwork follow-up remains on `claude/daily-bhakti-more-sources` as draft PR #509. Final local `npm test` passed all 3,552 tests (2,655 Jest tests); native subject/asset export evidence and pending share/device QA are recorded in the evaluation README.
