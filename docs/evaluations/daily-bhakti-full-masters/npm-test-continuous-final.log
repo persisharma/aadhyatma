@@ -68,14 +68,14 @@ PASS src/screens/__tests__/VidhiScreens.test.tsx (6.53 s)
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -96,14 +96,14 @@ PASS src/screens/__tests__/VidhiScreens.test.tsx (6.53 s)
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -144,14 +144,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       73 | function publish(next: RosterState): void {
@@ -175,14 +175,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -194,14 +194,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -213,14 +213,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -232,14 +232,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -251,14 +251,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -270,14 +270,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -289,14 +289,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -308,14 +308,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -327,14 +327,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -346,14 +346,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -365,14 +365,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -384,14 +384,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -403,14 +403,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -422,14 +422,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -441,14 +441,14 @@ PASS src/components/__tests__/TodayStrip.test.tsx
 
     console.error
       An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
@@ -587,14 +587,14 @@ PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -615,14 +615,14 @@ PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -643,14 +643,14 @@ PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -671,14 +671,14 @@ PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -699,14 +699,14 @@ PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -727,14 +727,14 @@ PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -755,14 +755,14 @@ PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -783,14 +783,14 @@ PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -811,14 +811,14 @@ PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -839,14 +839,14 @@ PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
 
     console.error
       An update to GitaLanguageProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       90 |       .catch(() => undefined)
@@ -906,14 +906,14 @@ PASS src/contexts/__tests__/JapamCounterContext.test.tsx
 
     console.error
       An update to JapamCounterProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       71 |       })
@@ -934,14 +934,14 @@ PASS src/contexts/__tests__/JapamCounterContext.test.tsx
 
     console.error
       An update to JapamCounterProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       71 |       })
@@ -962,14 +962,14 @@ PASS src/contexts/__tests__/JapamCounterContext.test.tsx
 
     console.error
       An update to JapamCounterProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       71 |       })
@@ -990,14 +990,14 @@ PASS src/contexts/__tests__/JapamCounterContext.test.tsx
 
     console.error
       An update to JapamCounterProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       71 |       })
@@ -1018,14 +1018,14 @@ PASS src/contexts/__tests__/JapamCounterContext.test.tsx
 
     console.error
       An update to JapamCounterProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       71 |       })
@@ -1046,14 +1046,14 @@ PASS src/contexts/__tests__/JapamCounterContext.test.tsx
 
     console.error
       An update to JapamCounterProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       71 |       })
@@ -1074,14 +1074,14 @@ PASS src/contexts/__tests__/JapamCounterContext.test.tsx
 
     console.error
       An update to JapamCounterProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       71 |       })
@@ -1122,14 +1122,14 @@ PASS src/components/__tests__/RateStepper.test.tsx
 
     console.error
       An update to FontScaleProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       44 |       })
@@ -1150,14 +1150,14 @@ PASS src/components/__tests__/RateStepper.test.tsx
 
     console.error
       An update to FontScaleProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       44 |       })
@@ -1178,14 +1178,14 @@ PASS src/components/__tests__/RateStepper.test.tsx
 
     console.error
       An update to FontScaleProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       44 |       })
@@ -1206,14 +1206,14 @@ PASS src/components/__tests__/RateStepper.test.tsx
 
     console.error
       An update to FontScaleProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       44 |       })
@@ -1234,14 +1234,14 @@ PASS src/components/__tests__/RateStepper.test.tsx
 
     console.error
       An update to FontScaleProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       44 |       })
@@ -1262,14 +1262,14 @@ PASS src/components/__tests__/RateStepper.test.tsx
 
     console.error
       An update to FontScaleProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       44 |       })
@@ -1290,14 +1290,14 @@ PASS src/components/__tests__/RateStepper.test.tsx
 
     console.error
       An update to FontScaleProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       44 |       })
@@ -1318,14 +1318,14 @@ PASS src/components/__tests__/RateStepper.test.tsx
 
     console.error
       An update to FontScaleProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       44 |       })
@@ -1346,14 +1346,14 @@ PASS src/components/__tests__/RateStepper.test.tsx
 
     console.error
       An update to FontScaleProvider inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       44 |       })
@@ -1396,14 +1396,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       195 |     expect(captured.follows).toEqual([]);
@@ -1427,14 +1427,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       204 |     expect(captured.followCount).toBe(1);
@@ -1458,14 +1458,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       212 |     await actSync(() => captured.follow('vahan', keyOffset(3)));
@@ -1489,14 +1489,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       221 |     await actSync(() => captured.follow('namkaran', k));
@@ -1520,14 +1520,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       232 |     expect(captured.isFollowing('vahan', k)).toBe(false);
@@ -1551,14 +1551,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       241 |     await actSync(() => captured.follow('namkaran', keyOffset(10)));
@@ -1582,14 +1582,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       261 |     );
@@ -1613,14 +1613,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       273 |     // The prune is durable — storage was rewritten, not just filtered in memory.
@@ -1644,14 +1644,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       285 |     await actSync(() => captured.pruneExpired(twoDaysOn));
@@ -1675,14 +1675,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       299 |     ).setItem.mock.calls.length;
@@ -1706,14 +1706,14 @@ PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
 
     console.error
       An update to Root inside a test was not wrapped in act(...).
-      
+
       When testing, code that causes React state updates should be wrapped into act(...):
-      
+
       act(() => {
         /* fire events that update state */
       });
       /* assert on the output */
-      
+
       This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
       307 |     expect(captured.isLoading).toBe(false);
