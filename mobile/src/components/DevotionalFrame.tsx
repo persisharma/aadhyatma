@@ -94,7 +94,10 @@ export function DevotionalVerseBody({ header, verse, meaning, lang, art, verseSt
       <Text testID="devotional-share-source" allowFontScaling={!exportMode} adjustsFontSizeToFit numberOfLines={2} minimumFontScale={0.6} style={fit([reading, { fontSize: sourceSize, lineHeight: sourceSize * 1.3, color: '#7C210D', fontFamily: lang === 'hi' ? type.verseFace : face }])}>{header}</Text>
     </Panel>
     <Panel art={art} width={width} top={spec.sourceEnd} bottom={spec.verseEnd} testID="devotional-verse-panel"
-      contentStyle={{ paddingHorizontal: 92 * scale }} onLoad={() => mark('verse')} onError={onError}>
+      // Use the paper inside the ornamental rules; extra inset here needlessly
+      // wraps verses even when the surrounding card has room. Keep the reading
+      // size and let Panel grow vertically rather than shrinking scripture.
+      contentStyle={{ paddingHorizontal: 55 * scale }} onLoad={() => mark('verse')} onError={onError}>
       <Text testID="devotional-share-verse" allowFontScaling={!exportMode}
         style={fit([reading, verseStyle, exportMode && { fontSize: shortVerse ? 52 : lang === 'en' ? 27 : type.verseSize, lineHeight: shortVerse ? (spec.verseEnd - spec.sourceEnd) / 2 : lang === 'kn' ? 48 : lang === 'gu' ? 46 : type.verseLeading }, { color: '#2D1005', fontFamily: lang === 'hi' ? type.verseFace : face, transform: [{ translateY: shortVerse ? 16 * scale : 9 * scale }] }])}>{verse.trim()}</Text>
     </Panel>
