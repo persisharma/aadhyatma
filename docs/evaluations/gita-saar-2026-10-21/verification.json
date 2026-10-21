@@ -35,14 +35,18 @@
     "android": false
   },
   "maestro": {
-    "result": "blocked",
+    "result": "passed",
     "flow": "mobile/.maestro/gita-saar-visual-smoke.yaml",
-    "yaml_steps": 26,
+    "yaml_steps": 27,
     "yaml_parse": "passed",
     "attempts": [
       "Shared fresh-install launch stalled with the development LogBox covering Begin.",
       "The second app launch showed No script URL provided (unsanitizedScriptURLString = null), before reaching Gita Saar."
     ],
-    "passed": false
+    "passed": true,
+    "exit_code": 0,
+    "scope": "Existing isolated iOS simulator profile; launch, index, English reader, vertical scrolling and Gita 6.32 handoff. Fresh-install setup is not covered.",
+    "recovery": "Restarted unresponsive Metro; handled the development warning overlay; explicitly swiped the first listing row clear of the tab bar before tapping.",
+    "evidence": "maestro/run.log"
   }
 }

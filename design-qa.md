@@ -529,6 +529,6 @@ The first iteration was blocked on native background and Large/regional review. 
 
 ### Coverage limits
 
-No exhaustive 170-page visual audit, Android/physical-device review, or OS accessibility enlargement beyond the app's Large preset was performed. These are open coverage items, not claimed by this scoped iOS correction pass. The Maestro flow parses but its run is blocked before Home by the installed native dev client reporting `No script URL provided`; it is not a passing e2e result. Details are in the linked verification record. The final automated run was repeated after merging current main.
+No exhaustive 170-page visual audit, Android/physical-device review, or OS accessibility enlargement beyond the app's Large preset was performed. These are open coverage items, not claimed by this scoped iOS correction pass. The dedicated 27-step Maestro flow passes (exit 0) on the existing isolated iOS profile after restarting unresponsive Metro and handling the debug overlay. It verifies physical scrolling and the full-Gita handoff. Fresh-install setup is not covered. The final automated run was repeated after merging current main. Evidence and earlier failed attempts are recorded in the linked review.
 
 final result: passed

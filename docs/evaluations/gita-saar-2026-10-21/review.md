@@ -44,6 +44,12 @@ Some captures include the computer-use pointer overlay. Screenshots of a scrolle
 
 ## Maestro result
 
-The new 26-step YAML parses. The native smoke run did **not** pass: the shared first-install setup stalled with the development warning overlay covering Begin. A second launch then showed `No script URL provided` / `unsanitizedScriptURLString = (null)` before the app could reach Home. This installed simulator dev client's bundle connection needs repair before rerunning the flow. Manual native captures above were taken before that relaunch and are separate evidence.
+**Passed, exit 0** on the existing isolated iOS simulator profile. The 27-step flow launches the app, opens Sacred Books → Gita Saar, captures the Hindi title, switches to English, physically swipes the first theme clear of the tab bar, opens True Prema, scrolls to the complete Saar/handoff, and asserts Chapter 6 / verse 32 of 47 after the handoff. Fresh-install setup is not covered by this successful run.
+
+Earlier attempts exposed a development LogBox overlay over setup, an unresponsive Metro (`No script URL provided` during relaunch), and an iOS accessibility false positive for a theme row under the tab bar. Restarting Metro and explicitly swiping that row into the viewport resolved the run. These failed attempts are not counted as passing evidence.
+
+- [Native run log](maestro/run.log)
+- [Title](maestro/gita-saar-hi-title.png) · [Icon listing](maestro/gita-saar-theme-icons.png)
+- [Reader opening](maestro/gita-saar-en-opening.png) · [Complete Saar](maestro/gita-saar-en-complete-saar.png) · [Gita handoff](maestro/gita-saar-full-gita-handoff.png)
 
 The final full automated run was repeated after merging current main at code revision `685821ac`: TypeScript plus 3,512 tests passed (37 widget, 2,625 Jest across 272 suites, 617 engine, 184 data, 49 Ask tests).

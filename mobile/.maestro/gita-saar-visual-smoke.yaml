@@ -10,14 +10,19 @@ appId: com.prashantsharma.vedansh
     arguments:
       RCT_jsLocation: "127.0.0.1:8084"
 - extendedWaitUntil:
-    visible: "Skip tour|Begin|.*Today.s Panchang.*|.*आज का पंचांग.*"
+    visible: "Skip tour|Begin|.*Today.s Panchang.*|.*आज का पंचांग.*|.*Open debugger.*"
     timeout: 90000
 - tapOn:
     text: "Skip tour"
     optional: true
-- tapOn:
-    id: logbox_dismiss_button_warn
-    optional: true
+# The debug LogBox has no stable accessibility identifier in this binary.
+# Its observed close control sits at the lower-right, above the home indicator.
+- runFlow:
+    when:
+      visible: ".*Open debugger.*"
+    commands:
+      - tapOn:
+          point: "92%,93%"
 - tapOn:
     text: "Begin"
     optional: true
@@ -47,6 +52,12 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: gita-saar-hi-title
 - tapOn:
     id: lang-toggle-en
+# A partially visible first row can still be reported visible beneath the tab
+# bar by iOS accessibility. Move it into the content viewport before tapping.
+- swipe:
+    start: "50%,82%"
+    end: "50%,45%"
+    duration: 600
 - scrollUntilVisible:
     element:
       text: "True Prema\\. 19 verses\\. Tap to open\\."
