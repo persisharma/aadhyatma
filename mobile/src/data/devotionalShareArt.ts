@@ -86,7 +86,7 @@ export function devotionalArtForVerse(v: { sourceId: string; verseIndex: number 
   return verseArt[`${v.sourceId}:${v.verseIndex}`] ?? devotionalSourceArt[v.sourceId] ?? 'prayer';
 }
 /**
- * The full lossless masters ship from R2 (prefix `devotional-share`), not the bundle.
+ * The complete portrait masters ship from R2 (prefix `devotional-share`), not the bundle.
  * `mobile/assets/devotional-share/` keeps the reviewed sources and their provenance;
  * `scripts/prepare-devotional-share.mjs` publishes them and writes this manifest.
  */

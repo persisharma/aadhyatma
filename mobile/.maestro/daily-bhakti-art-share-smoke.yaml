@@ -15,18 +15,30 @@ appId: com.prashantsharma.vedansh
     visible: "Card language: English"
     timeout: 20000
 - tapOn: "Card language: Hindi"
+- extendedWaitUntil:
+    visible: { id: "devotional-preview-ready" }
+    timeout: 20000
 - waitForAnimationToEnd
 - assertVisible: "Share to other apps"
 - takeScreenshot: e2e-shots/daily-art-share-hi
 - tapOn: "Card language: English"
+- extendedWaitUntil:
+    visible: { id: "devotional-preview-ready" }
+    timeout: 20000
 - waitForAnimationToEnd
 - assertVisible: "Share to other apps"
 - takeScreenshot: e2e-shots/daily-art-share-en
 - tapOn: "Card language: Gujarati"
+- extendedWaitUntil:
+    visible: { id: "devotional-preview-ready" }
+    timeout: 20000
 - waitForAnimationToEnd
 - assertVisible: "Share to other apps"
 - takeScreenshot: e2e-shots/daily-art-share-gu
 - tapOn: "Card language: Kannada"
+- extendedWaitUntil:
+    visible: { id: "devotional-preview-ready" }
+    timeout: 20000
 - waitForAnimationToEnd
 - assertVisible: "Share to other apps"
 - takeScreenshot: e2e-shots/daily-art-share-kn

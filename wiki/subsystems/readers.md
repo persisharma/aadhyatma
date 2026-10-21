@@ -110,15 +110,17 @@ physical performance remain open. Later Vidhi
 steps show the divider without repeating art. Semantic guide art follows declared deities and
 personal-tithi guides remain neutral. Individual reader paging/scroll logic is still separate.
 Daily Bhakti now uses the separate offline Design 2 `DevotionalFrame` for both its screen
-and single-image export (`design.md` §39.9). It does not use the Home icon registry or reader
-CDN paintings at runtime. `versePool.ts` exposes 2,387 candidates; 59 lazy flat sources add
+and single-image export (`design.md` §39.9). It uses the separate `devotional-share` R2 category
+and persistent artwork cache; the Home icon registry and reader-illustration manifest remain separate. `versePool.ts` exposes 2,387 candidates; 59 lazy flat sources add
 1,014 verses without moving the existing pool indices. `devotionalShareArt.ts` selects nine
 original deity plates, eighteen complete 1080×1456 portrait masters, or the neutral prayer fallback.
 The new paintings cover all 330 previously neutral additions, with distinct Gayatri,
 Khatu Shyam and Devi forms. After the user rejected rectangular banner reuse, the subjects
 were repainted as complete cards with a continuous parchment fade, brand plaque, border
-and footer. All slices now use each subject’s own master. The complete 28-asset set is
-21.52MiB under the unchanged 22MiB contract; no reader CDN activation is involved.
+and footer. All slices now use each subject’s own master. The complete 28-source set is
+21.52MiB under the unchanged 22MiB source contract. All paintings are served from R2 and
+excluded from the bundled asset graph. Paper/text stay usable during first fetch or failure;
+a cached master works offline and sharing waits for successful native decode.
 All scripture and meanings remain native, unrestricted text. The Bhakti tab uses a literal `getComponent` loader, keeping its expanded screen off Home’s
 static launch graph. Share waits for every image section and the final measured layout; long readings grow instead of splitting.
 See [[integrations/reading-artwork]] for the separate reader CDN pipeline.

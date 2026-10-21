@@ -1083,3 +1083,8 @@ PR #508 merged during the artwork work. Preserved its new `versePoolFlat.ts` laz
 ## [2026-10-21] ingest | Vidhi step art uploaded; Daily Bhakti share masters moved to R2
 
 PR #507's `vidhiArtworkManifest.json` (63 reviewed step paintings, prefix `vidhi-steps`) had been merged without its R2 upload; uploaded all 63 with immutable caching and verified with `prepare-vidhi-artwork.mjs --verify --cdn`. The Daily Bhakti share masters added by #494/#499 were bundled (~18MiB, a deliberate offline tradeoff in #499); at the user's direction they now ship from R2 under `devotional-share` through the download-once cache, with `prepare-devotional-share.mjs` publishing/verifying and the bundling guard covering the folder. Updated [[subsystems/share]].
+
+
+## [2026-10-21] ingest | Daily Bhakti continuous paintings and verified R2 delivery
+
+Replaced the user-rejected eighteen rectangular headers with complete portrait masters, fitted section coordinates and one subject master for every slice. Restored the omitted paper band above the footer on short share cards and made preview QA await complete paint. Reconciled main through 23b99e0c, including R2 delivery and verse wrapping, then published all eighteen new objects under devotional-share. All 28 public hashes match and both production bundles contain zero painting files. All 3,564 local tests, eighteen native R2 subjects, four-script sharing/actual PNG exports, normal-restart cache reuse and Standard/Large reading checks passed. Android-device, physical-device and WhatsApp delivery remain unverified. See docs/evaluations/daily-bhakti-full-masters/README.md; the old rectangular-header evaluation is superseded.

@@ -4,7 +4,8 @@ import type { Lang } from '@/data/gita/language';
 import { devotionalFrameColors as colors } from '@/theme/devotionalFrame';
 import { fontFamilies } from '@/theme/typography';
 import { devotionalMetrics as m, devotionalCardGeometry, type DevotionalPage } from '@/utils/devotionalShareLayout';
-import { DevotionalHero, DevotionalFooter, DevotionalVerseBody, devotionalFace } from './DevotionalFrame';
+import { DevotionalHero, DevotionalFooter, DevotionalVerseBody, DevotionalSlice, devotionalFace } from './DevotionalFrame';
+import { devotionalFrameCanvas } from '@/data/devotionalFrameSpec';
 
 export type DevotionalShareCardProps = {
   header: string; page: DevotionalPage; lang: Lang; pageIndex: number; pageCount: number;
@@ -16,16 +17,18 @@ const MeasuredCard = React.forwardRef<View, DevotionalShareCardProps>(function M
   const [bodyPainted, setBodyPainted] = React.useState(false);
   const [heroPainted, setHeroPainted] = React.useState(false);
   const [footerPainted, setFooterPainted] = React.useState(false);
+  const [spacerPainted, setSpacerPainted] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
   const [bodyHeight, setBodyHeight] = React.useState<number | null>(null);
   const [nativeHeight, setNativeHeight] = React.useState<number | null>(null);
   const validBody = bodyHeight !== null && Number.isFinite(bodyHeight) && bodyHeight > 0;
   const geometry = devotionalCardGeometry(validBody ? bodyHeight : 0, page.art);
+  const spacerHeight = validBody ? Math.max(0, geometry.height - geometry.heroHeight - bodyHeight - m.footerSpace) : 0;
   const laidOut = validBody && nativeHeight === geometry.height;
   React.useEffect(() => {
     if (failed || (bodyHeight !== null && !validBody)) onReady?.(false);
-    else if (laidOut && heroPainted && footerPainted && bodyPainted) { onHeight?.(geometry.height); onReady?.(true); }
-  }, [heroPainted, footerPainted, bodyPainted, failed, bodyHeight, validBody, laidOut, geometry.height, onReady, onHeight]);
+    else if (laidOut && heroPainted && footerPainted && bodyPainted && (!spacerHeight || spacerPainted)) { onHeight?.(geometry.height); onReady?.(true); }
+  }, [heroPainted, footerPainted, bodyPainted, spacerHeight, spacerPainted, failed, bodyHeight, validBody, laidOut, geometry.height, onReady, onHeight]);
   const latin = lang === 'en';
   const face = devotionalFace(lang);
   return <View ref={ref} collapsable={false} testID="devotional-share-card"
@@ -40,6 +43,12 @@ const MeasuredCard = React.forwardRef<View, DevotionalShareCardProps>(function M
         verseStyle={{ fontFamily: face, fontSize: latin ? m.latinVerseSize : m.verseSize, lineHeight: latin ? m.latinVerseLeading : m.verseLeading, color: colors.ink }}
         meaningStyle={{ fontFamily: face, fontSize: latin ? m.latinMeaningSize : m.meaningSize, lineHeight: latin ? m.latinMeaningLeading : m.meaningLeading, color: colors.meaning }} />
     </View>
+    {/* Restore the remaining master between the reading and footer on short cards.
+        Crop from its top as text grows; keep its border, flowers and paper unscaled. */}
+    {spacerHeight > 0 ? <DevotionalSlice art={page.art} width={m.width}
+      top={devotionalFrameCanvas.footerTop - spacerHeight * devotionalFrameCanvas.width / m.width}
+      bottom={devotionalFrameCanvas.footerTop} testID="devotional-spacer-image"
+      onLoad={() => setSpacerPainted(true)} onError={() => setFailed(true)} /> : null}
     <View style={styles.footer}>
       <DevotionalFooter art={page.art} width={m.width} onLoad={() => setFooterPainted(true)} onError={() => setFailed(true)} />
       {pageCount > 1 ? <Text allowFontScaling={false} style={styles.pageNumber}>{pageIndex + 1}/{pageCount}</Text> : null}

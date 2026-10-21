@@ -46,10 +46,10 @@ template, `$artifact-template-vedansh-style-3-reader-banner`, retains the origin
 PNG and the same guide for reuse outside this checkout. The style can be reused in other
 formats; actual kids-story layout and source gates still follow their own contracts.
 
-## Daily Bhakti offline artwork (PR #508)
+## Daily Bhakti card artwork (PR #508 follow-up)
 
 `mobile/src/data/devotionalShareArt.ts` and `mobile/assets/devotional-share/manifest.json`
-are a separate bounded offline set. Nine original full deity masters and neutral prayer retain
+describe a separate bounded source set. Nine original full deity masters and neutral prayer retain
 their existing bytes. Eighteen new complete 1080×1456 portrait masters cover all 330
 previously neutral verses among the 1,014 added candidates. The initial landscape-header
 implementation was rejected by the user for looking pasted onto the card.
@@ -59,9 +59,13 @@ the subject with its own brand plaque, scene-to-paper transition, gold frame and
 footer. `DevotionalHero`, reading bands and footer slice the same subject master.
 `manifest.subjects` records shipped/generated hashes, exact prompt keys and matching body
 identity; `devotionalFrameSpec` keeps the contiguous reading coordinates.
-The eighteen compressed paintings add 4,288,786 bytes; the complete offline set is
-22,567,642 bytes (21.52MiB), below the unchanged 22MiB ceiling. General prayers and unknown
-sources retain neutral fallback. No reader CDN assets are activated or uploaded.
+The eighteen compressed sources total 4,288,786 bytes; the complete source set is
+22,567,642 bytes (21.52MiB), below the unchanged 22MiB ceiling. All 28 paintings ship from
+the separate `devotional-share` R2 category through `devotionalShareManifest.json` and the
+shared persistent cache. None are bundled. The publisher includes original and new subjects;
+`--verify --cdn` checks every public SHA-256. Text remains usable on paper during first fetch
+or failure; captures refuse missing/undecoded masters. General prayers and unknown sources
+retain the neutral prayer mapping. Reader illustration CDN manifests remain separate.
 Tests pin all 1,014 mappings and all four scripts; current native evidence is in
 `docs/evaluations/daily-bhakti-full-masters/README.md`. The previous
 `daily-bhakti-art-508` evaluation documents the superseded rectangular treatment.
