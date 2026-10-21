@@ -2,7 +2,7 @@ import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 
 export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   'bhagavad-gita': 'krishna', 'krishna-stotram': 'krishna',
-  'shiva-strotam': 'shiva', 'om-namah-shivaya': 'shiva',
+  'shiva-strotam': 'shiva', 'om-namah-shivaya': 'shiva', 'mahamrityunjaya-mantra': 'shiva',
   'durga-stotram': 'durga', 'saraswati-stotram': 'saraswati',
   'saraswati-moola-mantra': 'saraswati', 'vidyarambha-prarthana': 'saraswati',
   'ganesh-stotram': 'ganesha', 'vishnu-sahasranama': 'vishnu',

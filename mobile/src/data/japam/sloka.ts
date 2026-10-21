@@ -159,10 +159,20 @@ export function isSlokaJapaSource(sourceId: string): boolean {
 const isTitleCard = (v: CorpusVerse) => v.number === 0 && v.sanskrit !== undefined;
 
 /**
+ * Shlokas that are also a mantra in `japam.json`: the reader's जप pill opens
+ * that mantra, so one chant keeps one count wherever it is started
+ * (`slokaJapa.test.ts` keeps the two texts identical).
+ */
+const LIST_MANTRA: Readonly<Record<string, string>> = {
+  'sloka.shiva-strotam.3.1': 'mahamrityunjaya-mantra',
+};
+
+/**
  * The sloka id for the reader page at `verseIndex` of `chapter` —
- * `sloka.<sourceId>.<chapter>.<number>`. A chapter's title card is not a
- * shloka, so it resolves to the chapter's first recited one. URL-safe because
- * the widget deep link carries it. Null when the source is not a stotram.
+ * `sloka.<sourceId>.<chapter>.<number>`, or the list mantra's id when the
+ * shloka is one (`LIST_MANTRA`). A chapter's title card is not a shloka, so it
+ * resolves to the chapter's first recited one. URL-safe because the widget
+ * deep link carries it. Null when the source is not a stotram.
  */
 export function slokaJapaId(sourceId: string, chapter: number, verseIndex: number): string | null {
   const source = SOURCES.find((s) => s.sourceId === sourceId);
@@ -170,7 +180,9 @@ export function slokaJapaId(sourceId: string, chapter: number, verseIndex: numbe
   const verses = source.corpus().chapter(chapter).verses;
   const at = verses[Math.max(0, Math.min(verses.length - 1, verseIndex))];
   const verse = at && !isTitleCard(at) ? at : verses.find((v) => !isTitleCard(v));
-  return verse ? `${PREFIX}${sourceId}.${chapter}.${verse.number}` : null;
+  if (!verse) return null;
+  const id = `${PREFIX}${sourceId}.${chapter}.${verse.number}`;
+  return LIST_MANTRA[id] ?? id;
 }
 
 /** Every sloka id, in library order. Loads every stotram chapter — tests only. */

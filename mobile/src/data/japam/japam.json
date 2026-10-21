@@ -154,15 +154,46 @@
         ],
         "retrievedOn": "2026-10-13"
       }
+    },
+    {
+      "id": "mahamrityunjaya-mantra",
+      "nameHi": "महामृत्युंजय मंत्र",
+      "nameEn": "Mahamrityunjaya Mantra",
+      "sub": "ऋग्वेद ७.५९.१२ · त्र्यम्बक मंत्र",
+      "subEn": "Rigveda 7.59.12 · Tryambaka mantra",
+      "thumb": "म",
+      "deities": [
+        "shiva"
+      ],
+      "lines": [
+        "ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्।",
+        "उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय माऽमृतात्॥"
+      ],
+      "linesEn": [
+        "oṁ tryambakaṁ yajāmahe sugandhiṁ puṣhṭivardhanam",
+        "urvārukamiva bandhanānmṛityormukṣhīya mā'mṛitāt"
+      ],
+      "meaningHi": "हम सुगन्धित, सबका पोषण करने वाले त्रिनेत्र त्र्यम्बक (शिव) की उपासना करते हैं। जैसे पकी हुई ककड़ी अपनी बेल के बन्धन से सहज छूट जाती है, वैसे ही हम मृत्यु के बन्धन से मुक्त हों, पर अमृत (मोक्ष) से नहीं। जप में ऋग्वेद के इस मंत्र से पहले ‘ॐ’ जोड़ा जाता है।",
+      "meaningEn": "We worship the fragrant Three-Eyed One (Tryambaka, Shiva), who nourishes all beings. As a ripe cucumber slips free of its vine, may we be released from the bond of death, but not from immortality (moksha). In japa the Rigvedic verse is commonly preceded by Om.",
+      "source": {
+        "baseText": "Rigveda 7.59.12, the Tryambaka verse — the same collation as the Shiva Stotram reading (shiva-strotam/chapter-03.json), checked against the Rigveda Samhita/Padapatha with Sayana commentary and the University of Texas metrically restored Rigveda Book 7. The Om prefix is devotional usage, outside the cited verse. The Hindi and English meanings are original editorial glosses.",
+        "referenceUrls": [
+          "https://rigveda.sanatana.in/describe/rikMandala/007.059.012",
+          "https://lrc.la.utexas.edu/books/rigveda/RV07"
+        ],
+        "retrievedOn": "2026-10-13"
+      }
     }
   ],
   "source": {
-    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name). Saraswati Moola Mantra cross-verified with Drik Panchang and Sri Matham Puja Sangraha.",
+    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name). Saraswati Moola Mantra cross-verified with Drik Panchang and Sri Matham Puja Sangraha. Mahamrityunjaya Mantra (Rigveda 7.59.12) shares the Shiva Stotram reading's collation.",
     "referenceUrls": [
       "https://sanskritdocuments.org/doc_deities_misc/sArthagAyatrI.html",
       "https://vedabase.io/en/library/kb/90/",
       "https://www.drikpanchang.com/vedic-mantra/goddesses/saraswati/mantra/saraswati-moola-mantra.html?lang=en",
-      "https://www.srimatham.com/uploads/5/5/4/9/5549439/puja_sangraha.pdf"
+      "https://www.srimatham.com/uploads/5/5/4/9/5549439/puja_sangraha.pdf",
+      "https://rigveda.sanatana.in/describe/rikMandala/007.059.012",
+      "https://lrc.la.utexas.edu/books/rigveda/RV07"
     ],
     "retrievedOn": "2026-10-13"
   }

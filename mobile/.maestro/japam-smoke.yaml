@@ -1,7 +1,7 @@
 # Japam Category Smoke Test
 #
-# Verifies the existing five mantra cards and the new Saraswati manual counter.
-# The bundled registry has seven mantras; Durga is covered by the data suite.
+# Verifies the existing five mantra cards and the Saraswati and Mahamrityunjaya manual counters.
+# The bundled registry has eight mantras.
 #
 # Japam routes to JapamCounterScreen (a counter UI with a 108-bead mala),
 # NOT a standard verse pager — per RULEBOOK §1 field 6. This flow opens the
@@ -42,6 +42,20 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 10000
 - tapOn: "Saraswati Moola Mantra\\..*Tap to open\\."
+- waitForAnimationToEnd
+- assertVisible: ".*0 of 108 on this mala.*"
+- tapOn: ".*Tap to count one bead.*"
+- assertVisible: ".*1 of 108 on this mala.*"
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# Mahamrityunjaya is a list mantra too (and what Shiva Stotram ch. 3's जप pill opens).
+- scrollUntilVisible:
+    element:
+      text: "Mahamrityunjaya Mantra\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Mahamrityunjaya Mantra\\..*Tap to open\\."
 - waitForAnimationToEnd
 - assertVisible: ".*0 of 108 on this mala.*"
 - tapOn: ".*Tap to count one bead.*"

@@ -76,6 +76,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'radha-naam': backgroundImages.deity_radha_krishna,
   'jai-shri-ram': backgroundImages.deity_rama_darbar,
   'saraswati-moola-mantra': backgroundImages.deity_saraswati_veena,
+  'mahamrityunjaya-mantra': shivaStrotamImages.shiva,
   ramcharitmanas: backgroundImages.deity_rama_darbar,
   'valmiki-ramayan': backgroundImages.deity_rama_darbar,
   'durga-stotram': backgroundImages.deity_durga_lion,

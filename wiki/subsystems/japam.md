@@ -1,7 +1,7 @@
 ---
 title: Japam Counter & Sloka Japa
 type: subsystem
-sources: [mobile/src/data/japam/index.ts, mobile/src/data/japam/sloka.ts, mobile/src/data/japam/japam.json, mobile/src/contexts/JapamCounterContext.tsx, mobile/src/screens/JapamCounterScreen.tsx, mobile/src/components/StartJapaButton.tsx, mobile/src/components/JapamMala.tsx, mobile/src/components/JapamAudioPlayer.tsx, mobile/src/data/__tests__/slokaJapa.test.ts, mobile/src/screens/__tests__/JapamCounterMala.test.tsx, design.md, RULEBOOK.md]
+sources: [mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, mobile/src/data/devotionalShareArt.ts, mobile/src/data/discoveryMeta.ts, mobile/.maestro/japam-smoke.yaml, mobile/src/data/japam/sloka.ts, mobile/src/data/japam/japam.json, mobile/src/contexts/JapamCounterContext.tsx, mobile/src/screens/JapamCounterScreen.tsx, mobile/src/components/StartJapaButton.tsx, mobile/src/components/JapamMala.tsx, mobile/src/components/JapamAudioPlayer.tsx, mobile/src/data/__tests__/slokaJapa.test.ts, mobile/src/screens/__tests__/JapamCounterMala.test.tsx, design.md, RULEBOOK.md]
 last_verified_date: 2026-10-21
 confidence: high
 status: current
@@ -10,7 +10,7 @@ status: current
 ## Summary
 
 The JapaMala counter (`JapamCounterScreen`, Home stack, route `JapamCounter { mantraId, autoPlay? }`)
-counts 108-bead rounds of one counter entry. An entry is either a **mantra** (`japam.json`, 7 today)
+counts 108-bead rounds of one counter entry. An entry is either a **mantra** (`japam.json`, 8 today)
 or, since Oct 2026, a **sloka** — any shloka of a `category: 'stotram'` text, chanted exactly like a
 mantra (one bead per recitation of that shloka). Both are `JapamMantra` objects resolved by
 `findJapamMantra(id)`, so every id-keyed consumer treats them alike. design.md §35 / §35.1,
@@ -34,6 +34,9 @@ RULEBOOK §3 "Every stotram shloka is startable as japa".
   row, absolutely pinned left (`japaSlot`), mirroring read-aloud on the right. It takes the reader's
   `navigation` prop rather than `useNavigation()` so reader tests stay navigator-free, and the
   reader's `currentIndex` as `verseIndex`; the id is resolved on press.
+- **Shloka = list mantra.** `LIST_MANTRA` in `sloka.ts` maps a sloka id to a `japam.json` mantra with the
+  same text (today `sloka.shiva-strotam.3.1` → `mahamrityunjaya-mantra`); `slokaJapaId` returns the
+  mantra id, so the reader pill and the Jap Mala tile share one count. The sloka id still resolves.
 - **Counter** for a sloka: the §35 counter, with the name as the caption under the lines (naam japa's
   caption), `हर श्लोक एक मनका` hint, `आज N श्लोक` tally, the section's sketch as background.
 
@@ -58,6 +61,11 @@ RULEBOOK §3 "Every stotram shloka is startable as japa".
 - **New stotram-category text** → add it to `SOURCES` and render `StartJapaButton` (with
   `verseIndex`) in its reader; `slokaJapa.test.ts` fails while the registry and the library
   category disagree.
+- **Adding a mantra** touches `japam.json` (per-mantra `source`, URLs rolled into the file's list),
+  `backgrounds.ts` `sourceBackgrounds` (a module-load throw if missing), `devotionalShareArt.ts`,
+  optionally `discoveryMeta.ts`, and `japam-smoke.yaml`. If its text is also a stotram shloka, add it to
+  `LIST_MANTRA`. The Audio-library `mahamrityunjay-mantra` recording is CDN-only, so the japam entry is
+  a silent manual counter (bundling it would grow the binary).
 - The audio row shows the generic "इस मंत्र की ध्वनि उपलब्ध नहीं है" notice for slokas (no recordings).
 - History: the first cut (20 Oct) counted one bead per *complete paath* with a full-text sheet; replaced
   the next day by sloka japa after an A/B prototype.
