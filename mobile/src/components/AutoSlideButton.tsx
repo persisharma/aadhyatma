@@ -17,7 +17,7 @@ const BAR_HEIGHTS = [5, 8, 11];
 /**
  * The auto-slide (स्वतः) control (design.md §85). Idle it is one pill — ▶ + "स्वतः /
  * Auto"; playing it splits into ❚❚ and a three-bar pace meter (slow · normal · fast) that
- * cycles on tap, over a hairline countdown to the next page.
+ * cycles on tap, over a hairline countdown to the next scroll or page turn.
  *
  * `floating` (the default) anchors it bottom-left of a verse pager, mirroring
  * `JumpToStartButton` on the right. Screens whose pager bottom is caption text (Kids
@@ -38,20 +38,20 @@ export default function AutoSlideButton({
   const reducedMotion = useReducedMotion();
   const progress = useRef(new Animated.Value(0)).current;
 
-  const { playing, pageDurationMs, cycleKey } = control;
+  const { playing, countdownMs, countdownKey } = control;
   useEffect(() => {
     progress.stopAnimation();
     progress.setValue(0);
-    if (!playing || reducedMotion) return undefined;
+    if (!playing || countdownMs == null || reducedMotion) return undefined;
     const countdown = Animated.timing(progress, {
       toValue: 1,
-      duration: pageDurationMs,
+      duration: countdownMs,
       easing: Easing.linear,
       useNativeDriver: true,
     });
     countdown.start();
     return () => countdown.stop();
-  }, [playing, pageDurationMs, cycleKey, reducedMotion, progress]);
+  }, [playing, countdownMs, countdownKey, reducedMotion, progress]);
 
   if (!control.visible) return null;
 

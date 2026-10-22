@@ -193,6 +193,7 @@ export default function KavachamReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={verses as KavachamVerse[]}
             keyExtractor={(v) => v.id}

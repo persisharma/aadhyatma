@@ -166,6 +166,7 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
             </View>
             <View style={styles.listContainer}>
               <FlatList
+                CellRendererComponent={autoSlide.Cell}
                 ref={listRef}
                 data={data}
                 keyExtractor={(item) => item.id}

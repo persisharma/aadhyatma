@@ -194,6 +194,7 @@ export default function AshtakamReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={verses as AshtakamVerse[]}
             keyExtractor={(v) => v.id}

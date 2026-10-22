@@ -1096,3 +1096,7 @@ Updated reading-artwork, readers and share for nine full-resolution q94 WebP del
 ## [2026-10-22] ingest | Auto-slide (स्वतः) on every paged surface
 
 Updated readers for the new hands-free page turning: `useReaderPlayback` replaces direct `useReaderReadAloud` calls in 25 readers incl. Vidhi conduct; Kids Stories and the comic use `useAutoSlide`. Text-length pacing, persisted pace, chapter hand-off, keep-awake. design.md §85 and RULEBOOK §3 added. Typecheck/lint only — no unit, e2e or device verification yet.
+
+## [2026-10-22] ingest | Auto-slide scrolls long pages before turning
+
+Readers page updated: `AutoSlideScrollView` + pager `CellRendererComponent` let the slideshow scroll a tall page to its bottom in steps before turning; touch pauses. Wired into 10 page components, Kids Stories and Vidhi steps. Typecheck/lint only.

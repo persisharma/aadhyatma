@@ -198,6 +198,7 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={verses as StutiVerse[]}
             keyExtractor={(v) => v.id}

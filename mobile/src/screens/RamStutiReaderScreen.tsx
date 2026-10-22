@@ -137,6 +137,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}

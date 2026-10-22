@@ -129,6 +129,7 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
             </View>
             <View style={styles.listContainer}>
               <FlatList
+                CellRendererComponent={autoSlide.Cell}
                 ref={listRef}
                 data={sections}
                 keyExtractor={(s) => s.id}

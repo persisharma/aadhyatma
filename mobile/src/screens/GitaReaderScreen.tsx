@@ -263,6 +263,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}

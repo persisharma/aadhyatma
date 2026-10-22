@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FlatList, ScrollView, Text, View, useWindowDimensions } from 'react-native';
+import { FlatList, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -8,6 +8,7 @@ import LanguageToggle from '@/components/LanguageToggle';
 import KidsStoryArt from '@/components/KidsStoryArt';
 import ShareButton from '@/components/ShareButton';
 import AutoSlideButton from '@/components/AutoSlideButton';
+import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { useAutoSlide } from './_useAutoSlide';
 import { useShare } from '@/utils/shareVerse';
 import { kidsStoryShareable } from '@/utils/shareContent';
@@ -84,6 +85,7 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
       <View style={{ flex: 1 }} onLayout={event => { if (event.nativeEvent.layout.width > 0) setPageWidth(event.nativeEvent.layout.width); }}>
         <FlatList
           testID="story-pager"
+          CellRendererComponent={autoSlide.Cell}
           key={pageWidth}
           ref={pager}
           data={story.pages}
@@ -118,7 +120,7 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
       // Preserve the scene independently of caption length. Vertical overflow
       // scrolls within this page; horizontal swipes still turn the story page.
       return (
-          <ScrollView testID={`story-page-${page.id}`} directionalLockEnabled nestedScrollEnabled style={{ width: pageWidth, flex: 1 }} contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.sm, gap: spacing.sm }}>
+          <AutoSlideScrollView testID={`story-page-${page.id}`} directionalLockEnabled nestedScrollEnabled style={{ width: pageWidth, flex: 1 }} contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.sm, gap: spacing.sm }}>
             <KidsStoryArt art={page.art} label={storyText(page.title, lang)} />
             {caption}
             {isLast && <View style={{ padding: spacing.lg, gap: spacing.sm }}>
@@ -126,7 +128,7 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
               <Text style={{ ...meaningToken(lang, typography), color: colors.ink }}>{storyText(story.takeaway, lang)}</Text>
               <Text style={{ ...meaningToken(lang, typography), color: colors.inkSoft }}>{storyText(story.sourceNote, lang)}</Text>
             </View>}
-          </ScrollView>
+          </AutoSlideScrollView>
       );
           }}
         />

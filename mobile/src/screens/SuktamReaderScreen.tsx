@@ -193,6 +193,7 @@ export default function SuktamReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={verses as SuktamVerse[]}
             keyExtractor={(v) => v.id}

@@ -209,6 +209,7 @@ export default function SaraswatiStotramReaderScreen({ navigation, route }: Prop
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}

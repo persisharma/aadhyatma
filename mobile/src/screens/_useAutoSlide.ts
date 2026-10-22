@@ -2,6 +2,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AccessibilityInfo, AppState } from 'react-native';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import { useGitaLanguage } from '@/data/gita/language';
+import {
+  makePageScrollCell,
+  type PageScroll,
+  type PageScrollRegistry,
+} from '@/components/AutoSlideScrollView';
 import { buildVerseScript } from '@/readAloud/verseScript';
 import { toReadableVerse } from '@/readAloud/verseAdapter';
 import {
@@ -26,6 +31,14 @@ import {
  * `autoSlideDurationMs`), a manual swipe restarts the countdown on the page swiped
  * to, and the screen is kept awake while it runs.
  *
+ * A page taller than the screen is scrolled to its bottom first: the visible part
+ * holds for its share of the page's time, then the page scrolls down by
+ * `SCROLL_STEP` of a screen and holds for the newly revealed share, until the
+ * bottom — and only then turns. This needs the pager to render
+ * `CellRendererComponent={autoSlide.Cell}` and the page to use
+ * `AutoSlideScrollView`; without them a page simply holds for its whole time.
+ * Touching the page pauses; letting go resumes from wherever it was left.
+ *
  * The pager stays the source of truth for position: this hook only asks it to move
  * (`goToPage`) and follows `currentIndex` wherever it lands, exactly like read-aloud.
  */
@@ -35,14 +48,23 @@ export type AutoSlideControl = {
   visible: boolean;
   playing: boolean;
   speed: AutoSlideSpeed;
-  /** How long the current page holds; the button's countdown runs over this. */
-  pageDurationMs: number;
-  /** Changes whenever the countdown restarts. */
-  cycleKey: string;
+  /** Time to the next scroll or page turn; null while the user is holding the page. */
+  countdownMs: number | null;
+  /** Changes whenever a new countdown starts. */
+  countdownKey: number;
   toggle: () => void;
   stop: () => void;
   cycleSpeed: () => void;
+  /** The pager's `CellRendererComponent` — lets pages report their scroll view. */
+  Cell: ReturnType<typeof makePageScrollCell>;
 };
+
+/** Each scroll moves this share of a screen, keeping the rest on screen for context. */
+const SCROLL_STEP = 0.7;
+/** No hold, however small the revealed strip, is shorter than this. */
+const MIN_HOLD_MS = 1500;
+/** After the user lets go of a page, wait at least this long before moving on. */
+const RESUME_MS = 2000;
 
 let nextOwner = 1;
 
@@ -63,6 +85,8 @@ export function useAutoSlide(args: {
   continuesPastEnd: boolean;
   /** Called just before playback starts — used to silence read-aloud. */
   onStart?: () => void;
+  /** List index of page 0 — a reader's `offset` for its prepended prev-chapter card. */
+  listOffset?: number;
 }): AutoSlideControl {
   const { sourceId, pageCount, currentIndex, pageChars, continuesPastEnd } = args;
   const { speed, handoff } = useAutoSlideStore();
@@ -70,7 +94,22 @@ export function useAutoSlide(args: {
   const [playing, setPlaying] = useState(false);
   // Bumped on every timed turn, so a scroll that never lands is retried rather than
   // leaving the slideshow "playing" with no timer armed.
-  const [turn, setTurn] = useState(0);
+  const [turnCount, setTurnCount] = useState(0);
+  const [countdown, setCountdown] = useState<{ ms: number | null; key: number }>({ ms: null, key: 0 });
+
+  // Mounted pages' scroll views, keyed by list index (see AutoSlideScrollView).
+  const pagesRef = useRef(new Map<number, PageScroll>());
+  const holdRef = useRef<(index: number, held: boolean) => void>(() => undefined);
+  const [registry] = useState<PageScrollRegistry>(() => ({
+    register: (index, page) => {
+      pagesRef.current.set(index, page);
+      return () => {
+        if (pagesRef.current.get(index) === page) pagesRef.current.delete(index);
+      };
+    },
+    hold: (index, held) => holdRef.current(index, held),
+  }));
+  const [Cell] = useState(() => makePageScrollCell(registry));
 
   const argsRef = useRef(args);
   argsRef.current = args;
@@ -107,12 +146,31 @@ export function useAutoSlide(args: {
 
   useEffect(() => {
     if (!playing) return undefined;
-    const timer = setTimeout(() => {
+    const listIndex = currentIndex + (argsRef.current.listOffset ?? 0);
+    const pageOf = () => pagesRef.current.get(listIndex);
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    let held = false;
+    let target = 0;
+
+    const schedule = (fn: () => void, ms: number) => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(fn, ms);
+      setCountdown((c) => ({ ms, key: c.key + 1 }));
+    };
+    // The page's time is shared out by height: holding for `px` of a `content`-tall
+    // page takes that fraction of it. An unmeasured page holds for all of it.
+    const holdFor = (px: number) => {
+      const content = pageOf()?.content ?? 0;
+      if (content <= 0) return pageDurationMs;
+      return Math.max(MIN_HOLD_MS, (pageDurationMs * Math.min(px, content)) / content);
+    };
+
+    const turnPage = () => {
       const { pageCount: count, goToPage, continuesPastEnd: more } = argsRef.current;
       const next = currentIndex + 1;
       if (next < count) {
         goToPage(next);
-        setTurn((t) => t + 1);
+        setTurnCount((t) => t + 1);
         return;
       }
       setPlaying(false);
@@ -120,9 +178,49 @@ export function useAutoSlide(args: {
         armAutoSlideHandoff(argsRef.current.sourceId, owner);
         goToPage(next);
       }
-    }, pageDurationMs);
-    return () => clearTimeout(timer);
-  }, [playing, currentIndex, pageDurationMs, turn, owner]);
+    };
+    // Scroll on by a step, or turn once the bottom is on screen.
+    const step = () => {
+      const page = pageOf();
+      const bottom = page ? page.content - page.viewport : 0;
+      if (!page || page.viewport <= 0 || target >= bottom - 2) {
+        turnPage();
+        return;
+      }
+      const next = Math.min(target + page.viewport * SCROLL_STEP, bottom);
+      const revealed = next - target;
+      target = next;
+      page.scrollTo(next);
+      schedule(step, holdFor(revealed));
+    };
+
+    holdRef.current = (index, isHeld) => {
+      if (index !== listIndex) return;
+      if (isHeld) {
+        held = true;
+        if (timer) clearTimeout(timer);
+        timer = null;
+        setCountdown((c) => ({ ms: null, key: c.key + 1 }));
+      } else if (held) {
+        held = false;
+        // Carry on from wherever the user left the page, after a moment to read it.
+        const page = pageOf();
+        const resumeMs = Math.max(RESUME_MS, holdFor((page?.viewport ?? 0) * SCROLL_STEP));
+        schedule(() => {
+          target = pageOf()?.y ?? target;
+          step();
+        }, resumeMs);
+      }
+    };
+
+    const first = pageOf();
+    target = first?.y ?? 0;
+    schedule(step, first && first.viewport > 0 ? holdFor(first.viewport) : pageDurationMs);
+    return () => {
+      if (timer) clearTimeout(timer);
+      holdRef.current = () => undefined;
+    };
+  }, [playing, currentIndex, pageDurationMs, turnCount, owner]);
 
   // A chapter reader's replacement instance picks up where the previous one left off.
   useEffect(() => {
@@ -185,11 +283,12 @@ export function useAutoSlide(args: {
     visible,
     playing,
     speed,
-    pageDurationMs,
-    cycleKey: `${currentIndex}:${turn}:${pageDurationMs}`,
+    countdownMs: countdown.ms,
+    countdownKey: countdown.key,
     toggle,
     stop,
     cycleSpeed,
+    Cell,
   };
 }
 
@@ -236,6 +335,7 @@ export function useReaderPlayback<T>(args: ReaderPagerArgs<T>): {
     pageChars,
     goToPage,
     continuesPastEnd: data.length > offset + verseCount,
+    listOffset: offset,
     onStart: () => {
       const r = readAloudRef.current;
       if (r.isSpeaking || r.isPaused) r.stop();

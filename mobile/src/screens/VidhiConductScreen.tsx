@@ -42,6 +42,7 @@ import { vidhiMantraShareable } from '@/utils/shareContent';
 import Ornament from '@/components/Ornament';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import AutoSlideButton from '@/components/AutoSlideButton';
+import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { useReaderPlayback } from '@/screens/_useAutoSlide';
 import { clampIndex } from '@/utils/clamp';
 import type { VidhiStackParamList } from '@/navigation/types';
@@ -286,6 +287,7 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
         <View style={styles.listContainer}>
           <FlatList
             ref={listRef}
+            CellRendererComponent={autoSlide.Cell}
             testID="vidhi-conduct-pager"
             data={pages}
             keyExtractor={(page) => page.id}
@@ -375,7 +377,7 @@ function StepPage({
 
   return (
     <View testID={`vidhi-timeline-page-${step.id}`} style={{ width }} accessibilityElementsHidden={!active} importantForAccessibility={active ? 'auto' : 'no-hide-descendants'}>
-      <ScrollView
+      <AutoSlideScrollView
         contentContainerStyle={[styles.pageScroll, { paddingHorizontal: spacing.readingGutter }]}
         showsVerticalScrollIndicator={false}
       >
@@ -490,7 +492,7 @@ function StepPage({
           </Text>
           <View style={[styles.footerRule, { backgroundColor: colors.divider }]} />
         </View>
-      </ScrollView>
+      </AutoSlideScrollView>
     </View>
   );
 }

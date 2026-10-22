@@ -70,7 +70,7 @@ export default function ComicReaderScreen({ route, navigation }: NativeStackScre
         <LanguageToggle />
       </View>
       <View style={{ flex: 1 }} onLayout={event => { if (event.nativeEvent.layout.width > 0) setPageWidth(event.nativeEvent.layout.width); }}>
-        <FlatList testID="comic-pager" key={pageWidth} ref={pager} data={pages} extraData={{ language, typography }} keyExtractor={page => page.id}
+        <FlatList testID="comic-pager" key={pageWidth} ref={pager} CellRendererComponent={autoSlide.Cell} data={pages} extraData={{ language, typography }} keyExtractor={page => page.id}
           horizontal pagingEnabled directionalLockEnabled showsHorizontalScrollIndicator={false} initialScrollIndex={index}
           initialNumToRender={1} maxToRenderPerBatch={2} windowSize={3}
           getItemLayout={(_, position) => ({ length: pageWidth, offset: pageWidth * position, index: position })}

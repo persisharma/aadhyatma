@@ -263,6 +263,7 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer} onLayout={(event) => setPageHeight(event.nativeEvent.layout.height)}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}

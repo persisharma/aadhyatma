@@ -133,6 +133,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={aarti.verses}
             keyExtractor={(v) => v.id}

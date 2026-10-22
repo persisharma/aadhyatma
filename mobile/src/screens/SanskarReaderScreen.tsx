@@ -164,6 +164,7 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={verses}
             keyExtractor={(v) => v.id}

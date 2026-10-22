@@ -215,6 +215,7 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}
