@@ -7,6 +7,15 @@ const mockScroll = jest.fn();
 const mockShare = jest.fn();
 jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, busy: false }) }));
 jest.mock('@/components/ShareButton', () => ({ __esModule: true, default: 'ShareButton' }));
+// Auto-slide is covered by its own hook/button; these suites replace react-native
+// wholesale, so stub it like the other reader controls.
+jest.mock('@/components/AutoSlideButton', () => ({ __esModule: true, default: 'AutoSlideButton' }));
+// A pass-through ScrollView outside an auto-slide pager; the scene assertions below
+// check the host ScrollView it renders.
+jest.mock('@/components/AutoSlideScrollView', () => ({ __esModule: true, default: 'ScrollView' }));
+jest.mock('@/screens/_useAutoSlide', () => ({
+  useAutoSlide: () => ({ visible: false, playing: false, toggle: jest.fn(), stop: jest.fn(), cycleSpeed: jest.fn() }),
+}));
 jest.mock('react-native', () => {
   const React = require('react');
   return {
