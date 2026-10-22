@@ -1098,3 +1098,5 @@ Updated share: the explanation box now mirror-tiles each master's trimmed verse 
 
 ## [2026-10-22] ingest | Daily Bhakti explanation in its own महत्त्व box
 Updated share: the explanation now sits in a twin of the अर्थ box (same caps, mirror-tiled clean middle) behind a second lotus divider, replacing the side-rule strip.
+
+## [2026-10-22] ingest | rating card asks with in-app stars (design.md §54, RULEBOOK §6.2): 4–5★ hand off to the store, 1–3★ get a thank-you step with "Write to us" (FEEDBACK_EMAIL, null until a support inbox is set) plus a smaller store link (no review gating) and a 90-day pause via lowRatedAt.
