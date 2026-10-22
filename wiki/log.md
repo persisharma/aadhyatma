@@ -1092,3 +1092,5 @@ Replaced the user-rejected eighteen rectangular headers with complete portrait m
 ## [2026-10-22] ingest | Daily Bhakti smaller R2 delivery
 
 Updated reading-artwork, readers and share for nine full-resolution q94 WebP delivery encodings, retained lossless authoring references and the 9MiB delivery budget. All 28 masters total 8,953,360 bytes; the eighteen newer subjects and neutral prayer are unchanged. Source, CDN, native and export evidence is tracked in `docs/evaluations/daily-bhakti-compression/`.
+
+## [2026-10-22] ingest | Suvichar personalized card composer, shared cache/capture readiness, editable names and publication gate; added subsystems/suvichar.

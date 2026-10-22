@@ -90,8 +90,9 @@ describe('cross-tab navigation targets', () => {
     for (const helper of ['panchangTabTarget', 'moreTabTarget']) {
       expect(entryRoutes).toContain(`export function ${helper}<`);
     }
-    // Both helpers hard-code initial: false in their return — one shape, twice.
-    expect(entryRoutes.match(/initial: false \};/g)).toHaveLength(2);
+    expect(entryRoutes).toContain('export function suvicharTabTarget()');
+    // All three cross-tab helpers preserve the destination stack root.
+    expect(entryRoutes.match(/initial: false \};/g)).toHaveLength(3);
   });
 
   test('the Home widgets spotlight routes through moreTabTarget', () => {

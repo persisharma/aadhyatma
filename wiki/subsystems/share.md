@@ -9,7 +9,7 @@ status: current
 
 ## Summary
 
-One provider (`ShareProvider` / `useShare()` in `utils/shareVerse.tsx`, mounted once in
+For scripture and prose, one provider (`ShareProvider` / `useShare()` in `utils/shareVerse.tsx`, mounted once in
 `App.tsx`) turns content into branded parchment images, captures them
 off-screen with `react-native-view-shot`, and
 hands it to WhatsApp / the OS sheet / Instagram. `share(content, lang)` takes a
@@ -106,3 +106,8 @@ The shared capture pipeline compensates for UIKit point dimensions using `PixelR
 `dailyBhaktiShareable` prepares one complete verse/meaning page per language. `DevotionalShareCard` grows from actual native body/root layout and reports height after every image slice decodes. The provider, full-height preview and Story frame preserve that measurement. All 27 deity/subject masters plus neutral prayer ship from the separate `devotional-share` R2 category through the shared persistent cache; none are bundled. The eighteen new subjects are complete portrait compositions with their own scene-to-parchment transition, brand plaque, reading frame and footer, replacing the rejected rectangular header reuse. Every section slices its own subject master using manifest-fitted coordinates. Short cards restore the remaining master band above the footer, cropped as text grows; preview and capture readiness include its paint. Text remains readable on paper while a first download is pending or fails; capture refuses incomplete art, while previously cached masters work offline. `scripts/prepare-devotional-share.mjs --verify --cdn` verifies all 28 public source hashes. Native/device/WhatsApp evidence is tracked separately in `docs/evaluations/daily-bhakti-full-masters/README.md`. See design.md §39.9 and [[integrations/reading-artwork]].
 
 The 22 Oct delivery optimization reduces the complete Daily Bhakti set from 21.52MiB to 8.54MiB by re-encoding only the nine older lossless portraits at WebP q94/m6/sharp YUV. All dimensions, slice coordinates and capture logic stay unchanged. The lossless authoring hashes/revision remain in provenance; the delivered pixels are perceptually compressed. See `docs/evaluations/daily-bhakti-compression/` and [[integrations/reading-artwork]].
+
+
+### Personalized Suvichar
+
+[[suvichar]] is a separate composer: it captures the exact editable native preview, reusing the persistent artwork cache and `multiShare.shareFiles` delivery adapter, with an expo-sharing fallback. It does not pass personal names through scripture/prose content types. Its artwork subscription survives text edits; a measured child resets paint/layout readiness per content generation. New R2 master hashes remain inactive until public-byte verification.

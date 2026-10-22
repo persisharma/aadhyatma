@@ -38,6 +38,7 @@ jest.mock('react-native-safe-area-context', () => ({
 // Pin the tab to a known verse (a reminder-tap deep link) so the rendered
 // background is deterministic instead of following a random pool pick.
 jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ navigate: jest.fn() }),
   useRoute: () => ({
     key: 'DailyBhaktiTab-test',
     name: 'DailyBhaktiTab',

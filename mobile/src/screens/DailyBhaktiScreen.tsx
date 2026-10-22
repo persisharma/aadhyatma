@@ -1,3 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { suvicharTabTarget } from '@/navigation/entryRoutes';
 import { dailyBhaktiShareable } from '@/utils/dailyBhaktiShare';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
@@ -50,6 +53,7 @@ function resolveInitialVerse(
 
 export default function DailyBhaktiScreen() {
   const { colors, typography, spacing } = useTheme();
+  const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>();
   // Feature-tour spotlight anchors (design.md §47).
   const dailyVerseRef = useTourTarget('dailyVerse');
   const shareButtonRef = useTourTarget('shareButton');
@@ -132,6 +136,9 @@ export default function DailyBhaktiScreen() {
           {/* Setup strip (design.md §23): reminder first, then the verse widget —
               one ask at a time, renders nothing once both are settled. */}
           <DailyBhaktiNudge previewLines={verseLines} />
+          <Pressable testID="open-suvichar" accessibilityRole="button" onPress={() => navigation.navigate('HomeTab', suvicharTabTarget())} style={{ minHeight: 48, padding: spacing.md, borderWidth: 1, borderColor: colors.divider, marginBottom: spacing.md }}>
+            <Text style={[meaningToken(lang, typography), { color: colors.saffronDeep, textAlign: 'center' }]}>{pick(lang, { hi: 'सुविचार बनाएँ · अपना नाम जोड़ें', en: 'Create a card · Add your name', gu: 'સુવિચાર બનાવો · તમારું નામ ઉમેરો', kn: 'ಸುವಿಚಾರ ರಚಿಸಿ · ನಿಮ್ಮ ಹೆಸರು ಸೇರಿಸಿ' })}</Text>
+          </Pressable>
 
           {/* Compact controls leave the illustrated reading free of duplicated headings. */}
           <View style={styles.controls}>
