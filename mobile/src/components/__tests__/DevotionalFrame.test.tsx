@@ -73,6 +73,11 @@ it('does not invent commentary', () => {
   expect(splitDevotionalMeaning('One complete paragraph.')).toEqual({ meaning: 'One complete paragraph.', commentary: '' });
   expect(splitDevotionalMeaning('')).toEqual({ meaning: '', commentary: '' });
 });
+it('keeps a lone heading paragraph with the paragraph it heads', () => {
+  expect(splitDevotionalMeaning('महत्त्व:\n\nपूरा अर्थ।')).toEqual({ meaning: 'महत्त्व:\nपूरा अर्थ।', commentary: '' });
+  expect(splitDevotionalMeaning('Significance:\n\nThe meaning.\n\nMore.')).toEqual({ meaning: 'Significance:\nThe meaning.', commentary: 'More.' });
+  expect(splitDevotionalMeaning('He said: be steadfast.\n\nMore.')).toEqual({ meaning: 'He said: be steadfast.', commentary: 'More.' });
+});
 it('keeps the scenic footer after content', () => {
   let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalFooter art="durga" width={324} />); });
   const footer = tree!.root.findByProps({ testID: 'devotional-footer' }), image = footer.findAllByType(Image)[0];
@@ -97,14 +102,19 @@ it('grows the meaning box without distorting decorative caps or hiding scripture
   const before = caps(); act(() => frame.findAllByType(View).find(n => n.props.onLayout)!.props.onLayout({ nativeEvent: { layout: { height: 1200 } } }));
   expect(caps()).toEqual(before); expect(tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.numberOfLines).toBeUndefined(); act(() => tree!.unmount());
 });
-it('puts a long explanation on plain paper with no baked scenery to stretch', () => {
+it('boxes a long explanation like the meaning, caps intact and a mirror-tiled middle', () => {
   const meaning = 'The meaning.\n\n' + 'A long explanation that keeps going. '.repeat(60);
-  let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header="Test" verse="Om" meaning={meaning} lang="en" art="hanuman" verseStyle={{}} meaningStyle={{}} exportMode />); });
-  const panel = tree!.root.findByProps({ testID: 'devotional-commentary-panel' });
-  // Flat paper box (card bg), never a master image — so nothing stretches as it grows.
-  expect(panel.type).toBe(View);
-  expect(StyleSheet.flatten(panel.props.style).backgroundColor).toBe('#FAE7BE');
-  expect(panel.findAllByType(Image)).toHaveLength(0);
+  const width = 540, spec = devotionalFrameSpec('hanuman'), tile = (128 - 82) * 3 * width / 1080;
+  const minimum = (spec.meaningBottom - spec.meaningTop) * width / 1080, caps = minimum - tile / 3;
+  let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header="Test" verse="Om" meaning={meaning} lang="hi" art="hanuman" verseStyle={{}} meaningStyle={{}} width={width} exportMode />); });
+  const panel = tree!.root.findAllByProps({ testID: 'devotional-commentary-panel' }).find(n => n.props.onLayout)!;
+  act(() => panel.props.onLayout({ nativeEvent: { layout: { height: caps + tile * 3.5 } } }));
+  const tiles = panel.findAllByType(Image).filter(n => n.props.testID === 'devotional-commentary-panel-tile');
+  expect(tiles).toHaveLength(4);
+  // Alternate tiles flip so every seam joins identical rows.
+  expect(panel.findAllByType(View).filter(n => StyleSheet.flatten(n.props.style)?.transform)).toHaveLength(2);
+  expect(tree!.root.findByProps({ testID: 'devotional-commentary-label' }).props.children).toBe('महत्त्व');
+  expect(tree!.root.findAllByProps({ testID: 'devotional-commentary-divider-image' }).length).toBeGreaterThan(0);
   expect(tree!.root.findByProps({ testID: 'devotional-share-commentary' }).props.children).toContain('A long explanation');
   act(() => tree!.unmount());
 });

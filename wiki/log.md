@@ -1092,6 +1092,14 @@ Replaced the user-rejected eighteen rectangular headers with complete portrait m
 
 Updated reading-artwork, readers and share for nine full-resolution q94 WebP delivery encodings, retained lossless authoring references and the 9MiB delivery budget. All 28 masters total 8,953,360 bytes; the eighteen newer subjects and neutral prayer are unchanged. Source, CDN, native and export evidence is tracked in `docs/evaluations/daily-bhakti-compression/`.
 
+## [2026-10-22] ingest | Daily Bhakti explanation keeps the frame
+Updated share: the explanation box now mirror-tiles each master's trimmed verse band, so the side rules run to the footer; label-only first paragraphs (`महत्त्व:`) stay inside the अर्थ box.
+
+## [2026-10-22] ingest | Daily Bhakti explanation in its own महत्त्व box
+Updated share: the explanation now sits in a twin of the अर्थ box (same caps, mirror-tiled clean middle) behind a second lotus divider, replacing the side-rule strip.
+
+## [2026-10-21] ingest | share → rating ask: non-devotional prose share cards (katha/Theerth/story/listing/Ask) now report the new `prose-shared` §54 moment; subsystems/share.md gained a rating-ask bullet.
+
 ## [2026-10-22] ingest | List rows unified on one `ListCard` shell
 
 Ten hand-rolled list-row cards (four paddings, five thumb sizes, three shadow tiers) now render `components/ListCard.tsx` (design.md §8): `size` regular (18 padding, 52 thumb, title · second-language name · meta) or compact (14, 44, title · meta), active gradient on `elevation.lifted` or `disabled`; `CardThumb`/`CardTitles`/`CardMeta`/`CardRoutineTail` encode the text and trailing rules. Moved onto it: `LibraryCard` (unused `compact` variant removed), sadhana, vidhi, `TrackCard`, `GitaChapterCard` (eyebrow folded into meta), Theerth `BrowseCard`, `DeityCard` (circle avatar retired; localized count via `meta`, English `itemCount` kept for a11y). The `flat` variant was removed (its fill was lighter than the page). Vidhi rows gain ＋ only when `isRecurringVidhi` (`data/vidhi/recurrence.ts`, shared with the detail header). Gotcha: `ListCard` carries `marginBottom: 12`; wrappers inside `gap: 12` lists pass `marginBottom: 0`. A11y labels unchanged, so Maestro selectors are unaffected; no simulator run in this session.
