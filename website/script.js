@@ -178,3 +178,48 @@
     }
   });
 })();
+
+/* App banner. iOS Safari already gets Apple's Smart App Banner on pages that
+   carry the apple-itunes-app meta, so this covers the phones it cannot:
+   Android, in-app browsers (Instagram, WhatsApp, Facebook) and other iOS
+   browsers. The button goes through /get/, which picks the right store and
+   counts the tap under its source. A dismissal is remembered for 14 days. */
+(function () {
+  'use strict';
+  var ua = navigator.userAgent || '';
+  var isAndroid = /Android/i.test(ua);
+  var isIOS = /iPad|iPhone|iPod/.test(ua) ||
+              (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  if (!isAndroid && !isIOS) return;
+
+  var inApp = /FBAN|FBAV|FB_IAB|Instagram|WhatsApp|Line\/|Snapchat|Twitter|LinkedInApp|GSA\//.test(ua);
+  var iosSafari = isIOS && !inApp && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo/.test(ua);
+  if (iosSafari && document.querySelector('meta[name="apple-itunes-app"]')) return;
+
+  var key = 'vedansh-banner-closed', wait = 14 * 864e5;
+  try { if (Date.now() - Number(localStorage.getItem(key) || 0) < wait) return; } catch (e) { /* private mode */ }
+
+  var hi = document.documentElement.lang === 'hi';
+  var bar = document.createElement('aside');
+  bar.className = 'app-banner';
+  bar.setAttribute('aria-label', hi ? 'वेदांश ऐप' : 'Vedansh app');
+  bar.innerHTML =
+    '<img src="/images/icon-68.webp" alt="" width="42" height="42">' +
+    '<div class="app-banner-text"><strong></strong><span></span></div>' +
+    '<a class="btn btn-primary" href="/get/?utm_source=web-banner"></a>' +
+    '<button class="app-banner-close" type="button">&times;</button>';
+  bar.querySelector('strong').textContent = hi ? 'वेदांश' : 'Vedansh';
+  bar.querySelector('span').textContent = hi ? 'मुफ़्त · गीता, पंचांग, जप' : 'Free · Gita, Panchang, Japa';
+  bar.querySelector('a').textContent = hi ? 'ऐप पाएँ' : 'Get the app';
+  var close = bar.querySelector('button');
+  close.setAttribute('aria-label', hi ? 'बंद करें' : 'Close');
+  close.addEventListener('click', function () {
+    try { localStorage.setItem(key, String(Date.now())); } catch (e) { /* ignore */ }
+    bar.classList.remove('is-shown');
+    setTimeout(function () { bar.remove(); }, 400);
+  });
+  document.body.appendChild(bar);
+  // Keep the end of the page reachable above the bar.
+  document.body.style.paddingBottom = bar.offsetHeight + 'px';
+  requestAnimationFrame(function () { bar.classList.add('is-shown'); });
+})();

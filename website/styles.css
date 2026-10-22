@@ -663,3 +663,27 @@ body[lang="hi"] { line-height: 1.75; }
   .nav-links a { font-size: 0.9rem; letter-spacing: 0.01em; }
   .nav-links a[href="#get"] { display: none; }  /* the download buttons sit just below */
 }
+
+/* App banner (script.js): a slim bar for phone visitors the native iOS Smart
+   App Banner cannot reach — Android, in-app browsers, iOS Chrome. Above the
+   paper grain (z 60) and clear of the home indicator. */
+.app-banner {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 70;
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.6rem 0.75rem calc(0.6rem + env(safe-area-inset-bottom));
+  background: var(--parchment-soft); border-top: 1px solid var(--rule-strong);
+  box-shadow: 0 -10px 28px -18px rgba(47, 30, 16, 0.55);
+  font-family: var(--body); color: var(--ink);
+  transform: translateY(100%); transition: transform 320ms ease;
+}
+.app-banner.is-shown { transform: none; }
+.app-banner img { width: 2.6rem; height: 2.6rem; border-radius: 0.6rem; flex: none; box-shadow: var(--shadow-soft); }
+.app-banner-text { flex: 1; min-width: 0; line-height: 1.25; }
+.app-banner-text strong { display: block; font-family: var(--display); font-size: 1.1rem; font-weight: 600; }
+.app-banner-text span { display: block; font-size: 0.85rem; color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-banner .btn { padding: 0.55rem 1rem; font-size: 0.95rem; flex: none; }
+.app-banner-close {
+  flex: none; width: 2rem; height: 2rem; margin-left: -0.25rem;
+  border: 0; background: none; color: var(--ink-muted); font-size: 1.4rem; line-height: 1; cursor: pointer;
+}
+@media (prefers-reduced-motion: reduce) { .app-banner { transition: none; } }
