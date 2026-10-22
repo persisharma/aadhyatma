@@ -1,0 +1,104 @@
+{
+  "gita": [
+    {
+      "id": "bg-2-47",
+      "chapter": 2,
+      "number": 47,
+      "sanskrit": [
+        "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।",
+        "मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि।।2.47।।"
+      ],
+      "meaningHi": "कर्तव्य-कर्म करनेमें ही तेरा अधिकार है, फलोंमें कभी नहीं। अतः तू कर्मफलका हेतु भी मत बन और तेरी अकर्मण्यतामें भी आसक्ति न हो।",
+      "meaningEn": "Your right is only to work, but not to its results; do not let the results of action be your motive, nor let your attachment be to inaction.",
+      "transliteration": [
+        "karmaṇy-evādhikāras te mā phaleṣhu kadāchana",
+        "mā karma-phala-hetur bhūr mā te saṅgo ’stvakarmaṇi"
+      ]
+    },
+    {
+      "id": "bg-2-48",
+      "chapter": 2,
+      "number": 48,
+      "sanskrit": [
+        "योगस्थः कुरु कर्माणि सङ्गं त्यक्त्वा धनञ्जय।",
+        "सिद्ध्यसिद्ध्योः समो भूत्वा समत्वं योग उच्यते।।2.48।।"
+      ],
+      "meaningHi": "हे धनञ्जय ! तू आसक्तिका त्याग करके सिद्धि-असिद्धिमें सम होकर योगमें स्थित हुआ कर्मोंको कर; क्योंकि समत्व ही योग कहा जाता है।",
+      "meaningEn": "Perform action, O Arjuna, being steadfast in Yoga, abandoning attachment and balanced in success and failure; evenness of mind is called Yoga.",
+      "transliteration": [
+        "yoga-sthaḥ kuru karmāṇi saṅgaṁ tyaktvā dhanañjaya",
+        "siddhy-asiddhyoḥ samo bhūtvā samatvaṁ yoga uchyate"
+      ]
+    },
+    {
+      "id": "bg-2-50",
+      "chapter": 2,
+      "number": 50,
+      "sanskrit": [
+        "बुद्धियुक्तो जहातीह उभे सुकृतदुष्कृते।",
+        "तस्माद्योगाय युज्यस्व योगः कर्मसु कौशलम्।।2.50।।"
+      ],
+      "meaningHi": "बुद्धि-(समता) से युक्त मनुष्य यहाँ जीवित अवस्थामें ही पुण्य और पाप दोनोंका त्याग कर देता है। अतः तू योग-(समता-) में लग जा, क्योंकि योग ही कर्मोंमें कुशलता है।",
+      "meaningEn": "Endowed with wisdom and evenness of mind, one casts off in this life both good and evil deeds; therefore, devote yourself to Yoga; Yoga is skill in action.",
+      "transliteration": [
+        "buddhi-yukto jahātīha ubhe sukṛita-duṣhkṛquite",
+        "tasmād yogāya yujyasva yogaḥ karmasu kauśhalam"
+      ]
+    }
+  ],
+  "chalisa": {
+    "lines": [
+      "श्रीगुरु चरन सरोज रज, निज मन मुकुर सुधारि।",
+      "बरनउँ रघुबर बिमल जसु, जो दायक फल चारि॥"
+    ],
+    "meaningHi": "गुरुचरणों की कृपा से मन को निर्मल करके मैं श्रीराम के पवित्र यश का वर्णन करता हूँ, जो धर्म, अर्थ, काम और मोक्ष देने वाले हैं।",
+    "meaningEn": "Having polished the mirror of my heart with the dust of my Guru's lotus feet, I sing the pure fame of the best of the Raghus, which bestows the four fruits of life: righteousness, prosperity, pleasure and liberation."
+  },
+  "mantras": [
+    {
+      "id": "om-namah-shivaya",
+      "nameHi": "ॐ नमः शिवाय",
+      "nameEn": "Om Namah Shivaya",
+      "lines": [
+        "ॐ नमः शिवाय"
+      ],
+      "linesEn": [
+        "Om Namah Shivaya"
+      ]
+    },
+    {
+      "id": "hare-krishna-mahamantra",
+      "nameHi": "हरे कृष्ण महामंत्र",
+      "nameEn": "Hare Krishna Mahamantra",
+      "lines": [
+        "हरे कृष्ण हरे कृष्ण",
+        "कृष्ण कृष्ण हरे हरे",
+        "हरे राम हरे राम",
+        "राम राम हरे हरे"
+      ],
+      "linesEn": [
+        "Hare Krishna Hare Krishna",
+        "Krishna Krishna Hare Hare",
+        "Hare Rama Hare Rama",
+        "Rama Rama Hare Hare"
+      ]
+    },
+    {
+      "id": "gayatri-mantra",
+      "nameHi": "गायत्री मंत्र",
+      "nameEn": "Gayatri Mantra",
+      "lines": [
+        "ॐ भूर्भुवः स्वः",
+        "तत् सवितुर्वरेण्यं",
+        "भर्गो देवस्य धीमहि",
+        "धियो यो नः प्रचोदयात्"
+      ],
+      "linesEn": [
+        "Om bhur bhuvah svah",
+        "tat savitur varenyam",
+        "bhargo devasya dhimahi",
+        "dhiyo yo nah prachodayat"
+      ]
+    }
+  ]
+}

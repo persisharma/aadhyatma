@@ -1,0 +1,27 @@
+name: Purge website events older than 30 days
+
+# The privacy policy promises website events are kept for 30 days. Visits also
+# purge expired rows (functions/api/hits.js), but with no traffic nothing would
+# run — this daily job guarantees the deletion. Fails loudly if credentials are missing.
+on:
+  schedule:
+    - cron: '17 21 * * *'   # 02:47 IST daily
+  workflow_dispatch:
+
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
+  D1_NAME: vedansh-hits
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete expired events
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error::Cloudflare credentials missing — expired website events were NOT purged."; exit 1
+          fi
+          cutoff=$(( ($(date +%s) - 30*86400) * 1000 ))
+          npx --yes wrangler@4 d1 execute "$D1_NAME" --remote --yes --command \
+            "CREATE TABLE IF NOT EXISTS website_events (id TEXT PRIMARY KEY, ts INTEGER NOT NULL, payload TEXT NOT NULL); DELETE FROM website_events WHERE ts < $cutoff;"

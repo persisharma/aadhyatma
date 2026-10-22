@@ -18,7 +18,7 @@ const BUMP = 'INSERT INTO hits (k, n) VALUES (?1, 1) ON CONFLICT(k) DO UPDATE SE
 const READ = 'SELECT n FROM hits WHERE k = ?1';
 const SOURCE = /^[a-z0-9][a-z0-9_.-]{0,39}$/;
 
-export async function onRequest({ request, env }) {
+export async function onRequest({ request, env, waitUntil }) {
   if (request.method !== 'GET' && request.method !== 'POST') {
     return new Response(null, { status: 405, headers: { allow: 'GET, POST' } });
   }
@@ -50,6 +50,14 @@ export async function onRequest({ request, env }) {
   if (page && request.method === 'POST' && SOURCE.test(src)) keys.push(`${page === '/get/' ? 'src' : 'site'}:${src}`);
 
   const results = await env.DB.batch(keys.map((k) => env.DB.prepare(sql).bind(k)));
+
+  // Keep the privacy policy's 30-day promise for the separate website_events
+  // table (website/app /stats/): purge expired rows in the background on each
+  // counted visit. Best effort — a missing table or a failure never affects
+  // the count. A daily scheduled job guarantees it when there is no traffic.
+  if (request.method === 'POST' && waitUntil) {
+    waitUntil(env.DB.prepare('DELETE FROM website_events WHERE ts < ?1').bind(Date.now() - 30 * 86400000).run().catch(() => {}));
+  }
   const [total, count] = results.map((r) => (r.results[0] ? Number(r.results[0].n) : 0));
 
   return new Response(JSON.stringify({ total, page, count: page ? count : null }), { status: 200, headers: HEADERS });

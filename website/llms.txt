@@ -34,10 +34,15 @@ transliteration. The texts, the audio and the panchang engine ship inside the ap
   the sanskars (naming, vidyarambh, mundan, annaprashan), with each window explained.
 - **Sharing**: any verse, muhurat or Guna Milan result as a card to WhatsApp,
   Messages, or Instagram (4:5 post or 9:16 story).
-- **Sanskar**: the samskaras, written for children to read.
+- **Sanskar**: illustrated stories of Krishna, Hanuman, Ganesha and Maa Durga for children, an illustrated Ramayana (Bālakāṇḍa) comic in Hindi and English, and the samskaras written for children to read.
+- **Garud Puran** and **Gita Saar**: selected Garud Puran readings, and Gita teachings arranged by everyday themes.
 - **Also**: good-habit tracking, home-screen widgets for the panchang, a verse or
   the japam count, search across the whole library, Daan kathas, and Pitru Paksha
   with its shraddha days, smaran and kathas.
+
+## On the website
+
+vedansh.app shows today's sunrise, sunset, day choghadiya and Rahu Kaal for a chosen Indian city, three Bhagavad Gita verses, the opening of the Hanuman Chalisa, an 11-count japa mala and a verse share card. The full texts and tools are in the app.
 
 ## Privacy
 

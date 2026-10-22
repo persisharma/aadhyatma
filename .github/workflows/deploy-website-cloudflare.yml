@@ -87,6 +87,8 @@ jobs:
         working-directory: website
         run: |
           sql="CREATE TABLE IF NOT EXISTS hits (k TEXT PRIMARY KEY, n INTEGER NOT NULL);"
+          # Additive: the 30-day website events behind /stats/ (website/app). Never touches hits.
+          sql="$sql CREATE TABLE IF NOT EXISTS website_events (id TEXT PRIMARY KEY, ts INTEGER NOT NULL, payload TEXT NOT NULL); CREATE INDEX IF NOT EXISTS website_events_ts ON website_events(ts);"
           for k in total 'page:/' 'page:/privacy/' 'page:/terms/' 'page:/support/' 'page:/get/' 'page:/hi/' 'page:/hi/privacy/' 'page:/hi/terms/' 'page:/hi/support/'; do
             # Judge by exit status: a missing key prints an error to stdout.
             if v=$(npx --yes wrangler@4 kv key get "$k" --namespace-id "$KV_ID" --remote 2>/dev/null) && [ "$v" -ge 0 ] 2>/dev/null; then

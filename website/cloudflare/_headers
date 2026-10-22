@@ -24,5 +24,9 @@
   Cache-Control: public, max-age=3600
   Access-Control-Allow-Origin: *
 
+/assets/*
+  # React app files; JS/CSS names are content-hashed, images keep their names.
+  Cache-Control: public, max-age=604800
+
 /api/*
   Cache-Control: no-store
