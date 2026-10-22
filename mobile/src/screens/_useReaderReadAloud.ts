@@ -45,7 +45,8 @@ export type ReadAloudControl = {
   stop: () => void;
 };
 
-export function useReaderReadAloud<T>(args: {
+/** The paging state every reader already has — shared by read-aloud and auto-slide. */
+export type ReaderPagerArgs<T> = {
   sourceId: string;
   /** FlatList data, sentinels included. */
   data: readonly T[];
@@ -56,7 +57,9 @@ export function useReaderReadAloud<T>(args: {
   /** Current page in verse-space. */
   currentIndex: number;
   listRef: React.RefObject<FlatList<T> | null>;
-}): ReadAloudControl {
+};
+
+export function useReaderReadAloud<T>(args: ReaderPagerArgs<T>): ReadAloudControl {
   const { sourceId, data, offset, verseCount, currentIndex, listRef } = args;
   const { lang } = useGitaLanguage();
   const { prefs } = useReadAloudPrefs();

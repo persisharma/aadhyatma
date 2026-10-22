@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FlatList, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -7,6 +7,8 @@ import ReadingProgressBar from '@/components/ReadingProgressBar';
 import LanguageToggle from '@/components/LanguageToggle';
 import KidsStoryArt from '@/components/KidsStoryArt';
 import ShareButton from '@/components/ShareButton';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useAutoSlide } from './_useAutoSlide';
 import { useShare } from '@/utils/shareVerse';
 import { kidsStoryShareable } from '@/utils/shareContent';
 import { getKidsStory, storyPageIndex, storyText, type StoryPage } from '@/data/kidsStories';
@@ -30,6 +32,27 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
   useEffect(() => {
     if (story) pager.current?.scrollToIndex({ index: storyPageIndex(story, route.params.pageId), animated: false });
   }, [story, route.params.pageId]);
+  // Paced on the caption the page shows; the last page adds the takeaway and source.
+  const pageChars = useCallback((pageIndex: number) => {
+    const page = story?.pages[pageIndex];
+    if (!story || !page) return 0;
+    const parts = [page.title, page.text, page.dialogue?.speaker, page.dialogue?.text];
+    if (pageIndex === story.pages.length - 1) parts.push(story.takeaway, story.sourceNote);
+    return parts.reduce((n, part) => n + (part ? storyText(part, lang).length : 0), 0);
+  }, [story, lang]);
+  // Programmatic scrolls never fire onMomentumScrollEnd on iOS, so set the index too.
+  const goToPage = useCallback((pageIndex: number) => {
+    pager.current?.scrollToIndex({ index: pageIndex, animated: true });
+    setIndex(pageIndex);
+  }, []);
+  const autoSlide = useAutoSlide({
+    sourceId: `kids-story:${route.params.storyId}`,
+    pageCount: story?.pages.length ?? 0,
+    currentIndex: index,
+    pageChars,
+    goToPage,
+    continuesPastEnd: false,
+  });
   const library = pick(lang, { hi: 'कथा संग्रह', en: 'Story library', gu: 'વાર્તા સંગ્રહ', kn: 'ಕಥಾ ಸಂಗ್ರಹ' });
   if (!story) return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
@@ -47,6 +70,10 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
       } />
       <ReadingProgressBar current={index + 1} total={story.pages.length} />
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingTop: 6, paddingBottom: 12 }}>
+        {/* Inline, not floating, so it never covers the caption. */}
+        <View pointerEvents="box-none" style={{ position: 'absolute', left: spacing.readingGutter }}>
+          <AutoSlideButton control={autoSlide} floating={false} />
+        </View>
         <View style={{ position: 'absolute', right: spacing.readingGutter }}>
           <ShareButton busy={busy} accessibilityLabel={pick(lang, { hi: 'चित्र-कथा साझा करें', en: 'Share picture story', gu: 'ચિત્રવાર્તા શેર કરો', kn: 'ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ' })}
             accessibilityHint={pick(lang, { hi: 'चित्र और कथा के कार्ड चुनें', en: 'Choose illustrated story cards', gu: 'ચિત્ર અને વાર્તાનાં કાર્ડ પસંદ કરો', kn: 'ಚಿತ್ರ ಮತ್ತು ಕಥೆಯ ಕಾರ್ಡ್‌ಗಳನ್ನು ಆರಿಸಿ' })}

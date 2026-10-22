@@ -1092,3 +1092,7 @@ Replaced the user-rejected eighteen rectangular headers with complete portrait m
 ## [2026-10-22] ingest | Daily Bhakti smaller R2 delivery
 
 Updated reading-artwork, readers and share for nine full-resolution q94 WebP delivery encodings, retained lossless authoring references and the 9MiB delivery budget. All 28 masters total 8,953,360 bytes; the eighteen newer subjects and neutral prayer are unchanged. Source, CDN, native and export evidence is tracked in `docs/evaluations/daily-bhakti-compression/`.
+
+## [2026-10-22] ingest | Auto-slide (स्वतः) on every paged surface
+
+Updated readers for the new hands-free page turning: `useReaderPlayback` replaces direct `useReaderReadAloud` calls in 25 readers incl. Vidhi conduct; Kids Stories and the comic use `useAutoSlide`. Text-length pacing, persisted pace, chapter hand-off, keep-awake. design.md §85 and RULEBOOK §3 added. Typecheck/lint only — no unit, e2e or device verification yet.

@@ -23,7 +23,8 @@ import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from '@/screens/_useAutoSlide';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
 import { vratKathaShareable } from '@/utils/shareContent';
@@ -49,7 +50,7 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
   // Prose reader: each section's `bodyHi`/`bodyEn` paragraphs are the spoken text
   // (the adapter's prose branch), one page per section, no offset. Namespaced so a
   // katha id can never collide with a verse text's sourceId in the controller.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: `katha-${route.params.kathaId}`,
     data: sections,
     offset: 0,
@@ -116,6 +117,10 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
           <>
             <ReadingProgressBar current={currentIndex + 1} total={total} />
             <View style={styles.toggleRow}>
+              {/* Inline, not floating: the prose fills the pager to its bottom edge. */}
+              <View style={styles.autoSlideSlot}>
+                <AutoSlideButton control={autoSlide} floating={false} />
+              </View>
               <LanguageToggle />
               {/* Pinned right so the toggle stays centred (design.md §56.2). */}
               <View style={styles.readAloudSlot}>
@@ -173,6 +178,7 @@ const styles = StyleSheet.create({
   counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
   toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
+  autoSlideSlot: { position: 'absolute', left: 16, top: 6, bottom: 6, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   empty: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },

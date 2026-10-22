@@ -33,7 +33,8 @@ import ReaderHeader from '@/components/ReaderHeader';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from './_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from './_useAutoSlide';
 import type { RootStackParamList } from '@/navigation/types';
 
 type NextTransitionItem = {
@@ -112,7 +113,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
 
   // Called before the null-chapter early return below, so hook order stays stable;
   // with no chapter it simply has zero pages to speak.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: 'bhagavad-gita',
     data,
     offset,
@@ -353,6 +354,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
 
           {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>

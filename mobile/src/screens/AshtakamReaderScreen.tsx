@@ -34,7 +34,8 @@ import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 import { getTrackForText } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from '@/screens/_useAutoSlide';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AshtakamReader'>;
@@ -62,7 +63,7 @@ export default function AshtakamReaderScreen({ navigation, route }: Props) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   // Flat reader: list index === verse index, so no offset.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: ashtakamId,
     data: verses,
     offset: 0,
@@ -265,6 +266,7 @@ export default function AshtakamReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
 
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
