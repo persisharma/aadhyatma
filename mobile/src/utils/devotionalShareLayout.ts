@@ -30,12 +30,20 @@ export function devotionalTextHeight(text: string, lang: Lang, size: number, lea
   const perLine = charsPerLine(width, size, advances[lang]);
   return text.trim().split('\n').reduce((sum, line) => sum + wrappedLines(line, perLine) * leading, 0);
 }
+/** A lone label paragraph ("महत्त्व:", "Significance:") heads the paragraph after it. */
+const HEADING = /^[^\n]{1,32}[:：]$/;
 /** Preserve every stored paragraph; only its presentation changes. */
 export function splitDevotionalMeaning(text: string): { meaning: string; commentary: string } {
   const trimmed = text.trim();
   const separator = /\n\s*\n/.exec(trimmed);
   if (!separator) return { meaning: trimmed, commentary: '' };
-  return { meaning: trimmed.slice(0, separator.index), commentary: trimmed.slice(separator.index + separator[0].length) };
+  const head = trimmed.slice(0, separator.index);
+  if (HEADING.test(head)) {
+    // Otherwise the अर्थ box would hold only the label and push its paragraph outside.
+    const rest = splitDevotionalMeaning(trimmed.slice(separator.index + separator[0].length));
+    return { meaning: `${head}\n${rest.meaning}`, commentary: rest.commentary };
+  }
+  return { meaning: head, commentary: trimmed.slice(separator.index + separator[0].length) };
 }
 export function devotionalBodyHeight(header: string, verse: string, meaning: string, lang: Lang): number {
   const m = devotionalMetrics, latin = lang === 'en';
