@@ -90,8 +90,8 @@ tap-to-read preview so enrolling in an upcoming sankalp does not land on an empt
 The catalog (`SadhanaProgramListScreen`) + detail follow the app card language (design.md §46):
 `RoutineShell` gained an optional `background` prop → the catalog sits on `getRandomDeityBackground()`
 (By-Deity convention) and the detail on `getDeityBackground(program.deity)`; cards are warm
-`LibraryCard`-style (gradient thumb from `program.thumb`, both languages via `orderTitlesByLanguage`,
-status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Practice ledger. It is a
+the shared regular `ListCard` (painted deity thumb, both languages via `orderTitlesByLanguage`,
+subtitle meta, status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Practice ledger. It is a
 **tap-to-expand accordion**: the header (eyebrow + title + progress bar + resting prose) is always
 shown with a rotating dropdown caret, and the unit rows **collapse by default, dropping down only when
 the header is tapped** — styled identically to the §31 daily-routine ledger rows (28 px offering ring,

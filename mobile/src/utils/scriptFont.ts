@@ -31,6 +31,19 @@ export function captionFont(text: string): { fontFamily: string; fontStyle: 'nor
 }
 
 /**
+ * Font family + tracking for a card meta line ("४ श्लोक · अर्थ सहित", "12 temples"),
+ * chosen by the script of the text: the upright Noto Serif face with NO tracking
+ * for Indic text (tracking splits the shirorekha, and Inter has no Indic glyphs —
+ * design.md §46), Inter with the `cardMeta` tracking for Latin.
+ */
+export function metaFont(text: string): { fontFamily: string; letterSpacing: number } {
+  if (GUJARATI.test(text)) return { fontFamily: fontFamilies.gujarati, letterSpacing: 0 };
+  if (KANNADA.test(text)) return { fontFamily: fontFamilies.kannada, letterSpacing: 0 };
+  if (DEVANAGARI.test(text)) return { fontFamily: fontFamilies.devanagari, letterSpacing: 0 };
+  return { fontFamily: fontFamilies.inter, letterSpacing: 0.4 };
+}
+
+/**
  * Semibold/title face for a heading whose text is built dynamically (e.g. a
  * caption prop): the Noto Serif SemiBold for Gujarati/Kannada text, else the
  * given `fallback`. Use where a fixed Devanagari title token can't tell whether
