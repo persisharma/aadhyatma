@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
-last_verified_date: 2026-10-21
+last_verified_date: 2026-10-22
 confidence: high
 status: current
 ---
@@ -118,7 +118,7 @@ The new paintings cover all 330 previously neutral additions, with distinct Gaya
 Khatu Shyam and Devi forms. After the user rejected rectangular banner reuse, the subjects
 were repainted as complete cards with a continuous parchment fade, brand plaque, border
 and footer. All slices now use each subject’s own master. The complete 28-source set is
-21.52MiB under the unchanged 22MiB source contract. All paintings are served from R2 and
+8.54MiB under the 9MiB delivery contract after full-resolution perceptual compression of the nine older portraits. Lossless authoring masters remain pinned in Git; the eighteen newer subjects and neutral prayer are unchanged. All paintings are served from R2 and
 excluded from the bundled asset graph. Paper/text stay usable during first fetch or failure;
 a cached master works offline and sharing waits for successful native decode.
 All scripture and meanings remain native, unrestricted text. The Bhakti tab uses a literal `getComponent` loader, keeping its expanded screen off Home’s
