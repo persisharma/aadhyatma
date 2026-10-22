@@ -109,6 +109,8 @@ appId: com.prashantsharma.vedansh
     visible: "Thank you for rating"
     timeout: 10000
 - assertVisible: "Rate Vedansh on the store"
+# Present because FEEDBACK_EMAIL is set; not tapped — it leaves for the mail app.
+- assertVisible: "Write to Vedansh"
 - tapOn: "Close"
 - waitForAnimationToEnd
 - assertNotVisible: "Thank you for rating"

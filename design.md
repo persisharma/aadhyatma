@@ -2739,7 +2739,7 @@ pageSheet modals: this is a short interruption, not a screen to work in. Max wid
    working and we'll fix it.") and a `saffron` primary, `हमें लिखें` / `Write to us` / `અમને લખો` /
    `ನಮಗೆ ಬರೆಯಿರಿ`, a11y `"Write to Vedansh"`, which opens a pre-filled email (`feedbackMailto`:
    stars, app version, platform). The user sends it from their own mail app, so the app still
-   collects nothing. `FEEDBACK_EMAIL` ships `null` until a support inbox is chosen, which hides both.
+   collects nothing. `FEEDBACK_EMAIL` is the Vedansh support inbox (Oct 2026); setting it to `null` hides both.
 4. **Store link** — 14 `ink-soft`, underlined, 44 min-height: `स्टोर पर रेटिंग दें` / `Rate on the
    store` / `સ્ટોર પર રેટિંગ આપો` / `ಸ್ಟೋರ್‌ನಲ್ಲಿ ರೇಟಿಂಗ್ ನೀಡಿ`, a11y `"Rate Vedansh on the store"`.
    Deliberately present: hiding the store from unhappy users is **review gating**, which Play's

@@ -271,9 +271,9 @@ describe('in-app stars', () => {
     expect(LOW_RATING_COOLDOWN_DAYS).toBe(90);
   });
 
-  it('ships with no feedback address until one is set', () => {
+  it('ships with the Vedansh support inbox', () => {
     expect(feedbackEmail()).toBe(FEEDBACK_EMAIL);
-    expect(FEEDBACK_EMAIL).toBeNull();
+    expect(FEEDBACK_EMAIL).toBe('vedansh.app.support@gmail.com');
   });
 
   it('pre-fills the feedback email with the stars, version and platform', () => {

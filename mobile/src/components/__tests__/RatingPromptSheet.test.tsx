@@ -381,10 +381,24 @@ describe('stars and buttons', () => {
   });
 
   test('without a feedback inbox, the thank-you step has no email button', async () => {
+    const inbox = jest.spyOn(ratingPrompt, 'feedbackEmail').mockReturnValue(null);
+    try {
+      const tree = await renderAndSettle();
+      await tapStars(tree, 2);
+      expect(pressablesByLabel(tree, 'Write to Vedansh')).toHaveLength(0);
+      expect(pressablesByLabel(tree, 'Close')).toHaveLength(1);
+    } finally {
+      inbox.mockRestore();
+    }
+  });
+
+  test('ships with "Write to us" on the thank-you step, addressed to the support inbox', async () => {
     const tree = await renderAndSettle();
-    await tapStars(tree, 2);
-    expect(pressablesByLabel(tree, 'Write to Vedansh')).toHaveLength(0);
-    expect(pressablesByLabel(tree, 'Close')).toHaveLength(1);
+    await tapStars(tree, 1);
+    await act(async () => {
+      pressableByLabel(tree, 'Write to Vedansh').props.onPress();
+    });
+    expect(openURL.mock.calls[0][0]).toMatch(/^mailto:vedansh\.app\.support@gmail\.com\?/);
   });
 
   test('with a feedback inbox, "Write to us" opens a pre-filled email and closes', async () => {

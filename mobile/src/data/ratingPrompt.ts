@@ -129,7 +129,7 @@ export const LOW_RATING_COOLDOWN_DAYS = 90;
  * hides that button, leaving the store link and Close. Use a support inbox, not
  * a personal address: it ships inside the app.
  */
-export const FEEDBACK_EMAIL: string | null = null;
+export const FEEDBACK_EMAIL: string | null = 'vedansh.app.support@gmail.com';
 
 /** Read through a function so tests can stand in an address. */
 export function feedbackEmail(): string | null {
