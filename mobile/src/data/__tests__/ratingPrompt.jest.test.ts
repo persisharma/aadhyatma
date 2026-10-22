@@ -236,12 +236,13 @@ describe('parseRatingPromptState', () => {
         askCount: 3,
         lastAskedAt: NOW,
         outcome: 'pending',
-        asksByTrigger: { 'routine-complete': 1, 'verse-shared': 1, 'mala-complete': 1 },
+        asksByTrigger: { 'routine-complete': 1, 'verse-shared': 1, 'prose-shared': 1, 'mala-complete': 1 },
       })
     );
     expect(parsed.asksByTrigger).toEqual({
       'routine-complete': 1,
       'verse-shared': 1,
+      'prose-shared': 1,
       'mala-complete': 1,
     });
   });
