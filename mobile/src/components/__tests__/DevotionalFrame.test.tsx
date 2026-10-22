@@ -102,18 +102,19 @@ it('grows the meaning box without distorting decorative caps or hiding scripture
   const before = caps(); act(() => frame.findAllByType(View).find(n => n.props.onLayout)!.props.onLayout({ nativeEvent: { layout: { height: 1200 } } }));
   expect(caps()).toEqual(before); expect(tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.numberOfLines).toBeUndefined(); act(() => tree!.unmount());
 });
-it('frames a long explanation with mirror-tiled side rules, never stretched scenery', () => {
+it('boxes a long explanation like the meaning, caps intact and a mirror-tiled middle', () => {
   const meaning = 'The meaning.\n\n' + 'A long explanation that keeps going. '.repeat(60);
-  const width = 540, spec = devotionalFrameSpec('hanuman'), band = (spec.verseEnd - spec.sourceEnd - 32) * width / 1080;
-  let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header="Test" verse="Om" meaning={meaning} lang="en" art="hanuman" verseStyle={{}} meaningStyle={{}} width={width} exportMode />); });
+  const width = 540, spec = devotionalFrameSpec('hanuman'), tile = (128 - 82) * 3 * width / 1080;
+  const minimum = (spec.meaningBottom - spec.meaningTop) * width / 1080, caps = minimum - tile / 3;
+  let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header="Test" verse="Om" meaning={meaning} lang="hi" art="hanuman" verseStyle={{}} meaningStyle={{}} width={width} exportMode />); });
   const panel = tree!.root.findAllByProps({ testID: 'devotional-commentary-panel' }).find(n => n.props.onLayout)!;
-  act(() => panel.props.onLayout({ nativeEvent: { layout: { height: band * 3.5 } } }));
+  act(() => panel.props.onLayout({ nativeEvent: { layout: { height: caps + tile * 3.5 } } }));
   const tiles = panel.findAllByType(Image).filter(n => n.props.testID === 'devotional-commentary-panel-tile');
   expect(tiles).toHaveLength(4);
-  // Each tile clips the verse band at the master's own scale; alternate tiles flip.
-  for (const tile of tiles) expect(StyleSheet.flatten(tile.props.style).height).toBe(1456 * width / 1080);
-  const flips = panel.findAllByType(View).filter(n => StyleSheet.flatten(n.props.style)?.transform);
-  expect(flips).toHaveLength(2);
+  // Alternate tiles flip so every seam joins identical rows.
+  expect(panel.findAllByType(View).filter(n => StyleSheet.flatten(n.props.style)?.transform)).toHaveLength(2);
+  expect(tree!.root.findByProps({ testID: 'devotional-commentary-label' }).props.children).toBe('महत्त्व');
+  expect(tree!.root.findAllByProps({ testID: 'devotional-commentary-divider-image' }).length).toBeGreaterThan(0);
   expect(tree!.root.findByProps({ testID: 'devotional-share-commentary' }).props.children).toContain('A long explanation');
   act(() => tree!.unmount());
 });

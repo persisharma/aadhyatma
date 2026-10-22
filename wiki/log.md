@@ -1095,3 +1095,6 @@ Updated reading-artwork, readers and share for nine full-resolution q94 WebP del
 
 ## [2026-10-22] ingest | Daily Bhakti explanation keeps the frame
 Updated share: the explanation box now mirror-tiles each master's trimmed verse band, so the side rules run to the footer; label-only first paragraphs (`महत्त्व:`) stay inside the अर्थ box.
+
+## [2026-10-22] ingest | Daily Bhakti explanation in its own महत्त्व box
+Updated share: the explanation now sits in a twin of the अर्थ box (same caps, mirror-tiled clean middle) behind a second lotus divider, replacing the side-rule strip.
