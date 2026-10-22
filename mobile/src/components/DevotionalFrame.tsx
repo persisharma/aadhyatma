@@ -84,25 +84,50 @@ export function DevotionalHero({ art, width, onLoad, onError }: {
     </View>
   </View>;
 }
-/** Both decorated caps stay intact while the middle paper/vertical rules grow. */
-function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, children, overlay, testID, contentStyle, onLoad, onError }: {
-  art: DevotionalArt; width: number; top: number; bottom: number; topCap?: number; bottomCap?: number;
+/** Mirror-tile a clean band of paper and rules into `height`, each tile `stretch`× the band, so a
+ * tall box grows without smearing grain into streaks and each seam joins identical rows. */
+function Tiles({ art, width, top, bottom, height, stretch, testID, onLoad, onError }: {
+  art: DevotionalArt; width: number; top: number; bottom: number; height: number; stretch: number;
+  testID?: string; onLoad?: () => void; onError?: () => void;
+}) {
+  const tile = (bottom - top) * width / canvas.width * stretch;
+  const count = height > 0 ? Math.ceil(height / tile) : 0;
+  const painted = React.useRef(new Set<number>());
+  const report = () => { if (count && Array.from({ length: count }, (_, i) => i).every(i => painted.current.has(i))) onLoad?.(); };
+  React.useEffect(report, [count]); // eslint-disable-line react-hooks/exhaustive-deps
+  return <View style={{ height, overflow: 'hidden' }}>
+    {Array.from({ length: count }, (_, i) => <View key={i} style={i % 2 ? { transform: [{ scaleY: -1 }] } : undefined}>
+      <DevotionalSlice art={art} width={width} top={top} bottom={bottom} height={tile} testID={testID}
+        onLoad={() => { painted.current.add(i); report(); }} onError={onError} />
+    </View>)}
+  </View>;
+}
+/** Both decorated caps stay intact while the middle paper/vertical rules grow: stretched, or
+ * mirror-tiled at `tile`× when the middle is a clean band and the box may grow very tall. */
+function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, tile, children, overlay, testID, contentStyle, onLoad, onError }: {
+  art: DevotionalArt; width: number; top: number; bottom: number; topCap?: number; bottomCap?: number; tile?: number;
   children?: React.ReactNode; overlay?: React.ReactNode; testID: string; contentStyle?: ViewStyle; onLoad?: () => void; onError?: () => void;
 }) {
   const scale = width / canvas.width, minimum = (bottom - top) * scale;
   const [height, setHeight] = React.useState(minimum);
   const painted = React.useRef(new Set<string>());
   const paintedPart = (part: string) => { painted.current.add(part); if (painted.current.size === 1 + Number(topCap > 0) + Number(bottomCap > 0)) onLoad?.(); };
+  const middle = Math.max(0, height - (topCap + bottomCap) * scale);
   return <View testID={testID} onLayout={e => setHeight(e.nativeEvent.layout.height)} style={{ minHeight: minimum }}>
     <View pointerEvents="none" accessible={false} style={StyleSheet.absoluteFill}>
       {topCap ? <DevotionalSlice art={art} width={width} top={top} bottom={top + topCap} onLoad={() => paintedPart('top')} onError={onError} /> : null}
-      <DevotionalSlice art={art} width={width} top={top + topCap} bottom={bottom - bottomCap}
-        height={Math.max(0, height - (topCap + bottomCap) * scale)} testID={`${testID}-image`} onLoad={() => paintedPart('middle')} onError={onError} />
+      {tile ? <Tiles art={art} width={width} top={top + topCap} bottom={bottom - bottomCap} height={middle} stretch={tile}
+        testID={`${testID}-tile`} onLoad={() => paintedPart('middle')} onError={onError} />
+        : <DevotionalSlice art={art} width={width} top={top + topCap} bottom={bottom - bottomCap}
+          height={middle} testID={`${testID}-image`} onLoad={() => paintedPart('middle')} onError={onError} />}
       {bottomCap ? <DevotionalSlice art={art} width={width} top={bottom - bottomCap} bottom={bottom} onLoad={() => paintedPart('bottom')} onError={onError} /> : null}
     </View>
     <View style={contentStyle}>{children}</View>{overlay}
   </View>;
 }
+/** Rows below the meaning box's 68px top cap that hold only paper and rules on every master
+ * (a few above are the label dashes; below, some masters' corner curls begin, e.g. Durga +63). */
+const BOX_TILE = [82, 128] as const;
 export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, art, verseStyle, meaningStyle, width = 540, exportMode = false, onLoad, onError }: {
   /** `verseRows` (one charan each) replace `verse` when every row fits on one line. */
   header: string; verse: string; verseRows?: readonly string[]; meaning: string; lang: Lang; art: DevotionalArt;
@@ -112,11 +137,8 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
   const spec = devotionalFrameSpec(art), scale = width / canvas.width;
   const parts = splitDevotionalMeaning(meaning), face = devotionalFace(lang);
   const decoded = React.useRef(new Set<string>());
-  const mark = (id: string) => { decoded.current.add(id); if (decoded.current.size === 6) onLoad?.(); };
-  // Commentary sits on plain paper (its own flow box, no baked scenery), so there is
-  // no image to await — clear its paint barrier on mount.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(() => { mark('comment'); }, []);
+  // Source, verse, divider, meaning and closing divider; the explanation adds its divider and box.
+  const mark = (id: string) => { decoded.current.add(id); if (decoded.current.size === (parts.commentary ? 7 : 5)) onLoad?.(); };
   // On a phone, charan rows only when native layout shows each on one line: a row that
   // wraps would break mid-charan again, so the caller's `verse` (today's flow) is shown
   // instead. Undecided rows stay invisible for that one layout pass. The 540dp export
@@ -142,6 +164,10 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
   const reading = { fontFamily: face, textAlign: 'center' as const, includeFontPadding: false };
   const bodyFace = lang === 'hi' ? shortMeaning ? fontFamilies.devanagari : type.bodyFace : face;
   const fit = (style: StyleProp<TextStyle>) => withMarkHeadroom(style, exportMode ? 1 : PixelRatio.getFontScale());
+  // A box label sits in the gap its master leaves between the top-cap dashes.
+  const boxLabel = (testID: string, label: string) => <Text testID={testID} allowFontScaling={!exportMode} adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1}
+    style={fit([reading, { position: 'absolute', top: (art === 'vishnu' ? 31 : 30) * scale, left: 490 * scale, width: 100 * scale, fontSize: (lang === 'en' ? 21 : art === 'vishnu' ? 30 : 42) * scale, lineHeight: 44 * scale, color: '#7C210D' }])}>{label}</Text>;
+  const boxContent = { paddingTop: spec.meaningPad * scale, paddingBottom: 22 * scale, paddingHorizontal: 86 * scale };
   return <View>
     <Panel art={art} width={width} top={spec.hero} bottom={spec.sourceEnd} bottomCap={28} testID="devotional-source-panel"
       contentStyle={{ paddingTop: spec.sourceTop * scale, paddingHorizontal: 120 * scale, paddingBottom: 22 * scale }} onLoad={() => mark('source')} onError={onError}>
@@ -158,23 +184,24 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
     </Panel>
     <DevotionalSlice art={art} width={width} top={spec.verseEnd} bottom={spec.meaningTop} testID="devotional-divider-image" onLoad={() => mark('divider')} onError={onError} />
     <Panel art={art} width={width} top={spec.meaningTop} bottom={spec.meaningBottom} topCap={68} bottomCap={48} testID="devotional-meaning-frame"
-      overlay={<Text testID="devotional-meaning-label" allowFontScaling={!exportMode} adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1}
-        style={fit([reading, { position: 'absolute', top: (art === 'vishnu' ? 31 : 30) * scale, left: 490 * scale, width: 100 * scale, fontSize: (lang === 'en' ? 21 : art === 'vishnu' ? 30 : 42) * scale, lineHeight: 44 * scale, color: '#7C210D' }])}>{pick(lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' })}</Text>}
-      onLoad={() => mark('meaning')} onError={onError} contentStyle={{ paddingTop: spec.meaningPad * scale, paddingBottom: 22 * scale, paddingHorizontal: 86 * scale }}>
+      overlay={boxLabel('devotional-meaning-label', pick(lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' }))}
+      onLoad={() => mark('meaning')} onError={onError} contentStyle={boxContent}>
       <Text testID="devotional-share-meaning" allowFontScaling={!exportMode}
         style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning ? 28 : lang === 'en' ? 23 : type.meaningSize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : shortMeaning ? 34 : type.meaningLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.meaning}</Text>
     </Panel>
-    <DevotionalSlice art={art} width={width} top={spec.meaningBottom} bottom={spec.commentTop} testID="devotional-comment-divider-image" onLoad={() => mark('commentDivider')} onError={onError} />
-    {/* Explanation on plain paper, its own flow box — no baked scenery to stretch,
-        and it collapses to nothing when absent so the footer scenery rises to meet
-        the reading instead of a large empty band (design.md §23). */}
-    {parts.commentary ? (
-      <View testID="devotional-commentary-panel"
-        style={{ paddingHorizontal: 124 * scale, paddingTop: 11 * scale, paddingBottom: 18 * scale, backgroundColor: devotionalFrameColors.paper }}>
+    {/* The explanation gets a twin of the meaning box behind the same lotus divider: its caps stay
+        intact and its clean middle mirror-tiles, so any length keeps undistorted corners. Absent,
+        nothing renders and the footer scenery rises to meet the reading instead of an empty band. */}
+    {parts.commentary ? <>
+      <DevotionalSlice art={art} width={width} top={spec.verseEnd} bottom={spec.meaningTop} testID="devotional-commentary-divider-image" onLoad={() => mark('commentLead')} onError={onError} />
+      <Panel art={art} width={width} top={spec.meaningTop} bottom={spec.meaningBottom} topCap={BOX_TILE[0]} bottomCap={spec.meaningBottom - spec.meaningTop - BOX_TILE[1]} tile={3}
+        testID="devotional-commentary-panel" overlay={boxLabel('devotional-commentary-label', pick(lang, { hi: 'महत्त्व', en: 'Significance', gu: 'મહત્ત્વ', kn: 'ಮಹತ್ತ್ವ' }))}
+        onLoad={() => mark('comment')} onError={onError} contentStyle={boxContent}>
         <Text testID="devotional-share-commentary" allowFontScaling={!exportMode}
           style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning || lang === 'en' ? 23 : type.commentarySize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : type.commentaryLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.commentary}</Text>
-      </View>
-    ) : null}
+      </Panel>
+    </> : null}
+    <DevotionalSlice art={art} width={width} top={spec.meaningBottom} bottom={spec.commentTop} testID="devotional-comment-divider-image" onLoad={() => mark('commentDivider')} onError={onError} />
   </View>;
 }
 export function DevotionalFooter({ art, width, onLoad, onError }: { art: DevotionalArt; width: number; onLoad?: () => void; onError?: () => void }) {
