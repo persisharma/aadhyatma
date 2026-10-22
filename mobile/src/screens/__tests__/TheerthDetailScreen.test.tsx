@@ -288,8 +288,11 @@ function renderTree(templeId: string, lang: 'hi' | 'en') {
 }
 
 function cardByLabel(tree: TestRenderer.ReactTestRenderer, prefix: string) {
+  // Outermost matches only: a card is a ListCard wrapping a Pressable, and both
+  // carry the same label and onPress.
   const cards = tree.root.findAll(
     (n) => typeof n.props.accessibilityLabel === 'string' && n.props.accessibilityLabel.startsWith(prefix) && typeof n.props.onPress === 'function',
+    { deep: false },
   );
   assert.equal(cards.length, 1, `exactly one card labelled "${prefix}…"`);
   return cards[0];
