@@ -4,7 +4,7 @@ import { devotionalFrameSpec } from '@/data/devotionalFrameSpec';
 import { charsPerLine } from './shareCardType';
 
 export type DevotionalArt = 'krishna' | 'shiva' | 'durga' | 'saraswati' | 'ganesha' | 'vishnu' | 'hanuman' | 'rama' | 'surya' | 'prayer' | DevotionalSubjectArt;
-export type DevotionalPage = { art: DevotionalArt; verse: string; meaning: string; heroHeight: number; continuation: boolean };
+export type DevotionalPage = { art: DevotionalArt; verse: string; verseRows?: readonly string[]; meaning: string; heroHeight: number; continuation: boolean };
 export const devotionalMetrics = {
   width: 540, height: 728, inset: 28, contentBottom: 608, contentTop: 12,
   sourceSize: 15, sourceLeading: 26, sourceGap: 11,
@@ -56,7 +56,25 @@ export function devotionalCardGeometry(bodyHeight: number, art: DevotionalArt = 
   const heroHeight = devotionalHeroGeometry(art, devotionalMetrics.width).height;
   return { heroHeight, height: Math.ceil(Math.max(devotionalMetrics.height, heroHeight + bodyHeight + devotionalMetrics.footerSpace)) };
 }
-export function paginateDevotional(input: { art: DevotionalArt; header: string; verse: string; meaning: string; lang: Lang }): DevotionalPage[] {
+export function paginateDevotional(input: { art: DevotionalArt; header: string; verse: string; verseRows?: readonly string[]; meaning: string; lang: Lang }): DevotionalPage[] {
   const geometry = devotionalCardGeometry(devotionalBodyHeight(input.header, input.verse, input.meaning, input.lang), input.art);
-  return [{ art: input.art, verse: input.verse, meaning: input.meaning, heroHeight: geometry.heroHeight, continuation: false }];
+  return [{ art: input.art, verse: input.verse, ...(input.verseRows && { verseRows: input.verseRows }), meaning: input.meaning, heroHeight: geometry.heroHeight, continuation: false }];
+}
+/** A stored chaupai line "X। Y॥" carries two charans; split at its one inner danda. */
+function coupletHalves(line: string): string[] | null {
+  const m = /^(.*?[^।]।)\s+(\S.*)$/.exec(line.trim());
+  return m && m[2].endsWith('॥') && !/[^।]।\s+\S/.test(m[2]) ? [m[1], m[2]] : null;
+}
+/**
+ * Verse rows with one charan each. Only a stored couplet line (Sundarkand and Bajrang
+ * Baan keep two charans per line) splits; romanized lines split at their single ". "
+ * where the Devanagari line did. Every other line stays whole. DevotionalVerseBody shows
+ * these rows only when each fits on one row.
+ */
+export function devotionalCharanRows(lang: Lang, devaLines: readonly string[], shownLines: readonly string[]): string[] {
+  return shownLines.flatMap((line, i) => {
+    if (!coupletHalves(devaLines[i] ?? '')) return [line.trim()];
+    const latin = lang === 'en' ? /^(.*?\.)\s+(\S.*)$/.exec(line.trim()) : null;
+    return coupletHalves(line) ?? (latin && !/\.\s+\S/.test(latin[2]) ? [latin[1], latin[2]] : [line.trim()]);
+  });
 }

@@ -26,6 +26,36 @@ it.each([288, 358, 540])('keeps readable verse type and lets the full paper widt
   expect(text.props.allowFontScaling).toBe(true);
   act(() => tree!.unmount());
 });
+describe('one charan per row', () => {
+  const rows = ['सुनत सभय मन मुख मुसुकाई।', 'कहत दसानन सबहि सुनाई॥'], flow = rows.join(' ');
+  const mount = (exportMode = false) => create(<DevotionalVerseBody header="सुंदरकाण्ड" verse={flow} verseRows={rows} meaning="अर्थ" lang="hi" art="hanuman"
+    width={358} verseStyle={{ fontSize: 23, lineHeight: 36 }} meaningStyle={{}} exportMode={exportMode} />);
+  const verse = (tree: ReactTestRenderer) => tree.root.findByProps({ testID: 'devotional-share-verse' });
+  it.each([[2, rows.join('\n')], [3, flow]])('shows %i native lines as %j once layout reports', (lines, shown) => {
+    let tree: ReactTestRenderer; act(() => { tree = mount(); });
+    expect(verse(tree!).props.children).toBe(rows.join('\n'));
+    expect(StyleSheet.flatten(verse(tree!).props.style).opacity).toBe(0);
+    act(() => verse(tree!).props.onTextLayout({ nativeEvent: { lines: Array.from({ length: lines }, () => ({})) } }));
+    expect(verse(tree!).props.children).toBe(shown);
+    expect(StyleSheet.flatten(verse(tree!).props.style).opacity).toBeUndefined();
+    act(() => tree!.unmount());
+  });
+  it('falls back to the flowing verse when native layout never reports', () => {
+    jest.useFakeTimers();
+    let tree: ReactTestRenderer; act(() => { tree = mount(); });
+    act(() => { jest.advanceTimersByTime(500); });
+    expect(verse(tree!).props.children).toBe(flow);
+    expect(StyleSheet.flatten(verse(tree!).props.style).opacity).toBeUndefined();
+    act(() => tree!.unmount()); jest.useRealTimers();
+  });
+  it('shows the rows on the export card without probing', () => {
+    let tree: ReactTestRenderer; act(() => { tree = mount(true); });
+    expect(verse(tree!).props.children).toBe(rows.join('\n'));
+    expect(verse(tree!).props.onTextLayout).toBeUndefined();
+    expect(StyleSheet.flatten(verse(tree!).props.style).opacity).toBeUndefined();
+    act(() => tree!.unmount());
+  });
+});
 it('retains the complete long meaning and all commentary paragraphs', () => {
   const meaning = 'A complete meaning. '.repeat(100) + '\n\nFirst commentary.\n\nSecond commentary.';
   let tree: ReactTestRenderer;

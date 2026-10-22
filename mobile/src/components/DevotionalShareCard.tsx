@@ -39,7 +39,7 @@ const MeasuredCard = React.forwardRef<View, DevotionalShareCardProps>(function M
       const h = e.nativeEvent.layout.height;
       setBodyHeight(Number.isFinite(h) && h > 0 ? Math.ceil(h) : Infinity);
     }}>
-      <DevotionalVerseBody header={header} verse={page.verse} meaning={page.meaning} lang={lang} art={page.art} inset={m.inset} exportMode onLoad={() => setBodyPainted(true)} onError={() => setFailed(true)}
+      <DevotionalVerseBody header={header} verse={page.verse} verseRows={page.verseRows} meaning={page.meaning} lang={lang} art={page.art} inset={m.inset} exportMode onLoad={() => setBodyPainted(true)} onError={() => setFailed(true)}
         verseStyle={{ fontFamily: face, fontSize: latin ? m.latinVerseSize : m.verseSize, lineHeight: latin ? m.latinVerseLeading : m.verseLeading, color: colors.ink }}
         meaningStyle={{ fontFamily: face, fontSize: latin ? m.latinMeaningSize : m.meaningSize, lineHeight: latin ? m.latinMeaningLeading : m.meaningLeading, color: colors.meaning }} />
     </View>
