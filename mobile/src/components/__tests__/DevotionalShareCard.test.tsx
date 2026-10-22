@@ -2,6 +2,12 @@ import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import DevotionalShareCard from '../DevotionalShareCard';
+
+// The masters come from R2 through the download-once cache; tests resolve them to a local file.
+jest.mock('@/utils/backgroundAssetCache', () => ({
+  subscribeBackgroundAsset: (request: { key: string; ext: string }, listener: (uri: string | null) => void) => { listener(`file:///cache/${request.key}.${request.ext}`); return () => undefined; },
+  evictBackgroundAsset: jest.fn(async () => undefined),
+}));
 const page = { art: 'krishna' as const, verse: 'Om', meaning: 'Peace', heroHeight: 90, continuation: false };
 let tree: ReactTestRenderer;
 const height = jest.fn();
@@ -37,4 +43,13 @@ it.each([NaN, Infinity, 0, -1])('refuses invalid body height %s', h => {
 it('resets painting and measurement when the reading changes', () => {
   const ready = jest.fn(); mount(ready); paint(); layout(); expect(ready).toHaveBeenLastCalledWith(true); ready.mockClear();
   act(() => tree.update(card(ready, 'A different, longer complete meaning.'))); layout(); expect(ready).not.toHaveBeenCalled(); paint(); expect(ready).toHaveBeenLastCalledWith(true);
+});
+it('fills the short-card gap from the same unscaled master and waits for its paint', () => {
+  const ready = jest.fn(); mount(ready); layout(300, 728); paint('devotional-spacer-image');
+  expect(ready).not.toHaveBeenCalled();
+  const spacer = tree.root.findAllByType(Image).find(node => node.props.testID === 'devotional-spacer-image')!;
+  expect(StyleSheet.flatten(spacer.props.style)).toMatchObject({ width: 540, height: 728, top: -600 });
+  expect(spacer.props.source).toEqual(tree.root.findAllByType(Image).find(node => node.props.testID === 'devotional-footer-image')!.props.source);
+  act(() => spacer.props.onLoad()); expect(ready).toHaveBeenLastCalledWith(true);
+  act(() => spacer.props.onError()); expect(ready).toHaveBeenLastCalledWith(false);
 });

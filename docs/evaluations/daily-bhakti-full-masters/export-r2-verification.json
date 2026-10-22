@@ -1,0 +1,127 @@
+{
+  "platforms": {
+    "ios": {
+      "devotionalArtworkBundled": 0,
+      "verifiedSourceHashesExcluded": 28
+    },
+    "android": {
+      "devotionalArtworkBundled": 0,
+      "verifiedSourceHashesExcluded": 28
+    }
+  },
+  "published": {
+    "krishna": {
+      "url": "https://cdn.vedansh.app/devotional-share/6c40d1bb006803e7.webp",
+      "sha256": "6c40d1bb006803e73c5ef9330b633a997c4544f6f77d5b9a24b447299fa42bfd"
+    },
+    "shiva": {
+      "url": "https://cdn.vedansh.app/devotional-share/273fd179b1f9ab2f.webp",
+      "sha256": "273fd179b1f9ab2f111ef5030bd6be8199d36913c17f6fd66d40a80bafb1d2cf"
+    },
+    "durga": {
+      "url": "https://cdn.vedansh.app/devotional-share/7afdf5dd707562d6.webp",
+      "sha256": "7afdf5dd707562d677bbb9f1ef61f9219a017fce64431bc4dedebc14cf118594"
+    },
+    "saraswati": {
+      "url": "https://cdn.vedansh.app/devotional-share/6f3fb5927ae597bd.webp",
+      "sha256": "6f3fb5927ae597bdc8083a1bdce737538e5e9eb807c398222fde8cae9d67be3c"
+    },
+    "ganesha": {
+      "url": "https://cdn.vedansh.app/devotional-share/e818179daea4b63c.webp",
+      "sha256": "e818179daea4b63c3c926cebe73e4c9ce504421e09c9f9f59eb6e505a0c5cca2"
+    },
+    "vishnu": {
+      "url": "https://cdn.vedansh.app/devotional-share/9f3c09c8e9523cd0.webp",
+      "sha256": "9f3c09c8e9523cd0161e000547b2e8d92ad731c841bb8a524ece3f2a613a33ca"
+    },
+    "hanuman": {
+      "url": "https://cdn.vedansh.app/devotional-share/6fc1a388cd95278e.webp",
+      "sha256": "6fc1a388cd95278e347d5f499166d7e60b39e1b02109ebfd95c49e7730475665"
+    },
+    "rama": {
+      "url": "https://cdn.vedansh.app/devotional-share/a74d87589a57d05f.webp",
+      "sha256": "a74d87589a57d05f0296adc1d14c4210e8a56d114c385deca74d4b4d9ac39268"
+    },
+    "prayer": {
+      "url": "https://cdn.vedansh.app/devotional-share/f0039a88ac310b2c.webp",
+      "sha256": "f0039a88ac310b2cb6ad56bf00c501676e1a5897617a0585c765e617bece4438"
+    },
+    "surya": {
+      "url": "https://cdn.vedansh.app/devotional-share/1df75c8491ea24a3.webp",
+      "sha256": "1df75c8491ea24a3e31946217e42e2979fa8e8e1ab71b5367cf283451a43018e"
+    },
+    "lakshmi": {
+      "url": "https://cdn.vedansh.app/devotional-share/42d5befa57320c9c.webp",
+      "sha256": "42d5befa57320c9cd3e26c4b5d1f92419d51e18096d05dbbe33ed96bdd2e1186"
+    },
+    "dattatreya": {
+      "url": "https://cdn.vedansh.app/devotional-share/2d78b8613ceef140.webp",
+      "sha256": "2d78b8613ceef1401400e7bd840b7866274d45d7f3fe10134af2452a51daf1c0"
+    },
+    "shani": {
+      "url": "https://cdn.vedansh.app/devotional-share/8c67164e8256664e.webp",
+      "sha256": "8c67164e8256664e16f3cb081d220dab754a82687b5e787cb847aa5a09f5c103"
+    },
+    "khatu-shyam": {
+      "url": "https://cdn.vedansh.app/devotional-share/da53cfbc4118ef45.webp",
+      "sha256": "da53cfbc4118ef45a199db823b700eebdbf28ff402b99fcaad00260c259177ea"
+    },
+    "ganga": {
+      "url": "https://cdn.vedansh.app/devotional-share/dd1100c7bb27066f.webp",
+      "sha256": "dd1100c7bb27066fd1f561b5f37dd8541e11d8a03f01b3a99eb1d08a9d321512"
+    },
+    "kali": {
+      "url": "https://cdn.vedansh.app/devotional-share/3bb7347caca51d61.webp",
+      "sha256": "3bb7347caca51d611e1a321ced13d47514a39e2912fb075e4cffebee762ffaa4"
+    },
+    "kubera": {
+      "url": "https://cdn.vedansh.app/devotional-share/71cf0e5cb3712706.webp",
+      "sha256": "71cf0e5cb3712706ad377b9d7b7ea05da9d52ddcb0f724ff28c518f28923d5ef"
+    },
+    "radha": {
+      "url": "https://cdn.vedansh.app/devotional-share/f92c5e1c60ae26a2.webp",
+      "sha256": "f92c5e1c60ae26a289c31fb18d81e5b7474c23c6f8e4974c8183461eb7c61f40"
+    },
+    "kartikeya": {
+      "url": "https://cdn.vedansh.app/devotional-share/ca4b55e641754682.webp",
+      "sha256": "ca4b55e64175468246f607eaa7e7f924f741a5743692cafecfd8030eddbc826f"
+    },
+    "narasimha": {
+      "url": "https://cdn.vedansh.app/devotional-share/bb191d8bdb38702d.webp",
+      "sha256": "bb191d8bdb38702d097c34ec9a7686a986f3f86dbf0c73883bd7e24a984f4030"
+    },
+    "santoshi": {
+      "url": "https://cdn.vedansh.app/devotional-share/719a076d46e3f8eb.webp",
+      "sha256": "719a076d46e3f8eb5e23778e5ee319e632aa61dd4979932c56c3180ba937d0e1"
+    },
+    "navagraha": {
+      "url": "https://cdn.vedansh.app/devotional-share/a82e400825acdd6b.webp",
+      "sha256": "a82e400825acdd6bc5111641d931e3f2c4fea6c277e97675949b487cfb4cf3e3"
+    },
+    "gayatri": {
+      "url": "https://cdn.vedansh.app/devotional-share/cabaa07a07ac600e.webp",
+      "sha256": "cabaa07a07ac600e29dac01251b210f0055ca26095cc20f11a6c2004359a75ca"
+    },
+    "ahoi": {
+      "url": "https://cdn.vedansh.app/devotional-share/0779a33731de1ae4.webp",
+      "sha256": "0779a33731de1ae439497820d7cfcc3dcf4b9e06fe07592cb59785928c770855"
+    },
+    "ekadashi": {
+      "url": "https://cdn.vedansh.app/devotional-share/121e9971ce30a51b.webp",
+      "sha256": "121e9971ce30a51b373d12ca02eb09431a179e89a9107d5223d5a4e96a2c0681"
+    },
+    "vaishno": {
+      "url": "https://cdn.vedansh.app/devotional-share/c392727a29e7fc77.webp",
+      "sha256": "c392727a29e7fc775b1d3d2a9dc73068ac2e67bc1ad60510d275025943f5c9c9"
+    },
+    "shakambhari": {
+      "url": "https://cdn.vedansh.app/devotional-share/970863db370347fa.webp",
+      "sha256": "970863db370347faf2f9f3573f81bcc2ecdc8fc553991c6bab7b83af3cb34bbe"
+    },
+    "tulsi": {
+      "url": "https://cdn.vedansh.app/devotional-share/383f34bb56894b25.webp",
+      "sha256": "383f34bb56894b25dbd83aa9f169537ae0e7a83a9356440cbabd43fb688b40ab"
+    }
+  },
+  "cdnVerification": "prepare-devotional-share.mjs --verify --cdn passed with all 28 public response hashes matching source bytes"
+}

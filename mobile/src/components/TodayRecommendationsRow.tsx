@@ -38,16 +38,12 @@ export default function TodayRecommendationsRow({ horizontalGutter }: { horizont
   const today = React.useMemo(() => new Date(todayKey), [todayKey]);
   const recommendations = React.useMemo(() => {
     const base = getTodayRecommendationDetails(today);
-    // गीता सार is pinned to the lead of the FOR TODAY row on every ordinary day
-    // — a standing door into the themed Gita readings. On a festival day the
-    // festival's own reading must still lead (design.md §50, tied to the
-    // morning's festive reminder), so when the first recommendation is a
-    // festival card we leave the row exactly as the engine built it.
-    if (base[0]?.festivalHi) return base;
+    // गीता सार is pinned to the lead of the FOR TODAY row every day (design.md
+    // §50) — a standing door into the themed Gita readings. Dedupe any copy the
+    // vaar tier already produced (गीता सार is a Krishna text, so it surfaces on
+    // its own on Krishna's weekday) before pinning it to front.
     const gitaSaar = library.find((entry) => entry.id === 'gita-saar');
     if (!gitaSaar || gitaSaar.status !== 'active' || gitaSaar.hidden) return base;
-    // Drop any duplicate the vaar tier produced (गीता सार is a Krishna text, so
-    // it surfaces on its own on Krishna's weekday) before pinning it to front.
     return [{ entry: gitaSaar }, ...base.filter((r) => r.entry.id !== 'gita-saar')];
   }, [today]);
   // अबूझ मुहूर्त (PRD-16 §4.2) — resolved off the render path, null on an
@@ -56,10 +52,9 @@ export default function TodayRecommendationsRow({ horizontalGutter }: { horizont
   // on by festiveReminders.test.ts; keeping it entry-only leaves the notification
   // ⇄ FOR TODAY contract exactly as it is.
   const abujh = useTodayAbujh(today);
-  // अबूझ follows whatever is pinned to the lead: the festival card on a festival
-  // day, गीता सार on an ordinary day (both occupy slot 0), so it slots in second.
-  // It only leads when nothing is pinned there — e.g. the गीता सार entry is
-  // unavailable on an ordinary abujh day (Guru/Ravi Pushya).
+  // अबूझ follows गीता सार, which holds slot 0, so it slots in second. It only
+  // leads when nothing is pinned there — e.g. the गीता सार entry is unavailable
+  // and no festival card leads on an abujh day (Guru/Ravi Pushya).
   const abujhIndex = React.useMemo(() => {
     if (!abujh) return -1;
     const lead = recommendations[0];

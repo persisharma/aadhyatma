@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
-last_verified_date: 2026-10-16
+last_verified_date: 2026-10-21
 confidence: high
 status: current
 ---
@@ -109,12 +109,21 @@ missing corporate CA trust; see [[integrations/reading-artwork]]. The full reade
 physical performance remain open. Later Vidhi
 steps show the divider without repeating art. Semantic guide art follows declared deities and
 personal-tithi guides remain neutral. Individual reader paging/scroll logic is still separate.
-Daily Bhakti's rotating verse card omits the banner after the October 12 reading-space
-correction but keeps its verse's reader-page plate (restored 14 Oct). Every verse page keeps
-its semantic `BackgroundLayer` plate whether or not it shows the banner — the banner is
-additive, never a background replacement. `Ornament compact` replaces
-the nested 80pt vertical margins with 12pt total. Shared reading-size tokens and full text stay
-intact; long verses/meanings still scroll. Source-specific share backgrounds are unchanged.
+Daily Bhakti now uses the separate offline Design 2 `DevotionalFrame` for both its screen
+and single-image export (`design.md` §39.9). It uses the separate `devotional-share` R2 category
+and persistent artwork cache; the Home icon registry and reader-illustration manifest remain separate. `versePool.ts` exposes 2,387 candidates; 59 lazy flat sources add
+1,014 verses without moving the existing pool indices. `devotionalShareArt.ts` selects nine
+original deity plates, eighteen complete 1080×1456 portrait masters, or the neutral prayer fallback.
+The new paintings cover all 330 previously neutral additions, with distinct Gayatri,
+Khatu Shyam and Devi forms. After the user rejected rectangular banner reuse, the subjects
+were repainted as complete cards with a continuous parchment fade, brand plaque, border
+and footer. All slices now use each subject’s own master. The complete 28-source set is
+21.52MiB under the unchanged 22MiB source contract. All paintings are served from R2 and
+excluded from the bundled asset graph. Paper/text stay usable during first fetch or failure;
+a cached master works offline and sharing waits for successful native decode.
+All scripture and meanings remain native, unrestricted text. The Bhakti tab uses a literal `getComponent` loader, keeping its expanded screen off Home’s
+static launch graph. Share waits for every image section and the final measured layout; long readings grow instead of splitting.
+See [[integrations/reading-artwork]] for the separate reader CDN pipeline.
 `ProseParagraph` preserves complete source strings while giving iOS Fabric one extra point of
 drawing height after natural layout, avoiding observed Kannada final-line clipping. Measurement
 resets on source/font/window changes; Android uses natural layout without the extra callback.
