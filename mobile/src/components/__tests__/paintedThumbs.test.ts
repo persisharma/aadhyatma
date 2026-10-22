@@ -11,6 +11,8 @@ const LETTER_TILE_EXCEPTIONS = new Set([
   'screens/NamkaranResultScreen.tsx',
   'screens/NamkaranRashiScreen.tsx',
   'screens/AbujhDaysScreen.tsx',
+  // A chapter numeral is data, like a date tile.
+  'components/GitaChapterCard.tsx',
 ]);
 
 const root = path.join(__dirname, '../..');

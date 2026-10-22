@@ -261,7 +261,7 @@ This table is the **single source of truth** for reading-content sizing, impleme
 > on the scale.
 >
 > **Not tokenised, on purpose:** an *incidental* circle — a radius that is exactly half its box —
-> keeps a bare literal: the `DeityCard` avatar (`borderRadius: 22`), the profile badge, and the
+> keeps a bare literal: the profile badge and the
 > Panchang month stepper, as do `deityGlyphs/` + `CategoryIcon` illustration internals. Card /
 > tile / pill corners and the one shared 44 pt back control take a token; one-off circles stay
 > literals.
@@ -475,46 +475,57 @@ The one element that carries over is the **footer mantra**: `॥ श्रीर
 
 ---
 
-## 8. Component: Library Card
+## 8. Component: List Row Card (`ListCard`)
 
-Two variants: `active` (live module) and `coming` (placeholder).
+**Purpose.** The one list-row card in the app. Every list row renders `components/ListCard.tsx` — library entries (`LibraryCard`), sadhana programs, vidhis, audio tracks (`TrackCard`), chapter indexes (`GitaChapterCard`), Muhurat/Namkaran/Vastu rows and doors, Theerth browse rows and deity rows (`DeityCard`). An Oct 2026 audit found ten hand-rolled copies at four paddings, five thumb sizes and three shadow tiers; the shell now fixes those values and callers own only the slots. `ListingCard` (§82) is the one deliberate exception — its size comes from the illustration.
 
 ```
-[ thumb ]  [ name (Hindi) ]                      [ › or badge ]
-           [ name-en (Latin italic, muted) ]
-           [ sub meta (counts, subtitle) ]
+[ thumb ]  [ title (reading language) ]               [ trailing ]
+           [ second-language name (optional) ]
+           [ meta ]
 ```
 
-### Active
+**Sizes** (`size` prop):
 
-- Background: linear-gradient `#FFF5E0 → #F5DEAC`
-- Border: `rgba(184, 98, 27, 0.4)`
-- Shadow: `md` (runtime: **`elevation.raised`**)
-- Thumb: gradient `#F8D291 → #E0A255` with tagged deity artwork and category fallback (§42). The single-akshara `thumb` is data only and is never drawn.
-- Right side: saffron `›` chevron.
+| | `regular` (content rows) | `compact` (browse/group rows) |
+| --- | --- | --- |
+| Padding · gap | 18 · 14 | 14 · 12 |
+| Thumb (`CardThumb`) | 52×52, `radii.md` | 44×44, `radii.md` |
+| Lines | title · second-language name · meta | title · meta (second-language name optional — `DeityCard` keeps it) |
+| Used by | `LibraryCard`, sadhana, vidhi, `TrackCard`, `GitaChapterCard`, Muhurat/Namkaran/Vastu rows | Theerth category/state/temple rows, `DeityCard` |
 
-### Coming
+**Surfaces** — the only two:
 
-- Background: `rgba(255, 250, 235, 0.72)`
-- Border: `divider`
-- Shadow: `sm` (runtime: **`elevation.subtle`**)
-- Thumb: flat `#F1E0B3` with `saffron-deep` letter.
-- Content (thumb + names) at 55% opacity so it looks dormant but still legible.
-- Top-right pill badge: `SOON` (**10**, uppercase, 0.18em tracking, `rgba(166,124,52,0.14)` fill — was 9, below the §3.0 floor).
+- **Active:** `cardActiveFrom → cardActiveTo` gradient, 1px `cardActiveBorder`, `radii.lg`, **`elevation.lifted`**. Thumb on the `cardThumbActiveFrom → cardThumbActiveTo` gradient.
+- **Disabled** (`disabled`, a "coming soon" `LibraryCard`): `cardSurface` fill, `divider` border, `elevation.subtle`, not pressable; thumb flat `cardThumbRest` with a `divider` border; thumb art and title lines at 55% opacity. A `SOON` pill (10, uppercase, 1.6 tracking, `goldTint` fill) sits top-right.
 
-### Content per card
+There is no flat variant (removed Oct 2026: its `parchment-soft` fill was lighter than the `background`, so it read as a white slab rather than a quieter card).
+
+**Text column** (`CardTitles`, sizes from `CARD_TITLE_SIZES` via `orderTitlesByLanguage`):
+
+- Title: dev 17 / lat 19 (Cormorant Bold, 0.3 tracking), `ink`. **Wraps — never clamped**; a cut Devanagari title can lose its meaning.
+- Second-language name: dev 13 / lat 12 italic, `ink-muted`; 2 below the title, 6 above the meta (2 on compact).
+- Meta (`CardMeta`): 11, `ink-muted` at 0.9. Font follows the text's script (`metaFont`): the Noto Serif face with **no** tracking for Devanagari/Gujarati/Kannada (§46 — Inter has no Indic glyphs and tracking splits the shirorekha), Inter with 0.4 tracking for Latin.
+
+**Trailing slot** (the behaviour rule): `›` (26, `saffron`) opens the item · `＋ ›` (`CardRoutineTail`: 30pt gold-ringed ＋ with 12 hit slop, then ›) opens it and can add it to a routine · ▶ plays in place (`TrackCard`) · pill `›` opens and shows progress (sadhana) · `SOON` is disabled. Compact rows never carry ＋ — groups are not routine items.
+
+**Overlay slot:** absolutely positioned NEW/SOON badges (`newBadgeBg` fill, `newBadgeText`, 10 uppercase) — top 12 / right 12 on regular, top 8 / right 8 on compact.
+
+**Spacing:** 12 between cards. `ListCard` carries `marginBottom: 12`; wrappers used inside `gap: 12` lists (`LibraryCard`, `DeityCard`, `TrackCard`, `GitaChapterCard`) pass `marginBottom: 0`.
+
+### `LibraryCard` content
 
 | Text | Example |
 | --- | --- |
-| name (Hindi) | `हनुमान चालीसा` |
-| name-en | `Hanuman Chalisa` |
-| sub | `43 verses · Hindi with meaning` |
+| name (reading language) | `हनुमान चालीसा` |
+| second-language name | `Hanuman Chalisa` |
+| meta | `43 verses · Hindi with meaning` |
 
-Tapping `active` card → push Reader (Section 9) for that module.
+Thumb: tagged deity artwork with category fallback (§42); the single-akshara `thumb` is data only and is never drawn. Trailing: `＋ ›`, or plain `›` for theerth entries (they open a map, not a reader). Tapping an active card → push Reader (Section 9) for that module. A11y label: `<nameEn>. <subEn>.[ New.] Tap to open.` / `… Coming soon.`
 
 ### Read coverage row (§84)
 
-On a full-size `active` card whose text has been read (or completed at least once), a row sits under the sub meta (8 top margin): texts with **more than one subsection** get a 4 pt `ReadProgressBar` (`saffronTint` track, `saffronDeep` fill, flex) plus `NN% · C.V` (12/600 `saffronDeep`; `C.V` = the latest saved position) and, after a completed reading, a `✓ N पाठ` chip; **single texts** (chalisa, aarti, ashtakam, stuti, sanskar…) get the `✓ N पाठ` chip (`goldChipBg`, Phosphor check 12 bold, 12 `saffronDeep`) and a muted `read / total` while a reading is in progress — a bar would sit at 100% forever after the first reading. Unread cards, `compact` cards and non-reading rows (japa, theerth) render exactly as before. The a11y label is unchanged (Maestro matches on it); coverage rides on `accessibilityValue`. **Long-press** (or the VoiceOver "Reset progress" action) opens the reset confirmation (§84) and the row becomes an inline `प्रगति रीसेट हुई · पूर्ववत करें` undo for 6 s. Files: `LibraryCard.tsx`, `LibraryCardProgress.tsx`.
+On a full-size `active` card whose text has been read (or completed at least once), a row sits under the sub meta (8 top margin): texts with **more than one subsection** get a 4 pt `ReadProgressBar` (`saffronTint` track, `saffronDeep` fill, flex) plus `NN% · C.V` (12/600 `saffronDeep`; `C.V` = the latest saved position) and, after a completed reading, a `✓ N पाठ` chip; **single texts** (chalisa, aarti, ashtakam, stuti, sanskar…) get the `✓ N पाठ` chip (`goldChipBg`, Phosphor check 12 bold, 12 `saffronDeep`) and a muted `read / total` while a reading is in progress — a bar would sit at 100% forever after the first reading. The row is the last child of `ListCard`'s text column, under `CardTitles`, so a card with progress is taller (about 24 pt) than an unread one. Unread cards and non-reading rows (japa, theerth) show no row; compact `ListCard` rows (Theerth, deities) never carry coverage. The a11y label is unchanged (Maestro matches on it); coverage rides on `accessibilityValue`. **Long-press** (or the VoiceOver "Reset progress" action) opens the reset confirmation (§84) and the row becomes an inline `प्रगति रीसेट हुई · पूर्ववत करें` undo for 6 s. Files: `LibraryCard.tsx`, `LibraryCardProgress.tsx`.
 
 ---
 
@@ -804,6 +815,7 @@ When a new text is added, pick the pattern that fits the source:
 - `mobile/src/audio/` — audio session setup (the player context lives in `contexts/`).
 
 **Components:**
+- `mobile/src/components/ListCard.tsx` — the one list-row card shell: sizes, surfaces, `CardThumb` / `CardTitles` / `CardMeta` / `CardRoutineTail` (Section 8).
 - `mobile/src/components/LibraryCard.tsx` — Home library entry (Section 8).
 - `mobile/src/components/GitaChapterCard.tsx` — Chapters Index entry (Section 15).
 - `mobile/src/components/LanguageToggle.tsx` — the two-segment regional-language/English pill (Section 16).
@@ -842,16 +854,12 @@ When building new components, pull tokens from the theme — never hard-code a h
 3. **Language toggle row** (8 top / 16 bottom padding, centred). See Section 16.
 4. **Chapter list** (28 px side padding, 12 px gap between cards). Each card is a `GitaChapterCard` (see below). Scrollable. Once anything in the text has been read, the list opens with the **progress summary** (§84): `cardSurface` card, `divider` border, `radii.lg` — `70 / 701 पठित · 1 / 18 पूर्ण` (13 `ink-soft`) with the whole-text `NN%` (13/600 `saffronDeep`), a 4 pt `ReadProgressBar`, `N पूर्ण पाठ` when a full reading has completed, and a footer row: the long-press hint (11 `ink-muted`) and `प्रगति रीसेट` (12 underlined `avoidDeep`, 44 pt target) — replaced by the inline undo for 6 s after a reset.
 
-**Chapter card (`GitaChapterCard`):**
+**Chapter card (`GitaChapterCard`):** the regular `ListCard` (§8).
 
-- Background: the same `cardActiveFrom → cardActiveTo` gradient as the Home active library card, so active chapters feel consistent with the live module on Home.
-- Layout: `[ chapter-number thumb ]  [ tag · title · verse-count ]  [ › ]`
-  - Thumb: gradient `cardThumbActiveFrom → cardThumbActiveTo`, 46×46, radius `md`. Centre renders the chapter number in Noto Serif Devanagari 20 `parchment-soft`.
-  - Tag (above title): `अध्याय N` or `CHAPTER N` in Inter 10 600, `0.3em`, uppercase, `saffron-deep`.
-  - Title: rendered in the selected language — Hindi (Noto Serif Devanagari 17 600 `ink`) or English (Cormorant Garamond 16 400 italic `ink`). `numberOfLines={2}`.
-  - Sub: `47 श्लोक` (Hindi) or `47 verses` (English), `cardMeta` size, `ink-muted`.
-  - Right: saffron `›` chevron.
-- **Read coverage (§84)** — only inside a `GranthProgressScope` (all 13 `GitaChapterCard` chapters screens wrap their list in one): once any verse of the chapter is read, the sub becomes `23 / 43 श्लोक · अंतिम 5` (read / total in the screen's own unit, then the chapter's saved verse) over a 4 pt `ReadProgressBar`; a **fully read** chapter swaps the numbered thumb for a solid `saffronDeep` square with a Phosphor check (22, bold, `parchment-soft`) and drops the bar. Long-press (or the "Reset progress" a11y action) asks to reset just that chapter. The a11y label is unchanged; coverage rides on `accessibilityValue` (`23 of 43 read` / `Complete`). Outside a scope the card is byte-for-byte the old one.
+- Thumb: 52×52 gradient `CardThumb` holding the chapter number (Noto Serif Devanagari 22 `parchment-soft`) — a numeral is data, like a date tile, so it is exempt from the painted-thumb rule.
+- Text: chapter title in the reading language, the other language's title beneath, then meta `अध्याय N · 47 श्लोक` / `Chapter N · 47 verses`. The unit label moved from its own eyebrow into the meta line (Oct 2026) because the thumb already shows the number.
+- Right: saffron `›` chevron.
+- **Read coverage (§84)** — only inside a `GranthProgressScope` (all 13 `GitaChapterCard` chapters screens wrap their list in one): once any verse of the chapter is read, the meta becomes `अध्याय N · 23 / 43 श्लोक · अंतिम 5` (read / total in the screen's own unit, then the chapter's saved verse) over a 4 pt `ReadProgressBar` (6 pt below the meta); a **fully read** chapter swaps the numbered thumb for `CardThumb done` — a solid `saffronDeep` square with a Phosphor check (22, bold, `parchment-soft`) — and drops the bar. Long-press (or the "Reset progress" a11y action) asks to reset just that chapter. The a11y label is unchanged; coverage rides on `accessibilityValue` (`23 of 43 read` / `Complete`). Outside a scope the card shows no progress.
 - Tap → Reader **resumes at the chapter's last-read verse** (`getChapterProgress` from the reading-progress context, `GitaChaptersIndexScreen.tsx`); a chapter with no prior progress opens at verse 1. Read coverage never changes where a chapter opens.
 
 **Ordering.** Chapters appear in numerical order 1–18. No sorting.
@@ -1116,9 +1124,9 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 4. **View toggle** (segmented control, parchment-soft fill, divider border, pill radius):
    - Two halves: `राज्य · By State` and `श्रेणी · By Category` (lang-swapped labels; category is the default).
    - Active half tinted `saffron-tint` with `saffron-deep` text; inactive transparent with `ink-muted`. Halves are minWidth 100 × minHeight 44, `radiogroup`/`radio` roles.
-5. **Browse card list** — one gradient LibraryCard-style row per **category** or **state**: `[ thumb icon ]  [ name · meta "N तीर्थ / N temples" ]  [ › ]`, with a NEW badge when any temple inside is still unseen. The thumb icon depends on what the row represents, both on the `cardThumbActive` gradient square:
-   - **Grouping rows (category / state)** span many presiding deities, so they carry the shared illustrated **theerth** temple miniature (`<StoryIcon name="theerth" size={34} />`, `assets/icons/storybook/theerth.png`) — the same new-style art Home's category tile and the Discover card use.
-   - **Temple rows** (drill-in) carry their **presiding deity's** glyph via `<DeityIcon iconKey={deityIconKey(temple.deity)} size={34} />` — trishul for Shiva, chakra for Vishnu, lotus for Durga, bansuri for Krishna, and so on — matching how `LibraryCard` thumbs a text's deity.
+5. **Browse card list** — one **compact** `ListCard` (§8: 14 padding, 44pt thumb, title · meta, 26pt ›; title wraps) per **category** or **state**: `[ thumb icon ]  [ name · meta "N तीर्थ / N temples" ]  [ › ]`, with a NEW badge when any temple inside is still unseen. The thumb icon depends on what the row represents, both on the `cardThumbActive` gradient square:
+   - **Grouping rows (category / state)** span many presiding deities, so they carry the shared illustrated **theerth** temple miniature (`<StoryIcon name="theerth" size={36} />`, `assets/icons/storybook/theerth.png`) — the same new-style art Home's category tile and the Discover card use.
+   - **Temple rows** (drill-in) carry their **presiding deity's** glyph via `<DeityIcon iconKey={deityIconKey(temple.deity)} />` (36) — trishul for Shiva, chakra for Vishnu, lotus for Durga, bansuri for Krishna, and so on — matching how `LibraryCard` thumbs a text's deity.
 
    Both replaced the earlier flat `॥` (category) / `ॐ` (state) text glyphs. The deity glyph also drives the map pins (§29). The meta line follows the §46 meta convention: `cardMeta` size, Inter + tracking for English only; Indic meta takes the script serif with **no** tracking (tracking splits the shirorekha). Category rows follow the curated `groupOrder` — the `TheerthGroup` buckets द्वादश ज्योतिर्लिङ्ग, चार धाम, छोटा चार धाम, शक्ति पीठ, plus an "अन्य प्रसिद्ध तीर्थ · Other Famous Temples" bucket for ungrouped temples; state rows sort alphabetically by `stateEn`.
 
@@ -1399,7 +1407,7 @@ Two new mechanisms carry them, both narrow: a real **`nakshatra`** matcher (the 
 
 **No new notification family.** These rules are **not** added to the default-on festive-reminder catalog (§38): that list is “famous enough that every user is already observing it”, and a state festival is not. The opt-in path is the existing ★ follow → vrat reminders, which now works for all seventeen because they finally resolve to a date.
 
-**Muhurat Finder door** (`MuhuratFinderDoor`, PRD-16 §60) — one shared `ListCard` in its **`flat` variant** (`parchment-soft` on a `divider` border — Aug 2026: the gradient is reserved for the live glance card directly above, so the door no longer reads as part of it) with a नया/NEW badge, inserted **between the glance card and the anga grid**: "is now auspicious?" readers are the users with a date decision to make. Leading thumb: a **drawn sunrise glyph** (sun ring + three rays over a horizon bar, View-strokes like the §17 tab icons — no emoji, §5) in `saffron-deep` on a 46pt `saffron-tint` disc, replacing the gradient मु letter tile. It pushes `MuhuratFinder` in the same Panchang stack; nothing above or below it moves.
+**Muhurat Finder door** (`MuhuratFinderDoor`, PRD-16 §60) — the regular `ListCard` (§8) with the painted `muhurat` thumb (40dp in the 52pt `CardThumb`), title `शुभ मुहूर्त खोज` over `Find a Muhurat`, meta `गृह प्रवेश · वाहन · नामकरण…`, and a नया/NEW badge top-right; inserted **between the glance card and the anga grid**: "is now auspicious?" readers are the users with a date decision to make. It shares the glance card's gradient (the earlier flat variant was removed, Oct 2026), so a **16pt top margin** keeps the two from reading as one card. It pushes `MuhuratFinder` in the same Panchang stack; nothing above or below it moves.
 
 **Muhurat Detail** (`MuhuratDetailScreen` → shared `MuhuratCardBody`, reached from the glance-card footer — and, for a specific chosen day, from the Muhurat Finder day detail and Abujh rows, §60) — the gold-॥-framed panchang card (§5): panchang + sun rows, then the full 8+8 day/night choghadiya table and अभिजीत/राहु/गुलिक/यमगण्ड rows. The panchang rows use the same `formatEndInstant` next-day suffix as the anga tiles, and kshaya days add `क्षय तिथि` / `क्षय नक्षत्र` rows so the card (and its share PNG) never disagrees with the tiles. The yoga row is labelled **नित्य योग** (the PRD-27 collision rule, §69), and — full variant only, like the नित्य योग/करण rows themselves — a **शुभ योग** row per present yoga follows it (`<full name> · <window>`; end-only when the window opens at sunrise, start–end on a mid-day onset; derived per render from `computeShubhYogas(p, md.nextSunrise)`, never cached). Each is a quality-tinted `Muh` row (`goldTint` auspicious / `avoidTint` avoid) with the currently-running period ring-bordered in `saffron` + an `अभी` badge. **Name and time render in dark `ink`/`ink-soft` on both qualities** — the tint plus a small signal-coloured `· शुभ/त्याज्य` text tag carry the quality (§12, never colour alone); the text is never itself tinted-down (terracotta-on-`avoidTint` was muddy ~4.8:1). The quality tag, time range, and now-badge use the **non-italic semibold Cormorant face, never the thin italic `cardLatin`** (§3) — the same readability fix as the glance card. The card title (top bar + `MuhuratCardBody` heading) is **`आज का पंचांग` only when the date is today** (`useMuhurat().isToday`); a specific finder/abujh-selected day reads **`इस दिन का पंचांग`** so it never claims to be today while the dateline shows a different day. The same body renders the shareable PNG (`variant="share"`, captured off-screen).
 
@@ -1461,7 +1469,7 @@ The list is **two browsable tiers**, rendered as one `FlatList` under group head
 2. **Deity filter rail** — horizontal row of circular chips (§20 family): 54 px disc on the `cardThumbActiveFrom → cardThumbActiveTo` gradient with a `parchment-soft` Devanagari glyph, 11 pt label below; the selected chip gains a 2 px `saffron` ring on a `saffron-tint` pad. A leading `ॐ · सभी/All` chip clears the filter. Only deities that actually have an available track appear.
 3. Sections with bilingual headings (`जारी रखें · Continue listening` when a track is loaded, `पाठ · Recitations`, `भजन व आरती · Bhajans & Aartis`), each a stack of `TrackCard`s.
 
-**Track card** (`components/audio/TrackCard.tsx`) — the §8 catalog-card language on an audio row: `cardActiveFrom → cardActiveTo` gradient, `cardActiveBorder`, `radii.lg`, 18 padding; a 52 px deity-icon thumb on the thumb gradient; bilingual title via `orderTitlesByLanguage` (dev 17 / lat 19 primary); sub meta `पाठ · 8:14`-style (`cardMeta` size). The tail swaps the navigate chevron for a 38 px **play disc**: `saffron-tint` + `saffron-deep` ▶ at rest, filled `saffron` + `on-primary` ❚❚ for the currently playing track. Tapping a card plays the track and opens Now Playing.
+**Track card** (`components/audio/TrackCard.tsx`) — the regular `ListCard` (§8) on an audio row: 52pt deity-icon thumb; bilingual title via `orderTitlesByLanguage` (titles wrap, never clamped); meta `पाठ · 8:14`-style. The tail swaps the navigate chevron for a 38 px **play disc**: `saffron-tint` + `saffron-deep` ▶ at rest, filled `saffron` + `on-primary` ❚❚ for the currently playing track. Tapping a card plays the track and opens Now Playing.
 
 **Playback state** (`AudioPlayerContext`) — one imperative `expo-audio` player for the whole session (unlike the component-scoped `JapamAudioPlayer`), so playback survives navigation. The session is configured for background audio via `audio/audioSession.ts`: `playsInSilentMode`, with the interruption mode branched per platform in the **single `interruptionMode` field** — `mixWithOthers` on iOS, `duckOthers` on Android. Android must NOT rely on `interruptionModeAndroid` (expo-audio resolves `interruptionMode ?? interruptionModeAndroid`, so the iOS value overrides it) and must not use `mixWithOthers` (expo-audio then never requests audio focus, and Android 12+ force-mutes focus-less players when another app holds focus — the "silent playback on Android 16 devices" bug). Exposes position/duration, ±15 s skip (`SKIP_SECONDS`), next/previous across the playable set, loop, rate 0.5–1.5×, and `nowPlayingOpen`.
 
@@ -1972,13 +1980,13 @@ Twenty-one deities, each `{ id, nameHi, nameEn, iconKey }`: rama (bowArrow) · k
 
 ### Component: Deity Card (`DeityCard.tsx`)
 
-Wears the active LibraryCard treatment (§8): `cardActiveFrom → cardActiveTo` gradient fill, 1 px `cardActiveBorder`, `radii.lg`, raised shadow, 14 padding, horizontal layout with 12 gap:
+The **compact** `ListCard` (§8): 14 padding, 12 gap, `elevation.lifted`.
 
-- **Avatar**: 44×44 circle in the `cardThumbActiveFrom → cardThumbActiveTo` gradient, containing a `DeityIcon` (below); falls back to the deity's first two Devanagari characters.
-- **Names** via `orderTitlesByLanguage` (dev 16/12, lat 18/11): primary in `ink`, secondary italic `ink-muted`, then the count line at 10 `ink-muted`.
-- Right `›` chevron in `saffron`.
-- **NEW pill** top-right when `hasNew`: `newBadgeBg` fill, `newBadgeText` text, `pill` radius, **10 pt** uppercase (was 9, below the §3.0 floor) — same geometry as §19.
-- Whole card is the press target; a11y label reads name + count + "New." when badged.
+- **Thumb**: 44×44 `CardThumb` (rounded square, `radii.md` — the circle avatar was retired Oct 2026) holding a `DeityIcon` (below).
+- **Names** via `orderTitlesByLanguage` (`CARD_TITLE_SIZES`, dev 17/13): primary in `ink`, the second-language name in italic `ink-muted`, then the count meta in the reading language (`12 पाठ` / `12 texts`, passed as `meta`).
+- Right `›` chevron (26) in `saffron`.
+- **NEW pill** top-right when `hasNew`: `newBadgeBg` fill, `newBadgeText` text, `pill` radius, **10 pt** uppercase — same geometry as §19.
+- Whole card is the press target; a11y label reads `<nameEn>. <itemCount>.[ New.]` with the English `itemCount` the e2e flows select on.
 
 ### Deity Icon system (`DeityIcon.tsx` + `deityArtwork.ts`)
 
@@ -2162,7 +2170,7 @@ The per-routine reminder opt-in (the final PRD-07 phase; PRD `docs/roadmap/prds/
 
 `RoutineShell` titled `संकल्प · Sadhana Programs`, **on a sketch background** — a multi-deity index, so it passes `getRandomDeityBackground()` (memoised per mount, same convention as the By-Deity index §42), not the flat gradient. Intro line in `meaning` prose. Programs group under `sectionLabel` eyebrows — **In progress**, **Available**, **Completed sankalps** — rendered via `pillTextStyle` (Inter uppercase for `en`; script serif, no tracking, for hi/gu/kn).
 
-Cards follow the **active Library Card** language (§8): every program is startable, so there is **no** dormant/"coming" (flat) variant — all cards carry the warm `cardActiveFrom → cardActiveTo` gradient, `cardActiveBorder`, and the raised shadow, with a `cardThumbActiveFrom → cardThumbActiveTo` gradient thumb holding the painted art of the program's `deity` (`DeityIcon`, §42), or the Sankalp art (`StoryIcon japam`) for a program without one. The Devanagari `thumb` glyph stays in the data only as `DeityIcon`'s text fallback. Titles show **both** reading languages ordered by the active one via `orderTitlesByLanguage()` (dev 17/13, lat 19/12); no subtitle line (kept terse — the pill carries the state). Tail: a status pill (`parchmentHighlight` fill, `goldTint` border, `cardMeta` type in `saffron-deep` via `pillTextStyle`) reading `Day n / N` (active), `N days` (available), or `✓ Complete` (done), then the saffron `›` chevron (26). Completed cards dim to 0.9 opacity. Each card is a `Pressable` with an explicit English a11y label `<titleEn>. <subtitleEn>. Tap to open.` → `SadhanaProgramDetail`.
+Cards are the regular `ListCard` (§8): every program is startable, so there is **no** disabled variant — painted art of the program's `deity` (`DeityIcon`, §42), or the Sankalp art (`StoryIcon japam`) for a program without one. The Devanagari `thumb` glyph stays in the data only. Titles show **both** reading languages ordered by the active one via `orderTitlesByLanguage()` (`CARD_TITLE_SIZES`), then the program's subtitle as meta (`इकतालीस दिन का संकल्प`). Tail: a status pill (`parchmentHighlight` fill, `goldTint` border, `cardMeta` type in `saffron-deep` via `pillTextStyle`) reading `Day n / N` (active), `N days` (available), or `✓ Complete` (done), then the saffron `›` chevron (26). Completed cards dim to 0.9 opacity. A11y label: `<titleEn>. <subtitleEn>. Tap to open.` → `SadhanaProgramDetail`.
 
 ### Screen: Sankalp detail (`SadhanaProgramDetailScreen.tsx`)
 
@@ -3213,7 +3221,7 @@ Lock Screen families get no art.
 
 **Shared components (no forks — §7/§9, RULEBOOK §9).** All four screens use the canonical **`ReaderHeader`** (`variant="index"`, like GunaMilan §58) — `[back] · centred title · right slot` — never a local top-bar/back copy; the day detail passes the shared **`ShareButton`** into its `right` slot. Secondary context that used to live as a header subtitle is a content line instead (the picker's "आप क्या करने जा रहे हैं?" prompt; the results' `city · दृक्पंचांग पद्धति` line, which also carries the on-surface provenance).
 
-Every list item in the feature is the shared **`ListCard`** (`components/ListCard.tsx`) — the app's library list-card grammar extracted so muhurat doesn't fork its own look: a separate rounded card with the `cardActiveFrom→cardActiveTo` gradient + `cardActiveBorder` + `radii.lg` + `elevation.card`, a leading `CardThumb` (52pt gradient square), a title/subtitle column, and the standard 26pt saffron chevron. **No add-to-routine `+`** (that stays `LibraryCard`-specific). It is used by the **occasion picker** (thumb = Devanagari glyph, title = occasion, caption = counterpart), the **result cards** and **Abujh cards** (thumb = day number, title = month · weekday, then tier, then the best window), and the **`MuhuratFinderDoor`** (via the card's **`flat` variant** — `parchment-soft` on `divider`, no gradient, so it defers to the glance card above it, §33; thumb = a drawn sunrise glyph on a `saffron-tint` disc, title + नया/NEW badge, subtitle). **Every result card is identical — there is no "hero" first card and no ordinal digits**; rank is carried by list order + the सर्वोत्तम / अन्य उपयुक्त section labels, matching the app's uniform-list convention.
+Every list item in the feature is the shared regular **`ListCard`** (§8) — so muhurat doesn't fork its own look. It is used by the **occasion picker** (painted occasion thumb, title = occasion, caption = counterpart), the **result cards** and **Abujh cards** (thumb = day number, title = month · weekday, then tier, then the best window), the **`MuhuratFinderDoor`** (§33), and the गृह प्रवेश **Vastu doors** (`muhurat-vastu-door`, `muhurat-ghar-door`: bilingual title + meta, both on the active gradient). **Every result card is identical — there is no "hero" first card and no ordinal digits**; rank is carried by list order + the सर्वोत्तम / अन्य उपयुक्त section labels, matching the app's uniform-list convention.
 
 **Performance — one day-store for the whole subsystem.** The per-day inputs (panchang solve + asta flags) live in the framework-free **`panchang/panchangDayStore.ts`**, keyed by **absolute civil date** (`YYYY-MM-DD`) within a scope of **`locationKey` + calendar system** — the app's canonical location key (cityId, else `lat,lng@2dp`), the same one the observance cache and the engine's Observer cache use, so a GPS fix with no cityId can never alias another city's days. Absolute-date keying (rather than an index off a scan's start day) is what makes a solved day survive a **midnight rollover** and an entry that starts on a different day. The store is bounded to **`MAX_CITIES` = 5 scopes, LRU**: a 6th city evicts only the least-recently-used one and fires eviction listeners; touring cities never evicts the ones under the cap.
 
@@ -3287,7 +3295,7 @@ Storage is `contexts/MuhuratFollowContext.tsx`, a sibling of the vrat store rath
 
 ### 62.1 Vidhi Catalog (`VidhiCatalogScreen`)
 
-`ReaderHeader variant="index"` ("पूजा विधियाँ"), then one card per published vidhi following the **§8 LibraryCard active-variant spec rebuilt from the same tokens** (`LibraryCard` itself is coupled to `LibraryEntry` + the routine sheet): `cardActiveFrom→cardActiveTo` gradient, `cardActiveBorder`, `radii.lg`, `elevation.raised`, 52pt thumb (`cardThumbActive*` gradient, `radii.md`) holding the painted art of the vidhi's first tagged deity (`DeityIcon`), or the Puja Vidhi art (`StoryIcon vrat`) for an untagged vidhi such as the Shraddha guide, `orderTitlesByLanguage` title pair (dev 17/lat 19 primary), and a localized `cardMeta` sub-line (`16 चरण · लगभग 60 मिनट · कथा सहित` / `16 steps · About 60 min · with katha`), saffron 26pt ›. No source-verification or tradition copy is published on the catalog surface.
+`ReaderHeader variant="index"` ("पूजा विधियाँ"), then one regular `ListCard` (§8) per published vidhi: painted art of the vidhi's first tagged deity (`DeityIcon`), or the Puja Vidhi art (`StoryIcon vrat`) for an untagged vidhi such as the Shraddha guide; `orderTitlesByLanguage` title pair; localized meta (`16 चरण · लगभग 60 मिनट · कथा सहित` / `16 steps · About 60 min · with katha`). **Recurring (monthly) vidhis carry the `＋ ›` add-to-routine tail** (Satyanarayan); annual festival pujas show plain `›`. Both the catalog ＋ and the detail header button read `isRecurringVidhi` (`data/vidhi/recurrence.ts`). No source-verification or tradition copy is published on the catalog surface.
 
 ### 62.2 Vidhi Detail (`VidhiDetailScreen` — `{ vidhiId, dateMs? }`)
 
@@ -3426,7 +3434,7 @@ All copy flows through `contentByLang`/`meaningByLang` (gu/kn derive from the De
 
 **Guidance surfaces (`screens/VastuDishaScreen.tsx`).** Below the chakra + status line: `इस दिशा में / In this direction` — the room entries whose `directions` include the faced dik, emphasised with `card-active-border`; then `कक्ष-दर-कक्ष / Room by room` — every verified `VastuRoomEntry` as a quiet `parchment-soft` card (title + dik line, convention 13/20 `ink-soft`, `कारण ·` reason 12/18 muted, `जहाँ संभव न हो ·` accommodation when stated); then `घर का मंदिर / The home mandir` — `MandirGuidanceEntry` cards with bulleted rows, a warning-toned `टालें / Avoid` block (the §65.1 split), and a muted family-tradition note. A closing muted line restates the stance: convention, not verdict. All copy flows `contentByLang`/`meaningByLang`/`pick` (gu/kn derive or are hand-authored per helper contract).
 
-**Doors.** More hub → साधना group row `वास्तु दिशा / Vastu Disha` (`more-vastu-disha`, NEW state for one release — the §59 widget-row pattern). A गृह प्रवेश muhurat result renders the `muhurat-vastu-door` ListCard under the location line (PRD-24 §6) and, beneath it, the Phase-2 `muhurat-ghar-door` (`नया घर मापें` → `buildGharVastuDoorTarget`: no living home → setup as `role: 'living'`, else the living home's reading — US-16). `VastuDisha` AND the four `GharVastu*` routes are registered on both the More and Panchang stacks (the PRD-19 multi-stack door pattern) so each door pushes in place and Back retraces the journey; the GharVastu screens load through `getComponent` require() thunks so the journey stays off the static launch graph. On `VastuDishaScreen` itself, under the chip row: the `मेरे घर / My homes` flat ListCard (`vastu-mere-ghar-door`, घ thumb; NEW badge until the roster holds a home, then the home's label or `<n> घर सहेजे गए`) → setup when the roster is empty, else always the ROSTER (never straight to a lone home — the roster owns `+ नया घर`).
+**Doors.** More hub → साधना group row `वास्तु दिशा / Vastu Disha` (`more-vastu-disha`, NEW state for one release — the §59 widget-row pattern). A गृह प्रवेश muhurat result renders the `muhurat-vastu-door` ListCard under the location line (PRD-24 §6) and, beneath it, the Phase-2 `muhurat-ghar-door` (`नया घर मापें` → `buildGharVastuDoorTarget`: no living home → setup as `role: 'living'`, else the living home's reading — US-16). `VastuDisha` AND the four `GharVastu*` routes are registered on both the More and Panchang stacks (the PRD-19 multi-stack door pattern) so each door pushes in place and Back retraces the journey; the GharVastu screens load through `getComponent` require() thunks so the journey stays off the static launch graph. On `VastuDishaScreen` itself, under the chip row: the `मेरे घर / My homes` ListCard (`vastu-mere-ghar-door`, painted `ghar` thumb, bilingual title; NEW pill top-right until the roster holds a home; meta = the home's label or `<n> घर सहेजे गए`) → setup when the roster is empty, else always the ROSTER (never straight to a lone home — the roster owns `+ नया घर`).
 
 **Release.** `expo-sensors` is native — the Phase-1 feature shipped store-only with the 1.5.0 `whatsNew` entry and `APP_TOUR_VERSION` bump. Phase 2 (R1 + R2: the source ladder, tilt, Hold, declination grid, गृह वास्तु) is pure JS over modules already in the shipped binary (`expo-location`, `expo-haptics`, `expo-sensors`) and ships **OTA** at the current runtime.
 
