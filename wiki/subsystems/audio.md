@@ -1,7 +1,7 @@
 ---
 title: Audio & Read Aloud
 type: subsystem
-sources: [mobile/src/contexts/AudioPlayerContext.tsx, mobile/src/contexts/ReadAloudContext.tsx, mobile/src/contexts/ReadAloudPrefsContext.tsx, mobile/src/audio/audioSession.ts, mobile/src/audio/playbackArbiter.ts, mobile/src/readAloud/, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/components/ReadAloudSettingsSheet.tsx, mobile/src/components/RateStepper.tsx, mobile/src/components/JapamAudioPlayer.tsx, mobile/src/components/audio/MiniPlayer.tsx, mobile/src/screens/audio/NowPlayingScreen.tsx, mobile/src/data/audio/tracks.ts, design.md, RULEBOOK.md]
+sources: [mobile/src/contexts/AudioPlayerContext.tsx, mobile/src/contexts/ReadAloudContext.tsx, mobile/src/contexts/ReadAloudPrefsContext.tsx, mobile/src/audio/audioSession.ts, mobile/src/audio/playbackArbiter.ts, mobile/src/readAloud/, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/components/ReadAloudSettingsSheet.tsx, mobile/src/components/RateStepper.tsx, mobile/src/components/JapamAudioPlayer.tsx, mobile/src/components/audio/MiniPlayer.tsx, mobile/src/screens/audio/NowPlayingScreen.tsx, mobile/src/data/audio/tracks.ts, mobile/plugins/withoutAudioRecordingService.js, design.md, RULEBOOK.md]
 last_verified_date: 2026-09-04
 confidence: high
 status: current
@@ -159,3 +159,10 @@ so a stale non-Indian preference can never resurrect a dropped accent.
   RULEBOOK forbids emoji. The visible label is localized; the `accessibilityLabel` stays English
   ("Read aloud" / "Pause reading aloud" / "Read aloud unavailable") for Maestro. The `♪`
   (`READ_ALOUD_GLYPH`) now only marks the More → Read Aloud settings row.
+- **Android ships no recording surface.** expo-audio's library manifest always declares
+  `AudioRecordingService` (`foregroundServiceType="microphone"`) and `RECORD_AUDIO`; Play flagged
+  the service as a restricted FGS type reachable from a BOOT_COMPLETED receiver. `plugins/withoutAudioRecordingService.js`
+  strips the service (`tools:node="remove"`) and `app.json` `blockedPermissions` strips the
+  permission. Adding a recorder means deleting both first. `AudioControlsService` (mediaPlayback)
+  stays — lock-screen controls need it; Play's same finding on it is a static false positive (only
+  `setActiveForLockScreen` starts it, no boot path does).

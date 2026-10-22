@@ -36,7 +36,8 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "blockedPermissions": [
-        "android.permission.ACTIVITY_RECOGNITION"
+        "android.permission.ACTIVITY_RECOGNITION",
+        "android.permission.RECORD_AUDIO"
       ],
       "permissions": [
         "FOREGROUND_SERVICE",
@@ -70,6 +71,7 @@
           "microphonePermission": false
         }
       ],
+      "./plugins/withoutAudioRecordingService.js",
       [
         "expo-notifications",
         {
@@ -91,7 +93,15 @@
           "isAndroidBackgroundLocationEnabled": false
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": true
+          }
+        }
+      ]
     ],
     "owner": "prashant.sharma",
     "extra": {

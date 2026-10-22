@@ -1041,3 +1041,7 @@ Corrected the reported Hanuman Ashtak 1.5 split meaning and blank/grey header st
 ## [2026-10-20] gap | Stotra paath Maestro step in stotram-smoke.yaml is authored and YAML-parsed but not yet run on a simulator; no on-device visual check of the paath sheet or the left `japaSlot` on a 320 pt (SE) width.
 
 ## [2026-10-21] ingest | Stotram japa switched from paath to sloka: after an interactive A/B prototype the user chose "repeat the shloka on screen". `data/japam/paath.ts` → `sloka.ts` (ids `sloka.<source>.<chapter>.<number>`, keyed on verse number; title card → first shloka), `StartJapaButton` now takes the reader's `verseIndex`, and the counter's paath mode (name head, `पाठ पढ़ें` row, full-text sheet) is gone — a shloka renders like a mantra with its name as the caption. design.md §35.1, RULEBOOK §3, subsystems/japam.md updated.
+
+## [2026-10-22] ingest | Play Console vc12 findings: stripped expo-audio `AudioRecordingService` + `RECORD_AUDIO` from the Android manifest (new `plugins/withoutAudioRecordingService.js`, `blockedPermissions`); enabled R8 via `expo-build-properties` (shrinkResources off — runtime `getIdentifier` raw sounds). subsystems/audio.md Gotchas + runbooks/store-submission.md Gotchas updated.
+
+## [2026-10-22] gap | R8 release build not yet built or smoke-tested (no Android SDK in the authoring container); large-screen orientation finding (targetSdk 36 ignores portrait lock on ≥600dp) unaddressed — product decision.

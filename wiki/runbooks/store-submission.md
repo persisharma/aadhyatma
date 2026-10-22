@@ -24,6 +24,7 @@ Prepare store copy and device-specific real UI captures separately from signing,
 - Artwork and recorded audio require initial connectivity; cached replay is separate evidence. The Android emulator rejects the corporate Netskope inspection certificate chain, including a Google control URL. Host HTTP403/1010 does not establish a production CDN failure. Warm-cache captures and seeded-cache tests do not prove fresh delivery.
 - Compatible debug/Expo Go captures do not verify the final signed binary, custom modules, physical sensors, background audio, tracking refusal or push behavior. Recheck permissions and age/child-audience settings in that binary.
 - RULEBOOK §0.3 gates EAS build/submit/update and version bumps. Listing-material preparation does not itself authorize those operations.
+- Android release builds run R8 (`expo-build-properties` → `android.enableMinifyInReleaseBuilds`, added 22 Oct 2026 for Play's "DEX obfuscation below threshold", fix-by Feb 2027). Resource shrinking is deliberately **off**: `JapamAlarmReceiver.lookupSoundResource` resolves `res/raw` alarm WAVs by runtime name via `getIdentifier`, which the shrinker cannot see. The first R8 build needs a full release smoke (Japam alarms + boot re-arm, widgets, Meta events, lock-screen audio) before submission. The AAB carries the R8 mapping for Play deobfuscation.
 
 ## Verified submission state on 11 October 2026
 
