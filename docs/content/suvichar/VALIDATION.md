@@ -64,3 +64,5 @@ Inspection of react-native-view-shot's installed native implementation found tha
 TypeScript passed and all 32 focused Suvichar tests passed after this fix, covering Android pixels, iOS pixel ratios 2/3, tall cards, invalid geometry, stale measurements and loss of image readiness. GitHub CI on the prior PR head passed typecheck, reader/component and engine gates; subsequent steps were still running when this update was prepared. Native image inspection remains pending.
 
 Access was checked again: no R2 credentials, Wrangler login, Android SDK, adb, Maestro, xcrun or emulator is available in this workspace. Publishing and actual native WhatsApp verification therefore remain blocked; no hashes were activated.
+
+Production Expo/Hermes exports subsequently passed for both iOS and Android on the capture-fix code commit. Both asset maps were inspected against all 42 source master IDs and the Suvichar source directory; neither bundle contains any Suvichar background. Exact export/asset-map hashes are recorded in export-verification.json. These are JavaScript compilation and asset-graph checks, not installed-native or WhatsApp verification.
