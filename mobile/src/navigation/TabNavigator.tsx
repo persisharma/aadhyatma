@@ -8,7 +8,6 @@ import StackLoadBoundary from './StackLoadBoundary';
 import { LazyPanchangStackNavigator } from './lazyPanchangStack';
 import MoreStackNavigator from './MoreStackNavigator';
 import AudioStackNavigator from './AudioStackNavigator';
-import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -112,7 +111,11 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="DailyBhaktiTab"
-        component={DailyBhaktiScreen}
+        getComponent={() => {
+          // Literal route loader keeps the painted card off Home's launch graph.
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          return require('@/screens/DailyBhaktiScreen').default;
+        }}
         options={{
           title: contentByLang(lang, 'भक्ति', 'Bhakti'),
           tabBarLabel: tabLabel('भक्ति', 'Bhakti'),

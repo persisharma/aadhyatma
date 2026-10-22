@@ -2,7 +2,7 @@
 title: Share Cards (verse, prose, series)
 type: subsystem
 sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareText.ts, mobile/src/utils/shareContent.ts, mobile/src/utils/listingShare.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
-last_verified_date: 2026-10-21
+last_verified_date: 2026-10-22
 confidence: high
 status: current
 ---
@@ -108,4 +108,6 @@ The shared capture pipeline compensates for UIKit point dimensions using `PixelR
 
 ## Daily Bhakti complete devotional image
 
-`dailyBhaktiShareable` prepares one complete verse/meaning page per language. `DevotionalShareCard` grows from actual native body/root layout and reports height after image decode. The provider, full-height preview and Story frame preserve that measurement. This fixes Hanuman Ashtak 1.5 being split at the first meaning sentence. The 270dp continuous artwork header removes the lower parchment band and uses same-RGB alpha stops; installed native gradient/WhatsApp verification remains pending. See design.md §39.9.
+`dailyBhaktiShareable` prepares one complete verse/meaning page per language. `DevotionalShareCard` grows from actual native body/root layout and reports height after every image slice decodes. The provider, full-height preview and Story frame preserve that measurement. All 27 deity/subject masters plus neutral prayer ship from the separate `devotional-share` R2 category through the shared persistent cache; none are bundled. The eighteen new subjects are complete portrait compositions with their own scene-to-parchment transition, brand plaque, reading frame and footer, replacing the rejected rectangular header reuse. Every section slices its own subject master using manifest-fitted coordinates. Short cards restore the remaining master band above the footer, cropped as text grows; preview and capture readiness include its paint. Text remains readable on paper while a first download is pending or fails; capture refuses incomplete art, while previously cached masters work offline. `scripts/prepare-devotional-share.mjs --verify --cdn` verifies all 28 public source hashes. Native/device/WhatsApp evidence is tracked separately in `docs/evaluations/daily-bhakti-full-masters/README.md`. See design.md §39.9 and [[integrations/reading-artwork]].
+
+The 22 Oct delivery optimization reduces the complete Daily Bhakti set from 21.52MiB to 8.54MiB by re-encoding only the nine older lossless portraits at WebP q94/m6/sharp YUV. All dimensions, slice coordinates and capture logic stay unchanged. The lossless authoring hashes/revision remain in provenance; the delivered pixels are perceptually compressed. See `docs/evaluations/daily-bhakti-compression/` and [[integrations/reading-artwork]].

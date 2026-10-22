@@ -18,6 +18,7 @@ import { buildListingShare } from '@/utils/listingShare';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import GranthProgressScope from '@/components/GranthProgressScope';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -66,27 +67,29 @@ export default function ValmikiRamayanChaptersScreen({ navigation }: Props) {
           ]}
           showsVerticalScrollIndicator={false}
         >
-          {valmikiRamayanChaptersManifest.map((chapter) => (
-            <GitaChapterCard
-              key={chapter.chapter}
-              chapter={chapter}
-              // The epic's subsection unit is the kāṇḍa, not the Gita's अध्याय, and
-              // each one holds ślokas (design.md §53, §3 pill vocabulary).
-              chapterLabelHi="काण्ड"
-              chapterLabelEn="Kanda"
-              unitLabelHi="श्लोक"
-              unitLabelEn="shlokas"
-              unitLabelEnSingular="shloka"
-              onPress={() => {
-                const resumeIndex =
-                  getChapterProgress('valmiki-ramayan', chapter.chapter)?.verseIndex ?? 0;
-                navigation.navigate('ValmikiRamayanReader', {
-                  chapter: chapter.chapter,
-                  initialIndex: resumeIndex,
-                });
-              }}
-            />
-          ))}
+          <GranthProgressScope sourceId="valmiki-ramayan">
+            {valmikiRamayanChaptersManifest.map((chapter) => (
+              <GitaChapterCard
+                key={chapter.chapter}
+                chapter={chapter}
+                // The epic's subsection unit is the kāṇḍa, not the Gita's अध्याय, and
+                // each one holds ślokas (design.md §53, §3 pill vocabulary).
+                chapterLabelHi="काण्ड"
+                chapterLabelEn="Kanda"
+                unitLabelHi="श्लोक"
+                unitLabelEn="shlokas"
+                unitLabelEnSingular="shloka"
+                onPress={() => {
+                  const resumeIndex =
+                    getChapterProgress('valmiki-ramayan', chapter.chapter)?.verseIndex ?? 0;
+                  navigation.navigate('ValmikiRamayanReader', {
+                    chapter: chapter.chapter,
+                    initialIndex: resumeIndex,
+                  });
+                }}
+              />
+            ))}
+          </GranthProgressScope>
         </ScrollView>
       </SafeAreaView>
     </View>

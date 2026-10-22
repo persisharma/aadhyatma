@@ -1,0 +1,83 @@
+{
+  "encoding": "cwebp 1.6.0, q94 m6 sharp_yuv; perceptual, not pixel identical",
+  "count": 28,
+  "changedCount": 9,
+  "unchangedCount": 19,
+  "beforeBytes": 22567642,
+  "afterBytes": 8953360,
+  "files": [
+    {
+      "art": "krishna",
+      "beforeBytes": 2101850,
+      "afterBytes": 533568,
+      "width": 1080,
+      "height": 1456,
+      "sha256": "82dbb769bd7c36ef0e0b769b44e2e1aac0c66667684f574d975b61d663d057a6"
+    },
+    {
+      "art": "shiva",
+      "beforeBytes": 2000426,
+      "afterBytes": 506606,
+      "width": 1080,
+      "height": 1456,
+      "sha256": "4b5ff253ed09d997990d8bf29a1758bc3e41acfa58dd4d51083fbcada7dd31d8"
+    },
+    {
+      "art": "durga",
+      "beforeBytes": 2107912,
+      "afterBytes": 535444,
+      "width": 1080,
+      "height": 1456,
+      "sha256": "a10965cc8fe0e178c07070d4e407e1313ebd1c1ddc1c95b2f5caff06e15abdf7"
+    },
+    {
+      "art": "saraswati",
+      "beforeBytes": 2026362,
+      "afterBytes": 514102,
+      "width": 1080,
+      "height": 1456,
+      "sha256": "bdb817dc72bed47c4d50246f213af8de72f150c017b3cff04aa60bcddf3c8401"
+    },
+    {
+      "art": "ganesha",
+      "beforeBytes": 1999782,
+      "afterBytes": 503004,
+      "width": 1080,
+      "height": 1456,
+      "sha256": "997c8980d07c00c304b4f49643505ed9659a275aa136d0840f120b2a0bdde10c"
+    },
+    {
+      "art": "vishnu",
+      "beforeBytes": 1827970,
+      "afterBytes": 408430,
+      "width": 1080,
+      "height": 1456,
+      "sha256": "be33c0e312f89e9b94f2bf319c306027d0986b7a844c2d60db1e59228ce4db48"
+    },
+    {
+      "art": "hanuman",
+      "beforeBytes": 2049084,
+      "afterBytes": 519798,
+      "width": 1080,
+      "height": 1456,
+      "sha256": "96732be9e4a66bba6b5912d6308ed967acb59f63b0bd35dcbd52fa04fd6311e4"
+    },
+    {
+      "art": "rama",
+      "beforeBytes": 2095066,
+      "afterBytes": 526124,
+      "width": 1080,
+      "height": 1456,
+      "sha256": "dbc292b082b5848c90a2b38d37a964bd91edfdb18044621ca05eba3c54e59b60"
+    },
+    {
+      "art": "surya",
+      "beforeBytes": 1898902,
+      "afterBytes": 445996,
+      "width": 1080,
+      "height": 1456,
+      "sha256": "210b2032318cffb97d1ecd2999ad7add11558f50aa14094512c0444a99e01bc0"
+    }
+  ],
+  "savedPercent": 60.32655959359865
+}

@@ -1,0 +1,173 @@
+{
+  "prefix": "devotional-share",
+  "assets": {
+    "ahoi": {
+      "hash": "0779a33731de1ae4",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "dattatreya": {
+      "hash": "2d78b8613ceef140",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "durga": {
+      "hash": "a10965cc8fe0e178",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "ekadashi": {
+      "hash": "121e9971ce30a51b",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "ganesha": {
+      "hash": "997c8980d07c00c3",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "ganga": {
+      "hash": "dd1100c7bb27066f",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "gayatri": {
+      "hash": "cabaa07a07ac600e",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "hanuman": {
+      "hash": "96732be9e4a66bba",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "kali": {
+      "hash": "3bb7347caca51d61",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "kartikeya": {
+      "hash": "ca4b55e641754682",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "khatu-shyam": {
+      "hash": "da53cfbc4118ef45",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "krishna": {
+      "hash": "82dbb769bd7c36ef",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "kubera": {
+      "hash": "71cf0e5cb3712706",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "lakshmi": {
+      "hash": "42d5befa57320c9c",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "narasimha": {
+      "hash": "bb191d8bdb38702d",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "navagraha": {
+      "hash": "a82e400825acdd6b",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "prayer": {
+      "hash": "f0039a88ac310b2c",
+      "ext": "webp",
+      "width": 1200,
+      "height": 800
+    },
+    "radha": {
+      "hash": "f92c5e1c60ae26a2",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "rama": {
+      "hash": "dbc292b082b5848c",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "santoshi": {
+      "hash": "719a076d46e3f8eb",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "saraswati": {
+      "hash": "bdb817dc72bed47c",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "shakambhari": {
+      "hash": "970863db370347fa",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "shani": {
+      "hash": "8c67164e8256664e",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "shiva": {
+      "hash": "4b5ff253ed09d997",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "surya": {
+      "hash": "210b2032318cffb9",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "tulsi": {
+      "hash": "383f34bb56894b25",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "vaishno": {
+      "hash": "c392727a29e7fc77",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    },
+    "vishnu": {
+      "hash": "be33c0e312f89e9b",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1456
+    }
+  }
+}

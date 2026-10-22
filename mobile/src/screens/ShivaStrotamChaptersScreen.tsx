@@ -18,6 +18,7 @@ import { buildListingShare } from '@/utils/listingShare';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import GranthProgressScope from '@/components/GranthProgressScope';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -66,16 +67,18 @@ export default function ShivaStrotamChaptersScreen({ navigation }: Props) {
           ]}
           showsVerticalScrollIndicator={false}
         >
-          {shivaStrotamChaptersManifest.map((chapter) => (
-            <GitaChapterCard
-              key={chapter.chapter}
-              chapter={chapter}
-              onPress={() => {
-                const resumeIndex = getChapterProgress('shiva-strotam', chapter.chapter)?.verseIndex ?? 0;
-                navigation.navigate('ShivaStrotamReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
-              }}
-            />
-          ))}
+          <GranthProgressScope sourceId="shiva-strotam">
+            {shivaStrotamChaptersManifest.map((chapter) => (
+              <GitaChapterCard
+                key={chapter.chapter}
+                chapter={chapter}
+                onPress={() => {
+                  const resumeIndex = getChapterProgress('shiva-strotam', chapter.chapter)?.verseIndex ?? 0;
+                  navigation.navigate('ShivaStrotamReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
+                }}
+              />
+            ))}
+          </GranthProgressScope>
         </ScrollView>
       </SafeAreaView>
     </View>

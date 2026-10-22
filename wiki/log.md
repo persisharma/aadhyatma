@@ -1036,6 +1036,10 @@ Corrected the reported Hanuman Ashtak 1.5 split meaning and blank/grey header st
 
 ## [2026-10-17] ingest | languages: English verse display respelling (readableRomanization) + Tiro Devanagari Sanskrit reading tokens
 
+
+## [2026-10-21] ingest | Daily Bhakti PR 508 painted subject coverage
+
+Mapped all 330 formerly neutral additions to eighteen distinct subject paintings. Reused eleven approved local reader paintings and generated seven missing scenes; the new offline headers share the cleared parchment body/footer, preserving all nine original deity masters. Recorded manifests, prompt provenance, separate 3MiB header and 22MiB combined budgets, exhaustive 2,381-verse/four-script tests and native verification evidence in `docs/evaluations/daily-bhakti-art-508/`. Corrected stale wiki claims that Daily Bhakti still used reader backgrounds and the RULEBOOK’s incorrect combined <2MiB claim.
 ## [2026-10-20] ingest | Stotra paath as japa: any stotram-category text (22 stotras across 12 sources) can be started on the JapaMala, one bead per complete recitation. New `data/japam/paath.ts` registry resolved through `findJapamMantra` (lazy `require()` corpora — data/japam is on the launch graph), `StartJapaButton` left-pinned on 9 stotram readers' toggle rows, counter paath mode (name head, `पाठ पढ़ें` row → full-text sheet with `पाठ पूर्ण` bead button), Profile/alarm-picker id fixes. New page subsystems/japam.md; readers.md toggle-row note. design.md §35.1, RULEBOOK §3.
 
 ## [2026-10-20] gap | Stotra paath Maestro step in stotram-smoke.yaml is authored and YAML-parsed but not yet run on a simulator; no on-device visual check of the paath sheet or the left `japaSlot` on a 320 pt (SE) width.
@@ -1065,4 +1069,28 @@ Reproduced the data-test failure that treated the new root Vidhi artwork manifes
 ## [2026-10-21] ingest | PR #507 startup budget after current-main reconciliation
 
 The complete local test run passed 272 reader/component suites and the engine checks, then detected a combined launch graph of 4,095,731 bytes against the unchanged 4,090,000-byte ceiling. Deferred the Vidhi request module at the shared loader's descriptor branch, keeping the artwork manifest off the static startup graph. Added a forbidden-path regression plus shared-loader request coverage; no artwork, ritual copy or budget changed.
+
+
+## [2026-10-21] ingest | Daily Bhakti final artwork verification
+
+Reconciled current main, including six additional eligible verses (2,387 pool total), and made the Bhakti screen a literal on-demand tab route to preserve the unchanged 4,090,000-byte launch budget. All 3,546 local tests passed. The installed iOS artwork smoke passed all eighteen decoded subjects and every capture was visually reviewed; iOS/Android exports contain all 28 matching artwork hashes. Native share export, four-script preview and Standard/Large smoke reruns remain pending after the final simulator launch stalled under severe host load; no WhatsApp, Android-device or physical-device delivery is claimed. See `docs/evaluations/daily-bhakti-art-508/README.md`.
+
+
+## [2026-10-21] ingest | Daily Bhakti artwork follow-up PR 509
+
+PR #508 merged during the artwork work. Preserved its new `versePoolFlat.ts` lazy registry and reconciled current main, including the Gita Saar design refresh. The artwork follow-up remains on `claude/daily-bhakti-more-sources` as draft PR #509. Final local `npm test` passed all 3,552 tests (2,655 Jest tests); native subject/asset export evidence and pending share/device QA are recorded in the evaluation README.
+
+## [2026-10-21] ingest | Vidhi step art uploaded; Daily Bhakti share masters moved to R2
+
+PR #507's `vidhiArtworkManifest.json` (63 reviewed step paintings, prefix `vidhi-steps`) had been merged without its R2 upload; uploaded all 63 with immutable caching and verified with `prepare-vidhi-artwork.mjs --verify --cdn`. The Daily Bhakti share masters added by #494/#499 were bundled (~18MiB, a deliberate offline tradeoff in #499); at the user's direction they now ship from R2 under `devotional-share` through the download-once cache, with `prepare-devotional-share.mjs` publishing/verifying and the bundling guard covering the folder. Updated [[subsystems/share]].
+
+
+## [2026-10-21] ingest | Daily Bhakti continuous paintings and verified R2 delivery
+
+Replaced the user-rejected eighteen rectangular headers with complete portrait masters, fitted section coordinates and one subject master for every slice. Restored the omitted paper band above the footer on short share cards and made preview QA await complete paint. Reconciled main through 23b99e0c, including R2 delivery and verse wrapping, then published all eighteen new objects under devotional-share. All 28 public hashes match and both production bundles contain zero painting files. All 3,564 local tests, eighteen native R2 subjects, four-script sharing/actual PNG exports, normal-restart cache reuse and Standard/Large reading checks passed. Android-device, physical-device and WhatsApp delivery remain unverified. See docs/evaluations/daily-bhakti-full-masters/README.md; the old rectangular-header evaluation is superseded.
+
+## [2026-10-22] ingest | Daily Bhakti smaller R2 delivery
+
+Updated reading-artwork, readers and share for nine full-resolution q94 WebP delivery encodings, retained lossless authoring references and the 9MiB delivery budget. All 28 masters total 8,953,360 bytes; the eighteen newer subjects and neutral prayer are unchanged. Source, CDN, native and export evidence is tracked in `docs/evaluations/daily-bhakti-compression/`.
+
 ## [2026-10-21] ingest | share → rating ask: non-devotional prose share cards (katha/Theerth/story/listing/Ask) now report the new `prose-shared` §54 moment; subsystems/share.md gained a rating-ask bullet.

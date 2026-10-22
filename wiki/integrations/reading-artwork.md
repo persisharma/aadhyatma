@@ -2,7 +2,7 @@
 title: Reading artwork on R2
 type: integration
 sources: [mobile/assets/garud-puran/index.ts, scripts/verify-artwork-corrections.mjs, mobile/src/data/__tests__/artworkDelivery.jest.test.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md, docs/content-parity/reader-illustration-style3-prompt.md]
-last_verified_date: 2026-10-16
+last_verified_date: 2026-10-22
 confidence: high
 status: current
 ---
@@ -46,6 +46,36 @@ template, `$artifact-template-vedansh-style-3-reader-banner`, retains the origin
 PNG and the same guide for reuse outside this checkout. The style can be reused in other
 formats; actual kids-story layout and source gates still follow their own contracts.
 
+## Daily Bhakti card artwork (PR #508 follow-up)
+
+`mobile/src/data/devotionalShareArt.ts` and `mobile/assets/devotional-share/manifest.json`
+describe a separate bounded source set. Nine original full deity masters retain their composition and resolution; neutral prayer retains
+its existing bytes. The original nine use smaller delivery encodings as of 22 Oct. Eighteen new complete 1080×1456 portrait masters cover all 330
+previously neutral verses among the 1,014 added candidates. The initial landscape-header
+implementation was rejected by the user for looking pasted onto the card.
+
+Each replacement uses the original Ganesha layout as the full-card reference, repainted for
+the subject with its own brand plaque, scene-to-paper transition, gold frame and scenic
+footer. `DevotionalHero`, reading bands and footer slice the same subject master.
+`manifest.subjects` records shipped/generated hashes, exact prompt keys and matching body
+identity; `devotionalFrameSpec` keeps the contiguous reading coordinates.
+The eighteen compressed sources total 4,288,786 bytes; the complete source set is
+8,953,360 bytes (8.54MiB), reduced from 22,567,642 bytes (21.52MiB), under the 9MiB delivery ceiling.
+The nine original portraits use WebP q94/m6/sharp YUV at 1080×1456, each under 600KiB.
+Their lossless authoring versions remain pinned by Git revision/path/hash in `authoringMaster`;
+zero protected-pixel changes describes those composites, not delivery pixels.
+`optimize-devotional-share.mjs` reads the pinned lossless masters to avoid generation loss.
+The eighteen new masters and neutral prayer are unchanged. Compression review and
+verification are recorded separately in `docs/evaluations/daily-bhakti-compression/`. All 28 paintings ship from
+the separate `devotional-share` R2 category through `devotionalShareManifest.json` and the
+shared persistent cache. None are bundled. The publisher includes original and new subjects;
+`--verify --cdn` checks every public SHA-256. Text remains usable on paper during first fetch
+or failure; captures refuse missing/undecoded masters. General prayers and unknown sources
+retain the neutral prayer mapping. Reader illustration CDN manifests remain separate.
+Tests pin all 1,014 mappings and all four scripts; current native evidence is in
+`docs/evaluations/daily-bhakti-full-masters/README.md`. The previous
+`daily-bhakti-art-508` evaluation documents the superseded rectangular treatment.
+
 ## Details
 
 1. The four asset indexes (`backgrounds`, `chalisa`, `gita`, `shiva-strotam`) export
@@ -87,18 +117,17 @@ formats; actual kids-story layout and source gates still follow their own contra
    screens pass their actual verse index (after chapter transition offsets), and
    KathaSectionPage gates both Vrat Katha and Pitru introduction artwork to section zero.
    Direct links to later verses/sections remain text-first. Single continuous prose and
-   standalone detail/guide screens keep their one opening image. Daily Bhakti's quick rotating
-   verse card is text-first following the October 12 correction: no banner frame/placeholder/
-   request, and the compact ornament between verse and meaning.
+   standalone detail/guide screens keep their one opening image. Daily Bhakti now uses its
+   separate offline Design 2 frame, described below; it does not fetch a reader banner.
    **Gotcha — a banner never replaces the background.** The 10 Oct rollout had swapped the seven
    verse layouts, Daan Punya and the Daily Bhakti card from their semantic plate to the neutral
    paper; once banners were gated, later verses and the daily card showed no thematic art.
    Restored 14 Oct: verse pages use `BackgroundLayer source={bg}` (`getReaderBackground`) on
-   every card, Daily Bhakti uses `getReaderBackground(sourceId, { stanza: chapter })`, Daan
+   every card. Daily Bhakti subsequently moved to its own offline frame; Daan
    Punya uses `getDaanBackground()`. Neutral paper is only the offline fallback and the surface
    for screens that never had a plate (prose folios, Pitru, Vidhi, Daan journey/Katha, Garud Puran).
    `readerArtworkPlacement.test.tsx` pins this per layout.
-   The themed share-card background remains separate and unchanged.
+   Daily Bhakti’s separate offline frame now serves its screen and single-image share together.
    Approved dedicated illustrations replace the rejected focal crops for all mapped reading
    slots. The legacy crop registry remains only for unmapped art. Manifest dimensions determine geometry before fetching;
    no network dimension probe, layout callback or native decode changes the frame size.

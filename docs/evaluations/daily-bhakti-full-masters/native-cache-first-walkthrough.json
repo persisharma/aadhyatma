@@ -1,0 +1,110 @@
+{
+  "ahoi": {
+    "file": "0779a33731de1ae4.webp",
+    "bytes": 233354,
+    "sha256": "0779a33731de1ae439497820d7cfcc3dcf4b9e06fe07592cb59785928c770855",
+    "mtimeNs": 1792604651275612810
+  },
+  "dattatreya": {
+    "file": "2d78b8613ceef140.webp",
+    "bytes": 235524,
+    "sha256": "2d78b8613ceef1401400e7bd840b7866274d45d7f3fe10134af2452a51daf1c0",
+    "mtimeNs": 1792604597812917235
+  },
+  "ekadashi": {
+    "file": "121e9971ce30a51b.webp",
+    "bytes": 232652,
+    "sha256": "121e9971ce30a51b373d12ca02eb09431a179e89a9107d5223d5a4e96a2c0681",
+    "mtimeNs": 1792604674076312673
+  },
+  "ganga": {
+    "file": "dd1100c7bb27066f.webp",
+    "bytes": 213650,
+    "sha256": "dd1100c7bb27066fd1f561b5f37dd8541e11d8a03f01b3a99eb1d08a9d321512",
+    "mtimeNs": 1792604608770205444
+  },
+  "gayatri": {
+    "file": "cabaa07a07ac600e.webp",
+    "bytes": 224310,
+    "sha256": "cabaa07a07ac600e29dac01251b210f0055ca26095cc20f11a6c2004359a75ca",
+    "mtimeNs": 1792604565666004406
+  },
+  "kali": {
+    "file": "3bb7347caca51d61.webp",
+    "bytes": 239326,
+    "sha256": "3bb7347caca51d611e1a321ced13d47514a39e2912fb075e4cffebee762ffaa4",
+    "mtimeNs": 1792604619456542843
+  },
+  "kartikeya": {
+    "file": "ca4b55e641754682.webp",
+    "bytes": 242314,
+    "sha256": "ca4b55e64175468246f607eaa7e7f924f741a5743692cafecfd8030eddbc826f",
+    "mtimeNs": 1792604715396848679
+  },
+  "khatu-shyam": {
+    "file": "da53cfbc4118ef45.webp",
+    "bytes": 256824,
+    "sha256": "da53cfbc4118ef45a199db823b700eebdbf28ff402b99fcaad00260c259177ea",
+    "mtimeNs": 1792604576848106682
+  },
+  "kubera": {
+    "file": "71cf0e5cb3712706.webp",
+    "bytes": 219274,
+    "sha256": "71cf0e5cb3712706ad377b9d7b7ea05da9d52ddcb0f724ff28c518f28923d5ef",
+    "mtimeNs": 1792604629869908421
+  },
+  "lakshmi": {
+    "file": "42d5befa57320c9c.webp",
+    "bytes": 244220,
+    "sha256": "42d5befa57320c9cd3e26c4b5d1f92419d51e18096d05dbbe33ed96bdd2e1186",
+    "mtimeNs": 1792604554112411414
+  },
+  "narasimha": {
+    "file": "bb191d8bdb38702d.webp",
+    "bytes": 258726,
+    "sha256": "bb191d8bdb38702d097c34ec9a7686a986f3f86dbf0c73883bd7e24a984f4030",
+    "mtimeNs": 1792604725630813973
+  },
+  "navagraha": {
+    "file": "a82e400825acdd6b.webp",
+    "bytes": 245194,
+    "sha256": "a82e400825acdd6bc5111641d931e3f2c4fea6c277e97675949b487cfb4cf3e3",
+    "mtimeNs": 1792604734926089587
+  },
+  "radha": {
+    "file": "f92c5e1c60ae26a2.webp",
+    "bytes": 256606,
+    "sha256": "f92c5e1c60ae26a289c31fb18d81e5b7474c23c6f8e4974c8183461eb7c61f40",
+    "mtimeNs": 1792604705527290148
+  },
+  "santoshi": {
+    "file": "719a076d46e3f8eb.webp",
+    "bytes": 206794,
+    "sha256": "719a076d46e3f8eb5e23778e5ee319e632aa61dd4979932c56c3180ba937d0e1",
+    "mtimeNs": 1792604641188112709
+  },
+  "shakambhari": {
+    "file": "970863db370347fa.webp",
+    "bytes": 255914,
+    "sha256": "970863db370347faf2f9f3573f81bcc2ecdc8fc553991c6bab7b83af3cb34bbe",
+    "mtimeNs": 1792604695412392943
+  },
+  "shani": {
+    "file": "8c67164e8256664e.webp",
+    "bytes": 239720,
+    "sha256": "8c67164e8256664e16f3cb081d220dab754a82687b5e787cb847aa5a09f5c103",
+    "mtimeNs": 1792604587706598034
+  },
+  "tulsi": {
+    "file": "383f34bb56894b25.webp",
+    "bytes": 226108,
+    "sha256": "383f34bb56894b25dbd83aa9f169537ae0e7a83a9356440cbabd43fb688b40ab",
+    "mtimeNs": 1792604684989231230
+  },
+  "vaishno": {
+    "file": "c392727a29e7fc77.webp",
+    "bytes": 258276,
+    "sha256": "c392727a29e7fc775b1d3d2a9dc73068ac2e67bc1ad60510d275025943f5c9c9",
+    "mtimeNs": 1792604662601372388
+  }
+}

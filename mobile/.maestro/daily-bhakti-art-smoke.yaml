@@ -1,0 +1,222 @@
+# All eighteen formerly neutral Daily Bhakti subjects, through real widget links.
+# Use -e METRO_PORT=<isolated Metro port>; default stays 8084.
+# Captures are for visual review; mapping assertions prove the selected subject.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- openLink: "vedansh://widget/verse?sourceId=lakshmi-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-lakshmi" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-lakshmi
+- openLink: "vedansh://widget/verse?sourceId=gayatri-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-gayatri" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-gayatri
+- openLink: "vedansh://widget/verse?sourceId=khatu-shyam-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-khatu-shyam" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-khatu-shyam
+- openLink: "vedansh://widget/verse?sourceId=shani-aarti&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-shani" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-shani
+- openLink: "vedansh://widget/verse?sourceId=dattatreya-aarti&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-dattatreya" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-dattatreya
+- openLink: "vedansh://widget/verse?sourceId=om-jai-gange-mata&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-ganga" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-ganga
+- openLink: "vedansh://widget/verse?sourceId=kalika-ashtakam&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-kali" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-kali
+- openLink: "vedansh://widget/verse?sourceId=kubera-aarti&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-kubera" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-kubera
+- openLink: "vedansh://widget/verse?sourceId=santoshi-mata-aarti&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-santoshi" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-santoshi
+- openLink: "vedansh://widget/verse?sourceId=ahoi-mata-aarti&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-ahoi" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-ahoi
+- openLink: "vedansh://widget/verse?sourceId=vaishno-devi-aarti&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-vaishno" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-vaishno
+- openLink: "vedansh://widget/verse?sourceId=ekadashi-mata-aarti&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-ekadashi" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-ekadashi
+- openLink: "vedansh://widget/verse?sourceId=tulsi-aarti&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-tulsi" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-tulsi
+- openLink: "vedansh://widget/verse?sourceId=shakambhari-aarti&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-shakambhari" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-shakambhari
+- openLink: "vedansh://widget/verse?sourceId=radhashtakam&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-radha" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-radha
+- openLink: "vedansh://widget/verse?sourceId=subrahmanya-ashtakam&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-kartikeya" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-kartikeya
+- openLink: "vedansh://widget/verse?sourceId=narasimha-ashtakam&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-narasimha" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-narasimha
+- openLink: "vedansh://widget/verse?sourceId=navagraha-stotram&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-navagraha" }
+    timeout: 15000
+- assertVisible: { id: "devotional-share-verse" }
+- takeScreenshot: e2e-shots/daily-art-navagraha

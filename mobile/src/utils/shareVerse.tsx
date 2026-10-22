@@ -264,11 +264,16 @@ type ProseCardSpec = {
 };
 
 /** Preview uses the measured complete card, so a long meaning is never clipped. */
-function DevotionalPreview({ card }: { card: ProseCardSpec }) {
+export function DevotionalPreview({ card }: { card: ProseCardSpec }) {
   const [height, setHeight] = useState(CARD_HEIGHT);
-  return <ScaledShareCard width={216} metrics={{ width: CARD_WIDTH, height }}>
-    <ProseShareCard {...card} onHeight={setHeight} />
-  </ScaledShareCard>;
+  const identity = JSON.stringify([card.header, card.lang, card.page.devotional]);
+  const [painted, setPainted] = useState<string | null>(null);
+  const onReady = useCallback((ready: boolean) => setPainted(ready ? identity : null), [identity]);
+  return <View testID={painted === identity ? 'devotional-preview-ready' : 'devotional-preview-loading'}>
+    <ScaledShareCard width={216} metrics={{ width: CARD_WIDTH, height }}>
+      <ProseShareCard {...card} onHeight={setHeight} onIllustrationReady={onReady} />
+    </ScaledShareCard>
+  </View>;
 }
 
 /** The picture card is already 9:16: it is captured at the story size and never framed. */

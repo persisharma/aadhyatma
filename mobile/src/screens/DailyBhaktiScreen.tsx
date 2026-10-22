@@ -18,7 +18,8 @@ import { aartiIndexById } from '@/data/aarti/ids';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
 import { DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
-import { devotionalFrameColors } from '@/theme/devotionalFrame';
+import { devotionalFrameColors, devotionalReaderVerseLeading } from '@/theme/devotionalFrame';
+import { devotionalCharanRows } from '@/utils/devotionalShareLayout';
 import { devotionalArtForVerse } from '@/data/devotionalShareArt';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -91,6 +92,7 @@ export default function DailyBhaktiScreen() {
   const verseLines = verse
     ? verseLinesByLang(lang, verse.textHi, verse.textEn.length > 0 ? verse.textEn : verse.textHi)
     : [];
+  const verseType = verseToken(lang, typography);
 
   if (!verse) {
     return (
@@ -157,9 +159,12 @@ export default function DailyBhaktiScreen() {
             <DevotionalVerseBody
               width={cardWidth} inset={cardWidth * 55 / 1080}
               header={[contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn), contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')].filter(Boolean).join(' · ')}
-              verse={verseLines.join('\n')} meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
+              // One charan per row when each fits; otherwise the stored lines flow
+              // together so a short fragment can use the previous row.
+              verse={verseLines.join(' ')} verseRows={devotionalCharanRows(lang, verse.textHi, verseLines)}
+              meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
               lang={lang} art={devotionalArtForVerse(verse)}
-              verseStyle={{ ...verseToken(lang, typography), color: colors.ink }}
+              verseStyle={{ ...verseType, lineHeight: lang === 'hi' ? devotionalReaderVerseLeading(verseType.fontSize) : verseType.lineHeight, color: colors.ink }}
               meaningStyle={{ ...meaningToken(lang, typography), color: colors.inkSoft }} />
             <DevotionalFooter art={devotionalArtForVerse(verse)} width={cardWidth} />
           </View>

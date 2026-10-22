@@ -69,6 +69,9 @@ test('Bhakti uses the same deity artwork, framed meaning and footer as export', 
   expect(tree!.root.findByType(DevotionalHero).props.art).toBe(art);
   expect(tree!.root.findByType(DevotionalFooter).props.art).toBe(art);
   expect(tree!.root.findByType(DevotionalVerseBody).props.meaning).toBe(verse.meaningHi);
+  expect(tree!.root.findByType(DevotionalVerseBody).props.verse).toBe(verse.textHi.join(' '));
+  expect(tree!.root.findByType(DevotionalVerseBody).props.verseRows).toEqual(verse.textHi.map(l => l.trim()));
+  expect(tree!.root.findByType(DevotionalVerseBody).props.verseStyle).toMatchObject({ fontSize: 23, lineHeight: 36 });
   expect(tree!.root.findAllByProps({ testID: 'devotional-meaning-frame' }).length).toBeGreaterThan(0);
   const strings = tree!.root.findAllByType(Text).map(n => n.props.children);
   expect(strings).not.toContain('Daily Verse');

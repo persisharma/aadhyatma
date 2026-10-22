@@ -25,8 +25,16 @@ it('preserves every Daily Bhakti verse and meaning in all four languages in one 
     }
   }
 });
+it('gives a stored chaupai couplet one charan per row on the share card', () => {
+  const v = getVersePool().find(v => v.sourceId === 'sundarkand' && v.textHi.length === 2 && v.textHi.every(l => /। \S.*॥$/.test(l)))!;
+  const prepared = dailyBhaktiShareable(v).scopes[0].prepared!;
+  expect(prepared.hi.pages[0].devotional!.verseRows).toEqual(v.textHi.flatMap(l => l.split(/(?<=।) /)));
+  for (const lang of ['gu', 'kn'] as Lang[]) expect(prepared[lang].pages[0].devotional!.verseRows).toHaveLength(4);
+  const gita = getVersePool().find(v => v.sourceId === 'bhagavad-gita')!;
+  expect(dailyBhaktiShareable(gita).scopes[0].prepared!.hi.pages[0].devotional!.verseRows).toBeUndefined();
+});
 it('maps deity families and per-verse exceptions conservatively', () => {
-  expect(new Set(Object.values(devotionalSourceArt)).size).toBe(10);
+  expect(new Set(Object.values(devotionalSourceArt)).size).toBe(28);
   expect(devotionalArtForVerse({ sourceId: 'unknown', verseIndex: 0 })).toBe('prayer');
   expect(devotionalArtForVerse({ sourceId: 'gayatri-mantra', verseIndex: 0 })).toBe('surya');
   expect(devotionalArtForVerse({ sourceId: 'vidyarambha-prarthana', verseIndex: 1 })).toBe('ganesha');

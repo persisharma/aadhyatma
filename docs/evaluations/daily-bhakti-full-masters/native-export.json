@@ -1,0 +1,24 @@
+{
+  "hi": {
+    "file": "native/lakshmi-hi-export.png",
+    "bytes": 3148036,
+    "sha256": "4ab0d38308c920553197db534d97501ab5f74f030f29b583637abda0a14ea4a8",
+    "dimensions": [
+      "  pixelWidth: 1080",
+      "  pixelHeight: 1456"
+    ],
+    "handedTo": "iOS system share sheet",
+    "sentToOtherPerson": false
+  },
+  "kn": {
+    "file": "native/lakshmi-kn-export.png",
+    "bytes": 3132322,
+    "sha256": "a91c5c1240e86b6281dffeb807a38c3f90d8dc61f80d93f93e64ec4c24f6589c",
+    "dimensions": [
+      "  pixelWidth: 1080",
+      "  pixelHeight: 1702"
+    ],
+    "handedTo": "iOS system share sheet",
+    "sentToOtherPerson": false
+  }
+}

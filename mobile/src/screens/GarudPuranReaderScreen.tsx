@@ -17,6 +17,7 @@ import { getGarudPuranChapter, garudPuranChaptersManifest, type GarudPuranPage }
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import { readingParchment } from '@/data/backgroundAsset';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -134,6 +135,7 @@ export default function GarudPuranReaderScreen({ navigation, route }: Props) {
       updatedAt: Date.now(),
     });
   }, [chapter, currentIndex, setProgress]);
+  useReadDwell('garud-puran', chapter?.chapter, chapter ? currentIndex : -1);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 

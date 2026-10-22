@@ -1,0 +1,87 @@
+# Read-Coverage Smoke Test (design.md §84 — what has been read, per Granth)
+#
+# Stays on Bhagavad Gītā 1.1 past the 3 s read rule, backs out to the chapter
+# index and asserts the progress summary counts that verse; then resets with
+# the summary's control, undoes it, resets again and lets the 6 s undo lapse —
+# the summary disappears once nothing is read.
+#
+# Coverage shows on the summary's own a11y label ("N of 701 read, …") because
+# chapter/library card labels are deliberately unchanged (other flows match
+# on them); per-card counts ride on accessibilityValue and are unit-tested in
+# components/__tests__/readCoverageUi.test.tsx.
+#
+# English first so chapter cards read "Chapter N. …" (see gita-smoke).
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+- runFlow: _open-settings.yaml
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- tapOn: "Sacred Books\\..*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Bhagavad Gītā\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Bhagavad Gītā\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# Fresh install (clearState): nothing read yet, so no summary on the index.
+- extendedWaitUntil:
+    visible: "Chapter 1\\..*Tap to open\\."
+    timeout: 15000
+- assertNotVisible: { id: "granth-progress-summary" }
+
+# ── Read 1.1: stay on it past the 3 s dwell ──
+- tapOn: "Chapter 1\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Maestro has no sleep; an optional wait for an element that never appears
+# holds the reader on 1.1 for 5 s and then carries on.
+- extendedWaitUntil:
+    visible: { id: "read-coverage-never-rendered" }
+    timeout: 5000
+    optional: true
+- tapOn: "Back to chapters"
+- waitForAnimationToEnd
+
+# ── The index now opens with the summary, counting that one verse ──
+- extendedWaitUntil:
+    visible: "1 of 701 read.*"
+    timeout: 10000
+
+# ── Reset → undo restores it ──
+- tapOn: { id: "granth-progress-reset" }
+- waitForAnimationToEnd
+- tapOn: { id: "progress-reset-confirm" }
+- waitForAnimationToEnd
+- assertVisible: { id: "progress-reset-undo" }
+- tapOn: { id: "progress-reset-undo" }
+- waitForAnimationToEnd
+- assertVisible: "1 of 701 read.*"
+
+# ── Reset again and let the undo lapse → summary gone ──
+- tapOn: { id: "granth-progress-reset" }
+- waitForAnimationToEnd
+- tapOn: { id: "progress-reset-confirm" }
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    notVisible: { id: "progress-reset-undo" }
+    timeout: 12000
+- assertNotVisible: { id: "granth-progress-summary" }
+- stopApp:
+    appId: com.prashantsharma.vedansh

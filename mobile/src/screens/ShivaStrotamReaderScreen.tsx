@@ -21,6 +21,7 @@ import {
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import JumpToStartButton from '@/components/JumpToStartButton';
@@ -134,6 +135,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
       updatedAt: Date.now(),
     });
   }, [chapter, currentIndex, setProgress]);
+  useReadDwell('shiva-strotam', chapter?.chapter, chapter ? currentIndex : -1);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 

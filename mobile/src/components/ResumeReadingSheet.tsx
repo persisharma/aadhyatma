@@ -6,6 +6,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, titleFontByLang } from '@/utils/langType';
+import ReadProgressBar from '@/components/ReadProgressBar';
 
 type Props = {
   visible: boolean;
@@ -17,6 +18,17 @@ type Props = {
   onResume: () => void;
   onStartOver: () => void;
   onDismiss: () => void;
+  /** Read-coverage line inside the location card, e.g. "23 / 43 पठित · कुल 25%" (design.md §84). */
+  coverageHi?: string;
+  coverageEn?: string;
+  /** Fill of the bar under the coverage line, 0–100. */
+  coveragePct?: number;
+  /** The first unread verse; shows the "Next unread" action when set. */
+  nextUnreadHi?: string;
+  nextUnreadEn?: string;
+  onNextUnread?: () => void;
+  /** Opens the text's subsection list; set only for texts that have one. */
+  onAllChapters?: () => void;
 };
 
 export default function ResumeReadingSheet({
@@ -28,6 +40,13 @@ export default function ResumeReadingSheet({
   onResume,
   onStartOver,
   onDismiss,
+  coverageHi,
+  coverageEn,
+  coveragePct,
+  nextUnreadHi,
+  nextUnreadEn,
+  onNextUnread,
+  onAllChapters,
 }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
@@ -166,6 +185,14 @@ export default function ResumeReadingSheet({
             >
               {contentByLang(lang, locationHi, locationEn)}
             </Text>
+            {coverageHi && coverageEn ? (
+              <View style={styles.coverage} testID="resume-coverage">
+                {coveragePct != null ? <ReadProgressBar pct={coveragePct} /> : null}
+                <Text style={[styles.coverageText, { color: colors.inkSoft }]}>
+                  {contentByLang(lang, coverageHi, coverageEn)}
+                </Text>
+              </View>
+            ) : null}
           </View>
 
           <Pressable
@@ -194,6 +221,33 @@ export default function ResumeReadingSheet({
             </Text>
           </Pressable>
 
+          {onNextUnread && nextUnreadHi && nextUnreadEn ? (
+            <Pressable
+              onPress={onNextUnread}
+              accessibilityRole="button"
+              accessibilityLabel="Next unread verse"
+              testID="resume-next-unread"
+              style={({ pressed }) => [
+                styles.secondaryBtn,
+                styles.stackedBtn,
+                { borderColor: colors.cardActiveBorder, borderRadius: radii.md },
+                pressed && { opacity: 0.7 },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.secondaryBtnText,
+                  { color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily },
+                ]}
+              >
+                अगला अपठित · Next unread
+              </Text>
+              <Text style={[styles.btnCaption, { color: colors.inkMuted }]}>
+                {contentByLang(lang, nextUnreadHi, nextUnreadEn)}
+              </Text>
+            </Pressable>
+          ) : null}
+
           <Pressable
             onPress={onStartOver}
             accessibilityRole="button"
@@ -219,27 +273,54 @@ export default function ResumeReadingSheet({
             >
               आरंभ से पढ़ें · Start Over
             </Text>
+            {coverageHi ? (
+              // Start Over moves only the position; read marks are separate (design.md §84).
+              <Text style={[styles.btnCaption, { color: colors.inkMuted }]}>
+                पठित चिह्न बने रहेंगे · Read marks stay
+              </Text>
+            ) : null}
           </Pressable>
 
-          <Pressable
-            onPress={onDismiss}
-            accessibilityRole="button"
-            accessibilityLabel="Cancel"
-            hitSlop={12}
-            style={styles.cancelBtn}
-          >
-            <Text
-              style={[
-                styles.cancelBtnText,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.cardLatin.fontFamily,
-                },
-              ]}
+          <View style={styles.footerRow}>
+            {onAllChapters ? (
+              <Pressable
+                onPress={onAllChapters}
+                accessibilityRole="button"
+                accessibilityLabel="All chapters"
+                testID="resume-all-chapters"
+                hitSlop={12}
+                style={styles.cancelBtn}
+              >
+                <Text
+                  style={[
+                    styles.linkText,
+                    { color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily },
+                  ]}
+                >
+                  सभी अध्याय · All chapters
+                </Text>
+              </Pressable>
+            ) : null}
+            <Pressable
+              onPress={onDismiss}
+              accessibilityRole="button"
+              accessibilityLabel="Cancel"
+              hitSlop={12}
+              style={styles.cancelBtn}
             >
-              Cancel
-            </Text>
-          </Pressable>
+              <Text
+                style={[
+                  styles.cancelBtnText,
+                  {
+                    color: colors.inkMuted,
+                    fontFamily: typography.cardLatin.fontFamily,
+                  },
+                ]}
+              >
+                Cancel
+              </Text>
+            </Pressable>
+          </View>
         </Pressable>
       </Pressable>
     </Modal>
@@ -330,6 +411,32 @@ const styles = StyleSheet.create({
     minHeight: 44,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  coverage: {
+    alignSelf: 'stretch',
+    marginTop: 10,
+    gap: 6,
+  },
+  coverageText: {
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  stackedBtn: {
+    marginBottom: 10,
+  },
+  btnCaption: {
+    fontSize: 11,
+    marginTop: 3,
+    textAlign: 'center',
+  },
+  footerRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 24,
+  },
+  linkText: {
+    fontSize: 13,
+    textDecorationLine: 'underline',
   },
   cancelBtnText: {
     fontSize: 13,
