@@ -1,0 +1,100 @@
+# All nine recompressed masters must decode from R2, retain the full card,
+# export a complete PNG and remain usable after a normal process restart.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- openLink: "vedansh://widget/verse?sourceId=krishna-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-krishna" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-krishna
+- openLink: "vedansh://widget/verse?sourceId=shiv-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-shiva" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-shiva
+- openLink: "vedansh://widget/verse?sourceId=durga-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-durga" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-durga
+- openLink: "vedansh://widget/verse?sourceId=saraswati-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-saraswati" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-saraswati
+- openLink: "vedansh://widget/verse?sourceId=vishnu-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-vishnu" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-vishnu
+- openLink: "vedansh://widget/verse?sourceId=hanuman-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-hanuman" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-hanuman
+- openLink: "vedansh://widget/verse?sourceId=ram-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-rama" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-rama
+- openLink: "vedansh://widget/verse?sourceId=surya-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-surya" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-surya
+- openLink: "vedansh://widget/verse?sourceId=ganesh-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-ganesha" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-ganesha
+- tapOn: "Share verse"
+- extendedWaitUntil:
+    visible: "Card language: Hindi"
+    timeout: 20000
+- tapOn: "Card language: Hindi"
+- extendedWaitUntil:
+    visible: { id: "devotional-preview-ready" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-ganesha-preview
+- tapOn: "Share to other apps"
+- extendedWaitUntil:
+    visible: "Copy|Save Image|AirDrop"
+    timeout: 30000
+- takeScreenshot: e2e-shots/daily-compressed-ganesha-export-sheet
+- stopApp:
+    appId: com.prashantsharma.vedansh
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "आज के लिए|FOR TODAY"
+    timeout: 30000
+- openLink: "vedansh://widget/verse?sourceId=ganesh-chalisa&verseIndex=0"
+- waitForAnimationToEnd:
+    timeout: 5000
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-ganesha" }
+    timeout: 20000
+- takeScreenshot: e2e-shots/daily-compressed-ganesha-cached

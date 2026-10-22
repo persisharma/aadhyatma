@@ -1,0 +1,2803 @@
+
+> vedansh@0.1.0 test
+> npm run typecheck && npm run test:widgets && npm run test:readers && npm run test:engine && npm run test:data && npm run test:ask
+
+
+> vedansh@0.1.0 typecheck
+> tsc --noEmit
+
+
+> vedansh@0.1.0 test:widgets
+> tsx --test src/widgets/__tests__/catalog.test.ts src/widgets/__tests__/contract.test.ts src/widgets/__tests__/planPayload.test.ts src/widgets/__tests__/planner.test.ts src/widgets/__tests__/startup.test.ts
+
+✔ every catalog entry offers its recommended size and a unique native kind (0.496041ms)
+✔ the verse is offered wide-first and the Panchang small-first (0.097ms)
+✔ iOS supportedFamilies match the sizes the gallery advertises (1.287792ms)
+✔ every Android provider in the catalog is a real class, a registered receiver, and has its info resource (2.007667ms)
+✔ only the small verse cell reads the excerpt — wider cells read the full lines (0.854958ms)
+✔ size labels exist in all four reading languages (0.141333ms)
+✔ every iOS family branch attaches its own widget URL (0.422125ms)
+✔ every offered non-Lock-Screen size has a plate at its exact pixel budget, and no strays (1.969333ms)
+✔ iOS loads each plate by name and refuses one over the family pixel budget (0.645667ms)
+✔ Android shows each provider's plates only through the guarded art step (1.254791ms)
+✔ both native widgets draw the widget text tokens the plates were toned for (0.781834ms)
+✔ decodes the committed v1 cross-language document (16.237833ms)
+✔ fails closed for missing, corrupt, newer schema, and expired payloads (0.680125ms)
+✔ generatedAt does not defeat the valid 14-day offline window (0.634209ms)
+✔ rejects partially decoded dates and localizations (0.279167ms)
+✔ rejects native links whose query does not exactly match the payload (0.88775ms)
+✔ the chain decodes, and its links stay ordered, single-ended and anchored (1.550625ms)
+✔ dedup key changes for every planner trigger (0.332125ms)
+✔ real bundle planner produces a dated, validated 14-day Panchang and verse window (202.553917ms)
+✔ every dated day carries a chain that agrees with the app’s live tithi (138.133209ms)
+✔ a handover past midnight carries its date, so “तक 5:22 AM” never reads as this morning (97.020417ms)
+✔ Panchang dates and timings are stable when the process zone is non-IST (173.754291ms)
+✔ japa streak ignores reading-only days and may end yesterday (0.968708ms)
+✔ builds true >108 totals and an exact mantra deep link (16.419375ms)
+✔ Japam uses the device-local UserActivity day while Panchang remains represented IST (1.038042ms)
+✔ two-line policy is deterministic and bounded (0.377708ms)
+✔ two-line excerpt never leaves a dangling virama/joiner before the ellipsis (◌ U+25CC) (0.265792ms)
+✔ the flowed verse the wide/large cells render is complete and never ellipsized (0.167042ms)
+✔ the running tithi turns over ON the handover, not at midnight (0.201708ms)
+✔ a day with no chain falls back to its sunrise tithi (0.071125ms)
+✔ startup coordinator keeps planner and Panchang graph behind a dynamic boundary (0.8205ms)
+✔ native consumers include recovery and freshness validation (0.904208ms)
+✔ both native readers select the running tithi and refresh on its handover (0.747375ms)
+✔ iOS emits offline dated entries, one kind per content type, and registers copied fonts (0.697584ms)
+✔ config plugins wire the canonical fixture into both native decoders (0.631125ms)
+✔ App resolves a cold widget URL or launching notification before navigation mounts (1.542708ms)
+✔ widget planning selects indexed verses without materialising the complete pool (1.029792ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 935.684167
+
+> vedansh@0.1.0 test:readers
+> npm run test:readers:1 && npm run test:readers:2 && npm run test:readers:3
+
+
+> vedansh@0.1.0 test:readers:1
+> jest --config jest.config.js --runInBand --shard=1/3
+
+PASS src/screens/__tests__/VidhiScreens.test.tsx (6.53 s)
+  ● Console
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+PASS src/utils/__tests__/dailyBhaktiShare.test.ts
+PASS src/screens/__tests__/NamkaranExperience.test.tsx
+PASS src/screens/__tests__/PitruSmaranScreens.test.tsx
+PASS src/panchang/__tests__/jest/panchangDayRouting.jest.test.ts
+PASS src/utils/__tests__/shareCardPages.test.ts
+PASS src/screens/__tests__/ValmikiRamayanReaderScreen.test.tsx
+PASS src/screens/__tests__/RamStutiReaderScreen.test.tsx
+PASS src/theme/__tests__/themeFontScale.test.tsx
+PASS src/components/__tests__/readerArtworkPlacement.test.tsx
+PASS src/utils/__tests__/listingShare.test.ts
+PASS src/screens/__tests__/AshtakamReaderScreen.test.tsx
+PASS src/data/__tests__/artworkDelivery.jest.test.ts
+PASS src/components/__tests__/ComicPanel.test.tsx
+PASS src/data/gita-saar/__tests__/gitaSaarContent.test.ts
+PASS src/screens/__tests__/KavachamReaderScreen.test.tsx
+PASS src/components/__tests__/CalendarDatePicker.test.tsx
+PASS src/screens/__tests__/GrahaReferenceScreen.test.tsx
+PASS src/components/__tests__/TodayStrip.test.tsx
+  ● Console
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      73 | function publish(next: RosterState): void {
+      74 |   state = next;
+    > 75 |   listeners.forEach((listener) => listener(next));
+         |                                   ^
+      76 | }
+      77 |
+      78 | export function getRosterSnapshot(): RosterState {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at listener (src/panchang/birthProfileStore.ts:75:35)
+          at Set.forEach (<anonymous>)
+      at forEach (src/panchang/birthProfileStore.ts:75:13)
+      at publish (src/panchang/birthProfileStore.ts:138:9)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+    console.error
+      An update to JanmaTithiDayChip inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+
+PASS src/components/__tests__/ComicArt.test.tsx
+  ● Console
+
+    console.warn
+      [comic-art] page-01 download failed Error: offline
+
+      51 |     }).catch(error => {
+      52 |       if (active) {
+    > 53 |         if (__DEV__) console.warn(`[comic-art] ${panel.art} download failed`, String(error));
+         |                              ^
+      54 |         setState({ art: panel.art, failed: true });
+      55 |       }
+      56 |     });
+
+      at warn (src/components/ComicArt.tsx:53:30)
+
+PASS src/screens/__tests__/JapamCounterMala.test.tsx
+PASS src/screens/__tests__/GocharExperience.test.tsx
+PASS src/screens/__tests__/SearchScreenPreparing.test.tsx
+PASS src/screens/__tests__/JapamAlarmEditor.test.tsx
+PASS src/screens/__tests__/PitruPakshaShikshaScreen.test.tsx
+PASS src/data/__tests__/devotionalShareArt.jest.test.ts
+PASS src/components/__tests__/LocationPickerModal.test.tsx
+PASS src/components/__tests__/LibraryCardNewBadge.test.tsx
+PASS src/data/__tests__/dailyBhaktiArtCoverage.jest.test.ts
+PASS src/utils/__tests__/kidsStoryShare.test.ts
+PASS src/screens/__tests__/VratKathaReaderScreen.test.tsx
+PASS src/data/vastu/__tests__/declinationGrid.test.ts
+PASS src/screens/__tests__/NowPlayingScreen.test.tsx
+PASS src/screens/__tests__/SaraswatiStotramReaderScreen.test.tsx
+PASS src/screens/__tests__/SankalpTouchpoints.test.tsx
+PASS src/screens/__tests__/KidsStoryReaderScreen.test.tsx
+PASS src/components/__tests__/DailyBhaktiNudge.test.tsx
+PASS src/screens/__tests__/ComicReaderScreen.test.tsx
+PASS src/components/__tests__/AskAnswerCard.test.tsx
+PASS src/data/__tests__/aartiExpansion.jest.test.ts
+PASS src/components/__tests__/LanguagePickerSheet.test.tsx
+PASS src/components/__tests__/TrackCard.test.tsx
+PASS src/components/__tests__/shareCardBackground.test.tsx
+PASS src/screens/__tests__/GarudPuranChaptersScreen.test.tsx
+PASS src/components/__tests__/DeityIcon.test.tsx
+PASS src/components/__tests__/DayVaasCards.test.tsx
+PASS src/components/__tests__/FeatureIcon.test.tsx
+PASS src/components/__tests__/UpdateReadyModal.test.tsx
+PASS src/data/daan/__tests__/daanContent.test.ts
+PASS src/components/__tests__/SadhanaCompletionOverlay.test.tsx
+PASS src/components/__tests__/FestiveToran.test.tsx
+PASS src/components/__tests__/namkaranTypeFit.test.tsx
+PASS src/data/__tests__/comics.jest.test.ts
+PASS src/components/video/__tests__/DockedYouTubePlayer.test.tsx
+PASS src/contexts/__tests__/PanchangLocationContext.test.tsx
+PASS src/navigation/__tests__/stackLoadBoundary.test.tsx
+PASS src/panchang/__tests__/jest/birthProfiles.jest.test.ts
+PASS src/components/__tests__/paintedThumbs.test.ts
+PASS src/components/__tests__/RoutineCelebrationOverlay.test.tsx
+PASS src/components/__tests__/BackgroundLayer.test.tsx
+PASS src/vastu/__tests__/useCompassHeading.test.tsx
+PASS src/navigation/__tests__/screenPrefetch.test.tsx
+PASS src/components/__tests__/JumpToStartButton.test.tsx
+PASS src/components/__tests__/ObservanceDetailHero.test.tsx
+PASS src/components/__tests__/MuhuratGlanceCardTithi.test.tsx
+PASS src/components/__tests__/ReadingProgressBar.test.tsx
+PASS src/data/__tests__/tourContent.jest.test.ts
+PASS src/contexts/__tests__/VratFollowContext.test.tsx
+PASS src/notifications/__tests__/festiveScheduler.jest.test.ts
+PASS src/readAloud/__tests__/voices.test.ts
+PASS src/contexts/__tests__/AudioPlayerContext.test.tsx
+PASS src/utils/__tests__/transliterate.test.ts
+PASS src/data/__tests__/ratingPrompt.jest.test.ts
+PASS src/panchang/__tests__/jest/pitruSmaranSolves.jest.test.ts
+PASS src/utils/__tests__/shareText.test.ts
+PASS src/panchang/__tests__/jest/useJyotishNow.jest.test.tsx
+PASS src/components/__tests__/ProseParagraph.test.tsx
+PASS src/utils/__tests__/backgroundAssetCache.test.ts
+PASS src/panchang/__tests__/jest/panchangDayCache.jest.test.ts
+PASS src/utils/__tests__/useTodayKey.test.tsx
+PASS src/screens/__tests__/PitruSmaranTouchpoints.test.ts
+PASS src/panchang/__tests__/jest/pincodePrefs.jest.test.ts
+PASS src/components/__tests__/ObservanceListRow.test.tsx
+PASS src/panchang/__tests__/jest/janmaTithiPrefs.jest.test.ts
+PASS src/vastu/__tests__/homeHandoff.test.ts
+PASS src/utils/__tests__/metaAppEvents.test.ts
+PASS src/utils/__tests__/metaActivationController.test.ts
+PASS src/vastu/__tests__/assessHome.test.ts
+PASS src/theme/__tests__/fontScale.test.ts
+PASS src/navigation/__tests__/vidhiBackNavigation.test.ts
+PASS src/components/__tests__/dailyBhaktiNudgeView.test.ts
+
+Test Suites: 91 passed, 91 total
+Tests:       878 passed, 878 total
+Snapshots:   0 total
+Time:        29.825 s, estimated 30 s
+Ran all test suites.
+
+> vedansh@0.1.0 test:readers:2
+> jest --config jest.config.js --runInBand --shard=2/3
+
+PASS src/components/__tests__/MuhuratReminderScheduler.test.tsx (6.515 s)
+PASS src/utils/__tests__/shareVerseTarget.test.tsx (6.642 s)
+  ● Console
+
+    console.warn
+      Clipboard has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-clipboard/clipboard' instead of 'react-native'. See https://github.com/react-native-clipboard/clipboard
+
+      69 | }));
+      70 |
+    > 71 | const setString = jest.spyOn(Clipboard, 'setString').mockImplementation(() => {});
+         |                              ^
+      72 | const rnShare = jest
+      73 |   .spyOn(Share, 'share')
+      74 |   .mockResolvedValue({ action: 'sharedAction' } as Awaited<ReturnType<typeof Share.share>>);
+
+      at warn (node_modules/react-native/Libraries/Utilities/warnOnce.js:27:11)
+      at Object.warnOnce [as Clipboard] (node_modules/react-native/index.js:181:5)
+      at Object.Clipboard (src/utils/__tests__/shareVerseTarget.test.tsx:71:30)
+
+PASS src/screens/__tests__/readerReadAloud.test.tsx
+PASS src/utils/__tests__/shareBackgroundReady.test.tsx
+PASS src/screens/__tests__/PrashnaExperience.test.tsx
+PASS src/screens/__tests__/MuhuratFollow.test.tsx
+PASS src/screens/__tests__/KundaliReportExperience.test.tsx
+PASS src/screens/__tests__/TheerthDetailScreen.test.tsx
+PASS src/screens/__tests__/MuhuratPersonalStrip.test.tsx
+PASS src/screens/__tests__/GitaReaderScreen.test.tsx
+PASS src/screens/__tests__/ObservanceDetailScreen.test.tsx
+  ● Console
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+    console.error
+      An update to GitaLanguageProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      90 |       .catch(() => undefined)
+      91 |       .finally(() => {
+    > 92 |         if (!cancelled) setIsLoading(false);
+         |                         ^
+      93 |       });
+      94 |     return () => {
+      95 |       cancelled = true;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/data/gita/language.tsx:92:25)
+
+PASS src/screens/__tests__/DurgaStotramReaderScreen.test.tsx
+PASS src/screens/__tests__/readerProgressBar.test.tsx
+PASS src/screens/__tests__/JanmaTithiScreens.test.tsx
+PASS src/screens/__tests__/GunaMilanExperience.test.tsx
+PASS src/screens/__tests__/GitaSaarReaderScreen.test.tsx
+PASS src/screens/__tests__/GharVastuScreens.test.tsx
+PASS src/components/__tests__/TodayRecommendationsRow.test.tsx
+PASS src/screens/__tests__/VastuDishaScreen.test.tsx
+PASS src/components/__tests__/DevotionalShareCard.test.tsx
+PASS src/notifications/__tests__/dayAngaResolver.jest.test.ts
+PASS src/screens/__tests__/KulParamparaScreens.test.tsx
+PASS src/panchang/__tests__/jest/backgroundWork.jest.test.ts
+PASS src/screens/__tests__/RoutineCompletion.test.tsx
+PASS src/screens/__tests__/StutiReaderScreen.test.tsx
+PASS src/screens/__tests__/ShivaStrotamReaderScreen.test.tsx
+PASS src/navigation/__tests__/tabTargets.test.ts
+PASS src/screens/__tests__/GharVastuPadaRing.test.tsx
+PASS src/screens/__tests__/KrishnaStotramReaderScreen.test.tsx
+PASS src/screens/__tests__/RamcharitmanasReaderScreen.test.tsx
+PASS src/screens/__tests__/GaneshStotramReaderScreen.test.tsx
+PASS src/screens/__tests__/DailyBhaktiScreen.test.tsx
+PASS src/components/__tests__/DevotionalFrame.test.tsx
+PASS src/screens/__tests__/SanskarReaderScreen.test.tsx
+PASS src/screens/__tests__/HanumanAshtakReaderScreen.test.tsx
+PASS src/components/__tests__/ShareTargetSheet.test.tsx
+PASS src/components/__tests__/ReaderActionTargets.test.tsx
+PASS src/contexts/__tests__/panchangCalendarSystem.test.tsx
+PASS src/components/__tests__/SankalpTodayCard.test.tsx
+PASS src/components/__tests__/CategoryIcon.test.tsx
+PASS src/components/__tests__/KidsStoriesHomeCard.test.tsx
+PASS src/components/__tests__/ReadingSizePickerSheet.test.tsx
+PASS src/components/__tests__/GrahaReadingListNarrative.test.tsx
+PASS src/contexts/__tests__/JapamAlarmsContext.test.tsx
+PASS src/components/__tests__/TimeStepper.test.tsx
+PASS src/components/__tests__/PitruPakshaDayChip.test.tsx
+PASS src/vastu/__tests__/useDikFeedback.test.tsx
+PASS src/contexts/__tests__/JapamCounterContext.test.tsx
+  ● Console
+
+    console.error
+      An update to JapamCounterProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      71 |       })
+      72 |       .catch(() => undefined)
+    > 73 |       .finally(() => setIsLoading(false));
+         |                      ^
+      74 |   }, []);
+      75 |
+      76 |   const persist = useCallback((next: EntryMap) => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/JapamCounterContext.tsx:73:22)
+
+    console.error
+      An update to JapamCounterProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      71 |       })
+      72 |       .catch(() => undefined)
+    > 73 |       .finally(() => setIsLoading(false));
+         |                      ^
+      74 |   }, []);
+      75 |
+      76 |   const persist = useCallback((next: EntryMap) => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/JapamCounterContext.tsx:73:22)
+
+    console.error
+      An update to JapamCounterProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      71 |       })
+      72 |       .catch(() => undefined)
+    > 73 |       .finally(() => setIsLoading(false));
+         |                      ^
+      74 |   }, []);
+      75 |
+      76 |   const persist = useCallback((next: EntryMap) => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/JapamCounterContext.tsx:73:22)
+
+    console.error
+      An update to JapamCounterProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      71 |       })
+      72 |       .catch(() => undefined)
+    > 73 |       .finally(() => setIsLoading(false));
+         |                      ^
+      74 |   }, []);
+      75 |
+      76 |   const persist = useCallback((next: EntryMap) => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/JapamCounterContext.tsx:73:22)
+
+    console.error
+      An update to JapamCounterProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      71 |       })
+      72 |       .catch(() => undefined)
+    > 73 |       .finally(() => setIsLoading(false));
+         |                      ^
+      74 |   }, []);
+      75 |
+      76 |   const persist = useCallback((next: EntryMap) => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/JapamCounterContext.tsx:73:22)
+
+    console.error
+      An update to JapamCounterProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      71 |       })
+      72 |       .catch(() => undefined)
+    > 73 |       .finally(() => setIsLoading(false));
+         |                      ^
+      74 |   }, []);
+      75 |
+      76 |   const persist = useCallback((next: EntryMap) => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/JapamCounterContext.tsx:73:22)
+
+    console.error
+      An update to JapamCounterProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      71 |       })
+      72 |       .catch(() => undefined)
+    > 73 |       .finally(() => setIsLoading(false));
+         |                      ^
+      74 |   }, []);
+      75 |
+      76 |   const persist = useCallback((next: EntryMap) => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/JapamCounterContext.tsx:73:22)
+
+PASS src/components/__tests__/IndiaMap.test.tsx
+PASS src/contexts/__tests__/TourContext.test.tsx
+PASS src/contexts/__tests__/NotificationPreferencesContext.test.tsx
+PASS src/components/__tests__/ArcStrip.test.tsx
+PASS src/notifications/__tests__/deepLink.jest.test.tsx
+PASS src/components/__tests__/shareCardFit.test.tsx
+PASS src/contexts/__tests__/ReadAloudContext.test.tsx
+PASS src/notifications/__tests__/pushTokenUpload.jest.test.ts
+PASS src/components/__tests__/OnboardingSetupSheet.test.tsx
+PASS src/data/__tests__/audioCatalog.jest.test.ts
+PASS src/contexts/__tests__/NewContentContext.test.tsx
+PASS src/components/__tests__/HomeWordmark.test.tsx
+PASS src/components/__tests__/ShareFitFrame.test.tsx
+PASS src/contexts/__tests__/RoutineContext.test.tsx
+PASS src/panchang/__tests__/jest/arcChoiceStore.jest.test.ts
+PASS src/notifications/__tests__/pushToken.jest.test.ts
+PASS src/screens/__tests__/KidsStoryCatalogScreen.test.tsx
+PASS src/components/__tests__/RateStepper.test.tsx
+  ● Console
+
+    console.error
+      An update to FontScaleProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      44 |       })
+      45 |       .finally(() => {
+    > 46 |         if (mounted) setIsLoading(false);
+         |                      ^
+      47 |       });
+      48 |     return () => {
+      49 |       mounted = false;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/FontScaleContext.tsx:46:22)
+
+    console.error
+      An update to FontScaleProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      44 |       })
+      45 |       .finally(() => {
+    > 46 |         if (mounted) setIsLoading(false);
+         |                      ^
+      47 |       });
+      48 |     return () => {
+      49 |       mounted = false;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/FontScaleContext.tsx:46:22)
+
+    console.error
+      An update to FontScaleProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      44 |       })
+      45 |       .finally(() => {
+    > 46 |         if (mounted) setIsLoading(false);
+         |                      ^
+      47 |       });
+      48 |     return () => {
+      49 |       mounted = false;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/FontScaleContext.tsx:46:22)
+
+    console.error
+      An update to FontScaleProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      44 |       })
+      45 |       .finally(() => {
+    > 46 |         if (mounted) setIsLoading(false);
+         |                      ^
+      47 |       });
+      48 |     return () => {
+      49 |       mounted = false;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/FontScaleContext.tsx:46:22)
+
+    console.error
+      An update to FontScaleProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      44 |       })
+      45 |       .finally(() => {
+    > 46 |         if (mounted) setIsLoading(false);
+         |                      ^
+      47 |       });
+      48 |     return () => {
+      49 |       mounted = false;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/FontScaleContext.tsx:46:22)
+
+    console.error
+      An update to FontScaleProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      44 |       })
+      45 |       .finally(() => {
+    > 46 |         if (mounted) setIsLoading(false);
+         |                      ^
+      47 |       });
+      48 |     return () => {
+      49 |       mounted = false;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/FontScaleContext.tsx:46:22)
+
+    console.error
+      An update to FontScaleProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      44 |       })
+      45 |       .finally(() => {
+    > 46 |         if (mounted) setIsLoading(false);
+         |                      ^
+      47 |       });
+      48 |     return () => {
+      49 |       mounted = false;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/FontScaleContext.tsx:46:22)
+
+    console.error
+      An update to FontScaleProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      44 |       })
+      45 |       .finally(() => {
+    > 46 |         if (mounted) setIsLoading(false);
+         |                      ^
+      47 |       });
+      48 |     return () => {
+      49 |       mounted = false;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/FontScaleContext.tsx:46:22)
+
+    console.error
+      An update to FontScaleProvider inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      44 |       })
+      45 |       .finally(() => {
+    > 46 |         if (mounted) setIsLoading(false);
+         |                      ^
+      47 |       });
+      48 |     return () => {
+      49 |       mounted = false;
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at dispatchSetStateInternal (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4148:13)
+      at dispatchSetState (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4107:7)
+      at setIsLoading (src/contexts/FontScaleContext.tsx:46:22)
+
+PASS src/components/__tests__/tourPlacement.test.ts
+PASS src/readAloud/__tests__/verseScript.test.ts
+PASS src/notifications/__tests__/japamAlarmNative.jest.test.ts
+PASS src/data/vastu/__tests__/homeTemplates.test.ts
+PASS src/panchang/__tests__/jest/moreFamilySummary.jest.test.tsx
+PASS src/utils/__tests__/shareHashtags.test.ts
+PASS src/components/__tests__/japamBeadProgress.test.ts
+PASS src/utils/__tests__/derivedCacheReset.test.ts
+PASS src/video/__tests__/verseSync.test.ts
+PASS src/vastu/__tests__/homeRecord.test.ts
+PASS src/components/__tests__/routineBannerView.test.ts
+PASS src/utils/__tests__/homeLayout.test.ts
+PASS src/notifications/__tests__/androidAlarmPolicy.jest.test.ts
+PASS src/data/__tests__/practiceView.jest.test.ts
+PASS src/notifications/__tests__/pitruSchedulers.jest.test.ts
+PASS src/navigation/__tests__/lazyScreenRegistration.test.ts
+PASS src/components/__tests__/japamMalaGeometry.test.ts
+PASS src/utils/__tests__/langType.test.ts
+PASS src/components/__tests__/routineCelebrationView.test.ts
+PASS src/contexts/__tests__/MuhuratFollowContext.test.tsx
+  ● Console
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      195 |     expect(captured.follows).toEqual([]);
+      196 |     expect(captured.followCount).toBe(0);
+    > 197 |     tree.unmount();
+          |          ^
+      198 |   });
+      199 |
+      200 |   it('follow → isFollowing, persisted', async () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:197:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      204 |     expect(captured.followCount).toBe(1);
+      205 |     expect(JSON.parse(mockStore[STORAGE_KEY])).toHaveLength(1);
+    > 206 |     tree.unmount();
+          |          ^
+      207 |   });
+      208 |
+      209 |   it('follow is idempotent', async () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:206:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      212 |     await actSync(() => captured.follow('vahan', keyOffset(3)));
+      213 |     expect(captured.followCount).toBe(1);
+    > 214 |     tree.unmount();
+          |          ^
+      215 |   });
+      216 |
+      217 |   it('the same day under two occasions are two follows', async () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:214:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      221 |     await actSync(() => captured.follow('namkaran', k));
+      222 |     expect(captured.followCount).toBe(2);
+    > 223 |     tree.unmount();
+          |          ^
+      224 |   });
+      225 |
+      226 |   it('unfollow removes only the targeted (occasion, date)', async () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:223:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      232 |     expect(captured.isFollowing('vahan', k)).toBe(false);
+      233 |     expect(captured.isFollowing('namkaran', k)).toBe(true);
+    > 234 |     tree.unmount();
+          |          ^
+      235 |   });
+      236 |
+      237 |   it('keeps follows soonest-first as they are added out of order', async () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:234:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      241 |     await actSync(() => captured.follow('namkaran', keyOffset(10)));
+      242 |     expect(captured.follows.map((f) => f.occasionId)).toEqual(['vahan', 'namkaran', 'griha-pravesh']);
+    > 243 |     tree.unmount();
+          |          ^
+      244 |   });
+      245 |
+      246 |   it('setReminder stores a per-follow override; no-ops for a non-followed day', async () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:243:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      261 |     );
+      262 |     expect(captured.getFollow('vidyarambh', k)).toBeUndefined();
+    > 263 |     tree.unmount();
+          |          ^
+      264 |   });
+      265 |
+      266 |   it('hydrates stored follows and prunes past ones on load', async () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:263:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      273 |     // The prune is durable — storage was rewritten, not just filtered in memory.
+      274 |     expect(JSON.parse(mockStore[STORAGE_KEY])).toHaveLength(1);
+    > 275 |     tree.unmount();
+          |          ^
+      276 |   });
+      277 |
+      278 |   it('pruneExpired drops follows whose day has passed', async () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:275:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      285 |     await actSync(() => captured.pruneExpired(twoDaysOn));
+      286 |     expect(captured.follows.map((f) => f.occasionId)).toEqual(['vidyarambh']);
+    > 287 |     tree.unmount();
+          |          ^
+      288 |   });
+      289 |
+      290 |   it('pruneExpired does not rewrite storage when nothing expired', async () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:287:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      299 |     ).setItem.mock.calls.length;
+      300 |     expect(after).toBe(writes);
+    > 301 |     tree.unmount();
+          |          ^
+      302 |   });
+      303 |
+      304 |   it('survives corrupted storage', async () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:301:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+    console.error
+      An update to Root inside a test was not wrapped in act(...).
+
+      When testing, code that causes React state updates should be wrapped into act(...):
+
+      act(() => {
+        /* fire events that update state */
+      });
+      /* assert on the output */
+
+      This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      307 |     expect(captured.isLoading).toBe(false);
+      308 |     expect(captured.follows).toEqual([]);
+    > 309 |     tree.unmount();
+          |          ^
+      310 |   });
+      311 |
+      312 |   it('the default pref anchors day-of to the window', () => {
+
+      at node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11801:19
+      at runWithFiberInDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:1574:13)
+      at warnIfUpdatesNotWrappedWithActDEV (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11800:9)
+      at scheduleUpdateOnFiber (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:10326:9)
+      at updateContainerImpl (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12382:10)
+      at updateContainer (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:12326:7)
+      at Object.unmount (node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14674:14)
+      at Object.unmount (src/contexts/__tests__/MuhuratFollowContext.test.tsx:309:10)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS src/utils/__tests__/multiShare.test.ts
+PASS src/data/__tests__/routineAddable.jest.test.ts
+PASS src/utils/__tests__/semverCompare.test.ts
+PASS src/utils/__tests__/coverRect.test.ts
+PASS src/data/__tests__/assetManifest.jest.test.ts
+
+Test Suites: 91 passed, 91 total
+Tests:       1042 passed, 1042 total
+Snapshots:   0 total
+Time:        32.631 s, estimated 37 s
+Ran all test suites.
+
+> vedansh@0.1.0 test:readers:3
+> jest --config jest.config.js --runInBand --shard=3/3
+
+PASS src/utils/__tests__/shareSeries.test.tsx (8.02 s)
+  ● Console
+
+    console.warn
+      Clipboard has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-clipboard/clipboard' instead of 'react-native'. See https://github.com/react-native-clipboard/clipboard
+
+      47 | }));
+      48 |
+    > 49 | const setString = jest.spyOn(Clipboard, 'setString').mockImplementation(() => {});
+         |                              ^
+      50 | const rnShare = jest
+      51 |   .spyOn(Share, 'share')
+      52 |   .mockResolvedValue({ action: 'sharedAction' } as Awaited<ReturnType<typeof Share.share>>);
+
+      at warn (node_modules/react-native/Libraries/Utilities/warnOnce.js:27:11)
+      at Object.warnOnce [as Clipboard] (node_modules/react-native/index.js:181:5)
+      at Object.Clipboard (src/utils/__tests__/shareSeries.test.tsx:49:30)
+
+PASS src/components/__tests__/RoutineCelebration.test.tsx
+PASS src/widgets/__tests__/planCache.jest.test.ts
+PASS src/utils/__tests__/kidsStoryShareFlow.test.tsx
+PASS src/utils/__tests__/dailyBhaktiSingleShareFlow.test.tsx
+  ● Console
+
+    console.warn
+      Clipboard has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-clipboard/clipboard' instead of 'react-native'. See https://github.com/react-native-clipboard/clipboard
+
+      503 |         // this whole feature still ships over OTA.
+      504 |         try {
+    > 505 |           Clipboard.setString(caption);
+          |           ^
+      506 |         } catch {
+      507 |           // Clipboard is best-effort: the card itself still carries the branding.
+      508 |         }
+
+      at warn (node_modules/react-native/Libraries/Utilities/warnOnce.js:27:11)
+      at Object.warnOnce [as Clipboard] (node_modules/react-native/index.js:181:5)
+      at Clipboard (src/utils/shareVerse.tsx:505:11)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/utils/shareVerse.tsx:564:6)
+      at deliver (src/utils/shareVerse.tsx:697:34)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS src/screens/__tests__/MoreScreen.test.tsx
+PASS src/screens/__tests__/DaanScreens.test.tsx
+PASS src/screens/__tests__/AartiReaderScreen.test.tsx
+PASS src/screens/__tests__/readerAutoAdvance.test.tsx
+PASS src/screens/__tests__/MuhuratFinderScreens.test.tsx
+PASS src/components/__tests__/readerTypeScale.test.tsx
+PASS src/screens/__tests__/JapamCounterFontScale.test.tsx
+PASS src/screens/__tests__/JapamCounterRatingAsk.test.tsx
+PASS src/screens/__tests__/KundaliExperience.test.tsx
+PASS src/screens/__tests__/ChalisaReaderScreen.test.tsx
+PASS src/components/__tests__/ReadAloudSettingsSheet.test.tsx
+PASS src/panchang/__tests__/jest/panchangDayPrewarm.jest.test.ts
+PASS src/screens/__tests__/MultiProfileJyotish.test.tsx
+PASS src/panchang/__tests__/jest/panchangLaunchPrefetch.jest.test.ts
+PASS src/screens/__tests__/SundarkandReaderScreen.test.tsx
+PASS src/screens/__tests__/BajrangBaanReaderScreen.test.tsx
+PASS src/screens/__tests__/DiscoveryScreens.test.tsx
+PASS src/utils/__tests__/shareContent.test.ts
+PASS src/data/pitru/__tests__/pitruShikshaContent.test.ts
+PASS src/screens/__tests__/GarudPuranReaderScreen.test.tsx
+PASS src/components/__tests__/FeatureTour.test.tsx
+PASS src/screens/__tests__/TheerthMapScreen.test.tsx
+PASS src/components/__tests__/SadhanaCompletion.integration.test.tsx
+PASS src/screens/__tests__/VishnuSahasranamaReaderScreen.test.tsx
+PASS src/theme/__tests__/docTokenSync.test.ts
+PASS src/components/__tests__/RoutineBanner.test.tsx
+PASS src/screens/__tests__/gitaAutoAdvance.test.tsx
+PASS src/components/__tests__/MiniPlayer.test.tsx
+PASS src/components/__tests__/JyotishToolTile.test.tsx
+PASS src/screens/__tests__/SuktamReaderScreen.test.tsx
+PASS src/navigation/__tests__/tabBarIcons.test.tsx
+PASS src/components/__tests__/PitruSmaranDayChip.test.tsx
+PASS src/utils/__tests__/typographySafety.test.ts
+PASS src/data/vastu/__tests__/vastuContent.test.ts
+PASS src/components/__tests__/storybookAssets.test.ts
+PASS src/components/__tests__/jyotishShareCardFit.test.tsx
+PASS src/components/__tests__/proseShareCardFit.test.tsx
+PASS src/components/__tests__/ListingCard.test.tsx
+PASS src/components/__tests__/ClockTimePicker.test.tsx
+PASS src/components/__tests__/RatingPromptSheet.test.tsx
+PASS src/data/__tests__/backgrounds.coverage.jest.test.ts
+PASS src/screens/__tests__/useSearchIndex.test.tsx
+PASS src/components/__tests__/ReadingBanner.test.tsx
+PASS src/data/video/__tests__/videoMappings.test.ts
+PASS src/components/__tests__/BackgroundArtwork.test.tsx
+PASS src/components/__tests__/DeityCardNewBadge.test.tsx
+PASS src/panchang/__tests__/useRashifalDay.jest.test.tsx
+PASS src/components/__tests__/PanchangTimelineRow.test.tsx
+PASS src/components/__tests__/NorthIndianChart.test.tsx
+PASS src/contexts/__tests__/PitruSmaranContext.test.tsx
+PASS src/panchang/__tests__/jest/kulParamparaStore.jest.test.ts
+PASS src/components/__tests__/FeatureCard.test.tsx
+PASS src/components/__tests__/ShubhYogaCard.test.tsx
+PASS src/contexts/__tests__/NotificationPreferencesContext.ios.test.tsx
+PASS src/utils/__tests__/buildFingerprint.test.ts
+PASS src/notifications/__tests__/japamAlarmScheduler.jest.test.ts
+PASS src/contexts/__tests__/SadhanaContext.test.tsx
+PASS src/components/__tests__/CategoryCardNewBadge.test.tsx
+PASS src/components/__tests__/CelestialChakra.test.tsx
+PASS src/data/__tests__/readerIllustrationAsset.jest.test.ts
+PASS src/audio/__tests__/playbackArbiter.jest.test.ts
+PASS src/contexts/__tests__/ReadingProgressContext.test.tsx
+PASS src/navigation/__tests__/moreStackLoading.test.tsx
+PASS src/contexts/__tests__/TilePressContext.test.tsx
+PASS src/screens/__tests__/HomeCategoryGrid.test.ts
+PASS src/contexts/__tests__/DaanLedgerContext.test.tsx
+PASS src/data/__tests__/garudPuran.jest.test.ts
+PASS src/components/__tests__/FestiveReminderScheduler.test.tsx
+PASS src/panchang/__tests__/jest/namkaranState.jest.test.ts
+PASS src/contexts/__tests__/ReadAloudPrefsContext.test.tsx
+PASS src/utils/__tests__/shareLinks.test.ts
+PASS src/utils/__tests__/localize.test.ts
+PASS src/video/__tests__/videoId.test.ts
+PASS src/utils/__tests__/assetCache.test.ts
+PASS src/audio/__tests__/audioSession.jest.test.ts
+PASS src/utils/__tests__/shareFeedLayout.test.ts
+PASS src/utils/__tests__/titleByLanguage.test.ts
+PASS src/vastu/__tests__/homeRecordStore.test.ts
+PASS src/theme/__tests__/colors.contrast.test.ts
+PASS src/vastu/__tests__/compass.test.ts
+PASS src/utils/__tests__/shareStoryLayout.test.ts
+PASS src/notifications/__tests__/permissionState.jest.test.ts
+PASS src/utils/__tests__/shuffleBySeed.test.ts
+PASS src/utils/__tests__/scriptFont.test.ts
+PASS src/utils/__tests__/readableRomanization.test.ts
+PASS src/widgets/__tests__/deepLink.jest.test.ts
+
+Test Suites: 91 passed, 91 total
+Tests:       747 passed, 747 total
+Snapshots:   0 total
+Time:        33.693 s, estimated 35 s
+Ran all test suites.
+
+> vedansh@0.1.0 test:engine
+> TZ=Asia/Kolkata tsx --test src/panchang/__tests__/*.test.ts
+
+✔ every festival-anchored ABUJH_RULE_ID resolves inside a full-year window (21.389958ms)
+✔ Dev Uthani Ekadashi and Akshaya Tritiya both reach the abujh scan (715.643417ms)
+✔ the production 260-day scan reaches well past its 60th observance (408.23675ms)
+✔ abujh days are unique and sorted (1123.40225ms)
+✔ isAbujhDay agrees with the scan on every day it lists (1311.40425ms)
+✔ an abujh day lifts the SEASONAL bars — chaturmas and asta (21.427083ms)
+✔ an abujh day does NOT lift the per-day doshas (window-time, Phase 2) (23.054958ms)
+✔ a rikta tithi covering ALL daylight windows still excludes the day, abujh or not (141.016ms)
+✔ the abujh exemption never makes a NON-abujh day better (240.918ms)
+✔ abujhFestivalKeys is date-keyed consistently with the day store (0.650625ms)
+✔ every arc field on a rule is present-together, names a real arc, and every arc rule id resolves (1.72375ms)
+✔ the three shipped arcs are exactly the PRD-28 roster; the rules carry the PRD roles (0.172125ms)
+✔ the eight arc rules keep their tithi/month/paksha and the day rule their published dates require (0.198583ms)
+✔ the offered duration set is 1½/3/5/7/10 and nothing is a default (0.233917ms)
+✔ sthapana → visarjan: 1½/3/5/7 count civil days from the family’s day 1; 10 binds Anant Chaturdashi (35.950208ms)
+✔ a 10-day choice falls back to day 10 by count when the visarjan rule is out of reach (0.111959ms)
+✔ Ganesh unchosen: an OPEN occurrence — sthapana only, no visarjan, no presumed end (0.226833ms)
+✔ Ganesh 5 days: five slots, the family’s visarjan on day 5, Anant Chaturdashi NOT bound (0.130208ms)
+✔ Ganesh 10 days: the visarjan slot IS the Anant Chaturdashi rule and the span is honest (12 civil days in 2026) (3.980875ms)
+✔ Diwali 2026: six civil days, day 2 carries the Naraka Chaturdashi gap label, rule-bound days are tappable ids (0.699875ms)
+✔ Navratri 2026: ghatasthapana → Vijayadashami; ordinals come from dates, not the customary 10 (2902.525875ms)
+✔ resolveArcOccurrence picks the occurrence containing today, else the next one; choices are occurrence-scoped (0.980042ms)
+✔ arcDayFor: before / during (ordinal, remaining) / after; open arcs count honestly with unknown remaining (0.839667ms)
+✔ Navratri preparation window: Kanya Pujan bhog/grocery hand-off surfaces from three days before the end to the eve, not on Dashami (0.503083ms)
+✔ visarjanReminderInputs: no choice ⇒ nothing; a current-year choice ⇒ one input on the SOLVED date riding the vrat family (0.290208ms)
+✔ visarjanReminderInputs: a stale (other-year) choice, an unknown duration, or a calendar-fixed arc yields nothing (0.1075ms)
+✔ arcs.ts is pure (no clock, storage, React) and festivals.ts does not import arcs.ts (relation stays additive data) (3.637041ms)
+✔ the registry preserves v1 and publishes all phase 2/3 profiles (0.94425ms)
+✔ every profile carries bilingual guidance and independent published sources (0.695625ms)
+✔ every genuine vrat and upavas rule has verified food or offering guidance (0.235666ms)
+✔ rule and vidhi hooks round-trip through verified-only accessors (0.547333ms)
+✔ draft profiles remain invisible non-vacuously (0.096958ms)
+✔ eating, offering, and abhisheka claims stay distinct (0.274958ms)
+✔ customer-rendered copy carries no editorial status or health claims (0.74775ms)
+✔ all rendered Hindi copy is well-formed Devanagari (1.456416ms)
+✔ precomputed Ujjain year seeds identically to the deferred resolve (25.283416ms)
+✔ an empty precomputed day still seeds (a valid empty answer, not a miss) (0.814167ms)
+✔ a non-precomputed Ujjain year returns null so the caller defers the live scan (0.184083ms)
+✔ amanta is precomputed too, so it seeds identically to the deferred resolve (0.785583ms)
+✔ an unknown city with no stored scan falls back to the Ujjain precomputed table (0.436583ms)
+✔ calendar grid includes leading and trailing dates for a stable six-week month (8.846375ms)
+✔ calendar grid marks selected, today, current month, and observance dates (0.217333ms)
+✔ every date sits in the column its own weekday names, for eight years of months (5.577917ms)
+✔ 15 August 2026 is a Saturday in the last column (0.175958ms)
+✔ neither calendar sizes a column by a fractional percentage (3.639208ms)
+✔ cooperative calculations preserve exact dates and end times for both calendars and time zones (232.905416ms)
+✔ a queued callback interrupts a numerical search spanning multiple time slices (3.3515ms)
+✔ dasha reading engine stays pure and has no wall-clock fallback (15.245417ms)
+✔ authored dasha copy stays inside guidance framing (6.287959ms)
+✔ every Mahadasha × Antardasha combination produces a complete reading (0.904167ms)
+✔ reading is deterministic and null outside the 120-year table (3.019875ms)
+✔ pair-reading basis keys are IST civil dates, identical to indiaDateKey (7.740667ms)
+✔ the child register observes, in both languages, for every lord and every pair (3.523667ms)
+✔ the DayInputs shape change (lagnas, PRD-16/P3) shipped with its version bump (1.460834ms)
+✔ 1-year parity — fresh == cached == persisted (ujjain/purnimant) (5415.152625ms)
+✔ 1-year parity — fresh == cached == persisted (ujjain/amanta) (1694.555167ms)
+✔ 1-year parity — fresh == cached == persisted (delhi/purnimant) (2299.8255ms)
+✔ 1-year parity — fresh == cached == persisted (delhi/amanta) (1006.5755ms)
+✔ 1-year parity — fresh == cached == persisted (19.076,72.8777/purnimant) (1610.822791ms)
+✔ 1-year parity — fresh == cached == persisted (19.076,72.8777/amanta) (1050.055167ms)
+✔ 14 Jan 2026 — Wednesday (40.502167ms)
+✔ 3 Mar 2026 — Holi Purnima (8.376875ms)
+✔ 22 May 2026 — Shukla Paksha (8.566292ms)
+✔ 20 Oct 2026 — Shukla Navami (3.640375ms)
+✔ 12 Aug 2026 — Krishna Amavasya (4.188417ms)
+✔ Brahma Muhurta = sunrise - 96min to sunrise - 48min (3.386167ms)
+✔ Vara matches JS getDay() (35.026458ms)
+✔ Vikram Samvat 2082-2083 in 2026 (6.735209ms)
+✔ all name fields are non-empty (4.041ms)
+✔ tithi endTime is reasonable relative to sunrise (29.464959ms)
+✔ lunar month has valid index and names (6.757167ms)
+✔ Amanta and Purnimant months are identical in Shukla Paksha (6.887709ms)
+✔ Amanta month is one month behind Purnimant in Krishna Paksha (5.078666ms)
+✔ Karana at sunrise matches source-backed boundary cases (10.525334ms)
+✔ Tithi/month helper uses the corrected lunar month logic (121.408458ms)
+✔ Kshaya tithi is captured — Krishna Ekadashi skipped at sunrise, 10 Jul 2026 (Bengaluru) (8.165458ms)
+✔ kshaya nakshatra is captured — Mrigashira skipped at sunrise, 29 Jan 2026 (Ujjain) (4.403417ms)
+✔ kshaya angas are null on ordinary days (23.024417ms)
+✔ the fixture is non-trivial and every row cites a published listing (0.972333ms)
+✔ griha-pravesh 2026-11-11: published-list golden (documented-divergence) (46.277166ms)
+✔ griha-pravesh 2026-11-14: published-list golden (documented-divergence) (8.544042ms)
+✔ griha-pravesh 2026-11-25: published-list golden (offered) (7.306709ms)
+✔ griha-pravesh 2026-11-26: published-list golden (offered) (17.953292ms)
+✔ chaturmas span: Devshayani 25 Jul 2026 through the kshaya Dev Uthani boundary (163.805292ms)
+✔ chaturmas is calendar-system invariant (amanta month names must not move the season) (17.1555ms)
+✔ asta flags match the validated 2026 combustion windows (1.011834ms)
+✔ 17 Aug 2026 is a shreshtha Vehicle Purchase day with kaal-free windows (25.209458ms)
+✔ 8 Aug 2026 (Vishti at sunrise) is excluded for every occasion carrying the bhadra dosha (7.2865ms)
+✔ 26 Nov 2026 is the validated first shreshtha Griha Pravesh day after Chaturmas (7.529ms)
+✔ 90-day Griha Pravesh scan from 7 Aug 2026 yields zero results, dominated by Chaturmas (501.391958ms)
+✔ auspicious windows are best-first: Amrit, then Abhijit (7.970417ms)
+✔ every abujh rule id resolves to a shipped observance rule (1.943041ms)
+✔ Pushya yoga days: Ravi Pushya on 1 Nov 2026, none on adjacent days (6.571917ms)
+✔ every rule table is explicitly marked draft until §10 review lands (RULEBOOK §17) (0.314084ms)
+✔ finder sources stay pure: no wall clock, randomness, network, storage, or React (3.738292ms)
+✔ karana.endTime is solved, and sits exactly on a 6° elongation boundary (70.164291ms)
+✔ when Vishti is the SECOND half of its tithi, karana end equals tithi end (17.154375ms)
+✔ validated 2026 bhadra ends: 20 Aug ~8:16, 3 Sep ~15:28, 26 Sep ~10:47 IST (52.27325ms)
+✔ angaAt steps the tithi after its end, and not before (8.071167ms)
+✔ angaAt is KSHAYA-aware: the skipped anga comes first, then ITS successor (5.128208ms)
+✔ a vriddhi-style anga (endTime beyond the day) never steps (6.071167ms)
+✔ 20 Aug 2026: bhadra 6:04–8:16 AM removes NO windows — the day is usable again (16.414708ms)
+✔ 3 Sep 2026: bhadra to 3:28 PM eats every midday window; only the evening survives (6.262458ms)
+✔ a day whose bhadra covers every window stays excluded and NAMES bhadra (31.760833ms)
+✔ a non-Vishti day carries no bhadra interval (7.13125ms)
+✔ 27 Aug 2026 Vahan: the late-onset Vishti (Phase 3) re-excludes what Phase 2 offered (25.600459ms)
+✔ 26 Aug 2026 Vahan: only the pre-Chaturdashi window survives; nothing on the rikta tithi is offered (39.776541ms)
+✔ 19 Aug 2026 Vahan: the Swati window is shreshtha; every post-changeover Vishakha window demotes (28.313167ms)
+✔ every offered window carries its own tier and factors, shreshtha windows first (8.1355ms)
+✔ a barred month excludes the day with the masa dosha; abujh lifts it (5.180333ms)
+✔ masa normalisation is calendar-system invariant (18.084375ms)
+✔ upanayana is the one occasion with a populated masa bar (DRAFT) (8.009209ms)
+✔ thirteen occasions (यात्रा joined in Phase 3), each in exactly one picker group, all DRAFT (4.674834ms)
+✔ a Phase-2 occasion grades end-to-end (mundan on the validated 17 Aug 2026) (6.2365ms)
+✔ 19 Aug 2026 Vahan: every offered segment sits inside exactly ONE lagna span (100.340959ms)
+✔ 17 Aug 2026 Vahan: the leading sub-24-min sliver is dropped — the window starts AT the boundary (19.487959ms)
+✔ 10 Jul 2026 Bengaluru (kshaya day): windows split at the nakshatra end and step through the SKIPPED tithi (14.992584ms)
+✔ every shipped lagna table is EMPTY (DRAFT) — grading inert, chips only (RULEBOOK §17) (0.129583ms)
+✔ with empty lagna tables the day tier is unchanged by supplying spans (back-compat) (280.549833ms)
+✔ a BARRED lagna demotes a three-factor segment to madhyam; it never excludes the day (7.386125ms)
+✔ a PREFERRED lagna sets the factor and wins the within-tier tie-break (10.786875ms)
+✔ hora is a TIE-break only: sort keys run tier → lagna → window priority → hora (20.16375ms)
+✔ a late-onset Vishti interval sits exactly on 6° elongation boundaries and drops covered windows (9.077125ms)
+✔ a sunrise-Vishti day never carries lateVishti (adjacent Vishti karanas are impossible) (6.854709ms)
+✔ यात्रा is the 13th occasion, DRAFT, carrying the disha-shool dosha (0.162041ms)
+✔ the chosen direction excludes exactly its shool weekdays, naming the dosha (10.15125ms)
+✔ intercardinal directions carry no shool in v1 (recorded variant choice) (8.334334ms)
+✔ resolveFestivalsForYear returns festivals for 2026 (24.467375ms)
+✔ festivals are sorted chronologically (0.524583ms)
+✔ Holi 2026 falls in Feb-Mar (0.177917ms)
+✔ getUpcomingFestivals returns future festivals (0.901791ms)
+✔ each resolved festival has valid rule fields (3.126791ms)
+✔ Makar Sankranti 2026 resolves to Jan 14 or 15 (0.168625ms)
+✔ getUpcomingFestivals includes today festival when called mid-day (5.626834ms)
+✔ 2026 Ashwin and Kartik festival ordering is internally consistent (0.195375ms)
+✔ selected-date observances include short details and linked reading hints (0.190875ms)
+✔ selected-date observances are deduplicated by id (0.161083ms)
+✔ upcoming observances are anchored to the selected date and calendar system (2.299833ms)
+✔ Krishna Paksha festivals keep their civil date across Purnimant and Amanta (0.750458ms)
+✔ Janmashtami resolves to its real civil date, not one lunar month early (0.481333ms)
+✔ Maha Shivaratri and Narada Jayanti use the Purnimant month (real dates) (0.134208ms)
+✔ Ekadashi names follow source-backed Krishna Paksha month convention (0.072709ms)
+✔ gochar engine stays pure and has no wall-clock fallback (4.488541ms)
+✔ authored gochar copy stays inside guidance framing (1.40275ms)
+✔ snapshot and personal guidance are deterministic (11.4965ms)
+✔ snapshot covers all nine grahas with consistent houses (2.288916ms)
+✔ tara bala covers the full 27×27 grid with the classical 9-cycle (2.940166ms)
+✔ personal guidance is a strict superset of computeRashifal (13.842083ms)
+✔ dasha note appears exactly when a focus transit is a running lord (26.111584ms)
+✔ Saturn ingress into Meena lands in the verified late-March 2025 window (1.59925ms)
+✔ Sade Sati phases move with the 2025 Saturn ingress (0.477833ms)
+✔ Sade Sati boundary scan returns the Saturn ingress instant (27.516042ms)
+✔ dhaiya flags surface as secondary observations, never as a phase (1.202458ms)
+✔ upcoming ingresses are future-dated, sorted, and sign-consistent (13.971625ms)
+✔ findNextIngress validates inputs and honours maxDays (0.209708ms)
+✔ active house themes are unique, sorted, and theme-aligned (0.438167ms)
+✔ engine, content and sheet renderer stay pure (6.608ms)
+✔ sign lords come from the dignity table and equal RASHI_LORD (0.27775ms)
+✔ mitra / shatru rashi: dignity speaks first and the nodes never vote (0.1635ms)
+✔ lordship follows the functional rules — Mesha worked through, and every yogakaraka (0.783ms)
+✔ house votes: dig-bala first, every graha in the 11th, benefics in kendra/trikona, malefics in growth houses (0.187042ms)
+✔ combustion uses flat orbs that agree with the muhurat engine, across the 0° seam (1.880375ms)
+✔ sign lines name the sign, its lord and the relation — "an unfriendly sign" never stands alone (0.62025ms)
+✔ every house names its karaka (0.160041ms)
+✔ the label is counted: all one way → that way; any disagreement, or no vote → mixed (0.247334ms)
+✔ nine cards for every lagna: order, closed labels, own basis, every line filled, plain ordinals (77.100208ms)
+✔ empty houses: every unoccupied house, in order, read through where its lord sits (28.890125ms)
+✔ content tables are complete and bilingual (1.054042ms)
+✔ the section intro is short bullets, index-aligned across languages (0.125417ms)
+✔ upay: nine distinct active paaths, weekday daan from the shared vaar table, nodes by शनिवत् राहु · कुजवत् केतु (4.716583ms)
+✔ authored copy: no absolute claims, fatality, medical directive, commerce, fear, or the old hedge (10.07125ms)
+✔ the review record carries a dated sign-off (7 Oct 2026), and only a complete record opens the gate (0.23575ms)
+✔ the sign-off covers exactly the reviewed content — any later edit needs a new sign-off (3.196125ms)
+✔ the committed jyotishi review sheet matches the tables (npm run export:graha-review) (2.635125ms)
+✔ dignity buckets: strength first, then debilitation, then the sign relation (4.721583ms)
+✔ all nine grahas now have a narrative table (0.8195ms)
+✔ an out-of-range house returns no narrative rather than crashing (0.126584ms)
+✔ depth: a strong and a weak placement in the SAME house read differently (every tara, every house) (0.391875ms)
+✔ every graha is complete: 12 houses × 4 buckets, both languages, nothing empty (1.868584ms)
+✔ the lordship modifier fires for one ruled house (Sun/Moon) and two (the rest), grammatical in both (0.234208ms)
+✔ the modifier layer appends only the chart-specific facts that are present (0.233334ms)
+✔ nodes have no dignity: every bucket reads the same, and they carry no modifiers (0.139ms)
+✔ authored narrative copy: no absolute claims, fatality, medical, commerce, fear, or the old hedge (38.324ms)
+✔ the narrative review is approved (signed off 12 Oct 2026), so store builds show it (0.316291ms)
+✔ every graha has a complete, bilingual reference entry (2.220583ms)
+✔ authored reference copy obeys the §14.3.5 bans (1.949458ms)
+✔ longitude normalization is stable at the 0/360 seam (2.68325ms)
+✔ every pada/nakshatra/rashi boundary classifies below, at, and above (1.46475ms)
+✔ Vashya uses exact Sagittarius and Capricorn 15-degree splits (0.109958ms)
+✔ all 108×108 pada combinations remain bounded and sum exactly (62.111792ms)
+✔ directional rules are explicit (0.250042ms)
+✔ B. V. Raman Yoni table preserves its asymmetric orientations (0.120291ms)
+✔ unknown-time aggregation returns exact only when every checked state agrees (0.476416ms)
+✔ IST parsing does not depend on the device timezone and rejects fabricated noon (0.521083ms)
+✔ IST day enumeration visits each classification interval, including a degree split (0.369792ms)
+✔ engine source stays pure and uses the real Moon API (1.940666ms)
+✔ published Mini/Jose report matches all eight independent row scores (1.578917ms)
+✔ DrikPanchang same-Nadi priority changes interpretation at 28/36 (0.208791ms)
+✔ published Chitra/Uttara-Ashadha report preserves fractional scores (0.184792ms)
+✔ B. V. Raman Bhakoot cancellations cover same and friendly rashi lords (0.232792ms)
+✔ 24 horas tile sunrise → next sunrise; 12 day + 12 night (0.853417ms)
+✔ first hora is the weekday lord; sequence follows the classical order; 25th hora = next weekday lord (0.294167ms)
+✔ horaAt resolves the containing hora; outside the range → null (0.196208ms)
+✔ benefic tie-break set is exactly Guru/Shukra/Budh; names carry Devanagari (0.693583ms)
+✔ hora source stays pure: no wall clock, randomness, network, storage, React, or astronomy (1.036791ms)
+✔ janmaTithiRuleFromBirthDate rejects malformed and impossible dates (1.034875ms)
+✔ janmaTithiRuleFromBirthDate is the sunrise tithi of the birth civil date (PRD-17 convention) (32.983791ms)
+✔ the derived rule solves forward and matches its own occurrence day (841.197833ms)
+✔ tithiRuleMatchesDate does NOT fire on the Pitru-Paksha mapped day (living ≠ dead) (206.324875ms)
+✔ janmaNakshatraIndex agrees with the shared Moon-longitude primitive at the IST instant (0.462792ms)
+✔ janmaNakshatraIndex rejects malformed inputs (0.133083ms)
+✔ cooperative birth-date derivation yields and preserves the existing convention (77.355792ms)
+✔ default-visible kathas read as in-story narrative, not commentary (36.573292ms)
+✔ normalize keeps registry ids, drops unknown ids, and trims free text (20.088292ms)
+✔ normalize drops an unknown deity id and empty sub-records (0.177ms)
+✔ serialize → parse round-trips a full record (0.188541ms)
+✔ parse degrades corruption and version drift to the empty record (0.136291ms)
+✔ kuldevDisplayName prefers the registry name and falls back to the family word (0.131084ms)
+✔ the export envelope is versioned, denormalized, and carries no device ids (38.886ms)
+✔ ujjain-1992 matches independent Swiss Ephemeris Lahiri fixture (14.289375ms)
+✔ delhi-2000 matches independent Swiss Ephemeris Lahiri fixture (2.55675ms)
+✔ bengaluru-2024 matches independent Swiss Ephemeris Lahiri fixture (0.950875ms)
+✔ whole-sign houses rotate exactly from the Lagna sign (0.902375ms)
+✔ Rahu and Ketu are exactly opposite and all nine grahas are present (0.856208ms)
+✔ Vimshottari starts from the Moon nakshatra and spans one 120-year cycle (0.341666ms)
+✔ birth falls within the balance of the first Vimshottari period (51.665333ms)
+✔ beginner insights explain Lagna, Moon, and Dasha without deterministic claims (5.537958ms)
+✔ Rashifal is deterministic for an India civil day and valid for all rashis (13.730334ms)
+✔ engine source stays pure: no wall clock, randomness, network, storage, or React (5.265292ms)
+Swiss Ephemeris audit: 150 charts / 1350 graha placements; max ayanamsa 0.004345°, Lagna 0.009195°, graha 0.009331°, Dasha boundary 4.452 days; 0 rashi/nakshatra/pada/house/retrograde/Antardasha mismatches.
+✔ Swiss Ephemeris corpus is independently sourced and covers 150 India/IST charts (1.714291ms)
+✔ 150 charts match Swiss Ephemeris Lahiri positions, Lagna, houses, and Dasha (210.554833ms)
+✔ basis module stays pure (1.582791ms)
+✔ dignity: exaltation, debilitation (opposite sign) and own signs from the classical table (0.242709ms)
+✔ naisargika maitri: the BPHS rows, asymmetric, self is friend (0.166125ms)
+✔ age band derives from the chart birth instant and the read instant (50.80725ms)
+✔ every basis node kind renders a non-empty label in both languages (0.558667ms)
+✔ handoff engine stays pure and has no wall-clock fallback (1.340042ms)
+✔ handoff text is deterministic and complete (2.729ms)
+✔ the machine-readable tail parses back to the exact report model (3.633416ms)
+✔ selected question export carries auditable context and preserves the original report tail (44.83675ms)
+✔ the graha cards export card by card, each with its own basis line (RULEBOOK §14.7) (6.092625ms)
+✔ report engine stays pure and has no wall-clock fallback (4.537917ms)
+✔ authored report copy stays inside guidance framing (1.811541ms)
+✔ the model is deterministic and survives a JSON round trip unchanged (38.52975ms)
+✔ section order and completeness hold for charts across all twelve lagnas (74.275166ms)
+✔ Kaal Sarp never appears anywhere in an emitted model (1.356375ms)
+✔ Mangal Dosha is display-gated off by default and truth-tabled when on (36.508ms)
+✔ life-area sections read house lords from the classical table (13.147166ms)
+✔ summary carries birth facts and the disclaimer frames both ends (9.049042ms)
+✔ ordinal grammar: no "1th/2th/3th bhava" anywhere in an emitted model, in any lagna (63.224208ms)
+✔ the disclaimer appears once in the model, never per life area (0.576958ms)
+✔ dasha lines lead with dates and name the balance at birth (0.792417ms)
+✔ transit statements are stamped with the report date and say when they change (0.3635ms)
+✔ the snapshot is a projection: every fact id is a real section id and the count is 5–7 (0.306417ms)
+✔ combinations section leads with the Lagna lord and carries basis for every line (0.271791ms)
+✔ life areas are age-aware with stable ids: a 13-year-old gets no partnership section (15.13825ms)
+✔ snapshot running-period line ends on the ANTARDASHA, not the Mahadasha (0.812667ms)
+✔ one canonical date per dasha boundary: the pair basis and the timeline basis agree (IST keys) (0.503208ms)
+✔ same-sign pairings say "same bhava" and state the degree gap; Budhaditya is an association under the same-sign rule (0.428166ms)
+✔ under 13 the transit card records Saturn’s position and never headlines a Sade Sati phase (0.880291ms)
+✔ the child dasha reading is written for a parent to observe, not an adult theme with a renamed heading (5.104083ms)
+✔ a minor’s report names the child, never "your chart"; the Moon and same-bhava lines carry the observe framing (12.643625ms)
+✔ the snapshot leads with notable placements drawn from the summary, not the top-ranked combination (0.604708ms)
+✔ graha cards are display-gated: off by default, between moon and combinations when on, never for a minor (6.118375ms)
+✔ graha cards across all twelve lagnas: plain ordinals, no bare digit before भाव (107.282375ms)
+✔ combinations engine stays pure (4.45925ms)
+✔ authored combination copy stays inside guidance framing and names tradition (1.07725ms)
+✔ no yoga definition claims verification before its two-source review (0.13125ms)
+✔ every combination carries a non-empty basis, the list is capped and deterministic (5.455833ms)
+✔ detectors: conjunction, Budhaditya, Gajakesari, Chandra-Mangal, dignity all fire on a seated chart (36.687708ms)
+✔ kendra–trikona and dhana yogas fire on lord association and never double-count the Lagna lord (0.309917ms)
+✔ same-sign groups always state the degree gap and only call a tight pair a close conjunction (0.607458ms)
+✔ spans tile [sunrise, nextSunrise) exactly, 12–13 spans, rashi monotonic mod 12 (254.531916ms)
+✔ every internal boundary sits on a 30° ascendant crossing (< 1 min resolution) (12.832708ms)
+✔ lagnaAt agrees with the Swiss Ephemeris corpus rashi for all 150 charts (46.324416ms)
+✔ closed-form ascendant equals computeLagna (the corpus-verified solver) at arbitrary instants (32.955166ms)
+✔ degenerate day (nextSunrise <= sunrise) yields no spans; lagnaAt degrades to -1 (0.673209ms)
+✔ lagnaSweep source stays pure: no wall clock, randomness, network, storage, or React (1.083083ms)
+✔ the launch-safe id list and the display registry cannot drift apart (2.289584ms)
+✔ registry is 22 lenses — 20 regional + 2 traditions — with unique ids (0.19425ms)
+✔ every lens has both scripts and an example in both, and sits in a rendered group (0.192291ms)
+✔ Ujjain, Delhi and Chandigarh seed nothing — a default is not a signal (0.446375ms)
+✔ a tradition lens is NEVER reachable from any seeding path (0.173584ms)
+✔ every seeded lens id is a real lens (0.205ms)
+✔ a city seeds its calendar; Bengaluru seeds both of its (0.209833ms)
+✔ a Rajasthan tehsil seeds rajasthan; an unknown id seeds nothing (0.137208ms)
+✔ a pincode location seeds from the state in its own stored label (0.171834ms)
+✔ serialisation is sorted and canonical, so equal sets write equal bytes (0.163167ms)
+✔ parsing drops unknown ids but keeps the rest, and survives corrupt input (0.178917ms)
+✔ a round trip through serialise → parse is the identity (4.505166ms)
+✔ a rule with no lens is universal — visible to everyone, always (0.133167ms)
+✔ a lensed rule needs ONE matching lens — a shared observance is one rule (0.079417ms)
+✔ the catalog hides a lensed rule until its calendar is on (5.184542ms)
+✔ `includeHidden` does not bypass the lens gate (0.215459ms)
+✔ search is lens-blind — a name typed by hand always resolves (3.816958ms)
+✔ getRulesForLens names exactly the default-visible rules a lens adds (0.196625ms)
+✔ getRulesForLens agrees with the catalog gate, lens by lens (1.025541ms)
+✔ getRulesForLens never lists a hidden/advanced rule or a universal one (0.167792ms)
+✔ only calendars that add something are OFFERED — today that is tamil and jain, in registry order (0.232708ms)
+✔ the display set drops stored ids for empty calendars but keeps offered ones (0.085417ms)
+✔ getLensAdditions groups the ACTIVE offered set in registry order and skips empty calendars (0.110667ms)
+✔ with every lens on, the additions are exactly the lensed default rules, each once per lens (0.104167ms)
+✔ select-all is an ordinary stored set of the offered ids — it round-trips like any other (0.058917ms)
+✔ `visibility: 'regional'` is retired — no rule may carry it again (0.056875ms)
+✔ the two former `regional` rules are now default + a lens (0.094583ms)
+✔ every `lens` value on every rule is a real lens (0.075209ms)
+✔ omitting the lens argument equals passing the empty set, on every query (14.848083ms)
+✔ turning every lens on never REMOVES a day from any query (2.20725ms)
+✔ the upcoming list lenses BEFORE it slices, so the count is of visible days (0.384833ms)
+✔ omitted location ≡ explicit Ujjain (85.860791ms)
+✔ Delhi sunrise/sunset differ from Ujjain (14 Jan 2026, vs drikpanchang Delhi) (9.58675ms)
+✔ Guwahati sunrise ~1 h earlier than Ujjain (14 Jan 2026) (41.199708ms)
+✔ Brahma Muhurta tracks the location-specific sunrise (10.213041ms)
+✔ computeTithiAndMonth cache isolates locations (52.857458ms)
+✔ locationKey: undefined ⇒ ujjain; cityId preferred; coords fallback (0.126875ms)
+✔ city list: unique ids, Ujjain first as default (0.1595ms)
+✔ city list is two tiers: national cities first, then Rajasthan tehsils (5.592834ms)
+✔ Rajasthan tehsils: prefixed ids, all 33 districts, coordinates inside the state (23.483ms)
+✔ Rajasthan tehsils: no two share a coordinate (would mean a bad geocode) (0.554ms)
+✔ cityMatchesQuery matches name in either script, and a tehsil by its district (0.188ms)
+✔ nearestCity snaps GPS coordinates to the expected city (2.211459ms)
+✔ nearestCity resolves inside Rajasthan at tehsil granularity (0.2845ms)
+✔ non-Ujjain location falls back to Ujjain observances until store fills, then upgrades (39.6605ms)
+✔ chunked live scan matches the sync live scan (Delhi 2026) (2639.103916ms)
+✔ muhurat windows are correct segments of DrikPanchang rise/set for all 131 days (6.314792ms)
+✔ muhurat windows align with engine sunrise/sunset (Ujjain) (158.560042ms)
+✔ nextAuspiciousPeriod finds the first auspicious window at/after the clock (33.824625ms)
+✔ day choghadiya matches the published Sujangarh card (±2 min) (0.922709ms)
+✔ Rahu Kaal matches the published card (±2 min) (0.15875ms)
+✔ Abhijit start matches; duration follows the DrikPanchang 15-part convention (0.087792ms)
+✔ muhurat invariants hold for every day across 2026–2027 (6205.05275ms)
+✔ scanAbujhDays resolves with festival + pushya days and never hangs (763.54025ms)
+✔ paints festival days progressively — first onProgress arrives before the full scan (1.160042ms)
+✔ writes solved days into the SHARED day store, keyed by absolute date (402.452583ms)
+✔ a second scan starting a day later reuses the first scan’s solves (366.703708ms)
+✔ a single bad day-solve is skipped, not fatal — the scan still resolves (300.22675ms)
+✔ respects cancellation — stops and returns what it has (0.726875ms)
+✔ the draft convention has exactly 108 charanas and 27 consistent attributes (0.936958ms)
+✔ all 108 half-open boundaries resolve below, at, and above without drift (0.304958ms)
+✔ Namkaran classification agrees with Kundali Moon classification (11.945833ms)
+✔ unknown time uses bisection windows and handles the 360 to zero wrap (1.048666ms)
+✔ a stable injected day still returns a range with one honest window (0.297ms)
+✔ a day that crosses a rashi boundary reports both rashis, in order, once each (0.250666ms)
+✔ rashi sets are derived as twelve disjoint groups of nine charanas (0.223083ms)
+✔ Namkaran engine stays pure and has no wall-clock fallback (6.052708ms)
+✔ every area tag names a real, default-visible rule and a real area (1.087208ms)
+✔ an area tag is display-only: tagged rules stay universal (no lens) (0.178583ms)
+✔ a lensed rule reads its lens as its area; an untagged rule is pan-India (3.117291ms)
+✔ the area filter partitions a list: pan-India + tagged = all (3.275958ms)
+✔ every anchored festival lands on its published day exactly (24.2675ms)
+✔ the audited day rules land on their published dates exactly (4.134417ms)
+✔ Maha Navami resolves once a year, on the Durgashtami day or the next (6.768416ms)
+✔ monthly vrats land on every 2026 date Drik lists (0.300459ms)
+✔ Raksha Bandhan follows the Bhadra rule on every published date 2023–2031 (1986.242208ms)
+✔ Rangwali Holi is the day after the Bhadra-ruled Holika Dahan, 2023–2031 (5.418334ms)
+✔ Janmashtami: Smarta on its published day, the Vaishnava row only where Drik prints one (5.910041ms)
+✔ Ekadashi: Smarta and Vaishnava days match every published pair (1.014917ms)
+✔ Smarta Ekadashi 2025 is exactly Drik's list — including the second Putrada on 30 Dec (0.240833ms)
+✔ Darsha Amavasya takes the day of greater aparahna cover (Feb 2029: 13th, not the midpoint 12th) (0.25675ms)
+✔ Maha Shivaratri is in February (Phalguna), never January (Magha) (0.209291ms)
+✔ Sankashti Chaturthi lands on the moonrise day for every lunation of 2025 (0.113916ms)
+✔ Sankashti Chaturthi is on 31 Aug 2026, the night Chaturthi covers moonrise (0.091ms)
+✔ every lunation keeps exactly one Sankashti Chaturthi (1.364958ms)
+✔ Karwa Chauth falls on its month’s Sankashti Chaturthi (0.273583ms)
+✔ Karwa Chauth matches its published dates (0.123041ms)
+✔ the live matcher agrees with the shipped table on the reported dates (45.23725ms)
+✔ Hariyali and Kajari Teej match their published dates (0.178958ms)
+✔ the three Teej land in order: Hariyali, then Kajari, then Hartalika (17.858583ms)
+✔ Bahula Chaturthi matches its published dates and rides the Sankashti day (0.211ms)
+✔ Ganesh Chaturthi and Ram Navami match their published dates exactly (0.07775ms)
+✔ the monthly Vinayaka Chaturthi rides the Ganesh Chaturthi day (RULEBOOK §23.4) (1.336ms)
+✔ Bhadwa Chauth (Chauth Mata vrat) rides the same moonrise day as Bahula Chaturthi (0.218542ms)
+✔ regional wave-1 observances match their published dates exactly (0.199625ms)
+✔ every regional wave-1 rule resolves exactly once a year, 2024-2031 (3.495333ms)
+✔ regional rules ride the shipped rule that shares their tithi (2.744333ms)
+✔ both Chhaths resolve, roughly half a year apart (0.339416ms)
+✔ Bachh Baras is kept on its pradosh evening (0.108459ms)
+✔ Darsha Amavasya matches its published aparahna dates (0.078417ms)
+✔ Darsha Amavasya and the udaya row coincide when the amavasya covers both instants (0.053167ms)
+✔ Darsha Amavasya and the udaya Amavasya Vrat stay one day apart at most (0.257583ms)
+✔ every lunation keeps exactly one Darsha Amavasya (0.172375ms)
+✔ the live aparahna matcher agrees with the shipped table (RULEBOOK §23.9) (17.234042ms)
+✔ wave-2 observances match their published dates exactly (0.360875ms)
+✔ every wave-2 rule resolves exactly once a year, 2024-2031 (0.951083ms)
+✔ wave-2 rules ride the shipped rule that shares their tithi (0.664167ms)
+✔ Chitra Pournami tracks the Mesha solar month, not lunar Chaitra (0.099334ms)
+✔ sankrantis land on the civil day that contains the ingress (0.465333ms)
+✔ section-A observances match their published forward-year dates (0.220833ms)
+✔ section-A observances match their published dates exactly (0.198041ms)
+✔ every section-A rule resolves exactly once a year, 2024-2031, and is pinned (1.733833ms)
+✔ section-A rules ride the shipped rule that shares their tithi (0.548208ms)
+✔ Hayagriva Jayanti keeps its own (aparahna) day apart from Raksha Bandhan (0.06975ms)
+✔ aparahna is the fourth of the day’s five parts, around the sampled midpoint (0.630041ms)
+✔ the two amavasya rows say what their own day is for (10 vs 11 Sep 2026) (50.4225ms)
+✔ on a coinciding day both notes still describe their own rite (10 Oct 2026) (21.250708ms)
+✔ the aparahna note is withheld on the lunation no afternoon carries (7.668167ms)
+✔ the udaya note never prints a chaturdashi end as the amavasya’s (3.292458ms)
+✔ the chandrodaya note is unchanged, and needs a moonrise (13.0245ms)
+✔ a rule with no note returns null, and an unsolved day never guesses (4.242333ms)
+✔ source catalog captures default and advanced Drik Vrat list entries (1.043125ms)
+✔ monthly shukla Chaturthi is labelled distinctly from the Ganesh Chaturthi festival (0.211958ms)
+✔ all surfaced observance rules have source metadata and stable rule types (0.308708ms)
+✔ Vrat Katha catalog is linked to internal bilingual content without copied source bodies (0.157208ms)
+✔ Vrat Katha metadata has no dangling IDs (1.090459ms)
+✔ default-visible katha content uses full bilingual episode retellings (1.278ms)
+✔ source-backed Satyanarayana content follows the full five-adhyay story structure (0.665458ms)
+✔ Teja Dashami carries the folk-deity katha its rule links to (0.273ms)
+✔ source-backed seasonal family kathas are full narratives, not compact summaries (0.171166ms)
+✔ source-backed Ganesha Chaturthi content follows the Syamantaka and moon-curse episodes (0.211709ms)
+✔ source-backed Sankashti content uses monthly katha episodes (0.161833ms)
+✔ source-backed Pradosha content covers the weekday katha variants (0.133083ms)
+✔ recurring tithi vrats resolve month by month for future years (2336.051458ms)
+✔ annual lunar festivals fall in the nija month, skipping the adhik maas (1547.114917ms)
+✔ non-January Sankranti dates are generated from solar ingress rules (0.203708ms)
+✔ weekday-in-lunar-month vrats are generated without annual crawling (1333.349709ms)
+✔ search returns default observances and can include hidden captured catalog entries (2.113959ms)
+✔ kshaya Ekadashi is not dropped — Yogini Ekadashi 2026 resolves to 10 July (96.09225ms)
+✔ vriddhi tithi fires a monthly vrat once, on the first day (0.442208ms)
+✔ the guard detects a mutation (the harness is not vacuous) (35.371875ms)
+✔ the muhurat engine never mutates the day it is given (49.344625ms)
+✔ the finder verdict path never mutates the day (25.0295ms)
+✔ the display formatters never mutate the day (21.195ms)
+✔ serialization never mutates the day, and a revived day is a fresh instance (5.307417ms)
+✔ the store hands the SAME instance to every reader — the reason this matters (5.67325ms)
+✔ serialize → revive reproduces the day exactly, Dates included (36.851833ms)
+✔ a kshaya day (null angas + Date endTimes) also round-trips (78.567708ms)
+✔ corrupt / non-JSON storage revives to null, never throws (0.176708ms)
+✔ computes a day once, then reuses it by absolute date (44.853ms)
+✔ scopeKeyFor separates cities, calendar systems, and cityId-less GPS points (0.778708ms)
+✔ holds at most 5 cities; a 6th evicts the least-recently-used only (0.710625ms)
+✔ choosing a new city does not evict others while under the cap (0.124084ms)
+✔ Panchang visible data is stable for the next year except expected lunar month labels (3006.372ms)
+✔ calendar grid tags every resolved observance date for the next year (3.391334ms)
+✔ drik cross-check: vara / paksha / tithi / nakshatra / yoga / karana match for all 131 days (806.214708ms)
+✔ drik cross-check: sunrise & sunset within 3 minutes for all 131 days (695.90375ms)
+✔ Adhik Maas flag matches drikpanchang for every day (681.595041ms)
+✔ Vikram Samvat matches drikpanchang for every day (542.670125ms)
+✔ Purnimanta lunar month matches drikpanchang for every day (413.795958ms)
+✔ Amanta lunar month matches drikpanchang for every day (268.143041ms)
+✔ pincode table: shape matches what pincodes.ts assumes (0.949834ms)
+✔ office table: aligned with the pincode table, one kind per name, no separator inside a name (64.949292ms)
+✔ pincode table: ascending order (binary search depends on it) and in-India coordinates (9.772167ms)
+✔ pincode table: every state carries a Devanagari name (0.290667ms)
+✔ isPincodeQuery accepts only a 6-digit code that does not start with 0 (0.3305ms)
+✔ lookupPincode resolves Kolhapur — the case the city list could not serve (1.03275ms)
+✔ lookupPincode spot-checks across the country (0.243667ms)
+✔ coordinates land where the place is — each case is a source error the generator repairs (0.273375ms)
+✔ misfiled states are repaired: Agartala is not in Telangana (0.144792ms)
+✔ state names are the ones lensRegistry keys on (0.324833ms)
+✔ lookupPincode returns null for malformed and unknown codes (0.109625ms)
+✔ toDevanagariDigits converts digits and leaves other characters alone (0.128916ms)
+✔ pincode city ids are stable, prefixed, and recognised (0.185959ms)
+✔ toPincodeLocation keeps a picked place name in English and the state at the tail (0.12325ms)
+✔ toPincodeLocation labels in both scripts and keeps its source (0.066ms)
+✔ nearestPincode beats nearestCity where the city list is sparse (1.651458ms)
+✔ snapToNearestLocation returns a gps-sourced location (0.346708ms)
+✔ snapToNearestLocation keeps the CITY when the city is the closer answer (0.355084ms)
+✔ nearestPincode now finds Srinagar itself, not a pincode in Doda (0.179417ms)
+✔ isPlaceQuery wants three Latin letters (0.269334ms)
+✔ searchPlaces finds a village the city list never had (21.462791ms)
+✔ the shipped folded names are exactly what the runtime fold produces (502.41125ms)
+✔ foldPlaceName meets the common romanisation variants (0.664625ms)
+✔ the Bihar district towns are found under every common spelling, and by district name (14.839792ms)
+✔ when two places fold alike, the one spelled exactly as typed comes first (2.878084ms)
+✔ a district prefix needs four letters, a whole district name does not (5.148042ms)
+✔ searchPlaces is case- and space-insensitive (4.560458ms)
+✔ searchPlaces ranks towns above same-named villages, and prefixes above substrings (5.139417ms)
+✔ searchPlaces honours its limit and returns nothing for a non-name (9.257417ms)
+✔ placesForPincode lists what a code serves, towns first (0.330083ms)
+✔ deriveTithiRuleFromDate reads the sunrise tithi in purnimant convention (31.231334ms)
+✔ derive → solve round-trips: solving the derived rule from the same date returns that date (34.78525ms)
+✔ solveNextOccurrence agrees with the festival engine for the same rule (convention parity) (452.022541ms)
+✔ normal year: Magha Krishna Ashtami next occurrence from Aug 2026 is 29 Jan 2027 (123.435792ms)
+✔ solveNextOccurrence is fromDate-inclusive (an occurrence today is "today", not next year) (148.2635ms)
+✔ kshaya tithi: Ashadha Krishna Ekadashi 2026 resolves to 10 Jul, the day the tithi prevails (57.378166ms)
+✔ adhik maas: Jyeshtha rules skip Adhik Jyeshtha 2026 and land in the nija month (179.712167ms)
+✔ pitruPakshaWindow 2026: purnima 26 Sep, Pratipada Shraddha 27 Sep, Sarvapitri Amavasya 10 Oct (49.670209ms)
+✔ pitruPakshaWindow 2025: purnima 7 Sep, window 8–21 Sep (67.786583ms)
+✔ pitruPakshaWindow moves both ends to their aparahna days (2024 purnima, 2027 amavasya) (148.205375ms)
+✔ published Pitru Paksha fortnights 2024–2027 match day for day (Ujjain) (1.270834ms)
+✔ published Pitru Paksha fortnights 2024–2027 match day for day (New Delhi) (433.301792ms)
+✔ Jaipur 2026: Saptami Shraddha 2 Oct and Ashtami Shraddha 3 Oct are separate days (141.813292ms)
+✔ annual shraddha dates land on the published Pitru Paksha days (2024–2027) (247.08ms)
+✔ annual shraddha: Saptami 2026 is 2 Oct (aparahna); the janma reckoning keeps the sunrise day 3 Oct (1.206041ms)
+✔ annual shraddha: a sunrise day after `from` whose aparahna day is before it has passed — the next year answers (70.459333ms)
+✔ primePitruPakshaWindow seeds the memo, and downstream solvers use the seeded value (11.488125ms)
+✔ a window primed from disk names every fortnight day exactly as a fresh solve does (2024–2031) (361.015667ms)
+✔ the asynchronous day label agrees with the synchronous one and honours cancellation (21.584959ms)
+✔ primePitruPakshaWindow never overwrites a year this session already solved (1.223666ms)
+✔ pakshaShraddhaDay maps a tithi into the fortnight (2026 anchors) (0.176042ms)
+✔ nextSarvapitriAmavasya rolls across the year boundary (1.263166ms)
+✔ nextObservanceForEntry: tithi entries solve annually, sarvapitri entries land on the amavasya (0.520666ms)
+✔ entryMatchesDate: fires only on the observance day (the Panchang day chip predicate) (0.204208ms)
+✔ pitruPakshaObservanceForDate exposes the public daily label only within the fortnight (0.17775ms)
+✔ kshaya day matches entryMatchesDate too (chip shows on the prevailing day) (2.568708ms)
+✔ invalid rules are rejected, never solved (0.1625ms)
+✔ tithiRuleLabel renders sarvapitri and edge tithi names (0.12225ms)
+✔ asynchronous Pitru Paksha agrees with the synchronous engine across years and locations (29.854708ms)
+✔ prashna engine and registry stay pure (7.169292ms)
+✔ authored copy: guidance framing, no absolute claims, no fatality, no medical directive, no commerce (2.211209ms)
+✔ registry: nine purposes, valid bhavas/karakas, honest source flags, non-empty ask forms (4.725125ms)
+✔ every open answer: non-empty basis on every factor, chain and window; plain JSON; deterministic (78.334709ms)
+✔ age gate matrix: closed purposes render NO reading for a 13-year-old; all open for an adult (8.725667ms)
+✔ strength is counted from independent groups: one factor never renders प्रबल (0.2535ms)
+✔ contradiction is shown: when resists exist the सार names the tension, and both columns fill (2.380125ms)
+✔ timing is a dated window: current maha + antar always, a next relevant antar when one exists, never an event date (0.666792ms)
+✔ swasthya never leaves constitution and routine, and always routes to a doctor (1.169916ms)
+✔ dhan carries the not-financial-advice line in every strength (0.439959ms)
+✔ a seated Tula-lagna chart reads विद्या as supported and names Saturn on both learning houses (0.697375ms)
+✔ all nine topics and all questions have deterministic, traceable bilingual readings (79.195584ms)
+✔ question context changes actions without changing chart evidence; foreign or unknown question resets (4.048584ms)
+✔ minors have no gated reading and open readings address parents (1.865417ms)
+✔ contradictions survive theme grouping including several houses mapped to one theme (0.863833ms)
+✔ protected topics answer directly without chart-based outcome timing (11.769ms)
+✔ timing relevance does not add favourable strength or require waiting (2.461334ms)
+✔ different charts produce different connections, not just a different strength label (4.229667ms)
+✔ guidance has no network, randomness, personal case data or certain-outcome copy (1.67475ms)
+✔ same chart changes its reading across Jupiter-Rahu and Saturn-Saturn (27.816167ms)
+✔ a job-switch answer states a decision and traces both sides to this chart and date (6.798041ms)
+✔ a supportive job-switch answer names independent period and transit support (3.8905ms)
+✔ node occupancy establishes relevance without inheriting difficult-house polarity (0.930791ms)
+✔ every emitted lord, occupant and transit reference agrees with the chart (35.776375ms)
+✔ all adult safe questions give distinct bilingual answers with linked evidence (6.558625ms)
+✔ the next boundary crosses into a new Mahadasha and uses half-open exact instants (0.753375ms)
+✔ a fast Ask reading retains the same current phase as a full screen reading (1.506625ms)
+✔ vedha removes support and Saturn keeps the Sun exception (0.41775ms)
+✔ special transit aspects are counted from the transit house, not from the Moon (0.156625ms)
+✔ duplicate natal support cannot manufacture a favourable current period; contradictions remain (1.597875ms)
+✔ question priority changes the natal focus; adult expansion does not leak into minors or protected topics (2.528416ms)
+✔ before the end instant the sunrise tithi prevails, end included (1.2795ms)
+✔ past the end the successor runs, with no invented end instant (0.5495ms)
+✔ kshaya day walks main → kshaya → successor (0.269459ms)
+✔ a null end terminates the walk — no guessing past what the day solved (0.137875ms)
+✔ successor index wraps: Amavasya → Pratipada and Purnima → krishna Pratipada (0.108667ms)
+✔ kshaya reference day agrees with the real engine chain (Bengaluru 10 Jul 2026) (36.4645ms)
+✔ the chain is the sunrise tithi first, then the same links the walk visits (1.453459ms)
+✔ the chain resolves to the live tithi at every instant of the day (13.148042ms)
+✔ the successor is named when the sunrise tithi hands over the same day (0.26275ms)
+✔ no successor when the sunrise tithi runs past midnight or past the day (0.1525ms)
+✔ no successor on a kshaya day — the tile already renders both tithis (0.121833ms)
+✔ the handover agrees with the real solve for Bengaluru, 31 Aug 2026 (6.399958ms)
+✔ all twelve signs and houses have complete readings grounded in the shared transit table (232.601625ms)
+✔ mixed signals remain mixed rather than choosing the first observation (0.176416ms)
+✔ personal context is a strict layer and never leaks into another selected sign (2.687958ms)
+✔ same India civil day has one deterministic reading; midnight, month and year boundaries are explicit (2.090667ms)
+✔ detailed reading stays pure, serializable and within guidance vocabulary (1.611667ms)
+✔ English ordinals: 1st 2nd 3rd 4th … 11th 12th 13th 21st 22nd 23rd (1.539875ms)
+✔ Hindi bhava labels use the classical ordinal words, never a bare digit (0.370416ms)
+✔ dates render from the IST civil day regardless of the UTC instant (0.377ms)
+✔ age spans are whole years and months on the IST calendar, clamped at zero (0.772416ms)
+✔ published occurrence names resolve from the occurrence day (70.900375ms)
+✔ a Tuesday occurrence is flagged Angarki (4.554084ms)
+✔ every resolved 2026 Sankashti occurrence gets a name without throwing (38.937083ms)
+✔ सर्वार्थ सिद्धि and अमृत सिद्धि tables match shubh-yoga-v1.md row-for-row (3.950875ms)
+✔ every अमृत सिद्धि pair is also a सर्वार्थ सिद्धि row (doc invariant) (0.215375ms)
+✔ रवि योग counts and the पुष्कर factor sets match the doc (0.201917ms)
+✔ sunToMoonCount is the inclusive 27-cycle count, wrap included (0.110875ms)
+✔ labels: every yoga name ends in योग / Yoga (the naming-collision rule, RULEBOOK §24) (0.118209ms)
+✔ tables are explicitly draft until the §10 review lands (release gate) (0.075125ms)
+✔ a sunrise-nakshatra match runs sunrise → nakshatra end, fromSunrise set (1.302209ms)
+✔ a mid-day onset starts at the changeover, and a table nakshatra outlasting the day is bounded at next sunrise (0.469041ms)
+✔ kshaya nakshatra inserts its own segment (never index+1 across a kshaya) (0.32525ms)
+✔ adjacent table nakshatras merge into one continuous window (0.284417ms)
+✔ पुष्कर needs all three factors, and the window also ends when the TITHI leaves the भद्रा set (0.354083ms)
+✔ degenerate spans return no windows (0.095041ms)
+✔ 2026 sweep: every window sits inside its vāra-day and matches its table at the window start (2869.390125ms)
+✔ shubhYoga stays pure: no wall clock, randomness, network, storage, or React (12.223708ms)
+✔ annotate-only is structural: eventMuhurat must never import shubhYoga (RULEBOOK §24) (1.249542ms)
+✔ the full 27×27 tara matrix matches muhurat-tarabala-v1.md row-for-row (1.553959ms)
+✔ the full 12×12 chandra matrix matches muhurat-tarabala-v1.md row-for-row (0.462375ms)
+✔ चंद्राष्टम: the 8th from the janma rashi is the strongest bar, at every janma rashi (0.177ms)
+✔ the जन्म tara (same nakshatra, and +9/+18) is CONTESTED, never a plain verdict (0.150541ms)
+✔ DIVERGENCE GUARD: muhurat Tarabala disagrees with the Guna Milan Tara koota by design (0.095792ms)
+✔ janma derivation floors like gunaMilan/kundali (13°20′ nakshatras, 30° rashis) (0.66825ms)
+✔ tara names carry Devanagari + English, all nine (0.21925ms)
+✔ taraChandraBala source stays pure: no wall clock, randomness, network, storage, React, or astronomy (0.81775ms)
+✔ entry ids are unique (1.384541ms)
+✔ the v1 starter set is exactly the eight §6.1 entries (0.614625ms)
+✔ every rendered hi/en pair is non-empty and bilingual (0.231625ms)
+✔ every entry carries ≥2 reference URLs and a verification note (0.238333ms)
+✔ boundTithi is present iff the parana kind is tithi-bound, and within 1–15 (0.135292ms)
+✔ every upvasId in festivals.ts resolves to an entry, and every entry is attached to ≥1 rule (0.180417ms)
+✔ §6.1 attached-rule sets are pinned literally (0.348125ms)
+✔ content-correctness pins — facts asserted literally so refactors cannot swap rules (0.153584ms)
+✔ draft entries are not exposed by getUpvasInfo — proven non-vacuously (0.180791ms)
+✔ customer-rendered fields carry no draft/review/status language (0.915541ms)
+✔ all Hindi fields are well-formed Devanagari (the #243 gate) (26.926875ms)
+✔ normal Dwadashi morning: window = parana-day sunrise → Dwadashi end (kshaya-occurrence reference) (35.727375ms)
+✔ bound tithi already over before the parana sunrise ⇒ null (text-only renders) (11.989125ms)
+✔ both pakshas of the bound tithi fold to the same 1–15 value (0.302333ms)
+✔ missing or inverted tithi end ⇒ null — never an invented time (0.171583ms)
+✔ moonrise kind: the occurrence day’s engine moonrise, verbatim (7.029459ms)
+✔ null moonrise ⇒ null (engine can return it) (0.467666ms)
+✔ text-only kind never computes, whatever days are handed in (4.839458ms)
+✔ customer-facing components do not expose implementation or release-state copy (309.526416ms)
+✔ user-facing panchang labels avoid the Drik Panchang trademark phrase (8.438584ms)
+✔ panchang smoke flow drives the generic Panchang tab label (2.429125ms)
+✔ chandra vaas maps each rashi to its element direction (4.181459ms)
+✔ chandra vaas favourable travel: the Moon ahead or on the right, for all 4 directions (0.211083ms)
+✔ agni vaas: (tithi + 1 + vara) mod 4 — 0/3 prithvi, 1 akash, 2 patal (0.124375ms)
+✔ the engine solves the Moon rashi at sunrise and its change instant (239.703ms)
+✔ dayVaas carries the sunrise reading, its end, and what follows (1.249125ms)
+✔ disha shool follows the vara (Sun/Fri W, Mon/Sat E, Tue/Wed N, Thu S) (0.244333ms)
+✔ the चन्द्रमा tile names the rashi and the next one when it changes (0.421459ms)
+✔ vaas inputs agree with the recorded Drik Panchang days (530.748792ms)
+✔ moon sign changes match published Delhi almanac rows (11.271583ms)
+✔ getRulesForCategory returns only default-visible rules of that category (0.968583ms)
+✔ getCategoryCounts mirror getRulesForCategory for each browsable type (3.131083ms)
+✔ getNextOccurrences returns ascending future dates for a recurring rule (14.498292ms)
+✔ getNextOccurrence returns the single soonest future date, or null when unknown (0.496083ms)
+✔ getNextOccurrences returns [] for an unknown rule id (0.21725ms)
+✔ getRuleById finds a rule (including hidden) or returns null (0.1425ms)
+✔ getKathaLibrary exposes the bundled bilingual kathas (0.825416ms)
+✔ weekly outlook engine stays pure and has no wall-clock fallback (1.311916ms)
+✔ authored weekly copy stays inside guidance framing and never scores days (0.670708ms)
+✔ seven anchored days with consecutive keys and consistent derivations (3.891458ms)
+✔ outlook is deterministic and anchor-stable within a civil day (2.032375ms)
+ℹ tests 617
+ℹ suites 0
+ℹ pass 617
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14274.349958
+
+> vedansh@0.1.0 test:data
+> tsx --test src/data/__tests__/jayAdhyaShakti.test.ts src/data/__tests__/searchNormalize.test.ts src/data/__tests__/contentCorrectness.test.ts src/data/__tests__/libraryIntegrity.test.ts src/data/__tests__/slokaJapa.test.ts src/data/__tests__/grahaBeejJapa.test.ts src/data/__tests__/paintedIconsOnly.test.ts src/data/__tests__/devanagariWellFormed.test.ts src/data/__tests__/vidhiContent.test.ts src/data/__tests__/vidhiVisuals.test.ts src/data/__tests__/searchIndex.test.ts src/data/__tests__/warmSearchIndex.test.ts src/data/__tests__/launchGraph.test.ts src/data/__tests__/verseCounts.test.ts src/data/__tests__/chapteredCorpusInvariants.test.ts src/data/__tests__/theerth.test.ts src/data/__tests__/namkaranCorpus.test.ts src/data/__tests__/kidsStories.test.ts src/data/chapteredTotals.test.ts src/data/sourceIdMigration.test.ts src/data/sadhana/progress.test.ts src/panchang/muhurat.test.ts src/navigation/entryRoutes.test.ts src/navigation/routeGraph.test.ts src/notifications/__tests__/scheduler.test.ts src/notifications/__tests__/reminderVerseLookup.test.ts src/notifications/__tests__/vratReminderPure.test.ts src/notifications/__tests__/muhuratReminderPure.test.ts src/notifications/__tests__/festiveReminderPure.test.ts src/notifications/__tests__/festiveReminders.test.ts src/notifications/__tests__/pitruReminderPure.test.ts src/notifications/__tests__/janmaTithiReminderPure.test.ts src/notifications/__tests__/japamAlarms.test.ts src/notifications/__tests__/sadhanaReminder.test.ts src/notifications/__tests__/routineReminderPure.test.ts src/notifications/__tests__/returnReminderPure.test.ts src/notifications/__tests__/pushTokenPure.test.ts
+
+✔ sundarkand: every chapter agrees with its manifest entry (38.052834ms)
+✔ sundarkand: the chapter getter rejects out-of-range chapters (0.251667ms)
+✔ shiva-strotam: every chapter agrees with its manifest entry (5.024667ms)
+✔ shiva-strotam: the chapter getter rejects out-of-range chapters (0.297ms)
+✔ durga-stotram: every chapter agrees with its manifest entry (6.591458ms)
+✔ durga-stotram: the chapter getter rejects out-of-range chapters (0.108542ms)
+✔ saraswati-stotram: every chapter agrees with its manifest entry (4.084791ms)
+✔ saraswati-stotram: the chapter getter rejects out-of-range chapters (0.065084ms)
+✔ ganesh-stotram: every chapter agrees with its manifest entry (3.264167ms)
+✔ ganesh-stotram: the chapter getter rejects out-of-range chapters (0.134416ms)
+✔ vishnu-sahasranama: every chapter agrees with its manifest entry (5.908334ms)
+✔ vishnu-sahasranama: the chapter getter rejects out-of-range chapters (0.114208ms)
+✔ hanuman-ashtak: every chapter agrees with its manifest entry (2.677ms)
+✔ hanuman-ashtak: the chapter getter rejects out-of-range chapters (0.076375ms)
+✔ krishna-stotram: every chapter agrees with its manifest entry (3.328209ms)
+✔ krishna-stotram: the chapter getter rejects out-of-range chapters (0.062166ms)
+✔ bajrang-baan: every chapter agrees with its manifest entry (1.464917ms)
+✔ bajrang-baan: the chapter getter rejects out-of-range chapters (0.051708ms)
+✔ ram-stuti: every chapter agrees with its manifest entry (1.536375ms)
+✔ ram-stuti: the chapter getter rejects out-of-range chapters (0.060125ms)
+✔ ramcharitmanas: every chapter agrees with its manifest entry (4.945917ms)
+✔ ramcharitmanas: the chapter getter rejects out-of-range chapters (0.05775ms)
+All content correctness tests passed
+✔ src/data/__tests__/contentCorrectness.test.ts (2236.895333ms)
+Devanagari well-formedness: no new defects. 33 baselined instance(s) remain across 6 file(s) — see RULEBOOK §11.14.
+✔ src/data/__tests__/devanagariWellFormed.test.ts (1737.705416ms)
+✔ every graha has a beej japam entry whose line is its GRAHA_UPAY mantra (0.879541ms)
+✔ beej meanings frame the japa as a practice, never a fix (0.090625ms)
+✔ graha beej mantras stay off the verse of the day; the deity mantras join it (275.995584ms)
+✔ places the unity stanza before the signature in the maintainer-approved ending (1.084625ms)
+✔ closing pages retain English parity, authored meanings and valid regional scripts (2.57225ms)
+✔ listing count and source disclosure describe the extended edition (0.689917ms)
+✔ deity shelves contain only published stories, with future titles kept separate (1.155458ms)
+✔ stories have unique stable pages and authored text in all four languages (1.494833ms)
+✔ listing descriptions fit one line in every language (0.246834ms)
+✔ introductions say so in their own description, since cards carry no kind tag (0.169625ms)
+✔ locale selection changes narration while keeping the shared illustration and page (0.224542ms)
+✔ the four new stories carry complete sourced arcs, regional text and distinct matching artwork (77.003125ms)
+✔ every page and cover resolves to a source illustration (uploaded to the CDN, cached on-device) (88.683208ms)
+✔ every source illustration has a bottom-band review tied to its actual image bytes (95.050708ms)
+✔ Krishna Janma keeps distinct scene art and matching browser assets (23.959167ms)
+✔ Navaratri resolves all nine days once, with honest introduction labels and the shared Katyayani story (0.273625ms)
+✔ Durga readings carry all four narratives, sourced page arcs, unique art and matching browser/CDN bytes (401.683667ms)
+✔ production source never imports bundled kids-story illustrations, including the Home cover (1400.208125ms)
+✔ export asset gate rejects a renamed story image outside the story folders (189.150541ms)
+✔ export asset gate accepts an export with no story imagery (175.239416ms)
+✔ no on-demand corpus payload is statically reachable from the app entry (2.460542ms)
+✔ the static launch graph stays inside its byte budget (16.437417ms)
+libraryIntegrity: 111 entries — all invariants hold
+✔ src/data/__tests__/libraryIntegrity.test.ts (852.48125ms)
+✔ the development corpus is explicitly blocked from release (0.618167ms)
+✔ the shard set is exactly one file per nakshatra, correctly self-labelled (0.173208ms)
+✔ every name is stored in the shard of each nakshatra its charanas touch (0.316917ms)
+✔ authored names have unique ids, bilingual meanings, matching initials, and resolving deities (0.199667ms)
+✔ the generated count index matches the shards (0.998625ms)
+✔ each shard and the corpus as a whole stay within the reviewed byte budgets (0.347042ms)
+✔ the 12+12 coverage floor gates release eligibility (5.011417ms)
+✔ no UI file renders an entry, track or program `thumb` glyph (54.409875ms)
+✔ DeityIcon takes no text fallback — an unknown key draws the painted deity seal (27.80675ms)
+✔ src/data/__tests__/searchIndex.test.ts (2364.733709ms)
+✔ src/data/__tests__/searchNormalize.test.ts (927.348459ms)
+✔ every active stotram-category library entry is a sloka-japa source, and nothing else is (0.752666ms)
+✔ every recited shloka resolves to a counter entry like a mantra (54.536042ms)
+✔ the reader page maps to the shloka on screen; a title card starts the first shloka (0.3465ms)
+✔ a shloka that is also a list mantra opens that mantra, so one chant keeps one count (0.149791ms)
+✔ sloka ids are URL-safe (the Japam widget deep link carries them) (0.275916ms)
+✔ malformed or unknown sloka ids do not resolve (0.202125ms)
+✔ slokas never join the mantra list (0.054916ms)
+✓ theerth data-contract: 71 temples, 32 states covered, projection aligned, sourced prose present
+✔ src/data/__tests__/theerth.test.ts (550.091542ms)
+✔ every generated verse count still matches its corpus (22.019958ms)
+✔ verseCounts exports exactly what texts.ts and versePool.ts need, and nothing stale (0.41775ms)
+✔ texts.ts takes its verse counts from verseCounts.ts, never from a corpus (5.244541ms)
+vidhi content: 7 published vidhi(s) + 2 draft(s), 106 steps, 12 transcribed mantras — all gates green.
+✔ src/data/__tests__/vidhiContent.test.ts (1281.442959ms)
+✔ all 106 published steps use reviewed R2 images, including every supplementary image (433.640708ms)
+✔ a content, assignment or image change invalidates its exact step-by-step semantic review (6.760625ms)
+✔ deity-specific flowers, offerings and distinct actions cannot regress to generic art (0.188667ms)
+✔ personal remembrance art remains flame-free without deity or ancestor portraits (0.117959ms)
+✔ a sliced build is byte-identical to an uninterrupted one — at any budget (1728.421875ms)
+✔ a warmed index is the one later callers get back (246.891542ms)
+✔ peekSearchIndex never does work (0.095416ms)
+✔ the build is sliced finer than one-entry-per-slice (224.0995ms)
+✔ concurrent callers share ONE job and resolve to the same index (419.142667ms)
+✔ a tap mid-warm FINISHES the warm-up's work instead of starting over (332.572667ms)
+✔ search works off a warmed index (153.901625ms)
+✔ src/data/chapteredTotals.test.ts (967.904667ms)
+✔ catalog is well-formed (0.974333ms)
+✔ day counts (0.134917ms)
+✔ uniform program repeats the same unit every day (0.315959ms)
+✔ per-day program maps dayIndex → chapter (0.476709ms)
+✔ fresh enrollment → active on day 1 (0.3135ms)
+✔ completing today → done-today, next day locked until tomorrow (0.210833ms)
+✔ grace: a calendar gap does not consume a day — next day is active, not skipped (0.178333ms)
+✔ completing the final day → completed (पूर्णाहुति) (0.112583ms)
+✔ day counts for weekday + festival cadences (0.099833ms)
+✔ navratri: unique completion key per day, chapter rotation (0.177917ms)
+✔ festival-window: waiting when no window today, active inside the window (0.154625ms)
+✔ festival-window: a completed calendar day shows done-today (0.082334ms)
+✔ weekday: resting on an off-day, active on an eligible day (0.151958ms)
+✔ weekday: grace — a missed eligible day does not advance the vow (0.110833ms)
+✔ withDayCommitted appends the day immutably (0.106708ms)
+✔ orderSadhanaCards: daily card first, then upcoming sankalps nearest-first (0.383333ms)
+✔ orderSadhanaCards: daily (consecutive) active outranks a calendar-gated card eligible today (0.1175ms)
+✔ orderSadhanaCards: resting sankalps sort nearest-first regardless of input order (0.173833ms)
+✔ orderSadhanaCards: done-today outranks waiting; completed sinks last (0.128208ms)
+✔ orderSadhanaCards: does not mutate its input (0.095375ms)
+✔ src/data/sourceIdMigration.test.ts (959.214542ms)
+✔ src/navigation/entryRoutes.test.ts (954.807792ms)
+✔ every route in the graph is really registered on a stack (3.233042ms)
+✔ no route lists itself as its own child (0.214833ms)
+✔ childRoutes is total — undefined and unknown routes give an empty list (0.110792ms)
+✔ the graph actually covers the main doors out of Home (0.09075ms)
+✔ src/notifications/__tests__/festiveReminderPure.test.ts (703.933ms)
+✔ src/notifications/__tests__/festiveReminders.test.ts (872.527375ms)
+✔ plans exactly ONE notice per person: the evening before at 18:00 (1.152125ms)
+✔ a null date, a passed eve, and an out-of-window date all schedule nothing (0.183917ms)
+✔ the cap keeps the SOONEST notices (dated one-shots have no user ranking) (0.314833ms)
+✔ copy is devotional, never social — names the tithi, no greeting, no exclamation (0.254708ms)
+✔ src/notifications/__tests__/japamAlarms.test.ts (594.236167ms)
+✔ clampDayOf: window-anchored day-of fires WINDOW_LEAD_MINUTES before the window (0.902ms)
+✔ clampDayOf: a literal 07:00 is pulled BACK behind an early window (0.12275ms)
+✔ clampDayOf: a chosen time already before the window is left alone (0.084625ms)
+✔ clampDayOf: window-anchored beats a LATER chosen time too (0.084334ms)
+✔ clampDayOf: never crosses back past local midnight (0.083167ms)
+✔ clampDayOf: no window falls back to the chosen time (0.086791ms)
+✔ plans one advance + one day-of per follow (0.473209ms)
+✔ identifiers are prefix-scoped and stable per (occasion, kind, date) (0.17675ms)
+✔ an excluded day schedules NOTHING (verdict drift after a location change) (0.118ms)
+✔ advanceDays 0 drops the advance notice; dayOf false drops the day-of (0.765209ms)
+✔ advanceDays 3 fires three evenings before (0.181542ms)
+✔ fire times already past are dropped (0.080708ms)
+✔ fire times beyond the rolling window are dropped (0.27725ms)
+✔ cap keeps the SOONEST notices and reports the truncation (0.226875ms)
+✔ planning is deterministic when two notices share a fire minute (0.127375ms)
+✔ a day with no resolvable window still gets both notices at the chosen time (0.082ms)
+✔ day-of copy carries the window; advance copy names the day (0.158917ms)
+✔ multi-day advance copy counts the days (0.074ms)
+✔ every notification body is authored Hindi-first with an English counterpart (0.200209ms)
+✔ personal planner is opt-in by input and creates day-before plus day-of slots (4.350959ms)
+✔ season planner creates two public, person-free reminders and ignores past slots (0.465208ms)
+✔ the project id mirrors app.json — a drift here mints tokens for the wrong project (1.310083ms)
+✔ the registry endpoint is pinned to the production https url (0.14025ms)
+✔ only a non-empty https endpoint counts as configured (0.085125ms)
+✔ the api key is trimmed, and a blank value counts as no key (0.089ms)
+✔ the body is the device id wrapped in a one-element array (0.625667ms)
+✔ a device id registers once; a first run and a rotated id both register (0.086625ms)
+✔ install ids are deterministic per seed, distinct across seeds and mint times (0.355667ms)
+✔ a blank or truncated stored install id is not reused (0.071083ms)
+✔ the env var wins over the source fallback, and only https counts (0.14775ms)
+✔ status codes map to retry / accept / give-up (0.173625ms)
+✔ only a retryable outcome retries, and only within the attempt budget (0.106125ms)
+✔ backoff triples, is clamped, and is jittered per device without randomness (0.216417ms)
+✔ a first-attempt success makes no further request and never sleeps (0.163416ms)
+✔ a transient failure is retried and can still succeed (0.117417ms)
+✔ retries are exhausted, not infinite (0.114625ms)
+✔ a 4xx stops immediately — re-sending an identical rejected body is waste (0.109917ms)
+✔ src/notifications/__tests__/reminderVerseLookup.test.ts (798.426375ms)
+▶ planReturnReminders
+  ✔ arms the full ladder: cap slots, one every interval, at the fixed morning time (0.73875ms)
+  ✔ the first slot is never sooner than the interval — an active user hears nothing (0.514375ms)
+  ✔ every slot is strictly in the future and identifiers are unique under the family prefix (0.195375ms)
+  ✔ weekday follows the fire date: a Friday re-arm lands on Mon, Thu, Sun, Wed, Sat (0.574ms)
+  ✔ honours a smaller cap / different interval (0.115ms)
+  ✔ a re-arm on a DST-free month never drifts the fire hour (0.383167ms)
+✔ planReturnReminders (3.734041ms)
+▶ RETURN_REMINDER_COPY
+  ✔ covers all seven weekdays with non-empty hi/en title and body (0.99325ms)
+  ✔ each weekday title names the vaar deity the routine builder suggests (0.182291ms)
+  ✔ every named text is a shipped, active library entry for that weekday deity (0.244292ms)
+  ✔ copy carries no store, connectivity or implementation words (RULEBOOK copy rule) (0.299959ms)
+✔ RETURN_REMINDER_COPY (1.976792ms)
+▶ formatReturnReminderContent
+  ✔ hi and en read straight from the weekday copy (0.202041ms)
+  ✔ defaults to Hindi (0.07575ms)
+  ✔ gu/kn are re-scripted from the Devanagari, never left in Devanagari or Latin (0.438125ms)
+✔ formatReturnReminderContent (0.834417ms)
+✔ daily mode fills one reminder per day across the window (1.147583ms)
+✔ weekday mode fires only on the scheduled days (Sat-only → Saturdays only) (0.213042ms)
+✔ an empty weekday union yields zero candidates (0.095375ms)
+✔ skips today's slot when its time has already elapsed (0.110625ms)
+✔ completedToday suppresses today only; tomorrow onward is untouched (0.122417ms)
+✔ caps priority-first (creation order), soonest fire as tie-break (0.151834ms)
+✔ the default window is 7 days and the cap 12 — the PRD-07 P3 budget slice (0.116959ms)
+✔ identifiers follow routine-reminder:{routineId}:{dateKey} (0.174709ms)
+✔ copy is Devanagari-led and names the routine; blank nameHi falls back to nameEn (0.152583ms)
+✔ deterministic for a fixed now — no clock reads (0.715875ms)
+✔ schedules one reminder per day across the window (0.809ms)
+✔ skips today's slot when its time has already elapsed (0.415541ms)
+✔ caps total notifications, priority-first (0.377291ms)
+✔ content is Hindi-led and names the program (0.39725ms)
+✔ src/notifications/__tests__/scheduler.test.ts (486.069375ms)
+✔ src/notifications/__tests__/vratReminderPure.test.ts (621.677209ms)
+✔ splitEqual produces n contiguous equal spans covering the range (0.888084ms)
+✔ day + night each have 8 choghadiya covering their span (0.344292ms)
+✔ DrikPanchang day-start choghadiya per weekday (0.321667ms)
+✔ night choghadiya starts +5 around the wheel from the day start (0.148625ms)
+✔ day choghadiya follow the published weekday sequence, all 8 periods (0.746166ms)
+✔ night choghadiya follow the published weekday sequence, all 8 periods (0.298834ms)
+✔ Saturday 10:30 PM is Shubh (then Amrit), never the morning Kaal → Shubh pair (0.209667ms)
+✔ quality mapping — amrit/shubh/labh/char auspicious; udveg/kaal/rog avoid (0.145125ms)
+✔ Rahu Kaal is the correct weekday eighth (Sun=8th, Mon=2nd) (0.207375ms)
+✔ Gulika and Yamaganda land on their weekday eighths (0.202208ms)
+✔ Abhijit is the 8th of 15 day-muhurtas (≈ midday) (0.194458ms)
+✔ classifyNow finds the containing choghadiya and any kaal (0.123333ms)
+ℹ tests 194
+ℹ suites 3
+ℹ pass 194
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4796.4295
+
+> vedansh@0.1.0 test:ask
+> TZ=Asia/Kolkata tsx --test src/ask/__tests__/*.test.ts
+
+✔ leads with today, then observance or upcoming, then windows (32.917125ms)
+✔ the sankalp card appears only when an enrolment is active (1.246917ms)
+✔ is deterministic for a fixed context (1.482958ms)
+
+223 positives · 222 hit · 1 miss · 0 wrong · top-1 99.6%
+
+  ✗ navratri me mata ko kya chadhaye  → none (wanted bhog.offer) key="navratri me mata ko kya chadhaye" ents={"observance":"class:navratri"}
+✔ golden corpus: ≥ 85% top-1 and zero wrong answers (166.008334ms)
+✔ negatives never answer (3.078875ms)
+✔ inherent vowel: a bare consonant carries "a" (0.612125ms)
+✔ word-final schwa is deleted (Hindi), written ā is kept (0.119958ms)
+✔ Devanagari, IAST and Hinglish land on one key (0.1085ms)
+✔ Hinglish spelling noise collapses (0.07175ms)
+✔ fold is idempotent and strips punctuation (0.1275ms)
+✔ stem strips honorific tails so ganeshji ≡ ganesha ≡ ganesh (0.093625ms)
+✔ generic tokens include the ones that produced false entity tags (0.086208ms)
+✔ no ask-engine module is on the static launch graph (51.404458ms)
+✔ every registry entry has lexicon coverage (2.699583ms)
+✔ every alias points at an id that exists in its registry (0.275542ms)
+✔ observance classes exist and pick up their members from the registry (0.114833ms)
+✔ every key is folded, non-trivial, and unique per (type,id) (0.476459ms)
+✔ lexicon stays inside the bundle budget (§13.7) (0.108667ms)
+✔ an in-keeping room answers with परंपरा + आपके घर में + the class (1.990542ms)
+✔ a forbidden placement carries tone avoid; multiple ordinals each get a line (0.526042ms)
+✔ an unmeasured room answers honestly, never inventing a zone (0.580791ms)
+✔ the action opens the saved home (0.799125ms)
+✔ no saved living home → none, with the generic vastu example as did-you-mean (0.405084ms)
+✔ a room this home never listed abstains rather than answering from nothing (0.434958ms)
+✔ the non-possessive question still gets the generic convention answer (0.396542ms)
+✔ the declined register is untouched — a dosh framing never reaches the record (0.4555ms)
+✔ no score, percent or remedy in any line of a myhome answer (0.561792ms)
+✔ without a saved chart the stance guard declines exactly as before (22.549084ms)
+✔ with a saved adult chart a purpose-shaped predictive question becomes a dated-window answer (15.639875ms)
+✔ Ask sends an explicit job-change question to the same decision and selected screen question (4.627417ms)
+✔ Ask selects the other explicit questions and keeps their chart-backed answer on hand-off (7.284334ms)
+✔ predictive framing with no readable purpose stays declined even with a chart (0.707708ms)
+✔ a minor's chart returns the gate reason and no reading for a closed purpose (1.085042ms)
+✔ the muhurat hand-off rides business, travel and marriage answers only (1.931417ms)
+✔ §13.3 class vs instance: bare "ekadashi" is the class, a qualifier picks the instance (2.15825ms)
+✔ §13.3 specificity floor: generic tokens never establish an entity (0.710958ms)
+✔ deity stem matching: श्री गणेश ≡ ganesha ≡ ganesh ≡ ganeshji ≡ ganpati (3.900458ms)
+✔ relative day: कल is tomorrow, but "rahu kal" is a Kaal (0.670959ms)
+✔ §3.2 answer-or-abstain: an intent with a missing required slot is ineligible, not low-confidence (0.616875ms)
+✔ §3.4 stance guard: predictive and personal framing is declined, not answered (1.097917ms)
+✔ philosophy is a content search, not an answer (0.438292ms)
+✔ answers carry working, actions and the verified-only provenance where content-backed (0.704709ms)
+✔ bhog.avoid beats bhog.offer on "kya nahi chadhaye" (0.62025ms)
+✔ the class resolves to the NEXT occurrence, and "kal X hai kya" answers yes/no about that day (23.623083ms)
+✔ did-you-mean suggestions follow the entities that WERE found (0.275041ms)
+✔ looksLikeQuestion keeps plain library queries out of the abstain state (§3.6) (0.0945ms)
+✔ determinism: the same question resolves identically twice (7.395375ms)
+✔ ask-from-context seed fills a missing slot (0.624792ms)
+✔ §13.3 the bare word अमावस्या means the calendar amavasya, not दर्श अमावस्या (6.523666ms)
+ℹ tests 49
+ℹ suites 0
+ℹ pass 49
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 567.652667

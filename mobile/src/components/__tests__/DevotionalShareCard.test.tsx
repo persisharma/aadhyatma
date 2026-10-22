@@ -44,3 +44,12 @@ it('resets painting and measurement when the reading changes', () => {
   const ready = jest.fn(); mount(ready); paint(); layout(); expect(ready).toHaveBeenLastCalledWith(true); ready.mockClear();
   act(() => tree.update(card(ready, 'A different, longer complete meaning.'))); layout(); expect(ready).not.toHaveBeenCalled(); paint(); expect(ready).toHaveBeenLastCalledWith(true);
 });
+it('fills the short-card gap from the same unscaled master and waits for its paint', () => {
+  const ready = jest.fn(); mount(ready); layout(300, 728); paint('devotional-spacer-image');
+  expect(ready).not.toHaveBeenCalled();
+  const spacer = tree.root.findAllByType(Image).find(node => node.props.testID === 'devotional-spacer-image')!;
+  expect(StyleSheet.flatten(spacer.props.style)).toMatchObject({ width: 540, height: 728, top: -600 });
+  expect(spacer.props.source).toEqual(tree.root.findAllByType(Image).find(node => node.props.testID === 'devotional-footer-image')!.props.source);
+  act(() => spacer.props.onLoad()); expect(ready).toHaveBeenLastCalledWith(true);
+  act(() => spacer.props.onError()); expect(ready).toHaveBeenLastCalledWith(false);
+});

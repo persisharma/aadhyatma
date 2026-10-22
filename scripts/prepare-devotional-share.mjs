@@ -22,7 +22,8 @@ const manifestPath = path.join(root, 'mobile/src/data/devotionalShareManifest.js
 const stage = path.join(root, 'scripts/.cache/devotional-share');
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 const manifest = { prefix: 'devotional-share', assets: {} };
-for (const [stem, source] of Object.entries(provenance.assets).sort(([a], [b]) => a.localeCompare(b))) {
+const sources = { ...provenance.assets, ...provenance.subjects };
+for (const [stem, source] of Object.entries(sources).sort(([a], [b]) => a.localeCompare(b))) {
   const bytes = readFileSync(path.join(folder, source.file));
   assert.equal(sha256(bytes), source.sha256, `Changed/unreviewed master: ${stem}`);
   assert.equal(bytes.length, source.bytes, stem);
@@ -35,7 +36,7 @@ if (process.argv.includes('--verify')) {
 } else {
   rmSync(stage, { recursive: true, force: true });
   mkdirSync(stage, { recursive: true });
-  for (const [stem, asset] of Object.entries(manifest.assets)) copyFileSync(path.join(folder, provenance.assets[stem].file), path.join(stage, `${asset.hash}.${asset.ext}`));
+  for (const [stem, asset] of Object.entries(manifest.assets)) copyFileSync(path.join(folder, sources[stem].file), path.join(stage, `${asset.hash}.${asset.ext}`));
   writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
   console.log(`Staged ${Object.keys(manifest.assets).length} masters as <hash>.<ext> in ${path.relative(root, stage)}; upload pending`);
 }
@@ -45,7 +46,7 @@ if (process.argv.includes('--cdn')) {
   for (const [stem, asset] of Object.entries(manifest.assets)) {
     const response = await fetch(`${base}/${manifest.prefix}/${asset.hash}.${asset.ext}`);
     assert.ok(response.ok, `${stem}: HTTP ${response.status}`);
-    assert.equal(sha256(Buffer.from(await response.arrayBuffer())), provenance.assets[stem].sha256, `${stem}: CDN bytes differ`);
+    assert.equal(sha256(Buffer.from(await response.arrayBuffer())), sources[stem].sha256, `${stem}: CDN bytes differ`);
   }
   console.log('All public devotional share objects match the reviewed source SHA-256 values');
 }

@@ -4,8 +4,11 @@ import {
   StyleSheet,
   Text,
   View,
+  type AccessibilityActionEvent,
+  type AccessibilityActionInfo,
   type AccessibilityRole,
   type AccessibilityState,
+  type AccessibilityValue,
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
@@ -34,8 +37,9 @@ import type { OrderedTitlePart, TitleSizeScale } from '@/utils/titleByLanguage';
  * `subtle` shadow, not pressable. There is no other surface.
  *
  * Callers own only the slots: `leading` (usually `<CardThumb>`), the text column
- * (usually `<CardTitles>`), `right` (defaults to the › chevron) and `overlay`
- * (an absolutely-positioned NEW/SOON badge). The trailing slot follows the
+ * (usually `<CardTitles>`, then any read-progress row beneath it), `right`
+ * (defaults to the › chevron) and `overlay` (an absolutely-positioned
+ * NEW/SOON badge). The trailing slot follows the
  * behaviour rule: › opens · ＋ › opens and can be added to a routine · ▶ plays
  * in place · pill › opens and shows progress · SOON is disabled. Compact rows
  * never carry ＋ — groups are not routine items.
@@ -58,12 +62,19 @@ const SHELL = {
 const SizeContext = createContext<ListCardSize>('regular');
 const DisabledContext = createContext(false);
 
-/** The gradient thumb tile; sized by the enclosing card, muted when it is disabled. */
-export function CardThumb({ children }: { children: React.ReactNode }) {
+/**
+ * The gradient thumb tile; sized by the enclosing card, muted when it is
+ * disabled. `done` fills it solid `saffron-deep` — a finished chapter's ✓
+ * (design.md §84).
+ */
+export function CardThumb({ children, done = false, testID }: { children: React.ReactNode; done?: boolean; testID?: string }) {
   const { colors, radii } = useTheme();
   const size = SHELL[useContext(SizeContext)].thumb;
   const disabled = useContext(DisabledContext);
   const box = { width: size, height: size, borderRadius: radii.md };
+  if (done) {
+    return <View testID={testID} style={[styles.thumb, box, { backgroundColor: colors.saffronDeep }]}>{children}</View>;
+  }
   if (disabled) {
     return (
       <View style={[styles.thumb, box, styles.thumbRest, { backgroundColor: colors.cardThumbRest, borderColor: colors.divider }]}>
@@ -163,9 +174,13 @@ export default function ListCard({
   disabled = false,
   onPress,
   onPressIn,
+  onLongPress,
   accessibilityLabel,
   accessibilityRole = 'button',
   accessibilityState,
+  accessibilityValue,
+  accessibilityActions,
+  onAccessibilityAction,
   testID,
   style,
 }: {
@@ -181,9 +196,15 @@ export default function ListCard({
   disabled?: boolean;
   onPress?: () => void;
   onPressIn?: () => void;
+  /** Read-coverage reset (design.md §84). */
+  onLongPress?: () => void;
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
   accessibilityState?: AccessibilityState;
+  /** Read progress rides here so the label stays the stable e2e selector. */
+  accessibilityValue?: AccessibilityValue;
+  accessibilityActions?: AccessibilityActionInfo[];
+  onAccessibilityAction?: (event: AccessibilityActionEvent) => void;
   testID?: string;
   style?: StyleProp<ViewStyle>;
 }) {
@@ -222,9 +243,13 @@ export default function ListCard({
       testID={testID}
       onPress={onPress}
       onPressIn={onPressIn}
+      onLongPress={onLongPress}
       accessibilityRole={accessibilityRole}
       accessibilityLabel={accessibilityLabel}
       accessibilityState={accessibilityState}
+      accessibilityValue={accessibilityValue}
+      accessibilityActions={accessibilityActions}
+      onAccessibilityAction={onAccessibilityAction}
       style={({ pressed }) => [
         frame,
         // Opaque base so the Android shadow renders; the gradient carries its

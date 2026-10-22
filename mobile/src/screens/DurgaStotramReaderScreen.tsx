@@ -9,6 +9,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import ReaderHeader from '@/components/ReaderHeader';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
@@ -114,6 +115,7 @@ export default function DurgaStotramReaderScreen({ navigation, route }: Props) {
     if (chapter == null) return;
     setProgress({ sourceId: 'durga-stotram', chapter: chapter.chapter, verseIndex: currentIndex, updatedAt: Date.now() });
   }, [chapter, currentIndex, setProgress]);
+  useReadDwell('durga-stotram', chapter?.chapter, chapter ? currentIndex : -1);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 

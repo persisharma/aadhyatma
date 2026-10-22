@@ -1,0 +1,92 @@
+WARNING: Final field parent in class maestro.cli.command.TestCommand has been mutated reflectively by class picocli.CommandLine$Model$FieldBinding in unnamed module @41e68d87 (file:/Users/prashant/.maestro/lib/picocli-4.6.3.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.fusesource.jansi.internal.JansiLoader in an unnamed module (file:/Users/prashant/.maestro/lib/jansi-2.4.1.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Running on Vedansh-Reading-Art-QA - iOS 26.5 - BD91E840-482E-4816-838A-9C5247E401DA
+ > Flow daily-bhakti-compression-smoke
+Run _launch.yaml...
+  Launch app "com.prashantsharma.vedansh" with clear state (launch arguments: {RCT_jsLocation=${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}})...WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.oracle.truffle.api.dsl.InlineSupport$UnsafeField (file:/Users/prashant/.maestro/lib/truffle-api-24.2.0.jar)
+WARNING: Please consider reporting this to the maintainers of class com.oracle.truffle.api.dsl.InlineSupport$UnsafeField
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+ COMPLETED
+  Wait for animation to end within 30000 ms... COMPLETED
+  Assert that "Allow|Skip tour|Begin|Close|Got it|.*Today.s Panchang.*|.*आज का पंचांग.*" is visible... COMPLETED
+  Tap on (Optional) "Allow"... COMPLETED
+  Tap on (Optional) "Don't Allow"... WARNED
+  Tap on (Optional) "Skip tour"... COMPLETED
+  Wait for animation to end... COMPLETED
+  Tap on (Optional) "Begin"... COMPLETED
+  Tap on (Optional) "Close"... WARNED
+  Tap on (Optional) "Got it"... WARNED
+  Tap on (Optional) "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"... WARNED
+  Wait for animation to end... COMPLETED
+  Tap on (Optional) "Allow"... WARNED
+  Tap on (Optional) "Don.t Allow"... WARNED
+  Wait for animation to end... COMPLETED
+  Tap on (Optional) "SKIP|Skip|Skip tour"... WARNED
+  Tap on (Optional) "Begin"... COMPLETED
+  Wait for animation to end... COMPLETED
+  Assert that ".*Today.s Panchang.*|.*आज का पंचांग.*" is visible... COMPLETED
+  Assert that "आज के लिए|FOR TODAY" is visible... COMPLETED
+  Tap on (Optional) "Skip tour"... WARNED
+  Tap on (Optional) "Begin"... WARNED
+  Swiping in DOWN direction in 400 ms... COMPLETED
+  Wait for animation to end... COMPLETED
+Run _launch.yaml... COMPLETED
+Open vedansh://widget/verse?sourceId=krishna-chalisa&verseIndex=0... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that id: devotional-subject-krishna is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-krishna... COMPLETED
+Open vedansh://widget/verse?sourceId=shiv-chalisa&verseIndex=0... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that id: devotional-subject-shiva is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-shiva... COMPLETED
+Open vedansh://widget/verse?sourceId=durga-chalisa&verseIndex=0... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that id: devotional-subject-durga is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-durga... COMPLETED
+Open vedansh://widget/verse?sourceId=saraswati-chalisa&verseIndex=0... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that id: devotional-subject-saraswati is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-saraswati... COMPLETED
+Open vedansh://widget/verse?sourceId=vishnu-chalisa&verseIndex=0... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that id: devotional-subject-vishnu is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-vishnu... COMPLETED
+Open vedansh://widget/verse?sourceId=hanuman-chalisa&verseIndex=0... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that id: devotional-subject-hanuman is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-hanuman... COMPLETED
+Open vedansh://widget/verse?sourceId=ram-chalisa&verseIndex=0... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that id: devotional-subject-rama is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-rama... COMPLETED
+Open vedansh://widget/verse?sourceId=surya-chalisa&verseIndex=0... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that id: devotional-subject-surya is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-surya... COMPLETED
+Open vedansh://widget/verse?sourceId=ganesh-chalisa&verseIndex=0... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that id: devotional-subject-ganesha is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-ganesha... COMPLETED
+Tap on "Share verse"... COMPLETED
+Assert that "Card language: Hindi" is visible... COMPLETED
+Tap on "Card language: Hindi"... COMPLETED
+Assert that id: devotional-preview-ready is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-ganesha-preview... COMPLETED
+Tap on "Share to other apps"... COMPLETED
+Assert that "Copy|Save Image|AirDrop" is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-ganesha-export-sheet... COMPLETED
+Stop com.prashantsharma.vedansh... COMPLETED
+Launch app "com.prashantsharma.vedansh" (launch arguments: {RCT_jsLocation=${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}})... COMPLETED
+Wait for animation to end... COMPLETED
+Assert that "आज के लिए|FOR TODAY" is visible... COMPLETED
+Open vedansh://widget/verse?sourceId=ganesh-chalisa&verseIndex=0... COMPLETED
+Wait for animation to end within 5000 ms... COMPLETED
+Assert that id: devotional-subject-ganesha is visible... COMPLETED
+Take screenshot e2e-shots/daily-compressed-ganesha-cached... COMPLETED

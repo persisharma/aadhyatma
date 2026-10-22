@@ -14,6 +14,7 @@ import { buildListingShare } from '@/utils/listingShare';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import GranthProgressScope from '@/components/GranthProgressScope';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'SaraswatiStotramChapters'>;
@@ -56,13 +57,15 @@ export default function SaraswatiStotramChaptersScreen({ navigation }: Props) {
           contentContainerStyle={[styles.scrollContent, { paddingHorizontal: spacing.screenGutter, gap: spacing.md }]}
           showsVerticalScrollIndicator={false}
         >
-          {saraswatiStotramChaptersManifest.map((chapter) => (
-            <GitaChapterCard
-              key={chapter.chapter}
-              chapter={chapter}
-              onPress={() => navigation.navigate('SaraswatiStotramReader', { chapter: chapter.chapter })}
-            />
-          ))}
+          <GranthProgressScope sourceId="saraswati-stotram">
+            {saraswatiStotramChaptersManifest.map((chapter) => (
+              <GitaChapterCard
+                key={chapter.chapter}
+                chapter={chapter}
+                onPress={() => navigation.navigate('SaraswatiStotramReader', { chapter: chapter.chapter })}
+              />
+            ))}
+          </GranthProgressScope>
         </ScrollView>
       </SafeAreaView>
     </View>

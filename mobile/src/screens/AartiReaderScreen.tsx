@@ -9,6 +9,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import ReaderHeader from '@/components/ReaderHeader';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
@@ -64,6 +65,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
       updatedAt: Date.now(),
     });
   }, [sourceId, currentIndex, setProgress]);
+  useReadDwell(sourceId, undefined, currentIndex);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 

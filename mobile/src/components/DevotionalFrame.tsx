@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Image, PixelRatio, StyleSheet, Text, View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
+import { Image, PixelRatio, Platform, StyleSheet, Text, View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 import type { Lang } from '@/data/gita/language';
-import { devotionalArtRequest } from '@/data/devotionalShareArt';
+import { devotionalArtRequest, devotionalPlateArt } from '@/data/devotionalShareArt';
 import { evictBackgroundAsset, subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
 import { devotionalFrameSpec, devotionalFrameCanvas as canvas } from '@/data/devotionalFrameSpec';
 import { devotionalFrameType as type, devotionalFrameColors } from '@/theme/devotionalFrame';
@@ -54,8 +54,7 @@ function MasterImage({ art, testID, style, resizeMode, onLoad, onError }: {
   return <Image testID={testID} source={{ uri }} accessible={false} resizeMode={resizeMode} style={style} onLoad={onLoad}
     onError={() => { const request = devotionalArtRequest(art); if (request) void evictBackgroundAsset(request); onError?.(); }} />;
 }
-const plateArt = (art: DevotionalArt): DevotionalArt => (art === 'prayer' ? 'ganesha' : art);
-/** Clip the full lossless master. Stretch only a specified plain-paper band. */
+/** Clip the complete portrait master. Stretch only a specified plain-paper band. */
 export function DevotionalSlice({ art, width, top, bottom, height, testID, onLoad, onError }: {
   art: DevotionalArt; width: number; top: number; bottom: number; height?: number;
   testID?: string; onLoad?: () => void; onError?: () => void;
@@ -63,7 +62,7 @@ export function DevotionalSlice({ art, width, top, bottom, height, testID, onLoa
   const displayHeight = height ?? (bottom - top) * width / canvas.width;
   const verticalScale = displayHeight / (bottom - top);
   return <View pointerEvents="none" accessible={false} style={{ width, height: displayHeight, overflow: 'hidden' }}>
-    <MasterImage art={plateArt(art)} testID={testID} resizeMode="stretch"
+    <MasterImage art={devotionalPlateArt(art)} testID={testID} resizeMode="stretch"
       style={{ position: 'absolute', left: 0, top: -top * verticalScale, width, height: canvas.height * verticalScale }}
       onLoad={onLoad} onError={onError} />
   </View>;
@@ -72,12 +71,18 @@ export function DevotionalHero({ art, width, onLoad, onError }: {
   art: DevotionalArt; lang: Lang; width: number; onLoad?: () => void; onError?: () => void;
 }) {
   const h = devotionalFrameSpec(art).hero;
-  if (art === 'prayer') return <View testID="devotional-share-artwork" style={{ height: h * width / canvas.width, overflow: 'hidden' }}>
-    <MasterImage art="prayer" testID="devotional-hero-image" resizeMode="cover"
-      style={{ width, height: h * width / canvas.width }} onLoad={onLoad} onError={onError} />
+  const [paintedArt, setPaintedArt] = useState<DevotionalArt | null>(null);
+  const loaded = () => { setPaintedArt(art); onLoad?.(); };
+  const failed = () => { setPaintedArt(null); onError?.(); };
+  return <View testID="devotional-share-artwork">
+    <View testID={`devotional-subject-${paintedArt === art ? art : `loading-${art}`}`} collapsable={false}>
+      {art === 'prayer' ? <View style={{ height: h * width / canvas.width, overflow: 'hidden' }}>
+        <MasterImage key={art} art={art} testID="devotional-hero-image" resizeMode="cover"
+          style={{ width, height: h * width / canvas.width }} onLoad={loaded} onError={failed} />
+      </View> : <DevotionalSlice key={art} art={art} width={width} top={0} bottom={h}
+        testID="devotional-hero-image" onLoad={loaded} onError={failed} />}
+    </View>
   </View>;
-  return <View testID="devotional-share-artwork"><DevotionalSlice art={art} width={width} top={0} bottom={h}
-    testID="devotional-hero-image" onLoad={onLoad} onError={onError} /></View>;
 }
 /** Both decorated caps stay intact while the middle paper/vertical rules grow. */
 function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, children, overlay, testID, contentStyle, onLoad, onError }: {
@@ -98,8 +103,9 @@ function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, children, o
     <View style={contentStyle}>{children}</View>{overlay}
   </View>;
 }
-export function DevotionalVerseBody({ header, verse, meaning, lang, art, verseStyle, meaningStyle, width = 540, exportMode = false, onLoad, onError }: {
-  header: string; verse: string; meaning: string; lang: Lang; art: DevotionalArt;
+export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, art, verseStyle, meaningStyle, width = 540, exportMode = false, onLoad, onError }: {
+  /** `verseRows` (one charan each) replace `verse` when every row fits on one line. */
+  header: string; verse: string; verseRows?: readonly string[]; meaning: string; lang: Lang; art: DevotionalArt;
   verseStyle: TextStyle; meaningStyle: TextStyle; width?: number; inset?: number; exportMode?: boolean;
   onLoad?: () => void; onError?: () => void;
 }) {
@@ -111,7 +117,23 @@ export function DevotionalVerseBody({ header, verse, meaning, lang, art, verseSt
   // no image to await — clear its paint barrier on mount.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => { mark('comment'); }, []);
-  const shortVerse = lang === 'hi' && !verse.includes('\n') && Array.from(verse).length <= 32;
+  // On a phone, charan rows only when native layout shows each on one line: a row that
+  // wraps would break mid-charan again, so the caller's `verse` (today's flow) is shown
+  // instead. Undecided rows stay invisible for that one layout pass. The 540dp export
+  // fits a chaupai charan, so it skips the probe and its capture gate; web has no
+  // onTextLayout and wraps a long row in place.
+  const rowsText = verseRows?.join('\n');
+  const fitKey = rowsText && rowsText !== verse.trim() ? [width, verseStyle.fontSize, PixelRatio.getFontScale(), rowsText].join('|') : null;
+  const [rowFit, setRowFit] = React.useState<{ key: string; rows: boolean } | null>(null);
+  const fits = !fitKey ? false : exportMode || Platform.OS === 'web' ? true : rowFit?.key === fitKey ? rowFit.rows : null;
+  const shown = fits === false ? verse.trim() : rowsText!;
+  React.useEffect(() => {
+    if (fits !== null) return;
+    // A Text that never reports layout falls back to the caller's verse, never stays hidden.
+    const timer = setTimeout(() => setRowFit(prev => prev?.key === fitKey ? prev : { key: fitKey!, rows: false }), 500);
+    return () => clearTimeout(timer);
+  }, [fits, fitKey]);
+  const shortVerse = lang === 'hi' && !shown.includes('\n') && Array.from(shown).length <= 32;
   const shortMeaning = Array.from(parts.meaning).length < 55;
   // One calibrated size + one script-correct face for every header; long source
   // lines shrink-to-fit inside two lines instead of jumping size/face (which read
@@ -131,7 +153,8 @@ export function DevotionalVerseBody({ header, verse, meaning, lang, art, verseSt
       // size and let Panel grow vertically rather than shrinking scripture.
       contentStyle={{ paddingHorizontal: 55 * scale }} onLoad={() => mark('verse')} onError={onError}>
       <Text testID="devotional-share-verse" allowFontScaling={!exportMode}
-        style={fit([reading, verseStyle, exportMode && { fontSize: shortVerse ? 52 : lang === 'en' ? 27 : type.verseSize, lineHeight: shortVerse ? (spec.verseEnd - spec.sourceEnd) / 2 : lang === 'kn' ? 48 : lang === 'gu' ? 46 : type.verseLeading }, { color: '#2D1005', fontFamily: lang === 'hi' ? type.verseFace : face, transform: [{ translateY: shortVerse ? 16 * scale : 9 * scale }] }])}>{verse.trim()}</Text>
+        onTextLayout={fits === null ? e => setRowFit({ key: fitKey!, rows: e.nativeEvent.lines.length <= verseRows!.length }) : undefined}
+        style={fit([reading, verseStyle, exportMode && { fontSize: shortVerse ? 52 : lang === 'en' ? 27 : type.verseSize, lineHeight: shortVerse ? (spec.verseEnd - spec.sourceEnd) / 2 : lang === 'kn' ? 48 : lang === 'gu' ? 46 : type.verseLeading }, { color: '#2D1005', fontFamily: lang === 'hi' ? type.verseFace : face, transform: [{ translateY: shortVerse ? 16 * scale : 9 * scale }] }, fits === null && { opacity: 0 }])}>{shown}</Text>
     </Panel>
     <DevotionalSlice art={art} width={width} top={spec.verseEnd} bottom={spec.meaningTop} testID="devotional-divider-image" onLoad={() => mark('divider')} onError={onError} />
     <Panel art={art} width={width} top={spec.meaningTop} bottom={spec.meaningBottom} topCap={68} bottomCap={48} testID="devotional-meaning-frame"

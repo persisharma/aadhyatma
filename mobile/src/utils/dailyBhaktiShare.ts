@@ -2,7 +2,7 @@ import type { Lang } from '@/data/gita/language';
 import type { UniformVerse } from '@/data/versePool';
 import { devotionalArtForVerse } from '@/data/devotionalShareArt';
 import { contentByLang, meaningByLang, pick, verseLinesByLang } from './localize';
-import { paginateDevotional } from './devotionalShareLayout';
+import { devotionalCharanRows, paginateDevotional } from './devotionalShareLayout';
 import type { ShareableProse, ShareableProseScope } from './shareVerse';
 
 export const devotionalMeaningLabel = { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' };
@@ -12,9 +12,9 @@ export function dailyBhaktiShareable(v: UniformVerse): ShareableProse {
   for (const lang of ['hi', 'en', 'gu', 'kn'] as Lang[]) {
     const label = contentByLang(lang, v.labelHi ?? '', v.labelEn ?? '');
     const header = `${contentByLang(lang, v.sourceNameHi, v.sourceNameEn)} · ${label}`;
-    const lines = verseLinesByLang(lang, v.textHi, v.textEn);
+    const lines = verseLinesByLang(lang, v.textHi, v.textEn), rows = devotionalCharanRows(lang, v.textHi, lines);
     const parts = paginateDevotional({ art: devotionalArtForVerse(v), header, lang,
-      verse: lines.join('\n'), meaning: meaningByLang(lang, v.meaningHi, v.meaningEn) });
+      verse: lines.join('\n'), verseRows: rows.length > lines.length ? rows : undefined, meaning: meaningByLang(lang, v.meaningHi, v.meaningEn) });
     prepared[lang] = { label, header: label, firstLine: lines[0] ?? '', pages: parts.map(part => ({
       title: null, usedDp: 0, devotional: part,
       blocks: [
