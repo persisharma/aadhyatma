@@ -1100,3 +1100,6 @@ Updated share: the explanation box now mirror-tiles each master's trimmed verse 
 Updated share: the explanation now sits in a twin of the अर्थ box (same caps, mirror-tiled clean middle) behind a second lotus divider, replacing the side-rule strip.
 
 ## [2026-10-22] ingest | Suvichar personalized card composer, shared cache/capture readiness, editable names and publication gate; added subsystems/suvichar.
+
+## [2026-10-22] ingest | Suvichar capture verification
+Native view-shot requires both dimensions for Android resizing and UIKit point scaling. Composer now exports proportional 1080-pixel images from measured height and rechecks readiness/identity before capture; 32 focused tests passed. R2 credentials and native device tooling remain unavailable.

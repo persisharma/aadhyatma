@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Pressable, TextInput, View } from 'react-native';
+import { Alert, PixelRatio, Platform, Pressable, TextInput, View } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import SuvicharScreen from '../SuvicharScreen';
 import SuvicharCard from '@/components/SuvicharCard';
@@ -17,7 +17,7 @@ jest.mock('@/utils/multiShare', () => ({ shareFiles: jest.fn(async () => false) 
 jest.mock('@react-native-async-storage/async-storage', () => ({ __esModule: true, default: { getItem: jest.fn(async () => null), setItem: jest.fn(async () => undefined) } }));
 let tree: ReactTestRenderer;
 async function flush() { await act(async () => { for (let i = 0; i < 8; i++) await Promise.resolve(); }); }
-async function mount() { await act(async () => { tree = create(<SuvicharScreen />); }); await flush(); }
+async function mount() { await act(async () => { tree = create(<SuvicharScreen />); }); await flush(); act(() => tree.root.findByType(SuvicharCard).props.onHeight(900)); }
 const node = (id: string) => tree.root.findAllByProps({ testID: id }).find(n => typeof n.props.onPress === 'function' || typeof n.props.onChangeText === 'function')!;
 beforeEach(() => { jest.clearAllMocks(); jest.spyOn(global, 'requestAnimationFrame').mockImplementation(cb => { cb(0); return 0; }); });
 afterEach(async () => { if (tree) act(() => tree.unmount()); await flush(); jest.restoreAllMocks(); });
@@ -74,4 +74,24 @@ it('keeps a ready card shareable when its selected frame is tapped again', async
   await mount(); act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
   act(() => node('suvichar-frame-mandir-jharokha').props.onPress());
   expect(node('suvichar-share').props.disabled).toBe(false);
+});
+
+it('passes both native dimensions for a complete 1080-pixel-wide image', async () => {
+  await mount(); const props = tree.root.findByType(SuvicharCard).props;
+  act(() => { props.onHeight(1200); props.onReady(true); });
+  await act(async () => node('suvichar-share').props.onPress()); await flush();
+  const scale = Platform.OS === 'ios' ? PixelRatio.get() : 1;
+  expect(captureRef).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ width: 1080 / scale, height: Math.ceil(1200 * 1080 / props.width) / scale }));
+});
+it('refuses a card that loses image readiness during the capture wait', async () => {
+  await mount(); const props = tree.root.findByType(SuvicharCard).props;
+  act(() => props.onReady(true));
+  await act(async () => { const pending = node('suvichar-share').props.onPress(); props.onReady(false); await pending; });
+  expect(captureRef).not.toHaveBeenCalled();
+});
+it('refuses a new selection until its own measured height arrives', async () => {
+  await mount(); act(() => node('suvichar-name').props.onChangeText('New name'));
+  act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
+  await act(async () => node('suvichar-share').props.onPress());
+  expect(captureRef).not.toHaveBeenCalled();
 });

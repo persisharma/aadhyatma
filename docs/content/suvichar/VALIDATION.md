@@ -56,3 +56,11 @@ CHECK_EXIT=0
 3. Inspect actual native cards/PNGs and WhatsApp handoff in all four scripts at Standard/Large, with empty/long names, the complete 280-unit message, every deity/frame, cold cache, decode failure/retry and restart persistence. Source-art review and unit tests do not establish native export fidelity.
 
 No app release, EAS build, deployment, recipient message or automatic festival notification was performed.
+
+## Follow-up export verification
+
+Inspection of react-native-view-shot's installed native implementation found that Android only resizes when both width and height are supplied, and UIKit uses point dimensions at the screen pixel ratio. The composer now supplies both dimensions from its measured card height, using the same platform scaling policy as ShareProvider. It rechecks the active card identity, native measurement and image readiness after waiting for the capture frames, and refuses a stale layout.
+
+TypeScript passed and all 32 focused Suvichar tests passed after this fix, covering Android pixels, iOS pixel ratios 2/3, tall cards, invalid geometry, stale measurements and loss of image readiness. GitHub CI on the prior PR head passed typecheck, reader/component and engine gates; subsequent steps were still running when this update was prepared. Native image inspection remains pending.
+
+Access was checked again: no R2 credentials, Wrangler login, Android SDK, adb, Maestro, xcrun or emulator is available in this workspace. Publishing and actual native WhatsApp verification therefore remain blocked; no hashes were activated.

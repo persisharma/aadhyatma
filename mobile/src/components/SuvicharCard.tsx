@@ -10,7 +10,7 @@ import { contentByLang, pick } from '@/utils/localize';
 
 type Props = {
   deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; lang: Lang; width: number;
-  onReady: (ready: boolean) => void; original?: boolean;
+  onReady: (ready: boolean) => void; onHeight?: (height: number) => void; original?: boolean;
 };
 /** Keep the artwork subscription alive while names/messages are being typed. */
 export default function SuvicharCard(props: Props) {
@@ -24,7 +24,7 @@ export default function SuvicharCard(props: Props) {
   return <MeasuredCard key={JSON.stringify([props.message, props.name, props.lang, props.width])}
     {...props} uri={uri} onFailure={failed} />;
 }
-function MeasuredCard({ deity, frame, message, name, lang, width, onReady, original = true, uri, onFailure }: Props & {
+function MeasuredCard({ deity, frame, message, name, lang, width, onReady, onHeight, original = true, uri, onFailure }: Props & {
   uri: string | null; onFailure: () => void;
 }) {
   const { colors } = useTheme();
@@ -41,7 +41,7 @@ function MeasuredCard({ deity, frame, message, name, lang, width, onReady, origi
   const hero = width * t.aspect * heroFraction;
   const backgroundHeight = bodyHeight / (1 - heroFraction);
   const failed = () => { setPainted({ hero: false, body: false }); onFailure(); };
-  return <View testID="suvichar-card" onLayout={e => setRootHeight(e.nativeEvent.layout.height)} style={{ width, backgroundColor: colors.parchmentSoft }} collapsable={false}>
+  return <View testID="suvichar-card" onLayout={e => { setRootHeight(e.nativeEvent.layout.height); onHeight?.(e.nativeEvent.layout.height); }} style={{ width, backgroundColor: colors.parchmentSoft }} collapsable={false}>
     <View style={{ height: hero, overflow: 'hidden' }}>
       {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width, height: width * t.aspect }} onLoad={() => setPainted(p => ({ ...p, hero: true }))} onError={failed} /> : null}
       <Text allowFontScaling={false} style={[text(t.brand), { position: 'absolute', top: 0, left: width * .2, right: width * .2 }]}>{contentByLang(lang, 'वेदांश', 'VEDANSH')}</Text>

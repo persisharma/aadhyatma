@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Pressable, ScrollView, Text, TextInput, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Alert, PixelRatio, Platform, Pressable, ScrollView, Text, TextInput, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -13,6 +13,7 @@ import { defaultSuvichar, initialSuvichar, parseSuvicharPreferences, suvicharArt
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
 import { titleFontByLang } from '@/utils/langType';
+import { suvicharCaptureSize } from '@/utils/suvicharCapture';
 import { shareFiles } from '@/utils/multiShare';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -32,6 +33,8 @@ export default function SuvicharScreen() {
   const [retry, setRetry] = useState(0);
   const card = useRef<View>(null);
   const lock = useRef(false);
+  const measurement = useRef<{ identity: string; height: number } | null>(null);
+  const latestReady = useRef<string | null>(null);
   useEffect(() => { let active = true; void saves.then(() => AsyncStorage.getItem(KEY)).then(raw => { if (active) { setPrefs(parseSuvicharPreferences(raw)); setLoaded(true); } }).catch(() => { if (active) setLoaded(true); }); return () => { active = false; }; }, []);
   useEffect(() => { if (loaded) saves = saves.catch(() => undefined).then(() => AsyncStorage.setItem(KEY, JSON.stringify(prefs))).catch(() => undefined); }, [prefs, loaded]);
   const tr = (s: LocalizedStrings) => pick(lang, s);
@@ -45,14 +48,21 @@ export default function SuvicharScreen() {
   const update = (patch: Partial<typeof prefs>) => setPrefs(p => ({ ...p, ...patch }));
   // Each mounted preview owns its readiness, so stale decode callbacks cannot unlock a replacement.
   const activeIdentity = useRef(identity); activeIdentity.current = identity;
-  const onReady = useCallback((value: boolean) => { if (activeIdentity.current === identity) setReadyIdentity(value ? identity : null); }, [identity]);
+  const onReady = useCallback((value: boolean) => { if (activeIdentity.current === identity) { latestReady.current = value ? identity : null; setReadyIdentity(latestReady.current); } }, [identity]);
+  const onHeight = useCallback((height: number) => {
+    if (activeIdentity.current === identity && Number.isFinite(height) && height > 0) measurement.current = { identity, height };
+  }, [identity]);
   const share = async () => {
     if (lock.current || !ready || !loaded) return;
     lock.current = true; setBusy(true);
     let uri: string | undefined;
     try {
       await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
-      uri = await captureRef(card, { format: 'png', quality: 1, result: 'tmpfile', width: 1080 });
+      const measured = measurement.current;
+      if (activeIdentity.current !== identity || latestReady.current !== identity || measured?.identity !== identity) throw new Error('Card changed before capture');
+      const captureScale = Platform.OS === 'ios' ? PixelRatio.get() : 1;
+      const size = suvicharCaptureSize(width, measured.height, captureScale);
+      uri = await captureRef(card, { format: 'png', quality: 1, result: 'tmpfile', ...size });
       if (!await shareFiles([uri], { title })) {
         if (!await Sharing.isAvailableAsync()) throw new Error('Sharing unavailable');
         await Sharing.shareAsync(uri, { mimeType: 'image/png', UTI: 'public.png', dialogTitle: title });
@@ -70,7 +80,7 @@ export default function SuvicharScreen() {
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: spacing.sm }}>{suvicharFrames.map(f => button(contentByLang(lang, f.hi, f.en), () => update({ frame: f.id }), prefs.frame === f.id, `suvichar-frame-${f.id}`))}</ScrollView>
       <Text style={style}>{tr({ hi: 'शुभकामनाएँ चुनें', en: 'Choose a wish', gu: 'શુભેચ્છા પસંદ કરો', kn: 'ಶುಭಾಶಯ ಆಯ್ಕೆ ಮಾಡಿ' })}</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: spacing.sm }}>{suvicharWishes.map(w => button(contentByLang(lang, w.hi, w.en), () => update({ deity: w.deity, message: contentByLang(lang, w.messageHi, w.messageEn) }), false, `suvichar-wish-${w.id}`))}</ScrollView>
-      <View ref={card} collapsable={false} style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} message={message} lang={lang} width={width} onReady={onReady} original={!prefs.message.trim()} /></View>
+      <View ref={card} collapsable={false} style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} message={message} lang={lang} width={width} onReady={onReady} onHeight={onHeight} original={!prefs.message.trim()} /></View>
       {!ready ? button(tr({ hi: 'चित्र फिर लाएँ', en: 'Reload artwork', gu: 'ચિત્ર ફરી લાવો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ' }), () => { setReadyIdentity(null); setRetry(n => n + 1); }, false, 'suvichar-retry') : null}
       {button(tr({ hi: 'अगला सुविचार', en: 'Next thought', gu: 'આગળનો સુવિચાર', kn: 'ಮುಂದಿನ ಸುವಿಚಾರ' }), () => {
         const index = suvicharReflections.findIndex(r => contentByLang(lang, r.hi, r.en) === prefs.message);
