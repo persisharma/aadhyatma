@@ -1,115 +1,51 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
-import { elevation } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import type { DeityIconKey } from '@/data/deities';
 import DeityIcon from './DeityIcon';
+import ListCard, { CARD_TITLE_SIZES, CardThumb, CardTitles } from './ListCard';
 
 type Props = {
   nameHi: string;
   nameEn: string;
   nameGu?: string;
   nameKn?: string;
+  /** Count for the accessibility label ("3 texts") — English by the e2e contract. */
   itemCount: string;
+  /** The visible count in the reading language; defaults to `itemCount`. */
+  meta?: string;
   iconKey?: DeityIconKey;
   onPress?: () => void;
   testID?: string;
-  /** When true, shows a green "NEW" badge top-right (deity has unseen content). */
+  /** When true, shows a "NEW" badge top-right (deity has unseen content). */
   hasNew?: boolean;
 };
 
-export default function DeityCard({ nameHi, nameEn, nameGu, nameKn, itemCount, iconKey, onPress, testID, hasNew }: Props) {
+/**
+ * A deity browse row as the shared compact `ListCard` (design.md §8): painted
+ * deity thumb, bilingual name, count meta.
+ */
+export default function DeityCard({ nameHi, nameEn, nameGu, nameKn, itemCount, meta, iconKey, onPress, testID, hasNew }: Props) {
   const { colors, radii } = useTheme();
   const { lang } = useGitaLanguage();
 
-  const ordered = orderTitlesByLanguage(lang, nameHi, nameEn, {
-    devPrimary: 16,
-    devSecondary: 12,
-    latPrimary: 18,
-    latSecondary: 11,
-  });
+  const ordered = orderTitlesByLanguage(lang, nameHi, nameEn, CARD_TITLE_SIZES);
   // Story catalog names have editorially authored regional spellings. Keep the
   // shared title hierarchy, but use those spellings instead of transliteration.
   const primary = { ...ordered.primary, text: lang === 'gu' ? nameGu ?? ordered.primary.text : lang === 'kn' ? nameKn ?? ordered.primary.text : ordered.primary.text };
-  const secondary = ordered.secondary;
 
   return (
-    <Pressable
+    <ListCard
+      size="compact"
       testID={testID}
       onPress={onPress}
-      style={({ pressed }) => [
-        styles.card,
-        {
-          // Match the active LibraryCard treatment used across other sections:
-          // warm gradient fill (below), saffron-tinted border, lifted shadow.
-          borderColor: colors.cardActiveBorder,
-          borderRadius: radii.lg,
-          ...elevation.raised,
-        },
-        pressed && styles.cardPressed,
-      ]}
-      accessibilityRole="button"
       accessibilityLabel={`${nameEn}. ${itemCount}.${hasNew ? ' New.' : ''}`}
-    >
-      <LinearGradient
-        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[styles.cardBg, { borderRadius: radii.lg }]}
-      />
-      <LinearGradient
-        colors={[colors.cardThumbActiveFrom, colors.cardThumbActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.avatar}
-      >
-        <DeityIcon iconKey={iconKey} />
-      </LinearGradient>
-
-      <View style={styles.meta}>
-        <Text
-          style={[
-            styles.nameHi,
-            {
-              color: colors.ink,
-              fontFamily: primary.fontFamily,
-              fontSize: primary.fontSize,
-              fontStyle: primary.fontStyle,
-              letterSpacing: primary.letterSpacing,
-            },
-          ]}
-        >
-          {primary.text}
-        </Text>
-        <Text
-          style={[
-            styles.nameEn,
-            {
-              color: colors.inkMuted,
-              fontFamily: secondary.fontFamily,
-              fontSize: secondary.fontSize,
-              fontStyle: secondary.fontStyle,
-            },
-          ]}
-        >
-          {secondary.text}
-        </Text>
-        <Text
-          style={[
-            styles.count,
-            { color: colors.inkMuted, fontSize: 10 },
-          ]}
-        >
-          {itemCount}
-        </Text>
-      </View>
-
-      <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
-
-      {hasNew && (
+      // Deity lists space their cards with the container's `gap`.
+      style={styles.inList}
+      leading={<CardThumb><DeityIcon iconKey={iconKey} /></CardThumb>}
+      overlay={hasNew ? (
         <View
           style={[styles.badge, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]}
           pointerEvents="none"
@@ -118,52 +54,15 @@ export default function DeityCard({ nameHi, nameEn, nameGu, nameKn, itemCount, i
             NEW
           </Text>
         </View>
-      )}
-    </Pressable>
+      ) : null}
+    >
+      <CardTitles primary={primary} secondary={ordered.secondary} meta={meta ?? itemCount} />
+    </ListCard>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    position: 'relative',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 14,
-    borderWidth: 1,
-    gap: 12,
-    overflow: 'hidden',
-  },
-  cardBg: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  cardPressed: {
-    opacity: 0.85,
-  },
-  avatar: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  meta: {
-    flex: 1,
-    minWidth: 0,
-  },
-  nameHi: {
-    marginBottom: 1,
-  },
-  nameEn: {
-    fontStyle: 'italic',
-    marginBottom: 3,
-  },
-  count: {
-    opacity: 0.9,
-  },
-  chev: {
-    fontSize: 18,
-    marginLeft: 8,
-  },
+  inList: { marginBottom: 0 },
   badge: {
     position: 'absolute',
     top: 8,

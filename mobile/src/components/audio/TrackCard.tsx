@@ -1,21 +1,20 @@
 import AppIcon from '@/components/AppIcon';
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
-import { elevation } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { pick } from '@/utils/localize';
 import { deityIconKey } from '@/data/deities';
 import DeityIcon from '@/components/DeityIcon';
+import ListCard, { CARD_TITLE_SIZES, CardThumb, CardTitles } from '@/components/ListCard';
 import type { AudioTrack } from '@/data/audio/tracks';
 
 /**
- * A single audio track rendered in the app's catalog-card language — the same
- * gradient surface, Devanagari-letter thumb, bilingual title slotting, and sub
- * meta as `LibraryCard` (design.md §8) — with a saffron play affordance in the
- * tail instead of the navigate chevron.
+ * A single audio track as the shared regular `ListCard` (design.md §8) —
+ * painted deity thumb, bilingual title slotting (titles wrap, never clamped)
+ * and kind · duration meta — with a saffron play affordance in the tail
+ * instead of the navigate chevron (▶ plays in place).
  */
 function fmt(sec?: number): string {
   if (!sec) return '';
@@ -34,14 +33,9 @@ type Props = {
 };
 
 export default function TrackCard({ track, onPress, onPressIn, playing }: Props) {
-  const { colors, typography, radii } = useTheme();
+  const { colors, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const { primary, secondary } = orderTitlesByLanguage(lang, track.titleHi, track.titleEn, {
-    devPrimary: 17,
-    devSecondary: 13,
-    latPrimary: 19,
-    latSecondary: 12,
-  });
+  const { primary, secondary } = orderTitlesByLanguage(lang, track.titleHi, track.titleEn, CARD_TITLE_SIZES);
 
   const kindLabel =
     track.kind === 'recitation'
@@ -51,121 +45,45 @@ export default function TrackCard({ track, onPress, onPressIn, playing }: Props)
   const sub = duration ? `${kindLabel} · ${duration}` : kindLabel;
 
   return (
-    <Pressable
+    <ListCard
       onPress={onPress}
       onPressIn={onPressIn}
-      accessibilityRole="button"
       accessibilityLabel={`Play ${track.titleEn}. ${kindLabel}.`}
-      style={({ pressed }) => [
-        styles.card,
-        {
-          borderRadius: radii.lg,
-          borderColor: colors.cardActiveBorder,
-          borderWidth: 1,
-          ...elevation.raised,
-        },
-        pressed && styles.cardPressed,
-      ]}
+      // The audio library spaces its cards with the container's `gap`.
+      style={styles.inList}
+      leading={
+        <CardThumb>
+          <DeityIcon iconKey={track.deity ? deityIconKey(track.deity) : undefined} />
+        </CardThumb>
+      }
+      right={
+        <View
+          style={[
+            styles.playBtn,
+            {
+              backgroundColor: playing ? colors.saffron : colors.saffronTint,
+              borderColor: colors.cardActiveBorder,
+              borderRadius: radii.pill,
+            },
+          ]}
+          pointerEvents="none"
+        >
+          <AppIcon name={playing ? "pause" : "play"} size={18} color={playing ? colors.onPrimary : colors.iconInk} weight="fill" />
+        </View>
+      }
     >
-      <LinearGradient
-        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[StyleSheet.absoluteFill, { borderRadius: radii.lg }]}
-      />
-
-      <LinearGradient
-        colors={[colors.cardThumbActiveFrom, colors.cardThumbActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[styles.thumb, { borderRadius: radii.md }]}
-      >
-        <DeityIcon
-          iconKey={track.deity ? deityIconKey(track.deity) : undefined}
-        />
-      </LinearGradient>
-
-      <View style={styles.meta}>
-        <Text
-          style={[
-            styles.nameHi,
-            {
-              color: colors.ink,
-              fontFamily: primary.fontFamily,
-              fontSize: primary.fontSize,
-              fontStyle: primary.fontStyle,
-              letterSpacing: primary.letterSpacing,
-            },
-          ]}
-          numberOfLines={1}
-        >
-          {primary.text}
-        </Text>
-        <Text
-          style={[
-            styles.nameEn,
-            {
-              color: colors.inkMuted,
-              fontFamily: secondary.fontFamily,
-              fontSize: secondary.fontSize,
-              fontStyle: secondary.fontStyle,
-            },
-          ]}
-          numberOfLines={1}
-        >
-          {secondary.text}
-        </Text>
-        <Text style={[styles.cardSub, { color: colors.inkMuted, fontSize: typography.cardMeta.fontSize }]}>
-          {sub}
-        </Text>
-      </View>
-
-      <View
-        style={[
-          styles.playBtn,
-          {
-            backgroundColor: playing ? colors.saffron : colors.saffronTint,
-            borderColor: colors.cardActiveBorder,
-            borderRadius: radii.pill,
-          },
-        ]}
-        pointerEvents="none"
-      >
-        <AppIcon name={playing ? "pause" : "play"} size={18} color={playing ? colors.onPrimary : colors.iconInk} weight="fill" />
-      </View>
-    </Pressable>
+      <CardTitles primary={primary} secondary={secondary} meta={sub} />
+    </ListCard>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    position: 'relative',
-    padding: 18,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-    overflow: 'hidden',
-  },
-  cardPressed: { opacity: 0.85 },
-  thumb: {
-    width: 52,
-    height: 52,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  meta: { flex: 1, minWidth: 0 },
-  nameHi: { marginBottom: 2 },
-  nameEn: { marginBottom: 6 },
-  cardSub: { opacity: 0.9 },
+  inList: { marginBottom: 0 },
   playBtn: {
     width: 38,
     height: 38,
     borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  playGlyph: {
-    fontSize: 13,
-    includeFontPadding: false,
   },
 });

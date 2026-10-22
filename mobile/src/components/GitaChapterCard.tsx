@@ -1,16 +1,15 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, Text, View } from 'react-native';
+import { CheckIcon } from 'phosphor-react-native/src/icons/Check';
 import { useTheme } from '@/theme/ThemeContext';
-import { elevation } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import { cardFontByLang, isLatinLang, pillTextStyle } from '@/utils/langType';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { useReadCoverage } from '@/utils/readCoverageStore';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useGranthProgressScope } from '@/components/GranthProgressScope';
 import ReadProgressBar from '@/components/ReadProgressBar';
-import { CheckIcon } from 'phosphor-react-native/src/icons/Check';
+import ListCard, { CARD_TITLE_SIZES, CardThumb, CardTitles } from './ListCard';
 import type { GitaChapterSummary } from '@/data/gita';
 
 type Props = {
@@ -27,6 +26,14 @@ type Props = {
   unitLabelEnSingular?: string;
 };
 
+/**
+ * A chapter-index row as the shared regular `ListCard` (design.md §8): the
+ * chapter numeral in the thumb (a number is data, not an icon), bilingual
+ * chapter title, and "अध्याय 1 · 47 श्लोक" meta. The unit label lives in the
+ * meta line rather than its own eyebrow, since the thumb already shows the
+ * number. Inside a `GranthProgressScope` the meta carries the read count and
+ * a coverage bar follows it; a finished chapter's thumb turns into a ✓.
+ */
 export default function GitaChapterCard({
   chapter,
   onPress,
@@ -36,13 +43,11 @@ export default function GitaChapterCard({
   unitLabelEn = 'verses',
   unitLabelEnSingular = 'verse',
 }: Props) {
-  const { colors, typography, radii } = useTheme();
+  const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
 
+  const { primary, secondary } = orderTitlesByLanguage(lang, chapter.titleHi, chapter.titleEn, CARD_TITLE_SIZES);
   const primaryTitle = contentByLang(lang, chapter.titleHi, chapter.titleEn);
-  const primaryFontFamily = cardFontByLang(lang);
-  const primaryFontSize = isLatinLang(lang) ? 16 : 17;
-  const primaryIsItalic = lang === 'en';
 
   const chapterLabel = contentByLang(lang, chapterLabelHi, chapterLabelEn);
   const unitLabel = contentByLang(
@@ -77,143 +82,47 @@ export default function GitaChapterCard({
   const a11yLabel = `${chapterTag}. ${primaryTitle}. ${verseMeta}. Tap to open.`;
 
   return (
-    <Pressable
+    <ListCard
       onPress={onPress}
       onLongPress={read > 0 ? askReset : undefined}
-      accessibilityRole="button"
       accessibilityLabel={a11yLabel}
       accessibilityValue={read > 0 ? { text: complete ? 'Complete' : `${read} of ${chapter.verseCount} read` } : undefined}
       accessibilityActions={read > 0 ? [{ name: 'longpress', label: 'Reset progress' }] : undefined}
       onAccessibilityAction={(e) => {
         if (e.nativeEvent.actionName === 'longpress') askReset();
       }}
-      style={({ pressed }) => [
-        styles.card,
-        {
-          borderRadius: radii.lg,
-          borderColor: colors.cardActiveBorder,
-        },
-        pressed && { opacity: 0.86 },
-      ]}
+      // Chapter indexes space their cards with the container's `gap`.
+      style={styles.inList}
+      leading={
+        complete ? (
+          <CardThumb done testID="chapter-complete">
+            <CheckIcon size={22} weight="bold" color={colors.parchmentSoft} />
+          </CardThumb>
+        ) : (
+          <CardThumb>
+            <Text style={[styles.numeral, { color: colors.parchmentSoft, fontFamily: typography.thumb.fontFamily }]}>
+              {chapter.chapter}
+            </Text>
+          </CardThumb>
+        )
+      }
     >
-      <LinearGradient
-        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]}
-      />
-
-      {complete ? (
-        <View testID="chapter-complete" style={[styles.thumb, { borderRadius: radii.md, backgroundColor: colors.saffronDeep }]}>
-          <CheckIcon size={22} weight="bold" color={colors.parchmentSoft} />
+      <CardTitles primary={primary} secondary={secondary} meta={`${chapterTag} · ${progressMeta ?? verseMeta}`} />
+      {read > 0 && !complete ? (
+        <View style={styles.bar}>
+          <ReadProgressBar pct={(read / chapter.verseCount) * 100} />
         </View>
-      ) : (
-        <LinearGradient
-          colors={[colors.cardThumbActiveFrom, colors.cardThumbActiveTo]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={[styles.thumb, { borderRadius: radii.md }]}
-        >
-          <Text
-            style={[
-              styles.thumbNumber,
-              {
-                color: colors.parchmentSoft,
-                fontFamily: typography.thumb.fontFamily,
-              },
-            ]}
-          >
-            {chapter.chapter}
-          </Text>
-        </LinearGradient>
-      )}
-
-      <View style={styles.meta}>
-        <Text
-          style={[
-            styles.tag,
-            pillTextStyle(lang, typography.versePill),
-            { color: colors.saffronDeep },
-          ]}
-        >
-          {chapterTag.toUpperCase()}
-        </Text>
-        <Text
-          style={[
-            styles.title,
-            {
-              color: colors.ink,
-              fontFamily: primaryFontFamily,
-              fontSize: primaryFontSize,
-              fontStyle: primaryIsItalic ? 'italic' : 'normal',
-            },
-          ]}
-          numberOfLines={2}
-        >
-          {primaryTitle}
-        </Text>
-        <Text
-          style={[
-            styles.sub,
-            {
-              color: colors.inkMuted,
-              fontSize: typography.cardMeta.fontSize,
-              letterSpacing: typography.cardMeta.letterSpacing,
-            },
-          ]}
-        >
-          {progressMeta ?? verseMeta}
-        </Text>
-        {read > 0 && !complete ? <ReadProgressBar pct={(read / chapter.verseCount) * 100} /> : null}
-      </View>
-
-      <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
-    </Pressable>
+      ) : null}
+    </ListCard>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    position: 'relative',
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-    overflow: 'hidden',
-    borderWidth: 1,
-    ...elevation.lifted,
-  },
-  thumb: {
-    overflow: 'hidden',
-    width: 46,
-    height: 46,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  thumbNumber: {
-    fontSize: 20,
+  inList: { marginBottom: 0 },
+  numeral: {
+    fontSize: 22,
     includeFontPadding: false,
     marginTop: -1,
   },
-  meta: {
-    flex: 1,
-    minWidth: 0,
-    gap: 3,
-  },
-  tag: {
-    textTransform: 'uppercase',
-    includeFontPadding: false,
-  },
-  title: {
-    // Devanagari title — leave Android's includeFontPadding on so top matras of
-    // the chapter name aren't clipped (iOS is unaffected either way).
-  },
-  sub: {
-    opacity: 0.9,
-  },
-  chev: {
-    fontSize: 26,
-    marginLeft: 6,
-    includeFontPadding: false,
-  },
+  bar: { marginTop: 6 },
 });

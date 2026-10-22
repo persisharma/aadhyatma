@@ -30,7 +30,7 @@ import ReaderHeader from '@/components/ReaderHeader';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import BhogGuidancePanel from '@/components/BhogGuidancePanel';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
-import { getRuleById } from '@/panchang/vratCatalog';
+import { isRecurringVidhi } from '@/data/vidhi/recurrence';
 import { getBhogForVidhi } from '@/panchang/bhogContent';
 import { moreTabTarget } from '@/navigation/entryRoutes';
 import type { TabParamList, VidhiStackParamList } from '@/navigation/types';
@@ -112,12 +112,8 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
   const actionColor = isPersonalTithi ? colors.gold : colors.saffron;
   const actionTextColor = isPersonalTithi ? colors.ink : colors.parchment;
 
-  // Add-to-routine is offered for RECURRING vidhis only (PRD-19 Phase 2B):
-  // a monthly observance (Satyanarayan on every purnima) belongs in a routine;
-  // an annual festival puja does not.
-  const isRecurring = vidhi.festivalIds.some(
-    (festivalId) => getRuleById(festivalId)?.recurrence === 'monthly'
-  );
+  // Add-to-routine is offered for RECURRING vidhis only (PRD-19 Phase 2B).
+  const isRecurring = isRecurringVidhi(vidhi);
 
   const toggleItem = (itemKey: string) => {
     const next = new Set(checked);

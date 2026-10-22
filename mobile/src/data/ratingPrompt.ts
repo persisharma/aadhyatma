@@ -41,21 +41,26 @@ export type RatingPromptOutcome = 'pending' | 'rated' | 'declined';
  *
  *  - `routine-complete` — the pushpa-varsha for today's routine has finished.
  *  - `verse-shared` — a verse share was dispatched to the OS/Instagram sheet.
+ *  - `prose-shared` — a katha / Theerth / story / listing / Ask card (any
+ *    non-devotional prose share) was dispatched. Kept apart from `verse-shared`
+ *    so `asksByTrigger` can tell which share surface earns the rating.
  *  - `mala-complete` — the japam counter screen was left after ≥1 round this visit.
  *
- * Three moments ship (product decision, Sept 2026: routine completion was the
+ * Four moments ship (product decision, Sept 2026: routine completion was the
  * first; share + mala added to widen reach to users who never build a routine,
- * since ratings were coming in too low). The type stays a union so a further
+ * since ratings were coming in too low; Oct 2026: prose share cards added so
+ * every share card can ask, not only verses). The type stays a union so a further
  * moment is a one-literal change here plus a `requestAsk` call at the host — see
  * RULEBOOK §6.2. Each moment fires only once its own feedback has finished (a
  * share sheet closed, the japam screen left) — never mid-interaction and never
  * over a celebration; the gate and the once-per-session guard still apply.
  */
-export type RatingAskTrigger = 'routine-complete' | 'verse-shared' | 'mala-complete';
+export type RatingAskTrigger = 'routine-complete' | 'verse-shared' | 'prose-shared' | 'mala-complete';
 
 export const RATING_ASK_TRIGGERS: readonly RatingAskTrigger[] = [
   'routine-complete',
   'verse-shared',
+  'prose-shared',
   'mala-complete',
 ];
 
