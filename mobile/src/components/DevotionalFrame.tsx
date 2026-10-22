@@ -103,6 +103,31 @@ function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, children, o
     <View style={contentStyle}>{children}</View>{overlay}
   </View>;
 }
+/** Master rows trimmed off each end of the verse band before tiling it: the source and lotus
+ * dividers dip up to 10px into that band on some masters (Surya top, Krishna/Shiva bottom). */
+const RAIL_TRIM = 16;
+/** Mirror-tile a plain band of paper and side rules down a box of any height, so the frame
+ * runs on at the master's own scale: grain never stretches and each seam joins identical rows. */
+function Rail({ art, width, top, bottom, children, testID, contentStyle, onLoad, onError }: {
+  art: DevotionalArt; width: number; top: number; bottom: number;
+  children?: React.ReactNode; testID: string; contentStyle?: ViewStyle; onLoad?: () => void; onError?: () => void;
+}) {
+  const band = (bottom - top) * width / canvas.width;
+  const [height, setHeight] = React.useState(0);
+  const tiles = height > 0 ? Math.ceil(height / band) : 0;
+  const painted = React.useRef(new Set<number>());
+  const report = () => { if (tiles && Array.from({ length: tiles }, (_, i) => i).every(i => painted.current.has(i))) onLoad?.(); };
+  React.useEffect(report, [tiles]); // eslint-disable-line react-hooks/exhaustive-deps
+  return <View testID={testID} onLayout={e => setHeight(e.nativeEvent.layout.height)} style={{ backgroundColor: devotionalFrameColors.paper }}>
+    <View pointerEvents="none" accessible={false} style={[StyleSheet.absoluteFill, { overflow: 'hidden' }]}>
+      {Array.from({ length: tiles }, (_, i) => <View key={i} style={i % 2 ? { transform: [{ scaleY: -1 }] } : undefined}>
+        <DevotionalSlice art={art} width={width} top={top} bottom={bottom} testID={`${testID}-tile`}
+          onLoad={() => { painted.current.add(i); report(); }} onError={onError} />
+      </View>)}
+    </View>
+    <View style={contentStyle}>{children}</View>
+  </View>;
+}
 export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, art, verseStyle, meaningStyle, width = 540, exportMode = false, onLoad, onError }: {
   /** `verseRows` (one charan each) replace `verse` when every row fits on one line. */
   header: string; verse: string; verseRows?: readonly string[]; meaning: string; lang: Lang; art: DevotionalArt;
@@ -113,10 +138,9 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
   const parts = splitDevotionalMeaning(meaning), face = devotionalFace(lang);
   const decoded = React.useRef(new Set<string>());
   const mark = (id: string) => { decoded.current.add(id); if (decoded.current.size === 6) onLoad?.(); };
-  // Commentary sits on plain paper (its own flow box, no baked scenery), so there is
-  // no image to await — clear its paint barrier on mount.
+  // With no commentary there is no rail to await — clear its paint barrier.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(() => { mark('comment'); }, []);
+  React.useEffect(() => { if (!parts.commentary) mark('comment'); }, [parts.commentary]);
   // On a phone, charan rows only when native layout shows each on one line: a row that
   // wraps would break mid-charan again, so the caller's `verse` (today's flow) is shown
   // instead. Undecided rows stay invisible for that one layout pass. The 540dp export
@@ -165,15 +189,15 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
         style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning ? 28 : lang === 'en' ? 23 : type.meaningSize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : shortMeaning ? 34 : type.meaningLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.meaning}</Text>
     </Panel>
     <DevotionalSlice art={art} width={width} top={spec.meaningBottom} bottom={spec.commentTop} testID="devotional-comment-divider-image" onLoad={() => mark('commentDivider')} onError={onError} />
-    {/* Explanation on plain paper, its own flow box — no baked scenery to stretch,
-        and it collapses to nothing when absent so the footer scenery rises to meet
-        the reading instead of a large empty band (design.md §23). */}
+    {/* Explanation in its own flow box, framed by the verse band's side rules tiled at
+        their own scale (no baked scenery to stretch). It collapses to nothing when absent
+        so the footer scenery rises to meet the reading instead of a large empty band. */}
     {parts.commentary ? (
-      <View testID="devotional-commentary-panel"
-        style={{ paddingHorizontal: 124 * scale, paddingTop: 11 * scale, paddingBottom: 18 * scale, backgroundColor: devotionalFrameColors.paper }}>
+      <Rail art={art} width={width} top={spec.sourceEnd + RAIL_TRIM} bottom={spec.verseEnd - RAIL_TRIM} testID="devotional-commentary-panel"
+        contentStyle={{ paddingHorizontal: 124 * scale, paddingTop: 11 * scale, paddingBottom: 18 * scale }} onLoad={() => mark('comment')} onError={onError}>
         <Text testID="devotional-share-commentary" allowFontScaling={!exportMode}
           style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning || lang === 'en' ? 23 : type.commentarySize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : type.commentaryLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.commentary}</Text>
-      </View>
+      </Rail>
     ) : null}
   </View>;
 }
