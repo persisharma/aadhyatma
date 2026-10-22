@@ -7,21 +7,20 @@ import {
   Text,
   View,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { elevation } from '@/theme/elevation';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import { cardFontByLang, isLatinLang, scriptBodyFont } from '@/utils/langType';
+import { cardFontByLang, isLatinLang } from '@/utils/langType';
 import { useNewContent, templeNewKey } from '@/contexts/NewContentContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import IndiaMap, { type IndiaMapPin } from '@/components/IndiaMap';
 import StoryIcon from '@/components/StoryIcon';
 import DeityIcon from '@/components/DeityIcon';
+import ListCard, { CardThumb, CardTitles } from '@/components/ListCard';
 import { deityIconKey } from '@/data/deities';
 import type { DeityIconKey } from '@/data/deities';
 import {
@@ -427,82 +426,39 @@ function BrowseCard({
   lang: Lang;
   onPress: () => void;
 } & Omit<ThemeBits, 'spacing'>) {
+  // Card titles follow the active language's face (design.md §type-scale):
+  // Devanagari for hi; Cormorant Bold for en, sized a step up + 0.3 tracking
+  // so the lighter Latin face reads at parity with the denser Devanagari.
+  const title = {
+    text: name,
+    fontFamily:
+      lang === 'gu'
+        ? fontFamilies.gujaratiBold
+        : lang === 'kn'
+          ? fontFamilies.kannadaBold
+          : lang === 'hi'
+            ? typography.cardHindi.fontFamily
+            : fontFamilies.latinBold,
+    fontSize: isLatinLang(lang) ? 19 : 17,
+    fontStyle: 'normal' as const,
+    letterSpacing: lang === 'en' ? 0.3 : undefined,
+  };
   return (
-    <Pressable
+    <ListCard
+      size="compact"
       onPress={onPress}
-      accessibilityRole="button"
       accessibilityLabel={hasNew ? `${name}. New.` : name}
-      style={({ pressed }) => [
-        rowStyles.card,
-        {
-          // Match the active LibraryCard treatment used across other sections:
-          // warm gradient fill (below), saffron-tinted border, lifted shadow.
-          borderColor: colors.cardActiveBorder,
-          borderRadius: radii.lg,
-          ...elevation.raised,
-        },
-        pressed && { opacity: 0.85 },
-      ]}
-    >
-      <LinearGradient
-        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[rowStyles.cardBg, { borderRadius: radii.lg }]}
-      />
-      <LinearGradient
-        colors={[colors.cardThumbActiveFrom, colors.cardThumbActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[rowStyles.thumb, { borderRadius: radii.sm }]}
-      >
-        {/* Temple rows show their presiding deity's glyph (trishul, chakra,
-            lotus…); the grouping rows (category/state), which span many
-            deities, keep the illustrated temple miniature (design.md §26/§47). */}
-        {deityKey
-          ? <DeityIcon iconKey={deityKey} size={34} />
-          : <StoryIcon name="theerth" size={34} />}
-      </LinearGradient>
-      <View style={rowStyles.textColumn}>
-        <Text
-          numberOfLines={1}
-          style={{
-            // Card titles follow the active language's face (design.md §type-scale):
-            // Devanagari for hi; Cormorant Bold for en, sized a step up + 0.3 tracking
-            // so the lighter Latin face reads at parity with the denser Devanagari.
-            fontFamily:
-              lang === 'gu'
-                ? fontFamilies.gujaratiBold
-                : lang === 'kn'
-                  ? fontFamilies.kannadaBold
-                  : lang === 'hi'
-                    ? typography.cardHindi.fontFamily
-                    : fontFamilies.latinBold,
-            fontSize: isLatinLang(lang) ? 19 : 17,
-            letterSpacing: lang === 'en' ? 0.3 : undefined,
-            color: colors.ink,
-          }}
-        >
-          {name}
-        </Text>
-        <Text
-          numberOfLines={1}
-          style={{
-            color: colors.inkMuted,
-            // §46 meta convention: script serif for Indic (Inter has no Indic
-            // glyphs) and tracking only on Latin — spacing splits the shirorekha.
-            fontFamily: scriptBodyFont(lang, isLatinLang(lang) ? typography.cardMeta.fontFamily : fontFamilies.devanagari),
-            fontSize: typography.cardMeta.fontSize,
-            letterSpacing: isLatinLang(lang) ? typography.cardMeta.letterSpacing : 0,
-            opacity: 0.9,
-            marginTop: 3,
-          }}
-        >
-          {meta}
-        </Text>
-      </View>
-      <Text style={{ color: colors.saffron, fontSize: 22, marginLeft: 8 }}>{'›'}</Text>
-      {hasNew ? (
+      leading={
+        <CardThumb>
+          {/* Temple rows show their presiding deity's glyph (trishul, chakra,
+              lotus…); the grouping rows (category/state), which span many
+              deities, keep the illustrated temple miniature (design.md §26/§47). */}
+          {deityKey
+            ? <DeityIcon iconKey={deityKey} />
+            : <StoryIcon name="theerth" size={36} />}
+        </CardThumb>
+      }
+      overlay={hasNew ? (
         <View
           style={[rowStyles.badge, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]}
           pointerEvents="none"
@@ -512,7 +468,9 @@ function BrowseCard({
           </Text>
         </View>
       ) : null}
-    </Pressable>
+    >
+      <CardTitles primary={title} meta={meta} />
+    </ListCard>
   );
 }
 
@@ -548,18 +506,6 @@ const toggleStyles = StyleSheet.create({
 });
 
 const rowStyles = StyleSheet.create({
-  card: {
-    position: 'relative',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 14,
-    borderWidth: 1,
-    marginBottom: 10,
-    overflow: 'hidden',
-  },
-  cardBg: { ...StyleSheet.absoluteFillObject },
-  thumb: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center', marginRight: 12 },
-  textColumn: { flex: 1 },
   badge: {
     position: 'absolute',
     top: 8,

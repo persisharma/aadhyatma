@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { library } from '@/data/texts';
 import { deities } from '@/data/deities';
@@ -43,6 +44,14 @@ export default function DeityIndexScreen({ navigation }: Props) {
     const count = deityTexts(deityId).length;
     if (count === 0) return '';
     return `${count} text${count > 1 ? 's' : ''}`;
+  };
+
+  // The visible count follows the reading language; the a11y label keeps the
+  // English `getItemCount` form the e2e flows select on.
+  const getItemMeta = (deityId: string): string => {
+    const count = deityTexts(deityId).length;
+    if (count === 0) return '';
+    return contentByLang(lang, `${count} पाठ`, getItemCount(deityId));
   };
 
   // A deity is NEW when any of its texts is still unacknowledged — mirrors the
@@ -117,6 +126,7 @@ export default function DeityIndexScreen({ navigation }: Props) {
               nameHi={deity.nameHi}
               nameEn={deity.nameEn}
               itemCount={getItemCount(deity.id)}
+              meta={getItemMeta(deity.id)}
               iconKey={deity.iconKey}
               hasNew={deityHasNew(deity.id)}
               onPress={() => navigation.navigate('DeityDetail', { deityId: deity.id })}

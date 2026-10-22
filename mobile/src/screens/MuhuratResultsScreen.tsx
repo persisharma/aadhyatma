@@ -8,7 +8,8 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
-import ListCard, { CardThumb } from '@/components/ListCard';
+import ListCard, { CARD_TITLE_SIZES, CardThumb, CardTitles } from '@/components/ListCard';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import MuhuratChip from '@/components/MuhuratChip';
 import MuhuratFollowControl from '@/components/MuhuratFollowControl';
 import MuhuratBalaStrip from '@/components/MuhuratBalaStrip';
@@ -383,12 +384,10 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
                 onPress={() => navigation.navigate('VastuDisha')}
                 accessibilityLabel="Open Vastu Disha for the new home"
               >
-                <Text style={{ color: colors.ink, fontFamily: titleFont, fontSize: 15 }}>
-                  {contentByLang(lang, 'नए घर की वास्तु दिशा', 'Vastu directions for the new home')}
-                </Text>
-                <Text style={{ color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily, fontSize: 11.5, lineHeight: 17 }}>
-                  {contentByLang(lang, 'मंदिर · रसोई · मुख्य द्वार — दिशा चक्र के साथ', 'Mandir · kitchen · main door — with the disha chakra')}
-                </Text>
+                <CardTitles
+                  {...orderTitlesByLanguage(lang, 'नए घर की वास्तु दिशा', 'Vastu directions for the new home', CARD_TITLE_SIZES)}
+                  meta={contentByLang(lang, 'मंदिर · रसोई · मुख्य द्वार — दिशा चक्र के साथ', 'Mandir · kitchen · main door — with the disha chakra')}
+                />
               </ListCard>
               {/* मेरा घर (PRD-24 Phase 2 §C4/US-16): measure the home being
                   entered. No living home → setup (role 'living'); else the
@@ -396,7 +395,6 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
               <View style={{ marginTop: spacing.sm }}>
                 <ListCard
                   testID="muhurat-ghar-door"
-                  variant="flat"
                   leading={
                     <CardThumb>
                       <StoryIcon name="ghar" size={44} />
@@ -409,16 +407,14 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
                   }}
                   accessibilityLabel="Measure the new home on the vastu mandala"
                 >
-                  <Text style={{ color: colors.ink, fontFamily: titleFont, fontSize: 15 }}>
-                    {contentByLang(lang, 'नया घर मापें', 'Measure the new home')}
-                  </Text>
-                  <Text style={{ color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily, fontSize: 11.5, lineHeight: 17 }}>
-                    {contentByLang(
+                  <CardTitles
+                    {...orderTitlesByLanguage(lang, 'नया घर मापें', 'Measure the new home', CARD_TITLE_SIZES)}
+                    meta={contentByLang(
                       lang,
                       'कक्ष मंडल पर रखें — विधान के साथ पढ़ें',
                       'Place the rooms on the mandala — read them with the convention'
                     )}
-                  </Text>
+                  />
                 </ListCard>
               </View>
             </View>
