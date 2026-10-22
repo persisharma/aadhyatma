@@ -18,6 +18,7 @@ import { buildListingShare } from '@/utils/listingShare';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import GranthProgressScope from '@/components/GranthProgressScope';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { RootStackParamList } from '@/navigation/types';
 
@@ -66,16 +67,18 @@ export default function SundarkandChaptersScreen({ navigation }: Props) {
           ]}
           showsVerticalScrollIndicator={false}
         >
-          {sundarkandChaptersManifest.map((chapter) => (
-            <GitaChapterCard
-              key={chapter.chapter}
-              chapter={chapter}
-              onPress={() => {
-                const resumeIndex = getChapterProgress('sundarkand', chapter.chapter)?.verseIndex ?? 0;
-                navigation.navigate('SundarkandReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
-              }}
-            />
-          ))}
+          <GranthProgressScope sourceId="sundarkand">
+            {sundarkandChaptersManifest.map((chapter) => (
+              <GitaChapterCard
+                key={chapter.chapter}
+                chapter={chapter}
+                onPress={() => {
+                  const resumeIndex = getChapterProgress('sundarkand', chapter.chapter)?.verseIndex ?? 0;
+                  navigation.navigate('SundarkandReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
+                }}
+              />
+            ))}
+          </GranthProgressScope>
         </ScrollView>
       </SafeAreaView>
     </View>

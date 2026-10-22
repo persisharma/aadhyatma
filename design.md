@@ -512,6 +512,10 @@ Two variants: `active` (live module) and `coming` (placeholder).
 
 Tapping `active` card → push Reader (Section 9) for that module.
 
+### Read coverage row (§84)
+
+On a full-size `active` card whose text has been read (or completed at least once), a row sits under the sub meta (8 top margin): texts with **more than one subsection** get a 4 pt `ReadProgressBar` (`saffronTint` track, `saffronDeep` fill, flex) plus `NN% · C.V` (12/600 `saffronDeep`; `C.V` = the latest saved position) and, after a completed reading, a `✓ N पाठ` chip; **single texts** (chalisa, aarti, ashtakam, stuti, sanskar…) get the `✓ N पाठ` chip (`goldChipBg`, Phosphor check 12 bold, 12 `saffronDeep`) and a muted `read / total` while a reading is in progress — a bar would sit at 100% forever after the first reading. Unread cards, `compact` cards and non-reading rows (japa, theerth) render exactly as before. The a11y label is unchanged (Maestro matches on it); coverage rides on `accessibilityValue`. **Long-press** (or the VoiceOver "Reset progress" action) opens the reset confirmation (§84) and the row becomes an inline `प्रगति रीसेट हुई · पूर्ववत करें` undo for 6 s. Files: `LibraryCard.tsx`, `LibraryCardProgress.tsx`.
+
 ---
 
 ## 9. Screen: Text Reader
@@ -836,7 +840,7 @@ When building new components, pull tokens from the theme — never hard-code a h
      chapters index is a landing surface, the reader top bar is compact chrome.
    - The balancing right-side spacer is the header's own, matching the back-button footprint.
 3. **Language toggle row** (8 top / 16 bottom padding, centred). See Section 16.
-4. **Chapter list** (28 px side padding, 12 px gap between cards). Each card is a `GitaChapterCard` (see below). Scrollable.
+4. **Chapter list** (28 px side padding, 12 px gap between cards). Each card is a `GitaChapterCard` (see below). Scrollable. Once anything in the text has been read, the list opens with the **progress summary** (§84): `cardSurface` card, `divider` border, `radii.lg` — `70 / 701 पठित · 1 / 18 पूर्ण` (13 `ink-soft`) with the whole-text `NN%` (13/600 `saffronDeep`), a 4 pt `ReadProgressBar`, `N पूर्ण पाठ` when a full reading has completed, and a footer row: the long-press hint (11 `ink-muted`) and `प्रगति रीसेट` (12 underlined `avoidDeep`, 44 pt target) — replaced by the inline undo for 6 s after a reset.
 
 **Chapter card (`GitaChapterCard`):**
 
@@ -847,7 +851,8 @@ When building new components, pull tokens from the theme — never hard-code a h
   - Title: rendered in the selected language — Hindi (Noto Serif Devanagari 17 600 `ink`) or English (Cormorant Garamond 16 400 italic `ink`). `numberOfLines={2}`.
   - Sub: `47 श्लोक` (Hindi) or `47 verses` (English), `cardMeta` size, `ink-muted`.
   - Right: saffron `›` chevron.
-- Tap → Reader **resumes at the chapter's last-read verse** (`getChapterProgress` from the reading-progress context, `GitaChaptersIndexScreen.tsx`); a chapter with no prior progress opens at verse 1.
+- **Read coverage (§84)** — only inside a `GranthProgressScope` (all 13 `GitaChapterCard` chapters screens wrap their list in one): once any verse of the chapter is read, the sub becomes `23 / 43 श्लोक · अंतिम 5` (read / total in the screen's own unit, then the chapter's saved verse) over a 4 pt `ReadProgressBar`; a **fully read** chapter swaps the numbered thumb for a solid `saffronDeep` square with a Phosphor check (22, bold, `parchment-soft`) and drops the bar. Long-press (or the "Reset progress" a11y action) asks to reset just that chapter. The a11y label is unchanged; coverage rides on `accessibilityValue` (`23 of 43 read` / `Complete`). Outside a scope the card is byte-for-byte the old one.
+- Tap → Reader **resumes at the chapter's last-read verse** (`getChapterProgress` from the reading-progress context, `GitaChaptersIndexScreen.tsx`); a chapter with no prior progress opens at verse 1. Read coverage never changes where a chapter opens.
 
 **Ordering.** Chapters appear in numerical order 1–18. No sorting.
 
@@ -1000,7 +1005,7 @@ Two status variants — `active` (has content) and `coming` (placeholder) — an
 2. Top bar: back button (‹ in 44px circle) + title "ग्रन्थ · Sacred Books" — primary/secondary ordered by the reading language via `orderTitlesByLanguage()` (primary `ink`, demoted secondary `ink-muted`, separated by `·`)
 3. Item list: renders `LibraryCard` (Section 8) for each item in the category, 12px gap, 28px side padding
 4. Items render in **registry order** — the ordering is curated in the `library` array (`mobile/src/data/texts.ts`), not sorted at render time (every shipped entry is `active` today; `hidden` entries are filtered out)
-5. Tapping an item with prior reading progress opens a `ResumeReadingSheet` (resume at the saved verse / start over) before navigating; items with no progress navigate straight to their start
+5. Tapping an item with prior reading progress opens a `ResumeReadingSheet` (resume at the saved verse / next unread / start over / all chapters, §40) before navigating; items with no progress navigate straight to their start
 
 Background: the category's faded sketch plate (`getCategoryBackground`, §6) under the parchment overlay.
 
@@ -1857,6 +1862,12 @@ The continuous form of the `n / total` page counter. A 3 px full-width track in 
 5. Secondary button: outlined `cardActiveBorder`, `आरंभ से पढ़ें · Start Over` in `saffron-deep`.
 6. `Cancel` — italic 13 `ink-muted`, 44 pt min-height text button.
 
+**Read-coverage additions (§84)**, all optional props filled by `useResumeSheetCoverage` on every listing that opens the sheet (Category, Deity Detail, Deity List, Purpose):
+- Inside the last-read card, under the location: a 4 pt `ReadProgressBar` and `इस भाग में 23 / 43 पठित · कुल 9%` (12 `ink-soft`; single texts: `20 / 43 पठित`; `· N पाठ` appended after a completed reading).
+- Between Resume and Start Over: an outlined **`अगला अपठित · Next unread`** button with the target's `formatLocation` as an 11 `ink-muted` caption — the first unread verse scanning from the resumed chapter (wrapping), shown only when it differs from the Resume position.
+- Under the Start Over label, when anything is read: `पठित चिह्न बने रहेंगे · Read marks stay` (11 `ink-muted`) — Start Over moves only the position.
+- Beside Cancel, for texts with subsections: an underlined **`सभी अध्याय · All chapters`** link (`navigateToEntryStart` → the chapters screen), the way into the chapter list that the sheet otherwise skips.
+
 **Behaviour.** Resume → navigate to the saved position (`navigateToProgress`). Start Over on a **chaptered** entry clears only the chapter being resumed (`clearChapterProgress`) and reopens that chapter at verse 1 — sibling chapters keep their positions; on a linear entry it clears the whole source and opens at the start. Every exit path also `markSeen`s the entry (clears its NEW badge, §44). Backdrop tap dismisses.
 
 ### Chapter auto-advance (transition cards)
@@ -1867,7 +1878,7 @@ Multi-chapter readers must let the reader swipe **across** chapter boundaries (t
 
 A floating pill anchored bottom-right of the verse pager (16/16 inset, clear of the centred pager dots) rendered only when the reader is past verse 1 — a one-tap return after a subsection auto-jump, without swiping back through every page. `parchment-soft` fill, `cardActiveBorder` 1 px, `pill` radius, **`elevation.lifted`** (§4 — was an inline `0.18/10` shadow); `⇤` glyph (15) + language-aware label `आरंभ` / `Start` (13, italic for en) in `saffron-deep`. Tap scrolls (animated) to index 0 of the current chapter.
 
-**Files:** `mobile/src/contexts/ReadingProgressContext.tsx`, `mobile/src/components/ReadingProgressBar.tsx`, `ResumeReadingSheet.tsx`, `JumpToStartButton.tsx`, `NextChapterCard.tsx`, `PrevChapterCard.tsx`, `mobile/src/utils/formatLocation.ts`; consumers `GitaReaderScreen.tsx` (canonical), `CategoryListScreen.tsx`, `DeityListScreen.tsx`, `GitaChaptersIndexScreen.tsx`.
+**Files:** `mobile/src/contexts/ReadingProgressContext.tsx`, `mobile/src/components/ReadingProgressBar.tsx`, `ResumeReadingSheet.tsx`, `useResumeSheetCoverage.ts`, `JumpToStartButton.tsx`, `NextChapterCard.tsx`, `PrevChapterCard.tsx`, `mobile/src/utils/formatLocation.ts`; consumers `GitaReaderScreen.tsx` (canonical), `CategoryListScreen.tsx`, `DeityListScreen.tsx`, `GitaChaptersIndexScreen.tsx`.
 
 ---
 
@@ -3834,3 +3845,19 @@ Files: `mobile/src/components/ListingCard.tsx` (card, `ListingSectionHeader`, `L
 **Guards.** Never shown when `Updates.isEnabled` is false (dev clients / Expo Go, where `reloadAsync()` throws).
 
 Files: `mobile/src/components/UpdateReadyModal.tsx`, mounted in `mobile/App.tsx`. Tests: `components/__tests__/UpdateReadyModal.test.tsx` (pending-visibility, dev-client guard, Update-now reloads, no-Later guard, backdrop dismiss).
+
+## 84. Read coverage — what has been read, per Granth
+
+**Purpose.** The saved position (§40) is one cursor per subsection, and Start Over moves it back to verse 1 — so on its own it cannot say whether a chapter was ever read, or how much of a Granth is done. Read coverage records **which** verse-pages were read, independently of the position: it only grows as verses are read, and shrinks only on an explicit reset or when a full reading completes.
+
+**The read rule.** A verse-page counts as read once it has stayed on screen for **3 s** (`READ_DWELL_MS`, `useReadDwell`). The mark is recorded when the page is left — paging on, leaving the reader, or the app going to the background — so fast swiping through a chapter marks nothing and no timer outlives a reader; background time never counts (returning restarts the clock). Every reader calls `useReadDwell(sourceId, chapter, currentIndex)` beside its `setProgress` effect (RULEBOOK §3 *Read coverage*); transition-card indices are ignored.
+
+**What's persisted.** `@vedansh/read-coverage`: `{ v: 1, read, paath, paathAt }` — `read` maps `<sourceId>::<chapter>` (chapter 1 for single texts) to sorted inclusive verse-index ranges; `paath` counts completed full readings per text; `paathAt` is the last completion time. When every page of a text has been read, its `paath` goes up by one and its read marks clear for the next reading. Page counts come from the chapter manifests, and for single texts from the reader's own page count (the verse pool), so completion follows the pages the reader actually swipes.
+
+**First launch with coverage.** The store seeds once from the saved positions: everything up to and including each subsection's saved verse counts as read (a position on the first page seeds nothing); a text seeded complete is banked as one पाठ. History from before this release cannot be recovered beyond that.
+
+**Surfaces.** Library cards (§8 *Read coverage row*), chapter cards and the chapters summary (§15), the resume sheet (§40). The Garud Puran and Gita Saar index screens use their own cards (`ListingCard`, the theme cards) and do not show per-reading coverage yet; their library card and resume sheet do. Nothing on the first frame reads coverage: the store is a module store (`useSyncExternalStore`) that hydrates the first time a reader, card or sheet asks — no App-level provider, so the launch graph is unchanged.
+
+**Reset.** Long-press a library card (whole text) or a chapter card (that chapter), or tap `प्रगति रीसेट` on the chapters summary (whole text). `ProgressResetDialog`: centred `parchmentSoft` card over `modalBackdrop`, `cardActiveBorder` 1 px, `radii.lg`, max 420 — `प्रगति रीसेट करें?` (19, title face) over the target name (14 `ink-muted`), a `divider` rule, then the body stating exactly what clears and what stays (`N पठित चिह्न मिट जाएँगे। पूर्ण पाठ की गिनती और अंतिम पठित स्थान वैसे ही रहेंगे।`, 15/24 `ink-soft`), a solid `avoidDeep` `रीसेट करें` button (`onPrimary` text) and a 44 pt `रहने दें` text button. A reset clears read marks only — never the पाठ count, never the saved position (Start Over already moves that), so routine completion (§31) is untouched. After confirming, the cleared row shows `ResetUndoPill` (`प्रगति रीसेट हुई` + outlined `पूर्ववत करें`) for 6 s (`RESET_UNDO_MS`); undo merges the cleared ranges back. All copy in this section is authored in hi/en/gu/kn via `pick`, except the resume-sheet lines, which follow that sheet's bilingual house style.
+
+**Files:** `mobile/src/data/readCoverage.ts` (pure rules), `mobile/src/utils/readCoverageStore.ts` (store + `useReadCoverage`), `mobile/src/screens/_useReadDwell.ts`, `mobile/src/components/{ReadProgressBar,LibraryCardProgress,GranthProgressScope,ProgressResetDialog,ResetUndoPill,useProgressReset,useResumeSheetCoverage}.tsx|ts`. Tests: `data/__tests__/readCoverage.test.ts` (tsx), `utils/__tests__/readCoverageStore.test.tsx`, `components/__tests__/readCoverageUi.test.tsx`, `screens/__tests__/readerReadDwell.test.ts` (every reader wires the dwell hook).

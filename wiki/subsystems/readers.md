@@ -168,6 +168,27 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
 (velocity-scrolled, ~47 swipes). Each reader also has a chapter-1 smoke test (RULEBOOK §3
 *Reader smoke test*).
 
+**Read coverage (Oct 2026, design.md §84).** Separate from the saved *position*
+(`ReadingProgressContext`, one cursor per subsection that Start Over rewinds), coverage records
+WHICH verse-pages were read: `@vedansh/read-coverage` = `{ v:1, read: { '<sourceId>::<chapter>':
+[[from,to],…] }, paath, paathAt }` (flat texts use chapter 1). Rules are pure in
+`data/readCoverage.ts`; the store is a module store in `utils/readCoverageStore.ts`
+(`useSyncExternalStore`, `useReadCoverage()`), **not** an App provider — it hydrates on first
+use, so it adds nothing to the launch graph. Every reader calls
+`useReadDwell(sourceId, chapter, currentIndex)` beside its `setProgress` effect: a page counts as
+read after 3 s on screen, recorded when the page is left (page change, unmount, background) —
+no timers: an earlier setTimeout version fired after Jest tore reader tests down and crashed the
+`--runInBand` shard. When every page of a text
+is read its `paath` (full readings) goes up and its marks clear. First launch seeds from the
+saved positions (everything up to each saved verse; a text seeded complete becomes one पाठ).
+Surfaces: `LibraryCardProgress` under library cards (bar `NN% · C.V` for multi-subsection texts,
+`✓ N पाठ` chip for single texts), `GitaChapterCard` inside `<GranthProgressScope sourceId>` on the
+13 chapters screens (✓ thumb, `read / total · अंतिम N`, whole-text summary + reset), and
+`useResumeSheetCoverage` → ResumeReadingSheet (coverage line, Next unread, All chapters, "read
+marks stay" under Start Over). Reset (long-press a library/chapter card, or the summary link) →
+`ProgressResetDialog` → clears marks only (never पाठ, never the position) → inline 6 s undo.
+`readerReadDwell.test.ts` fails if any `setProgress` screen lacks the hook.
+
 ## Garud Puran source research (not integrated)
 
 As of 2026-10-01, `docs/content/garud-puran/README.md` inventories the separate
@@ -199,6 +220,19 @@ measured popularity ranking, and every item remains ineligible for release.
   `JumpToStartButton.tsx`, `LanguageToggle.tsx`, `BookmarkButton.tsx`, `ShareButton.tsx`.
 
 ## Gotchas
+
+- **Coverage page counts follow the reader, not the library row.** Flat texts are sized from the
+  verse pool's page count (the reader's own payload), chaptered texts from their manifests. The
+  two can disagree — `om-jai-shiv-omkara`'s row says 9 but its reader swipes 12 pages — and
+  completion must follow the pages. A new chaptered text needs its manifest added to
+  `chapteredManifests()` in `data/readCoverage.ts` (`readCoverage.test.ts` pins every library
+  text with a `verseCount` has a shape).
+- **Card a11y labels are deliberately unchanged by coverage** (Maestro matches on them);
+  coverage rides on `accessibilityValue`, and reset/undo on `accessibilityActions`. The chapters
+  summary is its own a11y element (`granth-progress-summary`) so its reset link stays reachable.
+- **The launch graph had ~235 bytes of headroom on 2026-10-21** — an App-level coverage provider
+  failed `launchGraph.test.ts`, hence the lazy module store. Also note the walker's
+  `STATIC_IMPORT` regex is single-line: a multi-line `import { … } from` is not counted.
 
 - **The reader *body* still has no shared shell** — each reader's paging logic is copy-pasted, so
   a new feature (like auto-advance) must be hand-applied to every multi-chapter reader. This is

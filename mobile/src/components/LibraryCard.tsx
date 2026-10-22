@@ -20,6 +20,10 @@ import { useNewContent } from '@/contexts/NewContentContext';
 import { useRoutineSheet } from '@/contexts/RoutineSheetContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import { useReadCoverage } from '@/utils/readCoverageStore';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useProgressReset } from '@/components/useProgressReset';
+import LibraryCardProgress from '@/components/LibraryCardProgress';
 
 type Props = {
   entry: LibraryEntry;
@@ -43,6 +47,16 @@ export default function LibraryCard({ entry, onPress, style, variant = 'default'
   const isActive = entry.status === 'active';
   const showNew = isActive && isNew(entry.id);
   const sub = lang === 'en' ? entry.subEn : entry.sub;
+
+  // Read coverage (design.md §84): only on full-size active cards, never compact ones.
+  const reset = useProgressReset();
+  const { getSourceCoverage } = useReadCoverage();
+  const { getProgress } = useReadingProgress();
+  const coverage = isActive && !compact ? getSourceCoverage(entry.id) : null;
+  const readCount = coverage?.read ?? 0;
+  const askReset = () => {
+    if (readCount > 0) reset.ask({ sourceId: entry.id, label: primary.text, readCount });
+  };
 
   const accessibilityRole: AccessibilityRole | undefined = isActive ? 'button' : undefined;
   const accessibilityLabel = `${entry.nameEn}. ${entry.subEn}.${showNew ? ' New.' : ''} ${isActive ? 'Tap to open.' : 'Coming soon.'}`;
@@ -124,6 +138,9 @@ export default function LibraryCard({ entry, onPress, style, variant = 'default'
             {sub}
           </Text>
         )}
+        {coverage ? (
+          <LibraryCardProgress coverage={coverage} pin={getProgress(entry.id)} onUndo={reset.undo} />
+        ) : null}
       </View>
 
       {isActive ? (
@@ -199,13 +216,31 @@ export default function LibraryCard({ entry, onPress, style, variant = 'default'
   ];
 
   if (isActive) {
+    // The reset dialog sits beside the card, not inside it, so a tap in the
+    // dialog can never reach the card's own press handlers.
     return (
+      <>
       <Pressable
         onPress={onPress}
         style={({ pressed }) => [cardStyle, style, pressed && styles.cardPressed]}
+        onLongPress={readCount > 0 ? askReset : undefined}
         accessibilityRole={accessibilityRole}
         accessibilityLabel={accessibilityLabel}
         accessibilityState={accessibilityState}
+        accessibilityValue={coverage && (readCount > 0 || coverage.paath > 0) ? { text: `${coverage.pct} percent read, ${coverage.paath} full readings` } : undefined}
+        // The inline undo sits inside the card, which VoiceOver reads as one
+        // element, so it is offered as a custom action too.
+        accessibilityActions={
+          reset.undo
+            ? [{ name: 'undo', label: 'Undo reset' }]
+            : readCount > 0
+              ? [{ name: 'longpress', label: 'Reset progress' }]
+              : undefined
+        }
+        onAccessibilityAction={(e) => {
+          if (e.nativeEvent.actionName === 'longpress') askReset();
+          if (e.nativeEvent.actionName === 'undo') reset.undo?.();
+        }}
       >
         <LinearGradient
           colors={[colors.cardActiveFrom, colors.cardActiveTo]}
@@ -215,6 +250,8 @@ export default function LibraryCard({ entry, onPress, style, variant = 'default'
         />
         {body}
       </Pressable>
+      {reset.dialog}
+      </>
     );
   }
 

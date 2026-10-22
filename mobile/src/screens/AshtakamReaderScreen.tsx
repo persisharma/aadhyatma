@@ -20,6 +20,7 @@ import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -77,6 +78,7 @@ export default function AshtakamReaderScreen({ navigation, route }: Props) {
       updatedAt: Date.now(),
     });
   }, [ashtakamId, currentIndex, setProgress]);
+  useReadDwell(ashtakamId, undefined, currentIndex);
 
   const viewabilityConfig = useRef({
     itemVisiblePercentThreshold: 60,
