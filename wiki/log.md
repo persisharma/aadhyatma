@@ -1088,3 +1088,7 @@ PR #507's `vidhiArtworkManifest.json` (63 reviewed step paintings, prefix `vidhi
 ## [2026-10-21] ingest | Daily Bhakti continuous paintings and verified R2 delivery
 
 Replaced the user-rejected eighteen rectangular headers with complete portrait masters, fitted section coordinates and one subject master for every slice. Restored the omitted paper band above the footer on short share cards and made preview QA await complete paint. Reconciled main through 23b99e0c, including R2 delivery and verse wrapping, then published all eighteen new objects under devotional-share. All 28 public hashes match and both production bundles contain zero painting files. All 3,564 local tests, eighteen native R2 subjects, four-script sharing/actual PNG exports, normal-restart cache reuse and Standard/Large reading checks passed. Android-device, physical-device and WhatsApp delivery remain unverified. See docs/evaluations/daily-bhakti-full-masters/README.md; the old rectangular-header evaluation is superseded.
+
+## [2026-10-22] ingest | Daily Bhakti smaller R2 delivery
+
+Updated reading-artwork, readers and share for nine full-resolution q94 WebP delivery encodings, retained lossless authoring references and the 9MiB delivery budget. All 28 masters total 8,953,360 bytes; the eighteen newer subjects and neutral prayer are unchanged. Source, CDN, native and export evidence is tracked in `docs/evaluations/daily-bhakti-compression/`.

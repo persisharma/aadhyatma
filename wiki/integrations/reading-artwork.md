@@ -2,7 +2,7 @@
 title: Reading artwork on R2
 type: integration
 sources: [mobile/assets/garud-puran/index.ts, scripts/verify-artwork-corrections.mjs, mobile/src/data/__tests__/artworkDelivery.jest.test.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md, docs/content-parity/reader-illustration-style3-prompt.md]
-last_verified_date: 2026-10-21
+last_verified_date: 2026-10-22
 confidence: high
 status: current
 ---
@@ -49,8 +49,8 @@ formats; actual kids-story layout and source gates still follow their own contra
 ## Daily Bhakti card artwork (PR #508 follow-up)
 
 `mobile/src/data/devotionalShareArt.ts` and `mobile/assets/devotional-share/manifest.json`
-describe a separate bounded source set. Nine original full deity masters and neutral prayer retain
-their existing bytes. Eighteen new complete 1080×1456 portrait masters cover all 330
+describe a separate bounded source set. Nine original full deity masters retain their composition and resolution; neutral prayer retains
+its existing bytes. The original nine use smaller delivery encodings as of 22 Oct. Eighteen new complete 1080×1456 portrait masters cover all 330
 previously neutral verses among the 1,014 added candidates. The initial landscape-header
 implementation was rejected by the user for looking pasted onto the card.
 
@@ -60,7 +60,13 @@ footer. `DevotionalHero`, reading bands and footer slice the same subject master
 `manifest.subjects` records shipped/generated hashes, exact prompt keys and matching body
 identity; `devotionalFrameSpec` keeps the contiguous reading coordinates.
 The eighteen compressed sources total 4,288,786 bytes; the complete source set is
-22,567,642 bytes (21.52MiB), below the unchanged 22MiB ceiling. All 28 paintings ship from
+8,953,360 bytes (8.54MiB), reduced from 22,567,642 bytes (21.52MiB), under the 9MiB delivery ceiling.
+The nine original portraits use WebP q94/m6/sharp YUV at 1080×1456, each under 600KiB.
+Their lossless authoring versions remain pinned by Git revision/path/hash in `authoringMaster`;
+zero protected-pixel changes describes those composites, not delivery pixels.
+`optimize-devotional-share.mjs` reads the pinned lossless masters to avoid generation loss.
+The eighteen new masters and neutral prayer are unchanged. Compression review and
+verification are recorded separately in `docs/evaluations/daily-bhakti-compression/`. All 28 paintings ship from
 the separate `devotional-share` R2 category through `devotionalShareManifest.json` and the
 shared persistent cache. None are bundled. The publisher includes original and new subjects;
 `--verify --cdn` checks every public SHA-256. Text remains usable on paper during first fetch

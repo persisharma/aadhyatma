@@ -1,0 +1,62 @@
+{
+  "files": [
+    {
+      "art": "krishna",
+      "bytes": 533568,
+      "sha256": "82dbb769bd7c36ef0e0b769b44e2e1aac0c66667684f574d975b61d663d057a6",
+      "mtime": 1792646107.6698408
+    },
+    {
+      "art": "shiva",
+      "bytes": 506606,
+      "sha256": "4b5ff253ed09d997990d8bf29a1758bc3e41acfa58dd4d51083fbcada7dd31d8",
+      "mtime": 1792646112.0411496
+    },
+    {
+      "art": "durga",
+      "bytes": 535444,
+      "sha256": "a10965cc8fe0e178c07070d4e407e1313ebd1c1ddc1c95b2f5caff06e15abdf7",
+      "mtime": 1792646114.1591704
+    },
+    {
+      "art": "saraswati",
+      "bytes": 514102,
+      "sha256": "bdb817dc72bed47c4d50246f213af8de72f150c017b3cff04aa60bcddf3c8401",
+      "mtime": 1792646116.8533645
+    },
+    {
+      "art": "ganesha",
+      "bytes": 503004,
+      "sha256": "997c8980d07c00c304b4f49643505ed9659a275aa136d0840f120b2a0bdde10c",
+      "mtime": 1792646128.6615224
+    },
+    {
+      "art": "vishnu",
+      "bytes": 408430,
+      "sha256": "be33c0e312f89e9b94f2bf319c306027d0986b7a844c2d60db1e59228ce4db48",
+      "mtime": 1792646119.1154811
+    },
+    {
+      "art": "hanuman",
+      "bytes": 519798,
+      "sha256": "96732be9e4a66bba6b5912d6308ed967acb59f63b0bd35dcbd52fa04fd6311e4",
+      "mtime": 1792646123.194747
+    },
+    {
+      "art": "rama",
+      "bytes": 526124,
+      "sha256": "dbc292b082b5848c90a2b38d37a964bd91edfdb18044621ca05eba3c54e59b60",
+      "mtime": 1792646124.2834978
+    },
+    {
+      "art": "surya",
+      "bytes": 445996,
+      "sha256": "210b2032318cffb97d1ecd2999ad7add11558f50aa14094512c0444a99e01bc0",
+      "mtime": 1792646126.7347121
+    }
+  ],
+  "ganeshaReusedAcrossRestart": true,
+  "cacheMtime": 1792646128.6615224,
+  "firstDecodedScreenshotMtime": 1792646130.771129,
+  "restartDecodedScreenshotMtime": 1792646147.5278869
+}
