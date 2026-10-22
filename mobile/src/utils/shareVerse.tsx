@@ -318,6 +318,16 @@ type ResolvedScope = {
 /** The modal's dismissal animation must finish before the OS sheet presents over it. */
 const SHEET_DISMISS_MS = 350;
 
+type ShareMoment = 'verse-shared' | 'prose-shared';
+
+/**
+ * The §54 rating moment a dispatched prose share reports. Devotional pages are
+ * verses on the prose card (Daily Bhakti), so they keep the verse moment; every
+ * other prose card (katha, Theerth, story, listing, Ask) reports its own.
+ */
+const proseShareMoment = (page: ProsePage | undefined): ShareMoment =>
+  page?.devotional ? 'verse-shared' : 'prose-shared';
+
 const pageWord = (n: number, m: number): { hi: string; en: string } => ({
   hi: `पृष्ठ ${n}/${m}`,
   en: `page ${n}/${m}`,
@@ -695,7 +705,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         const label = spec.pageCount > 1 ? pageWord(highlighted + 1, spec.pageCount) : null;
         const caption = proseCaption(content, scope, lang, target, label);
         const dispatched = await deliver(fileUri, caption, target, format, uiLang);
-        if (dispatched && spec.page.devotional) requestRatingAskRef.current('verse-shared');
+        if (dispatched) requestRatingAskRef.current(proseShareMoment(spec.page));
       } catch {
         // Dismissal or failure: swallow, as the verse path does.
       } finally {
@@ -754,7 +764,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         setProse(null);
         await wait(SHEET_DISMISS_MS);
         const dispatched = await shareFiles(uris, { message: caption, title: 'Share pages' });
-        if (dispatched && scope.pagination.pages[0]?.devotional) requestRatingAskRef.current('verse-shared');
+        if (dispatched) requestRatingAskRef.current(proseShareMoment(scope.pagination.pages[0]));
       } catch {
         // Dismissal or failure: swallow.
       } finally {
@@ -775,27 +785,27 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     try {
       await wait(SHEET_DISMISS_MS);
       const dispatched = await shareFiles(uris, { title: 'Share on Instagram' });
-      if (dispatched && prose?.content.scopes[prose.scopeIndex]?.prepared?.[prose.lang].pages[0]?.devotional) requestRatingAskRef.current('verse-shared');
+      if (dispatched) requestRatingAskRef.current(proseShareMoment(activeScope?.pagination.pages[0]));
     } catch {
       // Dismissal or failure: swallow.
     } finally {
       setBusy(false);
       inFlightRef.current = false;
     }
-  }, [prose]);
+  }, [prose, activeScope]);
 
   /**
    * "Send as text" (§39.8): one plain message to the OS sheet. No capture, so the
    * sheet's dismissal has to be waited out explicitly before the OS sheet presents.
    */
-  const sendText = useCallback(async (message: string, moment?: 'verse-shared') => {
+  const sendText = useCallback(async (message: string, moment: ShareMoment) => {
     if (inFlightRef.current) return;
     inFlightRef.current = true;
     setBusy(true);
     try {
       await wait(SHEET_DISMISS_MS);
       const result = await Share.share({ message }, { dialogTitle: 'Share' });
-      if (moment && result.action === Share.sharedAction) requestRatingAskRef.current(moment);
+      if (result.action === Share.sharedAction) requestRatingAskRef.current(moment);
     } catch {
       // Dismissal or failure: swallow, as the image paths do.
     } finally {
@@ -813,7 +823,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       lang: prose.lang,
     });
     setProse(null);
-    void sendText(message, activeScope.pagination.pages[0]?.devotional ? 'verse-shared' : undefined);
+    void sendText(message, proseShareMoment(activeScope.pagination.pages[0]));
   }, [prose, activeScope, sendText]);
 
   const share = useCallback(
