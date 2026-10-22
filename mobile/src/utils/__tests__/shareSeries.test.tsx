@@ -236,7 +236,7 @@ describe('series share flow', () => {
     expect(mockRequestAsk).toHaveBeenCalledWith('prose-shared');
   });
 
-  test('a dismissed prose share reports no rating moment', async () => {
+  test('an all-pages share that never reaches the OS sheet reports no rating moment', async () => {
     mockShareFiles.mockResolvedValueOnce(false);
     const tree = await open(LONG);
     await act(async () => byLabel(tree, 'Share all pages').props.onPress());
