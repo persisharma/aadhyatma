@@ -1,0 +1,57 @@
+{
+  "output": "/tmp/daily-bhakti-508-export",
+  "platforms": {
+    "android": {
+      "allDevotionalAssetsPresent": true,
+      "count": 28,
+      "heroes": [
+        "lakshmi",
+        "khatu-shyam",
+        "shani",
+        "dattatreya",
+        "ganga",
+        "kali",
+        "kubera",
+        "radha",
+        "kartikeya",
+        "narasimha",
+        "navagraha",
+        "santoshi",
+        "vaishno",
+        "tulsi",
+        "ahoi",
+        "ekadashi",
+        "shakambhari",
+        "gayatri"
+      ],
+      "bundle": "_expo/static/js/android/index-0368b4ef104e20ff7458e43fc544d8af.hbc",
+      "bundleBytes": 49401417
+    },
+    "ios": {
+      "allDevotionalAssetsPresent": true,
+      "count": 28,
+      "heroes": [
+        "lakshmi",
+        "khatu-shyam",
+        "shani",
+        "dattatreya",
+        "ganga",
+        "kali",
+        "kubera",
+        "radha",
+        "kartikeya",
+        "narasimha",
+        "navagraha",
+        "santoshi",
+        "vaishno",
+        "tulsi",
+        "ahoi",
+        "ekadashi",
+        "shakambhari",
+        "gayatri"
+      ],
+      "bundle": "_expo/static/js/ios/index-a495afcc0abaa7acde84881f2448fcfb.hbc",
+      "bundleBytes": 49385604
+    }
+  }
+}

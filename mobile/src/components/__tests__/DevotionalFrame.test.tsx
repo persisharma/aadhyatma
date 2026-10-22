@@ -3,6 +3,7 @@ import { Image, View, StyleSheet } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import { DevotionalVerseBody, DevotionalFooter, DevotionalHero } from '../DevotionalFrame';
 import manifest from '../../../assets/devotional-share/manifest.json';
+import { devotionalArtRequest, devotionalSubjectArt, devotionalPlateArt } from '@/data/devotionalShareArt';
 import { devotionalFrameSpec } from '@/data/devotionalFrameSpec';
 import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 import { splitDevotionalMeaning } from '@/utils/devotionalShareLayout';
@@ -50,7 +51,7 @@ it('keeps the scenic footer after content', () => {
   expect((StyleSheet.flatten(footer.props.style) ?? {}).position).toBeUndefined(); act(() => tree!.unmount());
 });
 it.each([288, 358, 540])('uses explicit full-master dimensions at width %s', width => {
-  for (const art of Object.keys(manifest.assets) as DevotionalArt[]) {
+  for (const art of [...Object.keys(manifest.assets), ...Object.keys(manifest.subjects)] as DevotionalArt[]) {
     let tree: ReactTestRenderer; act(() => { tree = create(<><DevotionalHero art={art} lang="hi" width={width} /><DevotionalFooter art={art} width={width} /></>); });
     const images = tree!.root.findAllByType(Image);
     const footer = StyleSheet.flatten(images.find(n => n.props.testID === 'devotional-footer-image')!.props.style);
@@ -102,6 +103,40 @@ it.each(['hi', 'en', 'gu', 'kn'] as const)('gives every %s first line room for t
     expect(s.paddingTop ?? 0).toBeGreaterThanOrEqual(1.53 * s.fontSize - s.lineHeight);
     expect((s.paddingTop ?? 0) + (s.marginTop ?? 0)).toBe(0);
   }
+  act(() => tree!.unmount());
+});
+
+it.each(Object.keys(devotionalSubjectArt) as (keyof typeof devotionalSubjectArt)[])('uses the same complete %s master for scene, reading areas and footer', art => {
+  let tree: ReactTestRenderer;
+  act(() => { tree = create(<><DevotionalHero art={art} lang="hi" width={324} /><DevotionalVerseBody header="Source" verse="Om" meaning="Complete meaning." lang="hi" art={art} width={324} verseStyle={{}} meaningStyle={{}} /><DevotionalFooter art={art} width={324} /></>); });
+  const hero = tree!.root.findAllByType(Image).find(n => n.props.testID === 'devotional-hero-image')!;
+  expect(hero.props.source).toEqual({ uri: `file:///cache/${devotionalArtRequest(art)!.key}.webp` });
+  expect(hero.props.resizeMode).toBe('stretch');
+  expect(StyleSheet.flatten(hero.props.style).height).toBe(1456 * 324 / 1080);
+  let clip = hero.parent!; while (clip.type !== View) clip = clip.parent!;
+  expect(StyleSheet.flatten(clip.props.style).height).toBe(devotionalFrameSpec(art).hero * 324 / 1080);
+  expect(devotionalPlateArt(art)).toBe(art);
+  for (const image of tree!.root.findAllByType(Image).filter(n => n !== hero)) {
+    expect(image.props.source).toEqual({ uri: `file:///cache/${devotionalArtRequest(art)!.key}.webp` });
+  }
+  act(() => tree!.unmount());
+});
+
+it('does not report a subject ready until its native image decodes, including source switches', () => {
+  let tree: ReactTestRenderer;
+  const ready = jest.fn(), error = jest.fn();
+  act(() => { tree = create(<DevotionalHero art="lakshmi" lang="hi" width={324} onLoad={ready} onError={error} />); });
+  expect(tree!.root.findAllByProps({ testID: 'devotional-subject-lakshmi' })).toHaveLength(0);
+  act(() => tree!.root.findByType(Image).props.onLoad());
+  expect(tree!.root.findAllByProps({ testID: 'devotional-subject-lakshmi' }).length).toBeGreaterThan(0);
+  expect(ready).toHaveBeenCalledTimes(1);
+  act(() => { tree!.update(<DevotionalHero art="kali" lang="hi" width={324} onLoad={ready} onError={error} />); });
+  expect(tree!.root.findAllByProps({ testID: 'devotional-subject-kali' })).toHaveLength(0);
+  act(() => tree!.root.findByType(Image).props.onError());
+  expect(error).toHaveBeenCalledTimes(1);
+  expect(tree!.root.findAllByProps({ testID: 'devotional-subject-kali' })).toHaveLength(0);
+  act(() => tree!.root.findByType(Image).props.onLoad());
+  expect(tree!.root.findAllByProps({ testID: 'devotional-subject-kali' }).length).toBeGreaterThan(0);
   act(() => tree!.unmount());
 });
 

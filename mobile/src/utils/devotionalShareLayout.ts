@@ -1,8 +1,9 @@
+import type { DevotionalSubjectArt } from '@/data/devotionalShareArt';
 import type { Lang } from '@/data/gita/language';
 import { devotionalFrameSpec } from '@/data/devotionalFrameSpec';
 import { charsPerLine } from './shareCardType';
 
-export type DevotionalArt = 'krishna' | 'shiva' | 'durga' | 'saraswati' | 'ganesha' | 'vishnu' | 'hanuman' | 'rama' | 'surya' | 'prayer';
+export type DevotionalArt = 'krishna' | 'shiva' | 'durga' | 'saraswati' | 'ganesha' | 'vishnu' | 'hanuman' | 'rama' | 'surya' | 'prayer' | DevotionalSubjectArt;
 export type DevotionalPage = { art: DevotionalArt; verse: string; meaning: string; heroHeight: number; continuation: boolean };
 export const devotionalMetrics = {
   width: 540, height: 728, inset: 28, contentBottom: 608, contentTop: 12,

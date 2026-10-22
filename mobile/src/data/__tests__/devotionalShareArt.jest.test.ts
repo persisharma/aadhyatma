@@ -2,13 +2,36 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import manifest from '../../../assets/devotional-share/manifest.json';
-import { devotionalArtRequest } from '../devotionalShareArt';
+import { devotionalArtRequest, devotionalSubjectArt, type DevotionalSubjectArt } from '../devotionalShareArt';
 import type { DevotionalArt } from '@/utils/devotionalShareLayout';
-it('keeps ten hashed reviewed masters as sources and publishes each to R2, not the bundle', () => {
+import { devotionalFrameSpec } from '../devotionalFrameSpec';
+it('retains eighteen complete portrait masters with pinned provenance within the combined budget', () => {
+  expect(Object.keys(manifest.subjects).sort()).toEqual(Object.keys(devotionalSubjectArt).sort());
+  const prompts = JSON.parse(fs.readFileSync(path.join(__dirname, '../../../../docs/evaluations/daily-bhakti-full-masters/prompts.json'), 'utf8'));
+  let bytes = 0;
+  for (const [art, a] of Object.entries(manifest.subjects)) {
+    const b = fs.readFileSync(path.join(__dirname, '../../../assets/devotional-share', a.file));
+    expect(a.file).toBe(`master-${art}.webp`);
+    expect(b.length).toBe(a.bytes);
+    expect(crypto.createHash('sha256').update(b).digest('hex')).toBe(a.sha256);
+    expect([a.width, a.height]).toEqual([1080, 1456]);
+    expect(a.bodyPlate).toBe(art);
+    expect(devotionalFrameSpec(art as DevotionalSubjectArt)).toEqual(a.frameSpec);
+    const f = a.frameSpec;
+    expect([0, f.hero, f.sourceEnd, f.verseEnd, f.meaningTop, f.meaningBottom, f.commentTop, 1296, 1456]).toEqual([0, 560, 683, 815, 886, 1106, 1164, 1296, 1456]);
+    expect(a.sourceSha256).toMatch(/^[0-9a-f]{64}$/);
+    expect(prompts.prompts[art].length).toBeGreaterThan(100);
+    expect(fs.existsSync(path.join(__dirname, '../../../assets/devotional-share', `hero-${art}.webp`))).toBe(false);
+    bytes += b.length;
+  }
+  expect(bytes + Object.values(manifest.assets).reduce((sum, a) => sum + a.bytes, 0)).toBeLessThan(22 * 1024 * 1024);
+});
+
+it('keeps all 28 hashed reviewed masters as sources and publishes each to R2, not the bundle', () => {
   const r2 = JSON.parse(fs.readFileSync(path.join(__dirname, '../devotionalShareManifest.json'), 'utf8'));
   expect(r2.prefix).toBe('devotional-share');
   expect(Object.keys(manifest.assets)).toHaveLength(10);
-  for (const [art, a] of Object.entries(manifest.assets)) {
+  for (const [art, a] of Object.entries({ ...manifest.assets, ...manifest.subjects })) {
     const b = fs.readFileSync(path.join(__dirname, '../../../assets/devotional-share', a.file));
     expect(b.length).toBe(a.bytes);
     const sha = crypto.createHash('sha256').update(b).digest('hex');

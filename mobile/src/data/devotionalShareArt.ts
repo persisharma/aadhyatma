@@ -5,6 +5,35 @@ import devotionalShareManifestJson from './devotionalShareManifest.json';
 
 const devotionalShareManifest: RemoteAssetManifest = devotionalShareManifestJson;
 
+/** Complete portrait paintings; every card slice uses its own master. */
+export const devotionalSubjectArt = {
+  'lakshmi': 'lakshmi',
+  'khatu-shyam': 'khatu-shyam',
+  'shani': 'shani',
+  'dattatreya': 'dattatreya',
+  'ganga': 'ganga',
+  'kali': 'kali',
+  'kubera': 'kubera',
+  'radha': 'radha',
+  'kartikeya': 'kartikeya',
+  'narasimha': 'narasimha',
+  'navagraha': 'navagraha',
+  'gayatri': 'gayatri',
+  'santoshi': 'santoshi',
+  'ahoi': 'ahoi',
+  'vaishno': 'vaishno',
+  'ekadashi': 'ekadashi',
+  'tulsi': 'tulsi',
+  'shakambhari': 'shakambhari',
+} as const;
+export type DevotionalSubjectArt = keyof typeof devotionalSubjectArt;
+export function isDevotionalSubjectArt(art: DevotionalArt): art is DevotionalSubjectArt {
+  return Object.prototype.hasOwnProperty.call(devotionalSubjectArt, art);
+}
+export function devotionalPlateArt(art: DevotionalArt) {
+  return art === 'prayer' ? 'ganesha' : art;
+}
+
 export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   'bhagavad-gita': 'krishna', 'krishna-stotram': 'krishna',
   'shiva-strotam': 'shiva', 'om-namah-shivaya': 'shiva', 'mahamrityunjaya-mantra': 'shiva',
@@ -19,19 +48,19 @@ export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   'hanuman-moola-mantra': 'hanuman', 'shri-ram-jai-ram': 'rama', 'durga-beej-mantra': 'durga',
   'surya-beej-mantra': 'surya',
   'gau-seva': 'prayer', 'matribhumi-vandana': 'prayer', 'prabhati-shloka': 'prayer',
-  'sandhya-deepam': 'prayer', 'tulsi-puja': 'prayer', 'ratri-shloka': 'rama',
+  'sandhya-deepam': 'prayer', 'tulsi-puja': 'tulsi', 'ratri-shloka': 'rama',
   // Chalisas, aartis, ashtakams, suktams, kavachs and stutis: a painted deity
-  // only when the text is addressed to it by name, else the neutral plate.
-  'gayatri-chalisa': 'prayer', 'khatu-shyam-chalisa': 'prayer', 'lakshmi-chalisa': 'prayer',
-  'gayatri-aarti': 'prayer', 'khatu-shyam-aarti': 'prayer', 'om-jai-lakshmi-mata': 'prayer',
-  'shani-aarti': 'prayer', 'dattatreya-aarti': 'prayer', 'om-jai-gange-mata': 'prayer',
-  'ambe-tu-hai-jagdambe-kali': 'prayer', 'kubera-aarti': 'prayer', 'santoshi-mata-aarti': 'prayer',
-  'ahoi-mata-aarti': 'prayer', 'vaishno-devi-aarti': 'prayer', 'ekadashi-mata-aarti': 'prayer',
-  'tulsi-aarti': 'prayer', 'shakambhari-aarti': 'prayer',
-  'mahalakshmi-ashtakam': 'prayer', radhashtakam: 'prayer', 'subrahmanya-ashtakam': 'prayer',
-  gangashtakam: 'prayer', 'narasimha-ashtakam': 'prayer', 'datta-ashtakam': 'prayer',
-  'shani-ashtakam': 'prayer', 'kalika-ashtakam': 'prayer',
-  'kubera-stotram': 'prayer', 'navagraha-stotram': 'prayer',
+  // only when the text is addressed to it by name; general prayers retain the neutral plate.
+  'gayatri-chalisa': 'gayatri', 'khatu-shyam-chalisa': 'khatu-shyam', 'lakshmi-chalisa': 'lakshmi',
+  'gayatri-aarti': 'gayatri', 'khatu-shyam-aarti': 'khatu-shyam', 'om-jai-lakshmi-mata': 'lakshmi',
+  'shani-aarti': 'shani', 'dattatreya-aarti': 'dattatreya', 'om-jai-gange-mata': 'ganga',
+  'ambe-tu-hai-jagdambe-kali': 'kali', 'kubera-aarti': 'kubera', 'santoshi-mata-aarti': 'santoshi',
+  'ahoi-mata-aarti': 'ahoi', 'vaishno-devi-aarti': 'vaishno', 'ekadashi-mata-aarti': 'ekadashi',
+  'tulsi-aarti': 'tulsi', 'shakambhari-aarti': 'shakambhari',
+  'mahalakshmi-ashtakam': 'lakshmi', radhashtakam: 'radha', 'subrahmanya-ashtakam': 'kartikeya',
+  gangashtakam: 'ganga', 'narasimha-ashtakam': 'narasimha', 'datta-ashtakam': 'dattatreya',
+  'shani-ashtakam': 'shani', 'kalika-ashtakam': 'kali',
+  'kubera-stotram': 'kubera', 'navagraha-stotram': 'navagraha',
   'hanuman-chalisa': 'hanuman', 'hanuman-aarti': 'hanuman',
   'shiv-chalisa': 'shiva', 'om-jai-shiv-omkara': 'shiva', lingashtakam: 'shiva',
   rudrashtakam: 'shiva', 'shiva-kavacham': 'shiva',
@@ -57,7 +86,7 @@ export function devotionalArtForVerse(v: { sourceId: string; verseIndex: number 
   return verseArt[`${v.sourceId}:${v.verseIndex}`] ?? devotionalSourceArt[v.sourceId] ?? 'prayer';
 }
 /**
- * The full lossless masters ship from R2 (prefix `devotional-share`), not the bundle.
+ * The complete portrait masters ship from R2 (prefix `devotional-share`), not the bundle.
  * `mobile/assets/devotional-share/` keeps the reviewed sources and their provenance;
  * `scripts/prepare-devotional-share.mjs` publishes them and writes this manifest.
  */

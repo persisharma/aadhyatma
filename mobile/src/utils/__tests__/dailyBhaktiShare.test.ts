@@ -26,7 +26,7 @@ it('preserves every Daily Bhakti verse and meaning in all four languages in one 
   }
 });
 it('maps deity families and per-verse exceptions conservatively', () => {
-  expect(new Set(Object.values(devotionalSourceArt)).size).toBe(10);
+  expect(new Set(Object.values(devotionalSourceArt)).size).toBe(28);
   expect(devotionalArtForVerse({ sourceId: 'unknown', verseIndex: 0 })).toBe('prayer');
   expect(devotionalArtForVerse({ sourceId: 'gayatri-mantra', verseIndex: 0 })).toBe('surya');
   expect(devotionalArtForVerse({ sourceId: 'vidyarambha-prarthana', verseIndex: 1 })).toBe('ganesha');
