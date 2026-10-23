@@ -1,6 +1,6 @@
 # Suvichar: personalized devotional sharing
 
-Daily Bhakti now opens a separate card composer. Choose a deity and frame, add an optional name or family name, choose a starter reflection or ready-made wish, edit the message, save a complete favorite and share the native PNG through the OS sheet, including WhatsApp. Changing art or selecting another thought preserves the sender. Artwork subscriptions survive typing; only the measured text/card child resets.
+Daily Bhakti now opens a separate card section with Ready-made cards selected first and Create your own alongside it. Choose a deity and frame, add an optional name or family name, choose a starter reflection or ready-made wish, edit the message, save a complete favorite and share the native PNG through the OS sheet, including WhatsApp. Changing art or selecting another thought preserves the sender. Artwork subscriptions survive typing; only the measured text/card child resets.
 
 The card follows Option 2: complete artwork above readable text, a separate optional “सप्रेम — name” line, and clear native Vedansh branding with vedansh.app/get. Source art has no baked-in message, name or logo. Long messages grow the lower paper section; they are never truncated or automatically shrunk. Exports are 1080 pixels wide with their full measured height.
 
@@ -57,3 +57,7 @@ An existing authenticated Wrangler setup can use `--publish --wrangler`. The scr
 See [VALIDATION.md](VALIDATION.md) for executed checks and outstanding native review. Reader/component test scripts now explicitly use Asia/Kolkata, matching the engine suite and its India-local date fixtures.
 
 Before merge, publish/verify artwork and run mobile/.maestro/suvichar-personalization.yaml on an installed native app. Inspect hi/en/gu/kn at Standard/Large, empty and long sender names, the full 280-unit message, all 42 selections, cold-cache/failure/retry, restart persistence, and the actual PNG handed to WhatsApp. The smoke flow does not send any message to a recipient. These device/export checks were not run in this workspace.
+
+## Ready-made cards
+
+The default collection contains 21 complete compositions: 14 deity cards and seven morning/festival wishes. Select a card, optionally add a name, and share without writing a message. All three frames remain available (63 template/frame combinations over the same 42 masters). The thumbnail rail is virtualized and reuses the R2 cache; the selected full native card retains every message line. Create your own keeps the existing editing tools, and switching modes preserves the selected card/name. Text comes from the existing authored reflection/wish pool; the 1,000 draft records remain outside the app. Publication and installed-native checks are still required.

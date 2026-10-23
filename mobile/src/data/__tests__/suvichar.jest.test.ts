@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { cleanSender, parseSuvicharPreferences, suvicharArtKey, suvicharArtRequest, suvicharHeroFraction, suvicharDeities, suvicharFrames, NAME_LIMIT } from '../suvichar';
+import { suvicharTemplates } from '../suvicharTemplates';
 it('maps all fourteen subjects to three distinct masters without fallback', () => {
   const keys = suvicharDeities.flatMap(d => suvicharFrames.map(f => suvicharArtKey(d.id, f.id)));
   expect(keys).toHaveLength(42); expect(new Set(keys).size).toBe(42);
@@ -9,6 +10,17 @@ it('maps all fourteen subjects to three distinct masters without fallback', () =
   expect(keys).toContain('salasar-balaji--bhakti-patra');
   expect(keys).toContain('khatu-shyam--pushp-aangan');
   expect(keys).toContain('tirupati-balaji--mandir-jharokha');
+});
+it('provides complete ready-made compositions for every deity and all seven wishes', () => {
+  expect(suvicharTemplates).toHaveLength(21);
+  expect(new Set(suvicharTemplates.map(t => t.id)).size).toBe(21);
+  expect(suvicharTemplates.filter(t => t.kind === 'daily').map(t => t.deity).sort()).toEqual(suvicharDeities.map(d => d.id).sort());
+  expect(suvicharTemplates.filter(t => t.kind === 'wish')).toHaveLength(7);
+  for (const t of suvicharTemplates) {
+    expect(suvicharFrames.some(f => f.id === t.frame)).toBe(true);
+    expect(t.messageHi.length).toBeGreaterThan(0); expect(t.messageHi.length).toBeLessThanOrEqual(280);
+    expect(t.messageEn.length).toBeGreaterThan(0); expect(t.messageEn.length).toBeLessThanOrEqual(280);
+  }
 });
 it.each([null, '{', 'null', '[]', '{}'])('recovers corrupt or missing preferences %s', raw => {
   expect(parseSuvicharPreferences(raw)).toMatchObject({ deity: 'krishna', frame: 'mandir-jharokha', name: '', favorites: [] });

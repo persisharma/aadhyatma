@@ -76,6 +76,12 @@ export type RatingPromptState = {
    * additive and optional: an older blob without it parses as `{}`.
    */
   asksByTrigger: Partial<Record<RatingAskTrigger, number>>;
+  /**
+   * Epoch ms of the last 1–3★ tap on the card, or null. Those users get the
+   * thank-you step instead of the store, and the card stays away for
+   * `LOW_RATING_COOLDOWN_DAYS` so what they disliked can be fixed first.
+   */
+  lowRatedAt: number | null;
 };
 
 export const RATING_PROMPT_DEFAULTS: RatingPromptState = {
@@ -83,6 +89,7 @@ export const RATING_PROMPT_DEFAULTS: RatingPromptState = {
   lastAskedAt: null,
   outcome: 'pending',
   asksByTrigger: {},
+  lowRatedAt: null,
 };
 
 /** Cold starts before we're willing to ask — mirrors the opt-in sheet's "earn the ask". */
@@ -107,6 +114,27 @@ export const REASK_COOLDOWN_DAYS = 5;
  * ask from being unbounded nagging (RULEBOOK §6.2).
  */
 export const MAX_ASKS: number | null = null;
+/**
+ * In-app stars at or above this hand off to the store's review page; below it the
+ * card thanks the user and offers "Write to us" first. The store link stays on
+ * that low-star step too (product decision, Oct 2026): hiding the store from
+ * unhappy users is review gating, which Play's ratings policy and the US FTC
+ * treat as deceptive.
+ */
+export const STORE_MIN_STARS = 4;
+/** Quiet period after a 1–3★ tap (product decision, Oct 2026). */
+export const LOW_RATING_COOLDOWN_DAYS = 90;
+/**
+ * Inbox the low-star step's "Write to us" opens a pre-filled email to. `null`
+ * hides that button, leaving the store link and Close. Use a support inbox, not
+ * a personal address: it ships inside the app.
+ */
+export const FEEDBACK_EMAIL: string | null = 'vedansh.app.support@gmail.com';
+
+/** Read through a function so tests can stand in an address. */
+export function feedbackEmail(): string | null {
+  return FEEDBACK_EMAIL;
+}
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -129,6 +157,10 @@ export function parseRatingPromptState(raw: string | null): RatingPromptState {
           ? parsed.outcome
           : RATING_PROMPT_DEFAULTS.outcome,
       asksByTrigger: parseAsksByTrigger(parsed.asksByTrigger),
+      lowRatedAt:
+        typeof parsed.lowRatedAt === 'number' && Number.isFinite(parsed.lowRatedAt) && parsed.lowRatedAt > 0
+          ? parsed.lowRatedAt
+          : RATING_PROMPT_DEFAULTS.lowRatedAt,
     };
   } catch {
     return RATING_PROMPT_DEFAULTS;
@@ -178,6 +210,7 @@ export function isEligibleForRatingPrompt(input: RatingEligibilityInput): boolea
   if (activeDays < MIN_ACTIVE_DAYS) return false;
   if (totalReads < MIN_VERSE_READS) return false;
   if (state.lastAskedAt !== null && now - state.lastAskedAt < REASK_COOLDOWN_DAYS * DAY_MS) return false;
+  if (state.lowRatedAt !== null && now - state.lowRatedAt < LOW_RATING_COOLDOWN_DAYS * DAY_MS) return false;
   return true;
 }
 
@@ -206,11 +239,16 @@ export function afterRated(state: RatingPromptState, now: number): RatingPromptS
   return { ...state, outcome: 'rated', lastAskedAt: now };
 }
 
+/** State after a 1–3★ tap: still askable, once `LOW_RATING_COOLDOWN_DAYS` pass. */
+export function afterLowRating(state: RatingPromptState, now: number): RatingPromptState {
+  return { ...state, lowRatedAt: now };
+}
+
 /**
  * State after a permanent opt-out — terminal.
  *
- * NOT reachable from the sheet: the card ships with two actions only ("now" and
- * "later", product decision Aug 2026), so nothing in the current UI calls this.
+ * NOT reachable from the sheet: the card has no opt-out (product decision Aug
+ * 2026, kept when the stars arrived), so nothing in the current UI calls this.
  * It is kept because the gate must still honour an `outcome: 'declined'` written
  * by an earlier build, and because a Settings-side opt-out (the mitigation
  * RULEBOOK §6.2 describes) would use exactly this transition.
@@ -235,4 +273,14 @@ export function storeListingUrl(platform: string): string {
  */
 export function storeReviewUrl(platform: string): string {
   return platform === 'ios' ? `${APP_STORE_URL}?action=write-review` : PLAY_STORE_URL;
+}
+
+/**
+ * The pre-filled email behind "Write to us". It opens in the user's mail app and
+ * they choose whether to send it, so nothing leaves the phone without them.
+ */
+export function feedbackMailto(email: string, stars: number, platform: string, appVersion: string): string {
+  const subject = `Vedansh feedback (${stars}/5)`;
+  const body = `Rating: ${stars}/5\nApp: ${appVersion} (${platform})\n\nWhat should we fix?\n\n`;
+  return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }

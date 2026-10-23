@@ -70,3 +70,7 @@ Production Expo/Hermes exports subsequently passed for both iOS and Android on t
 ## Salasar identity correction — 23 October 2026
 
 The earlier generic bearded human faces were rejected. All three Salasar masters were regenerated using a darshan photograph as the identity reference, preserving the broad monolithic sindoor form, round white eyes, triangular red nose and flat painted moustache/beard. The frame and message-paper boundaries were visually reviewed. Reference URL, exact prompts, PNG hashes and replacement WebP hashes are recorded in sources.json. All 42 WebPs decode and the 10 source/provenance tests pass. Native/WhatsApp review and R2 publication remain pending. The corrected review prototype preserves all 42 selections and 1,000 draft records.
+
+## Ready-made collection and conflict resolution — 23 October 2026
+
+Added 21 complete ready-made compositions (14 deities and seven wishes), the default ready-made/custom mode selector, virtualized R2 thumbnail subscriptions, sender-preserving preset selection and a native smoke flow. TypeScript passes. Focused ready-made/personalization/capture/source checks pass: 5 suites, 36 tests. The picker test exercises selection and subscription cleanup; screen tests share a preset without editing its message and preserve a selected wish when entering custom mode. Main through 3ac76f5 was reconciled, preserving rating-star changes and both wiki histories. Maestro/native PNG/WhatsApp checks and R2 publication remain pending; no artwork hashes were activated.

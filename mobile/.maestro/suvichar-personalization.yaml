@@ -4,6 +4,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "tab-bhakti" }
 - tapOn:
     id: "open-suvichar"
+- tapOn: { id: "suvichar-mode-custom" }
 - scrollUntilVisible:
     element:
       id: "suvichar-name"

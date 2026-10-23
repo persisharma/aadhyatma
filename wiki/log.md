@@ -1112,3 +1112,8 @@ Native view-shot requires both dimensions for Android resizing and UIKit point s
 ## [2026-10-23] ingest | Salasar Suvichar shrine identity correction
 
 Replaced all three rejected naturalistic human faces using a Salasar darshan photo reference. The shrine form and geometric facial features are part of deity identity; beard/moustache keywords alone were insufficient. Updated source provenance and the review prototype; all 42 masters decode and 10 source tests pass. R2/native checks remain pending.
+## [2026-10-22] ingest | rating card asks with in-app stars (design.md §54, RULEBOOK §6.2): 4–5★ hand off to the store, 1–3★ get a thank-you step with "Write to us" (FEEDBACK_EMAIL, null until a support inbox is set) plus a smaller store link (no review gating) and a 90-day pause via lowRatedAt.
+
+## [2026-10-23] ingest | Ready-made Suvichar cards and main reconciliation
+
+Added the default ready-made collection (14 deity compositions and seven wishes) alongside the custom creator, with virtualized cached thumbnails, optional names and the existing native capture gate. All three frames remain available; mode/preset selection preserves the sender. Reconciled main through 3ac76f5, retaining the in-app-star rating changes and both wiki histories. R2 publication and native sharing inspection remain pending.

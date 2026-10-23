@@ -2717,29 +2717,44 @@ cold-start ask** (product decision, Sept 2026: "keep a pop-up, ask at the moment
 **Bundle-only, by constraint.** No `expo-store-review`, no `SKStoreReviewController`, no Play
 In-App Review. Every one of those is a native module, so a rating nudge behind one could only ship
 in a store build — and this repo's operating constraint (`docs/roadmap/2026-Q3-roadmap.md`) is that
-features ship inside the bundle. The sheet is therefore ours, and the primary button hands off to
-the store listing with `Linking.openURL` — the same reasoning that keeps the Instagram row on an
+features ship inside the bundle. The sheet is therefore ours, and a 4–5★ tap hands off to the
+store listing with `Linking.openURL` — the same reasoning that keeps the Instagram row on an
 `https://` URL (§37). Cost of the choice: the user leaves the app instead of rating in place, and
 the OS does not throttle us, so **we** own the throttling. Hence the gate below.
 
 **Structure** (`components/RatingPromptSheet.tsx`) — a centered card on a `modalBackdrop`
 (transparent `Modal`, `animationType="fade"`), matching `UpdateReadyModal` (§44) rather than the
 pageSheet modals: this is a short interruption, not a screen to work in. Max width 360, `radii.lg`,
-`parchment`, `spacing.xxl` padding, 12 gap, everything centered:
+`parchment`, `spacing.xxl` padding, 12 gap, everything centered. Two steps:
 
-1. **Decorative star row** — `★★★★★` at 22 in `gold`, `letterSpacing: 3`. Says "rating" faster
-   than a sentence can. `accessibilityElementsHidden` + `importantForAccessibility="no"` so it never
-   reads as a control (§12) — it is not interactive; there is no in-app star capture.
-2. **Title** 20, `accessibilityRole="header"`, script title face — `Vedansh आपको कैसा लगा?` /
+*Asking step* (every opening starts here):
+
+1. **Title** 20, `accessibilityRole="header"`, script title face — `Vedansh आपको कैसा लगा?` /
    `Enjoying Vedansh?` / `Vedansh કેવું લાગ્યું?` / `Vedansh ಹೇಗಿದೆ?`
-3. **Lede** 15/23 `ink-soft`, script body face — one sentence on why it helps, one on the cost
+2. **Lede** 15/23 `ink-soft`, script body face — one sentence on why it helps, one on the cost
    ("एक मिनट लगेगा" / "It takes a minute").
-4. **Primary** — `saffron` fill, `radii.md`, 44 min-height: `रेटिंग दें` / `Rate Vedansh` /
-   `રેટિંગ આપો` / `ರೇಟಿಂಗ್ ನೀಡಿ`. A11y label is the constant `"Rate Vedansh on the store"`.
-5. **`बाद में` / Maybe later** — 13 `ink-muted`, the tracked-uppercase secondary treatment. The
-   card's last element, and the only exit besides rating.
+3. **Star row** — five `☆` buttons at 34 in `gold`, each a 44×44 target, 4 apart; a pressed star
+   shows `★`. A11y labels are the constants `"Rate 1 star"` … `"Rate 5 stars"`. There is no Yes/No
+   question and no separate Rate button: the stars are the action (product decision, Oct 2026).
+   **4–5★** (`STORE_MIN_STARS`) hands off to the store at once; **1–3★** moves to the thank-you step.
+4. **`बाद में` / Maybe later** — 13 `ink-muted`, the tracked-uppercase secondary treatment.
 
-**Two actions, no permanent opt-out** (product decision, Aug 2026: "only now and later"). The
+*Thank-you step* (after 1–3★):
+
+1. **Echoed stars** — the chosen count as `★★☆☆☆` at 22, `letterSpacing: 3`, a11y-hidden (§12).
+2. **Title** — `रेटिंग के लिए धन्यवाद` / `Thank you for rating` / `રેટિંગ બદલ આભાર` / `ರೇಟಿಂಗ್‌ಗೆ ಧನ್ಯವಾದಗಳು`.
+3. **Ask + "Write to us"** — only when `FEEDBACK_EMAIL` is set: one lede line ("Tell us what isn't
+   working and we'll fix it.") and a `saffron` primary, `हमें लिखें` / `Write to us` / `અમને લખો` /
+   `ನಮಗೆ ಬರೆಯಿರಿ`, a11y `"Write to Vedansh"`, which opens a pre-filled email (`feedbackMailto`:
+   stars, app version, platform). The user sends it from their own mail app, so the app still
+   collects nothing. `FEEDBACK_EMAIL` is the Vedansh support inbox (Oct 2026); setting it to `null` hides both.
+4. **Store link** — 14 `ink-soft`, underlined, 44 min-height: `स्टोर पर रेटिंग दें` / `Rate on the
+   store` / `સ્ટોર પર રેટિંગ આપો` / `ಸ್ಟೋರ್‌ನಲ್ಲಿ ರೇಟಿಂಗ್ ನೀಡಿ`, a11y `"Rate Vedansh on the store"`.
+   Deliberately present: hiding the store from unhappy users is **review gating**, which Play's
+   ratings policy and the US FTC treat as deceptive. It is smaller than the primary, not absent.
+5. **`बंद करें` / Close** — the secondary treatment, a11y `"Close"`.
+
+**No permanent opt-out** (product decision, Aug 2026: "only now and later"). The
 earlier third button — `फिर न पूछें` / Don't ask again — is **removed**. Consequence, stated
 plainly: with `MAX_ASKS` at `null` there is now no state a user can reach from this card that stops
 the 5-day cadence except rating. `outcome: 'declined'` and `afterDeclined` survive in the model so
@@ -2790,6 +2805,7 @@ when **all** hold:
 | Distinct active days | `≥ MIN_ACTIVE_DAYS` (3) | A habit, not a visit |
 | Lifetime verse reads | `≥ MIN_VERSE_READS` (20) | Filters users who opened but never read |
 | Since the last ask | `≥ REASK_COOLDOWN_DAYS` (5) | The quiet period, and now the **only** thing spacing asks out — with no lifetime ceiling it is load-bearing, not a scheduling detail |
+| Since a 1–3★ tap | `≥ LOW_RATING_COOLDOWN_DAYS` (90) | Time to fix what an unhappy user disliked before asking them again (product decision, Oct 2026) |
 | No other surface asking | — | Tour, onboarding setup, What's New, reminder opt-in (§47/§38) |
 
 Engagement numbers come from `UserActivityContext.lifetimeTotals()`; the cold-start count is read
@@ -2797,7 +2813,7 @@ from the **notification meta's** `appOpenCount` rather than a second counter —
 have they come back" number, already incremented once per cold start, serving both asks (the rating's earned 5-open gate and the opt-in's first-open gate).
 
 **Persistence & lifecycle** (`contexts/RatingPromptContext.tsx`). One AsyncStorage blob,
-`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome, asksByTrigger }`, defensively parsed
+`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome, asksByTrigger, lowRatedAt }`, defensively parsed
 (junk fields fall back to defaults, never crash; a blob from the cold-start build without
 `asksByTrigger` parses with `{}`). `asksByTrigger` counts auto-opens per `RatingAskTrigger` — the
 only way, with no analytics backend, to learn which moment actually earns the rating. Behaviour:
@@ -2812,15 +2828,18 @@ only way, with no analytics backend, to learn which moment actually earns the ra
 - **Opening consumes an ask slot, starts the cooldown, and credits the trigger** (`afterAsked`).
   A swipe-away still counts as "we asked" — the cooldown, not the outcome, is what silences the
   second ask.
-- **Primary** → `afterRated` (terminal) + `Linking.openURL(storeReviewUrl(Platform.OS))`. iOS gets
+- **4–5★, or the thank-you step's store link** → `afterRated` (terminal) + `Linking.openURL(storeReviewUrl(Platform.OS))`. iOS gets
   `…?action=write-review` (the App Store review composer); Play has no listing equivalent, so
   Android lands on the listing, whose rating stars are the first thing on the page. If the OS
   refuses the deep link, it falls back to the plain listing, then fails **silently** — a broken
   hand-off must not throw an error at a user who just tried to do us a favour. "Rated" records the
   *hand-off*, not a review the app cannot observe.
-- **Maybe later** → close only; the same card returns after the 5-day cooldown, indefinitely. This
-  is the sheet's only non-terminal exit, and the `Modal`'s `onRequestClose` (Android back) maps to
-  it too — so a back press is a "later", never an opt-out.
+- **1–3★** → `afterLowRating` records `lowRatedAt` (outcome stays `pending`) and the card moves to
+  its thank-you step. "Write to us" and Close both close it; the auto-ask then stays away for 90
+  days. The in-app stars themselves go nowhere: the store needs its own rating.
+- **Maybe later** → close only; the same card returns after the 5-day cooldown, indefinitely. The
+  `Modal`'s `onRequestClose` (Android back) maps to it too — so a back press is a "later", never an
+  opt-out.
 - The **More row** calls `open()`, which bypasses the gate and spends **no** ask slot — a user who
   went looking has opted in. It keeps working after `declined`; opting out silences the auto-ask.
 
@@ -2832,23 +2851,25 @@ from `contexts/ratingAsk.ts`**, which has no RN/expo/storage imports and returns
 provider: importing `RatingPromptContext` directly would drag `NotificationPreferencesContext` →
 `expo-notifications` into any unit test that mounts the host standalone.
 
-**Files.** `mobile/src/data/ratingPrompt.ts` (state, triggers, gate, store URLs),
+**Files.** `mobile/src/data/ratingPrompt.ts` (state, triggers, gate, star threshold, feedback inbox + mailto, store URLs),
 `mobile/src/contexts/RatingPromptContext.tsx`, `mobile/src/contexts/ratingAsk.ts`,
 `mobile/src/components/RatingPromptSheet.tsx`, hosts in
 `mobile/src/components/RoutineCelebrationOverlay.tsx` (`routine-complete`),
 `mobile/src/utils/shareVerse.tsx` (`verse-shared`, `prose-shared`) and
 `mobile/src/screens/JapamCounterScreen.tsx` (`mala-complete`), row in
 `mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
-Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundary,
-per-trigger credit, defensive parse incl. the pre-trigger blob, URL shapes),
+Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, both cooldown boundaries,
+per-trigger credit, defensive parse incl. the pre-trigger blob, URL and mailto shapes),
 `src/components/__tests__/RatingPromptSheet.test.tsx` (silent cold start, the moment opens after
 the delay and is credited, once per session, one card for two moments, a surface claiming the
-screen mid-delay, persisted outcomes, the two-action shape, all four languages, a11y-hidden stars,
-the no-op hook outside the provider), `src/components/__tests__/RoutineCelebrationOverlay.test.tsx`
+screen mid-delay, 4–5★ to the store, 1–3★ to the thank-you step with its store link, "Write to us"
+with and without an inbox, persisted outcomes, no opt-out, both steps in all four languages,
+a11y-hidden echoed stars, the no-op hook outside the provider), `src/components/__tests__/RoutineCelebrationOverlay.test.tsx`
 (the moment is reported on `onDone`, not on completion),
 `src/screens/__tests__/MoreScreen.test.tsx` (the row opens the sheet instead of leaving the app).
-E2E: `.maestro/rating-prompt-smoke.yaml` — the manual path only; the auto path's thresholds are
-unreachable under `clearState`, so the gate is unit-tested instead.
+E2E: `.maestro/rating-prompt-smoke.yaml` — the manual path only (open, stars present, Maybe later,
+2★ to the thank-you step and Close); the auto path's thresholds are unreachable under `clearState`,
+so the gate is unit-tested instead.
 
 ---
 
@@ -3887,3 +3908,7 @@ Share only after both artwork sections decode and the measured root matches its 
 New artwork lives under the separate R2 prefix `suvichar` and the shared persistent cache. Sources/provenance may be committed for review, but no master may be bundled. `scripts/prepare-suvichar.mjs --publish` uploads all 42, verifies public bytes against source hashes and only then activates the runtime manifest. The initial empty manifest intentionally blocks sharing until publication; this is a draft-PR merge blocker. Installed iOS/Android and WhatsApp image inspection, four scripts, Standard/Large and long names/messages remain required before merge.
 
 The reviewed source bounds are 60% for straight frames, 64% for floral frames and 62% for Tirupati’s temple frame; use suvicharHeroFraction rather than a universal crop. Initial authored content is 20 rotating reflections plus the opening thought and seven ready-made wishes.
+
+### Suvichar ready-made collection — 23 October 2026
+
+The section opens on **तैयार कार्ड / Ready-made cards**, beside **अपना बनाएँ / Create your own**. Ready-made mode offers devotional messages (14 deity compositions) and greetings (seven wishes) in a horizontal virtualized painted-card rail. A tap applies the complete deity/frame/message composition while retaining the optional sender; the full native preview below is the image that is shared. All three frame choices remain available, yielding 63 template/frame combinations over the existing 42 masters, with no new artwork files. Custom mode exposes the existing deity, wish and message editors; switching modes never clears the card. Both modes use the same favorites, persistence, cache and decode/layout capture guard. Thumbnails contain a short text excerpt; the selected native card always retains the complete message. Ready-made content is original authored text, not a scripture quotation.

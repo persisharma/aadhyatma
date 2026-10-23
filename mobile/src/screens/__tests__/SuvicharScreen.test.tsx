@@ -3,11 +3,14 @@ import { Alert, PixelRatio, Platform, Pressable, TextInput, View } from 'react-n
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import SuvicharScreen from '../SuvicharScreen';
 import SuvicharCard from '@/components/SuvicharCard';
+import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
+import { suvicharTemplates } from '@/data/suvicharTemplates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 jest.mock('@/components/ReaderHeader', () => () => null);
 jest.mock('@/components/SuvicharCard', () => 'SuvicharCard');
+jest.mock('@/components/SuvicharPresetPicker', () => 'SuvicharPresetPicker');
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'hi' }) }));
 jest.mock('@react-navigation/native', () => ({ useNavigation: () => ({ goBack: jest.fn() }) }));
 jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: 'SafeAreaView' }));
@@ -17,7 +20,7 @@ jest.mock('@/utils/multiShare', () => ({ shareFiles: jest.fn(async () => false) 
 jest.mock('@react-native-async-storage/async-storage', () => ({ __esModule: true, default: { getItem: jest.fn(async () => null), setItem: jest.fn(async () => undefined) } }));
 let tree: ReactTestRenderer;
 async function flush() { await act(async () => { for (let i = 0; i < 8; i++) await Promise.resolve(); }); }
-async function mount() { await act(async () => { tree = create(<SuvicharScreen />); }); await flush(); act(() => tree.root.findByType(SuvicharCard).props.onHeight(900)); }
+async function mount(custom = true) { await act(async () => { tree = create(<SuvicharScreen />); }); await flush(); if (custom) act(() => node('suvichar-mode-custom').props.onPress()); act(() => tree.root.findByType(SuvicharCard).props.onHeight(900)); }
 const node = (id: string) => tree.root.findAllByProps({ testID: id }).find(n => typeof n.props.onPress === 'function' || typeof n.props.onChangeText === 'function')!;
 beforeEach(() => { jest.clearAllMocks(); jest.spyOn(global, 'requestAnimationFrame').mockImplementation(cb => { cb(0); return 0; }); });
 afterEach(async () => { if (tree) act(() => tree.unmount()); await flush(); jest.restoreAllMocks(); });
@@ -94,4 +97,31 @@ it('refuses a new selection until its own measured height arrives', async () => 
   act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
   await act(async () => node('suvichar-share').props.onPress());
   expect(captureRef).not.toHaveBeenCalled();
+});
+
+it('opens ready-made cards first and shares one without editing a message', async () => {
+  await mount(false);
+  expect(node('suvichar-mode-ready').props.accessibilityState.selected).toBe(true);
+  expect(tree.root.findAllByProps({ testID: 'suvichar-message' })).toHaveLength(0);
+  const picker = tree.root.findByType(SuvicharPresetPicker);
+  expect(picker.props.templates).toHaveLength(14);
+  act(() => node('suvichar-name').props.onChangeText('Sharma family'));
+  const preset = suvicharTemplates.find(t => t.id === 'daily-salasar-balaji')!;
+  act(() => picker.props.onSelect(preset));
+  const card = tree.root.findByType(SuvicharCard).props;
+  expect(card).toMatchObject({ deity: 'salasar-balaji', frame: preset.frame, message: preset.messageHi, name: 'Sharma family', original: true });
+  act(() => { card.onHeight(950); card.onReady(true); });
+  await act(async () => node('suvichar-share').props.onPress());
+  expect(captureRef).toHaveBeenCalledTimes(1);
+});
+
+it('offers seven ready-made wishes and keeps the selected card when switching to customize', async () => {
+  await mount(false); act(() => node('suvichar-presets-wish').props.onPress());
+  const picker = tree.root.findByType(SuvicharPresetPicker);
+  expect(picker.props.templates).toHaveLength(7);
+  const diwali = suvicharTemplates.find(t => t.id === 'wish-diwali')!;
+  act(() => picker.props.onSelect(diwali));
+  expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ deity: 'lakshmi', original: false, message: diwali.messageHi });
+  act(() => node('suvichar-mode-custom').props.onPress());
+  expect(node('suvichar-message').props.value).toBe(diwali.messageHi);
 });
