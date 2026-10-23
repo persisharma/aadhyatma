@@ -38,15 +38,15 @@ it('keeps the link line inside the painted footer strip, unstretched, whatever t
   const line = footer.findAllByType(Text).map(t => [t.props.children].flat().join(''));
   expect(line).toEqual(['vedansh.app/get']);
   expect(tree.root.findByProps({ testID: 'suvichar-card-download' })).toBeTruthy();
+  expect(tree.root.findByProps({ testID: 'suvichar-card-divider' })).toBeTruthy();
 });
 
-it('centres the wordmark in each frame’s painted top space; the letter frame gets the one-row badge', () => {
+it('centres the same one-row badge in each frame’s painted top space', () => {
   mount(jest.fn());
   const slot = suvicharBrandSlot('mandir-jharokha');
   const brand = tree.root.findByProps({ testID: 'suvichar-card-brand' });
   expect(brand.props.style.top).toBeCloseTo(450 * slot.top); expect(brand.props.style.height).toBeCloseTo(450 * (slot.bottom - slot.top));
-  expect(brand.findByType(Text).props.children).toBe('वेदांश');
-  expect(tree.root.findAllByProps({ testID: 'suvichar-card-badge' })).toHaveLength(0);
+  expect(brand.findByProps({ testID: 'suvichar-card-badge' }).findAllByType(Text).map(t => t.props.children)).toEqual(['वेदांश', 'Vedansh.app']);
   act(() => tree.update(<SuvicharCard deity="krishna" frame="bhakti-patra" name="" message="श्रद्धा रखिए।" lang="hi" width={360} onReady={jest.fn()} />));
   expect(tree.root.findByProps({ testID: 'suvichar-card-badge' }).findAllByType(Text).map(t => t.props.children)).toEqual(['वेदांश', 'Vedansh.app']);
 });

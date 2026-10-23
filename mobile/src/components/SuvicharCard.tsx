@@ -7,7 +7,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { suvicharCardType as t } from '@/theme/suvichar';
 import { fontFamilies } from '@/theme/typography';
 import { titleFontByLang } from '@/utils/langType';
-import { contentByLang, pick } from '@/utils/localize';
+import { pick } from '@/utils/localize';
 
 type Props = {
   deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; lang: Lang; width: number;
@@ -51,7 +51,7 @@ function MeasuredCard({ deity, frame, message, name, lang, width, onReady, onHei
     <View style={{ height: hero, overflow: 'hidden' }}>
       {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width, height: full }} onLoad={() => setPainted(p => ({ ...p, hero: true }))} onError={failed} /> : null}
       <View testID="suvichar-card-brand" style={{ position: 'absolute', left: 0, right: 0, top: full * brand.top, height: full * (brand.bottom - brand.top), alignItems: 'center', justifyContent: 'center' }}>
-        {brand.badge ? <BrandBadge size={brand.size * scale} /> : <Text allowFontScaling={false} style={[text(brand.size), { lineHeight: brand.size * scale * 1.55 }]}>{contentByLang(lang, 'वेदांश', 'VEDANSH')}</Text>}
+        <BrandBadge size={t.badge * scale} />
       </View>
     </View>
     <View testID="suvichar-card-body" onLayout={e => { setBodyHeight(e.nativeEvent.layout.height); setMeasured(Number.isFinite(e.nativeEvent.layout.height) && e.nativeEvent.layout.height > 0); }} style={{ minHeight: full * (band.start - heroFraction), justifyContent: 'center', overflow: 'hidden' }}>
@@ -59,7 +59,11 @@ function MeasuredCard({ deity, frame, message, name, lang, width, onReady, onHei
       <View style={{ paddingHorizontal: width * t.horizontalInset, paddingVertical: 8 * scale }}>
         <Text allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{pick(lang, { hi: 'आज का सुविचार', en: 'A thought for today', gu: 'આજનો સુવિચાર', kn: 'ಇಂದಿನ ಸುವಿಚಾರ' })}</Text>
         <Text testID="suvichar-card-message" allowFontScaling={false} style={text(t.message)}>{message}</Text>
-        <Text allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{original ? pick(lang, { hi: 'वेदांश संग्रह से', en: 'From the Vedansh collection', gu: 'વેદાંશ સંગ્રહમાંથી', kn: 'ವೇದಾಂಶ ಸಂಗ್ರಹದಿಂದ' }) : pick(lang, { hi: 'आपकी शुभकामना', en: 'Your warm wishes', gu: 'તમારી શુભેચ્છા', kn: 'ನಿಮ್ಮ ಶುಭಾಶಯ' })}</Text>
+        <View testID="suvichar-card-divider" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 * scale, marginVertical: 6 * scale }}>
+          <View style={{ width: 36 * scale, height: StyleSheet.hairlineWidth * 2, backgroundColor: colors.gold }} /><Diamond size={3.5 * scale} />
+          <View style={{ width: 36 * scale, height: StyleSheet.hairlineWidth * 2, backgroundColor: colors.gold }} />
+        </View>
+        {original ? null : <Text allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{pick(lang, { hi: 'आपकी शुभकामना', en: 'Your warm wishes', gu: 'તમારી શુભેચ્છા', kn: 'ನಿಮ್ಮ ಶುಭಾಶಯ' })}</Text>}
         {sender ? <Text testID="suvichar-card-sender" allowFontScaling={false} style={text(t.name)}>{pick(lang, { hi: 'सप्रेम', en: 'With love', gu: 'સપ્રેમ', kn: 'ಪ್ರೀತಿಯಿಂದ' })} — {sender}</Text> : null}
         <Text testID="suvichar-card-download" allowFontScaling={false} style={[text(t.label), { color: colors.saffronDeep, marginTop: 6 * scale, marginHorizontal: width * .14 }]}>{pick(lang, { hi: 'ऐसे और संदेशों के लिए वेदांश ऐप डाउनलोड करें', en: 'Download the Vedansh app for more wishes like this', gu: 'આવા વધુ સંદેશ માટે વેદાંશ ઍપ ડાઉનલોડ કરો', kn: 'ಇಂತಹ ಇನ್ನಷ್ಟು ಸಂದೇಶಗಳಿಗೆ ವೇದಾಂಶ ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ' })}</Text>
       </View>
@@ -72,11 +76,15 @@ function MeasuredCard({ deity, frame, message, name, lang, width, onReady, onHei
     </View>
   </View>;
 }
-/** The Bhakti share-card wordmark badge in one row, so it fits the letter frame's margin and covers its rule. */
+function Diamond({ size }: { size: number }) {
+  const { colors } = useTheme();
+  return <View style={{ width: size, height: size, backgroundColor: colors.gold, transform: [{ rotate: '45deg' }] }} />;
+}
+/** The Bhakti share-card wordmark badge in one row, so it fits every frame's top space and covers the letter frame's rule. */
 function BrandBadge({ size }: { size: number }) {
   const { colors } = useTheme();
   const u = size / 14;
-  const diamond = <View style={{ width: 4 * u, height: 4 * u, backgroundColor: colors.gold, transform: [{ rotate: '45deg' }] }} />;
+  const diamond = <Diamond size={4 * u} />;
   return <View testID="suvichar-card-badge" style={{ padding: 1.5 * u, borderWidth: 1, borderColor: colors.gold, borderRadius: 3 * u, backgroundColor: colors.parchmentSoft }}>
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 * u, paddingHorizontal: 7 * u, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.gold, borderRadius: 2 * u }}>
       {diamond}
