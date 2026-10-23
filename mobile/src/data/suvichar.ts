@@ -225,3 +225,14 @@ export const suvicharReflections = [
 export function suvicharHeroFraction(deity: SuvicharDeity, frame: SuvicharFrame): number {
   return frame === 'pushp-aangan' ? .64 : deity === 'tirupati-balaji' && frame === 'mandir-jharokha' ? .62 : .60;
 }
+
+/**
+ * Painted footer strip, as fractions of master height, measured on all 14 masters per frame:
+ * `start` sits just above the divider rule, the text window between the rule and the bottom border.
+ * The card renders this slice unstretched so the footer line never crosses painted rules.
+ */
+export function suvicharFooterBand(frame: SuvicharFrame): { start: number; textTop: number; textBottom: number } {
+  return frame === 'mandir-jharokha' ? { start: .908, textTop: .92, textBottom: .982 }
+    : frame === 'pushp-aangan' ? { start: .898, textTop: .909, textBottom: .979 }
+    : { start: .891, textTop: .904, textBottom: .972 };
+}

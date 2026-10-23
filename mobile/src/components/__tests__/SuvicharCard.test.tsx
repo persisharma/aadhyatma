@@ -1,7 +1,8 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, Text } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import SuvicharCard from '../SuvicharCard';
+import { suvicharFooterBand, suvicharHeroFraction } from '@/data/suvichar';
 import { subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
 jest.mock('@/data/suvichar', () => ({ ...jest.requireActual('@/data/suvichar'), suvicharArtRequest: () => ({ key: 'test', ext: 'webp', remoteUrl: 'https://cdn.vedansh.app/suvichar/test.webp' }) }));
 jest.mock('@/utils/backgroundAssetCache', () => ({ subscribeBackgroundAsset: jest.fn((_: unknown, cb: (uri: string) => void) => { cb('file:///test.webp'); return () => undefined; }), evictBackgroundAsset: jest.fn() }));
@@ -10,18 +11,33 @@ afterEach(() => { if (tree) act(() => tree.unmount()); });
 function mount(ready: jest.Mock, name = 'शर्मा परिवार', message = 'श्रद्धा रखिए।') {
   act(() => { tree = create(<SuvicharCard deity="krishna" frame="mandir-jharokha" name={name} message={message} lang="hi" width={360} onReady={ready} />); });
 }
-function layout(body = 250, root = 520) {
+// mandir-jharokha at 360 wide: fixed painting and footer slices around the measured body.
+const fixed = 360 * 1.25 * (suvicharHeroFraction('krishna', 'mandir-jharokha') + 1 - suvicharFooterBand('mandir-jharokha').start);
+function layout(body = 250, root = fixed + 250) {
   act(() => tree.root.findByProps({ testID: 'suvichar-card-body' }).props.onLayout({ nativeEvent: { layout: { height: body } } }));
   act(() => tree.root.findByProps({ testID: 'suvichar-card' }).props.onLayout({ nativeEvent: { layout: { height: root } } }));
 }
-it('waits for both decoded sections and matching final measured height', () => {
+it('waits for all three decoded sections and matching final measured height', () => {
   const ready = jest.fn(); mount(ready); layout();
   const images = tree.root.findAllByType(Image);
+  expect(images).toHaveLength(3);
   act(() => images[0].props.onLoad()); expect(ready).toHaveBeenLastCalledWith(false);
-  act(() => images[0].props.onLoad()); expect(ready).toHaveBeenLastCalledWith(false);
-  act(() => images[1].props.onLoad()); expect(ready).toHaveBeenLastCalledWith(true);
-  layout(800, 520); expect(ready).toHaveBeenLastCalledWith(false);
-  layout(800, 1070); expect(ready).toHaveBeenLastCalledWith(true);
+  act(() => images[1].props.onLoad()); expect(ready).toHaveBeenLastCalledWith(false);
+  act(() => images[2].props.onLoad()); expect(ready).toHaveBeenLastCalledWith(true);
+  layout(800, fixed + 250); expect(ready).toHaveBeenLastCalledWith(false);
+  layout(800, fixed + 800); expect(ready).toHaveBeenLastCalledWith(true);
+});
+
+it('keeps the brand line inside the painted footer strip, unstretched, whatever the message length', () => {
+  const band = suvicharFooterBand('mandir-jharokha');
+  mount(jest.fn(), 'शर्मा परिवार', 'श्रद्धा और सेवा। '.repeat(20)); layout(900);
+  const footer = tree.root.findByProps({ testID: 'suvichar-card-footer' });
+  expect(footer.props.style.height).toBeCloseTo(450 * (1 - band.start));
+  const art = footer.findByType(Image).props.style;
+  expect(art.height).toBe(450); expect(art.top).toBeCloseTo(-450 * band.start);
+  const line = footer.findAllByType(Text).map(t => [t.props.children].flat().join(''));
+  expect(line).toEqual(['वेदांश · vedansh.app/get']);
+  expect(tree.root.findAllByProps({ children: 'वेदांश' }).filter(n => n.type === Text)).toHaveLength(0);
 });
 it('refuses capture after native image decode failure', () => {
   const ready = jest.fn(); mount(ready); layout();
