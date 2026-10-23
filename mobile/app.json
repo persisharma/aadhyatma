@@ -98,7 +98,8 @@
         "expo-build-properties",
         {
           "android": {
-            "enableMinifyInReleaseBuilds": true
+            "enableMinifyInReleaseBuilds": true,
+            "extraProguardRules": "-keepclassmembers class * {\n  @android.webkit.JavascriptInterface <methods>;\n}"
           }
         }
       ]
