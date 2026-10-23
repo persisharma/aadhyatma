@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang, pick } from '@/utils/localize';
-import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { scriptBodyFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
@@ -18,6 +17,8 @@ import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
 import SankalpTodayCard from '@/components/SankalpTodayCard';
 import MalaStreak from '@/components/MalaStreak';
 import PracticeSeal from '@/components/PracticeSeal';
+import PracticeHero from '@/components/PracticeHero';
+import PracticeItemRow from '@/components/PracticeItemRow';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'RoutineToday'>;
@@ -35,12 +36,6 @@ export default function RoutineTodayScreen({ navigation }: Props) {
   const streak = currentStreak();
   const summary = practiceSummary(doneCount, total, lang);
   const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
-
-  // The routine ledger is a tap-to-expand accordion, matching the sankalp cards
-  // (§46): the completion summary card is the always-visible header and the item
-  // rows drop down only when it is tapped. Collapsed by default so the screen
-  // opens on a compact summary, not a long list.
-  const [expanded, setExpanded] = useState(false);
 
   const right = (
     <Pressable
@@ -61,12 +56,10 @@ export default function RoutineTodayScreen({ navigation }: Props) {
       right={right}
     >
       <ScrollView
-        contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }}
+        contentContainerStyle={{ paddingHorizontal: spacing.lg, paddingTop: 8, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
-        {/* नित्य साधना — the everyday daily routine leads the ledger; the
-            prebuilt sankalps follow below (a screen titled "Today's Practice"
-            should open on what you do every day, not the special vows). */}
+        <PracticeHero doneCount={doneCount} total={total} />
         {total === 0 ? (
           sadhanaCards.length === 0 ? (
           <View
@@ -103,195 +96,29 @@ export default function RoutineTodayScreen({ navigation }: Props) {
           ) : null
         ) : (
           <>
-            {/* Completion summary card — also the accordion header: tap it to
-                drop the item rows down (or fold them away). */}
-            <Pressable
-              onPress={() => setExpanded((v) => !v)}
-              accessibilityRole="button"
-              accessibilityState={{ expanded }}
-              accessibilityHint={
-                expanded
-                  ? contentByLang(lang, 'पाठ छिपाने के लिए टैप करें', 'Tap to hide the readings')
-                  : contentByLang(lang, 'पाठ देखने के लिए टैप करें', 'Tap to see the readings')
-              }
-              style={[
-                styles.summary,
-                {
-                  backgroundColor: colors.parchmentSoft,
-                  borderColor: colors.goldTint,
-                  borderRadius: radii.lg,
-                  padding: spacing.lg,
-                },
-                elevation.card,
-              ]}
-            >
-              {summary.allDone && (
-                <View style={{ marginBottom: spacing.sm }}>
-                  <PracticeSeal size={56} />
+            <View style={[styles.summary, { backgroundColor: colors.parchmentSoft, borderColor: colors.goldTint,
+              borderRadius: radii.md, padding: spacing.md, marginBottom: spacing.lg }]}>
+              <MalaStreak streak={streak} />
+              {summary.allDone ? <PracticeSeal size={48} /> : (
+                <View style={[styles.track, { backgroundColor: colors.parchmentDeep, borderRadius: radii.pill, marginTop: spacing.md }]}>
+                  <LinearGradient colors={[colors.gold, colors.saffron]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                    style={{ width: `${pct}%`, height: '100%', borderRadius: radii.pill }} />
                 </View>
               )}
-
-              <Text
-                style={{
-                  fontFamily:
-                    lang === 'en'
-                      ? fontFamilies.latinSemiBold
-                      : scriptTitleFont(lang, typography.screenTitle.fontFamily),
-                  fontSize: 26,
-                  color: colors.ink,
-                  textAlign: 'center',
-                }}
-              >
-                {summary.big}
-              </Text>
-              <Text
-                style={{
-                  fontFamily:
-                    lang === 'en'
-                      ? typography.cardLatin.fontFamily
-                      : scriptBodyFont(lang, typography.meaning.fontFamily),
-                  fontSize: 14,
-                  color: colors.inkSoft,
-                  textAlign: 'center',
-                  marginTop: 3,
-                }}
-              >
-                {summary.sub}
-              </Text>
-
-              {!summary.allDone && (
-                <View
-                  style={[
-                    styles.track,
-                    { backgroundColor: colors.parchmentDeep, borderRadius: radii.pill, marginTop: spacing.lg },
-                  ]}
-                >
-                  <LinearGradient
-                    colors={[colors.gold, colors.saffron]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={{ width: `${pct}%`, height: '100%', borderRadius: radii.pill }}
-                  />
-                </View>
-              )}
-
-              <View style={{ marginTop: spacing.lg }}>
-                <MalaStreak streak={streak} />
-              </View>
-
-              {/* Dropdown caret — a › rotated to point down when collapsed and
-                  up once the item rows are showing, the same accordion cue the
-                  sankalp cards use (§46). */}
-              <Text
-                style={[
-                  styles.summaryCaret,
-                  { color: colors.saffron, transform: [{ rotate: expanded ? '-90deg' : '90deg' }] },
-                ]}
-              >
-                ›
-              </Text>
-            </Pressable>
-
-            {/* Today's items — dropped down only when the summary header is tapped. */}
-            {expanded && (
-            <>
-              <View style={{ marginTop: spacing.lg }}>
-                {entries.map((e, i) => {
-                  const tail = offeredTail(e.done, e.doneAt, lang);
-                  const titleMain = contentByLang(lang, e.display.titleHi, e.display.titleEn);
-                  const titleAlt = lang === 'en' ? e.display.titleHi : e.display.titleEn;
-                  const last = i === entries.length - 1;
-                  return (
-                    <View
-                      key={e.key}
-                      style={[
-                        styles.itemRow,
-                        { borderBottomColor: colors.divider, borderBottomWidth: last ? 0 : 1 },
-                      ]}
-                    >
-                      <Pressable
-                        onPress={() =>
-                          e.done ? (e.doneMode === 'manual' ? unmarkManualDone(e.key) : undefined) : markManualDone(e.key)
-                        }
-                        accessibilityRole="button"
-                        accessibilityState={{ checked: e.done }}
-                        accessibilityLabel={
-                          e.done
-                            ? contentByLang(lang, 'अर्पित — चिह्न हटाएँ', 'Offered — tap to undo')
-                            : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')
-                        }
-                        hitSlop={10}
-                        style={{
-                          width: 28,
-                          height: 28,
-                          borderRadius: 14,
-                          borderWidth: 2,
-                          borderColor: colors.saffron,
-                          backgroundColor: e.done ? colors.saffron : 'transparent',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          // optically centres the 28px circle on the 24px title line
-                          marginTop: -2,
-                        }}
-                      >
-                        {e.done && <Text style={{ color: colors.onPrimary, fontSize: 14 }}>✓</Text>}
-                      </Pressable>
-
-                      <Pressable style={styles.itemInfo} onPress={() => navigateToRoutineItem(itemNav, e.item)}>
-                        <Text
-                          style={{
-                            fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
-                            fontSize: 16,
-                            lineHeight: 24,
-                            color: e.done ? colors.inkMuted : colors.ink,
-                          }}
-                        >
-                          {titleMain}
-                        </Text>
-                        <Text
-                          style={{
-                            // Mixed-script line (alt-language title + localized tail):
-                            // the §46 meta convention — Inter/cardMeta has no Indic glyphs.
-                            fontFamily:
-                              lang === 'en'
-                                ? typography.cardMeta.fontFamily
-                                : scriptBodyFont(lang, typography.meaning.fontFamily),
-                            fontSize: typography.cardMeta.fontSize,
-                            color: e.done ? colors.inkMuted : colors.saffronDeep,
-                            marginTop: 2,
-                          }}
-                        >
-                          {titleAlt} · {tail}
-                        </Text>
-                      </Pressable>
-
-                      <Pressable onPress={() => navigateToRoutineItem(itemNav, e.item)} hitSlop={8}>
-                        <Text style={{ color: colors.saffron, fontSize: 18, lineHeight: 24 }}>›</Text>
-                      </Pressable>
-                    </View>
-                  );
-                })}
-              </View>
-
-              <Text
-                style={{
-                  // meaning face, not cardLatin: the hi caption must not fall to the
-                  // system font; 1.5× leading keeps Devanagari matras unclipped.
-                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                  fontSize: 12,
-                  color: colors.inkMuted,
-                  marginTop: spacing.lg,
-                  lineHeight: 18,
-                }}
-              >
-                {meaningByLang(
-                  lang,
-                  'पाठ खोलने के लिए पंक्ति पर टैप करें — अंतिम पृष्ठ तक पहुँचने पर स्वतः अर्पित होगा। या ◯ को टैप कर स्वयं अर्पित चिह्नित करें।',
-                  'Open a reading to begin — it completes on its own when you reach the last page. Or tap the circle to mark it offered.'
-                )}
-              </Text>
-            </>
-            )}
+            </View>
+            {entries.map(e => {
+              const title = contentByLang(lang, e.display.titleHi, e.display.titleEn);
+              const auto = e.done && e.doneMode !== 'manual';
+              return <PracticeItemRow key={e.key} item={e.item} title={title} done={e.done}
+                subtitle={`${contentByLang(lang, e.display.subHi, e.display.subEn)} · ${offeredTail(e.done, e.doneAt, lang)}`}
+                onRead={() => navigateToRoutineItem(itemNav, e.item)}
+                onOffer={() => e.done ? unmarkManualDone(e.key) : markManualDone(e.key)}
+                offerDisabled={auto}
+                offerLabel={auto
+                  ? contentByLang(lang, 'पढ़ने से स्वतः अर्पित', 'Offered automatically by reading')
+                  : e.done ? contentByLang(lang, 'अर्पित — चिह्न हटाएँ', 'Offered — tap to undo')
+                    : contentByLang(lang, 'अर्पित चिह्नित करें', 'Mark offered')} />;
+            })}
           </>
         )}
 
@@ -326,11 +153,5 @@ export default function RoutineTodayScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   emptyCard: { alignItems: 'center', paddingVertical: 40, paddingHorizontal: 20, borderWidth: 1 },
   summary: { alignItems: 'center', borderWidth: 1 },
-  // Centred accordion caret at the foot of the summary card.
-  summaryCaret: { fontSize: 22, lineHeight: 22, marginTop: 10 },
-  track: { height: 7, width: '100%', overflow: 'hidden' },
-  // flex-start so the circle and chevron pin to the title's first line instead
-  // of drifting to the middle of a wrapped two-line block.
-  itemRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 14, paddingVertical: 14 },
-  itemInfo: { flex: 1, minWidth: 0 },
+  track: { height: 5, width: '100%', overflow: 'hidden' },
 });
