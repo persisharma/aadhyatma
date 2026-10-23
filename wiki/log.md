@@ -1129,3 +1129,7 @@ Readers page updated: `AutoSlideScrollView` + pager `CellRendererComponent` let 
 ## [2026-10-23] ingest | Suvichar masters published to R2
 
 PR #520 merged the 42 Suvichar source masters with an intentionally empty `suvicharManifest.json` (its publish attempt had no R2 credentials), so no Suvichar card could resolve artwork. Uploaded all 42 under `suvichar` with immutable caching, wrote the manifest from the same sources, and verified public bytes with `prepare-suvichar.mjs --verify`.
+
+## [2026-10-23] ingest | Suvichar footer band + Daily Bhakti entry card
+
+The card's whole lower panel used to stretch with the text, so the painted footer rule ran through the VEDANSH line and the top-overlaid वेदांश crossed the भक्ति पत्र frame rule. The card is now three slices (painting, stretched paper, unstretched footer strip from `suvicharFooterBand`), with one centred footer line. Daily Bhakti's bordered text box became `SuvicharEntryCard`. Follow-up: one app-icon + वेदांश pill centred in every frame's measured top space, download-app line added, attribution line replaced by a gold breaker (wishes label kept for user-authored messages).

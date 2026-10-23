@@ -30,6 +30,11 @@
       "width": 64,
       "height": 64
     },
+    "branding/brand-mark.png": {
+      "sha256": "e74c7b5f192eaddafe61703f6bfd81fcb7d0768c90c2b1372f55cef347a90ae7",
+      "width": 96,
+      "height": 96
+    },
     "adaptive-icon.png": {
       "sha256": "a1730d26dfcbd2a144fb5ac66397affc703a9aed638241826082021c1f8f85a0",
       "width": 1024,

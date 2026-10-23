@@ -30,6 +30,7 @@ import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import RoutineBanner from '@/components/RoutineBanner';
 import DailyBhaktiNudge from '@/components/DailyBhaktiNudge';
+import SuvicharEntryCard from '@/components/SuvicharEntryCard';
 import LanguageToggle from '@/components/LanguageToggle';
 import { useTourTarget } from '@/components/tour/tourTargets';
 
@@ -136,9 +137,7 @@ export default function DailyBhaktiScreen() {
           {/* Setup strip (design.md §23): reminder first, then the verse widget —
               one ask at a time, renders nothing once both are settled. */}
           <DailyBhaktiNudge previewLines={verseLines} />
-          <Pressable testID="open-suvichar" accessibilityRole="button" onPress={() => navigation.navigate('HomeTab', suvicharTabTarget())} style={{ minHeight: 48, padding: spacing.md, borderWidth: 1, borderColor: colors.divider, marginBottom: spacing.md }}>
-            <Text style={[meaningToken(lang, typography), { color: colors.saffronDeep, textAlign: 'center' }]}>{pick(lang, { hi: 'सुविचार बनाएँ · अपना नाम जोड़ें', en: 'Create a card · Add your name', gu: 'સુવિચાર બનાવો · તમારું નામ ઉમેરો', kn: 'ಸುವಿಚಾರ ರಚಿಸಿ · ನಿಮ್ಮ ಹೆಸರು ಸೇರಿಸಿ' })}</Text>
-          </Pressable>
+          <SuvicharEntryCard lang={lang} onPress={() => navigation.navigate('HomeTab', suvicharTabTarget())} />
 
           {/* Compact controls leave the illustrated reading free of duplicated headings. */}
           <View style={styles.controls}>

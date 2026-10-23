@@ -225,3 +225,26 @@ export const suvicharReflections = [
 export function suvicharHeroFraction(deity: SuvicharDeity, frame: SuvicharFrame): number {
   return frame === 'pushp-aangan' ? .64 : deity === 'tirupati-balaji' && frame === 'mandir-jharokha' ? .62 : .60;
 }
+
+/**
+ * Painted footer strip, as fractions of master height, measured on all 14 masters per frame:
+ * `start` sits just above the divider rule, the text window between the rule and the bottom border.
+ * The card renders this slice unstretched so the footer line never crosses painted rules.
+ */
+export function suvicharFooterBand(frame: SuvicharFrame): { start: number; textTop: number; textBottom: number } {
+  return frame === 'mandir-jharokha' ? { start: .908, textTop: .92, textBottom: .982 }
+    : frame === 'pushp-aangan' ? { start: .898, textTop: .909, textBottom: .979 }
+    : { start: .891, textTop: .904, textBottom: .972 };
+}
+
+/**
+ * Blank top space each frame paints for the brand badge (fractions of master height, measured on all 14 masters);
+ * the badge centres in it: the jharokha cartouche, the floral frame's paper band, and the letter frame's margin,
+ * whose rule (≈ .031) the opaque badge covers. Slots leave room above the badge and end above the painting.
+ */
+export function suvicharBrandSlot(frame: SuvicharFrame): { top: number; bottom: number } {
+  return frame === 'mandir-jharokha' ? { top: .008, bottom: .076 }
+    : frame === 'pushp-aangan' ? { top: .01, bottom: .058 }
+    : { top: .01, bottom: .058 };
+}
+
