@@ -40,6 +40,13 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   bitmaps at once). Single-page rows reuse the verse path's `deliver()` exactly.
 - **Multi-file share** (`utils/multiShare.ts`): `react-native-share` `open({ urls })`,
   probed via `TurboModuleRegistry.get('RNShare')` then lazily required.
+- **Rating ask after a share** (design.md §54). Every dispatched card reports a moment via
+  `useRatingAsk()`: verse cards and devotional prose pages → `verse-shared`; every other prose
+  card (katha, Theerth, story, listing, Ask) → `prose-shared` (`proseShareMoment`). Image
+  paths report when the OS sheet closes, sent or not (neither share module reports a dismissal);
+  only Send as text skips a dismissal. Failed captures and the Instagram carousel's hand-off
+  pause report nothing. The gate,
+  once-per-session guard and 1200 ms settle delay live in `RatingPromptContext`, not here.
 
 - **Send as text + card language** (design.md §39.8, `utils/shareText.ts`): a `Send as text` row hands the verse (lines + meaning) or the *selected* prose pages to `Share.share({ message })` with the caption's link lines — no capture, so no native gate and no 10-page cap. Card-language chips let the card, caption, hashtags and text go out in hi/en/gu/kn while the sheet chrome and alerts stay in the reader's language (`chooser.cardLang`; prose keeps `lang` = card, `uiLang` = chrome). Switching on a series re-paginates and resets selection.
 

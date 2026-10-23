@@ -1084,7 +1084,6 @@ PR #508 merged during the artwork work. Preserved its new `versePoolFlat.ts` laz
 
 PR #507's `vidhiArtworkManifest.json` (63 reviewed step paintings, prefix `vidhi-steps`) had been merged without its R2 upload; uploaded all 63 with immutable caching and verified with `prepare-vidhi-artwork.mjs --verify --cdn`. The Daily Bhakti share masters added by #494/#499 were bundled (~18MiB, a deliberate offline tradeoff in #499); at the user's direction they now ship from R2 under `devotional-share` through the download-once cache, with `prepare-devotional-share.mjs` publishing/verifying and the bundling guard covering the folder. Updated [[subsystems/share]].
 
-
 ## [2026-10-21] ingest | Daily Bhakti continuous paintings and verified R2 delivery
 
 Replaced the user-rejected eighteen rectangular headers with complete portrait masters, fitted section coordinates and one subject master for every slice. Restored the omitted paper band above the footer on short share cards and made preview QA await complete paint. Reconciled main through 23b99e0c, including R2 delivery and verse wrapping, then published all eighteen new objects under devotional-share. All 28 public hashes match and both production bundles contain zero painting files. All 3,564 local tests, eighteen native R2 subjects, four-script sharing/actual PNG exports, normal-restart cache reuse and Standard/Large reading checks passed. Android-device, physical-device and WhatsApp delivery remain unverified. See docs/evaluations/daily-bhakti-full-masters/README.md; the old rectangular-header evaluation is superseded.
@@ -1098,6 +1097,12 @@ Updated share: the explanation box now mirror-tiles each master's trimmed verse 
 
 ## [2026-10-22] ingest | Daily Bhakti explanation in its own महत्त्व box
 Updated share: the explanation now sits in a twin of the अर्थ box (same caps, mirror-tiled clean middle) behind a second lotus divider, replacing the side-rule strip.
+
+## [2026-10-21] ingest | share → rating ask: non-devotional prose share cards (katha/Theerth/story/listing/Ask) now report the new `prose-shared` §54 moment; subsystems/share.md gained a rating-ask bullet.
+
+## [2026-10-22] ingest | List rows unified on one `ListCard` shell
+
+Ten hand-rolled list-row cards (four paddings, five thumb sizes, three shadow tiers) now render `components/ListCard.tsx` (design.md §8): `size` regular (18 padding, 52 thumb, title · second-language name · meta) or compact (14, 44, title · meta), active gradient on `elevation.lifted` or `disabled`; `CardThumb`/`CardTitles`/`CardMeta`/`CardRoutineTail` encode the text and trailing rules. Moved onto it: `LibraryCard` (unused `compact` variant removed), sadhana, vidhi, `TrackCard`, `GitaChapterCard` (eyebrow folded into meta), Theerth `BrowseCard`, `DeityCard` (circle avatar retired; localized count via `meta`, English `itemCount` kept for a11y). The `flat` variant was removed (its fill was lighter than the page). Vidhi rows gain ＋ only when `isRecurringVidhi` (`data/vidhi/recurrence.ts`, shared with the detail header). Gotcha: `ListCard` carries `marginBottom: 12`; wrappers inside `gap: 12` lists pass `marginBottom: 0`. A11y labels unchanged, so Maestro selectors are unaffected; no simulator run in this session.
 
 ## [2026-10-22] ingest | Suvichar personalized card composer, shared cache/capture readiness, editable names and publication gate; added subsystems/suvichar.
 

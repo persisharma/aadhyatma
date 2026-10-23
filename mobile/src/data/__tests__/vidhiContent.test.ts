@@ -14,7 +14,9 @@
  * - the festival hook round-trips: every rule.vidhiId resolves to a vidhi and
  *   every vidhi.festivalIds names a real observance rule;
  * - deities are valid Deity tags;
- * - IAST fields carry no Devanagari and no ITRANS residue (§11.12).
+ * - IAST fields carry no Devanagari and no ITRANS residue (§11.12);
+ * - only monthly-recurring vidhis offer add-to-routine (catalog ＋ and detail
+ *   header share `isRecurringVidhi`).
  *
  * Run: npx tsx --test src/data/__tests__/vidhiContent.test.ts
  */
@@ -23,6 +25,7 @@ import assert from 'node:assert/strict';
 import { ALL_VIDHI_ENTRIES, VIDHI_BY_ID, VIDHI_DRAFTS, VIDHI_ENTRIES, getVidhiById, getVidhiForFestival, isVidhiPublished } from '../vidhi';
 import { findDevanagariDefects, describeDevanagariDefect } from '../devanagariWellFormed';
 import { KATHA_CONTENT_BY_ID } from '../../panchang/kathaContent';
+import { isRecurringVidhi } from '../vidhi/recurrence';
 import { OBSERVANCE_RULES } from '../../panchang/festivals';
 import { library } from '../texts';
 import { deities } from '../deities';
@@ -307,6 +310,11 @@ for (const [vidhiId, ids] of expectedRefs) {
   assert.equal(japa.mantra.devanagari, 'ॐ नमः शिवाय');
   assert.equal(japa.mantra.iast, 'oṁ namaḥ śivāya');
 }
+
+// Add-to-routine is for recurring vidhis only: the monthly Satyanarayan puja
+// carries the catalog row's ＋; an annual festival pujan does not.
+assert.equal(isRecurringVidhi(VIDHI_BY_ID.get('satyanarayan-puja')!), true);
+assert.equal(isRecurringVidhi(VIDHI_BY_ID.get('diwali-lakshmi-ganesh-puja')!), false);
 
 console.log(
   `vidhi content: ${VIDHI_ENTRIES.length} published vidhi(s) + ${VIDHI_DRAFTS.length} draft(s), ` +
