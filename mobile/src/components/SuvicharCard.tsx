@@ -9,6 +9,8 @@ import { fontFamilies } from '@/theme/typography';
 import { titleFontByLang } from '@/utils/langType';
 import { pick } from '@/utils/localize';
 
+const brandMark = require('@assets/branding/brand-mark.png');
+
 type Props = {
   deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; lang: Lang; width: number;
   onReady: (ready: boolean) => void; onHeight?: (height: number) => void; original?: boolean;
@@ -35,23 +37,23 @@ function MeasuredCard({ deity, frame, message, name, lang, width, onReady, onHei
   const full = width * t.aspect;
   const hero = full * heroFraction;
   const footer = full * (1 - band.start);
-  const [painted, setPainted] = useState({ hero: false, body: false, footer: false });
+  const [painted, setPainted] = useState({ hero: false, body: false, footer: false, mark: false });
   const [rootHeight, setRootHeight] = useState(0);
   const [measured, setMeasured] = useState(false);
   const [bodyHeight, setBodyHeight] = useState(full * (band.start - heroFraction));
-  useEffect(() => { onReady(!!uri && painted.hero && painted.body && painted.footer && measured && Math.abs(rootHeight - (hero + bodyHeight + footer)) < 1); }, [uri, painted, measured, rootHeight, bodyHeight, hero, footer, onReady]);
+  useEffect(() => { onReady(!!uri && painted.hero && painted.body && painted.footer && painted.mark && measured && Math.abs(rootHeight - (hero + bodyHeight + footer)) < 1); }, [uri, painted, measured, rootHeight, bodyHeight, hero, footer, onReady]);
   const scale = width / t.baseWidth;
   const face = titleFontByLang(lang);
   const text = (size: number) => ({ color: colors.ink, fontFamily: face, fontSize: size * scale, lineHeight: size * scale * t.leading, textAlign: 'center' as const });
   const sender = cleanSender(name);
   // Only the paper between the painting and the footer rule stretches with the text.
   const backgroundHeight = bodyHeight / (band.start - heroFraction);
-  const failed = () => { setPainted({ hero: false, body: false, footer: false }); onFailure(); };
+  const failed = () => { setPainted(p => ({ hero: false, body: false, footer: false, mark: p.mark })); onFailure(); };
   return <View testID="suvichar-card" onLayout={e => { setRootHeight(e.nativeEvent.layout.height); onHeight?.(e.nativeEvent.layout.height); }} style={{ width, backgroundColor: colors.parchmentSoft }} collapsable={false}>
     <View style={{ height: hero, overflow: 'hidden' }}>
       {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width, height: full }} onLoad={() => setPainted(p => ({ ...p, hero: true }))} onError={failed} /> : null}
       <View testID="suvichar-card-brand" style={{ position: 'absolute', left: 0, right: 0, top: full * brand.top, height: full * (brand.bottom - brand.top), alignItems: 'center', justifyContent: 'center' }}>
-        <BrandBadge size={t.badge * scale} />
+        <BrandBadge scale={scale} onPainted={() => setPainted(p => ({ ...p, mark: true }))} />
       </View>
     </View>
     <View testID="suvichar-card-body" onLayout={e => { setBodyHeight(e.nativeEvent.layout.height); setMeasured(Number.isFinite(e.nativeEvent.layout.height) && e.nativeEvent.layout.height > 0); }} style={{ minHeight: full * (band.start - heroFraction), justifyContent: 'center', overflow: 'hidden' }}>
@@ -80,18 +82,15 @@ function Diamond({ size }: { size: number }) {
   const { colors } = useTheme();
   return <View style={{ width: size, height: size, backgroundColor: colors.gold, transform: [{ rotate: '45deg' }] }} />;
 }
-/** The Bhakti share-card wordmark badge in one row, so it fits every frame's top space and covers the letter frame's rule. */
-function BrandBadge({ size }: { size: number }) {
-  const { colors } = useTheme();
-  const u = size / 14;
-  const diamond = <Diamond size={4 * u} />;
-  return <View testID="suvichar-card-badge" style={{ padding: 1.5 * u, borderWidth: 1, borderColor: colors.gold, borderRadius: 3 * u, backgroundColor: colors.parchmentSoft }}>
-    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 * u, paddingHorizontal: 7 * u, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.gold, borderRadius: 2 * u }}>
-      {diamond}
-      <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.devanagariBold, fontSize: size, lineHeight: size * 1.5, color: colors.saffronDeep }}>वेदांश</Text>
-      <View style={{ width: StyleSheet.hairlineWidth * 2, height: 12 * u, backgroundColor: colors.gold }} />
-      <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 12 * u, lineHeight: size * 1.5, color: colors.ink }}>Vedansh.app</Text>
-      {diamond}
-    </View>
+/** The app-icon + वेदांश lockup in a paper pill: fits every frame's top space and covers the letter frame's rule. */
+function BrandBadge({ scale, onPainted }: { scale: number; onPainted: () => void }) {
+  const { colors, radii } = useTheme();
+  return <View testID="suvichar-card-badge" style={{ flexDirection: 'row', alignItems: 'center', gap: 5 * scale, paddingVertical: 1.5 * scale, paddingLeft: 2.5 * scale,
+    paddingRight: 8 * scale, borderWidth: 1, borderColor: colors.gold, borderRadius: radii.pill, backgroundColor: colors.parchmentSoft }}>
+    {/* A bundled mark that fails to decode still leaves the wordmark, so it never blocks sharing. */}
+    <Image accessible={false} source={brandMark} style={{ width: 15 * scale, height: 15 * scale, borderRadius: 7.5 * scale }} onLoad={onPainted} onError={onPainted} />
+    {/* Devanagari has no descenders, so its ink rides high in the line box; drop it onto the icon's centre. */}
+    <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.devanagariBold, fontSize: t.badge * scale, lineHeight: 16 * scale, color: colors.saffronDeep,
+      transform: [{ translateY: t.badge * scale * .22 }] }}>वेदांश</Text>
   </View>;
 }

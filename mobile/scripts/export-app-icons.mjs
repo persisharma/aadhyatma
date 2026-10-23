@@ -59,6 +59,8 @@ function featherSplash(bytes) {
 save('icon.png', await resize(1024));
 save('splash-icon.png', featherSplash(await resize(512)));
 save('favicon.png', await resize(64));
+// In-app brand mark (Suvichar card badge): 20 dp at up to 3x export density.
+save('branding/brand-mark.png', await resize(96));
 // Android displays the center 72dp of a 108dp adaptive layer. Place the complete
 // tile inside that viewport; the essential central symbol remains inside its
 // 66dp safe circle even when launchers use different masks or motion effects.
@@ -75,4 +77,4 @@ writeFileSync(`${root}assets/branding/app-icon-manifest.json`, `${JSON.stringify
   adaptive: { canvas: 1024, artwork: 682, offset: 171, viewportDp: 72, layerDp: 108, safeCircleDp: 66 },
   files,
 }, null, 2)}\n`);
-console.log('Exported launcher, adaptive launcher, splash and favicon assets from the approved master.');
+console.log('Exported launcher, adaptive launcher, splash, favicon and brand-mark assets from the approved master.');

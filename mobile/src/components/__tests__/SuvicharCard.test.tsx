@@ -17,13 +17,12 @@ function layout(body = 250, root = fixed + 250) {
   act(() => tree.root.findByProps({ testID: 'suvichar-card-body' }).props.onLayout({ nativeEvent: { layout: { height: body } } }));
   act(() => tree.root.findByProps({ testID: 'suvichar-card' }).props.onLayout({ nativeEvent: { layout: { height: root } } }));
 }
-it('waits for all three decoded sections and matching final measured height', () => {
+it('waits for the three art slices and the brand mark to decode, and a matching final measured height', () => {
   const ready = jest.fn(); mount(ready); layout();
   const images = tree.root.findAllByType(Image);
-  expect(images).toHaveLength(3);
-  act(() => images[0].props.onLoad()); expect(ready).toHaveBeenLastCalledWith(false);
-  act(() => images[1].props.onLoad()); expect(ready).toHaveBeenLastCalledWith(false);
-  act(() => images[2].props.onLoad()); expect(ready).toHaveBeenLastCalledWith(true);
+  expect(images).toHaveLength(4);
+  for (const image of images.slice(0, 3)) { act(() => image.props.onLoad()); expect(ready).toHaveBeenLastCalledWith(false); }
+  act(() => images[3].props.onLoad()); expect(ready).toHaveBeenLastCalledWith(true);
   layout(800, fixed + 250); expect(ready).toHaveBeenLastCalledWith(false);
   layout(800, fixed + 800); expect(ready).toHaveBeenLastCalledWith(true);
 });
@@ -41,14 +40,15 @@ it('keeps the link line inside the painted footer strip, unstretched, whatever t
   expect(tree.root.findByProps({ testID: 'suvichar-card-divider' })).toBeTruthy();
 });
 
-it('centres the same one-row badge in each frame’s painted top space', () => {
+it('centres the same app-icon lockup in each frame’s painted top space', () => {
   mount(jest.fn());
   const slot = suvicharBrandSlot('mandir-jharokha');
   const brand = tree.root.findByProps({ testID: 'suvichar-card-brand' });
   expect(brand.props.style.top).toBeCloseTo(450 * slot.top); expect(brand.props.style.height).toBeCloseTo(450 * (slot.bottom - slot.top));
-  expect(brand.findByProps({ testID: 'suvichar-card-badge' }).findAllByType(Text).map(t => t.props.children)).toEqual(['वेदांश', 'Vedansh.app']);
+  const badge = brand.findByProps({ testID: 'suvichar-card-badge' });
+  expect(badge.findAllByType(Text).map(t => t.props.children)).toEqual(['वेदांश']); expect(badge.findAllByType(Image)).toHaveLength(1);
   act(() => tree.update(<SuvicharCard deity="krishna" frame="bhakti-patra" name="" message="श्रद्धा रखिए।" lang="hi" width={360} onReady={jest.fn()} />));
-  expect(tree.root.findByProps({ testID: 'suvichar-card-badge' }).findAllByType(Text).map(t => t.props.children)).toEqual(['वेदांश', 'Vedansh.app']);
+  expect(tree.root.findByProps({ testID: 'suvichar-card-badge' }).findAllByType(Text).map(t => t.props.children)).toEqual(['वेदांश']);
 });
 it('refuses capture after native image decode failure', () => {
   const ready = jest.fn(); mount(ready); layout();

@@ -238,13 +238,13 @@ export function suvicharFooterBand(frame: SuvicharFrame): { start: number; textT
 }
 
 /**
- * Blank top space each frame paints for the wordmark badge (fractions of master height, measured on all 14 masters):
- * the jharokha cartouche, the floral frame's paper band, and the letter frame's margin, whose rule the opaque
- * badge covers. Each slot ends above the crowns painted at the top centre.
+ * Blank top space each frame paints for the brand badge (fractions of master height, measured on all 14 masters);
+ * the badge centres in it: the jharokha cartouche, the floral frame's paper band, and the letter frame's margin,
+ * whose rule (≈ .031) the opaque badge covers. Slots leave room above the badge and end above the painting.
  */
 export function suvicharBrandSlot(frame: SuvicharFrame): { top: number; bottom: number } {
   return frame === 'mandir-jharokha' ? { top: .008, bottom: .076 }
-    : frame === 'pushp-aangan' ? { top: .004, bottom: .058 }
-    : { top: .004, bottom: .064 };
+    : frame === 'pushp-aangan' ? { top: .01, bottom: .058 }
+    : { top: .01, bottom: .058 };
 }
 
