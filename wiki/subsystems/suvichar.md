@@ -2,7 +2,7 @@
 title: Suvichar personalized cards
 type: subsystem
 sources: [mobile/src/screens/SuvicharScreen.tsx, mobile/src/components/SuvicharCard.tsx, mobile/src/data/suvichar.ts, scripts/prepare-suvichar.mjs]
-last_verified_date: 2026-10-22
+last_verified_date: 2026-10-23
 confidence: high
 status: current
 ---
@@ -20,3 +20,5 @@ Preferences and up to 50 complete favorites use the versioned `@vedansh/suvichar
 
 ## Gotchas
 The runtime manifest is empty until all source artwork is published and byte-verified by prepare-suvichar.mjs. This blocks image sharing and is a merge blocker, not a successful publication. All 42 source backgrounds were decoded and inspected in five contact sheets; native WhatsApp/device checks remain required. No new master belongs in the bundled asset graph.
+
+Salasar identity requires a shrine photo reference: the broad orange monolithic form, round eyes, triangular red nose and flat painted moustache/beard are essential. A naturalistic bearded human head was rejected despite matching the descriptive keywords. All three masters were corrected on 23 October; original frames and reviewed paper boundaries remain.

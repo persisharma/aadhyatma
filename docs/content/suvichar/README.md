@@ -6,7 +6,7 @@ The card follows Option 2: complete artwork above readable text, a separate opti
 
 ## Artwork
 
-42 full-resolution WebP masters were generated with the built-in image-generation tool, using the three user-approved frame references. Full prompts, dimensions, authoring PNG hashes and exact delivered SHA-256 hashes are recorded in [sources.json](../../../mobile/assets/suvichar/sources.json). Combined delivery size is 24444066 bytes. All 42 files were fully decoded and visually inspected in five contact sheets on 22 October 2026. Native preview/export review remains pending.
+42 full-resolution WebP masters were generated with the built-in image-generation tool, using the three user-approved frame references. Full prompts, dimensions, authoring PNG hashes and exact delivered SHA-256 hashes are recorded in [sources.json](../../../mobile/assets/suvichar/sources.json). Combined delivery size is 24095482 bytes. All 42 files were fully decoded and visually inspected in five contact sheets on 22 October 2026. Native preview/export review remains pending.
 
 The composition review checked text-free paper, complete figures, deity-specific attributes and distinct shrine forms: Ram Darbar has Ram, Sita, Lakshman and Hanuman; Salasar has the vermilion bearded/moustached shrine face; Khatu Shyam is the crowned sheesh presentation; Tirupati is the dark-stone Venkateswara murti with namam and four arms. These are original illustrations, not claims of photographic temple darshan. Reviewed hero fractions are .60 for the straight frames, .64 for floral scenes and .62 for Tirupati’s temple frame.
 
@@ -30,6 +30,8 @@ The table below links every full-resolution frame. Each background has a blank m
 | तिरुपति बालाजी | [मंदिर झरोखा](../../../mobile/assets/suvichar/tirupati-balaji--mandir-jharokha.webp) | [पुष्प आँगन](../../../mobile/assets/suvichar/tirupati-balaji--pushp-aangan.webp) | [भक्ति पत्र](../../../mobile/assets/suvichar/tirupati-balaji--bhakti-patra.webp) |
 
 Hanuman's three backgrounds were revised on 23 October: मंदिर झरोखा and भक्ति पत्र show an open-palm blessing; पुष्प आँगन shows joyful bhajan with one pair of brass manjira. The frame count remains three, with distinct poses rather than three namaste compositions. Updated source hashes and edit prompts are in sources.json; publication and native inspection remain pending.
+
+Salasar's three backgrounds were corrected on 23 October against a darshan photograph: the broad sindoor-covered shrine form, round white eyes, prominent triangular red nose and flat painted moustache/beard replace the rejected naturalistic human faces. The photo reference URL, edit prompts and revised hashes are recorded in sources.json. These remain original illustrated interpretations; native review is pending.
 
 ## Text directory and occasions
 

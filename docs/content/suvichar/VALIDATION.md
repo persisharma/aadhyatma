@@ -66,3 +66,7 @@ TypeScript passed and all 32 focused Suvichar tests passed after this fix, cover
 Access was checked again: no R2 credentials, Wrangler login, Android SDK, adb, Maestro, xcrun or emulator is available in this workspace. Publishing and actual native WhatsApp verification therefore remain blocked; no hashes were activated.
 
 Production Expo/Hermes exports subsequently passed for both iOS and Android on the capture-fix code commit. Both asset maps were inspected against all 42 source master IDs and the Suvichar source directory; neither bundle contains any Suvichar background. Exact export/asset-map hashes are recorded in export-verification.json. These are JavaScript compilation and asset-graph checks, not installed-native or WhatsApp verification.
+
+## Salasar identity correction — 23 October 2026
+
+The earlier generic bearded human faces were rejected. All three Salasar masters were regenerated using a darshan photograph as the identity reference, preserving the broad monolithic sindoor form, round white eyes, triangular red nose and flat painted moustache/beard. The frame and message-paper boundaries were visually reviewed. Reference URL, exact prompts, PNG hashes and replacement WebP hashes are recorded in sources.json. All 42 WebPs decode and the 10 source/provenance tests pass. Native/WhatsApp review and R2 publication remain pending. The corrected review prototype preserves all 42 selections and 1,000 draft records.

@@ -1108,3 +1108,7 @@ Ten hand-rolled list-row cards (four paddings, five thumb sizes, three shadow ti
 
 ## [2026-10-22] ingest | Suvichar capture verification
 Native view-shot requires both dimensions for Android resizing and UIKit point scaling. Composer now exports proportional 1080-pixel images from measured height and rechecks readiness/identity before capture; 32 focused tests passed. R2 credentials and native device tooling remain unavailable.
+
+## [2026-10-23] ingest | Salasar Suvichar shrine identity correction
+
+Replaced all three rejected naturalistic human faces using a Salasar darshan photo reference. The shrine form and geometric facial features are part of deity identity; beard/moustache keywords alone were insufficient. Updated source provenance and the review prototype; all 42 masters decode and 10 source tests pass. R2/native checks remain pending.

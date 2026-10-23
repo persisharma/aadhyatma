@@ -41,7 +41,7 @@ it('keeps exactly 42 complete unique source masters with matching provenance has
     expect(hash).toBe(a.sha256); hashes.add(hash); total += bytes.length;
     expect(a.heroFraction).toBe(suvicharHeroFraction(a.deity, a.frame));
     expect(a.width / a.height).toBeGreaterThan(.78); expect(a.width / a.height).toBeLessThan(.82);
-    expect(a.width).toBeGreaterThanOrEqual(1080); expect(a.prompt).toMatch(/Subject:|Edit target:/);
+    expect(a.width).toBeGreaterThanOrEqual(1080); expect(a.prompt).toMatch(/Subject:|Use case: precise-object-edit/);
     expect(a.authoringPngSha256).toMatch(/^[a-f0-9]{64}$/);
   }
   expect(hashes.size).toBe(42); expect(total).toBeLessThan(30 * 1024 * 1024);
