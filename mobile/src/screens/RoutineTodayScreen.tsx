@@ -28,7 +28,7 @@ export default function RoutineTodayScreen({ navigation }: Props) {
   const { lang } = useGitaLanguage();
   const { markManualDone, unmarkManualDone } = useRoutines();
   const { currentStreak } = useUserActivity();
-  const { entries, doneCount, total, hasRoutine } = useRoutineToday();
+  const { entries, doneCount, total } = useRoutineToday();
   const sadhanaCards = useSadhanaToday();
   // General-typed nav for the centralized routing helper (this screen has no
   // route params, which is incompatible with the helper's route-agnostic Nav).
