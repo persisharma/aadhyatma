@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-22",
+  "codeCommit": "16fb313072e8a3b2129541f6549da6c6ed195c11",
+  "scope": "Production JavaScript/Hermes compilation and bundled-asset inspection; not native-device verification",
+  "sourceMasters": 42,
+  "platforms": {
+    "ios": {
+      "export": "passed",
+      "assetMapSha256": "e675c2740a3e81dc05e09cc80918e855dc15de82f3c317cd72a5c90495b58f2e",
+      "assetEntries": 107,
+      "bundledSuvicharMasters": 0,
+      "hermesBundleBytes": 49509092,
+      "hermesBundleSha256": "bd07d6ac96159fa26c045f7ed584c7349738080dc557b80f5e5ab84c1752e440"
+    },
+    "android": {
+      "export": "passed",
+      "assetMapSha256": "698e4c9bef90a2af047ce02a2a9b62517af756690f06bea8d645c851628f5b3c",
+      "assetEntries": 107,
+      "bundledSuvicharMasters": 0,
+      "hermesBundleBytes": 49525497,
+      "hermesBundleSha256": "8bbd2eb1e31d897190349b4d539128913211b389ff60e00e057873e5e3199fb6"
+    }
+  }
+}

@@ -3877,6 +3877,25 @@ Files: `mobile/src/components/UpdateReadyModal.tsx`, mounted in `mobile/App.tsx`
 
 **Files:** `mobile/src/data/readCoverage.ts` (pure rules), `mobile/src/utils/readCoverageStore.ts` (store + `useReadCoverage`), `mobile/src/screens/_useReadDwell.ts`, `mobile/src/components/{ReadProgressBar,LibraryCardProgress,GranthProgressScope,ProgressResetDialog,ResetUndoPill,useProgressReset,useResumeSheetCoverage}.tsx|ts`. Tests: `data/__tests__/readCoverage.test.ts` (tsx), `utils/__tests__/readCoverageStore.test.tsx`, `components/__tests__/readCoverageUi.test.tsx`, `screens/__tests__/readerReadDwell.test.ts` (every reader wires the dwell hook).
 
+
+## 82. Suvichar — personalized devotional wishes
+
+Option 2 is the card composition: a complete deity painting above a separately rendered message, optional sender and Vedansh footer. Daily Bhakti keeps its scripture behavior and gains a door to the Home-stack composer. Fourteen subjects each have three approved directions: मंदिर झरोखा, पुष्प आँगन and भक्ति पत्र. Ram Darbar, Salasar Balaji, Khatu Shyam ji and Tirupati Balaji each require their own recognisable iconography; no generic fallback.
+
+Users choose deity, frame and an optional ready-made morning/festival wish, enter up to 48 UTF-16 units of sender name and 280 units of message, preview and share. An empty name removes its whole line; names are preserved verbatim in their own script and are never baked into art. Changing a deity, frame or wish preserves the sender. Preferences and up to 50 complete favorites persist across visits. Explicit festival choices do not claim a calendar match or infer lunar dates. The separate 1,000-message editorial directory remains draft content outside the shipped content graph.
+
+The fixed export typography lives in theme/suvichar.ts and scales with card width: message 21/34.65 at 360 dp, sender 15, metadata 12; actual painting geometry must be reviewed against every source. Grow the lower paper panel with native text height rather than shrinking or truncating text. Preview and capture use the same native component. All chrome supports hi/en/gu/kn; authored content follows contentByLang. User-authored messages carry a wishes label, never a scripture attribution. Use ReaderHeader, theme colors, script faces and 48 dp touch targets.
+
+Share only after both artwork sections decode and the measured root matches its complete body. Replacements invalidate readiness; stale image callbacks cannot unlock the new selection. Capture a 1080-pixel-wide PNG, preserve the full native height, use the existing lazy native share-file adapter or expo-sharing fallback, then release the temporary file. The target sheet lets the user choose WhatsApp or another destination; the app never sends to a recipient automatically.
+
+New artwork lives under the separate R2 prefix `suvichar` and the shared persistent cache. Sources/provenance may be committed for review, but no master may be bundled. `scripts/prepare-suvichar.mjs --publish` uploads all 42, verifies public bytes against source hashes and only then activates the runtime manifest. The initial empty manifest intentionally blocks sharing until publication; this is a draft-PR merge blocker. Installed iOS/Android and WhatsApp image inspection, four scripts, Standard/Large and long names/messages remain required before merge.
+
+The reviewed source bounds are 60% for straight frames, 64% for floral frames and 62% for Tirupati’s temple frame; use suvicharHeroFraction rather than a universal crop. Initial authored content is 20 rotating reflections plus the opening thought and seven ready-made wishes.
+
+### Suvichar ready-made collection — 23 October 2026
+
+The section opens on **तैयार कार्ड / Ready-made cards**, beside **अपना बनाएँ / Create your own**. Ready-made mode offers devotional messages (14 deity compositions) and greetings (seven wishes) in a horizontal virtualized painted-card rail. A tap applies the complete deity/frame/message composition while retaining the optional sender; the full native preview below is the image that is shared. All three frame choices remain available, yielding 63 template/frame combinations over the existing 42 masters, with no new artwork files. Custom mode exposes the existing deity, wish and message editors; switching modes never clears the card. Both modes use the same favorites, persistence, cache and decode/layout capture guard. Thumbnails contain a short text excerpt; the selected native card always retains the complete message. Ready-made content is original authored text, not a scripture quotation.
+
 ## 85. Auto-slide (स्वतः) — hands-free page turning
 
 **Purpose.** Every paged surface — the verse readers, Vrat Katha, Garud Puran, Gita Saar, पितृ पक्ष परिचय, Kids Stories, the Ramayan comic and Puja Vidhi conduct — can turn its own pages, so a reading can be followed without swiping. It is a reading aid, not playback: it never speaks (that is read-aloud, §56) and never starts on its own.

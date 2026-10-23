@@ -1104,7 +1104,19 @@ Updated share: the explanation now sits in a twin of the अर्थ box (same 
 
 Ten hand-rolled list-row cards (four paddings, five thumb sizes, three shadow tiers) now render `components/ListCard.tsx` (design.md §8): `size` regular (18 padding, 52 thumb, title · second-language name · meta) or compact (14, 44, title · meta), active gradient on `elevation.lifted` or `disabled`; `CardThumb`/`CardTitles`/`CardMeta`/`CardRoutineTail` encode the text and trailing rules. Moved onto it: `LibraryCard` (unused `compact` variant removed), sadhana, vidhi, `TrackCard`, `GitaChapterCard` (eyebrow folded into meta), Theerth `BrowseCard`, `DeityCard` (circle avatar retired; localized count via `meta`, English `itemCount` kept for a11y). The `flat` variant was removed (its fill was lighter than the page). Vidhi rows gain ＋ only when `isRecurringVidhi` (`data/vidhi/recurrence.ts`, shared with the detail header). Gotcha: `ListCard` carries `marginBottom: 12`; wrappers inside `gap: 12` lists pass `marginBottom: 0`. A11y labels unchanged, so Maestro selectors are unaffected; no simulator run in this session.
 
+## [2026-10-22] ingest | Suvichar personalized card composer, shared cache/capture readiness, editable names and publication gate; added subsystems/suvichar.
+
+## [2026-10-22] ingest | Suvichar capture verification
+Native view-shot requires both dimensions for Android resizing and UIKit point scaling. Composer now exports proportional 1080-pixel images from measured height and rechecks readiness/identity before capture; 32 focused tests passed. R2 credentials and native device tooling remain unavailable.
+
+## [2026-10-23] ingest | Salasar Suvichar shrine identity correction
+
+Replaced all three rejected naturalistic human faces using a Salasar darshan photo reference. The shrine form and geometric facial features are part of deity identity; beard/moustache keywords alone were insufficient. Updated source provenance and the review prototype; all 42 masters decode and 10 source tests pass. R2/native checks remain pending.
 ## [2026-10-22] ingest | rating card asks with in-app stars (design.md §54, RULEBOOK §6.2): 4–5★ hand off to the store, 1–3★ get a thank-you step with "Write to us" (FEEDBACK_EMAIL, null until a support inbox is set) plus a smaller store link (no review gating) and a 90-day pause via lowRatedAt.
+
+## [2026-10-23] ingest | Ready-made Suvichar cards and main reconciliation
+
+Added the default ready-made collection (14 deity compositions and seven wishes) alongside the custom creator, with virtualized cached thumbnails, optional names and the existing native capture gate. All three frames remain available; mode/preset selection preserves the sender. Reconciled main through 3ac76f5, retaining the in-app-star rating changes and both wiki histories. R2 publication and native sharing inspection remain pending.
 
 ## [2026-10-22] ingest | Auto-slide (स्वतः) on every paged surface
 

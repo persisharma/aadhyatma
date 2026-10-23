@@ -964,6 +964,8 @@ function collectJsonFiles(dirRel = ''): string[] {
       // Daily Bhakti share masters on R2 (stem → hash/size); their reviewed
       // provenance is assets/devotional-share/manifest.json, checked by devotionalShareArt tests.
       rel !== 'devotionalShareManifest.json' &&
+      // Suvichar is a published artwork hash map, not a scripture corpus.
+      rel !== 'suvicharManifest.json' &&
       rel !== 'valmiki-ramayan/daily-selection.json'
     ) {
       files.push(rel);

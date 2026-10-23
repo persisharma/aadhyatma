@@ -522,3 +522,8 @@ export function navigateToBookmark(nav: Nav, bm: BookmarkRef): boolean {
   );
   return true;
 }
+
+/** Preserve the Home root when a tab opens the personalized card composer. */
+export function suvicharTabTarget(): { screen: 'Suvichar'; initial: false } {
+  return { screen: 'Suvichar', initial: false };
+}

@@ -15,6 +15,8 @@ import type { HomeStackParamList } from './types';
  * would trade a launch cost for a launch spinner.
  */
 
+const SuvicharScreen = lazyScreen('Suvichar', 2, () => import('@/screens/SuvicharScreen'));
+
 // depth 2 — opened directly from Home
 const BrowseByPurposeScreen = lazyScreen('BrowseByPurpose', 2, () => import('@/screens/BrowseByPurposeScreen'));
 const CategoryListScreen = lazyScreen('CategoryList', 2, () => import('@/screens/CategoryListScreen'));
@@ -108,6 +110,7 @@ export default function HomeStackNavigator() {
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Suvichar" component={SuvicharScreen} />
       <Stack.Screen
         name="Search"
         component={SearchScreen}

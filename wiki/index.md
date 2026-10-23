@@ -47,3 +47,5 @@ _(none yet — add per-model pages as they warrant)_
 
 ## Decisions
 - [[decisions/ramayan-comic-character-continuity]] — approved comic direction, event-based continuity, 29-episode Hindi/English edition and complete62-page/four-language illustrated preview drafts, measured frames and editorial/native/production boundaries.
+
+- [[subsystems/suvichar]] — personalized devotional wishes, sender persistence, 42 reusable masters and publication gate.
