@@ -24,7 +24,8 @@ import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from './_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from './_useAutoSlide';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type NextTransitionItem = {
@@ -101,7 +102,7 @@ export default function SaraswatiStotramReaderScreen({ navigation, route }: Prop
 
   // Called before the null-chapter early return below, so hook order stays stable;
   // with no chapter it simply has zero pages to speak.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: 'saraswati-stotram',
     data,
     offset,
@@ -208,6 +209,7 @@ export default function SaraswatiStotramReaderScreen({ navigation, route }: Prop
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}
@@ -279,6 +281,7 @@ export default function SaraswatiStotramReaderScreen({ navigation, route }: Prop
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

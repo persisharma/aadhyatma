@@ -19,7 +19,8 @@ import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from '@/screens/_useAutoSlide';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -49,7 +50,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   // Flat reader: list index === verse index, so no offset.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId,
     data: aarti.verses,
     offset: 0,
@@ -132,6 +133,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={aarti.verses}
             keyExtractor={(v) => v.id}
@@ -196,6 +198,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

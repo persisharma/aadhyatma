@@ -41,7 +41,9 @@ import { useShare } from '@/utils/shareVerse';
 import { vidhiMantraShareable } from '@/utils/shareContent';
 import Ornament from '@/components/Ornament';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import AutoSlideScrollView from '@/components/AutoSlideScrollView';
+import { useReaderPlayback } from '@/screens/_useAutoSlide';
 import { clampIndex } from '@/utils/clamp';
 import type { VidhiStackParamList } from '@/navigation/types';
 
@@ -145,7 +147,9 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const listRef = useRef<FlatList<ConductPage>>(null);
 
-  const readAloud = useReaderReadAloud({
+  // Auto-slide paces a step by its reading time, not the time the ritual takes;
+  // the completion page ends the slideshow.
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: `vidhi-${route.params.vidhiId}`,
     data: pages,
     offset: 0,
@@ -272,7 +276,10 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
                   isPersonalTithi && activePhase === 'main' ? 'Tarpana & remembrance' : PHASE_LABELS[activePhase].en
                 )}
               </Text>
-              <ReadAloudButton control={readAloud} />
+              <View style={styles.handsFree}>
+                <AutoSlideButton control={autoSlide} floating={false} />
+                <ReadAloudButton control={readAloud} />
+              </View>
             </>
           )}
         </View>
@@ -280,6 +287,7 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
         <View style={styles.listContainer}>
           <FlatList
             ref={listRef}
+            CellRendererComponent={autoSlide.Cell}
             testID="vidhi-conduct-pager"
             data={pages}
             keyExtractor={(page) => page.id}
@@ -369,7 +377,7 @@ function StepPage({
 
   return (
     <View testID={`vidhi-timeline-page-${step.id}`} style={{ width }} accessibilityElementsHidden={!active} importantForAccessibility={active ? 'auto' : 'no-hide-descendants'}>
-      <ScrollView
+      <AutoSlideScrollView
         contentContainerStyle={[styles.pageScroll, { paddingHorizontal: spacing.readingGutter }]}
         showsVerticalScrollIndicator={false}
       >
@@ -484,7 +492,7 @@ function StepPage({
           </Text>
           <View style={[styles.footerRule, { backgroundColor: colors.divider }]} />
         </View>
-      </ScrollView>
+      </AutoSlideScrollView>
     </View>
   );
 }
@@ -691,6 +699,7 @@ const styles = StyleSheet.create({
   mantraShare: { position: 'absolute', right: 0, top: 0, bottom: 0, justifyContent: 'center' },
   sectionLabel: { fontSize: 11, textAlign: 'center', textTransform: 'uppercase' },
   readAloudSlot: { minHeight: 46, paddingHorizontal: spacing.readingGutter, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  handsFree: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   handoffCard: { borderWidth: 1.4, padding: 15, marginTop: 14 },
   seal: {
     width: 84,

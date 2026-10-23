@@ -23,7 +23,8 @@ import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from './_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from './_useAutoSlide';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'RamStutiReader'>;
@@ -46,7 +47,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
 
   // Called before the null-chapter early return below, so hook order stays stable;
   // single-chapter text, so the list carries no transition cards and no offset.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: 'ram-stuti',
     data: chapter?.verses ?? [],
     offset: 0,
@@ -136,6 +137,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
@@ -198,6 +200,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
           {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>

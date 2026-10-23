@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import type { KathaContentSection } from '@/panchang/types';
@@ -47,7 +48,7 @@ export default function KathaSectionPage({ section, index, total, width, pillHi 
 
   return (
     <View style={[styles.page, { width }]}>
-      <ScrollView
+      <AutoSlideScrollView
         style={styles.scroll}
         contentContainerStyle={[styles.scrollContent, { paddingHorizontal: spacing.screenGutter }]}
         showsVerticalScrollIndicator={false}
@@ -76,7 +77,7 @@ export default function KathaSectionPage({ section, index, total, width, pillHi 
             </ProseParagraph>
           ))}
         </ProseReadingCard>
-      </ScrollView>
+      </AutoSlideScrollView>
     </View>
   );
 }

@@ -1,6 +1,7 @@
 /** Illustrated prose page, adapted from KathaSectionPage (not a verse renderer). */
 import React, { useState } from 'react';
-import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { garudPuranImages } from '@assets/garud-puran';
 import type { GarudPuranPage as Page, GarudPuranSource } from '@/data/garud-puran';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -21,7 +22,7 @@ export default function GarudPuranPage({ verse, source, width, topActions }: Pro
   const bodyStyle = { ...meaningToken(lang, typography), color: colors.ink };
   return (
     <View style={[styles.page, { width }]} testID={`garud-page-${verse.id}`}>
-      <ScrollView contentContainerStyle={[styles.content, { paddingHorizontal: spacing.screenGutter }]} showsVerticalScrollIndicator={false}>
+      <AutoSlideScrollView contentContainerStyle={[styles.content, { paddingHorizontal: spacing.screenGutter }]} showsVerticalScrollIndicator={false}>
         <View style={styles.topRow}>
           <View style={[styles.pill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
             <Text style={[pillTextStyle(lang, typography.versePill), { color: colors.saffronDeep }]}>
@@ -56,7 +57,7 @@ export default function GarudPuranPage({ verse, source, width, topActions }: Pro
             </Pressable>
           ))}
         </View>}
-      </ScrollView>
+      </AutoSlideScrollView>
     </View>
   );
 }

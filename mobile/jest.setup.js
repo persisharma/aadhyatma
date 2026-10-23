@@ -95,6 +95,15 @@ jest.mock('expo-speech', () => ({
   maxSpeechInputLength: 4000,
 }));
 
+// expo-keep-awake is untranspiled ESM (same class as expo-speech above) and every
+// paged reader now reaches it through the auto-slide hook (`_useAutoSlide`), which
+// holds the screen awake while a slideshow plays. File-level mocks still win.
+jest.mock('expo-keep-awake', () => ({
+  useKeepAwake: jest.fn(),
+  activateKeepAwakeAsync: jest.fn(() => Promise.resolve()),
+  deactivateKeepAwake: jest.fn(() => Promise.resolve()),
+}));
+
 // The share provider (utils/shareVerse.tsx) is now mounted by every content screen
 // that carries a share button — readers, kathas, Theerth, Daan, Vidhi (PRD-45).
 // react-native-view-shot and expo-sharing are native; inert stubs let those screen

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import {
@@ -80,7 +81,7 @@ export default function VersePage({ verse, sourceId, width, topActions, belowCon
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
       <BackgroundLayer source={bg} />
 
-      <ScrollView
+      <AutoSlideScrollView
         style={styles.scroll}
         contentContainerStyle={[
           styles.scrollContent,
@@ -150,7 +151,7 @@ export default function VersePage({ verse, sourceId, width, topActions, belowCon
         </Text>
         <ProseParagraph style={[styles.body, bodyStyle]}>{meaning}</ProseParagraph>
         {belowContent}
-      </ScrollView>
+      </AutoSlideScrollView>
     </View>
   );
 }
