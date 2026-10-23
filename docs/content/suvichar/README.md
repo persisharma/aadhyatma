@@ -29,6 +29,8 @@ The table below links every full-resolution frame. Each background has a blank m
 | खाटू श्याम जी | [मंदिर झरोखा](../../../mobile/assets/suvichar/khatu-shyam--mandir-jharokha.webp) | [पुष्प आँगन](../../../mobile/assets/suvichar/khatu-shyam--pushp-aangan.webp) | [भक्ति पत्र](../../../mobile/assets/suvichar/khatu-shyam--bhakti-patra.webp) |
 | तिरुपति बालाजी | [मंदिर झरोखा](../../../mobile/assets/suvichar/tirupati-balaji--mandir-jharokha.webp) | [पुष्प आँगन](../../../mobile/assets/suvichar/tirupati-balaji--pushp-aangan.webp) | [भक्ति पत्र](../../../mobile/assets/suvichar/tirupati-balaji--bhakti-patra.webp) |
 
+Hanuman's three backgrounds were revised on 23 October: मंदिर झरोखा and भक्ति पत्र show an open-palm blessing; पुष्प आँगन shows joyful bhajan with one pair of brass manjira. The frame count remains three, with distinct poses rather than three namaste compositions. Updated source hashes and edit prompts are in sources.json; publication and native inspection remain pending.
+
 ## Text directory and occasions
 
 The app ships an original opening reflection, 20 further authored daily reflections, and seven explicit wish choices: morning, Diwali, Holi, Ram Navami, Janmashtami, Mahashivratri and Navratri. It also supports a reader’s own message. None is presented as a scripture quotation. UI copy is authored in Hindi, English, Gujarati and Kannada; authored content uses the app’s existing contentByLang policy. Personal names/messages remain verbatim.

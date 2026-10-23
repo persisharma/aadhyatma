@@ -106,14 +106,15 @@
       "file": "hanuman--bhakti-patra.webp",
       "width": 1121,
       "height": 1403,
-      "sha256": "0f25a79749243e438b2698a7065074e6c11e30e93a0fe9cfb73915843b3e56de",
-      "authoringPngSha256": "6bb57fbc17ea7d737771d267212a37dc345a8d121ce8776dbb15cd42110f207d",
-      "bytes": 512156,
-      "prompt": "Use case: illustration-story. Production text-free reusable devotional card background, portrait 4:5. Reference image supplies STYLE AND FRAME ONLY. Replace deity; REMOVE all text, branding, Om symbols, lettering, captions and sample sender. Retain the heritage postcard composition, subtly deckled cream paper, inset painted scene, fine antique-gold double rules and sparse botanical corner details from the reference. Subject: Mature gentle Shri Hanuman kneeling in reverence, exactly two hands joined in namaste, exactly one natural tail, saffron dhoti and refined crown, gada resting beside him, forest and distant Ayodhya temple. No Krishna attributes. Refined traditional Indian miniature painting, dignified calm adult faces, natural anatomy, warm antique ivory paper. Geometry: top 0-7% BLANK cream plaque for native brand; complete deity painting inside y=8-55%; y=57-94% QUIET BLANK paper for separately rendered message/name; footer y=94-100% blank paper. Borders confined to outermost7% sides; all figures and attributes contained in painting area, none in lower text area. No words, scripts, glyphs, logos, watermarks, graphic UI or placeholders anywhere. ONE complete card background, no collage.",
+      "sha256": "8dc6cea1149f2dae84b2629abb2955fc5bcd768cc386c678899d17b870f53d8f",
+      "authoringPngSha256": "ceaa63766df90adcf063078d0a9b98e9653523c0ba6e291184ca353796628bb6",
+      "bytes": 455016,
+      "prompt": "Use case: precise-object-edit. Edit target: supplied existing Hanuman devotional card. Replace ONLY Hanuman's folded-hands pose with this pose: Dignified seated Hanuman ji facing viewer, right hand raised palm outward in blessing (abhaya mudra), left hand naturally holding the upright gada shaft beside him. Exactly two arms and two hands, natural five fingers, one tail. Warm protective compassionate expression. Preserve mature recognizable Hanuman face, crown, saffron clothes, jewellery and one natural tail. Preserve the exact original portrait aspect ratio, original frame ornament, antique ivory palette, paper texture, backdrop and painting-to-blank-paper boundary. Keep all deity anatomy and objects entirely above existing lower text panel. Keep top branding plaque and lower message/name/footer paper completely empty. No text, no letters, no logo, no watermark. Do not add characters. Produce ONE full finished card background.",
       "tool": "built-in imagegen",
       "textFree": true,
       "heroFraction": 0.6,
-      "review": "All 42 inspected in five full contact sheets on 2026-10-22; deity identity, figure counts, text-free paper and painting bounds reviewed; native export review pending."
+      "review": "Revised 2026-10-23: visually inspected two-arm anatomy, blessing palms / paired manjira, single tail, frame and original paper boundaries; native export check pending.",
+      "pose": "abhaya-blessing"
     },
     {
       "id": "hanuman--mandir-jharokha",
@@ -122,14 +123,15 @@
       "file": "hanuman--mandir-jharokha.webp",
       "width": 1122,
       "height": 1402,
-      "sha256": "3e86c273ce15888264a23262224c60815d3834c6a2a05c3d496d56b0e522ff93",
-      "authoringPngSha256": "480c204f0f9eab36f9cc7b1066a1fae34f9b961a77949bc703b6f8de25225a87",
-      "bytes": 616174,
-      "prompt": "Use case: illustration-story. Production text-free reusable devotional card background, portrait 4:5. Reference image supplies STYLE AND FRAME ONLY. Replace deity; REMOVE all text, branding, Om symbols, lettering, captions and sample sender. Retain the detailed warm terracotta-and-antique-gold Rajasthani jharokha arch, refined miniature floral border and aged cream paper from the reference. Subject: Mature gentle Shri Hanuman kneeling in reverence, exactly two hands joined in namaste, exactly one natural tail, saffron dhoti and refined crown, gada resting beside him, forest and distant Ayodhya temple. No Krishna attributes. Refined traditional Indian miniature painting, dignified calm adult faces, natural anatomy, warm antique ivory paper. Geometry: top 0-7% BLANK cream plaque for native brand; complete deity painting inside y=8-55%; y=57-94% QUIET BLANK paper for separately rendered message/name; footer y=94-100% blank paper. Borders confined to outermost7% sides; all figures and attributes contained in painting area, none in lower text area. No words, scripts, glyphs, logos, watermarks, graphic UI or placeholders anywhere. ONE complete card background, no collage.",
+      "sha256": "40a87283667bcd6aae79b9e5cdca47c7af8128b6eae3f0ba81afc3cc9812d9bc",
+      "authoringPngSha256": "46ab861713ac17009f18e916b8a17e6e9d98f35edb3eb1c494d236e468a0e0f0",
+      "bytes": 568418,
+      "prompt": "Use case: precise-object-edit. Edit target: supplied existing Hanuman devotional card. Replace ONLY Hanuman's folded-hands pose with this pose: Seated majestically facing the viewer, right hand raised open palm facing viewer in abhaya blessing, left hand naturally resting on knee. Exactly two anatomically correct arms and hands. Gada rests separately beside him. Gentle confident benevolent expression. Preserve mature recognizable Hanuman face, crown, saffron clothes, jewellery and one natural tail. Preserve the exact original portrait aspect ratio, original frame ornament, antique ivory palette, paper texture, backdrop and painting-to-blank-paper boundary. Keep all deity anatomy and objects entirely above existing lower text panel. Keep top branding plaque and lower message/name/footer paper completely empty. No text, no letters, no logo, no watermark. Do not add characters. Produce ONE full finished card background.",
       "tool": "built-in imagegen",
       "textFree": true,
       "heroFraction": 0.6,
-      "review": "All 42 inspected in five full contact sheets on 2026-10-22; deity identity, figure counts, text-free paper and painting bounds reviewed; native export review pending."
+      "review": "Revised 2026-10-23: visually inspected two-arm anatomy, blessing palms / paired manjira, single tail, frame and original paper boundaries; native export check pending.",
+      "pose": "abhaya-blessing"
     },
     {
       "id": "hanuman--pushp-aangan",
@@ -138,14 +140,15 @@
       "file": "hanuman--pushp-aangan.webp",
       "width": 1122,
       "height": 1402,
-      "sha256": "4f4257a3fe70071c4d42f52fb9ad2b4ae5a46d926b68afd588520ade378142b2",
-      "authoringPngSha256": "65ed376f387bc01ea0df9a910c34187dfa8edbc9b7211d32faf85170c79d2aa8",
-      "bytes": 561882,
-      "prompt": "Use case: illustration-story. Production text-free reusable devotional card background, portrait 4:5. Reference image supplies STYLE AND FRAME ONLY. Replace deity; REMOVE all text, branding, Om symbols, lettering, captions and sample sender. Retain the delicate lotus-vine and leaf outer border, warm ivory paper, softly dissolving painted scene edge and restrained sage accents from the reference. Subject: Mature gentle Shri Hanuman kneeling in reverence, exactly two hands joined in namaste, exactly one natural tail, saffron dhoti and refined crown, gada resting beside him, forest and distant Ayodhya temple. No Krishna attributes. Refined traditional Indian miniature painting, dignified calm adult faces, natural anatomy, warm antique ivory paper. Geometry: top 0-7% BLANK cream plaque for native brand; complete deity painting inside y=8-55%; y=57-94% QUIET BLANK paper for separately rendered message/name; footer y=94-100% blank paper. Borders confined to outermost7% sides; all figures and attributes contained in painting area, none in lower text area. No words, scripts, glyphs, logos, watermarks, graphic UI or placeholders anywhere. ONE complete card background, no collage.",
+      "sha256": "cb72ecd9b2f51da9882c41328749571947ff5bf5fe4e14129c6b46ed3ccc73c1",
+      "authoringPngSha256": "303a87c7796f4bd01d636af07279ddb452e0746033c0af2fa46d1c7eeb93a3ef",
+      "bytes": 494716,
+      "prompt": "Use case: precise-object-edit. Edit target: supplied existing Hanuman devotional card. Replace ONLY Hanuman's folded-hands pose with this pose: Joyful Hanuman ji immersed in Rama bhajan, seated cross-legged, softly smiling with devotional half-closed eyes. Exactly two arms and hands holding ONE PAIR of small brass manjira cymbals, one cymbal in each hand, separated slightly as he plays them. Correct natural wrists and fingers; no namaste; no extra arms. Gada rests separately on ground. Preserve mature recognizable Hanuman face, crown, saffron clothes, jewellery and one natural tail. Preserve the exact original portrait aspect ratio, original frame ornament, antique ivory palette, paper texture, backdrop and painting-to-blank-paper boundary. Keep all deity anatomy and objects entirely above existing lower text panel. Keep top branding plaque and lower message/name/footer paper completely empty. No text, no letters, no logo, no watermark. Do not add characters. Produce ONE full finished card background.",
       "tool": "built-in imagegen",
       "textFree": true,
       "heroFraction": 0.64,
-      "review": "All 42 inspected in five full contact sheets on 2026-10-22; deity identity, figure counts, text-free paper and painting bounds reviewed; native export review pending."
+      "review": "Revised 2026-10-23: visually inspected two-arm anatomy, blessing palms / paired manjira, single tail, frame and original paper boundaries; native export check pending.",
+      "pose": "bhajan-manjira"
     },
     {
       "id": "khatu-shyam--bhakti-patra",
