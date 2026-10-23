@@ -13,7 +13,10 @@ import {
   RATING_PROMPT_DEFAULTS,
   RATING_PROMPT_STORAGE_KEY,
   afterAsked,
+  afterLowRating,
   afterRated,
+  feedbackEmail,
+  feedbackMailto,
   isEligibleForRatingPrompt,
   parseRatingPromptState,
   storeListingUrl,
@@ -63,8 +66,12 @@ type RatingPromptContextValue = {
    * permanent opt-out on the sheet (design.md §54, RULEBOOK §6.2).
    */
   dismiss: () => void;
-  /** "Rate Vedansh": hand off to the store listing and stop asking. */
+  /** A 4–5★ tap, or the low-star step's store link: hand off to the store and stop asking. */
   rate: () => void;
+  /** A 1–3★ tap: the card stays up on its thank-you step and stays away for 90 days after. */
+  recordLowRating: () => void;
+  /** "Write to us": close and open a pre-filled email. Offered only when `feedbackEmail()` is set. */
+  writeToUs: (stars: number) => void;
   /**
    * A good moment just happened — ask if the gate allows. Safe to call freely:
    * every refusal (not eligible, already asked this session, another surface on
@@ -82,6 +89,16 @@ const RatingPromptContext = createContext<RatingPromptContextValue | null>(null)
  * the same frame as the thing it is thanking the user for reads as an ad.
  */
 export const RATING_PROMPT_DELAY_MS = 1200;
+
+/** Lazy, as in KulParamparaExportScreen: expo-constants must stay out of Jest's static graph. */
+function appVersion(): string {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    return require('expo-constants').default?.expoConfig?.version ?? 'unknown';
+  } catch {
+    return 'unknown';
+  }
+}
 
 export function RatingPromptProvider({ children }: { children: React.ReactNode }) {
   const { meta, isLoading: notifLoading, shouldShowOptIn } = useNotificationPreferences();
@@ -198,9 +215,21 @@ export function RatingPromptProvider({ children }: { children: React.ReactNode }
     });
   }, [persist]);
 
+  const recordLowRating = useCallback(() => {
+    persist(afterLowRating(stateRef.current, Date.now()));
+  }, [persist]);
+
+  const writeToUs = useCallback((stars: number) => {
+    setVisible(false);
+    const email = feedbackEmail();
+    if (!email) return;
+    // No mail app: fail silently, as the store hand-off does.
+    Linking.openURL(feedbackMailto(email, stars, Platform.OS, appVersion())).catch(() => undefined);
+  }, []);
+
   const value = useMemo<RatingPromptContextValue>(
-    () => ({ visible, state, open, dismiss, rate, requestAsk }),
-    [visible, state, open, dismiss, rate, requestAsk]
+    () => ({ visible, state, open, dismiss, rate, recordLowRating, writeToUs, requestAsk }),
+    [visible, state, open, dismiss, rate, recordLowRating, writeToUs, requestAsk]
   );
 
   return (
