@@ -8,6 +8,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import PracticeSeal from '@/components/PracticeSeal';
+import PracticeItemRow from '@/components/PracticeItemRow';
 import { useSadhana } from '@/contexts/SadhanaContext';
 import { completedDayCount } from '@/data/sadhana/progress';
 import { offeredTail } from '@/data/routine/practiceView';
@@ -224,89 +225,19 @@ export default function SankalpTodayCard({ card }: { card: CardData }) {
             { borderTopColor: colors.divider, marginTop: spacing.md, paddingTop: spacing.xs },
           ]}
         >
-          {items.map((it, i) => {
-            // Only an active day is committable — the offering checkbox is a
-            // completion affordance and belongs to `active` alone. On a waiting
-            // day the unit is a read-ahead *preview* (design.md §46; the day is
-            // not committable until the gate opens), so we drop the check circle
-            // and label the row as a preview rather than a to-do — otherwise the
-            // empty circle promises progress a rest-day read can never deliver
-            // (the "still 0/4 after reading" confusion).
+          {items.map(it => {
             const committable = status.kind === 'active';
-            const titleMain = contentByLang(lang, it.display.titleHi, it.display.titleEn);
-            const tail = committable
-              ? offeredTail(it.done, it.doneAt, lang)
+            const title = contentByLang(lang, it.display.titleHi, it.display.titleEn);
+            const tail = committable ? offeredTail(it.done, it.doneAt, lang)
               : contentByLang(lang, 'झलक · पढ़ने के लिए टैप करें', 'Preview · Tap to read');
-            const last = i === items.length - 1;
-            return (
-              <View
-                key={it.key}
-                style={[
-                  styles.itemRow,
-                  { borderBottomColor: colors.divider, borderBottomWidth: last ? 0 : 1 },
-                ]}
-              >
-                {/* The check circle exists only on an ACTIVE day — a waiting
-                    (calendar-gated) preview is read-only, and a dead circle
-                    reads as a broken control. Label names the item so it
-                    never collides with the routine rows' generic circles. */}
-                {committable && (
-                  <Pressable
-                    onPress={it.done ? undefined : () => commitDay(program.id, status.dayIndex, 'marked')}
-                    accessibilityRole="button"
-                    accessibilityState={{ checked: it.done }}
-                    accessibilityLabel={
-                      it.done
-                        ? contentByLang(lang, `अर्पित — ${titleMain}`, `Offered — ${titleMain}`)
-                        : contentByLang(lang, `अर्पित चिह्नित करें — ${titleMain}`, `Mark offered — ${titleMain}`)
-                    }
-                    hitSlop={10}
-                    style={{
-                      width: 28,
-                      height: 28,
-                      borderRadius: 14,
-                      borderWidth: 2,
-                      borderColor: colors.saffron,
-                      backgroundColor: it.done ? colors.saffron : 'transparent',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      // optically centres the 28 px circle on the 24 px title line
-                      marginTop: -2,
-                    }}
-                  >
-                    {it.done && <Text style={{ color: colors.onPrimary, fontSize: 14 }}>✓</Text>}
-                  </Pressable>
-                )}
-                <Pressable style={{ flex: 1, minWidth: 0 }} onPress={() => navigateToRoutineItem(nav, it.item)}>
-                  <Text
-                    style={{
-                      fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
-                      fontSize: 16,
-                      lineHeight: 24,
-                      color: it.done ? colors.inkMuted : colors.ink,
-                    }}
-                  >
-                    {titleMain}
-                  </Text>
-                  <Text
-                    style={{
-                      fontFamily:
-                        lang === 'en'
-                          ? typography.cardMeta.fontFamily
-                          : scriptBodyFont(lang, typography.meaning.fontFamily),
-                      fontSize: typography.cardMeta.fontSize,
-                      color: it.done ? colors.inkMuted : colors.saffronDeep,
-                      marginTop: 2,
-                    }}
-                  >
-                    {contentByLang(lang, it.display.subHi, it.display.subEn)} · {tail}
-                  </Text>
-                </Pressable>
-                <Pressable onPress={() => navigateToRoutineItem(nav, it.item)} hitSlop={8}>
-                  <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
-                </Pressable>
-              </View>
-            );
+            return <PracticeItemRow key={it.key} item={it.item} title={title} done={it.done}
+              subtitle={`${contentByLang(lang, it.display.subHi, it.display.subEn)} · ${tail}`}
+              onRead={() => navigateToRoutineItem(nav, it.item)}
+              onOffer={status.kind === 'active' ? () => commitDay(program.id, status.dayIndex, 'marked') : undefined}
+              offerDisabled={it.done}
+              offerLabel={committable ? it.done
+                ? contentByLang(lang, `अर्पित — ${title}`, `Offered — ${title}`)
+                : contentByLang(lang, `अर्पित चिह्नित करें — ${title}`, `Mark offered — ${title}`) : undefined} />;
           })}
         </View>
       )}

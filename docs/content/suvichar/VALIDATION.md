@@ -74,3 +74,5 @@ The earlier generic bearded human faces were rejected. All three Salasar masters
 ## Ready-made collection and conflict resolution — 23 October 2026
 
 Added 21 complete ready-made compositions (14 deities and seven wishes), the default ready-made/custom mode selector, virtualized R2 thumbnail subscriptions, sender-preserving preset selection and a native smoke flow. TypeScript passes. Focused ready-made/personalization/capture/source checks pass: 5 suites, 36 tests. The picker test exercises selection and subscription cleanup; screen tests share a preset without editing its message and preserve a selected wish when entering custom mode. Main through 3ac76f5 was reconciled, preserving rating-star changes and both wiki histories. Maestro/native PNG/WhatsApp checks and R2 publication remain pending; no artwork hashes were activated.
+
+Main advanced again during publishing. Reconciled 5471d16, preserving the auto-slide reader changes, Sadhana visuals and both documentation additions.

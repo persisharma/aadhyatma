@@ -1,5 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -95,7 +96,7 @@ export default function GitaVersePage({ verse, sourceId, width, topActions, show
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
       <BackgroundLayer source={bg} />
 
-      <ScrollView
+      <AutoSlideScrollView
         style={styles.scroll}
         contentContainerStyle={[
           styles.scrollContent,
@@ -209,7 +210,7 @@ export default function GitaVersePage({ verse, sourceId, width, topActions, show
             )}
           </>
         ) : null}
-      </ScrollView>
+      </AutoSlideScrollView>
     </View>
   );
 }

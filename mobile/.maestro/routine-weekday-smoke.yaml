@@ -128,26 +128,39 @@ appId: com.prashantsharma.vedansh
 # The PRD-10 ledger headline reads "0 of 1"; the check-off circle's label is
 # "Mark offered" (→ "Offered — tap to undo" once checked).
 - assertVisible: "0 of 1.*"
-# The ledger is a tap-to-expand accordion — tap the summary card (its headline)
-# to drop the item rows down. Expansion persists, so the row stays visible
-# through the un-mark and open-into-reader steps below.
-- tapOn: "0 of 1.*"
-- waitForAnimationToEnd
+# Banner + list: readings are visible immediately.
+- assertVisible: { id: "practice-hero" }
+- scrollUntilVisible:
+    element:
+      text: "Mark offered"
+    centerElement: true
 - tapOn: "Mark offered"
 # Let the pushpa-varsha overlay finish before reading the headline underneath.
 - waitForAnimationToEnd:
     timeout: 10000
-- extendedWaitUntil:
-    visible: "1 of 1 offered.*"
-    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "1 of 1 offered.*"
+    direction: UP
 # Tap the same check-off again to UN-mark (manual done is reversible).
+- scrollUntilVisible:
+    element:
+      text: "Offered — tap to undo"
+    centerElement: true
 - tapOn: "Offered — tap to undo"
 - waitForAnimationToEnd
-- assertVisible: "0 of 1.*"
+- scrollUntilVisible:
+    element:
+      text: "0 of 1.*"
+    direction: UP
 
 # ── Step 7: Open the item into its reader, then return ──
 # The open-item Pressable merges the row title + subtitle ("Hanuman Chalisa,
 # हनुमान चालीसा · Tap to read") — anchor on title + tail.
+- scrollUntilVisible:
+    element:
+      text: "Hanuman Chalisa.*Tap to read.*"
+    centerElement: true
 - tapOn: "Hanuman Chalisa.*Tap to read.*"
 - waitForAnimationToEnd:
     timeout: 15000

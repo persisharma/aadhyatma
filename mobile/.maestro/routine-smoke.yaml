@@ -38,7 +38,7 @@
 #   - Each RoutineAddItems row's add toggle is a labelled button
 #     ("Add <NameEn>" / "Remove <NameEn>"); we add Hanuman Chalisa by name so the
 #     item that lands in the routine is deterministic.
-#   - "Mark done" is the check-off circle's accessibilityLabel on RoutineToday.
+#   - "Mark offered" is the check-off circle's accessibilityLabel on RoutineToday.
 #   - "All routines" is the ≡ header button's accessibilityLabel on RoutineToday.
 #
 # PRECONDITION: no routine exists yet (fresh install / clean slate). The flow
@@ -153,20 +153,22 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 # One item, none done yet → the PRD-10 ledger headline reads "0 of 1".
 - assertVisible: "0 of 1.*"
-# The ledger is a tap-to-expand accordion — tap the summary card (its headline)
-# to drop the item rows down before checking one off.
-- tapOn: "0 of 1.*"
-- waitForAnimationToEnd
-# The check-off circle's accessibilityLabel (PRD-10 "offered" register).
+# Banner + list: readings are visible immediately.
+- assertVisible: { id: "practice-hero" }
+- scrollUntilVisible:
+    element:
+      text: "Mark offered"
+    centerElement: true
 - tapOn: "Mark offered"
 # Capture the app-wide pushpa-varsha mid-animation (transient ~2s one-shot).
 - takeScreenshot: e2e-shots/vedansh-celebration
 # Let the celebration overlay finish before reading the headline underneath.
 - waitForAnimationToEnd:
     timeout: 10000
-- extendedWaitUntil:
-    visible: "1 of 1 offered.*"
-    timeout: 10000
+- scrollUntilVisible:
+    element:
+      text: "1 of 1 offered.*"
+    direction: UP
 
 # ── Step 8: My Routines lists the routine with its DAILY schedule pill ──
 - tapOn: "All routines"

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { ScrollView, View } from 'react-native';
+import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { comicPages, type ComicLanguage } from '@/data/comicBooks';
 import ComicPanel from './ComicPanel';
 import { useTheme } from '@/theme/ThemeContext';
@@ -8,7 +9,7 @@ type Page = ReturnType<typeof comicPages>[number];
 export default function ComicPage({ page, width, language, anchor, onUserScroll }: { page: Page; width: number; language: ComicLanguage; anchor?: string; onUserScroll: () => void }) {
   const scroll = useRef<ScrollView>(null);
   const { typography } = useTheme();
-  return <ScrollView ref={scroll} testID={`comic-page-${page.id}`} directionalLockEnabled nestedScrollEnabled
+  return <AutoSlideScrollView ref={scroll} testID={`comic-page-${page.id}`} directionalLockEnabled nestedScrollEnabled
     onScrollBeginDrag={onUserScroll} style={{ width, flex: 1 }} contentContainerStyle={{ paddingHorizontal: 4, paddingTop: 4, paddingBottom: 8, gap: 8 }}>
     {page.rows.map((row, i) => <View key={row.map(p => p.id).join('-')} testID={`comic-row-${page.number}-${i + 1}`}
       onLayout={event => { if (anchor && row.some(p => p.id === anchor)) { const y = event.nativeEvent.layout.y; requestAnimationFrame(() => scroll.current?.scrollTo({ y, animated: false })); } }}
@@ -17,5 +18,5 @@ export default function ComicPage({ page, width, language, anchor, onUserScroll 
         <ComicPanel key={`${panel.id}-${language}-${typography.meaning.fontSize}`} panel={panel} language={language} />
       </View>)}
     </View>)}
-  </ScrollView>;
+  </AutoSlideScrollView>;
 }

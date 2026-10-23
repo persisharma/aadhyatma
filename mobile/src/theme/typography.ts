@@ -24,6 +24,9 @@ export const fontFamilies = {
 } as const;
 
 export const typography = {
+  practiceHeroTitle: { fontSize: 24, lineHeight: 36 },
+  practiceItemTitle: { fontSize: 17, lineHeight: 26 },
+  practiceItemMeta: { fontSize: 13, lineHeight: 20 },
   screenTitle: {
     // Devanagari-only token — no letterSpacing: tracking splits the shirorekha.
     fontFamily: fontFamilies.devanagariBold,

@@ -1117,3 +1117,11 @@ Replaced all three rejected naturalistic human faces using a Salasar darshan pho
 ## [2026-10-23] ingest | Ready-made Suvichar cards and main reconciliation
 
 Added the default ready-made collection (14 deity compositions and seven wishes) alongside the custom creator, with virtualized cached thumbnails, optional names and the existing native capture gate. All three frames remain available; mode/preset selection preserves the sender. Reconciled main through 3ac76f5, retaining the in-app-star rating changes and both wiki histories. R2 publication and native sharing inspection remain pending.
+
+## [2026-10-22] ingest | Auto-slide (स्वतः) on every paged surface
+
+Updated readers for the new hands-free page turning: `useReaderPlayback` replaces direct `useReaderReadAloud` calls in 25 readers incl. Vidhi conduct; Kids Stories and the comic use `useAutoSlide`. Text-length pacing, persisted pace, chapter hand-off, keep-awake. design.md §85 and RULEBOOK §3 added. Typecheck/lint only — no unit, e2e or device verification yet.
+
+## [2026-10-22] ingest | Auto-slide scrolls long pages before turning
+
+Readers page updated: `AutoSlideScrollView` + pager `CellRendererComponent` let the slideshow scroll a tall page to its bottom in steps before turning; touch pauses. Wired into 10 page components, Kids Stories and Vidhi steps. Typecheck/lint only.
