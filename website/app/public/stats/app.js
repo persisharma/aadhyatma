@@ -1,5 +1,9 @@
 const $ = id => document.getElementById(id);
-let report, token = '', allPlacements = false, requestNumber = 0;
+// The owner token is kept in this browser only when "Remember on this device" is ticked.
+const TOKEN_KEY = 'vedansh-stats-token';
+const savedToken = () => { try { return localStorage.getItem(TOKEN_KEY) || ''; } catch { return ''; } };
+const keepToken = value => { try { if (value) localStorage.setItem(TOKEN_KEY, value); else localStorage.removeItem(TOKEN_KEY); } catch { /* private mode: memory only */ } };
+let report, token = savedToken(), allPlacements = false, requestNumber = 0;
 const human = value => (value || 'page').replace(/[-_:]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
 const node = (tag,text,cls) => {const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(cls)el.className=cls;return el;};
 function empty(el,text='No activity in this view yet.') {el.replaceChildren(node('div',text,'empty'));}
@@ -38,9 +42,9 @@ async function load() {
   try {
     const res=await fetch(`/api/stats?${query}`,{headers:token?{Authorization:`Bearer ${token}`}:{},cache:'no-store'});
     if(current !== requestNumber) return;
-    if(res.status===401 || res.status===503) {const data=await res.json();$('access').hidden=false;throw new Error(data.error || 'Owner access required');}
+    if(res.status===401 || res.status===503) {const data=await res.json();if(res.status===401){keepToken('');token='';$('forget').hidden=true;}$('access').hidden=false;throw new Error(data.error || 'Owner access required');}
     if(!res.ok)throw new Error('Stats are unavailable. Check the analytics endpoint.');
-    const data=await res.json();if(current !== requestNumber)return;report=data;$('access').hidden=true;render();$('status').textContent=`Updated ${new Date(report.generatedAt).toLocaleTimeString()}${report.truncated?' · Latest 100,000 events only':''}`;
+    const data=await res.json();if(current !== requestNumber)return;report=data;$('access').hidden=true;$('forget').hidden=!savedToken();render();$('status').textContent=`Updated ${new Date(report.generatedAt).toLocaleTimeString()}${report.truncated?' · Latest 100,000 events only':''}`;
   } catch(e) {if(current !== requestNumber)return;$('status').textContent=e.message;$('export').disabled=true;}
   finally {if(current === requestNumber)$('refresh').disabled=false;}
 }
@@ -48,7 +52,8 @@ $('refresh').addEventListener('click',load);
 for(const id of ['days','device','language'])$(id).addEventListener('change',load);
 $('more-placements').addEventListener('click',()=>{allPlacements=!allPlacements;renderPlacements();});
 $('sort').addEventListener('change',()=>report&&renderPlacements());
-$('access').addEventListener('submit',e=>{e.preventDefault();token=$('token').value;$('token').value='';load();});
+$('access').addEventListener('submit',e=>{e.preventDefault();token=$('token').value;$('token').value='';keepToken($('remember').checked?token:'');load();});
+$('forget').addEventListener('click',()=>{keepToken('');location.reload();});
 $('export').addEventListener('click',()=>{
   if(!report)return;
   const rows=[['design','section','button','seen_visits','clicks','clicked_visits','exposed_clicked_visits','click_rate'],...report.placements.map(r=>[report.version,r.section,r.target,r.views,r.clicks,r.visitors,r.exposedClicks,r.ctr??''])];
