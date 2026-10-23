@@ -34,8 +34,9 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "tab-bhakti" }
 - tapOn:
     id: "open-suvichar"
+# A saved sender comes back as the compact "सप्रेम — name" row, not an empty field.
 - scrollUntilVisible:
-    element: { id: "suvichar-name" }
-- assertVisible: "Sharma family"
+    element: { id: "suvichar-name-row" }
+- assertVisible: ".*Sharma family.*"
 # With published artwork: share, select WhatsApp and inspect the complete exported
 # PNG including name, all message lines and footer. Do not actually send a message.

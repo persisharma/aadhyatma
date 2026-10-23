@@ -17,17 +17,19 @@ jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: 'SafeAreaView
 jest.mock('react-native-view-shot', () => ({ captureRef: jest.fn(async () => 'file:///card.png'), releaseCapture: jest.fn() }));
 jest.mock('expo-sharing', () => ({ isAvailableAsync: jest.fn(async () => true), shareAsync: jest.fn(async () => undefined) }));
 jest.mock('@/utils/multiShare', () => ({ shareFiles: jest.fn(async () => false) }));
+jest.mock('@/utils/backgroundAssetCache', () => ({ subscribeBackgroundAsset: jest.fn(() => () => undefined) }));
 jest.mock('@react-native-async-storage/async-storage', () => ({ __esModule: true, default: { getItem: jest.fn(async () => null), setItem: jest.fn(async () => undefined) } }));
 let tree: ReactTestRenderer;
 async function flush() { await act(async () => { for (let i = 0; i < 8; i++) await Promise.resolve(); }); }
 async function mount(custom = true) { await act(async () => { tree = create(<SuvicharScreen />); }); await flush(); if (custom) act(() => node('suvichar-mode-custom').props.onPress()); act(() => tree.root.findByType(SuvicharCard).props.onHeight(900)); }
+const pickDeity = (deity: string) => act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(suvicharTemplates.find(t => t.kind === 'daily' && t.deity === deity)!));
 const node = (id: string) => tree.root.findAllByProps({ testID: id }).find(n => typeof n.props.onPress === 'function' || typeof n.props.onChangeText === 'function')!;
 beforeEach(() => { jest.clearAllMocks(); jest.spyOn(global, 'requestAnimationFrame').mockImplementation(cb => { cb(0); return 0; }); });
 afterEach(async () => { if (tree) act(() => tree.unmount()); await flush(); jest.restoreAllMocks(); });
 it('retains the sender through deity/frame changes and saves the latest name', async () => {
   await mount();
   act(() => node('suvichar-name').props.onChangeText('Sharma family'));
-  act(() => node('suvichar-deity-rama').props.onPress());
+  pickDeity('rama');
   act(() => node('suvichar-frame-pushp-aangan').props.onPress());
   await flush();
   expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ name: 'Sharma family', deity: 'rama', frame: 'pushp-aangan' });
@@ -47,11 +49,14 @@ it('rejects stale ready callbacks after name changes', async () => {
   act(() => stale(true)); expect(node('suvichar-share').props.disabled).toBe(true);
 });
 it('keeps the sender when selecting a festival and restores a saved favorite', async () => {
-  await mount(); act(() => node('suvichar-name').props.onChangeText('Sharma family'));
-  act(() => node('suvichar-wish-diwali').props.onPress());
+  await mount(false); act(() => node('suvichar-name').props.onChangeText('Sharma family'));
+  act(() => node('suvichar-presets-wish').props.onPress());
+  act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(suvicharTemplates.find(t => t.id === 'wish-diwali')!));
   expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ deity: 'lakshmi', name: 'Sharma family', original: false });
   act(() => node('suvichar-favorite').props.onPress());
-  act(() => node('suvichar-deity-rama').props.onPress());
+  expect(node('suvichar-favorite').props.accessibilityState.selected).toBe(true);
+  act(() => node('suvichar-mode-custom').props.onPress());
+  pickDeity('rama');
   act(() => node('suvichar-saved-0').props.onPress());
   expect(tree.root.findByType(SuvicharCard).props.deity).toBe('lakshmi');
 });
@@ -102,7 +107,7 @@ it('refuses a new selection until its own measured height arrives', async () => 
 it('opens ready-made cards first and shares one without editing a message', async () => {
   await mount(false);
   expect(node('suvichar-mode-ready').props.accessibilityState.selected).toBe(true);
-  expect(tree.root.findAllByProps({ testID: 'suvichar-message' })).toHaveLength(0);
+  expect(node('suvichar-message').props.value).toBe('');
   const picker = tree.root.findByType(SuvicharPresetPicker);
   expect(picker.props.templates).toHaveLength(14);
   act(() => node('suvichar-name').props.onChangeText('Sharma family'));
@@ -125,3 +130,35 @@ it('offers seven ready-made wishes and keeps the selected card when switching to
   act(() => node('suvichar-mode-custom').props.onPress());
   expect(node('suvichar-message').props.value).toBe(diwali.messageHi);
 });
+
+it('picks deities from compact painted tiles in custom mode', async () => {
+  await mount();
+  const picker = tree.root.findByType(SuvicharPresetPicker);
+  expect(picker.props).toMatchObject({ compact: true }); expect(picker.props.templates).toHaveLength(14);
+  expect(picker.props.testIDFor(picker.props.templates[0])).toBe(`suvichar-deity-${picker.props.templates[0].deity}`);
+  pickDeity('rama');
+  expect(tree.root.findByType(SuvicharCard).props.deity).toBe('rama');
+  expect(tree.root.findByType(SuvicharPresetPicker).props.selectedId).toBe(suvicharTemplates.find(t => t.kind === 'daily' && t.deity === 'rama')!.id);
+});
+
+it('offers message editing on ready-made cards', async () => {
+  await mount(false);
+  const preset = suvicharTemplates.find(t => t.id === 'daily-salasar-balaji')!;
+  act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(preset));
+  expect(node('suvichar-message').props.value).toBe(preset.messageHi);
+  act(() => node('suvichar-message').props.onChangeText('आपका दिन मंगलमय हो।'));
+  expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ message: 'आपका दिन मंगलमय हो।', original: false });
+});
+
+it('asks for the sender once, then shows it as an editable row', async () => {
+  jest.mocked(AsyncStorage.getItem).mockResolvedValueOnce(JSON.stringify({ deity: 'krishna', frame: 'mandir-jharokha', message: '', name: 'Sharma family', favorites: [] }));
+  await mount(false);
+  expect(tree.root.findAllByProps({ testID: 'suvichar-name' })).toHaveLength(0);
+  act(() => node('suvichar-name-row').props.onPress());
+  expect(node('suvichar-name').props.value).toBe('Sharma family');
+  act(() => node('suvichar-name').props.onChangeText('Patel family'));
+  act(() => node('suvichar-name').props.onBlur());
+  expect(tree.root.findAllByProps({ testID: 'suvichar-name' })).toHaveLength(0);
+  expect(tree.root.findByType(SuvicharCard).props.name).toBe('Patel family');
+});
+
