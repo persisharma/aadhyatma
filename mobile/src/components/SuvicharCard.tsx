@@ -89,8 +89,10 @@ function BrandBadge({ scale, onPainted }: { scale: number; onPainted: () => void
     paddingRight: 8 * scale, borderWidth: 1, borderColor: colors.gold, borderRadius: radii.pill, backgroundColor: colors.parchmentSoft }}>
     {/* A bundled mark that fails to decode still leaves the wordmark, so it never blocks sharing. */}
     <Image accessible={false} source={brandMark} style={{ width: 15 * scale, height: 15 * scale, borderRadius: 7.5 * scale }} onLoad={onPainted} onError={onPainted} />
-    {/* Devanagari has no descenders, so its ink rides high in the line box; drop it onto the icon's centre. */}
-    <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.devanagariBold, fontSize: t.badge * scale, lineHeight: 16 * scale, color: colors.saffronDeep,
-      transform: [{ translateY: t.badge * scale * .22 }] }}>वेदांश</Text>
+    {/* Devanagari has no descenders, so its ink rides high in the line box; drop it onto the icon's centre.
+        A line box shorter than the card's leading clips the matras above the shirorekha (वेदांश → वदाश), so keep the
+        full line and pull the margins in to hold the pill at its 16 dp text row. */}
+    <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.devanagariBold, fontSize: t.badge * scale, lineHeight: t.badge * t.leading * scale,
+      marginVertical: (16 - t.badge * t.leading) / 2 * scale, color: colors.saffronDeep, transform: [{ translateY: t.badge * scale * .22 }] }}>वेदांश</Text>
   </View>;
 }
