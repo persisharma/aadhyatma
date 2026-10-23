@@ -236,3 +236,15 @@ export function suvicharFooterBand(frame: SuvicharFrame): { start: number; textT
     : frame === 'pushp-aangan' ? { start: .898, textTop: .909, textBottom: .979 }
     : { start: .891, textTop: .904, textBottom: .972 };
 }
+
+/**
+ * Blank top space each frame paints for the wordmark (fractions of master height, measured on all 14 masters):
+ * the jharokha cartouche, the floral frame's paper band, and the letter frame's margin. That margin carries the
+ * frame rule, so it gets the opaque Bhakti-card badge (one row, clear of the crowns below). `size` is at 360 dp.
+ */
+export function suvicharBrandSlot(frame: SuvicharFrame): { top: number; bottom: number; size: number; badge?: boolean } {
+  return frame === 'mandir-jharokha' ? { top: .008, bottom: .076, size: 18 }
+    : frame === 'pushp-aangan' ? { top: .004, bottom: .054, size: 14 }
+    : { top: .004, bottom: .064, size: 14, badge: true };
+}
+

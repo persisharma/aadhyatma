@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import type { Lang } from '@/data/gita/language';
-import { cleanSender, suvicharArtRequest, suvicharFooterBand, suvicharHeroFraction, type SuvicharDeity, type SuvicharFrame } from '@/data/suvichar';
+import { cleanSender, suvicharArtRequest, suvicharBrandSlot, suvicharFooterBand, suvicharHeroFraction, type SuvicharDeity, type SuvicharFrame } from '@/data/suvichar';
 import { subscribeBackgroundAsset, evictBackgroundAsset } from '@/utils/backgroundAssetCache';
 import { useTheme } from '@/theme/ThemeContext';
 import { suvicharCardType as t } from '@/theme/suvichar';
+import { fontFamilies } from '@/theme/typography';
 import { titleFontByLang } from '@/utils/langType';
 import { contentByLang, pick } from '@/utils/localize';
 
@@ -30,6 +31,7 @@ function MeasuredCard({ deity, frame, message, name, lang, width, onReady, onHei
   const { colors } = useTheme();
   const heroFraction = suvicharHeroFraction(deity, frame);
   const band = suvicharFooterBand(frame);
+  const brand = suvicharBrandSlot(frame);
   const full = width * t.aspect;
   const hero = full * heroFraction;
   const footer = full * (1 - band.start);
@@ -48,21 +50,40 @@ function MeasuredCard({ deity, frame, message, name, lang, width, onReady, onHei
   return <View testID="suvichar-card" onLayout={e => { setRootHeight(e.nativeEvent.layout.height); onHeight?.(e.nativeEvent.layout.height); }} style={{ width, backgroundColor: colors.parchmentSoft }} collapsable={false}>
     <View style={{ height: hero, overflow: 'hidden' }}>
       {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width, height: full }} onLoad={() => setPainted(p => ({ ...p, hero: true }))} onError={failed} /> : null}
+      <View testID="suvichar-card-brand" style={{ position: 'absolute', left: 0, right: 0, top: full * brand.top, height: full * (brand.bottom - brand.top), alignItems: 'center', justifyContent: 'center' }}>
+        {brand.badge ? <BrandBadge size={brand.size * scale} /> : <Text allowFontScaling={false} style={[text(brand.size), { lineHeight: brand.size * scale * 1.55 }]}>{contentByLang(lang, 'वेदांश', 'VEDANSH')}</Text>}
+      </View>
     </View>
     <View testID="suvichar-card-body" onLayout={e => { setBodyHeight(e.nativeEvent.layout.height); setMeasured(Number.isFinite(e.nativeEvent.layout.height) && e.nativeEvent.layout.height > 0); }} style={{ minHeight: full * (band.start - heroFraction), justifyContent: 'center', overflow: 'hidden' }}>
       {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ position: 'absolute', width, height: backgroundHeight, top: -backgroundHeight * heroFraction }} onLoad={() => setPainted(p => ({ ...p, body: true }))} onError={failed} /> : null}
       <View style={{ paddingHorizontal: width * t.horizontalInset, paddingVertical: 8 * scale }}>
         <Text allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{pick(lang, { hi: 'आज का सुविचार', en: 'A thought for today', gu: 'આજનો સુવિચાર', kn: 'ಇಂದಿನ ಸುವಿಚಾರ' })}</Text>
         <Text testID="suvichar-card-message" allowFontScaling={false} style={text(t.message)}>{message}</Text>
-        <Text allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{original ? pick(lang, { hi: 'वेदांश का मौलिक विचार', en: 'An original Vedansh reflection', gu: 'વેદાંશનો મૌલિક વિચાર', kn: 'ವೇದಾಂಶದ ಮೂಲ ಚಿಂತನೆ' }) : pick(lang, { hi: 'आपकी शुभकामना', en: 'Your warm wishes', gu: 'તમારી શુભેચ્છા', kn: 'ನಿಮ್ಮ ಶುಭಾಶಯ' })}</Text>
+        <Text allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{original ? pick(lang, { hi: 'वेदांश संग्रह से', en: 'From the Vedansh collection', gu: 'વેદાંશ સંગ્રહમાંથી', kn: 'ವೇದಾಂಶ ಸಂಗ್ರಹದಿಂದ' }) : pick(lang, { hi: 'आपकी शुभकामना', en: 'Your warm wishes', gu: 'તમારી શુભેચ્છા', kn: 'ನಿಮ್ಮ ಶುಭಾಶಯ' })}</Text>
         {sender ? <Text testID="suvichar-card-sender" allowFontScaling={false} style={text(t.name)}>{pick(lang, { hi: 'सप्रेम', en: 'With love', gu: 'સપ્રેમ', kn: 'ಪ್ರೀತಿಯಿಂದ' })} — {sender}</Text> : null}
+        <Text testID="suvichar-card-download" allowFontScaling={false} style={[text(t.label), { color: colors.saffronDeep, marginTop: 6 * scale, marginHorizontal: width * .14 }]}>{pick(lang, { hi: 'ऐसे और संदेशों के लिए वेदांश ऐप डाउनलोड करें', en: 'Download the Vedansh app for more wishes like this', gu: 'આવા વધુ સંદેશ માટે વેદાંશ ઍપ ડાઉનલોડ કરો', kn: 'ಇಂತಹ ಇನ್ನಷ್ಟು ಸಂದೇಶಗಳಿಗೆ ವೇದಾಂಶ ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ' })}</Text>
       </View>
     </View>
     <View testID="suvichar-card-footer" style={{ height: footer, overflow: 'hidden' }}>
       {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ position: 'absolute', width, height: full, top: -full * band.start }} onLoad={() => setPainted(p => ({ ...p, footer: true }))} onError={failed} /> : null}
       <View style={{ position: 'absolute', left: width * t.horizontalInset, right: width * t.horizontalInset, top: full * (band.textTop - band.start), height: full * (band.textBottom - band.textTop), justifyContent: 'center' }}>
-        <Text allowFontScaling={false} numberOfLines={1} style={[text(t.footer), { color: colors.inkSoft }]}>{contentByLang(lang, 'वेदांश', 'VEDANSH')} · vedansh.app/get</Text>
+        <Text allowFontScaling={false} numberOfLines={1} style={[text(t.footer), { color: colors.inkSoft }]}>vedansh.app/get</Text>
       </View>
+    </View>
+  </View>;
+}
+/** The Bhakti share-card wordmark badge in one row, so it fits the letter frame's margin and covers its rule. */
+function BrandBadge({ size }: { size: number }) {
+  const { colors } = useTheme();
+  const u = size / 14;
+  const diamond = <View style={{ width: 4 * u, height: 4 * u, backgroundColor: colors.gold, transform: [{ rotate: '45deg' }] }} />;
+  return <View testID="suvichar-card-badge" style={{ padding: 1.5 * u, borderWidth: 1, borderColor: colors.gold, borderRadius: 3 * u, backgroundColor: colors.parchmentSoft }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 * u, paddingHorizontal: 7 * u, borderWidth: StyleSheet.hairlineWidth, borderColor: colors.gold, borderRadius: 2 * u }}>
+      {diamond}
+      <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.devanagariBold, fontSize: size, lineHeight: size * 1.5, color: colors.saffronDeep }}>वेदांश</Text>
+      <View style={{ width: StyleSheet.hairlineWidth * 2, height: 12 * u, backgroundColor: colors.gold }} />
+      <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 12 * u, lineHeight: size * 1.5, color: colors.ink }}>Vedansh.app</Text>
+      {diamond}
     </View>
   </View>;
 }
