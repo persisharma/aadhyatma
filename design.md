@@ -3896,6 +3896,20 @@ The reviewed source bounds are 60% for straight frames, 64% for floral frames an
 
 The section opens on **तैयार कार्ड / Ready-made cards**, beside **अपना बनाएँ / Create your own**. Ready-made mode offers devotional messages (14 deity compositions) and greetings (seven wishes) in a horizontal virtualized painted-card rail. A tap applies the complete deity/frame/message composition while retaining the optional sender; the full native preview below is the image that is shared. All three frame choices remain available, yielding 63 template/frame combinations over the existing 42 masters, with no new artwork files. Custom mode exposes the existing deity, wish and message editors; switching modes never clears the card. Both modes use the same favorites, persistence, cache and decode/layout capture guard. Thumbnails contain a short text excerpt; the selected native card always retains the complete message. Ready-made content is original authored text, not a scripture quotation.
 
+
+### Suvichar composer layout — control tiers and sticky share (23 October 2026)
+
+Purpose: every control used to be the same bordered 48 dp rectangle, so the mode switch, filters, frames and the Share action were indistinguishable and Share sat below the fold. The screen now has explicit tiers (`SuvicharScreen`):
+
+1. **Mode** — a full-width two-segment pill (§33.1 pattern: `parchmentSoft` track, `divider` border, `radii.pill`, selected `saffronTint` + `saffronDeep`, 15 pt, 44 dp): तैयार कार्ड / अपना बनाएँ (`suvichar-mode-*`).
+2. **Choose** — eyebrow labels (13 pt, `inkMuted`). Ready mode: “कार्ड चुनें” with underline tabs भक्ति संदेश / शुभकामनाएँ (15 pt, selected `saffronDeep` + 2 dp `saffron` underline, `suvichar-presets-*`) over the painted preset rail. Custom mode: “देवता चुनें” over the same rail in `compact` form (one painted tile per deity, no excerpt, `suvichar-deity-<id>`). Tiles take a 2 dp border, `saffron` when selected.
+3. **Frame** — three painted miniatures of the current deity in each frame (`SuvicharFramePicker`, 52×65 art from the shared R2 cache, label 12 pt, 2 dp `saffron` ring when selected, `suvichar-frame-<id>`).
+4. **Preview** — the native `SuvicharCard`; “चित्र फिर लाएँ” is a quiet text action under it.
+5. **Message** — in both modes: eyebrow “संदेश” with a “↻ दूसरा सुविचार” text action (`suvichar-next`), a multiline field (`cardActiveFrom` fill, `cardActiveBorder`) holding the selected card's message, and a hint with the 280 counter. Editing a ready-made message makes it a user wish (wishes label on the card).
+6. **Sender, asked once** — while no name is saved, a labelled field with “एक बार लिखें, आगे याद रहेगा”; once saved it collapses to a dashed `सप्रेम — name ✎` row (`suvichar-name-row`) that reopens the field. Favorites (`suvichar-saved-*`) are pill chips at the end; the header's bookmark scrolls to them when any exist.
+7. **Sticky action bar** — pinned under the scroll, `parchmentSoft` with a hairline top border: a 52 dp heart toggle (`suvichar-favorite`, filled when saved) and a full-width 52 dp `saffronDeep` primary button with the share icon and “साझा करें” (`suvichar-share`; 55% opacity until the card is capture-ready, spinner while busy).
+
+The custom-mode wish chips were removed; wishes live in the ready-made शुभकामनाएँ tab.
 ## 85. Auto-slide (स्वतः) — hands-free page turning
 
 **Purpose.** Every paged surface — the verse readers, Vrat Katha, Garud Puran, Gita Saar, पितृ पक्ष परिचय, Kids Stories, the Ramayan comic and Puja Vidhi conduct — can turn its own pages, so a reading can be followed without swiping. It is a reading aid, not playback: it never speaks (that is read-aloud, §56) and never starts on its own.
