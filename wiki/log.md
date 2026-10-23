@@ -1125,3 +1125,7 @@ Updated readers for the new hands-free page turning: `useReaderPlayback` replace
 ## [2026-10-22] ingest | Auto-slide scrolls long pages before turning
 
 Readers page updated: `AutoSlideScrollView` + pager `CellRendererComponent` let the slideshow scroll a tall page to its bottom in steps before turning; touch pauses. Wired into 10 page components, Kids Stories and Vidhi steps. Typecheck/lint only.
+
+## [2026-10-23] ingest | Suvichar masters published to R2
+
+PR #520 merged the 42 Suvichar source masters with an intentionally empty `suvicharManifest.json` (its publish attempt had no R2 credentials), so no Suvichar card could resolve artwork. Uploaded all 42 under `suvichar` with immutable caching, wrote the manifest from the same sources, and verified public bytes with `prepare-suvichar.mjs --verify`.

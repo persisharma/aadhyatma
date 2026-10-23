@@ -8,6 +8,7 @@
 - Final focused geometry/personalization/source checks: 21 tests passed after the reviewed painting boundaries were applied.
 - All 42 full-resolution WebP files decoded completely with Pillow. Five contact sheets were visually reviewed for subject identity, figure counts, text-free body space, consistent frame directions and complete painting boundaries. All source backgrounds and exact hashes are committed; contact-sheet inspection was performed locally.
 - prepare-suvichar.mjs syntax check passed. Publication was attempted and refused because required R2 credentials are absent; the runtime manifest remained unchanged and empty.
+- **Published 23 October 2026.** All 42 masters were uploaded to R2 under `suvichar/<sha256[:16]>.webp` with `public, max-age=31536000, immutable`, the runtime manifest was written from the same sources, and `node scripts/prepare-suvichar.mjs --verify` confirmed every public CDN object matches its source bytes.
 - git diff --check passed.
 
 The host rejects the tsx CLI IPC socket (`listen EPERM /tmp/tsx-0/...pipe`), so direct `npm test` stopped at that environment boundary. The complete constituent gate was run with the equivalent `node --import tsx --test ...` entry points for its tsx suites. Reader/component scripts explicitly pin Asia/Kolkata, matching the engine gate and India-local date fixtures; unpinned UTC runs had calendar-fixture failures. No production calendar code was changed.
