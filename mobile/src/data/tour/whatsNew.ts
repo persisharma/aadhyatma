@@ -26,13 +26,50 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.5.2';
+export const APP_TOUR_VERSION = '1.5.3';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.5.3': {
+    version: '1.5.3',
+    items: [
+      {
+        titleHi: 'डेली भक्ति · हर दिन एक पद',
+        titleEn: 'Daily Bhakti · a verse each day',
+        bodyHi:
+          'हर दिन एक नया भक्ति पद अर्थ सहित, सुंदर चित्रित कार्ड पर — अपनी भाषा में पढ़ें और एक छवि के रूप में साझा करें।',
+        bodyEn:
+          'A fresh devotional verse every day with its meaning, on a beautiful painted card — read it in your language and share it as an image.',
+      },
+      {
+        titleHi: 'बालकाण्ड रामायण कॉमिक',
+        titleEn: 'Bālakāṇḍa Ramayana comic',
+        bodyHi:
+          'बच्चों के खंड में अब चित्रित बालकाण्ड रामायण कॉमिक — हिंदी और अंग्रेज़ी दोनों में, ऐप में ही पढ़ें।',
+        bodyEn:
+          'Read the illustrated Bālakāṇḍa Ramayana comic right inside the app, now in both Hindi and English.',
+      },
+      {
+        titleHi: 'किसी भी स्तोत्र का जप',
+        titleEn: 'Any stotram as a japa',
+        bodyHi:
+          'किसी भी स्तोत्र को जप बनाएँ — हर पूर्ण पाठ पर एक मनका। महामृत्युंजय मंत्र भी अब जप माला में।',
+        bodyEn:
+          'Turn any stotram into a japa — one bead for every complete recitation. The Mahamrityunjaya Mantra joins the Jap Mala too.',
+      },
+      {
+        titleHi: 'कोई भी नगर या गाँव',
+        titleEn: 'Any town or village',
+        bodyHi:
+          'नई लोकेशन खोज से अपना पंचांग भारत के किसी भी नगर या गाँव पर सेट करें।',
+        bodyEn:
+          'Set your Panchang to any town or village in India with the new location search.',
+      },
+    ],
+  },
   '1.5.2': {
     version: '1.5.2',
     items: [{
