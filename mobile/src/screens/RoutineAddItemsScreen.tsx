@@ -5,9 +5,10 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import { pillTextStyle, scriptBodyFont } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
-import { library, type LibraryEntry } from '@/data/texts';
+import { library, type ContentCategory, type LibraryEntry } from '@/data/texts';
+import { categories } from '@/data/categories';
 import { deityForWeekday, WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { filterAddable } from '@/data/routine/addableSearch';
 import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
@@ -26,6 +27,10 @@ const addable: LibraryEntry[] = library.filter(
   (e) => e.status === 'active' && !e.hidden && e.category !== 'theerth',
 );
 
+// Filter chips in Home launcher rank, only for categories that have addable entries.
+const chipCategories = categories.filter((c) => addable.some((e) => e.category === c.id));
+const CHIP_FONT_CAP = 1.25;
+
 export default function RoutineAddItemsScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
@@ -39,6 +44,8 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
     () => filterAddable(addable, query, (e) => contentByLang(lang, e.nameHi, e.nameEn)),
     [query, lang],
   );
+  const [category, setCategory] = useState<ContentCategory | 'all'>('all');
+  const shown = category === 'all' ? matching : matching.filter((e) => e.category === category);
   const suggestedDeity = deityForWeekday(day);
   const isFocused = useIsFocused();
 
@@ -77,12 +84,21 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
 
   // Suggested (deity-of-day) first when building a weekday routine.
   const ordered = isWeekday
-    ? [...matching].sort((a, b) => {
+    ? [...shown].sort((a, b) => {
         const as = a.deities.includes(suggestedDeity) ? 0 : 1;
         const bs = b.deities.includes(suggestedDeity) ? 0 : 1;
         return as - bs;
       })
-    : matching;
+    : shown;
+
+  const chipOptions: { id: ContentCategory | 'all'; label: string; a11y: string }[] = [
+    { id: 'all', label: contentByLang(lang, 'सभी', 'All'), a11y: 'all' },
+    ...chipCategories.map((c) => ({
+      id: c.id,
+      label: contentByLang(lang, c.nameHi, c.shortNameEn ?? c.nameEn),
+      a11y: c.nameEn,
+    })),
+  ];
 
   return (
     <RoutineShell
@@ -136,6 +152,52 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
           clearButtonMode="while-editing"
           style={styles.search}
         />
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.chipWrap}
+          contentContainerStyle={styles.chipRow}
+          keyboardShouldPersistTaps="handled"
+          accessibilityLabel="Category filter"
+        >
+          {chipOptions.map((option) => {
+            const selected = option.id === category;
+            const count = option.id === 'all'
+              ? matching.length
+              : matching.filter((e) => e.category === option.id).length;
+            return (
+              <Pressable
+                key={option.id}
+                onPress={() => setCategory(option.id)}
+                accessibilityRole="button"
+                accessibilityState={{ selected }}
+                accessibilityLabel={`Category: ${option.a11y}`}
+                style={({ pressed }) => [
+                  styles.chip,
+                  {
+                    borderColor: selected ? colors.saffronDeep : colors.divider,
+                    backgroundColor: selected ? colors.saffronTint : colors.parchmentSoft,
+                    borderRadius: radii.pill,
+                  },
+                  pressed && { opacity: 0.7 },
+                ]}
+              >
+                <Text
+                  numberOfLines={1}
+                  maxFontSizeMultiplier={CHIP_FONT_CAP}
+                  style={{
+                    color: selected ? colors.saffronDeep : colors.inkSoft,
+                    fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
+                    fontSize: 14,
+                  }}
+                >
+                  {option.label}
+                  <Text style={{ color: colors.inkMuted, fontSize: 12 }}>{`  ${count}`}</Text>
+                </Text>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
 
         {ordered.map((entry) => {
           const added = !!findItem(entry.id);
@@ -211,7 +273,10 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
 
 const styles = StyleSheet.create({
   dayStrip: { flexDirection: 'row', gap: 6 },
-  search: { marginBottom: 4 },
+  search: { marginBottom: 8 },
+  chipWrap: { marginBottom: 4, flexGrow: 0 },
+  chipRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  chip: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 16, borderWidth: 1 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 11, borderBottomWidth: 1 },
   thumb: { width: 34, height: 34, alignItems: 'center', justifyContent: 'center' },
   info: { flex: 1, minWidth: 0 },
