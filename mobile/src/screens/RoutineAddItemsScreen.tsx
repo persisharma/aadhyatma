@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
-import { pillTextStyle } from '@/utils/langType';
+import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { useRoutines } from '@/contexts/RoutineContext';
-import { library, type LibraryEntry } from '@/data/texts';
+import { library, type ContentCategory, type LibraryEntry } from '@/data/texts';
+import { categories } from '@/data/categories';
 import { deityForWeekday, WEEKDAY_LABELS } from '@/data/routine/vaar';
+import { filterAddable } from '@/data/routine/addableSearch';
 import { RoutineShell, RoutineButton } from '@/components/RoutineShell';
+import TextField from '@/components/TextField';
 import DeityIcon from '@/components/DeityIcon';
 import CategoryIcon from '@/components/CategoryIcon';
 import { deityIconKey } from '@/data/deities';
@@ -24,6 +27,10 @@ const addable: LibraryEntry[] = library.filter(
   (e) => e.status === 'active' && !e.hidden && e.category !== 'theerth',
 );
 
+// Filter chips in Home launcher rank, only for categories that have addable entries.
+const chipCategories = categories.filter((c) => addable.some((e) => e.category === c.id));
+const CHIP_FONT_CAP = 1.25;
+
 export default function RoutineAddItemsScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
@@ -32,6 +39,13 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
   const routine = routines.find((r) => r.id === route.params.routineId);
   const isWeekday = routine?.mode === 'weekday';
   const [day, setDay] = useState<number>(new Date().getDay());
+  const [query, setQuery] = useState('');
+  const matching = useMemo(
+    () => filterAddable(addable, query, (e) => contentByLang(lang, e.nameHi, e.nameEn)),
+    [query, lang],
+  );
+  const [category, setCategory] = useState<ContentCategory | 'all'>('all');
+  const shown = category === 'all' ? matching : matching.filter((e) => e.category === category);
   const suggestedDeity = deityForWeekday(day);
   const isFocused = useIsFocused();
 
@@ -70,12 +84,21 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
 
   // Suggested (deity-of-day) first when building a weekday routine.
   const ordered = isWeekday
-    ? [...addable].sort((a, b) => {
+    ? [...shown].sort((a, b) => {
         const as = a.deities.includes(suggestedDeity) ? 0 : 1;
         const bs = b.deities.includes(suggestedDeity) ? 0 : 1;
         return as - bs;
       })
-    : addable;
+    : shown;
+
+  const chipOptions: { id: ContentCategory | 'all'; label: string; a11y: string }[] = [
+    { id: 'all', label: contentByLang(lang, 'सभी', 'All'), a11y: 'all' },
+    ...chipCategories.map((c) => ({
+      id: c.id,
+      label: contentByLang(lang, c.nameHi, c.shortNameEn ?? c.nameEn),
+      a11y: c.nameEn,
+    })),
+  ];
 
   return (
     <RoutineShell
@@ -86,6 +109,8 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
       >
         {isWeekday && (
           <View style={{ marginBottom: spacing.md }}>
@@ -115,6 +140,64 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
             </View>
           </View>
         )}
+
+        <TextField
+          value={query}
+          onChangeText={setQuery}
+          placeholder={pick(lang, { hi: 'पाठ या मंत्र खोजें…', en: 'Search texts or mantras…', gu: 'પાઠ કે મંત્ર શોધો…', kn: 'ಪಠ್ಯ ಅಥವಾ ಮಂತ್ರ ಹುಡುಕಿ…' })}
+          accessibilityLabel={pick(lang, { hi: 'सामग्री खोजें', en: 'Search content', gu: 'સામગ્રી શોધો', kn: 'ವಿಷಯ ಹುಡುಕಿ' })}
+          autoCorrect={false}
+          autoCapitalize="none"
+          returnKeyType="search"
+          clearButtonMode="while-editing"
+          style={styles.search}
+        />
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.chipWrap}
+          contentContainerStyle={styles.chipRow}
+          keyboardShouldPersistTaps="handled"
+          accessibilityLabel="Category filter"
+        >
+          {chipOptions.map((option) => {
+            const selected = option.id === category;
+            const count = option.id === 'all'
+              ? matching.length
+              : matching.filter((e) => e.category === option.id).length;
+            return (
+              <Pressable
+                key={option.id}
+                onPress={() => setCategory(option.id)}
+                accessibilityRole="button"
+                accessibilityState={{ selected }}
+                accessibilityLabel={`Category: ${option.a11y}`}
+                style={({ pressed }) => [
+                  styles.chip,
+                  {
+                    borderColor: selected ? colors.saffronDeep : colors.divider,
+                    backgroundColor: selected ? colors.saffronTint : colors.parchmentSoft,
+                    borderRadius: radii.pill,
+                  },
+                  pressed && { opacity: 0.7 },
+                ]}
+              >
+                <Text
+                  numberOfLines={1}
+                  maxFontSizeMultiplier={CHIP_FONT_CAP}
+                  style={{
+                    color: selected ? colors.saffronDeep : colors.inkSoft,
+                    fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
+                    fontSize: 14,
+                  }}
+                >
+                  {option.label}
+                  <Text style={{ color: colors.inkMuted, fontSize: 12 }}>{`  ${count}`}</Text>
+                </Text>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
 
         {ordered.map((entry) => {
           const added = !!findItem(entry.id);
@@ -157,6 +240,11 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
             </View>
           );
         })}
+        {ordered.length === 0 && (
+          <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, lineHeight: 20, color: colors.inkMuted, marginVertical: 24, textAlign: 'center' }}>
+            {pick(lang, { hi: 'कोई सामग्री नहीं मिली।', en: 'Nothing matches.', gu: 'કોઈ સામગ્રી મળી નથી.', kn: 'ಯಾವುದೇ ವಿಷಯ ಸಿಗಲಿಲ್ಲ.' })}
+          </Text>
+        )}
 
         <RoutineButton
           label={pick(lang, { hi: 'पूर्ण', en: 'Done', gu: 'પૂર્ણ', kn: 'ಮುಗಿದಿದೆ' })}
@@ -185,6 +273,10 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
 
 const styles = StyleSheet.create({
   dayStrip: { flexDirection: 'row', gap: 6 },
+  search: { marginBottom: 8 },
+  chipWrap: { marginBottom: 4, flexGrow: 0 },
+  chipRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  chip: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 16, borderWidth: 1 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 11, borderBottomWidth: 1 },
   thumb: { width: 34, height: 34, alignItems: 'center', justifyContent: 'center' },
   info: { flex: 1, minWidth: 0 },
