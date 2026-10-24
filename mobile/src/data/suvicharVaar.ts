@@ -10,12 +10,13 @@ export type SuvicharVaar = { hi: string; en: string; deities: readonly SuvicharD
  * least one day; the first deity is the day's default. Forms follow their deity: Salasar with Hanuman,
  * Tirupati, Jagannath, Ram and Ram Darbar with Vishnu, and Radha–Krishna, Sanwariya Seth and Khatu Shyam
  * with Krishna; Saraswati joins Ganesha as the pair for learning. Friday follows the editorial drafts
- * (Lakshmi), unlike Routine's VAAR_DEITY (Durga). Sunday stays empty until Surya masters are published:
- * no other deity stands in. A listed deity appears only once all three of its masters are in the
- * runtime manifest. Latin spellings follow the weekday hashtags in shareHashtags.ts.
+ * (Lakshmi), unlike Routine's VAAR_DEITY (Durga). Sunday is Surya's day; there are no Surya masters yet,
+ * so it shows Vishnu as Surya-Narayan. Put Surya first once its masters are published. A listed deity
+ * appears only once all three of its masters are in the runtime manifest. Latin spellings follow the
+ * weekday hashtags in shareHashtags.ts.
  */
 export const suvicharVaar: readonly SuvicharVaar[] = [
-  { hi: 'शुभ रविवार', en: 'Shubh Ravivar', deities: [] },
+  { hi: 'शुभ रविवार', en: 'Shubh Ravivar', deities: ['vishnu', 'tirupati-balaji'] },
   { hi: 'शुभ सोमवार', en: 'Shubh Somvar', deities: ['shiva'] },
   { hi: 'शुभ मंगलवार', en: 'Shubh Mangalwar', deities: ['hanuman', 'salasar-balaji'] },
   { hi: 'शुभ बुधवार', en: 'Shubh Budhwar', deities: ['ganesha', 'saraswati', 'krishna', 'radha-krishna', 'sanwariya-seth', 'khatu-shyam'] },

@@ -24,8 +24,8 @@ it('names the day and its deity, and shows the painting only from the cache', as
   expect(tree.root.findByProps({ testID: 'open-suvichar-art' }).props.source).toEqual({ uri: 'file:///hanuman.webp' });
 });
 
-it('keeps the general wording on Sunday and looks up no art', async () => {
+it('names Sunday with Vishnu as Surya-Narayan', async () => {
   day(25); await mount();
-  expect(texts()).toContain('आज का सुविचार भेजें');
-  expect(peekBackgroundAsset).not.toHaveBeenCalled();
+  expect(texts()).toEqual(expect.arrayContaining(['शुभ रविवार भेजें', 'भगवान विष्णु का आज का कार्ड, आपके नाम के साथ']));
+  expect(peekBackgroundAsset).toHaveBeenCalledWith(suvicharArtRequest('vishnu', 'mandir-jharokha'));
 });

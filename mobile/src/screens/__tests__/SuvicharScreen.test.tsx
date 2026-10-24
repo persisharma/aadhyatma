@@ -26,7 +26,7 @@ async function flush() { await act(async () => { for (let i = 0; i < 8; i++) awa
 async function mount(custom = true) { await act(async () => { tree = create(<SuvicharScreen />); }); await flush(); if (custom) act(() => node('suvichar-mode-custom').props.onPress()); act(() => tree.root.findByType(SuvicharCard).props.onHeight(900)); }
 const pickDeity = (deity: string) => act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(templatesToday().find(t => t.kind === 'daily' && t.deity === deity)!));
 const node = (id: string) => tree.root.findAllByProps({ testID: id }).find(n => typeof n.props.onPress === 'function' || typeof n.props.onChangeText === 'function')!;
-// Only Date is faked; promises, frames and timers stay real. 25 October 2026 is a Sunday, which has no weekday card.
+// Only Date is faked; promises, frames and timers stay real. Tests run on Sunday 25 October 2026 unless they pick a day.
 const day = (date: number) => jest.useFakeTimers({ now: new Date(2026, 9, date, 9), doNotFake: ['hrtime', 'nextTick', 'performance', 'queueMicrotask',
   'requestAnimationFrame', 'cancelAnimationFrame', 'requestIdleCallback', 'cancelIdleCallback', 'setImmediate', 'clearImmediate', 'setInterval', 'clearInterval', 'setTimeout', 'clearTimeout'] });
 beforeEach(() => { jest.clearAllMocks(); day(25); jest.spyOn(global, 'requestAnimationFrame').mockImplementation(cb => { cb(0); return 0; }); });
@@ -113,6 +113,7 @@ it('opens ready-made cards first and shares one without editing a message', asyn
   await mount(false);
   expect(node('suvichar-mode-ready').props.accessibilityState.selected).toBe(true);
   expect(node('suvichar-message').props.value).toBe('');
+  act(() => node('suvichar-presets-daily').props.onPress());
   const picker = tree.root.findByType(SuvicharPresetPicker);
   expect(picker.props.templates).toHaveLength(16);
   act(() => node('suvichar-name').props.onChangeText('Sharma family'));
@@ -181,10 +182,10 @@ describe('weekday cards', () => {
     expect(node('suvichar-message').props.value).toBe('');
   });
 
-  it('has no weekday tab on Sunday', async () => {
+  it('shows Vishnu as Surya-Narayan on Sunday', async () => {
     await mount(false);
-    expect(tree.root.findAllByProps({ testID: 'suvichar-presets-vaar' })).toHaveLength(0);
-    expect(card().title).toBeUndefined();
+    expect(node('suvichar-presets-vaar').props.accessibilityState.selected).toBe(true);
+    expect(card()).toMatchObject({ deity: 'vishnu', title: 'शुभ रविवार' });
   });
 
   it('keeps the saved frame, and never replaces a message the reader wrote', async () => {

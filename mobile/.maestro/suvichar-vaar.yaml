@@ -2,8 +2,9 @@ appId: com.prashantsharma.vedansh
 ---
 # Weekday (vaar) Suvichar: Daily Bhakti's door opens the composer on today's
 # card, titled for the day (शुभ मंगलवार …) above a day-free reflection.
-# Sunday has no weekday card until Surya masters are published, so the
-# weekday steps run only when the today tab is present.
+# Every day has a card (Sunday shows Vishnu as Surya-Narayan until Surya
+# masters exist); the weekday steps still guard on the today tab, so a day
+# whose deities are not yet published skips them.
 - runFlow: _launch.yaml
 - tapOn: { id: "tab-bhakti" }
 - tapOn: { id: "open-suvichar" }

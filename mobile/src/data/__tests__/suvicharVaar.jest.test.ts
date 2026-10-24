@@ -8,9 +8,8 @@ import { contentByLang } from '@/utils/localize';
 const on = (date: number) => new Date(2026, 9, date, 9);
 const sunday = on(25), monday = on(26), tuesday = on(27), friday = on(30);
 
-it('gives Monday to Saturday a published deity, and hides Sunday until Surya masters exist', () => {
-  expect(suvicharVaarFor(sunday)).toBeNull();
-  for (let date = 26; date <= 31; date++) {
+it('gives every day a published deity, with Vishnu as Surya-Narayan on Sunday until Surya masters exist', () => {
+  for (let date = 25; date <= 31; date++) {
     const vaar = suvicharVaarFor(on(date))!;
     expect(vaar.deities.length).toBeGreaterThan(0);
     for (const deity of vaar.deities) {
@@ -18,6 +17,7 @@ it('gives Monday to Saturday a published deity, and hides Sunday until Surya mas
       for (const frame of suvicharFrames) expect(suvicharArtRequest(deity, frame.id)).not.toBeNull();
     }
   }
+  expect(suvicharVaarFor(sunday)).toMatchObject({ hi: 'शुभ रविवार', deities: ['vishnu', 'tirupati-balaji'] });
   expect(suvicharVaarFor(friday)!.deities).toEqual(['lakshmi', 'durga']);
 });
 
@@ -58,7 +58,7 @@ it('offers every deity of the day in all three frames', () => {
   const daily = suvicharTemplatesFor(suvicharDay(tuesday)).filter(t => t.kind === 'daily');
   for (const c of cards) expect([c.kind, c.messageHi, c.messageEn]).toEqual(['vaar', daily.find(t => t.deity === c.deity)!.messageHi, daily.find(t => t.deity === c.deity)!.messageEn]);
   expect(suvicharVaarTemplates(monday)).toHaveLength(3);
-  expect(suvicharVaarTemplates(sunday)).toEqual([]);
+  expect(suvicharVaarTemplates(sunday).map(c => c.deity)).toEqual(['vishnu', 'vishnu', 'vishnu', 'tirupati-balaji', 'tirupati-balaji', 'tirupati-balaji']);
 });
 
 it('opens on today’s card unless the reader wrote the message', () => {
@@ -69,7 +69,7 @@ it('opens on today’s card unless the reader wrote the message', () => {
   expect(withTodaysVaar(wish, tuesday)).toMatchObject({ vaar: true, message: '' });
   const authored = { ...kept, message: 'आपका दिन मंगलमय हो।' };
   expect(withTodaysVaar(authored, tuesday)).toBe(authored);
-  expect(withTodaysVaar(kept, sunday)).toBe(kept);
+  expect(withTodaysVaar(kept, sunday)).toMatchObject({ deity: 'vishnu', vaar: true });
 });
 
 it('treats shipped text in every reading language as replaceable', () => {
