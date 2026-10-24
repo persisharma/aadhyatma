@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, AppState, PixelRatio, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Alert, PixelRatio, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -11,17 +11,18 @@ import SuvicharCard from '@/components/SuvicharCard';
 import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
 import SuvicharFramePicker from '@/components/SuvicharFramePicker';
 import AppIcon from '@/components/AppIcon';
-import { suvicharTemplates, suvicharVaarTemplates, type SuvicharTemplate } from '@/data/suvicharTemplates';
-import { suvicharDayKey, suvicharVaarFor, suvicharVaarReflection, withTodaysVaar } from '@/data/suvicharVaar';
+import { isSuvicharThought, suvicharDay, suvicharTemplatesFor, suvicharThoughts, type SuvicharTemplate } from '@/data/suvicharTemplates';
+import { suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '@/data/suvicharVaar';
 import { WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { useGitaLanguage } from '@/data/gita/language';
-import { defaultSuvichar, initialSuvichar, parseSuvicharPreferences, suvicharDeities, suvicharReflections, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
+import { initialSuvichar, parseSuvicharPreferences, suvicharDeities, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
 import { useTheme } from '@/theme/ThemeContext';
 import { androidBoxShadow } from '@/theme/elevation';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
 import { meaningToken, titleFontByLang } from '@/utils/langType';
 import { suvicharCaptureSize } from '@/utils/suvicharCapture';
 import { shareFiles } from '@/utils/multiShare';
+import { useTodayKey } from '@/utils/useTodayKey';
 import type { HomeStackParamList } from '@/navigation/types';
 
 const KEY = '@vedansh/suvichar/v1';
@@ -37,11 +38,10 @@ export default function SuvicharScreen() {
   const [loaded, setLoaded] = useState(false);
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<'ready' | 'custom'>('ready');
-  // The weekday card follows the device's civil date; returning to the app re-reads it.
-  const [now, setNow] = useState(() => new Date());
+  // Today's pairing of thoughts to deity cards and the weekday card, both re-read at midnight and on app return.
+  const todayKey = useTodayKey();
+  const now = useMemo(() => new Date(), [todayKey]); // eslint-disable-line react-hooks/exhaustive-deps
   const vaar = suvicharVaarFor(now);
-  const day = suvicharDayKey(now);
-  const vaarTemplates = useMemo(() => suvicharVaarTemplates(now), [day]); // eslint-disable-line react-hooks/exhaustive-deps
   const [presetKind, setPresetKind] = useState<'vaar' | 'daily' | 'wish'>(vaar ? 'vaar' : 'daily');
   const kind = presetKind === 'vaar' && !vaar ? 'daily' : presetKind;
   const [readyIdentity, setReadyIdentity] = useState<string | null>(null);
@@ -53,30 +53,33 @@ export default function SuvicharScreen() {
   const lock = useRef(false);
   const measurement = useRef<{ identity: string; height: number } | null>(null);
   const latestReady = useRef<string | null>(null);
-  useEffect(() => { let active = true; void saves.then(() => AsyncStorage.getItem(KEY)).then(raw => { if (active) { const parsed = withTodaysVaar(parseSuvicharPreferences(raw), new Date()); setPrefs(parsed); setEditingName(!parsed.name); setLoaded(true); } }).catch(() => { if (active) { setPrefs(p => withTodaysVaar(p, new Date())); setEditingName(true); setLoaded(true); } }); return () => { active = false; }; }, []);
-  useEffect(() => { const sub = AppState.addEventListener('change', state => { if (state === 'active') setNow(new Date()); }); return () => sub.remove(); }, []);
+  useEffect(() => { let active = true; void saves.then(() => AsyncStorage.getItem(KEY)).then(raw => { if (active) { const parsed = parseSuvicharPreferences(raw); setPrefs(withTodaysVaar(isSuvicharThought(parsed.message) ? { ...parsed, message: '' } : parsed, new Date())); setEditingName(!parsed.name); setLoaded(true); } }).catch(() => { if (active) { setPrefs(p => withTodaysVaar(p, new Date())); setEditingName(true); setLoaded(true); } }); return () => { active = false; }; }, []);
   // A new day re-opens on its own card, unless the reader has written their own message.
-  const openedDay = useRef(day);
+  const openedDay = useRef(todayKey);
   useEffect(() => {
-    if (!loaded || openedDay.current === day) return;
-    openedDay.current = day;
+    if (!loaded || openedDay.current === todayKey) return;
+    openedDay.current = todayKey;
     setPrefs(p => withTodaysVaar(p, now));
     setPresetKind(suvicharVaarFor(now) ? 'vaar' : 'daily');
-  }, [day, loaded]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [todayKey, loaded]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { if (loaded) saves = saves.catch(() => undefined).then(() => AsyncStorage.setItem(KEY, JSON.stringify(prefs))).catch(() => undefined); }, [prefs, loaded]);
   const tr = (s: LocalizedStrings) => pick(lang, s);
   const title = tr({ hi: 'सुविचार', en: 'Suvichar', gu: 'સુવિચાર', kn: 'ಸುವಿಚಾರ' });
+  // An unedited thought is not kept, so each visit opens on today's.
+  const templates = useMemo(() => suvicharTemplatesFor(suvicharDay(now)), [now]);
+  const vaarTemplates = useMemo(() => suvicharVaarTemplates(now, templates), [now, templates]);
   const cardTitle = prefs.vaar && vaar ? contentByLang(lang, vaar.hi, vaar.en) : undefined;
-  const todays = suvicharVaarReflection(now);
-  const message = prefs.message.trim() || (cardTitle ? contentByLang(lang, todays.hi, todays.en) : contentByLang(lang, defaultSuvichar.hi, defaultSuvichar.en));
-  const selectedTemplate = prefs.vaar ? undefined : suvicharTemplates.find(t => t.deity === prefs.deity && contentByLang(lang, t.messageHi, t.messageEn) === message);
-  const original = !prefs.message.trim() || selectedTemplate?.kind === 'daily' || suvicharReflections.some(r => contentByLang(lang, r.hi, r.en) === message);
+  const dailyTemplates = templates.filter(t => t.kind === 'daily');
+  const todays = dailyTemplates.find(t => t.deity === prefs.deity)!;
+  const message = prefs.message.trim() || contentByLang(lang, todays.messageHi, todays.messageEn);
+  const selectedTemplate = prefs.vaar ? undefined : templates.find(t => t.deity === prefs.deity && contentByLang(lang, t.messageHi, t.messageEn) === message);
+  const original = !prefs.message.trim() || selectedTemplate?.kind === 'daily' || suvicharThoughts.some(t => contentByLang(lang, t.hi, t.en) === message);
   const favorite = { deity: prefs.deity, frame: prefs.frame, message: prefs.message, name: prefs.name, ...(prefs.vaar ? { vaar: true as const } : {}) };
   const savedIndex = prefs.favorites.findIndex(f => JSON.stringify(f) === JSON.stringify(favorite));
   const identity = JSON.stringify([prefs.deity, prefs.frame, prefs.name, message, cardTitle, width, lang, retry]);
   const ready = readyIdentity === identity;
   const update = (patch: Partial<typeof prefs>) => setPrefs(p => ({ ...p, ...patch }));
-  // A weekday card keeps its message empty so it always shows the current day's reflection.
+  // A weekday card keeps its message empty so it always shows the deity's thought for the current day.
   const chooseTemplate = (template: SuvicharTemplate) => update(template.kind === 'vaar' ? { deity: template.deity, frame: template.frame, message: '', vaar: true }
     : { deity: template.deity, frame: template.frame, message: contentByLang(lang, template.messageHi, template.messageEn), vaar: false });
   // Each mounted preview owns its readiness, so stale decode callbacks cannot unlock a replacement.
@@ -119,11 +122,10 @@ export default function SuvicharScreen() {
     <Text style={{ fontFamily: face, fontSize: 14, lineHeight: 22, color: colors.inkSoft }}>{label}</Text></Pressable>;
   const inputStyle = { color: colors.ink, fontFamily: face, fontSize: 16, lineHeight: 26, backgroundColor: colors.cardActiveFrom, borderColor: colors.cardActiveBorder, borderWidth: 1, borderRadius: radii.md, padding: spacing.md };
   const nextReflection = () => {
-    const index = suvicharReflections.findIndex(r => contentByLang(lang, r.hi, r.en) === message);
-    const next = suvicharReflections[(index + 1) % suvicharReflections.length];
+    const index = suvicharThoughts.findIndex(t => contentByLang(lang, t.hi, t.en) === message);
+    const next = suvicharThoughts[(index + 1) % suvicharThoughts.length];
     update({ message: contentByLang(lang, next.hi, next.en) });
   };
-  const dailyTemplates = suvicharTemplates.filter(t => t.kind === 'daily');
   const shareOff = !ready || off;
   const myFavorites = tr({ hi: 'मेरे पसंदीदा', en: 'My favorites', gu: 'મારી પસંદ', kn: 'ನನ್ನ ಮೆಚ್ಚಿನವುಗಳು' });
   return <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
@@ -143,7 +145,7 @@ export default function SuvicharScreen() {
             {tab(tr({ hi: 'शुभकामनाएँ', en: 'Wishes', gu: 'શુભેચ્છાઓ', kn: 'ಶುಭಾಶಯಗಳು' }), () => setPresetKind('wish'), kind === 'wish', 'suvichar-presets-wish')}
           </View>
         </View>
-        <SuvicharPresetPicker templates={kind === 'vaar' ? vaarTemplates : suvicharTemplates.filter(t => t.kind === kind)} lang={lang}
+        <SuvicharPresetPicker templates={kind === 'vaar' ? vaarTemplates : templates.filter(t => t.kind === kind)} lang={lang}
           selectedId={kind === 'vaar' ? (prefs.vaar ? vaarTemplates.find(t => t.deity === prefs.deity && t.frame === prefs.frame)?.id : undefined) : selectedTemplate?.id} disabled={off} onSelect={chooseTemplate} />
       </View> : <View style={{ gap: spacing.sm }}>
         <Text style={eyebrow}>{tr({ hi: 'देवता चुनें', en: 'Choose a deity', gu: 'દેવતા પસંદ કરો', kn: 'ದೇವತೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ' })}</Text>

@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { cleanSender, parseSuvicharPreferences, suvicharArtKey, suvicharArtRequest, suvicharHeroFraction, suvicharDeities, suvicharFrames, NAME_LIMIT } from '../suvichar';
-import { suvicharTemplates } from '../suvicharTemplates';
+import { suvicharTemplatesFor } from '../suvicharTemplates';
+const suvicharTemplates = suvicharTemplatesFor(0);
 it('maps all sixteen subjects to three distinct masters without fallback', () => {
   const keys = suvicharDeities.flatMap(d => suvicharFrames.map(f => suvicharArtKey(d.id, f.id)));
   expect(keys).toHaveLength(48); expect(new Set(keys).size).toBe(48);

@@ -1,6 +1,6 @@
-import { defaultSuvichar, initialSuvichar, suvicharArtRequest, suvicharDeities, suvicharFrames, suvicharReflections } from '../suvichar';
-import { suvicharVaarTemplates } from '../suvicharTemplates';
-import { isAuthoredSuvicharMessage, suvicharDayKey, suvicharVaar, suvicharVaarFor, suvicharVaarReflection, withTodaysVaar } from '../suvicharVaar';
+import { initialSuvichar, suvicharArtRequest, suvicharDeities, suvicharFrames, suvicharReflections } from '../suvichar';
+import { suvicharDay, suvicharTemplatesFor, suvicharThoughts } from '../suvicharTemplates';
+import { isAuthoredSuvicharMessage, suvicharVaar, suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '../suvicharVaar';
 import { WEEKDAY_LABELS } from '../routine/vaar';
 import { contentByLang } from '@/utils/localize';
 
@@ -21,6 +21,13 @@ it('gives Monday to Saturday a published deity, and hides Sunday until Surya mas
   expect(suvicharVaarFor(friday)!.deities).toEqual(['lakshmi', 'durga']);
 });
 
+it('links every catalog deity to at least one day', () => {
+  const linked = new Set(suvicharVaar.flatMap(v => v.deities));
+  expect(suvicharDeities.filter(d => !linked.has(d.id)).map(d => d.id)).toEqual([]);
+  expect(suvicharVaarFor(on(28))!.deities).toEqual(['ganesha', 'saraswati', 'krishna', 'radha-krishna', 'sanwariya-seth', 'khatu-shyam']);
+  expect(suvicharVaarFor(on(29))!.deities).toEqual(['vishnu', 'tirupati-balaji', 'jagannath', 'rama', 'ram-darbar']);
+});
+
 it('lists only catalog deities and leaves out any whose masters are not yet published', () => {
   for (const vaar of suvicharVaar) for (const deity of vaar.deities) expect(suvicharDeities.some(d => d.id === deity)).toBe(true);
   const thursday = suvicharVaar[4].deities;
@@ -37,19 +44,19 @@ it('titles each day with its own weekday name', () => {
   expect(suvicharVaarFor(tuesday)!.en).toBe('Shubh Mangalwar');
 });
 
-it('pairs the title with day-free reflections that change from one day to the next', () => {
+it('pairs the title only with day-free thoughts', () => {
   const names = WEEKDAY_LABELS.flatMap(l => [l.hi, l.en]);
-  for (const r of [defaultSuvichar, ...suvicharReflections]) for (const name of names) {
+  for (const r of suvicharThoughts) for (const name of names) {
     expect(r.hi).not.toContain(name); expect(r.en).not.toContain(name);
   }
-  expect(suvicharVaarReflection(tuesday)).toBe(suvicharVaarReflection(on(27)));
-  for (let date = 26; date < 31; date++) expect(suvicharVaarReflection(on(date))).not.toBe(suvicharVaarReflection(on(date + 1)));
 });
 
 it('offers every deity of the day in all three frames', () => {
   const cards = suvicharVaarTemplates(tuesday);
   expect(cards.map(c => c.id)).toEqual(['hanuman', 'salasar-balaji'].flatMap(d => suvicharFrames.map(f => `vaar-${d}-${f.id}`)));
-  expect(cards.every(c => c.kind === 'vaar' && c.messageHi === suvicharVaarReflection(tuesday).hi)).toBe(true);
+  // Each weekday tile carries its deity's thought for the day, the same one its deity card shows.
+  const daily = suvicharTemplatesFor(suvicharDay(tuesday)).filter(t => t.kind === 'daily');
+  for (const c of cards) expect([c.kind, c.messageHi, c.messageEn]).toEqual(['vaar', daily.find(t => t.deity === c.deity)!.messageHi, daily.find(t => t.deity === c.deity)!.messageEn]);
   expect(suvicharVaarTemplates(monday)).toHaveLength(3);
   expect(suvicharVaarTemplates(sunday)).toEqual([]);
 });
@@ -70,9 +77,4 @@ it('treats shipped text in every reading language as replaceable', () => {
   for (const lang of ['hi', 'en', 'gu', 'kn'] as const) expect(isAuthoredSuvicharMessage(contentByLang(lang, r.hi, r.en))).toBe(false);
   expect(isAuthoredSuvicharMessage('')).toBe(false);
   expect(isAuthoredSuvicharMessage('मेरा अपना संदेश')).toBe(true);
-});
-
-it('keys the local calendar day', () => {
-  expect(suvicharDayKey(new Date(2026, 9, 27, 23, 59))).toBe(suvicharDayKey(new Date(2026, 9, 27, 0, 1)));
-  expect(suvicharDayKey(new Date(2026, 9, 27, 23, 59))).not.toBe(suvicharDayKey(new Date(2026, 9, 28, 0, 1)));
 });
