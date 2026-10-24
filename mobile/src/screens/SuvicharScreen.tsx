@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, PixelRatio, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,15 +11,16 @@ import SuvicharCard from '@/components/SuvicharCard';
 import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
 import SuvicharFramePicker from '@/components/SuvicharFramePicker';
 import AppIcon from '@/components/AppIcon';
-import { suvicharTemplates, type SuvicharTemplate } from '@/data/suvicharTemplates';
+import { isSuvicharThought, suvicharDay, suvicharTemplatesFor, suvicharThoughts, type SuvicharTemplate } from '@/data/suvicharTemplates';
 import { useGitaLanguage } from '@/data/gita/language';
-import { defaultSuvichar, initialSuvichar, parseSuvicharPreferences, suvicharDeities, suvicharReflections, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
+import { initialSuvichar, parseSuvicharPreferences, suvicharDeities, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
 import { useTheme } from '@/theme/ThemeContext';
 import { androidBoxShadow } from '@/theme/elevation';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
 import { meaningToken, titleFontByLang } from '@/utils/langType';
 import { suvicharCaptureSize } from '@/utils/suvicharCapture';
 import { shareFiles } from '@/utils/multiShare';
+import { useTodayKey } from '@/utils/useTodayKey';
 import type { HomeStackParamList } from '@/navigation/types';
 
 const KEY = '@vedansh/suvichar/v1';
@@ -45,13 +46,18 @@ export default function SuvicharScreen() {
   const lock = useRef(false);
   const measurement = useRef<{ identity: string; height: number } | null>(null);
   const latestReady = useRef<string | null>(null);
-  useEffect(() => { let active = true; void saves.then(() => AsyncStorage.getItem(KEY)).then(raw => { if (active) { const parsed = parseSuvicharPreferences(raw); setPrefs(parsed); setEditingName(!parsed.name); setLoaded(true); } }).catch(() => { if (active) { setEditingName(true); setLoaded(true); } }); return () => { active = false; }; }, []);
+  useEffect(() => { let active = true; void saves.then(() => AsyncStorage.getItem(KEY)).then(raw => { if (active) { const parsed = parseSuvicharPreferences(raw); setPrefs(isSuvicharThought(parsed.message) ? { ...parsed, message: '' } : parsed); setEditingName(!parsed.name); setLoaded(true); } }).catch(() => { if (active) { setEditingName(true); setLoaded(true); } }); return () => { active = false; }; }, []);
   useEffect(() => { if (loaded) saves = saves.catch(() => undefined).then(() => AsyncStorage.setItem(KEY, JSON.stringify(prefs))).catch(() => undefined); }, [prefs, loaded]);
   const tr = (s: LocalizedStrings) => pick(lang, s);
   const title = tr({ hi: 'सुविचार', en: 'Suvichar', gu: 'સુવિચાર', kn: 'ಸುವಿಚಾರ' });
-  const message = prefs.message.trim() || contentByLang(lang, defaultSuvichar.hi, defaultSuvichar.en);
-  const selectedTemplate = suvicharTemplates.find(t => t.deity === prefs.deity && contentByLang(lang, t.messageHi, t.messageEn) === message);
-  const original = !prefs.message.trim() || selectedTemplate?.kind === 'daily' || suvicharReflections.some(r => contentByLang(lang, r.hi, r.en) === message);
+  // Today's pairing of thoughts to deity cards; an unedited thought is not kept, so each visit opens on today's.
+  const todayKey = useTodayKey();
+  const templates = useMemo(() => suvicharTemplatesFor(suvicharDay(new Date(todayKey))), [todayKey]);
+  const dailyTemplates = templates.filter(t => t.kind === 'daily');
+  const todays = dailyTemplates.find(t => t.deity === prefs.deity)!;
+  const message = prefs.message.trim() || contentByLang(lang, todays.messageHi, todays.messageEn);
+  const selectedTemplate = templates.find(t => t.deity === prefs.deity && contentByLang(lang, t.messageHi, t.messageEn) === message);
+  const original = !prefs.message.trim() || selectedTemplate?.kind === 'daily' || suvicharThoughts.some(t => contentByLang(lang, t.hi, t.en) === message);
   const favorite = { deity: prefs.deity, frame: prefs.frame, message: prefs.message, name: prefs.name };
   const savedIndex = prefs.favorites.findIndex(f => JSON.stringify(f) === JSON.stringify(favorite));
   const identity = JSON.stringify([prefs.deity, prefs.frame, prefs.name, message, width, lang, retry]);
@@ -98,11 +104,10 @@ export default function SuvicharScreen() {
     <Text style={{ fontFamily: face, fontSize: 14, lineHeight: 22, color: colors.inkSoft }}>{label}</Text></Pressable>;
   const inputStyle = { color: colors.ink, fontFamily: face, fontSize: 16, lineHeight: 26, backgroundColor: colors.cardActiveFrom, borderColor: colors.cardActiveBorder, borderWidth: 1, borderRadius: radii.md, padding: spacing.md };
   const nextReflection = () => {
-    const index = suvicharReflections.findIndex(r => contentByLang(lang, r.hi, r.en) === prefs.message);
-    const next = suvicharReflections[(index + 1) % suvicharReflections.length];
+    const index = suvicharThoughts.findIndex(t => contentByLang(lang, t.hi, t.en) === message);
+    const next = suvicharThoughts[(index + 1) % suvicharThoughts.length];
     update({ message: contentByLang(lang, next.hi, next.en) });
   };
-  const dailyTemplates = suvicharTemplates.filter(t => t.kind === 'daily');
   const shareOff = !ready || off;
   const myFavorites = tr({ hi: 'मेरे पसंदीदा', en: 'My favorites', gu: 'મારી પસંદ', kn: 'ನನ್ನ ಮೆಚ್ಚಿನವುಗಳು' });
   return <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
@@ -121,7 +126,7 @@ export default function SuvicharScreen() {
             {tab(tr({ hi: 'शुभकामनाएँ', en: 'Wishes', gu: 'શુભેચ્છાઓ', kn: 'ಶುಭಾಶಯಗಳು' }), () => setPresetKind('wish'), presetKind === 'wish', 'suvichar-presets-wish')}
           </View>
         </View>
-        <SuvicharPresetPicker templates={suvicharTemplates.filter(t => t.kind === presetKind)} lang={lang} selectedId={selectedTemplate?.id} disabled={off} onSelect={chooseTemplate} />
+        <SuvicharPresetPicker templates={templates.filter(t => t.kind === presetKind)} lang={lang} selectedId={selectedTemplate?.id} disabled={off} onSelect={chooseTemplate} />
       </View> : <View style={{ gap: spacing.sm }}>
         <Text style={eyebrow}>{tr({ hi: 'देवता चुनें', en: 'Choose a deity', gu: 'દેવતા પસંદ કરો', kn: 'ದೇವತೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ' })}</Text>
         <SuvicharPresetPicker compact templates={dailyTemplates} lang={lang} selectedId={dailyTemplates.find(t => t.deity === prefs.deity)?.id} disabled={off}
