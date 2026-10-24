@@ -100,9 +100,10 @@ export const MESSAGE_LIMIT = 280;
 export function cleanSender(value: string): string {
   return value.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim();
 }
-export type SuvicharFavorite = { deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string };
+/** `vaar` marks a weekday card: its title is always the current day's, so a saved card never names a past day. */
+export type SuvicharFavorite = { deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; vaar?: true };
 export const initialSuvichar = { deity: 'krishna' as SuvicharDeity, frame: 'mandir-jharokha' as SuvicharFrame,
-  name: '', message: '', favorites: [] as SuvicharFavorite[] };
+  name: '', message: '', vaar: false, favorites: [] as SuvicharFavorite[] };
 export type SuvicharPreferences = typeof initialSuvichar;
 export function parseSuvicharPreferences(raw: string | null): SuvicharPreferences {
   try {
@@ -112,10 +113,11 @@ export function parseSuvicharPreferences(raw: string | null): SuvicharPreference
       frame: suvicharFrames.some(f => f.id === p.frame) ? p.frame : initialSuvichar.frame,
       name: typeof p.name === 'string' ? p.name.slice(0, NAME_LIMIT) : '',
       message: typeof p.message === 'string' ? p.message.slice(0, MESSAGE_LIMIT) : '',
+      vaar: p.vaar === true,
       favorites: Array.isArray(p.favorites) ? p.favorites.filter((f: SuvicharFavorite) => f &&
         suvicharDeities.some(d => d.id === f.deity) && suvicharFrames.some(s => s.id === f.frame) &&
         typeof f.name === 'string' && f.name.length <= NAME_LIMIT && typeof f.message === 'string' &&
-        f.message.length <= MESSAGE_LIMIT).slice(0, 50).map((f: SuvicharFavorite) => ({ deity: f.deity, frame: f.frame, message: f.message, name: f.name })) : [],
+        f.message.length <= MESSAGE_LIMIT).slice(0, 50).map((f: SuvicharFavorite) => ({ deity: f.deity, frame: f.frame, message: f.message, name: f.name, ...(f.vaar === true ? { vaar: true as const } : {}) })) : [],
     };
   } catch { return { ...initialSuvichar, favorites: [] }; }
 }

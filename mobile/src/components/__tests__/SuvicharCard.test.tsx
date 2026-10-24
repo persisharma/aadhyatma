@@ -73,3 +73,17 @@ it('reuses the artwork request while a sender is edited and remeasures the card'
   expect(ready).toHaveBeenLastCalledWith(false);
   expect(subscribeBackgroundAsset).toHaveBeenCalledTimes(1);
 });
+
+it('shows a weekday title in place of the label, and re-measures when the title changes', () => {
+  const ready = jest.fn();
+  act(() => { tree = create(<SuvicharCard deity="hanuman" frame="mandir-jharokha" name="" message="श्रद्धा रखिए।" title="शुभ मंगलवार" lang="hi" width={360} onReady={ready} />); });
+  const title = tree.root.findByProps({ testID: 'suvichar-card-title' });
+  expect(title.props.children).toBe('शुभ मंगलवार');
+  expect(title.props.style[0].fontSize).toBe(26); expect(title.props.style[0].lineHeight).toBeCloseTo(26 * 1.65);
+  const texts = tree.root.findAllByType(Text).map(t => [t.props.children].flat().join(''));
+  expect(texts).not.toContain('आज का सुविचार');
+  layout(); act(() => tree.root.findAllByType(Image).forEach(image => image.props.onLoad()));
+  expect(ready).toHaveBeenLastCalledWith(true);
+  act(() => tree.update(<SuvicharCard deity="hanuman" frame="mandir-jharokha" name="" message="श्रद्धा रखिए।" title="शुभ बुधवार" lang="hi" width={360} onReady={ready} />));
+  expect(ready).toHaveBeenLastCalledWith(false);
+});

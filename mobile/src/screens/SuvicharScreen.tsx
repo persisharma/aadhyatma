@@ -12,6 +12,8 @@ import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
 import SuvicharFramePicker from '@/components/SuvicharFramePicker';
 import AppIcon from '@/components/AppIcon';
 import { isSuvicharThought, suvicharDay, suvicharTemplatesFor, suvicharThoughts, type SuvicharTemplate } from '@/data/suvicharTemplates';
+import { suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '@/data/suvicharVaar';
+import { WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { useGitaLanguage } from '@/data/gita/language';
 import { initialSuvichar, parseSuvicharPreferences, suvicharDeities, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
 import { useTheme } from '@/theme/ThemeContext';
@@ -36,7 +38,12 @@ export default function SuvicharScreen() {
   const [loaded, setLoaded] = useState(false);
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<'ready' | 'custom'>('ready');
-  const [presetKind, setPresetKind] = useState<'daily' | 'wish'>('daily');
+  // Today's pairing of thoughts to deity cards and the weekday card, both re-read at midnight and on app return.
+  const todayKey = useTodayKey();
+  const now = useMemo(() => new Date(), [todayKey]); // eslint-disable-line react-hooks/exhaustive-deps
+  const vaar = suvicharVaarFor(now);
+  const [presetKind, setPresetKind] = useState<'vaar' | 'daily' | 'wish'>(vaar ? 'vaar' : 'daily');
+  const kind = presetKind === 'vaar' && !vaar ? 'daily' : presetKind;
   const [readyIdentity, setReadyIdentity] = useState<string | null>(null);
   const [retry, setRetry] = useState(0);
   // The sender is typed once and remembered; afterwards it is a compact editable row.
@@ -46,24 +53,35 @@ export default function SuvicharScreen() {
   const lock = useRef(false);
   const measurement = useRef<{ identity: string; height: number } | null>(null);
   const latestReady = useRef<string | null>(null);
-  useEffect(() => { let active = true; void saves.then(() => AsyncStorage.getItem(KEY)).then(raw => { if (active) { const parsed = parseSuvicharPreferences(raw); setPrefs(isSuvicharThought(parsed.message) ? { ...parsed, message: '' } : parsed); setEditingName(!parsed.name); setLoaded(true); } }).catch(() => { if (active) { setEditingName(true); setLoaded(true); } }); return () => { active = false; }; }, []);
+  useEffect(() => { let active = true; void saves.then(() => AsyncStorage.getItem(KEY)).then(raw => { if (active) { const parsed = parseSuvicharPreferences(raw); setPrefs(withTodaysVaar(isSuvicharThought(parsed.message) ? { ...parsed, message: '' } : parsed, new Date())); setEditingName(!parsed.name); setLoaded(true); } }).catch(() => { if (active) { setPrefs(p => withTodaysVaar(p, new Date())); setEditingName(true); setLoaded(true); } }); return () => { active = false; }; }, []);
+  // A new day re-opens on its own card, unless the reader has written their own message.
+  const openedDay = useRef(todayKey);
+  useEffect(() => {
+    if (!loaded || openedDay.current === todayKey) return;
+    openedDay.current = todayKey;
+    setPrefs(p => withTodaysVaar(p, now));
+    setPresetKind(suvicharVaarFor(now) ? 'vaar' : 'daily');
+  }, [todayKey, loaded]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { if (loaded) saves = saves.catch(() => undefined).then(() => AsyncStorage.setItem(KEY, JSON.stringify(prefs))).catch(() => undefined); }, [prefs, loaded]);
   const tr = (s: LocalizedStrings) => pick(lang, s);
   const title = tr({ hi: 'सुविचार', en: 'Suvichar', gu: 'સુવિચાર', kn: 'ಸುವಿಚಾರ' });
-  // Today's pairing of thoughts to deity cards; an unedited thought is not kept, so each visit opens on today's.
-  const todayKey = useTodayKey();
-  const templates = useMemo(() => suvicharTemplatesFor(suvicharDay(new Date(todayKey))), [todayKey]);
+  // An unedited thought is not kept, so each visit opens on today's.
+  const templates = useMemo(() => suvicharTemplatesFor(suvicharDay(now)), [now]);
+  const vaarTemplates = useMemo(() => suvicharVaarTemplates(now, templates), [now, templates]);
+  const cardTitle = prefs.vaar && vaar ? contentByLang(lang, vaar.hi, vaar.en) : undefined;
   const dailyTemplates = templates.filter(t => t.kind === 'daily');
   const todays = dailyTemplates.find(t => t.deity === prefs.deity)!;
   const message = prefs.message.trim() || contentByLang(lang, todays.messageHi, todays.messageEn);
-  const selectedTemplate = templates.find(t => t.deity === prefs.deity && contentByLang(lang, t.messageHi, t.messageEn) === message);
+  const selectedTemplate = prefs.vaar ? undefined : templates.find(t => t.deity === prefs.deity && contentByLang(lang, t.messageHi, t.messageEn) === message);
   const original = !prefs.message.trim() || selectedTemplate?.kind === 'daily' || suvicharThoughts.some(t => contentByLang(lang, t.hi, t.en) === message);
-  const favorite = { deity: prefs.deity, frame: prefs.frame, message: prefs.message, name: prefs.name };
+  const favorite = { deity: prefs.deity, frame: prefs.frame, message: prefs.message, name: prefs.name, ...(prefs.vaar ? { vaar: true as const } : {}) };
   const savedIndex = prefs.favorites.findIndex(f => JSON.stringify(f) === JSON.stringify(favorite));
-  const identity = JSON.stringify([prefs.deity, prefs.frame, prefs.name, message, width, lang, retry]);
+  const identity = JSON.stringify([prefs.deity, prefs.frame, prefs.name, message, cardTitle, width, lang, retry]);
   const ready = readyIdentity === identity;
   const update = (patch: Partial<typeof prefs>) => setPrefs(p => ({ ...p, ...patch }));
-  const chooseTemplate = (template: SuvicharTemplate) => update({ deity: template.deity, frame: template.frame, message: contentByLang(lang, template.messageHi, template.messageEn) });
+  // A weekday card keeps its message empty so it always shows the deity's thought for the current day.
+  const chooseTemplate = (template: SuvicharTemplate) => update(template.kind === 'vaar' ? { deity: template.deity, frame: template.frame, message: '', vaar: true }
+    : { deity: template.deity, frame: template.frame, message: contentByLang(lang, template.messageHi, template.messageEn), vaar: false });
   // Each mounted preview owns its readiness, so stale decode callbacks cannot unlock a replacement.
   const activeIdentity = useRef(identity); activeIdentity.current = identity;
   const onReady = useCallback((value: boolean) => { if (activeIdentity.current === identity) { latestReady.current = value ? identity : null; setReadyIdentity(latestReady.current); } }, [identity]);
@@ -121,12 +139,14 @@ export default function SuvicharScreen() {
       {mode === 'ready' ? <View style={{ gap: spacing.sm }}>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', columnGap: spacing.lg }}>
           <Text style={[eyebrow, { paddingBottom: spacing.sm + 2 }]}>{tr({ hi: 'कार्ड चुनें', en: 'Choose a card', gu: 'કાર્ડ પસંદ કરો', kn: 'ಕಾರ್ಡ್ ಆಯ್ಕೆ ಮಾಡಿ' })}</Text>
-          <View accessibilityRole="tablist" style={{ flexDirection: 'row', gap: spacing.lg }}>
-            {tab(tr({ hi: 'भक्ति संदेश', en: 'Devotional cards', gu: 'ભક્તિ સંદેશ', kn: 'ಭಕ್ತಿ ಸಂದೇಶಗಳು' }), () => setPresetKind('daily'), presetKind === 'daily', 'suvichar-presets-daily')}
-            {tab(tr({ hi: 'शुभकामनाएँ', en: 'Wishes', gu: 'શુભેચ્છાઓ', kn: 'ಶುಭಾಶಯಗಳು' }), () => setPresetKind('wish'), presetKind === 'wish', 'suvichar-presets-wish')}
+          <View accessibilityRole="tablist" style={{ flexDirection: 'row', flexWrap: 'wrap', columnGap: spacing.lg }}>
+            {vaar ? tab(`${tr({ hi: 'आज', en: 'Today', gu: 'આજ', kn: 'ಇಂದು' })} · ${contentByLang(lang, WEEKDAY_LABELS[now.getDay()].hi, WEEKDAY_LABELS[now.getDay()].en)}`, () => setPresetKind('vaar'), kind === 'vaar', 'suvichar-presets-vaar') : null}
+            {tab(tr({ hi: 'भक्ति संदेश', en: 'Devotional cards', gu: 'ભક્તિ સંદેશ', kn: 'ಭಕ್ತಿ ಸಂದೇಶಗಳು' }), () => setPresetKind('daily'), kind === 'daily', 'suvichar-presets-daily')}
+            {tab(tr({ hi: 'शुभकामनाएँ', en: 'Wishes', gu: 'શુભેચ્છાઓ', kn: 'ಶುಭಾಶಯಗಳು' }), () => setPresetKind('wish'), kind === 'wish', 'suvichar-presets-wish')}
           </View>
         </View>
-        <SuvicharPresetPicker templates={templates.filter(t => t.kind === presetKind)} lang={lang} selectedId={selectedTemplate?.id} disabled={off} onSelect={chooseTemplate} />
+        <SuvicharPresetPicker templates={kind === 'vaar' ? vaarTemplates : templates.filter(t => t.kind === kind)} lang={lang}
+          selectedId={kind === 'vaar' ? (prefs.vaar ? vaarTemplates.find(t => t.deity === prefs.deity && t.frame === prefs.frame)?.id : undefined) : selectedTemplate?.id} disabled={off} onSelect={chooseTemplate} />
       </View> : <View style={{ gap: spacing.sm }}>
         <Text style={eyebrow}>{tr({ hi: 'देवता चुनें', en: 'Choose a deity', gu: 'દેવતા પસંદ કરો', kn: 'ದೇವತೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ' })}</Text>
         <SuvicharPresetPicker compact templates={dailyTemplates} lang={lang} selectedId={dailyTemplates.find(t => t.deity === prefs.deity)?.id} disabled={off}
@@ -137,7 +157,7 @@ export default function SuvicharScreen() {
         <SuvicharFramePicker deity={prefs.deity} frame={prefs.frame} lang={lang} disabled={off} onSelect={frame => update({ frame })} />
       </View>
       <View style={{ gap: spacing.sm }}>
-        <View ref={card} collapsable={false} style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} message={message} lang={lang} width={width} onReady={onReady} onHeight={onHeight} original={original} /></View>
+        <View ref={card} collapsable={false} style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} message={message} title={cardTitle} lang={lang} width={width} onReady={onReady} onHeight={onHeight} original={original} /></View>
         {!ready ? <Pressable testID="suvichar-retry" accessibilityRole="button" disabled={off} onPress={() => { setReadyIdentity(null); setRetry(n => n + 1); }} style={{ alignSelf: 'center', minHeight: 44, justifyContent: 'center' }}>
           <Text style={{ fontFamily: face, fontSize: 14, color: colors.saffronDeep }}>{tr({ hi: 'चित्र फिर लाएँ', en: 'Reload artwork', gu: 'ચિત્ર ફરી લાવો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ' })}</Text></Pressable> : null}
       </View>
@@ -165,7 +185,7 @@ export default function SuvicharScreen() {
       {prefs.favorites.length ? <View style={{ gap: spacing.sm }}>
         <Text style={eyebrow}>{myFavorites}</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }}>
-          {prefs.favorites.map((f, i) => chip(`${contentByLang(lang, suvicharDeities.find(d => d.id === f.deity)!.hi, suvicharDeities.find(d => d.id === f.deity)!.en)} · ${f.name || contentByLang(lang, 'सुविचार', 'Suvichar')}`, () => update(f), `suvichar-saved-${i}`))}
+          {prefs.favorites.map((f, i) => chip(`${contentByLang(lang, suvicharDeities.find(d => d.id === f.deity)!.hi, suvicharDeities.find(d => d.id === f.deity)!.en)} · ${f.name || contentByLang(lang, 'सुविचार', 'Suvichar')}`, () => update({ ...f, vaar: f.vaar === true }), `suvichar-saved-${i}`))}
         </View>
       </View> : null}
     </ScrollView>}

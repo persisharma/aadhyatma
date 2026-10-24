@@ -1,11 +1,12 @@
 import React from 'react';
-import { Alert, PixelRatio, Platform, Pressable, TextInput, View } from 'react-native';
+import { Alert, AppState, PixelRatio, Platform, Pressable, TextInput, View } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import SuvicharScreen from '../SuvicharScreen';
 import SuvicharCard from '@/components/SuvicharCard';
 import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
 import { suvicharDay, suvicharTemplatesFor } from '@/data/suvicharTemplates';
-const suvicharTemplates = suvicharTemplatesFor(suvicharDay(new Date()));
+// Built when called, so it pairs thoughts for the faked date rather than the import-time date.
+const templatesToday = () => suvicharTemplatesFor(suvicharDay(new Date()));
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
@@ -23,10 +24,13 @@ jest.mock('@react-native-async-storage/async-storage', () => ({ __esModule: true
 let tree: ReactTestRenderer;
 async function flush() { await act(async () => { for (let i = 0; i < 8; i++) await Promise.resolve(); }); }
 async function mount(custom = true) { await act(async () => { tree = create(<SuvicharScreen />); }); await flush(); if (custom) act(() => node('suvichar-mode-custom').props.onPress()); act(() => tree.root.findByType(SuvicharCard).props.onHeight(900)); }
-const pickDeity = (deity: string) => act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(suvicharTemplates.find(t => t.kind === 'daily' && t.deity === deity)!));
+const pickDeity = (deity: string) => act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(templatesToday().find(t => t.kind === 'daily' && t.deity === deity)!));
 const node = (id: string) => tree.root.findAllByProps({ testID: id }).find(n => typeof n.props.onPress === 'function' || typeof n.props.onChangeText === 'function')!;
-beforeEach(() => { jest.clearAllMocks(); jest.spyOn(global, 'requestAnimationFrame').mockImplementation(cb => { cb(0); return 0; }); });
-afterEach(async () => { if (tree) act(() => tree.unmount()); await flush(); jest.restoreAllMocks(); });
+// Only Date is faked; promises, frames and timers stay real. Tests run on Sunday 25 October 2026 unless they pick a day.
+const day = (date: number) => jest.useFakeTimers({ now: new Date(2026, 9, date, 9), doNotFake: ['hrtime', 'nextTick', 'performance', 'queueMicrotask',
+  'requestAnimationFrame', 'cancelAnimationFrame', 'requestIdleCallback', 'cancelIdleCallback', 'setImmediate', 'clearImmediate', 'setInterval', 'clearInterval', 'setTimeout', 'clearTimeout'] });
+beforeEach(() => { jest.clearAllMocks(); day(25); jest.spyOn(global, 'requestAnimationFrame').mockImplementation(cb => { cb(0); return 0; }); });
+afterEach(async () => { if (tree) act(() => tree.unmount()); await flush(); jest.restoreAllMocks(); jest.useRealTimers(); });
 it('retains the sender through deity/frame changes and saves the latest name', async () => {
   await mount();
   act(() => node('suvichar-name').props.onChangeText('Sharma family'));
@@ -52,7 +56,7 @@ it('rejects stale ready callbacks after name changes', async () => {
 it('keeps the sender when selecting a festival and restores a saved favorite', async () => {
   await mount(false); act(() => node('suvichar-name').props.onChangeText('Sharma family'));
   act(() => node('suvichar-presets-wish').props.onPress());
-  act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(suvicharTemplates.find(t => t.id === 'wish-diwali')!));
+  act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(templatesToday().find(t => t.id === 'wish-diwali')!));
   expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ deity: 'lakshmi', name: 'Sharma family', original: false });
   act(() => node('suvichar-favorite').props.onPress());
   expect(node('suvichar-favorite').props.accessibilityState.selected).toBe(true);
@@ -109,10 +113,11 @@ it('opens ready-made cards first and shares one without editing a message', asyn
   await mount(false);
   expect(node('suvichar-mode-ready').props.accessibilityState.selected).toBe(true);
   expect(node('suvichar-message').props.value).toBe('');
+  act(() => node('suvichar-presets-daily').props.onPress());
   const picker = tree.root.findByType(SuvicharPresetPicker);
   expect(picker.props.templates).toHaveLength(16);
   act(() => node('suvichar-name').props.onChangeText('Sharma family'));
-  const preset = suvicharTemplates.find(t => t.id === 'daily-salasar-balaji')!;
+  const preset = templatesToday().find(t => t.id === 'daily-salasar-balaji')!;
   act(() => picker.props.onSelect(preset));
   const card = tree.root.findByType(SuvicharCard).props;
   expect(card).toMatchObject({ deity: 'salasar-balaji', frame: preset.frame, message: preset.messageHi, name: 'Sharma family', original: true });
@@ -125,7 +130,7 @@ it('offers seven ready-made wishes and keeps the selected card when switching to
   await mount(false); act(() => node('suvichar-presets-wish').props.onPress());
   const picker = tree.root.findByType(SuvicharPresetPicker);
   expect(picker.props.templates).toHaveLength(7);
-  const diwali = suvicharTemplates.find(t => t.id === 'wish-diwali')!;
+  const diwali = templatesToday().find(t => t.id === 'wish-diwali')!;
   act(() => picker.props.onSelect(diwali));
   expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ deity: 'lakshmi', original: false, message: diwali.messageHi });
   act(() => node('suvichar-mode-custom').props.onPress());
@@ -139,12 +144,12 @@ it('picks deities from compact painted tiles in custom mode', async () => {
   expect(picker.props.testIDFor(picker.props.templates[0])).toBe(`suvichar-deity-${picker.props.templates[0].deity}`);
   pickDeity('rama');
   expect(tree.root.findByType(SuvicharCard).props.deity).toBe('rama');
-  expect(tree.root.findByType(SuvicharPresetPicker).props.selectedId).toBe(suvicharTemplates.find(t => t.kind === 'daily' && t.deity === 'rama')!.id);
+  expect(tree.root.findByType(SuvicharPresetPicker).props.selectedId).toBe(templatesToday().find(t => t.kind === 'daily' && t.deity === 'rama')!.id);
 });
 
 it('offers message editing on ready-made cards', async () => {
   await mount(false);
-  const preset = suvicharTemplates.find(t => t.id === 'daily-salasar-balaji')!;
+  const preset = templatesToday().find(t => t.id === 'daily-salasar-balaji')!;
   act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(preset));
   expect(node('suvichar-message').props.value).toBe(preset.messageHi);
   act(() => node('suvichar-message').props.onChangeText('आपका दिन मंगलमय हो।'));
@@ -163,3 +168,61 @@ it('asks for the sender once, then shows it as an editable row', async () => {
   expect(tree.root.findByType(SuvicharCard).props.name).toBe('Patel family');
 });
 
+describe('weekday cards', () => {
+  const card = () => tree.root.findByType(SuvicharCard).props;
+  const stored = (prefs: object) => jest.mocked(AsyncStorage.getItem).mockResolvedValueOnce(JSON.stringify({ deity: 'krishna', frame: 'mandir-jharokha', message: '', name: '', favorites: [], ...prefs }));
+
+  it('opens a weekday on its own card: day title, that day’s deity and a day-free reflection', async () => {
+    day(27); await mount(false);
+    expect(node('suvichar-presets-vaar').props.accessibilityState.selected).toBe(true);
+    const picker = tree.root.findByType(SuvicharPresetPicker);
+    expect(picker.props.templates.map((t: { id: string }) => t.id)).toEqual(['hanuman', 'salasar-balaji'].flatMap(d => ['mandir-jharokha', 'pushp-aangan', 'bhakti-patra'].map(f => `vaar-${d}-${f}`)));
+    expect(picker.props.selectedId).toBe('vaar-hanuman-mandir-jharokha');
+    expect(card()).toMatchObject({ deity: 'hanuman', title: 'शुभ मंगलवार', message: templatesToday().find(t => t.kind === 'daily' && t.deity === 'hanuman')!.messageHi, original: true });
+    expect(node('suvichar-message').props.value).toBe('');
+  });
+
+  it('shows Vishnu as Surya-Narayan on Sunday', async () => {
+    await mount(false);
+    expect(node('suvichar-presets-vaar').props.accessibilityState.selected).toBe(true);
+    expect(card()).toMatchObject({ deity: 'vishnu', title: 'शुभ रविवार' });
+  });
+
+  it('keeps the saved frame, and never replaces a message the reader wrote', async () => {
+    day(27); stored({ frame: 'bhakti-patra' }); await mount(false);
+    expect(card()).toMatchObject({ deity: 'hanuman', frame: 'bhakti-patra', title: 'शुभ मंगलवार' });
+    act(() => tree.unmount());
+    stored({ frame: 'pushp-aangan', message: 'मेरा अपना संदेश' }); await mount(false);
+    expect(card()).toMatchObject({ deity: 'krishna', frame: 'pushp-aangan', message: 'मेरा अपना संदेश', title: undefined });
+  });
+
+  it('drops the title for another card and restores it from a weekday tile, keeping it through a new reflection', async () => {
+    day(27); await mount(false);
+    act(() => node('suvichar-presets-daily').props.onPress());
+    act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(templatesToday().find(t => t.id === 'daily-rama')!));
+    expect(card()).toMatchObject({ deity: 'rama', title: undefined });
+    act(() => node('suvichar-presets-vaar').props.onPress());
+    const picker = tree.root.findByType(SuvicharPresetPicker);
+    act(() => picker.props.onSelect(picker.props.templates.find((t: { id: string }) => t.id === 'vaar-salasar-balaji-pushp-aangan')));
+    expect(card()).toMatchObject({ deity: 'salasar-balaji', frame: 'pushp-aangan', title: 'शुभ मंगलवार' });
+    expect(tree.root.findByType(SuvicharPresetPicker).props.selectedId).toBe('vaar-salasar-balaji-pushp-aangan');
+    const first = card().message;
+    act(() => node('suvichar-next').props.onPress());
+    expect(card().title).toBe('शुभ मंगलवार'); expect(card().message).not.toBe(first);
+  });
+
+  it('rolls over to the new day on return, and a saved weekday card never names a past day', async () => {
+    let onChange: (state: string) => void = () => undefined;
+    jest.spyOn(AppState, 'addEventListener').mockImplementation((_, handler) => { onChange = handler as typeof onChange; return { remove: jest.fn() } as never; });
+    day(27); await mount(false);
+    act(() => node('suvichar-favorite').props.onPress());
+    const calls = jest.mocked(AsyncStorage.setItem).mock.calls; await flush();
+    expect(JSON.parse(calls[calls.length - 1][1]).favorites[0]).toMatchObject({ deity: 'hanuman', vaar: true });
+    act(() => card().onReady(true)); expect(node('suvichar-share').props.disabled).toBe(false);
+    day(28); act(() => onChange('active'));
+    expect(card()).toMatchObject({ deity: 'ganesha', title: 'शुभ बुधवार' });
+    expect(node('suvichar-share').props.disabled).toBe(true);
+    act(() => node('suvichar-saved-0').props.onPress());
+    expect(card()).toMatchObject({ deity: 'hanuman', title: 'शुभ बुधवार' });
+  });
+});

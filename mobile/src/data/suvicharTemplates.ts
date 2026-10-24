@@ -3,7 +3,7 @@ import type { Lang } from './gita/language';
 import { contentByLang } from '@/utils/localize';
 
 export type SuvicharTemplate = {
-  id: string; kind: 'daily' | 'wish'; deity: SuvicharDeity; frame: SuvicharFrame;
+  id: string; kind: 'daily' | 'wish' | 'vaar'; deity: SuvicharDeity; frame: SuvicharFrame;
   hi: string; en: string; messageHi: string; messageEn: string;
 };
 
