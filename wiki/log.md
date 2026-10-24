@@ -1137,3 +1137,8 @@ The card's whole lower panel used to stretch with the text, so the painted foote
 ## [2026-10-23] ingest | Suvichar composer tiers (option B)
 
 One `button()` helper had drawn every control alike, with Share below the fold. The composer now has a mode segment, underline filter tabs, painted deity and frame tiles, an always-editable message, a sender row remembered after first entry and a sticky heart + Share bar.
+
+## [2026-10-24] ingest | Weekday Suvichar cards (शुभ सोमवार – शुभ शनिवार)
+
+The composer opens Monday to Saturday on a weekday card: a 26-point saffron day title replaces the card label, and the message is a shipped day-free reflection that rotates by day of year. The आज tab lists the day's deities in every frame; Friday is Lakshmi (unlike Routine). Sunday is hidden until Surya masters exist, and only manifest-published deities appear, which also hides Jagannath for now. A reader-written message is never replaced; favorites store a `vaar` flag so they never name a past day. The Daily Bhakti entry names the day and deity and shows cache-only art. Focused Jest suites passed; Maestro `suvichar-vaar.yaml` parses but has not been run on a device.
+

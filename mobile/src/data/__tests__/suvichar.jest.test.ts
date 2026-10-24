@@ -27,7 +27,14 @@ it.each([null, '{', 'null', '[]', '{}'])('recovers corrupt or missing preference
 });
 it('restores names, frame, message and only valid saved cards', () => {
   const f = { deity: 'ram-darbar', frame: 'pushp-aangan', name: 'शर्मा परिवार', message: 'जय श्रीराम' };
-  expect(parseSuvicharPreferences(JSON.stringify({ ...f, favorites: [f, null, { deity: 'unknown' }] }))).toEqual({ ...f, favorites: [f] });
+  expect(parseSuvicharPreferences(JSON.stringify({ ...f, favorites: [f, null, { deity: 'unknown' }] }))).toEqual({ ...f, vaar: false, favorites: [f] });
+});
+it('restores the weekday flag on preferences and favorites, and drops anything but true', () => {
+  const f = { deity: 'hanuman', frame: 'bhakti-patra', name: '', message: '', vaar: true };
+  const parsed = parseSuvicharPreferences(JSON.stringify({ ...f, favorites: [f, { ...f, vaar: 'yes' }] }));
+  expect(parsed.vaar).toBe(true);
+  expect(parsed.favorites).toEqual([f, { deity: 'hanuman', frame: 'bhakti-patra', name: '', message: '' }]);
+  expect(parseSuvicharPreferences(JSON.stringify({ vaar: 1 })).vaar).toBe(false);
 });
 it('bounds untrusted stored input and strips sender control characters without changing its script', () => {
   expect(parseSuvicharPreferences(JSON.stringify({ name: 'a'.repeat(200) })).name).toHaveLength(NAME_LIMIT);

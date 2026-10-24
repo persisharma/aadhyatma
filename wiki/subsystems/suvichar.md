@@ -1,14 +1,14 @@
 ---
 title: Suvichar personalized cards
 type: subsystem
-sources: [mobile/src/screens/SuvicharScreen.tsx, mobile/src/components/SuvicharCard.tsx, mobile/src/components/SuvicharEntryCard.tsx, mobile/src/components/SuvicharFramePicker.tsx, mobile/src/data/suvichar.ts, scripts/prepare-suvichar.mjs]
-last_verified_date: 2026-10-23
+sources: [mobile/src/screens/SuvicharScreen.tsx, mobile/src/components/SuvicharCard.tsx, mobile/src/components/SuvicharEntryCard.tsx, mobile/src/components/SuvicharFramePicker.tsx, mobile/src/data/suvichar.ts, mobile/src/data/suvicharVaar.ts, mobile/src/data/suvicharTemplates.ts, scripts/prepare-suvichar.mjs]
+last_verified_date: 2026-10-24
 confidence: high
 status: current
 ---
 
 ## Summary
-Daily Bhakti opens a separate Home-stack composer for reusable devotional wishes with editable messages and optional names. Fourteen deities and three frame directions map to 42 text-free R2 masters.
+Daily Bhakti opens a separate Home-stack composer for reusable devotional wishes with editable messages and optional names. Sixteen deities and three frame directions have 48 source masters; 42 are in the runtime manifest (Sanwariya Seth and Jagannath are not yet published). On Monday to Saturday the composer opens on a weekday card titled “शुभ मंगलवार” and so on.
 
 ## Details
 Preferences and up to 50 complete favorites use the versioned `@vedansh/suvichar/v1` AsyncStorage key. Hydration finishes before inputs appear; writes are serialized. Artwork, message, name, language and preview width identify a capture generation. Only its own decode/layout callbacks may enable sharing. The root must match the measured growing body before capture; the PNG is 1080 pixels wide and retains full height.
@@ -26,3 +26,7 @@ Footer text must sit inside the painted footer strip: before the three-slice lay
 Salasar identity requires a shrine photo reference: the broad orange monolithic form, round eyes, triangular red nose and flat painted moustache/beard are essential. A naturalistic bearded human head was rejected despite matching the descriptive keywords. All three masters were corrected on 23 October; original frames and reviewed paper boundaries remain.
 
 The composer has explicit control tiers (mode segment, underline filter tabs, painted deity/frame tiles, eyebrow labels) and a sticky heart + Share bar; the message is editable in both modes and the sender collapses to a `सप्रेम — name ✎` row once saved (design.md §82 composer layout). Ready-made mode is the default: data/suvicharTemplates.ts composes 14 deity cards and seven wishes from existing authored content. SuvicharPresetPicker virtualizes thumbnail subscriptions to the shared R2 cache. A selection updates deity/frame/message while preserving the sender, and the full native SuvicharCard remains the single capture surface. All three frames remain available; custom mode preserves existing editing tools and switching modes does not reset preferences.
+
+Weekday cards (design.md §82 *Suvichar weekday cards*, `data/suvicharVaar.ts`): the day is only in the card title (`SuvicharCard` `title`, replacing the “आज का सुविचार” label), never in the message, which is one of the 21 shipped reflections picked by day of year. The ready-made rail's आज tab lists each of the day's deities in all three frames (`suvicharVaarTemplates`). `withTodaysVaar` runs on hydration and when the app returns on a new day: it sets `vaar: true` and an empty message (which renders today's reflection) unless the reader wrote the message, keeping frame, sender and favorites. Favorites store `vaar: true`, not a title, so a restored card names the current day. The Daily Bhakti entry names the day and deity and shows cached art only (`peekBackgroundAsset`, never a download).
+
+Weekday gotchas: `suvicharVaarFor` filters each day's deities by manifest presence, so Thursday's Jagannath stays hidden until its masters are published, and Sunday has no card until Surya masters exist (the आज tab is absent; nothing stands in). Friday is Lakshmi with Durga as alternate, deliberately unlike Routine's `VAAR_DEITY`. Latin titles reuse the weekday hashtag spellings in `shareHashtags.ts` (Mangalwar, Shukrawar). Screen tests fake only `Date` (`jest.useFakeTimers({ now, doNotFake: [...] })`) and pin the old suite to a Sunday; anything that asserts the default tab must pick a date.

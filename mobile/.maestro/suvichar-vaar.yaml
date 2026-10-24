@@ -1,0 +1,34 @@
+appId: com.prashantsharma.vedansh
+---
+# Weekday (vaar) Suvichar: Daily Bhakti's door opens the composer on today's
+# card, titled for the day (शुभ मंगलवार …) above a day-free reflection.
+# Sunday has no weekday card until Surya masters are published, so the
+# weekday steps run only when the today tab is present.
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-bhakti" }
+- tapOn: { id: "open-suvichar" }
+- assertVisible: { id: "suvichar-mode-ready" }
+- runFlow:
+    when: { visible: { id: "suvichar-presets-vaar" } }
+    commands:
+      - scrollUntilVisible:
+          element: { id: "suvichar-card-title" }
+      - assertVisible: { id: "suvichar-card-title" }
+      - assertVisible: { id: "suvichar-card-message" }
+      # A new reflection keeps the day title.
+      - scrollUntilVisible:
+          element: { id: "suvichar-next" }
+      - tapOn: { id: "suvichar-next" }
+      - scrollUntilVisible:
+          element: { id: "suvichar-card-title" }
+          direction: UP
+      - assertVisible: { id: "suvichar-card-title" }
+- runFlow:
+    when: { notVisible: { id: "suvichar-presets-vaar" } }
+    commands:
+      - assertNotVisible: { id: "suvichar-card-title" }
+- scrollUntilVisible:
+    element: { id: "suvichar-share" }
+- assertVisible: { id: "suvichar-share" }
+# Inspect the shared PNG through the OS/WhatsApp sheet on both platforms.
+# Do not send a message to a recipient.

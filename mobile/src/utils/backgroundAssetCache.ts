@@ -142,6 +142,16 @@ export function subscribeBackgroundAsset(request: CachedAssetRequest, listener: 
   };
 }
 
+/** Cache-only lookup for decorative previews: the persisted file or null. Never downloads. */
+export async function peekBackgroundAsset(request: CachedAssetRequest): Promise<string | null> {
+  const path = cachePath(request);
+  if (!path) return null;
+  try {
+    const info = await FileSystem.getInfoAsync(path);
+    return info.exists && !info.isDirectory && info.size > 0 ? path : null;
+  } catch { return null; }
+}
+
 /** A native decode failure must not poison the persistent cache on every visit. */
 export async function evictBackgroundAsset(request: CachedAssetRequest): Promise<void> {
   const path = cachePath(request);
