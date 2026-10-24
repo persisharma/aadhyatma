@@ -2,7 +2,7 @@ import React from 'react';
 import { Image } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import SuvicharPresetPicker from '../SuvicharPresetPicker';
-import { suvicharTemplates } from '@/data/suvicharTemplates';
+import { suvicharTemplatesFor } from '@/data/suvicharTemplates';
 import { subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
 
 const mockDispose = jest.fn();
@@ -12,7 +12,7 @@ jest.mock('@/utils/backgroundAssetCache', () => ({ subscribeBackgroundAsset: jes
 let tree: ReactTestRenderer;
 afterEach(() => { if (tree) act(() => tree.unmount()); jest.clearAllMocks(); });
 it('opens the full chosen preset and releases its cached artwork subscription on unmount', () => {
-  const preset = suvicharTemplates.find(t => t.id === 'daily-salasar-balaji')!;
+  const preset = suvicharTemplatesFor(0).find(t => t.id === 'daily-salasar-balaji')!;
   const onSelect = jest.fn();
   act(() => { tree = create(<SuvicharPresetPicker templates={[preset]} lang="hi" disabled={false} onSelect={onSelect} />); });
   expect(subscribeBackgroundAsset).toHaveBeenCalledWith(expect.objectContaining({ remoteUrl: expect.stringContaining('salasar-balaji') }), expect.any(Function));
