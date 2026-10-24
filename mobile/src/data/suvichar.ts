@@ -71,7 +71,9 @@ export const suvicharDeities = [
     "id": "tirupati-balaji",
     "hi": "तिरुपति बालाजी",
     "en": "Tirupati Balaji"
-  }
+  },
+  { "id": "sanwariya-seth", "hi": "सांवरिया सेठ", "en": "Sanwariya Seth" },
+  { "id": "jagannath", "hi": "भगवान जगन्नाथ", "en": "Lord Jagannath" }
 ] as const;
 export const suvicharFrames = [
   {

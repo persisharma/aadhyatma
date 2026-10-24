@@ -109,7 +109,7 @@ it('opens ready-made cards first and shares one without editing a message', asyn
   expect(node('suvichar-mode-ready').props.accessibilityState.selected).toBe(true);
   expect(node('suvichar-message').props.value).toBe('');
   const picker = tree.root.findByType(SuvicharPresetPicker);
-  expect(picker.props.templates).toHaveLength(14);
+  expect(picker.props.templates).toHaveLength(16);
   act(() => node('suvichar-name').props.onChangeText('Sharma family'));
   const preset = suvicharTemplates.find(t => t.id === 'daily-salasar-balaji')!;
   act(() => picker.props.onSelect(preset));
@@ -134,7 +134,7 @@ it('offers seven ready-made wishes and keeps the selected card when switching to
 it('picks deities from compact painted tiles in custom mode', async () => {
   await mount();
   const picker = tree.root.findByType(SuvicharPresetPicker);
-  expect(picker.props).toMatchObject({ compact: true }); expect(picker.props.templates).toHaveLength(14);
+  expect(picker.props).toMatchObject({ compact: true }); expect(picker.props.templates).toHaveLength(16);
   expect(picker.props.testIDFor(picker.props.templates[0])).toBe(`suvichar-deity-${picker.props.templates[0].deity}`);
   pickDeity('rama');
   expect(tree.root.findByType(SuvicharCard).props.deity).toBe('rama');
