@@ -449,6 +449,12 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           try {
             const measuredHeight = await withTimeout(verseMeasured, 5000);
             spec = { ...spec, measuredHeight };
+            // Instagram: the fit frame remounts the card, so the measuring mount's
+            // paint no longer counts — wait for the remounted card's own artwork.
+            const fitId = spec.captureId;
+            if (isDevotionalFit(spec) && fitId !== undefined) {
+              painted = new Promise<boolean>(resolve => { imageReady.current = { id: fitId, resolve }; });
+            }
             setPending(spec);
           } catch { imageReady.current = null; return null; }
           finally { verseLayout.current = null; }

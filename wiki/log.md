@@ -1137,3 +1137,7 @@ The card's whole lower panel used to stretch with the text, so the painted foote
 ## [2026-10-23] ingest | Suvichar composer tiers (option B)
 
 One `button()` helper had drawn every control alike, with Share below the fold. The composer now has a mode segment, underline filter tabs, painted deity and frame tiles, an always-editable message, a sender row remembered after first entry and a sticky heart + Share bar.
+
+## [2026-10-24] ingest | Six new Suvichar masters published
+
+PR #530 added Jagannath and Sanwariya Seth (6 masters) to the sources without publishing them, leaving the runtime manifest at 42 of 48, so those deities had no artwork. Uploaded the six with immutable caching, regenerated the manifest from the sources (48; existing entries unchanged) and verified with `prepare-suvichar.mjs --verify`.
