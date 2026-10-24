@@ -35,15 +35,21 @@ it('system share: waits for native height and paint, then exports the complete v
   expect(mockCapture).toHaveBeenCalledTimes(1);
   expect(mockCapture.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 2000 / PixelRatio.get() });
 });
+// The Instagram fit frame remounts the card after measuring, so the capture waits
+// for the *remounted* card's artwork (#531) — drive the measure first, then fire the
+// remounted card's onIllustrationReady.
+const fitCard = () => tree.root.findAllByType('ProseShareCard' as React.ElementType).find(n => n.props.onIllustrationReady)!;
 it('Instagram post: scales a tall card into the 4:5 frame so nothing is cropped', async () => {
   const card = await open('igPost');
-  act(() => { card.props.onHeight(1000); card.props.onIllustrationReady(true); }); await pause(); await pause();
+  act(() => card.props.onHeight(1000)); await pause();
+  act(() => fitCard().props.onIllustrationReady(true)); await pause(); await pause();
   expect(mockCapture).toHaveBeenCalledTimes(1);
   expect(mockCapture.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 1350 / PixelRatio.get() });
 });
 it('Instagram story: scales a tall card into the 9:16 frame so nothing is cropped', async () => {
   const card = await open('igStory');
-  act(() => { card.props.onHeight(1000); card.props.onIllustrationReady(true); }); await pause(); await pause();
+  act(() => card.props.onHeight(1000)); await pause();
+  act(() => fitCard().props.onIllustrationReady(true)); await pause(); await pause();
   expect(mockCapture).toHaveBeenCalledTimes(1);
   expect(mockCapture.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 1920 / PixelRatio.get() });
 });
