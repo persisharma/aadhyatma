@@ -1149,3 +1149,7 @@ The composer opens every day on a weekday card (Sunday: Vishnu as Surya-Narayan 
 ## [2026-10-25] ingest | Suvichar sender photo
 
 Senders can add one round photo above their name on the card (deity painting unchanged). Picked from the library with a square crop (`expo-image-picker`, camera/microphone permissions blocked), stored on-device under documents/suvichar, persisted by file name only, excluded from favorites, gated into capture readiness. Native module, so visible only on the next store build. Typecheck and lint passed; no Jest or Maestro run.
+
+## [2026-10-25] update | Suvichar sender photo is opt-in
+
+The photo row and card photo now appear only after the sender turns on “कार्ड पर अपनी फ़ोटो भी लगाएँ” (`photoOn`, off by default, persisted). Turning it off hides the photo without deleting the saved file. Typecheck and lint passed; no Jest or Maestro run.

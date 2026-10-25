@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Image, PixelRatio, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Alert, Image, PixelRatio, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -79,7 +79,8 @@ export default function SuvicharScreen() {
   const favorite = { deity: prefs.deity, frame: prefs.frame, message: prefs.message, name: prefs.name, ...(prefs.vaar ? { vaar: true as const } : {}) };
   const savedIndex = prefs.favorites.findIndex(f => JSON.stringify(f) === JSON.stringify(favorite));
   const photoUri = useMemo(() => prefs.photo ? senderPhotoUri(prefs.photo) : null, [prefs.photo]);
-  const identity = JSON.stringify([prefs.deity, prefs.frame, prefs.name, prefs.photo, message, cardTitle, width, lang, retry]);
+  const cardPhoto = prefs.photoOn ? photoUri : null;
+  const identity = JSON.stringify([prefs.deity, prefs.frame, prefs.name, cardPhoto, message, cardTitle, width, lang, retry]);
   const ready = readyIdentity === identity;
   const update = (patch: Partial<typeof prefs>) => setPrefs(p => ({ ...p, ...patch }));
   // A weekday card keeps its message empty so it always shows the deity's thought for the current day.
@@ -173,7 +174,7 @@ export default function SuvicharScreen() {
         <SuvicharFramePicker deity={prefs.deity} frame={prefs.frame} lang={lang} disabled={off} onSelect={frame => update({ frame })} />
       </View>
       <View style={{ gap: spacing.sm }}>
-        <View ref={card} collapsable={false} style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} photo={photoUri} onPhotoError={() => update({ photo: '' })} message={message} title={cardTitle} lang={lang} width={width} onReady={onReady} onHeight={onHeight} original={original} /></View>
+        <View ref={card} collapsable={false} style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} photo={cardPhoto} onPhotoError={() => update({ photo: '' })} message={message} title={cardTitle} lang={lang} width={width} onReady={onReady} onHeight={onHeight} original={original} /></View>
         {!ready ? <Pressable testID="suvichar-retry" accessibilityRole="button" disabled={off} onPress={() => { setReadyIdentity(null); setRetry(n => n + 1); }} style={{ alignSelf: 'center', minHeight: 44, justifyContent: 'center' }}>
           <Text style={{ fontFamily: face, fontSize: 14, color: colors.saffronDeep }}>{tr({ hi: 'चित्र फिर लाएँ', en: 'Reload artwork', gu: 'ચિત્ર ફરી લાવો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ' })}</Text></Pressable> : null}
       </View>
@@ -198,7 +199,14 @@ export default function SuvicharScreen() {
         <Text style={{ flex: 1, fontFamily: face, fontSize: 14, lineHeight: 22, color: colors.inkSoft }}>{tr({ hi: 'सप्रेम', en: 'With love', gu: 'સપ્રેમ', kn: 'ಪ್ರೀತಿಯಿಂದ' })} — <Text style={{ color: colors.ink }}>{prefs.name}</Text></Text>
         <AppIcon name="edit" size={16} color={colors.saffronDeep} />
       </Pressable>}
-      {photoAvailable || prefs.photo ? <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.xs }}>
+      {photoAvailable || prefs.photo ? <View style={{ gap: spacing.sm }}>
+      <View style={{ minHeight: 48, flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
+        <Text style={[eyebrow, { flex: 1 }]}>{tr({ hi: 'कार्ड पर अपनी फ़ोटो भी लगाएँ', en: 'Add your photo to the card', gu: 'કાર્ડ પર તમારો ફોટો પણ મૂકો', kn: 'ಕಾರ್ಡ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಫೋಟೋ ಕೂಡ ಹಾಕಿ' })}</Text>
+        <Switch testID="suvichar-photo-toggle" value={prefs.photoOn} onValueChange={photoOn => update({ photoOn })} disabled={off}
+          trackColor={{ true: colors.saffron, false: colors.divider }} thumbColor={colors.onPrimary} ios_backgroundColor={colors.divider}
+          accessibilityLabel={tr({ hi: 'कार्ड पर फ़ोटो चालू / बंद', en: 'Toggle photo on card', gu: 'કાર્ડ પર ફોટો ચાલુ / બંધ', kn: 'ಕಾರ್ಡ್‌ನಲ್ಲಿ ಫೋಟೋ ಆನ್ / ಆಫ್' })} />
+      </View>
+      {prefs.photoOn ? <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.xs }}>
         <Pressable testID="suvichar-photo" accessibilityRole="button" accessibilityLabel={prefs.photo ? tr({ hi: 'फ़ोटो बदलें', en: 'Change photo', gu: 'ફોટો બદલો', kn: 'ಫೋಟೋ ಬದಲಿಸಿ' }) : tr({ hi: 'अपनी फ़ोटो जोड़ें', en: 'Add your photo', gu: 'તમારો ફોટો ઉમેરો', kn: 'ನಿಮ್ಮ ಫೋಟೋ ಸೇರಿಸಿ' })}
           accessibilityState={{ disabled: off || !photoAvailable }} disabled={off || !photoAvailable} onPress={() => void choosePhoto()}
           style={({ pressed }) => ({ flex: 1, minHeight: 56, flexDirection: 'row', alignItems: 'center', gap: spacing.sm + 2, paddingHorizontal: spacing.md, paddingVertical: spacing.xs, borderRadius: radii.md, borderWidth: 1, borderStyle: 'dashed', borderColor: colors.cardActiveBorder, opacity: pressed ? 0.8 : 1 })}>
@@ -211,6 +219,7 @@ export default function SuvicharScreen() {
         </Pressable>
         {prefs.photo ? <Pressable testID="suvichar-photo-remove" accessibilityRole="button" accessibilityLabel={tr({ hi: 'फ़ोटो हटाएँ', en: 'Remove photo', gu: 'ફોટો દૂર કરો', kn: 'ಫೋಟೋ ತೆಗೆದುಹಾಕಿ' })} disabled={off} onPress={removePhoto}
           style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}><AppIcon name="close" size={18} color={colors.inkMuted} /></Pressable> : null}
+      </View> : null}
       </View> : null}
       {prefs.favorites.length ? <View style={{ gap: spacing.sm }}>
         <Text style={eyebrow}>{myFavorites}</Text>
