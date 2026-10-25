@@ -3907,7 +3907,7 @@ Purpose: every control used to be the same bordered 48 dp rectangle, so the mode
 3. **Frame** — three painted miniatures of the current deity in each frame (`SuvicharFramePicker`, 52×65 art from the shared R2 cache, label 12 pt, 2 dp `saffron` ring when selected, `suvichar-frame-<id>`).
 4. **Preview** — the native `SuvicharCard`; “चित्र फिर लाएँ” is a quiet text action under it.
 5. **Message** — in both modes: eyebrow “संदेश” with a “↻ दूसरा सुविचार” text action (`suvichar-next`), a multiline field (`cardActiveFrom` fill, `cardActiveBorder`) holding the selected card's message, and a hint with the 280 counter. Editing a ready-made message makes it a user wish (wishes label on the card).
-6. **Sender, asked once** — while no name is saved, a labelled field with “एक बार लिखें, आगे याद रहेगा”; once saved it collapses to a dashed `सप्रेम — name ✎` row (`suvichar-name-row`) that reopens the field. Favorites (`suvichar-saved-*`) are pill chips at the end; the header's bookmark scrolls to them when any exist.
+6. **Sender, asked once** — while no name is saved, a labelled field with “एक बार लिखें, आगे याद रहेगा”; once saved it collapses to a dashed `सप्रेम — name ✎` row (`suvichar-name-row`) that reopens the field. Below it, the optional sender-photo row (see *Suvichar sender photo*). Favorites (`suvichar-saved-*`) are pill chips at the end; the header's bookmark scrolls to them when any exist.
 7. **Sticky action bar** — pinned under the scroll, `parchmentSoft` with a hairline top border: a 52 dp heart toggle (`suvichar-favorite`, filled when saved) and a full-width 52 dp `saffronDeep` primary button with the share icon and “साझा करें” (`suvichar-share`; 55% opacity until the card is capture-ready, spinner while busy).
 
 The custom-mode wish chips were removed; wishes live in the ready-made शुभकामनाएँ tab.
@@ -3923,6 +3923,20 @@ Purpose: a ready card for each day of the week, “शुभ रविवार�
 **Composer:** on a weekday the ready-made tab row opens on आज · <weekday>, and the rail shows each of the day's deities in all three frames (`vaar-<deity>-<frame>`). Opening the composer applies today's card (`withTodaysVaar`): the saved frame, sender and favorites are kept, and the saved deity too when it is one of today's; a message the reader wrote is never replaced. Picking any other ready-made card drops the title; picking a weekday tile restores it. In custom mode, changing deity, frame or message keeps the title. The title always names the current civil day: the screen follows `useTodayKey` (midnight and app return), and a favorite saved from a weekday card stores `vaar: true` rather than a title, so it never names a past day. A title change resets capture readiness like any other text change.
 
 Files: `mobile/src/data/suvicharVaar.ts` (`suvicharVaarTemplates`), `data/suvicharTemplates.ts` (`'vaar'` kind), `components/SuvicharCard.tsx` (`title`), `components/SuvicharEntryCard.tsx`, `screens/SuvicharScreen.tsx`, `utils/backgroundAssetCache.ts` (`peekBackgroundAsset`), `theme/suvichar.ts`. E2E: `.maestro/suvichar-vaar.yaml`.
+
+### Suvichar sender photo — 25 October 2026
+
+Purpose: families send morning cards with their own face on them; the sender can add one round photo beside their name without replacing the deity painting.
+
+**Card:** the photo sits centred in the paper panel directly above “सप्रेम — name” (below the breaker and any wishes label): `suvicharCardType.photo` 56 at the 360 dp base, fully round, 1.5 dp `gold` ring, 4 dp above / 2 dp below (all scaled with card width), `suvichar-card-photo`. With no name it stands alone; with no photo the card is unchanged. The photo joins the decode gate like the brand mark, so a share never captures an empty circle; a photo that fails to decode is cleared from preferences and the row returns to “add”.
+
+**Composer:** under the sender row, a dashed row in the same style as `suvichar-name-row` (`suvichar-photo`, 56 dp min): a 40 dp round thumbnail (or the `photo` icon, 28 dp `saffronDeep`) beside “अपनी फ़ोटो जोड़ें (वैकल्पिक)” / “फ़ोटो बदलें” over the hint “नाम के ऊपर गोल फ़ोटो; सिर्फ़ इसी फ़ोन में सहेजी जाती है”; a 44 dp ✕ (`suvichar-photo-remove`) removes it. Tapping opens the system photo picker with a square crop (oval guide on Android). No camera capture.
+
+**Storage and privacy:** the cropped image is copied to `documents/suvichar/sender-<timestamp>.<ext>`; preferences keep only that file name (`photo`, validated by `isSenderPhotoName`) and resolve the URI at render time, because the iOS container path changes across updates. Like the name, the photo belongs to the sender: favorites do not store it, and changing or removing it deletes the old file. It is never uploaded; it leaves the phone only inside a card the user shares.
+
+**Release gate:** `expo-image-picker` is a native module, so the row appears only on a binary that contains it (`requireOptionalNativeModule('ExponentImagePicker')`, lazily required like `multiShare.ts`); an OTA to an older binary shows no photo control. The plugin is configured with `cameraPermission: false` and `microphonePermission: false`; iOS keeps one `NSPhotoLibraryUsageDescription` covering cards and the sender photo.
+
+Files: `mobile/src/utils/suvicharPhoto.ts`, `data/suvichar.ts` (`photo`, `isSenderPhotoName`), `components/SuvicharCard.tsx` (`photo`), `screens/SuvicharScreen.tsx`, `components/AppIcon.tsx` (`photo`), `theme/suvichar.ts`, `app.json`.
 ## 85. Auto-slide (स्वतः) — hands-free page turning
 
 **Purpose.** Every paged surface — the verse readers, Vrat Katha, Garud Puran, Gita Saar, पितृ पक्ष परिचय, Kids Stories, the Ramayan comic and Puja Vidhi conduct — can turn its own pages, so a reading can be followed without swiping. It is a reading aid, not playback: it never speaks (that is read-aloud, §56) and never starts on its own.

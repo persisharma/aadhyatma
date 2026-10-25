@@ -100,10 +100,13 @@ export const MESSAGE_LIMIT = 280;
 export function cleanSender(value: string): string {
   return value.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim();
 }
+/** Sender photos are written by utils/suvicharPhoto.ts only; a corrupt preference can never point at another file. */
+export function isSenderPhotoName(value: unknown): value is string { return typeof value === 'string' && /^sender-\d+\.(jpe?g|png|heic|webp)$/i.test(value); }
 /** `vaar` marks a weekday card: its title is always the current day's, so a saved card never names a past day. */
 export type SuvicharFavorite = { deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; vaar?: true };
+/** `photo` belongs to the sender, like the name, but favorites never store it: removing the photo removes it everywhere. */
 export const initialSuvichar = { deity: 'krishna' as SuvicharDeity, frame: 'mandir-jharokha' as SuvicharFrame,
-  name: '', message: '', vaar: false, favorites: [] as SuvicharFavorite[] };
+  name: '', photo: '', message: '', vaar: false, favorites: [] as SuvicharFavorite[] };
 export type SuvicharPreferences = typeof initialSuvichar;
 export function parseSuvicharPreferences(raw: string | null): SuvicharPreferences {
   try {
@@ -112,6 +115,7 @@ export function parseSuvicharPreferences(raw: string | null): SuvicharPreference
       deity: suvicharDeities.some(d => d.id === p.deity) ? p.deity : initialSuvichar.deity,
       frame: suvicharFrames.some(f => f.id === p.frame) ? p.frame : initialSuvichar.frame,
       name: typeof p.name === 'string' ? p.name.slice(0, NAME_LIMIT) : '',
+      photo: isSenderPhotoName(p.photo) ? p.photo : '',
       message: typeof p.message === 'string' ? p.message.slice(0, MESSAGE_LIMIT) : '',
       vaar: p.vaar === true,
       favorites: Array.isArray(p.favorites) ? p.favorites.filter((f: SuvicharFavorite) => f &&

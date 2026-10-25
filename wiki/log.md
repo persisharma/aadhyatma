@@ -1145,3 +1145,7 @@ PR #530 added Jagannath and Sanwariya Seth (6 masters) to the sources without pu
 ## [2026-10-24] ingest | Weekday Suvichar cards (शुभ सोमवार – शुभ शनिवार)
 
 The composer opens every day on a weekday card (Sunday: Vishnu as Surya-Narayan until Surya masters exist): a 26-point saffron day title replaces the card label, and the message is the deity's day-free thought for the day (the #536 rotation). The आज tab lists the day's deities in every frame; every catalog deity is linked to a day (Krishna forms and Saraswati on Wednesday, Ram and Vishnu forms on Thursday), and Friday is Lakshmi (unlike Routine). Only manifest-published deities appear (Thursday's Jagannath arrived with #532). A reader-written message is never replaced; favorites store a `vaar` flag so they never name a past day. The Daily Bhakti entry names the day and deity and shows cache-only art. Focused Jest suites passed; Maestro `suvichar-vaar.yaml` parses but has not been run on a device.
+
+## [2026-10-25] ingest | Suvichar sender photo
+
+Senders can add one round photo above their name on the card (deity painting unchanged). Picked from the library with a square crop (`expo-image-picker`, camera/microphone permissions blocked), stored on-device under documents/suvichar, persisted by file name only, excluded from favorites, gated into capture readiness. Native module, so visible only on the next store build. Typecheck and lint passed; no Jest or Maestro run.

@@ -20,7 +20,7 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSPhotoLibraryAddUsageDescription": "Save the verse and katha cards you share to Photos.",
-        "NSPhotoLibraryUsageDescription": "Allow access to your photo library to save and share the verse and katha cards you create.",
+        "NSPhotoLibraryUsageDescription": "Allow access to your photo library to save and share the verse and katha cards you create, and to add your photo to a Suvichar card.",
         "UIBackgroundModes": [
           "audio"
         ]
@@ -91,7 +91,15 @@
           "isAndroidBackgroundLocationEnabled": false
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow access to your photo library to save and share the verse and katha cards you create, and to add your photo to a Suvichar card.",
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
+      ]
     ],
     "owner": "prashant.sharma",
     "extra": {
