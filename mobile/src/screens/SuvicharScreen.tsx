@@ -215,7 +215,7 @@ export default function SuvicharScreen() {
             : <AppIcon name="photo" size={28} color={colors.saffronDeep} />}
           <View style={{ flex: 1 }}>
             <Text style={{ fontFamily: face, fontSize: 14, lineHeight: 22, color: colors.inkSoft }}>{prefs.photo ? tr({ hi: 'फ़ोटो बदलें', en: 'Change photo', gu: 'ફોટો બદલો', kn: 'ಫೋಟೋ ಬದಲಿಸಿ' }) : tr({ hi: 'अपनी फ़ोटो जोड़ें (वैकल्पिक)', en: 'Add your photo (optional)', gu: 'તમારો ફોટો ઉમેરો (વૈકલ્પિક)', kn: 'ನಿಮ್ಮ ಫೋಟೋ ಸೇರಿಸಿ (ಐಚ್ಛಿಕ)' })}</Text>
-            <Text style={hint}>{tr({ hi: 'नाम के ऊपर गोल फ़ोटो; सिर्फ़ इसी फ़ोन में सहेजी जाती है', en: 'Shown round above your name; saved only on this phone', gu: 'નામની ઉપર ગોળ ફોટો; ફક્ત આ ફોનમાં સચવાય છે', kn: 'ಹೆಸರಿನ ಮೇಲೆ ವೃತ್ತಾಕಾರದ ಫೋಟೋ; ಈ ಫೋನ್‌ನಲ್ಲಿ ಮಾತ್ರ ಉಳಿಸಲಾಗುತ್ತದೆ' })}</Text>
+            <Text style={hint}>{tr({ hi: 'नाम के ऊपर गोल फ़ोटो; चेहरा अपने-आप बीच में आता है', en: 'Shown round above your name; faces are centred automatically', gu: 'નામની ઉપર ગોળ ફોટો; ચહેરો આપમેળે વચ્ચે આવે છે', kn: 'ಹೆಸರಿನ ಮೇಲೆ ವೃತ್ತಾಕಾರದ ಫೋಟೋ; ಮುಖ ತಾನಾಗಿ ಮಧ್ಯಕ್ಕೆ ಬರುತ್ತದೆ' })}</Text>
           </View>
         </Pressable>
         {prefs.photo ? <Pressable testID="suvichar-photo-remove" accessibilityRole="button" accessibilityLabel={tr({ hi: 'फ़ोटो हटाएँ', en: 'Remove photo', gu: 'ફોટો દૂર કરો', kn: 'ಫೋಟೋ ತೆಗೆದುಹಾಕಿ' })} disabled={off} onPress={removePhoto}

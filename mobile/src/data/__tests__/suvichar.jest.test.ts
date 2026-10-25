@@ -28,7 +28,7 @@ it.each([null, '{', 'null', '[]', '{}'])('recovers corrupt or missing preference
 });
 it('restores names, frame, message and only valid saved cards', () => {
   const f = { deity: 'ram-darbar', frame: 'pushp-aangan', name: 'शर्मा परिवार', message: 'जय श्रीराम' };
-  expect(parseSuvicharPreferences(JSON.stringify({ ...f, favorites: [f, null, { deity: 'unknown' }] }))).toEqual({ ...f, vaar: false, favorites: [f] });
+  expect(parseSuvicharPreferences(JSON.stringify({ ...f, favorites: [f, null, { deity: 'unknown' }] }))).toEqual({ ...f, photo: '', photoFit: { x: 0, y: 0, w: 1, h: 1 }, photoOn: false, vaar: false, favorites: [f] });
 });
 it('restores the weekday flag on preferences and favorites, and drops anything but true', () => {
   const f = { deity: 'hanuman', frame: 'bhakti-patra', name: '', message: '', vaar: true };
