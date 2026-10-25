@@ -56,13 +56,21 @@ async function resolve(job: Job): Promise<string> {
   // treated as a hit and must not prevent a fresh download on the next launch.
   await FileSystem.deleteAsync(temporary, { idempotent: true });
   if (job.cancelled) throw new Error('Background no longer visible');
-  const download = FileSystem.createDownloadResumable(job.request.remoteUrl, temporary);
   let timer: ReturnType<typeof setTimeout> | undefined;
+  // The timeout measures a stall, not the whole transfer: every progress event
+  // restarts it. A fixed deadline can fail two parallel ~600 KB masters on a
+  // slow link while a third, downloaded alone afterwards, succeeds.
+  const restartTimer = () => {
+    if (!job.abort) return;
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(job.abort, BACKGROUND_DOWNLOAD_TIMEOUT_MS);
+  };
+  const download = FileSystem.createDownloadResumable(job.request.remoteUrl, temporary, {}, restartTimer);
   let committed = false;
   try {
     const interrupted = new Promise<never>((_, reject) => {
       job.abort = () => reject(new Error('Background download cancelled'));
-      timer = setTimeout(job.abort, BACKGROUND_DOWNLOAD_TIMEOUT_MS);
+      restartTimer();
     });
     const result = await Promise.race([download.downloadAsync(), interrupted]);
     if (job.cancelled || !result || result.status !== 200) throw new Error('Background download failed');

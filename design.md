@@ -345,7 +345,7 @@ persistent cached artwork after navigation focus and interactions. Deduplicated 
 bypass the network queue, so unrelated slow downloads do not delay cached paintings. Only
 misses enter the bounded download queue. All file operations are async;
 downloads deduplicate by hash/extension, limit concurrency to two, time out after eight seconds
-and cancel when the final viewer leaves. Completed valid artwork has no expiry, revalidation or
+without progress (each received chunk restarts the clock, so slow links still finish) and cancel when the final viewer leaves. Completed valid artwork has no expiry, revalidation or
 automatic eviction. Text and controls never await artwork; native decode errors preserve the
 fallback and evict damaged files for recovery.
 

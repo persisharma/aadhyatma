@@ -4,14 +4,14 @@ import type { CachedAssetRequest } from '../assetCache';
 
 const mockFiles = new Set<string>();
 const mockEmptyFiles = new Set<string>();
-const mockTasks: { path: string; finish: (status?: number, empty?: boolean) => void; fail: () => void; cancel: jest.Mock }[] = [];
+const mockTasks: { path: string; finish: (status?: number, empty?: boolean) => void; fail: () => void; cancel: jest.Mock; progress: () => void }[] = [];
 jest.mock('expo-file-system/legacy', () => ({
   documentDirectory: 'file:///docs/',
   getInfoAsync: jest.fn(async (path: string) => mockFiles.has(path) ? { exists: true, size: mockEmptyFiles.has(path) ? 0 : 20, isDirectory: false } : { exists: false }),
   makeDirectoryAsync: jest.fn(async () => undefined),
   moveAsync: jest.fn(async ({ from, to }) => { mockFiles.delete(from); mockFiles.add(to); }),
   deleteAsync: jest.fn(async (path: string) => { mockFiles.delete(path); }),
-  createDownloadResumable: jest.fn((url: string, path: string) => {
+  createDownloadResumable: jest.fn((url: string, path: string, _options?: object, onProgress?: () => void) => {
     let finish!: (status?: number, empty?: boolean) => void;
     let fail!: () => void;
     const promise = new Promise((resolve, reject) => {
@@ -23,7 +23,7 @@ jest.mock('expo-file-system/legacy', () => ({
       fail = () => reject(new Error('Network unavailable'));
     });
     const cancel = jest.fn(async () => undefined);
-    mockTasks.push({ path, finish, fail, cancel });
+    mockTasks.push({ path, finish, fail, cancel, progress: () => onProgress?.() });
     return { downloadAsync: () => promise, cancelAsync: cancel };
   }),
 }));
@@ -157,6 +157,16 @@ test('timeout cancels native work and settles to fallback without a partial cach
   expect(listener).toHaveBeenCalledWith(null);
   expect(FileSystem.moveAsync).not.toHaveBeenCalled();
   expect(FileSystem.deleteAsync).toHaveBeenCalledWith(mockTasks[0].path, { idempotent: true });
+});
+
+test('a slow download that keeps receiving bytes outlives the timeout; a stall still aborts it', async () => {
+  const slow = subscribe('slow'); const stalled = subscribe('stalled'); await flush();
+  for (let i = 0; i < 4; i++) { jest.advanceTimersByTime(BACKGROUND_DOWNLOAD_TIMEOUT_MS - 1000); mockTasks[0].progress(); }
+  await flush();
+  expect(mockTasks[0].cancel).not.toHaveBeenCalled();
+  expect(stalled).toHaveBeenCalledWith(null);
+  mockTasks[0].finish(); await flush();
+  expect(slow).toHaveBeenCalledWith('file:///docs/reading-backgrounds/slow.webp');
 });
 
 test('leaving one viewer keeps shared work; leaving the last cancels it without callbacks', async () => {

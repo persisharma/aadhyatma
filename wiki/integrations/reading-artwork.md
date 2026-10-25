@@ -97,7 +97,11 @@ Tests pin all 1,014 mappings and all four scripts; current native evidence is in
    behind unrelated slow downloads. Only misses enter the bounded queue and recheck disk before
    fetching. Lookup cancellation suppresses queued work and callbacks. Downloads deduplicate
    by content hash and extension, including across CDN URLs, with
-   concurrency two and an eight-second network timeout.
+   concurrency two and an eight-second **stall** timeout (each progress event restarts it).
+   It replaced a fixed whole-transfer deadline after Suvichar showed Vishnu's first two frame
+   tiles blank while the third painted (all three masters are published; device unverified):
+   two ~600 KB masters sharing a slow link can both miss 8 s while the third, alone, finishes,
+   and a failed tile never retries until it remounts.
    Files live under Documents `reading-backgrounds/`; unique `.part` files are promoted only
    after a successful, nonempty download. Releasing the last subscriber cancels queued/native work.
    Completed valid files have no expiry, network revalidation or automatic eviction. A fresh
