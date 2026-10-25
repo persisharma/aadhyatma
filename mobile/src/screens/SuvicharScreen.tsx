@@ -137,14 +137,14 @@ export default function SuvicharScreen() {
         {segment(tr({ hi: 'अपना बनाएँ', en: 'Create your own', gu: 'તમારું બનાવો', kn: 'ನಿಮ್ಮದೇ ರಚಿಸಿ' }), () => setMode('custom'), mode === 'custom', 'suvichar-mode-custom')}
       </View>
       {mode === 'ready' ? <View style={{ gap: spacing.sm }}>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', columnGap: spacing.lg }}>
-          <Text style={[eyebrow, { paddingBottom: spacing.sm + 2 }]}>{tr({ hi: 'कार्ड चुनें', en: 'Choose a card', gu: 'કાર્ડ પસંદ કરો', kn: 'ಕಾರ್ಡ್ ಆಯ್ಕೆ ಮಾಡಿ' })}</Text>
-          <View accessibilityRole="tablist" style={{ flexDirection: 'row', flexWrap: 'wrap', columnGap: spacing.lg }}>
+        <Text style={eyebrow}>{tr({ hi: 'कार्ड चुनें', en: 'Choose a card', gu: 'કાર્ડ પસંદ કરો', kn: 'ಕಾರ್ಡ್ ಆಯ್ಕೆ ಮಾಡಿ' })}</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View accessibilityRole="tablist" style={{ flexDirection: 'row', columnGap: spacing.lg }}>
             {vaar ? tab(`${tr({ hi: 'आज', en: 'Today', gu: 'આજ', kn: 'ಇಂದು' })} · ${contentByLang(lang, WEEKDAY_LABELS[now.getDay()].hi, WEEKDAY_LABELS[now.getDay()].en)}`, () => setPresetKind('vaar'), kind === 'vaar', 'suvichar-presets-vaar') : null}
             {tab(tr({ hi: 'भक्ति संदेश', en: 'Devotional cards', gu: 'ભક્તિ સંદેશ', kn: 'ಭಕ್ತಿ ಸಂದೇಶಗಳು' }), () => setPresetKind('daily'), kind === 'daily', 'suvichar-presets-daily')}
             {tab(tr({ hi: 'शुभकामनाएँ', en: 'Wishes', gu: 'શુભેચ્છાઓ', kn: 'ಶುಭಾಶಯಗಳು' }), () => setPresetKind('wish'), kind === 'wish', 'suvichar-presets-wish')}
           </View>
-        </View>
+        </ScrollView>
         <SuvicharPresetPicker templates={kind === 'vaar' ? vaarTemplates : templates.filter(t => t.kind === kind)} lang={lang}
           selectedId={kind === 'vaar' ? (prefs.vaar ? vaarTemplates.find(t => t.deity === prefs.deity && t.frame === prefs.frame)?.id : undefined) : selectedTemplate?.id} disabled={off} onSelect={chooseTemplate} />
       </View> : <View style={{ gap: spacing.sm }}>
