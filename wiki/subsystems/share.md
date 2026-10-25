@@ -2,14 +2,14 @@
 title: Share Cards (verse, prose, series)
 type: subsystem
 sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareText.ts, mobile/src/utils/shareContent.ts, mobile/src/utils/listingShare.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
-last_verified_date: 2026-10-19
+last_verified_date: 2026-10-22
 confidence: high
 status: current
 ---
 
 ## Summary
 
-One provider (`ShareProvider` / `useShare()` in `utils/shareVerse.tsx`, mounted once in
+For scripture and prose, one provider (`ShareProvider` / `useShare()` in `utils/shareVerse.tsx`, mounted once in
 `App.tsx`) turns content into branded parchment images, captures them
 off-screen with `react-native-view-shot`, and
 hands it to WhatsApp / the OS sheet / Instagram. `share(content, lang)` takes a
@@ -40,6 +40,13 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   bitmaps at once). Single-page rows reuse the verse path's `deliver()` exactly.
 - **Multi-file share** (`utils/multiShare.ts`): `react-native-share` `open({ urls })`,
   probed via `TurboModuleRegistry.get('RNShare')` then lazily required.
+- **Rating ask after a share** (design.md §54). Every dispatched card reports a moment via
+  `useRatingAsk()`: verse cards and devotional prose pages → `verse-shared`; every other prose
+  card (katha, Theerth, story, listing, Ask) → `prose-shared` (`proseShareMoment`). Image
+  paths report when the OS sheet closes, sent or not (neither share module reports a dismissal);
+  only Send as text skips a dismissal. Failed captures and the Instagram carousel's hand-off
+  pause report nothing. The gate,
+  once-per-session guard and 1200 ms settle delay live in `RatingPromptContext`, not here.
 
 - **Send as text + card language** (design.md §39.8, `utils/shareText.ts`): a `Send as text` row hands the verse (lines + meaning) or the *selected* prose pages to `Share.share({ message })` with the caption's link lines — no capture, so no native gate and no 10-page cap. Card-language chips let the card, caption, hashtags and text go out in hi/en/gu/kn while the sheet chrome and alerts stay in the reader's language (`chooser.cardLang`; prose keeps `lang` = card, `uiLang` = chrome). Switching on a series re-paginates and resets selection.
 
@@ -70,6 +77,7 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
   native height callback, then resizes the capture container and PNG height. A late callback
   from an older capture is ignored; missing layout takes the existing failure path instead
   of capturing a guessed short frame. This work runs only on share.
+- **First-line marks clip natively, not on web.** A `lineHeight` below ~1.53× font size (Noto Devanagari/Kannada, VedanshDevotionalText) makes iOS and Android trim the first line's box from the top; the Text then clips matras, reph and anusvara (हे→ह, चौपाई→चापाइ, अर्थ→अथ). React Native Web shows nothing wrong. `withMarkHeadroom` in `DevotionalFrame.tsx` adds padding plus an equal negative margin; reuse it for any tight Indic leading.
 - **Optional title line.** `meaningTitleHi/En` renders the complete theme title above the
   meaning at 18/27; actual wrapping contributes naturally to the measured image height.
 - **Tall images and Instagram.** The verse picker explains one taller image for long text
@@ -102,4 +110,11 @@ The shared capture pipeline compensates for UIKit point dimensions using `PixelR
 
 ## Daily Bhakti complete devotional image
 
-`dailyBhaktiShareable` prepares one complete verse/meaning page per language. `DevotionalShareCard` grows from actual native body/root layout and reports height after image decode. The provider, full-height preview and Story frame preserve that measurement. This fixes Hanuman Ashtak 1.5 being split at the first meaning sentence. The 270dp continuous artwork header removes the lower parchment band and uses same-RGB alpha stops; installed native gradient/WhatsApp verification remains pending. See design.md §39.9.
+`dailyBhaktiShareable` prepares one complete verse/meaning page per language. `DevotionalShareCard` grows from actual native body/root layout and reports height after every image slice decodes. The provider, full-height preview and Story frame preserve that measurement. All 27 deity/subject masters plus neutral prayer ship from the separate `devotional-share` R2 category through the shared persistent cache; none are bundled. The eighteen new subjects are complete portrait compositions with their own scene-to-parchment transition, brand plaque, reading frame and footer, replacing the rejected rectangular header reuse. Every section slices its own subject master using manifest-fitted coordinates. The explanation renders in a twin महत्त्व box (meaning-box caps, mirror-tiled clean middle) behind a second lotus divider; a label-only first paragraph (`महत्त्व:`) stays with its paragraph inside the अर्थ box. Short cards restore the remaining master band above the footer, cropped as text grows; preview and capture readiness include its paint. Text remains readable on paper while a first download is pending or fails; capture refuses incomplete art, while previously cached masters work offline. `scripts/prepare-devotional-share.mjs --verify --cdn` verifies all 28 public source hashes. Native/device/WhatsApp evidence is tracked separately in `docs/evaluations/daily-bhakti-full-masters/README.md`. See design.md §39.9 and [[integrations/reading-artwork]].
+
+The 22 Oct delivery optimization reduces the complete Daily Bhakti set from 21.52MiB to 8.54MiB by re-encoding only the nine older lossless portraits at WebP q94/m6/sharp YUV. All dimensions, slice coordinates and capture logic stay unchanged. The lossless authoring hashes/revision remain in provenance; the delivered pixels are perceptually compressed. See `docs/evaluations/daily-bhakti-compression/` and [[integrations/reading-artwork]].
+
+
+### Personalized Suvichar
+
+[[suvichar]] is a separate composer: it captures the exact editable native preview, reusing the persistent artwork cache and `multiShare.shareFiles` delivery adapter, with an expo-sharing fallback. It does not pass personal names through scripture/prose content types. Its artwork subscription survives text edits; a measured child resets paint/layout readiness per content generation. New R2 master hashes remain inactive until public-byte verification.

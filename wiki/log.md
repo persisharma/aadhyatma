@@ -1036,6 +1036,128 @@ Corrected the reported Hanuman Ashtak 1.5 split meaning and blank/grey header st
 
 ## [2026-10-17] ingest | languages: English verse display respelling (readableRomanization) + Tiro Devanagari Sanskrit reading tokens
 
+
+## [2026-10-21] ingest | Daily Bhakti PR 508 painted subject coverage
+
+Mapped all 330 formerly neutral additions to eighteen distinct subject paintings. Reused eleven approved local reader paintings and generated seven missing scenes; the new offline headers share the cleared parchment body/footer, preserving all nine original deity masters. Recorded manifests, prompt provenance, separate 3MiB header and 22MiB combined budgets, exhaustive 2,381-verse/four-script tests and native verification evidence in `docs/evaluations/daily-bhakti-art-508/`. Corrected stale wiki claims that Daily Bhakti still used reader backgrounds and the RULEBOOK’s incorrect combined <2MiB claim.
+## [2026-10-20] ingest | Stotra paath as japa: any stotram-category text (22 stotras across 12 sources) can be started on the JapaMala, one bead per complete recitation. New `data/japam/paath.ts` registry resolved through `findJapamMantra` (lazy `require()` corpora — data/japam is on the launch graph), `StartJapaButton` left-pinned on 9 stotram readers' toggle rows, counter paath mode (name head, `पाठ पढ़ें` row → full-text sheet with `पाठ पूर्ण` bead button), Profile/alarm-picker id fixes. New page subsystems/japam.md; readers.md toggle-row note. design.md §35.1, RULEBOOK §3.
+
+## [2026-10-20] gap | Stotra paath Maestro step in stotram-smoke.yaml is authored and YAML-parsed but not yet run on a simulator; no on-device visual check of the paath sheet or the left `japaSlot` on a 320 pt (SE) width.
+
+## [2026-10-21] ingest | Stotram japa switched from paath to sloka: after an interactive A/B prototype the user chose "repeat the shloka on screen". `data/japam/paath.ts` → `sloka.ts` (ids `sloka.<source>.<chapter>.<number>`, keyed on verse number; title card → first shloka), `StartJapaButton` now takes the reader's `verseIndex`, and the counter's paath mode (name head, `पाठ पढ़ें` row, full-text sheet) is gone — a shloka renders like a mantra with its name as the caption. design.md §35.1, RULEBOOK §3, subsystems/japam.md updated.
+
+## [2026-10-20] ingest | Puja Vidhi option 3 illustrated timeline: explicit artwork assignments for all 106 published steps, offline complete-canvas paintings, contextual neighbour navigation, step overview thumbnails and progress bar. Source privacy, hand-offs, manual completion and personal remembrance boundaries retained; native evidence and checks recorded in the puja visual review.
+
+## [2026-10-21] ingest | Puja visual review closeout: native Diwali Standard/Large, full mantra/IAST scrolling, flame-free remembrance, Gita hand-off/return, resume and completion observed. Fixed intrinsic Image sizing and direct-entry resume; isolated offscreen accessibility and hid conduct tab bars. See design-qa.md and docs/content-parity/puja-visual-guide for evidence and remaining delivery gaps.
+
+## [2026-10-21] ingest | Full Puja Vidhi image/text audit and R2 integration
+
+Reviewed all 106 published bilingual step/image assignments; updated 52 with action-specific scenes, material-dependent alternatives and deity-appropriate flower/leaf choices. Saved 35 new paintings and reviewed all 63 selected R2 source images. Added exact text/art hash review gates and full audit/gallery under `docs/content-parity/puja-visual-guide/`. Per user instruction, all step paintings now use the shared R2 artwork cache with neutral-paper fallback; source files are publishing inputs, never bundled requires. Local staging/manifest checks pass; the app is wired for the user's later object push. No upload, public-CDN verification, release or full new native walkthrough is claimed. See [[subsystems/puja-vidhi]].
+
+## [2026-10-21] ingest | PR #507 CI artwork metadata classification
+
+Reproduced the data-test failure that treated the new root Vidhi artwork manifest/source ledger as scripture. Excluded only those two metadata paths from the `source.referenceUrls` scan, matching the existing R2 manifest boundary; `vidhiVisuals.test.ts` retains source-byte, mapping and exact text/art review checks. Ritual content provenance requirements remain in force. R2 upload and current native walkthrough are still pending.
+
+## [2026-10-21] ingest | Mahamrityunjaya Mantra joins the japam list (`mahamrityunjaya-mantra`, Rigveda 7.59.12, Shiva; same collation as Shiva Stotram ch. 3). `LIST_MANTRA` in `sloka.ts` routes that chapter's जप pill to the list entry so one chant keeps one count. Silent manual counter (Audio-library take is CDN-only). design.md §35/§35.1, RULEBOOK §3, subsystems/japam.md updated.
+
+## [2026-10-21] ingest | Japam list grows to 22: Ganesh (ॐ गं गणपतये नमः), Om Namo Narayanaya, Hanuman moola, Shri Ram Jai Ram, Durga beej, and the nine Navagraha beej mantras (text = jyotishi-approved `GRAHA_UPAY`, pinned by `grahaBeejJapa.test.ts`). Kundali upay panel gets a `Chant on the mala` pill; Dasha tab opens the Mahadasha lord's beej counter. Mahalakshmi short form held (one source only).
+
+## [2026-10-21] gap | The 14 new mantras were checked through web-search results only — the environment's network policy blocks opening drikpanchang/bhaktibharat/sanskritdocuments pages — so each `source.baseText` says to re-read the pages before release. Maestro steps (japam-smoke Shani beej, kundali-smoke `dasha-beej-japa`) are authored but not run on a simulator.
+
+## [2026-10-21] ingest | Painted art only: `DeityIcon` drops its text fallback (unknown key → painted `deity` seal), all 16 `fallbackText` call sites removed, Now Playing's 96 pt ॐ text fallback replaced. RULEBOOK §3 rule + row 5, design.md §42/§35, `paintedIconsOnly.test.ts` guard (no `<x>.thumb` render, no `fallbackText` in UI). The 14 new japam entries draw their first deity's art; Chandra…Ketu share the Navagraha seal.
+
+## [2026-10-21] ingest | PR #507 startup budget after current-main reconciliation
+
+The complete local test run passed 272 reader/component suites and the engine checks, then detected a combined launch graph of 4,095,731 bytes against the unchanged 4,090,000-byte ceiling. Deferred the Vidhi request module at the shared loader's descriptor branch, keeping the artwork manifest off the static startup graph. Added a forbidden-path regression plus shared-loader request coverage; no artwork, ritual copy or budget changed.
+
+
+## [2026-10-21] ingest | Daily Bhakti final artwork verification
+
+Reconciled current main, including six additional eligible verses (2,387 pool total), and made the Bhakti screen a literal on-demand tab route to preserve the unchanged 4,090,000-byte launch budget. All 3,546 local tests passed. The installed iOS artwork smoke passed all eighteen decoded subjects and every capture was visually reviewed; iOS/Android exports contain all 28 matching artwork hashes. Native share export, four-script preview and Standard/Large smoke reruns remain pending after the final simulator launch stalled under severe host load; no WhatsApp, Android-device or physical-device delivery is claimed. See `docs/evaluations/daily-bhakti-art-508/README.md`.
+
+
+## [2026-10-21] ingest | Daily Bhakti artwork follow-up PR 509
+
+PR #508 merged during the artwork work. Preserved its new `versePoolFlat.ts` lazy registry and reconciled current main, including the Gita Saar design refresh. The artwork follow-up remains on `claude/daily-bhakti-more-sources` as draft PR #509. Final local `npm test` passed all 3,552 tests (2,655 Jest tests); native subject/asset export evidence and pending share/device QA are recorded in the evaluation README.
+
+## [2026-10-21] ingest | Vidhi step art uploaded; Daily Bhakti share masters moved to R2
+
+PR #507's `vidhiArtworkManifest.json` (63 reviewed step paintings, prefix `vidhi-steps`) had been merged without its R2 upload; uploaded all 63 with immutable caching and verified with `prepare-vidhi-artwork.mjs --verify --cdn`. The Daily Bhakti share masters added by #494/#499 were bundled (~18MiB, a deliberate offline tradeoff in #499); at the user's direction they now ship from R2 under `devotional-share` through the download-once cache, with `prepare-devotional-share.mjs` publishing/verifying and the bundling guard covering the folder. Updated [[subsystems/share]].
+
+## [2026-10-21] ingest | Daily Bhakti continuous paintings and verified R2 delivery
+
+Replaced the user-rejected eighteen rectangular headers with complete portrait masters, fitted section coordinates and one subject master for every slice. Restored the omitted paper band above the footer on short share cards and made preview QA await complete paint. Reconciled main through 23b99e0c, including R2 delivery and verse wrapping, then published all eighteen new objects under devotional-share. All 28 public hashes match and both production bundles contain zero painting files. All 3,564 local tests, eighteen native R2 subjects, four-script sharing/actual PNG exports, normal-restart cache reuse and Standard/Large reading checks passed. Android-device, physical-device and WhatsApp delivery remain unverified. See docs/evaluations/daily-bhakti-full-masters/README.md; the old rectangular-header evaluation is superseded.
+
+## [2026-10-22] ingest | Daily Bhakti smaller R2 delivery
+
+Updated reading-artwork, readers and share for nine full-resolution q94 WebP delivery encodings, retained lossless authoring references and the 9MiB delivery budget. All 28 masters total 8,953,360 bytes; the eighteen newer subjects and neutral prayer are unchanged. Source, CDN, native and export evidence is tracked in `docs/evaluations/daily-bhakti-compression/`.
+
+## [2026-10-22] ingest | Daily Bhakti explanation keeps the frame
+Updated share: the explanation box now mirror-tiles each master's trimmed verse band, so the side rules run to the footer; label-only first paragraphs (`महत्त्व:`) stay inside the अर्थ box.
+
+## [2026-10-22] ingest | Daily Bhakti explanation in its own महत्त्व box
+Updated share: the explanation now sits in a twin of the अर्थ box (same caps, mirror-tiled clean middle) behind a second lotus divider, replacing the side-rule strip.
+
+## [2026-10-21] ingest | share → rating ask: non-devotional prose share cards (katha/Theerth/story/listing/Ask) now report the new `prose-shared` §54 moment; subsystems/share.md gained a rating-ask bullet.
+
+## [2026-10-22] ingest | List rows unified on one `ListCard` shell
+
+Ten hand-rolled list-row cards (four paddings, five thumb sizes, three shadow tiers) now render `components/ListCard.tsx` (design.md §8): `size` regular (18 padding, 52 thumb, title · second-language name · meta) or compact (14, 44, title · meta), active gradient on `elevation.lifted` or `disabled`; `CardThumb`/`CardTitles`/`CardMeta`/`CardRoutineTail` encode the text and trailing rules. Moved onto it: `LibraryCard` (unused `compact` variant removed), sadhana, vidhi, `TrackCard`, `GitaChapterCard` (eyebrow folded into meta), Theerth `BrowseCard`, `DeityCard` (circle avatar retired; localized count via `meta`, English `itemCount` kept for a11y). The `flat` variant was removed (its fill was lighter than the page). Vidhi rows gain ＋ only when `isRecurringVidhi` (`data/vidhi/recurrence.ts`, shared with the detail header). Gotcha: `ListCard` carries `marginBottom: 12`; wrappers inside `gap: 12` lists pass `marginBottom: 0`. A11y labels unchanged, so Maestro selectors are unaffected; no simulator run in this session.
+
+## [2026-10-22] ingest | Suvichar personalized card composer, shared cache/capture readiness, editable names and publication gate; added subsystems/suvichar.
+
+## [2026-10-22] ingest | Suvichar capture verification
+Native view-shot requires both dimensions for Android resizing and UIKit point scaling. Composer now exports proportional 1080-pixel images from measured height and rechecks readiness/identity before capture; 32 focused tests passed. R2 credentials and native device tooling remain unavailable.
+
+## [2026-10-23] ingest | Salasar Suvichar shrine identity correction
+
+Replaced all three rejected naturalistic human faces using a Salasar darshan photo reference. The shrine form and geometric facial features are part of deity identity; beard/moustache keywords alone were insufficient. Updated source provenance and the review prototype; all 42 masters decode and 10 source tests pass. R2/native checks remain pending.
+## [2026-10-22] ingest | rating card asks with in-app stars (design.md §54, RULEBOOK §6.2): 4–5★ hand off to the store, 1–3★ get a thank-you step with "Write to us" (FEEDBACK_EMAIL, null until a support inbox is set) plus a smaller store link (no review gating) and a 90-day pause via lowRatedAt.
+
+## [2026-10-23] ingest | Ready-made Suvichar cards and main reconciliation
+
+Added the default ready-made collection (14 deity compositions and seven wishes) alongside the custom creator, with virtualized cached thumbnails, optional names and the existing native capture gate. All three frames remain available; mode/preset selection preserves the sender. Reconciled main through 3ac76f5, retaining the in-app-star rating changes and both wiki histories. R2 publication and native sharing inspection remain pending.
+
+## [2026-10-22] ingest | Auto-slide (स्वतः) on every paged surface
+
+Updated readers for the new hands-free page turning: `useReaderPlayback` replaces direct `useReaderReadAloud` calls in 25 readers incl. Vidhi conduct; Kids Stories and the comic use `useAutoSlide`. Text-length pacing, persisted pace, chapter hand-off, keep-awake. design.md §85 and RULEBOOK §3 added. Typecheck/lint only — no unit, e2e or device verification yet.
+
+## [2026-10-22] ingest | Auto-slide scrolls long pages before turning
+
+Readers page updated: `AutoSlideScrollView` + pager `CellRendererComponent` let the slideshow scroll a tall page to its bottom in steps before turning; touch pauses. Wired into 10 page components, Kids Stories and Vidhi steps. Typecheck/lint only.
+
+## [2026-10-23] ingest | Suvichar masters published to R2
+
+PR #520 merged the 42 Suvichar source masters with an intentionally empty `suvicharManifest.json` (its publish attempt had no R2 credentials), so no Suvichar card could resolve artwork. Uploaded all 42 under `suvichar` with immutable caching, wrote the manifest from the same sources, and verified public bytes with `prepare-suvichar.mjs --verify`.
+
+## [2026-10-23] ingest | Suvichar footer band + Daily Bhakti entry card
+
+The card's whole lower panel used to stretch with the text, so the painted footer rule ran through the VEDANSH line and the top-overlaid वेदांश crossed the भक्ति पत्र frame rule. The card is now three slices (painting, stretched paper, unstretched footer strip from `suvicharFooterBand`), with one centred footer line. Daily Bhakti's bordered text box became `SuvicharEntryCard`. Follow-up: one app-icon + वेदांश pill centred in every frame's measured top space, download-app line added, attribution line replaced by a gold breaker (wishes label kept for user-authored messages).
+
+## [2026-10-23] ingest | Suvichar composer tiers (option B)
+
+One `button()` helper had drawn every control alike, with Share below the fold. The composer now has a mode segment, underline filter tabs, painted deity and frame tiles, an always-editable message, a sender row remembered after first entry and a sticky heart + Share bar.
+
+## [2026-10-24] ingest | Six new Suvichar masters published
+
+PR #530 added Jagannath and Sanwariya Seth (6 masters) to the sources without publishing them, leaving the runtime manifest at 42 of 48, so those deities had no artwork. Uploaded the six with immutable caching, regenerated the manifest from the sources (48; existing entries unchanged) and verified with `prepare-suvichar.mjs --verify`.
+
+## [2026-10-24] ingest | Weekday Suvichar cards (शुभ सोमवार – शुभ शनिवार)
+
+The composer opens every day on a weekday card (Sunday: Vishnu as Surya-Narayan until Surya masters exist): a 26-point saffron day title replaces the card label, and the message is the deity's day-free thought for the day (the #536 rotation). The आज tab lists the day's deities in every frame; every catalog deity is linked to a day (Krishna forms and Saraswati on Wednesday, Ram and Vishnu forms on Thursday), and Friday is Lakshmi (unlike Routine). Only manifest-published deities appear (Thursday's Jagannath arrived with #532). A reader-written message is never replaced; favorites store a `vaar` flag so they never name a past day. The Daily Bhakti entry names the day and deity and shows cache-only art. Focused Jest suites passed; Maestro `suvichar-vaar.yaml` parses but has not been run on a device.
+
+## [2026-10-25] ingest | Suvichar sender photo
+
+Senders can add one round photo above their name on the card (deity painting unchanged). Picked from the library with a square crop (`expo-image-picker`, camera/microphone permissions blocked), stored on-device under documents/suvichar, persisted by file name only, excluded from favorites, gated into capture readiness. Native module, so visible only on the next store build. Typecheck and lint passed; no Jest or Maestro run.
+
+## [2026-10-25] update | Suvichar sender photo is opt-in
+
+The photo row and card photo now appear only after the sender turns on “कार्ड पर अपनी फ़ोटो भी लगाएँ” (`photoOn`, off by default, persisted). Turning it off hides the photo without deleting the saved file. Typecheck and lint passed; no Jest or Maestro run.
+
+## [2026-10-25] update | Suvichar sender photo face auto-fit
+
+The manual square crop is gone: a local Expo module (`modules/suvichar-face`: Apple Vision / Android FaceDetector, on-device) returns face boxes, `suvicharPhotoFit` frames all faces (centred-square fallback), and the fit is persisted as `photoFit` and applied at draw time. Typecheck and lint passed; native code not compiled here, no Jest or Maestro run.
+
 ## [2026-10-22] ingest | Complete Ayodhyakanda illustrated preview
 
 Recorded the81-page/269-scene four-language preview, full119-sarga pacing/source map, selected image hashes and frames, identity/action repairs and browser layout evidence in [[decisions/ramayan-comic-character-continuity]]. Whole-book user review precedes integration. Human editorial/source collation and complete native Standard/Large checks remain open; no mobile registry, CDN or release activation was performed.

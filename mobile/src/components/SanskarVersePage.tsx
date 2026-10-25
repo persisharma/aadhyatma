@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import {
@@ -94,7 +95,7 @@ export default function SanskarVersePage({ verse, sourceId, width, topActions, s
     <View style={[styles.page, { width, backgroundColor: colors.parchment }]}>
       <BackgroundLayer source={bg} />
 
-      <ScrollView
+      <AutoSlideScrollView
         style={styles.scroll}
         contentContainerStyle={[
           styles.scrollContent,
@@ -175,7 +176,7 @@ export default function SanskarVersePage({ verse, sourceId, width, topActions, s
             <ProseParagraph style={[styles.body, bodyStyle]}>{vidhiContent}</ProseParagraph>
           </View>
         ) : null}
-      </ScrollView>
+      </AutoSlideScrollView>
     </View>
   );
 }

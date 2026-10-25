@@ -1,17 +1,17 @@
 import React from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { useTheme } from '@/theme/ThemeContext';
-import { elevation } from '@/theme/elevation';
 import { spacing } from '@/theme/spacing';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { VIDHI_ENTRIES, type VidhiEntry } from '@/data/vidhi';
+import { isRecurringVidhi } from '@/data/vidhi/recurrence';
 import ReaderHeader from '@/components/ReaderHeader';
+import ListCard, { CARD_TITLE_SIZES, CardRoutineTail, CardThumb, CardTitles } from '@/components/ListCard';
 import DeityIcon from '@/components/DeityIcon';
 import StoryIcon from '@/components/StoryIcon';
 import { deityIconKeyFor } from '@/data/deities';
@@ -23,11 +23,10 @@ import type { VidhiStackParamList } from '@/navigation/types';
 type Props = NativeStackScreenProps<VidhiStackParamList, 'VidhiCatalog'>;
 
 /**
- * पूजा विधियाँ — the vidhi catalog (PRD-19, design.md §61). Each row follows
- * the §8 LibraryCard active-variant spec (cardActive gradient, letter thumb,
- * hi-name / latin-italic / sub-meta, saffron ›) rebuilt from the same tokens:
- * LibraryCard itself is coupled to LibraryEntry + the routine sheet, and a
- * vidhi is a procedure, not a library text.
+ * पूजा विधियाँ — the vidhi catalog (PRD-19, design.md §61). Each row is the
+ * shared regular `ListCard` (design.md §8): painted deity thumb, hi-name /
+ * latin-italic / step-count meta. Recurring (monthly) vidhis carry the ＋ ›
+ * add-to-routine tail, the same rule as the detail screen's header button.
  */
 export default function VidhiCatalogScreen({ navigation }: Props) {
   const { colors } = useTheme();
@@ -69,14 +68,8 @@ export default function VidhiCatalogScreen({ navigation }: Props) {
 }
 
 function VidhiCard({ entry, onPress }: { entry: VidhiEntry; onPress: () => void }) {
-  const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const { primary, secondary } = orderTitlesByLanguage(lang, entry.titleHi, entry.titleEn, {
-    devPrimary: 17,
-    devSecondary: 13,
-    latPrimary: 19,
-    latSecondary: 12,
-  });
+  const { primary, secondary } = orderTitlesByLanguage(lang, entry.titleHi, entry.titleEn, CARD_TITLE_SIZES);
   const iconKey = entry.deities.map(deityIconKeyFor).find(Boolean);
   const hasKatha = entry.steps.some((step) => step.ref?.kind === 'katha');
   const sub = contentByLang(
@@ -86,76 +79,26 @@ function VidhiCard({ entry, onPress }: { entry: VidhiEntry; onPress: () => void 
   );
 
   return (
-    <Pressable
+    <ListCard
       onPress={onPress}
       testID={`vidhi-card-${entry.id}`}
-      accessibilityRole="button"
       accessibilityLabel={contentByLang(
         lang,
         `${entry.titleHi}। ${entry.steps.length} चरण। खोलने के लिए टैप करें।`,
         `${entry.titleEn}. ${entry.steps.length} steps. Tap to open.`
       )}
-      style={({ pressed }) => [
-        styles.card,
-        { borderRadius: radii.lg, borderColor: colors.cardActiveBorder },
-        elevation.raised,
-        pressed && { opacity: 0.85 },
-      ]}
+      leading={
+        <CardThumb>
+          {/* The first tagged deity's painted art; the Puja Vidhi art for an untagged vidhi. */}
+          {iconKey
+            ? <DeityIcon iconKey={iconKey} />
+            : <StoryIcon name="vrat" size={36} />}
+        </CardThumb>
+      }
+      right={isRecurringVidhi(entry) ? <CardRoutineTail sourceId={entry.id} nameEn={entry.titleEn} /> : undefined}
     >
-      <LinearGradient
-        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]}
-      />
-      <LinearGradient
-        colors={[colors.cardThumbActiveFrom, colors.cardThumbActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[styles.thumb, { borderRadius: radii.md }]}
-      >
-        {/* The first tagged deity's painted art; the Puja Vidhi art for an untagged vidhi. */}
-        {iconKey
-          ? <DeityIcon iconKey={iconKey} fallbackText="" />
-          : <StoryIcon name="vrat" size={36} />}
-      </LinearGradient>
-      <View style={styles.meta}>
-        <Text
-          style={{
-            color: colors.ink,
-            fontFamily: primary.fontFamily,
-            fontSize: primary.fontSize,
-            fontStyle: primary.fontStyle,
-            letterSpacing: primary.letterSpacing,
-            marginBottom: 2,
-          }}
-        >
-          {primary.text}
-        </Text>
-        <Text
-          style={{
-            color: colors.inkMuted,
-            fontFamily: secondary.fontFamily,
-            fontSize: secondary.fontSize,
-            fontStyle: secondary.fontStyle,
-            marginBottom: 6,
-          }}
-        >
-          {secondary.text}
-        </Text>
-        <Text
-          style={{
-            color: colors.inkMuted,
-            fontFamily: typography.cardMeta.fontFamily,
-            fontSize: typography.cardMeta.fontSize,
-            letterSpacing: typography.cardMeta.letterSpacing,
-          }}
-        >
-          {sub}
-        </Text>
-      </View>
-      <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
-    </Pressable>
+      <CardTitles primary={primary} secondary={secondary} meta={sub} />
+    </ListCard>
   );
 }
 
@@ -163,22 +106,4 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   scroll: { paddingTop: 4, paddingBottom: 32 },
-  card: {
-    position: 'relative',
-    padding: 18,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-    overflow: 'hidden',
-    borderWidth: 1,
-    marginBottom: 12,
-  },
-  thumb: {
-    width: 52,
-    height: 52,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  meta: { flex: 1, minWidth: 0 },
-  chev: { fontSize: 26, marginLeft: 4 },
 });

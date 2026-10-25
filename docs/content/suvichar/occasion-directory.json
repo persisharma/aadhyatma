@@ -1,0 +1,452 @@
+[
+  {
+    "slug": "diwali",
+    "name_hi": "दीपावली",
+    "deity": "lakshmi-ganesh",
+    "artwork_brief_hi": "लक्ष्मी गणेश, दीप, कमल और घर का आँगन",
+    "schedule_key": "festival:diwali",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "dhanteras",
+    "name_hi": "धनतेरस",
+    "deity": "dhanvantari",
+    "artwork_brief_hi": "धन्वंतरि का सम्मानजनक चित्र और दीप",
+    "schedule_key": "festival:dhanteras",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "naraka-chaturdashi",
+    "name_hi": "नरक चतुर्दशी",
+    "deity": "krishna",
+    "artwork_brief_hi": "कृष्ण, प्रातःकाल और छोटे दीप",
+    "schedule_key": "festival:naraka-chaturdashi",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "govardhan",
+    "name_hi": "गोवर्धन पूजा",
+    "deity": "krishna",
+    "artwork_brief_hi": "गोवर्धन धारण करते कृष्ण, गाय और अन्नकूट",
+    "schedule_key": "festival:govardhan",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "bhai-dooj",
+    "name_hi": "भाई दूज",
+    "deity": "none",
+    "artwork_brief_hi": "भाई बहन के हाथ, तिलक थाली और दीप",
+    "schedule_key": "festival:bhai-dooj",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "devuthani",
+    "name_hi": "देवउठनी एकादशी",
+    "deity": "vishnu",
+    "artwork_brief_hi": "शेषशायी विष्णु, कमल और दीप",
+    "schedule_key": "festival:devuthani-ekadashi",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "tulsi-vivah",
+    "name_hi": "तुलसी विवाह",
+    "deity": "vishnu",
+    "artwork_brief_hi": "तुलसी चौरा, शालिग्राम और सरल मंडप",
+    "schedule_key": "festival:tulsi-vivah",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "kartik-purnima",
+    "name_hi": "कार्तिक पूर्णिमा",
+    "deity": "vishnu",
+    "artwork_brief_hi": "घाट पर दीप और जल में प्रतिबिंब",
+    "schedule_key": "festival:kartik-purnima",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "gita-jayanti",
+    "name_hi": "गीता जयंती",
+    "deity": "krishna",
+    "artwork_brief_hi": "कृष्ण, अर्जुन और खुली गीता",
+    "schedule_key": "festival:gita-jayanti",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "makar-sankranti",
+    "name_hi": "मकर संक्रांति",
+    "deity": "surya",
+    "artwork_brief_hi": "सूर्य, तिल गुड़, फसल और पतंग",
+    "schedule_key": "festival:makar-sankranti",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "pongal",
+    "name_hi": "पोंगल",
+    "deity": "surya",
+    "artwork_brief_hi": "पोंगल पात्र, गन्ना, कोलम और सूर्य",
+    "schedule_key": "festival:pongal",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "vasant-panchami",
+    "name_hi": "वसंत पंचमी",
+    "deity": "saraswati",
+    "artwork_brief_hi": "सरस्वती, वीणा, पुस्तक और वसंत के फूल",
+    "schedule_key": "festival:vasant-panchami",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "mahashivratri",
+    "name_hi": "महाशिवरात्रि",
+    "deity": "shiva",
+    "artwork_brief_hi": "शिव का शांत रूप, बिल्वपत्र और रात्रि दीप",
+    "schedule_key": "festival:mahashivratri",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "holika-dahan",
+    "name_hi": "होलिका दहन",
+    "deity": "vishnu",
+    "artwork_brief_hi": "प्रह्लाद की स्मृति, सुरक्षित दूरी पर होलिका अग्नि",
+    "schedule_key": "festival:holika-dahan",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "holi",
+    "name_hi": "होली",
+    "deity": "radha-krishna",
+    "artwork_brief_hi": "राधा कृष्ण, पलाश और हल्के गुलाल के रंग",
+    "schedule_key": "festival:holi",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "chaitra-navratri",
+    "name_hi": "चैत्र नवरात्रि",
+    "deity": "durga",
+    "artwork_brief_hi": "माँ दुर्गा, कलश और लाल चुनरी",
+    "schedule_key": "festival:chaitra-navratri",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "ram-navami",
+    "name_hi": "राम नवमी",
+    "deity": "ram",
+    "artwork_brief_hi": "श्रीराम, धनुष और अयोध्या की झलक",
+    "schedule_key": "festival:ram-navami",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "hanuman-jayanti",
+    "name_hi": "हनुमान जयंती",
+    "deity": "hanuman",
+    "artwork_brief_hi": "हनुमान का भक्त रूप और राम नाम",
+    "schedule_key": "festival:hanuman-jayanti",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "akshaya-tritiya",
+    "name_hi": "अक्षय तृतीया",
+    "deity": "lakshmi-vishnu",
+    "artwork_brief_hi": "लक्ष्मी नारायण, कमल और अन्नदान के पात्र",
+    "schedule_key": "festival:akshaya-tritiya",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "narasimha-jayanti",
+    "name_hi": "नृसिंह जयंती",
+    "deity": "narasimha",
+    "artwork_brief_hi": "शांत नृसिंह और भक्त प्रह्लाद, बिना हिंसक दृश्य",
+    "schedule_key": "festival:narasimha-jayanti",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "ganga-dussehra",
+    "name_hi": "गंगा दशहरा",
+    "deity": "ganga",
+    "artwork_brief_hi": "माँ गंगा, नदी और शांत घाट",
+    "schedule_key": "festival:ganga-dussehra",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "nirjala-ekadashi",
+    "name_hi": "निर्जला एकादशी",
+    "deity": "vishnu",
+    "artwork_brief_hi": "विष्णु, कमल और शांत मंदिर",
+    "schedule_key": "festival:nirjala-ekadashi",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "rath-yatra",
+    "name_hi": "जगन्नाथ रथ यात्रा",
+    "deity": "jagannath",
+    "artwork_brief_hi": "जगन्नाथ, बलभद्र, सुभद्रा और तीन रथ",
+    "schedule_key": "festival:rath-yatra",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "guru-purnima",
+    "name_hi": "गुरु पूर्णिमा",
+    "deity": "none",
+    "artwork_brief_hi": "गुरु चरण प्रतीक, पुस्तक और दीप",
+    "schedule_key": "festival:guru-purnima",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "sawan-somvar",
+    "name_hi": "सावन सोमवार",
+    "deity": "shiva",
+    "artwork_brief_hi": "शिव, बिल्वपत्र, वर्षा और मंदिर",
+    "schedule_key": "festival:sawan-somvar",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "nag-panchami",
+    "name_hi": "नाग पंचमी",
+    "deity": "shiva",
+    "artwork_brief_hi": "मंदिर का नाग प्रतीक और बिल्वपत्र, जीवित सर्प को दूध नहीं",
+    "schedule_key": "festival:nag-panchami",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "raksha-bandhan",
+    "name_hi": "रक्षा बंधन",
+    "deity": "none",
+    "artwork_brief_hi": "राखी, भाई बहन के हाथ और मिठाई",
+    "schedule_key": "festival:raksha-bandhan",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "janmashtami",
+    "name_hi": "कृष्ण जन्माष्टमी",
+    "deity": "bal-krishna",
+    "artwork_brief_hi": "बालकृष्ण, माखन, मोरपंख और झूला",
+    "schedule_key": "festival:janmashtami",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "ganesh-chaturthi",
+    "name_hi": "गणेश चतुर्थी",
+    "deity": "ganesh",
+    "artwork_brief_hi": "गणेश, मोदक, दूर्वा और सरल मंडप",
+    "schedule_key": "festival:ganesh-chaturthi",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "radhashtami",
+    "name_hi": "राधाष्टमी",
+    "deity": "radha-krishna",
+    "artwork_brief_hi": "राधा का सम्मानजनक चित्र, कमल और वृंदावन",
+    "schedule_key": "festival:radhashtami",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "anant-chaturdashi",
+    "name_hi": "अनंत चतुर्दशी",
+    "deity": "vishnu",
+    "artwork_brief_hi": "शेषशायी विष्णु और अनंत सूत्र",
+    "schedule_key": "festival:anant-chaturdashi",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "pitru-remembrance",
+    "name_hi": "पितृ स्मरण",
+    "deity": "none",
+    "artwork_brief_hi": "दीप, जलपात्र और शांत घाट, कोई उत्सवी सजावट नहीं",
+    "schedule_key": "observance:pitru-paksha",
+    "tone": "solemn",
+    "variants": 4
+  },
+  {
+    "slug": "sharad-navratri",
+    "name_hi": "शारदीय नवरात्रि",
+    "deity": "durga",
+    "artwork_brief_hi": "माँ दुर्गा, कमल, कलश और दीप",
+    "schedule_key": "festival:sharad-navratri",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "durga-ashtami",
+    "name_hi": "दुर्गा अष्टमी",
+    "deity": "durga",
+    "artwork_brief_hi": "माँ दुर्गा, कमल और पूजन थाली",
+    "schedule_key": "festival:durga-ashtami",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "maha-navami",
+    "name_hi": "महानवमी",
+    "deity": "durga",
+    "artwork_brief_hi": "सिद्धिदात्री का सम्मानजनक रूप, कमल और दीप",
+    "schedule_key": "festival:maha-navami",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "vijayadashami",
+    "name_hi": "विजयादशमी",
+    "deity": "ram",
+    "artwork_brief_hi": "श्रीराम, धनुष और शांत स्वर्णिम आकाश",
+    "schedule_key": "festival:vijayadashami",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "sharad-purnima",
+    "name_hi": "शरद पूर्णिमा",
+    "deity": "radha-krishna",
+    "artwork_brief_hi": "पूर्ण चंद्र, खीर पात्र और शांत वृंदावन",
+    "schedule_key": "festival:sharad-purnima",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "karwa-chauth",
+    "name_hi": "करवा चौथ",
+    "deity": "shiva-parvati",
+    "artwork_brief_hi": "करवा, छलनी, चंद्र और हाथों की थाली",
+    "schedule_key": "festival:karwa-chauth",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "ahoi-ashtami",
+    "name_hi": "अहोई अष्टमी",
+    "deity": "ahoi-mata",
+    "artwork_brief_hi": "अहोई माता का पारंपरिक पूजन चित्र और दीप",
+    "schedule_key": "festival:ahoi-ashtami",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "chhath",
+    "name_hi": "छठ पूजा",
+    "deity": "surya",
+    "artwork_brief_hi": "सूर्य, नदी घाट, सूप और अर्घ्य देते हाथ",
+    "schedule_key": "festival:chhath",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "ugadi",
+    "name_hi": "उगादि",
+    "deity": "none",
+    "artwork_brief_hi": "आम्रपल्लव, उगादि पचड़ी और पारंपरिक द्वार",
+    "schedule_key": "festival:ugadi",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "gudi-padwa",
+    "name_hi": "गुड़ी पड़वा",
+    "deity": "none",
+    "artwork_brief_hi": "पारंपरिक गुड़ी, रंगोली और आम्रपल्लव",
+    "schedule_key": "festival:gudi-padwa",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "onam",
+    "name_hi": "ओणम",
+    "deity": "none",
+    "artwork_brief_hi": "पूकलम, निलविलक्कु और राजा महाबलि का सम्मानजनक रूप",
+    "schedule_key": "festival:onam",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "varalakshmi",
+    "name_hi": "वरलक्ष्मी व्रत",
+    "deity": "lakshmi",
+    "artwork_brief_hi": "वरलक्ष्मी कलश, कमल और दीप",
+    "schedule_key": "festival:varalakshmi-vrat",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "ekadashi",
+    "name_hi": "एकादशी",
+    "deity": "vishnu",
+    "artwork_brief_hi": "विष्णु, तुलसी और शांत मंदिर",
+    "schedule_key": "recurring:ekadashi",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "purnima",
+    "name_hi": "पूर्णिमा",
+    "deity": "none",
+    "artwork_brief_hi": "पूर्ण चंद्र, दीप और शांत मंदिर",
+    "schedule_key": "recurring:purnima",
+    "tone": "devotional",
+    "variants": 4
+  },
+  {
+    "slug": "amavasya",
+    "name_hi": "अमावस्या",
+    "deity": "none",
+    "artwork_brief_hi": "एक शांत दीप और जलपात्र, संयत रंग",
+    "schedule_key": "recurring:amavasya",
+    "tone": "solemn",
+    "variants": 4
+  },
+  {
+    "slug": "birthday",
+    "name_hi": "जन्मदिन",
+    "deity": "ganesh",
+    "artwork_brief_hi": "गणेश, फूल और छोटा दीप",
+    "schedule_key": "personal:birthday",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "anniversary",
+    "name_hi": "विवाह वर्षगाँठ",
+    "deity": "shiva-parvati",
+    "artwork_brief_hi": "शिव पार्वती का शांत युगल रूप और फूल",
+    "schedule_key": "personal:anniversary",
+    "tone": "celebratory",
+    "variants": 4
+  },
+  {
+    "slug": "griha-pravesh",
+    "name_hi": "गृह प्रवेश",
+    "deity": "ganesh",
+    "artwork_brief_hi": "गणेश, कलश, आम्रपल्लव और घर का द्वार",
+    "schedule_key": "personal:griha-pravesh",
+    "tone": "celebratory",
+    "variants": 4
+  }
+]

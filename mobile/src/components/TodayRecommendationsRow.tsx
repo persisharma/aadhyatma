@@ -21,7 +21,7 @@ import { navigateToEntryStart } from '@/navigation/entryRoutes';
 import { useTodayAbujh } from '@/panchang/useMuhuratFinder';
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import { getDaanOccasionForRule } from '@/data/daan';
-import { getTodayFestival } from '@/data/discoveryMeta';
+import { library } from '@/data/texts';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
@@ -36,27 +36,31 @@ export default function TodayRecommendationsRow({ horizontalGutter }: { horizont
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
   const todayKey = useTodayKey();
   const today = React.useMemo(() => new Date(todayKey), [todayKey]);
-  const recommendations = React.useMemo(
-    () => getTodayRecommendationDetails(today),
-    [today]
-  );
+  const recommendations = React.useMemo(() => {
+    const base = getTodayRecommendationDetails(today);
+    // गीता सार is pinned to the lead of the FOR TODAY row every day (design.md
+    // §50) — a standing door into the themed Gita readings. Dedupe any copy the
+    // vaar tier already produced (गीता सार is a Krishna text, so it surfaces on
+    // its own on Krishna's weekday) before pinning it to front.
+    const gitaSaar = library.find((entry) => entry.id === 'gita-saar');
+    if (!gitaSaar || gitaSaar.status !== 'active' || gitaSaar.hidden) return base;
+    return [{ entry: gitaSaar }, ...base.filter((r) => r.entry.id !== 'gita-saar')];
+  }, [today]);
   // अबूझ मुहूर्त (PRD-16 §4.2) — resolved off the render path, null on an
   // ordinary day. It rides the ROW rather than `getTodayRecommendationDetails`
   // because that function returns LibraryEntry recommendations and is asserted
   // on by festiveReminders.test.ts; keeping it entry-only leaves the notification
   // ⇄ FOR TODAY contract exactly as it is.
   const abujh = useTodayAbujh(today);
-  // On a catalogued festival day the festival card must still LEAD (the same
-  // test pins that promise), so the abujh card slots in second. On any other
-  // abujh day — Guru/Ravi Pushya, which is the common case — it leads.
+  // अबूझ follows गीता सार, which holds slot 0, so it slots in second. It only
+  // leads when nothing is pinned there — e.g. the गीता सार entry is unavailable
+  // and no festival card leads on an abujh day (Guru/Ravi Pushya).
   const abujhIndex = React.useMemo(() => {
     if (!abujh) return -1;
-    try {
-      return getTodayFestival(today) ? 1 : 0;
-    } catch {
-      return 0;
-    }
-  }, [abujh, today]);
+    const lead = recommendations[0];
+    const pinned = Boolean(lead?.festivalHi) || lead?.entry.id === 'gita-saar';
+    return pinned ? 1 : 0;
+  }, [abujh, recommendations]);
 
   // दान-पुण्य (PRD-26) FOR-TODAY card — on a day whose observance carries a daan
   // occasion, offer the day's दान-यात्रा. Resolved off the same panchang path as
@@ -210,7 +214,7 @@ function spotlightForEntry(
     ctaEn: 'Read',
     icon: (
       entry.deities?.[0]
-        ? <DeityIcon iconKey={deityIconKey(entry.deities[0])} fallbackText={entry.thumb} size={32} />
+        ? <DeityIcon iconKey={deityIconKey(entry.deities[0])} size={32} />
         : <CategoryIcon iconKey={entry.category} />
     ),
   };

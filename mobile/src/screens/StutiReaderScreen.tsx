@@ -21,11 +21,13 @@ import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
+import StartJapaButton from '@/components/StartJapaButton';
 import VersePage from '@/components/VersePage';
 import WhenToRecitePanel from '@/components/WhenToRecitePanel';
 import { clampIndex } from '@/utils/clamp';
@@ -34,7 +36,8 @@ import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 import { getTrackForText } from '@/data/audio/tracks';
 import { hasRealAudio } from '@assets/audio-library';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from '@/screens/_useAutoSlide';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'StutiReader'>;
@@ -62,7 +65,7 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   // Flat reader: list index === verse index, so no offset.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: stutiId,
     data: verses,
     offset: 0,
@@ -78,6 +81,7 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
       updatedAt: Date.now(),
     });
   }, [stutiId, currentIndex, setProgress]);
+  useReadDwell(stutiId, undefined, currentIndex);
 
   const viewabilityConfig = useRef({
     itemVisiblePercentThreshold: 60,
@@ -182,6 +186,10 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={stutiId} />
+          {/* Pinned left, mirroring read-aloud on the right (design.md §35.1). */}
+          <View style={styles.japaSlot}>
+            <StartJapaButton navigation={navigation} sourceId={stutiId} verseIndex={currentIndex} />
+          </View>
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
           <View style={styles.readAloudSlot}>
             <ReadAloudButton control={readAloud} />
@@ -190,6 +198,7 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={verses as StutiVerse[]}
             keyExtractor={(v) => v.id}
@@ -262,6 +271,7 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
 
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
@@ -298,6 +308,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     alignItems: 'center',
   },
+  japaSlot: { position: 'absolute', left: 16, top: 6, bottom: 12, justifyContent: 'center' },
   readAloudSlot: {
     position: 'absolute',
     right: 16,

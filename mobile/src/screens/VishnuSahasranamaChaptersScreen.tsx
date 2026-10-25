@@ -14,6 +14,7 @@ import { buildListingShare } from '@/utils/listingShare';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
+import GranthProgressScope from '@/components/GranthProgressScope';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { HomeStackParamList } from '@/navigation/types';
 
@@ -58,16 +59,18 @@ export default function VishnuSahasranamaChaptersScreen({ navigation }: Props) {
           contentContainerStyle={[styles.scrollContent, { paddingHorizontal: spacing.screenGutter, gap: spacing.md }]}
           showsVerticalScrollIndicator={false}
         >
-          {vishnuSahasranamaChaptersManifest.map((chapter) => (
-            <GitaChapterCard
-              key={chapter.chapter}
-              chapter={chapter}
-              onPress={() => {
-                const resumeIndex = getChapterProgress('vishnu-sahasranama', chapter.chapter)?.verseIndex ?? 0;
-                navigation.navigate('VishnuSahasranamaReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
-              }}
-            />
-          ))}
+          <GranthProgressScope sourceId="vishnu-sahasranama">
+            {vishnuSahasranamaChaptersManifest.map((chapter) => (
+              <GitaChapterCard
+                key={chapter.chapter}
+                chapter={chapter}
+                onPress={() => {
+                  const resumeIndex = getChapterProgress('vishnu-sahasranama', chapter.chapter)?.verseIndex ?? 0;
+                  navigation.navigate('VishnuSahasranamaReader', { chapter: chapter.chapter, initialIndex: resumeIndex });
+                }}
+              />
+            ))}
+          </GranthProgressScope>
         </ScrollView>
       </SafeAreaView>
     </View>

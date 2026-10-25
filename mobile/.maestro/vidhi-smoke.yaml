@@ -12,8 +12,9 @@
 #      routine-style samagri summary + occurrence-scoped kitchen/checklist rows,
 #      and the तैयारी/पूजा segments.
 #   4. पूजा segment: phase-grouped step list + "Begin the puja" → conduct mode.
-#   5. Conduct: swipe-only reader paging reaches the dhyana mantra card; the
-#      bottom carousel dots replace previous/next controls; back returns.
+#   5. Conduct: illustrated timeline neighbours navigate exact steps, swipe
+#      paging reaches the dhyana mantra card, and back returns to the overview.
+#      Artwork delivery is checked separately after the pending R2 upload.
 #
 # Language: same recipe as panchang-smoke — flip the global reading language to
 # English first (Devanagari is unreliable in Maestro's iOS a11y tree), restore
@@ -180,6 +181,14 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "1 / 16"
     timeout: 15000
+- assertVisible: { id: "vidhi-timeline-step-1" }
+- tapOn: { id: "vidhi-timeline-step-1" }
+- waitForAnimationToEnd
+- assertVisible: "2 / 16"
+- assertVisible: { id: "vidhi-timeline-step-0" }
+- tapOn: { id: "vidhi-timeline-step-0" }
+- waitForAnimationToEnd
+- assertVisible: "1 / 16"
 - swipe:
     direction: LEFT
 - waitForAnimationToEnd

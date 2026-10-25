@@ -35,11 +35,12 @@ import NextChapterCard from '@/components/NextChapterCard';
 import ReaderHeader from '@/components/ReaderHeader';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
+import AutoSlideButton from '@/components/AutoSlideButton';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getPitruLessons } from '@/data/pitru';
 import type { MoreStackParamList } from '@/navigation/types';
 import type { KathaContentSection } from '@/panchang/types';
-import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
+import { useReaderPlayback } from '@/screens/_useAutoSlide';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang } from '@/utils/localize';
 import BackgroundLayer from '@/components/BackgroundLayer';
@@ -94,7 +95,7 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
     if (handoffTimer.current) clearTimeout(handoffTimer.current);
   }, []);
 
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: 'pitru-parichay',
     data,
     offset: 0,
@@ -153,6 +154,10 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
           <>
             <ReadingProgressBar current={shown} total={total} />
             <View style={styles.toggleRow}>
+              {/* Inline, not floating: the prose fills the pager to its bottom edge. */}
+              <View style={styles.autoSlideSlot}>
+                <AutoSlideButton control={autoSlide} floating={false} />
+              </View>
               <LanguageToggle />
               {/* Pinned right so the toggle stays centred (design.md §56.2). */}
               <View style={styles.readAloudSlot}>
@@ -161,6 +166,7 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
             </View>
             <View style={styles.listContainer}>
               <FlatList
+                CellRendererComponent={autoSlide.Cell}
                 ref={listRef}
                 data={data}
                 keyExtractor={(item) => item.id}
@@ -231,6 +237,7 @@ const styles = StyleSheet.create({
   counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
   toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
+  autoSlideSlot: { position: 'absolute', left: 16, top: 6, bottom: 6, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   // The testID wrapper must fill the FlatList cell: KathaSectionPage's flex:1

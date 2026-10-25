@@ -8,7 +8,6 @@ import StackLoadBoundary from './StackLoadBoundary';
 import { LazyPanchangStackNavigator } from './lazyPanchangStack';
 import MoreStackNavigator from './MoreStackNavigator';
 import AudioStackNavigator from './AudioStackNavigator';
-import DailyBhaktiScreen from '@/screens/DailyBhaktiScreen';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -28,7 +27,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 // Full-screen reader routes that should hide the bottom tab bar so it doesn't
 // compete with immersive reading. Lives at the tab level (rather than per-screen
 // setOptions) so the bar animates out cleanly and restores itself on blur.
-const IMMERSIVE_HOME_ROUTES = ['VratKathaReader'];
+const IMMERSIVE_ROUTES = ['VratKathaReader', 'VidhiConduct'];
 
 export default function TabNavigator() {
   const { colors } = useTheme();
@@ -104,7 +103,7 @@ export default function TabNavigator() {
             tabBarIcon: ({ focused, size }) => (
               <HomeIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
             ),
-            tabBarStyle: IMMERSIVE_HOME_ROUTES.includes(focused)
+            tabBarStyle: IMMERSIVE_ROUTES.includes(focused)
               ? { display: 'none' as const }
               : tabBarStyle,
           };
@@ -112,7 +111,11 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="DailyBhaktiTab"
-        component={DailyBhaktiScreen}
+        getComponent={() => {
+          // Literal route loader keeps the painted card off Home's launch graph.
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          return require('@/screens/DailyBhaktiScreen').default;
+        }}
         options={{
           title: contentByLang(lang, 'भक्ति', 'Bhakti'),
           tabBarLabel: tabLabel('भक्ति', 'Bhakti'),
@@ -126,28 +129,30 @@ export default function TabNavigator() {
       <Tab.Screen
         name="PanchangTab"
         component={PanchangTabRoot}
-        options={{
+        options={({ route }) => ({
           title: contentByLang(lang, 'पंचांग', 'Panchang'),
+          tabBarStyle: getFocusedRouteNameFromRoute(route) === 'VidhiConduct' ? { display: 'none' as const } : tabBarStyle,
           tabBarLabel: tabLabel('पंचांग', 'Panchang'),
           tabBarButtonTestID: 'tab-panchang',
           tabBarAccessibilityLabel: tabAccessibilityLabel('पंचांग', 'Panchang', 3),
           tabBarIcon: ({ focused, size }) => (
             <PanchangIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
           ),
-        }}
+        })}
       />
       <Tab.Screen
         name="VratTab"
         component={VratTabRoot}
-        options={{
+        options={({ route }) => ({
           title: contentByLang(lang, 'व्रत', 'Vrat'),
+          tabBarStyle: getFocusedRouteNameFromRoute(route) === 'VidhiConduct' ? { display: 'none' as const } : tabBarStyle,
           tabBarLabel: tabLabel('व्रत', 'Vrat'),
           tabBarButtonTestID: 'tab-vrat',
           tabBarAccessibilityLabel: tabAccessibilityLabel('व्रत', 'Vrat', 4),
           tabBarIcon: ({ focused, size }) => (
             <VratIcon color={focused ? colors.iconAccent : colors.iconInk} size={size} />
           ),
-        }}
+        })}
       />
       <Tab.Screen
         name="AudioTab"
@@ -165,13 +170,14 @@ export default function TabNavigator() {
       <Tab.Screen
         name="MoreTab"
         component={MoreStackNavigator}
-        options={{
+        options={({ route }) => ({
           // Preserve existing cross-stack and notification destinations while
           // exposing the hub through Home's gear instead of a sixth tab slot.
           title: contentByLang(lang, 'सेटिंग्स', 'Settings'),
+          tabBarStyle: getFocusedRouteNameFromRoute(route) === 'VidhiConduct' ? { display: 'none' as const } : tabBarStyle,
           tabBarButton: () => null,
           tabBarItemStyle: { display: 'none' },
-        }}
+        })}
       />
     </Tab.Navigator>
   );

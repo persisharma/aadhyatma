@@ -9,6 +9,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import ReaderHeader from '@/components/ReaderHeader';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
@@ -21,7 +22,8 @@ import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from './_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from './_useAutoSlide';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'HanumanAshtakReader'>;
@@ -44,7 +46,7 @@ export default function HanumanAshtakReaderScreen({ navigation, route }: Props) 
 
   // Called before the null-chapter early return below, so hook order stays stable;
   // single-chapter text, so the list carries no transition cards and no offset.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: 'hanuman-ashtak',
     data: chapter?.verses ?? [],
     offset: 0,
@@ -57,6 +59,7 @@ export default function HanumanAshtakReaderScreen({ navigation, route }: Props) 
     if (chapter == null) return;
     setProgress({ sourceId: 'hanuman-ashtak', chapter: chapter.chapter, verseIndex: currentIndex, updatedAt: Date.now() });
   }, [chapter, currentIndex, setProgress]);
+  useReadDwell('hanuman-ashtak', chapter?.chapter, chapter ? currentIndex : -1);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -129,6 +132,7 @@ export default function HanumanAshtakReaderScreen({ navigation, route }: Props) 
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
@@ -191,6 +195,7 @@ export default function HanumanAshtakReaderScreen({ navigation, route }: Props) 
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
           {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>

@@ -1,0 +1,21 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-bhakti" }
+- tapOn: { id: "open-suvichar" }
+- assertVisible: { id: "suvichar-mode-ready" }
+- tapOn: { id: "suvichar-presets-wish" }
+- tapOn: { id: "suvichar-preset-wish-diwali" }
+- scrollUntilVisible:
+    element: { id: "suvichar-card-message" }
+- assertVisible: "दीपावली की हार्दिक शुभकामनाएँ। आपके घर में सुख, सद्भाव और समृद्धि का प्रकाश बना रहे।"
+- scrollUntilVisible:
+    element: { id: "suvichar-name" }
+- tapOn: { id: "suvichar-name" }
+- inputText: "Sharma family"
+- hideKeyboard
+- scrollUntilVisible:
+    element: { id: "suvichar-share" }
+- assertVisible: { id: "suvichar-share" }
+# After R2 publication, inspect the native PNG through the OS/WhatsApp share
+# sheet on both platforms. Do not send a message to a recipient.

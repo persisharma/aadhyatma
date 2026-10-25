@@ -1,0 +1,49 @@
+# Native preview in four scripts, then a real capture to the OS sheet without sending.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- openLink: "vedansh://widget/verse?sourceId=lakshmi-chalisa&verseIndex=0"
+- runFlow:
+    when: { visible: "Open" }
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "devotional-subject-lakshmi" }
+    timeout: 15000
+- tapOn: "Share verse"
+- extendedWaitUntil:
+    visible: "Card language: English"
+    timeout: 20000
+- tapOn: "Card language: Hindi"
+- extendedWaitUntil:
+    visible: { id: "devotional-preview-ready" }
+    timeout: 20000
+- waitForAnimationToEnd
+- assertVisible: "Share to other apps"
+- takeScreenshot: e2e-shots/daily-art-share-hi
+- tapOn: "Card language: English"
+- extendedWaitUntil:
+    visible: { id: "devotional-preview-ready" }
+    timeout: 20000
+- waitForAnimationToEnd
+- assertVisible: "Share to other apps"
+- takeScreenshot: e2e-shots/daily-art-share-en
+- tapOn: "Card language: Gujarati"
+- extendedWaitUntil:
+    visible: { id: "devotional-preview-ready" }
+    timeout: 20000
+- waitForAnimationToEnd
+- assertVisible: "Share to other apps"
+- takeScreenshot: e2e-shots/daily-art-share-gu
+- tapOn: "Card language: Kannada"
+- extendedWaitUntil:
+    visible: { id: "devotional-preview-ready" }
+    timeout: 20000
+- waitForAnimationToEnd
+- assertVisible: "Share to other apps"
+- takeScreenshot: e2e-shots/daily-art-share-kn
+- tapOn: "Share to other apps"
+- extendedWaitUntil:
+    visible: "Copy|Save Image|AirDrop"
+    timeout: 30000
+- takeScreenshot: e2e-shots/daily-art-native-share-sheet

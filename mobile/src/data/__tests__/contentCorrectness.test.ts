@@ -956,6 +956,16 @@ function collectJsonFiles(dirRel = ''): string[] {
       // Art aliases are semantic asset mappings, not scripture. Their manifest
       // coverage and approved bytes are checked by readerIllustrationAsset tests.
       entry.name !== 'readerIllustrationAliases.json' &&
+      // Vidhi artwork delivery/review metadata contains hashes and file paths,
+      // not scripture. vidhiVisuals.test.ts checks every selected image's bytes,
+      // mapping and exact instruction/art review; keep these exclusions root-only.
+      rel !== 'vidhiArtworkManifest.json' &&
+      rel !== 'vidhiArtworkSources.json' &&
+      // Daily Bhakti share masters on R2 (stem → hash/size); their reviewed
+      // provenance is assets/devotional-share/manifest.json, checked by devotionalShareArt tests.
+      rel !== 'devotionalShareManifest.json' &&
+      // Suvichar is a published artwork hash map, not a scripture corpus.
+      rel !== 'suvicharManifest.json' &&
       rel !== 'valmiki-ramayan/daily-selection.json'
     ) {
       files.push(rel);

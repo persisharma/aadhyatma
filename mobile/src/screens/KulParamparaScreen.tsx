@@ -173,7 +173,7 @@ export default function KulParamparaScreen({ navigation }: Props) {
             {record.kuldev && (
               <View style={[styles.kuldevCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}>
                 {record.kuldev.deityId ? (
-                  <DeityIcon iconKey={deityIconKey(record.kuldev.deityId)} fallbackText={kuldevDisplayName(record.kuldev, 'hi').slice(0, 2)} size={54} />
+                  <DeityIcon iconKey={deityIconKey(record.kuldev.deityId)} size={54} />
                 ) : (
                   <View style={[styles.customGlyph, { borderColor: colors.goldTint, backgroundColor: colors.parchmentHighlight }]}>
                     <StoryIcon name="deity" size={44} />

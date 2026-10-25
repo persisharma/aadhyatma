@@ -1,8 +1,8 @@
 ---
 title: Readers
 type: subsystem
-sources: [mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
-last_verified_date: 2026-10-16
+sources: [mobile/src/components/AutoSlideScrollView.tsx, mobile/src/screens/_useAutoSlide.ts, mobile/src/utils/autoSlideStore.ts, mobile/src/components/AutoSlideButton.tsx, mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
+last_verified_date: 2026-10-22
 confidence: high
 status: current
 ---
@@ -32,6 +32,9 @@ parse the complete epic during startup; the platform bundle still carries every 
 - Current page tracked via `onViewableItemsChanged` (60% threshold) + `handleScroll`.
 - The toggle row hosts `LanguageToggle` **and** (since #87) an `AddToRoutineButton` — every
   reader has one; chaptered readers pass the current `chapter` (see [[routine]]).
+  The nine stotram readers also pin a `StartJapaButton` (`जप` pill) to the row's **left** edge
+  (`japaSlot`, absolute left 16), passing `currentIndex` so the counter opens on the shloka on
+  screen (see [[japam]]).
 - The top bar is `ReaderHeader` (`variant="reader"`; chapters/index screens pass
   `variant="index"` for the larger 22/20 title). Screens pass `title` / `onBack` / `right` and
   never geometry — RULEBOOK §3 makes a hand-rolled `topBar` block a hard reject.
@@ -43,6 +46,20 @@ parse the complete epic during startup; the platform bundle still carries every 
   transition sentinel, so speech stops at a chapter boundary rather than crossing it), owns the
   swipe-vs-auto-advance latch, and stops on unmount. Japam is the only text surface without it.
   See [[audio]].
+
+**Auto-slide / स्वतः (Oct 2026, design.md §85).** Every paged surface can turn its own pages.
+Readers call `useReaderPlayback(args)` (`_useAutoSlide.ts`) in place of `useReaderReadAloud(args)` —
+same args, returns `{ readAloud, autoSlide }`, and keeps the two hands-free modes mutually exclusive.
+Kids Stories and the comic call `useAutoSlide` directly with their own `pageChars`/`goToPage`.
+Pages hold for their text length (`autoSlideDurationMs`), not a fixed interval; pace persists in
+the `autoSlideStore` module store (no provider — launch graph untouched), which also carries the
+3 s hand-off that keeps a slideshow playing across a chapter `navigation.replace`. Long pages scroll
+to the bottom in 70%-of-a-screen steps (each holding for its share of the page time by height)
+before turning; this needs `CellRendererComponent={autoSlide.Cell}` on the pager and
+`AutoSlideScrollView` in the page component (a context tells it its list index). Touch pauses,
+release resumes after 2 s. Keep-awake while
+playing; stops on background and is hidden under a screen reader. `expo-keep-awake` is globally
+stubbed in `jest.setup.js` because every reader now reaches it.
 
 **Chapter auto-advance (the cross-subsection navigation contract).** A reader whose text has
 > 1 subsection must let the user swipe across chapter/kāṇḍa boundaries. The mechanism:
@@ -106,12 +123,21 @@ missing corporate CA trust; see [[integrations/reading-artwork]]. The full reade
 physical performance remain open. Later Vidhi
 steps show the divider without repeating art. Semantic guide art follows declared deities and
 personal-tithi guides remain neutral. Individual reader paging/scroll logic is still separate.
-Daily Bhakti's rotating verse card omits the banner after the October 12 reading-space
-correction but keeps its verse's reader-page plate (restored 14 Oct). Every verse page keeps
-its semantic `BackgroundLayer` plate whether or not it shows the banner — the banner is
-additive, never a background replacement. `Ornament compact` replaces
-the nested 80pt vertical margins with 12pt total. Shared reading-size tokens and full text stay
-intact; long verses/meanings still scroll. Source-specific share backgrounds are unchanged.
+Daily Bhakti now uses the separate offline Design 2 `DevotionalFrame` for both its screen
+and single-image export (`design.md` §39.9). It uses the separate `devotional-share` R2 category
+and persistent artwork cache; the Home icon registry and reader-illustration manifest remain separate. `versePool.ts` exposes 2,387 candidates; 59 lazy flat sources add
+1,014 verses without moving the existing pool indices. `devotionalShareArt.ts` selects nine
+original deity plates, eighteen complete 1080×1456 portrait masters, or the neutral prayer fallback.
+The new paintings cover all 330 previously neutral additions, with distinct Gayatri,
+Khatu Shyam and Devi forms. After the user rejected rectangular banner reuse, the subjects
+were repainted as complete cards with a continuous parchment fade, brand plaque, border
+and footer. All slices now use each subject’s own master. The complete 28-source set is
+8.54MiB under the 9MiB delivery contract after full-resolution perceptual compression of the nine older portraits. Lossless authoring masters remain pinned in Git; the eighteen newer subjects and neutral prayer are unchanged. All paintings are served from R2 and
+excluded from the bundled asset graph. Paper/text stay usable during first fetch or failure;
+a cached master works offline and sharing waits for successful native decode.
+All scripture and meanings remain native, unrestricted text. The Bhakti tab uses a literal `getComponent` loader, keeping its expanded screen off Home’s
+static launch graph. Share waits for every image section and the final measured layout; long readings grow instead of splitting.
+See [[integrations/reading-artwork]] for the separate reader CDN pipeline.
 `ProseParagraph` preserves complete source strings while giving iOS Fabric one extra point of
 drawing height after natural layout, avoiding observed Kannada final-line clipping. Measurement
 resets on source/font/window changes; Android uses natural layout without the extra callback.
@@ -156,6 +182,27 @@ transition page). `gitaAutoAdvance.test.tsx` covers the Gita swipe path Maestro 
 (velocity-scrolled, ~47 swipes). Each reader also has a chapter-1 smoke test (RULEBOOK §3
 *Reader smoke test*).
 
+**Read coverage (Oct 2026, design.md §84).** Separate from the saved *position*
+(`ReadingProgressContext`, one cursor per subsection that Start Over rewinds), coverage records
+WHICH verse-pages were read: `@vedansh/read-coverage` = `{ v:1, read: { '<sourceId>::<chapter>':
+[[from,to],…] }, paath, paathAt }` (flat texts use chapter 1). Rules are pure in
+`data/readCoverage.ts`; the store is a module store in `utils/readCoverageStore.ts`
+(`useSyncExternalStore`, `useReadCoverage()`), **not** an App provider — it hydrates on first
+use, so it adds nothing to the launch graph. Every reader calls
+`useReadDwell(sourceId, chapter, currentIndex)` beside its `setProgress` effect: a page counts as
+read after 3 s on screen, recorded when the page is left (page change, unmount, background) —
+no timers: an earlier setTimeout version fired after Jest tore reader tests down and crashed the
+`--runInBand` shard. When every page of a text
+is read its `paath` (full readings) goes up and its marks clear. First launch seeds from the
+saved positions (everything up to each saved verse; a text seeded complete becomes one पाठ).
+Surfaces: `LibraryCardProgress` under library cards (bar `NN% · C.V` for multi-subsection texts,
+`✓ N पाठ` chip for single texts), `GitaChapterCard` inside `<GranthProgressScope sourceId>` on the
+13 chapters screens (✓ thumb, `read / total · अंतिम N`, whole-text summary + reset), and
+`useResumeSheetCoverage` → ResumeReadingSheet (coverage line, Next unread, All chapters, "read
+marks stay" under Start Over). Reset (long-press a library/chapter card, or the summary link) →
+`ProgressResetDialog` → clears marks only (never पाठ, never the position) → inline 6 s undo.
+`readerReadDwell.test.ts` fails if any `setProgress` screen lacks the hook.
+
 ## Garud Puran source research (not integrated)
 
 As of 2026-10-01, `docs/content/garud-puran/README.md` inventories the separate
@@ -187,6 +234,22 @@ measured popularity ranking, and every item remains ineligible for release.
   `JumpToStartButton.tsx`, `LanguageToggle.tsx`, `BookmarkButton.tsx`, `ShareButton.tsx`.
 
 ## Gotchas
+
+- **Auto-slide's `goToPage` must set the index itself where the pager tracks position via
+  `onMomentumScrollEnd`** (Kids Stories, comic): a programmatic `scrollToIndex` never fires it on
+  iOS, so the slideshow would stall on page 1. Readers tracking `onScroll`/viewability are fine.
+- **Coverage page counts follow the reader, not the library row.** Flat texts are sized from the
+  verse pool's page count (the reader's own payload), chaptered texts from their manifests. The
+  two can disagree — `om-jai-shiv-omkara`'s row says 9 but its reader swipes 12 pages — and
+  completion must follow the pages. A new chaptered text needs its manifest added to
+  `chapteredManifests()` in `data/readCoverage.ts` (`readCoverage.test.ts` pins every library
+  text with a `verseCount` has a shape).
+- **Card a11y labels are deliberately unchanged by coverage** (Maestro matches on them);
+  coverage rides on `accessibilityValue`, and reset/undo on `accessibilityActions`. The chapters
+  summary is its own a11y element (`granth-progress-summary`) so its reset link stays reachable.
+- **The launch graph had ~235 bytes of headroom on 2026-10-21** — an App-level coverage provider
+  failed `launchGraph.test.ts`, hence the lazy module store. Also note the walker's
+  `STATIC_IMPORT` regex is single-line: a multi-line `import { … } from` is not counted.
 
 - **The reader *body* still has no shared shell** — each reader's paging logic is copy-pasted, so
   a new feature (like auto-advance) must be hand-applied to every multi-chapter reader. This is

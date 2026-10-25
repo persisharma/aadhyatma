@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, Clipboard, PixelRatio, Platform, Pressable, Share, StyleSheet, View } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import { ThemeProvider } from '@/theme/ThemeContext';
-import { ShareProvider, useShare, type ShareableVerse } from '@/utils/shareVerse';
+import { ShareProvider, useShare, DevotionalPreview, type ShareableVerse } from '@/utils/shareVerse';
 import { buildInstagramCaption } from '@/data/shareLinks';
 import { STORY_OUTPUT_HEIGHT, STORY_OUTPUT_WIDTH } from '@/utils/shareStoryLayout';
 
@@ -386,4 +386,24 @@ describe('share target flow', () => {
     expect(mockShareAsync).not.toHaveBeenCalled();
     expect(mockRequestAsk).not.toHaveBeenCalled();
   });
+});
+
+
+it('reports a devotional preview ready only after paint and resets for changed content', () => {
+  const card = {
+    background: null, header: 'Lakshmi', pageIndex: 0, pageCount: 1, lang: 'hi' as const,
+    page: { title: null, usedDp: 0, blocks: [], devotional: { art: 'lakshmi' as const, verse: 'Om', meaning: 'Peace', heroHeight: 90, continuation: false } },
+  };
+  let tree: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<DevotionalPreview card={card} />); });
+  const prose = () => tree!.root.find(node => (node.type as unknown) === 'ProseShareCard');
+  expect(tree!.root.findAllByProps({ testID: 'devotional-preview-ready' })).toHaveLength(0);
+  act(() => { prose().props.onHeight(1200); prose().props.onIllustrationReady(true); });
+  expect(tree!.root.findAllByType(View).filter(node => node.props.testID === 'devotional-preview-ready')).toHaveLength(1);
+  expect(tree!.root.findAllByType(View).some(node => StyleSheet.flatten(node.props.style)?.height === 480)).toBe(true);
+  act(() => { tree!.update(<DevotionalPreview card={{ ...card, page: { ...card.page, devotional: { ...card.page.devotional, meaning: 'A changed meaning' } } }} />); });
+  expect(tree!.root.findAllByProps({ testID: 'devotional-preview-ready' })).toHaveLength(0);
+  act(() => prose().props.onIllustrationReady(false));
+  expect(tree!.root.findAllByProps({ testID: 'devotional-preview-ready' })).toHaveLength(0);
+  act(() => tree!.unmount());
 });

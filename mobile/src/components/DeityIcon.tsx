@@ -1,15 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import type { DeityIconKey } from '@/data/deities';
 
 import StoryIcon from './StoryIcon';
 import { deityArtwork } from './deityArtwork';
-import { useTheme } from '@/theme/ThemeContext';
 
 type Props = {
+  /** Undefined renders the painted deity seal — never a text glyph (RULEBOOK §3). */
   iconKey?: DeityIconKey;
-  fallbackText: string;
   /** Rendered glyph size in dp. Defaults to 36 (the catalog-card avatar size). */
   size?: number;
 };
@@ -21,21 +20,15 @@ type Props = {
  */
 const BASE_SIZE = 36;
 
-export default function DeityIcon({ iconKey, fallbackText, size = BASE_SIZE }: Props) {
-  const { colors } = useTheme();
+export default function DeityIcon({ iconKey, size = BASE_SIZE }: Props) {
   const scale = size / BASE_SIZE;
-  if (iconKey) {
-    const artwork = deityArtwork[iconKey];
-    return (
-      <Scaled scale={scale}>
-        <View style={styles.canvas} testID={`deity-glyph-${iconKey}`} accessible={false}>
-          <StoryIcon name={artwork} size={BASE_SIZE} />
-        </View>
-      </Scaled>
-    );
-  }
-
-  return <Text style={[styles.fallback, { fontSize: size * 0.44, color: colors.parchmentSoft }]}>{fallbackText}</Text>;
+  return (
+    <Scaled scale={scale}>
+      <View style={styles.canvas} testID={`deity-glyph-${iconKey ?? 'fallback'}`} accessible={false}>
+        <StoryIcon name={iconKey ? deityArtwork[iconKey] : 'deity'} size={BASE_SIZE} />
+      </View>
+    </Scaled>
+  );
 }
 
 /** Scales the fixed-size illustrations. Renders children directly at 1× so the
@@ -51,10 +44,5 @@ const styles = StyleSheet.create({
     height: BASE_SIZE,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  fallback: {
-    fontSize: 16,
-    includeFontPadding: false,
-    textAlign: 'center',
   },
 });

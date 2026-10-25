@@ -5,15 +5,21 @@
  */
 
 import {
+  FEEDBACK_EMAIL,
+  LOW_RATING_COOLDOWN_DAYS,
   MAX_ASKS,
   MIN_ACTIVE_DAYS,
   MIN_APP_OPENS,
   MIN_VERSE_READS,
   RATING_PROMPT_DEFAULTS,
   REASK_COOLDOWN_DAYS,
+  STORE_MIN_STARS,
   afterAsked,
   afterDeclined,
+  afterLowRating,
   afterRated,
+  feedbackEmail,
+  feedbackMailto,
   isEligibleForRatingPrompt,
   parseRatingPromptState,
   storeListingUrl,
@@ -69,7 +75,7 @@ describe('isEligibleForRatingPrompt', () => {
 
   it('keeps asking indefinitely while MAX_ASKS is null', () => {
     // The 50th ask is as eligible as the first — only rating stops it from the sheet.
-    const state: RatingPromptState = { askCount: 50, lastAskedAt: null, outcome: 'pending', asksByTrigger: {} };
+    const state: RatingPromptState = { ...RATING_PROMPT_DEFAULTS, askCount: 50 };
     expect(isEligibleForRatingPrompt(eligibleInput({ state }))).toBe(true);
   });
 
@@ -84,7 +90,7 @@ describe('isEligibleForRatingPrompt', () => {
   });
 
   it('honours the cooldown, then re-asks once it lapses', () => {
-    const asked: RatingPromptState = { askCount: 1, lastAskedAt: NOW, outcome: 'pending', asksByTrigger: {} };
+    const asked: RatingPromptState = { ...RATING_PROMPT_DEFAULTS, askCount: 1, lastAskedAt: NOW };
 
     // Same day, and one day short of the window: still quiet.
     expect(isEligibleForRatingPrompt(eligibleInput({ state: asked }))).toBe(false);
@@ -101,6 +107,19 @@ describe('isEligibleForRatingPrompt', () => {
       )
     ).toBe(true);
   });
+
+  it('stays away for 90 days after a 1–3★ tap, then may ask again', () => {
+    const low = afterLowRating(RATING_PROMPT_DEFAULTS, NOW);
+    expect(low.outcome).toBe('pending');
+    expect(
+      isEligibleForRatingPrompt(
+        eligibleInput({ state: low, now: NOW + (LOW_RATING_COOLDOWN_DAYS - 1) * DAY_MS })
+      )
+    ).toBe(false);
+    expect(
+      isEligibleForRatingPrompt(eligibleInput({ state: low, now: NOW + LOW_RATING_COOLDOWN_DAYS * DAY_MS }))
+    ).toBe(true);
+  });
 });
 
 describe('state transitions', () => {
@@ -111,6 +130,7 @@ describe('state transitions', () => {
       lastAskedAt: NOW,
       outcome: 'pending',
       asksByTrigger: { 'routine-complete': 1 },
+      lowRatedAt: null,
     });
     expect(afterAsked(once, NOW, 'routine-complete').asksByTrigger).toEqual({
       'routine-complete': 2,
@@ -184,6 +204,7 @@ describe('parseRatingPromptState', () => {
       lastAskedAt: NOW,
       outcome: 'pending',
       asksByTrigger: { 'routine-complete': 1 },
+      lowRatedAt: NOW,
     };
     expect(parseRatingPromptState(JSON.stringify(state))).toEqual(state);
   });
@@ -193,7 +214,7 @@ describe('parseRatingPromptState', () => {
     const parsed = parseRatingPromptState(
       JSON.stringify({ askCount: 2, lastAskedAt: NOW, outcome: 'pending' })
     );
-    expect(parsed).toEqual({ askCount: 2, lastAskedAt: NOW, outcome: 'pending', asksByTrigger: {} });
+    expect(parsed).toEqual({ askCount: 2, lastAskedAt: NOW, outcome: 'pending', asksByTrigger: {}, lowRatedAt: null });
   });
 
   it('keeps only known moments with sane counts', () => {
@@ -215,12 +236,13 @@ describe('parseRatingPromptState', () => {
         askCount: 3,
         lastAskedAt: NOW,
         outcome: 'pending',
-        asksByTrigger: { 'routine-complete': 1, 'verse-shared': 1, 'mala-complete': 1 },
+        asksByTrigger: { 'routine-complete': 1, 'verse-shared': 1, 'prose-shared': 1, 'mala-complete': 1 },
       })
     );
     expect(parsed.asksByTrigger).toEqual({
       'routine-complete': 1,
       'verse-shared': 1,
+      'prose-shared': 1,
       'mala-complete': 1,
     });
   });
@@ -234,7 +256,33 @@ describe('parseRatingPromptState', () => {
 
   it('floors a fractional askCount and rejects a non-positive timestamp', () => {
     const parsed = parseRatingPromptState(JSON.stringify({ askCount: 1.8, lastAskedAt: 0, outcome: 'rated' }));
-    expect(parsed).toEqual({ askCount: 1, lastAskedAt: null, outcome: 'rated', asksByTrigger: {} });
+    expect(parsed).toEqual({ askCount: 1, lastAskedAt: null, outcome: 'rated', asksByTrigger: {}, lowRatedAt: null });
+  });
+
+  it('rejects a junk lowRatedAt', () => {
+    expect(parseRatingPromptState(JSON.stringify({ lowRatedAt: 'last week' })).lowRatedAt).toBeNull();
+    expect(parseRatingPromptState(JSON.stringify({ lowRatedAt: -5 })).lowRatedAt).toBeNull();
+  });
+});
+
+describe('in-app stars', () => {
+  it('sends 4★ and 5★ to the store, and keeps 1–3★ on the card', () => {
+    expect(STORE_MIN_STARS).toBe(4);
+    expect(LOW_RATING_COOLDOWN_DAYS).toBe(90);
+  });
+
+  it('ships with the Vedansh support inbox', () => {
+    expect(feedbackEmail()).toBe(FEEDBACK_EMAIL);
+    expect(FEEDBACK_EMAIL).toBe('vedansh.app.support@gmail.com');
+  });
+
+  it('pre-fills the feedback email with the stars, version and platform', () => {
+    const url = feedbackMailto('help@example.test', 2, 'android', '1.5.2');
+    expect(url.startsWith('mailto:help@example.test?subject=')).toBe(true);
+    const params = new URLSearchParams(url.slice(url.indexOf('?') + 1));
+    expect(params.get('subject')).toBe('Vedansh feedback (2/5)');
+    expect(params.get('body')).toContain('Rating: 2/5');
+    expect(params.get('body')).toContain('App: 1.5.2 (android)');
   });
 });
 

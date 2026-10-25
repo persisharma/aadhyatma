@@ -54,9 +54,10 @@ describe('TrackCard thumb', () => {
     expect(tree.root.findAllByProps({ testID: 'deity-glyph-bowArrow' }).length).toBeGreaterThan(0);
   });
 
-  test('falls back to the Devanagari thumb letter when the track has no deity', () => {
+  test('a track with no deity draws the painted deity seal, never its Devanagari thumb letter', () => {
     const tree = render(<TrackCard track={withoutDeity} onPress={() => undefined} />);
     expect(tree.root.findAllByProps({ testID: 'deity-glyph-bowArrow' })).toHaveLength(0);
-    expect(textOf(tree)).toContain('ओ');
+    expect(tree.root.findAllByProps({ testID: 'deity-glyph-fallback' }).length).toBeGreaterThan(0);
+    expect(textOf(tree)).not.toContain(withoutDeity.thumb);
   });
 });

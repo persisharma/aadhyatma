@@ -23,6 +23,7 @@ import {
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import JumpToStartButton from '@/components/JumpToStartButton';
@@ -35,10 +36,12 @@ import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
+import HomeWordmark from '@/components/HomeWordmark';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from './_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from './_useAutoSlide';
 import type { RootStackParamList } from '@/navigation/types';
 
 const SOURCE_ID = 'gita-saar';
@@ -120,10 +123,11 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
   const offset = isFirstChapter ? 0 : 1;
   const listRef = useRef<FlatList<FlatListItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [pageHeight, setPageHeight] = useState<number>();
   const hasNavigatedRef = useRef(false);
 
   // Before the null-chapter early return, so hook order stays stable.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: SOURCE_ID,
     data,
     offset,
@@ -141,6 +145,7 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
       updatedAt: Date.now(),
     });
   }, [chapter, currentIndex, setProgress]);
+  useReadDwell(SOURCE_ID, chapter?.chapter, chapter ? currentIndex : -1);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -201,7 +206,7 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
     ? contentByLang(lang, `${gitaSaarTitleHi} · ${chapter.titleHi}`, `${gitaSaarTitleEn} · ${chapter.titleEn}`)
     : '';
 
-  const listExtraData = useMemo(() => ({ lang, bookmarks, shareBusy }), [lang, bookmarks, shareBusy]);
+  const listExtraData = useMemo(() => ({ lang, bookmarks, shareBusy, pageHeight }), [lang, bookmarks, shareBusy, pageHeight]);
 
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -226,8 +231,9 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
         <ReaderHeader
           title={topTitle}
+          titleContent={<HomeWordmark compact showTagline={false} />}
           onBack={() => navigation.goBack()}
-          sideWidth={60}
+          sideWidth={48}
           right={
             <Text
               style={[
@@ -255,8 +261,9 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <View style={styles.listContainer}>
+        <View style={styles.listContainer} onLayout={(event) => setPageHeight(event.nativeEvent.layout.height)}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}
@@ -284,10 +291,11 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
               const isLastPage = verseIdx === verseCount - 1;
               return (
                 <GitaSaarVersePage
-                  showIllustration={verseIdx === 0}
+                  chapterTitle={contentByLang(lang, chapter.titleHi, chapter.titleEn)}
                   verse={item}
                   sourceId={SOURCE_ID}
                   width={width}
+                  height={pageHeight}
                   closing={isLastPage ? { hi: chapter.closingHi, en: chapter.closingEn } : undefined}
                   onOpenInGita={() =>
                     navigation.navigate('GitaReader', {
@@ -349,11 +357,13 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
             }}
             extraData={listExtraData}
             horizontal
+            directionalLockEnabled
+            nestedScrollEnabled
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             initialNumToRender={1}
             windowSize={3}
-            removeClippedSubviews
+            removeClippedSubviews={false}
             maxToRenderPerBatch={2}
             viewabilityConfig={viewabilityConfig}
             onViewableItemsChanged={onViewableItemsChanged}
@@ -364,6 +374,7 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
 
           {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>

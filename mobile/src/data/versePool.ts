@@ -13,7 +13,10 @@ import { getBajrangBaanChapter, bajrangBaanChaptersManifest } from './bajrang-ba
 import { getRamcharitmanasChapter, ramcharitmanasChaptersManifest } from './ramcharitmanas';
 import { valmikiRamayanDailySelection } from './valmiki-ramayan';
 import { japamMantras } from './japam';
+import { GRAHA_BEEJ_JAPA_ID } from './japam/grahaBeej';
 import { sanskarIds, getSanskar } from './sanskar';
+
+const grahaBeejJapaIds: ReadonlySet<string> = new Set(Object.values(GRAHA_BEEJ_JAPA_ID));
 
 export type UniformVerse = {
   sourceId: string;
@@ -39,6 +42,8 @@ export type UniformVerse = {
  * - **Japam**: one mantra per entry, no chapter.
  * - **Sanskar**: a flat verse list per ritual, no chapter; the first `intro`
  *   verse is a section descriptor and is excluded from the random pool.
+ * - **Flat** sources: one verse list per text, no chapter (chalisas, aartis,
+ *   ashtakams, suktams, kavachs, stutis), registered in `versePoolFlat.ts`.
  *
  * Each new section must be registered below — membership is explicit rather
  * than inferred from a category, so the pool only surfaces content with a
@@ -95,7 +100,7 @@ const PADA_SOURCES: readonly PadaSource[] = [
   { id: 'ramcharitmanas', manifest: ramcharitmanasChaptersManifest, getChapter: getRamcharitmanasChapter },
 ];
 
-type PoolSegment = {
+export type PoolSegment = {
   sourceId: string;
   length: number;
   lastPositions: readonly { chapter: number; verseIndex: number }[];
@@ -263,6 +268,9 @@ function buildPoolSegments(): PoolSegment[] {
     if (!isActive(mantra.id)) continue;
     // A naam-japa line is a single name, not a verse to surface on its own.
     if (mantra.naam) continue;
+    // A graha beej mantra is Kundali upaya (RULEBOOK §14.3.5): it stays on the
+    // surfaces the person opened, never pushed as a verse of the day.
+    if (grahaBeejJapaIds.has(mantra.id)) continue;
     const getAt = (offset: number): UniformVerse | null =>
       offset === 0
         ? {
@@ -321,11 +329,27 @@ function buildPoolSegments(): PoolSegment[] {
     });
   }
 
+  // Appended after the existing sources so earlier pool indices keep their verse.
+  // Required, not imported: the registry and its counts stay off the launch path.
+  segments.push(
+    ...(require('./versePoolFlat') as typeof import('./versePoolFlat')).flatPoolSegments({ isActive, nameHi, nameEn })
+  );
+
   return segments;
 }
 
-const poolSegments = buildPoolSegments();
-const poolSize = poolSegments.reduce((total, segment) => total + segment.length, 0);
+// Built on first use, not at import: the flat registry it requires stays off
+// the launch path until something asks for a verse.
+let poolSegments: PoolSegment[] | null = null;
+let poolSize = 0;
+
+function segments(): PoolSegment[] {
+  if (!poolSegments) {
+    poolSegments = buildPoolSegments();
+    poolSize = poolSegments.reduce((total, segment) => total + segment.length, 0);
+  }
+  return poolSegments;
+}
 
 export type VersePoolLastPositions = {
   chapters: Record<number, number>;
@@ -335,7 +359,7 @@ export type VersePoolLastPositions = {
 /** Completion boundaries derived from manifests, without loading verse data. */
 export function getVersePoolLastPositions(): Record<string, VersePoolLastPositions> {
   const positions: Record<string, VersePoolLastPositions> = {};
-  for (const segment of poolSegments) {
+  for (const segment of segments()) {
     for (const last of segment.lastPositions) {
       const source = positions[segment.sourceId] ?? { chapters: {}, lastChapter: last.chapter };
       const current = source.chapters[last.chapter];
@@ -348,13 +372,14 @@ export function getVersePoolLastPositions(): Record<string, VersePoolLastPositio
 }
 
 export function getVersePoolSize(): number {
+  segments();
   return poolSize;
 }
 
 export function getVerseAtPoolIndex(index: number): UniformVerse | null {
-  if (!Number.isInteger(index) || index < 0 || index >= poolSize) return null;
+  if (!Number.isInteger(index) || index < 0 || index >= getVersePoolSize()) return null;
   let offset = index;
-  for (const segment of poolSegments) {
+  for (const segment of segments()) {
     if (offset < segment.length) return segment.getAt(offset);
     offset -= segment.length;
   }
@@ -363,7 +388,7 @@ export function getVerseAtPoolIndex(index: number): UniformVerse | null {
 
 function buildPool(): UniformVerse[] {
   const pool: UniformVerse[] = [];
-  for (let index = 0; index < poolSize; index += 1) {
+  for (let index = 0; index < getVersePoolSize(); index += 1) {
     const verse = getVerseAtPoolIndex(index);
     if (verse) pool.push(verse);
   }
@@ -380,8 +405,9 @@ export function getVersePool(): UniformVerse[] {
 }
 
 export function getRandomVerse(): UniformVerse | null {
-  if (poolSize === 0) return null;
-  return getVerseAtPoolIndex(Math.floor(Math.random() * poolSize));
+  const size = getVersePoolSize();
+  if (size === 0) return null;
+  return getVerseAtPoolIndex(Math.floor(Math.random() * size));
 }
 
 /**
@@ -396,7 +422,7 @@ export function findVerse(
   verseIndex: number,
   chapter?: number
 ): UniformVerse | null {
-  for (const segment of poolSegments) {
+  for (const segment of segments()) {
     if (segment.sourceId !== sourceId) continue;
     const verse = segment.find(verseIndex, chapter);
     if (verse) return verse;

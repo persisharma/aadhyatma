@@ -267,6 +267,10 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*elapsed.*"
 - assertVisible: ".*left.*"
 - assertVisible: ".*Now.*"
+# The Mahadasha lord's beej mantra (Jupiter → Guru) opens its japam counter.
+- assertVisible:
+    id: "dasha-beej-japa"
+- assertVisible: "Chant Guru Beej Mantra on the mala, for the Jupiter Mahadasha"
 # Each "Now" level is named; anchor on a concrete row in the full Mahadasha
 # timeline because the two section captions can scroll past as one block.
 - scrollUntilVisible:

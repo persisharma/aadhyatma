@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-21",
+  "pr": 502,
+  "review_comments": {
+    "issue_comments": 0,
+    "reviews": 0,
+    "inline_comments": 0
+  },
+  "full_test": {
+    "command": "cd mobile && npm test",
+    "exit_code": 0,
+    "typecheck": "passed",
+    "widgets": 37,
+    "jest": {
+      "suites": 272,
+      "tests": 2625
+    },
+    "engine": 617,
+    "data": 184,
+    "ask": 49,
+    "total_tests": 3512,
+    "code_revision": "685821ac"
+  },
+  "native": {
+    "platform": "iOS 26.4 simulator",
+    "device": "575E0F9E-245D-477B-A9A7-9F93DDB2622B",
+    "scope": [
+      "Hindi Standard title, icon listing from start to end, opening reader and complete first Saar",
+      "English Standard complete first Saar, long theme-10 title, handoff to Gita 6.32",
+      "English Large complete first Saar",
+      "Gujarati Large index title and complete first Saar",
+      "Kannada Large index title/icons and complete first Saar"
+    ],
+    "exhaustive_170_page_audit": false,
+    "android": false
+  },
+  "maestro": {
+    "result": "passed",
+    "flow": "mobile/.maestro/gita-saar-visual-smoke.yaml",
+    "yaml_steps": 27,
+    "yaml_parse": "passed",
+    "attempts": [
+      "Shared fresh-install launch stalled with the development LogBox covering Begin.",
+      "The second app launch showed No script URL provided (unsanitizedScriptURLString = null), before reaching Gita Saar."
+    ],
+    "passed": true,
+    "exit_code": 0,
+    "scope": "Existing isolated iOS simulator profile; launch, index, English reader, vertical scrolling and Gita 6.32 handoff. Fresh-install setup is not covered.",
+    "recovery": "Restarted unresponsive Metro; handled the development warning overlay; explicitly swiped the first listing row clear of the tab bar before tapping.",
+    "evidence": "maestro/run.log"
+  },
+  "latest_correction": {
+    "change": "Bundled StoryIcon theme illustrations; no inserted reader banner; devotional background retained",
+    "typecheck": "passed",
+    "focused_tests": {
+      "suites": 3,
+      "tests": 29,
+      "result": "passed"
+    },
+    "native": {
+      "result": "passed",
+      "exit_code": 0,
+      "scope": "Existing iOS simulator profile: Hindi index, illustrated icons, English first Saar, scroll and Gita 6.32 handoff",
+      "visually_inspected": [
+        "theme icons",
+        "opening reader without inserted banner"
+      ],
+      "evidence": "background-only/"
+    },
+    "prior_evidence": "Full test run and Large/regional manual captures above refer to the previous iteration."
+  }
+}

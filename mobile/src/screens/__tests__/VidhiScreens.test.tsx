@@ -19,6 +19,9 @@ import { GitaLanguageProvider } from '@/data/gita/language';
 import { VIDHI_ENTRIES } from '@/data/vidhi';
 import { satyanarayanPuja } from '@/data/vidhi/satyanarayan-puja';
 import { shraddhaTarpanVidhi } from '@/data/vidhi/shraddha-tarpan-vidhi';
+import { diwaliLakshmiGaneshPuja } from '@/data/vidhi/diwali-lakshmi-ganesh-puja';
+import CachedArtwork from '@/components/CachedArtwork';
+import { conductStepFor, loadVidhiState, vidhiDateKey } from '@/data/vidhi/checklistStore';
 
 /**
  * `getState().routeNames` is how the shipped-text hand-off tells which stack the
@@ -48,6 +51,15 @@ jest.mock('expo-haptics', () => ({
 
 jest.mock('expo-keep-awake', () => ({
   useKeepAwake: jest.fn(),
+}));
+
+// Exercise unavailable R2 art without network or native file-system work.
+jest.mock('@/utils/backgroundAssetCache', () => ({
+  subscribeBackgroundAsset: (_request: unknown, listener: (uri: string | null) => void) => {
+    listener(null);
+    return jest.fn();
+  },
+  evictBackgroundAsset: jest.fn(),
 }));
 
 jest.mock('expo-linear-gradient', () => ({
@@ -87,6 +99,26 @@ async function settle() {
 
 const texts = (renderer: TestRenderer.ReactTestRenderer): string =>
   JSON.stringify(renderer.toJSON());
+
+test.each([
+  ['ganesh-upachara', 'ganesha-snana', 'ganesha-upachara'],
+  ['lakshmi-snana', 'lakshmi-metal-snana', 'lakshmi-symbolic-snana'],
+])('paired %s keeps both authored clauses when R2 is unavailable', async (stepId, firstArt, secondArt) => {
+  const index = diwaliLakshmiGaneshPuja.steps.findIndex(step => step.id === stepId);
+  const step = diwaliLakshmiGaneshPuja.steps[index];
+  const r = render(<VidhiConductScreen navigation={nav} route={{
+    key: `paired-${stepId}`, name: 'VidhiConduct', params: { vidhiId: diwaliLakshmiGaneshPuja.id, initialStep: index },
+  } as never} />);
+  await settle();
+  const page = r.root.findByProps({ testID: `vidhi-timeline-page-${stepId}` });
+  expect(page.findByProps({ testID: `vidhi-step-art-${stepId}` }).findByType(CachedArtwork).props.source)
+    .toEqual({ kind: 'vidhi-artwork', stem: firstArt });
+  expect(page.findByProps({ testID: `vidhi-step-art-${stepId}-1` }).findByType(CachedArtwork).props.source)
+    .toEqual({ kind: 'vidhi-artwork', stem: secondArt });
+  const split = step.instructionHi.indexOf(';');
+  expect(texts(r)).toContain(step.instructionHi.slice(0, split + 1));
+  expect(texts(r)).toContain(step.instructionHi.slice(split + 1).trimStart());
+});
 
 afterEach(() => {
   // Unmount inside act() so VirtualizedList's scheduled timers are torn down
@@ -258,17 +290,75 @@ test('VidhiConductScreen: mantra step renders Devanagari + IAST in the reading c
   expect(body).toContain('॥');
   // Counter is step-scoped: 4 / 16.
   expect(body).toContain(`${dhyanaIndex + 1} / ${satyanarayanPuja.steps.length}`);
-  // Conduct reuses the reading-card shell and reader swipe contract. There is
-  // no duplicate previous/next button bar or swipe-instruction copy.
+  // The illustrated timeline keeps the reader's swipe interaction; neighbouring
+  // rows supply direct access rather than a duplicate previous/next button bar.
   r.root.findByProps({ testID: 'vidhi-reading-card-dhyana' });
   const pager = r.root.findByProps({ testID: 'vidhi-conduct-pager' });
   expect(pager.props.horizontal).toBe(true);
   expect(pager.props.pagingEnabled).toBe(true);
-  r.root.findByProps({ testID: 'vidhi-pager-dots' });
+  r.root.findByProps({ testID: 'reading-progress-fill' });
+  r.root.findByProps({ testID: 'vidhi-timeline-page-dhyana' });
   expect(r.root.findAllByProps({ testID: 'vidhi-prev' })).toHaveLength(0);
   expect(r.root.findAllByProps({ testID: 'vidhi-next' })).toHaveLength(0);
   expect(body).not.toContain('Swipe');
   expect(body).not.toContain('swipe');
+});
+
+test('illustrated neighbours open the exact step and save it for resume', async () => {
+  const index = diwaliLakshmiGaneshPuja.steps.findIndex((step) => step.id === 'lakshmi-pushpa');
+  const r = render(<VidhiConductScreen navigation={nav} route={{
+    key: 'timeline', name: 'VidhiConduct',
+    params: { vidhiId: diwaliLakshmiGaneshPuja.id, initialStep: index },
+  } as never} />);
+  await settle();
+  const page = r.root.findByProps({ testID: 'vidhi-timeline-page-lakshmi-pushpa' });
+  const previous = page.findByProps({ testID: `vidhi-timeline-step-${index - 1}` });
+  const next = page.findByProps({ testID: `vidhi-timeline-step-${index + 1}` });
+  expect(previous.props.accessibilityLabel).toContain('वस्त्र व शृंगार');
+  expect(next.props.accessibilityLabel).toContain('धूप व दीप');
+  page.findByProps({ testID: 'vidhi-step-art-lakshmi-pushpa' });
+  act(() => next.props.onPress());
+  await settle();
+  expect(texts(r)).toContain('14 / 20');
+  expect(conductStepFor(await loadVidhiState(), diwaliLakshmiGaneshPuja.id, vidhiDateKey(new Date()))).toBe(index + 1);
+});
+
+test('opening a step directly saves resume before the first page turn', async () => {
+  const index = 5;
+  render(<VidhiConductScreen navigation={nav} route={{
+    key: 'direct-step', name: 'VidhiConduct',
+    params: { vidhiId: shraddhaTarpanVidhi.id, initialStep: index },
+  } as never} />);
+  await settle();
+  expect(conductStepFor(await loadVidhiState(), shraddhaTarpanVidhi.id, vidhiDateKey(new Date()))).toBe(index);
+});
+
+test('failed artwork leaves the complete step instruction and reader hand-off usable', async () => {
+  const index = satyanarayanPuja.steps.findIndex((step) => step.id === 'katha');
+  const r = render(<VidhiConductScreen navigation={nav} route={{
+    key: 'failed-art', name: 'VidhiConduct', params: { vidhiId: satyanarayanPuja.id, initialStep: index },
+  } as never} />);
+  await settle();
+  const page = r.root.findByProps({ testID: 'vidhi-timeline-page-katha' });
+  page.findByProps({ testID: 'vidhi-step-art-katha' });
+  expect(texts(r)).toContain(satyanarayanPuja.steps[index].instructionHi);
+  act(() => page.findByProps({ testID: 'vidhi-handoff-katha' }).props.onPress());
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('HomeTab', {
+    screen: 'VratKathaReader', params: { kathaId: 'satyanarayana-vrat-katha' },
+  });
+});
+
+test('the final timeline action reaches quiet completion and clears saved resume', async () => {
+  const index = satyanarayanPuja.steps.length - 1;
+  const r = render(<VidhiConductScreen navigation={nav} route={{
+    key: 'finish', name: 'VidhiConduct', params: { vidhiId: satyanarayanPuja.id, initialStep: index },
+  } as never} />);
+  await settle();
+  const page = r.root.findByProps({ testID: 'vidhi-timeline-page-kshama-prasad' });
+  act(() => page.findByProps({ testID: 'vidhi-timeline-finish' }).props.onPress());
+  await settle();
+  expect(texts(r)).toContain('पूजा सम्पन्न');
+  expect(conductStepFor(await loadVidhiState(), satyanarayanPuja.id, vidhiDateKey(new Date()))).toBeNull();
 });
 
 test('VidhiConductScreen: ref step hands off to the shipped katha reader and back', async () => {

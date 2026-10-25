@@ -1,0 +1,83 @@
+# Validation — 22 October 2026
+
+## Executed
+
+- TypeScript typecheck passed.
+- Full reader/component Jest gate: 280 suites, 2,735 tests passed across three shards in Asia/Kolkata.
+- Widget, Panchang engine, data integrity and Ask suites passed.
+- Final focused geometry/personalization/source checks: 21 tests passed after the reviewed painting boundaries were applied.
+- All 42 full-resolution WebP files decoded completely with Pillow. Five contact sheets were visually reviewed for subject identity, figure counts, text-free body space, consistent frame directions and complete painting boundaries. All source backgrounds and exact hashes are committed; contact-sheet inspection was performed locally.
+- prepare-suvichar.mjs syntax check passed. Publication was attempted and refused because required R2 credentials are absent; the runtime manifest remained unchanged and empty.
+- **Published 23 October 2026.** All 42 masters were uploaded to R2 under `suvichar/<sha256[:16]>.webp` with `public, max-age=31536000, immutable`, the runtime manifest was written from the same sources, and `node scripts/prepare-suvichar.mjs --verify` confirmed every public CDN object matches its source bytes.
+- git diff --check passed.
+
+The host rejects the tsx CLI IPC socket (`listen EPERM /tmp/tsx-0/...pipe`), so direct `npm test` stopped at that environment boundary. The complete constituent gate was run with the equivalent `node --import tsx --test ...` entry points for its tsx suites. Reader/component scripts explicitly pin Asia/Kolkata, matching the engine gate and India-local date fixtures; unpinned UTC runs had calendar-fixture failures. No production calendar code was changed.
+
+```text
+CHECK typecheck
+CHECK_EXIT=0
+CHECK test:widgets
+ℹ tests 37
+ℹ pass 37
+ℹ fail 0
+CHECK_EXIT=0
+CHECK test:readers:1
+Test Suites: 94 passed, 94 total
+Tests:       914 passed, 914 total
+CHECK_EXIT=0
+CHECK test:readers:2
+Test Suites: 93 passed, 93 total
+Tests:       1059 passed, 1059 total
+CHECK_EXIT=0
+CHECK test:readers:3
+Test Suites: 93 passed, 93 total
+Tests:       762 passed, 762 total
+CHECK_EXIT=0
+CHECK test:engine
+ℹ tests 617
+ℹ pass 617
+ℹ fail 0
+CHECK_EXIT=0
+CHECK test:data
+ℹ tests 207
+ℹ pass 207
+ℹ fail 0
+CHECK_EXIT=0
+CHECK test:ask
+ℹ tests 49
+ℹ pass 49
+ℹ fail 0
+CHECK_EXIT=0
+```
+
+## Outstanding before merge
+
+1. Publish all 42 assets with authorized R2 credentials, run public byte verification and commit the resulting runtime manifest. Until then image sharing is intentionally disabled.
+2. Run mobile/.maestro/suvichar-personalization.yaml on installed iOS and Android apps. This environment has no Maestro, adb, xcrun or native simulator.
+3. Inspect actual native cards/PNGs and WhatsApp handoff in all four scripts at Standard/Large, with empty/long names, the complete 280-unit message, every deity/frame, cold cache, decode failure/retry and restart persistence. Source-art review and unit tests do not establish native export fidelity.
+
+No app release, EAS build, deployment, recipient message or automatic festival notification was performed.
+
+## Follow-up export verification
+
+Inspection of react-native-view-shot's installed native implementation found that Android only resizes when both width and height are supplied, and UIKit uses point dimensions at the screen pixel ratio. The composer now supplies both dimensions from its measured card height, using the same platform scaling policy as ShareProvider. It rechecks the active card identity, native measurement and image readiness after waiting for the capture frames, and refuses a stale layout.
+
+TypeScript passed and all 32 focused Suvichar tests passed after this fix, covering Android pixels, iOS pixel ratios 2/3, tall cards, invalid geometry, stale measurements and loss of image readiness. GitHub CI on the prior PR head passed typecheck, reader/component and engine gates; subsequent steps were still running when this update was prepared. Native image inspection remains pending.
+
+Access was checked again: no R2 credentials, Wrangler login, Android SDK, adb, Maestro, xcrun or emulator is available in this workspace. Publishing and actual native WhatsApp verification therefore remain blocked; no hashes were activated.
+
+Production Expo/Hermes exports subsequently passed for both iOS and Android on the capture-fix code commit. Both asset maps were inspected against all 42 source master IDs and the Suvichar source directory; neither bundle contains any Suvichar background. Exact export/asset-map hashes are recorded in export-verification.json. These are JavaScript compilation and asset-graph checks, not installed-native or WhatsApp verification.
+
+## Salasar identity correction — 23 October 2026
+
+The earlier generic bearded human faces were rejected. All three Salasar masters were regenerated using a darshan photograph as the identity reference, preserving the broad monolithic sindoor form, round white eyes, triangular red nose and flat painted moustache/beard. The frame and message-paper boundaries were visually reviewed. Reference URL, exact prompts, PNG hashes and replacement WebP hashes are recorded in sources.json. All 42 WebPs decode and the 10 source/provenance tests pass. Native/WhatsApp review and R2 publication remain pending. The corrected review prototype preserves all 42 selections and 1,000 draft records.
+
+## Ready-made collection and conflict resolution — 23 October 2026
+
+Added 21 complete ready-made compositions (14 deities and seven wishes), the default ready-made/custom mode selector, virtualized R2 thumbnail subscriptions, sender-preserving preset selection and a native smoke flow. TypeScript passes. Focused ready-made/personalization/capture/source checks pass: 5 suites, 36 tests. The picker test exercises selection and subscription cleanup; screen tests share a preset without editing its message and preserve a selected wish when entering custom mode. Main through 3ac76f5 was reconciled, preserving rating-star changes and both wiki histories. Maestro/native PNG/WhatsApp checks and R2 publication remain pending; no artwork hashes were activated.
+
+Main advanced again during publishing. Reconciled 5471d16, preserving the auto-slide reader changes, Sadhana visuals and both documentation additions.
+
+## Publication — 24 October 2026
+
+The six masters added in #530 (Jagannath and Sanwariya Seth × three frames) were uploaded to R2 with `public, max-age=31536000, immutable`; the runtime manifest now lists all 48, with the existing 42 entries unchanged. `node scripts/prepare-suvichar.mjs --verify` confirmed every public object matches its source bytes.

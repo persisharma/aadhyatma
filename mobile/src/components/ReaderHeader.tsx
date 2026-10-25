@@ -21,6 +21,7 @@ import { isLatinLang, titleFontByLang } from '@/utils/langType';
  */
 export default function ReaderHeader({
   title,
+  titleContent,
   onBack,
   backAccessibilityLabel,
   right,
@@ -30,6 +31,8 @@ export default function ReaderHeader({
 }: {
   /** Already localized — pass `contentByLang(lang, hi, en)`. */
   title: string;
+  /** Optional branded masthead; the screen title remains available to accessibility. */
+  titleContent?: React.ReactNode;
   onBack: () => void;
   /**
    * Defaults to `"Back"`. Deliberately English and un-localized: the Maestro
@@ -81,7 +84,7 @@ export default function ReaderHeader({
         </Pressable>
       </View>
 
-      <Text
+      {titleContent ? <View accessible accessibilityLabel={title} style={styles.masthead}>{titleContent}</View> : <Text
         allowFontScaling
         // Reader titles are navigation chrome. Cap them below the point where a
         // long localized title can push into the status area or side controls;
@@ -99,7 +102,7 @@ export default function ReaderHeader({
         numberOfLines={1}
       >
         {title}
-      </Text>
+      </Text>}
 
       <View style={[styles.side, styles.sideRight, { width: side }]}>{right}</View>
     </View>
@@ -129,4 +132,5 @@ const styles = StyleSheet.create({
   },
   backGlyph: { fontSize: 22, lineHeight: 24, marginTop: -2, includeFontPadding: false },
   title: { flex: 1, textAlign: 'center', includeFontPadding: false, marginHorizontal: 4 },
+  masthead: { flex: 1, minWidth: 0, alignItems: 'center' },
 });

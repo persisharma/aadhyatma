@@ -2,7 +2,7 @@
 title: Daily Routine (Nitya Sadhana)
 type: subsystem
 sources: [mobile/src/data/routine/types.ts, mobile/src/data/routine/units.ts, mobile/src/data/routine/useRoutineToday.ts, mobile/src/data/routine/vaar.ts, mobile/src/data/sadhana/progress.ts, mobile/src/data/sadhana/useSadhanaToday.ts, mobile/src/contexts/RoutineContext.tsx, mobile/src/contexts/RoutineSheetProvider.tsx, mobile/src/components/RoutineBanner.tsx, mobile/src/components/SankalpTodayCard.tsx, mobile/src/components/routineBannerView.ts, mobile/src/components/AddToRoutineButton.tsx, mobile/src/components/RoutineCelebration.tsx, mobile/src/components/RoutineReminderScheduler.tsx, mobile/src/notifications/routineReminderPure.ts, mobile/src/notifications/routineScheduler.ts, mobile/src/screens/RoutineDetailScreen.tsx, docs/roadmap/prds/07-daily-routine-sadhana.md, docs/roadmap/prds/07-routine-reminders-phase3.md, docs/roadmap/prds/11-sadhana-programs.md]
-last_verified_date: 2026-08-18
+last_verified_date: 2026-10-23
 confidence: high
 status: current
 ---
@@ -68,11 +68,7 @@ UserActivity day totals show `rounds ≥ targetRounds`. `useRoutineToday()` comp
 Routine + ReadingProgress + UserActivity into `{entries, doneCount, total, hasRoutine}`;
 `doneMode` is `'manual' | 'auto' | null` (manual wins).
 
-**UI surfaces:** the `RoutineToday` ledger is a **tap-to-expand accordion** — the completion
-summary card is the always-visible header (with a centred rotating `›` caret) and the item rows +
-help caption **collapse by default, dropping down only when the summary card is tapped** (`expanded`
-state in `RoutineTodayScreen`). This mirrors the sankalp cards (see Sadhana Programs below), so both
-ledgers on the screen behave and look identical. Also: a `RoutineBanner` (pure view-model in
+**UI surfaces:** internal `RoutineToday` uses the approved banner + list layout: full 2:1 R2 devotional hero, separate mala/progress strip and immediately visible daily `PracticeItemRow`s. Shared portrait rows also render within expandable Sankalp cards. `data/routine/artwork.ts` resolves all 21 deity subjects from text/japa/vidhi metadata to published R2 reader art. Read/open and offering targets are separate; manual undo and derived completion remain unchanged. Home is unchanged. Also: a `RoutineBanner` (pure view-model in
 `routineBannerView.ts`; single-line chip since #110) with a `variant` prop — **`inline`** on Home
 (flows in the scroll between the Today strip and CATEGORIES; July 2026 — it used to dock at the
 bottom and floated over the DISCOVER carousel) and **`docked`** above the tab bar on Daily Bhakti;
@@ -90,12 +86,11 @@ tap-to-read preview so enrolling in an upcoming sankalp does not land on an empt
 The catalog (`SadhanaProgramListScreen`) + detail follow the app card language (design.md §46):
 `RoutineShell` gained an optional `background` prop → the catalog sits on `getRandomDeityBackground()`
 (By-Deity convention) and the detail on `getDeityBackground(program.deity)`; cards are warm
-`LibraryCard`-style (gradient thumb from `program.thumb`, both languages via `orderTitlesByLanguage`,
-status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Practice ledger. It is a
+the shared regular `ListCard` (painted deity thumb, both languages via `orderTitlesByLanguage`,
+subtitle meta, status pill, `›`). The `SankalpTodayCard` stays flat to match the Today's Practice ledger. It is a
 **tap-to-expand accordion**: the header (eyebrow + title + progress bar + resting prose) is always
 shown with a rotating dropdown caret, and the unit rows **collapse by default, dropping down only when
-the header is tapped** — styled identically to the §31 daily-routine ledger rows (28 px offering ring,
-16/24 title, `cardMeta` sub, bottom dividers). Only `active`/`waiting`-with-items days are expandable
+the header is tapped** — using the shared §31 portrait cards and separate offering controls. Only `active`/`waiting`-with-items days are expandable
 (`hasItems`); `done-today`/`completed` have no units so the header stays a plain block.
 The catalog has **three standing entry points** (July 2026 review — it used to hang solely off the
 create-routine chooser, unreachable in practice once a routine existed): the `CreateRoutineScreen`

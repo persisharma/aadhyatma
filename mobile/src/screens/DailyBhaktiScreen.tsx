@@ -1,3 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { suvicharTabTarget } from '@/navigation/entryRoutes';
 import { dailyBhaktiShareable } from '@/utils/dailyBhaktiShare';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
@@ -14,10 +17,12 @@ import {
 } from '@/utils/localize';
 import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
+import { aartiIndexById } from '@/data/aarti/ids';
 import type { UniformVerse } from '@/data/versePool';
 import type { TabParamList } from '@/navigation/types';
 import { DevotionalHero, DevotionalFooter, DevotionalVerseBody } from '@/components/DevotionalFrame';
-import { devotionalFrameColors } from '@/theme/devotionalFrame';
+import { devotionalFrameColors, devotionalReaderVerseLeading } from '@/theme/devotionalFrame';
+import { devotionalCharanRows } from '@/utils/devotionalShareLayout';
 import { devotionalArtForVerse } from '@/data/devotionalShareArt';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
@@ -25,6 +30,7 @@ import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import RoutineBanner from '@/components/RoutineBanner';
 import DailyBhaktiNudge from '@/components/DailyBhaktiNudge';
+import SuvicharEntryCard from '@/components/SuvicharEntryCard';
 import LanguageToggle from '@/components/LanguageToggle';
 import { useTourTarget } from '@/components/tour/tourTargets';
 
@@ -48,6 +54,7 @@ function resolveInitialVerse(
 
 export default function DailyBhaktiScreen() {
   const { colors, typography, spacing } = useTheme();
+  const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>();
   // Feature-tour spotlight anchors (design.md §47).
   const dailyVerseRef = useTourTarget('dailyVerse');
   const shareButtonRef = useTourTarget('shareButton');
@@ -79,14 +86,18 @@ export default function DailyBhaktiScreen() {
   }, []);
 
   // Mirror each reader's bookmark-id convention: chaptered sources use
-  // `id:chapter:idx`; chapterless ones (sanskar, japam) use `id::idx`, so an
-  // empty chapter segment keeps Daily Bhakti bookmarks in sync with the reader.
-  const bookmarkId = verse
-    ? `${verse.sourceId}:${verse.chapter ?? ''}:${verse.verseIndex}`
-    : '';
+  // `id:chapter:idx`; chapterless ones (sanskar, japam, chalisa, …) use
+  // `id::idx`, so an empty chapter segment keeps Daily Bhakti bookmarks in sync
+  // with the reader. The Aarti reader alone uses `id:idx`.
+  const bookmarkId = !verse
+    ? ''
+    : verse.sourceId in aartiIndexById
+      ? `${verse.sourceId}:${verse.verseIndex}`
+      : `${verse.sourceId}:${verse.chapter ?? ''}:${verse.verseIndex}`;
   const verseLines = verse
     ? verseLinesByLang(lang, verse.textHi, verse.textEn.length > 0 ? verse.textEn : verse.textHi)
     : [];
+  const verseType = verseToken(lang, typography);
 
   if (!verse) {
     return (
@@ -126,6 +137,7 @@ export default function DailyBhaktiScreen() {
           {/* Setup strip (design.md §23): reminder first, then the verse widget —
               one ask at a time, renders nothing once both are settled. */}
           <DailyBhaktiNudge previewLines={verseLines} />
+          <SuvicharEntryCard lang={lang} onPress={() => navigation.navigate('HomeTab', suvicharTabTarget())} />
 
           {/* Compact controls leave the illustrated reading free of duplicated headings. */}
           <View style={styles.controls}>
@@ -153,9 +165,12 @@ export default function DailyBhaktiScreen() {
             <DevotionalVerseBody
               width={cardWidth} inset={cardWidth * 55 / 1080}
               header={[contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn), contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')].filter(Boolean).join(' · ')}
-              verse={verseLines.join('\n')} meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
+              // One charan per row when each fits; otherwise the stored lines flow
+              // together so a short fragment can use the previous row.
+              verse={verseLines.join(' ')} verseRows={devotionalCharanRows(lang, verse.textHi, verseLines)}
+              meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
               lang={lang} art={devotionalArtForVerse(verse)}
-              verseStyle={{ ...verseToken(lang, typography), color: colors.ink }}
+              verseStyle={{ ...verseType, lineHeight: lang === 'hi' ? devotionalReaderVerseLeading(verseType.fontSize) : verseType.lineHeight, color: colors.ink }}
               meaningStyle={{ ...meaningToken(lang, typography), color: colors.inkSoft }} />
             <DevotionalFooter art={devotionalArtForVerse(verse)} width={cardWidth} />
           </View>

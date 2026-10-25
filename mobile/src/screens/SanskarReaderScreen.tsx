@@ -19,6 +19,7 @@ import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -26,7 +27,8 @@ import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import SanskarVersePage from '@/components/SanskarVersePage';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from '@/screens/_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from '@/screens/_useAutoSlide';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -52,7 +54,7 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
 
   // Flat reader: list index === verse index, so no offset. The adapter speaks the
   // sanskar's `vidhiHi`/`vidhiEn` instructions with the meaning.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: sanskarId,
     data: verses,
     offset: 0,
@@ -68,6 +70,7 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
       updatedAt: Date.now(),
     });
   }, [sanskarId, currentIndex, setProgress]);
+  useReadDwell(sanskarId, undefined, currentIndex);
 
   const viewabilityConfig = useRef({
     itemVisiblePercentThreshold: 60,
@@ -161,6 +164,7 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={verses}
             keyExtractor={(v) => v.id}
@@ -230,6 +234,7 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
 
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>

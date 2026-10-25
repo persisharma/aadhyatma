@@ -1,0 +1,1566 @@
+[
+  {
+    "id": "satyanarayan-puja",
+    "titleHi": "श्री सत्यनारायण पूजा",
+    "titleEn": "Shri Satyanarayan Puja",
+    "steps": [
+      {
+        "id": "sthapana",
+        "phase": "prep",
+        "titleHi": "स्थान शुद्धि व स्थापना",
+        "titleEn": "Prepare the space & place the deity",
+        "instructionHi": "पूजा स्थान स्वच्छ कर चौकी पर पीला या लाल वस्त्र बिछाएँ और श्री सत्यनारायण भगवान की प्रतिमा या चित्र स्थापित करें। स्वच्छ, शान्त स्थान से पूजा में एकाग्रता आती है।",
+        "instructionEn": "Clean the puja space, spread a yellow or red cloth on the chowki, and place the murti or picture of Shri Satyanarayan. A clean, calm space helps focus the mind for worship.",
+        "visual": "altar-preparation",
+        "visuals": [
+          "altar-preparation"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "kalash-deep",
+        "phase": "prep",
+        "titleHi": "कलश स्थापना व दीप प्रज्वलन",
+        "titleEn": "Set the kalash & light the lamp",
+        "instructionHi": "जल भरे कलश पर आम के पत्ते और नारियल रखकर चौकी के पास स्थापित करें, फिर घी का दीपक जलाएँ। कलश मंगल का और दीप पूजा का साक्षी है।",
+        "instructionEn": "Place a water-filled kalash topped with mango leaves and a coconut beside the chowki, then light a ghee lamp. The kalash marks auspiciousness; the lamp stands witness to the vrat.",
+        "visual": "kalash",
+        "visuals": [
+          "kalash",
+          "aarti-neutral"
+        ],
+        "clauseCaptions": true
+      },
+      {
+        "id": "sankalp",
+        "phase": "prep",
+        "titleHi": "संकल्प",
+        "titleEn": "Sankalp (vow)",
+        "instructionHi": "दाहिने हाथ में जल, अक्षत और पुष्प लेकर अपना नाम, गोत्र, आज की तिथि और मनोकामना बोलते हुए श्री सत्यनारायण व्रत-पूजा का संकल्प लें, फिर जल भूमि पर छोड़ दें। संकल्प से पूजा का उद्देश्य निश्चित होता है।",
+        "instructionEn": "Take water, akshat and a flower in your right palm; speak your name, gotra, today’s tithi and your wish, vowing to perform the Satyanarayan vrat-puja, then pour the water onto the ground. The sankalp sets the intention for the puja.",
+        "visual": "sankalp-lotus",
+        "visuals": [
+          "sankalp-lotus"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "dhyana",
+        "phase": "main",
+        "titleHi": "ध्यान",
+        "titleEn": "Dhyana (meditation)",
+        "instructionHi": "नेत्र बन्द कर श्री सत्यनारायण भगवान का ध्यान करें और ध्यान-मन्त्र बोलें। ध्यान से मन पूजा में स्थिर होता है।",
+        "instructionEn": "Close your eyes, meditate on Lord Satyanarayan, and recite the dhyana mantra. Dhyana steadies the mind before the offerings begin.",
+        "mantra": {
+          "devanagari": "ध्यायेत् सत्यं गुणातीतं गुणत्रयसमन्वितम्।\nलोकनाथं त्रिलोकेशं कौस्तुभाभरणं हरिम्॥\nनीलवर्णं पीतवस्त्रं श्रीवत्सपदभूषितम्।\nगोविन्दं गोकुलानन्दं ब्रह्माद्यैरपि पूजितम्॥",
+          "iast": "dhyāyet satyaṁ guṇātītaṁ guṇatraya-samanvitam\nlokanāthaṁ trilokeśaṁ kaustubhābharaṇaṁ harim\nnīlavarṇaṁ pītavastraṁ śrīvatsapadabhūṣitam\ngovindaṁ gokulānandaṁ brahmādyairapi pūjitam",
+          "sourceUrl": "https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html?lang=hi"
+        },
+        "visual": "prayer",
+        "visuals": [
+          "prayer"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "avahana",
+        "phase": "main",
+        "titleHi": "आवाहन",
+        "titleEn": "Avahana (invocation)",
+        "instructionHi": "हाथ में अक्षत-पुष्प लेकर आवाहन-मन्त्र बोलते हुए भगवान का आवाहन करें और अक्षत-पुष्प प्रतिमा के सम्मुख अर्पित करें। आवाहन से भगवान पूजा में आमंत्रित होते हैं।",
+        "instructionEn": "With akshat and flowers in your joined palms, recite the avahan mantra inviting the Lord, and place them before the murti. Avahana welcomes the Lord into the puja.",
+        "mantra": {
+          "devanagari": "दामोदर समागच्छ लक्ष्म्या सह जगत्पते।\nइमां मया कृतां पूजां गृहाण सुरसत्तम॥",
+          "iast": "dāmodara samāgaccha lakṣmyā saha jagatpate\nimāṁ mayā kṛtāṁ pūjāṁ gṛhāṇa surasattama",
+          "sourceUrl": "https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html"
+        },
+        "visual": "vishnu-flowers",
+        "visuals": [
+          "vishnu-flowers"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "asana",
+        "phase": "main",
+        "titleHi": "आसन",
+        "titleEn": "Asana (offering a seat)",
+        "instructionHi": "पाँच पुष्प अंजलि में लेकर मन्त्र बोलते हुए प्रतिमा के सम्मुख छोड़ें — यह भगवान को आसन अर्पित करना है।",
+        "instructionEn": "Take five flowers in anjali and release them before the murti while reciting the mantra — this offers the Lord a seat.",
+        "mantra": {
+          "devanagari": "ॐ श्रीसत्यनारायणाय नमः। आसनं समर्पयामि॥",
+          "iast": "oṁ śrīsatyanārāyaṇāya namaḥ\nāsanaṁ samarpayāmi",
+          "sourceUrl": "https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html?lang=hi"
+        },
+        "visual": "vishnu-asana-flowers",
+        "visuals": [
+          "vishnu-asana-flowers"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "snana",
+        "phase": "main",
+        "titleHi": "स्नान",
+        "titleEn": "Snana (bathing)",
+        "instructionHi": "भगवान को पहले जल से, फिर पंचामृत से और अन्त में पुनः शुद्ध जल से स्नान कराएँ। स्नान शुद्धि और सेवा का उपचार है।",
+        "instructionEn": "Bathe the deity first with water, then with panchamrit, and finally with pure water again. Snana is the offering of purification and service.",
+        "mantra": {
+          "devanagari": "ॐ श्रीसत्यनारायणाय नमः। स्नानं समर्पयामि॥",
+          "iast": "oṁ śrīsatyanārāyaṇāya namaḥ\nsnānaṁ samarpayāmi",
+          "sourceUrl": "https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html?lang=hi"
+        },
+        "visual": "satyanarayan-snana",
+        "visuals": [
+          "satyanarayan-snana"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "vastra-yajnopavit",
+        "phase": "main",
+        "titleHi": "वस्त्र व यज्ञोपवीत",
+        "titleEn": "Vastra & yajnopavita",
+        "instructionHi": "भगवान को अंगवस्त्र (या कलावा) और यज्ञोपवीत अर्पित करें। वस्त्र सम्मान का उपचार है।",
+        "instructionEn": "Offer the angavastram (or kalawa) and the sacred thread to the deity. Clothing is the offering of honour.",
+        "mantra": {
+          "devanagari": "ॐ श्रीसत्यनारायणाय नमः। वस्त्रं समर्पयामि॥\nॐ श्रीसत्यनारायणाय नमः। यज्ञोपवीतं समर्पयामि॥",
+          "iast": "oṁ śrīsatyanārāyaṇāya namaḥ, vastraṁ samarpayāmi\noṁ śrīsatyanārāyaṇāya namaḥ, yajñopavītaṁ samarpayāmi",
+          "sourceUrl": "https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html?lang=hi"
+        },
+        "visual": "vishnu-vastra-yajnopavita",
+        "visuals": [
+          "vishnu-vastra-yajnopavita"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "gandha",
+        "phase": "main",
+        "titleHi": "गन्ध-अक्षत",
+        "titleEn": "Gandha & akshat",
+        "instructionHi": "चन्दन/रोली से भगवान को तिलक करें और अक्षत अर्पित करें। गन्ध सुगन्ध और आदर का उपचार है।",
+        "instructionEn": "Apply a chandan/roli tilak to the deity and offer akshat. Gandha is the offering of fragrance and reverence.",
+        "mantra": {
+          "devanagari": "ॐ श्रीसत्यनारायणाय नमः। गन्धं समर्पयामि॥",
+          "iast": "oṁ śrīsatyanārāyaṇāya namaḥ\ngandhaṁ samarpayāmi",
+          "sourceUrl": "https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html?lang=hi"
+        },
+        "visual": "chandan-akshat",
+        "visuals": [
+          "chandan-akshat"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "pushpa",
+        "phase": "main",
+        "titleHi": "पुष्प",
+        "titleEn": "Pushpa (flowers)",
+        "instructionHi": "भगवान को पुष्प और माला अर्पित करें। पुष्प भक्ति की कोमलता का प्रतीक हैं।",
+        "instructionEn": "Offer flowers and the garland to the deity. Flowers stand for the tenderness of devotion.",
+        "mantra": {
+          "devanagari": "ॐ श्रीसत्यनारायणाय नमः। पुष्पं समर्पयामि॥",
+          "iast": "oṁ śrīsatyanārāyaṇāya namaḥ\npuṣpaṁ samarpayāmi",
+          "sourceUrl": "https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html?lang=hi"
+        },
+        "visual": "vishnu-flowers",
+        "visuals": [
+          "vishnu-flowers"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "dhoop",
+        "phase": "main",
+        "titleHi": "धूप",
+        "titleEn": "Dhoop (incense)",
+        "instructionHi": "धूप/अगरबत्ती जलाकर भगवान को धूप अर्पित करें (दिखाएँ)।",
+        "instructionEn": "Light the dhoop/incense and offer its fragrance to the deity.",
+        "mantra": {
+          "devanagari": "ॐ श्रीसत्यनारायणाय नमः। धूपम् आघ्रापयामि॥",
+          "iast": "oṁ śrīsatyanārāyaṇāya namaḥ\ndhūpam āghrāpayāmi",
+          "sourceUrl": "https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html?lang=hi"
+        },
+        "visual": "dhoop-only",
+        "visuals": [
+          "dhoop-only"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "deep",
+        "phase": "main",
+        "titleHi": "दीप",
+        "titleEn": "Dipa (lamp)",
+        "instructionHi": "घी का दीपक भगवान के सम्मुख दिखाएँ। दीप ज्ञान के प्रकाश का प्रतीक है।",
+        "instructionEn": "Show the lit ghee lamp before the deity. The lamp stands for the light of knowledge.",
+        "mantra": {
+          "devanagari": "ॐ श्रीसत्यनारायणाय नमः। दीपं दर्शयामि॥",
+          "iast": "oṁ śrīsatyanārāyaṇāya namaḥ\ndīpaṁ darśayāmi",
+          "sourceUrl": "https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html?lang=hi"
+        },
+        "visual": "aarti-neutral",
+        "visuals": [
+          "aarti-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "naivedya",
+        "phase": "main",
+        "titleHi": "नैवेद्य",
+        "titleEn": "Naivedya (food offering)",
+        "instructionHi": "पंजीरी/सूजी का प्रसाद, ऋतुफल, केले और पंचामृत तुलसी दल सहित भगवान को अर्पित करें। नैवेद्य कृतज्ञता का उपचार है।",
+        "instructionEn": "Offer the panjiri/semolina prasad, seasonal fruits, bananas and panchamrit with tulsi leaves to the deity. Naivedya is the offering of gratitude.",
+        "mantra": {
+          "devanagari": "ॐ श्रीसत्यनारायणाय नमः। नैवेद्यं निवेदयामि॥",
+          "iast": "oṁ śrīsatyanārāyaṇāya namaḥ\nnaivedyaṁ nivedayāmi",
+          "sourceUrl": "https://www.drikpanchang.com/hindu-gods/trimurti/lord-vishnu/puja-vidhi/satyanarayan-puja-vidhi.html?lang=hi"
+        },
+        "visual": "satyanarayan-naivedya",
+        "visuals": [
+          "satyanarayan-naivedya"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "katha",
+        "phase": "main",
+        "titleHi": "श्री सत्यनारायण व्रत कथा",
+        "titleEn": "Satyanarayan vrat katha",
+        "instructionHi": "परिवार सहित श्री सत्यनारायण व्रत कथा के पाँचों अध्याय पढ़ें या सुनें। कथा-श्रवण ही इस व्रत का हृदय है।",
+        "instructionEn": "Read or listen to all five chapters of the Satyanarayan vrat katha with the family. Hearing the katha is the heart of this vrat.",
+        "ref": {
+          "kind": "katha",
+          "id": "satyanarayana-vrat-katha"
+        },
+        "visual": "scripture",
+        "visuals": [
+          "scripture"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "aarti",
+        "phase": "closing",
+        "titleHi": "आरती",
+        "titleEn": "Aarti",
+        "instructionHi": "कपूर या घी के दीप से भगवान की आरती करें और परिवार सहित ॐ जय जगदीश हरे गाएँ।",
+        "instructionEn": "Offer aarti with lit camphor or a ghee lamp and sing Om Jai Jagdish Hare with the family.",
+        "ref": {
+          "kind": "section",
+          "id": "om-jai-jagdish"
+        },
+        "visual": "aarti-neutral",
+        "visuals": [
+          "aarti-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "kshama-prasad",
+        "phase": "closing",
+        "titleHi": "क्षमा-प्रार्थना व प्रसाद",
+        "titleEn": "Kshama-prarthana & prasad",
+        "instructionHi": "परिक्रमा कर क्षमा-प्रार्थना बोलें, फिर सभी को पंजीरी-पंचामृत का प्रसाद बाँटें। त्रुटियों के लिए क्षमा माँगकर पूजा पूर्ण होती है।",
+        "instructionEn": "Circumambulate, recite the kshama-prarthana, then distribute the panjiri and panchamrit prasad to everyone. Asking forgiveness for lapses completes the puja.",
+        "mantra": {
+          "devanagari": "मन्त्रहीनं क्रियाहीनं भक्तिहीनं जनार्दन।\nयत्पूजितं मया देव परिपूर्णं तदस्तु मे॥",
+          "iast": "mantrahīnaṁ kriyāhīnaṁ bhaktihīnaṁ janārdana\nyatpūjitaṁ mayā deva paripūrṇaṁ tadastu me",
+          "sourceUrl": "https://blog.shlokmantra.com/kshama-prarthana/"
+        },
+        "visual": "satyanarayan-naivedya",
+        "visuals": [
+          "satyanarayan-naivedya"
+        ],
+        "clauseCaptions": false
+      }
+    ]
+  },
+  {
+    "id": "diwali-lakshmi-ganesh-puja",
+    "titleHi": "दीपावली लक्ष्मी-गणेश पूजन",
+    "titleEn": "Diwali Lakshmi-Ganesh Pujan",
+    "steps": [
+      {
+        "id": "sthana-sajja",
+        "phase": "prep",
+        "titleHi": "स्थान शुद्धि व चौकी सज्जा",
+        "titleEn": "Clean the space & prepare the chowki",
+        "instructionHi": "पूजा स्थान साफ कर रंगोली बनाएँ, चौकी पर लाल वस्त्र बिछाएँ और दोनों ओर दीप रखने की सुरक्षित जगह बनाएँ।",
+        "instructionEn": "Clean the puja space, make a rangoli, spread a red cloth over the chowki, and leave safe space for lamps on both sides.",
+        "visual": "altar-preparation",
+        "visuals": [
+          "altar-preparation"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "pratima-sthapana",
+        "phase": "prep",
+        "titleHi": "लक्ष्मी-गणेश स्थापना",
+        "titleEn": "Place Lakshmi and Ganesha",
+        "instructionHi": "अक्षत के आसन पर श्री गणेश को बाईं ओर और माँ लक्ष्मी को उनकी दाईं ओर स्थापित करें; सिक्के या बही-खाता सामने रखें।",
+        "instructionEn": "Seat Shri Ganesha on the left and Maa Lakshmi on His right over a bed of akshat; place coins or the account book in front.",
+        "visual": "lakshmi-ganesha-sthapana",
+        "visuals": [
+          "lakshmi-ganesha-sthapana"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "atma-shuddhi",
+        "phase": "prep",
+        "titleHi": "आचमन व आत्म-शुद्धि",
+        "titleEn": "Achamana & self-purification",
+        "instructionHi": "स्वच्छ होकर आसन ग्रहण करें, आचमन करें और अपने ऊपर तथा सामग्री पर थोड़ा शुद्ध जल छिड़कें।",
+        "instructionEn": "Sit after bathing, perform achamana, and sprinkle a little clean water over yourself and the puja materials.",
+        "visual": "self-water-sprinkling",
+        "visuals": [
+          "self-water-sprinkling"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "sankalp",
+        "phase": "prep",
+        "titleHi": "संकल्प",
+        "titleEn": "Sankalp (vow)",
+        "instructionHi": "जल, अक्षत और पुष्प लेकर अपना नाम, गोत्र और दीपावली की तिथि बोलते हुए लक्ष्मी-गणेश पूजन का संकल्प लें; फिर जल भूमि पर छोड़ें।",
+        "instructionEn": "Hold water, akshat and a flower; state your name, gotra and the Diwali tithi, resolve to perform Lakshmi-Ganesh puja, then release the water.",
+        "visual": "sankalp-lotus",
+        "visuals": [
+          "sankalp-lotus"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "kalash-deep",
+        "phase": "main",
+        "titleHi": "कलश स्थापना व दीप प्रज्वलन",
+        "titleEn": "Set the kalash & light the lamp",
+        "instructionHi": "जल भरे कलश पर आम के पत्ते और नारियल रखकर मौली बाँधें, फिर घी का दीपक जलाएँ। दीप को कभी बिना देखरेख न छोड़ें।",
+        "instructionEn": "Top the water-filled kalash with mango leaves and a coconut, tie mauli around it, then light a ghee lamp. Never leave the flame unattended.",
+        "visual": "kalash",
+        "visuals": [
+          "kalash",
+          "aarti-neutral"
+        ],
+        "clauseCaptions": true
+      },
+      {
+        "id": "ganesh-avahana",
+        "phase": "main",
+        "titleHi": "श्री गणेश ध्यान व आवाहन",
+        "titleEn": "Ganesha dhyana & avahana",
+        "instructionHi": "हाथ में अक्षत-पुष्प लेकर श्री गणेश का ध्यान और आवाहन करें, फिर उन्हें आसन, पाद्य, अर्घ्य और आचमन का जल प्रतीक रूप में अर्पित करें।",
+        "instructionEn": "Meditate on and invoke Shri Ganesha with akshat and flowers, then symbolically offer a seat and water for padya, arghya and achamana.",
+        "visual": "flowers-akshat",
+        "visuals": [
+          "flowers-akshat",
+          "water-offering-neutral"
+        ],
+        "clauseCaptions": true
+      },
+      {
+        "id": "ganesh-vandana",
+        "phase": "main",
+        "titleHi": "गणेश वन्दना",
+        "titleEn": "Ganesha vandana",
+        "instructionHi": "आवाहन के बाद \"वक्रतुण्ड महाकाय\" गणेश वन्दना का पाठ करें — निर्विघ्न पूजन की प्रार्थना।",
+        "instructionEn": "After the avahana, recite the \"Vakratunda Mahakaya\" Ganesha vandana — a prayer that the puja proceed unobstructed.",
+        "ref": {
+          "kind": "section",
+          "id": "ganesh-stotram"
+        },
+        "visual": "prayer",
+        "visuals": [
+          "prayer"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "ganesh-upachara",
+        "phase": "main",
+        "titleHi": "गणेश स्नान व उपचार",
+        "titleEn": "Ganesha snana & offerings",
+        "instructionHi": "प्रतिमा के अनुसार जल या प्रतीकात्मक स्नान कराएँ; वस्त्र-मौली, चन्दन, अक्षत, सिन्दूर, पुष्प और दूर्वा अर्पित करें।",
+        "instructionEn": "According to the murti material, offer a water bath or symbolic snana; then offer cloth or mauli, chandan, akshat, sindoor, flowers and durva.",
+        "visual": "ganesha-upachara",
+        "visuals": [
+          "ganesha-snana",
+          "ganesha-upachara"
+        ],
+        "clauseCaptions": true
+      },
+      {
+        "id": "ganesh-naivedya",
+        "phase": "main",
+        "titleHi": "गणेश नैवेद्य",
+        "titleEn": "Ganesha naivedya",
+        "instructionHi": "श्री गणेश को मिठाई, फल और जल अर्पित करें; नैवेद्य के बाद धूप और दीप दिखाएँ।",
+        "instructionEn": "Offer sweets, fruit and water to Shri Ganesha; then present dhoop and the lit lamp.",
+        "visual": "naivedya",
+        "visuals": [
+          "naivedya",
+          "dhoop-deep-neutral"
+        ],
+        "clauseCaptions": true
+      },
+      {
+        "id": "lakshmi-avahana",
+        "phase": "main",
+        "titleHi": "महालक्ष्मी ध्यान व आवाहन",
+        "titleEn": "Mahalakshmi dhyana & avahana",
+        "instructionHi": "कमल या लाल पुष्प हाथ में लेकर माँ महालक्ष्मी का ध्यान और आवाहन करें, फिर पुष्प उनके चरणों में रखें।",
+        "instructionEn": "Hold a lotus or red flower, meditate on and invoke Maa Mahalakshmi, then place the flower at Her feet.",
+        "visual": "lakshmi-lotus",
+        "visuals": [
+          "lakshmi-lotus"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "lakshmi-snana",
+        "phase": "main",
+        "titleHi": "लक्ष्मी स्नान",
+        "titleEn": "Lakshmi snana",
+        "instructionHi": "धातु की प्रतिमा हो तो पंचामृत और शुद्ध जल से स्नान कराएँ; चित्र या मिट्टी की प्रतिमा पर केवल जल-पुष्प से प्रतीकात्मक स्नान करें।",
+        "instructionEn": "For a metal murti, bathe with panchamrit and clean water; for a picture or clay murti, offer symbolic snana with water and flowers only.",
+        "visual": "lakshmi-symbolic-snana",
+        "visuals": [
+          "lakshmi-metal-snana",
+          "lakshmi-symbolic-snana"
+        ],
+        "clauseCaptions": true
+      },
+      {
+        "id": "lakshmi-vastra-shringar",
+        "phase": "main",
+        "titleHi": "वस्त्र व शृंगार",
+        "titleEn": "Vastra & adornment",
+        "instructionHi": "माँ लक्ष्मी को वस्त्र या मौली, कुमकुम, सिन्दूर, चन्दन और इत्र अर्पित करें।",
+        "instructionEn": "Offer Maa Lakshmi cloth or mauli, kumkum, sindoor, chandan and perfume.",
+        "visual": "vastra-shringar",
+        "visuals": [
+          "vastra-shringar"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "lakshmi-pushpa",
+        "phase": "main",
+        "titleHi": "पुष्प व अक्षत",
+        "titleEn": "Flowers & akshat",
+        "instructionHi": "कमल, लाल पुष्प या उपलब्ध शुभ पुष्प, माला और अक्षत अर्पित करें।",
+        "instructionEn": "Offer lotus, red flowers or other available auspicious flowers, along with a garland and akshat.",
+        "visual": "lakshmi-lotus",
+        "visuals": [
+          "lakshmi-lotus"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "lakshmi-dhoop-deep",
+        "phase": "main",
+        "titleHi": "धूप व दीप",
+        "titleEn": "Dhoop & dipa",
+        "instructionHi": "माँ लक्ष्मी और श्री गणेश के सम्मुख धूप दिखाएँ, फिर घी का दीप घुमाकर प्रकाश अर्पित करें।",
+        "instructionEn": "Present dhoop before Maa Lakshmi and Shri Ganesha, then circle the ghee lamp to offer its light.",
+        "visual": "dhoop-deep-neutral",
+        "visuals": [
+          "dhoop-deep-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "lakshmi-naivedya",
+        "phase": "main",
+        "titleHi": "नैवेद्य",
+        "titleEn": "Naivedya",
+        "instructionHi": "खील, बताशे, मिठाई, फल, मेवे और जल अर्पित करें; परिवार का भोजन भी भावपूर्वक सामने रखा जा सकता है।",
+        "instructionEn": "Offer puffed rice, batasha, sweets, fruit, dry fruits and water; the family meal may also be placed before the deities with devotion.",
+        "visual": "diwali-naivedya",
+        "visuals": [
+          "diwali-naivedya"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "mahalakshmi-path",
+        "phase": "main",
+        "titleHi": "महालक्ष्मी प्रार्थना",
+        "titleEn": "Mahalakshmi prayer",
+        "instructionHi": "परिवार सहित महालक्ष्म्यष्टकम् का पाठ करें और धर्मपूर्वक समृद्धि तथा सद्बुद्धि की प्रार्थना करें।",
+        "instructionEn": "Read the Mahalakshmi Ashtakam with the family and pray for righteous prosperity and good judgment.",
+        "ref": {
+          "kind": "section",
+          "id": "mahalakshmi-ashtakam"
+        },
+        "visual": "scripture",
+        "visuals": [
+          "scripture"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "ganesh-aarti",
+        "phase": "closing",
+        "titleHi": "श्री गणेश आरती",
+        "titleEn": "Shri Ganesha aarti",
+        "instructionHi": "कपूर या घी के दीप से श्री गणेश की आरती करें और परिवार सहित जय गणेश देवा गाएँ।",
+        "instructionEn": "Offer aarti to Shri Ganesha with camphor or a ghee lamp and sing Jai Ganesh Deva with the family.",
+        "ref": {
+          "kind": "section",
+          "id": "jai-ganesh-deva"
+        },
+        "visual": "aarti-neutral",
+        "visuals": [
+          "aarti-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "lakshmi-aarti",
+        "phase": "closing",
+        "titleHi": "महालक्ष्मी आरती व पुष्पांजलि",
+        "titleEn": "Mahalakshmi aarti & pushpanjali",
+        "instructionHi": "माँ लक्ष्मी की पारिवारिक परम्परा वाली आरती करें, फिर हाथ में पुष्प लेकर दोनों देवताओं को पुष्पांजलि अर्पित करें।",
+        "instructionEn": "Sing the Maa Lakshmi aarti followed in your family, then hold flowers and offer pushpanjali to both deities.",
+        "visual": "aarti-neutral",
+        "visuals": [
+          "aarti-neutral",
+          "lakshmi-lotus"
+        ],
+        "clauseCaptions": true
+      },
+      {
+        "id": "deepa-shloka",
+        "phase": "closing",
+        "titleHi": "दीप श्लोक",
+        "titleEn": "Deepa shloka",
+        "instructionHi": "दीपमाला सजाने से पहले \"शुभं करोति कल्याणम्\" दीप श्लोक का पाठ करें — दीप-ज्योति को नमन।",
+        "instructionEn": "Before laying out the deepmala, recite the \"Shubham Karoti Kalyanam\" deepa shloka — salutations to the light of the lamp.",
+        "ref": {
+          "kind": "section",
+          "id": "sandhya-deepam"
+        },
+        "visual": "aarti-neutral",
+        "visuals": [
+          "aarti-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "deepmala-kshama",
+        "phase": "closing",
+        "titleHi": "दीपमाला व क्षमा-प्रार्थना",
+        "titleEn": "Deepmala & forgiveness prayer",
+        "instructionHi": "घर के सुरक्षित स्थानों पर दीप रखें, पूजा में हुई त्रुटियों के लिए क्षमा माँगें और प्रसाद बाँटें। सभी दीपों पर निगरानी रखें।",
+        "instructionEn": "Place lamps in safe parts of the home, ask forgiveness for any lapses, and share prasad. Keep every flame supervised.",
+        "visual": "deepmala",
+        "visuals": [
+          "deepmala"
+        ],
+        "clauseCaptions": false
+      }
+    ]
+  },
+  {
+    "id": "ganesh-chaturthi-sthapana",
+    "titleHi": "गणेश चतुर्थी स्थापना",
+    "titleEn": "Ganesh Chaturthi Sthapana",
+    "steps": [
+      {
+        "id": "sthana-sajja",
+        "phase": "prep",
+        "titleHi": "स्थान व चौकी सज्जा",
+        "titleEn": "Prepare the shrine and chowki",
+        "instructionHi": "स्वच्छ स्थान पर चौकी रखकर लाल या पीला वस्त्र बिछाएँ और अक्षत का आसन बनाएँ।",
+        "instructionEn": "Place the chowki in a clean area, cover it with red or yellow cloth, and make a seat of akshat.",
+        "visual": "altar-preparation",
+        "visuals": [
+          "altar-preparation"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "kalash-murti",
+        "phase": "prep",
+        "titleHi": "कलश व प्रतिमा तैयार करें",
+        "titleEn": "Prepare the kalash and murti",
+        "instructionHi": "कलश स्थापित करें और ढकी हुई मिट्टी की प्रतिमा चौकी के पास रखें; स्थापना से पहले प्रतिमा को स्नान न कराएँ।",
+        "instructionEn": "Set the kalash and keep the covered clay murti beside the chowki; do not bathe a clay murti before installation.",
+        "visual": "covered-ganesha-kalash",
+        "visuals": [
+          "covered-ganesha-kalash"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "sankalp",
+        "phase": "prep",
+        "titleHi": "संकल्प",
+        "titleEn": "Sankalp (vow)",
+        "instructionHi": "जल, अक्षत और पुष्प लेकर अपना नाम, गोत्र और तिथि बोलें तथा गणेश स्थापना और पूजन का संकल्प लें।",
+        "instructionEn": "Hold water, akshat and a flower; state your name, gotra and tithi, and resolve to install and worship Shri Ganesha.",
+        "visual": "sankalp",
+        "visuals": [
+          "sankalp"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "avahana-pratishtha",
+        "phase": "main",
+        "titleHi": "आवाहन व प्रतिष्ठापन",
+        "titleEn": "Avahana & pratishthapana",
+        "instructionHi": "प्रतिमा को अक्षत के आसन पर स्थापित कर श्री गणेश का आवाहन करें। घर में नित्य पूजित स्थायी प्रतिमा हो तो आवाहन-प्रतिष्ठा दोबारा न करें।",
+        "instructionEn": "Seat the murti on the akshat and invoke Shri Ganesha. Skip a new avahana-pratishtha for a permanent murti already worshipped daily.",
+        "visual": "ganesha-sthapana",
+        "visuals": [
+          "ganesha-sthapana"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "ganesh-vandana",
+        "phase": "main",
+        "titleHi": "गणेश वन्दना",
+        "titleEn": "Ganesha vandana",
+        "instructionHi": "स्थापना के बाद \"वक्रतुण्ड महाकाय\" गणेश वन्दना का पाठ करें — सभी विघ्नों के नाश की प्रार्थना।",
+        "instructionEn": "After the installation, recite the \"Vakratunda Mahakaya\" Ganesha vandana — a prayer for the removal of all obstacles.",
+        "ref": {
+          "kind": "section",
+          "id": "ganesh-stotram"
+        },
+        "visual": "prayer",
+        "visuals": [
+          "prayer"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "asana-padya",
+        "phase": "main",
+        "titleHi": "आसन व पाद्य",
+        "titleEn": "Asana & padya",
+        "instructionHi": "पाँच पुष्प से आसन अर्पित करें और चरण प्रक्षालन के लिए थोड़ा जल प्रतीक रूप में अर्पित करें।",
+        "instructionEn": "Offer a seat with five flowers and symbolically offer a little water for washing the feet.",
+        "visual": "asana-five-flowers",
+        "visuals": [
+          "asana-five-flowers",
+          "water-offering-neutral"
+        ],
+        "clauseCaptions": true
+      },
+      {
+        "id": "arghya-achamana",
+        "phase": "main",
+        "titleHi": "अर्घ्य व आचमन",
+        "titleEn": "Arghya & achamana",
+        "instructionHi": "सुगन्धित जल से अर्घ्य दें और आचमन के लिए शुद्ध जल अर्पित करें।",
+        "instructionEn": "Offer scented water as arghya and clean water for achamana.",
+        "visual": "water-offering-neutral",
+        "visuals": [
+          "water-offering-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "snana",
+        "phase": "main",
+        "titleHi": "स्नान",
+        "titleEn": "Snana",
+        "instructionHi": "मिट्टी की प्रतिमा पर पुष्प से जल के छींटे देकर प्रतीकात्मक स्नान कराएँ; धातु की प्रतिमा हो तो ही पंचामृत और जल प्रयोग करें।",
+        "instructionEn": "For a clay murti, offer symbolic snana by sprinkling water with a flower; use panchamrit and water only for a suitable metal murti.",
+        "visual": "ganesha-snana",
+        "visuals": [
+          "ganesha-snana"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "vastra-yajnopavita",
+        "phase": "main",
+        "titleHi": "वस्त्र व यज्ञोपवीत",
+        "titleEn": "Vastra & yajnopavita",
+        "instructionHi": "छोटा वस्त्र या मौली और यज्ञोपवीत अर्पित करें; प्रतिमा पर बल लगाकर कुछ न बाँधें।",
+        "instructionEn": "Offer a small cloth or mauli and the sacred thread; do not tie anything tightly around the murti.",
+        "visual": "vastra-yajnopavita",
+        "visuals": [
+          "vastra-yajnopavita"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "gandha-sindura",
+        "phase": "main",
+        "titleHi": "गन्ध व सिन्दूर",
+        "titleEn": "Gandha & sindoor",
+        "instructionHi": "चन्दन या अष्टगन्ध, हल्दी, रोली और सिन्दूर अर्पित करें। मिट्टी की प्रतिमा पर बहुत कम द्रव लगाएँ।",
+        "instructionEn": "Offer chandan or ashtagandha, turmeric, roli and sindoor. Use very little liquid on a clay murti.",
+        "visual": "gandha",
+        "visuals": [
+          "gandha"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "pushpa-durva",
+        "phase": "main",
+        "titleHi": "पुष्प व दूर्वा",
+        "titleEn": "Flowers & durva",
+        "instructionHi": "लाल पुष्प, माला और स्वच्छ दूर्वा अर्पित करें; उपलब्ध हो तो 21 दूर्वा-दल चढ़ाएँ।",
+        "instructionEn": "Offer red flowers, a garland and clean durva; offer 21 blades when available.",
+        "visual": "ganesha-offering",
+        "visuals": [
+          "ganesha-offering"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "dhoop-deep",
+        "phase": "main",
+        "titleHi": "धूप व दीप",
+        "titleEn": "Dhoop & dipa",
+        "instructionHi": "धूप दिखाएँ और घी का दीपक घुमाकर प्रकाश अर्पित करें। दीप को प्रतिमा और वस्त्र से सुरक्षित दूरी पर रखें।",
+        "instructionEn": "Present dhoop and circle the ghee lamp. Keep the flame a safe distance from the murti and cloth.",
+        "visual": "dhoop-deep-neutral",
+        "visuals": [
+          "dhoop-deep-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "naivedya",
+        "phase": "main",
+        "titleHi": "मोदक नैवेद्य",
+        "titleEn": "Modak naivedya",
+        "instructionHi": "मोदक या लड्डू, फल, नारियल और जल अर्पित करें; थोड़ी देर बाद यही प्रसाद परिवार में बाँटें।",
+        "instructionEn": "Offer modak or laddoo, fruit, coconut and water; later share this offering as prasad.",
+        "visual": "naivedya",
+        "visuals": [
+          "naivedya"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "katha",
+        "phase": "main",
+        "titleHi": "गणेश चतुर्थी व्रत कथा",
+        "titleEn": "Ganesh Chaturthi vrat katha",
+        "instructionHi": "परिवार सहित गणेश चतुर्थी व्रत कथा पढ़ें या सुनें।",
+        "instructionEn": "Read or listen to the Ganesh Chaturthi vrat katha with the family.",
+        "ref": {
+          "kind": "katha",
+          "id": "ganesha-chaturthi-vrat-katha"
+        },
+        "visual": "scripture",
+        "visuals": [
+          "scripture"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "aarti",
+        "phase": "main",
+        "titleHi": "आरती",
+        "titleEn": "Aarti",
+        "instructionHi": "कपूर या घी के दीप से आरती करें और परिवार सहित जय गणेश देवा गाएँ।",
+        "instructionEn": "Offer aarti with camphor or a ghee lamp and sing Jai Ganesh Deva with the family.",
+        "ref": {
+          "kind": "section",
+          "id": "jai-ganesh-deva"
+        },
+        "visual": "aarti-neutral",
+        "visuals": [
+          "aarti-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "pushpanjali-kshama",
+        "phase": "closing",
+        "titleHi": "पुष्पांजलि व क्षमा-प्रार्थना",
+        "titleEn": "Pushpanjali & forgiveness prayer",
+        "instructionHi": "पुष्पांजलि अर्पित कर जाने-अनजाने हुई त्रुटियों के लिए क्षमा माँगें और सबके मंगल की प्रार्थना करें।",
+        "instructionEn": "Offer pushpanjali, ask forgiveness for known and unknown lapses, and pray for everyone’s well-being.",
+        "visual": "flowers-akshat",
+        "visuals": [
+          "flowers-akshat"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "daily-seva",
+        "phase": "closing",
+        "titleHi": "दैनिक सेवा का संकल्प",
+        "titleEn": "Resolve the daily seva",
+        "instructionHi": "विसर्जन तक प्रतिदिन दीप, पुष्प और नैवेद्य अर्पित करें। स्थायी प्रतिमा का विसर्जन न करें; उत्सव की मिट्टी की प्रतिमा का ही परम्परा अनुसार विसर्जन करें।",
+        "instructionEn": "Offer a lamp, flowers and naivedya daily until visarjan. Never immerse a permanent murti; only the festival clay murti is immersed according to family tradition.",
+        "visual": "ganesha-puja",
+        "visuals": [
+          "ganesha-puja"
+        ],
+        "clauseCaptions": false
+      }
+    ]
+  },
+  {
+    "id": "navratri-ghatasthapana",
+    "titleHi": "नवरात्रि घटस्थापना",
+    "titleEn": "Navratri Ghatasthapana",
+    "steps": [
+      {
+        "id": "muhurat-sthana",
+        "phase": "prep",
+        "titleHi": "मुहूर्त व स्थान",
+        "titleEn": "Choose the muhurat and place",
+        "instructionHi": "पञ्चाङ्ग में अपने नगर का घटस्थापना मुहूर्त देखें और दिन के पहले भाग में स्वच्छ पूजा स्थान तैयार करें; रात्रि में स्थापना न करें।",
+        "instructionEn": "Check the city-specific Ghatasthapana muhurat in Panchang and prepare a clean shrine during the first part of the day; do not install the kalash at night.",
+        "visual": "panchang",
+        "visuals": [
+          "panchang"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "samagri-sajja",
+        "phase": "prep",
+        "titleHi": "सामग्री सज्जा",
+        "titleEn": "Arrange the materials",
+        "instructionHi": "मिट्टी, बीज, कलश, जल, पत्ते, नारियल, वस्त्र और पाँच उपचार एक साथ रख लें ताकि स्थापना बीच में न रुके।",
+        "instructionEn": "Arrange the soil, seeds, kalash, water, leaves, coconut, cloth and five offerings together so the installation is not interrupted.",
+        "visual": "navratri-samagri",
+        "visuals": [
+          "navratri-samagri"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "sankalp",
+        "phase": "prep",
+        "titleHi": "नवरात्रि संकल्प",
+        "titleEn": "Navratri sankalp",
+        "instructionHi": "जल, अक्षत और पुष्प लेकर नौ दिनों की देवी-आराधना, संयम और परिवार के मंगल का संकल्प लें।",
+        "instructionEn": "Hold water, akshat and a flower and resolve to observe nine days of Devi worship, self-discipline and prayer for the family’s well-being.",
+        "visual": "sankalp",
+        "visuals": [
+          "sankalp"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "mrida-prathama",
+        "phase": "main",
+        "titleHi": "मिट्टी की पहली परत",
+        "titleEn": "First layer of soil",
+        "instructionHi": "चौड़े पात्र में स्वच्छ मिट्टी की पहली परत बिछाकर उस पर सप्तधान्य या जौ समान रूप से फैलाएँ।",
+        "instructionEn": "Spread the first layer of clean soil in the wide pot and distribute the seven grains or barley evenly over it.",
+        "visual": "seed-bed",
+        "visuals": [
+          "seed-bed"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "dhanya-parata",
+        "phase": "main",
+        "titleHi": "धान्य की तीन परतें",
+        "titleEn": "Build the grain bed",
+        "instructionHi": "मिट्टी और बीज की दूसरी परत किनारों पर, फिर मिट्टी की तीसरी परत बिछाएँ; जमाने भर के लिए थोड़ा जल छिड़कें।",
+        "instructionEn": "Add a second soil-and-seed layer near the rim, then a final soil layer; sprinkle only enough water to settle it.",
+        "visual": "soil-layer",
+        "visuals": [
+          "soil-layer",
+          "grain-bed-water"
+        ],
+        "clauseCaptions": true
+      },
+      {
+        "id": "kalash-jala",
+        "phase": "main",
+        "titleHi": "कलश में जल भरें",
+        "titleEn": "Fill the kalash",
+        "instructionHi": "कलश के कण्ठ पर मौली बाँधें, उसमें शुद्ध जल भरकर सुपारी, सिक्का, अक्षत, दूर्वा और थोड़ा इत्र डालें।",
+        "instructionEn": "Tie mauli around the kalash neck, fill it with clean water, and add betel nut, a coin, akshat, durva and a little perfume.",
+        "visual": "kalash-water",
+        "visuals": [
+          "kalash-water"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "patra-dhakkana",
+        "phase": "main",
+        "titleHi": "पत्ते व ढक्कन",
+        "titleEn": "Arrange leaves and lid",
+        "instructionHi": "कलश के मुख पर पाँच आम या अशोक के पत्ते रखें, ढक्कन या कटोरी रखकर उस पर अक्षत भरें।",
+        "instructionEn": "Arrange five mango or Ashoka leaves at the mouth, place the lid or small bowl over them, and fill it with akshat.",
+        "visual": "kalash-leaves",
+        "visuals": [
+          "kalash-leaves"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "narikela",
+        "phase": "main",
+        "titleHi": "नारियल तैयार करें",
+        "titleEn": "Prepare the coconut",
+        "instructionHi": "साबुत नारियल को लाल वस्त्र में लपेटकर मौली से बाँधें और उसका शीर्ष ऊपर रखते हुए ढक्कन पर रखें।",
+        "instructionEn": "Wrap the whole coconut in red cloth, secure it with mauli, and place it upright over the lid.",
+        "visual": "coconut",
+        "visuals": [
+          "coconut"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "ghata-sthapana",
+        "phase": "main",
+        "titleHi": "घट स्थापना",
+        "titleEn": "Install the ghata",
+        "instructionHi": "तैयार कलश को बोए हुए धान्य-पात्र के मध्य स्थिर रखें, कुमकुम-चन्दन का तिलक करें और पुष्प-माला अर्पित करें।",
+        "instructionEn": "Set the prepared kalash firmly in the centre of the grain bed, apply kumkum and chandan, and offer flowers and a garland.",
+        "visual": "ghata-grain-bed",
+        "visuals": [
+          "ghata-grain-bed"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "durga-avahana",
+        "phase": "main",
+        "titleHi": "माँ दुर्गा का आवाहन",
+        "titleEn": "Invoke Maa Durga",
+        "instructionHi": "हाथ में अक्षत-पुष्प लेकर माँ दुर्गा से नौ दिनों तक कलश में विराजने और पूजा स्वीकार करने की प्रार्थना करें।",
+        "instructionEn": "Hold akshat and flowers and request Maa Durga to reside in the kalash and accept the worship through the nine nights.",
+        "visual": "flowers-akshat",
+        "visuals": [
+          "flowers-akshat"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "panchopachara",
+        "phase": "main",
+        "titleHi": "पञ्चोपचार पूजा",
+        "titleEn": "Panchopachara puja",
+        "instructionHi": "क्रम से गन्ध, पुष्प, धूप, दीप और फल-मिठाई का नैवेद्य अर्पित करें।",
+        "instructionEn": "Offer the five upacharas in order: fragrance, flowers, dhoop, dipa, and fruit or sweets as naivedya.",
+        "visual": "panchopachara",
+        "visuals": [
+          "panchopachara"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "devi-stuti",
+        "phase": "main",
+        "titleHi": "या देवी सर्वभूतेषु — देवी स्तुति",
+        "titleEn": "Ya Devi Sarvabhuteshu — Devi stuti",
+        "instructionHi": "हाथ जोड़कर देवी महात्म्य की \"या देवी सर्वभूतेषु\" स्तुति का पाठ करें — शक्ति रूप में विराजमान देवी की वन्दना।",
+        "instructionEn": "With folded hands, recite the \"Ya Devi Sarvabhuteshu\" stuti from the Devi Mahatmya — salutations to the Goddess who resides in all beings as Shakti.",
+        "ref": {
+          "kind": "section",
+          "id": "durga-stotram"
+        },
+        "visual": "prayer",
+        "visuals": [
+          "prayer"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "day-one-katha",
+        "phase": "main",
+        "titleHi": "नवरात्रि आरम्भ पाठ",
+        "titleEn": "Navratri opening reading",
+        "instructionHi": "परिवार सहित नवरात्रि आरम्भ की कथा पढ़ें और पहले दिन माँ शैलपुत्री का स्मरण करें।",
+        "instructionEn": "Read the Navratri opening story with the family and remember Maa Shailaputri on the first day.",
+        "ref": {
+          "kind": "katha",
+          "id": "navratri-start-katha"
+        },
+        "visual": "scripture",
+        "visuals": [
+          "scripture"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "aarti",
+        "phase": "closing",
+        "titleHi": "माँ दुर्गा की आरती",
+        "titleEn": "Maa Durga aarti",
+        "instructionHi": "दीप से आरती करें और परिवार सहित जय अम्बे गौरी गाएँ।",
+        "instructionEn": "Offer aarti with the lamp and sing Jai Ambe Gauri with the family.",
+        "ref": {
+          "kind": "section",
+          "id": "jai-ambe-gauri"
+        },
+        "visual": "aarti-neutral",
+        "visuals": [
+          "aarti-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "nava-dina-seva",
+        "phase": "closing",
+        "titleHi": "नौ दिनों की सेवा",
+        "titleEn": "Care through the nine days",
+        "instructionHi": "प्रतिदिन थोड़ा जल देकर अंकुर नम रखें और दीप केवल सुरक्षित निगरानी में जलाएँ। दशमी पर परिवार की परम्परा अनुसार घट का विसर्जन करें।",
+        "instructionEn": "Moisten the sprouts lightly each day and keep a lamp burning only under safe supervision. On Dashami, conclude and immerse the ghata according to family tradition.",
+        "visual": "sprouts",
+        "visuals": [
+          "sprouts"
+        ],
+        "clauseCaptions": false
+      }
+    ]
+  },
+  {
+    "id": "karwa-chauth-puja",
+    "titleHi": "करवा चौथ पूजन",
+    "titleEn": "Karwa Chauth Pujan",
+    "steps": [
+      {
+        "id": "pratah-sankalp",
+        "phase": "prep",
+        "titleHi": "प्रातः व्रत-संकल्प",
+        "titleEn": "Morning vrat sankalp",
+        "instructionHi": "स्नान के बाद अपने स्वास्थ्य और पारिवारिक परम्परा के अनुरूप व्रत का संकल्प लें और चन्द्र-दर्शन के बाद पारण का निश्चय करें।",
+        "instructionEn": "After bathing, take the vrat sankalp according to your health and family tradition, resolving to conclude it after moon sighting.",
+        "visual": "prayer",
+        "visuals": [
+          "prayer"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "vedi-sajja",
+        "phase": "prep",
+        "titleHi": "पूजा वेदी सज्जा",
+        "titleEn": "Prepare the puja altar",
+        "instructionHi": "चौकी पर लाल वस्त्र बिछाकर गौरा या चौथ माता तथा शिव परिवार का चित्र स्थापित करें; सामने अक्षत का छोटा मंडल बनाएँ।",
+        "instructionEn": "Cover the chowki with red cloth, place Gaura or Chauth Mata and the Shiva family image, and make a small akshat mandala in front.",
+        "visual": "altar-preparation",
+        "visuals": [
+          "altar-preparation"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "karwa-thali",
+        "phase": "prep",
+        "titleHi": "करवा व थाली तैयार करें",
+        "titleEn": "Prepare the karwa and thali",
+        "instructionHi": "करवे में जल या दूध भरकर मौली बाँधें; ढक्कन पर रोली-अक्षत, फल, मिठाई और पूजा की थाली सजाएँ।",
+        "instructionEn": "Fill the karwa with water or milk and tie mauli around it; arrange roli-akshat, fruit, sweets and the puja thali on its lid.",
+        "visual": "karwa",
+        "visuals": [
+          "karwa"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "deep-ganesh",
+        "phase": "main",
+        "titleHi": "दीप व गणेश पूजन",
+        "titleEn": "Lamp and Ganesha worship",
+        "instructionHi": "दीप जलाकर श्री गणेश का स्मरण करें और गन्ध, पुष्प, अक्षत तथा नैवेद्य अर्पित कर पूजा निर्विघ्न होने की प्रार्थना करें।",
+        "instructionEn": "Light the lamp, remember Shri Ganesha, and offer fragrance, flowers, akshat and naivedya while praying for an unobstructed puja.",
+        "visual": "ganesha-puja",
+        "visuals": [
+          "ganesha-puja"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "gaura-puja",
+        "phase": "main",
+        "titleHi": "गौरा व चौथ माता पूजन",
+        "titleEn": "Gaura and Chauth Mata puja",
+        "instructionHi": "गौरा और चौथ माता रूप में माँ पार्वती को रोली, सिन्दूर, अक्षत, पुष्प और नैवेद्य अर्पित करें।",
+        "instructionEn": "Worship Maa Parvati as Gaura and Chauth Mata with roli, sindoor, akshat, flowers and naivedya.",
+        "visual": "flowers-akshat",
+        "visuals": [
+          "flowers-akshat"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "shiva-parivar",
+        "phase": "main",
+        "titleHi": "शिव परिवार पूजन",
+        "titleEn": "Shiva family worship",
+        "instructionHi": "क्रम से भगवान शिव, कार्तिकेय और श्री गणेश को पुष्प, अक्षत और नैवेद्य अर्पित करें।",
+        "instructionEn": "Offer flowers, akshat and naivedya in order to Lord Shiva, Kartikeya and Shri Ganesha.",
+        "visual": "sankalp-lotus",
+        "visuals": [
+          "sankalp-lotus"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "karwa-offering",
+        "phase": "main",
+        "titleHi": "करवा अर्पण",
+        "titleEn": "Offer the karwa",
+        "instructionHi": "भरे हुए करवे पर रोली-अक्षत लगाकर उसे चौथ माता के सम्मुख रखें और परिवार के सौभाग्य व मंगल की प्रार्थना करें।",
+        "instructionEn": "Apply roli and akshat to the filled karwa, place it before Chauth Mata, and pray for the family’s well-being.",
+        "visual": "karwa",
+        "visuals": [
+          "karwa"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "katha",
+        "phase": "main",
+        "titleHi": "करवा चौथ व्रत कथा",
+        "titleEn": "Karwa Chauth vrat katha",
+        "instructionHi": "समूह या परिवार के साथ करवा चौथ व्रत कथा सुनें; कथा के समय करवा और पूजा-थाली अपने सामने रखें।",
+        "instructionEn": "Listen to the Karwa Chauth vrat katha with the group or family, keeping the karwa and puja thali before you.",
+        "ref": {
+          "kind": "katha",
+          "id": "karwa-chauth-vrat-katha"
+        },
+        "visual": "scripture",
+        "visuals": [
+          "scripture"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "thali-phera",
+        "phase": "main",
+        "titleHi": "थाली फेरना व आशीर्वाद",
+        "titleEn": "Pass the thali and receive blessings",
+        "instructionHi": "पारिवारिक रीति हो तो गीत या कथा के साथ पूजा-थाली फेरें और परिवार की वरिष्ठ सुहागिनों का आशीर्वाद लें।",
+        "instructionEn": "Where followed in the family, pass the puja thali with the traditional song or story and receive blessings from senior married women.",
+        "visual": "thali-phera",
+        "visuals": [
+          "thali-phera"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "karwa-dana",
+        "phase": "main",
+        "titleHi": "करवा दान",
+        "titleEn": "Karwa dana",
+        "instructionHi": "परम्परा अनुसार करवा, वस्त्र या दक्षिणा किसी ब्राह्मण अथवा पात्र सुहागिन को सम्मानपूर्वक अर्पित करें।",
+        "instructionEn": "According to tradition, respectfully offer the karwa, cloth or dakshina to a Brahmin or an eligible married woman.",
+        "visual": "karwa-dana",
+        "visuals": [
+          "karwa-dana"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "chandra-arghya",
+        "phase": "closing",
+        "titleHi": "चन्द्र-दर्शन व अर्घ्य",
+        "titleEn": "Moon sighting & arghya",
+        "instructionHi": "चन्द्रमा उदय होने पर दर्शन करें, लोटे से धीरे-धीरे जल का अर्घ्य दें और दीप दिखाकर प्रणाम करें। छलनी का प्रयोग केवल अपनी पारिवारिक रीति हो तो करें।",
+        "instructionEn": "After moonrise, view the Moon, pour water slowly as arghya, show the lamp and bow. Use a sieve only if it belongs to your family custom.",
+        "visual": "moon-arghya",
+        "visuals": [
+          "moon-arghya"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "parana-prasad",
+        "phase": "closing",
+        "titleHi": "पारण व प्रसाद",
+        "titleEn": "Parana & prasad",
+        "instructionHi": "पारिवारिक रीति अनुसार जल ग्रहण कर व्रत खोलें, चौथ माता को प्रणाम करें और प्रसाद बाँटें। स्वास्थ्य की आवश्यकता को व्रत से ऊपर रखें।",
+        "instructionEn": "According to family custom, receive water and conclude the fast, bow to Chauth Mata, and share prasad. Put health needs before fasting rules.",
+        "visual": "prasad",
+        "visuals": [
+          "prasad"
+        ],
+        "clauseCaptions": false
+      }
+    ]
+  },
+  {
+    "id": "maha-shivaratri-puja",
+    "titleHi": "महाशिवरात्रि पूजन",
+    "titleEn": "Maha Shivaratri Pujan",
+    "steps": [
+      {
+        "id": "vrat-taiyari",
+        "phase": "prep",
+        "titleHi": "व्रत व रात्रि-पूजा की तैयारी",
+        "titleEn": "Prepare for the fast and night puja",
+        "instructionHi": "अपने स्वास्थ्य के अनुरूप व्रत रखें, पूजा से पहले स्नान कर स्वच्छ वस्त्र पहनें और रात्रि-पूजा के लिए सामग्री एकत्र करें।",
+        "instructionEn": "Observe the fast according to your health, bathe and wear clean clothes before puja, and gather the materials for night worship.",
+        "visual": "clean-clothes",
+        "visuals": [
+          "clean-clothes"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "linga-sthapana",
+        "phase": "prep",
+        "titleHi": "शिवलिङ्ग स्थापना",
+        "titleEn": "Place the Shiva-linga",
+        "instructionHi": "शिवलिङ्ग को ऐसी थाली या अभिषेक पात्र में रखें जिससे अर्पित द्रव्य स्वच्छता से एकत्र हो सके; चित्र हो तो अभिषेक न करें।",
+        "instructionEn": "Place the Shiva-linga in a tray that can collect the offerings cleanly; do not pour abhisheka liquids over a picture.",
+        "visual": "shiva-linga",
+        "visuals": [
+          "shiva-linga"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "sankalp",
+        "phase": "prep",
+        "titleHi": "शिवरात्रि संकल्प",
+        "titleEn": "Shivaratri sankalp",
+        "instructionHi": "जल, अक्षत और पुष्प लेकर अपना नाम, गोत्र और तिथि बोलें तथा श्रद्धापूर्वक शिवरात्रि व्रत-पूजा का संकल्प लें।",
+        "instructionEn": "Hold water, akshat and a flower; state your name, gotra and tithi, and resolve to perform the Shivaratri vrat-puja with devotion.",
+        "visual": "sankalp-white",
+        "visuals": [
+          "sankalp-white"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "dhyana-avahana",
+        "phase": "main",
+        "titleHi": "ध्यान व आवाहन",
+        "titleEn": "Dhyana & avahana",
+        "instructionHi": "भगवान शिव का ध्यान करें, हाथ में पुष्प लेकर आवाहन करें और पुष्प शिवलिङ्ग या चित्र के समीप रखें।",
+        "instructionEn": "Meditate on Lord Shiva, invoke Him while holding a flower, and place it beside the Shiva-linga or picture.",
+        "visual": "shiva-flower",
+        "visuals": [
+          "shiva-flower"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "asana-padya-arghya",
+        "phase": "main",
+        "titleHi": "आसन, पाद्य व अर्घ्य",
+        "titleEn": "Asana, padya & arghya",
+        "instructionHi": "पुष्प से आसन और थोड़े जल से पाद्य, अर्घ्य तथा आचमन प्रतीक रूप में अर्पित करें।",
+        "instructionEn": "Symbolically offer a seat with flowers and small amounts of water for padya, arghya and achamana.",
+        "visual": "water-offering-neutral",
+        "visuals": [
+          "water-offering-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "jalabhisheka",
+        "phase": "main",
+        "titleHi": "जलाभिषेक",
+        "titleEn": "Water abhisheka",
+        "instructionHi": "शिवलिङ्ग पर शुद्ध जल या गंगाजल की पतली धारा चढ़ाएँ; जल व्यर्थ न बहाएँ।",
+        "instructionEn": "Pour a gentle stream of clean water or Gangajal over the Shiva-linga without wasting water.",
+        "visual": "shiva-abhishek",
+        "visuals": [
+          "shiva-abhishek"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "panchamrita",
+        "phase": "main",
+        "titleHi": "पञ्चामृत अभिषेक",
+        "titleEn": "Panchamrit abhisheka",
+        "instructionHi": "क्रम से दूध, दही, घी, शहद और शक्कर बहुत थोड़ी मात्रा में अर्पित करें। घर की रीति संक्षिप्त हो तो केवल जल और दूध पर्याप्त रखें।",
+        "instructionEn": "Offer small quantities of milk, curd, ghee, honey and sugar in order. For a shorter family observance, use only water and milk.",
+        "visual": "shiva-panchamrit",
+        "visuals": [
+          "shiva-panchamrit"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "shuddhodaka",
+        "phase": "main",
+        "titleHi": "शुद्धोदक स्नान",
+        "titleEn": "Final clean-water bath",
+        "instructionHi": "पञ्चामृत के बाद शुद्ध जल से शिवलिङ्ग को अच्छी तरह स्नान कराकर साफ करें।",
+        "instructionEn": "After panchamrit, rinse and cleanse the Shiva-linga thoroughly with clean water.",
+        "visual": "shiva-abhishek",
+        "visuals": [
+          "shiva-abhishek"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "gandha-bhasma",
+        "phase": "main",
+        "titleHi": "चन्दन व भस्म",
+        "titleEn": "Chandan & sacred ash",
+        "instructionHi": "चन्दन और भस्म अर्पित करें; शिवलिङ्ग पर कुमकुम या हल्दी लगाने के बजाय उन्हें पूजा-थाली तक सीमित रखें।",
+        "instructionEn": "Offer chandan and sacred ash; keep kumkum and turmeric on the puja thali rather than applying them to the Shiva-linga.",
+        "visual": "shiva-gandha",
+        "visuals": [
+          "shiva-gandha"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "bilva-pushpa",
+        "phase": "main",
+        "titleHi": "बिल्वपत्र व पुष्प",
+        "titleEn": "Bilva leaves & flowers",
+        "instructionHi": "स्वच्छ, अखण्ड बिल्वपत्र चिकनी ओर नीचे रखकर अर्पित करें, फिर सफेद पुष्प और उपलब्ध हो तो धतूरा या आक चढ़ाएँ।",
+        "instructionEn": "Offer clean, unbroken bilva leaves with the smooth side down, followed by white flowers and, when available, datura or aak.",
+        "visual": "shiva-bilva-datura",
+        "visuals": [
+          "shiva-bilva-datura"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "dhoop-deep",
+        "phase": "main",
+        "titleHi": "धूप व दीप",
+        "titleEn": "Dhoop & dipa",
+        "instructionHi": "धूप दिखाएँ और घी का दीपक घुमाकर प्रकाश अर्पित करें; दीप को बिल्वपत्र और वस्त्र से दूर रखें।",
+        "instructionEn": "Present dhoop and circle the ghee lamp, keeping the flame away from bilva leaves and cloth.",
+        "visual": "dhoop-deep-neutral",
+        "visuals": [
+          "dhoop-deep-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "naivedya",
+        "phase": "main",
+        "titleHi": "नैवेद्य",
+        "titleEn": "Naivedya",
+        "instructionHi": "फल, व्रत की मिठाई और जल अर्पित करें; सात्त्विक और बिना चखे नैवेद्य रखें।",
+        "instructionEn": "Offer fruit, vrat sweets and water; keep the naivedya sattvic and untasted.",
+        "visual": "vrat-naivedya",
+        "visuals": [
+          "vrat-naivedya"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "panchakshara-japa",
+        "phase": "main",
+        "titleHi": "पञ्चाक्षरी शिव-जप",
+        "titleEn": "Panchakshara Shiva japa",
+        "instructionHi": "शान्त होकर पञ्चाक्षरी शिव-मन्त्र का अपनी क्षमता अनुसार जप करें और मन को भगवान शिव में स्थिर रखें।",
+        "instructionEn": "Sit quietly and repeat the Panchakshara Shiva mantra as many times as comfortable, keeping the mind on Lord Shiva.",
+        "mantra": {
+          "devanagari": "ॐ नमः शिवाय",
+          "iast": "oṁ namaḥ śivāya",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Om_Namah_Shivaya"
+        },
+        "visual": "prayer",
+        "visuals": [
+          "prayer"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "katha",
+        "phase": "main",
+        "titleHi": "महाशिवरात्रि व्रत कथा",
+        "titleEn": "Maha Shivaratri vrat katha",
+        "instructionHi": "परिवार सहित महाशिवरात्रि व्रत कथा पढ़ें या सुनें।",
+        "instructionEn": "Read or listen to the Maha Shivaratri vrat katha with the family.",
+        "ref": {
+          "kind": "katha",
+          "id": "maha-shivaratri-vrat-katha"
+        },
+        "visual": "scripture",
+        "visuals": [
+          "scripture"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "aarti",
+        "phase": "closing",
+        "titleHi": "शिव आरती",
+        "titleEn": "Shiva aarti",
+        "instructionHi": "कपूर या घी के दीप से आरती करें और परिवार सहित ॐ जय शिव ओंकारा गाएँ।",
+        "instructionEn": "Offer aarti with camphor or a ghee lamp and sing Om Jai Shiv Omkara with the family.",
+        "ref": {
+          "kind": "section",
+          "id": "om-jai-shiv-omkara"
+        },
+        "visual": "aarti-neutral",
+        "visuals": [
+          "aarti-neutral"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "kshama-jagaran",
+        "phase": "closing",
+        "titleHi": "क्षमा, जागरण व पारण",
+        "titleEn": "Forgiveness, vigil & parana",
+        "instructionHi": "पूजा की त्रुटियों के लिए क्षमा माँगें। इच्छा और स्वास्थ्य हो तो रात्रि-जागरण या चार प्रहर में जलाभिषेक करें; अगले दिन पञ्चाङ्ग के पारण समय में व्रत खोलें।",
+        "instructionEn": "Ask forgiveness for any lapses. If health and circumstances allow, keep vigil or repeat water abhisheka in the four praharas; conclude the fast next day at the Panchang parana time.",
+        "visual": "prayer",
+        "visuals": [
+          "prayer"
+        ],
+        "clauseCaptions": false
+      }
+    ]
+  },
+  {
+    "id": "shraddha-tarpan-vidhi",
+    "titleHi": "पितृ तिल-तर्पण स्मरण",
+    "titleEn": "Pitru Tila-Tarpana Remembrance",
+    "steps": [
+      {
+        "id": "scope",
+        "phase": "prep",
+        "titleHi": "इस मार्गदर्शिका की सीमा",
+        "titleEn": "Know the scope of this guide",
+        "instructionHi": "यह घर पर किया जाने वाला सीमित तिल-तर्पण स्मरण है, सम्पूर्ण श्राद्ध नहीं। पिण्डदान, होम, भोजन और शाखा-विशेष विधान के लिए अपनी पारिवारिक परम्परा या योग्य आचार्य का मार्गदर्शन लें।",
+        "instructionEn": "This is a limited household tila-tarpana remembrance, not a complete Shraddha. Follow your family tradition or a qualified officiant for pinda, homa, bhojana and branch-specific rites.",
+        "visual": "remembrance-vessels",
+        "visuals": [
+          "remembrance-vessels"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "time-and-tradition",
+        "phase": "prep",
+        "titleHi": "तिथि और पारिवारिक रीति देखें",
+        "titleEn": "Confirm the date and family practice",
+        "instructionHi": "पुण्यतिथि या पितृ पक्ष की दिखाई गई तिथि देखें। परिवार में समय, दिशा या विधान निश्चित हो तो उसी को प्राथमिकता दें; यह मार्गदर्शिका उनका स्थान नहीं लेती।",
+        "instructionEn": "Confirm the displayed annual or Pitru Paksha date. Give priority to any timing, direction or method followed by your family; this guide does not replace it.",
+        "visual": "panchang",
+        "visuals": [
+          "panchang"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "prepare-place",
+        "phase": "prep",
+        "titleHi": "स्वच्छ स्थान तैयार करें",
+        "titleEn": "Prepare a clean place",
+        "instructionHi": "शान्त, स्वच्छ स्थान पर आसन रखें। जल चढ़ाने वाला पात्र और अर्पित जल समेटने का पात्र अलग रखें; इस संक्षिप्त विधि में अग्नि या जलाशय की आवश्यकता नहीं है।",
+        "instructionEn": "Set a seat in a quiet, clean place. Keep the offering vessel separate from the bowl that will collect the water; this concise guide needs neither a flame nor a water body.",
+        "visual": "remembrance-vessels",
+        "visuals": [
+          "remembrance-vessels"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "sankalpa-marker",
+        "phase": "prep",
+        "titleHi": "स्मरण का संकल्प",
+        "titleEn": "Set the remembrance intention",
+        "instructionHi": "जिन पितरों का स्मरण कर रहे हैं, उन्हें मन में याद करें। नाम, गोत्र और संकल्प-वाक्य केवल अपनी पारिवारिक रीति के अनुसार बोलें; यहाँ कोई निश्चित मन्त्र या सूत्र नहीं दिया गया है।",
+        "instructionEn": "Bring to mind the ancestors being remembered. State names, gotra or a sankalpa formula only according to your family practice; this guide supplies no fixed mantra or formula.",
+        "visual": "prayer",
+        "visuals": [
+          "prayer"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "prepare-tila-water",
+        "phase": "main",
+        "titleHi": "तिल-जल तैयार करें",
+        "titleEn": "Prepare sesame water",
+        "instructionHi": "स्वच्छ जल में थोड़ा काला तिल रखें। कुश या दर्भ का प्रयोग केवल तभी करें जब वह आपकी पारिवारिक रीति में हो और उसका सही उपयोग ज्ञात हो।",
+        "instructionEn": "Place a small amount of black sesame in clean water. Use kusha or darbha only when it belongs to your family practice and you know its proper use.",
+        "visual": "sesame-water",
+        "visuals": [
+          "sesame-water"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "offer-water",
+        "phase": "main",
+        "titleHi": "तिल-जल अर्पित करें",
+        "titleEn": "Offer the sesame water",
+        "instructionHi": "पितरों का श्रद्धापूर्वक स्मरण करते हुए थोड़ा तिल-जल नीचे रखे स्वच्छ पात्र में अर्पित करें। संख्या, दिशा, यज्ञोपवीत की स्थिति और क्रम अपनी परम्परा के अनुसार रखें; अनजान सूत्र की नकल न करें।",
+        "instructionEn": "Remember the ancestors reverently and offer a small stream of sesame water into the clean vessel below. Follow your tradition for count, direction, sacred-thread position and order; do not imitate an unfamiliar formula.",
+        "visual": "tarpana",
+        "visuals": [
+          "tarpana"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "silent-remembrance",
+        "phase": "main",
+        "titleHi": "मौन स्मरण",
+        "titleEn": "Pause in remembrance",
+        "instructionHi": "कुछ समय मौन बैठें, कृतज्ञता व्यक्त करें और परिवार के दिवंगत सदस्यों को स्मरण करें। यह भावपूर्ण विराम किसी पूर्ण श्राद्ध-विधान का विकल्प नहीं है।",
+        "instructionEn": "Sit quietly for a few moments, express gratitude and remember departed family members. This reflective pause is not a substitute for a complete Shraddha rite.",
+        "visual": "prayer",
+        "visuals": [
+          "prayer"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "gita-15",
+        "phase": "main",
+        "titleHi": "वैकल्पिक गीता पाठ — अध्याय १५",
+        "titleEn": "Optional Gita reading — Chapter 15",
+        "instructionHi": "इच्छा हो तो भगवद् गीता का पन्द्रहवाँ अध्याय स्मरण-पाठ के रूप में पढ़ें। यह पाठ तर्पण या श्राद्ध-विधान का स्थान नहीं लेता।",
+        "instructionEn": "If desired, read Bhagavad Gita Chapter 15 as remembrance. This reading does not replace tarpana or Shraddha rites.",
+        "ref": {
+          "kind": "gita",
+          "chapter": 15
+        },
+        "visual": "scripture",
+        "visuals": [
+          "scripture"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "gita-2",
+        "phase": "main",
+        "titleHi": "वैकल्पिक गीता पाठ — अध्याय २",
+        "titleEn": "Optional Gita reading — Chapter 2",
+        "instructionHi": "परिवार की इच्छा हो तो भगवद् गीता का दूसरा अध्याय पढ़ें और फिर इसी विधि पर लौटें। इसे अनिवार्य कर्म या श्राद्ध का विकल्प न मानें।",
+        "instructionEn": "If the family wishes, read Bhagavad Gita Chapter 2 and then return here. Treat it as optional remembrance, not an obligatory act or a substitute for Shraddha.",
+        "ref": {
+          "kind": "gita",
+          "chapter": 2
+        },
+        "visual": "scripture",
+        "visuals": [
+          "scripture"
+        ],
+        "clauseCaptions": false
+      },
+      {
+        "id": "close-and-clean",
+        "phase": "closing",
+        "titleHi": "समापन और स्वच्छता",
+        "titleEn": "Conclude and clean up",
+        "instructionHi": "नमस्कार कर स्मरण पूर्ण करें। समेटे हुए जल का निस्तारण अपनी पारिवारिक रीति और स्थानीय स्वच्छता नियमों के अनुसार करें; सार्वजनिक जल या स्थान को दूषित न करें, फिर पात्र और हाथ साफ करें।",
+        "instructionEn": "Bow and conclude the remembrance. Dispose of the collected water according to family practice and local hygiene rules without polluting public water or spaces, then clean the vessels and your hands.",
+        "visual": "remembrance-vessels",
+        "visuals": [
+          "remembrance-vessels"
+        ],
+        "clauseCaptions": false
+      }
+    ]
+  }
+]

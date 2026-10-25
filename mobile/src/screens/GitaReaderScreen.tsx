@@ -17,6 +17,7 @@ import { getGitaChapter, gitaChaptersManifest, type GitaVerse } from '@/data/git
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import JumpToStartButton from '@/components/JumpToStartButton';
@@ -32,7 +33,8 @@ import ReaderHeader from '@/components/ReaderHeader';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from './_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from './_useAutoSlide';
 import type { RootStackParamList } from '@/navigation/types';
 
 type NextTransitionItem = {
@@ -111,7 +113,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
 
   // Called before the null-chapter early return below, so hook order stays stable;
   // with no chapter it simply has zero pages to speak.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: 'bhagavad-gita',
     data,
     offset,
@@ -129,6 +131,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
       updatedAt: Date.now(),
     });
   }, [chapter, currentIndex, setProgress]);
+  useReadDwell('bhagavad-gita', chapter?.chapter, chapter ? currentIndex : -1);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -260,6 +263,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={data}
             keyExtractor={(item) => item.id}
@@ -351,6 +355,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
 
           {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>

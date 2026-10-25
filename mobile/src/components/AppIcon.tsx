@@ -6,6 +6,7 @@ import { SquaresFourIcon } from 'phosphor-react-native/src/icons/SquaresFour';
 import { MagnifyingGlassIcon } from 'phosphor-react-native/src/icons/MagnifyingGlass';
 import { ShareNetworkIcon } from 'phosphor-react-native/src/icons/ShareNetwork';
 import { HeartIcon } from 'phosphor-react-native/src/icons/Heart';
+import { UserCirclePlusIcon } from 'phosphor-react-native/src/icons/UserCirclePlus';
 import { ArrowLeftIcon } from 'phosphor-react-native/src/icons/ArrowLeft';
 import { CaretRightIcon } from 'phosphor-react-native/src/icons/CaretRight';
 import { XIcon } from 'phosphor-react-native/src/icons/X';
@@ -53,6 +54,7 @@ import { BirdIcon } from 'phosphor-react-native/src/icons/Bird';
 import { SparkleIcon } from 'phosphor-react-native/src/icons/Sparkle';
 import { GearSixIcon } from 'phosphor-react-native/src/icons/GearSix';
 import { ChatTextIcon } from 'phosphor-react-native/src/icons/ChatText';
+import { PencilSimpleIcon } from 'phosphor-react-native/src/icons/PencilSimple';
 
 // Direct imports keep the full icon catalogue out of the launch bundle.
 const icons = {
@@ -61,7 +63,9 @@ const icons = {
   widgets: SquaresFourIcon,
   share: ShareNetworkIcon,
   text: ChatTextIcon,
+  edit: PencilSimpleIcon,
   heart: HeartIcon,
+  photo: UserCirclePlusIcon,
   back: ArrowLeftIcon,
   next: CaretRightIcon,
   close: XIcon,

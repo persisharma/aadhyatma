@@ -16,6 +16,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import BasisChain from '@/components/BasisChain';
 import type { Lang } from '@/data/gita/language';
+import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
 import { library } from '@/data/texts';
 import { MAITRI_LABELS, narrativeReadingsApproved } from '@/panchang/grahaReadingContent';
 import type { Graha } from '@/panchang/kundali';
@@ -182,6 +183,7 @@ export default function GrahaReadingList({ cards, introHi, introEn, emptyHouses,
                     hi={`${card.upay.mantraHi} — ${card.upay.mantraCountHi}`}
                     en={`${card.upay.mantraEn} — ${card.upay.mantraCountEn}`}
                   />
+                  <PracticeLink sourceId={GRAHA_BEEJ_JAPA_ID[card.graha]} lang={lang} onPractice={onPractice} japa />
                   <PracticeLink sourceId={card.upay.practiceSourceId} lang={lang} onPractice={onPractice} />
                 </View>
 
@@ -376,7 +378,8 @@ function UpayRow({ lang, labelHi, labelEn, hi, en }: { lang: Lang; labelHi: stri
   );
 }
 
-function PracticeLink({ sourceId, lang, onPractice }: { sourceId: string; lang: Lang; onPractice: (sourceId: string) => void }) {
+/** The paath pill, or with `japa` the beej mantra's counter (`Chant … on the mala`). */
+function PracticeLink({ sourceId, lang, onPractice, japa = false }: { sourceId: string; lang: Lang; onPractice: (sourceId: string) => void; japa?: boolean }) {
   const { colors, radii } = useTheme();
   const entry = library.find((candidate) => candidate.id === sourceId && candidate.status === 'active');
   if (!entry) return null;
@@ -384,7 +387,7 @@ function PracticeLink({ sourceId, lang, onPractice }: { sourceId: string; lang: 
     <Pressable
       onPress={() => onPractice(entry.id)}
       accessibilityRole="button"
-      accessibilityLabel={`Open ${entry.nameEn} practice`}
+      accessibilityLabel={japa ? `Chant ${entry.nameEn} on the mala` : `Open ${entry.nameEn} practice`}
       style={({ pressed }) => [
         styles.practiceLink,
         { borderColor: colors.divider, backgroundColor: colors.cardSurface, borderRadius: radii.pill },
@@ -392,7 +395,9 @@ function PracticeLink({ sourceId, lang, onPractice }: { sourceId: string; lang: 
       ]}
     >
       <Text style={[styles.practiceLinkText, { color: colors.saffronDeep }]}>
-        {contentByLang(lang, `${entry.nameHi} पढ़ें`, `Read ${entry.nameEn}`)} ›
+        {japa
+          ? contentByLang(lang, `माला पर जप करें`, `Chant on the mala`)
+          : contentByLang(lang, `${entry.nameHi} पढ़ें`, `Read ${entry.nameEn}`)} ›
       </Text>
     </Pressable>
   );

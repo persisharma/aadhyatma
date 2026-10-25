@@ -24,6 +24,12 @@ jest.mock('@/components/ReaderHeader', () => ({ __esModule: true, default: (prop
   const React = require('react'); return React.createElement('ReaderHeader', props, props.right);
 } }));
 jest.mock('@/components/ShareButton', () => ({ __esModule: true, default: 'ShareButton' }));
+// Auto-slide is covered by its own hook/button; these suites replace react-native
+// wholesale, so stub it like the other reader controls.
+jest.mock('@/components/AutoSlideButton', () => ({ __esModule: true, default: 'AutoSlideButton' }));
+jest.mock('@/screens/_useAutoSlide', () => ({
+  useAutoSlide: () => ({ visible: false, playing: false, toggle: jest.fn(), stop: jest.fn(), cycleSpeed: jest.fn() }),
+}));
 jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, busy: false }) }));
 jest.mock('@/components/ReadingProgressBar', () => ({ __esModule: true, default: 'ReadingProgressBar' }));
 jest.mock('@/components/LanguageToggle', () => ({ __esModule: true, default: 'LanguageToggle' }));

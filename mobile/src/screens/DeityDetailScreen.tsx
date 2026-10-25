@@ -15,6 +15,7 @@ import { library, type ContentCategory, type LibraryEntry } from '@/data/texts';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import LibraryCard from '@/components/LibraryCard';
 import ResumeReadingSheet from '@/components/ResumeReadingSheet';
+import { useResumeSheetCoverage } from '@/components/useResumeSheetCoverage';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
@@ -69,6 +70,10 @@ export default function DeityDetailScreen({ navigation, route }: Props) {
 
   const pendingProgress = pendingEntry ? getProgress(pendingEntry.id) : undefined;
   const location = pendingProgress ? formatLocation(pendingProgress) : null;
+  const resumeCoverage = useResumeSheetCoverage(pendingEntry, pendingProgress, navigation, () => {
+    if (pendingEntry) markSeen(pendingEntry.id);
+    setPendingEntry(null);
+  });
 
   return (
     <View style={styles.root}>
@@ -200,6 +205,7 @@ export default function DeityDetailScreen({ navigation, route }: Props) {
             }
           }}
           onDismiss={() => setPendingEntry(null)}
+          {...resumeCoverage}
         />
       )}
     </View>

@@ -13,7 +13,8 @@ import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } fr
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import DishaChakra from '@/components/DishaChakra';
-import ListCard, { CardThumb } from '@/components/ListCard';
+import ListCard, { CARD_TITLE_SIZES, CardThumb, CardTitles } from '@/components/ListCard';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import ReaderHeader from '@/components/ReaderHeader';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getMandirGuidance } from '@/data/vastu/mandirGuidance';
@@ -21,7 +22,6 @@ import { getVastuRoomEntries } from '@/data/vastu/roomGuidance';
 import type { MandirGuidanceEntry, VastuRoomEntry } from '@/data/vastu/types';
 import { DISHA_LABELS, DISHA_ORDER, type DishaDirection } from '@/panchang/eventMuhurat';
 import { useTheme } from '@/theme/ThemeContext';
-import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang, pick } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { dikForHeading } from '@/vastu/compass';
@@ -39,6 +39,7 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
   const { lang } = useGitaLanguage();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
+  const homesTitle = orderTitlesByLanguage(lang, 'मेरे घर', 'My homes', CARD_TITLE_SIZES);
 
   // A chosen chip pauses the sensor (subscription removed); tapping the active
   // chip returns to live — unless the device has no magnetometer to return to.
@@ -262,18 +263,17 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
         <View style={{ marginTop: spacing.lg }}>
           <ListCard
             testID="vastu-mere-ghar-door"
-            variant="flat"
             leading={
               <CardThumb>
                 <StoryIcon name="ghar" size={44} />
               </CardThumb>
             }
-            right={
+            overlay={
               roster.homes.length === 0 ? (
-                <Text style={{ color: colors.saffronDeep, fontFamily: fontFamilies.interSemiBold, fontSize: 10.5, letterSpacing: 0.4 }}>
-                  NEW
-                </Text>
-              ) : undefined
+                <View style={[styles.doorNew, { backgroundColor: colors.newBadgeBg, borderRadius: radii.pill }]} pointerEvents="none">
+                  <Text style={[styles.doorNewText, { color: colors.newBadgeText }]}>NEW</Text>
+                </View>
+              ) : null
             }
             onPress={() => {
               // Empty → setup; otherwise ALWAYS the roster (PRD §C4 offers
@@ -285,21 +285,22 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
             }}
             accessibilityLabel="My homes — place the rooms on the mandala and read the convention"
           >
-            <Text style={{ color: colors.ink, fontFamily: titleFont, fontSize: 15 }}>
-              {pick(lang, { hi: 'मेरे घर', en: 'My homes', gu: 'મારાં ઘર', kn: 'ನನ್ನ ಮನೆಗಳು' })}
-            </Text>
-            <Text style={{ color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily, fontSize: 11.5, lineHeight: 17 }}>
-              {roster.homes.length === 0
-                ? pick(lang, {
-                    hi: 'कक्षों को मंडल पर रखें — विधान का पाठ पढ़ें',
-                    en: 'Place the rooms on the mandala — read the convention',
-                    gu: 'ઓરડાઓને મંડલ પર મૂકો — વિધાનનો પાઠ વાંચો',
-                    kn: 'ಕೋಣೆಗಳನ್ನು ಮಂಡಲದ ಮೇಲೆ ಇರಿಸಿ — ವಿಧಾನದ ಪಾಠ ಓದಿ',
-                  })
-                : roster.homes.length === 1
-                  ? roster.homes[0]!.label
-                  : `${roster.homes.length} ${pick(lang, { hi: 'घर सहेजे गए', en: 'homes saved', gu: 'ઘર સાચવ્યાં', kn: 'ಮನೆಗಳು ಉಳಿಸಲಾಗಿದೆ' })}`}
-            </Text>
+            <CardTitles
+              primary={{ ...homesTitle.primary, text: pick(lang, { hi: 'मेरे घर', en: 'My homes', gu: 'મારાં ઘર', kn: 'ನನ್ನ ಮನೆಗಳು' }) }}
+              secondary={homesTitle.secondary}
+              meta={
+                roster.homes.length === 0
+                  ? pick(lang, {
+                      hi: 'कक्षों को मंडल पर रखें — विधान का पाठ पढ़ें',
+                      en: 'Place the rooms on the mandala — read the convention',
+                      gu: 'ઓરડાઓને મંડલ પર મૂકો — વિધાનનો પાઠ વાંચો',
+                      kn: 'ಕೋಣೆಗಳನ್ನು ಮಂಡಲದ ಮೇಲೆ ಇರಿಸಿ — ವಿಧಾನದ ಪಾಠ ಓದಿ',
+                    })
+                  : roster.homes.length === 1
+                    ? roster.homes[0]!.label
+                    : `${roster.homes.length} ${pick(lang, { hi: 'घर सहेजे गए', en: 'homes saved', gu: 'ઘર સાચવ્યાં', kn: 'ಮನೆಗಳು ಉಳಿಸಲಾಗಿದೆ' })}`
+              }
+            />
           </ListCard>
         </View>
 
@@ -426,6 +427,8 @@ function MandirCard({ entry }: { entry: MandirGuidanceEntry }) {
 }
 
 const styles = StyleSheet.create({
+  doorNew: { position: 'absolute', top: 12, right: 12, paddingHorizontal: 10, paddingVertical: 3 },
+  doorNewText: { fontSize: 10, fontWeight: '600', letterSpacing: 1.6, textTransform: 'uppercase' },
   root: { flex: 1 },
   dishaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 7, justifyContent: 'center', marginTop: 12 },
   dishaChip: { borderWidth: 1, paddingHorizontal: 11, paddingVertical: 5 },

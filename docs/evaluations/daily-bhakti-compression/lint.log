@@ -1,0 +1,571 @@
+
+> vedansh@0.1.0 lint
+> expo lint
+
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/UpdateReadyModal.tsx
+  2:46  warning  'View' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/AskAnswerCard.test.tsx
+  15:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  16:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/ComicArt.test.tsx
+   3:24  warning  'comicPages' is defined but never used   @typescript-eslint/no-unused-vars
+  10:61  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  41:37  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/ComicPanel.test.tsx
+  8:83   warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  8:128  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  9:15   warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/FeatureTour.test.tsx
+  28:14  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/IndiaMap.test.tsx
+  13:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  14:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  21:1   warning  Import in body of module; reorder to top  import/first
+  22:1   warning  Import in body of module; reorder to top  import/first
+  23:1   warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/ListingCard.test.tsx
+   9:43   warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  18:54   warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  23:100  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  24:39   warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  25:25   warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  26:40   warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  47:26   warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  55:26   warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/MiniPlayer.test.tsx
+  19:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  20:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  32:1   warning  Import in body of module; reorder to top  import/first
+  33:1   warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/PitruSmaranDayChip.test.tsx
+  24:1  warning  Import in body of module; reorder to top  import/first
+  25:1  warning  Import in body of module; reorder to top  import/first
+  26:1  warning  Import in body of module; reorder to top  import/first
+  27:1  warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/ReadAloudSettingsSheet.test.tsx
+  27:1  warning  Import in body of module; reorder to top  import/first
+  28:1  warning  Import in body of module; reorder to top  import/first
+  29:1  warning  Import in body of module; reorder to top  import/first
+  30:1  warning  Import in body of module; reorder to top  import/first
+  31:1  warning  Import in body of module; reorder to top  import/first
+  32:1  warning  Import in body of module; reorder to top  import/first
+  33:1  warning  Import in body of module; reorder to top  import/first
+  34:1  warning  Import in body of module; reorder to top  import/first
+  35:1  warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/ReaderActionTargets.test.tsx
+  20:18  error  Missing "key" prop for element in array  react/jsx-key
+  21:15  error  Missing "key" prop for element in array  react/jsx-key
+  22:14  error  Missing "key" prop for element in array  react/jsx-key
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/RoutineCelebrationOverlay.test.tsx
+  37:15  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  38:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/SadhanaCompletionOverlay.test.tsx
+  42:32  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/TodayRecommendationsRow.test.tsx
+  15:33  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+  73:17  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+  74:20  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/TrackCard.test.tsx
+  12:1  warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/readerTypeScale.test.tsx
+  32:21  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  33:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/__tests__/routineBannerView.test.ts
+  26:16  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/video/__tests__/DockedYouTubePlayer.test.tsx
+  13:17  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  67:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  78:1   warning  Import in body of module; reorder to top  import/first
+  79:1   warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/contexts/__tests__/AudioPlayerContext.test.tsx
+  45:1  warning  Import in body of module; reorder to top  import/first
+  46:1  warning  Import in body of module; reorder to top  import/first
+  47:1  warning  Import in body of module; reorder to top  import/first
+  48:1  warning  Import in body of module; reorder to top  import/first
+  49:1  warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/contexts/__tests__/DaanLedgerContext.test.tsx
+  20:1  warning  Import in body of module; reorder to top  import/first
+  21:1  warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/contexts/__tests__/PitruSmaranContext.test.tsx
+  19:1  warning  Import in body of module; reorder to top  import/first
+  20:1  warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/contexts/__tests__/ReadAloudContext.test.tsx
+  31:1  warning  Import in body of module; reorder to top  import/first
+  32:1  warning  Import in body of module; reorder to top  import/first
+  33:1  warning  Import in body of module; reorder to top  import/first
+  34:1  warning  Import in body of module; reorder to top  import/first
+  35:1  warning  Import in body of module; reorder to top  import/first
+  36:1  warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/contexts/__tests__/ReadAloudPrefsContext.test.tsx
+  19:1  warning  Import in body of module; reorder to top  import/first
+  25:1  warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/__tests__/contentCorrectness.test.ts
+  1211:18  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/__tests__/devanagariWellFormed.test.ts
+  51:18  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/__tests__/theerth.test.ts
+  22:1  warning  Import in body of module; reorder to top  import/first
+  23:1  warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/artworkAsset.ts
+  11:37  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/bajrang-baan/index.ts
+  49:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/daan/__tests__/daanContent.test.ts
+   23:3   warning  'DAAN_CATEGORIES' is defined but never used  @typescript-eslint/no-unused-vars
+  225:22  warning  A `require()` style import is forbidden      @typescript-eslint/no-require-imports
+  226:7   warning  A `require()` style import is forbidden      @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/daan/index.ts
+  39:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  43:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  47:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  51:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  55:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  59:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  63:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/durga-stotram/index.ts
+  53:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/ganesh-stotram/index.ts
+  46:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/gita-saar/index.ts
+  110:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/hanuman-ashtak/index.ts
+  46:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/krishna-stotram/index.ts
+  46:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/pitru/index.ts
+  35:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  40:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  44:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  48:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  52:11  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/ram-stuti/index.ts
+  46:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/ramcharitmanas/index.ts
+  50:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/saraswati-stotram/index.ts
+  53:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/shiva-strotam/index.ts
+  46:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/sundarkand/index.ts
+  53:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/theerth/temples.ts
+  73:6  warning  'TempleId' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/versePool.ts
+  335:9  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/versePoolFlat.ts
+  33:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  38:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  43:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  48:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  53:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  72:18  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/vishnu-sahasranama/index.ts
+  46:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/navigation/PanchangStackNavigator.tsx
+  169:8   warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-require-imports')
+  172:29  warning  A `require()` style import is forbidden                                                                   @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/__tests__/eventMuhurat.engine.test.ts
+  42:23  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/__tests__/jest/moreFamilySummary.jest.test.tsx
+  10:5  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/__tests__/muhurat.external.test.ts
+  33:10  warning  'byKey' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/__tests__/vaas.test.ts
+  122:40  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/engine.ts
+  319:10  warning  'computePurnimantLunarMonth' is defined but never used  @typescript-eslint/no-unused-vars
+  327:10  warning  'resolveCalendarMonthIndex' is defined but never used   @typescript-eslint/no-unused-vars
+  835:9   warning  'observer' is assigned a value but never used           @typescript-eslint/no-unused-vars
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/festivalEngine.ts
+  38:25  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  41:59  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/lenses.ts
+  85:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  95:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/muhurat.ts
+   89:62  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+   91:14  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+   99:10  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+  112:13  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/useKundali.ts
+  26:8  warning  'ProfileRoster' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/useLenses.ts
+  12:10  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  21:10  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/vratCatalog.ts
+  118:10  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/panchang/weeklyOutlook.ts
+  8:3  warning  'houseForRashi' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/KulParamparaExportScreen.tsx
+  95:27  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/MuhuratDetailScreen.tsx
+  34:19  warning  'typography' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/MuhuratResultsScreen.tsx
+  137:5  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/PanchangScreen.tsx
+   4:90  warning  'TextInput' is defined but never used     @typescript-eslint/no-unused-vars
+  21:1   warning  Import in body of module; reorder to top  import/first
+  22:1   warning  Import in body of module; reorder to top  import/first
+  23:1   warning  Import in body of module; reorder to top  import/first
+  24:1   warning  Import in body of module; reorder to top  import/first
+  25:1   warning  Import in body of module; reorder to top  import/first
+  26:1   warning  Import in body of module; reorder to top  import/first
+  27:1   warning  Import in body of module; reorder to top  import/first
+  28:1   warning  Import in body of module; reorder to top  import/first
+  29:1   warning  Import in body of module; reorder to top  import/first
+  30:1   warning  Import in body of module; reorder to top  import/first
+  31:1   warning  Import in body of module; reorder to top  import/first
+  32:1   warning  Import in body of module; reorder to top  import/first
+  38:1   warning  Import in body of module; reorder to top  import/first
+  43:1   warning  Import in body of module; reorder to top  import/first
+  44:1   warning  Import in body of module; reorder to top  import/first
+  45:1   warning  Import in body of module; reorder to top  import/first
+  46:1   warning  Import in body of module; reorder to top  import/first
+  47:1   warning  Import in body of module; reorder to top  import/first
+  48:1   warning  Import in body of module; reorder to top  import/first
+  49:1   warning  Import in body of module; reorder to top  import/first
+  50:1   warning  Import in body of module; reorder to top  import/first
+  51:1   warning  Import in body of module; reorder to top  import/first
+  52:1   warning  Import in body of module; reorder to top  import/first
+  53:1   warning  Import in body of module; reorder to top  import/first
+  54:1   warning  Import in body of module; reorder to top  import/first
+  55:1   warning  Import in body of module; reorder to top  import/first
+  56:1   warning  Import in body of module; reorder to top  import/first
+  57:1   warning  Import in body of module; reorder to top  import/first
+  58:1   warning  Import in body of module; reorder to top  import/first
+  59:1   warning  Import in body of module; reorder to top  import/first
+  60:1   warning  Import in body of module; reorder to top  import/first
+  61:1   warning  Import in body of module; reorder to top  import/first
+  62:1   warning  Import in body of module; reorder to top  import/first
+  63:1   warning  Import in body of module; reorder to top  import/first
+  64:1   warning  Import in body of module; reorder to top  import/first
+  65:1   warning  Import in body of module; reorder to top  import/first
+  66:1   warning  Import in body of module; reorder to top  import/first
+  67:1   warning  Import in body of module; reorder to top  import/first
+  68:1   warning  Import in body of module; reorder to top  import/first
+  69:1   warning  Import in body of module; reorder to top  import/first
+  70:1   warning  Import in body of module; reorder to top  import/first
+  71:1   warning  Import in body of module; reorder to top  import/first
+  72:1   warning  Import in body of module; reorder to top  import/first
+  73:1   warning  Import in body of module; reorder to top  import/first
+  79:1   warning  Import in body of module; reorder to top  import/first
+  86:1   warning  Import in body of module; reorder to top  import/first
+  87:1   warning  Import in body of module; reorder to top  import/first
+  88:1   warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/RoutineTodayScreen.tsx
+  30:38  warning  'hasRoutine' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/ComicReaderScreen.test.tsx
+    8:17  warning  A `require()` style import is forbidden          @typescript-eslint/no-require-imports
+   24:17  warning  A `require()` style import is forbidden          @typescript-eslint/no-require-imports
+   35:20  warning  A `require()` style import is forbidden          @typescript-eslint/no-require-imports
+   37:16  warning  A `require()` style import is forbidden          @typescript-eslint/no-require-imports
+   38:15  warning  A `require()` style import is forbidden          @typescript-eslint/no-require-imports
+   39:23  warning  'comicPages' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   39:54  warning  A `require()` style import is forbidden          @typescript-eslint/no-require-imports
+   59:34  warning  A `require()` style import is forbidden          @typescript-eslint/no-require-imports
+  116:17  warning  'find' is assigned a value but never used        @typescript-eslint/no-unused-vars
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/DaanScreens.test.tsx
+   46:1   warning  Import in body of module; reorder to top  import/first
+   47:1   warning  Import in body of module; reorder to top  import/first
+   48:1   warning  Import in body of module; reorder to top  import/first
+   49:1   warning  Import in body of module; reorder to top  import/first
+   50:1   warning  Import in body of module; reorder to top  import/first
+   51:1   warning  Import in body of module; reorder to top  import/first
+  360:15  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  361:5   warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  400:25  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  427:25  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/GarudPuranChaptersScreen.test.tsx
+  17:30  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  18:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  18:87  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  21:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  22:40  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  23:34  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/JanmaTithiScreens.test.tsx
+  14:13  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  15:28  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  71:1   warning  Import in body of module; reorder to top  import/first
+  72:1   warning  Import in body of module; reorder to top  import/first
+  73:1   warning  Import in body of module; reorder to top  import/first
+  74:1   warning  Import in body of module; reorder to top  import/first
+  75:1   warning  Import in body of module; reorder to top  import/first
+  76:1   warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/JapamAlarmEditor.test.tsx
+  20:13  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  21:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/JapamCounterFontScale.test.tsx
+  21:58  warning  A `require()` style import is forbidden                                                                @typescript-eslint/no-require-imports
+  35:13  warning  A `require()` style import is forbidden                                                                @typescript-eslint/no-require-imports
+  36:20  warning  A `require()` style import is forbidden                                                                @typescript-eslint/no-require-imports
+  62:1   warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+  64:1   warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/JapamCounterMala.test.tsx
+  17:58  warning  A `require()` style import is forbidden                                                                @typescript-eslint/no-require-imports
+  30:13  warning  A `require()` style import is forbidden                                                                @typescript-eslint/no-require-imports
+  31:20  warning  A `require()` style import is forbidden                                                                @typescript-eslint/no-require-imports
+  56:1   warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+  58:1   warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/JapamCounterRatingAsk.test.tsx
+  20:15  warning  A `require()` style import is forbidden                                                                @typescript-eslint/no-require-imports
+  56:13  warning  A `require()` style import is forbidden                                                                @typescript-eslint/no-require-imports
+  57:20  warning  A `require()` style import is forbidden                                                                @typescript-eslint/no-require-imports
+  79:1   warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+  81:1   warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/KidsStoryCatalogScreen.test.tsx
+   13:17  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   21:91  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   28:17  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   34:15  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   81:50  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  113:31  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/KidsStoryReaderScreen.test.tsx
+  11:17  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  24:17  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  40:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  42:64  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/KulParamparaScreens.test.tsx
+  14:13  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  15:28  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  43:1   warning  Import in body of module; reorder to top  import/first
+  44:1   warning  Import in body of module; reorder to top  import/first
+  45:1   warning  Import in body of module; reorder to top  import/first
+  46:1   warning  Import in body of module; reorder to top  import/first
+  47:1   warning  Import in body of module; reorder to top  import/first
+  48:1   warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/MoreScreen.test.tsx
+   5:35  warning  '/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/ReadAloudSettingsSheet.tsx' imported multiple times  import/no-duplicates
+  11:36  warning  '/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/components/ReadAloudSettingsSheet.tsx' imported multiple times  import/no-duplicates
+  14:58  warning  A `require()` style import is forbidden                                                                                                     @typescript-eslint/no-require-imports
+  31:13  warning  A `require()` style import is forbidden                                                                                                     @typescript-eslint/no-require-imports
+  32:20  warning  A `require()` style import is forbidden                                                                                                     @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/MultiProfileJyotish.test.tsx
+   34:17  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+   35:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  250:14  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  251:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  275:14  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  276:16  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/NowPlayingScreen.test.tsx
+   8:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+   9:20  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  21:1   warning  Import in body of module; reorder to top  import/first
+  22:1   warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/PitruPakshaShikshaScreen.test.tsx
+   3:22  warning  '/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/node_modules/react-native/index.js' imported multiple times  import/no-duplicates
+  24:13  warning  A `require()` style import is forbidden                                                                                              @typescript-eslint/no-require-imports
+  25:28  warning  A `require()` style import is forbidden                                                                                              @typescript-eslint/no-require-imports
+  34:1   warning  Import in body of module; reorder to top                                                                                             import/first
+  35:1   warning  Import in body of module; reorder to top                                                                                             import/first
+  36:1   warning  Import in body of module; reorder to top                                                                                             import/first
+  37:1   warning  Import in body of module; reorder to top                                                                                             import/first
+  38:1   warning  Import in body of module; reorder to top                                                                                             import/first
+  39:1   warning  Import in body of module; reorder to top                                                                                             import/first
+  39:26  warning  '/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/node_modules/react-native/index.js' imported multiple times  import/no-duplicates
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/PitruSmaranScreens.test.tsx
+  20:13  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  21:28  warning  A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  81:1   warning  Import in body of module; reorder to top  import/first
+  88:1   warning  Import in body of module; reorder to top  import/first
+  89:1   warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/SankalpTouchpoints.test.tsx
+  20:29  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  23:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  24:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  33:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  34:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/SearchScreenPreparing.test.tsx
+  36:10  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/TheerthDetailScreen.test.tsx
+   23:29  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+   27:20  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+   28:20  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+  145:23  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/TheerthMapScreen.test.tsx
+  16:29  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  19:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  20:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  29:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  30:20  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx
+  101:37  warning  Array type using 'ReadonlyArray<T>' is forbidden. Use 'readonly T[]' instead  @typescript-eslint/array-type
+  131:37  warning  Array type using 'ReadonlyArray<T>' is forbidden. Use 'readonly T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/readerAutoAdvance.test.tsx
+  86:65  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/screens/__tests__/readerReadAloud.test.tsx
+   60:1  warning  Import in body of module; reorder to top  import/first
+   61:1  warning  Import in body of module; reorder to top  import/first
+   62:1  warning  Import in body of module; reorder to top  import/first
+   63:1  warning  Import in body of module; reorder to top  import/first
+   64:1  warning  Import in body of module; reorder to top  import/first
+   65:1  warning  Import in body of module; reorder to top  import/first
+   66:1  warning  Import in body of module; reorder to top  import/first
+   67:1  warning  Import in body of module; reorder to top  import/first
+   68:1  warning  Import in body of module; reorder to top  import/first
+   69:1  warning  Import in body of module; reorder to top  import/first
+   70:1  warning  Import in body of module; reorder to top  import/first
+   71:1  warning  Import in body of module; reorder to top  import/first
+   72:1  warning  Import in body of module; reorder to top  import/first
+   73:1  warning  Import in body of module; reorder to top  import/first
+   74:1  warning  Import in body of module; reorder to top  import/first
+   75:1  warning  Import in body of module; reorder to top  import/first
+   76:1  warning  Import in body of module; reorder to top  import/first
+   77:1  warning  Import in body of module; reorder to top  import/first
+   78:1  warning  Import in body of module; reorder to top  import/first
+   79:1  warning  Import in body of module; reorder to top  import/first
+   80:1  warning  Import in body of module; reorder to top  import/first
+   81:1  warning  Import in body of module; reorder to top  import/first
+   82:1  warning  Import in body of module; reorder to top  import/first
+   83:1  warning  Import in body of module; reorder to top  import/first
+   84:1  warning  Import in body of module; reorder to top  import/first
+   85:1  warning  Import in body of module; reorder to top  import/first
+   86:1  warning  Import in body of module; reorder to top  import/first
+   87:1  warning  Import in body of module; reorder to top  import/first
+   88:1  warning  Import in body of module; reorder to top  import/first
+   89:1  warning  Import in body of module; reorder to top  import/first
+   90:1  warning  Import in body of module; reorder to top  import/first
+   91:1  warning  Import in body of module; reorder to top  import/first
+   92:1  warning  Import in body of module; reorder to top  import/first
+   93:1  warning  Import in body of module; reorder to top  import/first
+   94:1  warning  Import in body of module; reorder to top  import/first
+   95:1  warning  Import in body of module; reorder to top  import/first
+   96:1  warning  Import in body of module; reorder to top  import/first
+   97:1  warning  Import in body of module; reorder to top  import/first
+   98:1  warning  Import in body of module; reorder to top  import/first
+   99:1  warning  Import in body of module; reorder to top  import/first
+  100:1  warning  Import in body of module; reorder to top  import/first
+  101:1  warning  Import in body of module; reorder to top  import/first
+  102:1  warning  Import in body of module; reorder to top  import/first
+  103:1  warning  Import in body of module; reorder to top  import/first
+  104:1  warning  Import in body of module; reorder to top  import/first
+  105:1  warning  Import in body of module; reorder to top  import/first
+  106:1  warning  Import in body of module; reorder to top  import/first
+  107:1  warning  Import in body of module; reorder to top  import/first
+  108:1  warning  Import in body of module; reorder to top  import/first
+  109:1  warning  Import in body of module; reorder to top  import/first
+  110:1  warning  Import in body of module; reorder to top  import/first
+  111:1  warning  Import in body of module; reorder to top  import/first
+  112:1  warning  Import in body of module; reorder to top  import/first
+  113:1  warning  Import in body of module; reorder to top  import/first
+  114:1  warning  Import in body of module; reorder to top  import/first
+  115:1  warning  Import in body of module; reorder to top  import/first
+  116:1  warning  Import in body of module; reorder to top  import/first
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/theme/__tests__/themeFontScale.test.tsx
+   27:21  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+   28:20  warning  A `require()` style import is forbidden                      @typescript-eslint/no-require-imports
+  190:16  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/utils/__tests__/metaAppEvents.test.ts
+  22:34  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  30:34  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  38:34  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  46:34  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  53:34  warning  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/utils/__tests__/useTodayKey.test.tsx
+  43:22  warning  Array type using 'Array<T>' is forbidden. Use 'T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/utils/transliterate.ts
+  34:17  warning  Array type using 'ReadonlyArray<T>' is forbidden. Use 'readonly T[]' instead  @typescript-eslint/array-type
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/utils/useCachedAsset.ts
+  25:6  warning  React Hook useEffect has a missing dependency: 'req'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/vastu/homeRecord.ts
+  12:32  warning  '/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/vastu/types.ts' imported multiple times  import/no-duplicates
+  13:31  warning  '/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/data/vastu/types.ts' imported multiple times  import/no-duplicates
+
+/Users/prashant/.codex/worktrees/daily-bhakti-art-508/Aadhyatma/mobile/src/widgets/__tests__/deepLink.jest.test.ts
+  8:1  warning  Import in body of module; reorder to top  import/first
+  9:1  warning  Import in body of module; reorder to top  import/first
+
+✖ 377 problems (3 errors, 374 warnings)
+  0 errors and 215 warnings potentially fixable with the `--fix` option.
+

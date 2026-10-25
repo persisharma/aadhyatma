@@ -3,6 +3,8 @@
  * supplies only paper under editable letters; every other original pixel stays.
  */
 const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto'), sharp = require('sharp');
+const { execFileSync } = require('node:child_process');
+const { tmpdir } = require('node:os');
 const directory = path.join(__dirname, '../assets/devotional-share');
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 async function build() {
@@ -25,8 +27,22 @@ async function build() {
   const encoded = await sharp(output, { raw: { width, height, channels: 3 } }).webp({ lossless: true }).toBuffer();
   const decoded = await sharp(encoded).removeAlpha().raw().toBuffer();
   for (let i = 0; i < decoded.length; i++) if (!mask[Math.floor(i / 3)] && decoded[i] !== original[i]) throw Error('Protected artwork changed');
-  fs.writeFileSync(path.join(directory, spec.file), encoded);
-  Object.assign(spec, { bytes: encoded.length, sha256: hash(encoded), protectedPixelChanges: 0 });
-  fs.writeFileSync(file, JSON.stringify(manifest, null, 2) + '\n'); console.log({ art, bytes: encoded.length, protectedPixelChanges: 0 });
+  let delivery = encoded;
+  if (spec.deliveryEncoding) {
+    if (hash(encoded) !== spec.authoringMaster.sha256) throw Error('Authoring encoder changed; review the regenerated lossless master before compression');
+    const version = execFileSync('cwebp', ['-version'], { encoding: 'utf8' }).trim();
+    if (`cwebp ${version}` !== spec.deliveryEncoding.encoder) throw Error('Use the reviewed cwebp version');
+    const { quality, method } = spec.deliveryEncoding;
+    const temp = fs.mkdtempSync(path.join(tmpdir(), 'devotional-master-'));
+    try {
+      const input = path.join(temp, 'authoring.webp'), output = path.join(temp, 'delivery.webp');
+      fs.writeFileSync(input, encoded);
+      execFileSync('cwebp', ['-quiet', '-q', String(quality), '-m', String(method), '-sharp_yuv', input, '-o', output]);
+      delivery = fs.readFileSync(output);
+    } finally { fs.rmSync(temp, { recursive: true, force: true }); }
+  } else spec.protectedPixelChanges = 0;
+  fs.writeFileSync(path.join(directory, spec.file), delivery);
+  Object.assign(spec, { bytes: delivery.length, sha256: hash(delivery) });
+  fs.writeFileSync(file, JSON.stringify(manifest, null, 2) + '\n'); console.log({ art, bytes: delivery.length, authoringProtectedPixelChanges: 0 });
 }
 build().catch(error => { console.error(error); process.exitCode = 1; });

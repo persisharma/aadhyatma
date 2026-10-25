@@ -1,14 +1,13 @@
 import React, { useMemo } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { elevation } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { RoutineShell } from '@/components/RoutineShell';
+import ListCard, { CARD_TITLE_SIZES, CardThumb, CardTitles } from '@/components/ListCard';
 import DeityIcon from '@/components/DeityIcon';
 import StoryIcon from '@/components/StoryIcon';
 import { deityIconKeyFor } from '@/data/deities';
@@ -22,11 +21,11 @@ import type { HomeStackParamList } from '@/navigation/types';
 type Props = NativeStackScreenProps<HomeStackParamList, 'SadhanaPrograms'>;
 
 /**
- * One program row on the sankalp listing — the same active-card language as
- * `LibraryCard` (design.md §8): a warm gradient surface with a first-glyph
- * gradient thumb, both reading languages ordered by the active one, a status
- * pill, and a saffron chevron. Every program is startable, so all cards read as
- * active (no dormant/"coming" variant); the pill carries the day-count / state.
+ * One program row on the sankalp listing — the shared regular `ListCard`
+ * (design.md §8): painted deity thumb, both reading languages ordered by the
+ * active one, the program's subtitle as meta, a status pill, and a saffron
+ * chevron. Every program is startable, so all cards read as active (no
+ * disabled variant); the pill carries the day-count / state.
  */
 function ProgramCard({
   program,
@@ -45,12 +44,7 @@ function ProgramCard({
   const isDone = enrollment?.status === 'completed';
   const isActive = enrollment?.status === 'active';
 
-  const { primary, secondary } = orderTitlesByLanguage(lang, program.titleHi, program.titleEn, {
-    devPrimary: 17,
-    devSecondary: 13,
-    latPrimary: 19,
-    latSecondary: 12,
-  });
+  const { primary, secondary } = orderTitlesByLanguage(lang, program.titleHi, program.titleEn, CARD_TITLE_SIZES);
 
   const badge = isDone
     ? contentByLang(lang, '✓ पूर्ण', '✓ Complete')
@@ -59,80 +53,40 @@ function ProgramCard({
       : contentByLang(lang, `${total} दिन`, `${total} days`);
 
   return (
-    <Pressable
+    <ListCard
       onPress={onPress}
-      accessibilityRole="button"
       accessibilityLabel={`${program.titleEn}. ${program.subtitleEn}. Tap to open.`}
-      style={({ pressed }) => [
-        styles.card,
-        {
-          borderRadius: radii.lg,
-          borderColor: colors.cardActiveBorder,
-          borderWidth: 1,
-          ...elevation.raised,
-          opacity: isDone ? 0.9 : 1,
-        },
-        pressed && styles.cardPressed,
-      ]}
-    >
-      <LinearGradient
-        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[styles.cardBg, { borderRadius: radii.lg }]}
-      />
-
-      <LinearGradient
-        colors={[colors.cardThumbActiveFrom, colors.cardThumbActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[styles.thumb, { borderRadius: radii.md }]}
-      >
-        {/* Painted deity art, as on library cards; the Sankalp art when a program has no deity. */}
-        {deityIconKeyFor(program.deity)
-          ? <DeityIcon iconKey={deityIconKeyFor(program.deity)} fallbackText={program.thumb} />
-          : <StoryIcon name="japam" size={36} />}
-      </LinearGradient>
-
-      <View style={styles.meta}>
-        <Text
-          style={{
-            color: colors.ink,
-            fontFamily: primary.fontFamily,
-            fontSize: primary.fontSize,
-            fontStyle: primary.fontStyle,
-            letterSpacing: primary.letterSpacing,
-            marginBottom: 2,
-          }}
-        >
-          {primary.text}
-        </Text>
-        <Text
-          style={{
-            color: colors.inkMuted,
-            fontFamily: secondary.fontFamily,
-            fontSize: secondary.fontSize,
-            fontStyle: secondary.fontStyle,
-          }}
-        >
-          {secondary.text}
-        </Text>
-      </View>
-
-      <View style={styles.tail}>
-        <View
-          style={[
-            styles.badge,
-            { backgroundColor: colors.parchmentHighlight, borderColor: colors.goldTint, borderRadius: radii.pill },
-          ]}
-        >
-          <Text style={[pillTextStyle(lang, typography.cardMeta), { color: colors.saffronDeep }]}>
-            {badge}
-          </Text>
+      style={isDone ? styles.done : undefined}
+      leading={
+        <CardThumb>
+          {/* Painted deity art, as on library cards; the Sankalp art when a program has no deity. */}
+          {deityIconKeyFor(program.deity)
+            ? <DeityIcon iconKey={deityIconKeyFor(program.deity)} />
+            : <StoryIcon name="japam" size={36} />}
+        </CardThumb>
+      }
+      right={
+        <View style={styles.tail}>
+          <View
+            style={[
+              styles.badge,
+              { backgroundColor: colors.parchmentHighlight, borderColor: colors.goldTint, borderRadius: radii.pill },
+            ]}
+          >
+            <Text style={[pillTextStyle(lang, typography.cardMeta), { color: colors.saffronDeep }]}>
+              {badge}
+            </Text>
+          </View>
+          <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
         </View>
-        <Text style={[styles.chev, { color: colors.saffron }]}>›</Text>
-      </View>
-    </Pressable>
+      }
+    >
+      <CardTitles
+        primary={primary}
+        secondary={secondary}
+        meta={contentByLang(lang, program.subtitleHi, program.subtitleEn)}
+      />
+    </ListCard>
   );
 }
 
@@ -202,19 +156,7 @@ export default function SadhanaProgramListScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    position: 'relative',
-    padding: 18,
-    marginBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-    overflow: 'hidden',
-  },
-  cardBg: { ...StyleSheet.absoluteFillObject },
-  cardPressed: { opacity: 0.85 },
-  thumb: { width: 52, height: 52, alignItems: 'center', justifyContent: 'center' },
-  meta: { flex: 1, minWidth: 0 },
+  done: { opacity: 0.9 },
   tail: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   badge: { paddingHorizontal: 10, paddingVertical: 3, borderWidth: 1 },
   chev: { fontSize: 26, marginLeft: 2 },

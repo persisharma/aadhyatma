@@ -9,6 +9,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { useReadDwell } from './_useReadDwell';
 import ReaderHeader from '@/components/ReaderHeader';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
@@ -17,11 +18,13 @@ import BajrangBaanVersePage from '@/components/BajrangBaanVersePage';
 import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
+import StartJapaButton from '@/components/StartJapaButton';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
-import { useReaderReadAloud } from './_useReaderReadAloud';
+import AutoSlideButton from '@/components/AutoSlideButton';
+import { useReaderPlayback } from './_useAutoSlide';
 import type { HomeStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'BajrangBaanReader'>;
@@ -44,7 +47,7 @@ export default function BajrangBaanReaderScreen({ navigation, route }: Props) {
 
   // Called before the null-chapter early return below, so hook order stays stable;
   // single-chapter text, so the list carries no transition cards and no offset.
-  const readAloud = useReaderReadAloud({
+  const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: 'bajrang-baan',
     data: chapter?.verses ?? [],
     offset: 0,
@@ -57,6 +60,7 @@ export default function BajrangBaanReaderScreen({ navigation, route }: Props) {
     if (chapter == null) return;
     setProgress({ sourceId: 'bajrang-baan', chapter: chapter.chapter, verseIndex: currentIndex, updatedAt: Date.now() });
   }, [chapter, currentIndex, setProgress]);
+  useReadDwell('bajrang-baan', chapter?.chapter, chapter ? currentIndex : -1);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -124,6 +128,10 @@ export default function BajrangBaanReaderScreen({ navigation, route }: Props) {
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
           <LanguageToggle />
           <AddToRoutineButton sourceId="bajrang-baan" chapter={chapter.chapter} />
+          {/* Pinned left, mirroring read-aloud on the right (design.md §35.1). */}
+          <View style={styles.japaSlot}>
+            <StartJapaButton navigation={navigation} sourceId="bajrang-baan" chapter={chapter.chapter} verseIndex={currentIndex} />
+          </View>
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
           <View style={styles.readAloudSlot}>
             <ReadAloudButton control={readAloud} />
@@ -132,6 +140,7 @@ export default function BajrangBaanReaderScreen({ navigation, route }: Props) {
 
         <View style={styles.listContainer}>
           <FlatList
+            CellRendererComponent={autoSlide.Cell}
             ref={listRef}
             data={chapter.verses}
             keyExtractor={(v) => v.id}
@@ -193,6 +202,7 @@ export default function BajrangBaanReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
+          <AutoSlideButton control={autoSlide} />
           {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
@@ -212,6 +222,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   counter: { includeFontPadding: false, minWidth: 48, textAlign: 'right' },
   toggleRow: { paddingVertical: 6, paddingBottom: 12, alignItems: 'center' },
+  japaSlot: { position: 'absolute', left: 16, top: 6, bottom: 12, justifyContent: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 12, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },

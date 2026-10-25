@@ -1,4 +1,5 @@
 import { garudPuranTotal, garudPuranReadingCount } from '../garud-puran';
+import { aartiIdByIndex, getAarti } from '../aarti';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
@@ -46,6 +47,7 @@ import * as generated from '../verseCounts';
  */
 test('every generated verse count still matches its corpus', () => {
   const pairs: readonly (readonly [string, unknown, unknown])[] = [
+  ['aartiVerseCounts', Object.fromEntries(aartiIdByIndex.map((id, index) => [id, getAarti(index).verses.length])), generated.aartiVerseCounts],
   ['achyutashtakamTotal', achyutashtakamTotal, generated.achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal, generated.bajrangBaanTotal],
   ['bhavaniAshtakamTotal', bhavaniAshtakamTotal, generated.bhavaniAshtakamTotal],
@@ -109,9 +111,10 @@ test('every generated verse count still matches its corpus', () => {
   }
 });
 
-test('verseCounts exports exactly what texts.ts needs, and nothing stale', () => {
+test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothing stale', () => {
   const exported = Object.keys(generated).sort();
   const expected = [
+  ['aartiVerseCounts', null, generated.aartiVerseCounts],
   ['achyutashtakamTotal', achyutashtakamTotal, generated.achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal, generated.bajrangBaanTotal],
   ['bhavaniAshtakamTotal', bhavaniAshtakamTotal, generated.bhavaniAshtakamTotal],

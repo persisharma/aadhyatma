@@ -1,0 +1,197 @@
+{
+  "prefix": "suvichar",
+  "assets": {
+    "durga--bhakti-patra": {
+      "hash": "6965a4e677d399b8",
+      "ext": "webp"
+    },
+    "durga--mandir-jharokha": {
+      "hash": "1d0931dd934f8509",
+      "ext": "webp"
+    },
+    "durga--pushp-aangan": {
+      "hash": "cd3651e8101c1f53",
+      "ext": "webp"
+    },
+    "ganesha--bhakti-patra": {
+      "hash": "7ed87dc220ad3a99",
+      "ext": "webp"
+    },
+    "ganesha--mandir-jharokha": {
+      "hash": "bf9e69e0bff9bfd5",
+      "ext": "webp"
+    },
+    "ganesha--pushp-aangan": {
+      "hash": "9382d77f8bdf5c24",
+      "ext": "webp"
+    },
+    "hanuman--bhakti-patra": {
+      "hash": "8dc6cea1149f2dae",
+      "ext": "webp"
+    },
+    "hanuman--mandir-jharokha": {
+      "hash": "40a87283667bcd6a",
+      "ext": "webp"
+    },
+    "hanuman--pushp-aangan": {
+      "hash": "cb72ecd9b2f51da9",
+      "ext": "webp"
+    },
+    "jagannath--bhakti-patra": {
+      "hash": "7215ad1e8e1ba874",
+      "ext": "webp"
+    },
+    "jagannath--mandir-jharokha": {
+      "hash": "d59aa7608e06dbe9",
+      "ext": "webp"
+    },
+    "jagannath--pushp-aangan": {
+      "hash": "f977ac77ee161530",
+      "ext": "webp"
+    },
+    "khatu-shyam--bhakti-patra": {
+      "hash": "8aa0c793530c7c0e",
+      "ext": "webp"
+    },
+    "khatu-shyam--mandir-jharokha": {
+      "hash": "edd28be04029eda2",
+      "ext": "webp"
+    },
+    "khatu-shyam--pushp-aangan": {
+      "hash": "3d32bf5b8bfe9a16",
+      "ext": "webp"
+    },
+    "krishna--bhakti-patra": {
+      "hash": "d080e0f989f19cfe",
+      "ext": "webp"
+    },
+    "krishna--mandir-jharokha": {
+      "hash": "4af885e216ef49e7",
+      "ext": "webp"
+    },
+    "krishna--pushp-aangan": {
+      "hash": "4eeb586c0946cd87",
+      "ext": "webp"
+    },
+    "lakshmi--bhakti-patra": {
+      "hash": "e3b6d2c9073f465a",
+      "ext": "webp"
+    },
+    "lakshmi--mandir-jharokha": {
+      "hash": "10ad47db30ea0b9a",
+      "ext": "webp"
+    },
+    "lakshmi--pushp-aangan": {
+      "hash": "1fbea91a07ea23e2",
+      "ext": "webp"
+    },
+    "radha-krishna--bhakti-patra": {
+      "hash": "f63f05d7550f4e21",
+      "ext": "webp"
+    },
+    "radha-krishna--mandir-jharokha": {
+      "hash": "69b33ea5d084a010",
+      "ext": "webp"
+    },
+    "radha-krishna--pushp-aangan": {
+      "hash": "092f5e08d5702f5f",
+      "ext": "webp"
+    },
+    "ram-darbar--bhakti-patra": {
+      "hash": "7e16d9f839852637",
+      "ext": "webp"
+    },
+    "ram-darbar--mandir-jharokha": {
+      "hash": "b1be45b8bf00bc18",
+      "ext": "webp"
+    },
+    "ram-darbar--pushp-aangan": {
+      "hash": "9cb55a7f67d41737",
+      "ext": "webp"
+    },
+    "rama--bhakti-patra": {
+      "hash": "975ed4d6e20152b3",
+      "ext": "webp"
+    },
+    "rama--mandir-jharokha": {
+      "hash": "966c1cacb831712a",
+      "ext": "webp"
+    },
+    "rama--pushp-aangan": {
+      "hash": "60a0bc955f8ab9eb",
+      "ext": "webp"
+    },
+    "salasar-balaji--bhakti-patra": {
+      "hash": "e24da7b757afc7d6",
+      "ext": "webp"
+    },
+    "salasar-balaji--mandir-jharokha": {
+      "hash": "ae436dfcfc9a786f",
+      "ext": "webp"
+    },
+    "salasar-balaji--pushp-aangan": {
+      "hash": "29f2b8ef4795f9d9",
+      "ext": "webp"
+    },
+    "sanwariya-seth--bhakti-patra": {
+      "hash": "85939fea44043852",
+      "ext": "webp"
+    },
+    "sanwariya-seth--mandir-jharokha": {
+      "hash": "e7809eefd94e3180",
+      "ext": "webp"
+    },
+    "sanwariya-seth--pushp-aangan": {
+      "hash": "f7b0b8ca744caba3",
+      "ext": "webp"
+    },
+    "saraswati--bhakti-patra": {
+      "hash": "b03865c8c37db0de",
+      "ext": "webp"
+    },
+    "saraswati--mandir-jharokha": {
+      "hash": "a00d3cf410a428ad",
+      "ext": "webp"
+    },
+    "saraswati--pushp-aangan": {
+      "hash": "93a6ab34b62623c5",
+      "ext": "webp"
+    },
+    "shiva--bhakti-patra": {
+      "hash": "6348ef09cc859ecb",
+      "ext": "webp"
+    },
+    "shiva--mandir-jharokha": {
+      "hash": "75b6adfdb78f80bc",
+      "ext": "webp"
+    },
+    "shiva--pushp-aangan": {
+      "hash": "af83185d452e29a3",
+      "ext": "webp"
+    },
+    "tirupati-balaji--bhakti-patra": {
+      "hash": "2ca715af8bb61474",
+      "ext": "webp"
+    },
+    "tirupati-balaji--mandir-jharokha": {
+      "hash": "4af128859b0a545a",
+      "ext": "webp"
+    },
+    "tirupati-balaji--pushp-aangan": {
+      "hash": "c5edc992cf7ca2b2",
+      "ext": "webp"
+    },
+    "vishnu--bhakti-patra": {
+      "hash": "157ddc787e5cbd67",
+      "ext": "webp"
+    },
+    "vishnu--mandir-jharokha": {
+      "hash": "212f371be695c7a9",
+      "ext": "webp"
+    },
+    "vishnu--pushp-aangan": {
+      "hash": "cd145fe21e14d2cc",
+      "ext": "webp"
+    }
+  }
+}

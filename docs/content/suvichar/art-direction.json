@@ -1,0 +1,94 @@
+{
+  "subjects": [
+    {
+      "id": "krishna",
+      "name": "श्रीकृष्ण",
+      "scene": "Adult serene Shri Krishna, blue-toned skin, peacock-feather crown, yellow dhoti, exactly two arms naturally playing a flute, Vrindavan river and flowers. No other deity."
+    },
+    {
+      "id": "rama",
+      "name": "श्रीराम",
+      "scene": "Adult serene Shri Ram with blue-toned skin, royal crown, saffron and cream attire, exactly two arms, one hand holding a bow naturally, quiver at shoulder, quiet Ayodhya gardens. No flute or peacock-feather crown."
+    },
+    {
+      "id": "hanuman",
+      "name": "श्रीहनुमान",
+      "scene": "Mature gentle Shri Hanuman kneeling in reverence, exactly two hands joined in namaste, exactly one natural tail, saffron dhoti and refined crown, gada resting beside him, forest and distant Ayodhya temple. No Krishna attributes."
+    },
+    {
+      "id": "shiva",
+      "name": "भगवान शिव",
+      "scene": "Serene adult Bhagwan Shiva seated in meditation with exactly two hands in his lap, matted hair, crescent moon and subtle Ganga motif, rudraksha, traditional natural snake around neck, trishul standing beside him and faint Himalayas. No flute, no peacock crown."
+    },
+    {
+      "id": "ganesha",
+      "name": "श्रीगणेश",
+      "scene": "Shri Ganesha seated peacefully, elephant head with exactly one natural trunk, four anatomically coherent arms: upper hands with pasha and ankush, lower hands with modak bowl and blessing gesture. Crown, warm cream saffron attire, one small mouse at feet, subtle temple garden. No human-headed deity."
+    },
+    {
+      "id": "durga",
+      "name": "माँ दुर्गा",
+      "scene": "Maa Durga in a peaceful dignified form, red sari and crown, exactly eight distinct natural arms bearing her traditional weapons and lotus, all hands readable, seated gracefully with her lion. Compassionate adult face, no battle or gore. Do not make the lion a tiger."
+    },
+    {
+      "id": "lakshmi",
+      "name": "माँ लक्ष्मी",
+      "scene": "Maa Lakshmi seated on a pink-ivory lotus, elegant red and cream sari, exactly four arms: upper pair holding lotuses, lower hands in blessing and generosity gestures. Subtle lotus pond and traditional temple garden, compassionate adult face, restrained jewellery and gold, no veena."
+    },
+    {
+      "id": "saraswati",
+      "name": "माँ सरस्वती",
+      "scene": "Maa Saraswati seated on an ivory lotus, white sari and refined crown, exactly four arms: two playing a veena naturally, remaining hands holding a book and prayer beads. One graceful swan nearby, quiet river foliage, calm adult face, no lion or coin shower."
+    },
+    {
+      "id": "vishnu",
+      "name": "भगवान विष्णु",
+      "scene": "Bhagwan Vishnu in a serene regal blue-toned form, golden crown and yellow attire, exactly four arms with shankha, chakra, gada and lotus, clearly distinct hands and attributes. Lotus-and-water temple setting. No flute, no peacock-feather crown, no Krishna substitution."
+    },
+    {
+      "id": "radha-krishna",
+      "name": "राधा–कृष्ण",
+      "scene": "Exactly two distinct adult figures, Radha and Krishna together in Vrindavan garden. Krishna with blue-toned skin, yellow attire, peacock-feather crown and flute; Radha with natural warm skin tone, elegant cream and muted rose traditional attire and veil. Exactly two arms per figure, natural hands, graceful devotional companionship. No children."
+    },
+    {
+      "id": "ram-darbar",
+      "name": "राम दरबार",
+      "scene": "Ram Darbar with exactly four recognisable figures: Shri Ram and Sita seated together on a throne, Lakshman standing beside them, Hanuman kneeling in devotion in front. Ram has blue-toned skin, crown and bow; Sita has natural warm skin tone and royal sari; Lakshman has bow and quiver; Hanuman has one tail and a gada resting nearby. Exactly two arms per figure. Balanced traditional Ayodhya court; do not duplicate Ram, omit Sita or turn Lakshman into Krishna."
+    },
+    {
+      "id": "salasar-balaji",
+      "name": "सालासर बालाजी दरबार",
+      "scene": "Distinctive frontal Salasar Balaji Hanuman shrine darshan illustration, not ordinary kneeling Hanuman: the vermilion-orange human-like face with unmistakable black moustache AND beard, expressive eyes, tilak, ornate crown, chest covered in dignified floral garlands and red-gold vestments, an ornate temple throne and canopy. Recognisably Salasar's traditional murti presentation. No generic monkey face, no blue Krishna, no Vishnu icon."
+    },
+    {
+      "id": "khatu-shyam",
+      "name": "खाटू श्याम जी",
+      "scene": "Distinctive Khatu Shyam Ji shrine representation: the sacred frontal crowned HEAD (sheesh) with expressive large eyes, tilak, traditional black moustache, rich crown and floral shringar, nested in an ornate shrine with cascading garlands. Depict the head-and-garland presentation, not a full standing human Krishna body; no flute, no Krishna garden character or Hanuman attributes."
+    },
+    {
+      "id": "tirupati-balaji",
+      "name": "तिरुपति बालाजी",
+      "scene": "Traditional Sri Venkateswara of Tirumala as a frontal dark black-stone standing murti with tall conical crown, the unmistakable large white U-shaped namam with central red streak, rich jewellery and long flower garlands, four arms: upper right chakra, upper left conch, lower right hand pointing down toward his feet in varada gesture, lower left near the waist. Golden South Indian prabhavali and subtle Tirumala temple setting. Not a blue-skinned human Vishnu, not Salasar Hanuman, no moustached orange face, no invented photographic darshan claim."
+    }
+  ],
+  "frames": [
+    {
+      "id": "mandir-jharokha",
+      "name": "मंदिर झरोखा",
+      "reference": "User-approved mandir-jharokha design from the design conversation",
+      "description": "Retain the detailed warm terracotta-and-antique-gold Rajasthani jharokha arch, refined miniature floral border and aged cream paper from the reference."
+    },
+    {
+      "id": "pushp-aangan",
+      "name": "पुष्प आँगन",
+      "reference": "User-approved pushp-aangan design from the design conversation",
+      "description": "Retain the delicate lotus-vine and leaf outer border, warm ivory paper, softly dissolving painted scene edge and restrained sage accents from the reference."
+    },
+    {
+      "id": "bhakti-patra",
+      "name": "भक्ति पत्र",
+      "reference": "User-approved bhakti-patra design from the design conversation",
+      "description": "Retain the heritage postcard composition, subtly deckled cream paper, inset painted scene, fine antique-gold double rules and sparse botanical corner details from the reference."
+    }
+  ]
+}

@@ -16,11 +16,12 @@
 - [[kids-stories]] — lazy four-deity library, nineteen readings including Durga/Navaratri, 143 reviewed illustrations, four-language causal review, reviewed frames, multi-card sharing and hashed R2 delivery; native/editorial/CDN evidence remains explicit.
 - [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, per-routine reminders, home banner + celebration.
 - [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, **festival arcs (पर्व-अर्क: sthapana → family-chosen visarjan)**, Daily Muhurat, shubh-yoga annotations (annotate-only), Kundali (incl. the draft **graha-by-graha cards with counted labels and upay**, jyotishi-gated), deterministic Daily Rashifal, private IST-only Guna Milan, newborn-private Namkaran, and dated one-shot muhurat follows.
+- [[japam]] — JapaMala counter: per-id 108-bead counts, the mantra list vs the id resolver, and **sloka japa** (any stotram shloka chanted like a mantra from the reader's `जप` pill, `sloka.<source>.<chapter>.<number>` ids).
 - [[japam-alarms]] — Japam Alarms: repeat-days, one-time, and skip-next; native AlarmKit/AlarmManager tier with expo fallback.
 - [[audio]] — the three sound sources (recorded library, japam loop, read-aloud TTS), the playback arbiter that keeps them mutually exclusive, and the expo-speech platform traps.
 - [[notifications]] — ten local notification families (daily verse, vrat, **muhurat**, festive, **return / वापसी स्मरण**, sadhana, **routine**, personal Pitru Smaran, public Pitru Paksha, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.
 - [[home-widgets]] — cross-platform Home/Lock Screen widgets: versioned 14-day IST snapshot, atomic native bridges, generated extension/provider wiring, gallery, and exact deep links.
-- [[puja-vidhi]] — festival and personal-tithi household guidance: occurrence-scoped preparation, swipe-only conduct, private provenance, shipped-text hand-offs, and the verified-only status boundary (draft visarjan family).
+- [[puja-vidhi]] — festival and personal-tithi household guidance: occurrence-scoped preparation, illustrated timeline conduct, private provenance, shipped-text hand-offs, and the verified-only status boundary (draft visarjan family).
 - [[bhog-naivedya]] — verified offerings, vrat food, prohibited offerings, parana meals, and the Vidhi kitchen-checklist integration.
 - [[ask]] — जिज्ञासा · Ask Vedansh: deterministic answer engine over the shipped engines (fold → derived lexicon → intents → answer-or-abstain), answer-first Search, आज का विधान briefing, answers that act.
 - [[vastu-disha]] — live 8-dik compass (fused→magnetometer source ladder, true-north grid correction, tilt/Hold honesty) + गृह वास्तु: mandala-grid home capture, five-class weighted readings, private roster + compare, text handoff, Ask `vastu.myhome`; Phase 1 store-gated (expo-sensors), Phase 2 OTA.
@@ -46,3 +47,5 @@ _(none yet — add per-model pages as they warrant)_
 
 ## Decisions
 - [[decisions/ramayan-comic-character-continuity]] — approved comic direction, event-based continuity, 29-episode Hindi/English edition and complete62-page/four-language illustrated preview drafts, measured frames, complete81-page/four-language Ayodhyakanda preview and editorial/native/production boundaries.
+
+- [[subsystems/suvichar]] — personalized devotional wishes, sender persistence, weekday (शुभ मंगलवार) cards with day-free messages, 48 published masters and publication gate.

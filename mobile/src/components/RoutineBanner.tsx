@@ -8,13 +8,14 @@ import { androidBoxShadow } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
+import { useSadhanaToday } from '@/data/sadhana/useSadhanaToday';
 import { useTilePress } from '@/contexts/TilePressContext';
-import { bannerStatus, bannerLine } from './routineBannerView';
+import { bannerStatus, bannerLine, withSankalps } from './routineBannerView';
 import LotusMark from './LotusMark';
 
 /**
  * Routine banner (PRD-07 §6.1). Single language-aware line. Three states: nudge
- * (no routine), progress (partial), and complete — which shows a lotus "पूर्ण"
+ * (no routine and no ongoing sankalp), progress (partial), and complete — which shows a lotus "पूर्ण"
  * achievement badge as a persistent status chip. The completion pushpa-varsha
  * itself fires app-wide from RoutineCelebrationOverlay (mounted at the nav
  * root), so it plays on whatever screen completion happens — not just here.
@@ -33,11 +34,16 @@ export default function RoutineBanner({
   const { lang } = useGitaLanguage();
   const { fontScale } = useWindowDimensions();
   const navigation = useNavigation<any>();
-  const { hasRoutine, doneCount, total } = useRoutineToday();
+  const routineToday = useRoutineToday();
+  const sadhanaCards = useSadhanaToday();
   const { beginTilePress, finishTilePress, activateTile } = useTilePress();
 
-  const status = bannerStatus({ hasRoutine, doneCount, total });
-  const line = bannerLine(status, lang);
+  // An enrolled sankalp is a practice too: without it here, taking a prebuilt
+  // sankalp left the banner nudging "set your daily practice".
+  const summary = withSankalps(routineToday, sadhanaCards);
+  const { doneCount, total } = summary;
+  const status = bannerStatus(summary);
+  const line = bannerLine(status, lang, summary.sankalpOnly);
   const open = (screen: 'RoutineToday' | 'RoutineCreate') => () =>
     navigation.navigate('HomeTab', { screen });
 

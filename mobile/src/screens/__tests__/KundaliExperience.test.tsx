@@ -19,6 +19,7 @@ import {
   parseStoredBirthProfile,
   validateBirthProfile,
 } from '@/panchang/useKundali';
+import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
 
 const mockNavigation = {
   goBack: jest.fn(),
@@ -180,6 +181,16 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   text = textOf(tree);
   assert.ok(text.includes('Vimshottari Dasha'));
   assert.ok(text.includes('not an event guarantee'));
+  // The Mahadasha lord's beej mantra opens its japam counter.
+  const mahaLord = getCurrentDasha(mockChart, new Date())!.maha.lord;
+  mockNavigation.navigate.mockClear();
+  act(() => {
+    tree.root.findByProps({ testID: 'dasha-beej-japa' }).props.onPress();
+  });
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('HomeTab', {
+    screen: 'JapamCounter',
+    params: { mantraId: GRAHA_BEEJ_JAPA_ID[mahaLord] },
+  });
   // PRD-20 Phase 4: the period reading sits above the timeline, structural only.
   assert.ok(text.includes('Reading this period'));
   assert.ok(text.includes('Tradition links'));

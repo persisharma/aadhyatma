@@ -1,0 +1,42 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-bhakti" }
+- tapOn:
+    id: "open-suvichar"
+- tapOn: { id: "suvichar-mode-custom" }
+- scrollUntilVisible:
+    element:
+      id: "suvichar-name"
+- tapOn:
+    id: "suvichar-name"
+- inputText: "Sharma family"
+- hideKeyboard
+- tapOn:
+    id: "suvichar-message"
+- inputText: "May your home be filled with love and peace."
+- hideKeyboard
+- scrollUntilVisible:
+    element: { id: "suvichar-frame-pushp-aangan" }
+    direction: UP
+- tapOn:
+    id: "suvichar-frame-pushp-aangan"
+- scrollUntilVisible:
+    element: { id: "suvichar-card-sender" }
+- assertVisible: "सप्रेम — Sharma family"
+- scrollUntilVisible:
+    element:
+      id: "suvichar-favorite"
+- tapOn:
+    id: "suvichar-favorite"
+- stopApp
+- launchApp
+- tapOn: { id: "tab-bhakti" }
+- tapOn:
+    id: "open-suvichar"
+# A saved sender comes back as the compact "सप्रेम — name" row, not an empty field.
+- scrollUntilVisible:
+    element: { id: "suvichar-name-row" }
+- assertVisible: ".*Sharma family.*"
+# With published artwork: share, select WhatsApp and inspect the complete exported
+# PNG including name, all message lines and footer. Do not actually send a message.

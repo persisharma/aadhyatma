@@ -77,7 +77,7 @@ export default function TheerthPin({ x, y, label, deityKey, onPress }: Props) {
       >
         {/* Presiding-deity glyph replaces the old ॥ marker, matching the
             pilgrimage cards' per-temple deity icons (design.md §29). */}
-        <DeityIcon iconKey={deityKey} fallbackText="" size={PIN_GLYPH_SIZE} />
+        <DeityIcon iconKey={deityKey} size={PIN_GLYPH_SIZE} />
       </Pressable>
     </View>
   );
