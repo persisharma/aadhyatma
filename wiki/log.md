@@ -1035,3 +1035,11 @@ Re-read all 62 pages/199 panel placements after the integrated edition left Rama
 Corrected the reported Hanuman Ashtak 1.5 split meaning and blank/grey header strip. The builder retains the complete verse and meaning in one native-measured image, with a continuous artwork header, full-height picker preview and growing Story frame. Corpus/capture tests and browser review distinguish source/measurement evidence from pending installed-device checks.
 
 ## [2026-10-17] ingest | languages: English verse display respelling (readableRomanization) + Tiro Devanagari Sanskrit reading tokens
+
+## [2026-10-22] ingest | Complete Ayodhyakanda illustrated preview
+
+Recorded the81-page/269-scene four-language preview, full119-sarga pacing/source map, selected image hashes and frames, identity/action repairs and browser layout evidence in [[decisions/ramayan-comic-character-continuity]]. Whole-book user review precedes integration. Human editorial/source collation and complete native Standard/Large checks remain open; no mobile registry, CDN or release activation was performed.
+
+## [2026-10-25] ingest | Ayodhyakanda continuity and costume follow-up
+
+Recorded the user-reported missing introduction and respectful family dialogue, full four-language audit, 95 revised fields and ten measured art replacements in [[decisions/ramayan-comic-character-continuity]]. Clarified departure, everyday forest and recollection costumes. Structural validation passes; current live browser observation was security-policy blocked, and older layout evidence is explicitly limited to the earlier revision. Native integration and editorial/source approval remain pending.
