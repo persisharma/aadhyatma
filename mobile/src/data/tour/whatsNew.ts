@@ -26,13 +26,22 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.5.2';
+export const APP_TOUR_VERSION = '1.5.4';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.5.4': {
+    version: '1.5.4',
+    items: [{
+      titleHi: 'सुविचार · भक्ति संदेश कार्ड',
+      titleEn: 'Suvichar · devotional message cards',
+      bodyHi: 'अब सुंदर भक्ति सुविचार कार्ड बनाएँ और साझा करें — देवता कार्ड, "शुभ रविवार" से "शुभ शनिवार" तक दिन-विशेष कार्ड, और चाहें तो अपनी फ़ोटो भी जोड़ें। हर दिन नए विचार।',
+      bodyEn: 'Create and share beautiful Suvichar cards — deity cards, day-of-week greetings from “Shubh Ravivar” to “Shubh Shanivar”, and optionally add your own photo. Fresh thoughts every day.',
+    }],
+  },
   '1.5.2': {
     version: '1.5.2',
     items: [{
