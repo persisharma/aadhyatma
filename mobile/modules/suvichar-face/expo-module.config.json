@@ -1,0 +1,5 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": { "modules": ["SuvicharFaceModule"] },
+  "android": { "modules": ["expo.modules.vedanshface.SuvicharFaceModule"] }
+}

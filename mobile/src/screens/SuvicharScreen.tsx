@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Image, PixelRatio, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Alert, PixelRatio, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -10,12 +10,13 @@ import ReaderHeader from '@/components/ReaderHeader';
 import SuvicharCard from '@/components/SuvicharCard';
 import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
 import SuvicharFramePicker from '@/components/SuvicharFramePicker';
+import SuvicharSenderPhoto from '@/components/SuvicharSenderPhoto';
 import AppIcon from '@/components/AppIcon';
 import { isSuvicharThought, suvicharDay, suvicharTemplatesFor, suvicharThoughts, type SuvicharTemplate } from '@/data/suvicharTemplates';
 import { suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '@/data/suvicharVaar';
 import { WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { useGitaLanguage } from '@/data/gita/language';
-import { initialSuvichar, parseSuvicharPreferences, suvicharDeities, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
+import { fullPhotoFit, initialSuvichar, parseSuvicharPreferences, suvicharDeities, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
 import { useTheme } from '@/theme/ThemeContext';
 import { androidBoxShadow } from '@/theme/elevation';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
@@ -80,7 +81,7 @@ export default function SuvicharScreen() {
   const savedIndex = prefs.favorites.findIndex(f => JSON.stringify(f) === JSON.stringify(favorite));
   const photoUri = useMemo(() => prefs.photo ? senderPhotoUri(prefs.photo) : null, [prefs.photo]);
   const cardPhoto = prefs.photoOn ? photoUri : null;
-  const identity = JSON.stringify([prefs.deity, prefs.frame, prefs.name, cardPhoto, message, cardTitle, width, lang, retry]);
+  const identity = JSON.stringify([prefs.deity, prefs.frame, prefs.name, cardPhoto, prefs.photoFit, message, cardTitle, width, lang, retry]);
   const ready = readyIdentity === identity;
   const update = (patch: Partial<typeof prefs>) => setPrefs(p => ({ ...p, ...patch }));
   // A weekday card keeps its message empty so it always shows the deity's thought for the current day.
@@ -139,11 +140,11 @@ export default function SuvicharScreen() {
     const previous = prefs.photo;
     try {
       const next = await pickSenderPhoto();
-      if (next) { update({ photo: next }); if (previous) deleteSenderPhoto(previous); }
+      if (next) { update({ photo: next.name, photoFit: next.fit }); if (previous) deleteSenderPhoto(previous); }
     } catch { Alert.alert(tr({ hi: 'फ़ोटो नहीं जुड़ पाई', en: 'Could not add the photo', gu: 'ફોટો ઉમેરી શકાયો નહીં', kn: 'ಫೋಟೋ ಸೇರಿಸಲಾಗಲಿಲ್ಲ' }), tr({ hi: 'कृपया दोबारा कोशिश करें।', en: 'Please try again.', gu: 'કૃપા કરીને ફરી પ્રયાસ કરો.', kn: 'ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' })); }
     finally { picking.current = false; }
   };
-  const removePhoto = () => { deleteSenderPhoto(prefs.photo); update({ photo: '' }); };
+  const removePhoto = () => { deleteSenderPhoto(prefs.photo); update({ photo: '', photoFit: fullPhotoFit }); };
   const myFavorites = tr({ hi: 'मेरे पसंदीदा', en: 'My favorites', gu: 'મારી પસંદ', kn: 'ನನ್ನ ಮೆಚ್ಚಿನವುಗಳು' });
   return <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
     <ReaderHeader title={title} onBack={() => navigation.goBack()} sideWidth={48} right={prefs.favorites.length ? <Pressable testID="suvichar-favorites-jump" accessibilityRole="button" accessibilityLabel={myFavorites}
@@ -174,7 +175,7 @@ export default function SuvicharScreen() {
         <SuvicharFramePicker deity={prefs.deity} frame={prefs.frame} lang={lang} disabled={off} onSelect={frame => update({ frame })} />
       </View>
       <View style={{ gap: spacing.sm }}>
-        <View ref={card} collapsable={false} style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} photo={cardPhoto} onPhotoError={() => update({ photo: '' })} message={message} title={cardTitle} lang={lang} width={width} onReady={onReady} onHeight={onHeight} original={original} /></View>
+        <View ref={card} collapsable={false} style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} photo={cardPhoto} photoFit={prefs.photoFit} onPhotoError={() => update({ photo: '', photoFit: fullPhotoFit })} message={message} title={cardTitle} lang={lang} width={width} onReady={onReady} onHeight={onHeight} original={original} /></View>
         {!ready ? <Pressable testID="suvichar-retry" accessibilityRole="button" disabled={off} onPress={() => { setReadyIdentity(null); setRetry(n => n + 1); }} style={{ alignSelf: 'center', minHeight: 44, justifyContent: 'center' }}>
           <Text style={{ fontFamily: face, fontSize: 14, color: colors.saffronDeep }}>{tr({ hi: 'चित्र फिर लाएँ', en: 'Reload artwork', gu: 'ચિત્ર ફરી લાવો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ' })}</Text></Pressable> : null}
       </View>
@@ -210,7 +211,7 @@ export default function SuvicharScreen() {
         <Pressable testID="suvichar-photo" accessibilityRole="button" accessibilityLabel={prefs.photo ? tr({ hi: 'फ़ोटो बदलें', en: 'Change photo', gu: 'ફોટો બદલો', kn: 'ಫೋಟೋ ಬದಲಿಸಿ' }) : tr({ hi: 'अपनी फ़ोटो जोड़ें', en: 'Add your photo', gu: 'તમારો ફોટો ઉમેરો', kn: 'ನಿಮ್ಮ ಫೋಟೋ ಸೇರಿಸಿ' })}
           accessibilityState={{ disabled: off || !photoAvailable }} disabled={off || !photoAvailable} onPress={() => void choosePhoto()}
           style={({ pressed }) => ({ flex: 1, minHeight: 56, flexDirection: 'row', alignItems: 'center', gap: spacing.sm + 2, paddingHorizontal: spacing.md, paddingVertical: spacing.xs, borderRadius: radii.md, borderWidth: 1, borderStyle: 'dashed', borderColor: colors.cardActiveBorder, opacity: pressed ? 0.8 : 1 })}>
-          {photoUri ? <Image testID="suvichar-photo-thumb" accessible={false} source={{ uri: photoUri }} style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 1, borderColor: colors.gold }} />
+          {photoUri ? <SuvicharSenderPhoto testID="suvichar-photo-thumb" uri={photoUri} fit={prefs.photoFit} size={40} ring={1} color={colors.gold} />
             : <AppIcon name="photo" size={28} color={colors.saffronDeep} />}
           <View style={{ flex: 1 }}>
             <Text style={{ fontFamily: face, fontSize: 14, lineHeight: 22, color: colors.inkSoft }}>{prefs.photo ? tr({ hi: 'फ़ोटो बदलें', en: 'Change photo', gu: 'ફોટો બદલો', kn: 'ಫೋಟೋ ಬದಲಿಸಿ' }) : tr({ hi: 'अपनी फ़ोटो जोड़ें (वैकल्पिक)', en: 'Add your photo (optional)', gu: 'તમારો ફોટો ઉમેરો (વૈકલ્પિક)', kn: 'ನಿಮ್ಮ ಫೋಟೋ ಸೇರಿಸಿ (ಐಚ್ಛಿಕ)' })}</Text>

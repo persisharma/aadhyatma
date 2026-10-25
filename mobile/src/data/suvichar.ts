@@ -102,6 +102,35 @@ export function cleanSender(value: string): string {
 }
 /** Sender photos are written by utils/suvicharPhoto.ts only; a corrupt preference can never point at another file. */
 export function isSenderPhotoName(value: unknown): value is string { return typeof value === 'string' && /^sender-\d+\.(jpe?g|png|heic|webp)$/i.test(value); }
+/** The square of the sender photo shown in the round frame, as fractions of the displayed image's width and height. */
+export type SuvicharPhotoFit = { x: number; y: number; w: number; h: number };
+/** A face box from the on-device detector, normalized with a top-left origin. */
+export type SuvicharFaceBox = { x: number; y: number; width: number; height: number };
+export const fullPhotoFit: SuvicharPhotoFit = { x: 0, y: 0, w: 1, h: 1 };
+export function isPhotoFit(value: unknown): value is SuvicharPhotoFit {
+  const f = value as SuvicharPhotoFit;
+  const ok = (n: unknown) => typeof n === 'number' && Number.isFinite(n);
+  return !!f && ok(f.x) && ok(f.y) && ok(f.w) && ok(f.h) && f.x >= 0 && f.y >= 0 && f.w > 0 && f.h > 0 && f.x + f.w <= 1.0001 && f.y + f.h <= 1.0001;
+}
+/**
+ * Fits every face (a family photo has several) into the round frame with room for hair and chin. Without a face,
+ * a centred square, raised on portrait photos where faces usually sit high. Never zooms past a fifth of the short side.
+ */
+export function suvicharPhotoFit(width: number, height: number, faces: readonly SuvicharFaceBox[]): SuvicharPhotoFit {
+  if (!(width > 0 && height > 0)) return fullPhotoFit;
+  const short = Math.min(width, height);
+  let cx = width / 2, cy = height > width ? height * .4 : height / 2, side = short;
+  if (faces.length) {
+    const left = Math.min(...faces.map(f => f.x)) * width, right = Math.max(...faces.map(f => f.x + f.width)) * width;
+    const top = Math.min(...faces.map(f => f.y)) * height, bottom = Math.max(...faces.map(f => f.y + f.height)) * height;
+    side = Math.max(right - left, bottom - top) * (faces.length > 1 ? 1.35 : 1.9);
+    cx = (left + right) / 2; cy = (top + bottom) / 2 + side * .06;
+  }
+  side = Math.min(short, Math.max(side, short * .2));
+  const clamp = (v: number, max: number) => Math.min(Math.max(v, 0), max);
+  const x = clamp(cx - side / 2, width - side), y = clamp(cy - side / 2, height - side);
+  return { x: x / width, y: y / height, w: side / width, h: side / height };
+}
 /** `vaar` marks a weekday card: its title is always the current day's, so a saved card never names a past day. */
 export type SuvicharFavorite = { deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; vaar?: true };
 /**
@@ -109,7 +138,7 @@ export type SuvicharFavorite = { deity: SuvicharDeity; frame: SuvicharFrame; mes
  * The photo section is opt-in: `photoOn` (off by default) shows it; turning it off hides the photo but keeps the file.
  */
 export const initialSuvichar = { deity: 'krishna' as SuvicharDeity, frame: 'mandir-jharokha' as SuvicharFrame,
-  name: '', photo: '', photoOn: false, message: '', vaar: false, favorites: [] as SuvicharFavorite[] };
+  name: '', photo: '', photoFit: fullPhotoFit, photoOn: false, message: '', vaar: false, favorites: [] as SuvicharFavorite[] };
 export type SuvicharPreferences = typeof initialSuvichar;
 export function parseSuvicharPreferences(raw: string | null): SuvicharPreferences {
   try {
@@ -120,6 +149,7 @@ export function parseSuvicharPreferences(raw: string | null): SuvicharPreference
       name: typeof p.name === 'string' ? p.name.slice(0, NAME_LIMIT) : '',
       photo: isSenderPhotoName(p.photo) ? p.photo : '',
       photoOn: p.photoOn === true,
+      photoFit: isPhotoFit(p.photoFit) ? { x: p.photoFit.x, y: p.photoFit.y, w: p.photoFit.w, h: p.photoFit.h } : fullPhotoFit,
       message: typeof p.message === 'string' ? p.message.slice(0, MESSAGE_LIMIT) : '',
       vaar: p.vaar === true,
       favorites: Array.isArray(p.favorites) ? p.favorites.filter((f: SuvicharFavorite) => f &&

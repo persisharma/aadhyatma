@@ -1,0 +1,7 @@
+{
+  "name": "vedansh-suvichar-face",
+  "version": "1.0.0",
+  "private": true,
+  "description": "On-device face boxes for fitting the Suvichar sender photo",
+  "license": "MIT"
+}

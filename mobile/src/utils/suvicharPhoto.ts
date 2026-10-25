@@ -10,12 +10,17 @@
  *
  * Preferences store only the file name, never the absolute URI: the iOS container path
  * changes across app updates, so the URI is resolved against `Paths.document` at render time.
+ *
+ * Faces are fitted automatically, never by a manual crop: the local `SuvicharFace` module
+ * (modules/suvichar-face: Apple Vision / Android FaceDetector, on-device) returns face boxes and
+ * `suvicharPhotoFit` turns them into the square the round frame shows. The file is not re-encoded.
  */
 import { requireOptionalNativeModule } from 'expo-modules-core';
 import { Directory, File, Paths } from 'expo-file-system';
-import { isSenderPhotoName } from '@/data/suvichar';
+import { isSenderPhotoName, suvicharPhotoFit, type SuvicharFaceBox, type SuvicharPhotoFit } from '@/data/suvichar';
 
 type Picker = typeof import('expo-image-picker');
+type FaceModule = { detect(uri: string): Promise<{ width: number; height: number; faces: SuvicharFaceBox[] }> };
 const DIR = 'suvichar';
 
 let cached: Picker | null | undefined;
@@ -35,11 +40,20 @@ export function senderPhotoUri(name: string): string | null {
   return isSenderPhotoName(name) ? new File(new Directory(Paths.document, DIR), name).uri : null;
 }
 
-/** Opens the system picker with a square crop; resolves the stored file name, or null when cancelled. */
-export async function pickSenderPhoto(): Promise<string | null> {
+/** A detector failure or a binary without it falls back to a centred square; a photo is never refused for its faces. */
+async function fitFaces(uri: string, width: number, height: number): Promise<SuvicharPhotoFit> {
+  try {
+    const detector = requireOptionalNativeModule<FaceModule>('SuvicharFace');
+    if (detector) { const found = await detector.detect(uri); return suvicharPhotoFit(found.width, found.height, found.faces); }
+  } catch { /* centred square below */ }
+  return suvicharPhotoFit(width, height, []);
+}
+
+/** Opens the system picker; resolves the stored file name and its face fit, or null when cancelled. */
+export async function pickSenderPhoto(): Promise<{ name: string; fit: SuvicharPhotoFit } | null> {
   const picker = load();
   if (!picker) return null;
-  const result = await picker.launchImageLibraryAsync({ mediaTypes: ['images'], allowsEditing: true, aspect: [1, 1], shape: 'oval', quality: 0.8 });
+  const result = await picker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 0.8 });
   const asset = result.canceled ? undefined : result.assets[0];
   if (!asset) return null;
   const ext = /\.(jpe?g|png|heic|webp)$/i.exec(asset.uri)?.[1]?.toLowerCase() ?? 'jpg';
@@ -47,8 +61,9 @@ export async function pickSenderPhoto(): Promise<string | null> {
   if (!dir.exists) dir.create({ intermediates: true });
   // A new name per pick, so the image cache never shows the previous photo.
   const name = `sender-${Date.now()}.${ext}`;
-  new File(asset.uri).copy(new File(dir, name));
-  return name;
+  const file = new File(dir, name);
+  new File(asset.uri).copy(file);
+  return { name, fit: await fitFaces(file.uri, asset.width, asset.height) };
 }
 
 export function deleteSenderPhoto(name: string): void {

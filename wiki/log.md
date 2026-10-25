@@ -1153,3 +1153,7 @@ Senders can add one round photo above their name on the card (deity painting unc
 ## [2026-10-25] update | Suvichar sender photo is opt-in
 
 The photo row and card photo now appear only after the sender turns on “कार्ड पर अपनी फ़ोटो भी लगाएँ” (`photoOn`, off by default, persisted). Turning it off hides the photo without deleting the saved file. Typecheck and lint passed; no Jest or Maestro run.
+
+## [2026-10-25] update | Suvichar sender photo face auto-fit
+
+The manual square crop is gone: a local Expo module (`modules/suvichar-face`: Apple Vision / Android FaceDetector, on-device) returns face boxes, `suvicharPhotoFit` frames all faces (centred-square fallback), and the fit is persisted as `photoFit` and applied at draw time. Typecheck and lint passed; native code not compiled here, no Jest or Maestro run.
