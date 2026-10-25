@@ -19,6 +19,8 @@ jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: 'SafeAreaView
 jest.mock('react-native-view-shot', () => ({ captureRef: jest.fn(async () => 'file:///card.png'), releaseCapture: jest.fn() }));
 jest.mock('expo-sharing', () => ({ isAvailableAsync: jest.fn(async () => true), shareAsync: jest.fn(async () => undefined) }));
 jest.mock('@/utils/multiShare', () => ({ shareFiles: jest.fn(async () => false) }));
+// The photo picker and face detector are native; these suites cover a binary without them.
+jest.mock('@/utils/suvicharPhoto', () => ({ isSenderPhotoAvailable: () => false, senderPhotoUri: () => null, pickSenderPhoto: jest.fn(async () => null), deleteSenderPhoto: jest.fn() }));
 jest.mock('@/utils/backgroundAssetCache', () => ({ subscribeBackgroundAsset: jest.fn(() => () => undefined) }));
 jest.mock('@react-native-async-storage/async-storage', () => ({ __esModule: true, default: { getItem: jest.fn(async () => null), setItem: jest.fn(async () => undefined) } }));
 let tree: ReactTestRenderer;
