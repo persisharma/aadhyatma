@@ -3,48 +3,42 @@ import { StyleSheet, View } from 'react-native';
 import StoryIcon from './StoryIcon';
 import CachedArtwork from './CachedArtwork';
 import { observanceIcon } from '@/panchang/observancePresentation';
-import { observancePortraits } from '@/panchang/observancePortraits';
+import { observanceIllustrations, type ObservanceArtVariant } from '@/panchang/observancePortraits';
 import type { ObservanceRule } from '@/panchang/types';
 import { useTheme } from '@/theme/ThemeContext';
 
-/** Real subject paintings; symbolic icons are only the loading/offline fallback. */
-export default function ObservanceArtwork({ rule, size = 64, width = size, height = size, layout = 'portrait' }: {
-  rule: Pick<ObservanceRule, 'deityEn' | 'category'>;
+/** Scene crops belong to their slot; a deity's face is not an event illustration. */
+export default function ObservanceArtwork({ rule, size = 78, width = size, height = size, variant = 'list' }: {
+  rule: Pick<ObservanceRule, 'deityEn' | 'category'> & Partial<Pick<ObservanceRule, 'id'>>;
   size?: number;
   width?: number;
   height?: number;
-  layout?: 'portrait' | 'scene';
+  variant?: ObservanceArtVariant;
 }) {
   const { colors, radii } = useTheme();
-  const portraits = observancePortraits(rule);
-  const paneWidth = width / Math.max(1, portraits.length);
-  const fallback = <StoryIcon name={observanceIcon(rule)} size={Math.min(height - 8, paneWidth - 4)} />;
+  const paintings = observanceIllustrations(rule, variant);
+  const multiple = paintings.length > 1;
+  // Separate complete miniatures for unmatched joint subjects, never vertical
+  // slices of enlarged faces. Known shared scenes use one complete painting.
+  const plateWidth = multiple ? width / paintings.length : width;
+  const plateHeight = multiple ? Math.min(plateWidth, height) : height;
+  const fallback = <StoryIcon name={observanceIcon(rule)} size={Math.min(plateWidth, plateHeight) - 8} />;
   return (
-    <View
-      accessible={false}
-      importantForAccessibility="no-hide-descendants"
-      style={[styles.frame, { width, height, borderRadius: radii.md, backgroundColor: colors.cardThumbRest }]}
-    >
-      {portraits.length ? portraits.map(({ source, frame }, index) => {
-        // Full reader scenes work in wide panels. Branded portrait masters and
-        // composites retain their reviewed focal frames and every named person.
-        const fullScene = layout === 'scene' && portraits.length === 1 && typeof source !== 'number' && source.kind === 'reader-illustration';
-        const imageHeight = Math.max(fullScene ? height : height * frame.zoom, paneWidth / frame.aspect);
+    <View accessible={false} importantForAccessibility="no-hide-descendants"
+      style={[styles.frame, { width, height, borderRadius: radii.sm, backgroundColor: colors.parchmentSoft }]}>
+      {paintings.length ? paintings.map(({ source, frame }, index) => {
+        const imageHeight = variant === 'upcoming' && frame.aspect < 1.4
+          ? plateHeight * frame.zoom : Math.max(plateHeight * frame.zoom, plateWidth / frame.aspect);
         const imageWidth = imageHeight * frame.aspect;
-        const centeredLeft = paneWidth / 2 - imageWidth * frame.x;
-        const centeredTop = height / 2 - imageHeight * frame.y;
-        // Keep off-centre subjects visible without exposing unpainted edges.
-        const left = fullScene ? Math.max(paneWidth - imageWidth, Math.min(0, centeredLeft)) : centeredLeft;
-        const top = fullScene ? Math.max(height - imageHeight, Math.min(0, centeredTop)) : centeredTop;
         return (
-          <CachedArtwork
-          key={index}
-          source={source}
-          resizeMode={fullScene ? 'cover' : 'contain'}
-          style={{ width: paneWidth, height, overflow: 'hidden' }}
-          imageStyle={{ width: imageWidth, height: imageHeight, left, top }}
-          fallback={<View style={styles.fallback}>{fallback}</View>}
-        />
+          <CachedArtwork key={index} source={source} resizeMode="contain"
+            style={{ width: plateWidth, height: plateHeight, overflow: 'hidden', borderRadius: multiple ? radii.sm : 0 }}
+            imageStyle={{ width: imageWidth, height: imageHeight,
+              right: 'auto', bottom: 'auto',
+              left: imageWidth < plateWidth ? (plateWidth - imageWidth) / 2 : Math.min(0, Math.max(plateWidth - imageWidth, plateWidth / 2 - imageWidth * frame.x)),
+              top: Math.min(0, Math.max(plateHeight - imageHeight, plateHeight / 2 - imageHeight * frame.y)),
+            }}
+            fallback={<View style={styles.fallback}>{fallback}</View>} />
         );
       }) : fallback}
     </View>

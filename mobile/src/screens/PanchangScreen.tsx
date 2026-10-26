@@ -1,7 +1,8 @@
-import StoryIcon, { type StoryIconName } from '@/components/StoryIcon';
+import type { StoryIconName } from '@/components/StoryIcon';
 import CatalogCategoryTile from '@/components/CatalogCategoryTile';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
 import ObservanceArtwork from '@/components/ObservanceArtwork';
+import { ListingCardFrame } from '@/components/ListingCard';
 import ObservanceTodaySummary from '@/components/ObservanceTodaySummary';
 import { observanceCountdown } from '@/panchang/observancePresentation';
 import AppIcon from '@/components/AppIcon';
@@ -1869,7 +1870,7 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
     : item.rule.nameEn;
 
   const actions = (
-      <View style={[styles.linkRow, compact && styles.catalogActions]}>
+      <View style={styles.linkRow}>
         {vidhi && (
           <Pressable
             onPress={() => onOpenVidhi(vidhi.id, item.date.getTime())}
@@ -1880,7 +1881,7 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
               `${vidhi.titleHi} पूजा विधि`,
               `Puja vidhi for ${vidhi.titleEn}`
             )}
-            style={({ pressed }) => [styles.kathaButton, compact && styles.catalogActionButton, { backgroundColor: colors.saffron, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
+            style={({ pressed }) => [styles.kathaButton, { backgroundColor: colors.saffron, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
           >
             <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 12, color: colors.parchment }}>
               ॥ {contentByLang(lang, 'पूजा विधि', 'Puja Vidhi')}
@@ -1892,9 +1893,9 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
             onPress={() => onOpenKatha(item.rule.kathaId as string)}
             accessibilityRole="button"
             accessibilityLabel={`Read katha ${katha.titleEn}`}
-            style={({ pressed }) => [styles.kathaButton, compact && styles.catalogActionButton, { backgroundColor: colors.goldTint, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
+            style={({ pressed }) => [styles.kathaButton, { backgroundColor: colors.goldTint, borderRadius: radii.pill }, pressed && { opacity: 0.7 }]}
           >
-            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 12, color: colors.saffronDeep }}>
+            <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
               {contentByLang(lang, 'कथा पढ़ें', 'Read Katha')}
             </Text>
           </Pressable>
@@ -1904,50 +1905,55 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
             onPress={() => onOpenLink(linkedEntry.id)}
             accessibilityRole="button"
             accessibilityLabel={`Open ${linkedEntry.nameEn}`}
-            style={({ pressed }) => [styles.linkButton, compact && styles.catalogActionButton, { borderColor: colors.divider }, pressed && { opacity: 0.7 }]}
+            style={({ pressed }) => [styles.linkButton, { borderColor: colors.divider }, pressed && { opacity: 0.7 }]}
           >
-            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 12, color: colors.saffronDeep }}>
+            <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
               {contentByLang(lang, `पढ़ें: ${linkedEntry.nameHi}`, `Read: ${linkedEntry.nameEn}`)}
             </Text>
           </Pressable>
         )}
       </View>
   );
-  if (compact) {
-    return (
-      <View style={[styles.observanceCard, { backgroundColor: colors.catalogSurface, borderColor: colors.catalogBorder, borderRadius: radii.lg }, elevation.card]}>
-        <ObservanceTodaySummary rule={item.rule} titleHi={titleHi} titleEn={titleEn} lang={lang}>
-          {dayNote && <Text style={{ ...typography.catalogMeta, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.saffronDeep }}>{contentByLang(lang, dayNote.hi, dayNote.en)}</Text>}
-          {actions}
-        </ObservanceTodaySummary>
-      </View>
-    );
-  }
+  const badge = (
+    <View style={[styles.categoryPill, { alignSelf: 'flex-start', marginBottom: 2, backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
+      <Text style={{ fontFamily: scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
+        {item.rule.category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat') : contentByLang(lang, 'पर्व', 'Festival')}
+      </Text>
+    </View>
+  );
+
+  const CardShell = compact ? ListingCardFrame : View;
   return (
-    <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
-      <View style={styles.observanceTop}>
+    <CardShell style={[styles.observanceCard, compact && { padding: 9, marginBottom: 0 }, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
+      {!compact && <View style={styles.observanceTop}>
         <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
           <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
             {item.rule.category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat') : contentByLang(lang, 'पर्व', 'Festival')}
           </Text>
         </View>
-        <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted }}>
+        {!compact && <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted }}>
           {contentByLang(lang, item.rule.deityHi, item.rule.deityEn)}
-        </Text>
-      </View>
+        </Text>}
+      </View>}
+      {compact ? (
+        <ObservanceTodaySummary rule={item.rule} titleHi={titleHi} titleEn={titleEn} lang={lang} badge={badge}>{actions}</ObservanceTodaySummary>
+      ) : (
+        <>
           <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
             {contentByLang(lang, titleHi, titleEn)}
           </Text>
           <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
             {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
           </Text>
+        </>
+      )}
       {dayNote && (
         <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
           {contentByLang(lang, dayNote.hi, dayNote.en)}
         </Text>
       )}
-      {actions}
-    </View>
+      {!compact && actions}
+    </CardShell>
   );
 }
 
@@ -2044,11 +2050,11 @@ function CatalogLedgerCell({
     >
       <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={20} color={colors.iconInk} weight="duotone" />
       <Text
-        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 3 }}
+        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, lineHeight: 20, color: colors.ink, marginTop: 3 }}
       >
         {label}
       </Text>
-      <Text style={{ ...captionFont(state), fontSize: 11, color: colors.saffronDeep, marginTop: 2 }}>
+      <Text style={{ ...captionFont(state), fontSize: 11, lineHeight: 16, color: colors.saffronDeep, marginTop: 2 }}>
         {state}
       </Text>
     </Pressable>
@@ -2403,7 +2409,7 @@ function CatalogLanding({
           {/* Same occurrence names, day notes and reading actions as the calendar;
               the catalog opts into an illustrated, expandable introduction. */}
           {todayItems.length > 0 && (
-            <View testID="catalog-today" style={{ marginBottom: 12 }}>
+            <View testID="catalog-today" style={{ marginBottom: 0 }}>
               <View style={styles.todayHead}>
                 <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
                   {contentByLang(lang, 'आज', 'Today')}
@@ -2491,7 +2497,7 @@ function CatalogLanding({
                 return <CatalogCategoryTile
                   key={category} lang={lang} artwork={meta.art}
                   title={contentByLang(lang, meta.hi, meta.en)}
-                  subtitle={`${count} ${contentByLang(lang, 'व्रत-पर्व', 'observances')}`}
+                  subtitle={`${count} ${contentByLang(lang, 'व्रत-पर्व', category === 'vrat' ? 'vrats' : category === 'festival' ? 'festivals' : 'fasts')}`}
                   accessibilityLabel={`${meta.en}, ${count}`}
                   onPress={() => onOpenCategory(category)}
                 />;
@@ -2564,7 +2570,7 @@ const styles = StyleSheet.create({
   myVratButton: { width: 34, height: 34, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 16, height: 16, borderRadius: 8, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
-  ledgerBar: { flexDirection: 'row', alignItems: 'stretch', borderWidth: 1, paddingVertical: 12, paddingHorizontal: 4, marginTop: 12 },
+  ledgerBar: { flexDirection: 'row', alignItems: 'stretch', borderWidth: 1, paddingVertical: 6, paddingHorizontal: 4, marginTop: 8 },
   ledgerCell: { flex: 1, minHeight: 48, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
@@ -2664,8 +2670,6 @@ const styles = StyleSheet.create({
   linkButton: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
   catalogSearch: { position: 'relative' },
   catalogSearchIcon: { position: 'absolute', left: 14, top: 12 },
-  catalogActions: { flexDirection: 'column', alignItems: 'stretch' },
-  catalogActionButton: { minHeight: 44, alignSelf: 'stretch', justifyContent: 'center', alignItems: 'center' },
   linkRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
   kathaButton: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
   upcomingSection: { marginTop: 12 },

@@ -25,6 +25,7 @@ import { BookmarkSimpleIcon } from 'phosphor-react-native/src/icons/BookmarkSimp
 import { UsersThreeIcon } from 'phosphor-react-native/src/icons/UsersThree';
 import { FlowerIcon } from 'phosphor-react-native/src/icons/Flower';
 import { GlobeHemisphereEastIcon } from 'phosphor-react-native/src/icons/GlobeHemisphereEast';
+import { CalendarDotsIcon } from 'phosphor-react-native/src/icons/CalendarDots';
 import { CalendarStarIcon } from 'phosphor-react-native/src/icons/CalendarStar';
 import { TranslateIcon } from 'phosphor-react-native/src/icons/Translate';
 import { TextAaIcon } from 'phosphor-react-native/src/icons/TextAa';
@@ -86,6 +87,7 @@ const icons = {
   remembrance: FlowerIcon,
   regional: GlobeHemisphereEastIcon,
   birthday: CalendarStarIcon,
+  date: CalendarDotsIcon,
   language: TranslateIcon,
   textSize: TextAaIcon,
   voice: SpeakerHighIcon,

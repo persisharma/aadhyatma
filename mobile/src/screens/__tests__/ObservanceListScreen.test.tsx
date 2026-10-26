@@ -40,7 +40,7 @@ function press(label: string) {
   act(() => button!.props.onPress());
 }
 function cards() {
-  return [...new Set(tree.root.findAll(node => /^observance-card-/.test(node.props.testID ?? '')).map(node => node.props.testID))];
+  return [...new Set(tree.root.findAll(node => node.props.accessibilityRole === 'button' && /^observance-card-/.test(node.props.testID ?? '')).map(node => node.props.testID))];
 }
 beforeEach(() => {
   jest.clearAllMocks();

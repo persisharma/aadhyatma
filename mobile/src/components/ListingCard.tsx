@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
 import { fontFamilies } from '@/theme/typography';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { captionFont } from '@/utils/scriptFont';
 import { isLatinLang, meaningToken, pillTextStyle, titleFontByLang } from '@/utils/langType';
 import { coverRect } from '@/utils/coverRect';
 import { backgroundAspectRatio, type BackgroundImage } from '@/data/backgroundAsset';
@@ -20,12 +21,15 @@ import CachedArtwork from './CachedArtwork';
  *
  * - The thumb is 92 wide and stretches to the card's full height (at least
  *   115 = 4:5); `thumbnail` must fill it (absolute fill, cover-cropped).
- * - The title is the reading language only — the toggle above the list gives
+ * - The standard title is the reading language only — the toggle above the list gives
  *   the other language. Never a second-language subtitle.
  * - `description` is optional and always one line; copy is written to fit, not
  *   truncated (RULEBOOK §3 budget).
  * - `meta` is the unit count ("4 पृष्ठ"). Age, kind and other tags do not go
  *   on cards; shelf-wide facts belong in `ListingScope`.
+ * - Vrat uses `observance` (78dp square) and `upcoming` (144x72 scene)
+ *   variants of this same shell. Their bilingual caption/date/save slots are
+ *   calendar metadata, not changes to the standard story/reading contract.
  */
 export const LISTING_THUMB_WIDTH = 92;
 export const LISTING_THUMB_MIN_HEIGHT = 115;
@@ -35,7 +39,11 @@ type Props = {
   title: string;
   eyebrow?: string;
   description?: string;
-  meta: string;
+  meta: React.ReactNode;
+  secondary?: string;
+  variant?: 'standard' | 'observance' | 'upcoming';
+  language?: Lang;
+  action?: React.ReactNode;
   /** Read fraction 0–1 where the section tracks progress; omitted otherwise. */
   progress?: number;
   thumbnail: React.ReactNode;
@@ -44,9 +52,13 @@ type Props = {
   accessibilityLabel?: string;
 };
 
-export default function ListingCard({ testID, title, eyebrow, description, meta, progress, thumbnail, onPress, accessibilityLabel }: Props) {
+export default function ListingCard({ testID, title, eyebrow, description, meta, progress, thumbnail, onPress, accessibilityLabel, secondary, variant = 'standard', language, action }: Props) {
   const { colors, radii, typography } = useTheme();
-  const { lang } = useGitaLanguage();
+  const { lang: readingLang } = useGitaLanguage();
+  const lang = language ?? readingLang;
+  const upcoming = variant === 'upcoming';
+  const observance = variant === 'observance';
+  const special = upcoming || observance;
   const latin = isLatinLang(lang);
   const bodyFont = meaningToken(lang, typography).fontFamily;
   const body = latin ? typography.listingBodyLatin : typography.listingBody;
@@ -54,54 +66,74 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
   const eyebrowStyle = latin
     ? pillTextStyle(lang, typography.sectionLabel)
     : { fontFamily: titleFontByLang(lang), ...typography.listingEyebrow };
-  const label = accessibilityLabel ?? `${eyebrow ? `${eyebrow}. ` : ''}${title}. ${meta}. Tap to open.`;
+  const label = accessibilityLabel ?? `${eyebrow ? `${eyebrow}. ` : ''}${title}. ${typeof meta === 'string' ? meta : ''}. Tap to open.`;
   const read = progress === undefined ? undefined : Math.min(1, Math.max(0, progress));
 
   return (
-    <Pressable
-      testID={testID}
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityLabel={label}
+    <ListingCardFrame testID={testID} onPress={onPress} accessibilityLabel={label}
       accessibilityValue={read === undefined ? undefined : { min: 0, max: 100, now: Math.round(read * 100) }}
-      style={({ pressed }) => [
-        styles.card,
-        { borderRadius: radii.lg, borderColor: colors.cardActiveBorder },
-        pressed && { opacity: 0.86 },
-      ]}
-    >
-      <LinearGradient
-        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]}
-      />
-      <View testID={testID ? `${testID}-thumb` : undefined} style={[styles.thumb, { borderRadius: radii.sm, backgroundColor: colors.parchmentSoft }]}>
+      action={action}
+      style={special ? (upcoming ? styles.upcomingCard : styles.observanceCard) : styles.card}
+      contentStyle={upcoming ? styles.upcomingContent : styles.observanceContent}>
+      <View testID={testID ? `${testID}-thumb` : undefined} style={[special ? (upcoming ? styles.upcomingThumb : styles.observanceThumb) : styles.thumb, { borderRadius: radii.sm, backgroundColor: colors.parchmentSoft }]}>
         {thumbnail}
       </View>
-      <View style={styles.body}>
+      <View style={[styles.body, upcoming && styles.upcomingBody]}>
         {eyebrow ? <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{eyebrow}</Text> : null}
         <Text
-          numberOfLines={2}
-          style={{ color: colors.ink, fontFamily: titleFontByLang(lang), fontStyle: latin ? 'italic' : 'normal', ...titleSize }}
+          numberOfLines={special ? undefined : 2}
+          style={{ color: colors.ink, fontFamily: titleFontByLang(lang), fontStyle: latin ? 'italic' : 'normal', ...titleSize, ...(special ? { fontSize: upcoming ? 14 : 17, lineHeight: upcoming ? 21 : 24 } : {}) }}
         >
           {title}
         </Text>
+        {secondary ? <Text style={{ ...captionFont(secondary), fontSize: 13, lineHeight: 18, color: colors.inkMuted }}>{secondary}</Text> : null}
         {description ? (
           <Text numberOfLines={1} style={{ color: colors.inkSoft, fontFamily: bodyFont, ...body }}>
             {description}
           </Text>
         ) : null}
-        <Text style={{ color: colors.inkMuted, fontFamily: bodyFont, ...body }}>{meta}</Text>
+        {typeof meta === 'string' ? <Text style={{ color: colors.inkMuted, fontFamily: bodyFont, ...body }}>{meta}</Text> : meta}
         {read === undefined ? null : (
           <View testID={testID ? `${testID}-progress` : undefined} style={[styles.track, { backgroundColor: colors.saffronTint }]}>
             <View style={[styles.fill, { width: `${read * 100}%`, backgroundColor: colors.saffron }]} />
           </View>
         )}
       </View>
-      <Text accessible={false} style={[styles.chev, { color: colors.saffron }]}>›</Text>
-    </Pressable>
+      {!upcoming && <Text accessible={false} style={[styles.chev, observance && styles.observanceChevron, { color: colors.saffron }]}>›</Text>}
+    </ListingCardFrame>
   );
+}
+
+/** Shared painted listing surface, also used by Vrat's scene cards. The
+ * action is a sibling of the open target, so saving never opens the detail. */
+export function ListingCardFrame({ children, action, onPress, accessibilityLabel, accessibilityValue, testID, style, contentStyle }: {
+  children: React.ReactNode;
+  action?: React.ReactNode;
+  onPress?: () => void;
+  accessibilityLabel?: string;
+  accessibilityValue?: { min: number; max: number; now: number };
+  testID?: string;
+  style?: StyleProp<ViewStyle>;
+  contentStyle?: StyleProp<ViewStyle>;
+}) {
+  const { colors, radii } = useTheme();
+  const frame = { borderWidth: 1, borderRadius: radii.lg, borderColor: colors.cardActiveBorder, backgroundColor: colors.cardActiveFrom };
+  const painting = <LinearGradient colors={[colors.cardActiveFrom, colors.cardActiveTo]}
+    start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]} />;
+  if (!onPress) return <View testID={testID} style={[frame, elevation.lifted, style]}>{painting}{children}</View>;
+  if (action) {
+    return <View style={[frame, elevation.lifted, style]}>
+      {painting}
+      <Pressable testID={testID} onPress={onPress} accessibilityRole="button" accessibilityLabel={accessibilityLabel} accessibilityValue={accessibilityValue}
+        style={({ pressed }) => [contentStyle, pressed && { opacity: 0.86 }]}>{children}</Pressable>
+      {action}
+    </View>;
+  }
+  return <Pressable testID={testID} onPress={onPress} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
+    accessibilityValue={accessibilityValue}
+    style={({ pressed }) => [frame, elevation.lifted, style, pressed && { opacity: 0.86 }]}>
+    {painting}{children}
+  </Pressable>;
 }
 
 /** A group heading inside a listing ("जीवन की सीख", "नवरात्रि के नौ रूप"). */
@@ -168,6 +200,14 @@ export function ListingThumbImage({ source, focusX = 0.5 }: { source: Background
 }
 
 const styles = StyleSheet.create({
+  observanceCard: { marginBottom: 6, minHeight: 92 },
+  upcomingCard: { width: 158 },
+  observanceContent: { flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', padding: 6, paddingRight: 48, gap: 12 },
+  upcomingContent: { padding: 6, gap: 4 },
+  observanceThumb: { width: 78, height: 78, flexShrink: 0, overflow: 'hidden' },
+  upcomingThumb: { width: 144, height: 72, flexShrink: 0, overflow: 'hidden' },
+  upcomingBody: { flexGrow: 0, paddingHorizontal: 2, paddingBottom: 2, gap: 1 },
+  observanceChevron: { position: 'absolute', bottom: 5, right: 16, fontSize: 20 },
   card: {
     position: 'relative',
     padding: 14,

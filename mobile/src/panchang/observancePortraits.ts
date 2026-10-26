@@ -100,3 +100,34 @@ export function observancePortraits(rule: Pick<ObservanceRule, 'deityEn'>): read
 export function missingObservancePortraits(): string[] {
   return [...new Set(Object.values(observanceSubjects).flat())].filter(key => !portraits[key]);
 }
+
+export type ObservanceArtVariant = 'list' | 'upcoming' | 'today';
+const ritualScene: ObservancePortrait = {
+  source: require('@assets/icons/observance-scenes/karwa-chauth-ritual.webp'),
+  frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 },
+};
+const pujaScene: ObservancePortrait = {
+  source: require('@assets/icons/observance-scenes/karwa-chauth-puja.webp'),
+  frame: { aspect: 2, x: 0.5, y: 0.5, zoom: 1 },
+};
+
+/** Event overrides precede identity art; full figures replace face-only crops. */
+export function observanceIllustrations(
+  rule: Pick<ObservanceRule, 'deityEn'> & Partial<Pick<ObservanceRule, 'id'>>,
+  variant: ObservanceArtVariant = 'list',
+): readonly ObservancePortrait[] {
+  if (rule.id && ['masik-krishna-janmashtami', 'janmashtami', 'janmashtami-vaishnava'].includes(rule.id)) {
+    return [{ source: require('@assets/icons/observance-scenes/bal-krishna-makhan.webp'), frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } }];
+  }
+  if (rule.id === 'karwa-chauth') return [variant === 'upcoming' ? pujaScene : ritualScene];
+  if (rule.id === 'valmiki-jayanti' && variant === 'today') {
+    return [reader('category-granth-open-scripture', 0.5, 0.5, 1)];
+  }
+  if (rule.deityEn === 'Sita Ram') return [reader('deity-rama-darbar', 0.5, 0.5, 1)];
+  return observancePortraits(rule).map(portrait => {
+    if (typeof portrait.source !== 'number' && portrait.source.kind === 'reader-illustration') {
+      return { ...portrait, frame: { ...portrait.frame, y: 0.5, zoom: 1 } };
+    }
+    return portrait;
+  });
+}

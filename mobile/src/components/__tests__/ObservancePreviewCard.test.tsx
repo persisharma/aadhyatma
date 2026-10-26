@@ -7,6 +7,8 @@ import AreaFilterChips from '../AreaFilterChips';
 import { observanceCountdown, observanceIcon, observanceMonth } from '@/panchang/observancePresentation';
 import type { ObservanceRule } from '@/panchang/types';
 
+jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'hi' }) }));
+
 const rule = {
   id: 'fixture', category: 'vrat', nameHi: 'संकष्टी चतुर्थी व्रत', nameEn: 'Sankashti Chaturthi Vrat',
   deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh',

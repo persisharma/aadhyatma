@@ -1,4 +1,4 @@
-# Dedicated portrait review, after first-run setup has been completed on a
+# Dedicated illustrated-card review, after first-run setup has been completed on a
 # development build connected to the worktree's Metro (default port 8084).
 # Captures are for human artwork/layout review, not proof of image fidelity.
 appId: com.prashantsharma.vedansh
@@ -19,6 +19,7 @@ appId: com.prashantsharma.vedansh
     element: { text: "My Vrat" }
     direction: UP
     centerElement: false
+- swipe: { direction: DOWN, duration: 400 }
 - waitForAnimationToEnd
 - takeScreenshot: e2e-shots/vrat-portraits-standard-landing
 - scrollUntilVisible:
@@ -49,6 +50,7 @@ appId: com.prashantsharma.vedansh
     element: { text: "My Vrat" }
     direction: UP
     centerElement: false
+- swipe: { direction: DOWN, duration: 400 }
 - waitForAnimationToEnd
 - takeScreenshot: e2e-shots/vrat-portraits-large-landing
 # Restore the reading-size preference for subsequent local flows.

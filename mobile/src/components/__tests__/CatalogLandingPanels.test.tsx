@@ -32,23 +32,23 @@ test('the large hero keeps reading and description expansion independent', () =>
   act(() => button('Read Ramayana').props.onPress());
   expect(read).toHaveBeenCalledTimes(1);
   expect(description().props.numberOfLines).toBe(2);
-  act(() => button('Expand description Valmiki Jayanti').props.onPress());
+  act(() => button(`Expand description Valmiki Jayanti. ${rule.shortDescriptionEn}`).props.onPress());
   expect(description().props.numberOfLines).toBeUndefined();
   expect(description().props.children).toBe(rule.shortDescriptionEn);
   expect(read).toHaveBeenCalledTimes(1);
 });
 
 test('wide panels use the already published single-deity scene', () => {
-  const tree = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Shri Ganesh' }} width={144} height={96} layout="scene" />);
+  const tree = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Shri Ganesh' }} width={144} height={96} variant="upcoming" />);
   const art = tree.root.findByType(CachedArtwork);
   expect(art.props.source).toEqual(observancePortraits({ deityEn: 'Shri Ganesh' })[0].source);
-  expect(art.props.resizeMode).toBe('cover');
+  expect(art.props.resizeMode).toBe('contain');
   expect(art.props.imageStyle).toMatchObject({ width: 192, height: 96, top: 0 });
   expect(art.props.style).toMatchObject({ width: 144, height: 96 });
 });
 
 test('tall panels keep off-centre Vishnu inside the painted frame', () => {
-  const tree = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Lord Vishnu' }} width={124} height={190} layout="scene" />);
+  const tree = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Lord Vishnu' }} width={124} height={190} variant="upcoming" />);
   const style = tree.root.findByType(CachedArtwork).props.imageStyle;
   const frame = observancePortraits({ deityEn: 'Lord Vishnu' })[0].frame;
   expect(style.left + style.width * frame.x).toBeCloseTo(62);
@@ -59,7 +59,7 @@ test('tall panels keep off-centre Vishnu inside the painted frame', () => {
 });
 
 test('branded Ahoi masters retain their reviewed portrait frame in wider panels', () => {
-  const tree = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Ahoi Mata' }} width={144} height={96} layout="scene" />);
+  const tree = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Ahoi Mata' }} width={144} height={96} variant="upcoming" />);
   const art = tree.root.findByType(CachedArtwork);
   const portrait = observancePortraits({ deityEn: 'Ahoi Mata' })[0];
   expect(art.props.source).toEqual(portrait.source);
@@ -68,10 +68,10 @@ test('branded Ahoi masters retain their reviewed portrait frame in wider panels'
   expect(art.props.imageStyle.left).toBe(72 - 96 * portrait.frame.zoom * portrait.frame.aspect * portrait.frame.x);
 });
 
-test('composite panels retain all named portraits and the default list geometry', () => {
+test('composite panels retain all named portraits and the full-figure list geometry', () => {
   const subject = { category: 'vrat' as const, deityEn: 'Lord Murugan and Shiva–Parvati' };
   const portraits = observancePortraits(subject);
-  const wide = render(<ObservanceArtwork rule={subject} width={150} height={100} layout="scene" />);
+  const wide = render(<ObservanceArtwork rule={subject} width={150} height={100} variant="upcoming" />);
   const panes = wide.root.findAllByType(CachedArtwork);
   expect(panes.map(node => node.props.source)).toEqual(portraits.map(p => p.source));
   expect(panes).toHaveLength(3);
@@ -79,9 +79,8 @@ test('composite panels retain all named portraits and the default list geometry'
   const row = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Shri Ganesh' }} />);
   const p = observancePortraits({ deityEn: 'Shri Ganesh' })[0];
   expect(row.root.findByType(CachedArtwork).props.imageStyle).toEqual({
-    width: 64 * p.frame.aspect * p.frame.zoom, height: 64 * p.frame.zoom,
-    left: 32 - 64 * p.frame.aspect * p.frame.zoom * p.frame.x,
-    top: 32 - 64 * p.frame.zoom * p.frame.y,
+    width: 78 * p.frame.aspect, height: 78,
+    left: 39 - 78 * p.frame.aspect * p.frame.x, top: 0, right: 'auto', bottom: 'auto',
   });
 });
 

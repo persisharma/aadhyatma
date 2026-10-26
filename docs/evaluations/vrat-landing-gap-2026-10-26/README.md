@@ -24,3 +24,8 @@ Fresh native visual acceptance is pending: this environment has no iOS/Android s
 - Pure suites pass: 37 widget, 621 engine, 218 data and 49 Ask tests (invoked through `node --import tsx` because the CLI IPC socket is unavailable here).
 - Broader Jest runs pass 2,706 test cases after restoring the existing sparse-checkout review fixtures. Three reader suites cannot load `react-native-webview` ESM (`readerReadAloud`, `readerProgressBar`, `ChalisaReaderScreen`). The same three failures reproduce in an unmodified checkout of main `5944bb8`; they are not introduced by the landing changes.
 - Standard/Large native and enlarged OS-text walkthroughs remain pending. No fresh native screenshot or release-readiness claim is made.
+
+
+## Reference and shared-card correction
+
+The user supplied the two original illustrated references and requested reuse of the Kids Stories listing treatment. The follow-up in `docs/evaluations/vrat-reference-rebuild-2026-10-26/` supersedes the earlier rectangular-wrapper geometry: Vrat now renders `ListingCard`, with explicit event-scene overrides and fresh native evidence. Header/search improvements from this draft remain. Refer to the newer QA report for current validation and limitations.

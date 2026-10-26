@@ -1200,3 +1200,8 @@ Reconciled main at cce27f82 (Panchang sharing, unified image-share provider and
 device registration). The only textual conflict was this append-only history;
 both histories were retained. TypeScript and all 3,762 local tests pass on the
 combined tree. The Vrat portrait/catalog changes remain intact.
+
+
+## [2026-10-26] ingest | Match Vrat reference cards using the Kids Stories listing shell
+
+Supplied landing/list references exposed tall square-avatar Upcoming cards and inconsistent subject cropping. Vrat now renders `ListingCard` variants, with `ListingCardFrame` for Today/category doors. Added explicit Karwa Chauth and child-Krishna event scenes (120,082 shipped bytes), preserved generic deity fallback identities and existing reader/story masters, and fixed Ahoi frame scaling plus English/enlarged category wrapping. Integrated the already-open #550 header/search changes after discovering #542 was merged. TypeScript and 3,778 tests pass; fresh iOS Standard/Large, English, XXXL and Kids Stories shelf evidence is in `docs/evaluations/vrat-reference-rebuild-2026-10-26/`. Android/device/accessibility and exhaustive catalog visual review remain separate.

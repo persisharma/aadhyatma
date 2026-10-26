@@ -1,5 +1,5 @@
 import { OBSERVANCE_RULES } from '@/panchang/festivals';
-import { missingObservancePortraits, observancePortraits, observanceSubjects } from '@/panchang/observancePortraits';
+import { missingObservancePortraits, observancePortraits, observanceSubjects, observanceIllustrations } from '@/panchang/observancePortraits';
 import { artworkRequest } from '@/data/artworkAsset';
 
 test('every default-visible calendar subject has an explicit artwork decision', () => {
@@ -36,4 +36,14 @@ test('reused paintings resolve through their existing published cache manifests'
       }
     }
   }
+});
+
+
+test('event scenes override generic deity art without replacing other Gauri observances', () => {
+  const karwa = { id: 'karwa-chauth', deityEn: 'Maa Gauri' };
+  expect(observanceIllustrations(karwa)[0].source).not.toEqual(observancePortraits(karwa)[0].source);
+  expect(observanceIllustrations(karwa, 'upcoming')[0].source).not.toEqual(observanceIllustrations(karwa, 'list')[0].source);
+  expect(observanceIllustrations({ id: 'gauri-vrat', deityEn: 'Maa Gauri' })[0].source).toEqual(observancePortraits(karwa)[0].source);
+  expect(observanceIllustrations({ id: 'masik-krishna-janmashtami', deityEn: 'Shri Krishna' })[0].source).not.toEqual(observancePortraits({ deityEn: 'Shri Krishna' })[0].source);
+  expect(observanceIllustrations({ deityEn: 'Sita Ram' })[0].source).toEqual({ kind: 'reader-illustration', stem: 'deity-rama-darbar' });
 });
