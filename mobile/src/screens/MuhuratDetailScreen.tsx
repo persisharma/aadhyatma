@@ -14,6 +14,7 @@ import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import MuhuratCardBody from '@/components/MuhuratCardBody';
 import ShareButton from '@/components/ShareButton';
+import { capturePixelSize } from '@/utils/captureSize';
 import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratDetail'>;
@@ -61,9 +62,7 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
         format: 'png',
         quality: 1,
         result: 'tmpfile',
-        ...(h > 0
-          ? { width: SHARE_CARD_WIDTH * SHARE_SCALE, height: Math.round(h * SHARE_SCALE) }
-          : null),
+        ...(h > 0 ? capturePixelSize(SHARE_CARD_WIDTH * SHARE_SCALE, Math.round(h * SHARE_SCALE)) : null),
       });
       if (await Sharing.isAvailableAsync()) {
         await Sharing.shareAsync(uri, {

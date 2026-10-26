@@ -1,8 +1,8 @@
 ---
 title: Share Cards (verse, prose, series)
 type: subsystem
-sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/shareText.ts, mobile/src/utils/shareContent.ts, mobile/src/utils/listingShare.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
-last_verified_date: 2026-10-22
+sources: [mobile/src/utils/shareVerse.tsx, mobile/src/utils/captureSize.ts, mobile/src/utils/shareText.ts, mobile/src/utils/shareContent.ts, mobile/src/utils/listingShare.ts, mobile/src/utils/kidsStoryShare.ts, mobile/src/components/KidsStoryArt.tsx, mobile/src/utils/shareCardPages.ts, mobile/src/utils/shareCardType.ts, mobile/src/utils/multiShare.ts, mobile/src/utils/shareStoryLayout.ts, mobile/src/components/ShareCard.tsx, mobile/src/components/ProseShareCard.tsx, mobile/src/components/ShareTargetSheet.tsx, mobile/src/components/SharePagesStrip.tsx, mobile/src/components/SharePagePreview.tsx, mobile/src/components/ShareStoryFrame.tsx, mobile/src/components/ShareBrandFooter.tsx, mobile/src/data/shareLinks.ts, mobile/src/data/shareHashtags.ts, mobile/app.json, mobile/jest.setup.js, design.md, RULEBOOK.md, docs/roadmap/prds/45-universal-share-carousel.md]
+last_verified_date: 2026-10-26
 confidence: high
 status: current
 ---
@@ -106,7 +106,7 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
 
 Illustrated story cards do not measure the title at render: the paginator fixes the art box (`illustration.heightDp`) from the estimated title + caption height, and `ProseShareCard` renders art → caption box (title → narration → quote/link blocks) inside that geometry. Export still waits for decoded art and layout. Prose type stays at the existing fixed readable size; only the art box varies. `ScaledShareCard` takes `metrics` so previews and thumbnails scale the 9:16 card correctly.
 
-The shared capture pipeline compensates for UIKit point dimensions using `PixelRatio.get()`; Android options remain physical pixels. Native iOS verification caught the old 3x multiplier (3240×4050) and the corrected output is checked at 1080×1350. Short story-frame options receive the same correction for 1080×1920; taller verse exports retain 1080px width and scale height proportionally.
+The shared capture pipeline compensates for UIKit point dimensions using `PixelRatio.get()`; Android options remain physical pixels. Native iOS verification caught the old 3x multiplier (3240×4050) and the corrected output is checked at 1080×1350. Short story-frame options receive the same correction for 1080×1920; taller verse exports retain 1080px width and scale height proportionally. The bespoke captures outside the provider (Muhurat detail, Muhurat Finder day card, `JyotishShareSheet`) apply the same correction through `utils/captureSize.ts` `capturePixelSize`; without it a tall Panchang card exported at ~2040×6000 on 3x iPhones and iOS WhatsApp rejected it ("This item cannot be shared").
 
 ## Daily Bhakti complete devotional image
 

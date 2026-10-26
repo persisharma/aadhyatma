@@ -27,6 +27,7 @@ import { HORA_NAMES_HI, HORA_NAMES_EN } from '@/panchang/hora';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { PanchangData } from '@/panchang/types';
 import MuhuratFinderShareCard from '@/components/MuhuratFinderShareCard';
+import { capturePixelSize } from '@/utils/captureSize';
 import MuhuratChip from '@/components/MuhuratChip';
 import ShubhYogaCard from '@/components/ShubhYogaCard';
 import MuhuratBalaStrip from '@/components/MuhuratBalaStrip';
@@ -81,7 +82,7 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
         format: 'png',
         quality: 1,
         result: 'tmpfile',
-        ...(h > 0 ? { width: SHARE_CARD_WIDTH * SHARE_SCALE, height: Math.round(h * SHARE_SCALE) } : null),
+        ...(h > 0 ? capturePixelSize(SHARE_CARD_WIDTH * SHARE_SCALE, Math.round(h * SHARE_SCALE)) : null),
       });
       if (await Sharing.isAvailableAsync()) {
         await Sharing.shareAsync(uri, {

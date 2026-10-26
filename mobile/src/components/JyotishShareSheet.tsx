@@ -18,6 +18,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { capturePixelSize } from '@/utils/captureSize';
 
 type Props = {
   visible: boolean;
@@ -77,8 +78,7 @@ export default function JyotishShareSheet({
         format: 'png',
         quality: 1,
         result: 'tmpfile',
-        width: 1080,
-        height: 1350,
+        ...capturePixelSize(1080, 1350),
       });
       if (await Sharing.isAvailableAsync()) {
         onShareSheetOpened?.();
