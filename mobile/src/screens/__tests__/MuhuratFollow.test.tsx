@@ -8,6 +8,7 @@
  * navigation shell and the native share/gradient modules are mocked, following
  * MuhuratFinderScreens.test.
  */
+import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { View as mockView } from 'react-native';
@@ -115,9 +116,9 @@ function render(el: React.ReactElement) {
   let renderer!: TestRenderer.ReactTestRenderer;
   act(() => {
     renderer = TestRenderer.create(
-      <GitaLanguageProvider>
+      <GitaLanguageProvider><ShareProvider>
         <MuhuratFollowProvider>{el}</MuhuratFollowProvider>
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
   });
   return renderer;
@@ -262,12 +263,12 @@ test('the ★ inventory lists a followed muhurat and opens its day', async () =>
   // One tree so the follow made on the detail screen is visible to the list.
   act(() => {
     renderer = TestRenderer.create(
-      <GitaLanguageProvider>
+      <GitaLanguageProvider><ShareProvider>
         <MuhuratFollowProvider>
           {dayDetail(GOOD_DAY)}
           <MuhuratFollowList onOpen={onOpen} />
         </MuhuratFollowProvider>
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
   });
   await settle();

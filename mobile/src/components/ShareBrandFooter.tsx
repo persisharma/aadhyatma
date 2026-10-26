@@ -1,10 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { SMART_LINK } from '@/data/shareLinks';
+
+/** The download link printed on every card; the caption carries the tappable one. */
+const PRINTED_LINK = SMART_LINK.replace(/^https?:\/\//, '');
 
 /**
  * Branding footer shared by every exported share card (design.md §39): `वेदांश़` ·
- * tagline · store line over a 1 px `divider` rule. One component so the verse card
+ * tagline · store line with the vedansh.app/get download link over a 1 px `divider` rule. One component so the verse card
  * and the prose card (§39.4) cannot drift.
  */
 export default function ShareBrandFooter() {
@@ -27,7 +31,7 @@ export default function ShareBrandFooter() {
       <Text
         style={[styles.storeLine, { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily }]}
       >
-        Now available on iOS & Android
+        {`Free on iOS & Android · ${PRINTED_LINK}`}
       </Text>
     </View>
   );
@@ -54,9 +58,9 @@ const styles = StyleSheet.create({
   },
   storeLine: {
     fontSize: 10,
-    letterSpacing: 2,
+    letterSpacing: 1,
     marginTop: 6,
-    textTransform: 'uppercase',
+    // Not uppercased: the link's path is case-sensitive.
     includeFontPadding: false,
   },
 });

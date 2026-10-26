@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
@@ -23,6 +24,8 @@ import {
 const mockNavigation = { goBack: jest.fn(), navigate: jest.fn() };
 const mockProfile = { name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' };
 
+// Opening a share mounts the provider's festival-tag resolver; it reads the panchang engine this suite mocks.
+jest.mock('@/components/TimelyTagsResolver', () => ({ __esModule: true, default: () => null }));
 jest.mock('expo-linear-gradient', () => ({
   LinearGradient: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
     mockReact.createElement(mockView, props, children),
@@ -41,9 +44,9 @@ function render(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <GunaMilanScreen navigation={mockNavigation as any} route={{ key: 'GunaMilan-test', name: 'GunaMilan' } as any} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
   });
   return tree;

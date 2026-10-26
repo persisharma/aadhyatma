@@ -288,7 +288,7 @@ export default function GunaMilanScreen({ navigation }: Props) {
       </KeyboardAvoidingView>
       {shareModel ? (
         <JyotishShareSheet
-          visible={shareVisible} lang={lang} titleHi="अष्टकूट मिलान साझा करें" titleEn="Share Guna Milan"
+          visible={shareVisible} lang={lang} titleHi="अष्टकूट मिलान साझा करें" titleEn="Share Guna Milan" captionHi="अष्टकूट गुण मिलान" captionEn="Guna Milan"
           privacyHi="केवल वैकल्पिक नाम, भूमिकाएँ और गुण साझा होंगे। जन्म तिथि, समय या अन्य निजी विवरण शामिल नहीं हैं।"
           privacyEn="Only optional names, roles, and scores are shared. Birth date, time, and other private details are excluded."
           onClose={() => setShareVisible(false)} onShareSheetOpened={() => { void incrementGunaMilanMetric('shareSheetOpened'); }}

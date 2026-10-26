@@ -196,7 +196,7 @@ export default function PanchangScreen({ route }: Props) {
   // the card needs only the day's windows, never the minute tick, so this
   // 2,500-line screen does not re-render every minute for it.
   const { muhurat: shareMd } = useMuhurat(selectedDate, calendarSystem, { live: false });
-  const { share: sharePanchang, busy: shareBusy, layer: shareLayer } = usePanchangShare();
+  const { share: sharePanchang, busy: shareBusy } = usePanchangShare();
   const shareUnavailable = shareBusy || !p || !shareMd;
   const shareDay = useCallback(() => {
     if (!p || !shareMd) return;
@@ -540,7 +540,6 @@ export default function PanchangScreen({ route }: Props) {
 
   return (
     <View style={styles.root}>
-      {shareLayer}
       {panchangTab === 'calendar'
         ? <PanchangChakraBackground />
         : <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />}
@@ -1515,6 +1514,8 @@ function JyotishLanding({
           lang={lang}
           titleHi={`आज का ${RASHI_NAMES_HI[moon.rashiIndex]} राशिफल साझा करें`}
           titleEn={`Share today’s ${RASHI_NAMES_EN[moon.rashiIndex]} Rashifal`}
+          captionHi={`आज का ${RASHI_NAMES_HI[moon.rashiIndex]} राशिफल`}
+          captionEn={`Today’s ${RASHI_NAMES_EN[moon.rashiIndex]} Rashifal`}
           privacyHi="केवल चन्द्र-राशि मार्गदर्शन साझा होगा। नाम या जन्म विवरण शामिल नहीं हैं।"
           privacyEn="Only Moon-sign guidance is shared. No name or birth details are included."
           onClose={() => setShareVisible(false)}

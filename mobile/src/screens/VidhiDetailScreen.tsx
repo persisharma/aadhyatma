@@ -11,6 +11,7 @@ import { spacing } from '@/theme/spacing';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
+import { withShareLinks } from '@/data/shareLinks';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getVidhiById, type VidhiPhase, type VidhiStep } from '@/data/vidhi';
 import { library } from '@/data/texts';
@@ -139,7 +140,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
     const groceryHeading = contentByLang(lang, 'भोग और रसोई', 'Bhog & kitchen');
     const grocerySection = groceryLines.length > 0 ? `\n\n${groceryHeading}\n${groceryLines.join('\n')}` : '';
     void Share.share(
-      { message: `${title} — ${heading}\n\n${lines.join('\n')}${grocerySection}` },
+      { message: withShareLinks(`${title} — ${heading}\n\n${lines.join('\n')}${grocerySection}`, lang) },
       { dialogTitle: heading }
     ).catch(() => undefined);
   };

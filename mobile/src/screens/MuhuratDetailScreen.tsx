@@ -32,9 +32,10 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
   const nowStartMs = muhurat.isToday ? muhurat.nowChoghadiya?.start.getTime() ?? null : null;
 
   // The share is the पूर्ण पंचांग card (design.md §33a), the same one the
-  // Panchang sky header shares — not a capture of this screen.
+  // Panchang sky header shares — not a capture of this screen — through the
+  // Daily Bhakti picker (§39.10).
   const observances = useObservancesForDate(date, calendarSystem);
-  const { share, busy, layer } = usePanchangShare();
+  const { share, busy } = usePanchangShare();
   const onShare = useCallback(() => {
     if (!ready) return;
     void share({ p, md, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
@@ -42,7 +43,6 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.root}>
-      {layer}
       <LinearGradient colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
