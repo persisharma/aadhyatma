@@ -1,0 +1,14 @@
+{
+  "page": 56,
+  "version": 3,
+  "prompt": "Precise repair ONLY in the MIDDLE (second) panel of the FIRST Ramayana comic page. Preserve top and bottom panels completely. In the middle panel, the man POINTING RIGHT towards the distant smoke must be an ANONYMOUS ADULT SCOUT, clearly different from the princes: give this pointing man a BLUE CLOTH HEADWRAP, modest CREAM/BROWN scouting clothes, a short dark beard, and a more mature face. Keep his pointing gesture, body placement and the smoke on the hill. The young man at the FAR LEFT holding a spear is SHATRUGHNA, clean-shaven warm tan young face, gentle square jaw, TEAL drape over TERRACOTTA/ORANGE prince clothing, as in the SECOND identity reference; keep him youthful and clean-shaven. The crouched blue-headwrapped guard in the foreground stays as is. Thus middle panel contains one youthful prince standing far left, one older blue-headwrapped scout pointing, and one crouched guard, with NO duplicate prince. Preserve every painted border, landscape, all other details and full source extent. No letters, text, labels, speech balloons, new panels or new people.",
+  "referencedImagePaths": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-056-v2.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/assets/brothers-v4.png"
+  ],
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-950ee1fe-6b9b-4454-a4b4-c23c8089aa9b.png",
+  "generatedOn": "2026-10-21",
+  "status": "scout role repair; visual review pending",
+  "selectedForPreview": true,
+  "selectionStatus": "agent-reviewed preview selection"
+}

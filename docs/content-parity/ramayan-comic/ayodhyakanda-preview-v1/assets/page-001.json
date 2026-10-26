@@ -1,0 +1,15 @@
+{
+  "page": 1,
+  "filename": "page-001.png",
+  "prompt": "Use case: illustration-story. Create one NEW text-free Ayodhya Kanda comic page, page 1, in exactly the richly colored Indian inked-comic rendering of the final attached reference page. Other attached images are character identity references only. Do not copy the reference compositions or lettering. Portrait page about 1:2, EXACTLY THREE full-width landscape paintings stacked vertically with very thin straight black panel borders and narrow ivory gutters. NO titles, captions, letters, speech balloons, logos, watermarks, UI, blank caption zones, blank bottom strips, or oversized borders. Each panel is a different narrative event. Everything required, especially hands, feet and principal props, stays in its panel. Natural painted scenery fills each panel without reserved sky/headroom. TOP PANEL: establishing warm Kekaya palace, Bharata and Shatrughna visiting their maternal uncle Yudhajit. Exactly two young princes: Bharata warm human complexion softer oval face in cream-gold with subdued blue sash; Shatrughna warm human complexion broader brow square gentle jaw in teal/terracotta. No crowns on these princes. Yudhajit older nobleman distinct from Dasharatha, purple/tan robes and trimmed dark moustache. NO Rama, NO blue people here. MIDDLE PANEL: Ayodhya open audience court, young adult crownless slate-blue Rama with broader serene face, well-groomed black wavy half-tied hair, yellow silk and red sash, modest gold ornaments, listening kindly to an elderly citizen with a petition; a small respectful group in background. No coronation, no matted locks or bark robes. BOTTOM PANEL: same older grey-moustached Dasharatha as reference, red/gold robes and royal crown, seated with cream-robed white round-bearded Vashishtha and blue-turbaned minister Sumantra in an intimate council, looking thoughtfully towards the distant city, considering his succession. Rama not present in this panel. Distinct camera angles and clear emotions, finely inked outlines, rich saffron/red/teal and slate-blue, detailed sandstone architecture, luminous warm Indian storybook light. Preserve consistent adult identities while separating the three locations. This page bridges from Balakanda's ending into a new royal responsibility; do not depict Rama as king or crowned.",
+  "references": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/assets/rama-v3.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/assets/brothers-v4.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/balakanda-illustrated-v3/assets/page-62.png"
+  ],
+  "status": "selected for agent visual review",
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-af904720-def1-4f18-87ea-49d5e79f0920.png",
+  "tool": "built-in image_gen",
+  "selectedForPreview": true,
+  "selectionStatus": "agent-reviewed preview selection"
+}

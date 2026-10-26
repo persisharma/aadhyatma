@@ -1,0 +1,4141 @@
+{
+  "reviewedOn": "2026-10-22",
+  "scope": "All 81 pages / 269 scenes; complete hi/en/gu/kn reading order, character roles, cause-response-consequence and relationship-specific dialogue",
+  "reviewer": "Codex agent; human language/editorial approval remains pending",
+  "sourceCorpus": {
+    "path": "mobile/src/data/valmiki-ramayan/chapter-02.json",
+    "sha256": "9b747d01132dff2f5a286fbe56484b7294361950e0c2d84b1005a910f422703e"
+  },
+  "changes": [
+    {
+      "scene": "ay-p001-s1",
+      "page": 1,
+      "field": "text",
+      "finding": "Define the absent brothers before their later return.",
+      "source": "2.1.1–4",
+      "before": {
+        "hi": "भरत और शत्रुघ्न अपने ननिहाल में थे।",
+        "en": "Bharata and Shatrughna were with their maternal family.",
+        "gu": "ભરત અને શત્રુઘ્ન પોતાના મોસાળમાં હતા.",
+        "kn": "ಭರತ ಮತ್ತು ಶತ್ರುಘ್ನ ತಾಯಿಯ ತವರಿನಲ್ಲಿದ್ದರು."
+      },
+      "after": {
+        "hi": "राम के छोटे भाई भरत और शत्रुघ्न अपने ननिहाल में थे।",
+        "en": "Rama’s younger brothers Bharata and Shatrughna were visiting their maternal family.",
+        "gu": "રામના નાના ભાઈઓ ભરત અને શત્રુઘ્ન પોતાના મોસાળમાં હતા.",
+        "kn": "ರಾಮನ ತಮ್ಮಂದಿರಾದ ಭರತ ಮತ್ತು ಶತ್ರುಘ್ನ ತಾಯಿಯ ತವರಿನಲ್ಲಿದ್ದರು."
+      }
+    },
+    {
+      "scene": "ay-p001-s2",
+      "page": 1,
+      "field": "narration",
+      "finding": "Establish Ayodhya and Rama’s service before the succession proposal.",
+      "source": "2.1",
+      "before": null,
+      "after": {
+        "hi": "अयोध्या में राजकुमार राम प्रजा का हाल पूछते थे।",
+        "en": "In Ayodhya, Prince Rama took care to ask after his people.",
+        "gu": "અયોધ્યામાં રાજકુમાર રામ પ્રજાની ખબર પૂછતા.",
+        "kn": "ಅಯೋಧ್ಯೆಯಲ್ಲಿ ರಾಜಕುಮಾರ ರಾಮರು ಪ್ರಜೆಗಳ ಕ್ಷೇಮ ವಿಚಾರಿಸುತ್ತಿದ್ದರು."
+      }
+    },
+    {
+      "scene": "ay-p001-s3",
+      "page": 1,
+      "field": "narration",
+      "finding": "Identify Dasharatha and his motive.",
+      "source": "2.1",
+      "before": null,
+      "after": {
+        "hi": "वृद्ध राजा दशरथ राम को युवराज बनाना चाहते थे।",
+        "en": "The ageing king Dasharatha wished to name Rama crown prince.",
+        "gu": "વૃદ્ધ રાજા દશરથ રામને યુવરાજ બનાવવા ઇચ્છતા હતા.",
+        "kn": "ವಯಸ್ಸಾಗುತ್ತಿದ್ದ ರಾಜ ದಶರಥರು ರಾಮರನ್ನು ಯುವರಾಜನನ್ನಾಗಿ ಮಾಡಲು ಬಯಸಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p003-s3",
+      "page": 3,
+      "field": "narration",
+      "finding": "Introduce Kaushalya as Rama’s mother.",
+      "source": "2.4",
+      "before": null,
+      "after": {
+        "hi": "राम अपनी माता कौशल्या का आशीर्वाद लेने पहुँचे।",
+        "en": "Rama went to seek his mother Kaushalya’s blessing.",
+        "gu": "રામ પોતાની માતા કૌશલ્યાના આશીર્વાદ લેવા પહોંચ્યા.",
+        "kn": "ರಾಮರು ತಮ್ಮ ತಾಯಿ ಕೌಸಲ್ಯೆಯ ಆಶೀರ್ವಾದ ಪಡೆಯಲು ಬಂದರು."
+      }
+    },
+    {
+      "scene": "ay-p004-s1",
+      "page": 4,
+      "field": "narration",
+      "finding": "Introduce Vashishtha’s role before his instruction.",
+      "source": "2.5",
+      "before": null,
+      "after": {
+        "hi": "कुलगुरु वसिष्ठ ने राम और उनकी पत्नी सीता को व्रत का नियम बताया।",
+        "en": "The family preceptor Vashishtha instructed Rama and his wife Sita in the observance.",
+        "gu": "કુળગુરુ વસિષ્ઠે રામ અને તેમનાં પત્ની સીતાને વ્રતના નિયમ સમજાવ્યા.",
+        "kn": "ಕುಲಗುರು ವಸಿಷ್ಠರು ರಾಮರು ಮತ್ತು ಅವರ ಪತ್ನಿ ಸೀತೆಗೆ ವ್ರತದ ನಿಯಮ ತಿಳಿಸಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p005-s1",
+      "page": 5,
+      "field": "narration",
+      "finding": "Identify Kaikeyi as Bharata’s mother; keep the earlier-day cue.",
+      "source": "2.7",
+      "before": {
+        "hi": "उसी दिन पहले, कैकेयी की परिचारिका मन्थरा ने राम के अभिषेक का समाचार सुना।",
+        "en": "Earlier that day, Kaikeyi's attendant Manthara heard of Rama's anointing.",
+        "gu": "એ જ દિવસે પહેલાં, કૈકેયીની પરિચારિકા મંથરાએ રામના અભિષેકના સમાચાર સાંભળ્યા.",
+        "kn": "ಅದೇ ದಿನ ಮುಂಚೆ, ಕೈಕೇಯಿಯ ಪರಿಚಾರಿಕೆ ಮಂಥರೆಗೆ ರಾಮನ ಅಭಿಷೇಕದ ಸುದ್ದಿ ತಿಳಿಯಿತು."
+      },
+      "after": {
+        "hi": "उसी दिन पहले, भरत की माता रानी कैकेयी की परिचारिका मन्थरा ने अभिषेक का समाचार सुना।",
+        "en": "Earlier that day, Manthara, attendant to Bharata’s mother Queen Kaikeyi, heard of the anointing.",
+        "gu": "એ જ દિવસે પહેલાં, ભરતની માતા રાણી કૈકેયીની પરિચારિકા મંથરાએ અભિષેકના સમાચાર સાંભળ્યા.",
+        "kn": "ಅದೇ ದಿನ ಮುಂಚೆ, ಭರತನ ತಾಯಿ ರಾಣಿ ಕೈಕೇಯಿಯ ಪರಿಚಾರಿಕೆ ಮಂಥರೆಗೆ ಅಭಿಷೇಕದ ಸುದ್ದಿ ತಿಳಿಯಿತು."
+      }
+    },
+    {
+      "scene": "ay-p010-s2",
+      "page": 10,
+      "field": "narration",
+      "finding": "Introduce Sumantra before the summons.",
+      "source": "2.14–15",
+      "before": null,
+      "after": {
+        "hi": "राजा के सारथी और मन्त्री सुमन्त्र को राम को बुलाने भेजा गया।",
+        "en": "Sumantra, the king’s charioteer and minister, was sent to summon Rama.",
+        "gu": "રાજાના સારથિ અને મંત્રી સુમંત્રને રામને બોલાવવા મોકલ્યા.",
+        "kn": "ರಾಜನ ಸಾರಥಿಯೂ ಮಂತ್ರಿಯೂ ಆದ ಸುಮಂತ್ರರನ್ನು ರಾಮರನ್ನು ಕರೆಯಲು ಕಳುಹಿಸಲಾಯಿತು."
+      }
+    },
+    {
+      "scene": "ay-p013-s3",
+      "page": 13,
+      "field": "narration",
+      "finding": "Show the move from Kaikeyi’s chamber to Kaushalya.",
+      "source": "2.20",
+      "before": null,
+      "after": {
+        "hi": "कैकेयी के भवन से राम माता कौशल्या के पास गए।",
+        "en": "Leaving Kaikeyi’s chambers, Rama went to Mother Kaushalya.",
+        "gu": "કૈકેયીના ભવનથી રામ માતા કૌશલ્યા પાસે ગયા.",
+        "kn": "ಕೈಕೇಯಿಯ ಭವನದಿಂದ ರಾಮರು ತಾಯಿ ಕೌಸಲ್ಯೆಯ ಬಳಿಗೆ ಹೋದರು."
+      }
+    },
+    {
+      "scene": "ay-p014-s1",
+      "page": 14,
+      "field": "narration",
+      "finding": "Introduce Lakshmana as the younger brother before his protest.",
+      "source": "2.21",
+      "before": null,
+      "after": {
+        "hi": "छोटे भाई लक्ष्मण यह सुनकर क्रोधित हो उठे।",
+        "en": "His younger brother Lakshmana was angered by the news.",
+        "gu": "નાના ભાઈ લક્ષ્મણ આ સાંભળીને ક્રોધિત થયા.",
+        "kn": "ಈ ಸುದ್ದಿ ಕೇಳಿ ತಮ್ಮ ಲಕ್ಷ್ಮಣರಿಗೆ ಕೋಪ ಬಂತು."
+      }
+    },
+    {
+      "scene": "ay-p020-s1",
+      "page": 20,
+      "field": "text",
+      "finding": "Replace an ambiguous pronoun with the donors’ names.",
+      "source": "2.32",
+      "before": {
+        "hi": "दोनों ने प्रियजनों और आश्रितों को दान दिए।",
+        "en": "They gave gifts to loved ones and dependants.",
+        "gu": "તેમણે પ્રિયજનો અને આશ્રિતોને દાન આપ્યાં.",
+        "kn": "ಅವರು ಪ್ರೀತಿಪಾತ್ರರಿಗೂ ಆಶ್ರಿತರಿಗೂ ದಾನ ನೀಡಿದರು."
+      },
+      "after": {
+        "hi": "राम और सीता ने प्रियजनों और आश्रितों को दान दिए।",
+        "en": "Rama and Sita gave gifts to loved ones and dependants.",
+        "gu": "રામ અને સીતાએ પ્રિયજનો અને આશ્રિતોને દાન આપ્યાં.",
+        "kn": "ರಾಮರು ಮತ್ತು ಸೀತೆ ಪ್ರೀತಿಪಾತ್ರರಿಗೂ ಆಶ್ರಿತರಿಗೂ ದಾನ ನೀಡಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p020-s2",
+      "page": 20,
+      "field": "narration",
+      "finding": "Trijata appears without identity, motive or arrival.",
+      "source": "2.32.29–35",
+      "before": null,
+      "after": {
+        "hi": "निर्धन वृद्ध ब्राह्मण त्रिजट परिवार की सहायता माँगने राम के पास आए।",
+        "en": "A poor, elderly Brahmin named Trijata came to Rama to seek help for his family.",
+        "gu": "ગરીબ વૃદ્ધ બ્રાહ્મણ ત્રિજટ પરિવાર માટે સહાય માગવા રામ પાસે આવ્યા.",
+        "kn": "ತ್ರಿಜಟ ಎಂಬ ಬಡ ವೃದ್ಧ ಬ್ರಾಹ್ಮಣರು ಕುಟುಂಬಕ್ಕೆ ನೆರವು ಕೇಳಲು ರಾಮರ ಬಳಿಗೆ ಬಂದರು."
+      }
+    },
+    {
+      "scene": "ay-p020-s4",
+      "page": 20,
+      "field": "narration",
+      "finding": "Make the shift from Trijata’s gift back to the household attendants explicit.",
+      "source": "2.32.25",
+      "before": null,
+      "after": {
+        "hi": "राम ने घरों की ज़िम्मेदारी सेवकों को सौंपी।",
+        "en": "Rama also entrusted the residences to the household attendants.",
+        "gu": "રામે ઘરોની જવાબદારી સેવકોને સોંપી.",
+        "kn": "ಮನೆಗಳ ಜವಾಬ್ದಾರಿಯನ್ನು ರಾಮರು ಸೇವಕರಿಗೆ ಒಪ್ಪಿಸಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p020-s4",
+      "page": 20,
+      "field": "text",
+      "finding": "Clarify which homes the attendants should guard.",
+      "source": "2.32.25",
+      "before": {
+        "hi": "हमारे लौटने तक इन घरों की देखभाल करना।",
+        "en": "Care for these homes until we return.",
+        "gu": "અમે પાછા આવીએ ત્યાં સુધી આ ઘરોની સંભાળ રાખજો.",
+        "kn": "ನಾವು ಮರಳುವವರೆಗೆ ಈ ಮನೆಗಳನ್ನು ನೋಡಿಕೊಳ್ಳಿ."
+      },
+      "after": {
+        "hi": "हमारे लौटने तक मेरे और लक्ष्मण के घरों की देखभाल करना।",
+        "en": "Please guard my residence and Lakshmana’s until we return.",
+        "gu": "અમે પાછા આવીએ ત્યાં સુધી મારા અને લક્ષ્મણના ઘરોની સંભાળ રાખજો.",
+        "kn": "ನಾವು ಮರಳುವವರೆಗೆ ನನ್ನ ಮತ್ತು ಲಕ್ಷ್ಮಣನ ಮನೆಗಳನ್ನು ನೋಡಿಕೊಳ್ಳಿ."
+      }
+    },
+    {
+      "scene": "ay-p021-s3",
+      "page": 21,
+      "field": "afterNarration",
+      "finding": "Answer Dasharatha’s request to stay the night before the next dispute.",
+      "source": "2.34.33–43",
+      "before": null,
+      "after": {
+        "hi": "राम ने पिता का वचन निभाने के लिए उसी दिन प्रस्थान करने का आग्रह किया।",
+        "en": "Rama remained resolved to leave that day and fulfil his father’s word.",
+        "gu": "પિતાનું વચન નિભાવવા રામે એ જ દિવસે પ્રસ્થાન કરવાનો આગ્રહ રાખ્યો.",
+        "kn": "ತಂದೆಯ ವಚನ ಪಾಲಿಸಲು ಆ ದಿನವೇ ಹೊರಡುವ ನಿರ್ಧಾರದಲ್ಲಿ ರಾಮರು ಸ್ಥಿರರಾಗಿದ್ದರು."
+      }
+    },
+    {
+      "scene": "ay-p023-s4",
+      "page": 23,
+      "field": "afterNarration",
+      "finding": "Explain why Sita does not continue wearing the bark wrap.",
+      "source": "2.38.3–6",
+      "before": null,
+      "after": {
+        "hi": "दशरथ ने भी कहा कि सीता पर वल्कल पहनने की शर्त नहीं थी; वे अपने वस्त्रों में जाएँ।",
+        "en": "Dasharatha too said that Sita had not been required to wear bark; she could keep her own garments.",
+        "gu": "દશરથે પણ કહ્યું કે સીતા માટે વલ્કલ પહેરવાની શરત નહોતી; તેઓ પોતાના વસ્ત્રોમાં જાય.",
+        "kn": "ಸೀತೆ ತೊಗಟೆಯ ಉಡುಗೆ ಧರಿಸಬೇಕೆಂಬ ಷರತ್ತು ಇರಲಿಲ್ಲ; ತಮ್ಮ ಉಡುಗೆಯಲ್ಲೇ ಹೋಗಲಿ ಎಂದು ದಶರಥರೂ ಹೇಳಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p024-s1",
+      "page": 24,
+      "field": "text",
+      "finding": "Account for the departure clothes and provisions rather than implying a random royal-costume reset.",
+      "source": "2.39.13–18",
+      "before": {
+        "hi": "रथ तैयार हुआ; सीता के लिए वस्तुएँ रखी गईं।",
+        "en": "The chariot was readied with provisions for Sita.",
+        "gu": "રથ તૈયાર થયો; સીતા માટે સામાન મુકાયો.",
+        "kn": "ರಥ ಸಿದ್ಧವಾಯಿತು; ಸೀತೆಗೆ ಬೇಕಾದ ಸಾಮಗ್ರಿ ಇರಿಸಲಾಯಿತು."
+      },
+      "after": {
+        "hi": "रथ तैयार हुआ। दशरथ ने सीता के लिए वस्त्र और आभूषण भी भिजवाए।",
+        "en": "The chariot was readied. Dasharatha also sent garments and ornaments for Sita.",
+        "gu": "રથ તૈયાર થયો. દશરથે સીતા માટે વસ્ત્રો અને આભૂષણો પણ મોકલ્યાં.",
+        "kn": "ರಥ ಸಿದ್ಧವಾಯಿತು. ದಶರಥರು ಸೀತೆಗೆ ಉಡುಗೆ ಮತ್ತು ಆಭರಣಗಳನ್ನೂ ಕಳುಹಿಸಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p024-s3",
+      "page": 24,
+      "field": "narration",
+      "finding": "Identify Sumitra’s relationship before her farewell counsel.",
+      "source": "2.40",
+      "before": null,
+      "after": {
+        "hi": "लक्ष्मण की माता सुमित्रा ने उन्हें आशीर्वाद दिया।",
+        "en": "Lakshmana’s mother Sumitra blessed him before the departure.",
+        "gu": "લક્ષ્મણની માતા સુમિત્રાએ તેમને આશીર્વાદ આપ્યા.",
+        "kn": "ಲಕ್ಷ್ಮಣನ ತಾಯಿ ಸುಮಿತ್ರೆ ಹೊರಡುವ ಮುನ್ನ ಅವರಿಗೆ ಆಶೀರ್ವಾದ ನೀಡಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p032-s1",
+      "page": 32,
+      "field": "text",
+      "finding": "Replace the unclear first-night-alone phrase with the actual new setting.",
+      "source": "2.53",
+      "before": {
+        "hi": "रथ और गुह पीछे रह गए; पहली रात अकेले थी।",
+        "en": "Chariot and Guha left behind, they faced their first night alone.",
+        "gu": "રથ અને ગુહ પાછળ રહ્યાં; પહેલી રાત એકલાં હતાં.",
+        "kn": "ರಥವೂ ಗುಹನೂ ಹಿಂದೆ ಉಳಿದರು; ಇದು ಒಂಟಿಯಾದ ಮೊದಲ ರಾತ್ರಿ."
+      },
+      "after": {
+        "hi": "गंगा पार कर अब तीनों रथ और साथियों से दूर वन में थे।",
+        "en": "Across the Ganga, the three were now in the forest, without the chariot or their companions.",
+        "gu": "ગંગા પાર કરીને હવે ત્રણેય રથ અને સાથીઓથી દૂર વનમાં હતાં.",
+        "kn": "ಗಂಗೆಯನ್ನು ದಾಟಿದ ಮೂವರೂ ಈಗ ರಥವೂ ಸಂಗಡಿಗರೂ ಇಲ್ಲದೆ ಕಾಡಿನಲ್ಲಿದ್ದರು."
+      }
+    },
+    {
+      "scene": "ay-p033-s1",
+      "page": 33,
+      "field": "text",
+      "finding": "Introduce Bharadwaja as a sage and name the confluence.",
+      "source": "2.54",
+      "before": {
+        "hi": "संगम पर भरद्वाज का आश्रम मिला।",
+        "en": "At the confluence they reached Bharadwaja's hermitage.",
+        "gu": "સંગમ પર ભરદ્વાજનો આશ્રમ મળ્યો.",
+        "kn": "ಸಂಗಮದಲ್ಲಿ ಭರದ್ವಾಜರ ಆಶ್ರಮ ತಲುಪಿದರು."
+      },
+      "after": {
+        "hi": "गंगा-यमुना के संगम पर वे ऋषि भरद्वाज के आश्रम पहुँचे।",
+        "en": "At the confluence of the Ganga and Yamuna, they reached the sage Bharadwaja’s hermitage.",
+        "gu": "ગંગા-યમુનાના સંગમ પર તેઓ ઋષિ ભરદ્વાજના આશ્રમ પહોંચ્યાં.",
+        "kn": "ಗಂಗಾ-ಯಮುನಾ ಸಂಗಮದಲ್ಲಿ ಅವರು ಭರದ್ವಾಜ ಋಷಿಯ ಆಶ್ರಮ ತಲುಪಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p035-s1",
+      "page": 35,
+      "field": "text",
+      "finding": "Give Valmiki’s role on his first appearance.",
+      "source": "2.56.16–17",
+      "before": {
+        "hi": "चित्रकूट में उन्होंने वाल्मीकि के आश्रम का दर्शन किया।",
+        "en": "At Chitrakuta they visited Valmiki's hermitage.",
+        "gu": "ચિત્રકૂટમાં તેમણે વાલ્મીકિના આશ્રમનાં દર્શન કર્યાં.",
+        "kn": "ಚಿತ್ರಕೂಟದಲ್ಲಿ ಅವರು ವಾಲ್ಮೀಕಿಯ ಆಶ್ರಮಕ್ಕೆ ಭೇಟಿ ನೀಡಿದರು."
+      },
+      "after": {
+        "hi": "चित्रकूट पहुँचकर वे महर्षि वाल्मीकि के आश्रम गए।",
+        "en": "Reaching Chitrakuta, they visited the sage Valmiki’s hermitage.",
+        "gu": "ચિત્રકૂટ પહોંચી તેઓ મહર્ષિ વાલ્મીકિના આશ્રમ ગયાં.",
+        "kn": "ಚಿತ್ರಕೂಟ ತಲುಪಿ ಅವರು ವಾಲ್ಮೀಕಿ ಮಹರ್ಷಿಯ ಆಶ್ರಮಕ್ಕೆ ಹೋದರು."
+      }
+    },
+    {
+      "scene": "ay-p040-s1",
+      "page": 40,
+      "field": "text",
+      "finding": "Connect the remembered curse with the return to present grief.",
+      "source": "2.64–65",
+      "before": {
+        "hi": "कथा पूरी हुई; दशरथ फिर उसी दुःख में डूब गए।",
+        "en": "His recollection ended; Dasharatha sank again into present grief.",
+        "gu": "કથા પૂરી થઈ; દશરથ ફરી એ જ દુઃખમાં ડૂબ્યા.",
+        "kn": "ನೆನಪಿನ ಕಥೆ ಮುಗಿಯಿತು; ದಶರಥ ಮತ್ತೆ ದುಃಖದಲ್ಲಿ ಮುಳುಗಿದ."
+      },
+      "after": {
+        "hi": "पुराने शाप की बात कहकर दशरथ फिर राम के वियोग में डूब गए।",
+        "en": "Having recalled the old curse, Dasharatha sank again into grief at Rama’s absence.",
+        "gu": "જૂના શાપની વાત કહી દશરથ ફરી રામના વિયોગમાં ડૂબી ગયા.",
+        "kn": "ಹಳೆಯ ಶಾಪವನ್ನು ನೆನಪಿಸಿಕೊಂಡ ದಶರಥರು ಮತ್ತೆ ರಾಮನ ಅಗಲಿಕೆಯ ದುಃಖದಲ್ಲಿ ಮುಳುಗಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p042-s1",
+      "page": 42,
+      "field": "narration",
+      "finding": "Mark Bharata’s location and that the dream precedes the messengers’ arrival.",
+      "source": "2.69",
+      "before": null,
+      "after": {
+        "hi": "उधर ननिहाल में भरत एक अशुभ स्वप्न देखकर व्याकुल थे।",
+        "en": "Meanwhile, at his maternal home, Bharata was troubled by an ominous dream.",
+        "gu": "ત્યાં મોસાળમાં ભરત એક અશુભ સ્વપ્ન જોઈ વ્યાકુળ હતા.",
+        "kn": "ಇತ್ತ ತಾಯಿಯ ತವರಿನಲ್ಲಿ ಭರತರು ಅಶುಭ ಕನಸು ಕಂಡು ಕಳವಳಗೊಂಡಿದ್ದರು."
+      }
+    },
+    {
+      "scene": "ay-p042-s2",
+      "page": 42,
+      "field": "narration",
+      "finding": "Connect the summons to the arriving messengers.",
+      "source": "2.68.6–8;2.70",
+      "before": null,
+      "after": {
+        "hi": "तभी अयोध्या के दूत पहुँचे।",
+        "en": "Then the messengers from Ayodhya arrived.",
+        "gu": "ત્યારે અયોધ્યાના દૂત પહોંચ્યા.",
+        "kn": "ಆಗ ಅಯೋಧ್ಯೆಯ ದೂತರು ಬಂದರು."
+      }
+    },
+    {
+      "scene": "ay-p042-s2",
+      "page": 42,
+      "field": "afterNarration",
+      "finding": "Explain why Bharata does not yet know of the death/exile.",
+      "source": "2.68.8",
+      "before": null,
+      "after": {
+        "hi": "आदेश के अनुसार दूतों ने अभी वनवास और राजा के निधन की बात नहीं बताई।",
+        "en": "Under their instructions, the messengers had not yet disclosed the exile or the king’s death.",
+        "gu": "આદેશ પ્રમાણે દૂતોએ હજી વનવાસ અને રાજાના નિધનની વાત જણાવી નહોતી.",
+        "kn": "ಆದೇಶದಂತೆ ದೂತರು ವನವಾಸ ಮತ್ತು ರಾಜನ ನಿಧನದ ಸುದ್ದಿಯನ್ನು ಇನ್ನೂ ತಿಳಿಸಿರಲಿಲ್ಲ."
+      }
+    },
+    {
+      "scene": "ay-p047-s1",
+      "page": 47,
+      "field": "text",
+      "finding": "Give the cause of Shatrughna’s anger before he seizes Manthara.",
+      "source": "2.78",
+      "before": {
+        "hi": "शत्रुघ्न ने क्रोध में मन्थरा को पकड़ लिया।",
+        "en": "In anger, Shatrughna seized Manthara.",
+        "gu": "શત્રુઘ્ને ક્રોધમાં મંથરાને પકડી લીધી.",
+        "kn": "ಕೋಪದಲ್ಲಿ ಶತ್ರುಘ್ನ ಮಂಥರೆಯನ್ನು ಹಿಡಿದ."
+      },
+      "after": {
+        "hi": "वनवास में मन्थरा की भूमिका से क्रोधित शत्रुघ्न ने उन्हें पकड़ लिया।",
+        "en": "Angered by Manthara’s part in the exile, Shatrughna seized her.",
+        "gu": "વનવાસમાં મંથરાની ભૂમિકાથી ક્રોધિત શત્રુઘ્ને તેમને પકડી લીધાં.",
+        "kn": "ವನವಾಸದಲ್ಲಿ ಮಂಥರೆಯ ಪಾತ್ರದಿಂದ ಕೋಪಗೊಂಡ ಶತ್ರುಘ್ನರು ಅವಳನ್ನು ಹಿಡಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p049-s1",
+      "page": 49,
+      "field": "narration",
+      "finding": "Explain why royal music appears after Bharata refused the throne.",
+      "source": "2.81",
+      "before": null,
+      "after": {
+        "hi": "अगली सुबह राजकीय वादक भरत को जगाने आए।",
+        "en": "The next morning, the royal musicians came to awaken Bharata.",
+        "gu": "બીજે દિવસે સવારે રાજકીય વાદકો ભરતને જગાડવા આવ્યા.",
+        "kn": "ಮರುದಿನ ಬೆಳಗ್ಗೆ ರಾಜವಾದ್ಯಗಾರರು ಭರತರನ್ನು ಎಬ್ಬಿಸಲು ಬಂದರು."
+      }
+    },
+    {
+      "scene": "ay-p050-s2",
+      "page": 50,
+      "field": "narration",
+      "finding": "Explain Guha’s suspicion before his order to prepare.",
+      "source": "2.84–85",
+      "before": null,
+      "after": {
+        "hi": "सशस्त्र दल देखकर गुह को राम की सुरक्षा की चिन्ता हुई।",
+        "en": "Seeing the armed party, Guha feared for Rama’s safety.",
+        "gu": "સશસ્ત્ર દળ જોઈ ગુહને રામની સુરક્ષાની ચિંતા થઈ.",
+        "kn": "ಶಸ್ತ್ರಸಜ್ಜಿತ ಸೇನೆಯನ್ನು ಕಂಡು ಗುಹನಿಗೆ ರಾಮರ ಸುರಕ್ಷತೆಯ ಚಿಂತೆಯಾಯಿತು."
+      }
+    },
+    {
+      "scene": "ay-p052-s1",
+      "page": 52,
+      "field": "narration",
+      "finding": "Give the reason for Guha’s earlier-night recollection.",
+      "source": "2.86–88",
+      "before": {
+        "hi": "गुह ने पहले की रात का वृत्तान्त सुनाया।",
+        "en": "Guha recalled the earlier night.",
+        "gu": "ગુહે પહેલાંની રાતનો વૃત્તાંત કહ્યો.",
+        "kn": "ಗುಹ ಹಿಂದಿನ ರಾತ್ರಿಯ ಕಥೆ ಹೇಳಿದ."
+      },
+      "after": {
+        "hi": "भरत ने राम के विश्राम की बात पूछी, तो गुह ने उस रात का वृत्तान्त सुनाया।",
+        "en": "Bharata asked about Rama’s rest, and Guha recalled that earlier night.",
+        "gu": "ભરતે રામના વિશ્રામ વિશે પૂછ્યું, તો ગુહે એ રાતનો વૃત્તાંત કહ્યો.",
+        "kn": "ಭರತರು ರಾಮರ ವಿಶ್ರಾಂತಿಯ ಬಗ್ಗೆ ಕೇಳಿದಾಗ ಗುಹನು ಆ ಹಿಂದಿನ ರಾತ್ರಿಯನ್ನು ನೆನಪಿಸಿಕೊಂಡನು."
+      }
+    },
+    {
+      "scene": "ay-p055-s2",
+      "page": 55,
+      "field": "narration",
+      "finding": "Frame the mother introductions rather than giving an unprompted answer.",
+      "source": "2.92",
+      "before": null,
+      "after": {
+        "hi": "भरत ने ऋषि को तीनों माताओं का परिचय कराया।",
+        "en": "Bharata introduced the three mothers to the sage.",
+        "gu": "ભરતે ઋષિને ત્રણેય માતાઓનો પરિચય કરાવ્યો.",
+        "kn": "ಭರತರು ಋಷಿಗೆ ಮೂವರು ತಾಯಂದಿರ ಪರಿಚಯ ಮಾಡಿಕೊಟ್ಟರು."
+      }
+    },
+    {
+      "scene": "ay-p056-s2",
+      "page": 56,
+      "field": "narration",
+      "finding": "Identify the unnamed speaker’s scouting role before the report.",
+      "source": "2.93",
+      "before": null,
+      "after": {
+        "hi": "आगे मार्ग देखने गए एक खोजी ने धुआँ देखा।",
+        "en": "A scout looking along the route spotted smoke.",
+        "gu": "આગળ માર્ગ જોવા ગયેલા એક શોધકે ધુમાડો જોયો.",
+        "kn": "ಮುಂದಿನ ದಾರಿ ನೋಡುತ್ತಿದ್ದ ಒಬ್ಬ ಶೋಧಕನಿಗೆ ಹೊಗೆ ಕಾಣಿಸಿತು."
+      }
+    },
+    {
+      "scene": "ay-p062-s2",
+      "page": 62,
+      "field": "text",
+      "finding": "Answer the ascetic-dress question as well as the purpose of the visit.",
+      "source": "2.88.26;2.101",
+      "before": {
+        "hi": "आप लौटकर अयोध्या का राज्य स्वीकार कीजिए।",
+        "en": "Please return and accept Ayodhya's throne.",
+        "gu": "તમે પાછા ફરી અયોધ્યાનું રાજ્ય સ્વીકારો.",
+        "kn": "ನೀವು ಹಿಂದಿರುಗಿ ಅಯೋಧ್ಯೆಯ ರಾಜ್ಯ ಸ್ವೀಕರಿಸಿ."
+      },
+      "after": {
+        "hi": "भैया, आपके बिना राजसुख नहीं चाहिए। लौटकर अयोध्या सँभालिए।",
+        "en": "Brother, I want no royal comforts without you. Please return and lead Ayodhya.",
+        "gu": "ભાઈ, તમારા વિના રાજસુખ નથી જોઈતું. પાછા આવી અયોધ્યા સંભાળો.",
+        "kn": "ಅಣ್ಣಾ, ನಿಮ್ಮಿಲ್ಲದೆ ರಾಜಸುಖ ಬೇಡ. ಹಿಂದಿರುಗಿ ಅಯೋಧ್ಯೆಯನ್ನು ನೋಡಿಕೊಳ್ಳಿ."
+      }
+    },
+    {
+      "scene": "ay-p064-s1",
+      "page": 64,
+      "field": "narration",
+      "finding": "Connect the mothers’ arrival with the river offerings.",
+      "source": "2.104",
+      "before": null,
+      "after": {
+        "hi": "वसिष्ठ और माताएँ भी मन्दाकिनी तट पर पहुँचे।",
+        "en": "Vashishtha and the mothers also reached the Mandakini bank.",
+        "gu": "વસિષ્ઠ અને માતાઓ પણ મંદાકિની તટે પહોંચ્યાં.",
+        "kn": "ವಸಿಷ್ಠರು ಮತ್ತು ತಾಯಂದಿರೂ ಮಂದಾಕಿನಿ ತೀರಕ್ಕೆ ಬಂದರು."
+      }
+    },
+    {
+      "scene": "ay-p065-s2",
+      "page": 65,
+      "field": "narration",
+      "finding": "Explain why Rama turns from the throne appeal to consolation.",
+      "source": "2.105",
+      "before": null,
+      "after": {
+        "hi": "भरत को शोक में देखकर राम ने उन्हें धीरज दिया।",
+        "en": "Seeing Bharata’s grief, Rama sought to console him.",
+        "gu": "ભરતનો શોક જોઈ રામે તેમને ધીરજ આપી.",
+        "kn": "ಭರತರ ದುಃಖ ಕಂಡು ರಾಮರು ಅವರಿಗೆ ಸಮಾಧಾನ ಹೇಳಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p066-s2",
+      "page": 66,
+      "field": "text",
+      "finding": "Name the known promise rather than alluding vaguely to unexplained older pledges.",
+      "source": "2.107",
+      "before": {
+        "hi": "पिता के पुराने वचन और वे दो वर बन्धन हैं।",
+        "en": "Father's earlier promises and those two boons bind us.",
+        "gu": "પિતાનાં જૂનાં વચન અને એ બે વર બંધન છે.",
+        "kn": "ತಂದೆಯ ಹಿಂದಿನ ವಚನಗಳೂ ಆ ಎರಡು ವರಗಳೂ ನಮ್ಮನ್ನು ಕಟ್ಟಿವೆ."
+      },
+      "after": {
+        "hi": "पिताश्री ने कैकेयी माता को दो वर दिए थे। उनका वचन कैसे तोड़ूँ?",
+        "en": "Father promised Mother Kaikeyi two boons. How could I break his word?",
+        "gu": "પિતાશ્રીએ કૈકેયી માતાને બે વર આપ્યા હતા. તેમનું વચન કેવી રીતે તોડું?",
+        "kn": "ತಂದೆಯವರು ಕೈಕೇಯಿ ತಾಯಿಗೆ ಎರಡು ವರ ಕೊಟ್ಟಿದ್ದರು. ಅವರ ವಚನವನ್ನು ಹೇಗೆ ಮುರಿಯಲಿ?"
+      }
+    },
+    {
+      "scene": "ay-p067-s1",
+      "page": 67,
+      "field": "narration",
+      "finding": "Define Jabali’s court role in accessible terms.",
+      "source": "2.108–109",
+      "before": {
+        "hi": "मन्त्री जाबालि ने परलोक के विश्वास पर संशय का तर्क रखा।",
+        "en": "The counsellor Jabali raised a skeptical argument about belief in an afterlife.",
+        "gu": "મંત્રી જાબાલિએ પરલોકના વિશ્વાસ પર શંકાનો તર્ક રજૂ કર્યો.",
+        "kn": "ಮಂತ್ರಿ ಜಾಬಾಲಿ ಪರಲೋಕದ ನಂಬಿಕೆಯ ಬಗ್ಗೆ ಸಂದೇಹದ ವಾದ ಮುಂದಿಟ್ಟ."
+      },
+      "after": {
+        "hi": "राजसभा के विद्वान ब्राह्मण जाबालि ने राम को लौटाने के लिए एक अलग तर्क रखा।",
+        "en": "Jabali, a learned Brahmin of the royal court, offered a different argument to persuade Rama to return.",
+        "gu": "રાજસભાના વિદ્વાન બ્રાહ્મણ જાબાલિએ રામને પાછા લાવવા એક જુદો તર્ક રજૂ કર્યો.",
+        "kn": "ರಾಜಸಭೆಯ ವಿದ್ವಾಂಸ ಬ್ರಾಹ್ಮಣ ಜಾಬಾಲಿಯವರು ರಾಮರನ್ನು ಹಿಂದಿರುಗಿಸಲು ಬೇರೊಂದು ವಾದ ಮುಂದಿಟ್ಟರು."
+      }
+    },
+    {
+      "scene": "ay-p067-s1",
+      "page": 67,
+      "field": "text",
+      "finding": "Make the argument’s relation to Rama’s promise understandable.",
+      "source": "2.108",
+      "before": {
+        "hi": "राज्य की प्रत्यक्ष आवश्यकता देखिए; लौट चलिए।",
+        "en": "Consider the kingdom's present needs. Return home.",
+        "gu": "રાજ્યની પ્રત્યક્ષ જરૂરિયાત જુઓ; પાછા ચાલો.",
+        "kn": "ರಾಜ್ಯದ ಪ್ರಸ್ತುತ ಅಗತ್ಯ ನೋಡಿ; ಹಿಂದಿರುಗಿ."
+      },
+      "after": {
+        "hi": "जो प्रजा जीवित है, उसकी सेवा के लिए लौटिए। बिछुड़े पिता का वचन आपको क्यों रोके?",
+        "en": "Return to serve the people who are living. Why should your departed father’s word hold you back?",
+        "gu": "જે પ્રજા જીવિત છે, તેની સેવા માટે પાછા ફરો. વિદાય પામેલા પિતાનું વચન તમને શા માટે રોકે?",
+        "kn": "ಬದುಕಿರುವ ಪ್ರಜೆಗಳ ಸೇವೆಗಾಗಿ ಹಿಂದಿರುಗಿ. ಅಗಲಿದ ತಂದೆಯ ವಚನ ನಿಮ್ಮನ್ನು ಏಕೆ ತಡೆಯಬೇಕು?"
+      }
+    },
+    {
+      "scene": "ay-p067-s2",
+      "page": 67,
+      "field": "text",
+      "finding": "Give a respectful, direct response to Jabali’s argument.",
+      "source": "2.109",
+      "before": {
+        "hi": "सुविधा के लिए सत्य का त्याग नहीं करूँगा।",
+        "en": "I will not abandon truth for convenience.",
+        "gu": "સુવિધા માટે સત્યનો ત્યાગ નહીં કરું.",
+        "kn": "ಅನುಕೂಲಕ್ಕಾಗಿ ಸತ್ಯವನ್ನು ತೊರೆಯುವುದಿಲ್ಲ."
+      },
+      "after": {
+        "hi": "मुनिवर, पिताश्री के जाने से उनका वचन असत्य नहीं हो जाता।",
+        "en": "Revered sir, Father’s death does not release me from keeping his word.",
+        "gu": "મુનિવર, પિતાશ્રીના જવાથી તેમનું વચન અસત્ય થતું નથી.",
+        "kn": "ಮುನಿವರೇ, ತಂದೆಯವರು ಅಗಲಿದರೂ ಅವರ ವಚನ ಪಾಲಿಸುವ ಹೊಣೆ ನನ್ನದು."
+      }
+    },
+    {
+      "scene": "ay-p069-s2",
+      "page": 69,
+      "field": "text",
+      "finding": "Make Rama’s response specific to the fasting vow.",
+      "source": "2.111",
+      "before": {
+        "hi": "भरत, यह मार्ग छोड़ो।",
+        "en": "Bharata, set that course aside.",
+        "gu": "ભરત, આ માર્ગ છોડો.",
+        "kn": "ಭರತ, ಆ ಮಾರ್ಗ ಬಿಡು."
+      },
+      "after": {
+        "hi": "प्रिय भरत, उठो। उपवास का यह हठ मत करो।",
+        "en": "Dear Bharata, rise. Do not insist on this fast.",
+        "gu": "પ્રિય ભરત, ઊઠો. ઉપવાસનો આ હઠ ન કરો.",
+        "kn": "ಪ್ರಿಯ ಭರತ, ಏಳು. ಈ ಉಪವಾಸದ ಹಠ ಮಾಡಬೇಡ."
+      }
+    },
+    {
+      "scene": "ay-p069-s3",
+      "page": 69,
+      "field": "text",
+      "finding": "Explain why the exile cannot be exchanged instead of a bare refusal.",
+      "source": "2.111",
+      "before": {
+        "hi": "मेरे बदले तुम वनवास नहीं भोग सकते।",
+        "en": "You cannot serve my exile in my place.",
+        "gu": "મારા બદલે તમે વનવાસ ન ભોગવી શકો.",
+        "kn": "ನನ್ನ ಬದಲು ನೀನು ವನವಾಸ ಅನುಭವಿಸಲಾರೆ."
+      },
+      "after": {
+        "hi": "यह वचन मुझे ही निभाना है, भरत। तुम मेरे बदले वनवास नहीं भोग सकते।",
+        "en": "This is my promise to fulfil, Bharata. You cannot serve the exile in my place.",
+        "gu": "આ વચન મારે જ નિભાવવાનું છે, ભરત. મારા બદલે તમે વનવાસ ન ભોગવી શકો.",
+        "kn": "ಈ ವಚನವನ್ನು ನಾನೇ ಪಾಲಿಸಬೇಕು, ಭರತ. ನನ್ನ ಬದಲು ನೀನು ವನವಾಸ ಅನುಭವಿಸಲಾರೆ."
+      }
+    },
+    {
+      "scene": "ay-p070-s3",
+      "page": 70,
+      "field": "narration",
+      "finding": "Connect the sandals request to Rama’s unchanged decision.",
+      "source": "2.112",
+      "before": null,
+      "after": {
+        "hi": "राम का निर्णय न बदला, तो भरत ने उनकी पादुकाएँ माँगीं।",
+        "en": "When Rama’s decision held firm, Bharata asked for his sandals.",
+        "gu": "રામનો નિર્ણય ન બદલાયો, તો ભરતે તેમની પાદુકાઓ માગી.",
+        "kn": "ರಾಮರ ನಿರ್ಧಾರ ಬದಲಾಗದಾಗ ಭರತರು ಅವರ ಪಾದುಕೆಗಳನ್ನು ಕೇಳಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p070-s4",
+      "page": 70,
+      "field": "text",
+      "finding": "Explain the sandals’ role in the coming regency in plain words.",
+      "source": "2.112;2.115",
+      "before": {
+        "hi": "वे आपके अधिकार की प्रतीक रहेंगी।",
+        "en": "They will stand for your authority.",
+        "gu": "તે તમારા અધિકારની પ્રતીક રહેશે.",
+        "kn": "ಅವು ನಿಮ್ಮ ಅಧಿಕಾರದ ಸಂಕೇತವಾಗಿರಲಿ."
+      },
+      "after": {
+        "hi": "आपकी पादुकाएँ सिंहासन पर रहेंगी। मैं आपकी ओर से प्रजा की सेवा करूँगा।",
+        "en": "Your sandals will occupy the throne. I will serve the people on your behalf.",
+        "gu": "તમારી પાદુકાઓ સિંહાસન પર રહેશે. હું તમારા વતી પ્રજાની સેવા કરીશ.",
+        "kn": "ನಿಮ್ಮ ಪಾದುಕೆಗಳು ಸಿಂಹಾಸನದಲ್ಲಿರಲಿ. ನಿಮ್ಮ ಪರವಾಗಿ ಪ್ರಜೆಗಳ ಸೇವೆ ಮಾಡುತ್ತೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p073-s2",
+      "page": 73,
+      "field": "text",
+      "finding": "Explain the purpose of moving to Nandigrama.",
+      "source": "2.115",
+      "before": {
+        "hi": "मुझे नन्दिग्राम से सेवा करने दीजिए।",
+        "en": "Let me serve from Nandigrama.",
+        "gu": "મને નંદિગ્રામથી સેવા કરવા દો.",
+        "kn": "ನಂದಿಗ್ರಾಮದಿಂದ ಸೇವೆ ಮಾಡಲು ಬಿಡಿ."
+      },
+      "after": {
+        "hi": "गुरुदेव, नन्दिग्राम में तपस्वी की तरह रहकर सेवा करने दीजिए।",
+        "en": "Revered teacher, let me live as an ascetic at Nandigrama and serve from there.",
+        "gu": "ગુરુદેવ, નંદિગ્રામમાં તપસ્વીની જેમ રહી સેવા કરવા દો.",
+        "kn": "ಗುರುದೇವರೇ, ನಂದಿಗ್ರಾಮದಲ್ಲಿ ತಪಸ್ವಿಯಂತೆ ಇದ್ದು ಸೇವೆ ಮಾಡಲು ಬಿಡಿ."
+      }
+    },
+    {
+      "scene": "ay-p075-s3",
+      "page": 75,
+      "field": "text",
+      "finding": "Introduce Khara’s identity before his followers drive the next move.",
+      "source": "2.116.11–17",
+      "before": {
+        "hi": "खर के राक्षस आश्रमों को सताते हैं। हमें जाना होगा।",
+        "en": "Khara's rakshasas harass the hermitages. We must leave.",
+        "gu": "ખરના રાક્ષસો આશ્રમોને સતાવે છે. અમારે જવું પડશે.",
+        "kn": "ಖರನ ರಾಕ್ಷಸರು ಆಶ್ರಮಗಳಿಗೆ ಕಿರುಕುಳ ಕೊಡುತ್ತಾರೆ. ನಾವು ಹೊರಡಬೇಕು."
+      },
+      "after": {
+        "hi": "खर नाम के राक्षस के अनुचर आश्रमों को सताते हैं। हमें जाना होगा।",
+        "en": "The followers of a rakshasa named Khara harass the hermitages. We must leave.",
+        "gu": "ખર નામના રાક્ષસના અનુચરો આશ્રમોને સતાવે છે. અમારે જવું પડશે.",
+        "kn": "ಖರ ಎಂಬ ರಾಕ್ಷಸನ ಅನುಚರರು ಆಶ್ರಮಗಳಿಗೆ ಕಿರುಕುಳ ಕೊಡುತ್ತಾರೆ. ನಾವು ಹೊರಡಬೇಕು."
+      }
+    },
+    {
+      "scene": "ay-p078-s2",
+      "page": 78,
+      "field": "text",
+      "finding": "Answer Anasuya’s counsel with Sita’s commitment, not just a vague memory.",
+      "source": "2.118",
+      "before": {
+        "hi": "माता से मिली शिक्षा मुझे स्मरण है।",
+        "en": "I remember the counsel my mother gave me.",
+        "gu": "માતાએ આપેલી શિક્ષા મને યાદ છે.",
+        "kn": "ತಾಯಿ ನೀಡಿದ ಬೋಧನೆ ನನಗೆ ನೆನಪಿದೆ."
+      },
+      "after": {
+        "hi": "माता, माँ की सीख याद है। वन के कष्ट भी मुझे आर्यपुत्र से अलग नहीं करेंगे।",
+        "en": "Mother, I remember my mother’s counsel. I will stand by my husband through hardship.",
+        "gu": "માતા, મારી માની શીખ યાદ છે. વનનાં કષ્ટ પણ મને આર્યપુત્રથી અલગ નહીં કરે.",
+        "kn": "ತಾಯಿಯೇ, ನನ್ನ ತಾಯಿಯ ಬೋಧನೆ ನೆನಪಿದೆ. ಕಾಡಿನ ಕಷ್ಟಗಳಲ್ಲಿಯೂ ಆರ್ಯಪುತ್ರರ ಜೊತೆ ಇರುತ್ತೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p079-s2",
+      "page": 79,
+      "field": "text",
+      "finding": "Introduce Janaka’s identity and Sita’s relationship in the recollection.",
+      "source": "2.118.28–33",
+      "before": {
+        "hi": "पिता जनक ने मुझे भूमि में पाया और पाला।",
+        "en": "Father Janaka found me in the earth and raised me.",
+        "gu": "પિતા જનકે મને ભૂમિમાં મેળવી અને ઉછેરી.",
+        "kn": "ತಂದೆ ಜನಕ ನನ್ನನ್ನು ಭೂಮಿಯಲ್ಲಿ ಕಂಡು ಬೆಳೆಸಿದರು."
+      },
+      "after": {
+        "hi": "मेरे पिता, मिथिला के राजा जनक ने मुझे भूमि में पाया और पाला।",
+        "en": "My father, King Janaka of Mithila, found me in the earth and raised me.",
+        "gu": "મારા પિતા, મિથિલાના રાજા જનકે મને ભૂમિમાં મેળવી અને ઉછેરી.",
+        "kn": "ನನ್ನ ತಂದೆ ಮಿಥಿಲೆಯ ರಾಜ ಜನಕರು ನನ್ನನ್ನು ಭೂಮಿಯಲ್ಲಿ ಕಂಡು ಬೆಳೆಸಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p020-s2b",
+      "page": 20,
+      "field": "narration",
+      "finding": "Explain the staff challenge as a playful test rather than an arbitrary condition.",
+      "source": "2.32.36–41",
+      "before": null,
+      "after": {
+        "hi": "राम ने उनके बल को परखने के लिए परिहास में कहा।",
+        "en": "Rama playfully invited him to show his strength.",
+        "gu": "રામે તેમનું બળ પરખવા પરિહાસમાં કહ્યું.",
+        "kn": "ಅವರ ಬಲವನ್ನು ನೋಡಲು ರಾಮರು ವಿನೋದವಾಗಿ ಹೇಳಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p020-s2b",
+      "page": 20,
+      "field": "afterNarration",
+      "finding": "Show the action between the challenge and its reward.",
+      "source": "2.32.37–38",
+      "before": null,
+      "after": {
+        "hi": "त्रिजट ने दण्ड दूर सरयू के पार फेंक दिया।",
+        "en": "Trijata hurled the staff far across the Sarayu.",
+        "gu": "ત્રિજટે દંડ દૂર સરયૂની પાર ફેંક્યો.",
+        "kn": "ತ್ರಿಜಟರು ದಂಡವನ್ನು ದೂರ ಸರಯೂ ನದಿಯಾಚೆಗೆ ಎಸೆದರು."
+      }
+    },
+    {
+      "scene": "ay-p020-s3",
+      "page": 20,
+      "field": "text",
+      "finding": "Complete the gift and its response in the pictured blessing scene.",
+      "source": "2.32.39–43",
+      "before": {
+        "hi": "त्रिजट के फेंके दण्ड तक की गायें उन्हें मिलीं।",
+        "en": "Trijata received the cows within his staff's cast.",
+        "gu": "ત્રિજટે ફેંકેલા દંડ સુધીની ગાયો તેમને મળી.",
+        "kn": "ತ್ರಿಜಟ ಎಸೆದ ದಂಡದ ದೂರದವರೆಗಿನ ಹಸುಗಳು ಅವನಿಗೆ ದೊರೆತವು."
+      },
+      "after": {
+        "hi": "राम ने गायें उन्हें दे दीं; प्रसन्न त्रिजट ने आशीर्वाद दिया।",
+        "en": "Rama gave him the cows, and the delighted Trijata blessed him.",
+        "gu": "રામે ગાયો તેમને આપી; પ્રસન્ન ત્રિજટે આશીર્વાદ આપ્યા.",
+        "kn": "ರಾಮರು ಅವರಿಗೆ ಹಸುಗಳನ್ನು ನೀಡಿದರು; ಸಂತೋಷಗೊಂಡ ತ್ರಿಜಟರು ಆಶೀರ್ವದಿಸಿದರು."
+      }
+    },
+    {
+      "scene": "ay-p014-s1",
+      "page": 14,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.21",
+      "before": {
+        "hi": "यह अन्याय है! हम इसे क्यों स्वीकार करें?",
+        "en": "This is unjust! Why should we accept it?",
+        "gu": "આ અન્યાય છે! આપણે શા માટે સ્વીકારીએ?",
+        "kn": "ಇದು ಅನ್ಯಾಯ! ನಾವು ಏಕೆ ಒಪ್ಪಬೇಕು?"
+      },
+      "after": {
+        "hi": "भैया, यह अन्याय है! हम इसे क्यों स्वीकार करें?",
+        "en": "Brother, this is unjust! Why should we accept it?",
+        "gu": "ભાઈ, આ અન્યાય છે! આપણે શા માટે સ્વીકારીએ?",
+        "kn": "ಅಣ್ಣಾ, ಇದು ಅನ್ಯಾಯ! ನಾವು ಏಕೆ ಒಪ್ಪಬೇಕು?"
+      }
+    },
+    {
+      "scene": "ay-p014-s3",
+      "page": 14,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.23",
+      "before": {
+        "hi": "पुरुषार्थ से इस निर्णय को बदला जा सकता है।",
+        "en": "Our own effort can change this decision.",
+        "gu": "પુરુષાર્થથી આ નિર્ણય બદલી શકાય છે.",
+        "kn": "ನಮ್ಮ ಪ್ರಯತ್ನದಿಂದ ಈ ನಿರ್ಧಾರ ಬದಲಿಸಬಹುದು."
+      },
+      "after": {
+        "hi": "भैया, अपने पुरुषार्थ से हम यह निर्णय बदल सकते हैं।",
+        "en": "Brother, with our own effort we can change this decision.",
+        "gu": "ભાઈ, આપણા પુરુષાર્થથી આ નિર્ણય બદલી શકીએ.",
+        "kn": "ಅಣ್ಣಾ, ನಮ್ಮ ಪ್ರಯತ್ನದಿಂದ ಈ ನಿರ್ಧಾರ ಬದಲಿಸಬಹುದು."
+      }
+    },
+    {
+      "scene": "ay-p019-s1",
+      "page": 19,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.31",
+      "before": {
+        "hi": "भैया, मुझे भी साथ चलने दीजिए।",
+        "en": "Brother, let me come with you too.",
+        "gu": "ભાઈ, મને પણ સાથે આવવા દો.",
+        "kn": "ಅಣ್ಣಾ, ನಾನೂ ನಿಮ್ಮೊಡನೆ ಬರಲು ಬಿಡಿ."
+      },
+      "after": {
+        "hi": "राम भैया, मुझे भी साथ चलने दीजिए।",
+        "en": "Brother Rama, please let me come with you too.",
+        "gu": "રામભાઈ, મને પણ સાથે આવવા દો.",
+        "kn": "ರಾಮಣ್ಣಾ, ನಾನೂ ನಿಮ್ಮೊಡನೆ ಬರಲು ಬಿಡಿ."
+      }
+    },
+    {
+      "scene": "ay-p019-s3",
+      "page": 19,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.31.15–19",
+      "before": {
+        "hi": "परिवार उनका ध्यान रखेगा। मुझे आपकी सेवा करनी है।",
+        "en": "The family will care for them. Let me serve you.",
+        "gu": "પરિવાર તેમનું ધ્યાન રાખશે. મને તમારી સેવા કરવા દો.",
+        "kn": "ಕುಟುಂಬದವರು ಅವರನ್ನು ನೋಡಿಕೊಳ್ಳುತ್ತಾರೆ. ನಿಮ್ಮ ಸೇವೆ ಮಾಡಲು ಬಿಡಿ."
+      },
+      "after": {
+        "hi": "माताओं का परिवार ध्यान रखेगा। मुझे आपकी और सीता भाभी की सेवा करने दीजिए।",
+        "en": "Our family will care for our mothers. Please let me serve you and my sister-in-law.",
+        "gu": "માતાઓનું પરિવાર ધ્યાન રાખશે. મને તમારી અને સીતા ભાભીની સેવા કરવા દો.",
+        "kn": "ತಾಯಂದಿರನ್ನು ಕುಟುಂಬದವರು ನೋಡಿಕೊಳ್ಳುತ್ತಾರೆ. ನಿಮ್ಮ ಮತ್ತು ಸೀತಾ ಅತ್ತಿಗೆಯ ಸೇವೆ ಮಾಡಲು ಬಿಡಿ."
+      }
+    },
+    {
+      "scene": "ay-p020-s2",
+      "page": 20,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.32.34–35",
+      "before": {
+        "hi": "मेरे परिवार को सहायता चाहिए।",
+        "en": "My family needs help.",
+        "gu": "મારા પરિવારને સહાય જોઈએ છે.",
+        "kn": "ನನ್ನ ಕುಟುಂಬಕ್ಕೆ ನೆರವು ಬೇಕು."
+      },
+      "after": {
+        "hi": "राजकुमार, मेरे परिवार को सहायता चाहिए।",
+        "en": "Prince Rama, my family needs help.",
+        "gu": "રાજકુમાર, મારા પરિવારને સહાય જોઈએ છે.",
+        "kn": "ರಾಜಕುಮಾರರೇ, ನನ್ನ ಕುಟುಂಬಕ್ಕೆ ನೆರವು ಬೇಕು."
+      }
+    },
+    {
+      "scene": "ay-p020-s2b",
+      "page": 20,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.32.36",
+      "before": {
+        "hi": "अपना दण्ड फेंकिए; जहाँ तक जाए, वहाँ की गायें आपकी।",
+        "en": "Cast your staff. The cows within its reach are yours.",
+        "gu": "તમારો દંડ ફેંકો; જ્યાં સુધી જાય, ત્યાંની ગાયો તમારી.",
+        "kn": "ನಿಮ್ಮ ದಂಡ ಎಸೆಯಿರಿ. ಅದರ ದೂರದವರೆಗಿನ ಹಸುಗಳು ನಿಮ್ಮವು."
+      },
+      "after": {
+        "hi": "विप्रवर, अपना दण्ड फेंकिए। जहाँ तक जाए, वहाँ की गायें आपकी।",
+        "en": "Revered sir, cast your staff. The cows within its reach will be yours.",
+        "gu": "વિપ્રવર, તમારો દંડ ફેંકો. જ્યાં સુધી જાય, ત્યાંની ગાયો તમારી.",
+        "kn": "ವಿಪ್ರವರೇ, ನಿಮ್ಮ ದಂಡ ಎಸೆಯಿರಿ. ಅದರ ದೂರದವರೆಗಿನ ಹಸುಗಳು ನಿಮ್ಮವು."
+      }
+    },
+    {
+      "scene": "ay-p025-s2",
+      "page": 25,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.40",
+      "before": {
+        "hi": "सुमन्त्र, आगे बढ़िए। यह विदा असह्य है।",
+        "en": "Sumantra, drive on. This farewell is unbearable.",
+        "gu": "સુમંત્ર, આગળ વધો. આ વિદાય અસહ્ય છે.",
+        "kn": "ಸುಮಂತ್ರ, ಮುಂದೆ ಹೋಗಿ. ಈ ವಿದಾಯ ಸಹಿಸಲಾಗುತ್ತಿಲ್ಲ."
+      },
+      "after": {
+        "hi": "सुमन्त्रजी, आगे बढ़िए। यह विदा असह्य है।",
+        "en": "Sumantra, please drive on. This farewell is unbearable.",
+        "gu": "સુમંત્રજી, આગળ વધો. આ વિદાય અસહ્ય છે.",
+        "kn": "ಸುಮಂತ್ರರೇ, ದಯವಿಟ್ಟು ಮುಂದೆ ಹೋಗಿ. ಈ ವಿದಾಯ ಸಹಿಸಲಾಗುತ್ತಿಲ್ಲ."
+      }
+    },
+    {
+      "scene": "ay-p030-s4",
+      "page": 30,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.51",
+      "before": {
+        "hi": "भैया और सीता सोए हैं; मैं जागूँगा।",
+        "en": "Rama and Sita sleep; I will stay awake.",
+        "gu": "ભાઈ અને સીતા સૂતાં છે; હું જાગીશ.",
+        "kn": "ಅಣ್ಣ ಮತ್ತು ಸೀತೆ ಮಲಗಿದ್ದಾರೆ; ನಾನು ಎಚ್ಚರವಾಗಿರುತ್ತೇನೆ."
+      },
+      "after": {
+        "hi": "राम भैया और सीता भाभी विश्राम कर रहे हैं। मैं उनकी रखवाली करूँगा।",
+        "en": "My elder brother and sister-in-law are resting. I will keep watch over them.",
+        "gu": "રામભાઈ અને સીતા ભાભી વિશ્રામ કરે છે. હું તેમની રખેવાળી કરીશ.",
+        "kn": "ರಾಮಣ್ಣ ಮತ್ತು ಸೀತಾ ಅತ್ತಿಗೆ ವಿಶ್ರಾಂತಿ ಪಡೆಯುತ್ತಿದ್ದಾರೆ. ನಾನು ಅವರ ಕಾವಲು ಕಾಯುತ್ತೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p031-s1",
+      "page": 31,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.52",
+      "before": {
+        "hi": "सुमन्त्र, लौटकर परिवार को हमारा सन्देश देना।",
+        "en": "Sumantra, return with our messages for the family.",
+        "gu": "સુમંત્ર, પાછા જઈ પરિવારને અમારો સંદેશ આપજો.",
+        "kn": "ಸುಮಂತ್ರ, ಹಿಂದಿರುಗಿ ಕುಟುಂಬಕ್ಕೆ ನಮ್ಮ ಸಂದೇಶ ತಿಳಿಸಿ."
+      },
+      "after": {
+        "hi": "सुमन्त्रजी, लौटकर पिताश्री और माताओं को हमारे प्रणाम कहिए।",
+        "en": "Sumantra, please return and convey our respects to Father and our mothers.",
+        "gu": "સુમંત્રજી, પાછા જઈ પિતાશ્રી અને માતાઓને અમારા પ્રણામ કહેજો.",
+        "kn": "ಸುಮಂತ್ರರೇ, ಹಿಂದಿರುಗಿ ತಂದೆಯವರಿಗೂ ತಾಯಂದಿರಿಗೂ ನಮ್ಮ ನಮಸ್ಕಾರ ತಿಳಿಸಿ."
+      }
+    },
+    {
+      "scene": "ay-p032-s3",
+      "page": 32,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.53",
+      "before": {
+        "hi": "मुझे आपके साथ रहने दीजिए।",
+        "en": "Please let me stay with you.",
+        "gu": "મને તમારી સાથે રહેવા દો.",
+        "kn": "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಜೊತೆಯಲ್ಲಿರಲು ಬಿಡಿ."
+      },
+      "after": {
+        "hi": "भैया, मुझे आपकी और सीता भाभी की सेवा में रहने दीजिए।",
+        "en": "Brother, please let me stay to serve you and my sister-in-law.",
+        "gu": "ભાઈ, મને તમારી અને સીતા ભાભીની સેવામાં રહેવા દો.",
+        "kn": "ಅಣ್ಣಾ, ನಿಮ್ಮ ಮತ್ತು ಸೀತಾ ಅತ್ತಿಗೆಯ ಸೇವೆಯಲ್ಲಿ ಇರಲು ಬಿಡಿ."
+      }
+    },
+    {
+      "scene": "ay-p044-s1",
+      "page": 44,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.72",
+      "before": {
+        "hi": "और राम? वे कहाँ हैं?",
+        "en": "And Rama? Where is he?",
+        "gu": "અને રામ? તેઓ ક્યાં છે?",
+        "kn": "ಹಾಗಾದರೆ ರಾಮ? ಅವನು ಎಲ್ಲಿದ್ದಾನೆ?"
+      },
+      "after": {
+        "hi": "और राम भैया? वे कहाँ हैं?",
+        "en": "And my elder brother Rama? Where is he?",
+        "gu": "અને રામભાઈ? તેઓ ક્યાં છે?",
+        "kn": "ಹಾಗಾದರೆ ರಾಮಣ್ಣ? ಅವರು ಎಲ್ಲಿದ್ದಾರೆ?"
+      }
+    },
+    {
+      "scene": "ay-p044-s3",
+      "page": 44,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.73",
+      "before": {
+        "hi": "ऐसा राज्य मुझे नहीं चाहिए! राम को वापस लाऊँगा।",
+        "en": "I want no such kingdom! I will bring Rama back.",
+        "gu": "આવું રાજ્ય મારે નથી જોઈતું! રામને પાછા લાવીશ.",
+        "kn": "ಇಂಥ ರಾಜ್ಯ ನನಗೆ ಬೇಡ! ರಾಮನನ್ನು ಮರಳಿ ಕರೆತರುತ್ತೇನೆ."
+      },
+      "after": {
+        "hi": "ऐसा राज्य मुझे नहीं चाहिए! मैं राम भैया को वापस लाऊँगा।",
+        "en": "I want no such kingdom! I will bring my elder brother Rama back.",
+        "gu": "આવું રાજ્ય મારે નથી જોઈતું! હું રામભાઈને પાછા લાવીશ.",
+        "kn": "ಇಂಥ ರಾಜ್ಯ ನನಗೆ ಬೇಡ! ನಾನು ರಾಮಣ್ಣನನ್ನು ಮರಳಿ ಕರೆತರುತ್ತೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p048-s2",
+      "page": 48,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.79",
+      "before": {
+        "hi": "राज्य राम का है। मैं उन्हें लाने जाऊँगा।",
+        "en": "The kingdom is Rama's. I will go to bring him back.",
+        "gu": "રાજ્ય રામનું છે. હું તેમને લેવા જઈશ.",
+        "kn": "ರಾಜ್ಯ ರಾಮನದು. ಅವನನ್ನು ಕರೆತರಲು ಹೋಗುತ್ತೇನೆ."
+      },
+      "after": {
+        "hi": "राज्य राम भैया का है। मैं उन्हें वापस लाने जाऊँगा।",
+        "en": "The kingdom belongs to my elder brother Rama. I will go to bring him back.",
+        "gu": "રાજ્ય રામભાઈનું છે. હું તેમને પાછા લાવવા જઈશ.",
+        "kn": "ರಾಜ್ಯ ರಾಮಣ್ಣನದು. ಅವರನ್ನು ಮರಳಿ ಕರೆತರಲು ಹೋಗುತ್ತೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p049-s2",
+      "page": 49,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.82",
+      "before": {
+        "hi": "मेरा अभिषेक नहीं होगा। राम ही ज्येष्ठ हैं।",
+        "en": "I will not be anointed. Rama is the elder.",
+        "gu": "મારો અભિષેક નહીં થાય. રામ જ મોટા છે.",
+        "kn": "ನನಗೆ ಅಭಿಷೇಕ ಬೇಡ. ರಾಮನೇ ಹಿರಿಯನು."
+      },
+      "after": {
+        "hi": "मेरा अभिषेक नहीं होगा। राम भैया ही ज्येष्ठ हैं।",
+        "en": "I will not be anointed. My elder brother Rama has the rightful place.",
+        "gu": "મારો અભિષેક નહીં થાય. રામભાઈ જ મોટા છે.",
+        "kn": "ನನಗೆ ಅಭಿಷೇಕ ಬೇಡ. ರಾಮಣ್ಣನೇ ಹಿರಿಯರು."
+      }
+    },
+    {
+      "scene": "ay-p049-s3",
+      "page": 49,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.82",
+      "before": {
+        "hi": "यात्रा तैयार करो; हम राम से प्रार्थना करेंगे।",
+        "en": "Prepare the journey; we will appeal to Rama.",
+        "gu": "યાત્રા તૈયાર કરો; આપણે રામને પ્રાર્થના કરીશું.",
+        "kn": "ಪ್ರಯಾಣ ಸಿದ್ಧಪಡಿಸಿ; ನಾವು ರಾಮನನ್ನು ಬೇಡಿಕೊಳ್ಳೋಣ."
+      },
+      "after": {
+        "hi": "यात्रा की तैयारी कीजिए। हम राम भैया से लौटने की प्रार्थना करेंगे।",
+        "en": "Prepare the journey. We will ask my elder brother Rama to return.",
+        "gu": "યાત્રાની તૈયારી કરો. આપણે રામભાઈને પાછા ફરવા પ્રાર્થના કરીશું.",
+        "kn": "ಪ್ರಯಾಣ ಸಿದ್ಧಪಡಿಸಿ. ರಾಮಣ್ಣ ಹಿಂದಿರುಗುವಂತೆ ಬೇಡಿಕೊಳ್ಳೋಣ."
+      }
+    },
+    {
+      "scene": "ay-p052-s3",
+      "page": 52,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.88",
+      "before": {
+        "hi": "यहीं राम और सीता को सोना पड़ा…",
+        "en": "This is where Rama and Sita had to sleep…",
+        "gu": "અહીં રામ અને સીતાને સૂવું પડ્યું…",
+        "kn": "ಇಲ್ಲೇ ರಾಮ ಮತ್ತು ಸೀತೆ ಮಲಗಬೇಕಾಯಿತು…"
+      },
+      "after": {
+        "hi": "यहीं राम भैया और सीता भाभी को सोना पड़ा…",
+        "en": "This is where my elder brother and sister-in-law had to sleep…",
+        "gu": "અહીં રામભાઈ અને સીતા ભાભીને સૂવું પડ્યું…",
+        "kn": "ಇಲ್ಲೇ ರಾಮಣ್ಣ ಮತ್ತು ಸೀತಾ ಅತ್ತಿಗೆ ಮಲಗಬೇಕಾಯಿತು…"
+      }
+    },
+    {
+      "scene": "ay-p054-s2",
+      "page": 54,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.90",
+      "before": {
+        "hi": "मैं राम को लौटने के लिए मनाने आया हूँ।",
+        "en": "I have come to persuade Rama to return.",
+        "gu": "હું રામને પાછા ફરવા મનાવવા આવ્યો છું.",
+        "kn": "ರಾಮನನ್ನು ಹಿಂದಿರುಗಲು ಮನವೊಲಿಸಲು ಬಂದಿದ್ದೇನೆ."
+      },
+      "after": {
+        "hi": "मुनिवर, मैं राम भैया को लौटने के लिए मनाने आया हूँ।",
+        "en": "Revered sage, I have come to persuade my elder brother Rama to return.",
+        "gu": "મુનિવર, હું રામભાઈને પાછા ફરવા મનાવવા આવ્યો છું.",
+        "kn": "ಮುನಿವರೇ, ರಾಮಣ್ಣ ಹಿಂದಿರುಗುವಂತೆ ಮನವೊಲಿಸಲು ಬಂದಿದ್ದೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p055-s2",
+      "page": 55,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.92",
+      "before": {
+        "hi": "ये हमारी माताएँ हैं।",
+        "en": "These are our mothers.",
+        "gu": "આ અમારી માતાઓ છે.",
+        "kn": "ಇವರು ನಮ್ಮ ತಾಯಂದಿರು."
+      },
+      "after": {
+        "hi": "मुनिवर, ये हमारी माताएँ हैं।",
+        "en": "Revered sage, these are our mothers.",
+        "gu": "મુનિવર, આ અમારી માતાઓ છે.",
+        "kn": "ಮುನಿವರೇ, ಇವರು ನಮ್ಮ ತಾಯಂದಿರು."
+      }
+    },
+    {
+      "scene": "ay-p058-s3",
+      "page": 58,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.96",
+      "before": {
+        "hi": "भरत की सेना है! क्या वे आक्रमण करेंगे?",
+        "en": "It is Bharata's army! Have they come to attack?",
+        "gu": "ભરતની સેના છે! શું તેઓ આક્રમણ કરશે?",
+        "kn": "ಭರತನ ಸೇನೆ! ಅವರು ದಾಳಿ ಮಾಡಲು ಬಂದಿದ್ದಾರೆಯೇ?"
+      },
+      "after": {
+        "hi": "भैया, भरत की सेना है! क्या वे आक्रमण करेंगे?",
+        "en": "Brother, it is Bharata’s army! Have they come to attack?",
+        "gu": "ભાઈ, ભરતની સેના છે! શું તેઓ આક્રમણ કરશે?",
+        "kn": "ಅಣ್ಣಾ, ಭರತನ ಸೇನೆ! ಅವರು ದಾಳಿ ಮಾಡಲು ಬಂದಿದ್ದಾರೆಯೇ?"
+      }
+    },
+    {
+      "scene": "ay-p060-s1",
+      "page": 60,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.99",
+      "before": {
+        "hi": "भैया राम!",
+        "en": "Brother Rama!",
+        "gu": "ભાઈ રામ!",
+        "kn": "ಅಣ್ಣಾ ರಾಮ!"
+      },
+      "after": {
+        "hi": "राम भैया!",
+        "en": "Brother Rama!",
+        "gu": "રામભાઈ!",
+        "kn": "ರಾಮಣ್ಣಾ!"
+      }
+    },
+    {
+      "scene": "ay-p062-s3",
+      "page": 62,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.101",
+      "before": {
+        "hi": "भैया… पिता अब नहीं रहे।",
+        "en": "Brother… Father has died.",
+        "gu": "ભાઈ… પિતા હવે નથી રહ્યા.",
+        "kn": "ಅಣ್ಣಾ… ತಂದೆ ಇನ್ನಿಲ್ಲ."
+      },
+      "after": {
+        "hi": "भैया… पिताश्री अब नहीं रहे।",
+        "en": "Brother… Father has died.",
+        "gu": "ભાઈ… પિતાશ્રી હવે નથી રહ્યા.",
+        "kn": "ಅಣ್ಣಾ… ತಂದೆಯವರು ಇನ್ನಿಲ್ಲ."
+      }
+    },
+    {
+      "scene": "ay-p062-s4",
+      "page": 62,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.102",
+      "before": {
+        "hi": "उनके लिए जल अर्पित कीजिए।",
+        "en": "Please offer water for him.",
+        "gu": "તેમના માટે જળ અર્પણ કરો.",
+        "kn": "ಅವರಿಗೆ ಜಲಾಂಜಲಿ ನೀಡಿ."
+      },
+      "after": {
+        "hi": "भैया, उनके लिए जल अर्पित कीजिए।",
+        "en": "Brother, please offer water for Father.",
+        "gu": "ભાઈ, તેમના માટે જળ અર્પણ કરો.",
+        "kn": "ಅಣ್ಣಾ, ತಂದೆಯವರಿಗೆ ಜಲಾಂಜಲಿ ನೀಡಿ."
+      }
+    },
+    {
+      "scene": "ay-p065-s1",
+      "page": 65,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.105",
+      "before": {
+        "hi": "मैं यह राज्य आपको लौटाने आया हूँ।",
+        "en": "I have come to return this kingdom to you.",
+        "gu": "હું આ રાજ્ય તમને પાછું સોંપવા આવ્યો છું.",
+        "kn": "ಈ ರಾಜ್ಯವನ್ನು ನಿಮಗೆ ಮರಳಿ ಒಪ್ಪಿಸಲು ಬಂದಿದ್ದೇನೆ."
+      },
+      "after": {
+        "hi": "भैया, मैं यह राज्य आपको लौटाने आया हूँ।",
+        "en": "Brother, I have come to return this kingdom to you.",
+        "gu": "ભાઈ, હું આ રાજ્ય તમને પાછું સોંપવા આવ્યો છું.",
+        "kn": "ಅಣ್ಣಾ, ಈ ರಾಜ್ಯವನ್ನು ನಿಮಗೆ ಮರಳಿ ಒಪ್ಪಿಸಲು ಬಂದಿದ್ದೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p066-s1",
+      "page": 66,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.106",
+      "before": {
+        "hi": "ज्येष्ठ आप हैं। राज्य आपका ही अधिकार है।",
+        "en": "You are the elder. The throne is rightfully yours.",
+        "gu": "મોટા તમે છો. રાજ્યનો અધિકાર તમારો જ છે.",
+        "kn": "ನೀವೇ ಹಿರಿಯರು. ರಾಜ್ಯದ ಹಕ್ಕು ನಿಮ್ಮದೇ."
+      },
+      "after": {
+        "hi": "भैया, ज्येष्ठ आप हैं। राज्य पर आपका ही अधिकार है।",
+        "en": "Brother, you are the elder. The throne is rightfully yours.",
+        "gu": "ભાઈ, મોટા તમે છો. રાજ્યનો અધિકાર તમારો જ છે.",
+        "kn": "ಅಣ್ಣಾ, ನೀವೇ ಹಿರಿಯರು. ರಾಜ್ಯದ ಹಕ್ಕು ನಿಮ್ಮದೇ."
+      }
+    },
+    {
+      "scene": "ay-p066-s4",
+      "page": 66,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.106–107",
+      "before": {
+        "hi": "पर आपके बिना मैं कैसे लौटूँ?",
+        "en": "But how can I return without you?",
+        "gu": "પણ તમારા વિના હું કેવી રીતે પાછો ફરું?",
+        "kn": "ಆದರೆ ನಿಮ್ಮಿಲ್ಲದೆ ನಾನು ಹೇಗೆ ಹಿಂದಿರುಗಲಿ?"
+      },
+      "after": {
+        "hi": "पर भैया, आपके बिना मैं कैसे लौटूँ?",
+        "en": "But Brother, how can I return without you?",
+        "gu": "પણ ભાઈ, તમારા વિના હું કેવી રીતે પાછો ફરું?",
+        "kn": "ಆದರೆ ಅಣ್ಣಾ, ನಿಮ್ಮಿಲ್ಲದೆ ನಾನು ಹೇಗೆ ಹಿಂದಿರುಗಲಿ?"
+      }
+    },
+    {
+      "scene": "ay-p068-s3",
+      "page": 68,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.110–111",
+      "before": {
+        "hi": "मैं पिता की आज्ञा का उल्लंघन नहीं कर सकता।",
+        "en": "I cannot disregard Father's command.",
+        "gu": "હું પિતાની આજ્ઞાનું ઉલ્લંઘન ન કરી શકું.",
+        "kn": "ನಾನು ತಂದೆಯ ಆಜ್ಞೆ ಮೀರಲಾರೆ."
+      },
+      "after": {
+        "hi": "गुरुदेव, मैं पिताश्री की आज्ञा का उल्लंघन नहीं कर सकता।",
+        "en": "Revered teacher, I cannot disregard Father’s command.",
+        "gu": "ગુરુદેવ, હું પિતાશ્રીની આજ્ઞાનું ઉલ્લંઘન ન કરી શકું.",
+        "kn": "ಗುರುದೇವರೇ, ನಾನು ತಂದೆಯವರ ಆಜ್ಞೆ ಮೀರಲಾರೆ."
+      }
+    },
+    {
+      "scene": "ay-p068-s4",
+      "page": 68,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.111",
+      "before": {
+        "hi": "भैया, अयोध्या लौट चलिए।",
+        "en": "Brother, please return to Ayodhya.",
+        "gu": "ભાઈ, અયોધ્યા પાછા ચાલો.",
+        "kn": "ಅಣ್ಣಾ, ಅಯೋಧ್ಯೆಗೆ ಹಿಂದಿರುಗಿ."
+      },
+      "after": {
+        "hi": "राम भैया, अयोध्या लौट चलिए।",
+        "en": "Brother Rama, please return to Ayodhya.",
+        "gu": "રામભાઈ, અયોધ્યા પાછા ચાલો.",
+        "kn": "ರಾಮಣ್ಣಾ, ಅಯೋಧ್ಯೆಗೆ ಹಿಂದಿರುಗಿ."
+      }
+    },
+    {
+      "scene": "ay-p069-s2b",
+      "page": 69,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.111",
+      "before": {
+        "hi": "तब आपके बदले मुझे वनवास भोगने दीजिए।",
+        "en": "Then let me serve the exile in your place.",
+        "gu": "તો તમારા બદલે મને વનવાસ ભોગવવા દો.",
+        "kn": "ಹಾಗಾದರೆ ನಿಮ್ಮ ಬದಲು ನಾನು ವನವಾಸ ಅನುಭವಿಸಲು ಬಿಡಿ."
+      },
+      "after": {
+        "hi": "तो भैया, आपके बदले मुझे वनवास भोगने दीजिए।",
+        "en": "Then Brother, let me serve the exile in your place.",
+        "gu": "તો ભાઈ, તમારા બદલે મને વનવાસ ભોગવવા દો.",
+        "kn": "ಹಾಗಾದರೆ ಅಣ್ಣಾ, ನಿಮ್ಮ ಬದಲು ನಾನು ವನವಾಸ ಅನುಭವಿಸಲು ಬಿಡಿ."
+      }
+    },
+    {
+      "scene": "ay-p070-s3",
+      "page": 70,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.112",
+      "before": {
+        "hi": "कृपया इन पादुकाओं पर चरण रख दीजिए।",
+        "en": "Please place your feet on these sandals.",
+        "gu": "કૃપા કરીને આ પાદુકાઓ પર ચરણ રાખો.",
+        "kn": "ದಯವಿಟ್ಟು ಈ ಪಾದುಕೆಗಳ ಮೇಲೆ ಪಾದವಿಡಿ."
+      },
+      "after": {
+        "hi": "भैया, कृपया इन पादुकाओं पर चरण रख दीजिए।",
+        "en": "Brother, please place your feet on these sandals.",
+        "gu": "ભાઈ, કૃપા કરીને આ પાદુકાઓ પર ચરણ રાખો.",
+        "kn": "ಅಣ್ಣಾ, ದಯವಿಟ್ಟು ಈ ಪಾದುಕೆಗಳ ಮೇಲೆ ಪಾದವಿಡಿ."
+      }
+    },
+    {
+      "scene": "ay-p071-s2",
+      "page": 71,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.112",
+      "before": {
+        "hi": "चौदह वर्ष पूरे होते ही लौट आइएगा।",
+        "en": "Return as soon as the fourteen years end.",
+        "gu": "ચૌદ વર્ષ પૂરાં થતાં જ પાછા આવજો.",
+        "kn": "ಹದಿನಾಲ್ಕು ವರ್ಷ ಮುಗಿದ ತಕ್ಷಣ ಮರಳಿ ಬನ್ನಿ."
+      },
+      "after": {
+        "hi": "भैया, चौदह वर्ष पूरे होते ही लौट आइएगा।",
+        "en": "Brother, please return as soon as the fourteen years end.",
+        "gu": "ભાઈ, ચૌદ વર્ષ પૂરાં થતાં જ પાછા આવજો.",
+        "kn": "ಅಣ್ಣಾ, ಹದಿನಾಲ್ಕು ವರ್ಷ ಮುಗಿದ ತಕ್ಷಣ ಮರಳಿ ಬನ್ನಿ."
+      }
+    },
+    {
+      "scene": "ay-p072-s2",
+      "page": 72,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.113",
+      "before": {
+        "hi": "राम ने पिता का वचन निभाने का निश्चय रखा है।",
+        "en": "Rama remains resolved to fulfil Father's promise.",
+        "gu": "રામે પિતાનું વચન નિભાવવાનો નિશ્ચય રાખ્યો છે.",
+        "kn": "ತಂದೆಯ ವಚನ ಪಾಲಿಸಲು ರಾಮ ದೃಢನಾಗಿದ್ದಾನೆ."
+      },
+      "after": {
+        "hi": "राम भैया पिताश्री का वचन निभाने के निश्चय पर अटल हैं।",
+        "en": "My elder brother Rama remains resolved to fulfil Father’s promise.",
+        "gu": "રામભાઈ પિતાશ્રીનું વચન નિભાવવાના નિશ્ચય પર અડગ છે.",
+        "kn": "ತಂದೆಯವರ ವಚನ ಪಾಲಿಸುವ ನಿರ್ಧಾರದಲ್ಲಿ ರಾಮಣ್ಣ ಸ್ಥಿರರಾಗಿದ್ದಾರೆ."
+      }
+    },
+    {
+      "scene": "ay-p073-s1",
+      "page": 73,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.114",
+      "before": {
+        "hi": "राम के बिना यह भवन भी सूना है।",
+        "en": "Without Rama, this palace feels empty too.",
+        "gu": "રામ વિના આ ભવન પણ સૂનું છે.",
+        "kn": "ರಾಮನಿಲ್ಲದೆ ಈ ಅರಮನೆಯೂ ಖಾಲಿಯಾಗಿದೆ."
+      },
+      "after": {
+        "hi": "राम भैया के बिना यह भवन भी सूना है।",
+        "en": "Without my elder brother Rama, this palace feels empty too.",
+        "gu": "રામભાઈ વિના આ ભવન પણ સૂનું છે.",
+        "kn": "ರಾಮಣ್ಣನಿಲ್ಲದೆ ಈ ಅರಮನೆಯೂ ಖಾಲಿಯಾಗಿದೆ."
+      }
+    },
+    {
+      "scene": "ay-p074-s2",
+      "page": 74,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.115",
+      "before": {
+        "hi": "राज्य का हर काम राम के नाम पर होगा।",
+        "en": "Every affair of state will be conducted in Rama's name.",
+        "gu": "રાજ્યનું દરેક કામ રામના નામે થશે.",
+        "kn": "ರಾಜ್ಯದ ಪ್ರತಿಯೊಂದು ಕೆಲಸವೂ ರಾಮನ ಹೆಸರಿನಲ್ಲಿ ನಡೆಯಲಿದೆ."
+      },
+      "after": {
+        "hi": "राज्य का हर काम राम भैया के नाम पर होगा।",
+        "en": "Every affair of state will be conducted in my elder brother Rama’s name.",
+        "gu": "રાજ્યનું દરેક કામ રામભાઈના નામે થશે.",
+        "kn": "ರಾಜ್ಯದ ಪ್ರತಿಯೊಂದು ಕೆಲಸವೂ ರಾಮಣ್ಣನ ಹೆಸರಿನಲ್ಲಿ ನಡೆಯಲಿದೆ."
+      }
+    },
+    {
+      "scene": "ay-p075-s2",
+      "page": 75,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.116",
+      "before": {
+        "hi": "आपकी चिन्ता का कारण क्या है?",
+        "en": "What is troubling you?",
+        "gu": "તમારી ચિંતાનું કારણ શું છે?",
+        "kn": "ನಿಮ್ಮ ಚಿಂತೆಗೆ ಕಾರಣವೇನು?"
+      },
+      "after": {
+        "hi": "ऋषिवर, आपकी चिन्ता का कारण क्या है?",
+        "en": "Revered sage, what is troubling you?",
+        "gu": "ઋષિવર, તમારી ચિંતાનું કારણ શું છે?",
+        "kn": "ಋಷಿವರೇ, ನಿಮ್ಮ ಚಿಂತೆಗೆ ಕಾರಣವೇನು?"
+      }
+    },
+    {
+      "scene": "ay-p079-s3",
+      "page": 79,
+      "field": "text",
+      "finding": "Use the speaker’s actual family relationship or respectful address. ",
+      "source": "2.118",
+      "before": {
+        "hi": "राम ने शिवधनुष उठाया; खींचते ही वह टूट गया।",
+        "en": "Rama lifted Shiva's bow; drawing it, he broke it.",
+        "gu": "રામે શિવધનુષ ઉપાડ્યું; ખેંચતાં જ તે તૂટી ગયું.",
+        "kn": "ರಾಮ ಶಿವಧನುಸ್ಸನ್ನು ಎತ್ತಿದ; ಎಳೆಯುವಾಗ ಅದು ಮುರಿಯಿತು."
+      },
+      "after": {
+        "hi": "आर्यपुत्र ने शिवधनुष उठाया; खींचते ही वह टूट गया।",
+        "en": "My husband Rama lifted Shiva’s bow; drawing it, he broke it.",
+        "gu": "આર્યપુત્રે શિવધનુષ ઉપાડ્યું; ખેંચતાં જ તે તૂટી ગયું.",
+        "kn": "ಆರ್ಯಪುತ್ರರು ಶಿವಧನುಸ್ಸನ್ನು ಎತ್ತಿದರು; ಎಳೆಯುವಾಗ ಅದು ಮುರಿಯಿತು."
+      }
+    },
+    {
+      "scene": "ay-p011-s2",
+      "page": 11,
+      "field": "text",
+      "finding": "Use respectful references to the father in the son’s speech.",
+      "source": "2.16-17",
+      "before": {
+        "hi": "सीते, मैं पिता से मिलकर आता हूँ।",
+        "en": "Sita, I am going to meet Father.",
+        "gu": "સીતે, હું પિતાને મળવા જાઉં છું.",
+        "kn": "ಸೀತೆ, ನಾನು ತಂದೆಯನ್ನು ಭೇಟಿಯಾಗಿ ಬರುತ್ತೇನೆ."
+      },
+      "after": {
+        "hi": "सीते, मैं पिताश्री से मिलकर आता हूँ।",
+        "en": "Sita, I am going to meet Father.",
+        "gu": "સીતે, હું પિતાશ્રીને મળવા જાઉં છું.",
+        "kn": "ಸೀತೆ, ನಾನು ತಂದೆಯನ್ನು ಭೇಟಿಯಾಗಿ ಬರುತ್ತೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p012-s2",
+      "page": 12,
+      "field": "text",
+      "finding": "Use respectful references to the father in the son’s speech.",
+      "source": "2.18",
+      "before": {
+        "hi": "माता, पिता मुझसे बोल क्यों नहीं रहे?",
+        "en": "Mother, why will Father not speak to me?",
+        "gu": "માતા, પિતા મારી સાથે બોલતા કેમ નથી?",
+        "kn": "ತಾಯಿ, ತಂದೆ ನನ್ನೊಡನೆ ಏಕೆ ಮಾತನಾಡುತ್ತಿಲ್ಲ?"
+      },
+      "after": {
+        "hi": "माता, पिताश्री मुझसे बोल क्यों नहीं रहे?",
+        "en": "Mother, why will Father not speak to me?",
+        "gu": "માતા, પિતાશ્રી મારી સાથે બોલતા કેમ નથી?",
+        "kn": "ತಾಯಿ, ತಂದೆ ನನ್ನೊಡನೆ ಏಕೆ ಮಾತನಾಡುತ್ತಿಲ್ಲ?"
+      }
+    },
+    {
+      "scene": "ay-p013-s1",
+      "page": 13,
+      "field": "text",
+      "finding": "Use respectful references to the father in the son’s speech.",
+      "source": "2.19-20",
+      "before": {
+        "hi": "पिता का वचन पूरा होगा। मैं वन जाऊँगा।",
+        "en": "Father's promise will be kept. I will go.",
+        "gu": "પિતાનું વચન પૂરું થશે. હું વન જઈશ.",
+        "kn": "ತಂದೆಯ ವಚನ ನೆರವೇರಲಿ. ನಾನು ಕಾಡಿಗೆ ಹೋಗುತ್ತೇನೆ."
+      },
+      "after": {
+        "hi": "पिताश्री का वचन पूरा होगा। मैं वन जाऊँगा।",
+        "en": "Father's promise will be kept. I will go.",
+        "gu": "પિતાશ્રીનું વચન પૂરું થશે. હું વન જઈશ.",
+        "kn": "ತಂದೆಯ ವಚನ ನೆರವೇರಲಿ. ನಾನು ಕಾಡಿಗೆ ಹೋಗುತ್ತೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p014-s2",
+      "page": 14,
+      "field": "text",
+      "finding": "Use respectful references to the father in the son’s speech.",
+      "source": "2.21-23",
+      "before": {
+        "hi": "मैं पिता का वचन तोड़कर राज्य नहीं लूँगा।",
+        "en": "I will not take power by breaking Father's word.",
+        "gu": "હું પિતાનું વચન તોડીને રાજ્ય નહીં લઉં.",
+        "kn": "ತಂದೆಯ ವಚನ ಮುರಿದು ರಾಜ್ಯ ಪಡೆಯುವುದಿಲ್ಲ."
+      },
+      "after": {
+        "hi": "मैं पिताश्री का वचन तोड़कर राज्य नहीं लूँगा।",
+        "en": "I will not take power by breaking Father's word.",
+        "gu": "હું પિતાશ્રીનું વચન તોડીને રાજ્ય નહીં લઉં.",
+        "kn": "ತಂದೆಯ ವಚನ ಮುರಿದು ರಾಜ್ಯ ಪಡೆಯುವುದಿಲ್ಲ."
+      }
+    },
+    {
+      "scene": "ay-p015-s2",
+      "page": 15,
+      "field": "text",
+      "finding": "Use respectful references to the father in the son’s speech.",
+      "source": "2.24-25",
+      "before": {
+        "hi": "पिता को आपकी आवश्यकता है। यहीं रहिए।",
+        "en": "Father needs you. Please stay here.",
+        "gu": "પિતાને તમારી જરૂર છે. અહીં જ રહો.",
+        "kn": "ತಂದೆಗೆ ನಿಮ್ಮ ಅಗತ್ಯವಿದೆ. ಇಲ್ಲಿಯೇ ಇರಿ."
+      },
+      "after": {
+        "hi": "पिताश्री को आपकी आवश्यकता है। यहीं रहिए।",
+        "en": "Father needs you. Please stay here.",
+        "gu": "પિતાશ્રીને તમારી જરૂર છે. અહીં જ રહો.",
+        "kn": "ತಂದೆಗೆ ನಿಮ್ಮ ಅಗತ್ಯವಿದೆ. ಇಲ್ಲಿಯೇ ಇರಿ."
+      }
+    },
+    {
+      "scene": "ay-p021-s2",
+      "page": 21,
+      "field": "text",
+      "finding": "Use respectful references to the father in the son’s speech.",
+      "source": "2.33-34",
+      "before": {
+        "hi": "पिता, वन जाने की आज्ञा दीजिए।",
+        "en": "Father, give me leave for the forest.",
+        "gu": "પિતા, વન જવાની આજ્ઞા આપો.",
+        "kn": "ತಂದೆಯೇ, ಕಾಡಿಗೆ ಹೊರಡಲು ಅನುಮತಿ ಕೊಡಿ."
+      },
+      "after": {
+        "hi": "पिताश्री, वन जाने की आज्ञा दीजिए।",
+        "en": "Father, give me leave for the forest.",
+        "gu": "પિતાશ્રી, વન જવાની આજ્ઞા આપો.",
+        "kn": "ತಂದೆಯೇ, ಕಾಡಿಗೆ ಹೊರಡಲು ಅನುಮತಿ ಕೊಡಿ."
+      }
+    },
+    {
+      "scene": "ay-p027-s1",
+      "page": 27,
+      "field": "text",
+      "finding": "Use respectful references to the father in the son’s speech.",
+      "source": "2.45-46",
+      "before": {
+        "hi": "लौट जाइए। पिता और भरत का साथ दीजिए।",
+        "en": "Please return. Support Father and Bharata.",
+        "gu": "પાછા જાઓ. પિતા અને ભરતને સાથ આપો.",
+        "kn": "ಹಿಂದಿರುಗಿ. ತಂದೆಗೂ ಭರತನಿಗೂ ಬೆಂಬಲ ನೀಡಿ."
+      },
+      "after": {
+        "hi": "लौट जाइए। पिताश्री और भरत का साथ दीजिए।",
+        "en": "Please return. Support Father and Bharata.",
+        "gu": "પાછા જાઓ. પિતાશ્રી અને ભરતને સાથ આપો.",
+        "kn": "ಹಿಂದಿರುಗಿ. ತಂದೆಗೂ ಭರತನಿಗೂ ಬೆಂಬಲ ನೀಡಿ."
+      }
+    },
+    {
+      "scene": "ay-p065-s3",
+      "page": 65,
+      "field": "text",
+      "finding": "Use respectful references to the father in the son’s speech.",
+      "source": "2.105",
+      "before": {
+        "hi": "तुम प्रजा सँभालो; मैं पिता का वचन निभाऊँगा।",
+        "en": "Care for the people; I will fulfil Father's promise.",
+        "gu": "તમે પ્રજા સંભાળો; હું પિતાનું વચન નિભાવીશ.",
+        "kn": "ನೀನು ಪ್ರಜೆಗಳನ್ನು ನೋಡಿಕೋ; ನಾನು ತಂದೆಯ ವಚನ ಪಾಲಿಸುತ್ತೇನೆ."
+      },
+      "after": {
+        "hi": "तुम प्रजा सँभालो; मैं पिताश्री का वचन निभाऊँगा।",
+        "en": "Care for the people; I will fulfil Father's promise.",
+        "gu": "તમે પ્રજા સંભાળો; હું પિતાશ્રીનું વચન નિભાવીશ.",
+        "kn": "ನೀನು ಪ್ರಜೆಗಳನ್ನು ನೋಡಿಕೋ; ನಾನು ತಂದೆಯ ವಚನ ಪಾಲಿಸುತ್ತೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p010-s2",
+      "page": 10,
+      "field": "text",
+      "finding": "A court officer refers respectfully to the prince.",
+      "source": "2.14–15",
+      "before": {
+        "hi": "मैं राम को अभी बुला लाता हूँ।",
+        "en": "I will bring Rama at once.",
+        "gu": "હું રામને હમણાં બોલાવી લાવું છું.",
+        "kn": "ನಾನು ಈಗಲೇ ರಾಮನನ್ನು ಕರೆತರುತ್ತೇನೆ."
+      },
+      "after": {
+        "hi": "मैं राजकुमार राम को अभी बुला लाता हूँ।",
+        "en": "I will bring Prince Rama at once.",
+        "gu": "હું રાજકુમાર રામને હમણાં બોલાવી લાવું છું.",
+        "kn": "ನಾನು ಈಗಲೇ ರಾಜಕುಮಾರ ರಾಮರನ್ನು ಕರೆತರುತ್ತೇನೆ."
+      }
+    },
+    {
+      "scene": "ay-p016-s2",
+      "page": 16,
+      "field": "text",
+      "finding": "Preserve Sita’s respectful spousal address in each language.",
+      "source": "2.26",
+      "before": {
+        "hi": "आर्यपुत्र, क्या हुआ? आप उदास क्यों हैं?",
+        "en": "What has happened? Why are you troubled?",
+        "gu": "આર્યપુત્ર, શું થયું? તમે ઉદાસ કેમ છો?",
+        "kn": "ಆರ್ಯಪುತ್ರ, ಏನಾಯಿತು? ಏಕೆ ಚಿಂತಿತರಾಗಿದ್ದೀರಿ?"
+      },
+      "after": {
+        "hi": "आर्यपुत्र, क्या हुआ? आप उदास क्यों हैं?",
+        "en": "My lord, what has happened? Why are you troubled?",
+        "gu": "આર્યપુત્ર, શું થયું? તમે ઉદાસ કેમ છો?",
+        "kn": "ಆರ್ಯಪುತ್ರರೇ, ಏನಾಯಿತು? ಏಕೆ ಚಿಂತಿತರಾಗಿದ್ದೀರಿ?"
+      }
+    },
+    {
+      "scene": "ay-p023-s2",
+      "page": 23,
+      "field": "text",
+      "finding": "Name the bark wrap being discussed, with a respectful spousal address.",
+      "source": "2.37.12",
+      "before": {
+        "hi": "इसे कैसे बाँधूँ?",
+        "en": "How do I fasten this?",
+        "gu": "આ કેવી રીતે બાંધું?",
+        "kn": "ಇದನ್ನು ಹೇಗೆ ಕಟ್ಟಿಕೊಳ್ಳಲಿ?"
+      },
+      "after": {
+        "hi": "आर्यपुत्र, यह वल्कल कैसे बाँधूँ?",
+        "en": "My lord, how do I fasten this bark wrap?",
+        "gu": "આર્યપુત્ર, આ વલ્કલ કેવી રીતે બાંધું?",
+        "kn": "ಆರ್ಯಪುತ್ರರೇ, ಈ ತೊಗಟೆಯ ಉಡುಗೆಯನ್ನು ಹೇಗೆ ಕಟ್ಟಿಕೊಳ್ಳಲಿ?"
+      }
+    },
+    {
+      "scene": "ay-p043-s1",
+      "page": 43,
+      "field": "text",
+      "finding": "Replace an awkward place-as-subject sentence with the arriving brothers.",
+      "source": "2.71",
+      "before": {
+        "hi": "सात रातों की यात्रा के बाद अयोध्या आई।",
+        "en": "After seven nights of travel, they reached Ayodhya.",
+        "gu": "સાત રાતની યાત્રા પછી અયોધ્યા આવ્યું.",
+        "kn": "ಏಳು ರಾತ್ರಿಗಳ ಪ್ರಯಾಣದ ಬಳಿಕ ಅಯೋಧ್ಯೆ ತಲುಪಿದರು."
+      },
+      "after": {
+        "hi": "सात रातों की यात्रा के बाद दोनों भाई अयोध्या पहुँचे।",
+        "en": "After seven nights of travel, the brothers reached Ayodhya.",
+        "gu": "સાત રાતની યાત્રા પછી બંને ભાઈઓ અયોધ્યા પહોંચ્યા.",
+        "kn": "ಏಳು ರಾತ್ರಿಗಳ ಪ್ರಯಾಣದ ಬಳಿಕ ಸಹೋದರರು ಅಯೋಧ್ಯೆ ತಲುಪಿದರು."
+      }
+    }
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "pageId": "ay-page-001",
+      "sourceSargas": [
+        1
+      ],
+      "sceneIds": [
+        "ay-p001-s1",
+        "ay-p001-s2",
+        "ay-p001-s3"
+      ],
+      "principalBeats": [
+        "Bharata and Shatrughna remain with their maternal family, continuing the end of Balakanda",
+        "Rama listens to citizens and serves under Dasharatha",
+        "The aging king considers giving Rama the responsibilities of crown prince"
+      ],
+      "nextPageConnection": "Dasharatha asks the assembled representatives whether Rama should be crown prince",
+      "findings": [
+        "Define the absent brothers before their later return.",
+        "Establish Ayodhya and Rama’s service before the succession proposal.",
+        "Identify Dasharatha and his motive."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 2,
+      "pageId": "ay-page-002",
+      "sourceSargas": [
+        2
+      ],
+      "sceneIds": [
+        "ay-p002-s1",
+        "ay-p002-s2"
+      ],
+      "principalBeats": [
+        "Dasharatha asks the assembled representatives whether Rama should be crown prince",
+        "The assembly agrees and explains its trust in Rama"
+      ],
+      "nextPageConnection": "Dasharatha commissions the rites and counsels Rama on self-control and public welfare",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 3,
+      "pageId": "ay-page-003",
+      "sourceSargas": [
+        3,
+        4
+      ],
+      "sceneIds": [
+        "ay-p003-s1",
+        "ay-p003-s2",
+        "ay-p003-s3"
+      ],
+      "principalBeats": [
+        "Dasharatha commissions the rites and counsels Rama on self-control and public welfare",
+        "Rama receives the announcement that the ceremony will be tomorrow",
+        "Kaushalya blesses Rama while Lakshmana stands beside him"
+      ],
+      "nextPageConnection": "Vashishtha instructs Rama and Sita in the night's observance",
+      "findings": [
+        "Introduce Kaushalya as Rama’s mother."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 4,
+      "pageId": "ay-page-004",
+      "sourceSargas": [
+        5,
+        6
+      ],
+      "sceneIds": [
+        "ay-p004-s1",
+        "ay-p004-s2",
+        "ay-p004-s3"
+      ],
+      "principalBeats": [
+        "Vashishtha instructs Rama and Sita in the night's observance",
+        "Rama and Sita keep the night's sacred observance",
+        "Ayodhya decorates its streets and welcomes visitors before sunrise"
+      ],
+      "nextPageConnection": "Earlier that day, Manthara hears of Rama's anointing and sees the festive streets",
+      "findings": [
+        "Introduce Vashishtha’s role before his instruction."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 5,
+      "pageId": "ay-page-005",
+      "sourceSargas": [
+        7
+      ],
+      "sceneIds": [
+        "ay-p005-s1",
+        "ay-p005-s2",
+        "ay-p005-s3"
+      ],
+      "principalBeats": [
+        "Earlier that day, Manthara hears of Rama's anointing and sees the festive streets",
+        "She brings the news of Rama's proposed anointing to Kaikeyi",
+        "Kaikeyi is delighted for Rama and offers Manthara a jewel"
+      ],
+      "nextPageConnection": "Manthara refuses the reward and warns that Bharata could lose his place",
+      "findings": [
+        "Identify Kaikeyi as Bharata’s mother; keep the earlier-day cue."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 6,
+      "pageId": "ay-page-006",
+      "sourceSargas": [
+        8,
+        9
+      ],
+      "sceneIds": [
+        "ay-p006-s1",
+        "ay-p006-s2",
+        "ay-p006-s3",
+        "ay-p006-s4"
+      ],
+      "principalBeats": [
+        "Manthara refuses the reward and warns that Bharata could lose his place",
+        "Kaikeyi initially defends Rama's love for all his brothers",
+        "Manthara recalls the two unclaimed boons from Dasharatha",
+        "Kaikeyi accepts the plan and resolves to ask for them"
+      ],
+      "nextPageConnection": "Kaikeyi removes her ornaments and waits in the chamber of anger",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 7,
+      "pageId": "ay-page-007",
+      "sourceSargas": [
+        9,
+        10,
+        11
+      ],
+      "sceneIds": [
+        "ay-p007-s1",
+        "ay-p007-s2",
+        "ay-p007-s3",
+        "ay-p007-s4"
+      ],
+      "principalBeats": [
+        "Kaikeyi removes her ornaments and waits in the chamber of anger",
+        "Dasharatha arrives and asks why she is distressed",
+        "She asks him to fulfil his old promise and he assures her",
+        "Dasharatha explicitly reaffirms that he will fulfil the two promised boons before he hears the demands"
+      ],
+      "nextPageConnection": "Kaikeyi asks that Bharata be anointed crown prince",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 8,
+      "pageId": "ay-page-008",
+      "sourceSargas": [
+        11
+      ],
+      "sceneIds": [
+        "ay-p008-s1",
+        "ay-p008-s2"
+      ],
+      "principalBeats": [
+        "Kaikeyi asks that Bharata be anointed crown prince",
+        "She asks that Rama live in the forest for fourteen years"
+      ],
+      "nextPageConnection": "Dasharatha reels at the demands and begs her to change them",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 9,
+      "pageId": "ay-page-009",
+      "sourceSargas": [
+        12,
+        13
+      ],
+      "sceneIds": [
+        "ay-p009-s1",
+        "ay-p009-s2",
+        "ay-p009-s3"
+      ],
+      "principalBeats": [
+        "Dasharatha reels at the demands and begs her to change them",
+        "Kaikeyi insists that he keep his promise",
+        "The king remains beside her through a grief-stricken night"
+      ],
+      "nextPageConnection": "Vashishtha arrives with preparations as the city waits for the ceremony",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 10,
+      "pageId": "ay-page-010",
+      "sourceSargas": [
+        14,
+        15
+      ],
+      "sceneIds": [
+        "ay-p010-s1",
+        "ay-p010-s2",
+        "ay-p010-s3"
+      ],
+      "principalBeats": [
+        "Vashishtha arrives with preparations as the city waits for the ceremony",
+        "Sumantra finds the king distressed and receives the summons for Rama",
+        "Sumantra reaches Rama's residence"
+      ],
+      "nextPageConnection": "Sumantra tells Rama that the king has called him",
+      "findings": [
+        "Introduce Sumantra before the summons.",
+        "A court officer refers respectfully to the prince."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 11,
+      "pageId": "ay-page-011",
+      "sourceSargas": [
+        16,
+        17
+      ],
+      "sceneIds": [
+        "ay-p011-s1",
+        "ay-p011-s2",
+        "ay-p011-s3"
+      ],
+      "principalBeats": [
+        "Sumantra tells Rama that the king has called him",
+        "Rama takes leave of Sita and travels with Lakshmana",
+        "Citizens bless him as he approaches Kaikeyi's palace"
+      ],
+      "nextPageConnection": "Rama greets Dasharatha and Kaikeyi and sees his father weeping",
+      "findings": [
+        "Use respectful references to the father in the son’s speech."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 12,
+      "pageId": "ay-page-012",
+      "sourceSargas": [
+        18
+      ],
+      "sceneIds": [
+        "ay-p012-s1",
+        "ay-p012-s2",
+        "ay-p012-s3"
+      ],
+      "principalBeats": [
+        "Rama greets Dasharatha and Kaikeyi and sees his father weeping",
+        "Rama asks what has caused his father's distress",
+        "Kaikeyi explains both boons and the fourteen-year forest exile"
+      ],
+      "nextPageConnection": "Rama accepts exile and asks that his father's promise be kept",
+      "findings": [
+        "Use respectful references to the father in the son’s speech."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 13,
+      "pageId": "ay-page-013",
+      "sourceSargas": [
+        19,
+        20
+      ],
+      "sceneIds": [
+        "ay-p013-s1",
+        "ay-p013-s2",
+        "ay-p013-s3",
+        "ay-p013-s4"
+      ],
+      "principalBeats": [
+        "Rama accepts exile and asks that his father's promise be kept",
+        "He bows to Dasharatha and Kaikeyi before leaving",
+        "Rama tells Kaushalya why he cannot receive the anointing",
+        "Kaushalya sinks in grief and Rama supports her"
+      ],
+      "nextPageConnection": "Lakshmana protests the injustice and urges resistance",
+      "findings": [
+        "Show the move from Kaikeyi’s chamber to Kaushalya.",
+        "Use respectful references to the father in the son’s speech."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 14,
+      "pageId": "ay-page-014",
+      "sourceSargas": [
+        21,
+        22,
+        23
+      ],
+      "sceneIds": [
+        "ay-p014-s1",
+        "ay-p014-s2",
+        "ay-p014-s3",
+        "ay-p014-s4"
+      ],
+      "principalBeats": [
+        "Lakshmana protests the injustice and urges resistance",
+        "Rama refuses to seize power against his father's word",
+        "Lakshmana argues for human effort rather than surrender to fate",
+        "Rama asks him to set aside anger and end the anointing preparations"
+      ],
+      "nextPageConnection": "Kaushalya asks to accompany her son",
+      "findings": [
+        "Introduce Lakshmana as the younger brother before his protest.",
+        "Use the speaker’s actual family relationship or respectful address. ",
+        "Use the speaker’s actual family relationship or respectful address. ",
+        "Use respectful references to the father in the son’s speech."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 15,
+      "pageId": "ay-page-015",
+      "sourceSargas": [
+        24,
+        25
+      ],
+      "sceneIds": [
+        "ay-p015-s1",
+        "ay-p015-s2",
+        "ay-p015-s3"
+      ],
+      "principalBeats": [
+        "Kaushalya asks to accompany her son",
+        "Rama asks her to stay and support Dasharatha",
+        "She grants permission and gives her blessing for his journey"
+      ],
+      "nextPageConnection": "Sita notices that Rama has returned without the ceremonial joy",
+      "findings": [
+        "Use respectful references to the father in the son’s speech."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 16,
+      "pageId": "ay-page-016",
+      "sourceSargas": [
+        26
+      ],
+      "sceneIds": [
+        "ay-p016-s1",
+        "ay-p016-s2",
+        "ay-p016-s3"
+      ],
+      "principalBeats": [
+        "Sita notices that Rama has returned without the ceremonial joy",
+        "She asks what has happened",
+        "Rama tells her about exile and asks her to remain in Ayodhya"
+      ],
+      "nextPageConnection": "Sita insists that she will share Rama's life in the forest",
+      "findings": [
+        "Preserve Sita’s respectful spousal address in each language."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 17,
+      "pageId": "ay-page-017",
+      "sourceSargas": [
+        27,
+        28,
+        29
+      ],
+      "sceneIds": [
+        "ay-p017-s1",
+        "ay-p017-s2",
+        "ay-p017-s3",
+        "ay-p017-s4"
+      ],
+      "principalBeats": [
+        "Sita insists that she will share Rama's life in the forest",
+        "Rama describes rough paths, wild animals and a life of little comfort",
+        "Sita answers that hardship together is preferable to separation",
+        "Rama hears her resolve"
+      ],
+      "nextPageConnection": "Sita continues her appeal and Rama comforts her",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 18,
+      "pageId": "ay-page-018",
+      "sourceSargas": [
+        30
+      ],
+      "sceneIds": [
+        "ay-p018-s1",
+        "ay-p018-s2",
+        "ay-p018-s3"
+      ],
+      "principalBeats": [
+        "Sita continues her appeal and Rama comforts her",
+        "Rama agrees that she may accompany him",
+        "They prepare to give away possessions before leaving"
+      ],
+      "nextPageConnection": "Lakshmana asks to accompany Rama and Sita",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 19,
+      "pageId": "ay-page-019",
+      "sourceSargas": [
+        31
+      ],
+      "sceneIds": [
+        "ay-p019-s1",
+        "ay-p019-s2",
+        "ay-p019-s3",
+        "ay-p019-s4"
+      ],
+      "principalBeats": [
+        "Lakshmana asks to accompany Rama and Sita",
+        "Rama worries about the care of their mothers",
+        "Lakshmana explains why their care can be entrusted to the family and Rama agrees",
+        "Lakshmana brings the weapons kept with their preceptor"
+      ],
+      "nextPageConnection": "Rama and Sita give belongings to teachers, friends and attendants",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. ",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 20,
+      "pageId": "ay-page-020",
+      "sourceSargas": [
+        32
+      ],
+      "sceneIds": [
+        "ay-p020-s1",
+        "ay-p020-s2",
+        "ay-p020-s2b",
+        "ay-p020-s3",
+        "ay-p020-s4"
+      ],
+      "principalBeats": [
+        "Rama and Sita give belongings to teachers, friends and attendants",
+        "Introduce the elderly poor Brahmin Trijata seeking help for his family",
+        "Rama playfully tests his strength with the staff challenge; Trijata throws the staff across the Sarayu",
+        "Rama grants the cows and Trijata blesses him",
+        "Rama makes provision for dependants and asks servants to care for the residences"
+      ],
+      "nextPageConnection": "The three walk through sorrowing citizens towards the king",
+      "findings": [
+        "Replace an ambiguous pronoun with the donors’ names.",
+        "Trijata appears without identity, motive or arrival.",
+        "Make the shift from Trijata’s gift back to the household attendants explicit.",
+        "Clarify which homes the attendants should guard.",
+        "Explain the staff challenge as a playful test rather than an arbitrary condition.",
+        "Show the action between the challenge and its reward.",
+        "Complete the gift and its response in the pictured blessing scene.",
+        "Use the speaker’s actual family relationship or respectful address. ",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 21,
+      "pageId": "ay-page-021",
+      "sourceSargas": [
+        33,
+        34
+      ],
+      "sceneIds": [
+        "ay-p021-s1",
+        "ay-p021-s2",
+        "ay-p021-s3"
+      ],
+      "principalBeats": [
+        "The three walk through sorrowing citizens towards the king",
+        "Rama asks Dasharatha for permission to depart",
+        "Dasharatha pleads for one more night but Rama holds to the departure"
+      ],
+      "nextPageConnection": "Sumantra and Siddhartha protest the unjust exile",
+      "findings": [
+        "Answer Dasharatha’s request to stay the night before the next dispute.",
+        "Use respectful references to the father in the son’s speech."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 22,
+      "pageId": "ay-page-022",
+      "sourceSargas": [
+        35,
+        36,
+        37
+      ],
+      "sceneIds": [
+        "ay-p022-s1",
+        "ay-p022-s1b",
+        "ay-p022-s2",
+        "ay-p022-s3"
+      ],
+      "principalBeats": [
+        "Sumantra and Siddhartha protest the unjust exile",
+        "Dasharatha explicitly proposes sending wealth and an army with Rama",
+        "Dasharatha proposes sending supplies and an escort but Kaikeyi objects",
+        "Rama says he needs the simple means of forest life and does not seek a royal retinue"
+      ],
+      "nextPageConnection": "Rama and Lakshmana take bark garments",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 23,
+      "pageId": "ay-page-023",
+      "sourceSargas": [
+        37,
+        38
+      ],
+      "sceneIds": [
+        "ay-p023-s1",
+        "ay-p023-s2",
+        "ay-p023-s3",
+        "ay-p023-s4"
+      ],
+      "principalBeats": [
+        "Rama and Lakshmana take bark garments",
+        "Sita does not know how to fasten hers",
+        "Rama helps tie it over her silk clothing",
+        "Vashishtha and Dasharatha object to imposing this hardship on Sita"
+      ],
+      "nextPageConnection": "Sumantra readies the chariot and Sita receives provisions and ornaments",
+      "findings": [
+        "Explain why Sita does not continue wearing the bark wrap.",
+        "Name the bark wrap being discussed, with a respectful spousal address."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 24,
+      "pageId": "ay-page-024",
+      "sourceSargas": [
+        39,
+        40
+      ],
+      "sceneIds": [
+        "ay-p024-s1",
+        "ay-p024-s2",
+        "ay-p024-s3",
+        "ay-p024-s4"
+      ],
+      "principalBeats": [
+        "Sumantra readies the chariot and Sita receives provisions and ornaments",
+        "Kaushalya embraces Sita and gives parting counsel",
+        "Sumitra asks Lakshmana to care for Rama and Sita",
+        "The three bow to the elders and mount the chariot"
+      ],
+      "nextPageConnection": "The chariot moves as citizens and the royal parents follow in grief",
+      "findings": [
+        "Account for the departure clothes and provisions rather than implying a random royal-costume reset.",
+        "Identify Sumitra’s relationship before her farewell counsel."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 25,
+      "pageId": "ay-page-025",
+      "sourceSargas": [
+        40,
+        41,
+        42
+      ],
+      "sceneIds": [
+        "ay-p025-s1",
+        "ay-p025-s2",
+        "ay-p025-s3",
+        "ay-p025-s4"
+      ],
+      "principalBeats": [
+        "The chariot moves as citizens and the royal parents follow in grief",
+        "Rama asks Sumantra to drive on because the farewell is unbearable",
+        "The dust disappears and Dasharatha collapses",
+        "Kaushalya and attendants help the king return"
+      ],
+      "nextPageConnection": "Kaushalya laments Rama's departure",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 26,
+      "pageId": "ay-page-026",
+      "sourceSargas": [
+        43,
+        44
+      ],
+      "sceneIds": [
+        "ay-p026-s1",
+        "ay-p026-s2",
+        "ay-p026-s3"
+      ],
+      "principalBeats": [
+        "Kaushalya laments Rama's departure",
+        "Sumitra reminds her of Rama's strength and Lakshmana's devotion",
+        "The mothers find what comfort they can together"
+      ],
+      "nextPageConnection": "Rama asks the following citizens to return and support the royal family",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 27,
+      "pageId": "ay-page-027",
+      "sourceSargas": [
+        45,
+        46
+      ],
+      "sceneIds": [
+        "ay-p027-s1",
+        "ay-p027-s2",
+        "ay-p027-s3"
+      ],
+      "principalBeats": [
+        "Rama asks the following citizens to return and support the royal family",
+        "They continue with him and reach the Tamasa",
+        "The travellers and citizens rest beside the river that night"
+      ],
+      "nextPageConnection": "Before dawn Rama decides to leave without prolonging the citizens' hardship",
+      "findings": [
+        "Use respectful references to the father in the son’s speech."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 28,
+      "pageId": "ay-page-028",
+      "sourceSargas": [
+        46,
+        47,
+        48
+      ],
+      "sceneIds": [
+        "ay-p028-s1",
+        "ay-p028-s2",
+        "ay-p028-s3",
+        "ay-p028-s4"
+      ],
+      "principalBeats": [
+        "Before dawn Rama decides to leave without prolonging the citizens' hardship",
+        "Sumantra first disguises the direction of their tracks and then drives onwards",
+        "The citizens wake and search for the chariot tracks",
+        "Unable to follow, they return to the grieving city"
+      ],
+      "nextPageConnection": "The chariot crosses successive rivers and villages",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 29,
+      "pageId": "ay-page-029",
+      "sourceSargas": [
+        49,
+        50
+      ],
+      "sceneIds": [
+        "ay-p029-s1",
+        "ay-p029-s2",
+        "ay-p029-s3"
+      ],
+      "principalBeats": [
+        "The chariot crosses successive rivers and villages",
+        "Rama takes leave of the country of his birth",
+        "At the Ganga, Guha, ruler of the Nishadas and Rama's friend, welcomes them"
+      ],
+      "nextPageConnection": "Guha offers hospitality and Rama asks particularly that the horses be fed",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 30,
+      "pageId": "ay-page-030",
+      "sourceSargas": [
+        50,
+        51
+      ],
+      "sceneIds": [
+        "ay-p030-s1",
+        "ay-p030-s2",
+        "ay-p030-s3",
+        "ay-p030-s4"
+      ],
+      "principalBeats": [
+        "Guha offers hospitality and Rama asks particularly that the horses be fed",
+        "Rama and Sita rest on a bed of grass",
+        "Guha offers to stand guard while Lakshmana rests",
+        "Lakshmana chooses to keep watch and speaks of concern for the family"
+      ],
+      "nextPageConnection": "Rama sends Sumantra back with messages for the family",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 31,
+      "pageId": "ay-page-031",
+      "sourceSargas": [
+        52
+      ],
+      "sceneIds": [
+        "ay-p031-s1",
+        "ay-p031-s2",
+        "ay-p031-s3",
+        "ay-p031-s4"
+      ],
+      "principalBeats": [
+        "Rama sends Sumantra back with messages for the family",
+        "Guha supplies banyan latex and the brothers bind their hair into matted locks",
+        "Guha's boat carries Rama, Sita and Lakshmana across the Ganga",
+        "Sita offers a prayer and they disembark on the far bank"
+      ],
+      "nextPageConnection": "Beyond the Ganga the three rest under a tree",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 32,
+      "pageId": "ay-page-032",
+      "sourceSargas": [
+        53
+      ],
+      "sceneIds": [
+        "ay-p032-s1",
+        "ay-p032-s2",
+        "ay-p032-s3"
+      ],
+      "principalBeats": [
+        "Beyond the Ganga the three rest under a tree",
+        "Rama worries about the mothers and suggests that Lakshmana return",
+        "Lakshmana asks to stay and Rama accepts his companionship"
+      ],
+      "nextPageConnection": "The three reach Bharadwaja's hermitage at the meeting of the rivers",
+      "findings": [
+        "Replace the unclear first-night-alone phrase with the actual new setting.",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 33,
+      "pageId": "ay-page-033",
+      "sourceSargas": [
+        54
+      ],
+      "sceneIds": [
+        "ay-p033-s1",
+        "ay-p033-s2",
+        "ay-p033-s3"
+      ],
+      "principalBeats": [
+        "The three reach Bharadwaja's hermitage at the meeting of the rivers",
+        "The sage welcomes them and hears Rama's situation",
+        "He recommends Chitrakuta as a place to live"
+      ],
+      "nextPageConnection": "Bharadwaja explains the onward route",
+      "findings": [
+        "Introduce Bharadwaja as a sage and name the confluence."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 34,
+      "pageId": "ay-page-034",
+      "sourceSargas": [
+        55
+      ],
+      "sceneIds": [
+        "ay-p034-s1",
+        "ay-p034-s2",
+        "ay-p034-s3",
+        "ay-p034-s4"
+      ],
+      "principalBeats": [
+        "Bharadwaja explains the onward route",
+        "The brothers build a raft and ferry Sita across the Yamuna",
+        "Sita prays at the river and the Shyama tree",
+        "They continue through the forest and rest for the night"
+      ],
+      "nextPageConnection": "They reach Chitrakuta and visit Valmiki's hermitage",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 35,
+      "pageId": "ay-page-035",
+      "sourceSargas": [
+        56
+      ],
+      "sceneIds": [
+        "ay-p035-s1",
+        "ay-p035-s2",
+        "ay-p035-s3",
+        "ay-p035-s4"
+      ],
+      "principalBeats": [
+        "They reach Chitrakuta and visit Valmiki's hermitage",
+        "Rama asks Lakshmana to build a leaf hut",
+        "Lakshmana completes the shelter",
+        "After the prescribed rites the three enter their forest home"
+      ],
+      "nextPageConnection": "Meanwhile Sumantra returns to Ayodhya in the empty chariot",
+      "findings": [
+        "Give Valmiki’s role on his first appearance."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 36,
+      "pageId": "ay-page-036",
+      "sourceSargas": [
+        57,
+        58
+      ],
+      "sceneIds": [
+        "ay-p036-s1",
+        "ay-p036-s2",
+        "ay-p036-s3"
+      ],
+      "principalBeats": [
+        "Meanwhile Sumantra returns to Ayodhya in the empty chariot",
+        "Dasharatha and Kaushalya ask for news of the travellers",
+        "Sumantra delivers Rama's reassuring messages and Lakshmana's anguished protest"
+      ],
+      "nextPageConnection": "Sumantra describes the departure and tries to reassure Kaushalya",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 37,
+      "pageId": "ay-page-037",
+      "sourceSargas": [
+        59,
+        60,
+        61,
+        62
+      ],
+      "sceneIds": [
+        "ay-p037-s1",
+        "ay-p037-s2",
+        "ay-p037-s3",
+        "ay-p037-s4"
+      ],
+      "principalBeats": [
+        "Sumantra describes the departure and tries to reassure Kaushalya",
+        "Kaushalya reproaches Dasharatha for sending Rama away",
+        "The exhausted king asks for understanding",
+        "Kaushalya regrets her harsh words and sits beside him as night falls"
+      ],
+      "nextPageConnection": "Dasharatha tells Kaushalya that an old act has returned to his mind",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 38,
+      "pageId": "ay-page-038",
+      "sourceSargas": [
+        63
+      ],
+      "sceneIds": [
+        "ay-p038-s1",
+        "ay-p038-s2",
+        "ay-p038-s3",
+        "ay-p038-s4"
+      ],
+      "principalBeats": [
+        "Dasharatha tells Kaushalya that an old act has returned to his mind",
+        "In an explicitly earlier-life scene the young prince shoots towards a sound he mistakes for an animal",
+        "He finds a young ascetic wounded beside his water vessel",
+        "The boy asks him to take water to his blind parents and dies"
+      ],
+      "nextPageConnection": "Still in Dasharatha's recollection, he carries water to the waiting parents",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 39,
+      "pageId": "ay-page-039",
+      "sourceSargas": [
+        64
+      ],
+      "sceneIds": [
+        "ay-p039-s1",
+        "ay-p039-s2",
+        "ay-p039-s3",
+        "ay-p039-s4",
+        "ay-p039-s5"
+      ],
+      "principalBeats": [
+        "Still in Dasharatha's recollection, he carries water to the waiting parents",
+        "He confesses the mistaken shot and leads them to their son",
+        "The parents mourn and perform the rites",
+        "The father foretells that Dasharatha too will die grieving separation from a son",
+        "After their farewell and mourning, the bereaved parents also pass away; portray the aftermath with dignity and no graphic act"
+      ],
+      "nextPageConnection": "The story returns explicitly to the older Dasharatha beside Kaushalya",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 40,
+      "pageId": "ay-page-040",
+      "sourceSargas": [
+        64,
+        65
+      ],
+      "sceneIds": [
+        "ay-p040-s1",
+        "ay-p040-s2",
+        "ay-p040-s3"
+      ],
+      "principalBeats": [
+        "The story returns explicitly to the older Dasharatha beside Kaushalya",
+        "Calling for Rama, Dasharatha dies in the night",
+        "At dawn the household discovers his death and the queens grieve"
+      ],
+      "nextPageConnection": "The king's body is preserved while his absent sons are summoned",
+      "findings": [
+        "Connect the remembered curse with the return to present grief."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 41,
+      "pageId": "ay-page-041",
+      "sourceSargas": [
+        66,
+        67,
+        68
+      ],
+      "sceneIds": [
+        "ay-p041-s1",
+        "ay-p041-s2",
+        "ay-p041-s3"
+      ],
+      "principalBeats": [
+        "The king's body is preserved while his absent sons are summoned",
+        "The ministers and sages discuss the need for leadership",
+        "Vashishtha sends messengers to fetch Bharata and Shatrughna from Kekaya"
+      ],
+      "nextPageConnection": "In Kekaya, Bharata wakes troubled by a frightening dream",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 42,
+      "pageId": "ay-page-042",
+      "sourceSargas": [
+        69,
+        70
+      ],
+      "sceneIds": [
+        "ay-p042-s1",
+        "ay-p042-s2",
+        "ay-p042-s3"
+      ],
+      "principalBeats": [
+        "At his maternal home, Bharata is disturbed by an ominous dream",
+        "Messengers summon Bharata urgently, withholding the exile and death under their instructions",
+        "Bharata and Shatrughna take leave of their maternal family"
+      ],
+      "nextPageConnection": "After seven nights of travel the brothers reach a quiet Ayodhya",
+      "findings": [
+        "Mark Bharata’s location and that the dream precedes the messengers’ arrival.",
+        "Connect the summons to the arriving messengers.",
+        "Explain why Bharata does not yet know of the death/exile."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 43,
+      "pageId": "ay-page-043",
+      "sourceSargas": [
+        71,
+        72
+      ],
+      "sceneIds": [
+        "ay-p043-s1",
+        "ay-p043-s2",
+        "ay-p043-s3",
+        "ay-p043-s4"
+      ],
+      "principalBeats": [
+        "After seven nights of travel the brothers reach a quiet Ayodhya",
+        "Bharata asks why the city has lost its joy",
+        "Unable to find Dasharatha, he asks Kaikeyi where his father is",
+        "Kaikeyi tells him of the king's death"
+      ],
+      "nextPageConnection": "Bharata asks about Rama and learns of the exile and the two boons",
+      "findings": [
+        "Replace an awkward place-as-subject sentence with the arriving brothers."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 44,
+      "pageId": "ay-page-044",
+      "sourceSargas": [
+        72,
+        73,
+        74
+      ],
+      "sceneIds": [
+        "ay-p044-s1",
+        "ay-p044-s2",
+        "ay-p044-s3"
+      ],
+      "principalBeats": [
+        "Bharata asks about Rama and learns of the exile and the two boons",
+        "Kaikeyi urges him to accept the throne",
+        "He rejects her plan and declares that he will bring Rama back"
+      ],
+      "nextPageConnection": "Bharata and Shatrughna approach Kaushalya",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. ",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 45,
+      "pageId": "ay-page-045",
+      "sourceSargas": [
+        75
+      ],
+      "sceneIds": [
+        "ay-p045-s1",
+        "ay-p045-s2",
+        "ay-p045-s3"
+      ],
+      "principalBeats": [
+        "Bharata and Shatrughna approach Kaushalya",
+        "She fears that Bharata wanted the kingdom",
+        "Bharata declares his innocence and Kaushalya embraces him"
+      ],
+      "nextPageConnection": "Vashishtha asks Bharata to perform Dasharatha's funeral",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 46,
+      "pageId": "ay-page-046",
+      "sourceSargas": [
+        76,
+        77
+      ],
+      "sceneIds": [
+        "ay-p046-s1",
+        "ay-p046-s2",
+        "ay-p046-s3"
+      ],
+      "principalBeats": [
+        "Vashishtha asks Bharata to perform Dasharatha's funeral",
+        "The royal family and citizens accompany the last rites at the Sarayu",
+        "After the prescribed days of mourning, the brothers complete the remaining rites together"
+      ],
+      "nextPageConnection": "Shatrughna seizes Manthara in anger over the calamity",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 47,
+      "pageId": "ay-page-047",
+      "sourceSargas": [
+        78
+      ],
+      "sceneIds": [
+        "ay-p047-s1",
+        "ay-p047-s2",
+        "ay-p047-s3"
+      ],
+      "principalBeats": [
+        "Shatrughna is angry at Manthara because she helped bring about Rama’s exile",
+        "Kaikeyi appeals for her safety",
+        "Bharata intervenes and Shatrughna releases her"
+      ],
+      "nextPageConnection": "The ministers ask Bharata to accept royal authority",
+      "findings": [
+        "Give the cause of Shatrughna’s anger before he seizes Manthara."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 48,
+      "pageId": "ay-page-048",
+      "sourceSargas": [
+        79,
+        80
+      ],
+      "sceneIds": [
+        "ay-p048-s1",
+        "ay-p048-s2",
+        "ay-p048-s3"
+      ],
+      "principalBeats": [
+        "The ministers ask Bharata to accept royal authority",
+        "Bharata says the eldest brother should rule and resolves to fetch Rama",
+        "Workers prepare the route, wells and camps towards the forest"
+      ],
+      "nextPageConnection": "Bharata stops the royal music, refusing to be celebrated as king",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 49,
+      "pageId": "ay-page-049",
+      "sourceSargas": [
+        81,
+        82
+      ],
+      "sceneIds": [
+        "ay-p049-s1",
+        "ay-p049-s2",
+        "ay-p049-s3"
+      ],
+      "principalBeats": [
+        "Bharata stops the royal music, refusing to be celebrated as king",
+        "At the assembly he again refuses Vashishtha's offer of anointing",
+        "He orders the journey to bring Rama home and the family prepares to leave"
+      ],
+      "nextPageConnection": "Bharata's party, mothers, teachers and troops reach Shringaverapura",
+      "findings": [
+        "Explain why royal music appears after Bharata refused the throne.",
+        "Use the speaker’s actual family relationship or respectful address. ",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 50,
+      "pageId": "ay-page-050",
+      "sourceSargas": [
+        83,
+        84
+      ],
+      "sceneIds": [
+        "ay-p050-s1",
+        "ay-p050-s2",
+        "ay-p050-s3"
+      ],
+      "principalBeats": [
+        "Bharata's party, mothers, teachers and troops reach Shringaverapura",
+        "Guha sees the army and prepares to protect Rama if needed",
+        "He approaches Bharata with an offer of hospitality"
+      ],
+      "nextPageConnection": "Guha asks whether Bharata intends harm to Rama",
+      "findings": [
+        "Explain Guha’s suspicion before his order to prepare."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 51,
+      "pageId": "ay-page-051",
+      "sourceSargas": [
+        85
+      ],
+      "sceneIds": [
+        "ay-p051-s1",
+        "ay-p051-s2",
+        "ay-p051-s3"
+      ],
+      "principalBeats": [
+        "Guha asks whether Bharata intends harm to Rama",
+        "Bharata explains that he has come to ask Rama to return",
+        "Guha rejoices at Bharata's intention and offers guides"
+      ],
+      "nextPageConnection": "Guha explicitly recalls Lakshmana's night vigil and the three travellers' departure",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 52,
+      "pageId": "ay-page-052",
+      "sourceSargas": [
+        86,
+        87,
+        88
+      ],
+      "sceneIds": [
+        "ay-p052-s1",
+        "ay-p052-s2",
+        "ay-p052-s3",
+        "ay-p052-s4"
+      ],
+      "principalBeats": [
+        "Guha explicitly recalls Lakshmana's night vigil and the three travellers' departure",
+        "Back in the present Bharata sees the grass where Rama and Sita slept",
+        "He grieves at their hardship",
+        "He resolves to live simply too and seek Rama rather than take the throne"
+      ],
+      "nextPageConnection": "Guha's boatmen ferry the party and army across the Ganga",
+      "findings": [
+        "Give the reason for Guha’s earlier-night recollection.",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 53,
+      "pageId": "ay-page-053",
+      "sourceSargas": [
+        89,
+        90
+      ],
+      "sceneIds": [
+        "ay-p053-s1",
+        "ay-p053-s2",
+        "ay-p053-s3"
+      ],
+      "principalBeats": [
+        "Guha's boatmen ferry the party and army across the Ganga",
+        "Near Prayaga, Bharata leaves the troops outside the hermitage",
+        "He and Vashishtha approach Bharadwaja respectfully"
+      ],
+      "nextPageConnection": "Bharadwaja asks why Bharata has come to the forest",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 54,
+      "pageId": "ay-page-054",
+      "sourceSargas": [
+        90,
+        91
+      ],
+      "sceneIds": [
+        "ay-p054-s1",
+        "ay-p054-s2",
+        "ay-p054-s3",
+        "ay-p054-s4"
+      ],
+      "principalBeats": [
+        "Bharadwaja asks why Bharata has come to the forest",
+        "Bharata explains that he seeks Rama's return rather than power",
+        "The sage tells him Rama is at Chitrakuta",
+        "Bharadwaja offers extraordinary hospitality to the whole retinue"
+      ],
+      "nextPageConnection": "Next morning Bharadwaja gives the route towards Chitrakuta and the Mandakini",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 55,
+      "pageId": "ay-page-055",
+      "sourceSargas": [
+        92
+      ],
+      "sceneIds": [
+        "ay-p055-s1",
+        "ay-p055-s2",
+        "ay-p055-s3"
+      ],
+      "principalBeats": [
+        "Next morning Bharadwaja gives the route towards Chitrakuta and the Mandakini",
+        "Bharata introduces the three queens to the sage",
+        "The party takes leave and continues towards Rama"
+      ],
+      "nextPageConnection": "The party reaches the country around Chitrakuta",
+      "findings": [
+        "Frame the mother introductions rather than giving an unprompted answer.",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 56,
+      "pageId": "ay-page-056",
+      "sourceSargas": [
+        93
+      ],
+      "sceneIds": [
+        "ay-p056-s1",
+        "ay-p056-s2",
+        "ay-p056-s3"
+      ],
+      "principalBeats": [
+        "The party reaches the country around Chitrakuta",
+        "Scouts notice smoke suggesting an inhabited hermitage",
+        "Bharata asks that the troops halt so the forest is not disturbed"
+      ],
+      "nextPageConnection": "Meanwhile at Chitrakuta, Rama shows Sita the mountain, Mandakini and birds in one quiet continuous landscape moment",
+      "findings": [
+        "Identify the unnamed speaker’s scouting role before the report."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 57,
+      "pageId": "ay-page-057",
+      "sourceSargas": [
+        94,
+        95
+      ],
+      "sceneIds": [
+        "ay-p057-s1"
+      ],
+      "principalBeats": [
+        "Meanwhile at Chitrakuta, Rama shows Sita the mountain, Mandakini and birds in one quiet continuous landscape moment"
+      ],
+      "nextPageConnection": "Hearing a distant clamour, Rama asks Lakshmana to look",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 58,
+      "pageId": "ay-page-058",
+      "sourceSargas": [
+        96,
+        97
+      ],
+      "sceneIds": [
+        "ay-p058-s1",
+        "ay-p058-s2",
+        "ay-p058-s3",
+        "ay-p058-s4"
+      ],
+      "principalBeats": [
+        "Hearing a distant clamour, Rama asks Lakshmana to look",
+        "Lakshmana climbs a tree to identify the approaching party",
+        "Seeing Bharata's army, Lakshmana fears an attack",
+        "Rama rejects the suspicion and reassures Lakshmana of Bharata's love"
+      ],
+      "nextPageConnection": "Bharata keeps the army at a distance",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 59,
+      "pageId": "ay-page-059",
+      "sourceSargas": [
+        97,
+        98
+      ],
+      "sceneIds": [
+        "ay-p059-s1",
+        "ay-p059-s2",
+        "ay-p059-s3"
+      ],
+      "principalBeats": [
+        "Bharata keeps the army at a distance",
+        "He and a small group follow the signs of Rama's dwelling",
+        "The smoke and worn path lead them towards the leaf hut"
+      ],
+      "nextPageConnection": "Bharata sees Rama in forest dress and falls at his feet",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 60,
+      "pageId": "ay-page-060",
+      "sourceSargas": [
+        99
+      ],
+      "sceneIds": [
+        "ay-p060-s1",
+        "ay-p060-s2",
+        "ay-p060-s3"
+      ],
+      "principalBeats": [
+        "Bharata sees Rama in forest dress and falls at his feet",
+        "Shatrughna joins him and Rama raises them",
+        "The brothers embrace with Lakshmana and Sita nearby"
+      ],
+      "nextPageConnection": "Rama asks about their father, teachers and the people of Ayodhya",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 61,
+      "pageId": "ay-page-061",
+      "sourceSargas": [
+        100
+      ],
+      "sceneIds": [
+        "ay-p061-s1",
+        "ay-p061-s2",
+        "ay-p061-s3"
+      ],
+      "principalBeats": [
+        "Rama asks about their father, teachers and the people of Ayodhya",
+        "He asks whether ministers, farmers, soldiers and those in need are cared for",
+        "His questions remind Bharata that rulership is a duty of care"
+      ],
+      "nextPageConnection": "Rama asks why Bharata has come in ascetic dress",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 62,
+      "pageId": "ay-page-062",
+      "sourceSargas": [
+        101,
+        102
+      ],
+      "sceneIds": [
+        "ay-p062-s1",
+        "ay-p062-s2",
+        "ay-p062-s3",
+        "ay-p062-s4"
+      ],
+      "principalBeats": [
+        "Rama asks why Bharata has come in ascetic dress",
+        "Bharata rejects royal comforts without his elder brother and requests his return",
+        "Bharata tells Rama that Dasharatha has died",
+        "He asks Rama to offer their father's rites"
+      ],
+      "nextPageConnection": "Rama is overcome and the brothers support one another",
+      "findings": [
+        "Answer the ascetic-dress question as well as the purpose of the visit.",
+        "Use the speaker’s actual family relationship or respectful address. ",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 63,
+      "pageId": "ay-page-063",
+      "sourceSargas": [
+        103
+      ],
+      "sceneIds": [
+        "ay-p063-s1",
+        "ay-p063-s2",
+        "ay-p063-s3"
+      ],
+      "principalBeats": [
+        "Rama is overcome and the brothers support one another",
+        "Rama, Sita and Lakshmana mourn Dasharatha",
+        "At the Mandakini they offer water and forest food for the departed king"
+      ],
+      "nextPageConnection": "The queens see the simple offerings by the river and grieve",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 64,
+      "pageId": "ay-page-064",
+      "sourceSargas": [
+        104
+      ],
+      "sceneIds": [
+        "ay-p064-s1",
+        "ay-p064-s2",
+        "ay-p064-s3"
+      ],
+      "principalBeats": [
+        "The queens see the simple offerings by the river and grieve",
+        "Rama, Lakshmana and Sita bow to the mothers",
+        "Rama greets Vashishtha and the family sits together"
+      ],
+      "nextPageConnection": "Bharata offers the kingdom back to Rama",
+      "findings": [
+        "Connect the mothers’ arrival with the river offerings."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 65,
+      "pageId": "ay-page-065",
+      "sourceSargas": [
+        105
+      ],
+      "sceneIds": [
+        "ay-p065-s1",
+        "ay-p065-s2",
+        "ay-p065-s3"
+      ],
+      "principalBeats": [
+        "Bharata offers the kingdom back to Rama",
+        "Rama comforts him about loss and the passing of life",
+        "Rama says he must fulfil the exile while Bharata cares for the kingdom"
+      ],
+      "nextPageConnection": "Bharata argues that Rama is the rightful elder and asks him to reverse the exile",
+      "findings": [
+        "Explain why Rama turns from the throne appeal to consolation.",
+        "Use the speaker’s actual family relationship or respectful address. ",
+        "Use respectful references to the father in the son’s speech."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 66,
+      "pageId": "ay-page-066",
+      "sourceSargas": [
+        106,
+        107
+      ],
+      "sceneIds": [
+        "ay-p066-s1",
+        "ay-p066-s2",
+        "ay-p066-s3",
+        "ay-p066-s4"
+      ],
+      "principalBeats": [
+        "Bharata argues that Rama is the rightful elder and asks him to reverse the exile",
+        "Rama explains the promises binding their father, including Kaikeyi's boons",
+        "Rama asks Bharata to preserve their father's word",
+        "Bharata remains unwilling to return without him"
+      ],
+      "nextPageConnection": "Jabali, a counsellor, argues that Rama should accept the tangible duties of kingship",
+      "findings": [
+        "Name the known promise rather than alluding vaguely to unexplained older pledges.",
+        "Use the speaker’s actual family relationship or respectful address. ",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 67,
+      "pageId": "ay-page-067",
+      "sourceSargas": [
+        108,
+        109
+      ],
+      "sceneIds": [
+        "ay-p067-s1",
+        "ay-p067-s2",
+        "ay-p067-s3",
+        "ay-p067-s4"
+      ],
+      "principalBeats": [
+        "The court Brahmin Jabali argues that a departed father’s word need not bind Rama’s present life",
+        "Rama respectfully answers that his father’s death does not release him from his promise",
+        "Jabali explains that his argument was intended to persuade Rama home",
+        "Rama remains committed to the vow"
+      ],
+      "nextPageConnection": "Vashishtha recalls the Ikshvaku lineage and the eldest son's succession",
+      "findings": [
+        "Define Jabali’s court role in accessible terms.",
+        "Make the argument’s relation to Rama’s promise understandable.",
+        "Give a respectful, direct response to Jabali’s argument."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 68,
+      "pageId": "ay-page-068",
+      "sourceSargas": [
+        110,
+        111
+      ],
+      "sceneIds": [
+        "ay-p068-s1",
+        "ay-p068-s2",
+        "ay-p068-s3",
+        "ay-p068-s4"
+      ],
+      "principalBeats": [
+        "Vashishtha recalls the Ikshvaku lineage and the eldest son's succession",
+        "He asks Rama to honour the wishes of his mother and teacher",
+        "Rama replies that he cannot set aside his father's command",
+        "Bharata asks again that Rama return"
+      ],
+      "nextPageConnection": "Bharata prepares a vow of fasting to press his appeal",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. ",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 69,
+      "pageId": "ay-page-069",
+      "sourceSargas": [
+        111
+      ],
+      "sceneIds": [
+        "ay-p069-s1",
+        "ay-p069-s2",
+        "ay-p069-s2b",
+        "ay-p069-s3"
+      ],
+      "principalBeats": [
+        "Bharata prepares a vow of fasting to press his appeal",
+        "Rama asks him to abandon that course",
+        "Bharata explicitly offers to undergo the exile instead of Rama before Rama refuses the substitution",
+        "Bharata offers to serve the exile instead but Rama says a personal vow cannot be exchanged"
+      ],
+      "nextPageConnection": "The assembled sages ask Bharata to accept Rama's decision",
+      "findings": [
+        "Make Rama’s response specific to the fasting vow.",
+        "Explain why the exile cannot be exchanged instead of a bare refusal.",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 70,
+      "pageId": "ay-page-070",
+      "sourceSargas": [
+        112
+      ],
+      "sceneIds": [
+        "ay-p070-s1",
+        "ay-p070-s2",
+        "ay-p070-s3",
+        "ay-p070-s4"
+      ],
+      "principalBeats": [
+        "The assembled sages ask Bharata to accept Rama's decision",
+        "Rama assures Bharata that he can care for Ayodhya with wise counsel",
+        "After Rama remains firm, Bharata requests sandals as a symbol of his brother’s authority",
+        "Bharata promises to place the sandals on the throne and govern on Rama’s behalf"
+      ],
+      "nextPageConnection": "Rama places his feet upon the sandals and gives them to Bharata",
+      "findings": [
+        "Connect the sandals request to Rama’s unchanged decision.",
+        "Explain the sandals’ role in the coming regency in plain words.",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 71,
+      "pageId": "ay-page-071",
+      "sourceSargas": [
+        112
+      ],
+      "sceneIds": [
+        "ay-p071-s1",
+        "ay-p071-s2",
+        "ay-p071-s3"
+      ],
+      "principalBeats": [
+        "Rama places his feet upon the sandals and gives them to Bharata",
+        "Bharata receives them reverently and asks Rama to return when fourteen years end",
+        "Rama embraces the brothers and asks Bharata to care for Kaikeyi without anger"
+      ],
+      "nextPageConnection": "Bharata carries the sandals as the family leaves Chitrakuta",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 72,
+      "pageId": "ay-page-072",
+      "sourceSargas": [
+        113
+      ],
+      "sceneIds": [
+        "ay-p072-s1",
+        "ay-p072-s2",
+        "ay-p072-s3"
+      ],
+      "principalBeats": [
+        "Bharata carries the sandals as the family leaves Chitrakuta",
+        "He stops at Bharadwaja's hermitage and explains Rama's decision",
+        "The party continues back towards Ayodhya"
+      ],
+      "nextPageConnection": "Bharata enters the subdued city and the empty royal residence",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 73,
+      "pageId": "ay-page-073",
+      "sourceSargas": [
+        114,
+        115
+      ],
+      "sceneIds": [
+        "ay-p073-s1",
+        "ay-p073-s2",
+        "ay-p073-s3"
+      ],
+      "principalBeats": [
+        "Bharata enters the subdued city and the empty royal residence",
+        "He asks the elders to let him serve from Nandigrama",
+        "Vashishtha and the ministers agree and accompany him there"
+      ],
+      "nextPageConnection": "At Nandigrama, Bharata reverently installs the gold-decorated sandals in the empty seat of authority",
+      "findings": [
+        "Explain the purpose of moving to Nandigrama.",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 74,
+      "pageId": "ay-page-074",
+      "sourceSargas": [
+        115
+      ],
+      "sceneIds": [
+        "ay-p074-s1",
+        "ay-p074-s2"
+      ],
+      "principalBeats": [
+        "At Nandigrama, Bharata reverently installs the gold-decorated sandals in the empty seat of authority",
+        "In ascetic dress, Bharata conducts the kingdom's affairs in Rama's name, with Shatrughna and ministers"
+      ],
+      "nextPageConnection": "Back at Chitrakuta, Rama notices anxiety among the ascetics",
+      "findings": [
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 75,
+      "pageId": "ay-page-075",
+      "sourceSargas": [
+        116
+      ],
+      "sceneIds": [
+        "ay-p075-s1",
+        "ay-p075-s2",
+        "ay-p075-s3"
+      ],
+      "principalBeats": [
+        "Back at Chitrakuta, Rama notices anxiety among the ascetics",
+        "An elder explains that Khara's rakshasas harass their hermitages",
+        "The elder sage identifies Khara as a rakshasa whose followers harass the hermitages"
+      ],
+      "nextPageConnection": "The ascetics leave Chitrakuta",
+      "findings": [
+        "Introduce Khara’s identity before his followers drive the next move.",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 76,
+      "pageId": "ay-page-076",
+      "sourceSargas": [
+        116,
+        117
+      ],
+      "sceneIds": [
+        "ay-p076-s1",
+        "ay-p076-s2",
+        "ay-p076-s3"
+      ],
+      "principalBeats": [
+        "The ascetics leave Chitrakuta",
+        "Rama considers the disturbed setting and memories of the family's visit",
+        "Rama, Sita and Lakshmana set out to seek another hermitage"
+      ],
+      "nextPageConnection": "The travellers reach Atri's hermitage and are welcomed",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 77,
+      "pageId": "ay-page-077",
+      "sourceSargas": [
+        117
+      ],
+      "sceneIds": [
+        "ay-p077-s1",
+        "ay-p077-s2",
+        "ay-p077-s3"
+      ],
+      "principalBeats": [
+        "The travellers reach Atri's hermitage and are welcomed",
+        "Atri introduces his wife Anasuya and her long austerities",
+        "Sita approaches Anasuya and greets her respectfully"
+      ],
+      "nextPageConnection": "Anasuya speaks with Sita about commitment in married life",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 78,
+      "pageId": "ay-page-078",
+      "sourceSargas": [
+        117,
+        118
+      ],
+      "sceneIds": [
+        "ay-p078-s1",
+        "ay-p078-s2",
+        "ay-p078-s3"
+      ],
+      "principalBeats": [
+        "Anasuya speaks with Sita about commitment in married life",
+        "Sita answers Anasuya’s counsel with her commitment to stand by her husband through hardship",
+        "Anasuya is pleased and offers garments, adornments and garlands"
+      ],
+      "nextPageConnection": "Anasuya asks how Sita and Rama were married",
+      "findings": [
+        "Answer Anasuya’s counsel with Sita’s commitment, not just a vague memory."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 79,
+      "pageId": "ay-page-079",
+      "sourceSargas": [
+        118
+      ],
+      "sceneIds": [
+        "ay-p079-s1",
+        "ay-p079-s2",
+        "ay-p079-s3",
+        "ay-p079-s4"
+      ],
+      "principalBeats": [
+        "Anasuya asks how Sita and Rama were married",
+        "Sita explicitly recalls Janaka finding and raising her",
+        "In the recollection Rama lifts and breaks Shiva's bow",
+        "Sita tells of the marriage arranged with their families' consent"
+      ],
+      "nextPageConnection": "The story returns to Anasuya, who embraces and blesses Sita",
+      "findings": [
+        "Introduce Janaka’s identity and Sita’s relationship in the recollection.",
+        "Use the speaker’s actual family relationship or respectful address. "
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "revised adaptation draft"
+    },
+    {
+      "page": 80,
+      "pageId": "ay-page-080",
+      "sourceSargas": [
+        119
+      ],
+      "sceneIds": [
+        "ay-p080-s1",
+        "ay-p080-s2",
+        "ay-p080-s3"
+      ],
+      "principalBeats": [
+        "The story returns to Anasuya, who embraces and blesses Sita",
+        "Sita shows Rama Anasuya's gifts",
+        "They rest at Atri's hermitage that night"
+      ],
+      "nextPageConnection": "At dawn the ascetics warn of danger and show the forest path used by the ascetics",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    },
+    {
+      "page": 81,
+      "pageId": "ay-page-081",
+      "sourceSargas": [
+        119
+      ],
+      "sceneIds": [
+        "ay-p081-s1",
+        "ay-p081-s2"
+      ],
+      "principalBeats": [
+        "At dawn the ascetics warn of danger and show the forest path used by the ascetics",
+        "The three take leave and walk into the deeper forest, bringing Ayodhyakanda to its close"
+      ],
+      "nextPageConnection": "End of kanda; next forest journey is explicitly signalled",
+      "findings": [
+        "Re-read in all four languages; no additional high-confidence missing introduction, unexplained response or disrespectful family address identified."
+      ],
+      "languagesRead": [
+        "hi",
+        "en",
+        "gu",
+        "kn"
+      ],
+      "status": "agent sequence review; human editorial pending"
+    }
+  ],
+  "limits": [
+    "Original child-friendly adaptation, not verbatim scripture quotations",
+    "Complete independent two-publication passage collation and human regional editorial review remain pending",
+    "Preview audit is not native device verification"
+  ],
+  "previewAppliedOn": "2026-10-25",
+  "artworkCorrections": {
+    "reviewedOn": "2026-10-25",
+    "pages": [
+      34,
+      52,
+      57,
+      60,
+      65,
+      71,
+      76,
+      77,
+      78,
+      79
+    ],
+    "everydayForestClothing": "Simple ochre, consistent with page 35; art direction rather than a claim that scripture forbids all ornaments.",
+    "departureException": "2.38.3–6 and 2.39.13–18 allow and provide fine garments/jewels; departure pages 24–30 are retained.",
+    "recollectionExceptions": "52 recalls page 30 before the Ganga crossing; 79 recalls birth and wedding. 78 shows gifts, not a return to court."
+  }
+}

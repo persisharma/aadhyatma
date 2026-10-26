@@ -81,6 +81,7 @@ import SadhanaReminderScheduler from '@/components/SadhanaReminderScheduler';
 import RoutineReminderScheduler from '@/components/RoutineReminderScheduler';
 import DailyVerseAngaBridge from '@/components/DailyVerseAngaBridge';
 import PushTokenRegistrar from '@/components/PushTokenRegistrar';
+import DeviceHeartbeat from '@/components/DeviceHeartbeat';
 import MiniPlayer from '@/components/audio/MiniPlayer';
 import NowPlayingScreen from '@/screens/audio/NowPlayingScreen';
 import { ShareProvider } from '@/utils/shareVerse';
@@ -425,6 +426,12 @@ export default function App() {
                                 prompts for nothing, and uploads nothing until
                                 `PUSH_REGISTRY_ENDPOINT` is set. */}
                             <PushTokenRegistrar />
+                            {/* Once-a-day PII-free snapshot (daily open,
+                                notification-permission state, enabled alarms).
+                                Runs for every install, not just granted ones;
+                                uploads nothing until the heartbeat endpoint and
+                                device-registration key are set. */}
+                            <DeviceHeartbeat />
                             <WidgetCoordinator />
                             <MiniPlayer />
                             <NowPlayingScreen />
