@@ -1,0 +1,13 @@
+{
+  "page": 39,
+  "version": 2,
+  "prompt": "Recompose the attached Ramayana recollection comic into EXACTLY THREE ROWS and FIVE independent panels, while preserving its richly inked Indian painted style and all five story beats. No text, lettering, labels, balloons or empty caption zones. This is young DASHARATHA's hunting mistake in the past, NOT Rama: human-complexioned young adult hunter, dark hair, dark moustache, cream/brown hunting wrap, bow/quiver. His established face must match the attached page. The old blind father has flowing white beard, the blind mother silver hair, both plain cream robes. Their young adult ascetic son has dark hair and modest cream cloth. EXACT LAYOUT: ROW ONE has TWO side-by-side TALL portrait panels, each about 3:4, with figures close and readable, no panoramic miniature compositions. Panel1 young Dasharatha kneels offering a water pot to both elderly parents. Panel2 young Dasharatha confesses to the parents beside their peacefully motionless fully clothed son, no blood or visible wound. ROW TWO has TWO side-by-side TALL portrait panels with near foreground faces: Panel3 the elderly parents tenderly mourn their son's peaceful body, with flowers and a dignity cloth, no visible cremation/fire. Panel4 the old blind father raises one palm as he declares a consequence, mother beside him, young Dasharatha kneeling before him in remorse. ROW THREE is ONE FULL-WIDTH LANDSCAPE panel: dignified aftermath, both elderly parents lie peacefully FULLY DRAPED with flowers on the riverbank, young Dasharatha kneels in grief nearby. All five subjects/actions are preserved; no death action, fire, visible injury, gore, extra body, blue person, crowns or time jump into the present. Three rows ONLY: two panels top, two panels middle, one panel bottom. The first four panels must use portrait compositions with large faces, not shrunken horizontal scenes. Thin straight black ink borders, narrow gutters; the five paintings fill the complete portrait page about 1:2. Keep the complete required people and hands safely inside their own frames; richly detailed river and forest setting, chronological daylight to sunset. No blank bottom margin.",
+  "referencedImagePaths": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-039-v1.png"
+  ],
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-9ba9fd7f-e538-4ee5-917e-715194d7a823.png",
+  "generatedOn": "2026-10-22",
+  "status": "portrait-pair layout repair; visual review pending",
+  "selectedForPreview": true,
+  "selectionStatus": "agent-reviewed preview selection"
+}

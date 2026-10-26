@@ -1,0 +1,15 @@
+{
+  "page": 52,
+  "version": 3,
+  "prompt": "Use case: precise-object-edit. Repair ONLY the TOP FIRST painting of the FIRST attached Ramayana comic page for a clearly labelled FLASHBACK. This is Guha remembering the earlier riverbank night BEFORE the Ganga crossing, the SAME night shown in the SECOND image. In the top painting only, restore sleeping SITA'S earlier RED sari with a restrained gold edge and red blouse, matching her appearance in the second image's sleeping painting. Do not use the later plain yellow Chitrakuta sari in this past moment. Preserve her established face, reclining pose, complete arms/hands and modest drape. Keep blue Rama sleeping alongside, Lakshmana keeping watch at left and red-headwrapped moustached Guha talking, and all forest/river/night details. This top painting is the past; the THREE lower paintings remain the present with Bharata and Shatrughna unchanged, youthful and CLEAN-SHAVEN. Do not add Sita or Rama to any lower painting. Preserve the exact four-panel, three-row layout, all dividers, dimensions and full painted extent. No text, labels, balloons or new people. Clothing timeline repair only.",
+  "referencedImagePaths": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-052-v2.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-030-v1.png"
+  ],
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-11a5239b-e1ac-42b9-9368-76b48d8882ed.png",
+  "generatedOn": "2026-10-22",
+  "status": "earlier-night costume repair; visual review pending",
+  "supersedes": "assets/page-052-v2.png",
+  "selectedForPreview": true,
+  "selectionStatus": "selected after costume/timeline review"
+}

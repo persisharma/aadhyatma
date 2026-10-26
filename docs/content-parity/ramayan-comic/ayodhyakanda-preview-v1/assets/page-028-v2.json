@@ -1,0 +1,13 @@
+{
+  "page": 28,
+  "version": 2,
+  "prompt": "Edit this Ramayana comic page. Keep its four panels in three rows and exact inked devotional style and character identities. Repair two spatial/action errors ONLY. TOP panel: Rama, Sita, Lakshmana and blue-turbaned Sumantra are quietly leaving their camp beside the TAMASA river before dawn, already OUTSIDE Ayodhya. Replace all palace walls, gateways, buildings and torches behind their chariot with a tree-lined rural riverbank, faint predawn stars and distant sleeping adult citizens beneath trees. Keep exactly these four people in the chariot, the horses and the same clothing and unmatted hair. MIDDLE-LEFT panel: show Sumantra upright DRIVING that chariot along a curved rural track to disguise their direction, with visible wheel tracks curving in the dirt. Remove the leafy branch and his reaching-down sweeping action; do not imply that he erases tracks with a branch. The three travellers remain seated behind him and full horses point along the route. Preserve MIDDLE-RIGHT citizens searching empty wheel tracks at dawn and BOTTOM citizens returning towards the city exactly. No text, captions, balloons, letters, new characters, or panel subdivisions.",
+  "referencedImagePaths": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-028-v1.png"
+  ],
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-4a3d2f0a-3015-4efe-8664-8968d4eb9240.png",
+  "status": "generated; visual review pending",
+  "generatedOn": "2026-10-21",
+  "selectedForPreview": true,
+  "selectionStatus": "agent-reviewed preview selection"
+}

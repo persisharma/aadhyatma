@@ -1,0 +1,21 @@
+{
+  "pages": 81,
+  "scenes": 269,
+  "sargas": 119,
+  "languages": [
+    "en",
+    "gu",
+    "hi",
+    "kn"
+  ],
+  "dialogueFrames": 189,
+  "selectedArtPages": 81,
+  "agentReviewedArtPages": 81,
+  "wholeIllustratedPreviewReady": true,
+  "errors": [],
+  "limits": [
+    "Original adaptation/translation drafts; human editorial approval pending",
+    "Full independent two-publication passage collation pending",
+    "Browser evidence does not establish native integration or delivery"
+  ]
+}

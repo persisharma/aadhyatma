@@ -1,0 +1,15 @@
+{
+  "page": 34,
+  "version": 3,
+  "prompt": "Use case: precise-object-edit. Correct ONLY SITA'S EVERYDAY FOREST CLOTHING in the FIRST attached Ramayana comic page. The SECOND page is the existing plain yellow forest-clothing reference only: NEVER copy its scenes/layout/people. Preserve the first image's complete painted extent, exact panel count, borders/gutters, all people/identities/skin colours/ages/poses/expressions, complete hands/feet, forest/river/hut setting, props and story actions. Sita is the young adult woman beside BLUE Rama, NOT any of the three elderly queens or the silver-haired Anasuya. In ALL PRESENT-TIME FOREST occurrences of Sita, give her the SAME simple matte yellow/ochre draped sari and plain yellow blouse, a very narrow plain ochre edge, no gold brocade, embroidered motifs, wide red/gold border, bridal veil, court jewelry, waist belt, armlets, layered gold necklaces or ornate hair decoration. Keep her red bindi, established face, modest sari drape, small simple earrings, one plain bangle and a slender marital neck thread. She remains dignified, cared for and fully clothed, not a ragged captive. Keep exact hairline, hair and current veil drape but simplify its material and decoration. Change Sita only; keep the three mothers' sari colours/ornaments, every prince's clothing/face, all sage beards and every other detail unchanged. No speech bubbles, lettering, captions, watermarks, empty bands, new objects or new people. Preserve the middle-left completed RAFT CROSSING with exactly three travellers aboard; never turn it back into construction.",
+  "referencedImagePaths": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-034-v2.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-035-v1.png"
+  ],
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-dca50357-43e0-4fea-a189-80c2521d156e.png",
+  "generatedOn": "2026-10-22",
+  "status": "forest costume continuity repair; visual review pending",
+  "supersedes": "assets/page-034-v2.png",
+  "selectedForPreview": true,
+  "selectionStatus": "selected after costume/timeline review"
+}
