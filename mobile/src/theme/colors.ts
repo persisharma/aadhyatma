@@ -59,6 +59,60 @@ export const lightColors = {
   // compositing math) in colors.contrast.test.ts.
   avoidDeep: '#7A3722',
 
+  // Choghadiya strip on the Muhurat card (design.md §33). The two qualities
+  // differ in LIGHTNESS, not hue alone — shubh a light gold, tyajya a deeper
+  // terracotta — and every segment also prints its name (never colour alone).
+  // `*Track` is the not-yet-elapsed remainder of the running segment.
+  choghadiyaShubh: '#D2AB5E',
+  choghadiyaShubhTrack: '#E8D09A',
+  choghadiyaAvoid: '#A85D40',
+  choghadiyaAvoidTrack: '#D2A08B',
+
+  // The Panchang sky header (PanchangSky, design.md §33): top → horizon stops.
+  // Between sunset and sunrise on a today view it is night — still the warm
+  // manuscript palette, deep sepia, never indigo; otherwise a saffron day.
+  skyNightTop: '#160A03',
+  skyNightUpper: '#2A1508',
+  skyNightLower: '#45250E',
+  skyNightHorizon: '#5C3214',
+  skyDayTop: '#F2C77F',
+  skyDayUpper: '#F6D79F',
+  skyDayLower: '#F9E6C0',
+  skyDayHorizon: '#F7E3B8',
+  // Cream type on the night sky. Every text token clears 4.5:1 on its lightest
+  // stop, `skyNightHorizon` (muted ≈ 5:1); day type uses ink/inkMuted, which
+  // clear it on `skyDayTop`.
+  nightInk: '#FFF4DC',
+  nightInkSoft: '#E9D8B6',
+  nightInkMuted: '#C2AC88',
+  nightGold: '#F2C46B',
+  nightGoldTrack: 'rgba(242, 196, 107, 0.35)',
+  nightAvoid: '#B8694B',
+  nightAvoidTrack: 'rgba(184, 105, 75, 0.45)',
+  // Glass controls riding the sky (mode switch, chips, round buttons).
+  nightGlass: 'rgba(255, 240, 210, 0.10)',
+  nightGlassBorder: 'rgba(255, 235, 200, 0.20)',
+  nightGlassActive: 'rgba(255, 241, 216, 0.95)',
+  dayGlass: 'rgba(255, 250, 238, 0.55)',
+  dayGlassBorder: 'rgba(138, 62, 11, 0.16)',
+  dayGlassActive: '#FFF9EE',
+  // Sky furniture: stars, clouds, the sunset → sunrise arc (travelled / to go)
+  // and the horizon hills.
+  starLight: '#FFF3D6',
+  cloud: 'rgba(255, 251, 240, 0.6)',
+  skyArcNight: 'rgba(251, 235, 200, 0.6)',
+  skyArcNightRest: 'rgba(251, 235, 200, 0.3)',
+  skyArcDay: 'rgba(138, 62, 11, 0.5)',
+  skyArcDayRest: 'rgba(138, 62, 11, 0.3)',
+  skyHillsNight: 'rgba(15, 7, 2, 0.6)',
+  skyHillsDay: 'rgba(184, 98, 27, 0.10)',
+  // The sky mark (CelestialGlyph): moon disc + its phase shadow, sun disc, halos.
+  moonLight: '#F6E6BC',
+  moonShadow: 'rgba(30, 15, 5, 0.88)',
+  moonHalo: 'rgba(255, 230, 180, 0.18)',
+  sunCore: '#F0A23C',
+  sunHalo: 'rgba(240, 162, 60, 0.22)',
+
   // "NEW" badge — saffron-tinted (primary/active accent → reads as fresh & live),
   // distinct from the muted gold "SOON" badge while staying in the warm palette.
   newBadgeBg: 'rgba(184, 98, 27, 0.16)',

@@ -30,11 +30,15 @@ jest.mock('@/panchang/useMuhurat', () => ({
   useMuhurat: () => ({
     isToday: mockIsToday,
     nowChoghadiya: null,
-    // Only `abhijit` and `rahu` are read off the solve; a truthy object is what
-    // takes the card past its skeleton branch.
+    nowRun: null,
+    // `abhijit`, `rahu` and the day run are read off the solve; a truthy object
+    // is what takes the card past its skeleton branch. An empty run keeps the
+    // choghadiya strip out of these kicker-only cases.
     muhurat: {
       abhijit: { start: new Date(2026, 7, 31, 11, 55), end: new Date(2026, 7, 31, 12, 44) },
       rahu: { start: new Date(2026, 7, 31, 7, 41), end: new Date(2026, 7, 31, 9, 14) },
+      dayChoghadiya: [],
+      nightChoghadiya: [],
     },
     panchang: mockPanchang,
   }),

@@ -397,15 +397,21 @@ test('every PRD-C practice id resolves through the existing reader dispatcher', 
 
 test('Panchang mode selector stays fixed above contextual controls', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '..', 'PanchangScreen.tsx'), 'utf8');
-  const selector = source.indexOf('ref={panchangSegmentRef}');
-  const contextualHeader = source.indexOf(
-    "{panchangTab !== 'jyotish' && <View style={styles.systemHeader}>"
-  );
+  // Both pieces are renderers, placed on the parchment (Vrat & Parv, Jyotish)
+  // and on the Panchang sky; in each placement the mode switch comes first.
+  const parchmentSelector = source.indexOf('{renderModeSwitch(null)}');
+  const contextualHeader = source.indexOf("{panchangTab !== 'jyotish' && renderSystemHeader(null)}");
+  const skySelector = source.indexOf('{renderModeSwitch(ink)}');
+  const skyHeader = source.indexOf('{renderSystemHeader(ink)}');
 
-  assert.ok(selector >= 0, 'Panchang mode selector exists');
+  assert.ok(source.includes('ref={panchangSegmentRef}'), 'Panchang mode selector exists');
   assert.ok(contextualHeader >= 0, 'contextual Panchang controls remain hidden in Jyotish');
   assert.ok(
-    selector < contextualHeader,
+    parchmentSelector >= 0 && parchmentSelector < contextualHeader,
     'primary mode selector renders before contextual controls and cannot jump between modes'
+  );
+  assert.ok(
+    skySelector >= 0 && skySelector < skyHeader,
+    'on the Panchang sky the mode selector also renders before the contextual controls'
   );
 });
