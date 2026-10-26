@@ -1,8 +1,8 @@
 ---
 title: Suvichar personalized cards
 type: subsystem
-sources: [mobile/src/utils/suvicharPhoto.ts, mobile/src/components/SuvicharSenderPhoto.tsx, mobile/modules/suvichar-face, mobile/src/screens/SuvicharScreen.tsx, mobile/src/components/SuvicharCard.tsx, mobile/src/components/SuvicharEntryCard.tsx, mobile/src/components/SuvicharFramePicker.tsx, mobile/src/data/suvichar.ts, mobile/src/data/suvicharVaar.ts, mobile/src/data/suvicharTemplates.ts, scripts/prepare-suvichar.mjs]
-last_verified_date: 2026-10-25
+sources: [mobile/src/data/shareLinks.ts, mobile/src/utils/suvicharPhoto.ts, mobile/src/components/SuvicharSenderPhoto.tsx, mobile/modules/suvichar-face, mobile/src/screens/SuvicharScreen.tsx, mobile/src/components/SuvicharCard.tsx, mobile/src/components/SuvicharEntryCard.tsx, mobile/src/components/SuvicharFramePicker.tsx, mobile/src/data/suvichar.ts, mobile/src/data/suvicharVaar.ts, mobile/src/data/suvicharTemplates.ts, scripts/prepare-suvichar.mjs]
+last_verified_date: 2026-10-26
 confidence: high
 status: current
 ---
@@ -13,7 +13,7 @@ Daily Bhakti opens a separate Home-stack composer for reusable devotional wishes
 ## Details
 Preferences and up to 50 complete favorites use the versioned `@vedansh/suvichar/v1` AsyncStorage key. Hydration finishes before inputs appear; writes are serialized. Artwork, message, name, language and preview width identify a capture generation. Only its own decode/layout callbacks may enable sharing. The root must match the measured growing body before capture; the PNG is 1080 pixels wide and retains full height.
 
-`SuvicharCard` uses the shared persistent background cache, two clipped sections of the same subject master (reviewed .60/.64/.62 painting boundaries), script-safe native text and a Vedansh footer. `shareFiles` lazily loads RNShare; expo-sharing handles older binaries. Capture supplies both dimensions: Android pixels and UIKit points adjusted by PixelRatio; after the animation frames it rechecks current identity, measured height and image readiness. Temporary captures are released after handoff. Festival wishes are explicitly selected; calendar automation is not implemented. The thousand draft messages and occasion plans stay in docs/content/suvichar.
+`SuvicharCard` uses the shared persistent background cache, two clipped sections of the same subject master (reviewed .60/.64/.62 painting boundaries), script-safe native text and a Vedansh footer. `shareFiles` lazily loads RNShare; expo-sharing handles older binaries. Capture supplies both dimensions: Android pixels and UIKit points adjusted by PixelRatio; after the animation frames it rechecks current identity, measured height and image readiness. Temporary captures are released after handoff. The RNShare call also passes `message: buildSuvicharShareMessage(lang)` (data/shareLinks.ts): one localized invite line ending in the `SMART_LINK` (https://vedansh.app/get), so WhatsApp shows a tappable link as the image caption. The printed footer URL is not tappable. The expo-sharing fallback cannot carry text; it is effectively unreachable because `runtimeVersion: appVersion` only sends this OTA to 1.5.4+ binaries, which bundle RNShare. Not verified on a device: whether iOS WhatsApp keeps the caption alongside the image. Festival wishes are explicitly selected; calendar automation is not implemented. The thousand draft messages and occasion plans stay in docs/content/suvichar.
 
 ## Dependencies
 [[share]]
