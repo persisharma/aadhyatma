@@ -18,7 +18,7 @@
   },
   "full_lint_baseline": {
     "errors": 3,
-    "warnings": 379,
+    "warnings": 381,
     "error_file": "mobile/src/components/__tests__/ReaderActionTargets.test.tsx",
     "lines": [
       20,
@@ -44,5 +44,20 @@
     "app_update_published": false,
     "app_version_changed": false,
     "new_approved_artwork_published": true
+  },
+  "native": {
+    "ios": {
+      "core_journey": "passed",
+      "restart_persistence": "passed",
+      "gu_kn_large": "passed"
+    },
+    "android": {
+      "core_journey": "passed",
+      "restart_persistence": "passed",
+      "gu_kn_large": "passed"
+    },
+    "tested_base": "61f79cea",
+    "main_reconciled": "df1b511a",
+    "note": "Feature native evidence captured before reconciling three unrelated main commits; the Gita Saar feature code is unchanged by reconciliation."
   }
 }

@@ -18,7 +18,8 @@ The core Maestro journey passed on an iPhone 17 Pro / iOS 26.5 simulator and an 
 
 - iOS reflection persistence after stopping and relaunching the app: passed.
 - iOS Gujarati and Kannada at Large reading size: passed, including theme 16 and scrolling to the takeaway/reflection action.
-- Android supplemental results are recorded in `checks.json` and the platform logs.
+- Android reflection persistence after stopping and relaunching the app: passed.
+- Android Gujarati and Kannada at Large reading size: passed, including theme 16 and scrolling to the takeaway/reflection action.
 
 The iOS walkthrough used an existing native debug client with this worktree's JavaScript. Android also compiled successfully from this checkout. Final Android evidence uses a **local debug-signed capture build with embedded production JavaScript**, developer support disabled and OTA disabled in the ignored generated Android project. These capture settings do not change tracked production configuration. This avoids development prefetch memory overhead; the captured app used approximately 300 MB PSS. No cloud build, app upload, OTA publication or version bump was performed.
 
@@ -30,8 +31,10 @@ Android API 36 can type unusually slowly in Maestro; the complete text-entry jou
 
 ## Automated checks and delivery
 
-`npm test` passed: **3,716 tests**, including all 287 reader Jest suites. This includes the source/reference integrity checks, all 16 bilingual learning frames, stable 170-page identities, typography, durable reflection writes, failed-read retry and save-error draft preservation. TypeScript and changed-file lint pass (two existing lazy-require warnings). Repository-wide lint retains three existing `react/jsx-key` errors in unchanged `ReaderActionTargets.test.tsx:20–22` and 379 warnings.
+`npm test` passed: **3,716 tests**, including all 287 reader Jest suites. This includes the source/reference integrity checks, all 16 bilingual learning frames, stable 170-page identities, typography, durable reflection writes, failed-read retry and save-error draft preservation. TypeScript and changed-file lint pass (two existing lazy-require warnings). Repository-wide lint retains three existing `react/jsx-key` errors in unchanged `ReaderActionTargets.test.tsx:20–22` and 381 warnings after main reconciliation.
 
 Both final iOS and Android Hermes exports passed. The new garden image is absent from both bundled asset maps; its immutable CDN object was fetched and matched against the full source hash. See `garden-provenance.json`, `checks.json`, platform screenshots and journey logs.
 
 Native evidence covers representative opening/last-theme journeys, not a manual visual review of every one of the 170 teachings. Physical-device performance, spoken-audio quality and VoiceOver/TalkBack review remain release checks. New learning frames are labelled editorial; existing scripture and Saar are unchanged.
+
+Native captures used base `61f79cea` plus this feature. Three unrelated main commits through `df1b511a` were subsequently reconciled without changing the Gita Saar implementation. Full-suite results after reconciliation are recorded separately in `checks.json`.
