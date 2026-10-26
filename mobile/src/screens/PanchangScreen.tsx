@@ -20,6 +20,7 @@ import LocationPickerModal from '@/components/LocationPickerModal';
 const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
 import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
+import ObservanceNowRibbon from '@/components/ObservanceNowRibbon';
 import ShubhYogaCard from '@/components/ShubhYogaCard';
 import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
@@ -36,6 +37,7 @@ import {
   PAKSHA_NAMES_HI,
 } from '@/panchang/names';
 import {
+  useObservancesForDate,
   usePanchangCalendarSystem,
   usePanchangForSelection,
   usePanchangMonthObservances,
@@ -180,6 +182,13 @@ export default function PanchangScreen({ route }: Props) {
     selectPerson: selectKundaliPerson,
   } = useKundali();
   const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
+  // Before sunrise the Hindu day is still yesterday's, so a festival kept last
+  // night is the one running — the ribbon above the now-card carries it over.
+  // Read once per render, not ticked: the screen re-renders on any selection.
+  const preDawnToday = p != null && selectedDate.getTime() === today.getTime() && Date.now() < p.sunrise.getTime();
+  const carryOverDate = useMemo(() => addDays(selectedDate, -1), [selectedDate]);
+  const carryOver = useObservancesForDate(preDawnToday ? carryOverDate : selectedDate, calendarSystem);
+  const ribbonTonight = preDawnToday && carryOver.length > 0;
   const [lensSheetVisible, setLensSheetVisible] = useState(false);
   const { lenses, availableCount: lensAvailableCount } = useLenses();
   // The one line PRD-42 §4.2 allows about seeding, named per city and dismissible.
@@ -658,7 +667,21 @@ export default function PanchangScreen({ route }: Props) {
               line, so the date is stated once and the day panel starts with the
               live muhurat card. */}
 
-          {/* Daily Muhurat — Choghadiya / Rahu Kaal glance card (PRD-14). Promoted
+          {/* The day's observance (or last night's, before sunrise) above the
+              fold — the व्रत और पर्व section below stays the full list. */}
+          {(ribbonTonight || observances.length > 0) && (
+            <View style={{ marginTop: 8 }}>
+              <ObservanceNowRibbon
+                items={ribbonTonight ? carryOver : observances}
+                tonight={ribbonTonight}
+                sunrise={p.sunrise}
+                tithiIndex={p.tithi.index}
+                onOpen={openObservanceDetail}
+              />
+            </View>
+          )}
+
+          {/* Daily Muhurat — Choghadiya / Rahu Kaal now-card (PRD-14). Promoted
               to lead the day panel, above the anga grid: "is now auspicious?" is
               the live, time-sensitive question users open Panchang for. */}
           <View ref={muhuratCardRef} collapsable={false} style={{ marginTop: 8 }}>

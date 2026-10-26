@@ -9,13 +9,39 @@ import { fontFamilies } from '@/theme/typography';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { nextAuspiciousPeriod } from '@/panchang/muhurat';
 import { prevailingTithi, successorTithiToday } from '@/panchang/prevailingTithi';
-import { formatClock, formatRange, formatEndInstant } from '@/panchang/muhuratFormat';
+import { formatClock, formatRange, formatRangeCompact, formatEndInstant } from '@/panchang/muhuratFormat';
 import type { CalendarSystem } from '@/panchang/types';
+import type { Lang } from '@/data/gita/language';
+import CelestialGlyph from './CelestialGlyph';
+import ChoghadiyaStrip from './ChoghadiyaStrip';
+
+// Cormorant's default figures are old-style; clock digits read as one height.
+const LINING = ['lining-nums', 'tabular-nums'] as const;
+
+/** "41 मिनट" / "1 घं 11 मि" — a span of whole minutes, rounded up. */
+function formatSpan(ms: number, lang: Lang): string {
+  const total = Math.max(1, Math.ceil(ms / 60000));
+  const h = Math.floor(total / 60);
+  const m = total % 60;
+  if (h === 0) return contentByLang(lang, `${m} मिनट`, `${m} min`);
+  if (m === 0) return contentByLang(lang, `${h} घं`, `${h} h`);
+  return contentByLang(lang, `${h} घं ${m} मि`, `${h} h ${m} m`);
+}
+
+/** Where a today window stands against the clock: "in 5 h 13 m" / running / passed. */
+function windowState(start: Date, end: Date, at: number, lang: Lang): string {
+  if (at < start.getTime()) return contentByLang(lang, `${formatSpan(start.getTime() - at, lang)} में`, `in ${formatSpan(start.getTime() - at, lang)}`);
+  if (at < end.getTime()) return contentByLang(lang, 'अभी चल रहा', 'running now');
+  return contentByLang(lang, 'बीत गया', 'passed');
+}
 
 /**
- * "Today's Timings" glance card (PRD-14 Variant A). Docked below the anga grid
- * on the Panchang → Calendar view. Answers "is now good?" and opens the full
- * Muhurat detail. Auspicious/avoid always carry a text label, never colour alone.
+ * The Muhurat now-card (PRD-14; design.md §33). Leads the Panchang → Calendar day
+ * panel and answers "is now good, and for how long?" before anything else. On a
+ * today view between sunset and sunrise it turns to night — moon in the day's
+ * phase on a deep sepia surface — and by day it keeps the warm gradient with the
+ * sun. Below the hero, the running half's eight choghadiya as a tappable strip.
+ * Auspicious/avoid always carry a text label, never colour alone.
  */
 export default function MuhuratGlanceCard({
   date,
@@ -28,8 +54,13 @@ export default function MuhuratGlanceCard({
 }) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const { isToday, nowChoghadiya, muhurat, panchang } = useMuhurat(date, calendarSystem);
+  const { isToday, nowChoghadiya, nowRun, muhurat, panchang } = useMuhurat(date, calendarSystem);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
+  const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
+  // Clock digits: Latin semibold for en (non-italic — italic strokes wash out on
+  // the gradient, §3/§12); the script face otherwise, since Cormorant has no
+  // Indic glyphs and these lines carry तक/से/में.
+  const clockFont = lang === 'en' ? fontFamilies.latinSemiBold : bodyFont;
 
   // The solve runs off the render path (and only the first time per day — it is
   // memoised in useMuhurat). Until it lands we render a skeleton that reserves
@@ -73,6 +104,13 @@ export default function MuhuratGlanceCard({
 
   const showNow = isToday && nowChoghadiya != null;
   const nowAvoid = nowChoghadiya?.quality === 'avoid';
+  // Night surface only for a live night read; a browsed date is a day almanac.
+  const night = showNow && nowChoghadiya!.phase === 'night';
+  const ink = night ? colors.nightInk : colors.ink;
+  const inkSoft = night ? colors.nightInkSoft : colors.inkSoft;
+  const inkMuted = night ? colors.nightInkMuted : colors.inkMuted;
+  const accent = night ? colors.nightGold : colors.saffronDeep;
+  const divider = night ? colors.nightDivider : colors.divider;
   // Live progress through the running period; the useMuhurat minute tick is what
   // re-renders this card, so the fraction advances once a minute.
   const at = Date.now();
@@ -112,10 +150,21 @@ export default function MuhuratGlanceCard({
       ? successorTithiToday(panchang)
       : null;
 
+  // The strip draws the half that holds "now" (last night's, before sunrise);
+  // a browsed date shows its daytime run with nothing marked.
+  const run = showNow && nowRun ? nowRun : muhurat.dayChoghadiya;
+  const nowIndex = showNow && nowRun
+    ? nowRun.findIndex((p) => p.start.getTime() === nowChoghadiya!.start.getTime())
+    : -1;
+
+  const tileStyle = night
+    ? { backgroundColor: colors.nightChipBg, borderColor: colors.nightDivider }
+    : null;
+
   return (
     <LinearGradient
-      colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-      style={[styles.card, { borderColor: colors.cardActiveBorder, borderRadius: radii.lg, padding: spacing.lg }, elevation.raised]}
+      colors={night ? [colors.nightCardFrom, colors.nightCardTo] : [colors.cardActiveFrom, colors.cardActiveTo]}
+      style={[styles.card, { borderColor: night ? colors.nightCardBorder : colors.cardActiveBorder, borderRadius: radii.lg, padding: spacing.lg }, elevation.raised]}
     >
       {/* Kicker row: the eyebrow on the left, the running tithi on the right —
           the one calendar fact promoted into the first-viewport hero card (the
@@ -125,7 +174,7 @@ export default function MuhuratGlanceCard({
           formatEndInstant adds a short date on past-midnight ends. The anga
           tile below stays the canonical sunrise-tithi + kshaya detail. */}
       <View style={styles.kickerRow}>
-        <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
+        <Text style={[eyebrowTextStyle(lang, 12), { color: accent }]}>
           {contentByLang(lang, 'आज का मुहूर्त', "Today's Timings")}
         </Text>
         {kickerTithi && panchang && (
@@ -133,10 +182,10 @@ export default function MuhuratGlanceCard({
           // than extending it, so the kicker never has to shrink to fit both.
           <View style={styles.kickerTithi}>
             <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.kickerTithiLine}>
-              <Text style={[eyebrowTextStyle(lang, 10, 0.6), { color: colors.saffronDeep }]}>
+              <Text style={[eyebrowTextStyle(lang, 10, 0.6), { color: accent }]}>
                 {contentByLang(lang, 'तिथि · ', 'Tithi · ')}
               </Text>
-              <Text style={{ fontFamily: titleFont, fontSize: 14.5, color: colors.ink }}>
+              <Text style={{ fontFamily: titleFont, fontSize: 14.5, color: ink }}>
                 {contentByLang(lang, kickerTithi.nameHi, kickerTithi.nameEn)}
               </Text>
               {kickerTithi.endTime && (
@@ -144,7 +193,7 @@ export default function MuhuratGlanceCard({
                 // en; the script body face otherwise — Cormorant has no Indic
                 // glyphs, and formatEndInstant's short-date suffix is Devanagari
                 // in hi (§3).
-                <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11, color: colors.inkSoft }}>
+                <Text style={{ fontFamily: clockFont, fontSize: 11, color: inkSoft, fontVariant: [...LINING] }}>
                   {contentByLang(lang, ' तक ', ' till ')}
                   {formatEndInstant(kickerTithi.endTime, panchang.date, lang)}
                 </Text>
@@ -155,7 +204,7 @@ export default function MuhuratGlanceCard({
                 numberOfLines={1}
                 adjustsFontSizeToFit
                 minimumFontScale={0.8}
-                style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 10.5, color: colors.inkMuted, textAlign: 'right', marginTop: 1 }}
+                style={{ fontFamily: bodyFont, fontSize: 10.5, color: inkMuted, textAlign: 'right', marginTop: 1 }}
               >
                 {contentByLang(lang, `फिर ${handover.nameHi} — शेष दिन`, `then ${handover.nameEn} — rest of day`)}
               </Text>
@@ -164,51 +213,37 @@ export default function MuhuratGlanceCard({
         )}
       </View>
 
-      {/* Hero line: current choghadiya when today, else the day's Abhijit. */}
+      {/* Hero: the sky mark, then the current choghadiya and how long it has
+          left when today — else the day's Abhijit. */}
       <View style={styles.nowRow}>
-        <View
-          style={[
-            styles.dot,
-            { backgroundColor: showNow && nowAvoid ? colors.avoid : colors.saffronDeep },
-          ]}
-        />
+        <CelestialGlyph kind={night ? 'moon' : 'sun'} tithiIndex={panchang?.tithi.index} />
         <View style={{ flex: 1 }}>
           <Text
             style={[
               eyebrowTextStyle(lang, 9, 0.6),
-              { textTransform: lang === 'en' ? 'uppercase' : 'none', color: colors.inkMuted },
+              { textTransform: lang === 'en' ? 'uppercase' : 'none', color: inkMuted },
             ]}
           >
             {showNow ? contentByLang(lang, 'अभी', 'Now') : contentByLang(lang, 'शुभ मुहूर्त', 'Auspicious')}
           </Text>
-          <Text style={{ fontFamily: titleFont, fontSize: 20, color: colors.ink }}>
+          <Text style={{ fontFamily: titleFont, fontSize: 22, color: ink }}>
             {showNow
               ? contentByLang(lang, `${nowChoghadiya!.nameHi} चौघड़िया`, `${nowChoghadiya!.nameEn} Choghadiya`)
               : contentByLang(lang, 'अभिजीत मुहूर्त', 'Abhijit Muhurat')}
           </Text>
-          {/* Times use the non-italic semibold face, never the thin italic
-              cardLatin — italic strokes wash out on the gradient (design.md §3/§12). */}
-          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
-            {showNow
-              ? contentByLang(lang, `${formatClock(nowChoghadiya!.end)} तक`, `till ${formatClock(nowChoghadiya!.end)}`)
-              : abhijit
-                ? formatRange(abhijit.start, abhijit.end)
-                : ''}
-          </Text>
-          {showNow && (
-            <View
-              style={[styles.progressTrack, { backgroundColor: colors.divider }]}
-              accessibilityRole="progressbar"
-              accessibilityValue={{ min: 0, max: 100, now: Math.round(nowProgress * 100) }}
-              accessibilityLabel={contentByLang(lang, 'चौघड़िया प्रगति', 'Choghadiya progress')}
-            >
-              <View
-                style={[
-                  styles.progressFill,
-                  { backgroundColor: colors.saffron, width: `${Math.round(nowProgress * 100)}%` },
-                ]}
-              />
-            </View>
+          {showNow ? (
+            <Text style={{ marginTop: 1 }}>
+              <Text style={{ fontFamily: titleFont, fontSize: 14, color: ink }}>
+                {contentByLang(lang, `${formatSpan(nowChoghadiya!.end.getTime() - at, lang)} शेष`, `${formatSpan(nowChoghadiya!.end.getTime() - at, lang)} left`)}
+              </Text>
+              <Text style={{ fontFamily: clockFont, fontSize: 12.5, color: inkSoft, fontVariant: [...LINING] }}>
+                {contentByLang(lang, ` · ${formatClock(nowChoghadiya!.end)} तक`, ` · till ${formatClock(nowChoghadiya!.end)}`)}
+              </Text>
+            </Text>
+          ) : (
+            <Text style={{ fontFamily: clockFont, fontSize: 12.5, color: inkSoft, marginTop: 1, fontVariant: [...LINING] }}>
+              {abhijit ? formatRange(abhijit.start, abhijit.end) : ''}
+            </Text>
           )}
         </View>
         {showNow && (
@@ -216,11 +251,13 @@ export default function MuhuratGlanceCard({
             style={[
               styles.tag,
               {
-                fontFamily: fontFamilies.latinBold,
+                fontFamily: lang === 'en' ? fontFamilies.latinBold : titleFont,
                 // Deep cuts on the chip tints — the composite darkens the surface,
                 // so raw `avoid` drops under AA there (colors.contrast.test.ts).
-                color: nowAvoid ? colors.avoidDeep : colors.saffronDeep,
-                backgroundColor: nowAvoid ? colors.avoidChipBg : colors.goldChipBg,
+                // At night both tints composite to a mid brown that coloured text
+                // cannot clear; cream ink does, and the tint carries the quality.
+                color: night ? colors.nightInk : nowAvoid ? colors.avoidDeep : accent,
+                backgroundColor: nowAvoid ? (night ? colors.nightAvoidTrack : colors.avoidChipBg) : (night ? colors.nightGoldTrack : colors.goldChipBg),
               },
             ]}
           >
@@ -234,21 +271,21 @@ export default function MuhuratGlanceCard({
           the detail. Quality is carried by the gold dot PLUS the text (§12). */}
       {nextShubh && (
         <View style={styles.nextShubhRow} accessibilityLabel={`Next auspicious: ${nextShubh.nameEn}, from ${formatClock(nextShubh.start)}`}>
-          <View style={[styles.nextDot, { backgroundColor: colors.gold }]} />
+          <View style={[styles.nextDot, { backgroundColor: night ? colors.nightGold : colors.gold }]} />
           <Text style={{ flexShrink: 1 }} numberOfLines={1}>
-            <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.inkSoft }}>
+            <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: inkSoft }}>
               {contentByLang(lang, 'अगला शुभ: ', 'Next auspicious: ')}
             </Text>
-            <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.ink }}>
+            <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: ink }}>
               {contentByLang(lang, `${nextShubh.nameHi} चौघड़िया`, `${nextShubh.nameEn} Choghadiya`)}
             </Text>
             {/* Clock digits stay on the Latin semibold face; the Indic 'से'
                 suffix must not — Cormorant has no Indic glyphs (§3). */}
-            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.saffronDeep }}>
+            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: accent, fontVariant: [...LINING] }}>
               {lang === 'en' ? ` from ${formatClock(nextShubh.start)}` : ` ${formatClock(nextShubh.start)}`}
             </Text>
             {lang !== 'en' && (
-              <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: colors.inkSoft }}>
+              <Text style={{ fontFamily: titleFont, fontSize: 12.5, color: inkSoft }}>
                 {contentByLang(lang, ' से', '')}
               </Text>
             )}
@@ -256,24 +293,54 @@ export default function MuhuratGlanceCard({
         </View>
       )}
 
+      {run.length === 8 && (
+        <ChoghadiyaStrip
+          key={run[0].start.getTime()}
+          periods={run}
+          nowIndex={nowIndex >= 0 ? nowIndex : null}
+          progress={nowProgress}
+          tone={night ? 'night' : 'day'}
+        />
+      )}
+
+      {/* Rahu and Abhijit as equal halves, tinted avoid/gold with a dot and a
+          label (never colour alone); a today view says how far off each is. */}
       <View style={styles.tiles}>
-        <View style={[styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
-          <Text style={{ fontFamily: titleFont, fontSize: 12, color: colors.inkMuted }}>{contentByLang(lang, 'राहु काल', 'Rahu Kaal')}</Text>
-          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.avoid, marginTop: 3 }}>{formatRange(rahu.start, rahu.end)}</Text>
-        </View>
-        <View style={[styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
-          <Text style={{ fontFamily: titleFont, fontSize: 12, color: colors.inkMuted }}>{contentByLang(lang, 'अभिजीत', 'Abhijit')}</Text>
-          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.saffronDeep, marginTop: 3 }}>
-            {abhijit ? formatRange(abhijit.start, abhijit.end) : '—'}
+        <View style={[styles.tile, { backgroundColor: colors.avoidTint, borderColor: colors.avoidChipBg, borderRadius: radii.md }, tileStyle]}>
+          <View style={styles.tileLabel}>
+            <View style={[styles.tileDot, { backgroundColor: night ? colors.nightAvoid : colors.avoid }]} />
+            <Text style={{ fontFamily: titleFont, fontSize: 12, color: night ? colors.nightAvoidText : colors.avoidDeep }}>{contentByLang(lang, 'राहु काल', 'Rahu Kaal')}</Text>
+          </View>
+          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 15, color: ink, marginTop: 3, fontVariant: [...LINING] }}>
+            {formatRangeCompact(rahu.start, rahu.end)}
           </Text>
+          {isToday && (
+            <Text style={{ fontFamily: bodyFont, fontSize: 11, color: inkMuted, marginTop: 1 }}>
+              {windowState(rahu.start, rahu.end, at, lang)}
+            </Text>
+          )}
+        </View>
+        <View style={[styles.tile, { backgroundColor: colors.goldTint, borderColor: colors.goldChipBg, borderRadius: radii.md }, tileStyle]}>
+          <View style={styles.tileLabel}>
+            <View style={[styles.tileDot, { backgroundColor: night ? colors.nightGold : colors.gold }]} />
+            <Text style={{ fontFamily: titleFont, fontSize: 12, color: accent }}>{contentByLang(lang, 'अभिजीत', 'Abhijit')}</Text>
+          </View>
+          <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 15, color: ink, marginTop: 3, fontVariant: [...LINING] }}>
+            {abhijit ? formatRangeCompact(abhijit.start, abhijit.end) : '—'}
+          </Text>
+          {isToday && abhijit && (
+            <Text style={{ fontFamily: bodyFont, fontSize: 11, color: inkMuted, marginTop: 1 }}>
+              {windowState(abhijit.start, abhijit.end, at, lang)}
+            </Text>
+          )}
         </View>
       </View>
 
-      <Pressable onPress={onViewAll} accessibilityRole="button" style={[styles.viewAll, { borderTopColor: colors.divider }]}>
-        <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffron }}>
+      <Pressable onPress={onViewAll} accessibilityRole="button" style={[styles.viewAll, { borderTopColor: divider }]}>
+        <Text style={{ fontFamily: titleFont, fontSize: 13, color: night ? colors.nightGold : colors.saffron }}>
           {contentByLang(lang, 'सभी मुहूर्त व चौघड़िया', 'All timings & choghadiya')}
         </Text>
-        <Text style={{ color: colors.saffron, fontSize: 18 }}>›</Text>
+        <Text style={{ color: night ? colors.nightGold : colors.saffron, fontSize: 18 }}>›</Text>
       </Pressable>
     </LinearGradient>
   );
@@ -291,12 +358,12 @@ const styles = StyleSheet.create({
   // No fontWeight: the call site sets fontFamilies.latinBold, a static 700 file
   // that already carries the weight (see utils/langType.ts).
   tag: { fontSize: 10, letterSpacing: 0.4, textTransform: 'uppercase', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, overflow: 'hidden' },
-  progressTrack: { height: 4, borderRadius: 2, marginTop: 8, overflow: 'hidden' },
-  progressFill: { height: 4, borderRadius: 2 },
   nextShubhRow: { flexDirection: 'row', alignItems: 'center', gap: 7, marginTop: 10 },
   nextDot: { width: 8, height: 8, borderRadius: 4 },
   tiles: { flexDirection: 'row', gap: 10, marginTop: 13 },
   tile: { flex: 1, borderWidth: 1, padding: 11 },
+  tileLabel: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  tileDot: { width: 7, height: 7, borderRadius: 3.5 },
   viewAll: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 14, paddingTop: 12, borderTopWidth: 1 },
   skelBar: { borderRadius: 5, opacity: 0.55 },
 });
