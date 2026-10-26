@@ -23,6 +23,7 @@ import { zoneLabel } from '@/data/vastu/mandala';
 import { DISHA_LABELS } from '@/panchang/eventMuhurat';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang, meaningByLang } from '@/utils/localize';
+import { withShareLinks } from '@/data/shareLinks';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import {
   FINDING_CLASS_LABELS,
@@ -222,7 +223,7 @@ export default function GharVastuScreen({ navigation, route }: { navigation: Nav
             onPress={() => {
               // Text-only today; when R3 adds record.plan, this switches to the
               // expo-sharing multi-item sheet with the plan image attached.
-              void Share.share({ message: buildHomeHandoffText(home, model) });
+              void Share.share({ message: withShareLinks(buildHomeHandoffText(home, model), lang) });
             }}
             style={[styles.action, { borderColor: colors.cardActiveBorder, borderRadius: radii.pill }]}
           >

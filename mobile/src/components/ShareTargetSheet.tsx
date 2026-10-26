@@ -88,6 +88,14 @@ type Props = {
   cardLayout?: ShareCardLayout;
   /** Verse images grow vertically to preserve the complete reading. */
   fullVerseImage?: boolean;
+  /** A self-drawn card (Panchang, Jyotish, Suvichar — §39.10): the same tall-image rows, card wording. */
+  wholeCard?: boolean;
+  /** One muted line under the preview (a privacy statement), already localized. */
+  note?: string;
+  /** Text-row overrides, already localized (a caller-owned hand-off such as the Kundali report text). */
+  textTitle?: string;
+  textSub?: string;
+  textA11y?: string;
   /** Language the card + caption are written in; with `onCardLang`, shows the chips. */
   cardLang?: Lang;
   onCardLang?: (lang: Lang) => void;
@@ -164,9 +172,15 @@ export default function ShareTargetSheet({
   onCardLang,
   onShareText,
   singleCardPreview,
+  wholeCard,
+  note,
+  textTitle,
+  textSub,
+  textA11y,
 }: Props) {
   const { colors, spacing, radii } = useTheme();
   const cardSize = cardMetricsFor(cardLayout);
+  const wholeImage = fullVerseImage || wholeCard;
   const subLabel = eyebrowTextStyle(lang, 12);
   const titleFont = cardFontByLang(lang);
   const multi = series && series.pageCount > 1 ? series : null;
@@ -191,8 +205,8 @@ export default function ShareTargetSheet({
     <TargetRow
       lang={lang}
       icon="text"
-      title={pick(lang, { hi: 'टेक्स्ट में भेजें', en: 'Send as text', gu: 'લખાણ તરીકે મોકલો', kn: 'ಪಠ್ಯವಾಗಿ ಕಳುಹಿಸಿ' })}
-      sub={multi
+      title={textTitle ?? pick(lang, { hi: 'टेक्स्ट में भेजें', en: 'Send as text', gu: 'લખાણ તરીકે મોકલો', kn: 'ಪಠ್ಯವಾಗಿ ಕಳುಹಿಸಿ' })}
+      sub={textSub ? textSub : multi
         ? pick(lang, { hi: 'चुने पृष्ठ एक संदेश में — बिना चित्र', en: 'Selected pages as one message — no image', gu: 'પસંદ પૃષ્ઠ એક સંદેશમાં — ચિત્ર વિના', kn: 'ಆಯ್ಕೆಯ ಪುಟಗಳು ಒಂದು ಸಂದೇಶದಲ್ಲಿ — ಚಿತ್ರವಿಲ್ಲ' })
         : fullVerseImage
         ? pick(lang, { hi: 'पूरा श्लोक और अर्थ — बिना चित्र', en: 'Full verse and meaning — no image', gu: 'સંપૂર્ણ શ્લોક અને અર્થ — ચિત્ર વિના', kn: 'ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ — ಚಿತ್ರವಿಲ್ಲ' })
@@ -201,7 +215,7 @@ export default function ShareTargetSheet({
       onPress={onShareText}
       disabled={busy}
       divider={false}
-      accessibilityLabel="Send as text"
+      accessibilityLabel={textA11y ?? 'Send as text'}
       accessibilityHint="Opens the share sheet with the reading as a plain message, without an image"
     />
   ) : null;
@@ -396,31 +410,44 @@ export default function ShareTargetSheet({
             lang={lang}
             icon="instagram"
             title={pick(lang, { hi: 'Instagram पोस्ट', en: 'Instagram post', gu: 'Instagram પોસ્ટ', kn: 'Instagram ಪೋಸ್ಟ್' })}
-            sub={fullVerseImage ? pick(lang, { hi: 'पूरा श्लोक और अर्थ एक चित्र में', en: 'Complete verse and meaning in one image', gu: 'સંપૂર્ણ શ્લોક અને અર્થ એક ચિત્રમાં', kn: 'ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ ಒಂದೇ ಚಿತ್ರದಲ್ಲಿ' }) : pick(lang, { hi: 'फ़ीड के लिए 4:5 कार्ड', en: '4:5 card — for the feed', gu: 'ફીડ માટે 4:5 કાર્ડ', kn: 'ಫೀಡ್‌ಗಾಗಿ 4:5 ಕಾರ್ಡ್' })}
-            chips={fullVerseImage ? pageChip : [...pageChip, '4:5']}
+            sub={wholeCard
+              ? pick(lang, { hi: 'पूरा कार्ड 4:5 फ़्रेम में — कुछ नहीं कटेगा', en: 'The whole card in a 4:5 frame — nothing cropped', gu: 'આખું કાર્ડ 4:5 ફ્રેમમાં — કશું કપાશે નહીં', kn: 'ಇಡೀ ಕಾರ್ಡ್ 4:5 ಚೌಕಟ್ಟಿನಲ್ಲಿ — ಏನೂ ಕತ್ತರಿಸುವುದಿಲ್ಲ' })
+              : fullVerseImage ? pick(lang, { hi: 'पूरा श्लोक और अर्थ एक चित्र में', en: 'Complete verse and meaning in one image', gu: 'સંપૂર્ણ શ્લોક અને અર્થ એક ચિત્રમાં', kn: 'ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ ಒಂದೇ ಚಿತ್ರದಲ್ಲಿ' }) : pick(lang, { hi: 'फ़ीड के लिए 4:5 कार्ड', en: '4:5 card — for the feed', gu: 'ફીડ માટે 4:5 કાર્ડ', kn: 'ಫೀಡ್‌ಗಾಗಿ 4:5 ಕಾರ್ಡ್' })}
+            chips={wholeImage ? pageChip : [...pageChip, '4:5']}
             onPress={onShareInstagramPost}
             disabled={busy}
             accessibilityLabel="Share on Instagram"
-            accessibilityHint={fullVerseImage ? 'Complete verse image. Copies the caption and hashtags, then opens the share sheet' : 'Instagram post, 4 by 5. Copies the caption and hashtags, then opens the share sheet'}
+            accessibilityHint={wholeCard ? 'The whole card in a 4 by 5 frame. Copies the caption and hashtags, then opens the share sheet' : fullVerseImage ? 'Complete verse image. Copies the caption and hashtags, then opens the share sheet' : 'Instagram post, 4 by 5. Copies the caption and hashtags, then opens the share sheet'}
           />
         )}
         <TargetRow
           lang={lang}
           icon="instagram"
           title={pick(lang, { hi: 'Instagram स्टोरी / रील', en: 'Instagram story / reel', gu: 'Instagram સ્ટોરી / રીલ', kn: 'Instagram ಸ್ಟೋರಿ / ರೀಲ್' })}
-          sub={fullVerseImage
+          sub={wholeCard
+            ? pick(lang, { hi: 'स्टोरी फ्रेम में पूरा कार्ड', en: 'Story frame with the whole card', gu: 'સ્ટોરી ફ્રેમમાં આખું કાર્ડ', kn: 'ಸ್ಟೋರಿ ಚೌಕಟ್ಟಿನಲ್ಲಿ ಇಡೀ ಕಾರ್ಡ್' })
+            : fullVerseImage
             ? pick(lang, { hi: 'स्टोरी फ्रेम में पूरा श्लोक और अर्थ', en: 'Story frame with the complete verse and meaning', gu: 'સ્ટોરી ફ્રેમમાં સંપૂર્ણ શ્લોક અને અર્થ', kn: 'ಸ್ಟೋರಿ ಚೌಕಟ್ಟಿನಲ್ಲಿ ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ' })
             : pick(lang, { hi: 'पूरी स्क्रीन 9:16 — कुछ भी नहीं कटेगा', en: 'Full screen 9:16 — nothing gets cropped', gu: 'આખી સ્ક્રીન 9:16 — કશું કપાશે નહીં', kn: 'ಪೂರ್ಣ ಪರದೆ 9:16 — ಏನೂ ಕತ್ತರಿಸುವುದಿಲ್ಲ' })}
-          chips={fullVerseImage ? pageChip : [...pageChip, '9:16']}
+          chips={wholeImage ? pageChip : [...pageChip, '9:16']}
           onPress={onShareInstagramStory}
           disabled={busy}
           divider={!multi && !!textRow}
           accessibilityLabel="Share as Instagram story or reel"
-          accessibilityHint={fullVerseImage ? 'Complete verse image in a story frame. Copies the caption and hashtags, then opens the share sheet' : 'Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens the share sheet'}
+          accessibilityHint={wholeCard ? 'The whole card in a story frame. Copies the caption and hashtags, then opens the share sheet' : fullVerseImage ? 'Complete verse image in a story frame. Copies the caption and hashtags, then opens the share sheet' : 'Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens the share sheet'}
         />
         {multi ? null : textRow}
 
-        {fullVerseImage ? (
+        {wholeCard ? (
+          <Text style={[subLabel, styles.copyNote, { color: colors.inkMuted }]}>
+            {pick(lang, {
+              hi: 'WhatsApp पर पूरा कार्ड एक चित्र में जाएगा, साथ में ऐप का लिंक।',
+              en: 'WhatsApp gets the whole card as one image, with the app link.',
+              gu: 'WhatsApp પર આખું કાર્ડ એક ચિત્રમાં જશે, સાથે ઍપની લિંક.',
+              kn: 'WhatsApp ಗೆ ಇಡೀ ಕಾರ್ಡ್ ಒಂದೇ ಚಿತ್ರವಾಗಿ, ಆ್ಯಪ್ ಲಿಂಕ್ ಜೊತೆ ಹೋಗುತ್ತದೆ.',
+            })}
+          </Text>
+        ) : fullVerseImage ? (
           <Text style={[subLabel, styles.copyNote, { color: colors.inkMuted }]}>
             {pick(lang, {
               hi: 'लंबे श्लोक एक ऊँचे चित्र में आएँगे। Instagram में चित्र का फ्रेम समायोजित करना पड़ सकता है।',
@@ -491,6 +518,9 @@ export default function ShareTargetSheet({
           <ScrollView style={styles.body} bounces={false} showsVerticalScrollIndicator={false}>
             {!multi || multi.view === 'targets' ? langChips : null}
             {!multi && singleCardPreview ? <View style={{ alignItems: 'center', marginVertical: 12 }}>{singleCardPreview}</View> : null}
+            {!multi && note ? (
+              <Text testID="share-sheet-note" style={[subLabel, { color: colors.inkMuted, textAlign: 'center', marginBottom: spacing.sm }]}>✓ {note}</Text>
+            ) : null}
             {body}
           </ScrollView>
           {showCancel ? (

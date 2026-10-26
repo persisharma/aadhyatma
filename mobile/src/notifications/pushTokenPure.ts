@@ -214,31 +214,67 @@ export const PUSH_TOKEN_SYNC_KEY = '@vedansh/push-token-sync';
  */
 export const PUSH_SYNC_TIMEOUT_MS = 8000;
 
-/** The request body the registry expects: one or more device ids. */
-export type DeviceIdsBody = {
-  deviceIds: string[];
+/**
+ * The registration payload the registry expects.
+ *
+ * `installId` is the permission-free, always-present handle: it is minted on the
+ * first open and captured even before (or without ever) a notification grant, so
+ * every install is registered, not only the ones that accept push. `pushToken`
+ * is the *pushable* address and only appears once notifications are granted; the
+ * server joins it to the install id so it can push to a device captured earlier.
+ *
+ * `deviceIds` is kept, carrying the push token when there is one, so the existing
+ * push-registry contract keeps working unchanged — the new fields are additive.
+ */
+export type DeviceRegistrationBody = {
+  installId: string;
+  platform: string;
+  pushToken?: string;
+  deviceIds?: string[];
 };
 
 /**
- * The registration payload for one device id.
- *
- * The endpoint takes an array (`{ "deviceIds": [...] }`); a single install only
- * ever has the one token, so we send a one-element array. Trimmed for safety;
- * the caller has already rejected an empty token upstream (`no-token`).
+ * Build the registration payload. `installId` and `platform` are always sent;
+ * `pushToken` (and the back-compat `deviceIds`) only when a token is available.
+ * Trimmed for safety.
  */
-export function buildDeviceIdsBody(deviceId: string): DeviceIdsBody {
-  return { deviceIds: [deviceId.trim()] };
+export function buildDeviceRegistrationBody(input: {
+  installId: string;
+  platform: string;
+  pushToken?: string | null;
+}): DeviceRegistrationBody {
+  const token = (input.pushToken ?? '').trim();
+  const body: DeviceRegistrationBody = {
+    installId: input.installId.trim(),
+    platform: input.platform,
+  };
+  if (token !== '') {
+    body.pushToken = token;
+    body.deviceIds = [token];
+  }
+  return body;
 }
 
 /**
- * Should we call the registry for this device id?
- *
- * `false` once the id has already been registered successfully — the once-only,
- * local-storage guard. A rotated token is a different value and registers
- * afresh; a first run has nothing stored and always registers.
+ * The once-only guard's key: what, about this device, a server would care to see
+ * change. The install id is stable, so in practice this changes exactly when the
+ * push token first appears (permission granted) or rotates — which is precisely
+ * when we must re-register.
  */
-export function shouldRegisterDeviceId(lastRegistered: string | null, deviceId: string): boolean {
-  return lastRegistered !== deviceId;
+export function deviceRegistrationFingerprint(
+  installId: string,
+  pushToken: string | null
+): string {
+  return `${installId.trim()}|${(pushToken ?? '').trim()}`;
+}
+
+/**
+ * Should we call the registry? `false` once this exact fingerprint has already
+ * registered successfully (the local-storage guard). A first open always
+ * registers; attaching or rotating a token registers afresh.
+ */
+export function shouldRegisterDevice(lastFingerprint: string | null, fingerprint: string): boolean {
+  return lastFingerprint !== fingerprint;
 }
 
 /**

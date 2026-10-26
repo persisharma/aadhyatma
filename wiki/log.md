@@ -1184,3 +1184,19 @@ subject portraits and neutral catalog background. Both wiki histories were
 retained. The merged tree passes TypeScript and all 3,751 local tests. Previous
 iOS artwork captures precede this merge; Android and full post-merge device
 acceptance remain pending.
+
+## [2026-10-26] update | पूर्ण पंचांग share card
+
+A share circle on the Panchang sky (hero-zone top-right, `PanchangSky` `action` slot) and the Muhurat Detail top bar now both share one 4:5 card with the whole day: angas with successors, all 16 choghadiya start times, kaal tiles, vaas tiles, today's पर्व, app icon and vedansh.app/get. Updated [[subsystems/share]] and [[subsystems/panchang]]; design.md §33a, RULEBOOK share rule.
+
+## [2026-10-26] update | Every image share runs through the Daily Bhakti provider
+
+iOS WhatsApp refused the Panchang card ("This item cannot be shared"): its private capture passed pixel sizes that UIKit read as points, giving ~2040×6000 on 3x phones. Panchang, the Muhurat Finder day card, all six Jyotish surfaces and Suvichar now pass a `ShareableCard` to `ShareProvider` (design.md §39.10): the Bhakti picker, whole-card WhatsApp image with the download caption, Instagram post/story fit, Send as text, and a brand + vedansh.app/get strip (`ShareCardMount`). Android delivery uses react-native-share so the caption reaches WhatsApp. `ShareBrandFooter` prints the link; text shares append `withShareLinks`. RULEBOOK §3 share rule, [[subsystems/share]] and [[subsystems/suvichar]] updated. Merging main's #545 (पूर्ण पंचांग card): its `usePanchangShare` hook now hands that card to the provider as a self-branded `ShareableCard` instead of capturing it itself, so the Panchang sky and Muhurat Detail keep the new card and gain the picker, Instagram story and Send as text. Typecheck and lint only; Jest suites, Maestro and device/WhatsApp checks not run.
+
+
+## [2026-10-26] ingest | Refresh PR 542 after sharing updates
+
+Reconciled main at cce27f82 (Panchang sharing, unified image-share provider and
+device registration). The only textual conflict was this append-only history;
+both histories were retained. TypeScript and all 3,762 local tests pass on the
+combined tree. The Vrat portrait/catalog changes remain intact.

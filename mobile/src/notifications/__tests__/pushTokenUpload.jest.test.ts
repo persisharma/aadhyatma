@@ -11,7 +11,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import { __resetPushTokenSyncState, syncPushToken } from '../pushToken';
-import { PUSH_TOKEN_SYNC_KEY } from '../pushTokenPure';
+import { INSTALL_ID_KEY, PUSH_TOKEN_SYNC_KEY, isUsableInstallId } from '../pushTokenPure';
 import * as permissionState from '../permissionState';
 
 const ENDPOINT = 'https://push.example.com/devices';
@@ -21,6 +21,15 @@ jest.mock('expo-notifications', () => ({
   getExpoPushTokenAsync: jest.fn(),
   addPushTokenListener: jest.fn(() => ({ remove: jest.fn() })),
 }));
+
+jest.mock('expo-crypto', () => ({
+  randomUUID: jest.fn(() => '11111111-2222-3333-4444-555555555555'),
+}));
+
+/** The fingerprint the once-only guard stores: the current install id + token. */
+async function expectedFingerprint(token: string): Promise<string> {
+  return `${await AsyncStorage.getItem(INSTALL_ID_KEY)}|${token}`;
+}
 
 jest.mock('../permissionState', () => ({
   readNotificationPermissionState: jest.fn(),
@@ -91,10 +100,17 @@ test('a first capture POSTs the device id as JSON, bearer-authed, and records it
   });
   expect(init.signal).toBeDefined();
 
-  // Exactly the documented contract: nothing but the device id leaves the
-  // device — no OS identifier, no location, no private Smaran/Kundali data.
-  expect(JSON.parse(init.body)).toEqual({ deviceIds: [TOKEN] });
-  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBe(TOKEN);
+  // Exactly the documented contract: the install id, the platform, and the
+  // push token — no OS identifier, no location, no private Smaran/Kundali data.
+  const installId = await AsyncStorage.getItem(INSTALL_ID_KEY);
+  expect(isUsableInstallId(installId)).toBe(true);
+  expect(JSON.parse(init.body)).toEqual({
+    installId,
+    platform: 'ios',
+    pushToken: TOKEN,
+    deviceIds: [TOKEN],
+  });
+  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBe(await expectedFingerprint(TOKEN));
 });
 
 test('with no API key configured it stays capture-only and makes no request', async () => {
@@ -120,8 +136,14 @@ test('a rotated token is a new device id and registers afresh', async () => {
 
   expect((await syncPushToken()).status).toBe('synced');
   expect(fetchMock).toHaveBeenCalledTimes(2);
-  expect(JSON.parse(fetchMock.mock.calls[1][1].body)).toEqual({ deviceIds: [NEXT_TOKEN] });
-  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBe(NEXT_TOKEN);
+  const installId = await AsyncStorage.getItem(INSTALL_ID_KEY);
+  expect(JSON.parse(fetchMock.mock.calls[1][1].body)).toEqual({
+    installId,
+    platform: 'ios',
+    pushToken: NEXT_TOKEN,
+    deviceIds: [NEXT_TOKEN],
+  });
+  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBe(await expectedFingerprint(NEXT_TOKEN));
 });
 
 test('a transient failure is retried and the retry can succeed', async () => {
@@ -138,7 +160,7 @@ test('a transient failure is retried and the retry can succeed', async () => {
   const result = await underFakeClock(() => syncPushToken());
   expect(result.status).toBe('synced');
   expect(fetchMock).toHaveBeenCalledTimes(3);
-  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBe(TOKEN);
+  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBe(await expectedFingerprint(TOKEN));
 });
 
 test('being offline exhausts the retries, then leaves the device id unrecorded', async () => {
@@ -158,7 +180,7 @@ test('a persistent 500 is retried, then re-attempted on a later sync', async () 
   fetchMock = mockFetch(() => Promise.resolve({ status: 200 }));
   __resetPushTokenSyncState();
   expect((await syncPushToken()).status).toBe('synced');
-  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBe(TOKEN);
+  expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBe(await expectedFingerprint(TOKEN));
 });
 
 test('a 4xx is not retried, and is not remembered as done either', async () => {

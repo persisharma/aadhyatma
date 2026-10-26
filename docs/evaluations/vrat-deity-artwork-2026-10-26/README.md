@@ -93,3 +93,11 @@ ESLint has no errors (existing deferred-import/import-order warnings remain).
 The earlier iOS Standard/Large artwork captures precede the main reconciliation;
 these are not fresh post-merge device proofs. Android and editorial/prototype
 acceptance remain pending.
+
+### Latest main refresh
+
+Reconciled main again at `cce27f82` after the sharing/registration updates. Only
+`wiki/log.md` conflicted; both histories were retained. TypeScript and the full
+local suite pass: 3,762 tests (37 widget, 2,837 reader/component, 621 engine,
+218 data and 49 Ask). Earlier native captures remain pre-reconciliation
+evidence, with the same device/editorial limitations stated above.

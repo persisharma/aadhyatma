@@ -15,6 +15,12 @@ export type ShareFitFrameProps = {
   /** Natural (unscaled) size of the card being placed. */
   cardWidth: number;
   cardHeight: number;
+  /**
+   * Canvas width in dp; defaults to the 540 dp card canvas. A narrower self-drawn card
+   * (a 340 dp Panchang card, §39.10) passes its own width so the frame scales around it
+   * and the export, still 1080 px wide, keeps the card's type at its designed size.
+   */
+  canvasWidth?: number;
   /** The card, laid out at its natural size; this frame scales it to fit. */
   children: React.ReactNode;
 };
@@ -30,10 +36,14 @@ export type ShareFitFrameProps = {
  * lays out at its native size; a `scale` transform shrinks it about its centre, so
  * no type sizes or the meaning-fit budget change — only the rasterised result.
  */
-export default function ShareFitFrame({ format, background, cardWidth, cardHeight, children }: ShareFitFrameProps) {
+export default function ShareFitFrame({ format, background, cardWidth, cardHeight, canvasWidth, children }: ShareFitFrameProps) {
   const { colors } = useTheme();
-  const canvas = format === 'story' ? storyCanvas : feedCanvas;
-  const place = format === 'story' ? placeStoryCard(cardWidth, cardHeight) : placeFeedCard(cardWidth, cardHeight);
+  const base = format === 'story' ? storyCanvas : feedCanvas;
+  // Place in the 540 dp geometry the safe insets are tuned for, then scale back down.
+  const k = canvasWidth ? base.width / canvasWidth : 1;
+  const canvas = { width: base.width / k, height: base.height / k };
+  const placed = format === 'story' ? placeStoryCard(cardWidth * k, cardHeight * k) : placeFeedCard(cardWidth * k, cardHeight * k);
+  const place = { scale: placed.scale, left: placed.left / k, top: placed.top / k, width: placed.width / k, height: placed.height / k };
   // Centre the native-size card on the placement centre, then scale about it: a
   // transform scales around the view's own centre, so the shrunk card stays put.
   const centreX = place.left + place.width / 2;

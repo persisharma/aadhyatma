@@ -30,6 +30,7 @@ import { useJyotishNow } from '@/panchang/useJyotishNow';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
+import { withShareLinks } from '@/data/shareLinks';
 import {
   pillTextStyle,
   scriptBodyFont,
@@ -112,7 +113,7 @@ export default function KundaliReportScreen({ navigation, route }: Props) {
   // birth details both actions carry; the app itself never contacts a service.
   const shareFullText = () => {
     if (!chart || !report) return;
-    void Share.share({ message: buildKundaliHandoffText(chart, report, questionReading) });
+    void Share.share({ message: withShareLinks(buildKundaliHandoffText(chart, report, questionReading), lang) });
   };
 
   const disclaimer = report && (
@@ -348,6 +349,8 @@ export default function KundaliReportScreen({ navigation, route }: Props) {
           lang={lang}
           titleHi="कुंडली सार साझा करें"
           titleEn="Share the chart summary"
+          captionHi="कुंडली सार"
+          captionEn="Kundali summary"
           privacyHi="कार्ड और पूर्ण पाठ में नाम, जन्म तिथि, समय और नगर हैं। पूर्ण पाठ में चुना हुआ प्रश्न और मार्गदर्शन भी होगा। साझा करने से पहले जाँच लें।"
           privacyEn="Both the card and the full text include the chart name, birth date, time, and city. The full text also includes any selected question and guidance. Review before sharing."
           detailTitleHi="पूर्ण पाठ साझा करें"

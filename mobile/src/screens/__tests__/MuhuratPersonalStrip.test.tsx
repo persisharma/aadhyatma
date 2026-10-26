@@ -9,6 +9,7 @@
  * bala words. Engine values are real (no engine mocks), same shells as
  * MuhuratFinderScreens.test.
  */
+import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { View as mockView } from 'react-native';
@@ -103,9 +104,9 @@ function render(el: React.ReactElement) {
   let renderer!: TestRenderer.ReactTestRenderer;
   act(() => {
     renderer = TestRenderer.create(
-      <GitaLanguageProvider>
+      <GitaLanguageProvider><ShareProvider>
         <MuhuratFollowProvider>{el}</MuhuratFollowProvider>
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
   });
   return renderer;
@@ -263,9 +264,9 @@ test('the share card carries NO personal row, even with a profile saved (absence
   let renderer!: TestRenderer.ReactTestRenderer;
   act(() => {
     renderer = TestRenderer.create(
-      <GitaLanguageProvider>
+      <GitaLanguageProvider><ShareProvider>
         <MuhuratFinderShareCard rule={getEventRule('vahan')} verdict={verdict} p={p} cityLabel="उज्जैन" />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
   });
   await settle();

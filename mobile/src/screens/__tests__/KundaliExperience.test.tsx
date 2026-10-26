@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { ShareProvider } from '@/utils/shareVerse';
 import fs from 'node:fs';
 import path from 'node:path';
 import React, * as mockReact from 'react';
@@ -41,6 +42,8 @@ const mockChart = computeKundali({
   timezone: 'Asia/Kolkata',
 });
 
+// Opening a share mounts the provider's festival-tag resolver; it reads the panchang engine this suite mocks.
+jest.mock('@/components/TimelyTagsResolver', () => ({ __esModule: true, default: () => null }));
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => mockNavigation,
 }));
@@ -102,7 +105,7 @@ function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">{node}</GitaLanguageProvider>
+      <GitaLanguageProvider initialLang="en"><ShareProvider>{node}</ShareProvider></GitaLanguageProvider>
     );
   });
   renderedTrees.push(tree);

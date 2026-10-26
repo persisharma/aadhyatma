@@ -69,6 +69,11 @@ export function shareLinkLines(lang: Lang): string[] {
   return [`${pick(lang, SHARE_CTA)} ${SMART_LINK}`, instagramLine(lang)];
 }
 
+/** Any plain-text share with the download + Instagram lines appended, so every share carries the referral. */
+export function withShareLinks(text: string, lang: Lang): string {
+  return [text, '', ...shareLinkLines(lang)].join('\n');
+}
+
 export function buildShareCaption(
   p: ShareCaptionParams,
   // The Instagram caption (buildInstagramCaption) omits the profile line — it already
@@ -78,9 +83,12 @@ export function buildShareCaption(
   const { withInstagram = true } = opts;
   // Header + first line are content: gu/kn re-script the Devanagari (which is the
   // recitation text for the verse line too). hi/en outputs are byte-identical to before.
-  const header = p.resolved ? `${p.resolved.sectionName} · ${p.resolved.verseLabel}` : `${contentByLang(p.lang, p.sectionNameHi, p.sectionNameEn)} · ${contentByLang(p.lang, p.verseLabelHi, p.verseLabelEn)}`;
+  const sectionName = p.resolved?.sectionName ?? contentByLang(p.lang, p.sectionNameHi, p.sectionNameEn);
+  const verseLabel = p.resolved?.verseLabel ?? contentByLang(p.lang, p.verseLabelHi, p.verseLabelEn);
   const firstLine = p.resolved?.firstLine ?? contentByLang(p.lang, p.firstLineHi, p.firstLineEn);
-  const lines = [`${header}`, `"${firstLine}"`, '', `${pick(p.lang, SHARE_CTA)} ${SMART_LINK}`];
+  // A self-drawn card (§39.10) may carry no label or quoted line; drop them rather than print `· ` / `""`.
+  const header = verseLabel ? `${sectionName} · ${verseLabel}` : sectionName;
+  const lines = [header, ...(firstLine ? [`"${firstLine}"`] : []), '', `${pick(p.lang, SHARE_CTA)} ${SMART_LINK}`];
   if (withInstagram) lines.push(instagramLine(p.lang));
   return lines.join('\n');
 }
@@ -204,4 +212,17 @@ export function buildSuvicharShareMessage(lang: Lang): string {
 /** App-invite message — feature list + download link, no verse attached (shared from More). */
 export function buildAppShareMessage(lang: Lang): string {
   return [`${pick(lang, APP_SHARE_INVITE)} ${SMART_LINK}`, instagramLine(lang)].join('\n');
+}
+
+/** Caption under the पूर्ण पंचांग card (design.md §33a): what the image is, then the download link. */
+const PANCHANG_CTA: LocalizedStrings = {
+  hi: 'रोज़ का पूरा पंचांग — Vedansh ऐप:',
+  en: 'The full panchang every day — get Vedansh:',
+  gu: 'રોજનું પૂરું પંચાંગ — Vedansh ઍપ:',
+  kn: 'ಪ್ರತಿದಿನದ ಪೂರ್ಣ ಪಂಚಾಂಗ — Vedansh ಆ್ಯಪ್:',
+};
+
+/** Two lines, no Instagram URL — it rides as the WhatsApp image caption, like Suvichar's. */
+export function buildPanchangShareMessage(lang: Lang, headline: string): string {
+  return [headline, `${pick(lang, PANCHANG_CTA)} ${SMART_LINK}`].join('\n');
 }
