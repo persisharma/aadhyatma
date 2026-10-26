@@ -1200,3 +1200,7 @@ Reconciled main at cce27f82 (Panchang sharing, unified image-share provider and
 device registration). The only textual conflict was this append-only history;
 both histories were retained. TypeScript and all 3,762 local tests pass on the
 combined tree. The Vrat portrait/catalog changes remain intact.
+
+## [2026-10-26] ingest | Aranyakanda planning only
+
+Recorded the complete75-sarga/91-provisional-page/256-scene outline, relationship-specific four-language address guide, event/prop contracts and explicit source/translation/art/native gaps in [[decisions/ramayan-comic-character-continuity]]. This planning-only package is submitted separately from the merged Ayodhyakanda PR540; no artwork or integration was started.
