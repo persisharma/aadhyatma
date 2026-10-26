@@ -21,6 +21,8 @@ let mockComputeState: { status: 'result'; result: NamkaranResult } = {
   result: calculateNamkaran({ kind: 'manual', nakshatraIndex: 6, pada: 1 }),
 };
 
+// Opening a share mounts the provider's festival-tag resolver; it reads the panchang engine this suite mocks.
+jest.mock('@/components/TimelyTagsResolver', () => ({ __esModule: true, default: () => null }));
 jest.mock('@react-navigation/native', () => ({ useNavigation: () => ({ navigate: jest.fn() }) }));
 jest.mock('@/panchang/useNamkaran', () => ({ useNamkaran: () => mockComputeState }));
 jest.mock('expo-linear-gradient', () => ({

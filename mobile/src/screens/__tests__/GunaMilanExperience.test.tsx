@@ -24,6 +24,8 @@ import {
 const mockNavigation = { goBack: jest.fn(), navigate: jest.fn() };
 const mockProfile = { name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' };
 
+// Opening a share mounts the provider's festival-tag resolver; it reads the panchang engine this suite mocks.
+jest.mock('@/components/TimelyTagsResolver', () => ({ __esModule: true, default: () => null }));
 jest.mock('expo-linear-gradient', () => ({
   LinearGradient: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) =>
     mockReact.createElement(mockView, props, children),

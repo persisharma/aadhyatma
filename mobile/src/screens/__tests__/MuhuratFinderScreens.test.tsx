@@ -23,6 +23,8 @@ import { computeMuhuratDay } from '@/panchang/muhurat';
 
 const mockNavigation = { goBack: jest.fn(), navigate: jest.fn() };
 
+// Opening a share mounts the provider's festival-tag resolver; it reads the panchang engine this suite mocks.
+jest.mock('@/components/TimelyTagsResolver', () => ({ __esModule: true, default: () => null }));
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => mockNavigation,
 }));
