@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
@@ -13,8 +13,8 @@ import type { ChoghadiyaPeriod, KaalWindow, MuhuratDay } from '@/panchang/muhura
 
 /**
  * The reverent, gold-॥-framed "आज का पंचांग" card body (design.md §5). Shared by
- * the Muhurat detail screen (`variant="full"`) and the shareable image
- * (`variant="share"`, branded by the share provider's strip — design.md §39.10). Dark `ink` text throughout; the auspicious tint
+ * the Muhurat detail screen (`variant="full"`) and a compact `variant="share"`
+ * (the screen now shares the पूर्ण पंचांग card instead, design.md §33a). Dark `ink` text throughout; the auspicious tint
  * signals quality behind the text, never graying it (design.md §12).
  */
 export default function MuhuratCardBody({
@@ -24,7 +24,6 @@ export default function MuhuratCardBody({
   nowStartMs,
   cityLabel,
   isToday = true,
-  lang: langProp,
 }: {
   p: PanchangData;
   md: MuhuratDay;
@@ -37,12 +36,9 @@ export default function MuhuratCardBody({
    * future/past day (reached via the Muhurat Finder, design.md §60) reads
    * "इस दिन का पंचांग" so it can't claim to be today. Defaults true. */
   isToday?: boolean;
-  /** Card language for the share image (§39.8 chips); defaults to the reading language. */
-  lang?: Lang;
 }) {
   const { colors, typography, radii } = useTheme();
-  const { lang: readerLang } = useGitaLanguage();
-  const lang = langProp ?? readerLang;
+  const { lang } = useGitaLanguage();
 
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);

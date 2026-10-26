@@ -7,19 +7,15 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { titleFontByLang } from '@/utils/langType';
-import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
+import { useObservancesForDate, usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import MuhuratCardBody from '@/components/MuhuratCardBody';
 import ShareButton from '@/components/ShareButton';
-import { useShare } from '@/utils/shareVerse';
-import { buildPanchangShareText, panchangShareCaption } from '@/panchang/panchangShareText';
+import { usePanchangShare } from '@/utils/panchangShare';
 import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratDetail'>;
-
-// Natural width (dp) of the share card; the provider exports it 1080 px wide.
-const SHARE_CARD_WIDTH = 340;
 
 export default function MuhuratDetailScreen({ navigation, route }: Props) {
   const { colors, typography, spacing } = useTheme();
@@ -35,30 +31,15 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
   const cityLabel = contentByLang(lang, location.labelHi, location.labelEn);
   const nowStartMs = muhurat.isToday ? muhurat.nowChoghadiya?.start.getTime() ?? null : null;
 
-  // The Daily Bhakti share flow (design.md §39.10): picker, WhatsApp tall image with
-  // the download caption, Instagram post/story fit, card-language chips, send as text.
-  const { share, busy } = useShare();
+  // The share is the पूर्ण पंचांग card (design.md §33a), the same one the
+  // Panchang sky header shares — not a capture of this screen — through the
+  // Daily Bhakti picker (§39.10).
+  const observances = useObservancesForDate(date, calendarSystem);
+  const { share, busy } = usePanchangShare();
   const onShare = useCallback(() => {
-    if (!p || !md) return;
-    const isToday = muhurat.isToday;
-    const city = (l: typeof lang) => contentByLang(l, location.labelHi, location.labelEn);
-    void share({
-      kind: 'card',
-      sourceId: 'panchang.today',
-      width: SHARE_CARD_WIDTH,
-      languages: true,
-      title: { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ' },
-      tagNameHi: 'पंचांग',
-      tagNameEn: 'Panchang',
-      render: ({ lang: cardLang }) => (
-        <View style={{ backgroundColor: colors.parchment, padding: 18 }}>
-          <MuhuratCardBody p={p} md={md} variant="share" lang={cardLang} cityLabel={city(cardLang)} isToday={isToday} />
-        </View>
-      ),
-      caption: (cardLang) => panchangShareCaption({ p, lang: cardLang, isToday }),
-      text: (cardLang) => buildPanchangShareText({ p, md, lang: cardLang, cityLabel: city(cardLang), isToday }),
-    }, lang);
-  }, [muhurat.isToday, location, share, p, md, colors.parchment, lang]);
+    if (!ready) return;
+    void share({ p, md, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
+  }, [ready, share, p, md, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
 
   return (
     <View style={styles.root}>

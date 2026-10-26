@@ -26,19 +26,10 @@ type PanchangShare = { p: PanchangData; md: MuhuratDay; lang: Lang; cityLabel: s
 const titleFor = (lang: Lang, isToday: boolean) =>
   isToday ? contentByLang(lang, 'आज का पंचांग', "Today's Panchang") : contentByLang(lang, 'इस दिन का पंचांग', "This Day's Panchang");
 
-/** Caption parts for the Panchang card (design.md §39.10): title · weekday + date, then tithi · nakshatra. */
-export function panchangShareCaption({ p, lang, isToday }: Pick<PanchangShare, 'p' | 'lang' | 'isToday'>) {
-  return {
-    sectionName: titleFor(lang, isToday),
-    label: `${contentByLang(lang, p.vara.nameHi, p.vara.nameEn)}, ${panchangDateLabel(p.date, lang)}`,
-    firstLine: `${contentByLang(lang, p.tithi.nameHi, p.tithi.nameEn)} · ${contentByLang(lang, p.nakshatra.nameHi, p.nakshatra.nameEn)}`,
-  };
-}
-
 /**
- * "Send as text" for the Panchang card: the share card's rows as plain lines — tithi,
- * nakshatra, sun, the auspicious day choghadiya, Abhijit and Rahu Kaal. The provider
- * appends the download lines.
+ * "Send as text" for the पूर्ण पंचांग card (design.md §33a): the day as plain lines —
+ * tithi, nakshatra, sun, the auspicious day choghadiya, Abhijit and Rahu Kaal. The
+ * provider appends the download lines.
  */
 export function buildPanchangShareText({ p, md, lang, cityLabel, isToday }: PanchangShare): string {
   const t = (hi: string, en: string) => contentByLang(lang, hi, en);
