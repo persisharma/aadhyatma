@@ -1157,3 +1157,7 @@ The photo row and card photo now appear only after the sender turns on “का
 ## [2026-10-25] update | Suvichar sender photo face auto-fit
 
 The manual square crop is gone: a local Expo module (`modules/suvichar-face`: Apple Vision / Android FaceDetector, on-device) returns face boxes, `suvicharPhotoFit` frames all faces (centred-square fallback), and the fit is persisted as `photoFit` and applied at draw time. Typecheck and lint passed; native code not compiled here, no Jest or Maestro run.
+
+## [2026-10-26] update | Suvichar share carries the app link
+
+The Suvichar share now passes a one-line caption (`buildSuvicharShareMessage`, data/shareLinks.ts) ending in https://vedansh.app/get, so the recipient gets a tappable download link with the image. design.md §82 and [[subsystems/suvichar]] updated. Typecheck and lint only; no Jest, Maestro or device run.

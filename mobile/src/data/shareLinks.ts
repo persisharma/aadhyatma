@@ -188,6 +188,19 @@ const APP_SHARE_INVITE: LocalizedStrings = {
   ].join('\n'),
 };
 
+/** Caption under a Suvichar card (design.md §82): the recipient's invite + tappable download link. */
+const SUVICHAR_CTA: LocalizedStrings = {
+  hi: 'आप भी ऐसे सुविचार भेजें — Vedansh ऐप:',
+  en: 'Send cards like this too — get Vedansh:',
+  gu: 'તમે પણ આવા સુવિચાર મોકલો — Vedansh ઍપ:',
+  kn: 'ನೀವೂ ಇಂತಹ ಸುವಿಚಾರ ಕಳುಹಿಸಿ — Vedansh ಆ್ಯಪ್:',
+};
+
+/** One line, no Instagram URL: it rides as the WhatsApp image caption, so it stays short. */
+export function buildSuvicharShareMessage(lang: Lang): string {
+  return `${pick(lang, SUVICHAR_CTA)} ${SMART_LINK}`;
+}
+
 /** App-invite message — feature list + download link, no verse attached (shared from More). */
 export function buildAppShareMessage(lang: Lang): string {
   return [`${pick(lang, APP_SHARE_INVITE)} ${SMART_LINK}`, instagramLine(lang)].join('\n');
