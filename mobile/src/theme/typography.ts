@@ -24,6 +24,9 @@ export const fontFamilies = {
 } as const;
 
 export const typography = {
+  catalogTitle: { fontSize: 18, lineHeight: 28 },
+  catalogMeta: { fontSize: 12, lineHeight: 20 },
+  catalogBody: { fontSize: 13, lineHeight: 21 },
   practiceHeroTitle: { fontSize: 24, lineHeight: 36 },
   practiceItemTitle: { fontSize: 17, lineHeight: 26 },
   practiceItemMeta: { fontSize: 13, lineHeight: 20 },

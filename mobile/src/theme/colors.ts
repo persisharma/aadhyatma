@@ -139,6 +139,10 @@ export const lightColors = {
   cardActiveFrom: '#FFF5E0',
   cardActiveTo: '#F5DEAC',
   cardActiveBorder: 'rgba(184, 98, 27, 0.4)',
+  // Approved Vrat landing-page treatment, scoped to the catalog surface.
+  catalogAccent: '#7A211A',
+  catalogSurface: '#FFF6E3',
+  catalogBorder: 'rgba(166, 124, 52, 0.28)',
   cardThumbRest: '#F1E0B3',
   cardThumbActiveFrom: '#F8D291',
   cardThumbActiveTo: '#E0A255',

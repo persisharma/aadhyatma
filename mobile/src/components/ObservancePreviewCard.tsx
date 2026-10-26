@@ -1,6 +1,7 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import ObservanceArtwork from './ObservanceArtwork';
+import CatalogArtwork from './CatalogArtwork';
 import AppIcon from './AppIcon';
 import type { Lang } from '@/data/gita/language';
 import type { ObservanceRule } from '@/panchang/types';
@@ -28,12 +29,14 @@ export default function ObservancePreviewCard({
 }) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const tile = layout === 'tile';
+  const { width } = useWindowDimensions();
+  const tileWidth = Math.min(spacing.catalogTileMaxWidth, Math.max(spacing.catalogTileMinWidth, (width - spacing.lg * 2 - spacing.md * 2) / 2.1));
   return (
     <View
       testID={`observance-card-${rule.id}`}
       style={[
-        styles.card, tile && styles.tile,
-        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg, marginBottom: tile ? 0 : spacing.md },
+        styles.card, tile && [styles.tile, { width: tileWidth }],
+        { backgroundColor: tile ? colors.catalogSurface : colors.parchmentSoft, borderColor: tile ? colors.catalogBorder : colors.divider, borderRadius: radii.lg, marginBottom: tile ? 0 : spacing.md },
         elevation.subtle,
       ]}
     >
@@ -43,9 +46,9 @@ export default function ObservancePreviewCard({
         onPress={onPress}
         style={({ pressed }) => [styles.main, { padding: spacing.md, gap: spacing.md }, tile && styles.tileMain, pressed && styles.pressed]}
       >
-        <ObservanceArtwork rule={rule} size={tile ? 80 : 64} />
+        {tile ? <CatalogArtwork rule={rule} /> : <ObservanceArtwork rule={rule} size={64} />}
         <View style={[styles.meta, tile && styles.tileMeta]}>
-          <Text style={{ ...typography.cardHindi, fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), color: colors.ink }}>
+          <Text style={{ ...typography.cardHindi, fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), color: tile ? colors.catalogAccent : colors.ink }}>
             {contentByLang(lang, rule.nameHi, rule.nameEn)}
           </Text>
           {!tile && (
@@ -53,6 +56,7 @@ export default function ObservancePreviewCard({
               {lang === 'en' ? rule.nameHi : rule.nameEn}
             </Text>
           )}
+          <View style={[styles.details, tile && styles.tileDetails, { gap: spacing.xs }]}>
           {dateLabel && (
             <View style={[styles.dateRow, { gap: spacing.xs, marginTop: spacing.xs }]}>
               <AppIcon name="birthday" size={14} color={colors.inkMuted} />
@@ -68,6 +72,7 @@ export default function ObservancePreviewCard({
               </Text>
             </View>
           )}
+          </View>
           {areaLabel && <Text style={{ ...typography.listingBody, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.saffronDeep, marginTop: spacing.xs }}>{areaLabel}</Text>}
         </View>
         {!tile && <AppIcon name="next" size={14} color={colors.inkMuted} />}
@@ -99,7 +104,9 @@ const styles = StyleSheet.create({
   dateRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' },
   countdown: { alignSelf: 'flex-start', paddingVertical: 2 },
   star: { width: 44, height: 44, flexShrink: 0, marginRight: 8, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  tile: { width: 184, alignItems: 'stretch' },
+  tile: { alignItems: 'stretch' },
+  details: { alignItems: 'flex-start' },
+  tileDetails: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' },
   tileMain: { flexDirection: 'column', alignItems: 'flex-start', paddingTop: 12 },
   tileMeta: { flexGrow: 0, flexShrink: 0, flexBasis: 'auto', alignSelf: 'stretch' },
   tileStar: { position: 'absolute', top: 8, right: 0 },

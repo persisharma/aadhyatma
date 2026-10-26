@@ -15,6 +15,9 @@ export const spacing = {
   // Option 1 miniatures occupy half a Home tile's width. Catalog thumbnails
   // retain their compact boxes; only the illustrated Home launchers use these.
   homeCategoryArtwork: 62.7,
+  catalogHeroArtworkHeight: 190,
+  catalogTileMinWidth: 144,
+  catalogTileMaxWidth: 184,
 } as const;
 
 // Corner radii — a single 4-step scale (10 · 14 · 18 · 22) plus the pill.
