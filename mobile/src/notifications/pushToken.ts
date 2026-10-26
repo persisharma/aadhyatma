@@ -1,19 +1,22 @@
 /**
- * Remote push-token capture: the glue.
+ * Remote device registration: the glue.
  *
- * One job: when the notification permission is *already* granted, read this
- * install's Expo push token, persist it, and (only if an endpoint **and** an API
- * key are configured) register it once. That is the whole feature.
+ * One job: on every open, register this install's **device id** (our own
+ * permission-free install id), and — once the notification permission is
+ * *already* granted — attach the Expo push token to it, so a server can push to
+ * a device it captured earlier. Capture runs regardless of permission, so every
+ * install is registered, not only the ones that accept push. Registration only
+ * happens when an endpoint **and** an API key are configured.
  *
  * ## What this module deliberately does NOT do
  *
  * It is additive by construction — nothing else in the app changes behaviour
  * because it exists:
  *
- * - **Never prompts.** It reads `readNotificationPermissionState()` and stands
- *   down unless the answer is already `granted`. The permission moment stays
- *   owned by `NotificationPreferencesContext` / `RoutineDetailScreen`, and one
- *   grant still covers every family (§38).
+ * - **Never prompts.** It reads `readNotificationPermissionState()` only to
+ *   decide whether to *attach* a token; it never asks. The permission moment
+ *   stays owned by `NotificationPreferencesContext` / `RoutineDetailScreen`, and
+ *   one grant still covers every family (§38).
  * - **Never schedules or cancels anything.** It does not touch the pending
  *   queue, so the nine local families and the shared iOS 64-pending budget are
  *   untouched.
@@ -21,23 +24,29 @@
  *   value is a status. Offline is the *normal* case for this app, so a failed
  *   upload is silent and simply retried on a later foreground.
  * - **Makes no network call at all** until both an endpoint and an API key are
- *   configured (see `resolvePushEndpoint` / `resolveApiKey`). The token is still
+ *   configured (see `resolvePushEndpoint` / `resolveApiKey`). The ids are still
  *   captured locally, so the plumbing is verifiable before any data leaves the
  *   device.
+ * - **Sends no OS identifier.** The install id is a random UUID we mint — never
+ *   IDFV / ANDROID_ID — plus the platform string and, when present, the push
+ *   token. No location, no account, no private Smaran/Kundali data.
  *
  * ## Server contract
  *
  * `POST <endpoint>`, `content-type: application/json`,
- * `authorization: Bearer <key>`, body = `DeviceIdsBody`:
+ * `authorization: Bearer <key>`, body = `DeviceRegistrationBody`:
  *
  * ```json
- * { "deviceIds": ["ExponentPushToken[…]"] }
+ * { "installId": "vd-…", "platform": "ios",
+ *   "pushToken": "ExponentPushToken[…]", "deviceIds": ["ExponentPushToken[…]"] }
  * ```
  *
- * The device id is the Expo push token — the address a server pushes to. Once a
- * given id registers successfully the client stores it and never re-sends it
- * (the once-only, local-storage guard); a rotated token is a new id and
- * registers afresh.
+ * `installId` and `platform` are always present; `pushToken` (and the kept
+ * back-compat `deviceIds`) appear only once notifications are granted. The
+ * server joins the push token to the install id. The client re-registers only
+ * when the `installId|pushToken` fingerprint changes — i.e. the first open, the
+ * token first appearing, or a rotation — and the once-only local-storage guard
+ * skips the call otherwise.
  *
  * **The status code is the whole protocol**, because it decides what the client
  * does next (`classifyUploadResponse`):
@@ -54,6 +63,8 @@
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
+import * as Crypto from 'expo-crypto';
 import * as Notifications from 'expo-notifications';
 import { readNotificationPermissionState } from './permissionState';
 import {
@@ -63,23 +74,24 @@ import {
   PUSH_SYNC_TIMEOUT_MS,
   PUSH_TOKEN_KEY,
   PUSH_TOKEN_SYNC_KEY,
-  buildDeviceIdsBody,
+  buildDeviceRegistrationBody,
+  deviceRegistrationFingerprint,
   isUsableInstallId,
   makeInstallId,
   resolveApiKey,
   resolvePushEndpoint,
   runUploadWithRetry,
-  shouldRegisterDeviceId,
+  shouldRegisterDevice,
 } from './pushTokenPure';
 
 /**
  * Outcome of one sync attempt. Every value is a normal, expected end state —
- * none of them is an error the user should ever see.
+ * none of them is an error the user should ever see. There is no "not-granted"
+ * or "no-token" end state anymore: the install id registers on open regardless
+ * of permission, and the push token is simply attached when it is available.
  *
- * - `not-granted` — permission is undetermined or refused. We stood down.
- * - `no-token` — no token available: a simulator, Expo Go, or a build whose
- *   APNs key / FCM service account is not configured on the EAS project.
- * - `captured` — token read and stored locally; no endpoint configured.
+ * - `captured` — install id (and token, if granted) stored locally; no endpoint
+ *   or key configured, so nothing left the device.
  * - `unchanged` — nothing a server cares about moved since the last upload.
  * - `synced` — the endpoint accepted the registration.
  * - `failed` — offline, timed out, or 5xx, after exhausting the retries. The
@@ -89,8 +101,6 @@ import {
  *   server-side fix is picked up on a later foreground.
  */
 export type PushTokenSyncStatus =
-  | 'not-granted'
-  | 'no-token'
   | 'captured'
   | 'unchanged'
   | 'synced'
@@ -99,7 +109,7 @@ export type PushTokenSyncStatus =
 
 export type PushTokenSyncResult = {
   status: PushTokenSyncStatus;
-  /** The captured token, when there was one. */
+  /** The captured push token, when notifications were granted and one existed. */
   token: string | null;
 };
 
@@ -129,16 +139,19 @@ async function write(key: string, value: string): Promise<void> {
 }
 
 /**
- * Our stable install id, minting it on first use from the supplied seed.
+ * Our stable install id — the device id captured on open.
  *
- * Seeded by the first captured token, so this is only ever called once we have
- * one — which is also why the id cannot be minted before a device is
- * push-capable. Nothing else in the app depends on it existing.
+ * Minted once from a fresh random UUID (no permission, no OS identifier, no push
+ * token required), persisted, then read back forever. It is the permission-free
+ * handle a server joins the push token to later, so it must exist on the very
+ * first open; `Crypto.randomUUID()` is the entropy source and carries no
+ * privacy-disclosure weight. A failure to read/write storage only costs a
+ * redundant mint-and-register on the next open.
  */
-export async function getInstallId(seed: string, now: number = Date.now()): Promise<string> {
+export async function getInstallId(now: number = Date.now()): Promise<string> {
   const existing = await read(INSTALL_ID_KEY);
   if (isUsableInstallId(existing)) return existing.trim();
-  const minted = makeInstallId(seed, now);
+  const minted = makeInstallId(Crypto.randomUUID(), now);
   await write(INSTALL_ID_KEY, minted);
   return minted;
 }
@@ -199,18 +212,19 @@ function sleep(ms: number): Promise<void> {
 }
 
 async function runSync(now: number): Promise<PushTokenSyncResult> {
-  // Cheapest gate first, and the one that makes this safe: we only ever act on
-  // a grant somebody else already obtained.
+  // The device id we capture on open. Minted permission-free, so this runs on
+  // the very first launch and for every install that never grants push.
+  const installId = await getInstallId(now);
+
+  // The push token is additive: read it only when the permission somebody else
+  // obtained is already granted (so we never prompt, and never throw on a
+  // simulator / credential-less build — `readExpoPushToken` returns null).
   const { status } = await readNotificationPermissionState();
-  if (status !== 'granted') return { status: 'not-granted', token: null };
+  const token = status === 'granted' ? await readExpoPushToken() : null;
 
-  const token = await readExpoPushToken();
-  if (!token) return { status: 'no-token', token: null };
-
-  // Persist first. The token is worth having locally even with no endpoint —
-  // it is what makes the capture verifiable on a real device before any upload
-  // is switched on.
-  await write(PUSH_TOKEN_KEY, token);
+  // Persist the token when we have one — worth having locally even with no
+  // endpoint, and what makes the capture verifiable on a real device.
+  if (token) await write(PUSH_TOKEN_KEY, token);
 
   // The full literal reads are required for babel's build-time inlining of
   // EXPO_PUBLIC_* vars — see `PUSH_REGISTRY_ENV_VAR` / the API-key env var.
@@ -219,26 +233,29 @@ async function runSync(now: number): Promise<PushTokenSyncResult> {
     PUSH_REGISTRY_ENDPOINT
   );
   const apiKey = resolveApiKey(process.env.EXPO_PUBLIC_DEVICE_REGISTRATION_API_KEY);
-  // No endpoint or no key ⇒ capture-only: the token is stored locally but never
-  // leaves the device (an unauthenticated call would just be rejected anyway).
+  // No endpoint or no key ⇒ capture-only: ids are stored locally but never
+  // leave the device (an unauthenticated call would just be rejected anyway).
   if (endpoint === null || apiKey === null) return { status: 'captured', token };
 
   // The local-storage once-only guard: skip the API entirely once this exact
-  // device id has already registered successfully.
+  // (install id + push token) state has already registered successfully.
+  const fingerprint = deviceRegistrationFingerprint(installId, token);
   const lastRegistered = await read(PUSH_TOKEN_SYNC_KEY);
-  if (!shouldRegisterDeviceId(lastRegistered, token)) return { status: 'unchanged', token };
+  if (!shouldRegisterDevice(lastRegistered, fingerprint)) return { status: 'unchanged', token };
 
-  const body = JSON.stringify(buildDeviceIdsBody(token));
+  const body = JSON.stringify(
+    buildDeviceRegistrationBody({ installId, platform: Platform.OS, pushToken: token })
+  );
   const { outcome } = await runUploadWithRetry({
     attempt: () => attemptUpload(endpoint, body, apiKey),
     sleep,
-    installId: await getInstallId(token, now),
+    installId,
   });
 
   if (outcome === 'rejected') return { status: 'rejected', token };
   if (outcome !== 'accepted') return { status: 'failed', token };
 
-  await write(PUSH_TOKEN_SYNC_KEY, token);
+  await write(PUSH_TOKEN_SYNC_KEY, fingerprint);
   return { status: 'synced', token };
 }
 

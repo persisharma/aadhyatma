@@ -9,8 +9,9 @@ import {
   PUSH_SYNC_JITTER_MS,
   PUSH_SYNC_MAX_ATTEMPTS,
   PUSH_SYNC_MAX_DELAY_MS,
-  buildDeviceIdsBody,
+  buildDeviceRegistrationBody,
   classifyUploadResponse,
+  deviceRegistrationFingerprint,
   isPushRegistryConfigured,
   isUsableInstallId,
   makeInstallId,
@@ -18,7 +19,7 @@ import {
   resolvePushEndpoint,
   retryDelayMs,
   runUploadWithRetry,
-  shouldRegisterDeviceId,
+  shouldRegisterDevice,
   shouldRetryUpload,
 } from '../pushTokenPure';
 
@@ -54,18 +55,47 @@ test('the api key is trimmed, and a blank value counts as no key', () => {
   assert.equal(resolveApiKey(null), null);
 });
 
-test('the body is the device id wrapped in a one-element array', () => {
-  assert.deepEqual(buildDeviceIdsBody(TOKEN), { deviceIds: [TOKEN] });
-  assert.deepEqual(buildDeviceIdsBody('  x  '), { deviceIds: ['x'] });
+test('the body always carries installId + platform; a token adds pushToken and deviceIds', () => {
+  // Captured on open, no token yet: install id + platform only — no push fields.
+  assert.deepEqual(buildDeviceRegistrationBody({ installId: 'vd-1', platform: 'ios' }), {
+    installId: 'vd-1',
+    platform: 'ios',
+  });
+  // Token granted: it is attached, and mirrored into the back-compat deviceIds.
+  assert.deepEqual(
+    buildDeviceRegistrationBody({ installId: ' vd-1 ', platform: 'android', pushToken: `  ${TOKEN}  ` }),
+    { installId: 'vd-1', platform: 'android', pushToken: TOKEN, deviceIds: [TOKEN] }
+  );
+  // An empty/whitespace token is treated as no token.
+  assert.deepEqual(buildDeviceRegistrationBody({ installId: 'vd-1', platform: 'ios', pushToken: '   ' }), {
+    installId: 'vd-1',
+    platform: 'ios',
+  });
 });
 
-test('a device id registers once; a first run and a rotated id both register', () => {
-  // Nothing stored yet ⇒ register.
-  assert.equal(shouldRegisterDeviceId(null, TOKEN), true);
-  // Already registered this exact id ⇒ skip the call.
-  assert.equal(shouldRegisterDeviceId(TOKEN, TOKEN), false);
-  // A rotated token is a different id ⇒ register afresh.
-  assert.equal(shouldRegisterDeviceId(TOKEN, NEXT_TOKEN), true);
+test('the fingerprint keys on install id + token, ignoring surrounding whitespace', () => {
+  assert.equal(deviceRegistrationFingerprint('vd-1', null), 'vd-1|');
+  assert.equal(deviceRegistrationFingerprint(' vd-1 ', ` ${TOKEN} `), `vd-1|${TOKEN}`);
+});
+
+test('a device registers once; the first open, attaching a token, and a rotation all register', () => {
+  // Nothing stored yet ⇒ register (the first open, token-less).
+  assert.equal(shouldRegisterDevice(null, deviceRegistrationFingerprint('vd-1', null)), true);
+  // Same state already registered ⇒ skip the call.
+  assert.equal(
+    shouldRegisterDevice('vd-1|', deviceRegistrationFingerprint('vd-1', null)),
+    false
+  );
+  // The token appears (permission granted) ⇒ register afresh to attach it.
+  assert.equal(
+    shouldRegisterDevice('vd-1|', deviceRegistrationFingerprint('vd-1', TOKEN)),
+    true
+  );
+  // A rotated token is a different state ⇒ register afresh.
+  assert.equal(
+    shouldRegisterDevice(`vd-1|${TOKEN}`, deviceRegistrationFingerprint('vd-1', NEXT_TOKEN)),
+    true
+  );
 });
 
 test('install ids are deterministic per seed, distinct across seeds and mint times', () => {
