@@ -22,6 +22,8 @@ import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
 import ObservanceNowRibbon from '@/components/ObservanceNowRibbon';
 import PanchangSky, { MonthGlyph, type SkyInk } from '@/components/PanchangSky';
+import { useMuhurat } from '@/panchang/useMuhurat';
+import { usePanchangShare } from '@/utils/panchangShare';
 import ShubhYogaCard from '@/components/ShubhYogaCard';
 import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
@@ -190,6 +192,16 @@ export default function PanchangScreen({ route }: Props) {
   const carryOverDate = useMemo(() => addDays(selectedDate, -1), [selectedDate]);
   const carryOver = useObservancesForDate(preDawnToday ? carryOverDate : selectedDate, calendarSystem);
   const ribbonTonight = preDawnToday && carryOver.length > 0;
+  // The पूर्ण पंचांग share (design.md §33a) from the sky header. `live: false`:
+  // the card needs only the day's windows, never the minute tick, so this
+  // 2,500-line screen does not re-render every minute for it.
+  const { muhurat: shareMd } = useMuhurat(selectedDate, calendarSystem, { live: false });
+  const { share: sharePanchang, busy: shareBusy, layer: shareLayer } = usePanchangShare();
+  const shareUnavailable = shareBusy || !p || !shareMd;
+  const shareDay = useCallback(() => {
+    if (!p || !shareMd) return;
+    void sharePanchang({ p, md: shareMd, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
+  }, [p, shareMd, sharePanchang, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
   // The Panchang sky header (design.md §33) starts under the status bar, so it
   // needs the inset.
   const insets = useSafeAreaInsets();
@@ -528,6 +540,7 @@ export default function PanchangScreen({ route }: Props) {
 
   return (
     <View style={styles.root}>
+      {shareLayer}
       {panchangTab === 'calendar'
         ? <PanchangChakraBackground />
         : <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />}
@@ -549,6 +562,25 @@ export default function PanchangScreen({ route }: Props) {
               topInset={insets.top + SCROLL_TOP}
               focused={isFocused}
               style={styles.skyBleed}
+              action={(ink) => (
+                // Share the day as the पूर्ण पंचांग card (design.md §33a).
+                <Pressable
+                  onPress={shareDay}
+                  disabled={shareUnavailable}
+                  accessibilityRole="button"
+                  accessibilityLabel="Share panchang"
+                  accessibilityState={{ disabled: shareUnavailable, busy: shareBusy }}
+                  hitSlop={6}
+                  style={({ pressed }) => [
+                    styles.myVratButton,
+                    { backgroundColor: ink.glass, borderColor: ink.glassBorder, borderRadius: radii.pill },
+                    shareUnavailable && { opacity: 0.5 },
+                    pressed && { opacity: 0.6 },
+                  ]}
+                >
+                  <AppIcon name="share" size={16} color={ink.ink} />
+                </Pressable>
+              )}
             >
               {(ink) => (
                 <>

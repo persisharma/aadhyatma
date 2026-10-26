@@ -205,3 +205,16 @@ export function buildSuvicharShareMessage(lang: Lang): string {
 export function buildAppShareMessage(lang: Lang): string {
   return [`${pick(lang, APP_SHARE_INVITE)} ${SMART_LINK}`, instagramLine(lang)].join('\n');
 }
+
+/** Caption under the पूर्ण पंचांग card (design.md §33a): what the image is, then the download link. */
+const PANCHANG_CTA: LocalizedStrings = {
+  hi: 'रोज़ का पूरा पंचांग — Vedansh ऐप:',
+  en: 'The full panchang every day — get Vedansh:',
+  gu: 'રોજનું પૂરું પંચાંગ — Vedansh ઍપ:',
+  kn: 'ಪ್ರತಿದಿನದ ಪೂರ್ಣ ಪಂಚಾಂಗ — Vedansh ಆ್ಯಪ್:',
+};
+
+/** Two lines, no Instagram URL — it rides as the WhatsApp image caption, like Suvichar's. */
+export function buildPanchangShareMessage(lang: Lang, headline: string): string {
+  return [headline, `${pick(lang, PANCHANG_CTA)} ${SMART_LINK}`].join('\n');
+}
