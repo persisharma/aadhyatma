@@ -136,7 +136,7 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
             <Image source={brandMark} onLoad={onIconLoad} style={styles.brandIcon} accessibilityIgnoresInvertColors />
             <View>
               <Text style={withMarkHeadroom({ fontFamily: fontFamilies.devanagariBold, fontSize: 16, lineHeight: 18, color: colors.ink })}>वेदांश़</Text>
-              <Text style={{ fontFamily: fontFamilies.latinSemiBoldItalic, fontSize: 12, lineHeight: 14, color: colors.saffronDeep }}>
+              <Text style={fit({ fontFamily: fontFamilies.latinSemiBoldItalic, fontSize: 12, lineHeight: 14, color: colors.saffronDeep })}>
                 Vedansh · <Text style={en ? undefined : { fontFamily: scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 11.5 }}>{t('पूर्ण पंचांग', 'Full Panchang')}</Text>
               </Text>
             </View>
