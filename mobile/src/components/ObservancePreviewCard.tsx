@@ -43,7 +43,7 @@ export default function ObservancePreviewCard({
         onPress={onPress}
         style={({ pressed }) => [styles.main, { padding: spacing.md, gap: spacing.md }, tile && styles.tileMain, pressed && styles.pressed]}
       >
-        <ObservanceArtwork rule={rule} size={tile ? 52 : 64} />
+        <ObservanceArtwork rule={rule} size={tile ? 80 : 64} />
         <View style={[styles.meta, tile && styles.tileMeta]}>
           <Text style={{ ...typography.cardHindi, fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), color: colors.ink }}>
             {contentByLang(lang, rule.nameHi, rule.nameEn)}

@@ -1,0 +1,322 @@
+{
+  "purpose": "Vrat and Parv subject portraits only",
+  "generatedWith": "built-in image_gen",
+  "generationRecord": "../../../../docs/evaluations/vrat-deity-artwork-2026-10-26/generation.json",
+  "assets": [
+    {
+      "id": "baglamukhi",
+      "filename": "baglamukhi.webp",
+      "sha256": "287f600584b17a977b862d349983196c391711706171c5706cfeb4a0d2241f42",
+      "width": 256,
+      "height": 256,
+      "bytes": 30312,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "balarama",
+      "filename": "balarama.webp",
+      "sha256": "5a111e28ba9916edd3176c35876d4b50a843b30a2c99783e78d63b84ba062316",
+      "width": 256,
+      "height": 256,
+      "bytes": 27926,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "bhairava",
+      "filename": "bhairava.webp",
+      "sha256": "19fae7fe0943d51c5e173a563eb507205fa6d656d1824891ce19a660523a27c6",
+      "width": 256,
+      "height": 256,
+      "bytes": 28916,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "bhishma",
+      "filename": "bhishma.webp",
+      "sha256": "cf6e6075013e05e46a65ee711da1b4de0d370cb40a8d0b3cbb049df46c2032c9",
+      "width": 256,
+      "height": 256,
+      "bytes": 28170,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "buddha",
+      "filename": "buddha.webp",
+      "sha256": "6e13862492c9b9d78721b8756ccab6cb80aa87d8ce359cf4dd257a0b9da2fa94",
+      "width": 256,
+      "height": 256,
+      "bytes": 23284,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "chandra",
+      "filename": "chandra.webp",
+      "sha256": "4e7619c54f596f697c3939ce5eb4889317f4b3fedf30ac531d313bf2e0e566db",
+      "width": 256,
+      "height": 256,
+      "bytes": 25400,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "chauth-mata",
+      "filename": "chauth-mata.webp",
+      "sha256": "c725b01088aeab8085603a9a41fc33b41a4d9699ed87fcf54d778d9c28deaae2",
+      "width": 256,
+      "height": 256,
+      "bytes": 27794,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "chitragupta",
+      "filename": "chitragupta.webp",
+      "sha256": "307e4f7e6c430d704fb552b8a5be848ab675a5878f2143510142797d01231d43",
+      "width": 256,
+      "height": 256,
+      "bytes": 31470,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "dasha-mata",
+      "filename": "dasha-mata.webp",
+      "sha256": "99159feb2df38ecdd2640756017c6a37effaf7e255c99a691dfa6cb5c977c9f4",
+      "width": 256,
+      "height": 256,
+      "bytes": 28146,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "dhanvantari",
+      "filename": "dhanvantari.webp",
+      "sha256": "6a53279a59dd3c91432dff1e17ea3801b805c589b8464880f31d0ef7230dac08",
+      "width": 256,
+      "height": 256,
+      "bytes": 32348,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "dhumavati",
+      "filename": "dhumavati.webp",
+      "sha256": "af403fa2a5da9a2d21fb3bdcebf748baaed7d41cab63a9539fefba1b1c606852",
+      "width": 256,
+      "height": 256,
+      "bytes": 27746,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "gangaur",
+      "filename": "gangaur.webp",
+      "sha256": "0dfc4a9937f60d09c8e60b12c59fbf8a0a5b353a0f8d3ba881cb5b736fc72184",
+      "width": 256,
+      "height": 256,
+      "bytes": 27918,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "gau-mata",
+      "filename": "gau-mata.webp",
+      "sha256": "7c6b00ccac309fee11ca3ff0fa9ec4a2230718a1eed9968291925e5d2d3519c2",
+      "width": 256,
+      "height": 256,
+      "bytes": 27254,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "hayagriva",
+      "filename": "hayagriva.webp",
+      "sha256": "77d51d0712af863fd6275d7cdd39e0458def0afdaf56b4f1a9cefe09f8a43e2e",
+      "width": 256,
+      "height": 256,
+      "bytes": 22206,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "jivitputrika",
+      "filename": "jivitputrika.webp",
+      "sha256": "d56eca78f43a6ea7a9a2023a2cc82749dd399e9e6c36eb3f0668686e0658d66f",
+      "width": 256,
+      "height": 256,
+      "bytes": 26878,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "kabir",
+      "filename": "kabir.webp",
+      "sha256": "e073ead30bbf659512fdb2f968b691ff92d93daf3fad654a8563a1a90ffa5f93",
+      "width": 256,
+      "height": 256,
+      "bytes": 24984,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "kalki",
+      "filename": "kalki.webp",
+      "sha256": "bedcbb3cfa144fff36e24865dc2390e29cc9093e26956e2a0a5531a0d9d11708",
+      "width": 256,
+      "height": 256,
+      "bytes": 25220,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "madhushravani",
+      "filename": "madhushravani.webp",
+      "sha256": "e080fa224adf4acd8db1d36b319549f894aa6cb82cb405f89b95ddb32489ad9c",
+      "width": 256,
+      "height": 256,
+      "bytes": 25804,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "mahavir",
+      "filename": "mahavir.webp",
+      "sha256": "444086b16417ece082afa875ef35b8f959415931e34f8c7dd37fa183c97b784d",
+      "width": 256,
+      "height": 256,
+      "bytes": 26780,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "matsya",
+      "filename": "matsya.webp",
+      "sha256": "5d94aa2ca3868be178f70dd0d70562f152cbd13a8856452a2f287803b844f258",
+      "width": 256,
+      "height": 256,
+      "bytes": 23878,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "naga",
+      "filename": "naga.webp",
+      "sha256": "410c1f2249f557c7216c9855948367156a1191143d517ffcd7359dcb5c54d98f",
+      "width": 256,
+      "height": 256,
+      "bytes": 30316,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "narada",
+      "filename": "narada.webp",
+      "sha256": "03ffdc1a2ecb7175e76905104700b7fbfc062b29bdb4142c9397f65eea105a47",
+      "width": 256,
+      "height": 256,
+      "bytes": 20792,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "narmada",
+      "filename": "narmada.webp",
+      "sha256": "003ff465a5bfc4a1da430df2e25d8a89da29cd128dbd8edbf4c3a966ac5cc868",
+      "width": 256,
+      "height": 256,
+      "bytes": 31528,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "parashurama",
+      "filename": "parashurama.webp",
+      "sha256": "b8625bfe4459b63839e97476061a10ad29bffb7dc0858a161bbb6bb8156bdcb0",
+      "width": 256,
+      "height": 256,
+      "bytes": 24136,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "savitri",
+      "filename": "savitri.webp",
+      "sha256": "2a25d33e8b89fa298429a52b3bcbde416575fcb32827deaa948c235a20de66b1",
+      "width": 256,
+      "height": 256,
+      "bytes": 30872,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "shankaracharya",
+      "filename": "shankaracharya.webp",
+      "sha256": "e9fff3e864255509d8b6a385504df0afbcb769ca319cab242636511cd8e2616f",
+      "width": 256,
+      "height": 256,
+      "bytes": 26804,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "shitala",
+      "filename": "shitala.webp",
+      "sha256": "3f914832b207accfad87ec1ac223ce052669e70e738b55921df9b4a557fc12f7",
+      "width": 256,
+      "height": 256,
+      "bytes": 31914,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "surdas",
+      "filename": "surdas.webp",
+      "sha256": "0c2bf046e7f5356763c777ba1ee0f50b7e3222b185f08fdf3001d256cec293f2",
+      "width": 256,
+      "height": 256,
+      "bytes": 27070,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "tulsidas",
+      "filename": "tulsidas.webp",
+      "sha256": "82f5e7a4b18e4d17e47717e9532ba60ab4fd47336ccb59cdf4a5fa5fa8c0e10e",
+      "width": 256,
+      "height": 256,
+      "bytes": 26212,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "vallabhacharya",
+      "filename": "vallabhacharya.webp",
+      "sha256": "abcae38346959c69890497658c4620b9e235be00205b7ba77cfb0c7712033085",
+      "width": 256,
+      "height": 256,
+      "bytes": 26948,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "valmiki",
+      "filename": "valmiki.webp",
+      "sha256": "e29c3e01b0a3cc5c73ea645c8d79ceeaf7cae578fc647bef5751c3ce74ace8ec",
+      "width": 256,
+      "height": 256,
+      "bytes": 28140,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "vamana",
+      "filename": "vamana.webp",
+      "sha256": "d4182c0a9f383d0f052044c9e1d525793030ea9da1c1ffe3532bf0120e087fe6",
+      "width": 256,
+      "height": 256,
+      "bytes": 24228,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "varaha",
+      "filename": "varaha.webp",
+      "sha256": "33cdfb019af3b7c238d3e01790e468cab04e6ee7003b1d6a7d1b9cc09dedfe65",
+      "width": 256,
+      "height": 256,
+      "bytes": 26590,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "vishwakarma",
+      "filename": "vishwakarma.webp",
+      "sha256": "82ea0bbca4ec1ceee0d02f21b7bfc1b4e0f16b64fe020be347e565625b2f627a",
+      "width": 256,
+      "height": 256,
+      "bytes": 27320,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    },
+    {
+      "id": "yama",
+      "filename": "yama.webp",
+      "sha256": "35642f7b5984b01aa2354f93ddecc6168a3a9a22f6b7860414393e8b7fa1e29c",
+      "width": 256,
+      "height": 256,
+      "bytes": 27270,
+      "review": "subject, complete square composition and 256px thumbnail inspected"
+    }
+  ]
+}

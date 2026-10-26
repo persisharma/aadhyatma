@@ -1161,3 +1161,8 @@ The manual square crop is gone: a local Expo module (`modules/suvichar-face`: Ap
 ## [2026-10-26] update | Suvichar share carries the app link
 
 The Suvichar share now passes a one-line caption (`buildSuvicharShareMessage`, data/shareLinks.ts) ending in https://vedansh.app/get, so the recipient gets a tappable download link with the image. design.md §82 and [[subsystems/suvichar]] updated. Typecheck and lint only; no Jest, Maestro or device run.
+
+
+## [2026-10-26] ingest | Vrat catalog subject portraits
+
+The calendar cards use actual deity/sage paintings: 25 published source paintings reused with source-specific portrait centres and 35 new 256px icons (952,574 bytes), with exact prompts and hashes retained. Exact identity/composite coverage, existing cache behavior, card/filter tests, TypeScript and launch-budget checks pass. Standard/Large iOS walks passed and were visually inspected; all 25 reused CDN source hashes match. Android and prototype/editorial acceptance remain pending in the evaluation record. No reader/story source or crop changed; no publication or push. [[subsystems/panchang]] and [[concepts/deity-icons]] updated.

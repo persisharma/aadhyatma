@@ -1,0 +1,63 @@
+# Dedicated portrait review, after first-run setup has been completed on a
+# development build connected to the worktree's Metro (default port 8084).
+# Captures are for human artwork/layout review, not proof of image fidelity.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Standard"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-vrat" }
+# Reselecting an already-open tab may preserve its category stack.
+- tapOn: { text: "Back", optional: true }
+- scrollUntilVisible:
+    element: { text: "My Vrat" }
+    direction: UP
+    centerElement: false
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/vrat-portraits-standard-landing
+- scrollUntilVisible:
+    element: { text: "Vrat,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Vrat,.*"
+- extendedWaitUntil:
+    visible: "Area: all"
+    timeout: 90000
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/vrat-portraits-standard-list
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Large"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-vrat" }
+- assertVisible: "Area: all"
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/vrat-portraits-large-list
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { text: "My Vrat" }
+    direction: UP
+    centerElement: false
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/vrat-portraits-large-landing
+# Restore the reading-size preference for subsequent local flows.
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Standard"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- waitForAnimationToEnd
