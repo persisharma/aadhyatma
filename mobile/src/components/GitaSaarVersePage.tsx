@@ -1,49 +1,56 @@
-import React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
-import AutoSlideScrollView from '@/components/AutoSlideScrollView';
-import { useTheme } from '@/theme/ThemeContext';
-import { fontFamilies } from '@/theme/typography';
-import { useGitaLanguage } from '@/data/gita/language';
+import React, { useEffect, useMemo, useState } from "react";
+import { Keyboard, Pressable, StyleSheet, View } from "react-native";
+import AutoSlideScrollView from "./AutoSlideScrollView";
+import { useTheme } from "@/theme/ThemeContext";
+import { fontFamilies } from "@/theme/typography";
+import { useGitaLanguage } from "@/data/gita/language";
 import {
-  verseLinesByLang,
+  gitaSaarChaptersManifest,
+  resolveGitaSaarRef,
+  type GitaSaarVerse,
+} from "@/data/gita-saar";
+import {
+  gitaSaarExperiences,
+  type LearningCopy,
+} from "@/data/gita-saar/experience";
+import { MAX_REFLECTION_LENGTH } from "@/data/gita-saar/learningStore";
+import {
+  contentByLang,
   meaningByLang,
   meaningSourceLang,
-  contentByLang,
   pick,
-} from '@/utils/localize';
+  verseLinesByLang,
+} from "@/utils/localize";
 import {
-  verseToken,
   meaningToken,
-  scriptBodyFont,
   scriptTitleFont,
+  verseToken,
   pillTextStyle,
-} from '@/utils/langType';
-import type { GitaSaarVerse } from '@/data/gita-saar';
-import { getReaderBackground } from '@/data/backgrounds';
-import BackgroundLayer from './BackgroundLayer';
-import GitaSaarDivider from './GitaSaarDivider';
-import ProseParagraph from './ProseParagraph';
+} from "@/utils/langType";
+import { getReaderBackground } from "@/data/backgrounds";
+import { readerIllustrationAsset } from "@/data/readerIllustrationAsset";
+import BackgroundLayer from "./BackgroundLayer";
+import ReadingBanner from "./ReadingBanner";
+import ProseParagraph from "./ProseParagraph";
+import GitaSaarThemeIcon from "./GitaSaarThemeIcon";
+import AppIcon from "./AppIcon";
+import TextField from "./TextField";
 
 type Props = {
   verse: GitaSaarVerse;
   sourceId: string;
   chapterTitle?: string;
   width: number;
-  /** Measured pager viewport: bounds the nested vertical reader on native. */
   height?: number;
   topActions?: React.ReactNode;
-  /** Rendered under the saar on the theme's last page — the one-line essence. */
   closing?: { hi: string; en: string };
-  /** Opens the Gita reader on this shloka (design.md §77: the quote travels with its hand-off). */
   onOpenInGita?: () => void;
+  isSaved?: boolean;
+  initialReflection?: string;
+  onSaveLearning?: (text: string) => Promise<void>;
+  onReflectionFocus?: () => void;
 };
-
-/**
- * One page of the गीता सार reader: the group eyebrow, the `श्लोक · c.v` pill,
- * the corpus Sanskrit / IAST, the सार (the theme's plain-language sense), and
- * the hand-off into the Gita reader for the full bhāvārtha and commentary.
- * Reading content sizes only from the shared typography tokens (RULEBOOK §3).
- */
+/** One continuous, essence-first lesson. Deeper scripture and writing are optional. */
 export default function GitaSaarVersePage({
   verse,
   sourceId,
@@ -53,279 +60,647 @@ export default function GitaSaarVersePage({
   topActions,
   closing,
   onOpenInGita,
+  isSaved = false,
+  initialReflection = "",
+  onSaveLearning,
+  onReflectionFocus,
 }: Props) {
-  const { colors, typography, radii, spacing } = useTheme();
+  const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-
-  const saar = meaningByLang(lang, verse.meaningHi, verse.meaningEn);
-  const groupTitle = contentByLang(lang, verse.groupTitleHi, verse.groupTitleEn);
-  const groupIntro = contentByLang(lang, verse.groupIntroHi, verse.groupIntroEn);
-  const themeLine = contentByLang(lang, verse.themeHi, verse.themeEn);
-  const closingText = closing ? meaningByLang(lang, closing.hi, closing.en) : null;
-
-  const saarLabel = pick(lang, { hi: 'सार', en: 'Essence', gu: 'સાર', kn: 'ಸಾರ' });
-  const closingLabel = pick(lang, {
-    hi: 'एक पंक्ति में',
-    en: 'In one line',
-    gu: 'એક પંક્તિમાં',
-    kn: 'ಒಂದು ಸಾಲಿನಲ್ಲಿ',
-  });
-  const openInGitaLabel = pick(lang, {
-    hi: 'पूरा अर्थ गीता में पढ़ें ›',
-    en: 'Read the full meaning in the Gita ›',
-    gu: 'પૂરો અર્થ ગીતામાં વાંચો ›',
-    kn: 'ಪೂರ್ಣ ಅರ್ಥವನ್ನು ಗೀತೆಯಲ್ಲಿ ಓದಿ ›',
-  });
-
-  // Same vocabulary as the Gita reader: the pill names the shloka as printed.
-  const pillText = contentByLang(
-    lang,
-    `श्लोक · ${verse.gitaChapter}.${verse.gitaVerse}`,
-    `Shloka · ${verse.gitaChapter}.${verse.gitaVerse}`
+  const themeId = gitaSaarChaptersManifest[verse.chapter - 1]?.id;
+  const experience = gitaSaarExperiences[themeId];
+  const [sourceOpen, setSourceOpen] = useState(false);
+  const [writing, setWriting] = useState(false);
+  const [reflection, setReflection] = useState(initialReflection);
+  const [dirty, setDirty] = useState(false);
+  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">(
+    "idle",
   );
-
-  const meaningTok = meaningToken(meaningSourceLang(lang), typography);
-  const bodyStyle = {
-    color: meaningSourceLang(lang) === 'en' ? colors.ink : colors.inkSoft,
-    fontFamily: meaningTok.fontFamily,
-    fontSize: meaningTok.fontSize,
-    lineHeight: meaningTok.lineHeight,
+  useEffect(() => {
+    if (!dirty) setReflection(initialReflection);
+  }, [initialReflection, dirty]);
+  useEffect(() => {
+    if (!isSaved && status === "saved") setStatus("idle");
+  }, [isSaved, status]);
+  const original = useMemo(
+    () =>
+      sourceOpen
+        ? resolveGitaSaarRef({
+            chapter: verse.gitaChapter,
+            verse: verse.gitaVerse,
+          })
+        : null,
+    [sourceOpen, verse.gitaChapter, verse.gitaVerse],
+  );
+  const copy = (value: LearningCopy) => meaningByLang(lang, value.hi, value.en);
+  const tok = meaningToken(meaningSourceLang(lang), typography);
+  const body = {
+    fontFamily: tok.fontFamily,
+    fontSize: tok.fontSize,
+    lineHeight: tok.lineHeight,
+    color: colors.inkSoft,
   } as const;
-
-  const labelStyle = {
-    color: colors.saffronDeep,
+  const title = {
     fontFamily:
-      lang === 'en'
-        ? typography.meaningLabel.fontFamily
-        : scriptTitleFont(lang, typography.readerTitle.fontFamily),
-    fontSize: typography.meaningLabel.fontSize,
-    letterSpacing: lang === 'en' ? typography.meaningLabel.letterSpacing : 0,
+      lang === "en"
+        ? fontFamilies.latinSemiBold
+        : scriptTitleFont(lang, typography.screenTitle.fontFamily),
+    color: colors.ink,
   } as const;
-
-  const a11yLabel = [
-    `Verse ${verse.gitaChapter}.${verse.gitaVerse}`,
-    groupTitle,
-    ...verse.sanskrit,
-    saarLabel,
-    saar,
-  ].join('. ');
-
+  const label = {
+    fontFamily: tok.fontFamily,
+    fontSize: 12,
+    lineHeight: 22,
+    color: colors.saffronDeep,
+  } as const;
+  const saved = isSaved && !dirty;
+  async function save() {
+    if (!onSaveLearning || status === "saving") return;
+    Keyboard.dismiss();
+    setStatus("saving");
+    try {
+      await onSaveLearning(reflection);
+      setDirty(false);
+      setStatus("saved");
+    } catch {
+      setStatus("error");
+    }
+  }
   return (
-    <View style={[styles.page, { width, height, backgroundColor: colors.parchment }]}>
+    <View
+      style={[
+        styles.page,
+        { width, height, backgroundColor: colors.parchment },
+      ]}
+    >
       <BackgroundLayer source={getReaderBackground(sourceId, verse)} />
-
       <AutoSlideScrollView
         style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator
+        contentContainerStyle={[
+          styles.content,
+          { paddingHorizontal: spacing.screenGutter },
+        ]}
         nestedScrollEnabled
         directionalLockEnabled
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
         accessible={false}
       >
-        <View style={{ paddingHorizontal: spacing.screenGutter }}>
-          {chapterTitle ? (
-            <ProseParagraph style={[styles.chapterTitle, {
-              color: colors.ink,
-              fontFamily: lang === 'en' ? fontFamilies.latinBold : scriptTitleFont(lang, typography.screenTitle.fontFamily),
-              fontSize: typography.screenTitle.fontSize,
-            }]}>{chapterTitle}</ProseParagraph>
-          ) : null}
-          {/* Group eyebrow: which section of the reading order this page belongs to. */}
-          <ProseParagraph
-            testID="gita-saar-group"
-            style={[
-              styles.eyebrow,
-              { fontFamily: lang === 'en' ? typography.subtitle.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 16, lineHeight: 25 },
-              { color: colors.inkMuted },
-            ]}
-          >
-            {groupTitle}
-          </ProseParagraph>
-          {verse.isGroupStart ? (
-            <ProseParagraph
-              style={[
-                styles.groupIntro,
-                {
-                  color: colors.inkSoft,
-                  fontFamily: lang === 'en' ? typography.subtitle.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
-                  fontSize: 15,
-                  lineHeight: 23,
-                  fontStyle: lang === 'en' ? 'italic' : 'normal',
-                },
-              ]}
-            >
-              {groupIntro}
+        <View style={styles.contextRow}>
+          {chapterTitle && (
+            <ProseParagraph style={[label, styles.context]}>
+              {chapterTitle}
             </ProseParagraph>
-          ) : null}
-
+          )}
+          {topActions && <View style={styles.actions}>{topActions}</View>}
         </View>
-        <View style={{ paddingHorizontal: spacing.screenGutter }}>
-          <View style={styles.headerRow}>
-            <View
-              accessible
-              accessibilityLabel={a11yLabel}
-              style={[styles.pill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}
-            >
-              <ProseParagraph
-                style={[styles.pillText, pillTextStyle(lang, typography.versePill), { color: colors.saffronDeep }]}
-              >
-                {pillText}
-              </ProseParagraph>
-            </View>
-            {topActions ? <View style={styles.headerActions}>{topActions}</View> : null}
-          </View>
-
-          <View style={styles.verseBlock}>
-            {verseLinesByLang(lang, verse.sanskrit, verse.transliteration).map((line, idx) => {
-              const tok = verseToken(lang, typography);
-              return (
-                <ProseParagraph
-                  key={`v-${idx}`}
-                  style={[
-                    styles.verseLine,
-                    { color: colors.ink, fontFamily: tok.fontFamily, fontSize: tok.fontSize, lineHeight: tok.lineHeight },
-                  ]}
-                >
-                  {line}
-                </ProseParagraph>
-              );
+        <ProseParagraph
+          style={[
+            pillTextStyle(lang, typography.versePill),
+            { color: colors.saffronDeep, marginTop: 5, marginBottom: 13 },
+          ]}
+        >
+          {contentByLang(
+            lang,
+            `श्लोक · ${verse.gitaChapter}.${verse.gitaVerse}`,
+            `Shloka · ${verse.gitaChapter}.${verse.gitaVerse}`,
+          )}
+        </ProseParagraph>
+        <ProseParagraph
+          accessibilityRole="header"
+          style={[
+            title,
+            {
+              fontSize: tok.fontSize + 8,
+              lineHeight: tok.lineHeight + 8,
+              marginBottom: 20,
+            },
+          ]}
+        >
+          {contentByLang(lang, verse.themeHi, verse.themeEn)}
+        </ProseParagraph>
+        <ProseParagraph style={[label, { marginBottom: 9 }]}>
+          {pick(lang, { hi: "सार", en: "Essence", gu: "સાર", kn: "ಸಾರ" })}
+        </ProseParagraph>
+        <ProseParagraph
+          testID="gita-saar-essence"
+          style={[body, { color: colors.ink, marginBottom: 23 }]}
+        >
+          {meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
+        </ProseParagraph>
+        <Pressable
+          testID="gita-saar-source-toggle"
+          accessibilityRole="button"
+          accessibilityLabel="Show original Gita verse and meaning"
+          accessibilityState={{ expanded: sourceOpen }}
+          onPress={() => setSourceOpen((open) => !open)}
+          style={[styles.sourceToggle, { borderColor: colors.divider }]}
+        >
+          <AppIcon name="text" size={19} color={colors.saffronDeep} />
+          <ProseParagraph style={[label, { flex: 1 }]}>
+            {pick(lang, {
+              hi: "मूल श्लोक और अर्थ",
+              en: "Original verse & meaning",
+              gu: "મૂળ શ્લોક અને અર્થ",
+              kn: "ಮೂಲ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ",
             })}
-          </View>
-
-          <GitaSaarDivider />
-
-          <ProseParagraph style={[styles.sectionLabel, labelStyle]}>{saarLabel}</ProseParagraph>
-          <ProseParagraph
+          </ProseParagraph>
+          <AppIcon
+            name={sourceOpen ? "close" : "next"}
+            size={17}
+            color={colors.saffronDeep}
+          />
+        </Pressable>
+        {sourceOpen && (
+          <View
+            testID="gita-saar-original"
             style={[
-              styles.themeLine,
+              styles.original,
               {
-                color: colors.ink,
-                fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.screenTitle.fontFamily),
-                fontSize: meaningTok.fontSize + 3,
-                lineHeight: meaningTok.lineHeight + 2,
-                fontStyle: lang === 'en' ? 'italic' : 'normal',
+                borderColor: colors.divider,
+                backgroundColor: colors.cardSurface,
+                borderRadius: radii.md,
               },
             ]}
           >
-            {themeLine}
+            {verseLinesByLang(lang, verse.sanskrit, verse.transliteration).map(
+              (line, i) => {
+                const vtok = verseToken(lang, typography);
+                return (
+                  <ProseParagraph
+                    key={i}
+                    style={{
+                      fontFamily: vtok.fontFamily,
+                      fontSize: vtok.fontSize,
+                      lineHeight: vtok.lineHeight,
+                      color: colors.ink,
+                      marginBottom: 12,
+                    }}
+                  >
+                    {line}
+                  </ProseParagraph>
+                );
+              },
+            )}
+            {original && (
+              <>
+                <ProseParagraph
+                  style={[label, { marginTop: 12, marginBottom: 8 }]}
+                >
+                  {pick(lang, {
+                    hi: "भावार्थ",
+                    en: "Meaning",
+                    gu: "ભાવાર્થ",
+                    kn: "ಭಾವಾರ್ಥ",
+                  })}
+                </ProseParagraph>
+                <ProseParagraph style={body}>
+                  {meaningByLang(lang, original.meaningHi, original.meaningEn)}
+                </ProseParagraph>
+              </>
+            )}
+          </View>
+        )}
+        {onOpenInGita && (
+          <Pressable
+            testID="gita-saar-open-in-gita"
+            accessibilityRole="button"
+            accessibilityLabel={`Open Gita reader for ${verse.gitaChapter}.${verse.gitaVerse}`}
+            onPress={onOpenInGita}
+            style={styles.handoff}
+          >
+            <ProseParagraph style={[label, { flex: 1 }]}>
+              {pick(lang, {
+                hi: "पूरा अर्थ गीता में पढ़ें",
+                en: "Read the full meaning in the Gita",
+                gu: "પૂરો અર્થ ગીતામાં વાંચો",
+                kn: "ಪೂರ್ಣ ಅರ್ಥವನ್ನು ಗೀತೆಯಲ್ಲಿ ಓದಿ",
+              })}
+            </ProseParagraph>
+            <AppIcon name="next" size={17} color={colors.saffronDeep} />
+          </Pressable>
+        )}
+        <View style={[styles.group, { borderColor: colors.divider }]}>
+          <ProseParagraph
+            testID="gita-saar-group"
+            style={[
+              title,
+              { fontSize: tok.fontSize, lineHeight: tok.lineHeight },
+            ]}
+          >
+            {contentByLang(lang, verse.groupTitleHi, verse.groupTitleEn)}
           </ProseParagraph>
-          <ProseParagraph style={[styles.body, bodyStyle]}>{saar}</ProseParagraph>
-
-          {onOpenInGita ? (
+          <ProseParagraph style={[body, { marginTop: 9 }]}>
+            {contentByLang(lang, verse.groupIntroHi, verse.groupIntroEn)}
+          </ProseParagraph>
+        </View>
+        {experience && verse.isGroupStart && (
+          <View testID="gita-saar-learning-frame" style={styles.explanation}>
+            <ProseParagraph style={label}>
+              {pick(lang, {
+                hi: "इस विषय को समझें",
+                en: "Understand the theme",
+                gu: "આ વિષયને સમજો",
+                kn: "ಈ ವಿಷಯವನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ",
+              })}
+            </ProseParagraph>
+            <ProseParagraph
+              accessibilityRole="header"
+              style={[
+                title,
+                {
+                  fontSize: tok.fontSize + 5,
+                  lineHeight: tok.lineHeight + 5,
+                  marginTop: 9,
+                  marginBottom: 20,
+                },
+              ]}
+            >
+              {copy(experience.title)}
+            </ProseParagraph>
+            {themeId === "karma" && verse.number === 1 && (
+              <ReadingBanner
+                testID="gita-saar-garden"
+                source={readerIllustrationAsset("gita-saar-karma-garden")}
+                style={{
+                  width: width - spacing.screenGutter * 2,
+                  maxWidth: 560,
+                  maxHeight: 280,
+                  marginBottom: 22,
+                }}
+              />
+            )}
+            {[experience.first, experience.second].map((frame, index) => (
+              <View
+                key={index}
+                style={[styles.learningRow, { borderColor: colors.divider }]}
+              >
+                <View
+                  style={[
+                    styles.learningSymbol,
+                    { backgroundColor: colors.goldTint },
+                  ]}
+                >
+                  {index === 0 ? (
+                    <GitaSaarThemeIcon themeId={themeId} />
+                  ) : (
+                    <AppIcon
+                      name="insight"
+                      size={25}
+                      color={colors.saffronDeep}
+                    />
+                  )}
+                </View>
+                <View style={styles.learningCopy}>
+                  <ProseParagraph
+                    style={[
+                      title,
+                      { fontSize: tok.fontSize, lineHeight: tok.lineHeight },
+                    ]}
+                  >
+                    {copy(frame.title)}
+                  </ProseParagraph>
+                  <ProseParagraph style={[body, { marginTop: 8 }]}>
+                    {copy(frame.body)}
+                  </ProseParagraph>
+                </View>
+              </View>
+            ))}
+            <ProseParagraph
+              style={[label, { color: colors.inkMuted, marginTop: 15 }]}
+            >
+              {pick(lang, {
+                hi: "उदाहरण और मनन संपादकीय प्रस्तुति हैं।",
+                en: "Examples and reflections are editorial.",
+                gu: "ઉદાહરણો અને મનન સંપાદકીય રજૂઆત છે.",
+                kn: "ಉದಾಹರಣೆಗಳು ಮತ್ತು ಚಿಂತನೆ ಸಂಪಾದಕೀಯ ನಿರೂಪಣೆ.",
+              })}
+            </ProseParagraph>
+          </View>
+        )}
+        {experience && (
+          <View
+            style={[
+              styles.takeaway,
+              {
+                backgroundColor: colors.cardSurface,
+                borderColor: colors.divider,
+                borderRadius: radii.md,
+              },
+            ]}
+          >
+            <ProseParagraph style={label}>
+              {pick(lang, {
+                hi: "आज साथ ले जाएँ",
+                en: "Take it into your day",
+                gu: "આજ સાથે લઈ જાઓ",
+                kn: "ಇಂದಿನ ದಿನಕ್ಕೆ ಜೊತೆಯಾಗಲಿ",
+              })}
+            </ProseParagraph>
+            <ProseParagraph
+              style={[body, { color: colors.ink, marginTop: 12 }]}
+            >
+              {copy(experience.takeaway)}
+            </ProseParagraph>
+          </View>
+        )}
+        {onSaveLearning && (
+          <View style={styles.keep}>
             <Pressable
-              onPress={onOpenInGita}
               accessibilityRole="button"
-              accessibilityLabel={`Open Gita reader for ${verse.gitaChapter}.${verse.gitaVerse}`}
-              testID="gita-saar-open-in-gita"
-              hitSlop={8}
-              style={({ pressed }) => [
-                styles.handoff,
-                { borderColor: colors.gold, borderRadius: radii.pill, backgroundColor: colors.parchmentSoft },
-                pressed && { opacity: 0.86 },
+              accessibilityLabel="Write a Gita Saar reflection"
+              accessibilityState={{ expanded: writing }}
+              onPress={() => {
+                if (writing) Keyboard.dismiss();
+                setWriting((open) => !open);
+              }}
+              style={[styles.writeToggle, { borderColor: colors.divider }]}
+            >
+              <AppIcon name="edit" size={19} color={colors.saffronDeep} />
+              <ProseParagraph style={[label, { flex: 1 }]}>
+                {pick(lang, {
+                  hi: "अपना एक विचार लिखें",
+                  en: "Add a thought of your own",
+                  gu: "તમારો એક વિચાર લખો",
+                  kn: "ನಿಮ್ಮ ಒಂದು ವಿಚಾರ ಬರೆಯಿರಿ",
+                })}
+              </ProseParagraph>
+              <ProseParagraph style={[label, { color: colors.inkMuted }]}>
+                {pick(lang, {
+                  hi: "वैकल्पिक",
+                  en: "Optional",
+                  gu: "વૈકલ્પિક",
+                  kn: "ಐಚ್ಛಿಕ",
+                })}
+              </ProseParagraph>
+            </Pressable>
+            {writing && (
+              <View style={{ marginBottom: 18 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                    gap: 12,
+                    marginTop: 15,
+                    marginBottom: 13,
+                  }}
+                >
+                  {experience && (
+                    <ProseParagraph style={[body, { flex: 1 }]}>
+                      {copy(experience.reflection)}
+                    </ProseParagraph>
+                  )}
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel="Finish writing Gita Saar reflection"
+                    onPress={() => Keyboard.dismiss()}
+                    style={{
+                      minHeight: 44,
+                      minWidth: 44,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <ProseParagraph style={label}>
+                      {pick(lang, {
+                        hi: "पूर्ण",
+                        en: "Done",
+                        gu: "પૂર્ણ",
+                        kn: "ಮುಗಿಯಿತು",
+                      })}
+                    </ProseParagraph>
+                  </Pressable>
+                </View>
+                <TextField
+                  variant="form"
+                  multiline
+                  maxLength={MAX_REFLECTION_LENGTH}
+                  accessibilityLabel="Gita Saar reflection"
+                  testID="gita-saar-reflection"
+                  value={reflection}
+                  onFocus={onReflectionFocus}
+                  onChangeText={(text) => {
+                    setReflection(text);
+                    setDirty(true);
+                    setStatus("idle");
+                  }}
+                  placeholder={pick(lang, {
+                    hi: "आज मैं…",
+                    en: "Today, I…",
+                    gu: "આજે હું…",
+                    kn: "ಇಂದು ನಾನು…",
+                  })}
+                  style={[
+                    body,
+                    {
+                      minHeight: 125,
+                      height: undefined,
+                      textAlignVertical: "top",
+                      paddingVertical: 12,
+                    },
+                  ]}
+                />
+              </View>
+            )}
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Save Gita Saar learning"
+              accessibilityState={{ disabled: status === "saving" }}
+              disabled={status === "saving"}
+              testID="gita-saar-save-learning"
+              onPress={() => void save()}
+              style={[
+                styles.save,
+                {
+                  backgroundColor: saved ? colors.goldTint : colors.saffronDeep,
+                  borderColor: saved ? colors.gold : colors.saffronDeep,
+                  borderRadius: radii.md,
+                },
               ]}
             >
               <ProseParagraph
-                style={{
-                  color: colors.saffronDeep,
-                  fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.readerTitle.fontFamily),
-                  fontSize: 14,
-                  textAlign: 'center',
-                  flexShrink: 1,
-                }}
+                style={[
+                  body,
+                  {
+                    color: saved ? colors.saffronDeep : colors.onPrimary,
+                    flex: 1,
+                  },
+                ]}
               >
-                {openInGitaLabel}
+                {status === "saving"
+                  ? pick(lang, {
+                      hi: "सहेज रहे हैं…",
+                      en: "Saving…",
+                      gu: "સાચવી રહ્યા છીએ…",
+                      kn: "ಉಳಿಸಲಾಗುತ್ತಿದೆ…",
+                    })
+                  : saved
+                    ? pick(lang, {
+                        hi: "सीख सहेज ली गई",
+                        en: "Teaching saved",
+                        gu: "શીખ સાચવી લીધી",
+                        kn: "ಕಲಿಕೆ ಉಳಿಸಲಾಗಿದೆ",
+                      })
+                    : reflection.trim()
+                      ? pick(lang, {
+                          hi: "सीख और विचार सहेजें",
+                          en: "Save teaching & reflection",
+                          gu: "શીખ અને વિચાર સાચવો",
+                          kn: "ಕಲಿಕೆ ಮತ್ತು ವಿಚಾರ ಉಳಿಸಿ",
+                        })
+                      : pick(lang, {
+                          hi: "सीख सहेजें",
+                          en: "Keep this teaching",
+                          gu: "શીખ સાચવો",
+                          kn: "ಕಲಿಕೆ ಉಳಿಸಿ",
+                        })}
               </ProseParagraph>
+              <AppIcon
+                name={saved ? "saved" : "next"}
+                size={21}
+                color={saved ? colors.saffronDeep : colors.onPrimary}
+              />
             </Pressable>
-          ) : null}
-
-          {closingText ? (
-            <>
-              <GitaSaarDivider />
-              <ProseParagraph style={[styles.sectionLabel, labelStyle]}>{closingLabel}</ProseParagraph>
-              <ProseParagraph style={[styles.body, styles.closing, bodyStyle]}>{closingText}</ProseParagraph>
-            </>
-          ) : null}
-        </View>
+            <ProseParagraph
+              accessibilityLiveRegion="polite"
+              style={[
+                label,
+                {
+                  color:
+                    status === "error" ? colors.avoidDeep : colors.inkMuted,
+                  marginTop: 10,
+                  textAlign: "center",
+                },
+              ]}
+            >
+              {status === "error"
+                ? pick(lang, {
+                    hi: "सहेजा नहीं जा सका। आपका लिखा यहीं है; फिर कोशिश करें।",
+                    en: "Could not save. Your writing is still here; try again.",
+                    gu: "સાચવી શકાયું નથી. તમારું લખાણ અહીં છે; ફરી પ્રયાસ કરો.",
+                    kn: "ಉಳಿಸಲಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಬರಹ ಇಲ್ಲಿದೆ; ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+                  })
+                : saved
+                  ? pick(lang, {
+                      hi: "मेरी सीख में कभी भी लौटकर पढ़ें।",
+                      en: "Return to it anytime in My learning.",
+                      gu: "મારી શીખમાં ગમે ત્યારે ફરી વાંચો.",
+                      kn: "ನನ್ನ ಕಲಿಕೆಯಲ್ಲಿ ಮತ್ತೆ ಓದಿ.",
+                    })
+                  : pick(lang, {
+                      hi: "आपके निजी विचार, आपकी सीख के साथ।",
+                      en: "Your private reflections, kept with your learning.",
+                      gu: "તમારા ખાનગી વિચારો, તમારી શીખ સાથે.",
+                      kn: "ನಿಮ್ಮ ಖಾಸಗಿ ವಿಚಾರಗಳು, ನಿಮ್ಮ ಕಲಿಕೆಯ ಜೊತೆಗೆ.",
+                    })}
+            </ProseParagraph>
+          </View>
+        )}
+        {closing && (
+          <View style={[styles.closing, { borderColor: colors.gold }]}>
+            <ProseParagraph style={label}>
+              {pick(lang, {
+                hi: "एक पंक्ति में",
+                en: "In one line",
+                gu: "એક પંક્તિમાં",
+                kn: "ಒಂದು ಸಾಲಿನಲ್ಲಿ",
+              })}
+            </ProseParagraph>
+            <ProseParagraph
+              style={[body, { color: colors.saffronDeep, marginTop: 12 }]}
+            >
+              {meaningByLang(lang, closing.hi, closing.en)}
+            </ProseParagraph>
+          </View>
+        )}
       </AutoSlideScrollView>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  page: {
-    flex: 1,
-    overflow: 'hidden',
-  },
-  scroll: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingTop: 16,
-    // Clears the pager-dots overlay and the screen/tab-bar seam (design.md B2).
-    paddingBottom: 64,
-  },
-  chapterTitle: { lineHeight: 54, paddingVertical: 8, marginBottom: 6 },
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
+  page: { overflow: "hidden" },
+  scroll: { flex: 1 },
+  content: { paddingTop: 12, paddingBottom: 100 },
+  contextRow: {
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
-    marginBottom: 14,
+    minHeight: 44,
   },
-  headerActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  context: { flex: 1 },
+  actions: { flexDirection: "row", gap: 8 },
+  sourceToggle: {
+    minHeight: 54,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    paddingVertical: 12,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  pill: {
-    maxWidth: '100%',
-    flexShrink: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-  },
-  pillText: {
-    textTransform: 'uppercase',
-    includeFontPadding: true,
-  },
-  eyebrow: {
-    marginBottom: 6,
-  },
-  groupIntro: {
-    marginBottom: 14,
-  },
-  verseBlock: {
-    gap: 4,
-    marginTop: 6,
-  },
-  verseLine: {
-    textAlign: 'center',
-    // Devanagari verse body — keep Android's font padding so top matras aren't clipped.
-  },
-  sectionLabel: {
-    textTransform: 'uppercase',
-    marginBottom: 10,
-    alignSelf: 'flex-start',
-  },
-  themeLine: {
-    textAlign: 'left',
-    paddingVertical: 4,
-    marginBottom: 10,
-  },
-  body: {
-    // Devanagari meaning prose — keep Android's font padding (no matra clip).
-  },
-  closing: {
-    textAlign: 'center',
+  original: {
+    padding: 18,
+    marginTop: 16,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   handoff: {
-    alignSelf: 'center',
-    maxWidth: '100%',
-    marginTop: 24,
-    minHeight: 44,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderWidth: 1,
+    minHeight: 48,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingVertical: 12,
+    marginBottom: 16,
+  },
+  group: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingTop: 20,
+    marginBottom: 24,
+  },
+  explanation: { marginBottom: 26 },
+  learningRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 14,
+    paddingVertical: 20,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  learningSymbol: {
+    width: 48,
+    minHeight: 48,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 24,
+  },
+  learningCopy: { flex: 1 },
+  takeaway: {
+    padding: 20,
+    borderWidth: StyleSheet.hairlineWidth,
+    marginTop: 4,
+    marginBottom: 18,
+  },
+  keep: { marginTop: 4 },
+  writeToggle: {
+    minHeight: 58,
+    paddingVertical: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginBottom: 18,
+  },
+  save: {
+    minHeight: 56,
+    paddingHorizontal: 18,
+    paddingVertical: 13,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  closing: {
+    paddingVertical: 24,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    marginTop: 26,
   },
 });

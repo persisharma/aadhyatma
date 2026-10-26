@@ -1161,3 +1161,7 @@ The manual square crop is gone: a local Expo module (`modules/suvichar-face`: Ap
 ## [2026-10-26] update | Suvichar share carries the app link
 
 The Suvichar share now passes a one-line caption (`buildSuvicharShareMessage`, data/shareLinks.ts) ending in https://vedansh.app/get, so the recipient gets a tappable download link with the image. design.md §82 and [[subsystems/suvichar]] updated. Typecheck and lint only; no Jest, Maestro or device run.
+
+## [2026-10-26] ingest | Gita Saar continuous native learning
+
+Implemented the approved question-led hub and essence-first continuous reader across all 16 existing themes / 170 stable pages. Added bilingual editorial frames, optional private reflections with serialized durable storage, My learning, direct previous/next, and the approved CDN-only karma garden illustration. Original scripture, Saar, IDs and ordering remain unchanged. Native testing found an Android SVG re-parenting crash during cold routing; `lazyScreen` now resolves cold modules through a cancellable effect while preserving synchronous warm rendering and mounted screen state. Updated design.md §75/§77, RULEBOOK §30 and [[gita-saar]]. Full mobile suite passes 3,716 tests; iOS and Android core native journeys pass. iOS restart persistence and Gujarati/Kannada Large reading checks pass. Local capture evidence and exact remaining limits are in docs/evaluations/gita-saar-revamp-2026-10-26. No app update or version change published.

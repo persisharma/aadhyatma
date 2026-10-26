@@ -1,0 +1,33 @@
+# Run after gita-saar-revamp-smoke.yaml; verifies a saved reflection after a
+# process restart, without resetting AsyncStorage or relying on in-memory state.
+appId: com.prashantsharma.vedansh
+---
+- stopApp
+- launchApp:
+    clearState: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 90000
+- scrollUntilVisible:
+    element: { text: "Sacred Books.*Tap to open." }
+    direction: DOWN
+- tapOn: "Sacred Books.*Tap to open."
+- scrollUntilVisible:
+    element: { text: "Gita Saar\\..*Tap to open\\..*" }
+    direction: DOWN
+- tapOn: "Gita Saar\\..*Tap to open\\..*"
+- tapOn: { id: lang-toggle-en }
+- scrollUntilVisible:
+    element: { text: "Saved Gita Saar learning" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Saved Gita Saar learning"
+- scrollUntilVisible:
+    element: { text: "I will give one task my full attention." }
+    direction: DOWN
+- assertVisible: "I will give one task my full attention."
+- takeScreenshot: e2e-shots/gita-saar-reflection-after-restart
+- tapOn: "Open saved Gita Saar 2.47"
+- assertVisible: "Right to the work, not the fruit"

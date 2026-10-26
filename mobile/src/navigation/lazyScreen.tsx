@@ -1,9 +1,14 @@
-import React, { Suspense, use, type ComponentType, type FunctionComponent } from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
-import { registerPrefetch } from './screenPrefetch';
+import React, {
+  useEffect,
+  useState,
+  type ComponentType,
+  type FunctionComponent,
+} from "react";
+import { ActivityIndicator, View } from "react-native";
+import { useTheme } from "@/theme/ThemeContext";
+import { useGitaLanguage } from "@/data/gita/language";
+import { contentByLang } from "@/utils/localize";
+import { registerPrefetch } from "./screenPrefetch";
 
 /**
  * Put a route behind a dynamic boundary and enrol it in the background warm-up.
@@ -11,7 +16,7 @@ import { registerPrefetch } from './screenPrefetch';
  * This generalises what `lazyPanchangStack` does for the Panchang tab: ONE
  * shared promise per screen, so the background walk in `screenPrefetch` and a
  * user's tap read the same evaluation instead of racing two of them. By the
- * time a tap arrives the module is usually already warm and the `Suspense`
+ * time a tap arrives the module is usually already warm and the loading
  * fallback below never paints.
  *
  * `depth` is the screen's navigation distance from Home — Home is 1, whatever
@@ -46,28 +51,32 @@ export function lazyScreen<P extends object>(
   registerPrefetch({ label, depth, load });
 
   /**
-   * WHY NOT `React.lazy`. It records that its promise resolved inside a `.then`
-   * callback, i.e. asynchronously — so on its FIRST render it always suspends,
-   * even when the module was warmed seconds ago. Every first tap painted the
-   * spinner for a frame, which silently defeated the whole background warm-up.
-   *
-   * `Body` checks `Resolved` first, so a warmed screen renders synchronously and
-   * the fallback never commits. Only a genuinely cold screen reaches `use()`,
-   * which suspends until the module arrives. Both paths render the same tree —
-   * Suspense > Body > Screen — so a screen that mounted cold is never remounted
-   * (and never loses its state) when it later becomes warm.
+   * A warm module paints synchronously. A cold module resolves through an effect
+   * rather than hiding/revealing a native SVG tree through Suspense: Android
+   * Fabric can otherwise attempt to attach an already-parented SVG path when
+   * opening a cold route. Once mounted, the screen keeps the same element type.
    */
-  function Body(props: P) {
-    const Screen = Resolved ?? use(load()).default;
-    return <Screen {...props} />;
-  }
-
   function LazyRouteScreen(props: P) {
-    return (
-      <Suspense fallback={<ScreenLoadFallback />}>
-        <Body {...props} />
-      </Suspense>
-    );
+    const [, redraw] = useState(0);
+    const [failure, setFailure] = useState<{ error: unknown } | null>(null);
+    const Screen = Resolved;
+    useEffect(() => {
+      if (Screen) return;
+      let active = true;
+      void load().then(
+        () => {
+          if (active) redraw((n) => n + 1);
+        },
+        (error: unknown) => {
+          if (active) setFailure({ error });
+        },
+      );
+      return () => {
+        active = false;
+      };
+    }, [Screen]);
+    if (failure) throw failure.error;
+    return Screen ? <Screen {...props} /> : <ScreenLoadFallback />;
   }
   LazyRouteScreen.displayName = `LazyScreen(${label})`;
   return LazyRouteScreen;
@@ -87,11 +96,11 @@ function ScreenLoadFallback() {
       // screen is on its way rather than silence (StackLoadBoundary does the same).
       accessible
       accessibilityRole="progressbar"
-      accessibilityLabel={contentByLang(lang, 'खुल रहा है', 'Opening')}
+      accessibilityLabel={contentByLang(lang, "खुल रहा है", "Opening")}
       style={{
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: "center",
+        justifyContent: "center",
         backgroundColor: colors.parchment,
       }}
     >
