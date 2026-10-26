@@ -240,7 +240,10 @@ test('VidhiDetailScreen: routine-style samagri checklist, private provenance, sh
   expect(message).toContain(firstItem.itemHi);
   expect(message).toContain('भोग और रसोई');
   expect(message).toContain('सूजी या गेहूँ का आटा');
-  expect(message).not.toContain('http'); // nothing but the list
+  // The list, then only the download + Instagram lines every share carries (design.md §39.10).
+  const [list, links] = message.split('\n\nVedansh ऐप पर पढ़ें: ');
+  expect(list).not.toContain('http');
+  expect(links).toBe('https://vedansh.app/get\nInstagram पर फ़ॉलो करें: https://www.instagram.com/vedansh.app');
 
   // पूजा mode: phase-grouped steps, and "पूजा प्रारम्भ" enters conduct at step 0.
   act(() => {

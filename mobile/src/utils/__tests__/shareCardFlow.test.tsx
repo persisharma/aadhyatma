@@ -49,7 +49,7 @@ it('opens the Daily Bhakti picker: whole-card rows, preview, card-language chips
   expect(props).toMatchObject({ wholeCard: true, title: 'पंचांग साझा करें', cardLang: 'hi' });
   expect(typeof props.onCardLang).toBe('function');
   expect(typeof props.onShareText).toBe('function');
-  expect(props.singleCardPreview.type).toBe('ShareCardPreview');
+  expect(props.singleCardPreview.props).toMatchObject({ content, lang: 'hi' });
 });
 
 it('system share exports the whole card 1080 px wide and captions it with the download link', async () => {
