@@ -18,4 +18,3 @@ Constraints: no adult Krishna, no flute, no additional people, no UI, typography
 
 Framing edit prompt (exact; input was initial generator output):
 Edit this existing square Bal Krishna devotional painting. Preserve the exact child identity, pose, blue skin, butter action, earthen pot, yellow dhoti, jewelry, style, warm gold garden and square aspect ratio. Change only the framing: zoom out so the ENTIRE peacock feather including its top tip and left wisps is inside the frame with at least 10% clear garden margin around its outermost painted edges. Keep both feet and the whole butter pot inside with similar safe inset. Slightly extend the existing garden background to create this margin. No other composition or subject changes. No text, UI, borders or logos.
-
