@@ -238,11 +238,13 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
             {t('मुहूर्त · चौघड़िया · व्रत-त्योहार · कुंडली · पाठ', 'Muhurat · Choghadiya · Festivals · Kundali')}
           </One>
         </View>
+        {/* One Text with the link as a span, so the two share a baseline: as sibling
+            Texts their boxes centre, and Devanagari sits high in its box. */}
         <View style={[styles.pill, { backgroundColor: colors.nightGold }]}>
           <Text style={fit({ fontFamily: en ? fontFamilies.interSemiBold : scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 12, lineHeight: 15, color: colors.ink })}>
-            {t('डाउनलोड', 'Download')}
+            {t('डाउनलोड', 'Download')}{'  '}
+            <Text style={{ fontFamily: fontFamilies.interSemiBold }}>{SMART_LINK.replace(/^https:\/\//, '')}</Text>
           </Text>
-          <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, lineHeight: 15, color: colors.ink }}>{SMART_LINK.replace(/^https:\/\//, '')}</Text>
         </View>
       </LinearGradient>
     </View>
@@ -285,5 +287,5 @@ const styles = StyleSheet.create({
   footer: { height: 50, marginTop: 6, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 10 },
   footerIcon: { width: 36, height: 36, borderRadius: 9, borderWidth: 1 },
   footerText: { flex: 1, minWidth: 0 },
-  pill: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 12, marginLeft: 'auto' },
+  pill: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 12, marginLeft: 'auto' },
 });
