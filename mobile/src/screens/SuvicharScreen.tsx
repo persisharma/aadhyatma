@@ -16,6 +16,7 @@ import { isSuvicharThought, suvicharDay, suvicharTemplatesFor, suvicharThoughts,
 import { suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '@/data/suvicharVaar';
 import { WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { useGitaLanguage } from '@/data/gita/language';
+import { buildSuvicharShareMessage } from '@/data/shareLinks';
 import { fullPhotoFit, initialSuvichar, parseSuvicharPreferences, suvicharDeities, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
 import { useTheme } from '@/theme/ThemeContext';
 import { androidBoxShadow } from '@/theme/elevation';
@@ -104,7 +105,8 @@ export default function SuvicharScreen() {
       const captureScale = Platform.OS === 'ios' ? PixelRatio.get() : 1;
       const size = suvicharCaptureSize(width, measured.height, captureScale);
       uri = await captureRef(card, { format: 'png', quality: 1, result: 'tmpfile', ...size });
-      if (!await shareFiles([uri], { title })) {
+      // The caption carries the tappable link; the printed vedansh.app/get on the card is not.
+      if (!await shareFiles([uri], { title, message: buildSuvicharShareMessage(lang) })) {
         if (!await Sharing.isAvailableAsync()) throw new Error('Sharing unavailable');
         await Sharing.shareAsync(uri, { mimeType: 'image/png', UTI: 'public.png', dialogTitle: title });
       }
