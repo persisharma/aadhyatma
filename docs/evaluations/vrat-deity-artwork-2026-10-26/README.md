@@ -78,3 +78,18 @@ performed. Category symbols, Home art and navigation art were not replaced.
   prototype/editorial acceptance remain pending. No native rebuild, OTA or
   release was performed. The user subsequently requested committing these
   artifacts and updating PR #542 after reconciling current main.
+
+## PR #542 reconciliation
+
+Reconciled with `origin/main` at `df1b511a` (Panchang sky header, festival ribbon
+and Choghadiya strip). The conflict was in `PanchangScreen`'s shared mode/header
+structure. Kept main's sky-aware rendering helpers and retained this PR's
+neutral catalog background, illustrated cards, expandable Today summary and
+independent stars. Both wiki histories are preserved.
+
+After reconciliation, `npm test` passed TypeScript and 3,751 tests: 37 widget,
+2,831 reader/component, 617 engine, 217 data and 49 Ask tests. Changed-source
+ESLint has no errors (existing deferred-import/import-order warnings remain).
+The earlier iOS Standard/Large artwork captures precede the main reconciliation;
+these are not fresh post-merge device proofs. Android and editorial/prototype
+acceptance remain pending.

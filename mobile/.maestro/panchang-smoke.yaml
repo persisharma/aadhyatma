@@ -101,9 +101,22 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*Ujjain.*"      # location chip label "Location: Ujjain"
 - assertVisible: "Purnimant calendar system"
 - assertVisible: "Amanta calendar system"
-- assertVisible: "Today"
-- assertVisible: "TITHI"
+# आज/Today shows only once the day has moved off today (the sky header hides a
+# no-op button); it is asserted after "Next date" below, where it is tapped.
+- assertVisible: "Next date"
+# The anga tiles sit under the sky header, ribbon and Muhurat card — past the
+# first viewport — so scroll to them, then back up to the day stepper.
+- scrollUntilVisible:
+    element:
+      text: "TITHI"
+    direction: DOWN
+    timeout: 10000
 - assertVisible: "NAKSHATRA"
+- scrollUntilVisible:
+    element:
+      text: "Next date"
+    direction: UP
+    timeout: 10000
 - assertVisible: "Expand calendar"
 - tapOn: "Next date"
 - waitForAnimationToEnd

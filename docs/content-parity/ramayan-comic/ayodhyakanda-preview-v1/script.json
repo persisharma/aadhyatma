@@ -1,0 +1,3243 @@
+{
+  "status": "original four-language adaptation drafts; human editorial review pending",
+  "languages": [
+    "hi",
+    "en",
+    "gu",
+    "kn"
+  ],
+  "copies": [
+    {
+      "id": "ay-p001-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "राम के छोटे भाई भरत और शत्रुघ्न अपने ननिहाल में थे।",
+        "en": "Rama’s younger brothers Bharata and Shatrughna were visiting their maternal family.",
+        "gu": "રામના નાના ભાઈઓ ભરત અને શત્રુઘ્ન પોતાના મોસાળમાં હતા.",
+        "kn": "ರಾಮನ ತಮ್ಮಂದಿರಾದ ಭರತ ಮತ್ತು ಶತ್ರುಘ್ನ ತಾಯಿಯ ತವರಿನಲ್ಲಿದ್ದರು."
+      }
+    },
+    {
+      "id": "ay-p001-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आपके घर में सब कुशल हैं?",
+        "en": "Is everyone at home well?",
+        "gu": "તમારા ઘરે સૌ કુશળ છે?",
+        "kn": "ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ಎಲ್ಲರೂ ಕ್ಷೇಮವಾಗಿದ್ದಾರೆಯೇ?"
+      },
+      "narration": {
+        "hi": "अयोध्या में राजकुमार राम प्रजा का हाल पूछते थे।",
+        "en": "In Ayodhya, Prince Rama took care to ask after his people.",
+        "gu": "અયોધ્યામાં રાજકુમાર રામ પ્રજાની ખબર પૂછતા.",
+        "kn": "ಅಯೋಧ್ಯೆಯಲ್ಲಿ ರಾಜಕುಮಾರ ರಾಮರು ಪ್ರಜೆಗಳ ಕ್ಷೇಮ ವಿಚಾರಿಸುತ್ತಿದ್ದರು."
+      }
+    },
+    {
+      "id": "ay-p001-s3",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "अब राम युवराज का दायित्व सँभालें।",
+        "en": "Let Rama take on the crown prince's duties.",
+        "gu": "હવે રામ યુવરાજની જવાબદારી સંભાળે.",
+        "kn": "ಇನ್ನು ರಾಮ ಯುವರಾಜನ ಹೊಣೆ ವಹಿಸಲಿ."
+      },
+      "narration": {
+        "hi": "वृद्ध राजा दशरथ राम को युवराज बनाना चाहते थे।",
+        "en": "The ageing king Dasharatha wished to name Rama crown prince.",
+        "gu": "વૃદ્ધ રાજા દશરથ રામને યુવરાજ બનાવવા ઇચ્છતા હતા.",
+        "kn": "ವಯಸ್ಸಾಗುತ್ತಿದ್ದ ರಾಜ ದಶರಥರು ರಾಮರನ್ನು ಯುವರಾಜನನ್ನಾಗಿ ಮಾಡಲು ಬಯಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p002-s1",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "इस विचार पर आप सबकी क्या राय है?",
+        "en": "What do you all think of this proposal?",
+        "gu": "આ વિચાર વિશે તમારો શું અભિપ્રાય છે?",
+        "kn": "ಈ ಪ್ರಸ್ತಾಪದ ಬಗ್ಗೆ ನಿಮ್ಮೆಲ್ಲರ ಅಭಿಪ್ರಾಯವೇನು?"
+      }
+    },
+    {
+      "id": "ay-p002-s2",
+      "speaker": "Citizens",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम हमारी चिन्ता अपने परिवार जैसी करते हैं।",
+        "en": "Rama cares for us as his own family.",
+        "gu": "રામ અમારી ચિંતા પોતાના પરિવાર જેવી કરે છે.",
+        "kn": "ರಾಮ ನಮ್ಮನ್ನು ತನ್ನ ಕುಟುಂಬದಂತೆ ನೋಡಿಕೊಳ್ಳುತ್ತಾನೆ."
+      }
+    },
+    {
+      "id": "ay-p003-s1",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम, संयम रखकर प्रजा का हित करना।",
+        "en": "Rama, govern with restraint and care for the people.",
+        "gu": "રામ, સંયમ રાખીને પ્રજાનું હિત કરજો.",
+        "kn": "ರಾಮ, ಸಂಯಮದಿಂದ ಪ್ರಜೆಯ ಹಿತ ಕಾಯಬೇಕು."
+      }
+    },
+    {
+      "id": "ay-p003-s2",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तुम्हारा अभिषेक कल ही होगा।",
+        "en": "Your anointing will be tomorrow.",
+        "gu": "તમારો અભિષેક કાલે જ થશે.",
+        "kn": "ನಿನ್ನ ಅಭಿಷೇಕ ನಾಳೆಯೇ ನಡೆಯಲಿದೆ."
+      }
+    },
+    {
+      "id": "ay-p003-s3",
+      "speaker": "Kaushalya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "पुत्र, तुम्हारा मंगल हो।",
+        "en": "May all be well with you, my son.",
+        "gu": "પુત્ર, તારું મંગળ થાઓ.",
+        "kn": "ಮಗನೇ, ನಿನಗೆ ಮಂಗಳವಾಗಲಿ."
+      },
+      "narration": {
+        "hi": "राम अपनी माता कौशल्या का आशीर्वाद लेने पहुँचे।",
+        "en": "Rama went to seek his mother Kaushalya’s blessing.",
+        "gu": "રામ પોતાની માતા કૌશલ્યાના આશીર્વાદ લેવા પહોંચ્યા.",
+        "kn": "ರಾಮರು ತಮ್ಮ ತಾಯಿ ಕೌಸಲ್ಯೆಯ ಆಶೀರ್ವಾದ ಪಡೆಯಲು ಬಂದರು."
+      }
+    },
+    {
+      "id": "ay-p004-s1",
+      "speaker": "Vashishtha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आज की रात व्रत और नियम से बिताओ।",
+        "en": "Observe tonight's fast and disciplines.",
+        "gu": "આજની રાત વ્રત અને નિયમથી વિતાવો.",
+        "kn": "ಇಂದಿನ ರಾತ್ರಿ ವ್ರತ ಮತ್ತು ನಿಯಮ ಪಾಲಿಸಿ."
+      },
+      "narration": {
+        "hi": "कुलगुरु वसिष्ठ ने राम और उनकी पत्नी सीता को व्रत का नियम बताया।",
+        "en": "The family preceptor Vashishtha instructed Rama and his wife Sita in the observance.",
+        "gu": "કુળગુરુ વસિષ્ઠે રામ અને તેમનાં પત્ની સીતાને વ્રતના નિયમ સમજાવ્યા.",
+        "kn": "ಕುಲಗುರು ವಸಿಷ್ಠರು ರಾಮರು ಮತ್ತು ಅವರ ಪತ್ನಿ ಸೀತೆಗೆ ವ್ರತದ ನಿಯಮ ತಿಳಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p004-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "राम और सीता ने साथ व्रत रखा।",
+        "en": "Rama and Sita observed the vow together.",
+        "gu": "રામ અને સીતાએ સાથે વ્રત રાખ્યું.",
+        "kn": "ರಾಮ ಮತ್ತು ಸೀತೆ ಜೊತೆಯಾಗಿ ವ್ರತ ಆಚರಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p004-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "अयोध्या अभिषेक के उत्सव के लिए सज उठी।",
+        "en": "Ayodhya was decorated for the anointing.",
+        "gu": "અયોધ્યા અભિષેકના ઉત્સવ માટે સજી ઊઠી.",
+        "kn": "ಅಯೋಧ್ಯೆ ಅಭಿಷೇಕದ ಸಂಭ್ರಮಕ್ಕೆ ಸಿಂಗಾರಗೊಂಡಿತು."
+      }
+    },
+    {
+      "id": "ay-p005-s1",
+      "speaker": "Manthara",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम का अभिषेक…!",
+        "en": "Rama's anointing…!",
+        "gu": "રામનો અભિષેક…!",
+        "kn": "ರಾಮನ ಅಭಿಷೇಕ…!"
+      },
+      "narration": {
+        "hi": "उसी दिन पहले, भरत की माता रानी कैकेयी की परिचारिका मन्थरा ने अभिषेक का समाचार सुना।",
+        "en": "Earlier that day, Manthara, attendant to Bharata’s mother Queen Kaikeyi, heard of the anointing.",
+        "gu": "એ જ દિવસે પહેલાં, ભરતની માતા રાણી કૈકેયીની પરિચારિકા મંથરાએ અભિષેકના સમાચાર સાંભળ્યા.",
+        "kn": "ಅದೇ ದಿನ ಮುಂಚೆ, ಭರತನ ತಾಯಿ ರಾಣಿ ಕೈಕೇಯಿಯ ಪರಿಚಾರಿಕೆ ಮಂಥರೆಗೆ ಅಭಿಷೇಕದ ಸುದ್ದಿ ತಿಳಿಯಿತು."
+      }
+    },
+    {
+      "id": "ay-p005-s2",
+      "speaker": "Manthara",
+      "mode": "dialogue",
+      "text": {
+        "hi": "कल राम का युवराज पद पर अभिषेक होगा!",
+        "en": "Rama will be anointed crown prince tomorrow!",
+        "gu": "કાલે રામનો યુવરાજ પદે અભિષેક થશે!",
+        "kn": "ನಾಳೆ ರಾಮನಿಗೆ ಯುವರಾಜನಾಗಿ ಅಭಿಷೇಕ ನಡೆಯಲಿದೆ!"
+      }
+    },
+    {
+      "id": "ay-p005-s3",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "यह तो शुभ समाचार है। यह आभूषण लो।",
+        "en": "What happy news! Take this jewel.",
+        "gu": "આ તો શુભ સમાચાર છે. આ આભૂષણ લો.",
+        "kn": "ಇದು ಶುಭಸುದ್ದಿ! ಈ ಆಭರಣ ತೆಗೆದುಕೋ."
+      }
+    },
+    {
+      "id": "ay-p006-s1",
+      "speaker": "Manthara",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तब भरत का स्थान क्या रह जाएगा?",
+        "en": "What place will Bharata have then?",
+        "gu": "પછી ભરતનું સ્થાન શું રહેશે?",
+        "kn": "ಹಾಗಾದರೆ ಭರತನ ಸ್ಥಾನ ಏನಾಗುವುದು?"
+      }
+    },
+    {
+      "id": "ay-p006-s2",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम तो सभी भाइयों से प्रेम करते हैं।",
+        "en": "Rama loves all his brothers.",
+        "gu": "રામ તો બધા ભાઈઓને પ્રેમ કરે છે.",
+        "kn": "ರಾಮ ತನ್ನ ಎಲ್ಲ ತಮ್ಮಂದಿರನ್ನೂ ಪ್ರೀತಿಸುತ್ತಾನೆ."
+      }
+    },
+    {
+      "id": "ay-p006-s3",
+      "speaker": "Manthara",
+      "mode": "dialogue",
+      "text": {
+        "hi": "युद्ध में राजा को बचाने पर मिले दो वर याद कीजिए।",
+        "en": "Remember the two boons for saving the king in battle.",
+        "gu": "યુદ્ધમાં રાજાને બચાવવા પર મળેલા બે વર યાદ કરો.",
+        "kn": "ಯುದ್ಧದಲ್ಲಿ ರಾಜನನ್ನು ಉಳಿಸಿದ್ದಕ್ಕೆ ಸಿಕ್ಕ ಎರಡು ವರ ನೆನಪಿಸಿಕೊಳ್ಳಿ."
+      }
+    },
+    {
+      "id": "ay-p006-s4",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मैं भरत का राज्य और राम का वनवास माँगूँगी।",
+        "en": "I will ask for Bharata's rule and Rama's exile.",
+        "gu": "હું ભરતનું રાજ્ય અને રામનો વનવાસ માગીશ.",
+        "kn": "ಭರತನಿಗೆ ರಾಜ್ಯ, ರಾಮನಿಗೆ ವನವಾಸ ಕೇಳುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p007-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "कैकेयी आभूषण उतार कोपभवन में जा बैठीं।",
+        "en": "Kaikeyi removed her jewels and entered the chamber of anger.",
+        "gu": "કૈકેયી આભૂષણ ઉતારી કોપભવનમાં બેઠાં.",
+        "kn": "ಕೈಕೇಯಿ ಆಭರಣ ಕಳಚಿ ಕೋಪಭವನದಲ್ಲಿ ಕುಳಿತಳು."
+      }
+    },
+    {
+      "id": "ay-p007-s2",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तुम्हारे दुःख का कारण क्या है?",
+        "en": "What has distressed you?",
+        "gu": "તમારા દુઃખનું કારણ શું છે?",
+        "kn": "ನಿನ್ನ ದುಃಖಕ್ಕೆ ಕಾರಣವೇನು?"
+      }
+    },
+    {
+      "id": "ay-p007-s3",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "पहले वचन दीजिए, वे दो वर देंगे।",
+        "en": "First promise to grant those two boons.",
+        "gu": "પહેલાં વચન આપો કે એ બે વર આપશો.",
+        "kn": "ಮೊದಲು ಆ ಎರಡು ವರ ನೀಡುವ ವಚನ ಕೊಡಿ."
+      }
+    },
+    {
+      "id": "ay-p007-s4",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मैं अपने दिए दोनों वर पूरे करूँगा।",
+        "en": "I will fulfil both boons I promised.",
+        "gu": "હું આપેલા બંને વર પૂરા કરીશ.",
+        "kn": "ನಾನು ಕೊಟ್ಟ ಎರಡೂ ವರಗಳನ್ನು ಪೂರೈಸುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p008-s1",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "पहला वर—भरत का अभिषेक हो।",
+        "en": "First: let Bharata receive the anointing.",
+        "gu": "પહેલો વર—ભરતનો અભિષેક થાય.",
+        "kn": "ಮೊದಲ ವರ—ಭರತನಿಗೆ ಅಭಿಷೇಕವಾಗಲಿ."
+      }
+    },
+    {
+      "id": "ay-p008-s2",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "दूसरा—राम चौदह वर्ष वन में रहें।",
+        "en": "Second: let Rama live in exile for fourteen years.",
+        "gu": "બીજો—રામ ચૌદ વર્ષ વનમાં રહે.",
+        "kn": "ಎರಡನೆಯದು—ರಾಮ ಹದಿನಾಲ್ಕು ವರ್ಷ ಕಾಡಿನಲ್ಲಿರಲಿ."
+      }
+    },
+    {
+      "id": "ay-p009-s1",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम ने तुम्हारा क्या अहित किया है?",
+        "en": "What harm has Rama ever done you?",
+        "gu": "રામે તમારું શું અહિત કર્યું છે?",
+        "kn": "ರಾಮ ನಿನಗೆ ಯಾವ ಕೆಡುಕು ಮಾಡಿದ್ದಾನೆ?"
+      }
+    },
+    {
+      "id": "ay-p009-s2",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आप अपना दिया हुआ वचन निभाइए।",
+        "en": "Keep the promise you gave me.",
+        "gu": "તમે આપેલું વચન નિભાવો.",
+        "kn": "ನೀವು ಕೊಟ್ಟ ವಚನ ಪಾಲಿಸಿ."
+      }
+    },
+    {
+      "id": "ay-p009-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "अनुनय में रात बीती; निर्णय नहीं बदला।",
+        "en": "The night passed in pleading; her demand remained.",
+        "gu": "વિનંતીમાં રાત વીતી; નિર્ણય ન બદલાયો.",
+        "kn": "ಬೇಡಿಕೊಳ್ಳುತ್ತಲೇ ರಾತ್ರಿ ಕಳೆಯಿತು; ಒತ್ತಾಯ ಬದಲಾಗಲಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "ay-p010-s1",
+      "speaker": "Vashishtha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "अभिषेक की सारी तैयारी हो गई है।",
+        "en": "Everything is ready for the anointing.",
+        "gu": "અભિષેકની બધી તૈયારી થઈ ગઈ છે.",
+        "kn": "ಅಭಿಷೇಕಕ್ಕೆ ಎಲ್ಲ ಸಿದ್ಧತೆ ಆಗಿದೆ."
+      },
+      "narration": {
+        "hi": "अब अभिषेक की सुबह हुई।",
+        "en": "Now the morning of the ceremony arrived.",
+        "gu": "હવે અભિષેકની સવાર થઈ.",
+        "kn": "ಈಗ ಅಭಿಷೇಕದ ಬೆಳಗು ಬಂತು."
+      }
+    },
+    {
+      "id": "ay-p010-s2",
+      "speaker": "Sumantra",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मैं राजकुमार राम को अभी बुला लाता हूँ।",
+        "en": "I will bring Prince Rama at once.",
+        "gu": "હું રાજકુમાર રામને હમણાં બોલાવી લાવું છું.",
+        "kn": "ನಾನು ಈಗಲೇ ರಾಜಕುಮಾರ ರಾಮರನ್ನು ಕರೆತರುತ್ತೇನೆ."
+      },
+      "narration": {
+        "hi": "राजा के सारथी और मन्त्री सुमन्त्र को राम को बुलाने भेजा गया।",
+        "en": "Sumantra, the king’s charioteer and minister, was sent to summon Rama.",
+        "gu": "રાજાના સારથિ અને મંત્રી સુમંત્રને રામને બોલાવવા મોકલ્યા.",
+        "kn": "ರಾಜನ ಸಾರಥಿಯೂ ಮಂತ್ರಿಯೂ ಆದ ಸುಮಂತ್ರರನ್ನು ರಾಮರನ್ನು ಕರೆಯಲು ಕಳುಹಿಸಲಾಯಿತು."
+      }
+    },
+    {
+      "id": "ay-p010-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "सुमन्त्र राम के भवन पहुँचे।",
+        "en": "Sumantra arrived at Rama's residence.",
+        "gu": "સુમંત્ર રામના ભવન પહોંચ્યા.",
+        "kn": "ಸುಮಂತ್ರ ರಾಮನ ಭವನ ತಲುಪಿದ."
+      }
+    },
+    {
+      "id": "ay-p011-s1",
+      "speaker": "Sumantra",
+      "mode": "dialogue",
+      "text": {
+        "hi": "महाराज ने आपको बुलाया है।",
+        "en": "The king has called for you.",
+        "gu": "મહારાજે તમને બોલાવ્યા છે.",
+        "kn": "ಮಹಾರಾಜರು ನಿಮ್ಮನ್ನು ಕರೆದಿದ್ದಾರೆ."
+      }
+    },
+    {
+      "id": "ay-p011-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "सीते, मैं पिताश्री से मिलकर आता हूँ।",
+        "en": "Sita, I am going to meet Father.",
+        "gu": "સીતે, હું પિતાશ્રીને મળવા જાઉં છું.",
+        "kn": "ಸೀತೆ, ನಾನು ತಂದೆಯನ್ನು ಭೇಟಿಯಾಗಿ ಬರುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p011-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "शुभकामनाओं के बीच वे राजभवन पहुँचे।",
+        "en": "Amid the people's blessings, they reached the palace.",
+        "gu": "લોકોની શુભેચ્છાઓ વચ્ચે તેઓ રાજભવન પહોંચ્યા.",
+        "kn": "ಜನರ ಹಾರೈಕೆಗಳ ನಡುವೆ ಅವರು ಅರಮನೆ ತಲುಪಿದರು."
+      }
+    },
+    {
+      "id": "ay-p012-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "भीतर पिता को रोते देख राम ठिठके।",
+        "en": "Inside, Rama stopped at the sight of his weeping father.",
+        "gu": "અંદર પિતાને રડતા જોઈ રામ થંભ્યા.",
+        "kn": "ಒಳಗೆ ತಂದೆ ಅಳುವುದನ್ನು ಕಂಡು ರಾಮ ನಿಂತ."
+      }
+    },
+    {
+      "id": "ay-p012-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "माता, पिताश्री मुझसे बोल क्यों नहीं रहे?",
+        "en": "Mother, why will Father not speak to me?",
+        "gu": "માતા, પિતાશ્રી મારી સાથે બોલતા કેમ નથી?",
+        "kn": "ತಾಯಿ, ತಂದೆ ನನ್ನೊಡನೆ ಏಕೆ ಮಾತನಾಡುತ್ತಿಲ್ಲ?"
+      }
+    },
+    {
+      "id": "ay-p012-s3",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भरत का अभिषेक होगा; तुम्हें चौदह वर्ष वन जाना है।",
+        "en": "Bharata is to be anointed; you must spend fourteen years in the forest.",
+        "gu": "ભરતનો અભિષેક થશે; તમારે ચૌદ વર્ષ વન જવાનું છે.",
+        "kn": "ಭರತನಿಗೆ ಅಭಿಷೇಕ; ನೀನು ಹದಿನಾಲ್ಕು ವರ್ಷ ಕಾಡಿಗೆ ಹೋಗಬೇಕು."
+      }
+    },
+    {
+      "id": "ay-p013-s1",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "पिताश्री का वचन पूरा होगा। मैं वन जाऊँगा।",
+        "en": "Father's promise will be kept. I will go.",
+        "gu": "પિતાશ્રીનું વચન પૂરું થશે. હું વન જઈશ.",
+        "kn": "ತಂದೆಯ ವಚನ ನೆರವೇರಲಿ. ನಾನು ಕಾಡಿಗೆ ಹೋಗುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p013-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मुझे विदा दीजिए।",
+        "en": "Give me leave to depart.",
+        "gu": "મને વિદાય આપો.",
+        "kn": "ನನಗೆ ಹೊರಡಲು ಅನುಮತಿ ಕೊಡಿ."
+      }
+    },
+    {
+      "id": "ay-p013-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "माता, आज अभिषेक नहीं, वनवास होगा।",
+        "en": "Mother, today brings exile instead of anointing.",
+        "gu": "માતા, આજે અભિષેકને બદલે વનવાસ થશે.",
+        "kn": "ತಾಯಿ, ಇಂದು ಅಭಿಷೇಕದ ಬದಲು ವನವಾಸ."
+      },
+      "narration": {
+        "hi": "कैकेयी के भवन से राम माता कौशल्या के पास गए।",
+        "en": "Leaving Kaikeyi’s chambers, Rama went to Mother Kaushalya.",
+        "gu": "કૈકેયીના ભવનથી રામ માતા કૌશલ્યા પાસે ગયા.",
+        "kn": "ಕೈಕೇಯಿಯ ಭವನದಿಂದ ರಾಮರು ತಾಯಿ ಕೌಸಲ್ಯೆಯ ಬಳಿಗೆ ಹೋದರು."
+      }
+    },
+    {
+      "id": "ay-p013-s4",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "कौशल्या शोक से गिर पड़ीं; राम ने सँभाला।",
+        "en": "Overcome by grief, Kaushalya fell; Rama supported her.",
+        "gu": "કૌશલ્યા શોકથી ઢળી પડ્યાં; રામે સંભાળ્યાં.",
+        "kn": "ದುಃಖದಿಂದ ಕುಸಿದ ಕೌಸಲ್ಯೆಯನ್ನು ರಾಮ ಹಿಡಿದುಕೊಂಡ."
+      }
+    },
+    {
+      "id": "ay-p014-s1",
+      "speaker": "Lakshmana",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया, यह अन्याय है! हम इसे क्यों स्वीकार करें?",
+        "en": "Brother, this is unjust! Why should we accept it?",
+        "gu": "ભાઈ, આ અન્યાય છે! આપણે શા માટે સ્વીકારીએ?",
+        "kn": "ಅಣ್ಣಾ, ಇದು ಅನ್ಯಾಯ! ನಾವು ಏಕೆ ಒಪ್ಪಬೇಕು?"
+      },
+      "narration": {
+        "hi": "छोटे भाई लक्ष्मण यह सुनकर क्रोधित हो उठे।",
+        "en": "His younger brother Lakshmana was angered by the news.",
+        "gu": "નાના ભાઈ લક્ષ્મણ આ સાંભળીને ક્રોધિત થયા.",
+        "kn": "ಈ ಸುದ್ದಿ ಕೇಳಿ ತಮ್ಮ ಲಕ್ಷ್ಮಣರಿಗೆ ಕೋಪ ಬಂತು."
+      }
+    },
+    {
+      "id": "ay-p014-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मैं पिताश्री का वचन तोड़कर राज्य नहीं लूँगा।",
+        "en": "I will not take power by breaking Father's word.",
+        "gu": "હું પિતાશ્રીનું વચન તોડીને રાજ્ય નહીં લઉં.",
+        "kn": "ತಂದೆಯ ವಚನ ಮುರಿದು ರಾಜ್ಯ ಪಡೆಯುವುದಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "ay-p014-s3",
+      "speaker": "Lakshmana",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया, अपने पुरुषार्थ से हम यह निर्णय बदल सकते हैं।",
+        "en": "Brother, with our own effort we can change this decision.",
+        "gu": "ભાઈ, આપણા પુરુષાર્થથી આ નિર્ણય બદલી શકીએ.",
+        "kn": "ಅಣ್ಣಾ, ನಮ್ಮ ಪ್ರಯತ್ನದಿಂದ ಈ ನಿರ್ಧಾರ ಬದಲಿಸಬಹುದು."
+      }
+    },
+    {
+      "id": "ay-p014-s4",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "क्रोध छोड़ो। अभिषेक की तैयारी रोक दो।",
+        "en": "Set anger aside. End the anointing preparations.",
+        "gu": "ક્રોધ છોડો. અભિષેકની તૈયારી રોકો.",
+        "kn": "ಕೋಪ ಬಿಡು. ಅಭಿಷೇಕದ ಸಿದ್ಧತೆ ನಿಲ್ಲಿಸು."
+      }
+    },
+    {
+      "id": "ay-p015-s1",
+      "speaker": "Kaushalya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मैं भी तुम्हारे साथ चलूँगी।",
+        "en": "I will come with you too.",
+        "gu": "હું પણ તારી સાથે આવીશ.",
+        "kn": "ನಾನೂ ನಿನ್ನ ಜೊತೆ ಬರುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p015-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "पिताश्री को आपकी आवश्यकता है। यहीं रहिए।",
+        "en": "Father needs you. Please stay here.",
+        "gu": "પિતાશ્રીને તમારી જરૂર છે. અહીં જ રહો.",
+        "kn": "ತಂದೆಗೆ ನಿಮ್ಮ ಅಗತ್ಯವಿದೆ. ಇಲ್ಲಿಯೇ ಇರಿ."
+      }
+    },
+    {
+      "id": "ay-p015-s3",
+      "speaker": "Kaushalya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "जाओ पुत्र, सुरक्षित लौटना।",
+        "en": "Go, my son. Return safely.",
+        "gu": "જા પુત્ર, સુરક્ષિત પાછો આવજે.",
+        "kn": "ಹೋಗು ಮಗನೇ, ಸುರಕ್ಷಿತವಾಗಿ ಮರಳಿ ಬಾ."
+      }
+    },
+    {
+      "id": "ay-p016-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "राम का बदला भाव देखकर सीता चिन्तित हुईं।",
+        "en": "Seeing Rama's changed expression, Sita grew concerned.",
+        "gu": "રામનો બદલાયેલો ભાવ જોઈ સીતા ચિંતિત થયાં.",
+        "kn": "ರಾಮನ ಬದಲಾದ ಮುಖಭಾವ ಕಂಡು ಸೀತೆಗೆ ಚಿಂತೆಯಾಯಿತು."
+      }
+    },
+    {
+      "id": "ay-p016-s2",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आर्यपुत्र, क्या हुआ? आप उदास क्यों हैं?",
+        "en": "My lord, what has happened? Why are you troubled?",
+        "gu": "આર્યપુત્ર, શું થયું? તમે ઉદાસ કેમ છો?",
+        "kn": "ಆರ್ಯಪುತ್ರರೇ, ಏನಾಯಿತು? ಏಕೆ ಚಿಂತಿತರಾಗಿದ್ದೀರಿ?"
+      }
+    },
+    {
+      "id": "ay-p016-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मुझे वन जाना है। तुम यहीं रहना।",
+        "en": "I must go to the forest. You should stay here.",
+        "gu": "મારે વન જવાનું છે. તમે અહીં રહો.",
+        "kn": "ನಾನು ಕಾಡಿಗೆ ಹೋಗಬೇಕು. ನೀನು ಇಲ್ಲಿಯೇ ಇರು."
+      }
+    },
+    {
+      "id": "ay-p017-s1",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मैं भी आपके साथ वन जाऊँगी।",
+        "en": "I will go to the forest with you.",
+        "gu": "હું પણ તમારી સાથે વન જઈશ.",
+        "kn": "ನಾನೂ ನಿಮ್ಮೊಂದಿಗೆ ಕಾಡಿಗೆ ಬರುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p017-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "वहाँ कठिन मार्ग और वन के संकट हैं।",
+        "en": "There are difficult paths and dangers there.",
+        "gu": "ત્યાં કઠિન માર્ગ અને વનનાં સંકટ છે.",
+        "kn": "ಅಲ್ಲಿ ದುರ್ಗಮ ದಾರಿಗಳು, ಕಾಡಿನ ಅಪಾಯಗಳಿವೆ."
+      }
+    },
+    {
+      "id": "ay-p017-s3",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आपके साथ रहकर मैं वे कष्ट सह लूँगी।",
+        "en": "I will bear those hardships beside you.",
+        "gu": "તમારી સાથે રહીને હું એ કષ્ટ સહન કરીશ.",
+        "kn": "ನಿಮ್ಮ ಜೊತೆಯಲ್ಲಿದ್ದು ಆ ಕಷ್ಟಗಳನ್ನು ಸಹಿಸುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p017-s4",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "राम ने सीता का दृढ़ निश्चय सुना।",
+        "en": "Rama listens to Sita's firm resolve.",
+        "gu": "રામે સીતાનો દૃઢ નિશ્ચય સાંભળ્યો.",
+        "kn": "ರಾಮ ಸೀತೆಯ ದೃಢನಿರ್ಧಾರವನ್ನು ಕೇಳುತ್ತಾನೆ."
+      }
+    },
+    {
+      "id": "ay-p018-s1",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मुझे आपसे अलग मत कीजिए।",
+        "en": "Please do not leave me behind.",
+        "gu": "મને તમારાથી અલગ ન કરો.",
+        "kn": "ನನ್ನನ್ನು ನಿಮ್ಮಿಂದ ದೂರ ಮಾಡಬೇಡಿ."
+      }
+    },
+    {
+      "id": "ay-p018-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तुम साथ चलोगी। दुःख मत करो।",
+        "en": "You will come with me. Do not grieve.",
+        "gu": "તમે સાથે આવશો. દુઃખ ન કરો.",
+        "kn": "ನೀನು ನನ್ನೊಡನೆ ಬರಬಹುದು. ದುಃಖಿಸಬೇಡ."
+      }
+    },
+    {
+      "id": "ay-p018-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "चलने से पहले ये वस्तुएँ दान कर दें।",
+        "en": "Let us give these possessions away before leaving.",
+        "gu": "જતાં પહેલાં આ વસ્તુઓ દાન કરી દઈએ.",
+        "kn": "ಹೊರಡುವ ಮೊದಲು ಈ ವಸ್ತುಗಳನ್ನು ದಾನ ಮಾಡೋಣ."
+      }
+    },
+    {
+      "id": "ay-p019-s1",
+      "speaker": "Lakshmana",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम भैया, मुझे भी साथ चलने दीजिए।",
+        "en": "Brother Rama, please let me come with you too.",
+        "gu": "રામભાઈ, મને પણ સાથે આવવા દો.",
+        "kn": "ರಾಮಣ್ಣಾ, ನಾನೂ ನಿಮ್ಮೊಡನೆ ಬರಲು ಬಿಡಿ."
+      }
+    },
+    {
+      "id": "ay-p019-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तब माताओं की देखभाल कौन करेगा?",
+        "en": "Who will care for our mothers then?",
+        "gu": "તો માતાઓની સંભાળ કોણ રાખશે?",
+        "kn": "ಹಾಗಾದರೆ ತಾಯಂದಿರನ್ನು ಯಾರು ನೋಡಿಕೊಳ್ಳುತ್ತಾರೆ?"
+      }
+    },
+    {
+      "id": "ay-p019-s3",
+      "speaker": "Lakshmana",
+      "mode": "dialogue",
+      "text": {
+        "hi": "माताओं का परिवार ध्यान रखेगा। मुझे आपकी और सीता भाभी की सेवा करने दीजिए।",
+        "en": "Our family will care for our mothers. Please let me serve you and my sister-in-law.",
+        "gu": "માતાઓનું પરિવાર ધ્યાન રાખશે. મને તમારી અને સીતા ભાભીની સેવા કરવા દો.",
+        "kn": "ತಾಯಂದಿರನ್ನು ಕುಟುಂಬದವರು ನೋಡಿಕೊಳ್ಳುತ್ತಾರೆ. ನಿಮ್ಮ ಮತ್ತು ಸೀತಾ ಅತ್ತಿಗೆಯ ಸೇವೆ ಮಾಡಲು ಬಿಡಿ."
+      }
+    },
+    {
+      "id": "ay-p019-s4",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "राम की सहमति पर लक्ष्मण शस्त्र ले आए।",
+        "en": "With Rama's agreement, Lakshmana brought their weapons.",
+        "gu": "રામની સંમતિથી લક્ષ્મણ શસ્ત્રો લઈ આવ્યા.",
+        "kn": "ರಾಮನ ಒಪ್ಪಿಗೆಯಿಂದ ಲಕ್ಷ್ಮಣ ಆಯುಧಗಳನ್ನು ತಂದ."
+      }
+    },
+    {
+      "id": "ay-p020-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "राम और सीता ने प्रियजनों और आश्रितों को दान दिए।",
+        "en": "Rama and Sita gave gifts to loved ones and dependants.",
+        "gu": "રામ અને સીતાએ પ્રિયજનો અને આશ્રિતોને દાન આપ્યાં.",
+        "kn": "ರಾಮರು ಮತ್ತು ಸೀತೆ ಪ್ರೀತಿಪಾತ್ರರಿಗೂ ಆಶ್ರಿತರಿಗೂ ದಾನ ನೀಡಿದರು."
+      }
+    },
+    {
+      "id": "ay-p020-s2",
+      "speaker": "Trijata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राजकुमार, मेरे परिवार को सहायता चाहिए।",
+        "en": "Prince Rama, my family needs help.",
+        "gu": "રાજકુમાર, મારા પરિવારને સહાય જોઈએ છે.",
+        "kn": "ರಾಜಕುಮಾರರೇ, ನನ್ನ ಕುಟುಂಬಕ್ಕೆ ನೆರವು ಬೇಕು."
+      },
+      "narration": {
+        "hi": "निर्धन वृद्ध ब्राह्मण त्रिजट परिवार की सहायता माँगने राम के पास आए।",
+        "en": "A poor, elderly Brahmin named Trijata came to Rama to seek help for his family.",
+        "gu": "ગરીબ વૃદ્ધ બ્રાહ્મણ ત્રિજટ પરિવાર માટે સહાય માગવા રામ પાસે આવ્યા.",
+        "kn": "ತ್ರಿಜಟ ಎಂಬ ಬಡ ವೃದ್ಧ ಬ್ರಾಹ್ಮಣರು ಕುಟುಂಬಕ್ಕೆ ನೆರವು ಕೇಳಲು ರಾಮರ ಬಳಿಗೆ ಬಂದರು."
+      }
+    },
+    {
+      "id": "ay-p020-s2b",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "विप्रवर, अपना दण्ड फेंकिए। जहाँ तक जाए, वहाँ की गायें आपकी।",
+        "en": "Revered sir, cast your staff. The cows within its reach will be yours.",
+        "gu": "વિપ્રવર, તમારો દંડ ફેંકો. જ્યાં સુધી જાય, ત્યાંની ગાયો તમારી.",
+        "kn": "ವಿಪ್ರವರೇ, ನಿಮ್ಮ ದಂಡ ಎಸೆಯಿರಿ. ಅದರ ದೂರದವರೆಗಿನ ಹಸುಗಳು ನಿಮ್ಮವು."
+      },
+      "narration": {
+        "hi": "राम ने उनके बल को परखने के लिए परिहास में कहा।",
+        "en": "Rama playfully invited him to show his strength.",
+        "gu": "રામે તેમનું બળ પરખવા પરિહાસમાં કહ્યું.",
+        "kn": "ಅವರ ಬಲವನ್ನು ನೋಡಲು ರಾಮರು ವಿನೋದವಾಗಿ ಹೇಳಿದರು."
+      },
+      "afterNarration": {
+        "hi": "त्रिजट ने दण्ड दूर सरयू के पार फेंक दिया।",
+        "en": "Trijata hurled the staff far across the Sarayu.",
+        "gu": "ત્રિજટે દંડ દૂર સરયૂની પાર ફેંક્યો.",
+        "kn": "ತ್ರಿಜಟರು ದಂಡವನ್ನು ದೂರ ಸರಯೂ ನದಿಯಾಚೆಗೆ ಎಸೆದರು."
+      }
+    },
+    {
+      "id": "ay-p020-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "राम ने गायें उन्हें दे दीं; प्रसन्न त्रिजट ने आशीर्वाद दिया।",
+        "en": "Rama gave him the cows, and the delighted Trijata blessed him.",
+        "gu": "રામે ગાયો તેમને આપી; પ્રસન્ન ત્રિજટે આશીર્વાદ આપ્યા.",
+        "kn": "ರಾಮರು ಅವರಿಗೆ ಹಸುಗಳನ್ನು ನೀಡಿದರು; ಸಂತೋಷಗೊಂಡ ತ್ರಿಜಟರು ಆಶೀರ್ವದಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p020-s4",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "हमारे लौटने तक मेरे और लक्ष्मण के घरों की देखभाल करना।",
+        "en": "Please guard my residence and Lakshmana’s until we return.",
+        "gu": "અમે પાછા આવીએ ત્યાં સુધી મારા અને લક્ષ્મણના ઘરોની સંભાળ રાખજો.",
+        "kn": "ನಾವು ಮರಳುವವರೆಗೆ ನನ್ನ ಮತ್ತು ಲಕ್ಷ್ಮಣನ ಮನೆಗಳನ್ನು ನೋಡಿಕೊಳ್ಳಿ."
+      },
+      "narration": {
+        "hi": "राम ने घरों की ज़िम्मेदारी सेवकों को सौंपी।",
+        "en": "Rama also entrusted the residences to the household attendants.",
+        "gu": "રામે ઘરોની જવાબદારી સેવકોને સોંપી.",
+        "kn": "ಮನೆಗಳ ಜವಾಬ್ದಾರಿಯನ್ನು ರಾಮರು ಸೇವಕರಿಗೆ ಒಪ್ಪಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p021-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "नगरवासियों के शोक के बीच वे पिता से मिलने चले।",
+        "en": "Amid the city's grief, they went to their father.",
+        "gu": "નગરજનોના શોક વચ્ચે તેઓ પિતાને મળવા ચાલ્યાં.",
+        "kn": "ನಗರದ ದುಃಖದ ನಡುವೆ ಅವರು ತಂದೆಯ ಬಳಿಗೆ ಹೋದರು."
+      }
+    },
+    {
+      "id": "ay-p021-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "पिताश्री, वन जाने की आज्ञा दीजिए।",
+        "en": "Father, give me leave for the forest.",
+        "gu": "પિતાશ્રી, વન જવાની આજ્ઞા આપો.",
+        "kn": "ತಂದೆಯೇ, ಕಾಡಿಗೆ ಹೊರಡಲು ಅನುಮತಿ ಕೊಡಿ."
+      }
+    },
+    {
+      "id": "ay-p021-s3",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आज की रात तो मेरे पास रहो।",
+        "en": "Stay with me at least tonight.",
+        "gu": "આજની રાત તો મારી પાસે રહો.",
+        "kn": "ಇಂದಿನ ರಾತ್ರಿಯಾದರೂ ನನ್ನ ಬಳಿ ಇರು."
+      },
+      "afterNarration": {
+        "hi": "राम ने पिता का वचन निभाने के लिए उसी दिन प्रस्थान करने का आग्रह किया।",
+        "en": "Rama remained resolved to leave that day and fulfil his father’s word.",
+        "gu": "પિતાનું વચન નિભાવવા રામે એ જ દિવસે પ્રસ્થાન કરવાનો આગ્રહ રાખ્યો.",
+        "kn": "ತಂದೆಯ ವಚನ ಪಾಲಿಸಲು ಆ ದಿನವೇ ಹೊರಡುವ ನಿರ್ಧಾರದಲ್ಲಿ ರಾಮರು ಸ್ಥಿರರಾಗಿದ್ದರು."
+      }
+    },
+    {
+      "id": "ay-p022-s1",
+      "speaker": "Sumantra",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम को निर्वासित करना उचित नहीं है।",
+        "en": "Sending Rama into exile is unjust.",
+        "gu": "રામને વનવાસ આપવો યોગ્ય નથી.",
+        "kn": "ರಾಮನನ್ನು ವನವಾಸಕ್ಕೆ ಕಳಿಸುವುದು ಸರಿಯಲ್ಲ."
+      }
+    },
+    {
+      "id": "ay-p022-s1b",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम के साथ सेना और धन भेजो।",
+        "en": "Send an army and wealth with Rama.",
+        "gu": "રામની સાથે સેના અને ધન મોકલો.",
+        "kn": "ರಾಮನೊಂದಿಗೆ ಸೇನೆ ಮತ್ತು ಸಂಪತ್ತು ಕಳಿಸಿ."
+      }
+    },
+    {
+      "id": "ay-p022-s2",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तब वनवास और राज्य में भेद क्या रहेगा?",
+        "en": "What would distinguish exile from royal life then?",
+        "gu": "તો વનવાસ અને રાજ્યમાં ભેદ શું રહેશે?",
+        "kn": "ಹಾಗಾದರೆ ವನವಾಸಕ್ಕೂ ರಾಜಜೀವನಕ್ಕೂ ವ್ಯತ್ಯಾಸವೇನು?"
+      }
+    },
+    {
+      "id": "ay-p022-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मुझे सेना नहीं, सरल वनजीवन चाहिए।",
+        "en": "I need no army, only a simple forest life.",
+        "gu": "મારે સેના નહીં, સાદું વનજીવન જોઈએ.",
+        "kn": "ನನಗೆ ಸೇನೆ ಬೇಡ, ಸರಳ ವನಜೀವನ ಸಾಕು."
+      }
+    },
+    {
+      "id": "ay-p023-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "भाइयों ने वल्कल धारण किए।",
+        "en": "The brothers put on bark garments.",
+        "gu": "ભાઈઓએ વલ્કલ ધારણ કર્યાં.",
+        "kn": "ಸಹೋದರರು ತೊಗಟೆಯ ಉಡುಗೆ ಧರಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p023-s2",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आर्यपुत्र, यह वल्कल कैसे बाँधूँ?",
+        "en": "My lord, how do I fasten this bark wrap?",
+        "gu": "આર્યપુત્ર, આ વલ્કલ કેવી રીતે બાંધું?",
+        "kn": "ಆರ್ಯಪುತ್ರರೇ, ಈ ತೊಗಟೆಯ ಉಡುಗೆಯನ್ನು ಹೇಗೆ ಕಟ್ಟಿಕೊಳ್ಳಲಿ?"
+      }
+    },
+    {
+      "id": "ay-p023-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "राम ने सीता के रेशमी वस्त्र पर वल्कल बाँधा।",
+        "en": "Rama fastened the bark cloth over Sita's silk.",
+        "gu": "રામે સીતાનાં રેશમી વસ્ત્ર પર વલ્કલ બાંધ્યું.",
+        "kn": "ರಾಮ ಸೀತೆಯ ರೇಷ್ಮೆ ಉಡುಗೆಯ ಮೇಲೆ ತೊಗಟೆಯ ಉಡುಗೆ ಕಟ್ಟಿದ."
+      }
+    },
+    {
+      "id": "ay-p023-s4",
+      "speaker": "Vashishtha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "सीता पर यह कठिनाई क्यों थोपी जाए?",
+        "en": "Why impose this hardship on Sita?",
+        "gu": "સીતા પર આ કઠિનાઈ શા માટે લાદવી?",
+        "kn": "ಸೀತೆಯ ಮೇಲೆ ಈ ಕಷ್ಟವನ್ನು ಏಕೆ ಹೇರಬೇಕು?"
+      },
+      "afterNarration": {
+        "hi": "दशरथ ने भी कहा कि सीता पर वल्कल पहनने की शर्त नहीं थी; वे अपने वस्त्रों में जाएँ।",
+        "en": "Dasharatha too said that Sita had not been required to wear bark; she could keep her own garments.",
+        "gu": "દશરથે પણ કહ્યું કે સીતા માટે વલ્કલ પહેરવાની શરત નહોતી; તેઓ પોતાના વસ્ત્રોમાં જાય.",
+        "kn": "ಸೀತೆ ತೊಗಟೆಯ ಉಡುಗೆ ಧರಿಸಬೇಕೆಂಬ ಷರತ್ತು ಇರಲಿಲ್ಲ; ತಮ್ಮ ಉಡುಗೆಯಲ್ಲೇ ಹೋಗಲಿ ಎಂದು ದಶರಥರೂ ಹೇಳಿದರು."
+      }
+    },
+    {
+      "id": "ay-p024-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "रथ तैयार हुआ। दशरथ ने सीता के लिए वस्त्र और आभूषण भी भिजवाए।",
+        "en": "The chariot was readied. Dasharatha also sent garments and ornaments for Sita.",
+        "gu": "રથ તૈયાર થયો. દશરથે સીતા માટે વસ્ત્રો અને આભૂષણો પણ મોકલ્યાં.",
+        "kn": "ರಥ ಸಿದ್ಧವಾಯಿತು. ದಶರಥರು ಸೀತೆಗೆ ಉಡುಗೆ ಮತ್ತು ಆಭರಣಗಳನ್ನೂ ಕಳುಹಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p024-s2",
+      "speaker": "Kaushalya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "सीते, कठिन समय में साथ निभाना।",
+        "en": "Sita, stand together through hardship.",
+        "gu": "સીતે, કઠિન સમયમાં સાથ નિભાવજો.",
+        "kn": "ಸೀತೆ, ಕಷ್ಟದ ಸಮಯದಲ್ಲಿ ಜೊತೆಗಿರು."
+      }
+    },
+    {
+      "id": "ay-p024-s3",
+      "speaker": "Sumitra",
+      "mode": "dialogue",
+      "text": {
+        "hi": "लक्ष्मण, राम और सीता का ध्यान रखना।",
+        "en": "Lakshmana, look after Rama and Sita.",
+        "gu": "લક્ષ્મણ, રામ અને સીતાનું ધ્યાન રાખજો.",
+        "kn": "ಲಕ್ಷ್ಮಣ, ರಾಮ ಮತ್ತು ಸೀತೆಯನ್ನು ನೋಡಿಕೋ."
+      },
+      "narration": {
+        "hi": "लक्ष्मण की माता सुमित्रा ने उन्हें आशीर्वाद दिया।",
+        "en": "Lakshmana’s mother Sumitra blessed him before the departure.",
+        "gu": "લક્ષ્મણની માતા સુમિત્રાએ તેમને આશીર્વાદ આપ્યા.",
+        "kn": "ಲಕ್ಷ್ಮಣನ ತಾಯಿ ಸುಮಿತ್ರೆ ಹೊರಡುವ ಮುನ್ನ ಅವರಿಗೆ ಆಶೀರ್ವಾದ ನೀಡಿದರು."
+      }
+    },
+    {
+      "id": "ay-p024-s4",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "तीनों बड़ों को प्रणाम कर रथ पर चढ़े।",
+        "en": "The three bow to their elders and board the chariot.",
+        "gu": "ત્રણેય બડાઓને પ્રણામ કરી રથ પર ચઢ્યાં.",
+        "kn": "ಮೂವರೂ ಹಿರಿಯರಿಗೆ ನಮಸ್ಕರಿಸಿ ರಥ ಏರುತ್ತಾರೆ."
+      }
+    },
+    {
+      "id": "ay-p025-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "रथ चला; परिवार और नागरिक पीछे दौड़े।",
+        "en": "The chariot moved; family and citizens followed.",
+        "gu": "રથ ચાલ્યો; પરિવાર અને નાગરિકો પાછળ દોડ્યાં.",
+        "kn": "ರಥ ಚಲಿಸಿತು; ಕುಟುಂಬದವರೂ ಜನರೂ ಹಿಂದೆ ಬಂದರು."
+      }
+    },
+    {
+      "id": "ay-p025-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "सुमन्त्रजी, आगे बढ़िए। यह विदा असह्य है।",
+        "en": "Sumantra, please drive on. This farewell is unbearable.",
+        "gu": "સુમંત્રજી, આગળ વધો. આ વિદાય અસહ્ય છે.",
+        "kn": "ಸುಮಂತ್ರರೇ, ದಯವಿಟ್ಟು ಮುಂದೆ ಹೋಗಿ. ಈ ವಿದಾಯ ಸಹಿಸಲಾಗುತ್ತಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "ay-p025-s3",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "रथ ओझल होते ही दशरथ शोक से गिर पड़े।",
+        "en": "As the chariot disappears, Dasharatha collapses in grief.",
+        "gu": "રથ ઓઝલ થતાં દશરથ શોકથી ઢળી પડ્યા.",
+        "kn": "ರಥ ಮರೆಯಾಗುತ್ತಿದ್ದಂತೆ ದಶರಥ ದುಃಖದಿಂದ ಕುಸಿಯುತ್ತಾನೆ."
+      }
+    },
+    {
+      "id": "ay-p025-s4",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "कौशल्या और सेवक दशरथ को लौटा ले गए।",
+        "en": "Kaushalya and the attendants helped Dasharatha home.",
+        "gu": "કૌશલ્યા અને સેવકો દશરથને પાછા લઈ ગયાં.",
+        "kn": "ಕೌಸಲ್ಯೆಯೂ ಸೇವಕರೂ ದಶರಥನನ್ನು ಅರಮನೆಗೆ ಕರೆದೊಯ್ದರು."
+      }
+    },
+    {
+      "id": "ay-p026-s1",
+      "speaker": "Kaushalya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मेरा पुत्र अब कहाँ विश्राम करेगा?",
+        "en": "Where will my son rest now?",
+        "gu": "મારો પુત્ર હવે ક્યાં વિશ્રામ કરશે?",
+        "kn": "ನನ್ನ ಮಗ ಈಗ ಎಲ್ಲಿ ವಿಶ್ರಾಂತಿ ಪಡೆಯುವನು?"
+      }
+    },
+    {
+      "id": "ay-p026-s2",
+      "speaker": "Sumitra",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम समर्थ हैं; लक्ष्मण भी साथ हैं।",
+        "en": "Rama is capable, and Lakshmana is with him.",
+        "gu": "રામ સમર્થ છે; લક્ષ્મણ પણ સાથે છે.",
+        "kn": "ರಾಮ ಸಮರ್ಥನಾಗಿದ್ದಾನೆ; ಲಕ್ಷ್ಮಣನೂ ಜೊತೆಯಲ್ಲಿದ್ದಾನೆ."
+      }
+    },
+    {
+      "id": "ay-p026-s3",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "माताएँ एक-दूसरे को धीरज देती हैं।",
+        "en": "The mothers console one another.",
+        "gu": "માતાઓ એકબીજાને ધીરજ આપે છે.",
+        "kn": "ತಾಯಂದಿರು ಪರಸ್ಪರ ಸಾಂತ್ವನ ನೀಡುತ್ತಾರೆ."
+      }
+    },
+    {
+      "id": "ay-p027-s1",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "लौट जाइए। पिताश्री और भरत का साथ दीजिए।",
+        "en": "Please return. Support Father and Bharata.",
+        "gu": "પાછા જાઓ. પિતાશ્રી અને ભરતને સાથ આપો.",
+        "kn": "ಹಿಂದಿರುಗಿ. ತಂದೆಗೂ ಭರತನಿಗೂ ಬೆಂಬಲ ನೀಡಿ."
+      }
+    },
+    {
+      "id": "ay-p027-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "लोग साथ चलते रहे; तमसा तट आया।",
+        "en": "The people kept following until they reached the Tamasa.",
+        "gu": "લોકો સાથે ચાલતાં રહ્યાં; તમસા તટ આવ્યો.",
+        "kn": "ಜನರು ಹಿಂದೆಯೇ ಬಂದರು; ತಮಸಾ ತೀರ ತಲುಪಿದರು."
+      }
+    },
+    {
+      "id": "ay-p027-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "सबने नदी किनारे रात बिताई।",
+        "en": "They spent the night beside the river.",
+        "gu": "બધાંએ નદીકિનારે રાત વિતાવી.",
+        "kn": "ಎಲ್ಲರೂ ನದೀತೀರದಲ್ಲಿ ರಾತ್ರಿ ಕಳೆದರು."
+      }
+    },
+    {
+      "id": "ay-p028-s1",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "इनका कष्ट न बढ़े; जागने से पहले चलें।",
+        "en": "Let us leave before they wake, sparing them more hardship.",
+        "gu": "તેમનું કષ્ટ ન વધે; જાગે તે પહેલાં ચાલીએ.",
+        "kn": "ಅವರ ಕಷ್ಟ ಹೆಚ್ಚದಿರಲಿ; ಎಚ್ಚರಗೊಳ್ಳುವ ಮುನ್ನ ಹೊರಡೋಣ."
+      }
+    },
+    {
+      "id": "ay-p028-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "सुमन्त्र ने दिशा का भ्रम देकर रथ आगे बढ़ाया।",
+        "en": "Sumantra disguised their direction before driving onwards.",
+        "gu": "સુમંત્રે દિશાનો ભ્રમ આપી રથ આગળ વધાર્યો.",
+        "kn": "ಸುಮಂತ್ರ ದಿಕ್ಕಿನ ಸುಳಿವು ಮರೆಮಾಡಿ ಮುಂದೆ ಹೊರಟ."
+      }
+    },
+    {
+      "id": "ay-p028-s3",
+      "speaker": "Citizens",
+      "mode": "dialogue",
+      "text": {
+        "hi": "रथ के चिह्न कहाँ गए?",
+        "en": "Where have the chariot tracks gone?",
+        "gu": "રથનાં ચિહ્નો ક્યાં ગયાં?",
+        "kn": "ರಥದ ಗುರುತುಗಳು ಎಲ್ಲಿ ಹೋದವು?"
+      }
+    },
+    {
+      "id": "ay-p028-s4",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "पथ न मिला; दुःखी नागरिक लौट गए।",
+        "en": "Unable to find the route, the citizens returned in sorrow.",
+        "gu": "માર્ગ ન મળ્યો; દુઃખી નાગરિકો પાછા ફર્યાં.",
+        "kn": "ದಾರಿ ಸಿಗದೆ ದುಃಖಿತ ಜನರು ಹಿಂದಿರುಗಿದರು."
+      }
+    },
+    {
+      "id": "ay-p029-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "नदियाँ और गाँव पीछे छूटते गए।",
+        "en": "Rivers and villages fell behind them.",
+        "gu": "નદીઓ અને ગામો પાછળ છૂટતાં ગયાં.",
+        "kn": "ನದಿಗಳೂ ಹಳ್ಳಿಗಳೂ ಹಿಂದೆ ಉಳಿದವು."
+      }
+    },
+    {
+      "id": "ay-p029-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "जन्मभूमि, लौटकर फिर तुम्हारे दर्शन करूँगा।",
+        "en": "Land of my birth, I shall see you again.",
+        "gu": "જન્મભૂમિ, પાછો આવી ફરી તારાં દર્શન કરીશ.",
+        "kn": "ಜನ್ಮಭೂಮಿಯೇ, ಮರಳಿ ನಿನ್ನ ದರ್ಶನ ಮಾಡುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p029-s3",
+      "speaker": "Guha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मित्र राम, आपका स्वागत है।",
+        "en": "My friend Rama, welcome.",
+        "gu": "મિત્ર રામ, તમારું સ્વાગત છે.",
+        "kn": "ಗೆಳೆಯ ರಾಮ, ನಿನಗೆ ಸ್ವಾಗತ."
+      },
+      "narration": {
+        "hi": "निषादराज गुह ने अपने मित्र राम का स्वागत किया।",
+        "en": "Guha, ruler of the Nishadas, welcomed his friend Rama.",
+        "gu": "નિષાદરાજ ગુહે પોતાના મિત્ર રામનું સ્વાગત કર્યું.",
+        "kn": "ನಿಷಾದರಾಜ ಗುಹ ತನ್ನ ಗೆಳೆಯ ರಾಮನನ್ನು ಸ್ವಾಗತಿಸಿದ."
+      }
+    },
+    {
+      "id": "ay-p030-s1",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "गुह, इन घोड़ों को भोजन और विश्राम दो।",
+        "en": "Guha, give these horses food and rest.",
+        "gu": "ગુહ, આ ઘોડાઓને ભોજન અને વિશ્રામ આપો.",
+        "kn": "ಗುಹ, ಈ ಕುದುರೆಗಳಿಗೆ ಆಹಾರ ಮತ್ತು ವಿಶ್ರಾಂತಿ ಕೊಡು."
+      }
+    },
+    {
+      "id": "ay-p030-s2",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "राम और सीता घास की शय्या पर सोए।",
+        "en": "Rama and Sita sleep on a bed of grass.",
+        "gu": "રામ અને સીતા ઘાસની પથારી પર સૂતાં હતાં.",
+        "kn": "ರಾಮ ಮತ್ತು ಸೀತೆ ಹುಲ್ಲಿನ ಹಾಸಿಗೆಯಲ್ಲಿ ಮಲಗಿದ್ದಾರೆ."
+      }
+    },
+    {
+      "id": "ay-p030-s3",
+      "speaker": "Guha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "लक्ष्मण, विश्राम करो। मैं पहरा दूँगा।",
+        "en": "Lakshmana, rest. I will keep watch.",
+        "gu": "લક્ષ્મણ, વિશ્રામ કરો. હું પહેરો ભરીશ.",
+        "kn": "ಲಕ್ಷ್ಮಣ, ವಿಶ್ರಾಂತಿ ಮಾಡು. ನಾನು ಕಾವಲಿರುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p030-s4",
+      "speaker": "Lakshmana",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम भैया और सीता भाभी विश्राम कर रहे हैं। मैं उनकी रखवाली करूँगा।",
+        "en": "My elder brother and sister-in-law are resting. I will keep watch over them.",
+        "gu": "રામભાઈ અને સીતા ભાભી વિશ્રામ કરે છે. હું તેમની રખેવાળી કરીશ.",
+        "kn": "ರಾಮಣ್ಣ ಮತ್ತು ಸೀತಾ ಅತ್ತಿಗೆ ವಿಶ್ರಾಂತಿ ಪಡೆಯುತ್ತಿದ್ದಾರೆ. ನಾನು ಅವರ ಕಾವಲು ಕಾಯುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p031-s1",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "सुमन्त्रजी, लौटकर पिताश्री और माताओं को हमारे प्रणाम कहिए।",
+        "en": "Sumantra, please return and convey our respects to Father and our mothers.",
+        "gu": "સુમંત્રજી, પાછા જઈ પિતાશ્રી અને માતાઓને અમારા પ્રણામ કહેજો.",
+        "kn": "ಸುಮಂತ್ರರೇ, ಹಿಂದಿರುಗಿ ತಂದೆಯವರಿಗೂ ತಾಯಂದಿರಿಗೂ ನಮ್ಮ ನಮಸ್ಕಾರ ತಿಳಿಸಿ."
+      }
+    },
+    {
+      "id": "ay-p031-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "गुह के दिए बड़ के दूध से दोनों ने जटा बाँधी।",
+        "en": "With Guha's banyan latex, the brothers bound matted locks.",
+        "gu": "ગુહે આપેલા વડના દૂધથી બંનેએ જટા બાંધી.",
+        "kn": "ಗುಹ ಕೊಟ್ಟ ಆಲದ ಹಾಲಿನಿಂದ ಇಬ್ಬರೂ ಜಟೆ ಕಟ್ಟಿದರು."
+      }
+    },
+    {
+      "id": "ay-p031-s3",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "नाव तीनों यात्रियों को गंगा पार ले चली।",
+        "en": "The boat carries the three travellers across the Ganga.",
+        "gu": "નાવ ત્રણેય યાત્રીઓને ગંગા પાર લઈ ચાલી.",
+        "kn": "ದೋಣಿ ಮೂವರು ಪಯಣಿಗರನ್ನು ಗಂಗೆಯಾಚೆ ಕರೆದೊಯ್ಯುತ್ತದೆ."
+      }
+    },
+    {
+      "id": "ay-p031-s4",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "गंगे, वनवास के बाद सकुशल लौटें।",
+        "en": "Ganga, may we return safely after exile.",
+        "gu": "ગંગે, વનવાસ પછી સકુશળ પાછાં ફરીએ.",
+        "kn": "ಗಂಗೆಯೇ, ವನವಾಸದ ಬಳಿಕ ಕ್ಷೇಮವಾಗಿ ಮರಳುವಂತಾಗಲಿ."
+      }
+    },
+    {
+      "id": "ay-p032-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "गंगा पार कर अब तीनों रथ और साथियों से दूर वन में थे।",
+        "en": "Across the Ganga, the three were now in the forest, without the chariot or their companions.",
+        "gu": "ગંગા પાર કરીને હવે ત્રણેય રથ અને સાથીઓથી દૂર વનમાં હતાં.",
+        "kn": "ಗಂಗೆಯನ್ನು ದಾಟಿದ ಮೂವರೂ ಈಗ ರಥವೂ ಸಂಗಡಿಗರೂ ಇಲ್ಲದೆ ಕಾಡಿನಲ್ಲಿದ್ದರು."
+      }
+    },
+    {
+      "id": "ay-p032-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "माताओं की चिन्ता है। क्या तुम लौटोगे?",
+        "en": "I worry for our mothers. Will you return?",
+        "gu": "માતાઓની ચિંતા છે. શું તમે પાછા જશો?",
+        "kn": "ತಾಯಂದಿರ ಚಿಂತೆಯಿದೆ. ನೀನು ಹಿಂದಿರುಗುವೆಯಾ?"
+      }
+    },
+    {
+      "id": "ay-p032-s3",
+      "speaker": "Lakshmana",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया, मुझे आपकी और सीता भाभी की सेवा में रहने दीजिए।",
+        "en": "Brother, please let me stay to serve you and my sister-in-law.",
+        "gu": "ભાઈ, મને તમારી અને સીતા ભાભીની સેવામાં રહેવા દો.",
+        "kn": "ಅಣ್ಣಾ, ನಿಮ್ಮ ಮತ್ತು ಸೀತಾ ಅತ್ತಿಗೆಯ ಸೇವೆಯಲ್ಲಿ ಇರಲು ಬಿಡಿ."
+      }
+    },
+    {
+      "id": "ay-p033-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "गंगा-यमुना के संगम पर वे ऋषि भरद्वाज के आश्रम पहुँचे।",
+        "en": "At the confluence of the Ganga and Yamuna, they reached the sage Bharadwaja’s hermitage.",
+        "gu": "ગંગા-યમુનાના સંગમ પર તેઓ ઋષિ ભરદ્વાજના આશ્રમ પહોંચ્યાં.",
+        "kn": "ಗಂಗಾ-ಯಮುನಾ ಸಂಗಮದಲ್ಲಿ ಅವರು ಭರದ್ವಾಜ ಋಷಿಯ ಆಶ್ರಮ ತಲುಪಿದರು."
+      }
+    },
+    {
+      "id": "ay-p033-s2",
+      "speaker": "Bharadwaja",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम, यहाँ तुम्हारा स्वागत है।",
+        "en": "Rama, you are welcome here.",
+        "gu": "રામ, અહીં તમારું સ્વાગત છે.",
+        "kn": "ರಾಮ, ಇಲ್ಲಿ ನಿನಗೆ ಸ್ವಾಗತ."
+      }
+    },
+    {
+      "id": "ay-p033-s3",
+      "speaker": "Bharadwaja",
+      "mode": "dialogue",
+      "text": {
+        "hi": "चित्रकूट तुम्हारे निवास के योग्य है।",
+        "en": "Chitrakuta is a suitable place for you to live.",
+        "gu": "ચિત્રકૂટ તમારા નિવાસ માટે યોગ્ય છે.",
+        "kn": "ಚಿತ್ರಕೂಟ ನಿಮ್ಮ ವಾಸಕ್ಕೆ ಸೂಕ್ತ ಸ್ಥಳ."
+      }
+    },
+    {
+      "id": "ay-p034-s1",
+      "speaker": "Bharadwaja",
+      "mode": "dialogue",
+      "text": {
+        "hi": "इस मार्ग से यमुना पार करके आगे जाना।",
+        "en": "Follow this route across the Yamuna.",
+        "gu": "આ માર્ગે યમુના પાર કરીને આગળ જજો.",
+        "kn": "ಈ ಮಾರ್ಗವಾಗಿ ಯಮುನೆ ದಾಟಿ ಮುಂದೆ ಹೋಗಿ."
+      }
+    },
+    {
+      "id": "ay-p034-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "भाइयों ने बेड़ा बनाकर सीता को पार पहुँचाया।",
+        "en": "The brothers built a raft and ferried Sita across.",
+        "gu": "ભાઈઓએ તરાપો બનાવી સીતાને પાર પહોંચાડ્યાં.",
+        "kn": "ಸಹೋದರರು ತೆಪ್ಪ ಕಟ್ಟಿ ಸೀತೆಯನ್ನು ದಾಟಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p034-s3",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "हमारी यात्रा मंगलमय हो।",
+        "en": "May our journey be blessed.",
+        "gu": "અમારી યાત્રા મંગળમય થાઓ.",
+        "kn": "ನಮ್ಮ ಪ್ರಯಾಣ ಮಂಗಳಮಯವಾಗಲಿ."
+      }
+    },
+    {
+      "id": "ay-p034-s4",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "वन में आगे बढ़कर उन्होंने रात बिताई।",
+        "en": "Further into the forest, they rested for the night.",
+        "gu": "વનમાં આગળ જઈ તેમણે રાત વિતાવી.",
+        "kn": "ಕಾಡಿನಲ್ಲಿ ಮುಂದೆ ಸಾಗಿ ರಾತ್ರಿ ವಿಶ್ರಾಂತಿ ಪಡೆದರು."
+      }
+    },
+    {
+      "id": "ay-p035-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "चित्रकूट पहुँचकर वे महर्षि वाल्मीकि के आश्रम गए।",
+        "en": "Reaching Chitrakuta, they visited the sage Valmiki’s hermitage.",
+        "gu": "ચિત્રકૂટ પહોંચી તેઓ મહર્ષિ વાલ્મીકિના આશ્રમ ગયાં.",
+        "kn": "ಚಿತ್ರಕೂಟ ತಲುಪಿ ಅವರು ವಾಲ್ಮೀಕಿ ಮಹರ್ಷಿಯ ಆಶ್ರಮಕ್ಕೆ ಹೋದರು."
+      }
+    },
+    {
+      "id": "ay-p035-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "लक्ष्मण, यहाँ एक पर्णकुटी बना दो।",
+        "en": "Lakshmana, build a leaf hut here.",
+        "gu": "લક્ષ્મણ, અહીં એક પર્ણકુટી બનાવો.",
+        "kn": "ಲಕ್ಷ್ಮಣ, ಇಲ್ಲಿ ಒಂದು ಪರ್ಣಕುಟಿ ಕಟ್ಟು."
+      }
+    },
+    {
+      "id": "ay-p035-s3",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "लक्ष्मण पर्णकुटी का निर्माण पूरा करते हैं।",
+        "en": "Lakshmana finishes building the leaf hut.",
+        "gu": "લક્ષ્મણ પર્ણકુટીનું બાંધકામ પૂરું કરે છે.",
+        "kn": "ಲಕ್ಷ್ಮಣ ಪರ್ಣಕುಟಿ ಕಟ್ಟುವುದನ್ನು ಮುಗಿಸುತ್ತಾನೆ."
+      }
+    },
+    {
+      "id": "ay-p035-s4",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "रीति पूरी कर उन्होंने वन के घर में प्रवेश किया।",
+        "en": "After the rites, they entered their forest home.",
+        "gu": "વિધિ પૂરી કરી તેમણે વનના ઘરમાં પ્રવેશ કર્યો.",
+        "kn": "ವಿಧಿ ನೆರವೇರಿಸಿ ತಮ್ಮ ಕಾಡಿನ ಮನೆ ಪ್ರವೇಶಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p036-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "उधर सुमन्त्र खाली रथ लेकर अयोध्या लौटे।",
+        "en": "Meanwhile Sumantra returned to Ayodhya with the empty chariot.",
+        "gu": "ત્યાં સુમંત્ર ખાલી રથ લઈને અયોધ્યા પાછા ફર્યા.",
+        "kn": "ಇತ್ತ ಸುಮಂತ್ರ ಖಾಲಿ ರಥದೊಂದಿಗೆ ಅಯೋಧ್ಯೆಗೆ ಮರಳಿದ."
+      }
+    },
+    {
+      "id": "ay-p036-s2",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम ने क्या सन्देश भेजा है?",
+        "en": "What message has Rama sent?",
+        "gu": "રામે શું સંદેશ મોકલ્યો છે?",
+        "kn": "ರಾಮ ಯಾವ ಸಂದೇಶ ಕಳಿಸಿದ್ದಾನೆ?"
+      }
+    },
+    {
+      "id": "ay-p036-s3",
+      "speaker": "Sumantra",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम ने सबको प्रणाम कहा है। लक्ष्मण बहुत व्यथित थे।",
+        "en": "Rama sends his respects to everyone. Lakshmana was deeply distressed.",
+        "gu": "રામે સૌને પ્રણામ કહ્યાં છે. લક્ષ્મણ ખૂબ વ્યથિત હતા.",
+        "kn": "ರಾಮ ಎಲ್ಲರಿಗೂ ನಮಸ್ಕಾರ ತಿಳಿಸಿದ್ದಾನೆ. ಲಕ್ಷ್ಮಣ ಬಹಳ ನೊಂದಿದ್ದ."
+      }
+    },
+    {
+      "id": "ay-p037-s1",
+      "speaker": "Sumantra",
+      "mode": "dialogue",
+      "text": {
+        "hi": "वे एक-दूसरे का ध्यान रखते हुए आगे गए।",
+        "en": "They went on, caring for one another.",
+        "gu": "તેઓ એકબીજાનું ધ્યાન રાખતાં આગળ ગયાં.",
+        "kn": "ಅವರು ಪರಸ್ಪರ ಕಾಳಜಿ ವಹಿಸುತ್ತಾ ಮುಂದೆ ಸಾಗಿದರು."
+      }
+    },
+    {
+      "id": "ay-p037-s2",
+      "speaker": "Kaushalya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आपने मेरे पुत्र को वन कैसे भेज दिया?",
+        "en": "How could you send my son to the forest?",
+        "gu": "તમે મારા પુત્રને વન કેવી રીતે મોકલ્યો?",
+        "kn": "ನನ್ನ ಮಗನನ್ನು ಕಾಡಿಗೆ ಹೇಗೆ ಕಳಿಸಿದಿರಿ?"
+      }
+    },
+    {
+      "id": "ay-p037-s3",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मेरा दुःख भी समझो।",
+        "en": "Please understand my sorrow too.",
+        "gu": "મારું દુઃખ પણ સમજો.",
+        "kn": "ನನ್ನ ದುಃಖವನ್ನೂ ಅರ್ಥಮಾಡಿಕೋ."
+      }
+    },
+    {
+      "id": "ay-p037-s4",
+      "speaker": "Kaushalya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "शोक में मेरे शब्द कठोर हो गए।",
+        "en": "Grief made my words harsh.",
+        "gu": "શોકમાં મારા શબ્દો કઠોર થયા.",
+        "kn": "ದುಃಖದಿಂದ ನನ್ನ ಮಾತು ಕಠಿಣವಾಯಿತು."
+      }
+    },
+    {
+      "id": "ay-p038-s1",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "कौशल्ये, एक पुरानी भूल सुनो।",
+        "en": "Kaushalya, hear of a mistake from my youth.",
+        "gu": "કૌશલ્યે, મારી એક જૂની ભૂલ સાંભળો.",
+        "kn": "ಕೌಸಲ್ಯೆ, ನನ್ನ ಯೌವನದ ಒಂದು ತಪ್ಪನ್ನು ಕೇಳು."
+      }
+    },
+    {
+      "id": "ay-p038-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "युवा दशरथ ने जल की ध्वनि को पशु समझ बाण छोड़ा।",
+        "en": "Young Dasharatha mistook a water sound for an animal and shot.",
+        "gu": "યુવાન દશરથે પાણીના અવાજને પશુ સમજી બાણ છોડ્યું.",
+        "kn": "ಯುವ ದಶರಥ ನೀರಿನ ಶಬ್ದವನ್ನು ಪ್ರಾಣಿಯೆಂದು ಭಾವಿಸಿ ಬಾಣ ಬಿಟ್ಟ."
+      }
+    },
+    {
+      "id": "ay-p038-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "पास जाकर देखा—एक तपस्वी युवक घायल था।",
+        "en": "Drawing near, he found a young ascetic wounded.",
+        "gu": "પાસે જઈ જોયું—એક તપસ્વી યુવક ઘાયલ હતો.",
+        "kn": "ಹತ್ತಿರ ಹೋದಾಗ ಒಬ್ಬ ತಪಸ್ವಿ ಯುವಕ ಗಾಯಗೊಂಡಿದ್ದ."
+      }
+    },
+    {
+      "id": "ay-p038-s4",
+      "speaker": "Young ascetic",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मेरे अन्धे माता-पिता को जल पहुँचा दीजिए।",
+        "en": "Take water to my blind parents.",
+        "gu": "મારા અંધ માતા-પિતાને પાણી પહોંચાડો.",
+        "kn": "ನನ್ನ ಅಂಧ ತಂದೆತಾಯಿಗೆ ನೀರು ಕೊಡಿ."
+      }
+    },
+    {
+      "id": "ay-p039-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "दशरथ जल लेकर प्रतीक्षा कर रहे माता-पिता तक पहुँचे।",
+        "en": "Dasharatha carried water to the waiting parents.",
+        "gu": "દશરથ પાણી લઈને રાહ જોતાં માતા-પિતા પાસે પહોંચ્યા.",
+        "kn": "ದಶರಥ ನೀರು ತೆಗೆದುಕೊಂಡು ಕಾಯುತ್ತಿದ್ದ ತಂದೆತಾಯಿಯ ಬಳಿಗೆ ಹೋದ."
+      }
+    },
+    {
+      "id": "ay-p039-s2",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मेरे बाण से आपके पुत्र की मृत्यु हुई।",
+        "en": "My arrow caused your son's death.",
+        "gu": "મારા બાણથી તમારા પુત્રનું મૃત્યુ થયું.",
+        "kn": "ನನ್ನ ಬಾಣದಿಂದ ನಿಮ್ಮ ಮಗ ಮೃತಪಟ್ಟ."
+      }
+    },
+    {
+      "id": "ay-p039-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "उन्होंने पुत्र का शोक मनाया और अन्तिम कर्म किए।",
+        "en": "They mourned their son and performed his last rites.",
+        "gu": "તેમણે પુત્રનો શોક મનાવ્યો અને અંતિમ કર્મ કર્યાં.",
+        "kn": "ಅವರು ಮಗನಿಗಾಗಿ ದುಃಖಿಸಿ ಅಂತಿಮ ವಿಧಿ ನೆರವೇರಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p039-s4",
+      "speaker": "Father",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तुम भी पुत्र-वियोग के शोक में प्राण छोड़ोगे।",
+        "en": "You too will die grieving separation from your son.",
+        "gu": "તમે પણ પુત્રવિયોગના શોકમાં પ્રાણ છોડશો.",
+        "kn": "ನೀನೂ ಮಗನ ಅಗಲಿಕೆಯ ದುಃಖದಲ್ಲೇ ಪ್ರಾಣ ಬಿಡುವೆ."
+      }
+    },
+    {
+      "id": "ay-p039-s5",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "पुत्र को विदा कर शोकाकुल माता-पिता भी चल बसे।",
+        "en": "After bidding their son farewell, the grieving parents also died.",
+        "gu": "પુત્રને વિદાય આપી શોકાકુલ માતા-પિતા પણ ચાલ્યાં ગયાં.",
+        "kn": "ಮಗನಿಗೆ ವಿದಾಯ ಹೇಳಿದ ದುಃಖಿತ ತಂದೆತಾಯಿಯೂ ಮೃತಪಟ್ಟರು."
+      }
+    },
+    {
+      "id": "ay-p040-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "पुराने शाप की बात कहकर दशरथ फिर राम के वियोग में डूब गए।",
+        "en": "Having recalled the old curse, Dasharatha sank again into grief at Rama’s absence.",
+        "gu": "જૂના શાપની વાત કહી દશરથ ફરી રામના વિયોગમાં ડૂબી ગયા.",
+        "kn": "ಹಳೆಯ ಶಾಪವನ್ನು ನೆನಪಿಸಿಕೊಂಡ ದಶರಥರು ಮತ್ತೆ ರಾಮನ ಅಗಲಿಕೆಯ ದುಃಖದಲ್ಲಿ ಮುಳುಗಿದರು."
+      }
+    },
+    {
+      "id": "ay-p040-s2",
+      "speaker": "Dasharatha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "हा राम… मेरे पुत्र…",
+        "en": "Rama… my son…",
+        "gu": "હા રામ… મારા પુત્ર…",
+        "kn": "ಹಾ ರಾಮ… ನನ್ನ ಮಗನೇ…"
+      }
+    },
+    {
+      "id": "ay-p040-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "रात में राजा चल बसे। सुबह महल शोक में डूब गया।",
+        "en": "The king died that night. At dawn, the palace mourned.",
+        "gu": "રાતે રાજા ચાલ્યા ગયા. સવારે મહેલ શોકમાં ડૂબ્યો.",
+        "kn": "ಆ ರಾತ್ರಿ ರಾಜನು ಮೃತಪಟ್ಟ. ಬೆಳಗಾಗುವಾಗ ಅರಮನೆ ಶೋಕದಲ್ಲಿತ್ತು."
+      }
+    },
+    {
+      "id": "ay-p041-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "पुत्रों के लौटने तक राजा का शरीर सुरक्षित रखा गया।",
+        "en": "The king's body was preserved until his sons returned.",
+        "gu": "પુત્રો પાછા ફરે ત્યાં સુધી રાજાનો દેહ સુરક્ષિત રખાયો.",
+        "kn": "ಮಕ್ಕಳು ಮರಳುವವರೆಗೆ ರಾಜನ ದೇಹವನ್ನು ಕಾಪಾಡಲಾಯಿತು."
+      }
+    },
+    {
+      "id": "ay-p041-s2",
+      "speaker": "Ministers",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राज्य को अब नेतृत्व चाहिए।",
+        "en": "The kingdom needs leadership now.",
+        "gu": "રાજ્યને હવે નેતૃત્વ જોઈએ.",
+        "kn": "ರಾಜ್ಯಕ್ಕೆ ಈಗ ನಾಯಕತ್ವ ಬೇಕಾಗಿದೆ."
+      }
+    },
+    {
+      "id": "ay-p041-s3",
+      "speaker": "Vashishtha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भरत और शत्रुघ्न को शीघ्र बुलाओ।",
+        "en": "Summon Bharata and Shatrughna at once.",
+        "gu": "ભરત અને શત્રુઘ્નને જલદી બોલાવો.",
+        "kn": "ಭರತ ಮತ್ತು ಶತ್ರುಘ್ನರನ್ನು ಬೇಗ ಕರೆತನ್ನಿ."
+      }
+    },
+    {
+      "id": "ay-p042-s1",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "इस स्वप्न से मन बहुत व्याकुल है।",
+        "en": "That dream has left me deeply troubled.",
+        "gu": "આ સ્વપ્નથી મન ખૂબ વ્યાકુળ છે.",
+        "kn": "ಆ ಕನಸಿನಿಂದ ಮನಸ್ಸು ಬಹಳ ಕಳವಳಗೊಂಡಿದೆ."
+      },
+      "narration": {
+        "hi": "उधर ननिहाल में भरत एक अशुभ स्वप्न देखकर व्याकुल थे।",
+        "en": "Meanwhile, at his maternal home, Bharata was troubled by an ominous dream.",
+        "gu": "ત્યાં મોસાળમાં ભરત એક અશુભ સ્વપ્ન જોઈ વ્યાકુળ હતા.",
+        "kn": "ಇತ್ತ ತಾಯಿಯ ತವರಿನಲ್ಲಿ ಭರತರು ಅಶುಭ ಕನಸು ಕಂಡು ಕಳವಳಗೊಂಡಿದ್ದರು."
+      }
+    },
+    {
+      "id": "ay-p042-s2",
+      "speaker": "Messenger",
+      "mode": "dialogue",
+      "text": {
+        "hi": "वसिष्ठजी ने आपको तुरंत अयोध्या बुलाया है।",
+        "en": "Vashishtha asks you to return to Ayodhya urgently.",
+        "gu": "વસિષ્ઠજીએ તમને તરત અયોધ્યા બોલાવ્યા છે.",
+        "kn": "ವಸಿಷ್ಠರು ನಿಮ್ಮನ್ನು ತಕ್ಷಣ ಅಯೋಧ್ಯೆಗೆ ಕರೆದಿದ್ದಾರೆ."
+      },
+      "narration": {
+        "hi": "तभी अयोध्या के दूत पहुँचे।",
+        "en": "Then the messengers from Ayodhya arrived.",
+        "gu": "ત્યારે અયોધ્યાના દૂત પહોંચ્યા.",
+        "kn": "ಆಗ ಅಯೋಧ್ಯೆಯ ದೂತರು ಬಂದರು."
+      },
+      "afterNarration": {
+        "hi": "आदेश के अनुसार दूतों ने अभी वनवास और राजा के निधन की बात नहीं बताई।",
+        "en": "Under their instructions, the messengers had not yet disclosed the exile or the king’s death.",
+        "gu": "આદેશ પ્રમાણે દૂતોએ હજી વનવાસ અને રાજાના નિધનની વાત જણાવી નહોતી.",
+        "kn": "ಆದೇಶದಂತೆ ದೂತರು ವನವಾಸ ಮತ್ತು ರಾಜನ ನಿಧನದ ಸುದ್ದಿಯನ್ನು ಇನ್ನೂ ತಿಳಿಸಿರಲಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "ay-p042-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "दोनों भाइयों ने ननिहाल से विदा ली।",
+        "en": "The brothers took leave of their maternal family.",
+        "gu": "બંને ભાઈઓએ મોસાળથી વિદાય લીધી.",
+        "kn": "ಇಬ್ಬರೂ ತಾಯಿಯ ತವರಿನಿಂದ ಬೀಳ್ಕೊಂಡರು."
+      }
+    },
+    {
+      "id": "ay-p043-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "सात रातों की यात्रा के बाद दोनों भाई अयोध्या पहुँचे।",
+        "en": "After seven nights of travel, the brothers reached Ayodhya.",
+        "gu": "સાત રાતની યાત્રા પછી બંને ભાઈઓ અયોધ્યા પહોંચ્યા.",
+        "kn": "ಏಳು ರಾತ್ರಿಗಳ ಪ್ರಯಾಣದ ಬಳಿಕ ಸಹೋದರರು ಅಯೋಧ್ಯೆ ತಲುಪಿದರು."
+      }
+    },
+    {
+      "id": "ay-p043-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "नगर इतना सूना क्यों है?",
+        "en": "Why is the city so desolate?",
+        "gu": "નગર આટલું સૂનું કેમ છે?",
+        "kn": "ನಗರ ಹೀಗೆ ಕಳಾಹೀನವಾಗಿರುವುದೇಕೆ?"
+      }
+    },
+    {
+      "id": "ay-p043-s3",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "माता, पिता कहाँ हैं?",
+        "en": "Mother, where is Father?",
+        "gu": "માતા, પિતા ક્યાં છે?",
+        "kn": "ತಾಯಿ, ತಂದೆ ಎಲ್ಲಿದ್ದಾರೆ?"
+      }
+    },
+    {
+      "id": "ay-p043-s4",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "पुत्र, तुम्हारे पिता अब नहीं रहे।",
+        "en": "My son, your father has died.",
+        "gu": "પુત્ર, તારા પિતા હવે નથી રહ્યા.",
+        "kn": "ಮಗನೇ, ನಿನ್ನ ತಂದೆ ಇನ್ನಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "ay-p044-s1",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "और राम भैया? वे कहाँ हैं?",
+        "en": "And my elder brother Rama? Where is he?",
+        "gu": "અને રામભાઈ? તેઓ ક્યાં છે?",
+        "kn": "ಹಾಗಾದರೆ ರಾಮಣ್ಣ? ಅವರು ಎಲ್ಲಿದ್ದಾರೆ?"
+      }
+    },
+    {
+      "id": "ay-p044-s2",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम वन गए हैं। अब तुम राज्य सँभालो।",
+        "en": "Rama has gone into exile. Now take the throne.",
+        "gu": "રામ વન ગયા છે. હવે તું રાજ્ય સંભાળ.",
+        "kn": "ರಾಮ ಕಾಡಿಗೆ ಹೋಗಿದ್ದಾನೆ. ಈಗ ನೀನು ರಾಜ್ಯ ವಹಿಸಿಕೋ."
+      },
+      "narration": {
+        "hi": "कैकेयी ने अपने माँगे हुए दो वर बताए।",
+        "en": "Kaikeyi explained the two boons she had demanded.",
+        "gu": "કૈકેયીએ પોતે માગેલા બે વર જણાવ્યા.",
+        "kn": "ಕೈಕೇಯಿ ತಾನು ಕೇಳಿದ್ದ ಎರಡು ವರಗಳನ್ನು ವಿವರಿಸಿದಳು."
+      }
+    },
+    {
+      "id": "ay-p044-s3",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "ऐसा राज्य मुझे नहीं चाहिए! मैं राम भैया को वापस लाऊँगा।",
+        "en": "I want no such kingdom! I will bring my elder brother Rama back.",
+        "gu": "આવું રાજ્ય મારે નથી જોઈતું! હું રામભાઈને પાછા લાવીશ.",
+        "kn": "ಇಂಥ ರಾಜ್ಯ ನನಗೆ ಬೇಡ! ನಾನು ರಾಮಣ್ಣನನ್ನು ಮರಳಿ ಕರೆತರುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p045-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "भरत और शत्रुघ्न कौशल्या के पास गए।",
+        "en": "Bharata and Shatrughna went to Kaushalya.",
+        "gu": "ભરત અને શત્રુઘ્ન કૌશલ્યા પાસે ગયા.",
+        "kn": "ಭರತ ಮತ್ತು ಶತ್ರುಘ್ನ ಕೌಸಲ್ಯೆಯ ಬಳಿಗೆ ಹೋದರು."
+      }
+    },
+    {
+      "id": "ay-p045-s2",
+      "speaker": "Kaushalya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "क्या तुम भी यही राज्य चाहते थे?",
+        "en": "Was this the kingdom you wanted too?",
+        "gu": "શું તું પણ આ જ રાજ્ય ઇચ્છતો હતો?",
+        "kn": "ನೀನೂ ಈ ರಾಜ್ಯವನ್ನೇ ಬಯಸಿದ್ದೆಯಾ?"
+      }
+    },
+    {
+      "id": "ay-p045-s3",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "माता, मुझे इस योजना का ज्ञान नहीं था।",
+        "en": "Mother, I knew nothing of this plan.",
+        "gu": "માતા, મને આ યોજનાની જાણ નહોતી.",
+        "kn": "ತಾಯಿ, ಈ ಯೋಜನೆ ನನಗೆ ತಿಳಿದಿರಲಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "ay-p046-s1",
+      "speaker": "Vashishtha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "अब पिता के अन्तिम कर्म पूरे करो।",
+        "en": "Now perform your father's final rites.",
+        "gu": "હવે પિતાનાં અંતિમ કર્મ પૂરાં કરો.",
+        "kn": "ಈಗ ತಂದೆಯ ಅಂತಿಮ ವಿಧಿ ನೆರವೇರಿಸು."
+      }
+    },
+    {
+      "id": "ay-p046-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "परिवार और प्रजा ने सरयू तट पर विदा दी।",
+        "en": "Family and people bade him farewell beside the Sarayu.",
+        "gu": "પરિવાર અને પ્રજાએ સરયૂ તટે વિદાય આપી.",
+        "kn": "ಕುಟುಂಬವೂ ಪ್ರಜೆಗಳೂ ಸರಯೂ ತೀರದಲ್ಲಿ ವಿದಾಯ ಹೇಳಿದರು."
+      }
+    },
+    {
+      "id": "ay-p046-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "शोक के निर्धारित दिनों में भाइयों ने कर्म पूरे किए।",
+        "en": "Through the appointed mourning days, the brothers completed the rites.",
+        "gu": "શોકના નિર્ધારિત દિવસોમાં ભાઈઓએ વિધિ પૂરી કરી.",
+        "kn": "ನಿಗದಿತ ಶೋಕದ ದಿನಗಳಲ್ಲಿ ಸಹೋದರರು ವಿಧಿಗಳನ್ನು ಮುಗಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p047-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "वनवास में मन्थरा की भूमिका से क्रोधित शत्रुघ्न ने उन्हें पकड़ लिया।",
+        "en": "Angered by Manthara’s part in the exile, Shatrughna seized her.",
+        "gu": "વનવાસમાં મંથરાની ભૂમિકાથી ક્રોધિત શત્રુઘ્ને તેમને પકડી લીધાં.",
+        "kn": "ವನವಾಸದಲ್ಲಿ ಮಂಥರೆಯ ಪಾತ್ರದಿಂದ ಕೋಪಗೊಂಡ ಶತ್ರುಘ್ನರು ಅವಳನ್ನು ಹಿಡಿದರು."
+      }
+    },
+    {
+      "id": "ay-p047-s2",
+      "speaker": "Kaikeyi",
+      "mode": "dialogue",
+      "text": {
+        "hi": "उसे छोड़ दो!",
+        "en": "Let her go!",
+        "gu": "તેને છોડી દો!",
+        "kn": "ಅವಳನ್ನು ಬಿಟ್ಟುಬಿಡು!"
+      }
+    },
+    {
+      "id": "ay-p047-s3",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "शत्रुघ्न, उसे हानि मत पहुँचाओ।",
+        "en": "Shatrughna, do not harm her.",
+        "gu": "શત્રુઘ્ન, તેને હાનિ ન પહોંચાડો.",
+        "kn": "ಶತ್ರುಘ್ನ, ಅವಳಿಗೆ ಹಾನಿ ಮಾಡಬೇಡ."
+      },
+      "afterNarration": {
+        "hi": "शत्रुघ्न ने मन्थरा को छोड़ दिया।",
+        "en": "Shatrughna released Manthara.",
+        "gu": "શત્રુઘ્ને મંથરાને છોડી દીધી.",
+        "kn": "ಶತ್ರುಘ್ನ ಮಂಥರೆಯನ್ನು ಬಿಟ್ಟ."
+      }
+    },
+    {
+      "id": "ay-p048-s1",
+      "speaker": "Ministers",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भरत, राज्य का दायित्व स्वीकार कीजिए।",
+        "en": "Bharata, accept responsibility for the kingdom.",
+        "gu": "ભરત, રાજ્યની જવાબદારી સ્વીકારો.",
+        "kn": "ಭರತ, ರಾಜ್ಯದ ಹೊಣೆ ಸ್ವೀಕರಿಸು."
+      }
+    },
+    {
+      "id": "ay-p048-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राज्य राम भैया का है। मैं उन्हें वापस लाने जाऊँगा।",
+        "en": "The kingdom belongs to my elder brother Rama. I will go to bring him back.",
+        "gu": "રાજ્ય રામભાઈનું છે. હું તેમને પાછા લાવવા જઈશ.",
+        "kn": "ರಾಜ್ಯ ರಾಮಣ್ಣನದು. ಅವರನ್ನು ಮರಳಿ ಕರೆತರಲು ಹೋಗುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p048-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "वन की ओर मार्ग, कुएँ और पड़ाव तैयार हुए।",
+        "en": "Roads, wells and camps were prepared towards the forest.",
+        "gu": "વન તરફ માર્ગ, કૂવા અને પડાવ તૈયાર થયાં.",
+        "kn": "ಕಾಡಿನ ಕಡೆಗೆ ದಾರಿ, ಬಾವಿ, ತಂಗುದಾಣ ಸಿದ್ಧವಾದವು."
+      }
+    },
+    {
+      "id": "ay-p049-s1",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "यह राजकीय संगीत बन्द करो।",
+        "en": "Stop this royal music.",
+        "gu": "આ રાજકીય સંગીત બંધ કરો.",
+        "kn": "ಈ ರಾಜಮಂಗಳ ವಾದ್ಯ ನಿಲ್ಲಿಸಿ."
+      },
+      "narration": {
+        "hi": "अगली सुबह राजकीय वादक भरत को जगाने आए।",
+        "en": "The next morning, the royal musicians came to awaken Bharata.",
+        "gu": "બીજે દિવસે સવારે રાજકીય વાદકો ભરતને જગાડવા આવ્યા.",
+        "kn": "ಮರುದಿನ ಬೆಳಗ್ಗೆ ರಾಜವಾದ್ಯಗಾರರು ಭರತರನ್ನು ಎಬ್ಬಿಸಲು ಬಂದರು."
+      }
+    },
+    {
+      "id": "ay-p049-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मेरा अभिषेक नहीं होगा। राम भैया ही ज्येष्ठ हैं।",
+        "en": "I will not be anointed. My elder brother Rama has the rightful place.",
+        "gu": "મારો અભિષેક નહીં થાય. રામભાઈ જ મોટા છે.",
+        "kn": "ನನಗೆ ಅಭಿಷೇಕ ಬೇಡ. ರಾಮಣ್ಣನೇ ಹಿರಿಯರು."
+      }
+    },
+    {
+      "id": "ay-p049-s3",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "यात्रा की तैयारी कीजिए। हम राम भैया से लौटने की प्रार्थना करेंगे।",
+        "en": "Prepare the journey. We will ask my elder brother Rama to return.",
+        "gu": "યાત્રાની તૈયારી કરો. આપણે રામભાઈને પાછા ફરવા પ્રાર્થના કરીશું.",
+        "kn": "ಪ್ರಯಾಣ ಸಿದ್ಧಪಡಿಸಿ. ರಾಮಣ್ಣ ಹಿಂದಿರುಗುವಂತೆ ಬೇಡಿಕೊಳ್ಳೋಣ."
+      }
+    },
+    {
+      "id": "ay-p050-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "परिवार, गुरु और सेना सहित भरत गंगा पहुँचे।",
+        "en": "Bharata reached the Ganga with family, teachers and troops.",
+        "gu": "પરિવાર, ગુરુ અને સેના સાથે ભરત ગંગા પહોંચ્યા.",
+        "kn": "ಕುಟುಂಬ, ಗುರುಗಳು, ಸೇನೆಯೊಂದಿಗೆ ಭರತ ಗಂಗಾತೀರ ತಲುಪಿದ."
+      }
+    },
+    {
+      "id": "ay-p050-s2",
+      "speaker": "Guha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम की रक्षा के लिए तैयार रहो।",
+        "en": "Be ready to protect Rama.",
+        "gu": "રામની રક્ષા માટે તૈયાર રહો.",
+        "kn": "ರಾಮನನ್ನು ರಕ್ಷಿಸಲು ಸಿದ್ಧರಾಗಿರಿ."
+      },
+      "narration": {
+        "hi": "सशस्त्र दल देखकर गुह को राम की सुरक्षा की चिन्ता हुई।",
+        "en": "Seeing the armed party, Guha feared for Rama’s safety.",
+        "gu": "સશસ્ત્ર દળ જોઈ ગુહને રામની સુરક્ષાની ચિંતા થઈ.",
+        "kn": "ಶಸ್ತ್ರಸಜ್ಜಿತ ಸೇನೆಯನ್ನು ಕಂಡು ಗುಹನಿಗೆ ರಾಮರ ಸುರಕ್ಷತೆಯ ಚಿಂತೆಯಾಯಿತು."
+      }
+    },
+    {
+      "id": "ay-p050-s3",
+      "speaker": "Guha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भरत, हमारा आतिथ्य स्वीकार कीजिए।",
+        "en": "Bharata, please accept our hospitality.",
+        "gu": "ભરત, અમારું આતિથ્ય સ્વીકારો.",
+        "kn": "ಭರತ, ನಮ್ಮ ಆತಿಥ್ಯ ಸ್ವೀಕರಿಸು."
+      }
+    },
+    {
+      "id": "ay-p051-s1",
+      "speaker": "Guha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "क्या यह सेना राम को हानि पहुँचाने आई है?",
+        "en": "Has this army come to harm Rama?",
+        "gu": "શું આ સેના રામને હાનિ પહોંચાડવા આવી છે?",
+        "kn": "ಈ ಸೇನೆ ರಾಮನಿಗೆ ಹಾನಿ ಮಾಡಲು ಬಂದಿದೆಯೇ?"
+      }
+    },
+    {
+      "id": "ay-p051-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "नहीं! मैं उन्हें अयोध्या वापस बुलाने आया हूँ।",
+        "en": "No! I have come to ask him home to Ayodhya.",
+        "gu": "ના! હું તેમને અયોધ્યા પાછા બોલાવવા આવ્યો છું.",
+        "kn": "ಇಲ್ಲ! ಅವರನ್ನು ಅಯೋಧ್ಯೆಗೆ ಮರಳಿ ಕರೆಯಲು ಬಂದಿದ್ದೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p051-s3",
+      "speaker": "Guha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तब मैं स्वयं मार्ग दिखाऊँगा।",
+        "en": "Then I will guide you myself.",
+        "gu": "તો હું પોતે માર્ગ બતાવીશ.",
+        "kn": "ಹಾಗಾದರೆ ನಾನೇ ದಾರಿ ತೋರಿಸುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p052-s1",
+      "speaker": "Guha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "उस रात लक्ष्मण सारी रात जागते रहे।",
+        "en": "That night, Lakshmana kept watch throughout.",
+        "gu": "એ રાતે લક્ષ્મણ આખી રાત જાગતા રહ્યા.",
+        "kn": "ಆ ರಾತ್ರಿ ಲಕ್ಷ್ಮಣ ಇಡೀ ರಾತ್ರಿ ಕಾವಲಿದ್ದ."
+      },
+      "narration": {
+        "hi": "भरत ने राम के विश्राम की बात पूछी, तो गुह ने उस रात का वृत्तान्त सुनाया।",
+        "en": "Bharata asked about Rama’s rest, and Guha recalled that earlier night.",
+        "gu": "ભરતે રામના વિશ્રામ વિશે પૂછ્યું, તો ગુહે એ રાતનો વૃત્તાંત કહ્યો.",
+        "kn": "ಭರತರು ರಾಮರ ವಿಶ್ರಾಂತಿಯ ಬಗ್ಗೆ ಕೇಳಿದಾಗ ಗುಹನು ಆ ಹಿಂದಿನ ರಾತ್ರಿಯನ್ನು ನೆನಪಿಸಿಕೊಂಡನು."
+      }
+    },
+    {
+      "id": "ay-p052-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "गुह की बात सुन भरत ने घास की शय्या देखी।",
+        "en": "After Guha's account, Bharata saw the bed of grass.",
+        "gu": "ગુહની વાત સાંભળી ભરતે ઘાસની પથારી જોઈ.",
+        "kn": "ಗುಹನ ಮಾತು ಕೇಳಿ ಭರತ ಹುಲ್ಲಿನ ಹಾಸಿಗೆ ಕಂಡ."
+      }
+    },
+    {
+      "id": "ay-p052-s3",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "यहीं राम भैया और सीता भाभी को सोना पड़ा…",
+        "en": "This is where my elder brother and sister-in-law had to sleep…",
+        "gu": "અહીં રામભાઈ અને સીતા ભાભીને સૂવું પડ્યું…",
+        "kn": "ಇಲ್ಲೇ ರಾಮಣ್ಣ ಮತ್ತು ಸೀತಾ ಅತ್ತಿಗೆ ಮಲಗಬೇಕಾಯಿತು…"
+      }
+    },
+    {
+      "id": "ay-p052-s4",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मैं भी वल्कल और जटा धारण करूँगा।",
+        "en": "I too will wear bark garments and matted locks.",
+        "gu": "હું પણ વલ્કલ અને જટા ધારણ કરીશ.",
+        "kn": "ನಾನೂ ತೊಗಟೆಯ ಉಡುಗೆ ಮತ್ತು ಜಟೆ ಧರಿಸುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p053-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "गुह के नाविकों ने सबको गंगा पार कराई।",
+        "en": "Guha's boatmen ferried the party across the Ganga.",
+        "gu": "ગુહના નાવિકોએ સૌને ગંગા પાર કરાવી.",
+        "kn": "ಗುಹನ ನಾವಿಕರು ಎಲ್ಲರನ್ನೂ ಗಂಗೆ ದಾಟಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p053-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "सेना यहीं ठहरे; आश्रम को कष्ट न हो।",
+        "en": "Let the troops wait here, sparing the hermitage disturbance.",
+        "gu": "સેના અહીં રોકાય; આશ્રમને કષ્ટ ન થાય.",
+        "kn": "ಸೇನೆ ಇಲ್ಲೇ ನಿಲ್ಲಲಿ; ಆಶ್ರಮಕ್ಕೆ ತೊಂದರೆ ಆಗದಿರಲಿ."
+      }
+    },
+    {
+      "id": "ay-p053-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "भरत और वसिष्ठ भरद्वाज से मिलने गए।",
+        "en": "Bharata and Vashishtha went to meet Bharadwaja.",
+        "gu": "ભરત અને વસિષ્ઠ ભરદ્વાજને મળવા ગયાં.",
+        "kn": "ಭರತ ಮತ್ತು ವಸಿಷ್ಠರು ಭರದ್ವಾಜರನ್ನು ಭೇಟಿಯಾಗಲು ಹೋದರು."
+      }
+    },
+    {
+      "id": "ay-p054-s1",
+      "speaker": "Bharadwaja",
+      "mode": "dialogue",
+      "text": {
+        "hi": "वन में आने का तुम्हारा उद्देश्य क्या है?",
+        "en": "What is your purpose in coming to the forest?",
+        "gu": "વનમાં આવવાનો તમારો હેતુ શું છે?",
+        "kn": "ಕಾಡಿಗೆ ಬಂದಿರುವ ನಿನ್ನ ಉದ್ದೇಶವೇನು?"
+      }
+    },
+    {
+      "id": "ay-p054-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मुनिवर, मैं राम भैया को लौटने के लिए मनाने आया हूँ।",
+        "en": "Revered sage, I have come to persuade my elder brother Rama to return.",
+        "gu": "મુનિવર, હું રામભાઈને પાછા ફરવા મનાવવા આવ્યો છું.",
+        "kn": "ಮುನಿವರೇ, ರಾಮಣ್ಣ ಹಿಂದಿರುಗುವಂತೆ ಮನವೊಲಿಸಲು ಬಂದಿದ್ದೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p054-s3",
+      "speaker": "Bharadwaja",
+      "mode": "dialogue",
+      "text": {
+        "hi": "वे चित्रकूट में हैं। आज यहाँ विश्राम करो।",
+        "en": "He is at Chitrakuta. Rest here today.",
+        "gu": "તેઓ ચિત્રકૂટમાં છે. આજે અહીં વિશ્રામ કરો.",
+        "kn": "ಅವನು ಚಿತ್ರಕೂಟದಲ್ಲಿದ್ದಾನೆ. ಇಂದು ಇಲ್ಲಿ ವಿಶ್ರಾಂತಿ ಮಾಡು."
+      }
+    },
+    {
+      "id": "ay-p054-s4",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "ऋषि ने पूरे दल का अद्भुत आतिथ्य किया।",
+        "en": "The sage offered extraordinary hospitality to the whole party.",
+        "gu": "ઋષિએ આખા દળનું અદ્ભુત આતિથ્ય કર્યું.",
+        "kn": "ಋಷಿ ಇಡೀ ಪರಿವಾರಕ್ಕೆ ಅದ್ಭುತ ಆತಿಥ್ಯ ನೀಡಿದರು."
+      }
+    },
+    {
+      "id": "ay-p055-s1",
+      "speaker": "Bharadwaja",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मन्दाकिनी की ओर यह मार्ग चित्रकूट जाता है।",
+        "en": "This route towards the Mandakini leads to Chitrakuta.",
+        "gu": "મંદાકિની તરફનો આ માર્ગ ચિત્રકૂટ જાય છે.",
+        "kn": "ಮಂದಾಕಿನಿಯ ಕಡೆಗಿನ ಈ ದಾರಿ ಚಿತ್ರಕೂಟಕ್ಕೆ ಹೋಗುತ್ತದೆ."
+      }
+    },
+    {
+      "id": "ay-p055-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मुनिवर, ये हमारी माताएँ हैं।",
+        "en": "Revered sage, these are our mothers.",
+        "gu": "મુનિવર, આ અમારી માતાઓ છે.",
+        "kn": "ಮುನಿವರೇ, ಇವರು ನಮ್ಮ ತಾಯಂದಿರು."
+      },
+      "narration": {
+        "hi": "भरत ने ऋषि को तीनों माताओं का परिचय कराया।",
+        "en": "Bharata introduced the three mothers to the sage.",
+        "gu": "ભરતે ઋષિને ત્રણેય માતાઓનો પરિચય કરાવ્યો.",
+        "kn": "ಭರತರು ಋಷಿಗೆ ಮೂವರು ತಾಯಂದಿರ ಪರಿಚಯ ಮಾಡಿಕೊಟ್ಟರು."
+      }
+    },
+    {
+      "id": "ay-p055-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "आशीर्वाद लेकर दल आगे बढ़ा।",
+        "en": "With the sage's blessing, the party moved on.",
+        "gu": "આશીર્વાદ લઈને દળ આગળ વધ્યું.",
+        "kn": "ಆಶೀರ್ವಾದ ಪಡೆದು ಪರಿವಾರ ಮುಂದೆ ಸಾಗಿತು."
+      }
+    },
+    {
+      "id": "ay-p056-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "चित्रकूट की पहाड़ियाँ सामने आ गईं।",
+        "en": "Chitrakuta's hills came into view.",
+        "gu": "ચિત્રકૂટની ટેકરીઓ સામે આવી.",
+        "kn": "ಚಿತ್ರಕೂಟದ ಬೆಟ್ಟಗಳು ಕಣ್ಣಿಗೆ ಬಿದ್ದವು."
+      }
+    },
+    {
+      "id": "ay-p056-s2",
+      "speaker": "Scout",
+      "mode": "dialogue",
+      "text": {
+        "hi": "देखिए, वहाँ धुआँ उठ रहा है।",
+        "en": "Look, smoke is rising over there.",
+        "gu": "જુઓ, ત્યાં ધુમાડો ઊઠે છે.",
+        "kn": "ನೋಡಿ, ಅಲ್ಲಿ ಹೊಗೆ ಏರುತ್ತಿದೆ."
+      },
+      "narration": {
+        "hi": "आगे मार्ग देखने गए एक खोजी ने धुआँ देखा।",
+        "en": "A scout looking along the route spotted smoke.",
+        "gu": "આગળ માર્ગ જોવા ગયેલા એક શોધકે ધુમાડો જોયો.",
+        "kn": "ಮುಂದಿನ ದಾರಿ ನೋಡುತ್ತಿದ್ದ ಒಬ್ಬ ಶೋಧಕನಿಗೆ ಹೊಗೆ ಕಾಣಿಸಿತು."
+      }
+    },
+    {
+      "id": "ay-p056-s3",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "सेना यहीं रुके। आश्रम को व्याकुल न करें।",
+        "en": "Keep the troops here. Do not disturb the hermitage.",
+        "gu": "સેના અહીં રોકાય. આશ્રમને વ્યાકુળ ન કરીએ.",
+        "kn": "ಸೇನೆ ಇಲ್ಲೇ ನಿಲ್ಲಲಿ. ಆಶ್ರಮಕ್ಕೆ ಗಾಬರಿ ಮಾಡದಿರಲಿ."
+      }
+    },
+    {
+      "id": "ay-p057-s1",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "सीते, मन्दाकिनी और इन पक्षियों को देखो।",
+        "en": "Sita, look at the Mandakini and these birds.",
+        "gu": "સીતે, મંદાકિની અને આ પક્ષીઓને જુઓ.",
+        "kn": "ಸೀತೆ, ಮಂದಾಕಿನಿ ಮತ್ತು ಈ ಪಕ್ಷಿಗಳನ್ನು ನೋಡು."
+      },
+      "narration": {
+        "hi": "उधर राम सीता को चित्रकूट की शोभा दिखा रहे थे।",
+        "en": "Meanwhile Rama was showing Sita Chitrakuta's beauty.",
+        "gu": "ત્યાં રામ સીતાને ચિત્રકૂટની શોભા બતાવતા હતા.",
+        "kn": "ಇತ್ತ ರಾಮ ಸೀತೆಗೆ ಚಿತ್ರಕೂಟದ ಸೊಬಗು ತೋರಿಸುತ್ತಿದ್ದ."
+      }
+    },
+    {
+      "id": "ay-p058-s1",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "लक्ष्मण, यह कोलाहल कहाँ से आ रहा है?",
+        "en": "Lakshmana, where is that clamour coming from?",
+        "gu": "લક્ષ્મણ, આ કોલાહલ ક્યાંથી આવે છે?",
+        "kn": "ಲಕ್ಷ್ಮಣ, ಈ ಗದ್ದಲ ಎಲ್ಲಿಂದ ಬರುತ್ತಿದೆ?"
+      }
+    },
+    {
+      "id": "ay-p058-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "en": "Lakshmana climbed a tree to look.",
+        "hi": "लक्ष्मण देखने के लिए एक पेड़ पर चढ़े।",
+        "gu": "લક્ષ્મણ જોવા માટે એક વૃક્ષ પર ચડ્યા.",
+        "kn": "ಏನಾಗಿದೆ ಎಂದು ನೋಡಲು ಲಕ್ಷ್ಮಣ ಮರ ಹತ್ತಿದನು."
+      }
+    },
+    {
+      "id": "ay-p058-s3",
+      "speaker": "Lakshmana",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया, भरत की सेना है! क्या वे आक्रमण करेंगे?",
+        "en": "Brother, it is Bharata’s army! Have they come to attack?",
+        "gu": "ભાઈ, ભરતની સેના છે! શું તેઓ આક્રમણ કરશે?",
+        "kn": "ಅಣ್ಣಾ, ಭರತನ ಸೇನೆ! ಅವರು ದಾಳಿ ಮಾಡಲು ಬಂದಿದ್ದಾರೆಯೇ?"
+      }
+    },
+    {
+      "id": "ay-p058-s4",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भरत प्रेम से आए हैं। उन पर सन्देह मत करो।",
+        "en": "Bharata comes in love. Do not suspect him.",
+        "gu": "ભરત પ્રેમથી આવ્યા છે. તેમના પર શંકા ન કરો.",
+        "kn": "ಭರತ ಪ್ರೀತಿಯಿಂದ ಬಂದಿದ್ದಾನೆ. ಅವನನ್ನು ಶಂಕಿಸಬೇಡ."
+      }
+    },
+    {
+      "id": "ay-p059-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "सेना दूर रही; भरत पैदल आगे बढ़े।",
+        "en": "The troops stayed back; Bharata continued on foot.",
+        "gu": "સેના દૂર રહી; ભરત પગપાળા આગળ વધ્યા.",
+        "kn": "ಸೇನೆ ಹಿಂದೆ ನಿಂತಿತು; ಭರತ ಕಾಲ್ನಡಿಗೆಯಲ್ಲಿ ಮುಂದೆ ಸಾಗಿದ."
+      }
+    },
+    {
+      "id": "ay-p059-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "इन चिह्नों पर चलें। आश्रम निकट होगा।",
+        "en": "Follow these signs. The hermitage must be near.",
+        "gu": "આ ચિહ્નો પર ચાલીએ. આશ્રમ નજીક હશે.",
+        "kn": "ಈ ಗುರುತುಗಳನ್ನು ಹಿಂಬಾಲಿಸೋಣ. ಆಶ್ರಮ ಹತ್ತಿರವಿರಬೇಕು."
+      }
+    },
+    {
+      "id": "ay-p059-s3",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "भरत पर्णकुटी की ओर बढ़ते हैं।",
+        "en": "Bharata approaches the leaf hut.",
+        "gu": "ભરત પર્ણકુટી તરફ આગળ વધે છે.",
+        "kn": "ಭರತ ಪರ್ಣಕುಟಿಯ ಕಡೆಗೆ ಸಾಗುತ್ತಾನೆ."
+      }
+    },
+    {
+      "id": "ay-p060-s1",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम भैया!",
+        "en": "Brother Rama!",
+        "gu": "રામભાઈ!",
+        "kn": "ರಾಮಣ್ಣಾ!"
+      }
+    },
+    {
+      "id": "ay-p060-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भरत, शत्रुघ्न! उठो, मेरे पास आओ।",
+        "en": "Bharata, Shatrughna! Rise and come to me.",
+        "gu": "ભરત, શત્રુઘ્ન! ઊઠો, મારી પાસે આવો.",
+        "kn": "ಭರತ, ಶತ್ರುಘ್ನ! ಎದ್ದು ನನ್ನ ಬಳಿಗೆ ಬನ್ನಿ."
+      }
+    },
+    {
+      "id": "ay-p060-s3",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "भाई भावुक होकर एक-दूसरे से गले मिलते हैं।",
+        "en": "The brothers embrace with deep emotion.",
+        "gu": "ભાઈઓ ભાવુક થઈને એકબીજાને ભેટે છે.",
+        "kn": "ಸಹೋದರರು ಭಾವುಕರಾಗಿ ಪರಸ್ಪರ ಅಪ್ಪಿಕೊಳ್ಳುತ್ತಾರೆ."
+      }
+    },
+    {
+      "id": "ay-p061-s1",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "पिता, गुरु और प्रजा सब कुशल हैं?",
+        "en": "Are Father, our teachers and the people well?",
+        "gu": "પિતા, ગુરુ અને પ્રજા સૌ કુશળ છે?",
+        "kn": "ತಂದೆ, ಗುರುಗಳು ಮತ್ತು ಪ್ರಜೆಗಳು ಕ್ಷೇಮವಾಗಿದ್ದಾರೆಯೇ?"
+      }
+    },
+    {
+      "id": "ay-p061-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मन्त्री, किसान और निर्बल जनों का ध्यान रखते हो?",
+        "en": "Do you care for ministers, farmers and those in need?",
+        "gu": "મંત્રી, ખેડૂત અને નિર્બળ લોકોનું ધ્યાન રાખો છો?",
+        "kn": "ಮಂತ್ರಿಗಳು, ರೈತರು, ಅಸಹಾಯಕರನ್ನು ನೋಡಿಕೊಳ್ಳುತ್ತಿದ್ದೀಯಾ?"
+      }
+    },
+    {
+      "id": "ay-p061-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राज्य का भार प्रजा की सेवा है।",
+        "en": "Rulership is a responsibility to serve the people.",
+        "gu": "રાજ્યનો ભાર પ્રજાની સેવા છે.",
+        "kn": "ರಾಜ್ಯದ ಹೊಣೆ ಎಂದರೆ ಪ್ರಜೆಯ ಸೇವೆ."
+      }
+    },
+    {
+      "id": "ay-p062-s1",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भरत, यह तपस्वी वेश और यहाँ आने का कारण?",
+        "en": "Bharata, why this ascetic dress, and why have you come?",
+        "gu": "ભરત, આ તપસ્વી વેશ અને અહીં આવવાનું કારણ?",
+        "kn": "ಭರತ, ಈ ತಪಸ್ವಿ ವೇಷವೇಕೆ? ಇಲ್ಲಿಗೆ ಏಕೆ ಬಂದೆ?"
+      }
+    },
+    {
+      "id": "ay-p062-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया, आपके बिना राजसुख नहीं चाहिए। लौटकर अयोध्या सँभालिए।",
+        "en": "Brother, I want no royal comforts without you. Please return and lead Ayodhya.",
+        "gu": "ભાઈ, તમારા વિના રાજસુખ નથી જોઈતું. પાછા આવી અયોધ્યા સંભાળો.",
+        "kn": "ಅಣ್ಣಾ, ನಿಮ್ಮಿಲ್ಲದೆ ರಾಜಸುಖ ಬೇಡ. ಹಿಂದಿರುಗಿ ಅಯೋಧ್ಯೆಯನ್ನು ನೋಡಿಕೊಳ್ಳಿ."
+      }
+    },
+    {
+      "id": "ay-p062-s3",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया… पिताश्री अब नहीं रहे।",
+        "en": "Brother… Father has died.",
+        "gu": "ભાઈ… પિતાશ્રી હવે નથી રહ્યા.",
+        "kn": "ಅಣ್ಣಾ… ತಂದೆಯವರು ಇನ್ನಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "ay-p062-s4",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया, उनके लिए जल अर्पित कीजिए।",
+        "en": "Brother, please offer water for Father.",
+        "gu": "ભાઈ, તેમના માટે જળ અર્પણ કરો.",
+        "kn": "ಅಣ್ಣಾ, ತಂದೆಯವರಿಗೆ ಜಲಾಂಜಲಿ ನೀಡಿ."
+      }
+    },
+    {
+      "id": "ay-p063-s1",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "समाचार सुन राम टूट पड़े; भाइयों ने सँभाला।",
+        "en": "Overcome by the news, Rama is supported by his brothers.",
+        "gu": "સમાચાર સાંભળી રામ ઢળી પડ્યા; ભાઈઓએ સંભાળ્યા.",
+        "kn": "ಸುದ್ದಿಯಿಂದ ಕುಸಿದ ರಾಮನನ್ನು ಸಹೋದರರು ಹಿಡಿದುಕೊಳ್ಳುತ್ತಾರೆ."
+      }
+    },
+    {
+      "id": "ay-p063-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "पिता के शोक में सबकी आँखें भर आईं।",
+        "en": "Grief for their father brought tears to every eye.",
+        "gu": "પિતાના શોકમાં સૌની આંખો ભરાઈ આવી.",
+        "kn": "ತಂದೆಯ ದುಃಖದಲ್ಲಿ ಎಲ್ಲರ ಕಣ್ಣು ತುಂಬಿದವು."
+      }
+    },
+    {
+      "id": "ay-p063-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "मन्दाकिनी पर जल और वन के फल अर्पित किए।",
+        "en": "At the Mandakini they offered water and forest fruit.",
+        "gu": "મંદાકિની પર જળ અને વનનાં ફળ અર્પણ કર્યાં.",
+        "kn": "ಮಂದಾಕಿನಿಯಲ್ಲಿ ನೀರು ಮತ್ತು ಕಾಡಿನ ಫಲ ಅರ್ಪಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p064-s1",
+      "speaker": "Kaushalya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मेरे पुत्र ने यही सरल अर्पण किए हैं…",
+        "en": "These are the simple offerings my son could make…",
+        "gu": "મારા પુત્રે આ જ સાદાં અર્પણ કર્યાં છે…",
+        "kn": "ನನ್ನ ಮಗ ಈ ಸರಳ ಅರ್ಪಣೆಗಳನ್ನೇ ಮಾಡಿದ್ದಾನೆ…"
+      },
+      "narration": {
+        "hi": "वसिष्ठ और माताएँ भी मन्दाकिनी तट पर पहुँचे।",
+        "en": "Vashishtha and the mothers also reached the Mandakini bank.",
+        "gu": "વસિષ્ઠ અને માતાઓ પણ મંદાકિની તટે પહોંચ્યાં.",
+        "kn": "ವಸಿಷ್ಠರು ಮತ್ತು ತಾಯಂದಿರೂ ಮಂದಾಕಿನಿ ತೀರಕ್ಕೆ ಬಂದರು."
+      }
+    },
+    {
+      "id": "ay-p064-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "तीनों ने माताओं के चरण छुए।",
+        "en": "The three bowed at their mothers' feet.",
+        "gu": "ત્રણેયે માતાઓનાં ચરણ સ્પર્શ્યાં.",
+        "kn": "ಮೂವರೂ ತಾಯಂದಿರ ಪಾದಗಳಿಗೆ ನಮಸ್ಕರಿಸಿದರು."
+      }
+    },
+    {
+      "id": "ay-p064-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "गुरुदेव, प्रणाम।",
+        "en": "My respects, revered teacher.",
+        "gu": "ગુરુદેવ, પ્રણામ.",
+        "kn": "ಗುರುದೇವ, ನಮಸ್ಕಾರ."
+      }
+    },
+    {
+      "id": "ay-p065-s1",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया, मैं यह राज्य आपको लौटाने आया हूँ।",
+        "en": "Brother, I have come to return this kingdom to you.",
+        "gu": "ભાઈ, હું આ રાજ્ય તમને પાછું સોંપવા આવ્યો છું.",
+        "kn": "ಅಣ್ಣಾ, ಈ ರಾಜ್ಯವನ್ನು ನಿಮಗೆ ಮರಳಿ ಒಪ್ಪಿಸಲು ಬಂದಿದ್ದೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p065-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मृत्यु सभी के जीवन में आती है, भरत।",
+        "en": "Death comes to every life, Bharata.",
+        "gu": "મૃત્યુ દરેકના જીવનમાં આવે છે, ભરત.",
+        "kn": "ಮರಣ ಪ್ರತಿಯೊಂದು ಜೀವಕ್ಕೂ ಬರುತ್ತದೆ, ಭರತ."
+      },
+      "narration": {
+        "hi": "भरत को शोक में देखकर राम ने उन्हें धीरज दिया।",
+        "en": "Seeing Bharata’s grief, Rama sought to console him.",
+        "gu": "ભરતનો શોક જોઈ રામે તેમને ધીરજ આપી.",
+        "kn": "ಭರತರ ದುಃಖ ಕಂಡು ರಾಮರು ಅವರಿಗೆ ಸಮಾಧಾನ ಹೇಳಿದರು."
+      }
+    },
+    {
+      "id": "ay-p065-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तुम प्रजा सँभालो; मैं पिताश्री का वचन निभाऊँगा।",
+        "en": "Care for the people; I will fulfil Father's promise.",
+        "gu": "તમે પ્રજા સંભાળો; હું પિતાશ્રીનું વચન નિભાવીશ.",
+        "kn": "ನೀನು ಪ್ರಜೆಗಳನ್ನು ನೋಡಿಕೋ; ನಾನು ತಂದೆಯ ವಚನ ಪಾಲಿಸುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p066-s1",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया, ज्येष्ठ आप हैं। राज्य पर आपका ही अधिकार है।",
+        "en": "Brother, you are the elder. The throne is rightfully yours.",
+        "gu": "ભાઈ, મોટા તમે છો. રાજ્યનો અધિકાર તમારો જ છે.",
+        "kn": "ಅಣ್ಣಾ, ನೀವೇ ಹಿರಿಯರು. ರಾಜ್ಯದ ಹಕ್ಕು ನಿಮ್ಮದೇ."
+      }
+    },
+    {
+      "id": "ay-p066-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "पिताश्री ने कैकेयी माता को दो वर दिए थे। उनका वचन कैसे तोड़ूँ?",
+        "en": "Father promised Mother Kaikeyi two boons. How could I break his word?",
+        "gu": "પિતાશ્રીએ કૈકેયી માતાને બે વર આપ્યા હતા. તેમનું વચન કેવી રીતે તોડું?",
+        "kn": "ತಂದೆಯವರು ಕೈಕೇಯಿ ತಾಯಿಗೆ ಎರಡು ವರ ಕೊಟ್ಟಿದ್ದರು. ಅವರ ವಚನವನ್ನು ಹೇಗೆ ಮುರಿಯಲಿ?"
+      }
+    },
+    {
+      "id": "ay-p066-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "हम दोनों मिलकर उनका वचन सत्य रखें।",
+        "en": "Together, let us keep his word true.",
+        "gu": "આપણે બંને મળીને તેમનું વચન સાચું રાખીએ.",
+        "kn": "ನಾವಿಬ್ಬರೂ ಸೇರಿ ಅವರ ವಚನ ಸತ್ಯವಾಗಿಡೋಣ."
+      }
+    },
+    {
+      "id": "ay-p066-s4",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "पर भैया, आपके बिना मैं कैसे लौटूँ?",
+        "en": "But Brother, how can I return without you?",
+        "gu": "પણ ભાઈ, તમારા વિના હું કેવી રીતે પાછો ફરું?",
+        "kn": "ಆದರೆ ಅಣ್ಣಾ, ನಿಮ್ಮಿಲ್ಲದೆ ನಾನು ಹೇಗೆ ಹಿಂದಿರುಗಲಿ?"
+      }
+    },
+    {
+      "id": "ay-p067-s1",
+      "speaker": "Jabali",
+      "mode": "dialogue",
+      "text": {
+        "hi": "जो प्रजा जीवित है, उसकी सेवा के लिए लौटिए। बिछुड़े पिता का वचन आपको क्यों रोके?",
+        "en": "Return to serve the people who are living. Why should your departed father’s word hold you back?",
+        "gu": "જે પ્રજા જીવિત છે, તેની સેવા માટે પાછા ફરો. વિદાય પામેલા પિતાનું વચન તમને શા માટે રોકે?",
+        "kn": "ಬದುಕಿರುವ ಪ್ರಜೆಗಳ ಸೇವೆಗಾಗಿ ಹಿಂದಿರುಗಿ. ಅಗಲಿದ ತಂದೆಯ ವಚನ ನಿಮ್ಮನ್ನು ಏಕೆ ತಡೆಯಬೇಕು?"
+      },
+      "narration": {
+        "hi": "राजसभा के विद्वान ब्राह्मण जाबालि ने राम को लौटाने के लिए एक अलग तर्क रखा।",
+        "en": "Jabali, a learned Brahmin of the royal court, offered a different argument to persuade Rama to return.",
+        "gu": "રાજસભાના વિદ્વાન બ્રાહ્મણ જાબાલિએ રામને પાછા લાવવા એક જુદો તર્ક રજૂ કર્યો.",
+        "kn": "ರಾಜಸಭೆಯ ವಿದ್ವಾಂಸ ಬ್ರಾಹ್ಮಣ ಜಾಬಾಲಿಯವರು ರಾಮರನ್ನು ಹಿಂದಿರುಗಿಸಲು ಬೇರೊಂದು ವಾದ ಮುಂದಿಟ್ಟರು."
+      }
+    },
+    {
+      "id": "ay-p067-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मुनिवर, पिताश्री के जाने से उनका वचन असत्य नहीं हो जाता।",
+        "en": "Revered sir, Father’s death does not release me from keeping his word.",
+        "gu": "મુનિવર, પિતાશ્રીના જવાથી તેમનું વચન અસત્ય થતું નથી.",
+        "kn": "ಮುನಿವರೇ, ತಂದೆಯವರು ಅಗಲಿದರೂ ಅವರ ವಚನ ಪಾಲಿಸುವ ಹೊಣೆ ನನ್ನದು."
+      }
+    },
+    {
+      "id": "ay-p067-s3",
+      "speaker": "Jabali",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मैंने आपको लौटाने के लिए यह तर्क दिया।",
+        "en": "I made that argument to persuade you to return.",
+        "gu": "તમને પાછા લાવવા મેં આ તર્ક આપ્યો.",
+        "kn": "ನಿಮ್ಮನ್ನು ಹಿಂದಿರುಗಿಸಲು ಈ ವಾದ ಮಾಡಿದೆ."
+      }
+    },
+    {
+      "id": "ay-p067-s4",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "फिर भी अपना वचन पूरा करूँगा।",
+        "en": "Even so, I will fulfil my promise.",
+        "gu": "તેમ છતાં મારું વચન પૂરું કરીશ.",
+        "kn": "ಆದರೂ ನನ್ನ ವಚನ ನೆರವೇರಿಸುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p068-s1",
+      "speaker": "Vashishtha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "इक्ष्वाकु वंश में ज्येष्ठ को राज्य मिलता आया है।",
+        "en": "In Ikshvaku's line, the eldest has inherited the throne.",
+        "gu": "ઇક્ષ્વાકુ વંશમાં મોટાને રાજ્ય મળતું આવ્યું છે.",
+        "kn": "ಇಕ್ಷ್ವಾಕು ವಂಶದಲ್ಲಿ ಹಿರಿಯನೇ ರಾಜ್ಯ ವಹಿಸಿಕೊಂಡಿದ್ದಾನೆ."
+      }
+    },
+    {
+      "id": "ay-p068-s2",
+      "speaker": "Vashishtha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "माता और गुरु का अनुरोध भी मानो।",
+        "en": "Heed your mother and teacher's appeal too.",
+        "gu": "માતા અને ગુરુની વિનંતી પણ માનો.",
+        "kn": "ತಾಯಿ ಮತ್ತು ಗುರುವಿನ ಬೇಡಿಕೆಯನ್ನೂ ಮನ್ನಿಸು."
+      }
+    },
+    {
+      "id": "ay-p068-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "गुरुदेव, मैं पिताश्री की आज्ञा का उल्लंघन नहीं कर सकता।",
+        "en": "Revered teacher, I cannot disregard Father’s command.",
+        "gu": "ગુરુદેવ, હું પિતાશ્રીની આજ્ઞાનું ઉલ્લંઘન ન કરી શકું.",
+        "kn": "ಗುರುದೇವರೇ, ನಾನು ತಂದೆಯವರ ಆಜ್ಞೆ ಮೀರಲಾರೆ."
+      }
+    },
+    {
+      "id": "ay-p068-s4",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम भैया, अयोध्या लौट चलिए।",
+        "en": "Brother Rama, please return to Ayodhya.",
+        "gu": "રામભાઈ, અયોધ્યા પાછા ચાલો.",
+        "kn": "ರಾಮಣ್ಣಾ, ಅಯೋಧ್ಯೆಗೆ ಹಿಂದಿರುಗಿ."
+      }
+    },
+    {
+      "id": "ay-p069-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "भरत ने उपवास के संकल्प से आग्रह करना चाहा।",
+        "en": "Bharata sought to press his appeal through a vow of fasting.",
+        "gu": "ભરતે ઉપવાસના સંકલ્પથી આગ્રહ કરવા ધાર્યું.",
+        "kn": "ಭರತ ಉಪವಾಸದ ಸಂಕಲ್ಪದಿಂದ ತನ್ನ ಬೇಡಿಕೆ ಒತ್ತಾಯಿಸಲು ಹೊರಟ."
+      }
+    },
+    {
+      "id": "ay-p069-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "प्रिय भरत, उठो। उपवास का यह हठ मत करो।",
+        "en": "Dear Bharata, rise. Do not insist on this fast.",
+        "gu": "પ્રિય ભરત, ઊઠો. ઉપવાસનો આ હઠ ન કરો.",
+        "kn": "ಪ್ರಿಯ ಭರತ, ಏಳು. ಈ ಉಪವಾಸದ ಹಠ ಮಾಡಬೇಡ."
+      }
+    },
+    {
+      "id": "ay-p069-s2b",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तो भैया, आपके बदले मुझे वनवास भोगने दीजिए।",
+        "en": "Then Brother, let me serve the exile in your place.",
+        "gu": "તો ભાઈ, તમારા બદલે મને વનવાસ ભોગવવા દો.",
+        "kn": "ಹಾಗಾದರೆ ಅಣ್ಣಾ, ನಿಮ್ಮ ಬದಲು ನಾನು ವನವಾಸ ಅನುಭವಿಸಲು ಬಿಡಿ."
+      }
+    },
+    {
+      "id": "ay-p069-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "यह वचन मुझे ही निभाना है, भरत। तुम मेरे बदले वनवास नहीं भोग सकते।",
+        "en": "This is my promise to fulfil, Bharata. You cannot serve the exile in my place.",
+        "gu": "આ વચન મારે જ નિભાવવાનું છે, ભરત. મારા બદલે તમે વનવાસ ન ભોગવી શકો.",
+        "kn": "ಈ ವಚನವನ್ನು ನಾನೇ ಪಾಲಿಸಬೇಕು, ಭರತ. ನನ್ನ ಬದಲು ನೀನು ವನವಾಸ ಅನುಭವಿಸಲಾರೆ."
+      }
+    },
+    {
+      "id": "ay-p070-s1",
+      "speaker": "Sages",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भरत, राम के निश्चय को स्वीकार करो।",
+        "en": "Bharata, accept Rama's decision.",
+        "gu": "ભરત, રામનો નિર્ણય સ્વીકારો.",
+        "kn": "ಭರತ, ರಾಮನ ನಿರ್ಧಾರ ಸ್ವೀಕರಿಸು."
+      }
+    },
+    {
+      "id": "ay-p070-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मन्त्रियों से परामर्श कर तुम प्रजा को सँभाल सकते हो।",
+        "en": "With wise counsel, you can care for the people.",
+        "gu": "મંત્રીઓની સલાહથી તમે પ્રજા સંભાળી શકો છો.",
+        "kn": "ಜಾಣರ ಸಲಹೆಯಿಂದ ನೀನು ಪ್ರಜೆಯನ್ನು ನೋಡಿಕೊಳ್ಳಬಲ್ಲೆ."
+      }
+    },
+    {
+      "id": "ay-p070-s3",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया, कृपया इन पादुकाओं पर चरण रख दीजिए।",
+        "en": "Brother, please place your feet on these sandals.",
+        "gu": "ભાઈ, કૃપા કરીને આ પાદુકાઓ પર ચરણ રાખો.",
+        "kn": "ಅಣ್ಣಾ, ದಯವಿಟ್ಟು ಈ ಪಾದುಕೆಗಳ ಮೇಲೆ ಪಾದವಿಡಿ."
+      },
+      "narration": {
+        "hi": "राम का निर्णय न बदला, तो भरत ने उनकी पादुकाएँ माँगीं।",
+        "en": "When Rama’s decision held firm, Bharata asked for his sandals.",
+        "gu": "રામનો નિર્ણય ન બદલાયો, તો ભરતે તેમની પાદુકાઓ માગી.",
+        "kn": "ರಾಮರ ನಿರ್ಧಾರ ಬದಲಾಗದಾಗ ಭರತರು ಅವರ ಪಾದುಕೆಗಳನ್ನು ಕೇಳಿದರು."
+      }
+    },
+    {
+      "id": "ay-p070-s4",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आपकी पादुकाएँ सिंहासन पर रहेंगी। मैं आपकी ओर से प्रजा की सेवा करूँगा।",
+        "en": "Your sandals will occupy the throne. I will serve the people on your behalf.",
+        "gu": "તમારી પાદુકાઓ સિંહાસન પર રહેશે. હું તમારા વતી પ્રજાની સેવા કરીશ.",
+        "kn": "ನಿಮ್ಮ ಪಾದುಕೆಗಳು ಸಿಂಹಾಸನದಲ್ಲಿರಲಿ. ನಿಮ್ಮ ಪರವಾಗಿ ಪ್ರಜೆಗಳ ಸೇವೆ ಮಾಡುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p071-s1",
+      "speaker": null,
+      "mode": "silent",
+      "text": {
+        "hi": "",
+        "en": "",
+        "gu": "",
+        "kn": ""
+      },
+      "alt": {
+        "hi": "राम ने पादुकाओं पर चरण रख उन्हें भरत को दिया।",
+        "en": "Rama places his feet on the sandals and gives them to Bharata.",
+        "gu": "રામે પાદુકાઓ પર ચરણ રાખી ભરતને આપી.",
+        "kn": "ರಾಮ ಪಾದುಕೆಗಳ ಮೇಲೆ ಪಾದವಿಟ್ಟು ಅವನ್ನು ಭರತನಿಗೆ ನೀಡುತ್ತಾನೆ."
+      }
+    },
+    {
+      "id": "ay-p071-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "भैया, चौदह वर्ष पूरे होते ही लौट आइएगा।",
+        "en": "Brother, please return as soon as the fourteen years end.",
+        "gu": "ભાઈ, ચૌદ વર્ષ પૂરાં થતાં જ પાછા આવજો.",
+        "kn": "ಅಣ್ಣಾ, ಹದಿನಾಲ್ಕು ವರ್ಷ ಮುಗಿದ ತಕ್ಷಣ ಮರಳಿ ಬನ್ನಿ."
+      }
+    },
+    {
+      "id": "ay-p071-s3",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "कैकेयी माता का भी बिना क्रोध ध्यान रखना।",
+        "en": "Care for Mother Kaikeyi too, without anger.",
+        "gu": "કૈકેયી માતાનું પણ ક્રોધ વિના ધ્યાન રાખજો.",
+        "kn": "ಕೈಕೇಯಿ ತಾಯಿಯನ್ನೂ ಕೋಪವಿಲ್ಲದೆ ನೋಡಿಕೋ."
+      }
+    },
+    {
+      "id": "ay-p072-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "पादुकाएँ सिर पर रख भरत लौटने चले।",
+        "en": "Bearing the sandals on his head, Bharata set out home.",
+        "gu": "પાદુકાઓ માથે રાખી ભરત પાછા ફરવા ચાલ્યા.",
+        "kn": "ಪಾದುಕೆಗಳನ್ನು ತಲೆಯ ಮೇಲೆ ಹೊತ್ತು ಭರತ ಹಿಂದಿರುಗಲು ಹೊರಟ."
+      }
+    },
+    {
+      "id": "ay-p072-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम भैया पिताश्री का वचन निभाने के निश्चय पर अटल हैं।",
+        "en": "My elder brother Rama remains resolved to fulfil Father’s promise.",
+        "gu": "રામભાઈ પિતાશ્રીનું વચન નિભાવવાના નિશ્ચય પર અડગ છે.",
+        "kn": "ತಂದೆಯವರ ವಚನ ಪಾಲಿಸುವ ನಿರ್ಧಾರದಲ್ಲಿ ರಾಮಣ್ಣ ಸ್ಥಿರರಾಗಿದ್ದಾರೆ."
+      }
+    },
+    {
+      "id": "ay-p072-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "भरद्वाज से विदा लेकर दल अयोध्या चला।",
+        "en": "Leaving Bharadwaja, the party continued towards Ayodhya.",
+        "gu": "ભરદ્વાજથી વિદાય લઈ દળ અયોધ્યા ચાલ્યું.",
+        "kn": "ಭರದ್ವಾಜರಿಂದ ಬೀಳ್ಕೊಂಡು ಪರಿವಾರ ಅಯೋಧ್ಯೆಗೆ ಹೊರಟಿತು."
+      }
+    },
+    {
+      "id": "ay-p073-s1",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राम भैया के बिना यह भवन भी सूना है।",
+        "en": "Without my elder brother Rama, this palace feels empty too.",
+        "gu": "રામભાઈ વિના આ ભવન પણ સૂનું છે.",
+        "kn": "ರಾಮಣ್ಣನಿಲ್ಲದೆ ಈ ಅರಮನೆಯೂ ಖಾಲಿಯಾಗಿದೆ."
+      }
+    },
+    {
+      "id": "ay-p073-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "गुरुदेव, नन्दिग्राम में तपस्वी की तरह रहकर सेवा करने दीजिए।",
+        "en": "Revered teacher, let me live as an ascetic at Nandigrama and serve from there.",
+        "gu": "ગુરુદેવ, નંદિગ્રામમાં તપસ્વીની જેમ રહી સેવા કરવા દો.",
+        "kn": "ಗುರುದೇವರೇ, ನಂದಿಗ್ರಾಮದಲ್ಲಿ ತಪಸ್ವಿಯಂತೆ ಇದ್ದು ಸೇವೆ ಮಾಡಲು ಬಿಡಿ."
+      }
+    },
+    {
+      "id": "ay-p073-s3",
+      "speaker": "Vashishtha",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तुम्हारा यह संकल्प उचित है।",
+        "en": "This resolve is fitting.",
+        "gu": "તમારો આ સંકલ્પ યોગ્ય છે.",
+        "kn": "ನಿನ್ನ ಈ ಸಂಕಲ್ಪ ಯೋಗ್ಯವಾಗಿದೆ."
+      }
+    },
+    {
+      "id": "ay-p074-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "नन्दिग्राम में भरत ने राम की पादुकाएँ प्रतिष्ठित कीं।",
+        "en": "At Nandigrama, Bharata installed Rama's sandals.",
+        "gu": "નંદિગ્રામમાં ભરતે રામની પાદુકાઓ સ્થાપી.",
+        "kn": "ನಂದಿಗ್ರಾಮದಲ್ಲಿ ಭರತ ರಾಮನ ಪಾದುಕೆಗಳನ್ನು ಪ್ರತಿಷ್ಠಾಪಿಸಿದ."
+      }
+    },
+    {
+      "id": "ay-p074-s2",
+      "speaker": "Bharata",
+      "mode": "dialogue",
+      "text": {
+        "hi": "राज्य का हर काम राम भैया के नाम पर होगा।",
+        "en": "Every affair of state will be conducted in my elder brother Rama’s name.",
+        "gu": "રાજ્યનું દરેક કામ રામભાઈના નામે થશે.",
+        "kn": "ರಾಜ್ಯದ ಪ್ರತಿಯೊಂದು ಕೆಲಸವೂ ರಾಮಣ್ಣನ ಹೆಸರಿನಲ್ಲಿ ನಡೆಯಲಿದೆ."
+      }
+    },
+    {
+      "id": "ay-p075-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "उधर चित्रकूट में ऋषि चिन्तित दिखे।",
+        "en": "Meanwhile at Chitrakuta, the ascetics seemed troubled.",
+        "gu": "ત્યાં ચિત્રકૂટમાં ઋષિઓ ચિંતિત દેખાયા.",
+        "kn": "ಇತ್ತ ಚಿತ್ರಕೂಟದಲ್ಲಿ ಋಷಿಗಳು ಚಿಂತಿತರಾಗಿ ಕಂಡರು."
+      }
+    },
+    {
+      "id": "ay-p075-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "ऋषिवर, आपकी चिन्ता का कारण क्या है?",
+        "en": "Revered sage, what is troubling you?",
+        "gu": "ઋષિવર, તમારી ચિંતાનું કારણ શું છે?",
+        "kn": "ಋಷಿವರೇ, ನಿಮ್ಮ ಚಿಂತೆಗೆ ಕಾರಣವೇನು?"
+      }
+    },
+    {
+      "id": "ay-p075-s3",
+      "speaker": "Elder sage",
+      "mode": "dialogue",
+      "text": {
+        "hi": "खर नाम के राक्षस के अनुचर आश्रमों को सताते हैं। हमें जाना होगा।",
+        "en": "The followers of a rakshasa named Khara harass the hermitages. We must leave.",
+        "gu": "ખર નામના રાક્ષસના અનુચરો આશ્રમોને સતાવે છે. અમારે જવું પડશે.",
+        "kn": "ಖರ ಎಂಬ ರಾಕ್ಷಸನ ಅನುಚರರು ಆಶ್ರಮಗಳಿಗೆ ಕಿರುಕುಳ ಕೊಡುತ್ತಾರೆ. ನಾವು ಹೊರಡಬೇಕು."
+      }
+    },
+    {
+      "id": "ay-p076-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "ऋषियों ने विदा ली और दूसरे आश्रमों को चले गए।",
+        "en": "The ascetics took leave for other hermitages.",
+        "gu": "ઋષિઓએ વિદાય લીધી અને બીજા આશ્રમોમાં ગયાં.",
+        "kn": "ಋಷಿಗಳು ಬೀಳ್ಕೊಂಡು ಬೇರೆ ಆಶ್ರಮಗಳಿಗೆ ತೆರಳಿದರು."
+      }
+    },
+    {
+      "id": "ay-p076-s2",
+      "speaker": "Rama",
+      "mode": "dialogue",
+      "text": {
+        "hi": "यह स्थान अब पहले जैसा शान्त नहीं रहा।",
+        "en": "This place no longer has its earlier peace.",
+        "gu": "આ સ્થાન હવે પહેલાં જેવું શાંત નથી રહ્યું.",
+        "kn": "ಈ ಸ್ಥಳ ಈಗ ಮೊದಲಿನಂತೆ ಶಾಂತವಾಗಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "ay-p076-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "परिवार की यादें भी थीं; तीनों आगे चल दिए।",
+        "en": "Memories of their family lingered; the three moved onwards.",
+        "gu": "પરિવારની યાદો પણ હતી; ત્રણેય આગળ ચાલ્યાં.",
+        "kn": "ಕುಟುಂಬದ ನೆನಪುಗಳೂ ಕಾಡಿದವು; ಮೂವರೂ ಮುಂದೆ ಹೊರಟರು."
+      }
+    },
+    {
+      "id": "ay-p077-s1",
+      "speaker": "Atri",
+      "mode": "dialogue",
+      "text": {
+        "hi": "हमारे आश्रम में तुम्हारा स्वागत है।",
+        "en": "Welcome to our hermitage.",
+        "gu": "અમારા આશ્રમમાં તમારું સ્વાગત છે.",
+        "kn": "ನಮ್ಮ ಆಶ್ರಮಕ್ಕೆ ಸ್ವಾಗತ."
+      },
+      "narration": {
+        "hi": "तीनों ऋषि अत्रि के आश्रम पहुँचे।",
+        "en": "The three reached the sage Atri's hermitage.",
+        "gu": "ત્રણેય ઋષિ અત્રિના આશ્રમ પહોંચ્યાં.",
+        "kn": "ಮೂವರೂ ಅತ್ರಿ ಋಷಿಯ ಆಶ್ರಮ ತಲುಪಿದರು."
+      }
+    },
+    {
+      "id": "ay-p077-s2",
+      "speaker": "Atri",
+      "mode": "dialogue",
+      "text": {
+        "hi": "सीते, मेरी पत्नी, तपस्विनी अनसूया से मिलो।",
+        "en": "Sita, meet my wife Anasuya, a devoted ascetic.",
+        "gu": "સીતે, મારી પત્ની, તપસ્વિની અનસૂયાને મળો.",
+        "kn": "ಸೀತೆ, ನನ್ನ ಪತ್ನಿ ತಪಸ್ವಿನಿ ಅನಸೂಯೆಯನ್ನು ಭೇಟಿ ಮಾಡು."
+      }
+    },
+    {
+      "id": "ay-p077-s3",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "माता, आपको प्रणाम।",
+        "en": "Mother, my respects to you.",
+        "gu": "માતા, તમને પ્રણામ.",
+        "kn": "ತಾಯಿ, ನಿಮಗೆ ನಮಸ್ಕಾರ."
+      }
+    },
+    {
+      "id": "ay-p078-s1",
+      "speaker": "Anasuya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "दाम्पत्य में निष्ठा कठिन समय में भी बनी रहे।",
+        "en": "May commitment in marriage endure through hardship too.",
+        "gu": "દામ્પત્યમાં નિષ્ઠા કઠિન સમયમાં પણ ટકી રહે.",
+        "kn": "ದಾಂಪತ್ಯದ ನಿಷ್ಠೆ ಕಷ್ಟದ ಸಮಯದಲ್ಲೂ ಉಳಿಯಲಿ."
+      }
+    },
+    {
+      "id": "ay-p078-s2",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "माता, माँ की सीख याद है। वन के कष्ट भी मुझे आर्यपुत्र से अलग नहीं करेंगे।",
+        "en": "Mother, I remember my mother’s counsel. I will stand by my husband through hardship.",
+        "gu": "માતા, મારી માની શીખ યાદ છે. વનનાં કષ્ટ પણ મને આર્યપુત્રથી અલગ નહીં કરે.",
+        "kn": "ತಾಯಿಯೇ, ನನ್ನ ತಾಯಿಯ ಬೋಧನೆ ನೆನಪಿದೆ. ಕಾಡಿನ ಕಷ್ಟಗಳಲ್ಲಿಯೂ ಆರ್ಯಪುತ್ರರ ಜೊತೆ ಇರುತ್ತೇನೆ."
+      }
+    },
+    {
+      "id": "ay-p078-s3",
+      "speaker": "Anasuya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "ये वस्त्र, आभूषण और माला स्वीकार करो।",
+        "en": "Accept these garments, ornaments and garland.",
+        "gu": "આ વસ્ત્રો, આભૂષણો અને માળા સ્વીકારો.",
+        "kn": "ಈ ಉಡುಗೆ, ಆಭರಣ ಮತ್ತು ಹಾರ ಸ್ವೀಕರಿಸು."
+      }
+    },
+    {
+      "id": "ay-p079-s1",
+      "speaker": "Anasuya",
+      "mode": "dialogue",
+      "text": {
+        "hi": "तुम्हारा विवाह कैसे हुआ था? सुनाओ।",
+        "en": "Tell me, how did your marriage take place?",
+        "gu": "તમારાં લગ્ન કેવી રીતે થયાં હતાં? કહો.",
+        "kn": "ನಿನ್ನ ವಿವಾಹ ಹೇಗಾಯಿತು? ಹೇಳು."
+      }
+    },
+    {
+      "id": "ay-p079-s2",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "मेरे पिता, मिथिला के राजा जनक ने मुझे भूमि में पाया और पाला।",
+        "en": "My father, King Janaka of Mithila, found me in the earth and raised me.",
+        "gu": "મારા પિતા, મિથિલાના રાજા જનકે મને ભૂમિમાં મેળવી અને ઉછેરી.",
+        "kn": "ನನ್ನ ತಂದೆ ಮಿಥಿಲೆಯ ರಾಜ ಜನಕರು ನನ್ನನ್ನು ಭೂಮಿಯಲ್ಲಿ ಕಂಡು ಬೆಳೆಸಿದರು."
+      },
+      "narration": {
+        "hi": "सीता ने अपना अतीत सुनाना आरम्भ किया।",
+        "en": "Sita began her recollection.",
+        "gu": "સીતાએ પોતાનું અતીત કહેવાનું શરૂ કર્યું.",
+        "kn": "ಸೀತೆ ತನ್ನ ಹಿಂದಿನ ಕಥೆ ಹೇಳತೊಡಗಿದಳು."
+      },
+      "offPanel": true
+    },
+    {
+      "id": "ay-p079-s3",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आर्यपुत्र ने शिवधनुष उठाया; खींचते ही वह टूट गया।",
+        "en": "My husband Rama lifted Shiva’s bow; drawing it, he broke it.",
+        "gu": "આર્યપુત્રે શિવધનુષ ઉપાડ્યું; ખેંચતાં જ તે તૂટી ગયું.",
+        "kn": "ಆರ್ಯಪುತ್ರರು ಶಿವಧನುಸ್ಸನ್ನು ಎತ್ತಿದರು; ಎಳೆಯುವಾಗ ಅದು ಮುರಿಯಿತು."
+      },
+      "offPanel": true
+    },
+    {
+      "id": "ay-p079-s4",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "दोनों परिवारों की सहमति से हमारा विवाह हुआ।",
+        "en": "With both families' consent, we were married.",
+        "gu": "બંને પરિવારોની સંમતિથી અમારાં લગ્ન થયાં.",
+        "kn": "ಇಬ್ಬರ ಕುಟುಂಬಗಳ ಒಪ್ಪಿಗೆಯಿಂದ ನಮ್ಮ ವಿವಾಹವಾಯಿತು."
+      },
+      "offPanel": true
+    },
+    {
+      "id": "ay-p080-s1",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "कथा सुनकर अनसूया ने सीता को हृदय से लगाया।",
+        "en": "Hearing the story, Anasuya embraced Sita.",
+        "gu": "કથા સાંભળી અનસૂયાએ સીતાને હૃદયથી લગાડ્યાં.",
+        "kn": "ಕಥೆ ಕೇಳಿ ಅನಸೂಯೆ ಸೀತೆಯನ್ನು ಅಪ್ಪಿಕೊಂಡಳು."
+      }
+    },
+    {
+      "id": "ay-p080-s2",
+      "speaker": "Sita",
+      "mode": "dialogue",
+      "text": {
+        "hi": "माता अनसूया ने ये प्रेम से दिए हैं।",
+        "en": "Mother Anasuya gave these with affection.",
+        "gu": "માતા અનસૂયાએ આ પ્રેમથી આપ્યાં છે.",
+        "kn": "ಅನಸೂಯಾ ತಾಯಿ ಇವುಗಳನ್ನು ಪ್ರೀತಿಯಿಂದ ಕೊಟ್ಟಿದ್ದಾರೆ."
+      }
+    },
+    {
+      "id": "ay-p080-s3",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "उन्होंने अत्रि के आश्रम में रात बिताई।",
+        "en": "They spent the night at Atri's hermitage.",
+        "gu": "તેમણે અત્રિના આશ્રમમાં રાત વિતાવી.",
+        "kn": "ಅವರು ಅತ್ರಿಯ ಆಶ್ರಮದಲ್ಲಿ ರಾತ್ರಿ ಕಳೆದರು."
+      }
+    },
+    {
+      "id": "ay-p081-s1",
+      "speaker": "Sages",
+      "mode": "dialogue",
+      "text": {
+        "hi": "आगे संकट हैं। इस वनपथ से जाइए।",
+        "en": "Dangers lie ahead. Follow this forest path.",
+        "gu": "આગળ સંકટ છે. આ વનમાર્ગે જાઓ.",
+        "kn": "ಮುಂದೆ ಅಪಾಯಗಳಿವೆ. ಈ ಕಾಡುದಾರಿಯಲ್ಲಿ ಹೋಗಿ."
+      }
+    },
+    {
+      "id": "ay-p081-s2",
+      "speaker": null,
+      "mode": "caption",
+      "text": {
+        "hi": "आशीर्वाद लेकर तीनों आगे बढ़े। अयोध्याकाण्ड पूर्ण हुआ।",
+        "en": "With the sages' blessing, the three went on. Ayodhyakanda ends.",
+        "gu": "આશીર્વાદ લઈને ત્રણેય આગળ વધ્યાં. અયોધ્યાકાંડ પૂર્ણ થયો.",
+        "kn": "ಆಶೀರ್ವಾದ ಪಡೆದು ಮೂವರೂ ಮುಂದೆ ಸಾಗಿದರು. ಅಯೋಧ್ಯಾಕಾಂಡ ಮುಗಿಯಿತು."
+      }
+    }
+  ]
+}

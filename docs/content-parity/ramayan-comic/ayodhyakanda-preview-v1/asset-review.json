@@ -1,0 +1,4519 @@
+{
+  "status": "Agent artwork review complete; user/editorial and native review pending",
+  "pages": [
+    {
+      "page": 1,
+      "file": "assets/page-001.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "6d29b68584d18a7696bb6620541955f6c398f3add5fe91a17a23ed25d036551f",
+      "frames": {
+        "ay-p001-s1": [
+          9,
+          8,
+          870,
+          574
+        ],
+        "ay-p001-s2": [
+          10,
+          594,
+          869,
+          516
+        ],
+        "ay-p001-s3": [
+          10,
+          1121,
+          869,
+          641
+        ]
+      },
+      "zones": {
+        "ay-p001-s2": [
+          0.05,
+          0.9,
+          0,
+          0.68,
+          0.27
+        ],
+        "ay-p001-s3": [
+          0.05,
+          0.9,
+          0,
+          0.22,
+          0.25
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 2,
+      "file": "assets/page-002-v2.png",
+      "dimensions": [
+        884,
+        1779
+      ],
+      "sha256": "724edbdeab51df590cc9067bae486aca52f485678e11fd4c29fceea2c8ba1926",
+      "frames": {
+        "ay-p002-s1": [
+          9,
+          7,
+          867,
+          810
+        ],
+        "ay-p002-s2": [
+          9,
+          829,
+          867,
+          940
+        ]
+      },
+      "zones": {
+        "ay-p002-s1": [
+          0.05,
+          0.9,
+          0,
+          0.84,
+          0.23
+        ],
+        "ay-p002-s2": [
+          0.05,
+          0.9,
+          0,
+          0.32,
+          0.27
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 3,
+      "file": "assets/page-003-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "6acf3ff70f5bb46091164cf1c32c73520f3f107f4835ed32f6ba33b416443030",
+      "frames": {
+        "ay-p003-s1": [
+          8,
+          6,
+          872,
+          587
+        ],
+        "ay-p003-s2": [
+          8,
+          604,
+          872,
+          538
+        ],
+        "ay-p003-s3": [
+          8,
+          1152,
+          872,
+          615
+        ]
+      },
+      "zones": {
+        "ay-p003-s1": [
+          0.05,
+          0.9,
+          0,
+          0.21,
+          0.27
+        ],
+        "ay-p003-s2": [
+          0.05,
+          0.9,
+          0,
+          0.23,
+          0.29
+        ],
+        "ay-p003-s3": [
+          0.05,
+          0.9,
+          0,
+          0.21,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 4,
+      "file": "assets/page-004.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "0d0e8c4049c77c92b416d6524114e55d071e275b753b37b20e452dbcb2a45d01",
+      "frames": {
+        "ay-p004-s1": [
+          8,
+          6,
+          871,
+          563
+        ],
+        "ay-p004-s2": [
+          9,
+          579,
+          869,
+          578
+        ],
+        "ay-p004-s3": [
+          9,
+          1167,
+          869,
+          599
+        ]
+      },
+      "zones": {
+        "ay-p004-s1": [
+          0.05,
+          0.9,
+          0,
+          0.19,
+          0.32
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 5,
+      "file": "assets/page-005-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "3de420cee2b8ce1d9ccde2dfb55b87b3ebb072b2407038f4d757f9b2fb52c49a",
+      "frames": {
+        "ay-p005-s1": [
+          11,
+          9,
+          866,
+          569
+        ],
+        "ay-p005-s2": [
+          12,
+          593,
+          864,
+          569
+        ],
+        "ay-p005-s3": [
+          12,
+          1174,
+          864,
+          589
+        ]
+      },
+      "zones": {
+        "ay-p005-s1": [
+          0.05,
+          0.9,
+          0,
+          0.3,
+          0.4
+        ],
+        "ay-p005-s2": [
+          0.05,
+          0.9,
+          0,
+          0.33,
+          0.25
+        ],
+        "ay-p005-s3": [
+          0.05,
+          0.9,
+          0,
+          0.66,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 6,
+      "file": "assets/page-006-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "29538c2f73a47df5bc9a2cd3c769746caa3de9a9c1fe5f430e29f22e1a7fada4",
+      "frames": {
+        "ay-p006-s1": [
+          9,
+          8,
+          870,
+          562
+        ],
+        "ay-p006-s2": [
+          10,
+          582,
+          426,
+          523
+        ],
+        "ay-p006-s3": [
+          448,
+          582,
+          431,
+          523
+        ],
+        "ay-p006-s4": [
+          10,
+          1115,
+          869,
+          650
+        ]
+      },
+      "zones": {
+        "ay-p006-s1": [
+          0.05,
+          0.9,
+          0,
+          0.34,
+          0.33
+        ],
+        "ay-p006-s2": [
+          0.05,
+          0.9,
+          0,
+          0.57,
+          0.32
+        ],
+        "ay-p006-s3": [
+          0.05,
+          0.9,
+          0,
+          0.35,
+          0.4
+        ],
+        "ay-p006-s4": [
+          0.05,
+          0.9,
+          0,
+          0.66,
+          0.31
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 7,
+      "file": "assets/page-007-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "a708620d81e1bb8c0cdd8fb55d46439ae10f007505205f0e4a99feb5826cea64",
+      "frames": {
+        "ay-p007-s1": [
+          10,
+          7,
+          867,
+          498
+        ],
+        "ay-p007-s2": [
+          10,
+          518,
+          427,
+          526
+        ],
+        "ay-p007-s3": [
+          452,
+          518,
+          425,
+          526
+        ],
+        "ay-p007-s4": [
+          10,
+          1056,
+          867,
+          707
+        ]
+      },
+      "zones": {
+        "ay-p007-s2": [
+          0.05,
+          0.9,
+          0,
+          0.35,
+          0.25
+        ],
+        "ay-p007-s3": [
+          0.05,
+          0.9,
+          0,
+          0.27,
+          0.38
+        ],
+        "ay-p007-s4": [
+          0.05,
+          0.9,
+          0,
+          0.4,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 8,
+      "file": "assets/page-008-v1.png",
+      "dimensions": [
+        886,
+        1775
+      ],
+      "sha256": "2ddc9046a9091ecf581b54bc99f1538aa128f71de46c31fad6efd3276f86eb54",
+      "frames": {
+        "ay-p008-s1": [
+          12,
+          8,
+          864,
+          823
+        ],
+        "ay-p008-s2": [
+          12,
+          846,
+          864,
+          917
+        ]
+      },
+      "zones": {
+        "ay-p008-s1": [
+          0.05,
+          0.9,
+          0,
+          0.33,
+          0.3
+        ],
+        "ay-p008-s2": [
+          0.05,
+          0.9,
+          0,
+          0.28,
+          0.31
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 9,
+      "file": "assets/page-009-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "c9e8198eaffcb760bfc1b44c9ba117769d9b21cbbb43578fb45f6305ee0b2dd8",
+      "frames": {
+        "ay-p009-s1": [
+          11,
+          8,
+          866,
+          576
+        ],
+        "ay-p009-s2": [
+          11,
+          595,
+          866,
+          547
+        ],
+        "ay-p009-s3": [
+          11,
+          1154,
+          866,
+          611
+        ]
+      },
+      "zones": {
+        "ay-p009-s1": [
+          0.05,
+          0.9,
+          0,
+          0.35,
+          0.32
+        ],
+        "ay-p009-s2": [
+          0.05,
+          0.9,
+          0,
+          0.68,
+          0.25
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 10,
+      "file": "assets/page-010-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "43eb92a1286072fba9a2dfadfc943ab03361b0c0436e837146e0875379d566f6",
+      "frames": {
+        "ay-p010-s1": [
+          9,
+          7,
+          870,
+          571
+        ],
+        "ay-p010-s2": [
+          10,
+          591,
+          869,
+          569
+        ],
+        "ay-p010-s3": [
+          10,
+          1171,
+          869,
+          593
+        ]
+      },
+      "zones": {
+        "ay-p010-s1": [
+          0.05,
+          0.9,
+          0,
+          0.5,
+          0.27
+        ],
+        "ay-p010-s2": [
+          0.05,
+          0.9,
+          0,
+          0.23,
+          0.32
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 11,
+      "file": "assets/page-011-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "520dfa63b6597c59f1615c07ac6ef3f9cba079823649972d0487cb4da603fa94",
+      "frames": {
+        "ay-p011-s1": [
+          9,
+          8,
+          870,
+          544
+        ],
+        "ay-p011-s2": [
+          9,
+          563,
+          870,
+          507
+        ],
+        "ay-p011-s3": [
+          9,
+          1080,
+          870,
+          685
+        ]
+      },
+      "zones": {
+        "ay-p011-s1": [
+          0.05,
+          0.9,
+          0,
+          0.25,
+          0.32
+        ],
+        "ay-p011-s2": [
+          0.05,
+          0.9,
+          0,
+          0.22,
+          0.27
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 12,
+      "file": "assets/page-012-v1.png",
+      "dimensions": [
+        984,
+        1599
+      ],
+      "sha256": "dad47eae5b52b295ff7171582b998b09e7a270c1266035fc6b9138b87f89e022",
+      "frames": {
+        "ay-p012-s1": [
+          11,
+          6,
+          963,
+          562
+        ],
+        "ay-p012-s2": [
+          11,
+          581,
+          962,
+          410
+        ],
+        "ay-p012-s3": [
+          11,
+          1003,
+          962,
+          585
+        ]
+      },
+      "zones": {
+        "ay-p012-s2": [
+          0.05,
+          0.9,
+          0,
+          0.2,
+          0.25
+        ],
+        "ay-p012-s3": [
+          0.05,
+          0.9,
+          0,
+          0.82,
+          0.25
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 13,
+      "file": "assets/page-013-v1.png",
+      "dimensions": [
+        889,
+        1770
+      ],
+      "sha256": "63cbf81370ceaee164f3c80290a222aab26d4433ff7ea03e1b7a9f604caf220e",
+      "frames": {
+        "ay-p013-s1": [
+          10,
+          7,
+          869,
+          607
+        ],
+        "ay-p013-s2": [
+          11,
+          625,
+          427,
+          571
+        ],
+        "ay-p013-s3": [
+          449,
+          625,
+          430,
+          571
+        ],
+        "ay-p013-s4": [
+          11,
+          1206,
+          868,
+          556
+        ]
+      },
+      "zones": {
+        "ay-p013-s1": [
+          0.05,
+          0.9,
+          0,
+          0.22,
+          0.25
+        ],
+        "ay-p013-s2": [
+          0.05,
+          0.9,
+          0,
+          0.36,
+          0.62
+        ],
+        "ay-p013-s3": [
+          0.05,
+          0.9,
+          0,
+          0.72,
+          0.32
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 14,
+      "file": "assets/page-014-v1.png",
+      "dimensions": [
+        884,
+        1780
+      ],
+      "sha256": "b0fdc4b3d5caf9bcbc8ea657c6ae9d7ce1ea6cbe98995e63b59171874dbe18d5",
+      "frames": {
+        "ay-p014-s1": [
+          9,
+          6,
+          867,
+          506
+        ],
+        "ay-p014-s2": [
+          9,
+          523,
+          441,
+          472
+        ],
+        "ay-p014-s3": [
+          462,
+          523,
+          413,
+          472
+        ],
+        "ay-p014-s4": [
+          9,
+          1006,
+          866,
+          765
+        ]
+      },
+      "zones": {
+        "ay-p014-s1": [
+          0.05,
+          0.9,
+          0,
+          0.34,
+          0.22
+        ],
+        "ay-p014-s2": [
+          0.05,
+          0.9,
+          0,
+          0.91,
+          0.23
+        ],
+        "ay-p014-s3": [
+          0.05,
+          0.9,
+          0,
+          0.13,
+          0.32
+        ],
+        "ay-p014-s4": [
+          0.05,
+          0.9,
+          0,
+          0.52,
+          0.25
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 15,
+      "file": "assets/page-015-v1.png",
+      "dimensions": [
+        891,
+        1766
+      ],
+      "sha256": "2c56979a94313d6485d9e3b1f4b18fb91b464112577600aa8b578b8427ea2eeb",
+      "frames": {
+        "ay-p015-s1": [
+          9,
+          7,
+          873,
+          582
+        ],
+        "ay-p015-s2": [
+          10,
+          600,
+          872,
+          521
+        ],
+        "ay-p015-s3": [
+          10,
+          1132,
+          872,
+          625
+        ]
+      },
+      "zones": {
+        "ay-p015-s1": [
+          0.05,
+          0.9,
+          0,
+          0.25,
+          0.32
+        ],
+        "ay-p015-s2": [
+          0.05,
+          0.9,
+          0,
+          0.65,
+          0.33
+        ],
+        "ay-p015-s3": [
+          0.05,
+          0.9,
+          0,
+          0.3,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 16,
+      "file": "assets/page-016-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "5ef421a567cade8c2e822c8ff82574bb88a0cffaa44efff7d1c6d4ccf616121d",
+      "frames": {
+        "ay-p016-s1": [
+          8,
+          6,
+          872,
+          578
+        ],
+        "ay-p016-s2": [
+          9,
+          595,
+          871,
+          540
+        ],
+        "ay-p016-s3": [
+          9,
+          1147,
+          871,
+          618
+        ]
+      },
+      "zones": {
+        "ay-p016-s2": [
+          0.05,
+          0.9,
+          0,
+          0.26,
+          0.38
+        ],
+        "ay-p016-s3": [
+          0.05,
+          0.9,
+          0,
+          0.75,
+          0.32
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 17,
+      "file": "assets/page-017-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "c8bb6e484ac8f1bff6bddd29fa2c56b74dc0880977b58f7ce33f147b020b2fa4",
+      "frames": {
+        "ay-p017-s1": [
+          10,
+          7,
+          869,
+          593
+        ],
+        "ay-p017-s2": [
+          10,
+          612,
+          499,
+          527
+        ],
+        "ay-p017-s3": [
+          521,
+          612,
+          358,
+          527
+        ],
+        "ay-p017-s4": [
+          10,
+          1150,
+          869,
+          614
+        ]
+      },
+      "zones": {
+        "ay-p017-s1": [
+          0.05,
+          0.9,
+          0,
+          0.4,
+          0.34
+        ],
+        "ay-p017-s2": [
+          0.05,
+          0.9,
+          0,
+          0.28,
+          0.4
+        ],
+        "ay-p017-s3": [
+          0.05,
+          0.9,
+          0,
+          0.45,
+          0.4
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 18,
+      "file": "assets/page-018-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "e0e8d6519b1df6a83066d805b27f645f1e156d9929a1a4bce7bc03bb2dfd1a71",
+      "frames": {
+        "ay-p018-s1": [
+          8,
+          6,
+          871,
+          549
+        ],
+        "ay-p018-s2": [
+          8,
+          564,
+          871,
+          468
+        ],
+        "ay-p018-s3": [
+          8,
+          1041,
+          871,
+          724
+        ]
+      },
+      "zones": {
+        "ay-p018-s1": [
+          0.05,
+          0.9,
+          0,
+          0.45,
+          0.31
+        ],
+        "ay-p018-s2": [
+          0.05,
+          0.9,
+          0,
+          0.59,
+          0.28
+        ],
+        "ay-p018-s3": [
+          0.05,
+          0.9,
+          0,
+          0.6,
+          0.18
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 19,
+      "file": "assets/page-019-v1.png",
+      "dimensions": [
+        884,
+        1779
+      ],
+      "sha256": "e9debabf736332a004da98acb479551ca02a3f745e1997799bc517798d5bfd63",
+      "frames": {
+        "ay-p019-s1": [
+          10,
+          8,
+          865,
+          554
+        ],
+        "ay-p019-s2": [
+          10,
+          575,
+          425,
+          420
+        ],
+        "ay-p019-s3": [
+          448,
+          575,
+          427,
+          420
+        ],
+        "ay-p019-s4": [
+          10,
+          1007,
+          864,
+          760
+        ]
+      },
+      "zones": {
+        "ay-p019-s1": [
+          0.05,
+          0.9,
+          0,
+          0.3,
+          0.3
+        ],
+        "ay-p019-s2": [
+          0.05,
+          0.9,
+          0,
+          0.33,
+          0.35
+        ],
+        "ay-p019-s3": [
+          0.05,
+          0.9,
+          0,
+          0.32,
+          0.35
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 20,
+      "file": "assets/page-020-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "e533a1c4287592fa23e27476a1506221dd4d1d5963b807773abfbc504f12c9fa",
+      "frames": {
+        "ay-p020-s1": [
+          9,
+          7,
+          869,
+          568
+        ],
+        "ay-p020-s2": [
+          10,
+          586,
+          427,
+          554
+        ],
+        "ay-p020-s2b": [
+          449,
+          586,
+          429,
+          554
+        ],
+        "ay-p020-s3": [
+          10,
+          1151,
+          434,
+          613
+        ],
+        "ay-p020-s4": [
+          455,
+          1151,
+          423,
+          613
+        ]
+      },
+      "zones": {
+        "ay-p020-s2": [
+          0.05,
+          0.9,
+          0,
+          0.29,
+          0.3
+        ],
+        "ay-p020-s2b": [
+          0.05,
+          0.9,
+          0,
+          0.1,
+          0.18
+        ],
+        "ay-p020-s4": [
+          0.05,
+          0.9,
+          0,
+          0.22,
+          0.2
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 21,
+      "file": "assets/page-021-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "3519556c514fd1fff4a9dbf385ec6fa5a999c488eade90244cba83d12715f129",
+      "frames": {
+        "ay-p021-s1": [
+          11,
+          8,
+          865,
+          604
+        ],
+        "ay-p021-s2": [
+          11,
+          626,
+          865,
+          561
+        ],
+        "ay-p021-s3": [
+          11,
+          1201,
+          865,
+          562
+        ]
+      },
+      "zones": {
+        "ay-p021-s2": [
+          0.05,
+          0.9,
+          0,
+          0.3,
+          0.22
+        ],
+        "ay-p021-s3": [
+          0.05,
+          0.9,
+          0,
+          0.67,
+          0.43
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 22,
+      "file": "assets/page-022-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "0a76f0c70c67b48568f0222097c021de620d9a64c704369d54ae700bcbc35ef5",
+      "frames": {
+        "ay-p022-s1": [
+          11,
+          8,
+          865,
+          585
+        ],
+        "ay-p022-s1b": [
+          11,
+          605,
+          400,
+          516
+        ],
+        "ay-p022-s2": [
+          424,
+          605,
+          452,
+          516
+        ],
+        "ay-p022-s3": [
+          11,
+          1133,
+          865,
+          631
+        ]
+      },
+      "zones": {
+        "ay-p022-s1": [
+          0.05,
+          0.9,
+          0,
+          0.13,
+          0.3
+        ],
+        "ay-p022-s1b": [
+          0.05,
+          0.9,
+          0,
+          0.64,
+          0.3
+        ],
+        "ay-p022-s2": [
+          0.05,
+          0.9,
+          0,
+          0.8,
+          0.24
+        ],
+        "ay-p022-s3": [
+          0.05,
+          0.9,
+          0,
+          0.51,
+          0.2
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 23,
+      "file": "assets/page-023-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "ebf9f8c5d37fb686f81fa9d49d874037606d5f9ad91bff4857de6005cfbcabce",
+      "frames": {
+        "ay-p023-s1": [
+          10,
+          8,
+          867,
+          542
+        ],
+        "ay-p023-s2": [
+          11,
+          561,
+          404,
+          543
+        ],
+        "ay-p023-s3": [
+          427,
+          561,
+          450,
+          543
+        ],
+        "ay-p023-s4": [
+          11,
+          1114,
+          866,
+          649
+        ]
+      },
+      "zones": {
+        "ay-p023-s2": [
+          0.05,
+          0.9,
+          0,
+          0.45,
+          0.28
+        ],
+        "ay-p023-s4": [
+          0.05,
+          0.9,
+          0,
+          0.17,
+          0.25
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 24,
+      "file": "assets/page-024-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "9807c7a8abd70424edd22f9ef1828f0c827a2104f88d212746f63a540fdf817d",
+      "frames": {
+        "ay-p024-s1": [
+          9,
+          6,
+          871,
+          620
+        ],
+        "ay-p024-s2": [
+          9,
+          637,
+          441,
+          433
+        ],
+        "ay-p024-s3": [
+          464,
+          637,
+          416,
+          433
+        ],
+        "ay-p024-s4": [
+          10,
+          1080,
+          870,
+          686
+        ]
+      },
+      "zones": {
+        "ay-p024-s2": [
+          0.05,
+          0.9,
+          0,
+          0.27,
+          0.3
+        ],
+        "ay-p024-s3": [
+          0.05,
+          0.9,
+          0,
+          0.3,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 25,
+      "file": "assets/page-025-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "9371a8e273b2d5b06262cbbbe67b15e986dcdf45715de1add154fbf1e43d4d47",
+      "frames": {
+        "ay-p025-s1": [
+          10,
+          7,
+          868,
+          605
+        ],
+        "ay-p025-s2": [
+          11,
+          623,
+          493,
+          527
+        ],
+        "ay-p025-s3": [
+          517,
+          623,
+          361,
+          527
+        ],
+        "ay-p025-s4": [
+          11,
+          1161,
+          867,
+          605
+        ]
+      },
+      "zones": {
+        "ay-p025-s2": [
+          0.05,
+          0.9,
+          0,
+          0.43,
+          0.25
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 26,
+      "file": "assets/page-026-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "d4a9e365c2e9898fd2a35b4e08bdaadd9c582df41ec33686d2f041a2aaaab2f9",
+      "frames": {
+        "ay-p026-s1": [
+          11,
+          9,
+          866,
+          589
+        ],
+        "ay-p026-s2": [
+          11,
+          612,
+          866,
+          521
+        ],
+        "ay-p026-s3": [
+          11,
+          1147,
+          866,
+          617
+        ]
+      },
+      "zones": {
+        "ay-p026-s1": [
+          0.05,
+          0.9,
+          0,
+          0.44,
+          0.32
+        ],
+        "ay-p026-s2": [
+          0.05,
+          0.9,
+          0,
+          0.67,
+          0.28
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 27,
+      "file": "assets/page-027-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "b157f0abc2043a89816207ba8ec63c91daf360b5d96aa864eaa9e22dd51b7cc7",
+      "frames": {
+        "ay-p027-s1": [
+          10,
+          8,
+          868,
+          601
+        ],
+        "ay-p027-s2": [
+          10,
+          618,
+          867,
+          592
+        ],
+        "ay-p027-s3": [
+          11,
+          1221,
+          866,
+          543
+        ]
+      },
+      "zones": {
+        "ay-p027-s1": [
+          0.05,
+          0.9,
+          0,
+          0.47,
+          0.25
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 28,
+      "file": "assets/page-028-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "38c4bd75afd71e23764959946b306da21b52e9e6d3d8ab9ee99262aba214e2c2",
+      "frames": {
+        "ay-p028-s1": [
+          11,
+          8,
+          868,
+          559
+        ],
+        "ay-p028-s2": [
+          11,
+          578,
+          418,
+          604
+        ],
+        "ay-p028-s3": [
+          440,
+          578,
+          438,
+          604
+        ],
+        "ay-p028-s4": [
+          11,
+          1192,
+          867,
+          573
+        ]
+      },
+      "zones": {
+        "ay-p028-s1": [
+          0.05,
+          0.9,
+          0,
+          0.46,
+          0.43
+        ],
+        "ay-p028-s3": [
+          0.05,
+          0.9,
+          0,
+          0.2,
+          0.36
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Panel divisions measured manually against the visible ink; false painted horizon lines ignored.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 29,
+      "file": "assets/page-029-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "314290de60f3e70f7e8603115538bc32c61ef252507411b6ff613f55d1201889",
+      "frames": {
+        "ay-p029-s1": [
+          10,
+          7,
+          869,
+          622
+        ],
+        "ay-p029-s2": [
+          10,
+          640,
+          869,
+          501
+        ],
+        "ay-p029-s3": [
+          11,
+          1151,
+          867,
+          614
+        ]
+      },
+      "zones": {
+        "ay-p029-s2": [
+          0.05,
+          0.9,
+          0,
+          0.3,
+          0.4
+        ],
+        "ay-p029-s3": [
+          0.05,
+          0.9,
+          0,
+          0.65,
+          0.35
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 30,
+      "file": "assets/page-030-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "572b5f4b190531e64d4a74e26c91b1f0a9fbf45ec3ce41fe23e1d13a703c74e7",
+      "frames": {
+        "ay-p030-s1": [
+          10,
+          7,
+          868,
+          545
+        ],
+        "ay-p030-s2": [
+          11,
+          564,
+          460,
+          532
+        ],
+        "ay-p030-s3": [
+          483,
+          564,
+          394,
+          532
+        ],
+        "ay-p030-s4": [
+          11,
+          1109,
+          865,
+          655
+        ]
+      },
+      "zones": {
+        "ay-p030-s1": [
+          0.05,
+          0.9,
+          0,
+          0.63,
+          0.23
+        ],
+        "ay-p030-s3": [
+          0.05,
+          0.9,
+          0,
+          0.23,
+          0.39
+        ],
+        "ay-p030-s4": [
+          0.05,
+          0.9,
+          0,
+          0.62,
+          0.27
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 31,
+      "file": "assets/page-031-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "2eed2653fc799eeb91bf1bda39b4a5581f6fc677ddc2610e8094d016b4eadb14",
+      "frames": {
+        "ay-p031-s1": [
+          10,
+          7,
+          870,
+          640
+        ],
+        "ay-p031-s2": [
+          10,
+          657,
+          464,
+          545
+        ],
+        "ay-p031-s3": [
+          485,
+          657,
+          395,
+          545
+        ],
+        "ay-p031-s4": [
+          11,
+          1214,
+          868,
+          551
+        ]
+      },
+      "zones": {
+        "ay-p031-s1": [
+          0.05,
+          0.9,
+          0,
+          0.48,
+          0.22
+        ],
+        "ay-p031-s4": [
+          0.05,
+          0.9,
+          0,
+          0.38,
+          0.59
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 32,
+      "file": "assets/page-032-v1.png",
+      "dimensions": [
+        884,
+        1779
+      ],
+      "sha256": "805c2974ef0c2e81aa6beefdcd5be5816de8fcda15d4b6de28761f3e5fba2799",
+      "frames": {
+        "ay-p032-s1": [
+          10,
+          9,
+          864,
+          596
+        ],
+        "ay-p032-s2": [
+          10,
+          619,
+          864,
+          541
+        ],
+        "ay-p032-s3": [
+          10,
+          1173,
+          865,
+          597
+        ]
+      },
+      "zones": {
+        "ay-p032-s2": [
+          0.05,
+          0.9,
+          0,
+          0.41,
+          0.32
+        ],
+        "ay-p032-s3": [
+          0.05,
+          0.9,
+          0,
+          0.75,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 33,
+      "file": "assets/page-033-v1.png",
+      "dimensions": [
+        886,
+        1774
+      ],
+      "sha256": "d98c32f13eecb4186ef3523cf90800409ed7940ab3dcad572d06b7fed4c4943d",
+      "frames": {
+        "ay-p033-s1": [
+          8,
+          6,
+          871,
+          651
+        ],
+        "ay-p033-s2": [
+          9,
+          668,
+          869,
+          452
+        ],
+        "ay-p033-s3": [
+          9,
+          1130,
+          869,
+          634
+        ]
+      },
+      "zones": {
+        "ay-p033-s2": [
+          0.05,
+          0.9,
+          0,
+          0.83,
+          0.22
+        ],
+        "ay-p033-s3": [
+          0.05,
+          0.9,
+          0,
+          0.53,
+          0.27
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 34,
+      "file": "assets/page-034-v3.png",
+      "dimensions": [
+        889,
+        1770
+      ],
+      "sha256": "7486a5567b21682c42c19b26d3dcfc3eac934af665f491dee8ce7a2717053e05",
+      "frames": {
+        "ay-p034-s1": [
+          10,
+          6,
+          871,
+          647
+        ],
+        "ay-p034-s2": [
+          11,
+          666,
+          517,
+          566
+        ],
+        "ay-p034-s3": [
+          541,
+          666,
+          340,
+          566
+        ],
+        "ay-p034-s4": [
+          12,
+          1244,
+          868,
+          515
+        ]
+      },
+      "zones": {
+        "ay-p034-s1": [
+          0.05,
+          0.9,
+          0,
+          0.64,
+          0.4
+        ],
+        "ay-p034-s3": [
+          0.05,
+          0.9,
+          0,
+          0.62,
+          0.38
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-25",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Panel divisions measured manually against the visible ink; false painted horizon lines ignored.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages.",
+        "2026-10-25 correction: Sita wears simple matte ochre daily forest clothing; ornate border and court jewellery removed. Cast, actions and complete painted extent reviewed.",
+        "Re-measured the real y1232/1241 divider; the y1270 night-sky darkness is preserved as painting, not treated as a border."
+      ]
+    },
+    {
+      "page": 35,
+      "file": "assets/page-035-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "947c0da029fc172f72d78e9d94644e99b6981ce8c046cc70a51cc2cba391913a",
+      "frames": {
+        "ay-p035-s1": [
+          8,
+          7,
+          871,
+          556
+        ],
+        "ay-p035-s2": [
+          9,
+          575,
+          458,
+          587
+        ],
+        "ay-p035-s3": [
+          480,
+          575,
+          398,
+          587
+        ],
+        "ay-p035-s4": [
+          9,
+          1172,
+          869,
+          593
+        ]
+      },
+      "zones": {
+        "ay-p035-s2": [
+          0.05,
+          0.9,
+          0,
+          0.27,
+          0.23
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 36,
+      "file": "assets/page-036-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "e5da317510a10e12e1474e2e3b8e6252399b6f41aa2012754a267c7919f9c2fe",
+      "frames": {
+        "ay-p036-s1": [
+          11,
+          6,
+          867,
+          576
+        ],
+        "ay-p036-s2": [
+          11,
+          594,
+          866,
+          567
+        ],
+        "ay-p036-s3": [
+          11,
+          1172,
+          867,
+          592
+        ]
+      },
+      "zones": {
+        "ay-p036-s2": [
+          0.05,
+          0.9,
+          0,
+          0.61,
+          0.26
+        ],
+        "ay-p036-s3": [
+          0.05,
+          0.9,
+          0,
+          0.27,
+          0.43
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 37,
+      "file": "assets/page-037-v1.png",
+      "dimensions": [
+        885,
+        1777
+      ],
+      "sha256": "adf474f8c4634f2b935b30ede7b8d6e6061a015c06cf477676f4b097514c7c83",
+      "frames": {
+        "ay-p037-s1": [
+          10,
+          7,
+          866,
+          560
+        ],
+        "ay-p037-s2": [
+          10,
+          578,
+          458,
+          448
+        ],
+        "ay-p037-s3": [
+          482,
+          578,
+          394,
+          448
+        ],
+        "ay-p037-s4": [
+          11,
+          1038,
+          865,
+          729
+        ]
+      },
+      "zones": {
+        "ay-p037-s1": [
+          0.05,
+          0.9,
+          0,
+          0.3,
+          0.36
+        ],
+        "ay-p037-s2": [
+          0.05,
+          0.9,
+          0,
+          0.33,
+          0.29
+        ],
+        "ay-p037-s3": [
+          0.05,
+          0.9,
+          0,
+          0.63,
+          0.44
+        ],
+        "ay-p037-s4": [
+          0.05,
+          0.9,
+          0,
+          0.4,
+          0.29
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 38,
+      "file": "assets/page-038-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "fd13c9eeb5c8464cb263e3f723f24966f725859d5687f9129696a638c767ab2b",
+      "frames": {
+        "ay-p038-s1": [
+          8,
+          6,
+          872,
+          506
+        ],
+        "ay-p038-s2": [
+          8,
+          524,
+          424,
+          628
+        ],
+        "ay-p038-s3": [
+          444,
+          524,
+          436,
+          628
+        ],
+        "ay-p038-s4": [
+          8,
+          1166,
+          872,
+          599
+        ]
+      },
+      "zones": {
+        "ay-p038-s1": [
+          0.05,
+          0.9,
+          0,
+          0.64,
+          0.3
+        ],
+        "ay-p038-s4": [
+          0.05,
+          0.9,
+          0,
+          0.26,
+          0.38
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 39,
+      "file": "assets/page-039-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "e789140efa9e13882802e127429da6da511a1a6fefe03be0a29c6f3ea04a6d2c",
+      "frames": {
+        "ay-p039-s1": [
+          9,
+          7,
+          428,
+          568
+        ],
+        "ay-p039-s2": [
+          451,
+          7,
+          428,
+          568
+        ],
+        "ay-p039-s3": [
+          10,
+          589,
+          427,
+          593
+        ],
+        "ay-p039-s4": [
+          452,
+          589,
+          427,
+          593
+        ],
+        "ay-p039-s5": [
+          10,
+          1194,
+          868,
+          570
+        ]
+      },
+      "zones": {
+        "ay-p039-s2": [
+          0.05,
+          0.9,
+          0,
+          0.32,
+          0.26
+        ],
+        "ay-p039-s4": [
+          0.05,
+          0.9,
+          0,
+          0.65,
+          0.27
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "All five story beats retained in three rows, 2+2+1. New portrait pairs give the figures readable scale beside Standard and Large lettering.",
+        "Full painting inspected: young human-complexioned Dasharatha; aged blind parents; dignified non-graphic aftermath. No blue Rama or present-time king.",
+        "Frame rectangles measured along the actual ink dividers; no content-dependent trimming."
+      ]
+    },
+    {
+      "page": 40,
+      "file": "assets/page-040-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "0ce4f5d89a066ab8d624fd5f9b7dc3dcd7950bf3629a891634e44f11b724fd47",
+      "frames": {
+        "ay-p040-s1": [
+          11,
+          8,
+          866,
+          547
+        ],
+        "ay-p040-s2": [
+          11,
+          567,
+          866,
+          483
+        ],
+        "ay-p040-s3": [
+          11,
+          1061,
+          865,
+          702
+        ]
+      },
+      "zones": {
+        "ay-p040-s2": [
+          0.05,
+          0.9,
+          0,
+          0.22,
+          0.4
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 41,
+      "file": "assets/page-041-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "0610060a6140303731c8598001f05308d7ffccc3755c73e534653241dbc75e95",
+      "frames": {
+        "ay-p041-s1": [
+          11,
+          7,
+          865,
+          552
+        ],
+        "ay-p041-s2": [
+          11,
+          571,
+          865,
+          532
+        ],
+        "ay-p041-s3": [
+          11,
+          1114,
+          865,
+          649
+        ]
+      },
+      "zones": {
+        "ay-p041-s2": [
+          0.05,
+          0.9,
+          0,
+          0.17,
+          0.32
+        ],
+        "ay-p041-s3": [
+          0.05,
+          0.9,
+          0,
+          0.35,
+          0.31
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 42,
+      "file": "assets/page-042-v1.png",
+      "dimensions": [
+        884,
+        1779
+      ],
+      "sha256": "8555dd36b164fb068f4540ade62d906e3f8a624f44c4c2691ac59165a36ab2c3",
+      "frames": {
+        "ay-p042-s1": [
+          10,
+          7,
+          864,
+          524
+        ],
+        "ay-p042-s2": [
+          11,
+          542,
+          863,
+          550
+        ],
+        "ay-p042-s3": [
+          11,
+          1103,
+          863,
+          666
+        ]
+      },
+      "zones": {
+        "ay-p042-s1": [
+          0.05,
+          0.9,
+          0,
+          0.42,
+          0.3
+        ],
+        "ay-p042-s2": [
+          0.05,
+          0.9,
+          0,
+          0.57,
+          0.38
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 43,
+      "file": "assets/page-043-v2.png",
+      "dimensions": [
+        886,
+        1775
+      ],
+      "sha256": "4bfb676eab86124dce5fee1103d5209dbea1909e25da03ccb8b79f3c52f2da40",
+      "frames": {
+        "ay-p043-s1": [
+          10,
+          7,
+          866,
+          577
+        ],
+        "ay-p043-s2": [
+          10,
+          596,
+          411,
+          510
+        ],
+        "ay-p043-s3": [
+          435,
+          596,
+          441,
+          510
+        ],
+        "ay-p043-s4": [
+          11,
+          1117,
+          865,
+          648
+        ]
+      },
+      "zones": {
+        "ay-p043-s2": [
+          0.05,
+          0.9,
+          0,
+          0.43,
+          0.31
+        ],
+        "ay-p043-s3": [
+          0.05,
+          0.9,
+          0,
+          0.39,
+          0.4
+        ],
+        "ay-p043-s4": [
+          0.05,
+          0.9,
+          0,
+          0.67,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 44,
+      "file": "assets/page-044-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "843f167fcf792fd7dd858e2d3cf46faec820bd3d56279763227eb040060993b5",
+      "frames": {
+        "ay-p044-s1": [
+          10,
+          7,
+          867,
+          599
+        ],
+        "ay-p044-s2": [
+          10,
+          618,
+          867,
+          529
+        ],
+        "ay-p044-s3": [
+          10,
+          1160,
+          867,
+          605
+        ]
+      },
+      "zones": {
+        "ay-p044-s1": [
+          0.05,
+          0.9,
+          0,
+          0.35,
+          0.39
+        ],
+        "ay-p044-s2": [
+          0.05,
+          0.9,
+          0,
+          0.6,
+          0.26
+        ],
+        "ay-p044-s3": [
+          0.05,
+          0.9,
+          0,
+          0.3,
+          0.37
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 45,
+      "file": "assets/page-045-v2.png",
+      "dimensions": [
+        881,
+        1786
+      ],
+      "sha256": "05fb224e1919dfd942ab2e85ff043bda1f161925ae1e54fba652b08138d257b9",
+      "frames": {
+        "ay-p045-s1": [
+          10,
+          7,
+          863,
+          598
+        ],
+        "ay-p045-s2": [
+          10,
+          616,
+          863,
+          478
+        ],
+        "ay-p045-s3": [
+          10,
+          1104,
+          863,
+          673
+        ]
+      },
+      "zones": {
+        "ay-p045-s2": [
+          0.05,
+          0.9,
+          0,
+          0.24,
+          0.32
+        ],
+        "ay-p045-s3": [
+          0.05,
+          0.9,
+          0,
+          0.4,
+          0.42
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 46,
+      "file": "assets/page-046-v2.png",
+      "dimensions": [
+        886,
+        1774
+      ],
+      "sha256": "d101c089613123aaaeafd084d50a192c281f768a553eed251762e46f00c49f9a",
+      "frames": {
+        "ay-p046-s1": [
+          9,
+          7,
+          868,
+          459
+        ],
+        "ay-p046-s2": [
+          10,
+          479,
+          867,
+          665
+        ],
+        "ay-p046-s3": [
+          10,
+          1153,
+          866,
+          610
+        ]
+      },
+      "zones": {
+        "ay-p046-s1": [
+          0.05,
+          0.9,
+          0,
+          0.87,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 47,
+      "file": "assets/page-047-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "695a90c6133e7e3c3088e3a5fe2c47c3695198158233df4e9bf31d97b34aa45d",
+      "frames": {
+        "ay-p047-s1": [
+          11,
+          8,
+          866,
+          523
+        ],
+        "ay-p047-s2": [
+          11,
+          542,
+          865,
+          545
+        ],
+        "ay-p047-s3": [
+          11,
+          1098,
+          866,
+          666
+        ]
+      },
+      "zones": {
+        "ay-p047-s2": [
+          0.05,
+          0.9,
+          0,
+          0.66,
+          0.3
+        ],
+        "ay-p047-s3": [
+          0.05,
+          0.9,
+          0,
+          0.53,
+          0.27
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 48,
+      "file": "assets/page-048-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "c32d96f702ae47530e1ce508679e674d6d3613e61405764e750dadd632df835c",
+      "frames": {
+        "ay-p048-s1": [
+          8,
+          7,
+          871,
+          579
+        ],
+        "ay-p048-s2": [
+          8,
+          596,
+          871,
+          554
+        ],
+        "ay-p048-s3": [
+          9,
+          1160,
+          870,
+          605
+        ]
+      },
+      "zones": {
+        "ay-p048-s1": [
+          0.05,
+          0.9,
+          0,
+          0.35,
+          0.35
+        ],
+        "ay-p048-s2": [
+          0.05,
+          0.9,
+          0,
+          0.48,
+          0.27
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 49,
+      "file": "assets/page-049-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "2007de6e426bb2fcb525d4d505b41bc21c061fa88c14b28969cc919ffec7e66d",
+      "frames": {
+        "ay-p049-s1": [
+          10,
+          7,
+          869,
+          599
+        ],
+        "ay-p049-s2": [
+          10,
+          615,
+          869,
+          541
+        ],
+        "ay-p049-s3": [
+          10,
+          1166,
+          869,
+          599
+        ]
+      },
+      "zones": {
+        "ay-p049-s1": [
+          0.05,
+          0.9,
+          0,
+          0.45,
+          0.25
+        ],
+        "ay-p049-s2": [
+          0.05,
+          0.9,
+          0,
+          0.54,
+          0.5
+        ],
+        "ay-p049-s3": [
+          0.05,
+          0.9,
+          0,
+          0.4,
+          0.23
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 50,
+      "file": "assets/page-050-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "24ae8501bcb480411d2016d9c85a772567fceb099c675c5feca52016002856f4",
+      "frames": {
+        "ay-p050-s1": [
+          9,
+          7,
+          869,
+          611
+        ],
+        "ay-p050-s2": [
+          10,
+          630,
+          868,
+          559
+        ],
+        "ay-p050-s3": [
+          10,
+          1201,
+          868,
+          563
+        ]
+      },
+      "zones": {
+        "ay-p050-s2": [
+          0.05,
+          0.9,
+          0,
+          0.4,
+          0.25
+        ],
+        "ay-p050-s3": [
+          0.05,
+          0.9,
+          0,
+          0.33,
+          0.33
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 51,
+      "file": "assets/page-051-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "3e8de3d61124fbff6368e3da4b308d7a9edadc569e0363b2acbda06692a300b7",
+      "frames": {
+        "ay-p051-s1": [
+          11,
+          8,
+          866,
+          582
+        ],
+        "ay-p051-s2": [
+          11,
+          603,
+          866,
+          563
+        ],
+        "ay-p051-s3": [
+          11,
+          1179,
+          866,
+          586
+        ]
+      },
+      "zones": {
+        "ay-p051-s1": [
+          0.05,
+          0.9,
+          0,
+          0.3,
+          0.3
+        ],
+        "ay-p051-s2": [
+          0.05,
+          0.9,
+          0,
+          0.5,
+          0.34
+        ],
+        "ay-p051-s3": [
+          0.05,
+          0.9,
+          0,
+          0.27,
+          0.32
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 52,
+      "file": "assets/page-052-v3.png",
+      "dimensions": [
+        891,
+        1766
+      ],
+      "sha256": "23c10e2f0143c812d1377f5154de1144635494eb4f6dc732d5346fcbcff17ddd",
+      "frames": {
+        "ay-p052-s1": [
+          10,
+          9,
+          870,
+          479
+        ],
+        "ay-p052-s2": [
+          11,
+          502,
+          488,
+          610
+        ],
+        "ay-p052-s3": [
+          514,
+          502,
+          367,
+          610
+        ],
+        "ay-p052-s4": [
+          11,
+          1127,
+          870,
+          615
+        ]
+      },
+      "zones": {
+        "ay-p052-s1": [
+          0.05,
+          0.9,
+          0,
+          0.47,
+          0.38
+        ],
+        "ay-p052-s3": [
+          0.05,
+          0.9,
+          0,
+          0.45,
+          0.33
+        ],
+        "ay-p052-s4": [
+          0.05,
+          0.9,
+          0,
+          0.53,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-25",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages.",
+        "2026-10-25 correction: Guha’s earlier-night recollection keeps Sita’s red departure sari, matching page 30; present Bharata panels unchanged."
+      ]
+    },
+    {
+      "page": 53,
+      "file": "assets/page-053-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "fcfd9f0f9e8f317d385efe654e6772138ef0bd1a9e2a74da1e4a2e8b44d1a298",
+      "frames": {
+        "ay-p053-s1": [
+          9,
+          8,
+          870,
+          649
+        ],
+        "ay-p053-s2": [
+          10,
+          668,
+          868,
+          457
+        ],
+        "ay-p053-s3": [
+          10,
+          1135,
+          868,
+          629
+        ]
+      },
+      "zones": {
+        "ay-p053-s2": [
+          0.05,
+          0.9,
+          0,
+          0.43,
+          0.34
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 54,
+      "file": "assets/page-054-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "d93f4c1a259b7d599bad60755e82503b20ecdc9212cd78cdf3026fa1c534b89e",
+      "frames": {
+        "ay-p054-s1": [
+          11,
+          8,
+          866,
+          560
+        ],
+        "ay-p054-s2": [
+          11,
+          580,
+          423,
+          544
+        ],
+        "ay-p054-s3": [
+          447,
+          580,
+          430,
+          544
+        ],
+        "ay-p054-s4": [
+          11,
+          1136,
+          866,
+          627
+        ]
+      },
+      "zones": {
+        "ay-p054-s1": [
+          0.05,
+          0.9,
+          0,
+          0.85,
+          0.31
+        ],
+        "ay-p054-s2": [
+          0.05,
+          0.9,
+          0,
+          0.42,
+          0.3
+        ],
+        "ay-p054-s3": [
+          0.05,
+          0.9,
+          0,
+          0.45,
+          0.31
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 55,
+      "file": "assets/page-055-v2.png",
+      "dimensions": [
+        883,
+        1780
+      ],
+      "sha256": "8d1595e2bd60f8aa1f21beb9419a3e5a8740264de67c01280b2c58b941f8e2cf",
+      "frames": {
+        "ay-p055-s1": [
+          10,
+          7,
+          865,
+          499
+        ],
+        "ay-p055-s2": [
+          10,
+          519,
+          865,
+          594
+        ],
+        "ay-p055-s3": [
+          10,
+          1125,
+          865,
+          646
+        ]
+      },
+      "zones": {
+        "ay-p055-s1": [
+          0.05,
+          0.9,
+          0,
+          0.9,
+          0.43
+        ],
+        "ay-p055-s2": [
+          0.05,
+          0.9,
+          0,
+          0.43,
+          0.25
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 56,
+      "file": "assets/page-056-v3.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "2e014cec7b467d94a91f0f1bda69a862f11758e01acbfb22b66b7e90760a76f5",
+      "frames": {
+        "ay-p056-s1": [
+          11,
+          7,
+          866,
+          587
+        ],
+        "ay-p056-s2": [
+          11,
+          608,
+          865,
+          540
+        ],
+        "ay-p056-s3": [
+          11,
+          1161,
+          865,
+          603
+        ]
+      },
+      "zones": {
+        "ay-p056-s2": [
+          0.05,
+          0.9,
+          0,
+          0.44,
+          0.36
+        ],
+        "ay-p056-s3": [
+          0.05,
+          0.9,
+          0,
+          0.44,
+          0.27
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 57,
+      "file": "assets/page-057-v3.png",
+      "dimensions": [
+        1122,
+        1402
+      ],
+      "sha256": "06ca8ac52591990019edf95c8026bec9014eef158892ddce0d931b45f4444cc7",
+      "frames": {
+        "ay-p057-s1": [
+          0,
+          0,
+          1122,
+          1402
+        ]
+      },
+      "zones": {
+        "ay-p057-s1": [
+          0.05,
+          0.9,
+          0,
+          0.41,
+          0.26
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-25",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Single compact borderless hero painting; complete original is displayed.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages.",
+        "2026-10-25 correction: Sita wears simple matte ochre daily forest clothing; ornate border and court jewellery removed. Cast, actions and complete painted extent reviewed."
+      ]
+    },
+    {
+      "page": 58,
+      "file": "assets/page-058-v1.png",
+      "dimensions": [
+        885,
+        1778
+      ],
+      "sha256": "2b4b6faca3db5192267c0a5786f38fff8f73db0aedd856ec04353dc60d67aa89",
+      "frames": {
+        "ay-p058-s1": [
+          9,
+          7,
+          868,
+          561
+        ],
+        "ay-p058-s2": [
+          10,
+          580,
+          476,
+          493
+        ],
+        "ay-p058-s3": [
+          499,
+          580,
+          377,
+          493
+        ],
+        "ay-p058-s4": [
+          10,
+          1084,
+          867,
+          685
+        ]
+      },
+      "zones": {
+        "ay-p058-s1": [
+          0.05,
+          0.9,
+          0,
+          0.45,
+          0.28
+        ],
+        "ay-p058-s3": [
+          0.05,
+          0.9,
+          0,
+          0.42,
+          0.4
+        ],
+        "ay-p058-s4": [
+          0.05,
+          0.9,
+          0,
+          0.44,
+          0.24
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 59,
+      "file": "assets/page-059-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "b9c0afd50e8ea2e9fdf41778c95352311242cd8f3ca47f03be13f6c5d978ebc1",
+      "frames": {
+        "ay-p059-s1": [
+          9,
+          7,
+          869,
+          573
+        ],
+        "ay-p059-s2": [
+          10,
+          592,
+          868,
+          578
+        ],
+        "ay-p059-s3": [
+          9,
+          1183,
+          869,
+          581
+        ]
+      },
+      "zones": {
+        "ay-p059-s2": [
+          0.05,
+          0.9,
+          0,
+          0.48,
+          0.24
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 60,
+      "file": "assets/page-060-v3.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "2895d2e41c6250ef988b2270f59c3a330b929e863c1634ac9eee46d5cd6231d5",
+      "frames": {
+        "ay-p060-s1": [
+          8,
+          7,
+          871,
+          584
+        ],
+        "ay-p060-s2": [
+          8,
+          599,
+          871,
+          574
+        ],
+        "ay-p060-s3": [
+          8,
+          1181,
+          871,
+          585
+        ]
+      },
+      "zones": {
+        "ay-p060-s1": [
+          0.05,
+          0.9,
+          0,
+          0.5,
+          0.81
+        ],
+        "ay-p060-s2": [
+          0.05,
+          0.9,
+          0,
+          0.2,
+          0.18
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-25",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages.",
+        "2026-10-25 correction: Sita wears simple matte ochre daily forest clothing; ornate border and court jewellery removed. Cast, actions and complete painted extent reviewed."
+      ]
+    },
+    {
+      "page": 61,
+      "file": "assets/page-061-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "532abcb541958ef05ea50d4d476c123f8edb3d37335c3e43bb9cac91e010fa42",
+      "frames": {
+        "ay-p061-s1": [
+          10,
+          8,
+          867,
+          542
+        ],
+        "ay-p061-s2": [
+          11,
+          562,
+          866,
+          569
+        ],
+        "ay-p061-s3": [
+          11,
+          1144,
+          866,
+          619
+        ]
+      },
+      "zones": {
+        "ay-p061-s1": [
+          0.05,
+          0.9,
+          0,
+          0.33,
+          0.37
+        ],
+        "ay-p061-s2": [
+          0.05,
+          0.9,
+          0,
+          0.34,
+          0.29
+        ],
+        "ay-p061-s3": [
+          0.05,
+          0.9,
+          0,
+          0.38,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 62,
+      "file": "assets/page-062-v2.png",
+      "dimensions": [
+        886,
+        1775
+      ],
+      "sha256": "e7fc8606fa1c137f74029e77f6c425c1560bf109466a5d312627851eca985ed9",
+      "frames": {
+        "ay-p062-s1": [
+          9,
+          7,
+          869,
+          497
+        ],
+        "ay-p062-s2": [
+          9,
+          518,
+          435,
+          527
+        ],
+        "ay-p062-s3": [
+          456,
+          518,
+          421,
+          527
+        ],
+        "ay-p062-s4": [
+          9,
+          1057,
+          868,
+          710
+        ]
+      },
+      "zones": {
+        "ay-p062-s1": [
+          0.05,
+          0.9,
+          0,
+          0.46,
+          0.32
+        ],
+        "ay-p062-s2": [
+          0.05,
+          0.9,
+          0,
+          0.68,
+          0.48
+        ],
+        "ay-p062-s3": [
+          0.05,
+          0.9,
+          0,
+          0.55,
+          0.47
+        ],
+        "ay-p062-s4": [
+          0.05,
+          0.9,
+          0,
+          0.72,
+          0.4
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 63,
+      "file": "assets/page-063-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "07bf3a288b91181882717c77d2183b858bd78fdd999f9cce9543a28aaf2321f0",
+      "frames": {
+        "ay-p063-s1": [
+          8,
+          7,
+          871,
+          511
+        ],
+        "ay-p063-s2": [
+          9,
+          531,
+          871,
+          584
+        ],
+        "ay-p063-s3": [
+          9,
+          1130,
+          870,
+          636
+        ]
+      },
+      "zones": {},
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 64,
+      "file": "assets/page-064-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "988d26597ff11e091a4aeae6d6044fc496731bf1e8ccaa1cb0e4e820a5323f53",
+      "frames": {
+        "ay-p064-s1": [
+          8,
+          6,
+          871,
+          600
+        ],
+        "ay-p064-s2": [
+          9,
+          616,
+          870,
+          501
+        ],
+        "ay-p064-s3": [
+          9,
+          1128,
+          870,
+          636
+        ]
+      },
+      "zones": {
+        "ay-p064-s1": [
+          0.05,
+          0.9,
+          0,
+          0.13,
+          0.4
+        ],
+        "ay-p064-s3": [
+          0.05,
+          0.9,
+          0,
+          0.14,
+          0.45
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 65,
+      "file": "assets/page-065-v2.png",
+      "dimensions": [
+        886,
+        1776
+      ],
+      "sha256": "9f547fea8249430939e199f1d4ccfdb34e4da9e7f983a7bce6ed0f764c183993",
+      "frames": {
+        "ay-p065-s1": [
+          11,
+          7,
+          865,
+          627
+        ],
+        "ay-p065-s2": [
+          11,
+          644,
+          865,
+          525
+        ],
+        "ay-p065-s3": [
+          11,
+          1180,
+          865,
+          587
+        ]
+      },
+      "zones": {
+        "ay-p065-s1": [
+          0.05,
+          0.9,
+          0,
+          0.39,
+          0.46
+        ],
+        "ay-p065-s2": [
+          0.05,
+          0.9,
+          0,
+          0.61,
+          0.28
+        ],
+        "ay-p065-s3": [
+          0.05,
+          0.9,
+          0,
+          0.5,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-25",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "2026-10-25 correction: Sita wears simple matte ochre daily forest clothing; ornate border and court jewellery removed. Cast, actions and complete painted extent reviewed."
+      ]
+    },
+    {
+      "page": 66,
+      "file": "assets/page-066-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "683967e06d3e1f370e151a131e64b69c98af8834eab3dac5de79739a8259dca0",
+      "frames": {
+        "ay-p066-s1": [
+          9,
+          8,
+          869,
+          593
+        ],
+        "ay-p066-s2": [
+          10,
+          612,
+          427,
+          512
+        ],
+        "ay-p066-s3": [
+          449,
+          612,
+          429,
+          512
+        ],
+        "ay-p066-s4": [
+          11,
+          1133,
+          866,
+          632
+        ]
+      },
+      "zones": {
+        "ay-p066-s1": [
+          0.05,
+          0.9,
+          0,
+          0.33,
+          0.37
+        ],
+        "ay-p066-s2": [
+          0.05,
+          0.9,
+          0,
+          0.6,
+          0.27
+        ],
+        "ay-p066-s3": [
+          0.05,
+          0.9,
+          0,
+          0.59,
+          0.29
+        ],
+        "ay-p066-s4": [
+          0.05,
+          0.9,
+          0,
+          0.35,
+          0.38
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 67,
+      "file": "assets/page-067-v1.png",
+      "dimensions": [
+        886,
+        1774
+      ],
+      "sha256": "c28ca602d4c9f31f48863b693257d478896c633c57d49d12ca069d8d7f7f40c8",
+      "frames": {
+        "ay-p067-s1": [
+          11,
+          7,
+          865,
+          515
+        ],
+        "ay-p067-s2": [
+          11,
+          536,
+          486,
+          463
+        ],
+        "ay-p067-s3": [
+          512,
+          536,
+          364,
+          463
+        ],
+        "ay-p067-s4": [
+          11,
+          1012,
+          865,
+          752
+        ]
+      },
+      "zones": {
+        "ay-p067-s1": [
+          0.05,
+          0.9,
+          0,
+          0.22,
+          0.25
+        ],
+        "ay-p067-s2": [
+          0.05,
+          0.9,
+          0,
+          0.4,
+          0.29
+        ],
+        "ay-p067-s3": [
+          0.05,
+          0.9,
+          0,
+          0.48,
+          0.3
+        ],
+        "ay-p067-s4": [
+          0.05,
+          0.9,
+          0,
+          0.48,
+          0.43
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 68,
+      "file": "assets/page-068-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "a66df1e0a3e4e2a49e897746206ed010714cc61fd77ce3d5a58376e91bbd61c7",
+      "frames": {
+        "ay-p068-s1": [
+          11,
+          7,
+          866,
+          633
+        ],
+        "ay-p068-s2": [
+          11,
+          651,
+          426,
+          431
+        ],
+        "ay-p068-s3": [
+          450,
+          651,
+          427,
+          431
+        ],
+        "ay-p068-s4": [
+          11,
+          1093,
+          866,
+          669
+        ]
+      },
+      "zones": {
+        "ay-p068-s1": [
+          0.05,
+          0.9,
+          0,
+          0.23,
+          0.31
+        ],
+        "ay-p068-s2": [
+          0.05,
+          0.9,
+          0,
+          0.36,
+          0.3
+        ],
+        "ay-p068-s3": [
+          0.05,
+          0.9,
+          0,
+          0.61,
+          0.32
+        ],
+        "ay-p068-s4": [
+          0.05,
+          0.9,
+          0,
+          0.33,
+          0.4
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 69,
+      "file": "assets/page-069-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "796edf7a6d7e274a9984f2e863ef018165b192e22bc839fdf0b83a2f66b57f71",
+      "frames": {
+        "ay-p069-s1": [
+          9,
+          5,
+          870,
+          534
+        ],
+        "ay-p069-s2": [
+          10,
+          551,
+          423,
+          526
+        ],
+        "ay-p069-s2b": [
+          446,
+          551,
+          432,
+          526
+        ],
+        "ay-p069-s3": [
+          10,
+          1089,
+          868,
+          674
+        ]
+      },
+      "zones": {
+        "ay-p069-s2": [
+          0.05,
+          0.9,
+          0,
+          0.74,
+          0.28
+        ],
+        "ay-p069-s2b": [
+          0.05,
+          0.9,
+          0,
+          0.29,
+          0.4
+        ],
+        "ay-p069-s3": [
+          0.05,
+          0.9,
+          0,
+          0.64,
+          0.25
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 70,
+      "file": "assets/page-070-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "16bcfc140580c7aa24c07224daf6487c714ba5f0fd1cba4d1504fda21e585e59",
+      "frames": {
+        "ay-p070-s1": [
+          10,
+          7,
+          869,
+          575
+        ],
+        "ay-p070-s2": [
+          10,
+          594,
+          427,
+          534
+        ],
+        "ay-p070-s3": [
+          449,
+          594,
+          430,
+          534
+        ],
+        "ay-p070-s4": [
+          10,
+          1139,
+          869,
+          626
+        ]
+      },
+      "zones": {
+        "ay-p070-s1": [
+          0.05,
+          0.9,
+          0,
+          0.57,
+          0.3
+        ],
+        "ay-p070-s2": [
+          0.05,
+          0.9,
+          0,
+          0.62,
+          0.3
+        ],
+        "ay-p070-s3": [
+          0.05,
+          0.9,
+          0,
+          0.33,
+          0.3
+        ],
+        "ay-p070-s4": [
+          0.05,
+          0.9,
+          0,
+          0.39,
+          0.36
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 71,
+      "file": "assets/page-071-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "b087b05cd5d04db115840a1a8c45aa8a3ddf26cb68910ee12745a899158bec9c",
+      "frames": {
+        "ay-p071-s1": [
+          10,
+          7,
+          868,
+          651
+        ],
+        "ay-p071-s2": [
+          10,
+          668,
+          867,
+          479
+        ],
+        "ay-p071-s3": [
+          10,
+          1157,
+          867,
+          607
+        ]
+      },
+      "zones": {
+        "ay-p071-s2": [
+          0.05,
+          0.9,
+          0,
+          0.58,
+          0.48
+        ],
+        "ay-p071-s3": [
+          0.05,
+          0.9,
+          0,
+          0.41,
+          0.35
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-25",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "2026-10-25 correction: Sita wears simple matte ochre daily forest clothing; ornate border and court jewellery removed. Cast, actions and complete painted extent reviewed."
+      ]
+    },
+    {
+      "page": 72,
+      "file": "assets/page-072-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "0fd5e7c0170ec2d5bff0da237d66fe57489f4650c36435ad0d8f829a4a0bb8d6",
+      "frames": {
+        "ay-p072-s1": [
+          8,
+          6,
+          871,
+          592
+        ],
+        "ay-p072-s2": [
+          8,
+          610,
+          871,
+          468
+        ],
+        "ay-p072-s3": [
+          8,
+          1089,
+          871,
+          675
+        ]
+      },
+      "zones": {
+        "ay-p072-s2": [
+          0.05,
+          0.9,
+          0,
+          0.47,
+          0.5
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 73,
+      "file": "assets/page-073-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "07796799fc39bb12a87ab2aa5b7b4e9b2d6a4bd259213295091e2f8dd7e7deab",
+      "frames": {
+        "ay-p073-s1": [
+          9,
+          7,
+          871,
+          617
+        ],
+        "ay-p073-s2": [
+          9,
+          633,
+          871,
+          495
+        ],
+        "ay-p073-s3": [
+          10,
+          1137,
+          870,
+          628
+        ]
+      },
+      "zones": {
+        "ay-p073-s1": [
+          0.05,
+          0.9,
+          0,
+          0.36,
+          0.3
+        ],
+        "ay-p073-s2": [
+          0.05,
+          0.9,
+          0,
+          0.35,
+          0.4
+        ],
+        "ay-p073-s3": [
+          0.05,
+          0.9,
+          0,
+          0.6,
+          0.25
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 74,
+      "file": "assets/page-074-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "580699e0eafa49a5e1f1490314db18ca62f63997768c359f9495c04a1260dcf8",
+      "frames": {
+        "ay-p074-s1": [
+          12,
+          8,
+          865,
+          922
+        ],
+        "ay-p074-s2": [
+          12,
+          943,
+          865,
+          821
+        ]
+      },
+      "zones": {
+        "ay-p074-s2": [
+          0.05,
+          0.9,
+          0,
+          0.47,
+          0.33
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Replacement inspected after repair; subject identity, role and action checked against adjacent pages."
+      ]
+    },
+    {
+      "page": 75,
+      "file": "assets/page-075-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "be832c73d688a601fa625f76624333432b91119a31e0ff9795de558bbdb8756d",
+      "frames": {
+        "ay-p075-s1": [
+          12,
+          9,
+          864,
+          645
+        ],
+        "ay-p075-s2": [
+          12,
+          665,
+          864,
+          471
+        ],
+        "ay-p075-s3": [
+          12,
+          1148,
+          864,
+          616
+        ]
+      },
+      "zones": {
+        "ay-p075-s2": [
+          0.05,
+          0.9,
+          0,
+          0.59,
+          0.43
+        ],
+        "ay-p075-s3": [
+          0.05,
+          0.9,
+          0,
+          0.35,
+          0.3
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 76,
+      "file": "assets/page-076-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "da4141dfdece3b7df9cdb48a448d959bf048980a11051e4f1fcf738741c88f2a",
+      "frames": {
+        "ay-p076-s1": [
+          10,
+          7,
+          868,
+          638
+        ],
+        "ay-p076-s2": [
+          10,
+          655,
+          868,
+          550
+        ],
+        "ay-p076-s3": [
+          10,
+          1214,
+          868,
+          550
+        ]
+      },
+      "zones": {
+        "ay-p076-s2": [
+          0.05,
+          0.9,
+          0,
+          0.42,
+          0.41
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-25",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "2026-10-25 correction: Sita wears simple matte ochre daily forest clothing; ornate border and court jewellery removed. Cast, actions and complete painted extent reviewed."
+      ]
+    },
+    {
+      "page": 77,
+      "file": "assets/page-077-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "43c4927403b1e3a56e8ea44feb66366d246ab81c42a1954c573ce1bcbab2be51",
+      "frames": {
+        "ay-p077-s1": [
+          11,
+          6,
+          866,
+          683
+        ],
+        "ay-p077-s2": [
+          11,
+          702,
+          866,
+          470
+        ],
+        "ay-p077-s3": [
+          12,
+          1184,
+          864,
+          577
+        ]
+      },
+      "zones": {
+        "ay-p077-s1": [
+          0.05,
+          0.9,
+          0,
+          0.78,
+          0.3
+        ],
+        "ay-p077-s2": [
+          0.05,
+          0.9,
+          0,
+          0.62,
+          0.26
+        ],
+        "ay-p077-s3": [
+          0.05,
+          0.9,
+          0,
+          0.48,
+          0.65
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-25",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "2026-10-25 correction: Sita wears simple matte ochre daily forest clothing; ornate border and court jewellery removed. Cast, actions and complete painted extent reviewed."
+      ]
+    },
+    {
+      "page": 78,
+      "file": "assets/page-078-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "30f3a6a9273902062a5acd81c3634bf382e49cbe05dea458120eeb6800d6f038",
+      "frames": {
+        "ay-p078-s1": [
+          11,
+          6,
+          866,
+          583
+        ],
+        "ay-p078-s2": [
+          11,
+          598,
+          866,
+          499
+        ],
+        "ay-p078-s3": [
+          11,
+          1108,
+          866,
+          659
+        ]
+      },
+      "zones": {
+        "ay-p078-s1": [
+          0.05,
+          0.9,
+          0,
+          0.26,
+          0.3
+        ],
+        "ay-p078-s2": [
+          0.05,
+          0.9,
+          0,
+          0.7,
+          0.34
+        ],
+        "ay-p078-s3": [
+          0.05,
+          0.9,
+          0,
+          0.25,
+          0.31
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-25",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "2026-10-25 correction: Sita wears simple matte ochre daily forest clothing; ornate border and court jewellery removed. Cast, actions and complete painted extent reviewed.",
+        "Anasuya’s folded gift garments and jewels remain visible; gifts are distinct from Sita’s current simple sari."
+      ]
+    },
+    {
+      "page": 79,
+      "file": "assets/page-079-v2.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "ee4104015f397a465ba6db366533d6a97ed9aa6cc7c0cca8199a8fd421546f74",
+      "frames": {
+        "ay-p079-s1": [
+          10,
+          7,
+          867,
+          437
+        ],
+        "ay-p079-s2": [
+          11,
+          454,
+          375,
+          623
+        ],
+        "ay-p079-s3": [
+          396,
+          454,
+          480,
+          623
+        ],
+        "ay-p079-s4": [
+          12,
+          1088,
+          863,
+          676
+        ]
+      },
+      "zones": {
+        "ay-p079-s1": [
+          0.05,
+          0.9,
+          0,
+          0.82,
+          0.3
+        ],
+        "ay-p079-s2": [
+          0.05,
+          0.9,
+          0,
+          0.5,
+          0
+        ],
+        "ay-p079-s3": [
+          0.05,
+          0.9,
+          0,
+          0.5,
+          0
+        ],
+        "ay-p079-s4": [
+          0.05,
+          0.9,
+          0,
+          0.5,
+          0
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-25",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks.",
+        "Sita narrates the marriage recollection off panel; bubbles have no tail to the infant, Janaka or Rama.",
+        "2026-10-25 correction: Sita wears simple matte ochre daily forest clothing; ornate border and court jewellery removed. Cast, actions and complete painted extent reviewed.",
+        "Only the present Anasuya conversation changes; birth, bow and wedding recollections retain their period clothing. Recollection remains off-panel Sita narration."
+      ]
+    },
+    {
+      "page": 80,
+      "file": "assets/page-080-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "aeff53cd189a53b4a0acdfc1689f3fb3fc94dc0beeb7f073fb2a0370d4d5466f",
+      "frames": {
+        "ay-p080-s1": [
+          9,
+          7,
+          870,
+          590
+        ],
+        "ay-p080-s2": [
+          10,
+          609,
+          868,
+          569
+        ],
+        "ay-p080-s3": [
+          10,
+          1190,
+          868,
+          574
+        ]
+      },
+      "zones": {
+        "ay-p080-s2": [
+          0.05,
+          0.9,
+          0,
+          0.28,
+          0.31
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    },
+    {
+      "page": 81,
+      "file": "assets/page-081-v1.png",
+      "dimensions": [
+        887,
+        1774
+      ],
+      "sha256": "1514c39522d2934d2877b2308069cd443582bdb1bbf6541a131506b3ef24ddd2",
+      "frames": {
+        "ay-p081-s1": [
+          10,
+          7,
+          869,
+          868
+        ],
+        "ay-p081-s2": [
+          11,
+          889,
+          868,
+          875
+        ]
+      },
+      "zones": {
+        "ay-p081-s1": [
+          0.05,
+          0.9,
+          0,
+          0.57,
+          0.32
+        ]
+      },
+      "reviewStatus": "agent-visual-review",
+      "reviewedOn": "2026-10-22",
+      "notes": [
+        "Complete painted extent inspected in full-page review contact at a width exceeding the reader; individual source inspected for ambiguous actions or identities.",
+        "Independent panel bounds follow visible ink, not caption length. Standard/Large browser and human editorial review are separate checks."
+      ]
+    }
+  ]
+}

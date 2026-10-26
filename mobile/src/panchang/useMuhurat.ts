@@ -54,6 +54,12 @@ export type UseMuhuratResult = {
   /** True when `date` is today (so the "now" read applies). */
   isToday: boolean;
   nowChoghadiya: ChoghadiyaPeriod | null;
+  /**
+   * The eight choghadiya of the half (day or night) `nowChoghadiya` sits in —
+   * yesterday's night before sunrise — so a surface can draw the whole run with
+   * "now" placed in it. Null whenever `nowChoghadiya` is.
+   */
+  nowRun: ChoghadiyaPeriod[] | null;
   nowKaal: KaalWindow | null;
 };
 
@@ -289,15 +295,26 @@ export function useMuhurat(
   const tick = useMinuteTick(opts?.live !== false);
 
   const now = useMemo(() => {
-    if (!solved || !isToday) return { nowChoghadiya: null as ChoghadiyaPeriod | null, nowKaal: null as KaalWindow | null };
+    if (!solved || !isToday) {
+      return {
+        nowChoghadiya: null as ChoghadiyaPeriod | null,
+        nowRun: null as ChoghadiyaPeriod[] | null,
+        nowKaal: null as KaalWindow | null,
+      };
+    }
     const at = Date.now();
-    const nowChoghadiya =
-      solved.nowPeriods.find((p) => at >= p.start.getTime() && at < p.end.getTime()) ?? null;
+    const nowIndex = solved.nowPeriods.findIndex((p) => at >= p.start.getTime() && at < p.end.getTime());
+    const nowChoghadiya = nowIndex >= 0 ? solved.nowPeriods[nowIndex] : null;
+    // `nowPeriods` is whole runs of eight laid end to end (yesterday's night,
+    // when present, then the day, then the night), so a run starts on a multiple
+    // of eight.
+    const runStart = nowIndex - (nowIndex % 8);
+    const nowRun = nowIndex >= 0 ? solved.nowPeriods.slice(runStart, runStart + 8) : null;
     const nowKaal =
       [solved.md.rahu, solved.md.gulika, solved.md.yamaganda].find(
         (k) => at >= k.start.getTime() && at < k.end.getTime()
       ) ?? null;
-    return { nowChoghadiya, nowKaal };
+    return { nowChoghadiya, nowRun, nowKaal };
     // `tick` drives the minute refresh.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [solved, isToday, tick]);
@@ -307,6 +324,7 @@ export function useMuhurat(
     panchang: solved?.panchang ?? null,
     isToday,
     nowChoghadiya: now.nowChoghadiya,
+    nowRun: now.nowRun,
     nowKaal: now.nowKaal,
   };
 }
