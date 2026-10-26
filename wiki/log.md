@@ -1169,3 +1169,7 @@ Recorded the user-reported missing introduction and respectful family dialogue, 
 ## [2026-10-26] update | Suvichar share carries the app link
 
 The Suvichar share now passes a one-line caption (`buildSuvicharShareMessage`, data/shareLinks.ts) ending in https://vedansh.app/get, so the recipient gets a tappable download link with the image. design.md §82 and [[subsystems/suvichar]] updated. Typecheck and lint only; no Jest, Maestro or device run.
+
+## [2026-10-26] update | पूर्ण पंचांग share card
+
+A share circle on the Panchang sky (hero-zone top-right, `PanchangSky` `action` slot) and the Muhurat Detail top bar now both share one 4:5 card with the whole day: angas with successors, all 16 choghadiya start times, kaal tiles, vaas tiles, today's पर्व, app icon and vedansh.app/get. Updated [[subsystems/share]] and [[subsystems/panchang]]; design.md §33a, RULEBOOK share rule.

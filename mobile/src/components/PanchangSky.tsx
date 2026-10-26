@@ -93,6 +93,7 @@ export default function PanchangSky({
   focused,
   style,
   children,
+  action,
 }: {
   date: Date;
   calendarSystem: CalendarSystem;
@@ -102,6 +103,10 @@ export default function PanchangSky({
   focused: boolean;
   style?: StyleProp<ViewStyle>;
   children: (ink: SkyInk) => React.ReactNode;
+  /** One glass circle at the hero zone's top-right (the day's share, design.md §33a).
+   * It lives here, not in the chip row, because that row has no width to spare: a
+   * fourth circle there cut "Bengaluru" to 79% on a 390 pt phone and to nothing at 320. */
+  action?: (ink: SkyInk) => React.ReactNode;
 }) {
   const sky = useMuhurat(date, calendarSystem);
   const tone: SkyTone = sky.isToday && sky.nowChoghadiya?.phase === 'night' ? 'night' : 'day';
@@ -213,6 +218,7 @@ export default function PanchangSky({
       <View style={styles.controls}>{children(ink)}</View>
 
       <View style={styles.zone}>
+        {action && <View style={styles.action}>{action(ink)}</View>}
         {W > 0 && muhurat && run && (
           <>
             <Svg width={W} height={ZONE_HEIGHT} style={StyleSheet.absoluteFill} pointerEvents="none">
@@ -316,6 +322,9 @@ const styles = StyleSheet.create({
   sky: { borderBottomLeftRadius: 28, borderBottomRightRadius: 28, overflow: 'hidden' },
   controls: { paddingHorizontal: 14 },
   zone: { height: ZONE_HEIGHT, marginTop: 6 },
+  // Top-right of the zone: the arc is at least ~60 dp below here at any phone
+  // width, so the sun/moon never passes under it.
+  action: { position: 'absolute', top: 0, right: 14, zIndex: 1 },
   glyph: { position: 'absolute', width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
   arcLabel: { position: 'absolute', top: HORIZON + 8, fontSize: 11 },
   hero: { position: 'absolute', left: 20, top: 0 },
