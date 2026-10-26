@@ -46,6 +46,6 @@ _(none yet — add per-model pages as they warrant)_
 - [[e2e-verification]] — Maestro e2e: authoring rules, the isolated-simulator verification recipe (multi-worktree machines), gotchas, and the "every change ships with e2e" policy.
 
 ## Decisions
-- [[decisions/ramayan-comic-character-continuity]] — approved comic direction, event-based continuity, 29-episode Hindi/English edition and complete62-page/four-language illustrated preview drafts, measured frames and editorial/native/production boundaries.
+- [[decisions/ramayan-comic-character-continuity]] — approved comic direction, event-based continuity, 29-episode Hindi/English edition and complete62-page/four-language illustrated preview drafts, measured frames, complete81-page/four-language Ayodhyakanda preview and editorial/native/production boundaries.
 
 - [[subsystems/suvichar]] — personalized devotional wishes, sender persistence, weekday (शुभ मंगलवार) cards with day-free messages, 48 published masters and publication gate.

@@ -1158,6 +1158,14 @@ The photo row and card photo now appear only after the sender turns on “का
 
 The manual square crop is gone: a local Expo module (`modules/suvichar-face`: Apple Vision / Android FaceDetector, on-device) returns face boxes, `suvicharPhotoFit` frames all faces (centred-square fallback), and the fit is persisted as `photoFit` and applied at draw time. Typecheck and lint passed; native code not compiled here, no Jest or Maestro run.
 
+## [2026-10-22] ingest | Complete Ayodhyakanda illustrated preview
+
+Recorded the81-page/269-scene four-language preview, full119-sarga pacing/source map, selected image hashes and frames, identity/action repairs and browser layout evidence in [[decisions/ramayan-comic-character-continuity]]. Whole-book user review precedes integration. Human editorial/source collation and complete native Standard/Large checks remain open; no mobile registry, CDN or release activation was performed.
+
+## [2026-10-25] ingest | Ayodhyakanda continuity and costume follow-up
+
+Recorded the user-reported missing introduction and respectful family dialogue, full four-language audit, 95 revised fields and ten measured art replacements in [[decisions/ramayan-comic-character-continuity]]. Clarified departure, everyday forest and recollection costumes. Structural validation passes; current live browser observation was security-policy blocked, and older layout evidence is explicitly limited to the earlier revision. Native integration and editorial/source approval remain pending.
+
 ## [2026-10-26] update | Suvichar share carries the app link
 
 The Suvichar share now passes a one-line caption (`buildSuvicharShareMessage`, data/shareLinks.ts) ending in https://vedansh.app/get, so the recipient gets a tappable download link with the image. design.md §82 and [[subsystems/suvichar]] updated. Typecheck and lint only; no Jest, Maestro or device run.

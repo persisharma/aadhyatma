@@ -1,0 +1,14 @@
+{
+  "page": 64,
+  "version": 2,
+  "prompt": "Edit only the BOTTOM (third) full-width panel of the FIRST attached Ramayana comic page. The young man seated at FAR LEFT directly facing the white-bearded teacher Vashishtha must be RAMA, not Lakshmana. Replace only this seated young man's head/skin identity with the established clean-shaven SLATE-BLUE RAMA from the SECOND character reference: broad calm oval face, Rama's tilaka, matted dark locks. Make ALL his visible face, neck, torso, arms, hands, legs and feet consistently slate-blue. Retain his modest saffron/tan bark-textured forest clothing, bow/quiver, seated respectful pose and full painted extent. Keep Vashishtha with his white beard, Sita, the three mothers, and the cream-robed Bharata and teal-clothed Shatrughna behind them exactly. Preserve the two TOP panels unchanged. Do not add another person, duplicate Rama, captions, balloons, writing, new objects or panels. Preserve every border, gutter, background and all body parts. The bottom panel depicts Rama respectfully greeting his teacher.",
+  "referencedImagePaths": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-064-v1.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/assets/rama-v3.png"
+  ],
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-9aa0da7a-4023-4f78-9a5f-a44d21e50034.png",
+  "generatedOn": "2026-10-21",
+  "status": "speaker identity repair; visual review pending",
+  "selectedForPreview": true,
+  "selectionStatus": "agent-reviewed preview selection"
+}

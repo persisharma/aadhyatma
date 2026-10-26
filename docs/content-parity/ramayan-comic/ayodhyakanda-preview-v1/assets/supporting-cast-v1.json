@@ -1,0 +1,11 @@
+{
+  "page": null,
+  "filename": "supporting-cast-v1.png",
+  "prompt": "Create an AUTHORING REFERENCE SHEET, not a story page. Match the richly coloured Indian Ramayana inked comic STYLE of the first reference, with fine dark outlines and dignified expressive adult faces, realistic drawn human anatomy, subdued-gold garments. Landscape sheet, two rows of three separate full-body character studies on light warm parchment, each with a small nearby head closeup; leave feet complete. NO speech bubbles, UI, story action, decorative props or watermark. Simple small labels allowed ONLY for this reference sheet. TOP LEFT label 'Manthara': older female royal attendant, age lines, slightly stooped posture without grotesque caricature, medium-brown complexion, grey-streaked black low hair, muted indigo sari with simple rust border, small plain earrings. TOP MIDDLE 'Guha': strong dignified adult Nishada leader, deep dark-brown complexion, broad kindly face, thick trimmed black moustache, red cloth headwrap, cream dhoti and brown drape, bow held relaxed at side; no crown, no face paint, no caste caricature. TOP RIGHT 'Bharadwaja': elderly slender sage, narrow long white beard, calm dark eyes, grey-blue shoulder drape over cream robes, simple tied white hair, staff. BOTTOM LEFT 'Atri': elderly sage with wide flowing white beard, terracotta/rust drape over cream, silver knot, different face from Bharadwaja. BOTTOM MIDDLE 'Anasuya': dignified very old woman, fine face lines, silver hair in low knot, sage-green/cream sari, warm kind eyes, simple prayer beads. BOTTOM RIGHT 'Jabali': middle-aged scholarly counsellor, dark beard streaked grey, tied dark hair, warm ochre/cream robes, slim scholarly face different from all other sages, blank palm-leaf bundle. These are artistic character designs for a source-based adaptation. No Rama, Lakshmana, royal kings, demons or other characters.",
+  "references": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/balakanda-illustrated-v3/assets/page-62.png"
+  ],
+  "status": "authoring reference; agent visually reviewed, user acceptance pending",
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-4a401424-fb0f-4de8-a2de-5f27ea37c5e6.png",
+  "tool": "built-in image_gen"
+}
