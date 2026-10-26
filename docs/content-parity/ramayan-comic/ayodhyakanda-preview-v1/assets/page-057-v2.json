@@ -1,0 +1,15 @@
+{
+  "page": 57,
+  "version": 2,
+  "prompt": "Use case: illustration-story. Create one NEW text-free Indian Ramayana comic HERO painting in the exact richly coloured inked style of the accepted Balakanda reference. Other attached sheets are identity references only. One single continuous COMPACT PORTRAIT composition, about 4:5, NO panels, NO subdivisions, NO repeated scene or character, NO text or speech balloons or UI or blank caption zone or bottom band. The quiet scene at Chitrakuta before Bharata's army is heard: young adult slate-blue Rama with broad calm clean-shaven face, matted dark locks, modest saffron/tan bark-textured forest clothes with a red accent, gently shows warm-complexioned adult Sita the beautiful Mandakini river and mountain. Sita wears a modest yellow/saffron sari with restrained red/gold border and has her established face and hairline. Exactly ONE Rama and ONE Sita only. They are large in the near foreground, natural complete hands and feet visible; Rama's pointing gesture leads to the river, birds over the water, wooded hills and a few distant deer. No crowns, royal palace, Rama's coronation, Bharata, Lakshmana, army, Guha or other people. Avoid a huge empty sky or floor: the complete pair and nearby foliage occupy most of the compact painting, with the river and Chitrakuta hills as a richly detailed background. Fine expressive ink lines, saturated but warm natural devotional colours, clear faces, soft daylight, dignified intimate mood. Preserve full required subjects. Source: Valmiki Ayodhya 2.94–95, original adaptation, no scripture lettering.",
+  "referencedImagePaths": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/balakanda-illustrated-v3/assets/page-62.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/assets/rama-v3.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/assets/sita-v2.png"
+  ],
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-97e14868-8e83-494c-82c5-3966f1f59dbe.png",
+  "status": "generated; visual review pending",
+  "generatedOn": "2026-10-21",
+  "selectedForPreview": false,
+  "selectionStatus": "superseded by costume/timeline correction"
+}

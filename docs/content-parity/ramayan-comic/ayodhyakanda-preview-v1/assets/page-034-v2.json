@@ -1,0 +1,13 @@
+{
+  "page": 34,
+  "version": 2,
+  "prompt": "Edit the attached Ramayana comic page with a precise local repair. Preserve the exact style, all identities, dimensions, gutters and every painting except the MIDDLE-LEFT panel. Replace only that panel's raft construction scene with a completed lashed-log raft floating midstream across the Yamuna, with exactly Rama, Sita and Lakshmana aboard. Blue Rama and human-complexioned Lakshmana have matted knots and modest saffron bark-textured forest clothing; they pole the raft while Sita sits safely in the middle in her yellow sari. Clear water around the completed raft demonstrates the crossing. No boatman, Guha, other people, extra limbs, captions, text or balloons. Preserve all three other paintings: Bharadwaja directions at top, Sita praying middle-right, and the three resting by fire at bottom. Keep all required bodies inside their panel.",
+  "referencedImagePaths": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-034-v1.png"
+  ],
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-e9e65559-bbb5-4b4b-affa-b78d01ac3fe2.png",
+  "status": "generated; visual review pending",
+  "generatedOn": "2026-10-21",
+  "selectedForPreview": false,
+  "selectionStatus": "superseded by costume/timeline correction"
+}

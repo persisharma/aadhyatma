@@ -1,0 +1,14 @@
+{
+  "page": 3,
+  "filename": "page-003-v2.png",
+  "prompt": "Edit the first reference comic page with a targeted correction ONLY in the middle panel. Remove the written document/scroll in Rama's hands and the minister handing it over. Replace the middle panel with a new close conversational angle of seated elderly grey-moustached crowned Dasharatha speaking directly to crownless adult blue Rama in yellow/red; Lakshmana yellow/green may be beside Rama. Rama listens with empty relaxed hands. The king orally tells Rama the anointing is tomorrow. No letters, scrolls, writing or document exchange. Preserve the top council and bottom Kaushalya blessing panels, overall three-row layout, identities, style, rich colours, text-free artwork and thin black borders.",
+  "references": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-003.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/balakanda-illustrated-v3/assets/page-62.png"
+  ],
+  "status": "selected for agent visual review",
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-37a8ae2c-f47b-41a7-993f-4d71cc1dc9cd.png",
+  "tool": "built-in image_gen",
+  "selectedForPreview": true,
+  "selectionStatus": "agent-reviewed preview selection"
+}

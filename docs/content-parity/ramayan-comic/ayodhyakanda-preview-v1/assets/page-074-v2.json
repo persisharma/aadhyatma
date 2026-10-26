@@ -1,0 +1,14 @@
+{
+  "page": 74,
+  "version": 2,
+  "prompt": "Edit the FIRST attached two-panel Ramayana comic page. Preserve both compositions, all framing and the richly inked painted style. Identity reference is second image. Correct ONLY Shatrughna's face in BOTH occurrences: the teal and terracotta clothed man standing at far left in the top panel and at right beside seated Bharata in the bottom panel. Shatrughna must be a youthful CLEAN-SHAVEN adult with warm tan complexion, square gentle jaw and established face from reference. Remove all his beard/moustache stubble, preserving hair, pose, clothes and jewelry. Keep white beards on elderly ministers. Bharata remains clean shaven in cream/tan ascetic garments and matted hair. Preserve one physical pair of gold-decorated sandals installed in the otherwise empty seat of authority in top panel, no human Rama, no crowned Bharata. Remove pseudo-writing from the record leaf Bharata holds and from visible scrolls; leave blank papyrus texture. Do not add letters, captions, speech balloons, other people or objects. Two full-width rows exactly, no extra panels.",
+  "referencedImagePaths": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-074-v1.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/assets/brothers-v4.png"
+  ],
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-8de48288-5db8-41a9-a10b-e9a979b716e4.png",
+  "status": "generated; visual review pending",
+  "generatedOn": "2026-10-21",
+  "selectedForPreview": true,
+  "selectionStatus": "agent-reviewed preview selection"
+}

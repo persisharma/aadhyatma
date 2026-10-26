@@ -1,0 +1,14 @@
+{
+  "page": 51,
+  "version": 2,
+  "prompt": "Precise identity correction to the FIRST attached Ramayana comic page. Keep every panel, composition, action, painted border, background, prop, costume and all other characters exactly. SECOND image is character identity reference only. In EVERY panel where either appears: SHATRUGHNA (the young prince wearing TEAL/GREEN drape and TERRACOTTA/ORANGE clothes, WITHOUT a turban) must have the established youthful CLEAN-SHAVEN face, warm tan skin, gentle square jaw, broad brow. Remove the unintended black beard and moustache from him in all occurrences. BHARATA (the young human-complexioned prince in CREAM/TAN/BROWN robes, WITHOUT a turban) must also be CLEAN-SHAVEN with his established soft oval face; remove any unintended black beard or moustache from him in all occurrences. Neither prince ages into a bearded adult between these adjacent story pages. Preserve their hair and pose. Do NOT change white-bearded sages or ministers, blue-turbaned moustached Sumantra, red-headcloth moustached Guha, guards, scouts, attendants or any older men. Change only the two princes' facial hair/facial identity, not their clothes or role. Do not introduce held sandals, crowns, new people, text, letters, speech balloons or new panels. Preserve the full original painted extent.",
+  "referencedImagePaths": [
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets/page-051-v1.png",
+    "/Users/prashant/.codex/worktrees/414c/Aadhyatma/docs/content-parity/ramayan-comic/assets/brothers-v4.png"
+  ],
+  "generatedPath": "/Users/prashant/.codex/generated_images/01a14ffc-c490-79c1-aaa9-a41d0bbe74c5/exec-b65831c5-bbbf-41ab-9dd1-f37c5cef45e1.png",
+  "generatedOn": "2026-10-21",
+  "status": "identity repair; visual review pending",
+  "selectedForPreview": true,
+  "selectionStatus": "agent-reviewed preview selection"
+}
