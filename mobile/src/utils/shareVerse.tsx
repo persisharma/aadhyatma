@@ -148,6 +148,8 @@ export type ShareableCard = {
   branded?: boolean;
   /** Paper behind the card inside the Instagram frames; null → plain parchment. */
   background?: BackgroundImage | null;
+  /** Story/Reel: dp kept clear each side (`storyRailInset`) when the card's text runs near its edges. */
+  storyInset?: number;
   /** Sheet heading, in the reader's language. */
   title: LocalizedStrings;
   /** One muted line under the preview (Jyotish privacy statement), already localized. */
@@ -1274,7 +1276,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             {pending.kind === 'card' ? (
               isFitCapture(pending) && pending.measuredHeight ? (
                 <ShareFitFrame format={pending.format} background={pending.card.background ?? null}
-                  cardWidth={pending.card.width} cardHeight={pending.measuredHeight} canvasWidth={pending.card.width}>
+                  cardWidth={pending.card.width} cardHeight={pending.measuredHeight} canvasWidth={pending.card.width} storyInset={pending.card.storyInset}>
                   <ShareCardMount key={pending.captureId ?? 'card'} content={pending.card} lang={pending.lang}
                     onReady={(ready) => {
                       const current = imageReady.current;

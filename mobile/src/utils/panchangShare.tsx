@@ -7,6 +7,7 @@ import PanchangShareCard, { PANCHANG_SHARE_WIDTH } from '@/components/PanchangSh
 import { buildPanchangShareModel } from '@/panchang/panchangShareModel';
 import { buildPanchangShareText } from '@/panchang/panchangShareText';
 import { isSameLocalDay } from '@/panchang/muhuratFormat';
+import { storyRailInset } from '@/utils/shareStoryLayout';
 
 // The brand mark is a bundled asset, so it decodes in a frame or two; never
 // hold the share longer than this for it.
@@ -39,6 +40,8 @@ export function panchangShareable(input: ShareInput): ShareableCard {
     width: PANCHANG_SHARE_WIDTH,
     awaitsArt: true,
     branded: true,
+    // Its text runs 12–14 dp from the edges, under the Reel's button column at full width.
+    storyInset: storyRailInset,
     languages: true,
     title: { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ' },
     tagNameHi: 'पंचांग',
