@@ -1,21 +1,21 @@
 import React, { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ObservanceListRow from '@/components/ObservanceListRow';
+import ObservancePreviewCard from '@/components/ObservancePreviewCard';
+import ReaderHeader from '@/components/ReaderHeader';
+import { observanceMonth, observanceCountdown } from '@/panchang/observancePresentation';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
 import { buildListingShare } from '@/utils/listingShare';
 import TextField from '@/components/TextField';
 import AreaFilterChips, { areaName } from '@/components/AreaFilterChips';
 import { useTheme } from '@/theme/ThemeContext';
-import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRulesForCategory, type BrowseCategory } from '@/panchang/vratCatalog';
 import { useVratFollows } from '@/contexts/VratFollowContext';
-import type { ObservanceRule } from '@/panchang/types';
 import { areasPresent, getObservanceAreas, matchesAreaFilter, type AreaFilter } from '@/panchang/observanceAreas';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { captionFont } from '@/utils/scriptFont';
@@ -40,13 +40,6 @@ function shortDate(date: Date, lang: Lang): string {
   return `${date.getDate()} ${months[date.getMonth()]}`;
 }
 
-function relativeLabel(date: Date, from: Date, lang: Lang): string {
-  const days = Math.round((startOfLocalDay(date).getTime() - startOfLocalDay(from).getTime()) / 86400000);
-  if (days <= 0) return contentByLang(lang, 'आज', 'today');
-  if (days === 1) return contentByLang(lang, 'कल', '1d');
-  return contentByLang(lang, `${days}द`, `${days}d`);
-}
-
 const TITLES: Record<BrowseCategory, { hi: string; en: string }> = {
   vrat: { hi: 'व्रत', en: 'Vrat' },
   festival: { hi: 'पर्व', en: 'Festivals' },
@@ -64,6 +57,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   const [calendarSystem] = usePanchangCalendarSystem();
   const [query, setQuery] = useState('');
   const [area, setArea] = useState<AreaFilter>('all');
+  const [followingOnly, setFollowingOnly] = useState(false);
   const { isFollowing, follow, unfollow } = useVratFollows();
 
   const category = route.params.category;
@@ -90,11 +84,12 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
     const q = query.trim().toLowerCase();
     return rows.filter(({ rule }) => {
       if (!matchesAreaFilter(rule, area)) return false;
+      if (followingOnly && !isFollowing(rule.id)) return false;
       if (!q) return true;
       const areaText = getObservanceAreas(rule).map((id) => `${areaName(id, 'hi')} ${areaName(id, 'en')}`).join(' ');
       return `${rule.nameHi} ${rule.nameEn} ${rule.deityEn} ${areaText}`.toLowerCase().includes(q);
     });
-  }, [rows, query, area]);
+  }, [rows, query, area, followingOnly, isFollowing]);
 
   const title = TITLES[category];
 
@@ -105,24 +100,21 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
         style={StyleSheet.absoluteFill}
       />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-        <View style={styles.topBar}>
-          <Pressable
-            onPress={() => navigation.goBack()}
-            accessibilityRole="button"
-            accessibilityLabel={contentByLang(lang, 'वापस', 'Back')}
-            hitSlop={12}
-            style={({ pressed }) => [styles.backButton, { borderColor: colors.divider }, pressed && { opacity: 0.6 }]}
-          >
-            <Text style={{ color: colors.inkSoft, fontSize: 20 }}>‹</Text>
-          </Pressable>
-          <View style={{ alignItems: 'center' }}>
-            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink }}>
-              {contentByLang(lang, title.hi, title.en)}
-            </Text>
-            <Text style={{ ...captionFont(lang === 'en' ? title.hi : title.en), fontSize: 12, color: colors.inkMuted }}>
-              {lang === 'en' ? title.hi : title.en} · {rows.length}
-            </Text>
-          </View>
+        <ReaderHeader
+          title={contentByLang(lang, title.hi, title.en)}
+          titleContent={(
+            <>
+              <Text style={{ ...typography.cardHindi, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), color: colors.ink }}>
+                {contentByLang(lang, title.hi, title.en)}
+              </Text>
+              <Text style={{ ...typography.cardLatin, ...captionFont(lang === 'en' ? title.hi : title.en), color: colors.inkMuted }}>
+                {lang === 'en' ? title.hi : title.en} · {rows.length}
+              </Text>
+            </>
+          )}
+          onBack={() => navigation.goBack()}
+          sideWidth={48}
+          right={(
           <ShareButton
             busy={shareBusy || filtered.length === 0}
             accessibilityLabel="Share observance listing"
@@ -137,7 +129,8 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
               })),
             }), lang)}
           />
-        </View>
+          )}
+        />
 
         <ScrollView
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
@@ -150,35 +143,43 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
             placeholder={contentByLang(lang, 'इस सूची में खोजें…', 'Search within this list…')}
             style={styles.search}
           />
-          <AreaFilterChips areas={areas} value={area} lang={lang} onChange={setArea} />
+          <AreaFilterChips
+            areas={areas} value={area} lang={lang} onChange={setArea}
+            followingOnly={followingOnly} onFollowingOnlyChange={setFollowingOnly}
+          />
 
           {filtered.map(({ rule, next }, i) => {
             const following = isFollowing(rule.id);
+            const month = observanceMonth(next?.date ?? null, today, lang);
+            const previous = i > 0 ? observanceMonth(filtered[i - 1].next?.date ?? null, today, lang) : null;
             const row = (
-              <ObservanceRow
+              <ObservancePreviewCard
                 rule={rule}
-                nextDate={next?.date ?? null}
-                today={today}
+                dateLabel={next?.date ? `${shortDate(next.date, lang)}${next.date.getFullYear() !== today.getFullYear() ? ` ${next.date.getFullYear()}` : ''}` : undefined}
+                countdown={next?.date ? observanceCountdown(next.date, today, lang) : undefined}
+                areaLabel={getObservanceAreas(rule).map(id => areaName(id, lang)).join(' · ') || undefined}
                 lang={lang}
-                colors={colors}
-                typography={typography}
                 following={following}
                 starRef={i === 0 ? vratFollowRef : undefined}
                 onToggleFollow={() => (following ? unfollow(rule.id) : follow(rule.id))}
                 onPress={() => navigation.navigate('ObservanceDetail', { ruleId: rule.id })}
               />
             );
-            return i === 0 ? (
-              <View key={rule.id} ref={vratListRef} collapsable={false}>
-                {row}
-              </View>
-            ) : (
-              <React.Fragment key={rule.id}>{row}</React.Fragment>
+            return (
+              <React.Fragment key={rule.id}>
+                {month !== previous && (
+                  <View style={[styles.monthHeading, { gap: spacing.md, marginTop: spacing.md, marginBottom: spacing.sm }]}>
+                    <Text accessibilityRole="header" style={{ ...typography.cardHindi, fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), color: colors.inkSoft }}>{month}</Text>
+                    <View style={[styles.monthLine, { backgroundColor: colors.divider }]} />
+                  </View>
+                )}
+                {i === 0 ? <View ref={vratListRef} collapsable={false}>{row}</View> : row}
+              </React.Fragment>
             );
           })}
           {filtered.length === 0 && (
             <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkMuted, marginTop: 24, textAlign: 'center' }}>
-              {contentByLang(lang, 'कोई परिणाम नहीं।', 'No matches.')}
+              {followingOnly ? contentByLang(lang, 'यहाँ कोई सहेजा हुआ व्रत नहीं है। सभी में जाकर ☆ दबाएँ।', 'No saved observances here. Choose All and tap a star to save one.') : contentByLang(lang, 'कोई परिणाम नहीं।', 'No matches.')}
             </Text>
           )}
         </ScrollView>
@@ -187,89 +188,11 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   );
 }
 
-function ObservanceRow({ rule, nextDate, today, lang, colors, typography, following, starRef, onToggleFollow, onPress }: {
-  rule: ObservanceRule;
-  nextDate: Date | null;
-  today: Date;
-  lang: Lang;
-  colors: any;
-  typography: any;
-  following: boolean;
-  starRef?: React.Ref<View>;
-  onToggleFollow: () => void;
-  onPress: () => void;
-}) {
-  return (
-    <ObservanceListRow
-      leadingAction={(
-        <Pressable
-          ref={starRef}
-          collapsable={false}
-          onPress={onToggleFollow}
-          accessibilityRole="button"
-          accessibilityState={{ selected: following }}
-          accessibilityLabel={`${following ? 'Unfollow' : 'Follow'} ${rule.nameEn}`}
-          hitSlop={8}
-          style={({ pressed }) => [styles.starBtn, pressed && { opacity: 0.5 }]}
-        >
-          <Text style={{ fontSize: 20, color: following ? colors.gold : colors.inkMuted }}>
-            {following ? '★' : '☆'}
-          </Text>
-        </Pressable>
-      )}
-      title={(
-        <View style={{ paddingRight: 10 }}>
-          <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-            {contentByLang(lang, rule.nameHi, rule.nameEn)}
-          </Text>
-        </View>
-      )}
-      caption={(
-        <View style={{ paddingRight: 10 }}>
-          <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
-            {lang === 'en' ? rule.nameHi : rule.nameEn}
-          </Text>
-          <AreaTag rule={rule} lang={lang} colors={colors} />
-        </View>
-      )}
-      trailing={nextDate ? (
-          <View style={{ alignItems: 'flex-end' }}>
-            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft }}>
-              {shortDate(nextDate, lang)}
-            </Text>
-            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkSoft, marginTop: 1 }}>
-              {relativeLabel(nextDate, today, lang)}
-            </Text>
-          </View>
-      ) : undefined}
-      onPress={onPress}
-      accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
-    />
-  );
-}
-
-/** The row's क्षेत्र line — pan-India rules carry none, so the tag always means something. */
-function AreaTag({ rule, lang, colors }: { rule: ObservanceRule; lang: Lang; colors: any }) {
-  const areas = getObservanceAreas(rule);
-  if (areas.length === 0) return null;
-  const label = areas.map((id) => areaName(id, lang)).join(' · ');
-  return (
-    <Text
-      numberOfLines={1}
-      accessibilityLabel={`Area: ${areas.map((id) => areaName(id, 'en')).join(', ')}`}
-      style={{ fontFamily: captionFont(label).fontFamily, fontSize: 12, color: colors.saffronDeep, marginTop: 2 }}
-    >
-      {label}
-    </Text>
-  );
-}
-
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 },
-  backButton: { width: 48, height: 48, borderWidth: 1, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 8, paddingBottom: 32 },
   search: { marginBottom: 8 },
-  starBtn: { width: 36, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', marginRight: 4 },
+  monthHeading: { flexDirection: 'row', alignItems: 'center' },
+  monthLine: { flex: 1, height: StyleSheet.hairlineWidth },
 });
