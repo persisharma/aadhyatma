@@ -1170,6 +1170,21 @@ Recorded the user-reported missing introduction and respectful family dialogue, 
 
 The Suvichar share now passes a one-line caption (`buildSuvicharShareMessage`, data/shareLinks.ts) ending in https://vedansh.app/get, so the recipient gets a tappable download link with the image. design.md §82 and [[subsystems/suvichar]] updated. Typecheck and lint only; no Jest, Maestro or device run.
 
+
+## [2026-10-26] ingest | Vrat catalog subject portraits
+
+The calendar cards use actual deity/sage paintings: 25 published source paintings reused with source-specific portrait centres and 35 new 256px icons (952,574 bytes), with exact prompts and hashes retained. Exact identity/composite coverage, existing cache behavior, card/filter tests, TypeScript and launch-budget checks pass. Standard/Large iOS walks passed and were visually inspected; all 25 reused CDN source hashes match. Android and prototype/editorial acceptance remain pending in the evaluation record. No reader/story source or crop changed; no publication or push. [[subsystems/panchang]] and [[concepts/deity-icons]] updated.
+
+
+## [2026-10-26] ingest | Reconcile PR 542 with the latest Panchang header
+
+Merged main at df1b511a while preserving its sky-aware mode/context helpers,
+Choghadiya strip and festival ribbon, plus the illustrated Vrat catalog,
+subject portraits and neutral catalog background. Both wiki histories were
+retained. The merged tree passes TypeScript and all 3,751 local tests. Previous
+iOS artwork captures precede this merge; Android and full post-merge device
+acceptance remain pending.
+
 ## [2026-10-26] update | पूर्ण पंचांग share card
 
 A share circle on the Panchang sky (hero-zone top-right, `PanchangSky` `action` slot) and the Muhurat Detail top bar now both share one 4:5 card with the whole day: angas with successors, all 16 choghadiya start times, kaal tiles, vaas tiles, today's पर्व, app icon and vedansh.app/get. Updated [[subsystems/share]] and [[subsystems/panchang]]; design.md §33a, RULEBOOK share rule.
@@ -1177,3 +1192,11 @@ A share circle on the Panchang sky (hero-zone top-right, `PanchangSky` `action` 
 ## [2026-10-26] update | Every image share runs through the Daily Bhakti provider
 
 iOS WhatsApp refused the Panchang card ("This item cannot be shared"): its private capture passed pixel sizes that UIKit read as points, giving ~2040×6000 on 3x phones. Panchang, the Muhurat Finder day card, all six Jyotish surfaces and Suvichar now pass a `ShareableCard` to `ShareProvider` (design.md §39.10): the Bhakti picker, whole-card WhatsApp image with the download caption, Instagram post/story fit, Send as text, and a brand + vedansh.app/get strip (`ShareCardMount`). Android delivery uses react-native-share so the caption reaches WhatsApp. `ShareBrandFooter` prints the link; text shares append `withShareLinks`. RULEBOOK §3 share rule, [[subsystems/share]] and [[subsystems/suvichar]] updated. Merging main's #545 (पूर्ण पंचांग card): its `usePanchangShare` hook now hands that card to the provider as a self-branded `ShareableCard` instead of capturing it itself, so the Panchang sky and Muhurat Detail keep the new card and gain the picker, Instagram story and Send as text. Typecheck and lint only; Jest suites, Maestro and device/WhatsApp checks not run.
+
+
+## [2026-10-26] ingest | Refresh PR 542 after sharing updates
+
+Reconciled main at cce27f82 (Panchang sharing, unified image-share provider and
+device registration). The only textual conflict was this append-only history;
+both histories were retained. TypeScript and all 3,762 local tests pass on the
+combined tree. The Vrat portrait/catalog changes remain intact.

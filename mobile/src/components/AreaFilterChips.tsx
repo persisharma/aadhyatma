@@ -30,18 +30,23 @@ export default function AreaFilterChips({
   value,
   lang,
   onChange,
+  followingOnly = false,
+  onFollowingOnlyChange,
 }: {
   areas: readonly ObservanceLens[];
   value: AreaFilter;
   lang: Lang;
   onChange: (next: AreaFilter) => void;
+  followingOnly?: boolean;
+  onFollowingOnlyChange?: (next: boolean) => void;
 }) {
   const { colors, typography, spacing, radii } = useTheme();
-  if (areas.length === 0) return null;
+  if (areas.length === 0 && !onFollowingOnlyChange) return null;
 
-  const options: { id: AreaFilter; label: string; a11y: string }[] = [
+  const options: { id: AreaFilter | 'following'; label: string; a11y: string }[] = [
     { id: 'all', label: contentByLang(lang, 'सभी', 'All'), a11y: 'Area: all' },
-    { id: 'pan-india', label: contentByLang(lang, 'सर्वत्र', 'Pan-India'), a11y: 'Area: pan-India' },
+    ...(onFollowingOnlyChange ? [{ id: 'following' as const, label: contentByLang(lang, '★ मेरे व्रत', '★ My Vrat'), a11y: 'Show saved observances' }] : []),
+    ...(areas.length > 0 ? [{ id: 'pan-india' as const, label: contentByLang(lang, 'सर्वत्र', 'Pan-India'), a11y: 'Area: pan-India' }] : []),
     ...areas.map((area) => ({
       id: area as AreaFilter,
       label: areaName(area, lang),
@@ -59,11 +64,17 @@ export default function AreaFilterChips({
       accessibilityLabel="Area filter"
     >
       {options.map((option) => {
-        const selected = option.id === value;
+        const selected = option.id === 'following' ? followingOnly : option.id === value && (value !== 'all' || !followingOnly);
         return (
           <Pressable
             key={option.id}
-            onPress={() => onChange(option.id)}
+            onPress={() => {
+              if (option.id === 'following') onFollowingOnlyChange?.(!followingOnly);
+              else {
+                onChange(option.id);
+                if (option.id === 'all') onFollowingOnlyChange?.(false);
+              }
+            }}
             accessibilityRole="button"
             accessibilityState={{ selected }}
             accessibilityLabel={option.a11y}

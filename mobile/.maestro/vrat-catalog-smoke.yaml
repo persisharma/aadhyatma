@@ -52,9 +52,11 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Landing: browse-by-type tiles ──
-- extendedWaitUntil:
-    visible: "Browse by type"
-    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Browse by type"
+    direction: DOWN
+    centerElement: true
 - assertVisible: "Vrat,.*"
 - assertVisible: "Festivals,.*"
 - assertVisible: "Katha library,.*"
@@ -72,17 +74,40 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Vrat tile → per-type list → back ──
+- scrollUntilVisible:
+    element:
+      text: "Vrat,.*"
+    direction: DOWN
+    centerElement: true
 - tapOn: "Vrat,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Search within this list…"
     timeout: 15000
+# Save directly from the illustrated list: it must stay on this screen.
+- tapOn: "Search within this list…"
+- inputText: "Nirjala"
+- hideKeyboard
+- tapOn: "Follow Nirjala Ekadashi"
+- assertVisible: "Unfollow Nirjala Ekadashi"
+- assertNotVisible: "About"
+- tapOn: "Show saved observances"
+- assertVisible: "Unfollow Nirjala Ekadashi"
+- tapOn: "Unfollow Nirjala Ekadashi"
+- assertVisible: "No saved observances here.*"
+- tapOn: "Area: all"
+- assertVisible: "Follow Nirjala Ekadashi"
 - tapOn: "Back"
 - waitForAnimationToEnd
 
 # ── Search → result → dedicated detail page ──
 # Search for a specific term so the result row ("Nirjala Ekadashi") is
 # unambiguous vs the search field's own value ("Nirjala").
+- scrollUntilVisible:
+    element:
+      text: "Search vrat, festival, upvas, katha…"
+    direction: UP
+    centerElement: true
 - tapOn: "Search vrat, festival, upvas, katha…"
 - inputText: "Nirjala"
 - hideKeyboard
