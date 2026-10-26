@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { FlatList, StyleSheet, Text, View as mockView } from 'react-native';
@@ -53,9 +54,9 @@ test('child mode reuses BirthDetailsForm without collecting a name, city, or Kun
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-test', name: 'Namkaran' } as any} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
   });
@@ -74,9 +75,9 @@ test('manual nakshatra browse uses the Home-style 3-column launcher grid before 
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-grid', name: 'Namkaran' } as any} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
   });
@@ -113,9 +114,9 @@ test('manual nakshatra grid renders the complete Hindi names inside unclipped tw
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="hi">
+      <GitaLanguageProvider initialLang="hi"><ShareProvider>
         <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-grid-hi', name: 'Namkaran' } as any} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
   });
@@ -140,9 +141,9 @@ test('every nakshatra tile label renders at one fixed size, not platform auto-sh
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="hi">
+      <GitaLanguageProvider initialLang="hi"><ShareProvider>
         <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-grid-size', name: 'Namkaran' } as any} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
   });
@@ -169,9 +170,9 @@ test('all-108 browse is a nakshatra-grouped grid of tappable pada cells, not a f
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-all', name: 'Namkaran' } as any} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
   });
@@ -205,12 +206,12 @@ test('exact manual result has one hero, a FlatList, filters, shortlist, and exac
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-test', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -239,9 +240,9 @@ test('result-screen section labels are script-aware and clear the first name row
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="hi">
+      <GitaLanguageProvider initialLang="hi"><ShareProvider>
         <NamkaranResultScreen navigation={mockNavigation as any} route={{ key: 'NamkaranResult-labels', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
   });
@@ -279,12 +280,12 @@ test('name detail carries both meanings and allows copying only the candidate na
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-detail', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -303,12 +304,12 @@ test('an empty filter combination is recoverable instead of a dead-end', async (
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-empty-filter', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -331,12 +332,12 @@ test('the approved Ashwini-Chu prototype route has a real name row', async () =>
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-ashwini', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 0, pada: 1 } } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -353,12 +354,12 @@ test('unknown-time result is uniform candidate rows with no hero or exact share'
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-range', name: 'NamkaranResult', params: { basis: { kind: 'birth', date: '2026-08-13', time: null } } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -393,12 +394,12 @@ test('the fallback notice appears on an exact thin charana', async () => {
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-thin', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 5, pada: 3 } } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -423,12 +424,12 @@ test('a range never claims the fallback, because a range never broadens', async 
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-range-fallback', name: 'NamkaranResult', params: { basis: { kind: 'birth', date: '2026-08-13', time: null } } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -442,12 +443,12 @@ test('a charana opened from an unknown-time day keeps its provenance and offers 
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-uncertain', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 }, fromUnknownTime: true } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -468,12 +469,12 @@ test('the same charana reached deliberately still shares — the flag is what su
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-deliberate', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 6, pada: 1 } } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -487,9 +488,9 @@ test('rashi is a peer browse door — twelve launcher tiles that land on the ras
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranScreen navigation={mockNavigation as any} route={{ key: 'Namkaran-rashi', name: 'Namkaran' } as any} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
   });
@@ -524,12 +525,12 @@ test('the rashi cross-check is nine tappable charanas, not a flattened syllable 
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-makara', name: 'NamkaranResult', params: { basis: { kind: 'manual', nakshatraIndex: 20, pada: 2 } } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -576,12 +577,12 @@ test('an unknown-time day that crosses a rashi boundary shows every rashi it tou
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranResultScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranResult-cross', name: 'NamkaranResult', params: { basis: { kind: 'birth', date: '2026-08-13', time: null } } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -602,12 +603,12 @@ test('the rashi detail lists nine charanas grouped by nakshatra and opens each o
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranRashiScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranRashi-mesha', name: 'NamkaranRashi', params: { rashiIndex: 0 } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -643,12 +644,12 @@ test('the rashi detail cannot reopen an unknown-time candidate as a settled answ
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranRashiScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranRashi-day', name: 'NamkaranRashi', params: { rashiIndex: 0, dayCharanas: [3, 4] } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();
@@ -670,12 +671,12 @@ test('a rashi detail opened from a browse door flags nothing', async () => {
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <NamkaranRashiScreen
           navigation={mockNavigation as any}
           route={{ key: 'NamkaranRashi-browse', name: 'NamkaranRashi', params: { rashiIndex: 0 } } as any}
         />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
     await Promise.resolve();
     await Promise.resolve();

@@ -494,6 +494,8 @@ export default function KundaliScreen({ navigation, route }: Props) {
           lang={lang}
           titleHi="अपनी कुंडली साझा करें"
           titleEn="Share your Kundali"
+          captionHi="जन्म कुंडली"
+          captionEn="Kundali"
           privacyHi="इस कार्ड में नाम, जन्म तिथि, समय और नगर शामिल हैं। साझा करने से पहले जाँच लें।"
           privacyEn="This card includes the chart name, birth date, time, and city. Review it before sharing."
           onClose={() => setShareVisible(false)}

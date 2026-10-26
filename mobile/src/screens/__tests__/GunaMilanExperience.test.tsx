@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
@@ -41,9 +42,9 @@ function render(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">
+      <GitaLanguageProvider initialLang="en"><ShareProvider>
         <GunaMilanScreen navigation={mockNavigation as any} route={{ key: 'GunaMilan-test', name: 'GunaMilan' } as any} />
-      </GitaLanguageProvider>
+      </ShareProvider></GitaLanguageProvider>
     );
   });
   return tree;

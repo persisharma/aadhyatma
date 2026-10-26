@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Share, Text, View as mockView } from 'react-native';
@@ -63,7 +64,7 @@ function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">{node}</GitaLanguageProvider>
+      <GitaLanguageProvider initialLang="en"><ShareProvider>{node}</ShareProvider></GitaLanguageProvider>
     );
   });
   return tree;
@@ -159,7 +160,7 @@ test('saved report renders every section in order with disclaimers at both ends'
   act(() => tree.unmount());
 });
 
-test('one Share button offers both the card and the warned full-text export', () => {
+test('one Share button offers both the card and the warned full-text export', async () => {
   mockKundaliState = {
     profile: { name: 'Aarav', date: '1992-08-14', time: '05:42', cityId: 'ujjain' },
     chart: savedChart,
@@ -188,7 +189,7 @@ test('one Share button offers both the card and the warned full-text export', ()
   // The sheet is the warning surface for BOTH actions.
   const text = textOf(tree);
   assert.ok(text.includes('Both the card and the full text include the chart name, birth date, time, and city'));
-  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Open share sheet' }), 'card share stays primary');
+  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Share to other apps' }), 'card share stays primary');
   assert.ok(text.includes('for notes or an AI assistant'));
 
   act(() => {
@@ -197,6 +198,8 @@ test('one Share button offers both the card and the warned full-text export', ()
       .find((node) => typeof node.props.onPress === 'function')!
       .props.onPress();
   });
+  // The provider closes its sheet first; the hand-off presents once the modal is gone.
+  await act(async () => { await new Promise((resolve) => setTimeout(resolve, 400)); });
 
   // The payload is the complete export: birth facts, chart table, dasha
   // dates, every section, and the machine-readable JSON model.

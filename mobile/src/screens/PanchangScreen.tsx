@@ -1379,6 +1379,8 @@ function JyotishLanding({
           lang={lang}
           titleHi={`आज का ${RASHI_NAMES_HI[moon.rashiIndex]} राशिफल साझा करें`}
           titleEn={`Share today’s ${RASHI_NAMES_EN[moon.rashiIndex]} Rashifal`}
+          captionHi={`आज का ${RASHI_NAMES_HI[moon.rashiIndex]} राशिफल`}
+          captionEn={`Today’s ${RASHI_NAMES_EN[moon.rashiIndex]} Rashifal`}
           privacyHi="केवल चन्द्र-राशि मार्गदर्शन साझा होगा। नाम या जन्म विवरण शामिल नहीं हैं।"
           privacyEn="Only Moon-sign guidance is shared. No name or birth details are included."
           onClose={() => setShareVisible(false)}

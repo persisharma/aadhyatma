@@ -1161,3 +1161,7 @@ The manual square crop is gone: a local Expo module (`modules/suvichar-face`: Ap
 ## [2026-10-26] update | Suvichar share carries the app link
 
 The Suvichar share now passes a one-line caption (`buildSuvicharShareMessage`, data/shareLinks.ts) ending in https://vedansh.app/get, so the recipient gets a tappable download link with the image. design.md §82 and [[subsystems/suvichar]] updated. Typecheck and lint only; no Jest, Maestro or device run.
+
+## [2026-10-26] update | Every image share runs through the Daily Bhakti provider
+
+iOS WhatsApp refused the Panchang card ("This item cannot be shared"): its private capture passed pixel sizes that UIKit read as points, giving ~2040×6000 on 3x phones. Panchang, the Muhurat Finder day card, all six Jyotish surfaces and Suvichar now pass a `ShareableCard` to `ShareProvider` (design.md §39.10): the Bhakti picker, whole-card WhatsApp image with the download caption, Instagram post/story fit, Send as text, and a brand + vedansh.app/get strip (`ShareCardMount`). Android delivery uses react-native-share so the caption reaches WhatsApp. `ShareBrandFooter` prints the link; text shares append `withShareLinks`. RULEBOOK §3 share rule, [[subsystems/share]] and [[subsystems/suvichar]] updated. Typecheck and lint only; Jest suites, Maestro and device/WhatsApp checks not run.

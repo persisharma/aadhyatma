@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { ShareProvider } from '@/utils/shareVerse';
 import fs from 'node:fs';
 import path from 'node:path';
 import React, * as mockReact from 'react';
@@ -102,7 +103,7 @@ function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="en">{node}</GitaLanguageProvider>
+      <GitaLanguageProvider initialLang="en"><ShareProvider>{node}</ShareProvider></GitaLanguageProvider>
     );
   });
   renderedTrees.push(tree);

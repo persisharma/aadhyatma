@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, AppState, PixelRatio, Platform, Pressable, TextInput, View } from 'react-native';
+import { AppState, Pressable, TextInput, View } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import SuvicharScreen from '../SuvicharScreen';
 import SuvicharCard from '@/components/SuvicharCard';
@@ -8,24 +8,24 @@ import { suvicharDay, suvicharTemplatesFor } from '@/data/suvicharTemplates';
 // Built when called, so it pairs thoughts for the faked date rather than the import-time date.
 const templatesToday = () => suvicharTemplatesFor(suvicharDay(new Date()));
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { captureRef } from 'react-native-view-shot';
-import * as Sharing from 'expo-sharing';
+import type { ShareableCard } from '@/utils/shareVerse';
 jest.mock('@/components/ReaderHeader', () => () => null);
 jest.mock('@/components/SuvicharCard', () => 'SuvicharCard');
 jest.mock('@/components/SuvicharPresetPicker', () => 'SuvicharPresetPicker');
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'hi' }) }));
 jest.mock('@react-navigation/native', () => ({ useNavigation: () => ({ goBack: jest.fn() }) }));
 jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: 'SafeAreaView' }));
-jest.mock('react-native-view-shot', () => ({ captureRef: jest.fn(async () => 'file:///card.png'), releaseCapture: jest.fn() }));
-jest.mock('expo-sharing', () => ({ isAvailableAsync: jest.fn(async () => true), shareAsync: jest.fn(async () => undefined) }));
-jest.mock('@/utils/multiShare', () => ({ shareFiles: jest.fn(async () => false) }));
+// Capture, picker and delivery belong to the shared provider (its own suites); this screen hands it the card.
+const mockShare = jest.fn(async (..._args: unknown[]) => undefined);
+jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, dismiss: jest.fn(), busy: false }) }));
+const sharedCard = () => mockShare.mock.calls[mockShare.mock.calls.length - 1][0] as ShareableCard;
 // The photo picker and face detector are native; these suites cover a binary without them.
 jest.mock('@/utils/suvicharPhoto', () => ({ isSenderPhotoAvailable: () => false, senderPhotoUri: () => null, pickSenderPhoto: jest.fn(async () => null), deleteSenderPhoto: jest.fn() }));
 jest.mock('@/utils/backgroundAssetCache', () => ({ subscribeBackgroundAsset: jest.fn(() => () => undefined) }));
 jest.mock('@react-native-async-storage/async-storage', () => ({ __esModule: true, default: { getItem: jest.fn(async () => null), setItem: jest.fn(async () => undefined) } }));
 let tree: ReactTestRenderer;
 async function flush() { await act(async () => { for (let i = 0; i < 8; i++) await Promise.resolve(); }); }
-async function mount(custom = true) { await act(async () => { tree = create(<SuvicharScreen />); }); await flush(); if (custom) act(() => node('suvichar-mode-custom').props.onPress()); act(() => tree.root.findByType(SuvicharCard).props.onHeight(900)); }
+async function mount(custom = true) { await act(async () => { tree = create(<SuvicharScreen />); }); await flush(); if (custom) act(() => node('suvichar-mode-custom').props.onPress()); }
 const pickDeity = (deity: string) => act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(templatesToday().find(t => t.kind === 'daily' && t.deity === deity)!));
 const node = (id: string) => tree.root.findAllByProps({ testID: id }).find(n => typeof n.props.onPress === 'function' || typeof n.props.onChangeText === 'function')!;
 // Only Date is faked; promises, frames and timers stay real. Tests run on Sunday 25 October 2026 unless they pick a day.
@@ -43,12 +43,15 @@ it('retains the sender through deity/frame changes and saves the latest name', a
   const calls = jest.mocked(AsyncStorage.setItem).mock.calls;
   expect(JSON.parse(calls[calls.length - 1][1]).name).toBe('Sharma family');
 });
-it('never captures before art readiness and locks duplicate shares', async () => {
+it('shares nothing before art readiness, then hands the provider the branded card', async () => {
   await mount(); expect(node('suvichar-share').props.disabled).toBe(true);
-  await act(async () => node('suvichar-share').props.onPress()); expect(captureRef).not.toHaveBeenCalled();
+  await act(async () => node('suvichar-share').props.onPress()); expect(mockShare).not.toHaveBeenCalled();
   act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
-  await act(async () => { node('suvichar-share').props.onPress(); node('suvichar-share').props.onPress(); });
-  await flush(); expect(captureRef).toHaveBeenCalledTimes(1); expect(Sharing.shareAsync).toHaveBeenCalledWith('file:///card.png', expect.objectContaining({ mimeType: 'image/png' }));
+  await act(async () => node('suvichar-share').props.onPress());
+  expect(mockShare).toHaveBeenCalledTimes(1);
+  // Same flow as the Daily Bhakti card: 540 dp natural width, waits for its art, prints its own brand.
+  expect(sharedCard()).toMatchObject({ kind: 'card', width: 540, awaitsArt: true, branded: true });
+  expect(mockShare.mock.calls[0][1]).toBe('hi');
 });
 it('rejects stale ready callbacks after name changes', async () => {
   await mount(); const stale = tree.root.findByType(SuvicharCard).props.onReady;
@@ -67,12 +70,14 @@ it('keeps the sender when selecting a festival and restores a saved favorite', a
   act(() => node('suvichar-saved-0').props.onPress());
   expect(tree.root.findByType(SuvicharCard).props.deity).toBe('lakshmi');
 });
-it('reports capture failure and does not hand off a missing image', async () => {
-  const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
-  jest.mocked(captureRef).mockRejectedValueOnce(new Error('capture failed'));
-  await mount(); act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
-  await act(async () => node('suvichar-share').props.onPress()); await flush();
-  expect(alert).toHaveBeenCalled(); expect(Sharing.shareAsync).not.toHaveBeenCalled();
+it('captions WhatsApp with the invite link and sends the wish as text with the sender', async () => {
+  await mount(); act(() => node('suvichar-name').props.onChangeText('Sharma family'));
+  act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
+  await act(async () => node('suvichar-share').props.onPress());
+  const card = sharedCard();
+  expect(card.message?.('hi')).toContain('https://vedansh.app/get');
+  expect(card.text?.('hi')).toContain('Sharma family');
+  expect(card.text?.('hi')).toContain(tree.root.findByType(SuvicharCard).props.message);
 });
 
 it('chooses a fresh reflection while preserving the sender and frame', async () => {
@@ -91,24 +96,13 @@ it('keeps a ready card shareable when its selected frame is tapped again', async
   expect(node('suvichar-share').props.disabled).toBe(false);
 });
 
-it('passes both native dimensions for a complete 1080-pixel-wide image', async () => {
-  await mount(); const props = tree.root.findByType(SuvicharCard).props;
-  act(() => { props.onHeight(1200); props.onReady(true); });
-  await act(async () => node('suvichar-share').props.onPress()); await flush();
-  const scale = Platform.OS === 'ios' ? PixelRatio.get() : 1;
-  expect(captureRef).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ width: 1080 / scale, height: Math.ceil(1200 * 1080 / props.width) / scale }));
-});
-it('refuses a card that loses image readiness during the capture wait', async () => {
+it('mounts the same card for the capture: deity, frame, message, sender and 540 dp width', async () => {
   await mount(); const props = tree.root.findByType(SuvicharCard).props;
   act(() => props.onReady(true));
-  await act(async () => { const pending = node('suvichar-share').props.onPress(); props.onReady(false); await pending; });
-  expect(captureRef).not.toHaveBeenCalled();
-});
-it('refuses a new selection until its own measured height arrives', async () => {
-  await mount(); act(() => node('suvichar-name').props.onChangeText('New name'));
-  act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
   await act(async () => node('suvichar-share').props.onPress());
-  expect(captureRef).not.toHaveBeenCalled();
+  const onReady = jest.fn();
+  const element = sharedCard().render({ lang: 'hi', onReady }) as React.ReactElement<Record<string, unknown>>;
+  expect(element.props).toMatchObject({ deity: props.deity, frame: props.frame, message: props.message, name: props.name, width: 540, onReady });
 });
 
 it('opens ready-made cards first and shares one without editing a message', async () => {
@@ -123,9 +117,9 @@ it('opens ready-made cards first and shares one without editing a message', asyn
   act(() => picker.props.onSelect(preset));
   const card = tree.root.findByType(SuvicharCard).props;
   expect(card).toMatchObject({ deity: 'salasar-balaji', frame: preset.frame, message: preset.messageHi, name: 'Sharma family', original: true });
-  act(() => { card.onHeight(950); card.onReady(true); });
+  act(() => card.onReady(true));
   await act(async () => node('suvichar-share').props.onPress());
-  expect(captureRef).toHaveBeenCalledTimes(1);
+  expect(mockShare).toHaveBeenCalledTimes(1);
 });
 
 it('offers seven ready-made wishes and keeps the selected card when switching to customize', async () => {

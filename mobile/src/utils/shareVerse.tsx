@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Alert, Clipboard, PixelRatio, Platform, Share, View } from 'react-native';
+import { Alert, Clipboard, Platform, Share, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
@@ -19,7 +19,7 @@ import { ArtworkCaptureContext, createArtworkPaintBarrier, type ArtworkPaintBarr
 import ProseShareCard from '@/components/ProseShareCard';
 import type ShareTargetSheetComponent from '@/components/ShareTargetSheet';
 import type { ShareSeriesView } from '@/components/ShareTargetSheet';
-import { buildInstagramCaption, buildShareCaption } from '@/data/shareLinks';
+import { buildInstagramCaption, buildShareCaption, withShareLinks } from '@/data/shareLinks';
 import {
   buildVerseHashtags,
   formatHashtags,
@@ -42,6 +42,7 @@ import {
   type ShareCardLayout,
 } from '@/utils/shareCardPages';
 import { isMultiShareAvailable, shareFiles } from '@/utils/multiShare';
+import { capturePixelSize } from '@/utils/captureSize';
 import { buildProseShareText, buildVerseShareText } from '@/utils/shareText';
 import { useRatingAsk } from '@/contexts/ratingAsk';
 import type { Lang } from '@/data/gita/language';
@@ -123,11 +124,66 @@ export type ShareableProse = {
   scopes: ShareableProseScope[];
 };
 
+/** What a card's renderer receives: the card language and its artwork-readiness callback. */
+export type ShareCardRenderProps = { lang: Lang; onReady: (ready: boolean) => void };
+
+/**
+ * Any self-drawn card — Panchang, a Muhurat day, a Jyotish card, a Suvichar — shared
+ * through the same picker, capture and delivery as the Daily Bhakti card (design.md
+ * §39.10): the system share keeps the whole tall image, Instagram post / story scale it
+ * whole into 4:5 / 9:16, the caption carries the download link, and the provider adds
+ * the brand + download strip under the card unless the card prints its own.
+ */
+export type ShareableCard = {
+  kind: 'card';
+  /** Hashtag / registry key (namespaced when no library entry exists: `panchang.today`). */
+  sourceId: string;
+  /** Natural layout width in dp; the exported image is 1080 px wide whatever it is. */
+  width: number;
+  /** The card at `width`. Called for the preview and for every capture mount. */
+  render: (p: ShareCardRenderProps) => React.ReactNode;
+  /** The card paints remote/local artwork and calls `onReady(true)` once all of it decoded. */
+  awaitsArt?: boolean;
+  /** The card prints its own brand + download line (Suvichar); otherwise the strip is added. */
+  branded?: boolean;
+  /** Paper behind the card inside the Instagram frames; null → plain parchment. */
+  background?: BackgroundImage | null;
+  /** Sheet heading, in the reader's language. */
+  title: LocalizedStrings;
+  /** One muted line under the preview (Jyotish privacy statement), already localized. */
+  note?: string;
+  /** The renderer honours `lang`, so the sheet offers card-language chips. */
+  languages?: boolean;
+  /** Caption heading, label and quoted line in the card language. */
+  caption: (lang: Lang) => { sectionName: string; label: string; firstLine: string };
+  /** What the hashtags name. */
+  tagNameHi: string;
+  tagNameEn: string;
+  /** Replaces the system caption (Suvichar's one-line invite); it must carry the link. */
+  message?: (lang: Lang) => string;
+  /** "Send as text": the card as one plain message; the download lines are appended. */
+  text?: (lang: Lang) => string;
+  /** "Send as text" handled by the caller (the Kundali report hand-off). */
+  onShareText?: () => void;
+  /** Overrides the text row's title/sub-label, already localized (the report's full-text hand-off). */
+  textRow?: { title: string; sub?: string; accessibilityLabel?: string };
+  /** Accessibility label of the sheet's card preview. */
+  previewLabel?: string;
+  /** Right before the image reaches the OS sheet (Guna Milan's share metric). */
+  onShared?: () => void;
+  /** The flow ended: cancelled, sent, or failed. */
+  onClose?: () => void;
+};
+
 /** Anything a share button can hand the provider. Verse callers are unchanged. */
-export type ShareableContent = ShareableVerse | ShareableProse;
+export type ShareableContent = ShareableVerse | ShareableProse | ShareableCard;
 
 export function isShareableProse(c: ShareableContent): c is ShareableProse {
   return (c as ShareableProse).kind === 'prose';
+}
+
+export function isShareableCard(c: ShareableContent): c is ShareableCard {
+  return (c as ShareableCard).kind === 'card';
 }
 
 type ShareMode = 'card' | 'screenshot';
@@ -172,6 +228,11 @@ type ShareContextValue = {
    * `target`). Prose always opens the picker — the reader chooses pages there.
    */
   share: (content: ShareableContent, lang: Lang, opts?: ShareOptions) => Promise<void>;
+  /**
+   * Close the picker opened for this card without sending — the caller's own state moved
+   * on (a Rashifal day change). No-op once a capture is running or another card is open.
+   */
+  dismiss: (content: ShareableCard) => void;
   /** True while a capture/share is in flight (debounces tap). */
   busy: boolean;
 };
@@ -235,6 +296,26 @@ function ShareFitFrame(props: ShareFitFrameProps) {
 }
 
 /**
+ * Deferred-require wrappers for the card mount and its preview — mounted only while a
+ * card share is open, so they stay off the launch graph like the fit frame above.
+ */
+type CardMountModule = typeof import('@/components/ShareCardMount');
+let cardMountModule: CardMountModule | null = null;
+function cardMount(): CardMountModule {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  if (!cardMountModule) cardMountModule = require('@/components/ShareCardMount') as CardMountModule;
+  return cardMountModule;
+}
+function ShareCardMount(props: React.ComponentProps<CardMountModule['default']>) {
+  const Mount = cardMount().default;
+  return <Mount {...props} />;
+}
+function ShareCardPreview(props: React.ComponentProps<CardMountModule['ShareCardPreview']>) {
+  const Preview = cardMount().ShareCardPreview;
+  return <Preview {...props} />;
+}
+
+/**
  * Deferred-require wrapper for the share target picker. The sheet (~30 KB) is only
  * mounted after the reader taps share, so a static import would put it on every
  * screen's cold start — `data/__tests__/launchGraph.test.ts` guards against that.
@@ -282,12 +363,18 @@ const isPictureCapture = (spec: PendingCapture) => spec.kind === 'prose' && spec
 type PendingCapture = (
   | { kind: 'verse'; verse: ShareableVerse; lang: Lang; format: ShareFormat; captureId?: number; measuredHeight?: number }
   | { kind: 'prose'; card: ProseCardSpec; format: ShareFormat; captureId?: number; measuredHeight?: number }
+  | { kind: 'card'; card: ShareableCard; lang: Lang; format: ShareFormat; captureId?: number; measuredHeight?: number }
 ) & { target?: ShareTarget; backgroundPaint?: ArtworkPaintBarrier };
 
-/** A long devotional card is scaled whole into the 4:5 / 9:16 frame for Instagram so
- *  Instagram never crops it. System/WhatsApp keep the full tall image (shown whole). */
-const isDevotionalFit = (spec: PendingCapture) =>
-  spec.kind === 'prose' && !!spec.card.page.devotional && spec.target === 'instagram' && !isPictureCapture(spec);
+/** A long devotional card — and every self-drawn card — is scaled whole into the 4:5 /
+ *  9:16 frame for Instagram so Instagram never crops it. System/WhatsApp keep the full
+ *  tall image (shown whole). */
+const isFitCapture = (spec: PendingCapture) =>
+  spec.target === 'instagram' &&
+  (spec.kind === 'card' || (spec.kind === 'prose' && !!spec.card.page.devotional && !isPictureCapture(spec)));
+
+/** Natural width of the mounted card; the export is 1080 px wide whatever it is. */
+const naturalWidth = (spec: PendingCapture) => (spec.kind === 'card' ? spec.card.width : CARD_WIDTH);
 
 type ProseChooser = {
   content: ShareableProse;
@@ -373,6 +460,13 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     opts?: ShareOptions;
   } | null>(null);
   const [prose, setProse] = useState<ProseChooser | null>(null);
+  const [cardChooser, setCardChooser] = useState<{
+    content: ShareableCard;
+    /** The reader's language — the sheet's chrome and alerts. */
+    lang: Lang;
+    /** What the card + caption are written in; switchable only when `content.languages`. */
+    cardLang: Lang;
+  } | null>(null);
   const [busy, setBusy] = useState(false);
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
@@ -418,6 +512,12 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           spec = { ...spec, captureId: id };
           verseMeasured = new Promise(resolve => { verseLayout.current = { id, resolve }; });
         }
+        if (spec.kind === 'card') {
+          // The mount reports its height only once the card's art and the brand mark painted.
+          const id = ++captureSequence.current;
+          spec = { ...spec, captureId: id };
+          verseMeasured = new Promise(resolve => { verseLayout.current = { id, resolve }; });
+        }
         if (spec.kind === 'prose' && spec.card.page.devotional) {
           const id = ++captureSequence.current;
           painted = new Promise<boolean>(resolve => { imageReady.current = { id, resolve }; });
@@ -452,7 +552,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             // Instagram: the fit frame remounts the card, so the measuring mount's
             // paint no longer counts — wait for the remounted card's own artwork.
             const fitId = spec.captureId;
-            if (isDevotionalFit(spec) && fitId !== undefined) {
+            if (isFitCapture(spec) && fitId !== undefined) {
               painted = new Promise<boolean>(resolve => { imageReady.current = { id: fitId, resolve }; });
             }
             setPending(spec);
@@ -472,24 +572,22 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         captureTarget = cardRef as React.RefObject<View | null>;
       }
       const tall = spec.format === 'story' || isPictureCapture(spec);
-      const outWidth = tall || isDevotionalFit(spec) ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH; // all 1080
-      const outHeight = isDevotionalFit(spec)
+      const outWidth = tall || isFitCapture(spec) ? STORY_OUTPUT_WIDTH : OUTPUT_WIDTH; // all 1080
+      const outHeight = isFitCapture(spec)
         // Instagram: fixed-aspect frame, card scaled to fit — never cropped.
         // Feed is 4:5 — the same 1080×1350 as OUTPUT_WIDTH×OUTPUT_HEIGHT.
         ? spec.format === 'story' ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT
         : spec.measuredHeight
-        ? spec.measuredHeight * (OUTPUT_WIDTH / CARD_WIDTH)
+        ? Math.round(spec.measuredHeight * (OUTPUT_WIDTH / naturalWidth(spec)))
         : tall ? STORY_OUTPUT_HEIGHT : OUTPUT_HEIGHT;
-      // UIKit captures point dimensions at the screen's scale; Android uses pixels.
-      const captureScale = Platform.OS === 'ios' ? PixelRatio.get() : 1;
       if (!captureTarget?.current) return null;
       try {
         return await captureRef(captureTarget.current, {
           format: 'png',
           quality: 1,
           result: 'tmpfile',
-          width: mode === 'card' ? outWidth / captureScale : undefined,
-          height: mode === 'card' ? outHeight / captureScale : undefined,
+          // UIKit captures point dimensions at the screen's scale; Android uses pixels.
+          ...(mode === 'card' ? capturePixelSize(outWidth, outHeight) : null),
         });
       } catch {
         return null;
@@ -553,9 +651,12 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             { message: caption, url: fileUri },
             { dialogTitle: 'Share verse' }
           );
+        } else if (await shareFiles([fileUri], { message: caption, title: 'Share' })) {
+          // Android's RN Share drops file URIs; react-native-share carries the image
+          // and the caption (with the download link) together, as on iOS.
         } else {
-          // Android's RN Share drops file URIs. Use expo-sharing for the image; the
-          // user types the caption in WhatsApp (the link is also printed on the card).
+          // A binary without react-native-share: expo-sharing takes the image only (the
+          // link is still printed on the card).
           const canShare = await Sharing.isAvailableAsync();
           if (canShare) {
             await Sharing.shareAsync(fileUri, {
@@ -832,9 +933,76 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     void sendText(message, proseShareMoment(activeScope.pagination.pages[0]));
   }, [prose, activeScope, sendText]);
 
+  // ─── Self-drawn cards (design.md §39.10) ────────────────────────────────────
+
+  const cardCaption = useCallback((content: ShareableCard, lang: Lang, target: ShareTarget) => {
+    const resolved = content.caption(lang);
+    if (target === 'system' && content.message) return content.message(lang);
+    const params = {
+      sectionNameHi: content.tagNameHi,
+      sectionNameEn: content.tagNameEn,
+      verseLabelHi: '',
+      verseLabelEn: '',
+      firstLineHi: resolved.firstLine,
+      firstLineEn: resolved.firstLine,
+      lang,
+      resolved: { sectionName: resolved.sectionName, verseLabel: resolved.label, firstLine: resolved.firstLine },
+    };
+    return target === 'instagram'
+      ? buildInstagramCaption({ ...params, sourceId: content.sourceId, timely: timelyRef.current })
+      : buildShareCaption(params);
+  }, []);
+
+  const runCard = useCallback(
+    async (target: ShareTarget, format: ShareFormat) => {
+      if (!cardChooser || inFlightRef.current) return;
+      const { content, lang: uiLang, cardLang } = cardChooser;
+      setCardChooser(null);
+      inFlightRef.current = true;
+      setBusy(true);
+      try {
+        const fileUri = await capture({ kind: 'card', card: content, lang: cardLang, format, target }, 'card');
+        // Never a text-only fallback: the card is the share.
+        if (!fileUri) { alertCouldNotShare(uiLang); return; }
+        content.onShared?.();
+        const dispatched = await deliver(fileUri, cardCaption(content, cardLang, target), target, format, uiLang);
+        if (dispatched) requestRatingAskRef.current('prose-shared');
+      } catch {
+        // Dismissal or failure: swallow, as the verse path does.
+      } finally {
+        setPending(null);
+        setBusy(false);
+        inFlightRef.current = false;
+        content.onClose?.();
+      }
+    },
+    [cardChooser, capture, deliver, cardCaption]
+  );
+
+  const runCardText = useCallback(() => {
+    if (!cardChooser || inFlightRef.current) return;
+    const { content, cardLang } = cardChooser;
+    setCardChooser(null);
+    if (content.onShareText) {
+      const handoff = content.onShareText;
+      void wait(SHEET_DISMISS_MS).then(() => { handoff(); content.onClose?.(); });
+      return;
+    }
+    if (!content.text) return;
+    const message = withShareLinks(content.text(cardLang), cardLang);
+    void sendText(message, 'prose-shared').finally(() => content.onClose?.());
+  }, [cardChooser, sendText]);
+
   const share = useCallback(
     async (content: ShareableContent, lang: Lang, opts?: ShareOptions) => {
-      if (inFlightRef.current) return;
+      if (inFlightRef.current) {
+        if (isShareableCard(content)) content.onClose?.();
+        return;
+      }
+      if (isShareableCard(content)) {
+        setCardChooser({ content, lang, cardLang: lang });
+        return;
+      }
       if (isShareableProse(content)) {
         if (!content.scopes.length) return;
         const first = resolveScopes(content, lang)[0];
@@ -861,7 +1029,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     [run]
   );
 
-  const value = useMemo<ShareContextValue>(() => ({ share, busy }), [share, busy]);
+  const dismiss = useCallback((content: ShareableCard) => {
+    setCardChooser((c) => (c && c.content === content && !inFlightRef.current ? null : c));
+  }, []);
+
+  const value = useMemo<ShareContextValue>(() => ({ share, dismiss, busy }), [share, dismiss, busy]);
 
   const hashtagPreview = useMemo(() => {
     if (chooser) {
@@ -872,6 +1044,19 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           sectionNameEn: chooser.verse.sectionNameEn,
           verseLabelEn: chooser.verse.verseLabelEn,
           lang: chooser.cardLang,
+          timely,
+        })
+      );
+    }
+    if (cardChooser) {
+      const c = cardChooser.content;
+      return formatHashtags(
+        buildVerseHashtags({
+          sourceId: c.sourceId,
+          sectionNameHi: c.tagNameHi,
+          sectionNameEn: c.tagNameEn,
+          verseLabelEn: '',
+          lang: cardChooser.cardLang,
           timely,
         })
       );
@@ -890,7 +1075,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       );
     }
     return '';
-  }, [chooser, prose, activeScope, timely]);
+  }, [chooser, cardChooser, prose, activeScope, timely]);
 
   const pickTarget = useCallback(
     (target: ShareTarget, format: ShareFormat) => {
@@ -979,11 +1164,18 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       : undefined;
 
   const pendingSize = (spec: PendingCapture) =>
-    (spec.kind === 'verse' || spec.card.page.devotional) && !spec.measuredHeight
+    spec.kind === 'card'
+      ? !spec.measuredHeight
+        ? { width: spec.card.width } // Let the card and its strip lay out at their own height.
+        : isFitCapture(spec)
+        // Instagram: the fit frame's canvas at the card's own width (4:5 / 9:16).
+        ? { width: spec.card.width, height: spec.card.width * (spec.format === 'story' ? storyCanvas.height / storyCanvas.width : CARD_HEIGHT / CARD_WIDTH) }
+        : { width: spec.card.width, height: spec.measuredHeight }
+      : (spec.kind === 'verse' || spec.card.page.devotional) && !spec.measuredHeight
       ? { width: CARD_WIDTH } // Let native text measure without a fixed-height ancestor.
       : isPictureCapture(spec)
       ? { width: cardMetricsFor('picture').width, height: cardMetricsFor('picture').height }
-      : isDevotionalFit(spec)
+      : isFitCapture(spec)
       // Instagram: the card is scaled to fit the fixed-aspect frame (ShareFitFrame).
       ? spec.format === 'story'
         ? { width: storyCanvas.width, height: storyCanvas.height }
@@ -998,7 +1190,34 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   return (
     <ShareContext.Provider value={value}>
       {children}
-      {chooser || prose ? <TimelyTagsResolver onResolve={onTimelyResolved} /> : null}
+      {chooser || prose || cardChooser ? <TimelyTagsResolver onResolve={onTimelyResolved} /> : null}
+      {cardChooser ? (
+        <ShareTargetSheet
+          visible
+          wholeCard
+          lang={cardChooser.lang}
+          title={pick(cardChooser.lang, cardChooser.content.title)}
+          note={cardChooser.content.note}
+          hashtagPreview={hashtagPreview}
+          busy={busy}
+          onShareSystem={() => void runCard('system', 'post')}
+          onShareInstagramPost={() => void runCard('instagram', 'post')}
+          onShareInstagramStory={() => void runCard('instagram', 'story')}
+          onShareText={cardChooser.content.text || cardChooser.content.onShareText ? runCardText : undefined}
+          textTitle={cardChooser.content.textRow?.title}
+          textSub={cardChooser.content.textRow?.sub}
+          textA11y={cardChooser.content.textRow?.accessibilityLabel}
+          cardLang={cardChooser.content.languages ? cardChooser.cardLang : undefined}
+          onCardLang={cardChooser.content.languages ? (next) => setCardChooser((c) => (c ? { ...c, cardLang: next } : c)) : undefined}
+          onClose={() => {
+            if (inFlightRef.current) return;
+            const closing = cardChooser.content;
+            setCardChooser(null);
+            closing.onClose?.();
+          }}
+          singleCardPreview={<ShareCardPreview key={cardChooser.cardLang} content={cardChooser.content} lang={cardChooser.cardLang} />}
+        />
+      ) : null}
       {chooser ? (
         <ShareTargetSheet
           visible
@@ -1052,10 +1271,24 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           style={{ position: 'absolute', left: -10000, top: -10000, ...pendingSize(pending) }}
         >
           <View ref={cardRef} collapsable={false} style={pendingSize(pending)}>
-            {pending.kind === 'prose' ? (
+            {pending.kind === 'card' ? (
+              isFitCapture(pending) && pending.measuredHeight ? (
+                <ShareFitFrame format={pending.format} background={pending.card.background ?? null}
+                  cardWidth={pending.card.width} cardHeight={pending.measuredHeight} canvasWidth={pending.card.width}>
+                  <ShareCardMount key={pending.captureId ?? 'card'} content={pending.card} lang={pending.lang}
+                    onReady={(ready) => {
+                      const current = imageReady.current;
+                      if (current && current.id === pending.captureId) current.resolve(ready);
+                    }} />
+                </ShareFitFrame>
+              ) : (
+                <ShareCardMount key={pending.captureId ?? 'card'} content={pending.card} lang={pending.lang}
+                  onHeight={height => onVerseHeight(pending.captureId, height)} />
+              )
+            ) : pending.kind === 'prose' ? (
               // Instagram: once measured, scale the whole devotional card to fit the
               // 4:5 / 9:16 frame so Instagram never crops it (design.md §39.3).
-              isDevotionalFit(pending) && pending.measuredHeight ? (
+              isFitCapture(pending) && pending.measuredHeight ? (
                 <ShareFitFrame format={pending.format} background={pending.card.background}
                   cardWidth={CARD_WIDTH} cardHeight={pending.measuredHeight}>
                   <ProseShareCard key={pending.captureId ?? 'prose'} {...pending.card}

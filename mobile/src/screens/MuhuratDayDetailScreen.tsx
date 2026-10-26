@@ -1,9 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { captureRef } from 'react-native-view-shot';
-import * as Sharing from 'expo-sharing';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -27,7 +25,8 @@ import { HORA_NAMES_HI, HORA_NAMES_EN } from '@/panchang/hora';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { PanchangData } from '@/panchang/types';
 import MuhuratFinderShareCard from '@/components/MuhuratFinderShareCard';
-import { capturePixelSize } from '@/utils/captureSize';
+import { useShare } from '@/utils/shareVerse';
+import { buildMuhuratDayShareText, muhuratDayShareCaption } from '@/panchang/muhuratDayShareText';
 import MuhuratChip from '@/components/MuhuratChip';
 import ShubhYogaCard from '@/components/ShubhYogaCard';
 import MuhuratBalaStrip from '@/components/MuhuratBalaStrip';
@@ -41,14 +40,8 @@ type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratDayDetail'>;
 const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MONTHS_HI = ['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्तूबर','नवंबर','दिसंबर'];
 
-// Share-card capture geometry — mirrors MuhuratDetailScreen / shareVerse.tsx.
+// Natural width (dp) of the share card; the provider exports it 1080 px wide.
 const SHARE_CARD_WIDTH = 340;
-const SHARE_SCALE = 2;
-
-async function waitForLayout() {
-  await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-  await new Promise<void>((resolve) => setTimeout(resolve, 60));
-}
 
 /**
  * Day detail — Answer → Action → Evidence (design.md §60). One dominant
@@ -66,36 +59,31 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
 
   const [data, setData] = useState<{ v: DayVerdict; p: PanchangData; yogas: ShubhYogaWindow[] } | null>(null);
-  const shotRef = useRef<View>(null);
-  const cardHeightRef = useRef(0);
-  const [busy, setBusy] = useState(false);
   const shareable = data != null && data.v.tier !== 'excluded';
-  const cityLabel = contentByLang(lang, location.labelHi, location.labelEn);
 
-  const onShare = useCallback(async () => {
-    if (busy || !shareable) return;
-    setBusy(true);
-    try {
-      await waitForLayout();
-      const h = cardHeightRef.current;
-      const uri = await captureRef(shotRef, {
-        format: 'png',
-        quality: 1,
-        result: 'tmpfile',
-        ...(h > 0 ? capturePixelSize(SHARE_CARD_WIDTH * SHARE_SCALE, Math.round(h * SHARE_SCALE)) : null),
-      });
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(uri, {
-          mimeType: 'image/png',
-          dialogTitle: pick(lang, { hi: 'मुहूर्त साझा करें', en: 'Share muhurat', gu: 'મુહૂર્ત શેર કરો', kn: 'ಮುಹೂರ್ತ ಹಂಚಿ' }),
-        });
-      }
-    } catch {
-      /* capture/share unavailable — non-fatal */
-    } finally {
-      setBusy(false);
-    }
-  }, [busy, shareable, lang]);
+  // The Daily Bhakti share flow (design.md §39.10), like the Panchang card.
+  const { share, busy } = useShare();
+  const onShare = useCallback(() => {
+    if (!data || data.v.tier === 'excluded') return;
+    const { v, p } = data;
+    const city = (l: typeof lang) => contentByLang(l, location.labelHi, location.labelEn);
+    void share({
+      kind: 'card',
+      sourceId: `muhurat.${rule.id}`,
+      width: SHARE_CARD_WIDTH,
+      languages: true,
+      title: { hi: 'मुहूर्त साझा करें', en: 'Share muhurat', gu: 'મુહૂર્ત શેર કરો', kn: 'ಮುಹೂರ್ತ ಹಂಚಿ' },
+      tagNameHi: rule.nameHi,
+      tagNameEn: rule.nameEn,
+      render: ({ lang: cardLang }) => (
+        <View style={{ backgroundColor: colors.parchment, padding: 18 }}>
+          <MuhuratFinderShareCard rule={rule} verdict={v} p={p} cityLabel={city(cardLang)} lang={cardLang} />
+        </View>
+      ),
+      caption: (cardLang) => muhuratDayShareCaption({ rule, verdict: v, lang: cardLang }),
+      text: (cardLang) => buildMuhuratDayShareText({ rule, verdict: v, p, lang: cardLang, cityLabel: city(cardLang) }),
+    }, lang);
+  }, [data, location, share, rule, colors.parchment, lang]);
   useEffect(() => {
     let cancelled = false;
     const id = setTimeout(() => {
@@ -192,25 +180,6 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
           ) : undefined
         }
       />
-
-      {/* Off-screen share card — captured whole regardless of screen height,
-          with an explicit measured output size (a content-sized view captured
-          with no dimensions can come back blank under the New Architecture).
-          Same proven pipeline as MuhuratDetailScreen / shareVerse.tsx. */}
-      {shareable && (
-        <View style={styles.captureLayer} pointerEvents="none">
-          <View
-            ref={shotRef}
-            collapsable={false}
-            onLayout={(e) => {
-              cardHeightRef.current = e.nativeEvent.layout.height;
-            }}
-            style={{ width: SHARE_CARD_WIDTH, backgroundColor: colors.parchment, padding: 18 }}
-          >
-            <MuhuratFinderShareCard rule={rule} verdict={data.v} p={data.p} cityLabel={cityLabel} />
-          </View>
-        </View>
-      )}
 
       {!data ? (
         <View style={styles.loading}>
@@ -463,7 +432,6 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   // Parked far off-screen; opacity:0 would still be composited over content.
-  captureLayer: { position: 'absolute', left: -10000, top: 0 },
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   answer: { borderWidth: 1, padding: 16, marginTop: 6 },
   tierPill: { alignSelf: 'center', paddingHorizontal: 10, paddingVertical: 4, marginTop: 10 },
