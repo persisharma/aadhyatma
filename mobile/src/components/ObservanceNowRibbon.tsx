@@ -9,7 +9,7 @@ import type { ResolvedObservance } from '@/panchang/types';
 import CelestialGlyph from './CelestialGlyph';
 
 /**
- * The day's observance, promoted above the Muhurat now-card (design.md §33): the
+ * The day's observance, promoted above the Muhurat card (design.md §33): the
  * व्रत और पर्व section sits past the fold, so a festival day used to open on
  * timings alone. `tonight` is the pre-dawn carry-over — before sunrise the
  * Hindu day is still yesterday's, so a festival kept last night (a nishita
@@ -63,7 +63,7 @@ export default function ObservanceNowRibbon({
         pressed && { opacity: 0.85 },
       ]}
     >
-      <View style={[styles.mark, { backgroundColor: colors.nightCardFrom }]}>
+      <View style={[styles.mark, { backgroundColor: colors.skyNightTop }]}>
         <CelestialGlyph kind="moon" tithiIndex={tithiIndex} size={18} />
       </View>
       <View style={{ flex: 1 }}>

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 
 /**
- * The Muhurat now-card's sky mark (design.md §33): the moon in the day's phase on
+ * The Panchang sky's mark (design.md §33): the moon in the day's phase on
  * a night view, the sun by day. Plain Views — a lit disc with an offset shadow
  * disc clipped inside it — so it needs no SVG and stays crisp at any scale. The
  * two-disc lune is a stylisation of the terminator, not an ephemeris drawing.
