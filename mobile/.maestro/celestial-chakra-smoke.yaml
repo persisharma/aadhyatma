@@ -17,7 +17,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: home
 - tapOn: ".*Today.s Panchang.*"
 - tapOn: "Panchang"
-- assertVisible: "Today"
+- assertVisible: "Expand calendar"
 - waitForAnimationToEnd
 - takeScreenshot: panchang
 - tapOn: "Jyotish"
@@ -32,6 +32,6 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Vrat & Parv"
 - assertVisible: "My Vrat.*"
 - tapOn: "Panchang"
-- assertVisible: "Today"
+- assertVisible: "Expand calendar"
 - tapOn: { id: "tab-home" }
 - assertVisible: ".*Today.s Panchang.*"

@@ -62,11 +62,15 @@ const LINING = ['lining-nums', 'tabular-nums'] as const;
 const ZONE_HEIGHT = 132;
 const HORIZON = 104;
 
-// Star field as fractions of the sky's width and height; a few twinkle.
-const STARS: readonly (readonly [number, number, number])[] = [
-  [0.07, 0.2, 1.2], [0.3, 0.17, 1.4], [0.55, 0.19, 1], [0.76, 0.2, 1.1], [0.9, 0.17, 1.5],
-  [0.03, 0.38, 1], [0.97, 0.36, 0.9], [0.42, 0.55, 0.9], [0.64, 0.58, 1.3], [0.86, 0.62, 1],
-  [0.5, 0.7, 1.2], [0.92, 0.74, 1.1], [0.6, 0.82, 0.8],
+// Stars kept off the controls: a few in the status-bar band (fractions of the
+// width and of the top inset) and the rest over the arc's half of the hero zone
+// (fractions of the width and of the zone's height), clear of the hero text.
+const BAND_STARS: readonly (readonly [number, number, number])[] = [
+  [0.08, 0.45, 1.2], [0.3, 0.7, 1], [0.55, 0.35, 1.3], [0.78, 0.6, 1], [0.95, 0.3, 1.1],
+];
+const ZONE_STARS: readonly (readonly [number, number, number])[] = [
+  [0.56, 0.1, 1.1], [0.66, 0.03, 0.9], [0.74, 0.2, 1.3], [0.83, 0.06, 1], [0.93, 0.16, 1.4],
+  [0.97, 0.45, 0.9], [0.6, 0.5, 0.8], [0.88, 0.55, 1],
 ];
 
 type Point = { x: number; y: number };
@@ -152,6 +156,8 @@ export default function PanchangSky({
   const following = showNow && !nowAvoid && nowIndex < 7 ? nowRun![nowIndex + 1] : null;
 
   const W = size.w;
+  // The hero zone is the sky's last child, flush with its bottom edge.
+  const zoneTop = size.h - ZONE_HEIGHT;
   const p0 = { x: W * 0.52, y: HORIZON };
   const p2 = { x: W - 24, y: HORIZON };
   const p1 = { x: (p0.x + p2.x) / 2, y: -30 };
@@ -184,13 +190,18 @@ export default function PanchangSky({
       {W > 0 && (
         <Svg width={W} height={size.h} style={StyleSheet.absoluteFill} pointerEvents="none">
           {night
-            ? STARS.map(([fx, fy, r], i) => (
-                <Circle key={i} cx={fx * W} cy={fy * size.h} r={r} fill={colors.starLight} opacity={i % 3 === 0 ? 0.55 : 0.9} />
-              ))
+            ? [
+                ...BAND_STARS.map(([fx, fy, r], i) => (
+                  <Circle key={`b${i}`} cx={fx * W} cy={fy * topInset} r={r} fill={colors.starLight} opacity={i % 2 === 0 ? 0.9 : 0.55} />
+                )),
+                ...ZONE_STARS.map(([fx, fy, r], i) => (
+                  <Circle key={`z${i}`} cx={fx * W} cy={zoneTop + fy * ZONE_HEIGHT} r={r} fill={colors.starLight} opacity={i % 3 === 0 ? 0.55 : 0.9} />
+                )),
+              ]
             : [
-                <Ellipse key="c1" cx={W * 0.86} cy={size.h * 0.62} rx={26} ry={8} fill={colors.cloud} />,
-                <Ellipse key="c2" cx={W * 0.9} cy={size.h * 0.6} rx={15} ry={9} fill={colors.cloud} />,
-                <Ellipse key="c3" cx={W * 0.5} cy={size.h * 0.6} rx={22} ry={6} fill={colors.cloud} />,
+                <Ellipse key="c1" cx={W * 0.86} cy={zoneTop + 22} rx={26} ry={8} fill={colors.cloud} />,
+                <Ellipse key="c2" cx={W * 0.9} cy={zoneTop + 16} rx={15} ry={9} fill={colors.cloud} />,
+                <Ellipse key="c3" cx={W * 0.62} cy={zoneTop + 6} rx={20} ry={5} fill={colors.cloud} />,
               ]}
         </Svg>
       )}

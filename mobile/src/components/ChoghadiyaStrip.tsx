@@ -120,7 +120,7 @@ export default function ChoghadiyaStrip({
           {nowIndex != null && shown != null && (
             <Text style={{ fontFamily: bodyFont, fontSize: 11, color: colors.inkMuted }}>
               {shown === nowIndex
-                ? contentByLang(lang, 'अभी', 'now')
+                ? contentByLang(lang, `अभी · ${pct}% बीता`, `now · ${pct}% gone`)
                 : shown < nowIndex
                   ? contentByLang(lang, 'बीत चुका', 'passed')
                   : contentByLang(lang, 'आगे', 'later')}

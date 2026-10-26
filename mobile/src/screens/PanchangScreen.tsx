@@ -221,14 +221,19 @@ export default function PanchangScreen({ route }: Props) {
       handle.cancel();
     };
   }, [location.cityId, location.labelEn]);
-  // The day's one-line identity (vara · masa paksha · Vikram Samvat), shared by
-  // the date card's visible subtitle and the date button's a11y label — the
-  // explicit label would otherwise hide the subtitle from screen readers.
-  const dayIdentityHi = p
-    ? `${p.vara.nameHi} · ${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[p.tithi.paksha]} पक्ष · विक्रम संवत् ${p.vikramSamvat}`
-    : null;
+  // The day's full identity (vara · masa paksha · Vikram Samvat) for the date
+  // button's a11y label — the explicit label would otherwise hide the visible
+  // line from screen readers, so it must carry at least what the sky shows.
   const dayIdentityEn = p
     ? `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} Paksha · Vikram Samvat ${p.vikramSamvat}`
+    : null;
+  // The sky's shorter visible line names the day's tithi in place of the संवत्
+  // (vara · masa paksha tithi); the full identity stays in the a11y label.
+  const daySkyLineHi = p
+    ? `${p.vara.nameHi} · ${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[p.tithi.paksha]} ${p.tithi.nameHi}`
+    : null;
+  const daySkyLineEn = p
+    ? `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} ${p.tithi.nameEn}`
     : null;
   // PRD-27: the day's शुभ योग windows — store-backed (no private cache), []
   // while the solve is in flight and on days with none, so the card below
@@ -417,6 +422,81 @@ export default function PanchangScreen({ route }: Props) {
     const surface = { backgroundColor: sky ? sky.glass : colors.parchmentSoft, borderColor: sky ? sky.glassBorder : colors.divider };
     // The pin's hole and the badge ring are cut in the colour behind them.
     const behind = sky ? (sky.tone === 'night' ? colors.skyNightLower : colors.skyDayLower) : colors.parchment;
+    const locationChip = (
+      <Pressable
+        onPress={() => setLocationPickerVisible(true)}
+        accessibilityRole="button"
+        accessibilityLabel={contentByLang(lang, `स्थान: ${location.labelHi}`, `Location: ${location.labelEn}`)}
+        hitSlop={8}
+        style={({ pressed }) => [
+          styles.locationChip,
+          sky ? styles.skyLocation : [surface, { borderRadius: radii.pill }],
+          pressed && { opacity: 0.6 },
+        ]}
+      >
+        <View style={[styles.pin, { backgroundColor: sky ? sky.accent : colors.saffron }]}>
+          <View style={[styles.pinHole, { backgroundColor: sky ? behind : colors.parchmentSoft }]} />
+        </View>
+        <Text
+          numberOfLines={1}
+          style={{ flexShrink: 1, fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: sky ? sky.ink : colors.inkSoft }}
+        >
+          {contentByLang(lang, location.labelHi, location.labelEn)}
+        </Text>
+      </Pressable>
+    );
+    const myVrat = (
+      <Pressable
+        onPress={openMyVrat}
+        accessibilityRole="button"
+        accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
+        hitSlop={10}
+        style={({ pressed }) => [styles.myVratButton, surface, { borderRadius: radii.pill }, pressed && { opacity: 0.6 }]}
+      >
+        <Text style={{ fontSize: 16, color: sky ? sky.accent : colors.gold }}>★</Text>
+        {followCount > 0 && (
+          <View style={[styles.starBadge, { backgroundColor: colors.saffron, borderColor: behind }]}>
+            <Text style={[styles.starBadgeText, { color: colors.parchment }]}>{followCount}</Text>
+          </View>
+        )}
+      </Pressable>
+    );
+    // On the sky the row reads as the preview drew it: city and calendar system
+    // as ONE glass chip (still two controls — the location button and the
+    // Purnimant/Amanta radios the smoke flows tap), then the month button and
+    // My Vrat on the right.
+    if (sky) {
+      return (
+        <View style={styles.skyChipRow}>
+          <View style={[styles.skyChipGroup, surface, { borderRadius: radii.pill }]}>
+            {locationChip}
+            <View style={[styles.skyChipDivider, { backgroundColor: sky.glassBorder }]} />
+            <CalendarSystemToggle
+              value={calendarSystem}
+              onChange={setCalendarSystem}
+              lang={lang}
+              colors={colors}
+              radii={radii}
+              typography={typography}
+              sky={sky}
+              bare
+            />
+          </View>
+          <View style={styles.skyChipActions}>
+            <Pressable
+              onPress={() => setCalendarExpanded((expanded) => !expanded)}
+              accessibilityRole="button"
+              accessibilityLabel={calendarExpanded ? 'Collapse calendar' : 'Expand calendar'}
+              hitSlop={6}
+              style={({ pressed }) => [styles.myVratButton, surface, { borderRadius: radii.pill }, calendarExpanded && { backgroundColor: sky.glassActive }, pressed && { opacity: 0.6 }]}
+            >
+              <MonthGlyph color={calendarExpanded ? sky.glassActiveText : sky.ink} size={16} />
+            </Pressable>
+            {myVrat}
+          </View>
+        </View>
+      );
+    }
     return (
       <View style={styles.systemHeader}>
         {/* Equal-width flex sides keep the calendar-system toggle centred on
@@ -425,23 +505,7 @@ export default function PanchangScreen({ route }: Props) {
           {/* Location selector — a drawn pin + city name in a bordered chip.
               Explicit accessibilityLabel "Location: <city>" keeps it readable
               for screen readers and stable for .maestro/panchang*-smoke. */}
-          <Pressable
-            onPress={() => setLocationPickerVisible(true)}
-            accessibilityRole="button"
-            accessibilityLabel={contentByLang(lang, `स्थान: ${location.labelHi}`, `Location: ${location.labelEn}`)}
-            hitSlop={8}
-            style={({ pressed }) => [styles.locationChip, surface, { borderRadius: radii.pill }, pressed && { opacity: 0.6 }]}
-          >
-            <View style={[styles.pin, { backgroundColor: sky ? sky.accent : colors.saffron }]}>
-              <View style={[styles.pinHole, { backgroundColor: sky ? behind : colors.parchmentSoft }]} />
-            </View>
-            <Text
-              numberOfLines={1}
-              style={{ flexShrink: 1, fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: sky ? sky.ink : colors.inkSoft }}
-            >
-              {contentByLang(lang, location.labelHi, location.labelEn)}
-            </Text>
-          </Pressable>
+          {locationChip}
         </View>
         {/* Calendar system (centre) */}
         <CalendarSystemToggle
@@ -451,25 +515,12 @@ export default function PanchangScreen({ route }: Props) {
           colors={colors}
           radii={radii}
           typography={typography}
-          sky={sky}
+          sky={null}
         />
         {/* My Vrat (right) — a circular icon button so the star reads as
             tappable and distinct from the location chip. */}
         <View style={[styles.headerSide, styles.headerSideRight]}>
-          <Pressable
-            onPress={openMyVrat}
-            accessibilityRole="button"
-            accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
-            hitSlop={10}
-            style={({ pressed }) => [styles.myVratButton, surface, { borderRadius: radii.pill }, pressed && { opacity: 0.6 }]}
-          >
-            <Text style={{ fontSize: 16, color: sky ? sky.accent : colors.gold }}>★</Text>
-            {followCount > 0 && (
-              <View style={[styles.starBadge, { backgroundColor: colors.saffron, borderColor: behind }]}>
-                <Text style={[styles.starBadgeText, { color: colors.parchment }]}>{followCount}</Text>
-              </View>
-            )}
-          </Pressable>
+          {myVrat}
         </View>
       </View>
     );
@@ -502,22 +553,13 @@ export default function PanchangScreen({ route }: Props) {
               {(ink) => (
                 <>
                   {renderModeSwitch(ink)}
-                  {/* Day stepper on the sky: month view and आज flank ‹ date ›. The
-                      date block also toggles the month grid — a large, natural tap
-                      target; its a11y label is the date plus the day identity line,
-                      while 'Expand calendar' stays unique to the button (the smoke
-                      flows full-string match on it). A horizontal swipe here steps
-                      the day, as it did on the old calendar card. */}
+                  {/* Day stepper on the sky: ‹ date ›. The date block also
+                      toggles the month grid — a large, natural tap target; its
+                      a11y label is the date plus the day identity line, while
+                      'Expand calendar' stays unique to the month button in the row
+                      below (the smoke flows full-string match on it). A horizontal
+                      swipe here steps the day, as it did on the old calendar card. */}
                   <View style={styles.skyDateRow} onTouchStart={handleCalendarTouchStart} onTouchEnd={handleCalendarTouchEnd}>
-                    <Pressable
-                      onPress={() => setCalendarExpanded((expanded) => !expanded)}
-                      accessibilityRole="button"
-                      accessibilityLabel={calendarExpanded ? 'Collapse calendar' : 'Expand calendar'}
-                      hitSlop={6}
-                      style={({ pressed }) => [styles.skyRoundButton, { backgroundColor: calendarExpanded ? ink.glassActive : ink.glass, borderColor: ink.glassBorder }, pressed && { opacity: 0.6 }]}
-                    >
-                      <MonthGlyph color={calendarExpanded ? ink.glassActiveText : ink.ink} />
-                    </Pressable>
                     <Pressable
                       onPress={() => shiftSelectedDate(-1)}
                       accessibilityRole="button"
@@ -537,15 +579,15 @@ export default function PanchangScreen({ route }: Props) {
                       <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 20, color: ink.ink, textAlign: 'center' }}>
                         {formatFullDate(selectedDate, lang)}
                       </Text>
-                      {/* The day's panchang identity (vara · masa paksha · संवत्) —
-                          a space while the day solves so the row height is stable. */}
+                      {/* The day's identity (vara · masa paksha tithi) — a space
+                          while the day solves so the row height is stable. */}
                       <Text
                         numberOfLines={1}
                         adjustsFontSizeToFit
                         minimumFontScale={0.75}
                         style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11.5, color: ink.inkSoft, marginTop: 1, textAlign: 'center' }}
                       >
-                        {dayIdentityHi && dayIdentityEn ? contentByLang(lang, dayIdentityHi, dayIdentityEn) : ' '}
+                        {daySkyLineHi && daySkyLineEn ? contentByLang(lang, daySkyLineHi, daySkyLineEn) : ' '}
                       </Text>
                     </Pressable>
                     <Pressable
@@ -557,17 +599,18 @@ export default function PanchangScreen({ route }: Props) {
                     >
                       <Text style={{ color: ink.ink, fontSize: 22 }}>›</Text>
                     </Pressable>
-                    {/* आज stays on screen even on today (the smoke flows assert it),
-                        quieted there because it would do nothing. */}
+                  </View>
+                  {/* आज appears only once the day has moved off today — on
+                      today it would do nothing. */}
+                  {!isSelectedToday && (
                     <Pressable
                       onPress={handleToday}
                       accessibilityRole="button"
                       accessibilityLabel="Today"
-                      hitSlop={6}
+                      hitSlop={8}
                       style={({ pressed }) => [
                         styles.skyTodayButton,
                         { backgroundColor: ink.glass, borderColor: ink.glassBorder },
-                        isSelectedToday && { opacity: 0.55 },
                         pressed && { opacity: 0.6 },
                       ]}
                     >
@@ -575,7 +618,7 @@ export default function PanchangScreen({ route }: Props) {
                         {contentByLang(lang, 'आज', 'Today')}
                       </Text>
                     </Pressable>
-                  </View>
+                  )}
                   {renderSystemHeader(ink)}
                 </>
               )}
@@ -1591,7 +1634,7 @@ function markerColor(marker: ResolvedObservance['rule']['marker'], colors: any):
   return colors.gold;
 }
 
-function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography, sky }: {
+function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography, sky, bare }: {
   value: CalendarSystem;
   onChange: (next: CalendarSystem) => void;
   lang: Lang;
@@ -1600,6 +1643,8 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
   typography: any;
   /** Set when the toggle rides the Panchang sky — glass instead of parchment. */
   sky: SkyInk | null;
+  /** Drop its own pill when it sits inside another one (the sky's city chip). */
+  bare?: boolean;
 }) {
   const options: { value: CalendarSystem; labelHi: string; labelEn: string }[] = [
     { value: 'purnimant', labelHi: 'पूर्णिमांत', labelEn: 'Purnimant' },
@@ -1608,7 +1653,10 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
 
   return (
     <View
-      style={[styles.systemToggle, { backgroundColor: sky ? sky.glass : colors.parchmentSoft, borderColor: sky ? sky.glassBorder : colors.divider, borderRadius: radii.pill }]}
+      style={[
+        styles.systemToggle,
+        bare ? styles.systemToggleBare : { backgroundColor: sky ? sky.glass : colors.parchmentSoft, borderColor: sky ? sky.glassBorder : colors.divider, borderRadius: radii.pill },
+      ]}
       accessibilityRole="radiogroup"
       accessibilityLabel="Calendar system"
     >
@@ -2485,10 +2533,15 @@ const styles = StyleSheet.create({
   // Full-bleed: undo the scroll's 14 pt side padding; the sky pads its controls back in.
   skyBleed: { marginHorizontal: -14 },
   skyDateRow: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 10 },
-  skyRoundButton: { width: 36, height: 36, borderRadius: 18, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  skyChevron: { width: 30, height: 44, alignItems: 'center', justifyContent: 'center' },
+  skyChevron: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   skyDateBlock: { flex: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
-  skyTodayButton: { minWidth: 44, height: 32, borderRadius: 16, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 10 },
+  skyTodayButton: { alignSelf: 'center', minWidth: 52, height: 30, borderRadius: 15, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12, marginTop: 4 },
+  skyChipRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 10 },
+  skyChipGroup: { flexDirection: 'row', alignItems: 'center', flexShrink: 1, borderWidth: 1, padding: 3 },
+  // Inside the group the chip drops its own pill; the group draws it.
+  skyLocation: { borderWidth: 0, paddingVertical: 0, minHeight: 34 },
+  skyChipDivider: { width: 1, height: 20, marginHorizontal: 2 },
+  skyChipActions: { flexDirection: 'row', gap: 8, marginLeft: 'auto' },
   systemHeader: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 10 },
   // Equal-width sides → the centre toggle is screen-centred. alignItems keeps the
   // chip hugging the left edge and the star the right.
@@ -2575,6 +2628,7 @@ const styles = StyleSheet.create({
     padding: 3,
     borderWidth: 1,
   },
+  systemToggleBare: { borderWidth: 0, padding: 0 },
   systemOption: {
     minWidth: 54,
     minHeight: 34,
