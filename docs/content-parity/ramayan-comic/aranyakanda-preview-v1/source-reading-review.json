@@ -1,0 +1,178 @@
+{
+  "readOn": "2026-10-27",
+  "reviewer": "Codex agent",
+  "scope": "Complete checked-in English meaning sequence, all 75 sargas, every available record; consecutive duplicate combined meanings read once with all printed references retained. Focused Hindi/publication comparison at critical passages.",
+  "sargasRead": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75
+  ],
+  "recordsTraversed": 2439,
+  "sourceSha256": "587ed271174a09cafdaa9d208dbd40bcc11852688fedaf3f6c73ab84c30358db",
+  "readingBatches": [
+    [
+      1,
+      8
+    ],
+    [
+      9,
+      16
+    ],
+    [
+      12,
+      12
+    ],
+    [
+      17,
+      22
+    ],
+    [
+      23,
+      28
+    ],
+    [
+      29,
+      35
+    ],
+    [
+      36,
+      41
+    ],
+    [
+      42,
+      47
+    ],
+    [
+      48,
+      53
+    ],
+    [
+      54,
+      60
+    ],
+    [
+      61,
+      66
+    ],
+    [
+      67,
+      71
+    ],
+    [
+      72,
+      75
+    ]
+  ],
+  "truncationRecovery": "The 9–16 output was truncated around sarga12; sarga12 and the end of11 were printed and read separately.",
+  "knownSourceIssues": [
+    {
+      "reference": "3.20.23",
+      "issue": "English meaning is a literal missing marker",
+      "value": "Missing"
+    },
+    {
+      "reference": "3.39.19",
+      "issue": "English meaning is a literal missing marker",
+      "value": "Missing"
+    },
+    {
+      "reference": "3.40.17",
+      "issue": "English meaning is a literal missing marker",
+      "value": "Missing"
+    },
+    {
+      "reference": "3.66",
+      "issue": "Local printed numbering skips 5; Hindi meanings diverge from local English numbering after 4. Hindi publication sarga66 is served under slug65 and contains 21 printed verses. Do not equate publication numbering or silently patch the base corpus.",
+      "sourceUrls": [
+        "https://www.valmikiramayan.net/utf8/aranya/sarga66/aranya_66_prose.htm",
+        "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-65-slokas-with-hindi-meaning/"
+      ]
+    },
+    {
+      "reference": "3.7.2",
+      "issue": "Local English inserts parenthetical Ganga. The comic will describe the journey without repeating an unverified river identification."
+    },
+    {
+      "reference": "3.70.3–6",
+      "issue": "Planning assigned counterattack speech to Rama; corrected to Lakshmana after the complete source read."
+    }
+  ],
+  "notClaimed": [
+    "Fresh full 75-sarga Hindi publication collation: raw requests unavailable.",
+    "Human regional-language/editorial acceptance.",
+    "Correction or re-verification of the canonical app scripture corpus."
+  ],
+  "status": "Complete base-English arc reading done; adapted-scene source comparison and full four-language script audit in progress."
+}
