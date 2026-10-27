@@ -50,12 +50,12 @@ test('library shows the Ramayana comic card and opens the native comic shelf', (
   const navigation = { navigate: jest.fn(), goBack: jest.fn() };
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => { tree = TestRenderer.create(<Library navigation={navigation} />); });
-  const card = tree.root.findAllByType('Pressable' as any).find(node => node.props.testID === 'kids-story-comic-balakanda-v1');
+  const card = tree.root.findAllByType('Pressable' as any).find(node => node.props.testID === 'kids-story-ramayan-comic');
   expect(card).toBeTruthy();
   // RULEBOOK §3: the comic card shows painted art (Rama's bow-arrow), not a Devanagari letter tile.
   expect(card!.props.iconKey).toBe('bowArrow');
   act(() => card!.props.onPress());
-  expect(navigation.navigate).toHaveBeenCalledWith('ComicChapters', { comicId: 'balakanda-v1' });
+  expect(navigation.navigate).toHaveBeenCalledWith('RamayanComic');
   act(() => tree.unmount());
 });
 

@@ -60,6 +60,7 @@ const HanumanAshtakReaderScreen = lazyScreen('HanumanAshtakReader', 3, () => imp
 const JapamCounterScreen = lazyScreen('JapamCounter', 3, () => import('@/screens/JapamCounterScreen'));
 const KavachamReaderScreen = lazyScreen('KavachamReader', 3, () => import('@/screens/KavachamReaderScreen'));
 const KidsStoryReaderScreen = lazyScreen('KidsStoryReader', 4, () => import('@/screens/KidsStoryReaderScreen'));
+const RamayanComicScreen = lazyScreen('RamayanComic', 3, () => import('@/screens/RamayanComicScreen'));
 const ComicChaptersScreen = lazyScreen('ComicChapters', 3, () => import('@/screens/ComicChaptersScreen'));
 const ComicReaderScreen = lazyScreen('ComicReader', 4, () => import('@/screens/ComicReaderScreen'));
 const KrishnaStotramChaptersScreen = lazyScreen('KrishnaStotramChapters', 3, () => import('@/screens/KrishnaStotramChaptersScreen'));
@@ -120,6 +121,7 @@ export default function HomeStackNavigator() {
       <Stack.Screen name="KidsStoryLibrary" component={KidsStoryLibraryScreen} />
       <Stack.Screen name="KidsStoryDeity" component={KidsStoryDeityScreen} />
       <Stack.Screen name="KidsStoryReader" component={KidsStoryReaderScreen} />
+      <Stack.Screen name="RamayanComic" component={RamayanComicScreen} />
       <Stack.Screen name="ComicChapters" component={ComicChaptersScreen} />
       <Stack.Screen name="ComicReader" component={ComicReaderScreen} />
       <Stack.Screen name="DeityList" component={DeityListScreen} />

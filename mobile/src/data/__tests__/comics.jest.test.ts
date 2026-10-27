@@ -62,3 +62,50 @@ test('Siddhashrama question is answered before the Vamana story, then returns to
     expect(returnToPresent[language].narration).toMatch(/सिद्धाश्रम|Siddhashrama|સિદ્ધાશ્રમ|ಸಿದ್ಧಾಶ್ರಮ/);
   }
 });
+
+import ayodhyaManifest from '../ayodhyaComicAssetManifest.json';
+import ayodhyaSource from '../comicBooks/ayodhyakanda.json';
+import { ramayanaKandas } from '../comics';
+const ayodhya = getComicBook('ayodhyakanda-v1')!;
+const ayodhyaPanels = ayodhya.episodes.flatMap(e => e.panels);
+test('Ayodhyakanda ships the complete illustrated edition with CDN-served art', () => {
+  expect(ayodhyaSource.baseText).toMatch(/Valmiki Ramayana, Ayodhya Kanda/);
+  expect(comicById('ayodhyakanda-v1')!.episodeCount).toBe(81);
+  expect(ayodhya.episodes).toHaveLength(81);
+  expect(comicPages(ayodhya)).toHaveLength(81);
+  expect(ayodhyaPanels).toHaveLength(269);
+  expect(new Set(ayodhyaPanels.map(p => p.id)).size).toBe(269);
+  expect(ayodhyaSource.sourceCoverage).toEqual(Array.from({ length: 119 }, (_, i) => i + 1));
+  expect(ayodhyaManifest.prefix).toBe('comics/ayodhyakanda-illustrated-v1');
+  expect(Object.keys(ayodhyaManifest.assets)).toHaveLength(81);
+});
+test('every Ayodhyakanda panel resolves to its CDN sheet and keeps four-language copy', () => {
+  for (const panel of ayodhyaPanels) {
+    const asset = ayodhyaManifest.assets[panel.art as keyof typeof ayodhyaManifest.assets];
+    expect(asset).toBeTruthy();
+    expect(panel.sha256.startsWith(asset.hash)).toBe(true);
+    expect(panel.frame.x + panel.frame.width).toBeLessThanOrEqual(1.00001);
+    expect(panel.frame.y + panel.frame.height).toBeLessThanOrEqual(1.00001);
+    // Speech is rendered as attributed captions (no authored balloon geometry), so no dialogue overlays.
+    for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+      expect(panel[lang].dialogue).toBeNull();
+      if (panel.mode !== 'silent') expect(panel[lang].narration.length).toBeGreaterThan(0);
+    }
+  }
+});
+test('every Ayodhyakanda scene routes to its containing page', () => {
+  const pages = comicPages(ayodhya);
+  for (const episode of ayodhya.episodes) {
+    for (const panel of episode.panels) {
+      expect(pages[comicPageIndex(ayodhya, undefined, panel.id)].rows.flat().some(p => p.id === panel.id)).toBe(true);
+    }
+  }
+});
+test('the Ramayana shelf lists seven kandas with Bala and Ayodhya live', () => {
+  expect(ramayanaKandas).toHaveLength(7);
+  const live = ramayanaKandas.filter(k => k.comicId);
+  expect(live.map(k => k.comicId)).toEqual(['balakanda-v1', 'ayodhyakanda-v1']);
+  for (const kanda of live) expect(getComicBook(kanda.comicId!)).toBeTruthy();
+  // The remaining kandas are declared but not yet shippable.
+  expect(ramayanaKandas.filter(k => !k.comicId).map(k => k.id)).toEqual(['aranya', 'kishkindha', 'sundara', 'yuddha', 'uttara']);
+});
