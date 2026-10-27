@@ -1,47 +1,55 @@
 import { getVersePool } from '../versePool';
-import { devotionalArtForVerse, devotionalSubjectArt } from '../devotionalShareArt';
+import { devotionalArtForVerse, isDevotionalSubjectArt } from '../devotionalShareArt';
 
+// Named-subject portraits that still have a pooled verse after chalisas and
+// aartis left the daily rotation. Each surviving subject is now carried by an
+// ashtakam, stotram or sanskar rather than its aarti/chalisa. (Portraits whose
+// only backing was an aarti/chalisa — gayatri, khatu-shyam, santoshi, ahoi,
+// vaishno, ekadashi, shakambhari — keep their masters but no longer surface.)
 const sourceGroups = {
-  lakshmi: ['lakshmi-chalisa', 'om-jai-lakshmi-mata', 'mahalakshmi-ashtakam'],
-  gayatri: ['gayatri-chalisa', 'gayatri-aarti'],
-  'khatu-shyam': ['khatu-shyam-chalisa', 'khatu-shyam-aarti'],
-  shani: ['shani-aarti', 'shani-ashtakam'],
-  dattatreya: ['dattatreya-aarti', 'datta-ashtakam'],
-  ganga: ['om-jai-gange-mata', 'gangashtakam'],
-  kali: ['ambe-tu-hai-jagdambe-kali', 'kalika-ashtakam'],
-  kubera: ['kubera-aarti', 'kubera-stotram'],
-  santoshi: ['santoshi-mata-aarti'], ahoi: ['ahoi-mata-aarti'],
-  vaishno: ['vaishno-devi-aarti'], ekadashi: ['ekadashi-mata-aarti'],
-  tulsi: ['tulsi-aarti'], shakambhari: ['shakambhari-aarti'],
-  radha: ['radhashtakam'], kartikeya: ['subrahmanya-ashtakam'],
-  narasimha: ['narasimha-ashtakam'], navagraha: ['navagraha-stotram'],
+  lakshmi: ['mahalakshmi-ashtakam'],
+  shani: ['shani-ashtakam'],
+  dattatreya: ['datta-ashtakam'],
+  ganga: ['gangashtakam'],
+  kali: ['kalika-ashtakam'],
+  kubera: ['kubera-stotram'],
+  radha: ['radhashtakam'],
+  kartikeya: ['subrahmanya-ashtakam'],
+  narasimha: ['narasimha-ashtakam'],
+  navagraha: ['navagraha-stotram'],
+  tulsi: ['tulsi-puja'],
 };
 
-it('gives every formerly neutral verse its named subject, including distinct Devi forms', () => {
+it('gives every pooled named-subject its distinct portrait', () => {
   const pool = getVersePool();
-  let covered = 0;
-  expect(Object.keys(devotionalSubjectArt).sort()).toEqual(Object.keys(sourceGroups).sort());
   for (const [art, sources] of Object.entries(sourceGroups)) {
+    expect(isDevotionalSubjectArt(art as never)).toBe(true);
     for (const sourceId of sources) {
       const verses = pool.filter(v => v.sourceId === sourceId);
       expect(verses.length).toBeGreaterThan(0);
       for (const verse of verses) expect(devotionalArtForVerse(verse)).toBe(art);
-      covered += verses.length;
     }
   }
-  expect(covered).toBe(330);
 });
 
-it('covers all 1,014 additions without changing the neutral fallback for general prayers', () => {
+it('pools the flat ashtakam/suktam/kavach/stuti sources without the neutral fallback', () => {
   const pool = getVersePool();
-  expect(pool).toHaveLength(2387);
-  // Pin this PR's sources rather than a prefix that unrelated new japam entries can move.
-  const addedSourceIds = new Set(["hanuman-chalisa", "shiv-chalisa", "durga-chalisa", "ganesh-chalisa", "gayatri-chalisa", "ram-chalisa", "krishna-chalisa", "vishnu-chalisa", "saraswati-chalisa", "khatu-shyam-chalisa", "lakshmi-chalisa", "surya-chalisa", "om-jai-jagdish", "hanuman-aarti", "jai-ganesh-deva", "om-jai-shiv-omkara", "jai-ambe-gauri", "aarti-kunj-bihari", "saraswati-aarti", "gayatri-aarti", "khatu-shyam-aarti", "om-jai-lakshmi-mata", "jay-adhya-shakti", "shani-aarti", "dattatreya-aarti", "om-jai-gange-mata", "ambe-tu-hai-jagdambe-kali", "kubera-aarti", "santoshi-mata-aarti", "ahoi-mata-aarti", "vaishno-devi-aarti", "ekadashi-mata-aarti", "tulsi-aarti", "shakambhari-aarti", "lingashtakam", "madhurashtakam", "achyutashtakam", "mahalakshmi-ashtakam", "surya-ashtakam", "radhashtakam", "subrahmanya-ashtakam", "gangashtakam", "bhavani-ashtakam", "narasimha-ashtakam", "datta-ashtakam", "shani-ashtakam", "kalika-ashtakam", "rudrashtakam", "devi-suktam", "purusha-suktam", "narayana-suktam", "rama-raksha-stotra", "ganesha-kavacham", "shiva-kavacham", "durga-kavach", "krishna-stuti", "durga-stuti-arjuna", "kubera-stotram", "navagraha-stotram"]);
-  const added = pool.filter(v => addedSourceIds.has(v.sourceId));
-  expect(added).toHaveLength(1014);
-  expect(new Set(added.map(v => v.sourceId)).size).toBe(59);
-  for (const verse of added) expect(devotionalArtForVerse(verse)).not.toBe('prayer');
+  expect(pool).toHaveLength(1676);
+  // The flat sources that remain after chalisas and aartis left the rotation.
+  const flatSourceIds = new Set(["lingashtakam", "madhurashtakam", "achyutashtakam", "mahalakshmi-ashtakam", "surya-ashtakam", "radhashtakam", "subrahmanya-ashtakam", "gangashtakam", "bhavani-ashtakam", "narasimha-ashtakam", "datta-ashtakam", "shani-ashtakam", "kalika-ashtakam", "rudrashtakam", "devi-suktam", "purusha-suktam", "narayana-suktam", "rama-raksha-stotra", "ganesha-kavacham", "shiva-kavacham", "durga-kavach", "krishna-stuti", "durga-stuti-arjuna", "kubera-stotram", "navagraha-stotram"]);
+  const flat = pool.filter(v => flatSourceIds.has(v.sourceId));
+  expect(new Set(flat.map(v => v.sourceId)).size).toBe(25);
+  for (const verse of flat) expect(devotionalArtForVerse(verse)).not.toBe('prayer');
   for (const sourceId of ['unknown-source', 'matribhumi-vandana', 'sandhya-deepam']) {
     expect(devotionalArtForVerse({ sourceId, verseIndex: 0 })).toBe('prayer');
+  }
+});
+
+it('no longer surfaces any chalisa or aarti in the daily pool', () => {
+  const sources = new Set(getVersePool().map(v => v.sourceId));
+  expect([...sources].filter(id => id.includes('chalisa'))).toEqual([]);
+  // The 22 aarti ids (mostly `*-aarti`, plus a few titled forms).
+  for (const id of ['om-jai-jagdish', 'jai-ambe-gauri', 'aarti-kunj-bihari', 'jay-adhya-shakti', 'ambe-tu-hai-jagdambe-kali', 'hanuman-aarti']) {
+    expect(sources.has(id)).toBe(false);
   }
 });
