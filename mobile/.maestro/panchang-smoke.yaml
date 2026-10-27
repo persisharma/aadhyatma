@@ -173,6 +173,9 @@ appId: com.prashantsharma.vedansh
 - assertNotVisible: "Upcoming"
 # The following day is Angarki Sankashti. A browsed date says Next day.
 - openLink: "vedansh://widget/panchang?date=2026-09-28"
+- tapOn:
+    text: "Open"
+    optional: true
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
