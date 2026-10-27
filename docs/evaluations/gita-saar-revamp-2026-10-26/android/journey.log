@@ -1,0 +1,69 @@
+Running on emulator-5582
+ > Flow gita-saar-revamp-smoke
+Run _launch.yaml...
+  Launch app "com.prashantsharma.vedansh" with clear state (launch arguments: {RCT_jsLocation=${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}})... COMPLETED
+  Wait for animation to end within 30000 ms... COMPLETED
+  Assert that "Allow|Skip tour|Begin|Close|Got it|.*Today.s Panchang.*|.*आज का पंचांग.*" is visible... COMPLETED
+  Tap on (Optional) "Allow"... WARNED
+  Tap on (Optional) "Don't Allow"... WARNED
+  Tap on (Optional) "Skip tour"... COMPLETED
+  Wait for animation to end... COMPLETED
+  Tap on (Optional) "Begin"... COMPLETED
+  Tap on (Optional) "Close"... WARNED
+  Tap on (Optional) "Got it"... WARNED
+  Tap on (Optional) "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"... WARNED
+  Wait for animation to end... COMPLETED
+  Tap on (Optional) "Allow"... WARNED
+  Tap on (Optional) "Don.t Allow"... WARNED
+  Wait for animation to end... COMPLETED
+  Tap on (Optional) "SKIP|Skip|Skip tour"... WARNED
+  Tap on (Optional) "Begin"... WARNED
+  Wait for animation to end... COMPLETED
+  Assert that ".*Today.s Panchang.*|.*आज का पंचांग.*" is visible... COMPLETED
+  Assert that "आज के लिए|FOR TODAY" is visible... COMPLETED
+  Tap on (Optional) "Skip tour"... WARNED
+  Tap on (Optional) "Begin"... WARNED
+  Swiping in DOWN direction in 400 ms... COMPLETED
+  Wait for animation to end... COMPLETED
+Run _launch.yaml... COMPLETED
+Scrolling DOWN until "Sacred Books.*Tap to open." is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Sacred Books.*Tap to open."... COMPLETED
+Scrolling DOWN until "Gita Saar\..*Tap to open\." is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Gita Saar\..*Tap to open\."... COMPLETED
+Tap on (Optional) "Start over from the beginning"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Start over from the beginning
+Assert that id: gita-saar-featured is visible... COMPLETED
+Take screenshot e2e-shots/gita-saar-revamp-index-hi... COMPLETED
+Tap on id: lang-toggle-en... COMPLETED
+Tap on id: gita-saar-featured... COMPLETED
+Assert that id: gita-saar-essence is visible... COMPLETED
+Take screenshot e2e-shots/gita-saar-revamp-reader-en... COMPLETED
+Tap on "Show original Gita verse and meaning"... COMPLETED
+Assert that id: gita-saar-original is visible... COMPLETED
+Tap on "Show original Gita verse and meaning"... COMPLETED
+Scrolling DOWN until id: gita-saar-garden is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Take screenshot e2e-shots/gita-saar-revamp-garden... COMPLETED
+Scrolling DOWN until "Write a Gita Saar reflection" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Tap on "Write a Gita Saar reflection"... COMPLETED
+Scrolling DOWN until id: gita-saar-reflection is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Tap on id: gita-saar-reflection... COMPLETED
+Input text I will give one task my full attention.... COMPLETED
+Tap on "Finish writing Gita Saar reflection"... COMPLETED
+Scrolling DOWN until id: gita-saar-save-learning is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Tap on id: gita-saar-save-learning... COMPLETED
+Assert that "Return to it anytime in My learning." is visible... COMPLETED
+Tap on "Next Gita Saar teaching"... COMPLETED
+Assert that "Evenness is yoga" is visible... COMPLETED
+Tap on "Previous Gita Saar teaching"... COMPLETED
+Tap on "Back"... COMPLETED
+Scrolling DOWN until "Saved Gita Saar learning" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Tap on "Saved Gita Saar learning"... COMPLETED
+Scrolling DOWN until "I will give one task my full attention." is visible with speed 40, visibility percentage 100%, timeout 15000 ms, with centering disabled... COMPLETED
+Take screenshot e2e-shots/gita-saar-revamp-saved... COMPLETED
+Tap on "Open saved Gita Saar 2.47"... COMPLETED
+Scrolling DOWN until id: gita-saar-open-in-gita, Index: 0 is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Tap on id: gita-saar-open-in-gita, Index: 0... COMPLETED
+Assert that "47 / 72" is visible... COMPLETED
+Take screenshot e2e-shots/gita-saar-revamp-source... COMPLETED

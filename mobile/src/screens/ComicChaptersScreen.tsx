@@ -26,9 +26,13 @@ export default function ComicChaptersScreen({ navigation, route }: NativeStackSc
   const comic = comicById(route.params.comicId);
   const book = getComicBook(route.params.comicId);
   const episodes = book?.episodes ?? [];
-  const scope = language === 'hi'
-    ? `${episodes.length} प्रसंग · वाल्मीकि रामायण के बालकाण्ड की चित्र-कथा। श्लोक-दर-श्लोक अनुवाद नहीं है।`
-    : `${episodes.length} episodes · A picture retelling of the Bala Kanda of the Valmiki Ramayana. Not a verse-by-verse translation.`;
+  const kanda = comic?.kanda;
+  const scope = kanda ? pick(lang, {
+    hi: `${episodes.length} प्रसंग · वाल्मीकि रामायण के ${kanda.hi} की चित्र-कथा। श्लोक-दर-श्लोक अनुवाद नहीं है।`,
+    en: `${episodes.length} episodes · A picture retelling of the ${kanda.en} of the Valmiki Ramayana. Not a verse-by-verse translation.`,
+    gu: `${episodes.length} પ્રસંગ · વાલ્મીકિ રામાયણના ${kanda.gu}ની ચિત્રકથા. શ્લોક-દર-શ્લોક અનુવાદ નથી.`,
+    kn: `${episodes.length} ಪ್ರಸಂಗಗಳು · ವಾಲ್ಮೀಕಿ ರಾಮಾಯಣದ ${kanda.kn} ಚಿತ್ರಕಥೆ. ಶ್ಲೋಕ-ದರ-ಶ್ಲೋಕ ಅನುವಾದವಲ್ಲ.`,
+  }) : '';
   const listingShare = comic && book ? buildListingShare({
     sourceId: route.params.comicId,
     titleHi: comic.title.hi, titleEn: comic.title.en,
@@ -60,7 +64,7 @@ export default function ComicChaptersScreen({ navigation, route }: NativeStackSc
           eyebrow={`${language === 'hi' ? 'प्रसंग' : 'Episode'} ${index + 1}`}
           title={title}
           meta={`${episode.panels.length} ${language === 'hi' ? 'पृष्ठ' : 'pages'}`}
-          thumbnail={<ComicArt compact fill panel={cover.panel} focusX={cover.focusX} label={title} />}
+          thumbnail={<ComicArt compact fill panel={cover.panel} comicId={route.params.comicId} focusX={cover.focusX} label={title} />}
           onPress={() => navigation.navigate('ComicReader', { comicId: route.params.comicId, episodeId: episode.id })}
         />;
       }} />

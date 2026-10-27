@@ -65,7 +65,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: gita-saar-theme-icons
 - tapOn: "True Prema\\. 19 verses\\. Tap to open\\."
 - extendedWaitUntil:
-    visible: "Before love is a feeling.*"
+    visible: { id: gita-saar-essence }
     timeout: 30000
 - takeScreenshot: gita-saar-en-opening
 - scrollUntilVisible:

@@ -1,0 +1,72 @@
+Running on emulator-5582
+ > Flow gita-saar-language-size
+Run _open-settings.yaml...
+  Tap on id: tab-home... COMPLETED
+  Tap on id: tab-home... COMPLETED
+  Wait for animation to end... COMPLETED
+  Scrolling UP until id: home-settings is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+  Tap on id: home-settings... COMPLETED
+  Wait for animation to end... COMPLETED
+Run _open-settings.yaml... COMPLETED
+Scrolling DOWN until "Language,.*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Language,.*"... COMPLETED
+Tap on "Gujarati"... COMPLETED
+Scrolling DOWN until "Reading size,.*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Reading size,.*"... COMPLETED
+Tap on "Large"... COMPLETED
+Tap on "Done|हो गया|થઈ ગયું|ಮುಗಿಯಿತು"... COMPLETED
+Tap on id: tab-home... COMPLETED
+Scrolling DOWN until "Sacred Books.*Tap to open." is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Sacred Books.*Tap to open."... COMPLETED
+Scrolling DOWN until "Gita Saar\..*Tap to open\..*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Gita Saar\..*Tap to open\..*"... COMPLETED
+Scrolling DOWN until id: gita-saar-theme-dhyan is visible with speed 40, visibility percentage 100%, timeout 30000 ms, with centering enabled... COMPLETED
+Take screenshot e2e-shots/gita-saar-gu-last-theme... COMPLETED
+Tap on id: gita-saar-theme-dhyan... COMPLETED
+Assert that id: gita-saar-essence is visible... COMPLETED
+Take screenshot e2e-shots/gita-saar-gu-large-reader... COMPLETED
+Scrolling DOWN until "Write a Gita Saar reflection" is visible with speed 40, visibility percentage 100%, timeout 30000 ms, with centering enabled... COMPLETED
+Take screenshot e2e-shots/gita-saar-gu-large-takeaway... COMPLETED
+Run _open-settings.yaml...
+  Tap on id: tab-home... COMPLETED
+  Tap on id: tab-home... COMPLETED
+  Wait for animation to end... COMPLETED
+  Scrolling UP until id: home-settings is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+  Tap on id: home-settings... COMPLETED
+  Wait for animation to end... COMPLETED
+Run _open-settings.yaml... COMPLETED
+Scrolling DOWN until "Language,.*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Language,.*"... COMPLETED
+Tap on "Kannada"... COMPLETED
+Scrolling DOWN until "Reading size,.*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Reading size,.*"... COMPLETED
+Tap on "Large"... COMPLETED
+Tap on "Done|हो गया|થઈ ગયું|ಮುಗಿಯಿತು"... COMPLETED
+Tap on id: tab-home... COMPLETED
+Scrolling DOWN until "Sacred Books.*Tap to open." is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Sacred Books.*Tap to open."... COMPLETED
+Scrolling DOWN until "Gita Saar\..*Tap to open\..*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Gita Saar\..*Tap to open\..*"... COMPLETED
+Scrolling DOWN until id: gita-saar-theme-dhyan is visible with speed 40, visibility percentage 100%, timeout 30000 ms, with centering enabled... COMPLETED
+Take screenshot e2e-shots/gita-saar-kn-last-theme... COMPLETED
+Tap on id: gita-saar-theme-dhyan... COMPLETED
+Assert that id: gita-saar-essence is visible... COMPLETED
+Take screenshot e2e-shots/gita-saar-kn-large-reader... COMPLETED
+Scrolling DOWN until "Write a Gita Saar reflection" is visible with speed 40, visibility percentage 100%, timeout 30000 ms, with centering enabled... COMPLETED
+Take screenshot e2e-shots/gita-saar-kn-large-takeaway... COMPLETED
+Run _open-settings.yaml...
+  Tap on id: tab-home... COMPLETED
+  Tap on id: tab-home... COMPLETED
+  Wait for animation to end... COMPLETED
+  Scrolling UP until id: home-settings is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+  Tap on id: home-settings... COMPLETED
+  Wait for animation to end... COMPLETED
+Run _open-settings.yaml... COMPLETED
+Scrolling DOWN until "Language,.*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Language,.*"... COMPLETED
+Tap on "Hindi"... COMPLETED
+Scrolling DOWN until "Reading size,.*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Reading size,.*"... COMPLETED
+Tap on "Standard"... COMPLETED
+Tap on "Done|हो गया|થઈ ગયું|ಮುಗಿಯಿತು"... COMPLETED
+Tap on id: tab-home... COMPLETED

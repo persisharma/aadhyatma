@@ -15,9 +15,10 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "home-kids-stories-card" }
 - scrollUntilVisible:
-    element: { id: "kids-story-comic-balakanda-v1" }
+    element: { id: "kids-story-ramayan-comic" }
     centerElement: true
-- tapOn: { id: "kids-story-comic-balakanda-v1" }
+- tapOn: { id: "kids-story-ramayan-comic" }
+- tapOn: { id: "ramayan-kanda-bala" }
 - scrollUntilVisible:
     element: { id: "comic-episode-bk-05" }
     centerElement: true

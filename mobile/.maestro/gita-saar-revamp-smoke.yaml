@@ -1,0 +1,81 @@
+# Native Gita Saar: question-led index, continuous lesson, original source,
+# combined reflection save, persisted learning, and next/previous controls.
+# Pass METRO_PORT to pin the bundle to the intended worktree.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element: { text: "Sacred Books.*Tap to open." }
+    direction: DOWN
+    timeout: 20000
+- tapOn: "Sacred Books.*Tap to open."
+- scrollUntilVisible:
+    element: { text: "Gita Saar\\..*Tap to open\\..*" }
+    direction: DOWN
+- tapOn: "Gita Saar\\..*Tap to open\\..*"
+- tapOn: { text: "Start over from the beginning", optional: true }
+- extendedWaitUntil:
+    visible: { id: gita-saar-featured }
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-revamp-index-hi
+- tapOn: { id: lang-toggle-en }
+- tapOn: { id: gita-saar-featured }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-karma }
+    timeout: 15000
+- takeScreenshot: e2e-shots/gita-saar-revamp-reader-en
+- scrollUntilVisible:
+    element: { id: gita-saar-story-connection }
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- takeScreenshot: e2e-shots/gita-saar-revamp-story-connection
+- scrollUntilVisible:
+    element: { id: gita-saar-source-toggle }
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- tapOn: "Show original Gita verse and meaning"
+- assertVisible: { id: gita-saar-original }
+- tapOn: "Show original Gita verse and meaning"
+- scrollUntilVisible:
+    element: { text: "Write a Gita Saar reflection" }
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- tapOn: "Write a Gita Saar reflection"
+- scrollUntilVisible:
+    element: { id: gita-saar-reflection }
+    direction: DOWN
+    centerElement: true
+- tapOn: { id: gita-saar-reflection }
+- inputText: "I will give one task my full attention."
+- tapOn: "Finish writing Gita Saar reflection"
+- scrollUntilVisible:
+    element: { id: gita-saar-save-learning }
+    direction: DOWN
+    centerElement: true
+- tapOn: { id: gita-saar-save-learning }
+- assertVisible: "Return to it anytime in My learning."
+- tapOn: "Next Gita Saar teaching"
+- assertVisible: "Evenness is yoga"
+- tapOn: "Previous Gita Saar teaching"
+- tapOn: Back
+- scrollUntilVisible:
+    element: { text: "Saved Gita Saar learning" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Saved Gita Saar learning"
+- scrollUntilVisible:
+    element: { text: "I will give one task my full attention." }
+    direction: DOWN
+    timeout: 15000
+- takeScreenshot: e2e-shots/gita-saar-revamp-saved
+- tapOn: "Open saved Gita Saar 2.47"
+- scrollUntilVisible:
+    element: { id: gita-saar-open-in-gita, index: 0 }
+    direction: DOWN
+    centerElement: true
+- tapOn: { id: gita-saar-open-in-gita, index: 0 }
+- assertVisible: "47 / 72"
+- takeScreenshot: e2e-shots/gita-saar-revamp-source

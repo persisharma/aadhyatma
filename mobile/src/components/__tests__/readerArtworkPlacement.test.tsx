@@ -48,10 +48,11 @@ const text = (tree: TestRenderer.ReactTestRenderer) => tree.root.findAllByType(T
 test.each(cases)('%s: opening artwork follows the reader policy and preserves continuation text', (name, page) => {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => { tree = TestRenderer.create(wrap(page(true))); });
-  expect(tree.root.findAllByType(ReadingBanner)).toHaveLength(name === 'Gita Saar' ? 0 : 1);
+  expect(tree.root.findAllByType(ReadingBanner)).toHaveLength(1);
   const reading = text(tree);
   act(() => { tree.update(wrap(page(false))); });
-  expect(tree.root.findAllByType(ReadingBanner)).toHaveLength(0);
+  // Gita Saar's illustration belongs to the first lesson's story itself.
+  expect(tree.root.findAllByType(ReadingBanner)).toHaveLength(name === 'Gita Saar' ? 1 : 0);
   expect(tree.root.findAllByProps({ testID: 'prose-reading-illustration' })).toHaveLength(0);
   expect(text(tree)).toEqual(reading);
   act(() => tree.unmount());

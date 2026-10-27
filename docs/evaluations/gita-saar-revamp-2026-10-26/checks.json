@@ -1,0 +1,73 @@
+{
+  "full_mobile_test_command": "npm test",
+  "full_mobile_test_exit_code": 0,
+  "jest_suites": 291,
+  "jest_tests": 2828,
+  "other_tests": {
+    "widgets": 37,
+    "engine": 617,
+    "data": 217,
+    "ask": 49
+  },
+  "total_tests": 3748,
+  "typecheck": "passed by npm test",
+  "changed_file_lint": {
+    "errors": 0,
+    "warnings": 2,
+    "warning_file": "readerTypeScale.test.tsx (existing lazy require imports)"
+  },
+  "full_lint_baseline": {
+    "errors": 3,
+    "warnings": 381,
+    "error_file": "mobile/src/components/__tests__/ReaderActionTargets.test.tsx",
+    "lines": [
+      20,
+      21,
+      22
+    ],
+    "rule": "react/jsx-key",
+    "changed": false
+  },
+  "exports": {
+    "ios": "/tmp/gita-saar-ios-export-verified",
+    "android": "/tmp/gita-saar-android-export-verified",
+    "garden_bundled": false,
+    "bundled_story_images": 0
+  },
+  "scripture": {
+    "themes": 16,
+    "pages": 170,
+    "original_corpus_changed": false,
+    "existing_theme_order_changed": false
+  },
+  "publication": {
+    "app_update_published": false,
+    "app_version_changed": false,
+    "new_approved_artwork_published": true
+  },
+  "native": {
+    "ios": {
+      "core_journey": "passed",
+      "restart_persistence": "passed",
+      "gu_kn_large": "passed"
+    },
+    "android": {
+      "core_journey": "passed",
+      "restart_persistence": "passed",
+      "gu_kn_large": "passed"
+    },
+    "tested_base": "61f79cea",
+    "main_reconciled": "df1b511a",
+    "note": "Feature native evidence captured before reconciling three unrelated main commits; the Gita Saar feature code is unchanged by reconciliation."
+  },
+  "initial_validation": {
+    "base": "61f79cea",
+    "total_tests": 3716,
+    "exit_code": 0
+  },
+  "reconciled_validation": {
+    "head": "98eff2f8",
+    "total_tests": 3748,
+    "exit_code": 0
+  }
+}
