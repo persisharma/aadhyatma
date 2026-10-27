@@ -1,0 +1,1429 @@
+{
+  "scope": "source access evidence only",
+  "retrievedOn": "2026-10-27",
+  "publications": [
+    {
+      "language": "en",
+      "sarga": 1,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga1/aranya_1_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "3aa0760599a4d3a18e5e8aded55d42d3d77d57c33c055db098a508b068f0832b",
+      "bytes": 24699,
+      "cacheFile": "en-001.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 1,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-1-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-001.html"
+    },
+    {
+      "language": "en",
+      "sarga": 2,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga2/aranya_2_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "cd30967305339fab70bb47e34e257c9b6000f25f52a9d24a98725b721e46dbd4",
+      "bytes": 11969,
+      "cacheFile": "en-002.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 2,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-2-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-002.html"
+    },
+    {
+      "language": "en",
+      "sarga": 3,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga3/aranya_3_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "30d30e37fb8b7613db54cd048e3b071982358cb5a4881482a2381733396b461b",
+      "bytes": 8233,
+      "cacheFile": "en-003.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 3,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-3-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-003.html"
+    },
+    {
+      "language": "en",
+      "sarga": 4,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga4/aranya_4_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "41a9fb223850f1a13f0754a51741c96081901374a1d49b12e72158458acb2b57",
+      "bytes": 14508,
+      "cacheFile": "en-004.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 4,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-4-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-004.html"
+    },
+    {
+      "language": "en",
+      "sarga": 5,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga5/aranya_5_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "ccca455618bbdd313fd150590c8aeb793a5d04702812cd602938eec7402931d7",
+      "bytes": 20335,
+      "cacheFile": "en-005.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 5,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-5-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-005.html"
+    },
+    {
+      "language": "en",
+      "sarga": 6,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga6/aranya_6_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "c84eae7f8b1becd1c08e100520abd9beb5742e2996c9135e9466547a110081b9",
+      "bytes": 14660,
+      "cacheFile": "en-006.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 6,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-6-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-006.html"
+    },
+    {
+      "language": "en",
+      "sarga": 7,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga7/aranya_7_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "e42fe47933d17d9bd41e03deaf52f6fcd083c6b53b513a5f02a1f1ca830e062a",
+      "bytes": 11014,
+      "cacheFile": "en-007.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 7,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-7-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-007.html"
+    },
+    {
+      "language": "en",
+      "sarga": 8,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga8/aranya_8_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "c4387954f4356bb322a2d3a50d5fcf675adfa22e18789173905b8b245ef83b09",
+      "bytes": 5139,
+      "cacheFile": "en-008.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 8,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-8-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-008.html"
+    },
+    {
+      "language": "en",
+      "sarga": 9,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga9/aranya_9_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "8853517bee9af618e1181336d03f4cdd09c21403aa1855a045660404021e72a4",
+      "bytes": 14952,
+      "cacheFile": "en-009.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 9,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-9-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-009.html"
+    },
+    {
+      "language": "en",
+      "sarga": 10,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga10/aranya_10_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "1c72fecbe828fc09a77b40f452d65e0fcbbd9ad40a47c26d3fe32af01d66f9ba",
+      "bytes": 5603,
+      "cacheFile": "en-010.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 10,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-10-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-010.html"
+    },
+    {
+      "language": "en",
+      "sarga": 11,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga11/aranya_11_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "079d1437bf0f2f1f27bbccb5f48d67dd3dd89698dfc78e3a4320a39f9feb1334",
+      "bytes": 26348,
+      "cacheFile": "en-011.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 11,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-11-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-011.html"
+    },
+    {
+      "language": "en",
+      "sarga": 12,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga12/aranya_12_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "ebd6c591897ddbbaa4d6d590ec45e2924fe15e38650c445bd1e2e12e56d2243e",
+      "bytes": 12015,
+      "cacheFile": "en-012.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 12,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-12-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-012.html"
+    },
+    {
+      "language": "en",
+      "sarga": 13,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga13/aranya_13_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "b76747036097fd44fd23a01552c13591002a37a2f5f33a32cdd100d71a5ec0e3",
+      "bytes": 7969,
+      "cacheFile": "en-013.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 13,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-13-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-013.html"
+    },
+    {
+      "language": "en",
+      "sarga": 14,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga14/aranya_14_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "6046ef24a215edec93541363e6c857fa1e28666d13ec263a4867a40a6fe92f10",
+      "bytes": 8426,
+      "cacheFile": "en-014.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 14,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-14-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-014.html"
+    },
+    {
+      "language": "en",
+      "sarga": 15,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga15/aranya_15_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "6bacf3176965be5de87b7b35eef3e94ae413032c465abe2b21a993ba28679f6e",
+      "bytes": 12719,
+      "cacheFile": "en-015.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 15,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-15-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-015.html"
+    },
+    {
+      "language": "en",
+      "sarga": 16,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga16/aranya_16_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "02122ff73ff996871fc4b167783ceada8506f8a7c3fe0798c374b586c11e23e6",
+      "bytes": 21848,
+      "cacheFile": "en-016.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 16,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-16-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-016.html"
+    },
+    {
+      "language": "en",
+      "sarga": 17,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga17/aranya_17_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "ef6b80fec784b2b05900790fe1cdb8750f3bffde9fbb6555d1ab3a0250c2cb0f",
+      "bytes": 8553,
+      "cacheFile": "en-017.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 17,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-17-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-017.html"
+    },
+    {
+      "language": "en",
+      "sarga": 18,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga18/aranya_18_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "73e1477e42100b82aa0b5ef03fe98c46bc2be834a5b909fe51e6184070235610",
+      "bytes": 14261,
+      "cacheFile": "en-018.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 18,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-18-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-018.html"
+    },
+    {
+      "language": "en",
+      "sarga": 19,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga19/aranya_19_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "74be339deff35b1a38d448d7df8adf24b8351bb08a484eb74d8e075debafc9cd",
+      "bytes": 22786,
+      "cacheFile": "en-019.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 19,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-19-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-019.html"
+    },
+    {
+      "language": "en",
+      "sarga": 20,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga20/aranya_20_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "a3dbca014d0b35d0a8a1ed9278dcd38075120f36cf64f5b15edac7bfaab5b6d3",
+      "bytes": 7795,
+      "cacheFile": "en-020.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 20,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-20-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-020.html"
+    },
+    {
+      "language": "en",
+      "sarga": 21,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga21/aranya_21_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "f17de3556dbbd28dc0f7303630817e65d7db74167687941bdb428be5e86f6960",
+      "bytes": 6485,
+      "cacheFile": "en-021.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 21,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-21-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-021.html"
+    },
+    {
+      "language": "en",
+      "sarga": 22,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga22/aranya_22_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "70747a39bee356b934b41df8e340ea9426eeef085881e37dd24e97855ac0f994",
+      "bytes": 6726,
+      "cacheFile": "en-022.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 22,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-22-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-022.html"
+    },
+    {
+      "language": "en",
+      "sarga": 23,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga23/aranya_23_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "73cab2408131ce5cc08d7111a4a8a8f9bc13d52af7296067c7eb047a58fd9405",
+      "bytes": 8151,
+      "cacheFile": "en-023.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 23,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-23-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-023.html"
+    },
+    {
+      "language": "en",
+      "sarga": 24,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga24/aranya_24_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "33c71a69d721c7c4e48cc108b1321f823874a5a4e2cc47684115abee78230bf0",
+      "bytes": 12400,
+      "cacheFile": "en-024.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 24,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-24-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-024.html"
+    },
+    {
+      "language": "en",
+      "sarga": 25,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga25/aranya_25_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 404",
+      "cacheFile": "en-025.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 25,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-25-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-025.html"
+    },
+    {
+      "language": "en",
+      "sarga": 26,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga26/aranya_26_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "bf1e083a1a11b513ff1bcdeeedff37393c6ccddb846611273eb75205f335484f",
+      "bytes": 9707,
+      "cacheFile": "en-026.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 26,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-26-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-026.html"
+    },
+    {
+      "language": "en",
+      "sarga": 27,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga27/aranya_27_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "1424dbe993cc3cd3cc055a497e88ed2cbd2fd24b4dae7b9c9a9fd04b59161340",
+      "bytes": 7538,
+      "cacheFile": "en-027.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 27,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-27-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-027.html"
+    },
+    {
+      "language": "en",
+      "sarga": 28,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga28/aranya_28_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "73ba533af99e743133a83bed9757fd2f93ff08944041bd3572b938acdefb6322",
+      "bytes": 7215,
+      "cacheFile": "en-028.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 28,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-28-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-028.html"
+    },
+    {
+      "language": "en",
+      "sarga": 29,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga29/aranya_29_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "862a8b95a8f220c6a0bcae4b56836c81856f3aac06106272f7cef6d6b1431250",
+      "bytes": 21992,
+      "cacheFile": "en-029.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 29,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-29-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-029.html"
+    },
+    {
+      "language": "en",
+      "sarga": 30,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga30/aranya_30_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "f8e362a26b49b70097df458a6fc87fa05858006919aaf44e3e9916829a98a2c9",
+      "bytes": 24043,
+      "cacheFile": "en-030.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 30,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-30-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-030.html"
+    },
+    {
+      "language": "en",
+      "sarga": 31,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga31/aranya_31_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "8453d9120dffce60e864702453fc1f5f2ec1f96760da35b7a7b5170a9b05e386",
+      "bytes": 24127,
+      "cacheFile": "en-031.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 31,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-31-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-031.html"
+    },
+    {
+      "language": "en",
+      "sarga": 32,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga32/aranya_32_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "ccf0fa108e7ac9641aff2b6281e36da3845579b9ede1b3238f646d0de3b7dbfd",
+      "bytes": 12285,
+      "cacheFile": "en-032.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 32,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-32-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-032.html"
+    },
+    {
+      "language": "en",
+      "sarga": 33,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga33/aranya_33_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "676c97a1bf6e14149f7a34d962ab0d567f01117bf49c15395dec2d0207a9fe15",
+      "bytes": 10893,
+      "cacheFile": "en-033.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 33,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-33-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-033.html"
+    },
+    {
+      "language": "en",
+      "sarga": 34,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga34/aranya_34_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "a637deed7c96fb3264f20faaf5ab79280fc117c5c98aebc371ce38ae88b5566b",
+      "bytes": 8888,
+      "cacheFile": "en-034.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 34,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-34-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-034.html"
+    },
+    {
+      "language": "en",
+      "sarga": 35,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga35/aranya_35_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "5425c1ff513f24e834e185720e501ebcf70ae21061297e5d09a7334af5588b5f",
+      "bytes": 16487,
+      "cacheFile": "en-035.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 35,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-35-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-035.html"
+    },
+    {
+      "language": "en",
+      "sarga": 36,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga36/aranya_36_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "9dff035cb3a41b8a60dc7b6e1657f4db318b5dac4119214f32635f20bb0d9abf",
+      "bytes": 10744,
+      "cacheFile": "en-036.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 36,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-36-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-036.html"
+    },
+    {
+      "language": "en",
+      "sarga": 37,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga37/aranya_37_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "5e88d3137db0051ecb072b7a669748837a0ed64598207acfe1a592e589526def",
+      "bytes": 12416,
+      "cacheFile": "en-037.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 37,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-37-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-037.html"
+    },
+    {
+      "language": "en",
+      "sarga": 38,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga38/aranya_38_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "5e6e2548a4d382b0b7d017a4511caf90af328c7d2a2fc016262284b6a461196b",
+      "bytes": 10881,
+      "cacheFile": "en-038.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 38,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-38-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-038.html"
+    },
+    {
+      "language": "en",
+      "sarga": 39,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga39/aranya_39_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "266dc5aa8c2cfbe8b5feb36de2d97cceef39462ec1cf805062a87136857cf2fb",
+      "bytes": 9743,
+      "cacheFile": "en-039.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 39,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-39-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-039.html"
+    },
+    {
+      "language": "en",
+      "sarga": 40,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga40/aranya_40_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 404",
+      "cacheFile": "en-040.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 40,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-40-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-040.html"
+    },
+    {
+      "language": "en",
+      "sarga": 41,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga41/aranya_41_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "ba0b7d71fe0f5f92a96d64664154f29a9d521d8ea2891b216c862c8c2d458e1c",
+      "bytes": 8644,
+      "cacheFile": "en-041.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 41,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-41-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-041.html"
+    },
+    {
+      "language": "en",
+      "sarga": 42,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga42/aranya_42_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "0f6ccad3eed658edf8562525e00023c787f1d83150b75990a521eba5c6a789e8",
+      "bytes": 12665,
+      "cacheFile": "en-042.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 42,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-42-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-042.html"
+    },
+    {
+      "language": "en",
+      "sarga": 43,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga43/aranya_43_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "683ba4bb3e9a99aa9a48e1e37baf5f49d148449b83167d9f076811232c97de28",
+      "bytes": 26313,
+      "cacheFile": "en-043.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 43,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-43-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-043.html"
+    },
+    {
+      "language": "en",
+      "sarga": 44,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga44/aranya_44_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "8eb356e9b80e82f9acd9340846893b1faa3ebed3303ebab2447c22ea985bd243",
+      "bytes": 9900,
+      "cacheFile": "en-044.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 44,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-44-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-044.html"
+    },
+    {
+      "language": "en",
+      "sarga": 45,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga45/aranya_45_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "603572d83142e6047942f145cd0c06c6cc8d261f73fbce40b6abb1fb531dba4f",
+      "bytes": 24287,
+      "cacheFile": "en-045.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 45,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-45-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-045.html"
+    },
+    {
+      "language": "en",
+      "sarga": 46,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga46/aranya_46_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "31bd1ab84149947c19cd494d0abdd2d1b436e39fa0c3d6177890d985a354c6d7",
+      "bytes": 17382,
+      "cacheFile": "en-046.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 46,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-46-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-046.html"
+    },
+    {
+      "language": "en",
+      "sarga": 47,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga47/aranya_47_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "2a461c431952b4d31ff9636da552d3505540aa6c77584784f4546f2a0b3b5e7c",
+      "bytes": 26803,
+      "cacheFile": "en-047.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 47,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-47-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-047.html"
+    },
+    {
+      "language": "en",
+      "sarga": 48,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga48/aranya_48_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "0c40457dd8b54d6a0936353e57c8b230d68fe23aa26013a86b76397591c36de9",
+      "bytes": 19384,
+      "cacheFile": "en-048.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 48,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-48-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-048.html"
+    },
+    {
+      "language": "en",
+      "sarga": 49,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga49/aranya_49_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "0d2f313b807cf176fff088565c6e33fbdf4d08991f3f71ba0ef3c82f8cdaafe8",
+      "bytes": 27258,
+      "cacheFile": "en-049.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 49,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-49-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-049.html"
+    },
+    {
+      "language": "en",
+      "sarga": 50,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga50/aranya_50_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "2284928c649ee0de68442c13aff40a4c563a9300434b20f464e10edf0e89967c",
+      "bytes": 18864,
+      "cacheFile": "en-050.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 50,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-50-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-050.html"
+    },
+    {
+      "language": "en",
+      "sarga": 51,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga51/aranya_51_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "ead770e73fa6e63b392462410d75d8d1c1e99f699cb6c3e8ce095aa0d3e10247",
+      "bytes": 16251,
+      "cacheFile": "en-051.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 51,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-51-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-051.html"
+    },
+    {
+      "language": "en",
+      "sarga": 52,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga52/aranya_52_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "956adbeded409491dcc3527e1adc9184e6a802d3e94fab59a141da176c5fc0a3",
+      "bytes": 31406,
+      "cacheFile": "en-052.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 52,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-52-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-052.html"
+    },
+    {
+      "language": "en",
+      "sarga": 53,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga53/aranya_53_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "c3aa0f92d2ba675a4b58e27f5a2e72921f4c7491757cb5f1eaea4c9e620dda66",
+      "bytes": 12868,
+      "cacheFile": "en-053.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 53,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-53-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-053.html"
+    },
+    {
+      "language": "en",
+      "sarga": 54,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga54/aranya_54_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "fb81b4b98864dd0bd90ba40ed972d63d44de276630dae9876be587eadf250736",
+      "bytes": 17390,
+      "cacheFile": "en-054.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 54,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-54-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-054.html"
+    },
+    {
+      "language": "en",
+      "sarga": 55,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga55/aranya_55_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "09931fa89b4ee0fc103a7cb2eba2fcad6ce61743736faa058ba69d192318721d",
+      "bytes": 22999,
+      "cacheFile": "en-055.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 55,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-55-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-055.html"
+    },
+    {
+      "language": "en",
+      "sarga": 56,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga56/aranya_56_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "65679b0cf5fa462f6a57b280dd6d460e5b1635fdb54e2cba9e8b8b361ce01e22",
+      "bytes": 36253,
+      "cacheFile": "en-056.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 56,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-56-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-056.html"
+    },
+    {
+      "language": "en",
+      "sarga": 57,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga57/aranya_57_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "3e0f10fffc3e429068cfe9400b3b1af87ec131a618cb4a30e5baf279acde77f9",
+      "bytes": 7461,
+      "cacheFile": "en-057.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 57,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-57-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-057.html"
+    },
+    {
+      "language": "en",
+      "sarga": 58,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga58/aranya_58_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "53b0d2c8f0e4d9077edb214a67f1f1928ffd9a00f04aa76048a3c6d600943429",
+      "bytes": 7820,
+      "cacheFile": "en-058.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 58,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-58-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-058.html"
+    },
+    {
+      "language": "en",
+      "sarga": 59,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga59/aranya_59_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "14f09eebc551d60c622d5ef6e8b9f42448b72d63cad795f1f39e0df0fad5628c",
+      "bytes": 7398,
+      "cacheFile": "en-059.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 59,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-59-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-059.html"
+    },
+    {
+      "language": "en",
+      "sarga": 60,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga60/aranya_60_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "1d7143095007f879e20edde61e68e79f269273f43bbdfde8441064bdc52e2263",
+      "bytes": 19334,
+      "cacheFile": "en-060.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 60,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-60-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-060.html"
+    },
+    {
+      "language": "en",
+      "sarga": 61,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga61/aranya_61_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "b6a59ad5766690e840cc0b710cecc9f07b6078341ea38a9ad0fd6c26ef751565",
+      "bytes": 8689,
+      "cacheFile": "en-061.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 61,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-61-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-061.html"
+    },
+    {
+      "language": "en",
+      "sarga": 62,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga62/aranya_62_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "d6e6e5d3970f509e4a691d49d52afdc2b2859c3d8fcd1b4ab2e3fa63b9a86f45",
+      "bytes": 7526,
+      "cacheFile": "en-062.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 62,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-62-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-062.html"
+    },
+    {
+      "language": "en",
+      "sarga": 63,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga63/aranya_63_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "73cf9c59ddd824a07714e63f88ba29be77ca709925a7e04d2b95991933745ec0",
+      "bytes": 10674,
+      "cacheFile": "en-063.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 63,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-63-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-063.html"
+    },
+    {
+      "language": "en",
+      "sarga": 64,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga64/aranya_64_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "9c1707792e109f6a72ada607e3468047d5f46dae58d58c646652d4a67ea9c4b1",
+      "bytes": 26023,
+      "cacheFile": "en-064.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 64,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-64-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-064.html"
+    },
+    {
+      "language": "en",
+      "sarga": 65,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga65/aranya_65_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "6cbd602588caaba0eb9941eb035f3346ecb270ec7b08f423d7a9e65673e6ca77",
+      "bytes": 5469,
+      "cacheFile": "en-065.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 65,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-65-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-065.html"
+    },
+    {
+      "language": "en",
+      "sarga": 66,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga66/aranya_66_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "d9abe78c5a8a741cfdc5710e8b2a22d46efa413b381f68b11e3da72d5cc66f30",
+      "bytes": 16806,
+      "cacheFile": "en-066.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 66,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-66-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-066.html"
+    },
+    {
+      "language": "en",
+      "sarga": 67,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga67/aranya_67_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "81f98c957a1f9cd8b1762776e69c6d3956fc6c9f16b9b44a471fecd32be4a719",
+      "bytes": 13064,
+      "cacheFile": "en-067.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 67,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-67-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-067.html"
+    },
+    {
+      "language": "en",
+      "sarga": 68,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga68/aranya_68_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "64ff5ac6b57135ccd81941eb4f784a5e9cd9f3d192f74547f4bc8ef19315973f",
+      "bytes": 19227,
+      "cacheFile": "en-068.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 68,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-68-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-068.html"
+    },
+    {
+      "language": "en",
+      "sarga": 69,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga69/aranya_69_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "12fcdb01040547f3c2a9518eba1c0adc7e04f4b7f035248671a0d255d89dc48c",
+      "bytes": 15453,
+      "cacheFile": "en-069.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 69,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-69-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-069.html"
+    },
+    {
+      "language": "en",
+      "sarga": 70,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga70/aranya_70_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "3f6efe501b4a0b478fd8826eae578995a9cadf501b9235a51984860c1532ec50",
+      "bytes": 7233,
+      "cacheFile": "en-070.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 70,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-70-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-070.html"
+    },
+    {
+      "language": "en",
+      "sarga": 71,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga71/aranya_71_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "81ac5b4e8f124b2915dc58eeaad5535c6f42d1553aa09b35c5c3b1ad0623b0fb",
+      "bytes": 11308,
+      "cacheFile": "en-071.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 71,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-71-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-071.html"
+    },
+    {
+      "language": "en",
+      "sarga": 72,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga72/aranya_72_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "a9cc988deafaaa611cd7ccb2335e13e8f6e2ec68292b1da21fd22852fcf457ae",
+      "bytes": 11411,
+      "cacheFile": "en-072.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 72,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-72-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-072.html"
+    },
+    {
+      "language": "en",
+      "sarga": 73,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga73/aranya_73_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "c1eb625a1a930fe92ec5288a87cdc080a40f77419de5e6e341f98e15ec307489",
+      "bytes": 22030,
+      "cacheFile": "en-073.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 73,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-73-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-073.html"
+    },
+    {
+      "language": "en",
+      "sarga": 74,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga74/aranya_74_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "956ed194548691f9613916b88351aaf9407d7c429039a5c4315286bcdeba0579",
+      "bytes": 33108,
+      "cacheFile": "en-074.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 74,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-74-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-074.html"
+    },
+    {
+      "language": "en",
+      "sarga": 75,
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga75/aranya_75_prose.htm",
+      "retrievedOn": "2026-10-27",
+      "status": "retrieved; editorial comparison pending",
+      "sha256": "a75c9c767121514db15d8db3b7f3d4eecca2cce99c50bbdbc5d2f104a94abc80",
+      "bytes": 12175,
+      "cacheFile": "en-075.html"
+    },
+    {
+      "language": "hi",
+      "sarga": 75,
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-75-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-27",
+      "status": "unavailable",
+      "error": "curl: (22) The requested URL returned error: 406",
+      "cacheFile": "hi-075.html"
+    }
+  ]
+}

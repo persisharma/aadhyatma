@@ -1204,3 +1204,7 @@ combined tree. The Vrat portrait/catalog changes remain intact.
 ## [2026-10-26] ingest | Aranyakanda planning only
 
 Recorded the complete75-sarga/91-provisional-page/256-scene outline, relationship-specific four-language address guide, event/prop contracts and explicit source/translation/art/native gaps in [[decisions/ramayan-comic-character-continuity]]. This planning-only package is submitted separately from the merged Ayodhyakanda PR540; no artwork or integration was started.
+
+## [2026-10-27] ingest | Aranyakanda source-reading authoring draft
+
+Opened draft PR #553 with `aranyakanda-preview-v1/`: full checked-in English arc reading (75 sargas / 2,439 records), source-data issue notes, publication retrieval evidence and the provisional 91-page / 256-scene outline. The retrieval record has73 English chapter pages,2 unavailable,and75 Hindi requests returning HTTP406. This remains authoring preparation, not independent collation, complete four-language scripts, human editorial acceptance, artwork or app integration. See [[decisions/ramayan-comic-character-continuity]].
