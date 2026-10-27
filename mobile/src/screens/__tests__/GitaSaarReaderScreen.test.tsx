@@ -1,11 +1,8 @@
 import assert from 'node:assert/strict';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import StoryIcon from '@/components/StoryIcon';
 import ProseParagraph from '@/components/ProseParagraph';
-import GitaSaarThemeIcon, {
-  gitaSaarThemeIcons,
-} from '@/components/GitaSaarThemeIcon';
+import { gitaSaarStories } from '@/data/gita-saar/stories';
 import ReadingBanner from '@/components/ReadingBanner';
 import CachedArtwork from '@/components/CachedArtwork';
 import { FlatList, Text, View as mockView } from 'react-native';
@@ -152,6 +149,32 @@ test('the reader has no required content tabs and exposes direct previous/next c
   act(() => tree.unmount());
 });
 
+test('the opening story is continuous and later verses offer one-tap return', () => {
+  const Page = jest.requireActual<
+    typeof import('@/components/GitaSaarVersePage')
+  >('@/components/GitaSaarVersePage').default;
+  const openStory = jest.fn();
+  let tree!: TestRenderer.ReactTestRenderer;
+  const page = (verse: typeof firstVerse) => (
+    <GitaLanguageProvider initialLang="en">
+      <Page verse={verse} sourceId="gita-saar" width={393} onOpenStory={openStory} />
+    </GitaLanguageProvider>
+  );
+  act(() => { tree = TestRenderer.create(page(firstVerse)); });
+  assert.ok(tree.root.findAll((n) => n.props.testID === 'gita-saar-story-image-true-prema').length > 0);
+  assert.equal(new Set(tree.root.findAll((n) => String(n.props.testID).startsWith('gita-saar-story-beat-')).map((n) => n.props.testID)).size, 3);
+  assert.ok(tree.root.findAll((n) => n.props.testID === 'gita-saar-story-connection').length > 0);
+  assert.ok(tree.root.findAll((n) => n.props.testID === 'gita-saar-story-everyday').length > 0);
+  assert.ok(tree.root.findAll((n) => n.props.accessibilityRole === 'link' && String(n.props.accessibilityLabel).startsWith('Read story source')).length > 0);
+  act(() => { tree.update(page(chapter.verses[1])); });
+  assert.equal(tree.root.findAll((n) => n.props.testID === 'gita-saar-story-hero-true-prema').length, 0);
+  const door = tree.root.findAll((n) => n.props.accessibilityLabel === "Read this theme's illustrated story" && typeof n.props.onPress === 'function')[0];
+  assert.ok(door);
+  act(() => door.props.onPress());
+  expect(openStory).toHaveBeenCalledTimes(1);
+  act(() => tree.unmount());
+});
+
 test('reader pages receive the measured viewport so long vertical content stays bounded', () => {
   const { tree } = render();
   const viewport = tree.root.findAll(
@@ -289,7 +312,7 @@ const GitaSaarThemesScreen = jest.requireActual<
 >('../GitaSaarThemesScreen').default;
 
 test.each(['hi', 'en', 'gu', 'kn'] as const)(
-  '%s listing keeps complete titles and uses an icon for every theme',
+  '%s listing keeps complete titles and shows a distinct story illustration for every theme',
   (lang) => {
     let tree!: TestRenderer.ReactTestRenderer;
     const navigate = jest.fn();
@@ -305,19 +328,24 @@ test.each(['hi', 'en', 'gu', 'kn'] as const)(
         </GitaLanguageProvider>
       );
     });
-    const icons = tree.root.findAllByType(GitaSaarThemeIcon);
+    const themeArt = tree.root
+      .findAllByType(ReadingBanner)
+      .filter((node) =>
+        String(node.props.testID).startsWith('gita-saar-theme-art-')
+      );
     assert.deepEqual(
-      icons.map((node) => node.props.themeId),
-      gitaSaarChaptersManifest.map((theme) => theme.id)
+      themeArt.map((node) => node.props.source.stem),
+      gitaSaarChaptersManifest.map(
+        (theme) => gitaSaarStories[theme.id].imageStem
+      )
+    );
+    assert.equal(
+      new Set(themeArt.map((node) => node.props.source.stem)).size,
+      16
     );
     assert.ok(
-      gitaSaarChaptersManifest.every((theme) => gitaSaarThemeIcons[theme.id])
-    );
-    assert.ok(
-      icons.every(
-        (node) =>
-          node.findByType(StoryIcon).props.name ===
-          gitaSaarThemeIcons[node.props.themeId]
+      themeArt.every(
+        (node) => node.findByType(CachedArtwork).props.resizeMode === 'contain'
       )
     );
     const paragraphs = tree.root.findAllByType(ProseParagraph);
@@ -335,7 +363,9 @@ test.each(['hi', 'en', 'gu', 'kn'] as const)(
       chapter: 5,
       initialIndex: 0,
     });
-    const banner = tree.root.findByType(ReadingBanner);
+    const banner = tree.root
+      .findAllByType(ReadingBanner)
+      .find((node) => node.props.testID === 'gita-saar-index-artwork')!;
     assert.equal(banner.findByType(CachedArtwork).props.resizeMode, 'contain');
     const buttons = tree.root.findAll(
       (node) =>

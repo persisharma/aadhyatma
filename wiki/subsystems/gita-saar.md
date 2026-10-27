@@ -1,8 +1,8 @@
 ---
 title: Gita Saar (गीता सार)
 type: subsystem
-sources: [mobile/src/data/gita-saar/types.ts, mobile/src/data/gita-saar/index.ts, mobile/src/data/gita-saar/themes/index.ts, mobile/src/data/gita-saar/themes/true-prema.ts, mobile/src/data/gita-saar/experience.ts, mobile/src/data/gita-saar/learningStore.ts, mobile/src/navigation/lazyScreen.tsx, mobile/src/navigation/__tests__/screenPrefetch.test.tsx, mobile/src/components/GitaSaarVersePage.tsx, mobile/src/screens/GitaSaarReaderScreen.tsx, mobile/src/screens/GitaSaarThemesScreen.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/data/searchIndex.ts, mobile/src/data/texts.ts, mobile/src/data/gita-saar/__tests__/gitaSaarContent.test.ts, mobile/src/screens/__tests__/GitaSaarReaderScreen.test.tsx, mobile/.maestro/granth-smoke.yaml, design.md, RULEBOOK.md]
-last_verified_date: 2026-10-26
+sources: [mobile/src/data/gita-saar/types.ts, mobile/src/data/gita-saar/index.ts, mobile/src/data/gita-saar/themes/index.ts, mobile/src/data/gita-saar/themes/true-prema.ts, mobile/src/data/gita-saar/experience.ts, mobile/src/data/gita-saar/stories.ts, mobile/src/data/gita-saar/learningStore.ts, mobile/src/navigation/lazyScreen.tsx, mobile/src/navigation/__tests__/screenPrefetch.test.tsx, mobile/src/components/GitaSaarStory.tsx, mobile/src/components/GitaSaarVersePage.tsx, mobile/src/screens/GitaSaarReaderScreen.tsx, mobile/src/screens/GitaSaarThemesScreen.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/data/searchIndex.ts, mobile/src/data/texts.ts, mobile/src/data/gita-saar/__tests__/gitaSaarContent.test.ts, mobile/src/screens/__tests__/GitaSaarReaderScreen.test.tsx, mobile/.maestro/granth-smoke.yaml, design.md, RULEBOOK.md]
+last_verified_date: 2026-10-27
 confidence: high
 status: current
 ---
@@ -31,18 +31,22 @@ Design: design.md §77; contract: RULEBOOK §30.
   (= theme number), number (= page), gitaChapter, gitaVerse, sanskrit, transliteration (both
   from the corpus), meaningHi/En (= the saar), themeHi/En, groupIndex, groupTitle*, groupIntro*,
   isGroupStart }`. Progress and bookmarks key on `gita-saar:<theme>:<pageIndex>`.
-- **Learning frames** — `experience.ts` adds a bilingual question, category, two-part explanation,
-  takeaway, reflection prompt and references for every stable theme id. The original corpus,
-  Saar, 16-theme order and 170 page ids are unchanged. The two explanatory frames appear on
-  group starts, with takeaway and optional reflection on every page. These are labelled editorial.
+- **Illustrated lessons** — `experience.ts` keeps bilingual questions, categories, takeaways and
+  reflection prompts. `stories.ts` gives each stable theme a distinct sourced story or scriptural
+  example: three bilingual beats, one captioned painting, source links, a separate Gita bridge and
+  one everyday application. The sixteen original Hindi/English adaptations are editorial prose;
+  they do not alter the corpus, Saar, theme order or the 170 page IDs. Research and scene review:
+  `docs/evaluations/gita-saar-stories-2026-10-26/research/README.md`.
 - **Screens** — `GitaSaarThemesScreen` (route `GitaSaarChapters`) is a question-led hub with
   the source-specific Krishna artwork, a direct Gita 2.47 entry (`chapter: 5, initialIndex: 0`),
-  resume, optional category filters, all sixteen theme cards and My learning on the same screen.
+  resume, optional category filters, all sixteen individually illustrated theme cards and My learning on the same screen.
   `GitaSaarReaderScreen` retains native measured horizontal paging, theme transitions,
   progress, bookmarks, routine, share, narration and auto-scroll. Direct previous/next controls
-  also cross theme boundaries. `GitaSaarVersePage` is one vertically scrolling, essence-first
-  lesson: complete existing Saar → optional original verse and corpus meaning → group context
-  and editorial explanation → takeaway → optional reflection → one save action. Original
+  also cross theme boundaries. `GitaSaarVersePage` is one vertically scrolling lesson. Its first page opens with that theme's
+  painting and title, then the complete existing Saar, three visible story beats, Gita connection,
+  everyday example and source links. Other verses offer a direct illustrated door back to this
+  story, then the usual takeaway, optional reflection and one save action. Group context, optional
+  original verse/corpus meaning and full-Gita handoff remain available. Original
   scripture disclosure and writing are optional, never required stages. The full-Gita handoff
   opens `GitaReader {chapter: gitaChapter, initialIndex: gitaVerse - 1}`.
 - **Private reflections** — `learningStore.ts`, AsyncStorage key
@@ -52,9 +56,10 @@ Design: design.md §77; contract: RULEBOOK §30.
   Save combines the reflection and the existing bookmark action. My learning combines old
   bookmarks with notes, and retains notes when the bookmark is removed. Notes are not included
   in share payloads. Editing stops narration and auto-scroll; Done and save dismiss the keyboard.
-- **Artwork** — the approved garden illustration appears at karma's first verse, 2.47, through
-  `readerIllustrationAsset('gita-saar-karma-garden')`. The 960×480 WebP is served from the
-  immutable manifest CDN URL, never required into the app bundle.
+- **Artwork** — `readerIllustrationAsset('gita-saar-story-<id>')` selects a distinct 960×480
+  approved WebP per theme. All sixteen immutable CDN objects were byte-verified; images use
+  `contain` geometry and are never required into the app bundle. The earlier garden prototype
+  object remains published, but Bhagiratha's scene now leads karma.
 - **Wiring** — `texts.ts` row (sub/verseCount from the manifest); `entryRoutes.ts` rows in
   `stotramChaptersRouteById` / `chapterCountBySourceId` / `stotramReaderRouteBySourceId`;
   `searchIndex.ts` `pushChapteredGitaSaar` (corpus lines + `theme — saar` as the meaning);
@@ -67,9 +72,8 @@ Design: design.md §77; contract: RULEBOOK §30.
   attaches the corpus Sanskrit/IAST at open time, so a page can never drift from the Gita
   reader's text; a bad ref throws (loader) and fails `gitaSaarContent.test.ts`, which opens the
   corpus JSON for every ref. The test also rejects any danda in an authored line.
-- **Adding a theme touches four files:** `themes/<id>.ts`, the array in `themes/index.ts`, the
-  manifest row in `index.ts` (id · titles · verse count — the test pins the mirror), and its
-  editorial learning frame in `experience.ts`. Routing,
+- **Adding a theme touches five data files plus an approved painting:** `themes/<id>.ts`, the array in `themes/index.ts`, the
+  manifest row in `index.ts` (id · titles · verse count — the test pins the mirror), its editorial frame in `experience.ts`, and a researched lesson in `stories.ts`. Routing,
   search, bookmarks, resume, the routine picker and the index all read the manifest. **Append
   only** — the registry position is the chapter number and therefore the key of every saved
   bookmark/progress row.

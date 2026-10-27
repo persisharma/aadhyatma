@@ -1,0 +1,51 @@
+# Native gallery sweep: every theme card opens its distinct story and picture.
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 30000
+- scrollUntilVisible:
+    element: { text: "Sacred Books.*Tap to open." }
+    direction: DOWN
+- tapOn: "Sacred Books.*Tap to open."
+- scrollUntilVisible:
+    element: { text: "Gita Saar\\..*Tap to open\\..*" }
+    direction: DOWN
+- tapOn: "Gita Saar\\..*Tap to open\\..*"
+- extendedWaitUntil:
+    visible: { id: gita-saar-featured }
+    timeout: 30000
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-daivi }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-daivi }
+- tapOn: { id: gita-saar-theme-daivi }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-daivi }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-daivi
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-dhyan }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-dhyan }
+- tapOn: { id: gita-saar-theme-dhyan }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-dhyan }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-dhyan
+- tapOn: Back

@@ -19,18 +19,19 @@ import {
   getGitaSaarChapter,
 } from '@/data/gita-saar';
 import { gitaSaarExperiences } from '@/data/gita-saar/experience';
+import { gitaSaarStories } from '@/data/gita-saar/stories';
 import { useGitaSaarLearning } from '@/data/gita-saar/learningStore';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { meaningToken, scriptTitleFont } from '@/utils/langType';
 import { getSourceBackground } from '@/data/backgrounds';
+import { readerIllustrationAsset } from '@/data/readerIllustrationAsset';
 import ReaderHeader from '@/components/ReaderHeader';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import { readingParchment } from '@/data/backgroundAsset';
 import ReadingBanner from '@/components/ReadingBanner';
 import ProseParagraph from '@/components/ProseParagraph';
 import AppIcon from '@/components/AppIcon';
-import GitaSaarThemeIcon from '@/components/GitaSaarThemeIcon';
 import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -401,7 +402,7 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                       key={theme.id}
                       accessibilityRole="button"
                       accessibilityLabel={`${theme.titleEn}. ${theme.verseCount} verses. Tap to open.`}
-                      onPress={() => open(theme.chapter)}
+                      onPress={() => open(theme.chapter, 0)}
                       style={({ pressed }) => [
                         styles.themeCard,
                         {
@@ -413,7 +414,19 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                         },
                       ]}
                     >
-                      <GitaSaarThemeIcon themeId={theme.id} />
+                      <ReadingBanner
+                        testID={`gita-saar-theme-art-${theme.id}`}
+                        source={readerIllustrationAsset(
+                          gitaSaarStories[theme.id].imageStem
+                        )}
+                        style={{
+                          width:
+                            (width - spacing.screenGutter * 2 - 12) / 2 - 28,
+                          maxWidth: 560,
+                          maxHeight: 280,
+                          marginBottom: 5,
+                        }}
+                      />
                       <ProseParagraph
                         style={[
                           titleType,

@@ -33,8 +33,11 @@ node scripts/prepare-reader-illustrations.mjs --upload   # publish, then update 
 Style/scene briefs and references:
 `docs/evaluations/reading-visuals-2026-10-11/style3-full-set/`.
 
-Gita Saar’s approved `gita-saar-karma-garden` scene was added on 2026-10-26 for the
-continuous learning frame at karma 2.47. It is explanatory editorial imagery,
-with the existing Krishna–Arjuna reading background retained. Source and exact
-prompt: `docs/evaluations/gita-saar-revamp-2026-10-26/`. The 44 approved paintings
-are published; the garden object is `150bc207bef44d6a.webp`.
+Gita Saar's first prototype used `gita-saar-karma-garden` at karma 2.47; that
+published object remains available but the current reader opens every theme
+with a distinct, source-grounded story painting. The sixteen approved
+`gita-saar-story-<theme>` WebPs are 960×480, published under immutable hashes,
+and rendered with `contain` so complete subjects remain visible. Their story
+sources, prompts, rejected scene, visual review and exact hashes are recorded
+in `docs/evaluations/gita-saar-stories-2026-10-26/`. The active manifest now
+contains 60 approved paintings; existing backgrounds remain unchanged.

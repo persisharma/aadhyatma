@@ -400,6 +400,16 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
                 const isLastPage = verseIdx === verseCount - 1;
                 return (
                   <GitaSaarVersePage
+                    onOpenStory={() => {
+                      Keyboard.dismiss();
+                      autoSlide.stop();
+                      readAloud.stop();
+                      listRef.current?.scrollToIndex({
+                        index: offset,
+                        animated: true,
+                      });
+                      setCurrentIndex(0);
+                    }}
                     chapterTitle={contentByLang(
                       lang,
                       chapter.titleHi,

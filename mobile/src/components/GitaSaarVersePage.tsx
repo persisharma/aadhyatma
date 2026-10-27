@@ -1,40 +1,42 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Keyboard, Pressable, StyleSheet, View } from "react-native";
-import AutoSlideScrollView from "./AutoSlideScrollView";
-import { useTheme } from "@/theme/ThemeContext";
-import { fontFamilies } from "@/theme/typography";
-import { useGitaLanguage } from "@/data/gita/language";
+import {
+  GitaSaarStoryHero,
+  GitaSaarStoryDoor,
+  GitaSaarStoryDetails,
+} from './GitaSaarStory';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Keyboard, Pressable, StyleSheet, View } from 'react-native';
+import AutoSlideScrollView from './AutoSlideScrollView';
+import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
+import { useGitaLanguage } from '@/data/gita/language';
 import {
   gitaSaarChaptersManifest,
   resolveGitaSaarRef,
   type GitaSaarVerse,
-} from "@/data/gita-saar";
+} from '@/data/gita-saar';
 import {
   gitaSaarExperiences,
   type LearningCopy,
-} from "@/data/gita-saar/experience";
-import { MAX_REFLECTION_LENGTH } from "@/data/gita-saar/learningStore";
+} from '@/data/gita-saar/experience';
+import { MAX_REFLECTION_LENGTH } from '@/data/gita-saar/learningStore';
 import {
   contentByLang,
   meaningByLang,
   meaningSourceLang,
   pick,
   verseLinesByLang,
-} from "@/utils/localize";
+} from '@/utils/localize';
 import {
   meaningToken,
   scriptTitleFont,
   verseToken,
   pillTextStyle,
-} from "@/utils/langType";
-import { getReaderBackground } from "@/data/backgrounds";
-import { readerIllustrationAsset } from "@/data/readerIllustrationAsset";
-import BackgroundLayer from "./BackgroundLayer";
-import ReadingBanner from "./ReadingBanner";
-import ProseParagraph from "./ProseParagraph";
-import GitaSaarThemeIcon from "./GitaSaarThemeIcon";
-import AppIcon from "./AppIcon";
-import TextField from "./TextField";
+} from '@/utils/langType';
+import { getReaderBackground } from '@/data/backgrounds';
+import BackgroundLayer from './BackgroundLayer';
+import ProseParagraph from './ProseParagraph';
+import AppIcon from './AppIcon';
+import TextField from './TextField';
 
 type Props = {
   verse: GitaSaarVerse;
@@ -49,6 +51,7 @@ type Props = {
   initialReflection?: string;
   onSaveLearning?: (text: string) => Promise<void>;
   onReflectionFocus?: () => void;
+  onOpenStory?: () => void;
 };
 /** One continuous, essence-first lesson. Deeper scripture and writing are optional. */
 export default function GitaSaarVersePage({
@@ -61,9 +64,10 @@ export default function GitaSaarVersePage({
   closing,
   onOpenInGita,
   isSaved = false,
-  initialReflection = "",
+  initialReflection = '',
   onSaveLearning,
   onReflectionFocus,
+  onOpenStory,
 }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
@@ -73,14 +77,14 @@ export default function GitaSaarVersePage({
   const [writing, setWriting] = useState(false);
   const [reflection, setReflection] = useState(initialReflection);
   const [dirty, setDirty] = useState(false);
-  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">(
-    "idle",
+  const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>(
+    'idle'
   );
   useEffect(() => {
     if (!dirty) setReflection(initialReflection);
   }, [initialReflection, dirty]);
   useEffect(() => {
-    if (!isSaved && status === "saved") setStatus("idle");
+    if (!isSaved && status === 'saved') setStatus('idle');
   }, [isSaved, status]);
   const original = useMemo(
     () =>
@@ -90,7 +94,7 @@ export default function GitaSaarVersePage({
             verse: verse.gitaVerse,
           })
         : null,
-    [sourceOpen, verse.gitaChapter, verse.gitaVerse],
+    [sourceOpen, verse.gitaChapter, verse.gitaVerse]
   );
   const copy = (value: LearningCopy) => meaningByLang(lang, value.hi, value.en);
   const tok = meaningToken(meaningSourceLang(lang), typography);
@@ -102,7 +106,7 @@ export default function GitaSaarVersePage({
   } as const;
   const title = {
     fontFamily:
-      lang === "en"
+      lang === 'en'
         ? fontFamilies.latinSemiBold
         : scriptTitleFont(lang, typography.screenTitle.fontFamily),
     color: colors.ink,
@@ -115,15 +119,15 @@ export default function GitaSaarVersePage({
   } as const;
   const saved = isSaved && !dirty;
   async function save() {
-    if (!onSaveLearning || status === "saving") return;
+    if (!onSaveLearning || status === 'saving') return;
     Keyboard.dismiss();
-    setStatus("saving");
+    setStatus('saving');
     try {
       await onSaveLearning(reflection);
       setDirty(false);
-      setStatus("saved");
+      setStatus('saved');
     } catch {
-      setStatus("error");
+      setStatus('error');
     }
   }
   return (
@@ -154,6 +158,14 @@ export default function GitaSaarVersePage({
           )}
           {topActions && <View style={styles.actions}>{topActions}</View>}
         </View>
+        {verse.number === 1 ? (
+          <GitaSaarStoryHero
+            themeId={themeId}
+            width={width - spacing.screenGutter * 2}
+          />
+        ) : (
+          <GitaSaarStoryDoor themeId={themeId} onPress={onOpenStory} />
+        )}
         <ProseParagraph
           style={[
             pillTextStyle(lang, typography.versePill),
@@ -163,7 +175,7 @@ export default function GitaSaarVersePage({
           {contentByLang(
             lang,
             `श्लोक · ${verse.gitaChapter}.${verse.gitaVerse}`,
-            `Shloka · ${verse.gitaChapter}.${verse.gitaVerse}`,
+            `Shloka · ${verse.gitaChapter}.${verse.gitaVerse}`
           )}
         </ProseParagraph>
         <ProseParagraph
@@ -180,7 +192,7 @@ export default function GitaSaarVersePage({
           {contentByLang(lang, verse.themeHi, verse.themeEn)}
         </ProseParagraph>
         <ProseParagraph style={[label, { marginBottom: 9 }]}>
-          {pick(lang, { hi: "सार", en: "Essence", gu: "સાર", kn: "ಸಾರ" })}
+          {pick(lang, { hi: 'सार', en: 'Essence', gu: 'સાર', kn: 'ಸಾರ' })}
         </ProseParagraph>
         <ProseParagraph
           testID="gita-saar-essence"
@@ -188,6 +200,7 @@ export default function GitaSaarVersePage({
         >
           {meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
         </ProseParagraph>
+        {verse.number === 1 && <GitaSaarStoryDetails themeId={themeId} />}
         <Pressable
           testID="gita-saar-source-toggle"
           accessibilityRole="button"
@@ -199,14 +212,14 @@ export default function GitaSaarVersePage({
           <AppIcon name="text" size={19} color={colors.saffronDeep} />
           <ProseParagraph style={[label, { flex: 1 }]}>
             {pick(lang, {
-              hi: "मूल श्लोक और अर्थ",
-              en: "Original verse & meaning",
-              gu: "મૂળ શ્લોક અને અર્થ",
-              kn: "ಮೂಲ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ",
+              hi: 'मूल श्लोक और अर्थ',
+              en: 'Original verse & meaning',
+              gu: 'મૂળ શ્લોક અને અર્થ',
+              kn: 'ಮೂಲ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ',
             })}
           </ProseParagraph>
           <AppIcon
-            name={sourceOpen ? "close" : "next"}
+            name={sourceOpen ? 'close' : 'next'}
             size={17}
             color={colors.saffronDeep}
           />
@@ -240,7 +253,7 @@ export default function GitaSaarVersePage({
                     {line}
                   </ProseParagraph>
                 );
-              },
+              }
             )}
             {original && (
               <>
@@ -248,10 +261,10 @@ export default function GitaSaarVersePage({
                   style={[label, { marginTop: 12, marginBottom: 8 }]}
                 >
                   {pick(lang, {
-                    hi: "भावार्थ",
-                    en: "Meaning",
-                    gu: "ભાવાર્થ",
-                    kn: "ಭಾವಾರ್ಥ",
+                    hi: 'भावार्थ',
+                    en: 'Meaning',
+                    gu: 'ભાવાર્થ',
+                    kn: 'ಭಾವಾರ್ಥ',
                   })}
                 </ProseParagraph>
                 <ProseParagraph style={body}>
@@ -271,10 +284,10 @@ export default function GitaSaarVersePage({
           >
             <ProseParagraph style={[label, { flex: 1 }]}>
               {pick(lang, {
-                hi: "पूरा अर्थ गीता में पढ़ें",
-                en: "Read the full meaning in the Gita",
-                gu: "પૂરો અર્થ ગીતામાં વાંચો",
-                kn: "ಪೂರ್ಣ ಅರ್ಥವನ್ನು ಗೀತೆಯಲ್ಲಿ ಓದಿ",
+                hi: 'पूरा अर्थ गीता में पढ़ें',
+                en: 'Read the full meaning in the Gita',
+                gu: 'પૂરો અર્થ ગીતામાં વાંચો',
+                kn: 'ಪೂರ್ಣ ಅರ್ಥವನ್ನು ಗೀತೆಯಲ್ಲಿ ಓದಿ',
               })}
             </ProseParagraph>
             <AppIcon name="next" size={17} color={colors.saffronDeep} />
@@ -294,91 +307,7 @@ export default function GitaSaarVersePage({
             {contentByLang(lang, verse.groupIntroHi, verse.groupIntroEn)}
           </ProseParagraph>
         </View>
-        {experience && verse.isGroupStart && (
-          <View testID="gita-saar-learning-frame" style={styles.explanation}>
-            <ProseParagraph style={label}>
-              {pick(lang, {
-                hi: "इस विषय को समझें",
-                en: "Understand the theme",
-                gu: "આ વિષયને સમજો",
-                kn: "ಈ ವಿಷಯವನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ",
-              })}
-            </ProseParagraph>
-            <ProseParagraph
-              accessibilityRole="header"
-              style={[
-                title,
-                {
-                  fontSize: tok.fontSize + 5,
-                  lineHeight: tok.lineHeight + 5,
-                  marginTop: 9,
-                  marginBottom: 20,
-                },
-              ]}
-            >
-              {copy(experience.title)}
-            </ProseParagraph>
-            {themeId === "karma" && verse.number === 1 && (
-              <ReadingBanner
-                testID="gita-saar-garden"
-                source={readerIllustrationAsset("gita-saar-karma-garden")}
-                style={{
-                  width: width - spacing.screenGutter * 2,
-                  maxWidth: 560,
-                  maxHeight: 280,
-                  marginBottom: 22,
-                }}
-              />
-            )}
-            {[experience.first, experience.second].map((frame, index) => (
-              <View
-                key={index}
-                style={[styles.learningRow, { borderColor: colors.divider }]}
-              >
-                <View
-                  style={[
-                    styles.learningSymbol,
-                    { backgroundColor: colors.goldTint },
-                  ]}
-                >
-                  {index === 0 ? (
-                    <GitaSaarThemeIcon themeId={themeId} />
-                  ) : (
-                    <AppIcon
-                      name="insight"
-                      size={25}
-                      color={colors.saffronDeep}
-                    />
-                  )}
-                </View>
-                <View style={styles.learningCopy}>
-                  <ProseParagraph
-                    style={[
-                      title,
-                      { fontSize: tok.fontSize, lineHeight: tok.lineHeight },
-                    ]}
-                  >
-                    {copy(frame.title)}
-                  </ProseParagraph>
-                  <ProseParagraph style={[body, { marginTop: 8 }]}>
-                    {copy(frame.body)}
-                  </ProseParagraph>
-                </View>
-              </View>
-            ))}
-            <ProseParagraph
-              style={[label, { color: colors.inkMuted, marginTop: 15 }]}
-            >
-              {pick(lang, {
-                hi: "उदाहरण और मनन संपादकीय प्रस्तुति हैं।",
-                en: "Examples and reflections are editorial.",
-                gu: "ઉદાહરણો અને મનન સંપાદકીય રજૂઆત છે.",
-                kn: "ಉದಾಹರಣೆಗಳು ಮತ್ತು ಚಿಂತನೆ ಸಂಪಾದಕೀಯ ನಿರೂಪಣೆ.",
-              })}
-            </ProseParagraph>
-          </View>
-        )}
-        {experience && (
+        {experience && verse.number !== 1 && (
           <View
             style={[
               styles.takeaway,
@@ -391,10 +320,10 @@ export default function GitaSaarVersePage({
           >
             <ProseParagraph style={label}>
               {pick(lang, {
-                hi: "आज साथ ले जाएँ",
-                en: "Take it into your day",
-                gu: "આજ સાથે લઈ જાઓ",
-                kn: "ಇಂದಿನ ದಿನಕ್ಕೆ ಜೊತೆಯಾಗಲಿ",
+                hi: 'आज साथ ले जाएँ',
+                en: 'Take it into your day',
+                gu: 'આજ સાથે લઈ જાઓ',
+                kn: 'ಇಂದಿನ ದಿನಕ್ಕೆ ಜೊತೆಯಾಗಲಿ',
               })}
             </ProseParagraph>
             <ProseParagraph
@@ -419,18 +348,18 @@ export default function GitaSaarVersePage({
               <AppIcon name="edit" size={19} color={colors.saffronDeep} />
               <ProseParagraph style={[label, { flex: 1 }]}>
                 {pick(lang, {
-                  hi: "अपना एक विचार लिखें",
-                  en: "Add a thought of your own",
-                  gu: "તમારો એક વિચાર લખો",
-                  kn: "ನಿಮ್ಮ ಒಂದು ವಿಚಾರ ಬರೆಯಿರಿ",
+                  hi: 'अपना एक विचार लिखें',
+                  en: 'Add a thought of your own',
+                  gu: 'તમારો એક વિચાર લખો',
+                  kn: 'ನಿಮ್ಮ ಒಂದು ವಿಚಾರ ಬರೆಯಿರಿ',
                 })}
               </ProseParagraph>
               <ProseParagraph style={[label, { color: colors.inkMuted }]}>
                 {pick(lang, {
-                  hi: "वैकल्पिक",
-                  en: "Optional",
-                  gu: "વૈકલ્પિક",
-                  kn: "ಐಚ್ಛಿಕ",
+                  hi: 'वैकल्पिक',
+                  en: 'Optional',
+                  gu: 'વૈકલ્પિક',
+                  kn: 'ಐಚ್ಛಿಕ',
                 })}
               </ProseParagraph>
             </Pressable>
@@ -438,8 +367,8 @@ export default function GitaSaarVersePage({
               <View style={{ marginBottom: 18 }}>
                 <View
                   style={{
-                    flexDirection: "row",
-                    alignItems: "flex-start",
+                    flexDirection: 'row',
+                    alignItems: 'flex-start',
                     gap: 12,
                     marginTop: 15,
                     marginBottom: 13,
@@ -457,16 +386,16 @@ export default function GitaSaarVersePage({
                     style={{
                       minHeight: 44,
                       minWidth: 44,
-                      justifyContent: "center",
-                      alignItems: "center",
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}
                   >
                     <ProseParagraph style={label}>
                       {pick(lang, {
-                        hi: "पूर्ण",
-                        en: "Done",
-                        gu: "પૂર્ણ",
-                        kn: "ಮುಗಿಯಿತು",
+                        hi: 'पूर्ण',
+                        en: 'Done',
+                        gu: 'પૂર્ણ',
+                        kn: 'ಮುಗಿಯಿತು',
                       })}
                     </ProseParagraph>
                   </Pressable>
@@ -482,20 +411,20 @@ export default function GitaSaarVersePage({
                   onChangeText={(text) => {
                     setReflection(text);
                     setDirty(true);
-                    setStatus("idle");
+                    setStatus('idle');
                   }}
                   placeholder={pick(lang, {
-                    hi: "आज मैं…",
-                    en: "Today, I…",
-                    gu: "આજે હું…",
-                    kn: "ಇಂದು ನಾನು…",
+                    hi: 'आज मैं…',
+                    en: 'Today, I…',
+                    gu: 'આજે હું…',
+                    kn: 'ಇಂದು ನಾನು…',
                   })}
                   style={[
                     body,
                     {
                       minHeight: 125,
                       height: undefined,
-                      textAlignVertical: "top",
+                      textAlignVertical: 'top',
                       paddingVertical: 12,
                     },
                   ]}
@@ -505,8 +434,8 @@ export default function GitaSaarVersePage({
             <Pressable
               accessibilityRole="button"
               accessibilityLabel="Save Gita Saar learning"
-              accessibilityState={{ disabled: status === "saving" }}
-              disabled={status === "saving"}
+              accessibilityState={{ disabled: status === 'saving' }}
+              disabled={status === 'saving'}
               testID="gita-saar-save-learning"
               onPress={() => void save()}
               style={[
@@ -527,36 +456,36 @@ export default function GitaSaarVersePage({
                   },
                 ]}
               >
-                {status === "saving"
+                {status === 'saving'
                   ? pick(lang, {
-                      hi: "सहेज रहे हैं…",
-                      en: "Saving…",
-                      gu: "સાચવી રહ્યા છીએ…",
-                      kn: "ಉಳಿಸಲಾಗುತ್ತಿದೆ…",
+                      hi: 'सहेज रहे हैं…',
+                      en: 'Saving…',
+                      gu: 'સાચવી રહ્યા છીએ…',
+                      kn: 'ಉಳಿಸಲಾಗುತ್ತಿದೆ…',
                     })
                   : saved
                     ? pick(lang, {
-                        hi: "सीख सहेज ली गई",
-                        en: "Teaching saved",
-                        gu: "શીખ સાચવી લીધી",
-                        kn: "ಕಲಿಕೆ ಉಳಿಸಲಾಗಿದೆ",
+                        hi: 'सीख सहेज ली गई',
+                        en: 'Teaching saved',
+                        gu: 'શીખ સાચવી લીધી',
+                        kn: 'ಕಲಿಕೆ ಉಳಿಸಲಾಗಿದೆ',
                       })
                     : reflection.trim()
                       ? pick(lang, {
-                          hi: "सीख और विचार सहेजें",
-                          en: "Save teaching & reflection",
-                          gu: "શીખ અને વિચાર સાચવો",
-                          kn: "ಕಲಿಕೆ ಮತ್ತು ವಿಚಾರ ಉಳಿಸಿ",
+                          hi: 'सीख और विचार सहेजें',
+                          en: 'Save teaching & reflection',
+                          gu: 'શીખ અને વિચાર સાચવો',
+                          kn: 'ಕಲಿಕೆ ಮತ್ತು ವಿಚಾರ ಉಳಿಸಿ',
                         })
                       : pick(lang, {
-                          hi: "सीख सहेजें",
-                          en: "Keep this teaching",
-                          gu: "શીખ સાચવો",
-                          kn: "ಕಲಿಕೆ ಉಳಿಸಿ",
+                          hi: 'सीख सहेजें',
+                          en: 'Keep this teaching',
+                          gu: 'શીખ સાચવો',
+                          kn: 'ಕಲಿಕೆ ಉಳಿಸಿ',
                         })}
               </ProseParagraph>
               <AppIcon
-                name={saved ? "saved" : "next"}
+                name={saved ? 'saved' : 'next'}
                 size={21}
                 color={saved ? colors.saffronDeep : colors.onPrimary}
               />
@@ -567,31 +496,31 @@ export default function GitaSaarVersePage({
                 label,
                 {
                   color:
-                    status === "error" ? colors.avoidDeep : colors.inkMuted,
+                    status === 'error' ? colors.avoidDeep : colors.inkMuted,
                   marginTop: 10,
-                  textAlign: "center",
+                  textAlign: 'center',
                 },
               ]}
             >
-              {status === "error"
+              {status === 'error'
                 ? pick(lang, {
-                    hi: "सहेजा नहीं जा सका। आपका लिखा यहीं है; फिर कोशिश करें।",
-                    en: "Could not save. Your writing is still here; try again.",
-                    gu: "સાચવી શકાયું નથી. તમારું લખાણ અહીં છે; ફરી પ્રયાસ કરો.",
-                    kn: "ಉಳಿಸಲಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಬರಹ ಇಲ್ಲಿದೆ; ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+                    hi: 'सहेजा नहीं जा सका। आपका लिखा यहीं है; फिर कोशिश करें।',
+                    en: 'Could not save. Your writing is still here; try again.',
+                    gu: 'સાચવી શકાયું નથી. તમારું લખાણ અહીં છે; ફરી પ્રયાસ કરો.',
+                    kn: 'ಉಳಿಸಲಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಬರಹ ಇಲ್ಲಿದೆ; ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
                   })
                 : saved
                   ? pick(lang, {
-                      hi: "मेरी सीख में कभी भी लौटकर पढ़ें।",
-                      en: "Return to it anytime in My learning.",
-                      gu: "મારી શીખમાં ગમે ત્યારે ફરી વાંચો.",
-                      kn: "ನನ್ನ ಕಲಿಕೆಯಲ್ಲಿ ಮತ್ತೆ ಓದಿ.",
+                      hi: 'मेरी सीख में कभी भी लौटकर पढ़ें।',
+                      en: 'Return to it anytime in My learning.',
+                      gu: 'મારી શીખમાં ગમે ત્યારે ફરી વાંચો.',
+                      kn: 'ನನ್ನ ಕಲಿಕೆಯಲ್ಲಿ ಮತ್ತೆ ಓದಿ.',
                     })
                   : pick(lang, {
-                      hi: "आपके निजी विचार, आपकी सीख के साथ।",
-                      en: "Your private reflections, kept with your learning.",
-                      gu: "તમારા ખાનગી વિચારો, તમારી શીખ સાથે.",
-                      kn: "ನಿಮ್ಮ ಖಾಸಗಿ ವಿಚಾರಗಳು, ನಿಮ್ಮ ಕಲಿಕೆಯ ಜೊತೆಗೆ.",
+                      hi: 'आपके निजी विचार, आपकी सीख के साथ।',
+                      en: 'Your private reflections, kept with your learning.',
+                      gu: 'તમારા ખાનગી વિચારો, તમારી શીખ સાથે.',
+                      kn: 'ನಿಮ್ಮ ಖಾಸಗಿ ವಿಚಾರಗಳು, ನಿಮ್ಮ ಕಲಿಕೆಯ ಜೊತೆಗೆ.',
                     })}
             </ProseParagraph>
           </View>
@@ -600,10 +529,10 @@ export default function GitaSaarVersePage({
           <View style={[styles.closing, { borderColor: colors.gold }]}>
             <ProseParagraph style={label}>
               {pick(lang, {
-                hi: "एक पंक्ति में",
-                en: "In one line",
-                gu: "એક પંક્તિમાં",
-                kn: "ಒಂದು ಸಾಲಿನಲ್ಲಿ",
+                hi: 'एक पंक्ति में',
+                en: 'In one line',
+                gu: 'એક પંક્તિમાં',
+                kn: 'ಒಂದು ಸಾಲಿನಲ್ಲಿ',
               })}
             </ProseParagraph>
             <ProseParagraph
@@ -618,21 +547,21 @@ export default function GitaSaarVersePage({
   );
 }
 const styles = StyleSheet.create({
-  page: { overflow: "hidden" },
+  page: { overflow: 'hidden' },
   scroll: { flex: 1 },
   content: { paddingTop: 12, paddingBottom: 100 },
   contextRow: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
     minHeight: 44,
   },
   context: { flex: 1 },
-  actions: { flexDirection: "row", gap: 8 },
+  actions: { flexDirection: 'row', gap: 8 },
   sourceToggle: {
     minHeight: 54,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 12,
     paddingVertical: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
@@ -645,8 +574,8 @@ const styles = StyleSheet.create({
   },
   handoff: {
     minHeight: 48,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
     paddingVertical: 12,
     marginBottom: 16,
@@ -658,8 +587,8 @@ const styles = StyleSheet.create({
   },
   explanation: { marginBottom: 26 },
   learningRow: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     gap: 14,
     paddingVertical: 20,
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -667,8 +596,8 @@ const styles = StyleSheet.create({
   learningSymbol: {
     width: 48,
     minHeight: 48,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 24,
   },
   learningCopy: { flex: 1 },
@@ -682,8 +611,8 @@ const styles = StyleSheet.create({
   writeToggle: {
     minHeight: 58,
     paddingVertical: 12,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 10,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -693,8 +622,8 @@ const styles = StyleSheet.create({
     minHeight: 56,
     paddingHorizontal: 18,
     paddingVertical: 13,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 12,
     borderWidth: StyleSheet.hairlineWidth,
   },
