@@ -17,7 +17,20 @@ export type ComicBook = { title: Record<Lang, string>; episodes: ComicEpisode[];
 export const comicLanguage = (lang: Lang): ComicLanguage => lang;
 export function getComicBook(id: string): ComicBook | undefined {
   if (id === 'balakanda-v1') return require('./balakanda.json') as ComicBook;
+  if (id === 'ayodhyakanda-v1') return require('./ayodhyakanda.json') as ComicBook;
   return undefined;
+}
+
+import type { RemoteAssetManifest } from '@/data/assetManifest';
+import balakandaManifest from '@/data/comicAssetManifest.json';
+import ayodhyakandaManifest from '@/data/ayodhyaComicAssetManifest.json';
+const comicManifests: Record<string, RemoteAssetManifest> = {
+  'balakanda-v1': balakandaManifest,
+  'ayodhyakanda-v1': ayodhyakandaManifest,
+};
+/** The CDN manifest for a comic's art sheets (each edition under its own R2 prefix). */
+export function getComicManifest(comicId: string): RemoteAssetManifest {
+  return comicManifests[comicId] ?? balakandaManifest;
 }
 export function comicPages(book: ComicBook) {
   const panels = new Map(book.episodes.flatMap(episode => episode.panels.map(panel => [panel.id, { panel, episode }] as const)));

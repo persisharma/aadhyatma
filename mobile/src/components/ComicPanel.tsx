@@ -7,7 +7,7 @@ import ComicArt, { comicArtGeometry } from './ComicArt';
 import { useTheme } from '@/theme/ThemeContext';
 import { comicTextStyle } from './comicTypography';
 
-export default function ComicPanel({ panel, language }: { panel: Panel; language: ComicLanguage }) {
+export default function ComicPanel({ panel, language, comicId }: { panel: Panel; language: ComicLanguage; comicId?: string }) {
   const { colors, typography } = useTheme();
   const [width, setWidth] = useState(0);
   const [originalHeight, setOriginalHeight] = useState(0);
@@ -24,7 +24,7 @@ export default function ComicPanel({ panel, language }: { panel: Panel; language
   return <View testID={`comic-panel-${panel.id}`} style={{ borderWidth: 2, borderColor: colors.ink, backgroundColor: '#fbf4df' }}
     onLayout={event => setWidth(Math.max(0, event.nativeEvent.layout.width - 4))}>
     <View testID="comic-scene" style={{ minHeight: artHeight + extra }}>
-      <View style={{ paddingTop: extra }}><ComicArt panel={panel} label={copy.narration || copy.dialogue || panel.source} /></View>
+      <View style={{ paddingTop: extra }}><ComicArt panel={panel} comicId={comicId} label={copy.narration || copy.dialogue || panel.source} /></View>
       {!!copy.dialogue && width > 0 && <>
         <View pointerEvents="none" accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"
           onLayout={event => setOriginalHeight(event.nativeEvent.layout.height)}
