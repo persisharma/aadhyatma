@@ -1,0 +1,34 @@
+{
+  "checkedOn": "2026-10-26",
+  "scope": "structural planning inventory only",
+  "pages": 91,
+  "sceneIntents": 256,
+  "sargasMapped": 75,
+  "rowCounts": {
+    "3": 72,
+    "2": 16,
+    "1": 3
+  },
+  "sceneModes": {
+    "caption-intent": 72,
+    "dialogue-intent": 126,
+    "silent-action": 58
+  },
+  "fourLanguageIllustrativeExamples": 11,
+  "errors": [],
+  "structuralCoveragePass": true,
+  "fullFourLanguageNarrativesAuthored": false,
+  "fullPassageCollationComplete": false,
+  "artworkReady": false,
+  "readyToGenerateWholeBookArt": false,
+  "readyForIntegration": false,
+  "limits": [
+    "Planning-level handoff review is not human editorial approval.",
+    "All four complete narratives must be written and independently read next.",
+    "No new art, screen, native device or delivery verification has occurred."
+  ],
+  "rulesAuditComplete": false,
+  "planningAuditCorrections": [
+    "Inserted ar-p065-s1b to resolve the aerial-to-ground transition before Sita approaches Jatayu."
+  ]
+}

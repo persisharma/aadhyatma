@@ -1,0 +1,123 @@
+{
+  "createdOn": "2026-10-26",
+  "baseText": "Valmiki Ramayana Aranyakanda, selected traditional 75-sarga numbering from the checked-in corpus",
+  "sourceCorpus": {
+    "path": "mobile/src/data/valmiki-ramayan/chapter-03.json",
+    "sha256": "587ed271174a09cafdaa9d208dbd40bcc11852688fedaf3f6c73ab84c30358db",
+    "sargaCount": 75,
+    "verseRecordCount": 2439
+  },
+  "adaptationBoundary": "Original child-friendly prose/dialogue retelling of the selected traditional Valmiki arc; no generated Sanskrit, liturgical text or unlabelled quotations.",
+  "reviewExtent": "All-sarga contents inventory and local beginning/middle/ending samples, with focused reads of continuity-critical local passages and listed web chapters. This is not a complete 2439-record reading or full two-publication collation.",
+  "readSources": [
+    {
+      "label": "English primary contents",
+      "url": "https://www.valmikiramayan.net/utf8/aranya/aranya_contents.htm",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened complete contents; inventoried 75 sargas. It is not passage-by-passage verification."
+    },
+    {
+      "label": "Hindi publication contents",
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranya-kanda-in-hindi-sanskrit-complete-pdf/",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened complete chapter index; compared whole-arc ordering. Reports 2440 verses, while checked-in corpus has 2439 records: numbering/count collation pending."
+    },
+    {
+      "label": "First Maricha consultation",
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga31/aranya_31_prose.htm",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened English prose and independent Hindi chapter. First warning and return to Lanka are retained; source notes distinguish traditional and critical-edition coverage."
+    },
+    {
+      "label": "First Maricha consultation, Hindi",
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-31-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened through the Hindi index link; verifies the separate first consultation and return."
+    },
+    {
+      "label": "Departure dilemma",
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga45/aranya_45_prose.htm",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened English and Hindi passages. Panic, accusation, guarding duty and reluctant departure must stay connected."
+    },
+    {
+      "label": "Departure dilemma, Hindi",
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-45-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened chapter; exact age-adapted dialogue awaits editorial review."
+    },
+    {
+      "label": "Shabari ending",
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga74/aranya_74_prose.htm",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened English and Hindi chapter; includes hospitality, teachers’ instruction, sacred places and departure, not only a food scene."
+    },
+    {
+      "label": "Shabari ending, Hindi",
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-74-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened chapter; do not import tasted-berry detail into the selected passage."
+    },
+    {
+      "label": "Lake accounts and elapsed years",
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga11/aranya_11_prose.htm",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened prose; preserve question/answer, labelled recollections, ten years, return to Sutikshna and two separate Agastya-related hosts."
+    },
+    {
+      "label": "Season and respectful correction",
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga16/aranya_16_prose.htm",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened prose; verse identifies hemanta, despite the English contents’ spring label. Rama corrects criticism of Kaikeyi."
+    },
+    {
+      "label": "Ornament clue",
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga54/aranya_54_prose.htm",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened prose; five vanaras, cloth bundle, crossing to Lanka and dispatched watchers are distinct beats."
+    },
+    {
+      "label": "Ayomukhi and Kabandha route",
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga69/aranya_69_prose.htm",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Opened prose; retain Ayomukhi’s separate identity and the search route leading to Kabandha."
+    },
+    {
+      "label": "Jatayu fight, English",
+      "url": "https://www.valmikiramayan.net/utf8/aranya/sarga51/aranya_51_prose.htm",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Focused comparison with local 3.51.40–46: Ravana sets Sita aside, strikes Jatayu, then Sita approaches the fallen defender. Chapter verse numbering differs between publications; compare action sequence rather than equating verse numbers."
+    },
+    {
+      "label": "Jatayu fight, Hindi",
+      "url": "https://www.ramcharit.in/valmiki-ramayana-aranyakanda-sarga-chapter-51-slokas-with-hindi-meaning/",
+      "retrievedOn": "2026-10-26",
+      "evidence": "Focused comparison with local 3.51.40–46: Ravana sets Sita aside, strikes Jatayu, then Sita approaches the fallen defender. Chapter verse numbering differs between publications; compare action sequence rather than equating verse numbers."
+    }
+  ],
+  "unavailable": [
+    {
+      "url": "https://www.valmiki.iitk.ac.in/content?language=dv&field_kanda_tid=3&field_sarga_value=1&field_sloka_value=1",
+      "attemptedOn": "2026-10-26",
+      "result": "Tool timeout; not counted as a publication read."
+    }
+  ],
+  "openQuestions": [
+    "Resolve the 2439 local-record / 2440 Hindi-index count against printed references before final source sign-off; do not silently add a verse.",
+    "Perform complete independent two-publication passage collation, including exact weapon, curse and testimony details.",
+    "Editorial review of child-friendly compression in 3.45 and 3.69 without deleting the causal conflict.",
+    "Exact prop/clothing evidence around the gifts, ornaments, broken chariot, sword and replacement bow.",
+    "Source 3.51: preserve the action sequence across differing printed verse numbering; the new ground-level framing is an explicitly labelled visual inference."
+  ],
+  "variantPolicy": {
+    "retained": "Sarga 31 and its first Maricha visit are retained because this selected 75-sarga traditional corpus contains them; disclose critical-edition difference.",
+    "notSilentlyAdded": [
+      "Lakshmana-rekha",
+      "Maya-Sita substitution",
+      "tasted-berry episode as a claim of this selected Valmiki passage",
+      "extra interpolated Indra/food episode listed separately in the Hindi index"
+    ],
+    "nextKandaBoundary": "Sugriva is introduced through Kabandha; Rama reaches Pampa. Hanuman’s meeting and the friendship pact begin in Kishkindha."
+  },
+  "status": "source-grounded planning inventory; shipping verification incomplete"
+}
