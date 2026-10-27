@@ -1,0 +1,23 @@
+{
+  "id": "jivitputrika-muted",
+  "tool": "built-in image_gen",
+  "intent": "color/rendering-only edit",
+  "generatedSource": "/Users/prashant/.codex/generated_images/01a17c45-0f94-7da3-91b2-d510cee45eb2/exec-2e28ad11-aee0-4cd6-b20c-52c1921b7c02.png",
+  "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/jivitputrika-muted.png",
+  "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/jivitputrika-muted.prompt.txt",
+  "shipped": "mobile/assets/icons/observance-scenes/jivitputrika-muted.webp",
+  "masterSha256": "7d80f7c3ab0639d00a0ca03eb6090e3acc0febfee80b7ca03465e838d8ec250c",
+  "shippedSha256": "5e860bae94845357bfe21dc3d27783e531c6085fb6477cfd1a27102de0aafe67",
+  "shippedDimensions": [
+    320,
+    320
+  ],
+  "shippedBytes": 37504,
+  "editTarget": "mobile/assets/icons/observance-portraits/jivitputrika.webp",
+  "styleReferences": [
+    "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+    "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp"
+  ],
+  "mechanicalProcessing": "Whole-canvas Lanczos resize, RGB, WebP quality85 method6 only.",
+  "review": "First result accepted: mother/child faces and poses, hands, worship arrangement, kalash/diya/fruit/leaves preserved; bright red/yellow/green intensity softened into matte dusty cinnabar/sage/antique-gold family. No text/UI/border."
+}

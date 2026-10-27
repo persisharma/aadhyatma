@@ -1,0 +1,19 @@
+{
+  "tool": "built-in image_gen",
+  "source": "/Users/prashant/.codex/generated_images/01a17bf6-80d9-7e61-aa98-021789f761e4/exec-77e65675-1de2-4733-b61d-ccc93fcfb567.png",
+  "source_dimensions": [
+    851,
+    1849
+  ],
+  "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/catalog-parchment.png",
+  "final": "mobile/assets/ui/vrat-catalog-parchment.webp",
+  "source_sha256": "7e34b12a8edaa137a9f1be25e09ac9421404243f1f7269922dca834619fe0216",
+  "final_sha256": "1a8b642e3dfbd235f9d179b5dfe5ab416a00943ff0412a9b669284b665e44705",
+  "dimensions": [
+    804,
+    1748
+  ],
+  "bytes": 12052,
+  "resize": "Whole canvas rescaled to804x1748, no crop.",
+  "review": "Inspected804x1748px final: calm light ivory paper with subtle grain, faint pale-gold floral mandalas partially offcanvas at topcorners and sparse middleedges. Broad central area clear. No text, UI, icons, subjects, dark vignette, frame or panel divisions."
+}

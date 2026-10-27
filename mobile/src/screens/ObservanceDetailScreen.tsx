@@ -1,10 +1,12 @@
 import StoryIcon from '@/components/StoryIcon';
 import AppIcon from '@/components/AppIcon';
+import ReaderHeader from '@/components/ReaderHeader';
+import CatalogCategoryArtwork from '@/components/CatalogCategoryArtwork';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { LinearGradient } from 'expo-linear-gradient';
+import CatalogBackground from '@/components/CatalogBackground';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ObservanceDetailHero from '@/components/ObservanceDetailHero';
 import BhogGuidancePanel from '@/components/BhogGuidancePanel';
@@ -138,25 +140,10 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
 
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <CatalogBackground />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-        <View style={styles.topBar}>
-          <Pressable
-            onPress={() => navigation.goBack()}
-            accessibilityRole="button"
-            accessibilityLabel={contentByLang(lang, 'वापस', 'Back')}
-            hitSlop={12}
-            style={({ pressed }) => [styles.backButton, { borderColor: colors.divider }, pressed && { opacity: 0.6 }]}
-          >
-            <Text style={{ color: colors.inkSoft, fontSize: 20 }}>‹</Text>
-          </Pressable>
-          <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-            {contentByLang(lang, 'व्रत विवरण', 'Observance')}
-          </Text>
-          {rule ? (
+        <ReaderHeader title={contentByLang(lang, 'व्रत विवरण', 'Observance')} onBack={() => navigation.goBack()} sideWidth={48}
+          right={rule ? (
             <ShareButton
               onPress={() =>
                 void share(
@@ -176,8 +163,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
             />
           ) : (
             <View style={{ width: 36 }} />
-          )}
-        </View>
+          )} />
 
         {!rule ? (
           <View style={styles.centered}>
@@ -256,9 +242,10 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                     pressed && { opacity: 0.8 },
                   ]}
                 >
-                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 13, color: colors.parchment }}>
-                    {contentByLang(lang, '॥ कथा पढ़ें', '॥ Read Katha')}
-                  </Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                    <AppIcon name="book" size={18} color={colors.parchment} />
+                    <Text style={{ flexShrink: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, lineHeight: 20, color: colors.parchment }}>{contentByLang(lang, 'कथा पढ़ें', 'Read Katha')}</Text>
+                  </View>
                 </Pressable>
               )}
             </View>
@@ -338,7 +325,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                   accessibilityLabel={`Read katha ${katha.titleEn}`}
                   style={({ pressed }) => [styles.kathaCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
                 >
-                  <Text style={{ fontSize: 22, color: colors.saffron, marginRight: 12 }}>॥</Text>
+                  <View style={{ marginRight: 12 }}><CatalogCategoryArtwork name="granth" /></View>
                   <View style={{ flex: 1 }}>
                     <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
                       {contentByLang(lang, katha.titleHi, katha.titleEn)}
@@ -473,7 +460,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                           )}
                           style={({ pressed }) => [styles.kathaCard, { backgroundColor: colors.parchment, borderColor: colors.divider, borderRadius: radii.lg }, pressed && { opacity: 0.8 }]}
                         >
-                          <Text style={{ fontSize: 22, color: colors.saffron, marginRight: 12 }}>॥</Text>
+                          <View style={{ marginRight: 12 }}><CatalogCategoryArtwork name="vrat" /></View>
                           <View style={{ flex: 1 }}>
                             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
                               {contentByLang(lang, vidhi.titleHi, vidhi.titleEn)}
@@ -512,7 +499,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                     )}
                     style={({ pressed }) => [styles.kathaCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card, pressed && { opacity: 0.8 }]}
                   >
-                    <Text style={{ fontSize: 22, color: colors.saffron, marginRight: 12 }}>॥</Text>
+                    <View style={{ marginRight: 12 }}><CatalogCategoryArtwork name="vrat" /></View>
                     <View style={{ flex: 1 }}>
                       <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
                         {contentByLang(lang, vidhi.titleHi, vidhi.titleEn)}
@@ -580,8 +567,6 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 },
-  backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
   scroll: { paddingTop: 8, paddingBottom: 32 },
   heroTags: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: 8 },

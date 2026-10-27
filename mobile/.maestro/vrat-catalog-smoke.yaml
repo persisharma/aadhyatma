@@ -51,6 +51,16 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Vrat & Parv"
 - waitForAnimationToEnd
 
+# The illustrated Today card keeps its full description available in place.
+- runFlow:
+    when:
+      visible: "Expand description.*"
+    commands:
+      - tapOn: "Expand description.*"
+      - assertVisible: "Collapse description.*"
+      - tapOn: "Collapse description.*"
+      - assertVisible: "Expand description.*"
+
 # ── Landing: browse-by-type tiles ──
 - scrollUntilVisible:
     element:

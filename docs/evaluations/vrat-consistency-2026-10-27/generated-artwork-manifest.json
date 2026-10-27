@@ -1,0 +1,190 @@
+[
+  {
+    "id": "ahoi-mata",
+    "tool": "built-in image_gen",
+    "source": "/Users/prashant/.codex/generated_images/01a17bf6-503e-7181-8283-68318975ed36/exec-cfc38639-0eaf-4cc4-b496-48df72c3cf80.png",
+    "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/ahoi-mata.png",
+    "prompt": "docs/evaluations/vrat-consistency-2026-10-27/masters/ahoi-mata.prompt.txt",
+    "shipped": "mobile/assets/icons/observance-scenes/ahoi-mata.webp",
+    "masterSha256": "1fa6f245668c5be5f8bca23a5373577c0027c48564512864069fc8405eb4b326",
+    "shippedSha256": "7949c25ec0ecf64a1b67d3117d927760de9a1e6e922c6413e7d4bede90a0cb60",
+    "masterDimensions": [
+      1254,
+      1254
+    ],
+    "shippedDimensions": [
+      320,
+      320
+    ],
+    "shippedBytes": 47436,
+    "mechanicalProcessing": "RGB; Lanczos 320x320; WebP quality85 method6. No visual editing.",
+    "referenceImages": [
+      "/Users/prashant/Downloads/Illustrated Vrat Calendar with Starred Favorites.png",
+      "mobile/assets/icons/observance-portraits/chauth-mata.webp"
+    ],
+    "review": "Inspected master and shipped 320px thumbnail. Crowned mother with child, both complete seated figures, warm parchment painted scene and animal motifs, no typography/UI/social-card crop."
+  },
+  {
+    "tool": "built-in image_gen",
+    "source": "/Users/prashant/.codex/generated_images/01a17bf6-80d9-7e61-aa98-021789f761e4/exec-77e65675-1de2-4733-b61d-ccc93fcfb567.png",
+    "source_dimensions": [
+      851,
+      1849
+    ],
+    "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/catalog-parchment.png",
+    "final": "mobile/assets/ui/vrat-catalog-parchment.webp",
+    "source_sha256": "7e34b12a8edaa137a9f1be25e09ac9421404243f1f7269922dca834619fe0216",
+    "final_sha256": "1a8b642e3dfbd235f9d179b5dfe5ab416a00943ff0412a9b669284b665e44705",
+    "dimensions": [
+      804,
+      1748
+    ],
+    "bytes": 12052,
+    "resize": "Whole canvas rescaled to804x1748, no crop.",
+    "review": "Inspected804x1748px final: calm light ivory paper with subtle grain, faint pale-gold floral mandalas partially offcanvas at topcorners and sparse middleedges. Broad central area clear. No text, UI, icons, subjects, dark vignette, frame or panel divisions."
+  },
+  {
+    "generator": "built-in image_gen",
+    "generatorSource": "/Users/prashant/.codex/generated_images/01a17bf6-af23-7653-b13b-f052548a573c/exec-8b8636c7-0735-416e-a8c0-dafc0b762425.png",
+    "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/khandoba-kartikeya.png",
+    "masterDimensions": [
+      1254,
+      1254
+    ],
+    "masterSHA256": "ee93060d2ecd176652c16232935c0c6f512ec5b7cd6b7f3853e795399fc1cab4",
+    "shipped": "mobile/assets/icons/observance-scenes/khandoba-kartikeya.webp",
+    "shippedDimensions": [
+      320,
+      320
+    ],
+    "shippedSHA256": "308d76452f8ba7bd088d984b22f508dc700183f824b275d36844156b7b5cb590",
+    "shippedBytes": 52340,
+    "references": [
+      "mobile/assets/reader-illustrations/theerth-khandoba-jejuri.webp",
+      "mobile/assets/reader-illustrations/theerth-vetrimalai-murugan.webp"
+    ],
+    "review": "Inspected shipped320px image: distinct mature moustached Khandoba with sword on left, youthful Kartikeya with vel spear and peacock on right, both complete seated figures, matching warm golden hand-painted temple-garden style, no text/border/extra goddess."
+  },
+  {
+    "id": "krishna-gau-mata",
+    "tool": "built-in image_gen",
+    "source": "/Users/prashant/.codex/generated_images/01a17bf6-503e-7181-8283-68318975ed36/exec-43ec63da-e947-4dc3-b3e6-0dd4059c395f.png",
+    "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/krishna-gau-mata.png",
+    "prompt": "docs/evaluations/vrat-consistency-2026-10-27/masters/krishna-gau-mata.prompt.txt",
+    "shipped": "mobile/assets/icons/observance-scenes/krishna-gau-mata.webp",
+    "masterSha256": "b06ed35a3c0363d6b157436970b9d5a5d9de6d42fce612b6a46f0db268f39638",
+    "shippedSha256": "e239dfd3f1c09ad91148deaaa50ed1a8e1874166487979dbc14ec6c2f39c6957",
+    "masterDimensions": [
+      1254,
+      1254
+    ],
+    "shippedDimensions": [
+      320,
+      320
+    ],
+    "shippedBytes": 51572,
+    "mechanicalProcessing": "RGB; Lanczos320x320; WebPquality85method6. No visual editing.",
+    "referenceImages": [
+      "mobile/assets/reader-illustrations/deity-krishna-bansuri.webp"
+    ],
+    "review": "Inspected master and shipped320px thumbnail. Complete Krishna playing flute beside one white cow, full bodies and heads/crown, coherent warm templegarden hand-painted scene, no text/UI."
+  },
+  {
+    "id": "krishna-yama",
+    "tool": "built-in image_gen",
+    "source": "/Users/prashant/.codex/generated_images/01a17bf6-503e-7181-8283-68318975ed36/exec-d2b72b66-9209-42f3-8fb6-996e6d7f2de0.png",
+    "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/krishna-yama.png",
+    "prompt": "docs/evaluations/vrat-consistency-2026-10-27/masters/krishna-yama.prompt.txt",
+    "shipped": "mobile/assets/icons/observance-scenes/krishna-yama.webp",
+    "masterSha256": "b25b1585f28a645dc859b4fea6982ff346e358e486bdec865db9285824eb0ea8",
+    "shippedSha256": "52726efe7a74cbf595f2ba5f2caac948850a6fd9ee683fa211c62254de07af41",
+    "masterDimensions": [
+      1254,
+      1254
+    ],
+    "shippedDimensions": [
+      320,
+      320
+    ],
+    "shippedBytes": 51318,
+    "mechanicalProcessing": "RGB; Lanczos320x320; WebPquality85method6. No visual editing.",
+    "referenceImages": [
+      "mobile/assets/icons/observance-portraits/yama.webp",
+      "mobile/assets/reader-illustrations/deity-krishna-bansuri.webp"
+    ],
+    "review": "Inspected master and shipped320px thumbnail. Distinct blue crowned Krishna holding flute and dark regal Yamaraja holding staff, seated together calmly with blackbuffalo behind, full crowns/heads/hands and complete seated figures. One coherent warm painted courtyard, no text/UI/violence."
+  },
+  {
+    "generator": "built-in image_gen",
+    "generatorSource": "/Users/prashant/.codex/generated_images/01a17bf6-af23-7653-b13b-f052548a573c/exec-354be2c8-2ba3-4a75-806b-352e90d15eeb.png",
+    "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/shiva-parvati-murugan.png",
+    "masterDimensions": [
+      1254,
+      1254
+    ],
+    "masterSHA256": "18c220612820fa34f0c905e57eb28a1bb27aa11ed9afc0608b73e71f04a2d256",
+    "shipped": "mobile/assets/icons/observance-scenes/shiva-parvati-murugan.webp",
+    "shippedDimensions": [
+      320,
+      320
+    ],
+    "shippedSHA256": "0620f00e763508904b374d6d036e40e1f3e6616ea8efb0871cb4100b1ae22a78",
+    "shippedBytes": 51476,
+    "references": [
+      "mobile/assets/reader-illustrations/shiva.webp",
+      "mobile/assets/reader-illustrations/deity-parvati-bhavani.webp",
+      "mobile/assets/reader-illustrations/theerth-vetrimalai-murugan.webp"
+    ],
+    "review": "Inspected shipped320px image: Shiva seated left, Parvati seated right, youthful Murugan central with vel spear and peacock; complete heads/hands/feet and garments, coherent warm painted temple-garden scene, no text or borders, no extra deities."
+  },
+  {
+    "tool": "built-in image_gen",
+    "source": "/Users/prashant/.codex/generated_images/01a17bf6-80d9-7e61-aa98-021789f761e4/exec-bb1dd7a7-9839-4f33-9e3c-5ddb31c68a0a.png",
+    "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/shiva-vishnu.png",
+    "final": "mobile/assets/icons/observance-scenes/shiva-vishnu.webp",
+    "source_sha256": "dcc2a265e2c84bed64d39189a9c85d196176b317edf7a145f15938290f56e070",
+    "final_sha256": "e92f0d3ad526e22e354116529d0ed3c51abc354ee40977da4e64128e7cf75a4d",
+    "dimensions": [
+      320,
+      320
+    ],
+    "bytes": 45712,
+    "review": "Inspected master-derived320px thumbnail: distinct Shiva and four-armed Vishnu seated together; full hair/crown/hands/feet, Shiva trident/crescent and Vishnu conch/discus visible; consistent golden painted courtyard; no text, extra deity, merged body or clipping."
+  },
+  {
+    "generator": "built-in image_gen",
+    "generatorSource": "/Users/prashant/.codex/generated_images/01a17bf6-af23-7653-b13b-f052548a573c/exec-93f7d551-39b5-4e86-9fbe-0a45aff4b259.png",
+    "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/siddhidatri.png",
+    "masterDimensions": [
+      1254,
+      1254
+    ],
+    "masterSHA256": "bf16005eca0a7b9c216d229c1a1ef64c3f091c8ee900f852f5611d1bc58f9ece",
+    "shipped": "mobile/assets/icons/observance-scenes/siddhidatri.webp",
+    "shippedDimensions": [
+      320,
+      320
+    ],
+    "shippedSHA256": "990039ff485e4e3e6a16643516fed9e4e663687af49edcb2bd7385d162225eb6",
+    "shippedBytes": 45550,
+    "references": [
+      "mobile/assets/reader-illustrations/deity-durga-lion.webp",
+      "mobile/assets/icons/observance-portraits/baglamukhi.webp"
+    ],
+    "review": "Inspected shipped320px image: one complete square painting, four arms with discus/conch/lotus/mace, complete crown/lotus/limbs, red sari, warm golden storybook palette, no visible text or frame."
+  },
+  {
+    "tool": "built-in image_gen",
+    "source": "/Users/prashant/.codex/generated_images/01a17bf6-80d9-7e61-aa98-021789f761e4/exec-205f9288-7eed-44ab-816f-f810b0de6648.png",
+    "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/tulsi-puja.png",
+    "final": "mobile/assets/icons/observance-scenes/tulsi-puja.webp",
+    "source_sha256": "3c7c2b8b168720ffd7404821664ec002339b44bb23e5761a8c7daaf4c50e4bab",
+    "final_sha256": "8e53b2ee468d245ae89fe9892226ba23c27e2cc1041c894efb5204460604f935",
+    "dimensions": [
+      320,
+      320
+    ],
+    "bytes": 46356,
+    "review": "Full Tulsi plant and decorated pedestal, diya and marigolds visible; no text or human subject; coherent warm hand-painted scene."
+  }
+]

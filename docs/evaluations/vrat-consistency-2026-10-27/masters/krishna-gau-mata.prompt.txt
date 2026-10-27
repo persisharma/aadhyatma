@@ -1,0 +1,8 @@
+Use case: illustration-story
+Asset type: one square native devotional calendar miniature, ultimately320x320 pixels for78px thumbnails.
+Primary request: one coherent hand-painted scene depicting Shri Krishna WITH Gau Mata, for Bahula Chaturthi and Gopashtami. Both named subjects must appear together in the same painting.
+Input image: supporting style reference only. Match its delicate Indian devotional storybook painting, detailed soft brushwork, muted warm gold, cream, blue, verdant foliage and temple-garden dusk. Output square; do not reproduce the wide layout or add the peacock.
+Subject: crowned blue Krishna standing gracefully playing his bamboo flute, wearing yellow dhoti, gold ornaments and peacock feather crown; beside him one peaceful white cow with a small tasteful garland. Krishna and cow both shown with complete heads and complete bodies, comfortably within central80percent, no cropped crown or legs.
+Scene: warm temple garden with subtle flowering foliage and distant muted temple architecture, softly glowing golden light; simple and legible at small native thumbnail scale. One focal group, centered.
+Style: richly detailed hand-painted Indian devotional miniature with natural faces and painterly texture. Consistent with existing Vedansh calendar illustrated assets.
+Constraints: exactly Krishna and one white cow, no other people, no panels, no split miniatures, no letters, no numbers, no text, no logos, no borders, no UI, no caption strip. Full painted background to edges. Not photorealistic, not3D, not vector.

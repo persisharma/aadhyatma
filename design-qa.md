@@ -1,3 +1,159 @@
+# Upcoming banner width correction
+
+final result: passed
+
+Source truth: the user's latest full-width-banner clarification, with the original landing/list mockups retained for painting/theme/text hierarchy. The explicit requested width and overlaid star supersede the prior110pt image beside the star. Original mockups: `../vrat-reference-rebuild-2026-10-26/references/{landing,list}.png`. Before implementation: `../vrat-palette-layout-2026-10-27/native-first.png`.
+
+Rendered implementation: `native-first.png`, `native-middle.png`, `native-last.png` and `native-large-{first,middle,last}.png` in `docs/evaluations/vrat-full-banner-2026-10-27/`. Actual iOS26.5/iPhone17Pro,402×874pt,3× PNG1206×2622. Hindi/27October/initial Karwa–Ganesh sequence is identical before and after. Normalization crops the same native region(42,1074,990,1491) from original3× files and downsamples to632px width without changing aspect ratio.
+
+Combined full-view evidence is `comparison-full.png`, with both native screens normalized to402×874; focused comparison is `comparison-banner.png`, opened and visually inspected. All three normal/enlarged rail positions were also opened. `preview.png` is a direct native crop, with no composited UI.
+
+[P1, fixed] Banner occupied only110/155≈71% of the card and left an unwanted blank star column. It now spans the complete141pt inner width. The star visibly overlays the banner's upper-right corner. Shared constants keep both the frame and actual artwork the same width; save remains an independent44pt target.
+
+Required fidelity surfaces:
+
+- Fonts/typography: existing maroon Devanagari hierarchy and native text metrics retained; long Janmashtami title and date/countdown remain complete at normal/XXXL sizes.
+- Spacing/layout: full inner-width banner, equal6pt insets,72pt height and overlaid star checked in the focused comparison; no blank side column remains. Intrinsic text height and shallow shadow clearance retained.
+- Colors/tokens: existing cream frame and softer painted palette unchanged. Opaque star circle remains readable over the artwork.
+- Images: current paintings fill their banner masks without stretching; all six Upcoming crops retain recognizable subjects/crowns. Wide Karwa/Ganesh/Vishnu paintings now show more of the original scene. Existing square paintings use the same reviewed upper focal point. No new art or runtime filters introduced.
+- Copy/content: titles, dates, countdowns and follow labels unchanged; independent save/detail behavior passed natively.
+
+No actionable P0/P1/P2 issue remains for this correction. TypeScript,33 focused tests, clean changed-file lint and native interaction/enlarged checks passed. Default reading cards are unchanged. Android/physical-device/screen-reader verification remains outside this run. Prior wider-page/palette findings and their evidence remain historical.
+
+
+---
+
+## Earlier palette and proportions evaluation (historical)
+
+# Vrat palette and card proportions QA
+
+final result: passed
+
+Scope: current illustrated Vrat landing/Upcoming/ledger, shared calendar surfaces and palette follow-up. This is iOS design verification, not cross-platform release acceptance.
+
+## Comparison inputs and state
+
+- Source visual truth: `../vrat-reference-rebuild-2026-10-26/references/landing.png` (852×1846) and `list.png` (853×1844), originally the user's two full mockups in Downloads. `references/prototype-upcoming.png` and `prototype-ledger.png` retain focused source regions.
+- Rendered implementation: `native-first.png`, `native-middle.png`, `native-last.png`, `native-hindi-vrat-list.png`, `native-katha.png`, `native-english-my-vrat.png`, `native-english-empty-my-vrat.png`, English Standard and systemXXXL first/middle/last captures.
+- Viewport: actual iOS26.5/iPhone17Pro,402×874pt at3×; native PNGs1206×2622. Full-view comparisons normalize both images to402px width with aspect preserved. Focused comparisons crop the original3× native pixels before downsampling, avoiding blurred upsampling. `layout-measurements.json` records reference→native content-width scaling (790px→374pt).
+- State: same initial Karwa/Ganesh/Ahoi order and Hindi list. Prototype date26Oct/countdown3days differs from current27Oct/countdown2days. Quiet current date has no Today event. Prototype favorites/location differ from test state. Native safe areas, canonical ReaderHeader and global navigation remain app-owned.
+- Combined full views: `comparison-full.png`, `comparison-list.png`, `comparison-native-before-after.png`. Focused side-by-side inputs: `comparison-upcoming.png`, `comparison-ledger.png`. All were opened and visually compared. Palette comparison: `palette-before-after.jpg`; all68 source paintings viewed on `palette-all-1.jpg` through `palette-all-3.jpg`.
+
+## Iterations and resolved findings
+
+1. [P2, fixed] Artwork identity/style was checked without catching saturation differences. Karwa puja/ritual, Ahoi, Bal Krishna, Jivitputrika and Dasha Mata were noticeably brighter/glossier than reused paintings. Built-in Image Gen color/rendering edits preserve subjects and composition with matte reds/greens/gold. Original inputs retained. Six before/after pairs and final all-art sheets show the correction; final native Karwa/Ahoi/Krishna rows and tiles show integration.
+2. [P2, fixed] Upcoming's older full-width image/overlaid large star changed the source composition. Tiles now155pt, illustration110×72, visible star28pt beside the art inside an independent44pt target; rail gap6pt. Direct normalized comparison verifies those proportions.
+3. [P2, fixed] Heavy gold/rounding and a clipped rectangular shadow differed from the paper prototype. Calendar tone now cream with14pt corners, shallow elevation and explicit rail shadow padding; default Kids Stories reading tone preserved. Focused comparison and all three rail positions show unclipped shadows.
+4. [P1, fixed in the earlier consistency pass, rechecked] Fixed/zero-basis calendar copy clipped long titles and metadata. Intrinsic card height, flexible date/countdown rows and growing ledger retain all copy at Standard and systemXXXL. Janmashtami wraps naturally; dates/countdowns move to another line as needed. No forced one-line truncation was reintroduced.
+5. [P2, capture issue, resolved] A separate checkout replaced preview port8084 mid-run, leaving blank image slots in an enlarged English capture. Those images were rejected and retaken from this checkout on dedicated8542. Final evidence contains resolved local paintings and parchment. One early Hindi list capture caught the push transition; it was replaced with a stable direct simulator capture.
+
+## Required fidelity surfaces
+
+- Fonts/typography: existing Noto Serif Devanagari titles/script metadata and Cormorant English captions retain the app's approved font language. Calendar titles now use maroon. Standard and enlarged glyphs, complete long titles, baseline spacing and metadata were read in native captures. Native font metrics add a little height beyond the raster mock; that is accepted to preserve readable Indic copy.
+- Spacing/layout: measured155pt/110×72/6pt/14pt geometry, image/star alignment, shallow shadow clearance and roughly73pt Standard ledger checked directly. Cards/ledger grow under large text, while category doors reflow full width. Partial edge cards are the intentional horizontal-scroll affordance; each card becomes fully visible when scrolled.
+- Colors/tokens: catalogSurface, catalogBorder, catalogAccent and native parchment are shared throughout calendar surfaces. Default reading cards keep their established theme. Six edited paintings join the muted family while distinct devotional colors remain. Saturation values are advisory, not a numerical acceptance rule.
+- Image quality/fidelity: all68 paintings reviewed for subject, composition and consistent medium. Six shipped edits are241,854bytes total and preserve the named figures/ritual objects. Exact prompts/master/input/shipped hashes recorded. Native small paintings are sharp enough at their actual slots; no poster text, symbolic fallback or render-time wash appears.
+- Copy/content: titles, bilingual row captions, real dates/countdowns and follows/reminders retained. No authored devotional narratives or calendar calculations changed. The tour's bilingual catalog release note now matches the inherited1.5.5 version contract.
+
+## Interactions and remaining limits
+
+Native follow→My Vrat, open reminders→save, unfollow→empty, return, Katha and Vrat list routes passed. All six Upcoming cards were reached in Hindi/English; enlarged English retains full content and persistent navigation. Test follow removed, Hindi/Standard and normal system text restored. TypeScript,3,781 full-suite tests,46 final focused tests and zero lint errors recorded in `validation.md`.
+
+No actionable P0/P1/P2 issue remains in this scoped comparison. Minor source/native font metrics, the metadata separator treatment, canonical header/safe-area height and global selected-tab treatment remain accepted native-system differences. Android, physical-device/screen-reader and smallest-phone checks remain pending; no claim of cross-platform or pixel-identical release acceptance.
+
+
+---
+
+## Earlier consistency evaluation (historical)
+
+# Vrat reference and consistency QA
+
+final result: passed
+
+Scope: illustrated Vrat browsing, shared cards, Katha integration, My Vrat, clipping and complete rule artwork assignments on the checked iOS viewport. Platform gaps are listed below; this is not cross-platform release acceptance.
+
+## Source and normalization
+
+- Source: `/Users/prashant/Downloads/Vedansh Vrat & Parv Landing Page.png` (852×1846) and `/Users/prashant/Downloads/Illustrated Vrat Calendar with Starred Favorites.png` (853×1844).
+- Implementation: native screenshots in this folder, 1206×2622 at 3×, 402×874pt. Reference and native images are normalized to 402px width without changing aspect ratio.
+- State: Hindi catalog/list with matching initial Karwa/Ganesh/Ahoi sequence; real date is 27 October, while the mock is dated 26 October. Today is therefore absent in the current date's landing. Saved states and current countdowns differ intentionally.
+- Combined inputs: `comparison-landing.png` (Upcoming/category regions) and `comparison-list.png` (full views). `preview.png` shows landing, My Vrat and Katha together.
+
+## Resolved findings
+
+- P1: Katha's missing artwork mapping. Replaced untyped `sanskar` with typed `granth`, a bundled scripture painting, and corrected detail reading/vidhi doors.
+- P1: My Vrat/Katha/search retained another design. They now use the actual shared Kids Stories listing shell and reference-derived paper; reminder/open/unfollow remain separate controls.
+- P1: Fixed/zero-basis calendar copy clipped long or enlarged content. Calendar open targets and Upcoming bodies now grow intrinsically. Search fields and the empty state grow/scroll.
+- P2: Upcoming art/action arrangement differed from the mock. The reviewed 112×74 image sits beside the save star inside a 158pt tile. All unique crops were inspected.
+- P2: Poster crops, neutral symbols and split subject strips drifted from the illustration style. Eight scenes plus 26 bundled small copies give all 200 assignments actual painted art; the UI paper restores the supplied edge treatment.
+- P2: List selected chips differed from the supplied maroon state. They now use the landing's catalogAccent token.
+
+## Five fidelity surfaces
+
+- Typography: existing script-aware Hindi/Latin faces retained. Titles, captions, dates, countdowns and notices wrap. System XXXL Katha includes a long two-line title; My Vrat and reminders were inspected enlarged. Normal and two-action rows keep separate minimum heights.
+- Spacing/layout: measured image/action arrangement, consistent listing surfaces, dynamic row height, 44pt sibling targets, full-width categories at enlarged system text. Partial edge cards in horizontal rails are intentional scroll affordances.
+- Color: pale parchment and faint ornaments follow the supplied visual source; maroon active filters match the landing. The existing Kids Stories gold card surface is deliberately reused, per the user's instruction.
+- Images: all 200 assignments and all unique Upcoming crops inspected, plus representative native routes. Complete new Ahoi/Tulsi/Siddhidatri paintings and coherent composite scenes replace unsuitable crops. No calendar card resolves through the old symbolic system.
+- Copy/content: complete authored names and descriptions retained. Calendar dates/counts remain engine-derived. No new ritual prose or scripture quotation was introduced.
+
+## Accepted differences and limits
+
+Native safe-area/status-bar geometry and 44pt touch minimums are preserved, so full-view header density and visible row count differ from the illustration. Art reuses approved paintings rather than duplicating every prototype painting. The shared Kids Stories card color remains. Minor ornamental header/lotus refinements are P3 follow-up polish.
+
+No open P0/P1/P2 issues were observed in the scoped comparisons. Android, physical-device/VoiceOver, smallest-phone and followed-muhurat native verification remain pending. The current native report does not claim a manual tap-through of all 200 rules.
+
+
+---
+
+# Prior evaluation record
+
+# Vrat reference and shared-listing QA — 26 October 2026
+
+final result: passed
+
+Scope: the authorized Today, Upcoming, category-door and Vrat-list card composition/artwork correction, including reuse of the Kids Stories listing component. This is not a claim that the whole native screen is a pixel-for-pixel recreation of the mock.
+
+## Visual truth and capture
+
+- User-supplied truth: `docs/evaluations/vrat-reference-rebuild-2026-10-26/references/landing.png` and `references/list.png` (landing: 852×1846; list: 853×1844).
+- Implementation: `native-standard-landing.png`, `native-standard-upcoming.png`, `native-standard-list.png`, `native-standard-list-lower.png` in that evaluation directory.
+- Native device: dedicated iPhone 17 Pro simulator, iOS 26.5, 402×874pt, captured at 3× (1206×2622). Density-normalized comparison inputs use 402px wide copies; source heights are 871px / 869px after proportional normalization. Device chrome and safe-area differences are excluded from card measurements.
+- State: 26 October 2026, Ujjain, Purnimant, Hindi, no Vrat followed; supplied mock uses Bengaluru and two selected stars. These location/follow-state differences are intentional; no calendar dates or engine logic were changed.
+- Full-view combined evidence: `comparison-landing-final.png`, `comparison-list-final.png`. Focused combined evidence: `comparison-landing-detail.png`, `comparison-list-detail.png`. Source and implementation are placed together in these actual comparison inputs.
+
+## Findings and fixes across iterations
+
+1. [P1, fixed] Upcoming used 80pt square faces inside 184pt-wide tall cards. It now uses the shared `ListingCard` Upcoming variant: 158pt width, 144×72 painting, inline date/countdown and 44pt sibling save target. The supplied mock normalizes to approximately 154×128pt; the implementation is slightly larger because it retains native target sizes and the shared card treatment.
+2. [P1, fixed] Event imagery was inferred only from the deity. Karwa Chauth now has separate puja and moon/sieve scenes; Janmashtami has Bal Krishna with makhan. Valmiki Today reuses the existing published scripture scene. Existing generic Gauri/Krishna art remains the fallback for other observances.
+3. [P1, fixed] Vrat maintained a private card shell despite the Kids Stories listing contract. `ObservancePreviewCard` now renders `ListingCard` directly. `ListingCardFrame` is the shared surface for Today/category doors. Standard story/comic/reading layout, progress, 92pt / 4:5 thumb and title rules are preserved.
+4. [P2, fixed] Tight face crops and a generalized scale calculation cut Ahoi's head. Reader artwork now shows full figures/context, and portrait zoom is applied to height before the cover minimum. Native list captures show Ganesha seated and Ahoi's complete head/subject. Known shared scenes such as Sita–Ram use one painting; unmatched composites use complete miniatures rather than face slices.
+5. [P2, fixed] Today placed prose/actions under a small square. It now places a 126×154 painting beside the title/prose/actions. Expansion retains all description text; the reading action remains independent. Native taps verified expansion/collapse and row save/open behavior.
+6. [P2, fixed] English category metadata broke “observances” into an orphan last letter. Counts now use concise units (vrats/festivals/fasts), and category doors become full width on narrow windows or fontScale > 1.2. Final `native-english-upcoming.png` and `native-system-xxxl-upcoming.png` show complete labels.
+
+Initial comparisons live in `iterations/01/`; rejected pre-fix English/loading captures live in `iterations/02/`. Final artwork acceptance uses root-level settled Hindi/English captures. Zero-byte screenshot attempts were rejected and replaced. Development-server memory exhaustion caused some transient blank local-art captures; a fresh session supplied the accepted settled captures. No asset was accepted from a blank frame.
+
+## Required fidelity surfaces
+
+- Fonts/typography: existing Noto Serif Indic and Cormorant/Inter families. Calendar titles wrap without clamping; standard story title behavior stays intact. Hindi and English captions/metadata inspected. App Standard/Large and iOS XXXL layouts captured; category text has enough space at enlarged OS size.
+- Spacing/layout: square list frames, wide Upcoming frames, smaller visible star circles with 44pt hit areas, inline date/countdown, Today split composition and category vignettes checked in focused comparisons. The ledger gap/line heights were tightened.
+- Colors/tokens: shared Kids Stories active-card gradient, border, radius and shadow are intentional per the user's reuse instruction. PR #550's maroon selection and search treatment are retained. Native safe areas and the established navigation/header remain, so the entire mock's above-fold density is not claimed as reproduced.
+- Image quality: three generated masters and the 320px square / 480×240 WebPs inspected. Source/shipped hashes, exact prompts and generation paths are retained. New assets total 120,082 bytes. Existing published reader/vidhi scenes and manifests are reused; no reader/story master or story frame was changed.
+- Copy/content: no authored religious prose, calendar calculation, dates, rule membership or reading destinations changed. Only English category count units were shortened; full Today prose remains available through expansion.
+
+## Validation and limits
+
+- Complete combined tree: TypeScript and `npm test` pass, 3,778 tests (37 widgets, 2,853 reader/component, 621 engine, 218 data, 49 Ask). After the final category wrapping/copy correction, TypeScript and 28 focused shared-card/list tests pass again.
+- Changed-source ESLint: zero errors; PanchangScreen retains existing deferred-import warnings. `git diff --check` passes.
+- Native: Hindi Standard/Large, English, iOS XXXL text, Today expansion/collapse, independent save/unfollow and detail opening. Kids Stories' Krishna shelf was opened and captured after the shared-shell refactor (`native-kids-stories-shared-card.png`).
+- Pending: Android, physical-device/touch/VoiceOver checks, the smallest phone viewport, and manual artwork review of every catalog entry/composite. No native release, OTA, R2 publication or PR merge is part of this correction.
+
+## Follow-up polish
+
+[P3] Further full-screen mock fidelity would require a separately scoped header/background/ornament density pass. Existing native controls/safe areas and the shared Kids Stories card surface intentionally take precedence in this change.
+
+
+---
+
 # Full Puja Vidhi image/text review and R2 integration — 21 October 2026
 
 Result: saved-image correspondence review and local R2 integration passed. R2 publication/CDN delivery and a full new native walkthrough remain pending.

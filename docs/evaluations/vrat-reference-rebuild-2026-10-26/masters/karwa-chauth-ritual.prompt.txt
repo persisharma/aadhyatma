@@ -1,0 +1,18 @@
+Tool: built-in image_gen.imagegen
+Reference: /Users/prashant/Downloads/Illustrated Vrat Calendar with Starred Favorites.png
+Selected final generator output: /Users/prashant/.codex/generated_images/01a17821-8060-73e3-9ae6-960a5a63b04f/exec-47586057-a818-40af-8e0a-f658bf866d09.png
+Selected workspace master: karwa-chauth-ritual.png
+
+Generation prompt (exact):
+Use case: illustration-story.
+Asset type: production square artwork thumbnail for a devotional mobile app.
+Input image is a style/composition REFERENCE only: the supplied illustrated Vrat calendar screenshot. Recreate only the subject/art direction of the first Karwa Chauth thumbnail, not the screen, frame, labels, or UI.
+Primary request: a text-free square 1:1 Karwa Chauth ritual scene. One Indian married woman in a red sari with ornate gold border and traditional gold jewelry, in side profile, reverently holding a circular sieve up toward the full moon at night. Small glowing diya near the lower edge.
+Scene/backdrop: deep navy night sky, luminous full moon visible beside and above the raised sieve, subtle garden/terrace environment.
+Style/medium: richly detailed warm painterly Indian devotional storybook illustration, fine textile patterns, soft brushwork, dimensional yet illustrated, warm gold illumination against deep blue.
+Composition/framing: square, show the woman's face and shoulder profile on the left, raised hand and sieve near center-right, full moon clearly visible in upper-right. Face, sieve, moon and diya must all remain readable at a small 80dp square thumbnail. Keep every crucial subject within a 10% safe inset so a rounded-square crop does not cut them. Include enough sari and hand context, avoid a face-only crop.
+Color palette: maroon-red, warm gold, cream skin highlights, deep navy.
+Text: none.
+Constraints: one woman only; no UI, screen border, typography, letters, numbers, logo, watermark, star icon, or collage. Do not turn her into a goddess.
+
+Framing edits: none.

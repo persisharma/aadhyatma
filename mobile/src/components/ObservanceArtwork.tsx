@@ -1,46 +1,49 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import StoryIcon from './StoryIcon';
 import CachedArtwork from './CachedArtwork';
-import { observanceIcon } from '@/panchang/observancePresentation';
-import { observancePortraits } from '@/panchang/observancePortraits';
+import { observanceThumbnail } from '@/panchang/observanceThumbnails';
+import { observanceIllustrations, type ObservanceArtVariant } from '@/panchang/observancePortraits';
 import type { ObservanceRule } from '@/panchang/types';
 import { useTheme } from '@/theme/ThemeContext';
 
-/** Real subject paintings; symbolic icons are only the loading/offline fallback. */
-export default function ObservanceArtwork({ rule, size = 64 }: {
-  rule: Pick<ObservanceRule, 'deityEn' | 'category'>;
+/** Scene crops belong to their slot; a deity's face is not an event illustration. */
+export default function ObservanceArtwork({ rule, size = 78, width = size, height = size, variant = 'list' }: {
+  rule: Pick<ObservanceRule, 'deityEn' | 'category'> & Partial<Pick<ObservanceRule, 'id'>>;
   size?: number;
+  width?: number;
+  height?: number;
+  variant?: ObservanceArtVariant;
 }) {
   const { colors, radii } = useTheme();
-  const portraits = observancePortraits(rule);
-  const width = size / Math.max(1, portraits.length);
-  const fallback = <StoryIcon name={observanceIcon(rule)} size={Math.min(size - 8, width - 4)} />;
+  const paintings = observanceIllustrations(rule, variant);
+  const multiple = paintings.length > 1;
+  // Separate complete miniatures for unmatched joint subjects, never vertical
+  // slices of enlarged faces. Known shared scenes use one complete painting.
+  const plateWidth = multiple ? width / paintings.length : width;
+  const plateHeight = multiple ? Math.min(plateWidth, height) : height;
+
   return (
-    <View
-      accessible={false}
-      importantForAccessibility="no-hide-descendants"
-      style={[styles.frame, { width: size, height: size, borderRadius: radii.md, backgroundColor: colors.cardThumbRest }]}
-    >
-      {portraits.length ? portraits.map(({ source, frame }, index) => (
-        <CachedArtwork
-          key={index}
-          source={source}
-          resizeMode="contain"
-          style={{ width, height: size, overflow: 'hidden' }}
-          imageStyle={{
-            width: size * frame.aspect * frame.zoom, height: size * frame.zoom,
-            left: width / 2 - size * frame.aspect * frame.zoom * frame.x,
-            top: size / 2 - size * frame.zoom * frame.y,
-          }}
-          fallback={<View style={styles.fallback}>{fallback}</View>}
-        />
-      )) : fallback}
+    <View accessible={false} importantForAccessibility="no-hide-descendants"
+      style={[styles.frame, { width, height, borderRadius: radii.sm, backgroundColor: colors.parchmentSoft }]}>
+      {paintings.length ? paintings.map(({ source, frame }, index) => {
+        const imageHeight = Math.max(plateHeight * frame.zoom, plateWidth / frame.aspect);
+        const focusY = variant === 'upcoming' && frame.aspect < 1.4 ? 0.3 : frame.y;
+        const imageWidth = imageHeight * frame.aspect;
+        return (
+          <CachedArtwork key={index} source={observanceThumbnail(source)} resizeMode="contain"
+            style={{ width: plateWidth, height: plateHeight, overflow: 'hidden', borderRadius: multiple ? radii.sm : 0 }}
+            imageStyle={{ width: imageWidth, height: imageHeight,
+              right: 'auto', bottom: 'auto',
+              left: imageWidth < plateWidth ? (plateWidth - imageWidth) / 2 : Math.min(0, Math.max(plateWidth - imageWidth, plateWidth / 2 - imageWidth * frame.x)),
+              top: Math.min(0, Math.max(plateHeight - imageHeight, plateHeight / 2 - imageHeight * focusY)),
+            }}
+            />
+        );
+      }) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   frame: { flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
-  fallback: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center' },
 });

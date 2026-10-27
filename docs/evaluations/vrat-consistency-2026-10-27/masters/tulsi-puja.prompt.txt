@@ -1,0 +1,7 @@
+Use case: illustration-story
+Asset type: square devotional calendar miniature, to display at 78x78dp and 320x320px.
+Primary request: one self-contained painting of a Tulsi puja plant in a traditional decorated terracotta-and-cream pedestal planter in a sunlit Indian courtyard. Show the recognisable full leafy green Tulsi plant, a small brass diya with flame and marigold flowers at its base. No human or invented deity.
+Input images: image1 dasha-mata is a style reference only for warm golden hand-painted storybook medium and devotional texture; image2 Parvati is a style reference only for fine softly painted detail, cream/gold palette and calm daylight. Do not copy either subject.
+Composition: square, complete plant and planter centrally framed inside central80% of canvas, full plant top and pedestal base safely visible, small contextual courtyard and subtle architectural stone behind it. Read clearly at tiny thumbnail size. Filled painted scene to edges, no empty caption panel.
+Style: exquisite traditional Indian devotional storybook painting, softly textured gouache and fine brushwork, warm parchment gold, muted leafy green, saffron marigolds, natural colours, serene soft daylight. Not photorealistic, not 3D, not vector, no neon.
+Constraints: No text, writing, title, UI, logo, watermark, outer frame or border. No montage or social poster; one coherent miniature.

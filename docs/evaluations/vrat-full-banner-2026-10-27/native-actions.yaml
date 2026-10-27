@@ -1,0 +1,27 @@
+appId: com.prashantsharma.vedansh
+---
+- extendedWaitUntil: { notVisible: "Downloading.*", timeout: 120000 }
+- extendedWaitUntil: { visible: { id: "tab-vrat" }, timeout: 120000 }
+- tapOn: { id: "tab-vrat" }
+- waitForAnimationToEnd
+- tapOn: { id: "tab-vrat" }
+- waitForAnimationToEnd
+- extendedWaitUntil: { visible: { id: "catalog-search" }, timeout: 90000 }
+- extendedWaitUntil: { notVisible: "Downloading.*", timeout: 120000 }
+- scrollUntilVisible:
+    element: { id: "catalog-search" }
+    direction: UP
+    centerElement: false
+- swipe: { direction: DOWN, duration: 400 }
+- waitForAnimationToEnd
+- takeScreenshot: /Users/prashant/.codex/worktrees/review-pr-542/Aadhyatma/docs/evaluations/vrat-full-banner-2026-10-27/native-first
+- tapOn: { id: "observance-star-karwa-chauth" }
+- assertVisible: { id: "catalog-search" }
+- assertVisible: "Unfollow Karwa Chauth"
+- tapOn: { id: "observance-card-karwa-chauth" }
+- waitForAnimationToEnd
+- assertNotVisible: { id: "catalog-search" }
+- tapOn: "Back"
+- waitForAnimationToEnd
+- tapOn: { id: "observance-star-karwa-chauth" }
+- assertVisible: "Follow Karwa Chauth"

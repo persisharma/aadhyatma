@@ -1,0 +1,39 @@
+{
+  "assets": [
+    {
+      "id": "karwa-chauth-ritual",
+      "tool": "built-in image_gen",
+      "master": "docs/evaluations/vrat-reference-rebuild-2026-10-26/masters/karwa-chauth-ritual.png",
+      "master_sha256": "9802b81c3e5f7f30694822c59fccea1b6881e0ca1941b58aa45d76f2d6019fef",
+      "shipped": "mobile/assets/icons/observance-scenes/karwa-chauth-ritual.webp",
+      "shipped_sha256": "ee672d00b2cdab6d311276ef6c77b504a788a60ad5606944bfb3d33ac6e9f44b",
+      "bytes": 31996,
+      "prompt_summary": "One married Indian woman in a red sari with gold border, traditional jewelry, side profile holding a circular sieve toward the full moon at night; one glowing diya. Warm detailed devotional storybook painting, deep navy sky, gold/maroon/cream. Square 1:1. Face, sieve, moon and diya together within a 10% safe inset. No extra people, text, UI, border or watermark. Reference: supplied illustrated Vrat list first thumbnail.",
+      "exact_prompt_record": "docs/evaluations/vrat-reference-rebuild-2026-10-26/masters/karwa-chauth-ritual.prompt.txt"
+    },
+    {
+      "id": "karwa-chauth-puja",
+      "tool": "built-in image_gen",
+      "master": "docs/evaluations/vrat-reference-rebuild-2026-10-26/masters/karwa-chauth-puja.png",
+      "master_sha256": "58fae1dfb305b0ec3ec919bd9c9a5f4d7e18ac841842a4817fad5c3d457792c7",
+      "shipped": "mobile/assets/icons/observance-scenes/karwa-chauth-puja.webp",
+      "shipped_sha256": "08966d585d7c2ab2e28072e330b64ffd59a43c4dff1069c955d649aad27082ee",
+      "bytes": 41950,
+      "prompt_summary": "Text-free 2:1 landscape Karwa Chauth puja still life matching the supplied first Upcoming thumbnail: ornate gold/copper kalash, green mango leaves and coconut, decorated sieve, one glowing diya, flowers and rich red cloth. Compact central composition in central 80%, readable at 150px. Warm detailed Indian devotional storybook painting, amber light and cream parchment atmosphere. No people, words, UI or border.",
+      "exact_prompt_record": "docs/evaluations/vrat-reference-rebuild-2026-10-26/masters/karwa-chauth-puja.prompt.txt"
+    },
+    {
+      "id": "bal-krishna-makhan",
+      "tool": "built-in image_gen",
+      "master": "docs/evaluations/vrat-reference-rebuild-2026-10-26/masters/bal-krishna-makhan.png",
+      "master_sha256": "8669307ae671a3f0357e624deca7c7255c98a8d83a776173b20b6b0ccf886013",
+      "shipped": "mobile/assets/icons/observance-scenes/bal-krishna-makhan.webp",
+      "shipped_sha256": "6290b6a337f926b13dd9bf4d09feee6cca250e30b1b5458835c8d28846d034c6",
+      "bytes": 46136,
+      "prompt_summary": "One seated Bal Krishna with blue skin, curly dark hair, peacock feather, gold ornaments, yellow dhoti, holding white butter beside a decorated earthen butter pot. Complete seated child, head, hands, legs and pot within central 85%. Warm cream-gold garden, richly painted devotional storybook. Square, no adult Krishna/flute, other people, text, UI or border. Framing correction: zoom out preserving identity/pose/style until complete feather and pot/feet have 10% margin. Reference: supplied list Masik Krishna Janmashtami thumbnail.",
+      "exact_prompt_record": "docs/evaluations/vrat-reference-rebuild-2026-10-26/masters/bal-krishna-makhan.prompt.txt"
+    }
+  ],
+  "total_new_bundle_bytes": 120082,
+  "reference_usage": "User-supplied composition/style guidance; no screenshot pixels used in shipped assets."
+}

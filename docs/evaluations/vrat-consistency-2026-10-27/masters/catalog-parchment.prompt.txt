@@ -1,0 +1,6 @@
+Use case: illustration-story
+Asset type: tall background paper texture ONLY for a devotional mobile calendar page, final ratio402:874 (about0.46 wide to1 tall), at least804x1748px or closest tall resolution.
+Primary request: recreate ONLY the quiet parchment paper background and faint pale golden edge ornaments visible behind the supplied two app references. References are style/context only; DO NOT render any app UI or copy any cards or text.
+Scene: matte softly lit warm ivory cream paper approximately #fff5da, almost uniform with extremely subtle fine natural paper grain. Very faint pale gold traditional floral/mandala ornaments partly off-canvas at upperleft and upperright, and one tiny sparse edge ornament around midheight; motifs stay at the extreme outer edges. Low contrast and graceful like the reference, not a dense decorative pattern.
+Composition: tall fullcanvas sheet. Broad central90% remains calm lightcream empty and readable. No brown vignette, no dark edges, no noisy texture, no large focal motif. Do not create a border/frame enclosing the page.
+Constraints: output only the paper texture; no letters, text, words, numerals, UI, cards, symbols, icons, deities, people, objects, screen, bezel, logo, watermark, statusbar or controls. No visible grid or panel divisions. No simulated screenshot. Matte subtle background asset.

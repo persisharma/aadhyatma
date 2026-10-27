@@ -135,3 +135,13 @@ describe('chip text readability on COMPOSITED chip tints (design.md §3/§12)', 
     expect(contrastRatio(lightColors.avoid, surface)).toBeLessThan(4.5);
   });
 });
+
+
+describe('approved catalog surfaces', () => {
+  test.each(['ink', 'inkSoft', 'inkMuted', 'catalogAccent', 'saffronDeep'] as const)('%s stays readable on catalog cards', key => {
+    expect(contrastRatio(lightColors[key], lightColors.catalogSurface)).toBeGreaterThanOrEqual(4.5);
+  });
+  test('selected catalog tabs have readable text', () => {
+    expect(contrastRatio(lightColors.onPrimary, lightColors.catalogAccent)).toBeGreaterThanOrEqual(4.5);
+  });
+});
