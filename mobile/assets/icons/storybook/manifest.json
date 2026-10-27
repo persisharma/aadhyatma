@@ -889,6 +889,138 @@
       ],
       "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/rashi.png",
       "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+    },
+    {
+      "name": "chandra",
+      "file": "chandra.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 36629,
+      "sha256": "47295dc48d5df9baafab80604a52e240ee4c4129526a5b01978af6a18fe19f12",
+      "masterSha256": "2e0d5cc4873c15bfea1df053053a56b56f37df66ead5d82eda42e6597d960086",
+      "sourceSha256": "2e0d5cc4873c15bfea1df053053a56b56f37df66ead5d82eda42e6597d960086",
+      "visibleBounds": [
+        40,
+        42,
+        472,
+        470
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/panchang-day-icons-2026-10-27/masters/chandra.png",
+      "source": "Original individually generated transparent master; codex-brief.md, prompts.json and sources.json retain provenance"
+    },
+    {
+      "name": "karana",
+      "file": "karana.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 47102,
+      "sha256": "8c146e8c89d30c78dace984168acdc1097fdd229f1edbe01c517899fe4afed2a",
+      "masterSha256": "cd8d93648ec1e0eb9d8aacf38296b19eca2f628139c0a75a5f8505466df3e7a4",
+      "sourceSha256": "cd8d93648ec1e0eb9d8aacf38296b19eca2f628139c0a75a5f8505466df3e7a4",
+      "visibleBounds": [
+        43,
+        40,
+        469,
+        472
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/panchang-day-icons-2026-10-27/masters/karana.png",
+      "source": "Original individually generated transparent master; codex-brief.md, prompts.json and sources.json retain provenance"
+    },
+    {
+      "name": "nitya-yoga",
+      "file": "nitya-yoga.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 40178,
+      "sha256": "17be92be583d3e60a71763955f774d2c490d190a40afa879275ebf85c5ff9d19",
+      "masterSha256": "aae43197126fb0fc305f8515f8a794a5a9ff2baaaae1873af327e82ca293d1af",
+      "sourceSha256": "aae43197126fb0fc305f8515f8a794a5a9ff2baaaae1873af327e82ca293d1af",
+      "visibleBounds": [
+        42,
+        40,
+        470,
+        472
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/panchang-day-icons-2026-10-27/masters/nitya-yoga.png",
+      "source": "Original individually generated transparent master; codex-brief.md, prompts.json and sources.json retain provenance"
+    },
+    {
+      "name": "agni-vaas",
+      "file": "agni-vaas.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 43964,
+      "sha256": "8cab69de523e74988b231dc9cf3794479e7b24898852a278ec9ad056cbaf01ff",
+      "masterSha256": "b687a65eb5fdc8c6e3015e42d0c5c7ef9cb99864ebcbd6cbc78ebf63af0dbc66",
+      "sourceSha256": "b687a65eb5fdc8c6e3015e42d0c5c7ef9cb99864ebcbd6cbc78ebf63af0dbc66",
+      "visibleBounds": [
+        50,
+        40,
+        462,
+        472
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/panchang-day-icons-2026-10-27/masters/agni-vaas.png",
+      "source": "Original individually generated transparent master; codex-brief.md, prompts.json and sources.json retain provenance"
+    },
+    {
+      "name": "sunset",
+      "file": "sunset.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 17618,
+      "sha256": "2d9388ea9c29aa0cf0b073588f12f4410757f7023c7c5cda3e13672daa3ba066",
+      "masterSha256": "19ac80236aac3e6151f92f0d87949d1a49022f5d2c9cee03c1a39e4c3dd7b053",
+      "sourceSha256": "19ac80236aac3e6151f92f0d87949d1a49022f5d2c9cee03c1a39e4c3dd7b053",
+      "visibleBounds": [
+        40,
+        132,
+        472,
+        379
+      ],
+      "alphaExtrema": [
+        0,
+        253
+      ],
+      "provenanceFile": "../../../../docs/evaluations/panchang-day-icons-2026-10-27/masters/sunset.png",
+      "source": "Original individually generated transparent master; codex-brief.md, prompts.json and sources.json retain provenance"
+    },
+    {
+      "name": "moonrise",
+      "file": "moonrise.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 19954,
+      "sha256": "b3f53e1342698da70aa51042ef8c0671ffe43455235d19bc16f9531de21499e8",
+      "masterSha256": "db1f34895ce55780b38b6c6b32d9758ddc18119f4baaafef4df0ec598d1d0573",
+      "sourceSha256": "db1f34895ce55780b38b6c6b32d9758ddc18119f4baaafef4df0ec598d1d0573",
+      "visibleBounds": [
+        40,
+        155,
+        472,
+        356
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ],
+      "provenanceFile": "../../../../docs/evaluations/panchang-day-icons-2026-10-27/masters/moonrise.png",
+      "source": "Original individually generated transparent master; codex-brief.md, prompts.json and sources.json retain provenance"
     }
   ],
   "correctedDate": "2026-10-06",

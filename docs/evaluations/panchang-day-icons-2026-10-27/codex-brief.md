@@ -1,5 +1,7 @@
 # Panchang day panel — six painted icons (Codex brief)
 
+**Owner amendments, 28 October:** Chandra and moonrise use plain lunar discs with no stars. The selected day stays in the top ribbon; the lower card shows the following day only (Next day on browsed dates). Regional/Pitru shortcuts remain as shipped pending an explicit placement decision. Final prompts are in `prompts.json` and `sources.json`; the original proposal below is retained for context.
+
 Run this in Codex (built-in `image_gen`) from the repository root. Part 1 paints the
 six icons the Panchang day panel still lacks, so its tiles can carry the same Storybook
 miniatures as Home, More and the Muhurat finder. Part 2 builds the approved screen. The approved layout is board **D0**

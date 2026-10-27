@@ -1220,3 +1220,5 @@ Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×7
 ## [2026-10-27] ingest | Upcoming full-width banners
 
 The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.
+
+## [2026-10-28] ingest | PR #556 painted Panchang day tiles, plain lunar icons and selected-day ribbon plus following-day card; regional/Pitru entry points retained.
