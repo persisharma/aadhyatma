@@ -27,6 +27,7 @@ for (const [stem, source] of Object.entries(sources).sort(([a], [b]) => a.locale
   const bytes = readFileSync(path.join(folder, source.file));
   assert.equal(sha256(bytes), source.sha256, `Changed/unreviewed master: ${stem}`);
   assert.equal(bytes.length, source.bytes, stem);
+  if (source.publication === 'pending') continue;
   manifest.assets[stem] = { hash: source.sha256.slice(0, 16), ext: path.extname(source.file).slice(1), width: source.width, height: source.height };
 }
 

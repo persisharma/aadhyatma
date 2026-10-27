@@ -975,6 +975,34 @@
         "sourceTop": 20,
         "meaningPad": 96
       }
+    },
+    "mahakaal": {
+      "file": "master-mahakaal.webp",
+      "width": 1080,
+      "height": 1456,
+      "bytes": 423940,
+      "sha256": "8d909c45775f6491474287eddc9fef01a099425c6f58560ef79b2ecc0f9618aa",
+      "sourceImage": "exec-3444537a-98c9-4a10-8fe5-e17e8c9db495.png",
+      "sourceSha256": "b67eeb56893b4571a125bf6a312a6ba490e387346e3b316d734192e76c031189",
+      "prompt": "Use case: illustration-story. Create one production devotional card master for Vedansh. Subject: Shri Mahakaleshwar Jyotirlinga of Ujjain, an artistic devotional interpretation, not a documentary photograph. Rounded dark stone Shiva lingam in its silver yoni pedestal, traditional white horizontal tripundra with central red tilak, reverent painted shringar eyes and curved moustache on the lingam, silver serpent canopy behind, white jasmine and marigold garlands around base, bilva leaves, softly glowing brass lamps within an ornate temple sanctum. NO human Shiva figure, NO human body or arms, no other deity. Refined warm full-colour Indian miniature painting, antique ivory parchment, gold/terracotta detailing matching reference. No lettering, glyphs, watermarks, sample text or Om anywhere. Keep entire shrine and garlands in upper painted portion. Reference image is STYLE/FRAME reference only, replace subject. Keep reference's precise heritage border and lower blank verse/meaning panels and landscape footer. Replace ONLY upper Shiva/Himalaya illustration with Mahakaleshwar temple shrine. Portrait 1080x1456. The complete shrine must fit in top y=0-36%; fade to plain paper by y=38%. Preserve body ornament dividers, meaning box and bottom landscape footer. Remove ALL text and branding from reference: app paints its real brand separately. NO writing anywhere.",
+      "tool": "built-in imagegen",
+      "review": "2026-10-27: all four full images inspected; shrine, text-free body and frame bounds checked. Artistic interpretation, not an exact photograph of the sanctum. Native and export QA pending.",
+      "kind": "generated-full-card-master",
+      "bodyPlate": "mahakaal",
+      "promptKey": "mahakaal",
+      "provenance": "Full shrine illustration generated from Shiva frame reference; original Shiva master retained. R2 publication pending.",
+      "frameSpec": {
+        "hero": 550,
+        "sourceEnd": 650,
+        "verseEnd": 785,
+        "meaningTop": 855,
+        "meaningBottom": 1075,
+        "commentTop": 1124,
+        "sourceFont": 20,
+        "sourceTop": 14,
+        "meaningPad": 95
+      },
+      "publication": "pending"
     }
   }
 }
