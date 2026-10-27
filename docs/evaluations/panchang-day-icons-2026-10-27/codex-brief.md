@@ -1,8 +1,8 @@
 # Panchang day panel — six painted icons (Codex brief)
 
-Run this in Codex (built-in `image_gen`) from the repository root. It paints the six
-icons the Panchang day panel still lacks so its tiles can carry the same Storybook
-miniatures as Home, More and the Muhurat finder. The approved layout is board **D0**
+Run this in Codex (built-in `image_gen`) from the repository root. Part 1 paints the
+six icons the Panchang day panel still lacks, so its tiles can carry the same Storybook
+miniatures as Home, More and the Muhurat finder. Part 2 builds the approved screen. The approved layout is board **D0**
 on the Panchang Redesign canvas: today's tiles unchanged, new warm-gradient
 surfaces, one painted icon per tile.
 
@@ -67,5 +67,59 @@ subject:
    regenerations, and a contact sheet (`review.png`) showing the six beside `surya.png`,
    `nakshatra.png` and `vrat.png` at 30 px and 72 px.
 
-Do not change any screen code in this pass. Wiring the icons into the Panchang tiles is
-a separate change.
+## Part 2: build board D0 in the app
+
+Do this after the six icons are exported. Scope: the Panchang tab in Panchang mode,
+everything below `MuhuratFinderDoor` in `mobile/src/screens/PanchangScreen.tsx`. The
+sky header, ribbon and Muhurat card are already done; leave them alone. Branch from
+`main`. Do **not** reuse the old `claude/panchang-bottom-half-panels` branch: that was a
+different direction (panels/agenda), and the owner rejected it.
+
+**Keep exactly as shipped:** the 2×2 anga tiles (`PanchangTile`), the vaas tiles
+(`DayVaasCards`), `ShubhYogaCard` and the sunrise/sunset/moonrise/ब्रह्म मुहूर्त card,
+with the same layout, copy, font sizes and a11y labels. Only their surfaces and icons change.
+
+**Surfaces.** Each tile/card becomes a `LinearGradient` at 160° from `#FFF8EA` to
+`#F5E4BE`, with a 1dp `rgba(166,124,52,0.30)` border, `radii.lg`, and a soft warm shadow
+(`elevation.card`). Add these as theme tokens; don't inline the hex values. The
+दिशा शूल tile alone uses an avoid-toned gradient, `#FBEBDF` → `#F0D6C4` with a
+`rgba(158,74,46,0.28)` border. The page background (`PanchangChakraBackground`) stays.
+
+**Icons** (painted PNGs through the storybook registry, decorative and hidden from a11y):
+
+| Where | Icon | Size / placement |
+|---|---|---|
+| तिथि tile | live `CelestialGlyph` moon on a `skyNightTop` disc | 32dp, top-right, 8dp inset |
+| नक्षत्र / नित्य योग / करण tiles | `nakshatra` / `nitya-yoga` / `karana` | 36dp, top-right, 8dp inset |
+| सूर्य / चन्द्रमा / दिशा शूल / अग्नि वास tiles | `gayatri` / `chandra` / `vastu-disha` / `agni-vaas` | 30dp, before the label, 6dp gap |
+| शुभ योग eyebrow | `star` (more-storybook) | 22dp, before the label |
+| सूर्योदय / सूर्यास्त / चंद्रोदय / ब्रह्म मुहूर्त | `surya` / `sunset` / `moonrise` / `aarti` | 40dp, replacing the `AppIcon` sun/moon |
+
+Make sure no anga value or chip runs under a top-right icon. Pad the label row, or
+let the value shrink as it already does.
+
+**Remove** the `व्रत और पर्व` section and the `आगामी` list from Panchang mode.
+**Add** one card, shown only when the selected date or the day after has an
+observance, and rendering nothing otherwise. It has one row per observance: a 42dp
+`vrat` icon, a pill (`आज` filled `saffron` with `parchment` text; `कल` on
+`goldChipBg` with `saffronDeep` text), the name (15pt title face) over the deity (12pt
+`inkMuted`), and a chevron. A row opens `ObservanceDetail` and is at least 48dp tall.
+Today's observances come from `usePanchangForSelection`; read tomorrow's with
+`useObservancesForDate(addDays(selectedDate, 1), calendarSystem)`. Keep the
+sankashti occurrence names (`sankashtiOccurrenceName`) the old `ObservanceCard` used.
+
+**Open product points** (ask the owner; don't decide them yourself):
+- Today's observance already shows in `ObservanceNowRibbon` above the Muhurat card,
+  so an `आज` row repeats it. The owner asked for today and tomorrow; tomorrow-only
+  was suggested.
+- Removing व्रत और पर्व also removes this page's `LensDiscoveryRow` (क्षेत्रीय पंचांग)
+  and the `PitruPakshaDayChip` / `PitruSmaranDayChip`. They remain on the व्रत tab.
+
+**Also update:** `design.md` §33 items 4–6 and `wiki/subsystems/panchang.md` (per
+`.claude/rules/design-doc-sync.md`), and `mobile/.maestro/panchang-smoke.yaml`, which
+asserts the removed `Vrat & Observances` and `Upcoming` headings. Run
+`npm run typecheck` and the affected Jest suites (`DayVaasCards`, `ShubhYogaCard`,
+`storybookAssets`) before pushing.
+
+**Out of scope:** the सभी मुहूर्त व चौघड़िया (Muhurat detail) screen. Its design (S1/S2/S3)
+is still undecided.
