@@ -1,0 +1,25 @@
+{
+  "id": "ahoi-mata",
+  "tool": "built-in image_gen",
+  "source": "/Users/prashant/.codex/generated_images/01a17bf6-503e-7181-8283-68318975ed36/exec-cfc38639-0eaf-4cc4-b496-48df72c3cf80.png",
+  "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/ahoi-mata.png",
+  "prompt": "docs/evaluations/vrat-consistency-2026-10-27/masters/ahoi-mata.prompt.txt",
+  "shipped": "mobile/assets/icons/observance-scenes/ahoi-mata.webp",
+  "masterSha256": "1fa6f245668c5be5f8bca23a5373577c0027c48564512864069fc8405eb4b326",
+  "shippedSha256": "7949c25ec0ecf64a1b67d3117d927760de9a1e6e922c6413e7d4bede90a0cb60",
+  "masterDimensions": [
+    1254,
+    1254
+  ],
+  "shippedDimensions": [
+    320,
+    320
+  ],
+  "shippedBytes": 47436,
+  "mechanicalProcessing": "RGB; Lanczos 320x320; WebP quality85 method6. No visual editing.",
+  "referenceImages": [
+    "/Users/prashant/Downloads/Illustrated Vrat Calendar with Starred Favorites.png",
+    "mobile/assets/icons/observance-portraits/chauth-mata.webp"
+  ],
+  "review": "Inspected master and shipped 320px thumbnail. Crowned mother with child, both complete seated figures, warm parchment painted scene and animal motifs, no typography/UI/social-card crop."
+}

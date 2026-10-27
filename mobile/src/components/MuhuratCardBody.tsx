@@ -1,36 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
-import { transliterateDevanagari } from '@/utils/transliterate';
 import { formatClock, formatEndInstant, formatRange, formatRangeEndAware } from '@/panchang/muhuratFormat';
+import { panchangDateLabel as fmtDate, panchangElementLine as elementLine } from '@/panchang/panchangShareText';
 import { computeShubhYogas } from '@/panchang/shubhYoga';
-import type { PanchangData, PanchangElement } from '@/panchang/types';
+import type { PanchangData } from '@/panchang/types';
 import type { ChoghadiyaPeriod, KaalWindow, MuhuratDay } from '@/panchang/muhurat';
-
-const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const MONTHS_HI = ['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्तूबर','नवंबर','दिसंबर'];
-
-function fmtDate(d: Date, lang: Lang): string {
-  // gu/kn re-script the Devanagari month, matching the other Panchang screens.
-  const months =
-    lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-}
-// referenceDay = the panchang date, so ends past midnight carry a short-date
-// suffix instead of reading as this morning (same rule as the anga tiles).
-function elementLine(e: PanchangElement, referenceDay: Date, lang: Lang): string {
-  const name = contentByLang(lang, e.nameHi, e.nameEn);
-  return e.endTime ? `${name} · ${formatEndInstant(e.endTime, referenceDay, lang)}` : name;
-}
 
 /**
  * The reverent, gold-॥-framed "आज का पंचांग" card body (design.md §5). Shared by
- * the Muhurat detail screen (`variant="full"`) and the shareable image
- * (`variant="share"` + `brand`). Dark `ink` text throughout; the auspicious tint
+ * the Muhurat detail screen (`variant="full"`) and a compact `variant="share"`
+ * (the screen now shares the पूर्ण पंचांग card instead, design.md §33a). Dark `ink` text throughout; the auspicious tint
  * signals quality behind the text, never graying it (design.md §12).
  */
 export default function MuhuratCardBody({
@@ -39,7 +23,6 @@ export default function MuhuratCardBody({
   variant,
   nowStartMs,
   cityLabel,
-  brand = false,
   isToday = true,
 }: {
   p: PanchangData;
@@ -49,7 +32,6 @@ export default function MuhuratCardBody({
    * (never the repeated key). Null/undefined when not today. */
   nowStartMs?: number | null;
   cityLabel: string;
-  brand?: boolean;
   /** Titles the card "आज का पंचांग" when true (the daily surface); a specific
    * future/past day (reached via the Muhurat Finder, design.md §60) reads
    * "इस दिन का पंचांग" so it can't claim to be today. Defaults true. */
@@ -193,14 +175,6 @@ export default function MuhuratCardBody({
           {contentByLang(lang, `सभी समय ${cityLabel} के अनुसार`, `All times for ${cityLabel}`)}
         </Text>
       </View>
-
-      {brand && (
-        <View style={styles.brandRow}>
-          <Text style={{ color: colors.saffron, fontFamily: typography.readerTitle.fontFamily, fontSize: 14 }}>ॐ</Text>
-          <Text style={{ color: colors.saffronDeep, fontFamily: titleFont, fontSize: 13 }}>वेदांश़</Text>
-          <Text style={{ color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily, fontSize: 11 }}>· {cityLabel}</Text>
-        </View>
-      )}
     </View>
   );
 }
@@ -217,5 +191,4 @@ const styles = StyleSheet.create({
   rule: { height: 1, marginVertical: 10 },
   muh: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 11, marginBottom: 5 },
   footnote: { fontSize: 11, textAlign: 'center', marginTop: 10, fontStyle: 'italic' },
-  brandRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 7, marginTop: 12 },
 });

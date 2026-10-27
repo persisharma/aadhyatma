@@ -1,0 +1,33 @@
+{
+  "reference": {
+    "file": "/Users/prashant/Downloads/Vedansh Vrat & Parv Landing Page.png",
+    "contentWidth": 790,
+    "ledger": [
+      790,
+      154
+    ],
+    "tileWidth": 327,
+    "image": [
+      232,
+      150
+    ],
+    "tileGap": 12
+  },
+  "native": {
+    "viewport": [
+      402,
+      874
+    ],
+    "contentWidth": 374,
+    "ledgerIcon": 18,
+    "tileWidth": 155,
+    "image": [
+      110,
+      72
+    ],
+    "tileGap": 6,
+    "cornerRadius": 14,
+    "shadowBottomClearance": 10
+  },
+  "note": "Match source proportions; native 44pt hit targets and intrinsic height remain. Image width/circle differ from the older full-width image screenshot supplied by the user."
+}

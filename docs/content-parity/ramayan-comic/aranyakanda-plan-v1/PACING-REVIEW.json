@@ -1,0 +1,1615 @@
+{
+  "createdOn": "2026-10-26",
+  "reviewType": "planning-level whole-arc and adjacent-page pass",
+  "reviewer": "Codex agent; human editorial approval not implied",
+  "pages": [
+    {
+      "pageId": "ar-page-001",
+      "sourceSargas": [
+        1
+      ],
+      "sceneIds": [
+        "ar-p001-s1",
+        "ar-p001-s2",
+        "ar-p001-s3"
+      ],
+      "nextPageConnection": "The following morning the three leave the welcoming settlement for deeper forest.",
+      "introductions": [
+        "Rama: the exiled prince continuing his father’s promise.",
+        "Sita: Rama’s wife, accompanying him in the forest.",
+        "Lakshmana: Rama’s younger brother; introduce Bhabhi as the respectful term for his elder brother’s wife when English retains that term.",
+        "Forest ascetics: residents of Dandaka, not an unexplained new royal assembly."
+      ],
+      "entryCue": "After taking leave of Atri and Anasuya, the three continue into Dandaka.",
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-002",
+      "sourceSargas": [
+        2
+      ],
+      "sceneIds": [
+        "ar-p002-s1",
+        "ar-p002-s2",
+        "ar-p002-s3"
+      ],
+      "nextPageConnection": "The seizure prompts the brothers to demand Sita’s release and fight.",
+      "introductions": [
+        "Viradha: a rakshasa confronting the travellers."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "No sexualised threat or sensational capture pose."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-003",
+      "sourceSargas": [
+        3
+      ],
+      "sceneIds": [
+        "ar-p003-s1",
+        "ar-p003-s2",
+        "ar-p003-s3",
+        "ar-p003-s4"
+      ],
+      "nextPageConnection": "With both brothers carried away, Sita’s distress and their counteraction follow.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-004",
+      "sourceSargas": [
+        4
+      ],
+      "sceneIds": [
+        "ar-p004-s1",
+        "ar-p004-s2",
+        "ar-p004-s3"
+      ],
+      "nextPageConnection": "Defeated Viradha explains his condition and the means of release.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "The rescue and reversal must be shown before any liberation."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-005",
+      "sourceSargas": [
+        4
+      ],
+      "sceneIds": [
+        "ar-p005-s1",
+        "ar-p005-s2",
+        "ar-p005-s3"
+      ],
+      "nextPageConnection": "Following Viradha’s advice, the three seek Sharabhanga.",
+      "introductions": [
+        "Tumburu: Viradha’s former gandharva identity, explained within his account."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Final instruction precedes burial in the locked reading order; no dead character speaks afterward."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-006",
+      "sourceSargas": [
+        5
+      ],
+      "sceneIds": [
+        "ar-p006-s1",
+        "ar-p006-s2",
+        "ar-p006-s3"
+      ],
+      "nextPageConnection": "Their meeting fulfils the sage’s waiting and leads to his departure.",
+      "introductions": [
+        "Sharabhanga: an elder forest sage who awaited Rama.",
+        "Indra: identify the celestial visitor without an unexplained costume cameo."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-007",
+      "sourceSargas": [
+        5,
+        6
+      ],
+      "sceneIds": [
+        "ar-p007-s1",
+        "ar-p007-s2"
+      ],
+      "nextPageConnection": "The assembled ascetics explain the danger that brought them to Rama.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "No sudden replacement of Sharabhanga with an unnamed speaking sage."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-008",
+      "sourceSargas": [
+        6
+      ],
+      "sceneIds": [
+        "ar-p008-s1",
+        "ar-p008-s2",
+        "ar-p008-s3"
+      ],
+      "nextPageConnection": "They reach the sage whose hospitality will support their forest journey.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-009",
+      "sourceSargas": [
+        7
+      ],
+      "sceneIds": [
+        "ar-p009-s1",
+        "ar-p009-s2",
+        "ar-p009-s3"
+      ],
+      "nextPageConnection": "After the night halt, Rama asks leave for the next part of the journey.",
+      "introductions": [
+        "Sutikshna: the hospitable sage named by the preceding route."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-010",
+      "sourceSargas": [
+        8
+      ],
+      "sceneIds": [
+        "ar-p010-s1",
+        "ar-p010-s2",
+        "ar-p010-s3"
+      ],
+      "nextPageConnection": "The weapons and vow lead Sita to raise a serious concern while they walk.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-011",
+      "sourceSargas": [
+        9
+      ],
+      "sceneIds": [
+        "ar-p011-s1",
+        "ar-p011-s2",
+        "ar-p011-s3"
+      ],
+      "nextPageConnection": "Her example explains the danger she fears, rather than leaving the question abstract.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Rama must answer Sita’s concern; do not reduce it to a decorative caption."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-012",
+      "sourceSargas": [
+        9
+      ],
+      "sceneIds": [
+        "ar-p012-s1",
+        "ar-p012-s2",
+        "ar-p012-s3"
+      ],
+      "nextPageConnection": "Back in the present, Rama responds to the concern she has explained.",
+      "introductions": [
+        "The unnamed ascetic and disguised Indra belong only to Sita’s example."
+      ],
+      "entryCue": "Sita’s illustrative story; return to the three travellers in the final frame.",
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-013",
+      "sourceSargas": [
+        10
+      ],
+      "sceneIds": [
+        "ar-p013-s1",
+        "ar-p013-s2",
+        "ar-p013-s3"
+      ],
+      "nextPageConnection": "The journey continues through hermitages and the lake country.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-014",
+      "sourceSargas": [
+        11
+      ],
+      "sceneIds": [
+        "ar-p014-s1",
+        "ar-p014-s2",
+        "ar-p014-s3"
+      ],
+      "nextPageConnection": "The guide’s explanation supplies the answer to the heard music.",
+      "introductions": [
+        "Dharmabhrita: the accompanying sage answering the lake question.",
+        "Mandakarni: the ascetic in that account, not a present traveller."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-015",
+      "sourceSargas": [
+        11
+      ],
+      "sceneIds": [
+        "ar-p015-s1",
+        "ar-p015-s2",
+        "ar-p015-s3"
+      ],
+      "nextPageConnection": "After this visit, their travels extend across many hermitages and years.",
+      "introductions": [
+        "Five apsaras: figures within the guide’s account; use the correct count."
+      ],
+      "entryCue": "Dharmabhrita’s account; explicit return to the lake shore.",
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-016",
+      "sourceSargas": [
+        11
+      ],
+      "sceneIds": [
+        "ar-p016-s1",
+        "ar-p016-s2",
+        "ar-p016-s3"
+      ],
+      "nextPageConnection": "Back with Sutikshna, Rama can ask where to meet Agastya.",
+      "introductions": [],
+      "entryCue": "Across these hermitage visits, ten years passed.",
+      "knownEditorialRisks": [
+        "No instant ageing to grey hair, palace costume reset or unlabelled time jump."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-017",
+      "sourceSargas": [
+        11
+      ],
+      "sceneIds": [
+        "ar-p017-s1",
+        "ar-p017-s2",
+        "ar-p017-s3"
+      ],
+      "nextPageConnection": "The approach prompts an explicitly told recollection of Agastya’s protection of sages.",
+      "introductions": [
+        "Agastya: the sage they wish to meet.",
+        "Agastya’s brother: a different host, not Agastya himself."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-018",
+      "sourceSargas": [
+        11
+      ],
+      "sceneIds": [
+        "ar-p018-s1",
+        "ar-p018-s2",
+        "ar-p018-s3"
+      ],
+      "nextPageConnection": "Agastya’s response ends the trick and explains why the route is associated with his protection.",
+      "introductions": [
+        "Ilvala and Vatapi: brothers within Rama’s narrated past episode."
+      ],
+      "entryCue": "Rama tells Lakshmana an earlier account of Agastya.",
+      "knownEditorialRisks": [
+        "No cannibalism detail, comic meal gag or gruesome visual."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-019",
+      "sourceSargas": [
+        11
+      ],
+      "sceneIds": [
+        "ar-p019-s1",
+        "ar-p019-s2",
+        "ar-p019-s3"
+      ],
+      "nextPageConnection": "They can now arrive at Agastya’s own hermitage without a confusing sage substitution.",
+      "introductions": [],
+      "entryCue": "Return from Rama’s recollection; night halt and next-morning departure.",
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-020",
+      "sourceSargas": [
+        12
+      ],
+      "sceneIds": [
+        "ar-p020-s1",
+        "ar-p020-s2",
+        "ar-p020-s3"
+      ],
+      "nextPageConnection": "Their reception leads to Agastya’s gift and advice.",
+      "introductions": [
+        "Agastya’s disciple: the messenger at this hermitage; identify his role."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-021",
+      "sourceSargas": [
+        12
+      ],
+      "sceneIds": [
+        "ar-p021-s1",
+        "ar-p021-s2"
+      ],
+      "nextPageConnection": "After the gift, Rama seeks a suitable place to live.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Track the earlier bow versus Agastya’s Vaishnava bow before Khara breaks the first."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-022",
+      "sourceSargas": [
+        13
+      ],
+      "sceneIds": [
+        "ar-p022-s1",
+        "ar-p022-s2"
+      ],
+      "nextPageConnection": "On the way to Panchavati they meet a large bird whose identity must first be established.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-023",
+      "sourceSargas": [
+        14
+      ],
+      "sceneIds": [
+        "ar-p023-s1",
+        "ar-p023-s2",
+        "ar-p023-s3"
+      ],
+      "nextPageConnection": "Jatayu’s explanation earns trust and motivates his offer of help.",
+      "introductions": [
+        "Jatayu: an elder vulture and Dasharatha’s friend, introduced long before the abduction."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-024",
+      "sourceSargas": [
+        14
+      ],
+      "sceneIds": [
+        "ar-p024-s1",
+        "ar-p024-s2",
+        "ar-p024-s3"
+      ],
+      "nextPageConnection": "The new trusted ally is established before the three choose their dwelling.",
+      "introductions": [
+        "Sampati: mentioned as Jatayu’s elder brother only; no premature active role."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-025",
+      "sourceSargas": [
+        15
+      ],
+      "sceneIds": [
+        "ar-p025-s1",
+        "ar-p025-s2"
+      ],
+      "nextPageConnection": "The agreed site leads directly to the hut’s construction.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-026",
+      "sourceSargas": [
+        15
+      ],
+      "sceneIds": [
+        "ar-p026-s1"
+      ],
+      "nextPageConnection": "After a period of settled life the season changes and the brothers remember Bharata.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Keep the hut modest and spatially reusable; never a palace pavilion."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-027",
+      "sourceSargas": [
+        16
+      ],
+      "sceneIds": [
+        "ar-p027-s1",
+        "ar-p027-s2",
+        "ar-p027-s3"
+      ],
+      "nextPageConnection": "Their return places them at the dwelling when Shurpanakha arrives.",
+      "introductions": [],
+      "entryCue": "After autumn, the early-winter season has begun.",
+      "knownEditorialRisks": [
+        "Contents-page season label differs; follow verse 3.16.1, not the erroneous spring heading."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-028",
+      "sourceSargas": [
+        17
+      ],
+      "sceneIds": [
+        "ar-p028-s1",
+        "ar-p028-s2",
+        "ar-p028-s3"
+      ],
+      "nextPageConnection": "Knowing who Rama is, she makes a proposal to which he must respond.",
+      "introductions": [
+        "Shurpanakha: a rakshasi, Ravana’s sister and Khara’s sister.",
+        "Ravana and Khara: relationship mentions now; full introductions at their own entries."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-029",
+      "sourceSargas": [
+        17,
+        18
+      ],
+      "sceneIds": [
+        "ar-p029-s1",
+        "ar-p029-s2",
+        "ar-p029-s3"
+      ],
+      "nextPageConnection": "Her continued desire turns into a threat to Sita, creating the immediate danger.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Respectful writing must not erase the exchange that precedes the attack; avoid ridicule of physical appearance."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-030",
+      "sourceSargas": [
+        18
+      ],
+      "sceneIds": [
+        "ar-p030-s1",
+        "ar-p030-s2",
+        "ar-p030-s3"
+      ],
+      "nextPageConnection": "She seeks Khara’s intervention because of the injury.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "No implication that rejection alone caused punishment; show the attack on Sita."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-031",
+      "sourceSargas": [
+        19
+      ],
+      "sceneIds": [
+        "ar-p031-s1",
+        "ar-p031-s2",
+        "ar-p031-s3"
+      ],
+      "nextPageConnection": "The first troop follows Shurpanakha to the hermitage.",
+      "introductions": [
+        "Khara: a rakshasa commander in Janasthana and her brother."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-032",
+      "sourceSargas": [
+        20
+      ],
+      "sceneIds": [
+        "ar-p032-s1",
+        "ar-p032-s2",
+        "ar-p032-s3"
+      ],
+      "nextPageConnection": "The failed first attack provokes a larger mobilisation.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-033",
+      "sourceSargas": [
+        21,
+        22
+      ],
+      "sceneIds": [
+        "ar-p033-s1",
+        "ar-p033-s2",
+        "ar-p033-s3"
+      ],
+      "nextPageConnection": "The assembled force marches toward Rama’s dwelling.",
+      "introductions": [
+        "Dushana: Khara’s military commander, introduced before his battle."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-034",
+      "sourceSargas": [
+        23,
+        24
+      ],
+      "sceneIds": [
+        "ar-p034-s1",
+        "ar-p034-s2",
+        "ar-p034-s3"
+      ],
+      "nextPageConnection": "With Sita guarded, Rama faces the approaching force.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Do not show Lakshmana beside Rama during the main battle; Sita remains at the cave."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-035",
+      "sourceSargas": [
+        25
+      ],
+      "sceneIds": [
+        "ar-p035-s1",
+        "ar-p035-s2",
+        "ar-p035-s3"
+      ],
+      "nextPageConnection": "Dushana tries to reverse his army’s losses.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-036",
+      "sourceSargas": [
+        26
+      ],
+      "sceneIds": [
+        "ar-p036-s1",
+        "ar-p036-s2",
+        "ar-p036-s3"
+      ],
+      "nextPageConnection": "Before Khara’s duel, Trishiras asks to fight.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-037",
+      "sourceSargas": [
+        27
+      ],
+      "sceneIds": [
+        "ar-p037-s1",
+        "ar-p037-s2",
+        "ar-p037-s3"
+      ],
+      "nextPageConnection": "Khara advances after the defeat of both named commanders.",
+      "introductions": [
+        "Trishiras: a three-headed rakshasa warrior; no unexplained extra general."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-038",
+      "sourceSargas": [
+        28
+      ],
+      "sceneIds": [
+        "ar-p038-s1",
+        "ar-p038-s2",
+        "ar-p038-s3",
+        "ar-p038-s4"
+      ],
+      "nextPageConnection": "Without his chariot, Khara changes weapons.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-039",
+      "sourceSargas": [
+        29
+      ],
+      "sceneIds": [
+        "ar-p039-s1",
+        "ar-p039-s2",
+        "ar-p039-s3"
+      ],
+      "nextPageConnection": "Khara resorts to another desperate attack.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-040",
+      "sourceSargas": [
+        30
+      ],
+      "sceneIds": [
+        "ar-p040-s1",
+        "ar-p040-s2",
+        "ar-p040-s3"
+      ],
+      "nextPageConnection": "The end of the threat allows the protected travellers and ascetics to return.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-041",
+      "sourceSargas": [
+        30
+      ],
+      "sceneIds": [
+        "ar-p041-s1",
+        "ar-p041-s2"
+      ],
+      "nextPageConnection": "News of the army’s defeat reaches Lanka through a survivor.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-042",
+      "sourceSargas": [
+        31
+      ],
+      "sceneIds": [
+        "ar-p042-s1",
+        "ar-p042-s2",
+        "ar-p042-s3"
+      ],
+      "nextPageConnection": "Ravana seeks Maricha’s help for a first consultation.",
+      "introductions": [
+        "Akampana: a survivor reporting the defeat.",
+        "Ravana: Lanka’s ruler and brother of Shurpanakha and Khara."
+      ],
+      "entryCue": "Meanwhile, in Lanka.",
+      "knownEditorialRisks": [
+        "Retain sarga 31 because the selected traditional corpus includes it; record critical-edition difference."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-043",
+      "sourceSargas": [
+        31
+      ],
+      "sceneIds": [
+        "ar-p043-s1",
+        "ar-p043-s2",
+        "ar-p043-s3"
+      ],
+      "nextPageConnection": "Back in Lanka, Shurpanakha’s intervention revives the scheme.",
+      "introductions": [
+        "Maricha: the surviving rakshasa previously encountered in Balakanda."
+      ],
+      "entryCue": "Ravana’s first visit to Maricha.",
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-044",
+      "sourceSargas": [
+        32,
+        33
+      ],
+      "sceneIds": [
+        "ar-p044-s1",
+        "ar-p044-s2",
+        "ar-p044-s3"
+      ],
+      "nextPageConnection": "Her answer draws Ravana’s attention to Sita.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-045",
+      "sourceSargas": [
+        34
+      ],
+      "sceneIds": [
+        "ar-p045-s1",
+        "ar-p045-s2",
+        "ar-p045-s3"
+      ],
+      "nextPageConnection": "Ravana returns to the helper who had already warned him away.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-046",
+      "sourceSargas": [
+        35
+      ],
+      "sceneIds": [
+        "ar-p046-s1",
+        "ar-p046-s2",
+        "ar-p046-s3"
+      ],
+      "nextPageConnection": "Ravana explains the specific deception he now demands.",
+      "introductions": [],
+      "entryCue": "After Shurpanakha’s report, Ravana went to Maricha again.",
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-047",
+      "sourceSargas": [
+        36
+      ],
+      "sceneIds": [
+        "ar-p047-s1",
+        "ar-p047-s2",
+        "ar-p047-s3"
+      ],
+      "nextPageConnection": "Maricha’s fear is grounded in his past encounters with Rama.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-048",
+      "sourceSargas": [
+        37,
+        38
+      ],
+      "sceneIds": [
+        "ar-p048-s1",
+        "ar-p048-s2",
+        "ar-p048-s3"
+      ],
+      "nextPageConnection": "He adds a later encounter to explain why he abandoned his earlier attacks.",
+      "introductions": [],
+      "entryCue": "Maricha recalls his earlier encounter; final frame returns to the present.",
+      "knownEditorialRisks": [
+        "Youthful Rama only in the memory; do not transfer that appearance to Panchavati."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-049",
+      "sourceSargas": [
+        39
+      ],
+      "sceneIds": [
+        "ar-p049-s1",
+        "ar-p049-s2",
+        "ar-p049-s3"
+      ],
+      "nextPageConnection": "Ravana’s refusal turns the request into coercion.",
+      "introductions": [],
+      "entryCue": "Maricha’s later encounter; return explicitly to the second consultation.",
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-050",
+      "sourceSargas": [
+        40,
+        41,
+        42
+      ],
+      "sceneIds": [
+        "ar-p050-s1",
+        "ar-p050-s2",
+        "ar-p050-s3"
+      ],
+      "nextPageConnection": "They arrive near the hut to put the deception into action.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-051",
+      "sourceSargas": [
+        42
+      ],
+      "sceneIds": [
+        "ar-p051-s1",
+        "ar-p051-s2",
+        "ar-p051-s3"
+      ],
+      "nextPageConnection": "Sita calls the brothers to see what has caught her attention.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-052",
+      "sourceSargas": [
+        43
+      ],
+      "sceneIds": [
+        "ar-p052-s1",
+        "ar-p052-s2",
+        "ar-p052-s3"
+      ],
+      "nextPageConnection": "Before leaving, Rama assigns responsibility for Sita’s protection.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-053",
+      "sourceSargas": [
+        43,
+        44
+      ],
+      "sceneIds": [
+        "ar-p053-s1",
+        "ar-p053-s2",
+        "ar-p053-s3"
+      ],
+      "nextPageConnection": "The deer draws Rama progressively farther from the guarded dwelling.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-054",
+      "sourceSargas": [
+        44
+      ],
+      "sceneIds": [
+        "ar-p054-s1",
+        "ar-p054-s2"
+      ],
+      "nextPageConnection": "Rama’s shot breaks the disguise and triggers the planned false cry.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-055",
+      "sourceSargas": [
+        44
+      ],
+      "sceneIds": [
+        "ar-p055-s1",
+        "ar-p055-s2",
+        "ar-p055-s3"
+      ],
+      "nextPageConnection": "The deceptive cry reaches Sita and Lakshmana, who interpret it differently.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Never label the bubble simply Rama; the reader must know whose voice is being copied."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-056",
+      "sourceSargas": [
+        45
+      ],
+      "sceneIds": [
+        "ar-p056-s1",
+        "ar-p056-s2",
+        "ar-p056-s3"
+      ],
+      "nextPageConnection": "Her continued fear leads to the painful accusation and Lakshmana’s decision.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-057",
+      "sourceSargas": [
+        45,
+        46
+      ],
+      "sceneIds": [
+        "ar-p057-s1",
+        "ar-p057-s2",
+        "ar-p057-s3"
+      ],
+      "nextPageConnection": "Sita is now alone, allowing the hidden intruder to approach.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Respectful language must preserve the actual conflict and motive.",
+        "No Lakshmana-rekha inserted into this Valmiki-based sequence."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-058",
+      "sourceSargas": [
+        46
+      ],
+      "sceneIds": [
+        "ar-p058-s1",
+        "ar-p058-s2",
+        "ar-p058-s3"
+      ],
+      "nextPageConnection": "The visitor’s questions lead Sita to identify herself and her family.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "No magic boundary, threshold bargain or crossing condition invented."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-059",
+      "sourceSargas": [
+        47
+      ],
+      "sceneIds": [
+        "ar-p059-s1",
+        "ar-p059-s2",
+        "ar-p059-s3"
+      ],
+      "nextPageConnection": "Once his identity and demand are clear, Sita can reject him.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-060",
+      "sourceSargas": [
+        47,
+        48
+      ],
+      "sceneIds": [
+        "ar-p060-s1",
+        "ar-p060-s2",
+        "ar-p060-s3"
+      ],
+      "nextPageConnection": "Her refusal is followed by Ravana’s forceful seizure; his responsibility remains clear.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-061",
+      "sourceSargas": [
+        49
+      ],
+      "sceneIds": [
+        "ar-p061-s1"
+      ],
+      "nextPageConnection": "As she is carried away, Sita appeals to familiar forest witnesses and Jatayu.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Full-form anatomy must not collapse to a single crowned man.",
+        "Use the sourced aerial chariot; do not casually call it Pushpaka."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-062",
+      "sourceSargas": [
+        49,
+        50
+      ],
+      "sceneIds": [
+        "ar-p062-s1",
+        "ar-p062-s2"
+      ],
+      "nextPageConnection": "Jatayu first demands that Ravana stop, giving the confrontation a stated purpose.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-063",
+      "sourceSargas": [
+        50
+      ],
+      "sceneIds": [
+        "ar-p063-s1",
+        "ar-p063-s2",
+        "ar-p063-s3"
+      ],
+      "nextPageConnection": "Ravana’s refusal and attack cause the aerial duel.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-064",
+      "sourceSargas": [
+        51
+      ],
+      "sceneIds": [
+        "ar-p064-s1",
+        "ar-p064-s2",
+        "ar-p064-s3"
+      ],
+      "nextPageConnection": "With the chariot broken, Ravana must escape under his own power.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-065",
+      "sourceSargas": [
+        51
+      ],
+      "sceneIds": [
+        "ar-p065-s1",
+        "ar-p065-s1b",
+        "ar-p065-s2"
+      ],
+      "nextPageConnection": "Sita responds to the fallen defender before Ravana carries her away again.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "No intact flying chariot after its destruction; no immediate Jatayu death.",
+        "Preserve the set-aside beat: Sita cannot still be in Ravana’s arms immediately before she runs to Jatayu."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-066",
+      "sourceSargas": [
+        51,
+        52
+      ],
+      "sceneIds": [
+        "ar-p066-s1",
+        "ar-p066-s2",
+        "ar-p066-s3"
+      ],
+      "nextPageConnection": "The flight resumes, and Sita continues resisting through speech and actions.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-067",
+      "sourceSargas": [
+        52,
+        53
+      ],
+      "sceneIds": [
+        "ar-p067-s1",
+        "ar-p067-s2"
+      ],
+      "nextPageConnection": "Seeing possible witnesses below, Sita deliberately leaves a more recognisable clue.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-068",
+      "sourceSargas": [
+        54
+      ],
+      "sceneIds": [
+        "ar-p068-s1",
+        "ar-p068-s2",
+        "ar-p068-s3"
+      ],
+      "nextPageConnection": "Ravana continues across the sea to Lanka while the clue remains with the witnesses.",
+      "introductions": [
+        "Five vanaras: witnesses on the mountain; name and identify active individuals later in Kishkindha."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Lock a modest ornament inventory beforehand; dropped items never reappear on Sita.",
+        "No premature conversation with Sugriva or Hanuman."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-069",
+      "sourceSargas": [
+        54
+      ],
+      "sceneIds": [
+        "ar-p069-s1",
+        "ar-p069-s2",
+        "ar-p069-s3"
+      ],
+      "nextPageConnection": "After securing the captive, Ravana responds to the loss of Janasthana.",
+      "introductions": [
+        "Rakshasi guards: captors assigned to watch Sita."
+      ],
+      "entryCue": "Across the sea, in Lanka.",
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-070",
+      "sourceSargas": [
+        54
+      ],
+      "sceneIds": [
+        "ar-p070-s1",
+        "ar-p070-s2",
+        "ar-p070-s3"
+      ],
+      "nextPageConnection": "Back in the palace Ravana tries persuasion where force has not won Sita’s acceptance.",
+      "introductions": [
+        "Eight watchers: dispatched to observe the situation at Janasthana."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-071",
+      "sourceSargas": [
+        55,
+        56
+      ],
+      "sceneIds": [
+        "ar-p071-s1",
+        "ar-p071-s2"
+      ],
+      "nextPageConnection": "Her refusal leads Ravana to threaten and move her under harsher guard.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-072",
+      "sourceSargas": [
+        56
+      ],
+      "sceneIds": [
+        "ar-p072-s1",
+        "ar-p072-s2",
+        "ar-p072-s3"
+      ],
+      "nextPageConnection": "The narration now returns explicitly to Rama and Lakshmana in the forest.",
+      "introductions": [],
+      "entryCue": "Lanka; Sita remains captive here during the brothers’ search.",
+      "knownEditorialRisks": [
+        "Do not mix this deadline with later elapsed months.",
+        "No sudden Trijata, Hanuman, royal costume or rescued Sita."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-073",
+      "sourceSargas": [
+        57
+      ],
+      "sceneIds": [
+        "ar-p073-s1",
+        "ar-p073-s2",
+        "ar-p073-s3"
+      ],
+      "nextPageConnection": "The brothers’ exchange continues as they hurry toward the dwelling.",
+      "introductions": [],
+      "entryCue": "Meanwhile, on the path back to Panchavati.",
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-074",
+      "sourceSargas": [
+        58,
+        59
+      ],
+      "sceneIds": [
+        "ar-p074-s1",
+        "ar-p074-s2",
+        "ar-p074-s3"
+      ],
+      "nextPageConnection": "Finding the empty dwelling turns fear into an urgent search.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-075",
+      "sourceSargas": [
+        60,
+        61
+      ],
+      "sceneIds": [
+        "ar-p075-s1",
+        "ar-p075-s2"
+      ],
+      "nextPageConnection": "When the immediate search fails, the brothers widen it.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-076",
+      "sourceSargas": [
+        62,
+        63
+      ],
+      "sceneIds": [
+        "ar-p076-s1",
+        "ar-p076-s2"
+      ],
+      "nextPageConnection": "The search reaches the Godavari and the first tangible traces.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-077",
+      "sourceSargas": [
+        64
+      ],
+      "sceneIds": [
+        "ar-p077-s1",
+        "ar-p077-s2",
+        "ar-p077-s3"
+      ],
+      "nextPageConnection": "The signs suggest violence, causing Rama’s grief to turn to anger.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Ground remnants are not the ornament bundle held by the vanaras."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-078",
+      "sourceSargas": [
+        64,
+        65
+      ],
+      "sceneIds": [
+        "ar-p078-s1",
+        "ar-p078-s2",
+        "ar-p078-s3"
+      ],
+      "nextPageConnection": "Lakshmana continues his counsel until Rama accepts it.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-079",
+      "sourceSargas": [
+        66,
+        67
+      ],
+      "sceneIds": [
+        "ar-p079-s1",
+        "ar-p079-s2",
+        "ar-p079-s3"
+      ],
+      "nextPageConnection": "The ambiguous sight leads to a mistaken suspicion that must be corrected.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-080",
+      "sourceSargas": [
+        67
+      ],
+      "sceneIds": [
+        "ar-p080-s1",
+        "ar-p080-s2",
+        "ar-p080-s3"
+      ],
+      "nextPageConnection": "Rama asks the dying defender for the information needed to continue.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "No unexplained amnesia: recognition follows the damaged, initially ambiguous view."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-081",
+      "sourceSargas": [
+        68
+      ],
+      "sceneIds": [
+        "ar-p081-s1",
+        "ar-p081-s2",
+        "ar-p081-s3"
+      ],
+      "nextPageConnection": "The brothers honour the defender before resuming their search.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-082",
+      "sourceSargas": [
+        68
+      ],
+      "sceneIds": [
+        "ar-p082-s1",
+        "ar-p082-s2"
+      ],
+      "nextPageConnection": "With Jatayu honoured and his clue retained, they continue deeper into the forest.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-083",
+      "sourceSargas": [
+        69
+      ],
+      "sceneIds": [
+        "ar-p083-s1",
+        "ar-p083-s2",
+        "ar-p083-s3"
+      ],
+      "nextPageConnection": "The brothers escape this obstruction but meet a different danger ahead.",
+      "introductions": [
+        "Ayomukhi: a separate rakshasi encountered during the search."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Sensitive mutilation scene: no sexualised framing or graphic anatomy; wording needs editorial approval."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-084",
+      "sourceSargas": [
+        69
+      ],
+      "sceneIds": [
+        "ar-p084-s1",
+        "ar-p084-s2",
+        "ar-p084-s3"
+      ],
+      "nextPageConnection": "Their cooperation supplies the means of escape before any account or blessing.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Kabandha’s anatomy is distinct: no generic giant with a normal head."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-085",
+      "sourceSargas": [
+        70
+      ],
+      "sceneIds": [
+        "ar-p085-s1",
+        "ar-p085-s2",
+        "ar-p085-s3"
+      ],
+      "nextPageConnection": "Learning who the brothers are, Kabandha explains his condition and request.",
+      "introductions": [
+        "Kabandha: name is explained after the encounter and introduction."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-086",
+      "sourceSargas": [
+        71
+      ],
+      "sceneIds": [
+        "ar-p086-s1",
+        "ar-p086-s2",
+        "ar-p086-s3"
+      ],
+      "nextPageConnection": "The brothers carry out the request, enabling his promised guidance.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-087",
+      "sourceSargas": [
+        72
+      ],
+      "sceneIds": [
+        "ar-p087-s1",
+        "ar-p087-s2",
+        "ar-p087-s3"
+      ],
+      "nextPageConnection": "The brothers need a route to reach the recommended ally.",
+      "introductions": [
+        "Sugriva: an exiled vanara leader who may help find Sita.",
+        "Vali: Sugriva’s elder brother, mentioned to explain the exile; full dispute belongs to Kishkindha."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-088",
+      "sourceSargas": [
+        73
+      ],
+      "sceneIds": [
+        "ar-p088-s1",
+        "ar-p088-s2",
+        "ar-p088-s3"
+      ],
+      "nextPageConnection": "The named hermitage on their route makes the meeting with Shabari expected.",
+      "introductions": [
+        "Shabari: the ascetic awaiting Rama in Matanga’s hermitage.",
+        "Matanga: the teacher associated with that hermitage."
+      ],
+      "entryCue": null,
+      "knownEditorialRisks": [],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-089",
+      "sourceSargas": [
+        74
+      ],
+      "sceneIds": [
+        "ar-p089-s1",
+        "ar-p089-s2",
+        "ar-p089-s3"
+      ],
+      "nextPageConnection": "She shows the teachers’ hermitage and requests leave to depart.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "No tasted-berry sequence asserted as a Valmiki episode."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-090",
+      "sourceSargas": [
+        74
+      ],
+      "sceneIds": [
+        "ar-p090-s1",
+        "ar-p090-s2"
+      ],
+      "nextPageConnection": "After honouring Shabari, the brothers continue toward Pampa and Sugriva.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "Do not end her encounter at fruit hospitality and omit the sourced resolution."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    },
+    {
+      "pageId": "ar-page-091",
+      "sourceSargas": [
+        75
+      ],
+      "sceneIds": [
+        "ar-p091-s1"
+      ],
+      "nextPageConnection": "End of Aranyakanda: Kishkindha opens with Pampa and the approach to Sugriva; Hanuman’s meeting belongs there.",
+      "introductions": [],
+      "entryCue": null,
+      "knownEditorialRisks": [
+        "No premature friendship pact, Hanuman meeting or rescue of Sita."
+      ],
+      "status": "planning pass; exact sources, four full scripts and art-to-scene check pending"
+    }
+  ],
+  "wholeNarrativeReviews": {
+    "hi": "not yet performed: full final script has not been authored",
+    "en": "not yet performed: full final script has not been authored",
+    "gu": "not yet performed: full final script has not been authored",
+    "kn": "not yet performed: full final script has not been authored"
+  },
+  "artReview": "not performed; no new artwork generated",
+  "nativeStandard": "not performed; integration is out of planning scope",
+  "nativeLarge": "not performed; integration is out of planning scope",
+  "criticalTransitions": [
+    "Sita’s question receives Rama’s response after her labelled sword example.",
+    "Mandakarni account returns to the lake; ten-year montage returns to Sutikshna.",
+    "Agastya’s brother and Agastya are separate visits; gift bow recurs at the correct battle.",
+    "Jatayu is introduced as father’s friend long before his rescue attempt.",
+    "First Maricha warning ends in Ravana’s return; Shurpanakha’s intervention causes the second visit.",
+    "False cry identifies Maricha; Sita’s fear, Lakshmana’s duty, accusation and departure stay connected.",
+    "Broken chariot remains broken; Jatayu stays alive until his later testimony.",
+    "Vanara bundle stays separate from ground battle clues; Sita remains in Lanka during the brothers’ search.",
+    "Lakshmana’s counsel has an observable response before the renewed search.",
+    "Kabandha’s requested release precedes guidance; Shabari is introduced before arrival and given her full resolution.",
+    "Pampa ending motivates the next kanda without staging Hanuman’s meeting early.",
+    "Page 65 now shows Ravana setting Sita aside during renewed combat before she approaches the fallen Jatayu on page 66."
+  ],
+  "rulesAuditStatus": "Partial: planning outline reviewed and one additional spatial transition repaired; complete sourced reading, four full scripts and visual/native checks pending."
+}

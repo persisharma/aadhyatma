@@ -1,0 +1,227 @@
+[
+  {
+    "stem": "daan-annapurna-bhiksha",
+    "url": "https://cdn.vedansh.app/reader-illustrations/3ababd2172739822.webp",
+    "client": "curl",
+    "bytes": 99228,
+    "sha256": "3ababd21727398228a0fde44ab198cd6bf183d834053de6815c667bc139c0b06",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-dattatreya",
+    "url": "https://cdn.vedansh.app/reader-illustrations/3c7883121f519d08.webp",
+    "client": "curl",
+    "bytes": 124082,
+    "sha256": "3c7883121f519d08e526734103ca345e0950254f4a17a6f207e0822fa5dc2a54",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-durga-lion",
+    "url": "https://cdn.vedansh.app/reader-illustrations/324b157dc73b990e.webp",
+    "client": "curl",
+    "bytes": 103118,
+    "sha256": "324b157dc73b990ec996dfd687e08e3a861c77067cfe6d0a0f28237f25855253",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-ganesha-modak",
+    "url": "https://cdn.vedansh.app/reader-illustrations/d25b9255ffa1b3f3.webp",
+    "client": "curl",
+    "bytes": 116908,
+    "sha256": "d25b9255ffa1b3f3805b8349f39933d51c09c230e7bd260da5546912e6a8bc69",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-ganga",
+    "url": "https://cdn.vedansh.app/reader-illustrations/25367a33becc7421.webp",
+    "client": "curl",
+    "bytes": 115768,
+    "sha256": "25367a33becc7421405561d8af10c76c5587e7ce6ea6190b18d516faf53b33f1",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-krishna-bansuri",
+    "url": "https://cdn.vedansh.app/reader-illustrations/f38054b6023adf22.webp",
+    "client": "curl",
+    "bytes": 127520,
+    "sha256": "f38054b6023adf221b4de2cf30281dff54fba7a5bd4b007e17277f1cef17b8ae",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-lakshmi",
+    "url": "https://cdn.vedansh.app/reader-illustrations/7b70b090e5eceb11.webp",
+    "client": "curl",
+    "bytes": 102884,
+    "sha256": "7b70b090e5eceb11284909e3a7d14d4f724df64ea395ef1f97ada845b2108450",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-narasimha-prahlad",
+    "url": "https://cdn.vedansh.app/reader-illustrations/5b4a63956b520203.webp",
+    "client": "curl",
+    "bytes": 130748,
+    "sha256": "5b4a63956b5202039bfb8b2f8ac171eec684b6bd601ea7fa367c4ffe3d74a051",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-parvati-bhavani",
+    "url": "https://cdn.vedansh.app/reader-illustrations/f489354a2564eaf9.webp",
+    "client": "curl",
+    "bytes": 120658,
+    "sha256": "f489354a2564eaf97d0cf65812db3424fe2a8a48709af9edf1907e7e33a45d62",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-radha-krishna",
+    "url": "https://cdn.vedansh.app/reader-illustrations/28a425c6391e95f0.webp",
+    "client": "curl",
+    "bytes": 135112,
+    "sha256": "28a425c6391e95f063604f806e5742ce4ccce2ba2b7732a8283f854abed25d4f",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-rama-darbar",
+    "url": "https://cdn.vedansh.app/reader-illustrations/934c7e58e18e4c5d.webp",
+    "client": "curl",
+    "bytes": 121604,
+    "sha256": "934c7e58e18e4c5df2932c0b9f923db76afec7d786002115e80f17004cd04976",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-saraswati-veena",
+    "url": "https://cdn.vedansh.app/reader-illustrations/0bfd51fab0c76639.webp",
+    "client": "curl",
+    "bytes": 110674,
+    "sha256": "0bfd51fab0c76639ced8675d2ffdbcfd0bfe1e19929109ab760afd8e61b74ddb",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-shani",
+    "url": "https://cdn.vedansh.app/reader-illustrations/0dc16111235285d3.webp",
+    "client": "curl",
+    "bytes": 102682,
+    "sha256": "0dc16111235285d390eb05d9e619644235e34454f2f50fd0a5fe58cbc3036f9f",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "deity-surya",
+    "url": "https://cdn.vedansh.app/reader-illustrations/c7d38e9b8588d376.webp",
+    "client": "curl",
+    "bytes": 108110,
+    "sha256": "c7d38e9b8588d3766c0a95e38f93a9eb59ccf8fa9d1517f190468ac81b420101",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "hanuman-sita",
+    "url": "https://cdn.vedansh.app/reader-illustrations/0acd6590e27d86c1.webp",
+    "client": "curl",
+    "bytes": 103596,
+    "sha256": "0acd6590e27d86c1b4e4e3642e536851789344ed2465c43e922d82f5d59da813",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "shiva",
+    "url": "https://cdn.vedansh.app/reader-illustrations/7cb9287b40c1bbe0.webp",
+    "client": "curl",
+    "bytes": 97660,
+    "sha256": "7cb9287b40c1bbe01c909389d648fc356a9ee9ad499c09924c024a32de36dfda",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "source-vishnu-narayana",
+    "url": "https://cdn.vedansh.app/reader-illustrations/ea3ebd005c439ef4.webp",
+    "client": "curl",
+    "bytes": 101452,
+    "sha256": "ea3ebd005c439ef456fe757e8b63d8eabb2c700ce58f3026d7de6ee15a3a2a1a",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "theerth-gogaji-gogamedi",
+    "url": "https://cdn.vedansh.app/reader-illustrations/54128d157693059d.webp",
+    "client": "curl",
+    "bytes": 106542,
+    "sha256": "54128d157693059df9aa85fb6b909b9fa12f2022418962ee2219264ad0fda54d",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "theerth-khandoba-jejuri",
+    "url": "https://cdn.vedansh.app/reader-illustrations/e036fbf06d13d127.webp",
+    "client": "curl",
+    "bytes": 125436,
+    "sha256": "e036fbf06d13d127b538919962a65ede571d1bafdc77ae4c7938e613416e7633",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "theerth-ramdevra",
+    "url": "https://cdn.vedansh.app/reader-illustrations/86de15db64abaf07.webp",
+    "client": "curl",
+    "bytes": 99154,
+    "sha256": "86de15db64abaf07bbcb2c3db001080ddb9397beab0bf234a749d0b42594efa7",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "theerth-tejaji-kharnal",
+    "url": "https://cdn.vedansh.app/reader-illustrations/7f202702907f142b.webp",
+    "client": "curl",
+    "bytes": 98798,
+    "sha256": "7f202702907f142ba3702913d378d1ceecab53581d9c105410424603e5442f1f",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "theerth-vetrimalai-murugan",
+    "url": "https://cdn.vedansh.app/reader-illustrations/4c61af521ee50ee8.webp",
+    "client": "curl",
+    "bytes": 112994,
+    "sha256": "4c61af521ee50ee8743163c9d783f22cfcc1c43c421845c665e3918a769062bf",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "ahoi",
+    "url": "https://cdn.vedansh.app/devotional-share/0779a33731de1ae4.webp",
+    "client": "curl",
+    "bytes": 233354,
+    "sha256": "0779a33731de1ae439497820d7cfcc3dcf4b9e06fe07592cb59785928c770855",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "tulsi",
+    "url": "https://cdn.vedansh.app/devotional-share/383f34bb56894b25.webp",
+    "client": "curl",
+    "bytes": 226108,
+    "sha256": "383f34bb56894b25dbd83aa9f169537ae0e7a83a9356440cbabd43fb688b40ab",
+    "hashMatches": true,
+    "status": 200
+  },
+  {
+    "stem": "si-01",
+    "url": "https://cdn.vedansh.app/kids-stories/f3a8ebd71f943aac.webp",
+    "client": "curl",
+    "bytes": 271706,
+    "sha256": "f3a8ebd71f943aac04017a8e7a5de4175dbd8f099067fd4e1967a4dcdf9e1f41",
+    "hashMatches": true,
+    "status": 200
+  }
+]

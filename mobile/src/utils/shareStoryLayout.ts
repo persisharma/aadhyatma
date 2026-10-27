@@ -28,7 +28,9 @@
  * and its meaning-fit budget are tuned against exactly 540×675 (§39). The cheaper
  * trade is to run the card full-bleed horizontally and let the rail sit over its
  * 28 dp internal padding: the rail overlaps the card's margin, never its text.
- * That keeps the capture a plain, unscaled view hierarchy.
+ * That keeps the capture a plain, unscaled view hierarchy. A card whose text runs
+ * closer to its edges than that (the Panchang card's 12–14 dp) passes
+ * {@link storyRailInset} instead and takes the small scale.
  *
  * The insets below are therefore chosen so the card fits at **scale 1**. All
  * values are dp against {@link storyCanvas}; the capture is taken at 2×.
@@ -55,6 +57,14 @@ export const STORY_OUTPUT_HEIGHT = 1920;
  * `shareStoryLayout.test.ts` fails loudly if that happens.
  */
 export const storySafeInsets = { top: 120, bottom: 165, horizontal: 0 } as const;
+
+/**
+ * Side inset (dp, each side) that keeps edge text clear of the Reel's like/comment/
+ * share column (~120 px = 60 dp from the right edge) for a card with ~12 dp internal
+ * padding. Symmetric so a Story, which has no column, still shows the card centred.
+ * A 540 dp card lands at scale ≈0.81.
+ */
+export const storyRailInset = 52;
 
 /** The rectangle inside the canvas that neither format crops nor covers. */
 export function storySafeBox(): { x: number; y: number; width: number; height: number } {
@@ -84,11 +94,12 @@ export type StoryCardPlacement = {
  *
  * The scale is a backstop, not a design tool: the insets are chosen so a
  * 540×675 card fits at 1:1. It only drops below 1 if the card outgrows the band,
- * which the tests treat as a regression to look at rather than absorb silently.
+ * which the tests treat as a regression to look at rather than absorb silently —
+ * or when the caller asks for `sideInset` ({@link storyRailInset}).
  */
-export function placeStoryCard(cardWidth: number, cardHeight: number): StoryCardPlacement {
+export function placeStoryCard(cardWidth: number, cardHeight: number, sideInset = 0): StoryCardPlacement {
   const safe = storySafeBox();
-  const scale = Math.min(1, safe.width / cardWidth, safe.height / cardHeight);
+  const scale = Math.min(1, (safe.width - sideInset * 2) / cardWidth, safe.height / cardHeight);
   const width = cardWidth * scale;
   const height = cardHeight * scale;
   return {

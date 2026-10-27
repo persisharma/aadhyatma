@@ -5,6 +5,7 @@
  * from the real engine (no engine mocks) on pinned 2026 dates; only the
  * navigation/context shells are mocked, following KundaliExperience.test.
  */
+import { ShareProvider } from '@/utils/shareVerse';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { View as mockView } from 'react-native';
@@ -22,6 +23,8 @@ import { computeMuhuratDay } from '@/panchang/muhurat';
 
 const mockNavigation = { goBack: jest.fn(), navigate: jest.fn() };
 
+// Opening a share mounts the provider's festival-tag resolver; it reads the panchang engine this suite mocks.
+jest.mock('@/components/TimelyTagsResolver', () => ({ __esModule: true, default: () => null }));
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => mockNavigation,
 }));
@@ -114,7 +117,7 @@ const nav = mockNavigation as never;
 function renderWithLang(el: React.ReactElement) {
   let renderer!: TestRenderer.ReactTestRenderer;
   act(() => {
-    renderer = TestRenderer.create(<GitaLanguageProvider>{el}</GitaLanguageProvider>);
+    renderer = TestRenderer.create(<GitaLanguageProvider><ShareProvider>{el}</ShareProvider></GitaLanguageProvider>);
   });
   return renderer;
 }
@@ -248,18 +251,15 @@ test('MuhuratDayDetailScreen renders answer-first with provenance and the doshas
     dateMs: new Date(2026, 7, 17).getTime(),
   });
 
-  // Share: the off-screen finder card is captured and handed to the OS sheet.
-  const { captureRef } = jest.requireMock('react-native-view-shot');
-  const sharing = jest.requireMock('expo-sharing');
+  // Share: the Daily Bhakti picker opens on the finder card (design.md §39.10) —
+  // WhatsApp / Instagram post / story / text, with the brand + download strip.
   const share = r.root.findByProps({ accessibilityLabel: 'मुहूर्त साझा करें' });
   await act(async () => {
     await share.props.onPress();
   });
-  expect(captureRef).toHaveBeenCalled();
-  expect(sharing.shareAsync).toHaveBeenCalledWith(
-    'file://muhurat-share.png',
-    expect.objectContaining({ mimeType: 'image/png' })
-  );
+  expect(r.root.findAllByProps({ accessibilityLabel: 'Share to other apps' }).length).toBeGreaterThan(0);
+  expect(r.root.findAllByProps({ accessibilityLabel: 'Share as Instagram story or reel' }).length).toBeGreaterThan(0);
+  expect(r.root.findAllByProps({ testID: 'share-card-brand-strip' }).length).toBeGreaterThan(0);
   act(() => r.unmount());
 });
 

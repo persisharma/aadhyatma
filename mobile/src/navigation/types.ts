@@ -66,6 +66,7 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   KidsStoryLibrary: undefined;
   KidsStoryDeity: { deityId: StoryDeityId };
   KidsStoryReader: { storyId: string; pageId?: string };
+  RamayanComic: undefined;
   ComicChapters: { comicId: string };
   ComicReader: { comicId: string; episodeId?: string; panelId?: string };
   /**

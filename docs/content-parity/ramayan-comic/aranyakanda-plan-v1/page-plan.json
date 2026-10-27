@@ -1,0 +1,6127 @@
+{
+  "edition": "aranyakanda-plan-v1",
+  "createdOn": "2026-10-26",
+  "status": "planning only; no new artwork, full script, preview implementation or app integration",
+  "baseText": "Valmiki Ramayana Aranyakanda, selected traditional 75-sarga numbering from the checked-in corpus",
+  "sourceCorpus": {
+    "path": "mobile/src/data/valmiki-ramayan/chapter-03.json",
+    "sha256": "587ed271174a09cafdaa9d208dbd40bcc11852688fedaf3f6c73ab84c30358db",
+    "sargaCount": 75,
+    "verseRecordCount": 2439
+  },
+  "pageCount": 91,
+  "sceneCount": 256,
+  "languages": [
+    "hi",
+    "en",
+    "gu",
+    "kn"
+  ],
+  "languagesStatus": "Four complete scripts are required next; current page titles and speech intents are planning material, not four authored narratives.",
+  "pageCountPolicy": "Provisional grouping chosen from causal beats; revise before art if four-language readability or source checks require another page. No fixed page quota.",
+  "rowsPolicy": "One, two or three rows per page; preserve complete art, measured panel boundaries and natural vertical scrolling.",
+  "pages": [
+    {
+      "id": "ar-page-001",
+      "number": 1,
+      "title": {
+        "hi": "दण्डक वन में प्रवेश",
+        "en": "Entering Dandaka"
+      },
+      "sourceSargas": [
+        1
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p001-s1"
+        ],
+        [
+          "ar-p001-s2"
+        ],
+        [
+          "ar-p001-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Ascetics"
+      ],
+      "introductions": [
+        "Rama: the exiled prince continuing his father’s promise.",
+        "Sita: Rama’s wife, accompanying him in the forest.",
+        "Lakshmana: Rama’s younger brother; introduce Bhabhi as the respectful term for his elder brother’s wife when English retains that term.",
+        "Forest ascetics: residents of Dandaka, not an unexplained new royal assembly."
+      ],
+      "entryCue": "After taking leave of Atri and Anasuya, the three continue into Dandaka.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "The three approach forest hermitages with existing forest dress and matted hair.",
+          "captionIntent": "Continue from Atri and Anasuya; identify the Dandaka forest and briefly re-establish Rama, his wife Sita and younger brother Lakshmana for a reader entering this kanda.",
+          "id": "ar-p001-s1",
+          "sourceSargas": [
+            1
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Ascetics",
+          "artAction": "Rama bows before the ascetics.",
+          "speechIntent": "Greet the residents and ask after their welfare.",
+          "id": "ar-p001-s2",
+          "sourceSargas": [
+            1
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ascetics",
+          "addressedTo": "Rama",
+          "artAction": "Ascetics welcome all three with forest food.",
+          "speechIntent": "Introduce themselves as forest ascetics and offer hospitality.",
+          "id": "ar-p001-s3",
+          "sourceSargas": [
+            1
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The following morning the three leave the welcoming settlement for deeper forest.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-002",
+      "number": 2,
+      "title": {
+        "hi": "विराध का आक्रमण",
+        "en": "Viradha blocks the path"
+      },
+      "sourceSargas": [
+        2
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p002-s1"
+        ],
+        [
+          "ar-p002-s2"
+        ],
+        [
+          "ar-p002-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Viradha"
+      ],
+      "introductions": [
+        "Viradha: a rakshasa confronting the travellers."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "A huge rakshasa carrying a spear emerges from the forest.",
+          "captionIntent": "Introduce Viradha as the threatening forest rakshasa.",
+          "id": "ar-p002-s1",
+          "sourceSargas": [
+            2
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Viradha",
+          "addressedTo": "Rama,Lakshmana",
+          "artAction": "Viradha seizes Sita while confronting the brothers.",
+          "speechIntent": "Challenge the armed forest visitors; threat is explicit.",
+          "id": "ar-p002-s2",
+          "sourceSargas": [
+            2
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "Lakshmana turns toward his distressed elder brother with bow ready.",
+          "speechIntent": "Assure Ram Bhaiya that they will defend Sita Bhabhi.",
+          "id": "ar-p002-s3",
+          "sourceSargas": [
+            2
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The seizure prompts the brothers to demand Sita’s release and fight.",
+      "editorialRisks": [
+        "No sexualised threat or sensational capture pose."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-003",
+      "number": 3,
+      "title": {
+        "hi": "शस्त्रों का असर क्यों नहीं",
+        "en": "Weapons cannot stop him"
+      },
+      "sourceSargas": [
+        3
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p003-s1"
+        ],
+        [
+          "ar-p003-s2",
+          "ar-p003-s3"
+        ],
+        [
+          "ar-p003-s4"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Viradha"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Viradha",
+          "artAction": "Rama faces Viradha with Sita still held.",
+          "speechIntent": "Demand release and establish whom the brothers are confronting.",
+          "id": "ar-p003-s1",
+          "sourceSargas": [
+            3
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "The brothers’ arrows fail to end Viradha’s attack.",
+          "id": "ar-p003-s2",
+          "sourceSargas": [
+            3
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Sita is released; Rama shatters the attacking spear.",
+          "id": "ar-p003-s3",
+          "sourceSargas": [
+            3
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Viradha lifts both brothers onto his shoulders.",
+          "captionIntent": "Their first attack has failed; the threat changes form.",
+          "id": "ar-p003-s4",
+          "sourceSargas": [
+            3
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "With both brothers carried away, Sita’s distress and their counteraction follow.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-004",
+      "number": 4,
+      "title": {
+        "hi": "सीता की पुकार",
+        "en": "Breaking Viradha’s grip"
+      },
+      "sourceSargas": [
+        4
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p004-s1"
+        ],
+        [
+          "ar-p004-s2"
+        ],
+        [
+          "ar-p004-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Viradha"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Viradha",
+          "artAction": "Sita follows the departing attacker in anguish.",
+          "speechIntent": "Demand that he release the brothers; preserve her active response.",
+          "id": "ar-p004-s1",
+          "sourceSargas": [
+            4
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The brothers disable Viradha’s grasp; injury remains outside the frame.",
+          "captionIntent": "Show the necessary counteraction without graphic anatomy.",
+          "id": "ar-p004-s2",
+          "sourceSargas": [
+            4
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Rama restrains the fallen rakshasa while Lakshmana listens.",
+          "speechIntent": "Recognise that weapons alone cannot end his condition.",
+          "id": "ar-p004-s3",
+          "sourceSargas": [
+            4
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Defeated Viradha explains his condition and the means of release.",
+      "editorialRisks": [
+        "The rescue and reversal must be shown before any liberation."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-005",
+      "number": 5,
+      "title": {
+        "hi": "विराध की मुक्ति",
+        "en": "Viradha explains his curse"
+      },
+      "sourceSargas": [
+        4
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p005-s1"
+        ],
+        [
+          "ar-p005-s2"
+        ],
+        [
+          "ar-p005-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Viradha"
+      ],
+      "introductions": [
+        "Tumburu: Viradha’s former gandharva identity, explained within his account."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Viradha",
+          "addressedTo": "Rama",
+          "artAction": "The subdued Viradha addresses Rama.",
+          "speechIntent": "Identify himself as Tumburu under a curse; explain the prescribed release.",
+          "id": "ar-p005-s1",
+          "sourceSargas": [
+            4
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Viradha",
+          "addressedTo": "Rama",
+          "artAction": "The subdued Viradha points the travellers toward Sharabhanga before burial.",
+          "speechIntent": "Direct Rama to Sharabhanga and request burial before the release is completed.",
+          "id": "ar-p005-s2",
+          "sourceSargas": [
+            4
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The brothers carry out burial with the body largely screened by terrain.",
+          "captionIntent": "Explain burial after the curse account; no procedural close-up.",
+          "id": "ar-p005-s3",
+          "sourceSargas": [
+            4
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Following Viradha’s advice, the three seek Sharabhanga.",
+      "editorialRisks": [
+        "Final instruction precedes burial in the locked reading order; no dead character speaks afterward."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-006",
+      "number": 6,
+      "title": {
+        "hi": "शरभंग का आश्रम",
+        "en": "Sharabhanga’s hermitage"
+      },
+      "sourceSargas": [
+        5
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p006-s1"
+        ],
+        [
+          "ar-p006-s2"
+        ],
+        [
+          "ar-p006-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Sharabhanga",
+        "Indra"
+      ],
+      "introductions": [
+        "Sharabhanga: an elder forest sage who awaited Rama.",
+        "Indra: identify the celestial visitor without an unexplained costume cameo."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "The travellers see Indra depart from a sage’s hermitage.",
+          "captionIntent": "Introduce the sage Sharabhanga and identify the departing celestial visitor.",
+          "id": "ar-p006-s1",
+          "sourceSargas": [
+            5
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Sharabhanga",
+          "artAction": "Rama respectfully greets the waiting sage.",
+          "speechIntent": "Ask about the visitor and seek counsel.",
+          "id": "ar-p006-s2",
+          "sourceSargas": [
+            5
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sharabhanga",
+          "addressedTo": "Rama",
+          "artAction": "The sage offers the fruits of his ascetic merit.",
+          "speechIntent": "Explain he remained to meet Rama; receive Rama’s respectful reply about his own path.",
+          "id": "ar-p006-s3",
+          "sourceSargas": [
+            5
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Their meeting fulfils the sage’s waiting and leads to his departure.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-007",
+      "number": 7,
+      "title": {
+        "hi": "ऋषि का प्रस्थान",
+        "en": "The sage’s departure"
+      },
+      "sourceSargas": [
+        5,
+        6
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p007-s1"
+        ],
+        [
+          "ar-p007-s2"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Sharabhanga",
+        "Ascetics"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Sharabhanga’s extraordinary radiant departure is represented through light; visitors witness reverently.",
+          "captionIntent": "Clearly identify a sacred narrative event, with no replicable act or instructional imagery.",
+          "id": "ar-p007-s1",
+          "sourceSargas": [
+            5,
+            6
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Other forest ascetics gather around Rama after the departure.",
+          "captionIntent": "Their gathering follows the meeting and opens their appeal for protection.",
+          "id": "ar-p007-s2",
+          "sourceSargas": [
+            5,
+            6
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The assembled ascetics explain the danger that brought them to Rama.",
+      "editorialRisks": [
+        "No sudden replacement of Sharabhanga with an unnamed speaking sage."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-008",
+      "number": 8,
+      "title": {
+        "hi": "वनवासियों की विनती",
+        "en": "The ascetics ask for safety"
+      },
+      "sourceSargas": [
+        6
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p008-s1"
+        ],
+        [
+          "ar-p008-s2"
+        ],
+        [
+          "ar-p008-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Ascetics"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ascetics",
+          "addressedTo": "Rama",
+          "artAction": "The ascetics show the threatened hermitage landscape.",
+          "speechIntent": "Explain repeated attacks and their inability to practise peacefully.",
+          "id": "ar-p008-s1",
+          "sourceSargas": [
+            6
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Ascetics",
+          "artAction": "Rama listens with concern, then answers.",
+          "speechIntent": "Recognise his responsibility and promise protection.",
+          "id": "ar-p008-s2",
+          "sourceSargas": [
+            6
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The three and their guides set out toward another hermitage.",
+          "captionIntent": "Name Sutikshna as the next sage they seek.",
+          "id": "ar-p008-s3",
+          "sourceSargas": [
+            6
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "They reach the sage whose hospitality will support their forest journey.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-009",
+      "number": 9,
+      "title": {
+        "hi": "सुतीक्ष्ण का स्वागत",
+        "en": "Sutikshna welcomes them"
+      },
+      "sourceSargas": [
+        7
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p009-s1"
+        ],
+        [
+          "ar-p009-s2"
+        ],
+        [
+          "ar-p009-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Sutikshna"
+      ],
+      "introductions": [
+        "Sutikshna: the hospitable sage named by the preceding route."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "A new elder sage welcomes the three at his hermitage.",
+          "captionIntent": "Introduce Sutikshna before his invitation.",
+          "id": "ar-p009-s1",
+          "sourceSargas": [
+            7
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sutikshna",
+          "addressedTo": "Rama",
+          "artAction": "Sutikshna offers a place to stay.",
+          "speechIntent": "Offer hospitality and residence.",
+          "id": "ar-p009-s2",
+          "sourceSargas": [
+            7
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Sutikshna",
+          "artAction": "Rama replies respectfully as evening approaches.",
+          "speechIntent": "Express their wish to visit forest hermitages; night hospitality completes the encounter.",
+          "id": "ar-p009-s3",
+          "sourceSargas": [
+            7
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "After the night halt, Rama asks leave for the next part of the journey.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-010",
+      "number": 10,
+      "title": {
+        "hi": "आगे बढ़ने की अनुमति",
+        "en": "Taking leave of Sutikshna"
+      },
+      "sourceSargas": [
+        8
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p010-s1"
+        ],
+        [
+          "ar-p010-s2"
+        ],
+        [
+          "ar-p010-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Sutikshna"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Sutikshna",
+          "artAction": "Rama requests permission at morning worship.",
+          "speechIntent": "Ask to visit other hermitages and promise to return.",
+          "id": "ar-p010-s1",
+          "sourceSargas": [
+            8
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sutikshna",
+          "addressedTo": "Rama",
+          "artAction": "The sage blesses the party and points out the route.",
+          "speechIntent": "Grant leave and welcome their eventual return.",
+          "id": "ar-p010-s2",
+          "sourceSargas": [
+            8
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Sita hands over the travellers’ bows and quivers before they depart.",
+          "id": "ar-p010-s3",
+          "sourceSargas": [
+            8
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The weapons and vow lead Sita to raise a serious concern while they walk.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-011",
+      "number": 11,
+      "title": {
+        "hi": "सीता का प्रश्न",
+        "en": "Sita asks about the vow"
+      },
+      "sourceSargas": [
+        9
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p011-s1"
+        ],
+        [
+          "ar-p011-s2"
+        ],
+        [
+          "ar-p011-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Rama",
+          "artAction": "Sita walks beside Rama and raises her concern.",
+          "speechIntent": "Ask whether bearing arms and undertaking conflict might disturb their forest discipline.",
+          "id": "ar-p011-s1",
+          "sourceSargas": [
+            9
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Rama",
+          "artAction": "Rama listens attentively as she continues.",
+          "speechIntent": "Distinguish protection from violence against those who have caused no harm.",
+          "id": "ar-p011-s2",
+          "sourceSargas": [
+            9
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Sita begins an example while the present forest remains established.",
+          "captionIntent": "Label the following episode as Sita’s illustrative story.",
+          "id": "ar-p011-s3",
+          "sourceSargas": [
+            9
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Her example explains the danger she fears, rather than leaving the question abstract.",
+      "editorialRisks": [
+        "Rama must answer Sita’s concern; do not reduce it to a decorative caption."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-012",
+      "number": 12,
+      "title": {
+        "hi": "तलवार की कथा",
+        "en": "The ascetic and the sword"
+      },
+      "sourceSargas": [
+        9
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p012-s1"
+        ],
+        [
+          "ar-p012-s2"
+        ],
+        [
+          "ar-p012-s3"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Rama",
+        "Lakshmana",
+        "Ascetic-in-story",
+        "Indra-in-disguise"
+      ],
+      "introductions": [
+        "The unnamed ascetic and disguised Indra belong only to Sita’s example."
+      ],
+      "entryCue": "Sita’s illustrative story; return to the three travellers in the final frame.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "In Sita’s story, a disguised visitor entrusts a sword to an ascetic.",
+          "captionIntent": "Identify the story’s ascetic and the entrusted weapon; this is an earlier illustrative episode.",
+          "id": "ar-p012-s1",
+          "sourceSargas": [
+            9
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The ascetic carries the sword during ordinary forest tasks.",
+          "captionIntent": "Show how attachment changes his conduct toward violence.",
+          "id": "ar-p012-s2",
+          "sourceSargas": [
+            9
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Rama",
+          "artAction": "Return visibly to Sita speaking to Rama on the forest path.",
+          "speechIntent": "Conclude her caution and invite Rama’s judgement.",
+          "id": "ar-p012-s3",
+          "sourceSargas": [
+            9
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Back in the present, Rama responds to the concern she has explained.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-013",
+      "number": 13,
+      "title": {
+        "hi": "राम का उत्तर",
+        "en": "Rama answers Sita"
+      },
+      "sourceSargas": [
+        10
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p013-s1"
+        ],
+        [
+          "ar-p013-s2"
+        ],
+        [
+          "ar-p013-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Sita",
+          "artAction": "Rama turns toward Sita with a composed expression.",
+          "speechIntent": "Acknowledge her concern and explain the ascetics’ appeal.",
+          "id": "ar-p013-s1",
+          "sourceSargas": [
+            10
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Sita",
+          "artAction": "Their walking conversation continues without an invented battle montage.",
+          "speechIntent": "Explain his commitment to protect those who sought refuge and keep his word.",
+          "id": "ar-p013-s2",
+          "sourceSargas": [
+            10
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "The three resume their forest route with Sita’s question having received a direct answer.",
+          "id": "ar-p013-s3",
+          "sourceSargas": [
+            10
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The journey continues through hermitages and the lake country.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-014",
+      "number": 14,
+      "title": {
+        "hi": "जल के भीतर संगीत",
+        "en": "Music beneath the lake"
+      },
+      "sourceSargas": [
+        11
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p014-s1"
+        ],
+        [
+          "ar-p014-s2"
+        ],
+        [
+          "ar-p014-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Dharmabhrita"
+      ],
+      "introductions": [
+        "Dharmabhrita: the accompanying sage answering the lake question.",
+        "Mandakarni: the ascetic in that account, not a present traveller."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "The travellers pause beside a lake from which music seems to rise.",
+          "id": "ar-p014-s1",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Dharmabhrita",
+          "artAction": "Rama asks an accompanying sage about the sound.",
+          "speechIntent": "Ask whose music is heard beneath the water.",
+          "id": "ar-p014-s2",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Dharmabhrita",
+          "addressedTo": "Rama",
+          "artAction": "The guide begins his explanation by the shore.",
+          "speechIntent": "Identify the Panchapsaras lake and sage Mandakarni before beginning the account.",
+          "id": "ar-p014-s3",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The guide’s explanation supplies the answer to the heard music.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-015",
+      "number": 15,
+      "title": {
+        "hi": "पञ्चाप्सरा की कथा",
+        "en": "The Panchapsaras account"
+      },
+      "sourceSargas": [
+        11
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p015-s1",
+          "ar-p015-s2"
+        ],
+        [
+          "ar-p015-s3"
+        ]
+      ],
+      "cast": [
+        "Mandakarni",
+        "Five-apsaras",
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Dharmabhrita"
+      ],
+      "introductions": [
+        "Five apsaras: figures within the guide’s account; use the correct count."
+      ],
+      "entryCue": "Dharmabhrita’s account; explicit return to the lake shore.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "A framed recollection shows Mandakarni’s austerity.",
+          "captionIntent": "Identify the past episode and the divine concern at his austerity.",
+          "id": "ar-p015-s1",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Five apsaras and the concealed lake dwelling are shown without sexualised imagery.",
+          "captionIntent": "Explain their marriage to the sage and the music associated with the dwelling.",
+          "id": "ar-p015-s2",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Return to the travellers listening beside the lake, then continuing on their route.",
+          "id": "ar-p015-s3",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "After this visit, their travels extend across many hermitages and years.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-016",
+      "number": 16,
+      "title": {
+        "hi": "वन में बीते दस वर्ष",
+        "en": "Ten years across the forest"
+      },
+      "sourceSargas": [
+        11
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p016-s1"
+        ],
+        [
+          "ar-p016-s2"
+        ],
+        [
+          "ar-p016-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Sutikshna"
+      ],
+      "introductions": [],
+      "entryCue": "Across these hermitage visits, ten years passed.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "A distinct seasonal travel montage shows changing hermitage stays.",
+          "captionIntent": "State explicitly that ten years pass across these visits; avoid an invented exact exile-year total.",
+          "id": "ar-p016-s1",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "The same adult identities travel in later seasons with maintained forest attire.",
+          "id": "ar-p016-s2",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The three return to Sutikshna’s recognisable hermitage.",
+          "captionIntent": "Explain this is their return to the previously introduced sage.",
+          "id": "ar-p016-s3",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Back with Sutikshna, Rama can ask where to meet Agastya.",
+      "editorialRisks": [
+        "No instant ageing to grey hair, palace costume reset or unlabelled time jump."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-017",
+      "number": 17,
+      "title": {
+        "hi": "अगस्त्य तक जाने का मार्ग",
+        "en": "The route to Agastya"
+      },
+      "sourceSargas": [
+        11
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p017-s1"
+        ],
+        [
+          "ar-p017-s2"
+        ],
+        [
+          "ar-p017-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Sutikshna"
+      ],
+      "introductions": [
+        "Agastya: the sage they wish to meet.",
+        "Agastya’s brother: a different host, not Agastya himself."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Sutikshna",
+          "artAction": "Rama asks the sage about a much-revered teacher.",
+          "speechIntent": "Name Agastya and express the wish to meet him.",
+          "id": "ar-p017-s1",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sutikshna",
+          "addressedTo": "Rama",
+          "artAction": "The sage indicates two successive hermitages.",
+          "speechIntent": "Explain that Agastya’s brother is a separate first stop, followed by Agastya.",
+          "id": "ar-p017-s2",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The travellers approach the first hermitage as evening nears.",
+          "captionIntent": "Identify it as the brother’s hermitage; cue Rama’s account of Agastya’s deeds.",
+          "id": "ar-p017-s3",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The approach prompts an explicitly told recollection of Agastya’s protection of sages.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-018",
+      "number": 18,
+      "title": {
+        "hi": "इल्वल और वातापि",
+        "en": "Ilvala and Vatapi"
+      },
+      "sourceSargas": [
+        11
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p018-s1"
+        ],
+        [
+          "ar-p018-s2"
+        ],
+        [
+          "ar-p018-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Sita",
+        "Ilvala",
+        "Vatapi",
+        "Agastya-in-story"
+      ],
+      "introductions": [
+        "Ilvala and Vatapi: brothers within Rama’s narrated past episode."
+      ],
+      "entryCue": "Rama tells Lakshmana an earlier account of Agastya.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Past-tense inset shows two rakshasa brothers plotting false hospitality.",
+          "captionIntent": "Introduce Ilvala and Vatapi and state that their deceptive meals harmed visiting sages.",
+          "id": "ar-p018-s1",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Agastya accepts the offered meal in the narrated episode; preparation and injuries remain off-panel.",
+          "captionIntent": "Establish why the sage faces their repeated trick.",
+          "id": "ar-p018-s2",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ilvala",
+          "addressedTo": "Vatapi",
+          "artAction": "Ilvala calls for his brother after the meal.",
+          "speechIntent": "Show the trigger of their scheme so its failure has a clear cause.",
+          "id": "ar-p018-s3",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Agastya’s response ends the trick and explains why the route is associated with his protection.",
+      "editorialRisks": [
+        "No cannibalism detail, comic meal gag or gruesome visual."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-019",
+      "number": 19,
+      "title": {
+        "hi": "कथा से वर्तमान में",
+        "en": "The trick ends; the journey resumes"
+      },
+      "sourceSargas": [
+        11
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p019-s1"
+        ],
+        [
+          "ar-p019-s2"
+        ],
+        [
+          "ar-p019-s3"
+        ]
+      ],
+      "cast": [
+        "Agastya-in-story",
+        "Ilvala",
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Agastya-brother"
+      ],
+      "introductions": [],
+      "entryCue": "Return from Rama’s recollection; night halt and next-morning departure.",
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Agastya",
+          "addressedTo": "Ilvala",
+          "artAction": "The sage calmly answers the failed summons.",
+          "speechIntent": "Explain that Vatapi can no longer carry out the trick.",
+          "id": "ar-p019-s1",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Ilvala’s attack and defeat are represented without injury detail.",
+          "captionIntent": "Complete the cause and outcome of the account.",
+          "id": "ar-p019-s2",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Return to the present: the brother welcomes them; a dawn departure follows.",
+          "captionIntent": "Distinguish the overnight host from Agastya; they leave for Agastya the following morning.",
+          "id": "ar-p019-s3",
+          "sourceSargas": [
+            11
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "They can now arrive at Agastya’s own hermitage without a confusing sage substitution.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-020",
+      "number": 20,
+      "title": {
+        "hi": "अगस्त्य से भेंट",
+        "en": "Meeting Agastya"
+      },
+      "sourceSargas": [
+        12
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p020-s1"
+        ],
+        [
+          "ar-p020-s2"
+        ],
+        [
+          "ar-p020-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Agastya",
+        "Agastya-disciple"
+      ],
+      "introductions": [
+        "Agastya’s disciple: the messenger at this hermitage; identify his role."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Agastya-disciple",
+          "artAction": "Lakshmana addresses the disciple at the entrance.",
+          "speechIntent": "Introduce Ram Bhaiya, Sita Bhabhi and himself; request the teacher’s permission.",
+          "id": "ar-p020-s1",
+          "sourceSargas": [
+            12
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The disciple informs the sage and returns with his welcome.",
+          "captionIntent": "Show the response to the request before entry.",
+          "id": "ar-p020-s2",
+          "sourceSargas": [
+            12
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Agastya",
+          "addressedTo": "Rama",
+          "artAction": "Agastya receives all three with hospitality.",
+          "speechIntent": "Welcome them by name, keeping this sage visually distinct from his brother.",
+          "id": "ar-p020-s3",
+          "sourceSargas": [
+            12
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Their reception leads to Agastya’s gift and advice.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-021",
+      "number": 21,
+      "title": {
+        "hi": "दिव्य आयुधों का उपहार",
+        "en": "Agastya’s gift of weapons"
+      },
+      "sourceSargas": [
+        12
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p021-s1"
+        ],
+        [
+          "ar-p021-s2"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Agastya"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Agastya",
+          "addressedTo": "Rama",
+          "artAction": "The sage presents the bow, arrow, quivers and sword in an orderly gift scene.",
+          "speechIntent": "Explain the weapons and their protective purpose; exact inventory to be passage-checked.",
+          "id": "ar-p021-s1",
+          "sourceSargas": [
+            12
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Agastya",
+          "artAction": "Rama respectfully receives the weapons.",
+          "speechIntent": "Acknowledge the gift; lock a prop ledger for subsequent battles.",
+          "id": "ar-p021-s2",
+          "sourceSargas": [
+            12
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "After the gift, Rama seeks a suitable place to live.",
+      "editorialRisks": [
+        "Track the earlier bow versus Agastya’s Vaishnava bow before Khara breaks the first."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-022",
+      "number": 22,
+      "title": {
+        "hi": "पञ्चवटी का सुझाव",
+        "en": "Agastya recommends Panchavati"
+      },
+      "sourceSargas": [
+        13
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p022-s1"
+        ],
+        [
+          "ar-p022-s2"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Agastya"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Agastya",
+          "artAction": "Rama asks where the three should settle.",
+          "speechIntent": "Request a safe and suitable hermitage site.",
+          "id": "ar-p022-s1",
+          "sourceSargas": [
+            13
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Agastya",
+          "addressedTo": "Rama",
+          "artAction": "The sage describes the Godavari setting and points out the route.",
+          "speechIntent": "Recommend Panchavati and acknowledge Sita’s endurance in the forest.",
+          "id": "ar-p022-s2",
+          "sourceSargas": [
+            13
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "On the way to Panchavati they meet a large bird whose identity must first be established.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-023",
+      "number": 23,
+      "title": {
+        "hi": "जटायु कौन हैं",
+        "en": "Who is Jatayu?"
+      },
+      "sourceSargas": [
+        14
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p023-s1"
+        ],
+        [
+          "ar-p023-s2"
+        ],
+        [
+          "ar-p023-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Jatayu"
+      ],
+      "introductions": [
+        "Jatayu: an elder vulture and Dasharatha’s friend, introduced long before the abduction."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "The brothers notice a huge vulture on their route and pause cautiously.",
+          "id": "ar-p023-s1",
+          "sourceSargas": [
+            14
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Jatayu",
+          "addressedTo": "Rama",
+          "artAction": "The bird speaks gently before any friendship embrace.",
+          "speechIntent": "Identify himself as Jatayu and a friend of their father Dasharatha.",
+          "id": "ar-p023-s2",
+          "sourceSargas": [
+            14
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Jatayu",
+          "artAction": "Rama lowers his guard and respectfully asks more.",
+          "speechIntent": "Ask about his lineage and friendship with Pitashri.",
+          "id": "ar-p023-s3",
+          "sourceSargas": [
+            14
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Jatayu’s explanation earns trust and motivates his offer of help.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-024",
+      "number": 24,
+      "title": {
+        "hi": "पिताश्री के मित्र",
+        "en": "Their father’s trusted friend"
+      },
+      "sourceSargas": [
+        14
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p024-s1"
+        ],
+        [
+          "ar-p024-s2"
+        ],
+        [
+          "ar-p024-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Jatayu"
+      ],
+      "introductions": [
+        "Sampati: mentioned as Jatayu’s elder brother only; no premature active role."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Jatayu",
+          "addressedTo": "Rama",
+          "artAction": "Jatayu recounts his family and friendship without a long unrelated genealogy montage.",
+          "speechIntent": "Briefly identify Aruna as his father and Sampati as his elder brother.",
+          "id": "ar-p024-s1",
+          "sourceSargas": [
+            14
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Jatayu",
+          "addressedTo": "Rama",
+          "artAction": "Jatayu offers to watch the forest around their dwelling.",
+          "speechIntent": "Offer help protecting Sita during the brothers’ absences.",
+          "id": "ar-p024-s2",
+          "sourceSargas": [
+            14
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Rama embraces the elder bird; the party proceeds toward Panchavati.",
+          "id": "ar-p024-s3",
+          "sourceSargas": [
+            14
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The new trusted ally is established before the three choose their dwelling.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-025",
+      "number": 25,
+      "title": {
+        "hi": "कुटिया कहाँ बने",
+        "en": "Choosing the dwelling site"
+      },
+      "sourceSargas": [
+        15
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p025-s1"
+        ],
+        [
+          "ar-p025-s2"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Rama and Lakshmana inspect the Godavari landscape with Sita.",
+          "speechIntent": "Discuss water, trees and a suitable hermitage site.",
+          "id": "ar-p025-s1",
+          "sourceSargas": [
+            15
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "Lakshmana responds and begins gathering building materials.",
+          "speechIntent": "Defer respectfully to Ram Bhaiya’s choice, then undertake construction.",
+          "id": "ar-p025-s2",
+          "sourceSargas": [
+            15
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The agreed site leads directly to the hut’s construction.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-026",
+      "number": 26,
+      "title": {
+        "hi": "पञ्चवटी में घर",
+        "en": "A home in Panchavati"
+      },
+      "sourceSargas": [
+        15
+      ],
+      "rowCount": 1,
+      "rows": [
+        [
+          "ar-p026-s1"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Complete portrait hero of the finished modest leaf hut, with Rama embracing Lakshmana and Sita nearby.",
+          "speechIntent": "Appreciate Lakshmana’s devoted care; narration can briefly establish their settled life.",
+          "id": "ar-p026-s1",
+          "sourceSargas": [
+            15
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "After a period of settled life the season changes and the brothers remember Bharata.",
+      "editorialRisks": [
+        "Keep the hut modest and spatially reusable; never a palace pavilion."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-027",
+      "number": 27,
+      "title": {
+        "hi": "हेमन्त और भरत की याद",
+        "en": "Winter and thoughts of Bharata"
+      },
+      "sourceSargas": [
+        16
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p027-s1"
+        ],
+        [
+          "ar-p027-s2"
+        ],
+        [
+          "ar-p027-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": "After autumn, the early-winter season has begun.",
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "The three walk toward the Godavari in a misty early-winter dawn.",
+          "speechIntent": "Remember Bharat Bhaiya’s austere life and concern about his hardship.",
+          "id": "ar-p027-s1",
+          "sourceSargas": [
+            16
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Rama gently corrects Lakshmana’s blame of Kaikeyi.",
+          "speechIntent": "Ask him to speak of Bharata’s goodness without condemning their mother.",
+          "id": "ar-p027-s2",
+          "sourceSargas": [
+            16
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "The three finish their riverside observance and return toward the hut.",
+          "id": "ar-p027-s3",
+          "sourceSargas": [
+            16
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Their return places them at the dwelling when Shurpanakha arrives.",
+      "editorialRisks": [
+        "Contents-page season label differs; follow verse 3.16.1, not the erroneous spring heading."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-028",
+      "number": 28,
+      "title": {
+        "hi": "शूर्पणखा का आगमन",
+        "en": "Shurpanakha arrives"
+      },
+      "sourceSargas": [
+        17
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p028-s1"
+        ],
+        [
+          "ar-p028-s2"
+        ],
+        [
+          "ar-p028-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Shurpanakha"
+      ],
+      "introductions": [
+        "Shurpanakha: a rakshasi, Ravana’s sister and Khara’s sister.",
+        "Ravana and Khara: relationship mentions now; full introductions at their own entries."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "A rakshasi approaches the inhabited hut.",
+          "captionIntent": "Introduce Shurpanakha as Ravana’s sister, connected to Khara in Janasthana.",
+          "id": "ar-p028-s1",
+          "sourceSargas": [
+            17
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Shurpanakha",
+          "addressedTo": "Rama",
+          "artAction": "She questions the armed hermitage visitor.",
+          "speechIntent": "Ask who he is and why he lives here.",
+          "id": "ar-p028-s2",
+          "sourceSargas": [
+            17
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Shurpanakha",
+          "artAction": "Rama identifies the three travellers.",
+          "speechIntent": "Name Sita as his wife and Lakshmana as his younger brother before the proposal.",
+          "id": "ar-p028-s3",
+          "sourceSargas": [
+            17
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Knowing who Rama is, she makes a proposal to which he must respond.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-029",
+      "number": 29,
+      "title": {
+        "hi": "प्रस्ताव और उत्तर",
+        "en": "The proposal and reply"
+      },
+      "sourceSargas": [
+        17,
+        18
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p029-s1"
+        ],
+        [
+          "ar-p029-s2"
+        ],
+        [
+          "ar-p029-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Shurpanakha"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Shurpanakha",
+          "addressedTo": "Rama",
+          "artAction": "Shurpanakha makes her wish explicit.",
+          "speechIntent": "Propose marriage to Rama.",
+          "id": "ar-p029-s1",
+          "sourceSargas": [
+            17,
+            18
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Shurpanakha",
+          "artAction": "Rama gestures toward Sita.",
+          "speechIntent": "State that he is married; retain the brothers’ exchange as sourced context without humiliating comedy.",
+          "id": "ar-p029-s2",
+          "sourceSargas": [
+            17,
+            18
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Shurpanakha",
+          "artAction": "Lakshmana replies when approached in turn.",
+          "speechIntent": "Retain the reply that redirects her to Rama; do not invent an actual second marriage offer.",
+          "id": "ar-p029-s3",
+          "sourceSargas": [
+            17,
+            18
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Her continued desire turns into a threat to Sita, creating the immediate danger.",
+      "editorialRisks": [
+        "Respectful writing must not erase the exchange that precedes the attack; avoid ridicule of physical appearance."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-030",
+      "number": 30,
+      "title": {
+        "hi": "सीता पर आक्रमण",
+        "en": "The attack on Sita"
+      },
+      "sourceSargas": [
+        18
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p030-s1"
+        ],
+        [
+          "ar-p030-s2"
+        ],
+        [
+          "ar-p030-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Shurpanakha"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "Shurpanakha rushes toward Sita; Rama blocks the attack.",
+          "id": "ar-p030-s1",
+          "sourceSargas": [
+            18
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Lakshmana intervenes with the sword; the disfiguring injury is outside the frame.",
+          "captionIntent": "State the defensive action and injury plainly, without graphic depiction.",
+          "id": "ar-p030-s2",
+          "sourceSargas": [
+            18
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "The wounded Shurpanakha flees toward her brother’s settlement.",
+          "id": "ar-p030-s3",
+          "sourceSargas": [
+            18
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "She seeks Khara’s intervention because of the injury.",
+      "editorialRisks": [
+        "No implication that rejection alone caused punishment; show the attack on Sita."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-031",
+      "number": 31,
+      "title": {
+        "hi": "खर के पास शिकायत",
+        "en": "Shurpanakha seeks Khara"
+      },
+      "sourceSargas": [
+        19
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p031-s1"
+        ],
+        [
+          "ar-p031-s2"
+        ],
+        [
+          "ar-p031-s3"
+        ]
+      ],
+      "cast": [
+        "Shurpanakha",
+        "Khara",
+        "Fourteen-rakshasas"
+      ],
+      "introductions": [
+        "Khara: a rakshasa commander in Janasthana and her brother."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Shurpanakha reaches an armed rakshasa settlement.",
+          "captionIntent": "Introduce Khara as her brother and the Janasthana commander.",
+          "id": "ar-p031-s1",
+          "sourceSargas": [
+            19
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Khara",
+          "addressedTo": "Shurpanakha",
+          "artAction": "Khara asks what happened.",
+          "speechIntent": "Elicit her account rather than presenting an unexplained revenge order.",
+          "id": "ar-p031-s2",
+          "sourceSargas": [
+            19
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Khara",
+          "addressedTo": "Fourteen-rakshasas",
+          "artAction": "Khara sends a named-count troop with Shurpanakha as guide.",
+          "speechIntent": "Order the first attack; distinguish fourteen attackers from the later main army.",
+          "id": "ar-p031-s3",
+          "sourceSargas": [
+            19
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The first troop follows Shurpanakha to the hermitage.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-032",
+      "number": 32,
+      "title": {
+        "hi": "पहला आक्रमण",
+        "en": "The first attackers"
+      },
+      "sourceSargas": [
+        20
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p032-s1"
+        ],
+        [
+          "ar-p032-s2"
+        ],
+        [
+          "ar-p032-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Shurpanakha",
+        "Fourteen-rakshasas"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Fourteen-rakshasas",
+          "artAction": "Rama confronts the approaching troop while Sita stays protected.",
+          "speechIntent": "Warn them and demand an end to the attack.",
+          "id": "ar-p032-s1",
+          "sourceSargas": [
+            20
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The troop attacks and Rama defeats it in a single readable action sequence.",
+          "captionIntent": "State the defeat of the fourteen without gore or a duplicated main battle.",
+          "id": "ar-p032-s2",
+          "sourceSargas": [
+            20
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Shurpanakha runs back to Khara after witnessing their defeat.",
+          "id": "ar-p032-s3",
+          "sourceSargas": [
+            20
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The failed first attack provokes a larger mobilisation.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-033",
+      "number": 33,
+      "title": {
+        "hi": "खर की सेना",
+        "en": "Khara gathers his army"
+      },
+      "sourceSargas": [
+        21,
+        22
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p033-s1"
+        ],
+        [
+          "ar-p033-s2"
+        ],
+        [
+          "ar-p033-s3"
+        ]
+      ],
+      "cast": [
+        "Shurpanakha",
+        "Khara",
+        "Dushana",
+        "Rakshasa-army"
+      ],
+      "introductions": [
+        "Dushana: Khara’s military commander, introduced before his battle."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Shurpanakha",
+          "addressedTo": "Khara",
+          "artAction": "She reports the troop’s defeat.",
+          "speechIntent": "Explain why she has returned and demands further action.",
+          "id": "ar-p033-s1",
+          "sourceSargas": [
+            21,
+            22
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Khara summons Dushana and the main force.",
+          "captionIntent": "Introduce Dushana as the commander helping Khara muster the army.",
+          "id": "ar-p033-s2",
+          "sourceSargas": [
+            21,
+            22
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Khara’s chariot leads the army out of Janasthana.",
+          "id": "ar-p033-s3",
+          "sourceSargas": [
+            21,
+            22
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The assembled force marches toward Rama’s dwelling.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-034",
+      "number": 34,
+      "title": {
+        "hi": "सीता की सुरक्षा पहले",
+        "en": "Preparing for the larger attack"
+      },
+      "sourceSargas": [
+        23,
+        24
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p034-s1"
+        ],
+        [
+          "ar-p034-s2"
+        ],
+        [
+          "ar-p034-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Khara",
+        "Rakshasa-army"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Khara’s advancing army encounters troubling signs.",
+          "captionIntent": "Maintain the march and impending threat; do not replace the scene with repeated crowd art.",
+          "id": "ar-p034-s1",
+          "sourceSargas": [
+            23,
+            24
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Rama directs Lakshmana beside the hut.",
+          "speechIntent": "Ask him to escort Sita Bhabhi to the sheltered hill cave and guard her.",
+          "id": "ar-p034-s2",
+          "sourceSargas": [
+            23,
+            24
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Lakshmana takes Sita to the cave while Rama prepares alone.",
+          "id": "ar-p034-s3",
+          "sourceSargas": [
+            23,
+            24
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "With Sita guarded, Rama faces the approaching force.",
+      "editorialRisks": [
+        "Do not show Lakshmana beside Rama during the main battle; Sita remains at the cave."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-035",
+      "number": 35,
+      "title": {
+        "hi": "अकेले खड़े राम",
+        "en": "Rama faces the army"
+      },
+      "sourceSargas": [
+        25
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p035-s1"
+        ],
+        [
+          "ar-p035-s2"
+        ],
+        [
+          "ar-p035-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Khara",
+        "Dushana",
+        "Rakshasa-army"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "Wide clear composition of Rama facing the advancing force.",
+          "id": "ar-p035-s1",
+          "sourceSargas": [
+            25
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "The first exchange shows the direction of attack and Rama’s defence.",
+          "id": "ar-p035-s2",
+          "sourceSargas": [
+            25
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The first ranks fall back under Rama’s arrows.",
+          "captionIntent": "Explain the change that prompts Dushana to lead the next attack.",
+          "id": "ar-p035-s3",
+          "sourceSargas": [
+            25
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Dushana tries to reverse his army’s losses.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-036",
+      "number": 36,
+      "title": {
+        "hi": "दूषण का युद्ध",
+        "en": "Dushana leads the assault"
+      },
+      "sourceSargas": [
+        26
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p036-s1"
+        ],
+        [
+          "ar-p036-s2"
+        ],
+        [
+          "ar-p036-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Dushana",
+        "Khara",
+        "Rakshasa-army"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Dushana",
+          "addressedTo": "Rakshasa-army",
+          "artAction": "Dushana rallies a new assault.",
+          "speechIntent": "Make his command role and response to the retreat explicit.",
+          "id": "ar-p036-s1",
+          "sourceSargas": [
+            26
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Rama confronts Dushana in a distinct composition.",
+          "id": "ar-p036-s2",
+          "sourceSargas": [
+            26
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Dushana’s defeat leaves Khara preparing to advance.",
+          "captionIntent": "State the outcome without detailed injury.",
+          "id": "ar-p036-s3",
+          "sourceSargas": [
+            26
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Before Khara’s duel, Trishiras asks to fight.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-037",
+      "number": 37,
+      "title": {
+        "hi": "त्रिशिरा की चुनौती",
+        "en": "Trishiras challenges Rama"
+      },
+      "sourceSargas": [
+        27
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p037-s1"
+        ],
+        [
+          "ar-p037-s2"
+        ],
+        [
+          "ar-p037-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Khara",
+        "Trishiras",
+        "Rakshasa-army"
+      ],
+      "introductions": [
+        "Trishiras: a three-headed rakshasa warrior; no unexplained extra general."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "A three-headed warrior addresses Khara beside his chariot.",
+          "captionIntent": "Introduce Trishiras as the warrior asking to fight in Khara’s place.",
+          "id": "ar-p037-s1",
+          "sourceSargas": [
+            27
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Trishiras and Rama exchange arrows.",
+          "id": "ar-p037-s2",
+          "sourceSargas": [
+            27
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Rama defeats Trishiras; the remaining warriors retreat.",
+          "captionIntent": "Explain why Khara must now confront Rama himself.",
+          "id": "ar-p037-s3",
+          "sourceSargas": [
+            27
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Khara advances after the defeat of both named commanders.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-038",
+      "number": 38,
+      "title": {
+        "hi": "धनुष टूटने के बाद",
+        "en": "Khara breaks Rama’s bow"
+      },
+      "sourceSargas": [
+        28
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p038-s1"
+        ],
+        [
+          "ar-p038-s2",
+          "ar-p038-s3"
+        ],
+        [
+          "ar-p038-s4"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Khara"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "Khara’s chariot advances into the duel.",
+          "id": "ar-p038-s1",
+          "sourceSargas": [
+            28
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Khara’s arrows break Rama’s first bow.",
+          "id": "ar-p038-s2",
+          "sourceSargas": [
+            28
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Rama takes up the Vaishnava bow given by Agastya.",
+          "captionIntent": "Recall the earlier gift; this is not a magically appearing replacement.",
+          "id": "ar-p038-s3",
+          "sourceSargas": [
+            28
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Rama disables Khara’s chariot, forcing the next stage of combat.",
+          "id": "ar-p038-s4",
+          "sourceSargas": [
+            28
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Without his chariot, Khara changes weapons.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-039",
+      "number": 39,
+      "title": {
+        "hi": "खर की गदा",
+        "en": "Khara’s mace"
+      },
+      "sourceSargas": [
+        29
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p039-s1"
+        ],
+        [
+          "ar-p039-s2"
+        ],
+        [
+          "ar-p039-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Khara"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Khara",
+          "artAction": "Rama confronts Khara on foot.",
+          "speechIntent": "Condemn his attacks on the forest ascetics; threats belong to the character dialogue.",
+          "id": "ar-p039-s1",
+          "sourceSargas": [
+            29
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Khara hurls his mace toward Rama.",
+          "id": "ar-p039-s2",
+          "sourceSargas": [
+            29
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Rama’s arrows break the mace before it reaches him.",
+          "id": "ar-p039-s3",
+          "sourceSargas": [
+            29
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Khara resorts to another desperate attack.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-040",
+      "number": 40,
+      "title": {
+        "hi": "खर का अन्त",
+        "en": "Khara’s final attack"
+      },
+      "sourceSargas": [
+        30
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p040-s1"
+        ],
+        [
+          "ar-p040-s2"
+        ],
+        [
+          "ar-p040-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Khara"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "Khara uproots a tree for his final assault.",
+          "id": "ar-p040-s1",
+          "sourceSargas": [
+            30
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Rama checks the assault and releases the decisive arrow.",
+          "id": "ar-p040-s2",
+          "sourceSargas": [
+            30
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The battlefield falls quiet after Khara’s defeat.",
+          "captionIntent": "Give the outcome and allow a quiet response rather than another battle.",
+          "id": "ar-p040-s3",
+          "sourceSargas": [
+            30
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The end of the threat allows the protected travellers and ascetics to return.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-041",
+      "number": 41,
+      "title": {
+        "hi": "संकट के बाद मिलन",
+        "en": "Reunion after the battle"
+      },
+      "sourceSargas": [
+        30
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p041-s1"
+        ],
+        [
+          "ar-p041-s2"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Ascetics"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Ascetics approach Rama with relief after the battle.",
+          "captionIntent": "Complete the protection vow’s immediate consequence.",
+          "id": "ar-p041-s1",
+          "sourceSargas": [
+            30
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Lakshmana brings Sita back from the cave; she embraces Rama.",
+          "id": "ar-p041-s2",
+          "sourceSargas": [
+            30
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "News of the army’s defeat reaches Lanka through a survivor.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-042",
+      "number": 42,
+      "title": {
+        "hi": "अकम्पन की सूचना",
+        "en": "Akampana reports to Lanka"
+      },
+      "sourceSargas": [
+        31
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p042-s1"
+        ],
+        [
+          "ar-p042-s2"
+        ],
+        [
+          "ar-p042-s3"
+        ]
+      ],
+      "cast": [
+        "Akampana",
+        "Ravana"
+      ],
+      "introductions": [
+        "Akampana: a survivor reporting the defeat.",
+        "Ravana: Lanka’s ruler and brother of Shurpanakha and Khara."
+      ],
+      "entryCue": "Meanwhile, in Lanka.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "A fleeing rakshasa reaches the Lankan court.",
+          "captionIntent": "Introduce Akampana as a survivor from Janasthana, and Ravana as Lanka’s ruler.",
+          "id": "ar-p042-s1",
+          "sourceSargas": [
+            31
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Akampana",
+          "addressedTo": "Ravana",
+          "artAction": "Akampana reports Khara and Dushana’s defeat.",
+          "speechIntent": "Identify Rama as Dasharatha’s son and explain what happened.",
+          "id": "ar-p042-s2",
+          "sourceSargas": [
+            31
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Akampana",
+          "addressedTo": "Ravana",
+          "artAction": "Akampana proposes an indirect attack.",
+          "speechIntent": "Explain the suggested abduction of Sita as a way to hurt Rama; this is a malicious plan, not narrator advice.",
+          "id": "ar-p042-s3",
+          "sourceSargas": [
+            31
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Ravana seeks Maricha’s help for a first consultation.",
+      "editorialRisks": [
+        "Retain sarga 31 because the selected traditional corpus includes it; record critical-edition difference."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-043",
+      "number": 43,
+      "title": {
+        "hi": "मारीच की पहली चेतावनी",
+        "en": "Maricha’s first warning"
+      },
+      "sourceSargas": [
+        31
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p043-s1"
+        ],
+        [
+          "ar-p043-s2"
+        ],
+        [
+          "ar-p043-s3"
+        ]
+      ],
+      "cast": [
+        "Ravana",
+        "Maricha"
+      ],
+      "introductions": [
+        "Maricha: the surviving rakshasa previously encountered in Balakanda."
+      ],
+      "entryCue": "Ravana’s first visit to Maricha.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Ravana reaches Maricha’s coastal retreat.",
+          "captionIntent": "Reintroduce Maricha, the rakshasa Rama had once driven away at Vishwamitra’s sacrifice.",
+          "id": "ar-p043-s1",
+          "sourceSargas": [
+            31
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Maricha",
+          "addressedTo": "Ravana",
+          "artAction": "Maricha warns the king against harming Rama’s household.",
+          "speechIntent": "Explain the danger of the proposed scheme.",
+          "id": "ar-p043-s2",
+          "sourceSargas": [
+            31
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Ravana returns to his palace without proceeding with the plan.",
+          "captionIntent": "Explicitly close the first visit; this is a real temporary retreat.",
+          "id": "ar-p043-s3",
+          "sourceSargas": [
+            31
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Back in Lanka, Shurpanakha’s intervention revives the scheme.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-044",
+      "number": 44,
+      "title": {
+        "hi": "लंका में शूर्पणखा",
+        "en": "Shurpanakha reaches Lanka"
+      },
+      "sourceSargas": [
+        32,
+        33
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p044-s1"
+        ],
+        [
+          "ar-p044-s2"
+        ],
+        [
+          "ar-p044-s3"
+        ]
+      ],
+      "cast": [
+        "Ravana",
+        "Shurpanakha",
+        "Ministers"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Shurpanakha reaches Ravana’s court after Janasthana’s defeat.",
+          "captionIntent": "Identify her as the same sister from Panchavati, not a new court complainant.",
+          "id": "ar-p044-s1",
+          "sourceSargas": [
+            32,
+            33
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Shurpanakha",
+          "addressedTo": "Ravana",
+          "artAction": "She challenges his neglect of events in Janasthana.",
+          "speechIntent": "Explain the losses and why she has come.",
+          "id": "ar-p044-s2",
+          "sourceSargas": [
+            32,
+            33
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Shurpanakha",
+          "artAction": "Ravana questions her about the attackers.",
+          "speechIntent": "Ask for the identities and circumstances.",
+          "id": "ar-p044-s3",
+          "sourceSargas": [
+            32,
+            33
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Her answer draws Ravana’s attention to Sita.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-045",
+      "number": 45,
+      "title": {
+        "hi": "बदले की योजना",
+        "en": "The scheme is revived"
+      },
+      "sourceSargas": [
+        34
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p045-s1"
+        ],
+        [
+          "ar-p045-s2"
+        ],
+        [
+          "ar-p045-s3"
+        ]
+      ],
+      "cast": [
+        "Ravana",
+        "Shurpanakha"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Shurpanakha",
+          "addressedTo": "Ravana",
+          "artAction": "She describes the three forest residents.",
+          "speechIntent": "Identify Rama, Lakshmana and Sita in response to his question.",
+          "id": "ar-p045-s1",
+          "sourceSargas": [
+            34
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Shurpanakha",
+          "addressedTo": "Ravana",
+          "artAction": "She urges him toward the abduction.",
+          "speechIntent": "Explain her persuasion without objectifying close-ups of Sita.",
+          "id": "ar-p045-s2",
+          "sourceSargas": [
+            34
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Ravana resolves to revisit Maricha.",
+          "captionIntent": "Link this decision directly to the next journey.",
+          "id": "ar-p045-s3",
+          "sourceSargas": [
+            34
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Ravana returns to the helper who had already warned him away.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-046",
+      "number": 46,
+      "title": {
+        "hi": "मारीच के पास दोबारा",
+        "en": "Ravana returns to Maricha"
+      },
+      "sourceSargas": [
+        35
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p046-s1"
+        ],
+        [
+          "ar-p046-s2"
+        ],
+        [
+          "ar-p046-s3"
+        ]
+      ],
+      "cast": [
+        "Ravana",
+        "Maricha"
+      ],
+      "introductions": [],
+      "entryCue": "After Shurpanakha’s report, Ravana went to Maricha again.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Ravana travels again along the coast.",
+          "captionIntent": "State explicitly that this is the second visit after his return to Lanka.",
+          "id": "ar-p046-s1",
+          "sourceSargas": [
+            35
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Maricha",
+          "addressedTo": "Ravana",
+          "artAction": "Maricha receives the returning ruler.",
+          "speechIntent": "Ask why he has come again.",
+          "id": "ar-p046-s2",
+          "sourceSargas": [
+            35
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Maricha",
+          "artAction": "Ravana begins his account of Janasthana and his renewed intention.",
+          "speechIntent": "Give the reason for his return rather than repeating the first arrival.",
+          "id": "ar-p046-s3",
+          "sourceSargas": [
+            35
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Ravana explains the specific deception he now demands.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-047",
+      "number": 47,
+      "title": {
+        "hi": "कपटमृग की योजना",
+        "en": "The golden-deer scheme"
+      },
+      "sourceSargas": [
+        36
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p047-s1"
+        ],
+        [
+          "ar-p047-s2"
+        ],
+        [
+          "ar-p047-s3"
+        ]
+      ],
+      "cast": [
+        "Ravana",
+        "Maricha"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Maricha",
+          "artAction": "Ravana lays out the forest deception.",
+          "speechIntent": "Order Maricha to take an extraordinary deer form and lure Rama away.",
+          "id": "ar-p047-s1",
+          "sourceSargas": [
+            36
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Maricha",
+          "artAction": "The plan continues as a discussion, not an unlabelled future scene.",
+          "speechIntent": "Explain the intended separation of the brothers from Sita.",
+          "id": "ar-p047-s2",
+          "sourceSargas": [
+            36
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Maricha recoils in fear at the demand.",
+          "id": "ar-p047-s3",
+          "sourceSargas": [
+            36
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Maricha’s fear is grounded in his past encounters with Rama.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-048",
+      "number": 48,
+      "title": {
+        "hi": "मारीच को याद है",
+        "en": "Maricha remembers Rama"
+      },
+      "sourceSargas": [
+        37,
+        38
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p048-s1"
+        ],
+        [
+          "ar-p048-s2"
+        ],
+        [
+          "ar-p048-s3"
+        ]
+      ],
+      "cast": [
+        "Maricha",
+        "Ravana",
+        "Rama-youth",
+        "Vishwamitra"
+      ],
+      "introductions": [],
+      "entryCue": "Maricha recalls his earlier encounter; final frame returns to the present.",
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Maricha",
+          "addressedTo": "Ravana",
+          "artAction": "Maricha argues against the plan.",
+          "speechIntent": "Explain Rama’s character and strength; warn against the abduction.",
+          "id": "ar-p048-s1",
+          "sourceSargas": [
+            37,
+            38
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "A labelled recollection shows young Rama defending Vishwamitra’s sacrifice.",
+          "captionIntent": "Recall Maricha’s earlier defeat; use the approved Balakanda life stage.",
+          "id": "ar-p048-s2",
+          "sourceSargas": [
+            37,
+            38
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Return to adult Maricha facing Ravana at the coastal retreat.",
+          "id": "ar-p048-s3",
+          "sourceSargas": [
+            37,
+            38
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "He adds a later encounter to explain why he abandoned his earlier attacks.",
+      "editorialRisks": [
+        "Youthful Rama only in the memory; do not transfer that appearance to Panchavati."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-049",
+      "number": 49,
+      "title": {
+        "hi": "फिर भी नहीं माना रावण",
+        "en": "Maricha’s further warning"
+      },
+      "sourceSargas": [
+        39
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p049-s1"
+        ],
+        [
+          "ar-p049-s2"
+        ],
+        [
+          "ar-p049-s3"
+        ]
+      ],
+      "cast": [
+        "Maricha",
+        "Ravana",
+        "Rama-in-memory"
+      ],
+      "introductions": [],
+      "entryCue": "Maricha’s later encounter; return explicitly to the second consultation.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "A separate labelled later memory shows Maricha’s subsequent failed deer-form attack.",
+          "captionIntent": "Distinguish this later encounter from Vishwamitra’s sacrifice and from the current golden deer.",
+          "id": "ar-p049-s1",
+          "sourceSargas": [
+            39
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Maricha",
+          "addressedTo": "Ravana",
+          "artAction": "Back in the present, Maricha describes his fear and retreat.",
+          "speechIntent": "Explain why he now lives apart and urges Ravana to stop.",
+          "id": "ar-p049-s2",
+          "sourceSargas": [
+            39
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Ravana rejects the warning, preparing to command rather than consult.",
+          "id": "ar-p049-s3",
+          "sourceSargas": [
+            39
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Ravana’s refusal turns the request into coercion.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-050",
+      "number": 50,
+      "title": {
+        "hi": "धमकी के अधीन सहमति",
+        "en": "Maricha is coerced"
+      },
+      "sourceSargas": [
+        40,
+        41,
+        42
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p050-s1"
+        ],
+        [
+          "ar-p050-s2"
+        ],
+        [
+          "ar-p050-s3"
+        ]
+      ],
+      "cast": [
+        "Ravana",
+        "Maricha"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Maricha",
+          "artAction": "Ravana threatens Maricha at the retreat.",
+          "speechIntent": "Make the choice between obeying and immediate death explicit in age-appropriate language.",
+          "id": "ar-p050-s1",
+          "sourceSargas": [
+            40,
+            41,
+            42
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Maricha",
+          "addressedTo": "Ravana",
+          "artAction": "Maricha gives a final warning, then yields under threat.",
+          "speechIntent": "Preserve fear and coercion as his motive; do not depict willing friendship.",
+          "id": "ar-p050-s2",
+          "sourceSargas": [
+            40,
+            41,
+            42
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Both leave toward Panchavati.",
+          "captionIntent": "Close the debate and identify the destination.",
+          "id": "ar-p050-s3",
+          "sourceSargas": [
+            40,
+            41,
+            42
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "They arrive near the hut to put the deception into action.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-051",
+      "number": 51,
+      "title": {
+        "hi": "स्वर्णमृग दिखाई दिया",
+        "en": "The golden deer appears"
+      },
+      "sourceSargas": [
+        42
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p051-s1"
+        ],
+        [
+          "ar-p051-s2"
+        ],
+        [
+          "ar-p051-s3"
+        ]
+      ],
+      "cast": [
+        "Maricha",
+        "Ravana",
+        "Sita"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "Maricha changes into the distinctive golden deer near the forest clearing.",
+          "id": "ar-p051-s1",
+          "sourceSargas": [
+            42
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Ravana remains concealed while the deer moves near the hut.",
+          "id": "ar-p051-s2",
+          "sourceSargas": [
+            42
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Sita notices the extraordinary deer while gathering flowers.",
+          "id": "ar-p051-s3",
+          "sourceSargas": [
+            42
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Sita calls the brothers to see what has caught her attention.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-052",
+      "number": 52,
+      "title": {
+        "hi": "सीता की इच्छा, लक्ष्मण का संशय",
+        "en": "Wonder and suspicion"
+      },
+      "sourceSargas": [
+        43
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p052-s1"
+        ],
+        [
+          "ar-p052-s2"
+        ],
+        [
+          "ar-p052-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Maricha-as-deer"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Rama",
+          "artAction": "Sita points out the extraordinary deer.",
+          "speechIntent": "Ask Aryaputra whether it can be brought back.",
+          "id": "ar-p052-s1",
+          "sourceSargas": [
+            43
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "Lakshmana studies the deer warily.",
+          "speechIntent": "Warn Ram Bhaiya that the creature may be Maricha’s illusion.",
+          "id": "ar-p052-s2",
+          "sourceSargas": [
+            43
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Sita,Lakshmana",
+          "artAction": "Rama considers both the request and warning.",
+          "speechIntent": "State his decision to pursue while acknowledging the possible deception.",
+          "id": "ar-p052-s3",
+          "sourceSargas": [
+            43
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Before leaving, Rama assigns responsibility for Sita’s protection.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-053",
+      "number": 53,
+      "title": {
+        "hi": "सीता की रक्षा का दायित्व",
+        "en": "Before Rama leaves"
+      },
+      "sourceSargas": [
+        43,
+        44
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p053-s1"
+        ],
+        [
+          "ar-p053-s2"
+        ],
+        [
+          "ar-p053-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Sita",
+        "Lakshmana",
+        "Maricha-as-deer"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Rama speaks directly to Lakshmana beside the hut.",
+          "speechIntent": "Entrust Sita’s safety to him and mention Jatayu’s help.",
+          "id": "ar-p053-s1",
+          "sourceSargas": [
+            43,
+            44
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "Lakshmana acknowledges the instruction.",
+          "speechIntent": "Confirm that he will guard Sita Bhabhi.",
+          "id": "ar-p053-s2",
+          "sourceSargas": [
+            43,
+            44
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Rama follows the deer while Lakshmana stays with Sita.",
+          "id": "ar-p053-s3",
+          "sourceSargas": [
+            43,
+            44
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The deer draws Rama progressively farther from the guarded dwelling.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-054",
+      "number": 54,
+      "title": {
+        "hi": "वन के भीतर छल",
+        "en": "The lure leads deeper"
+      },
+      "sourceSargas": [
+        44
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p054-s1"
+        ],
+        [
+          "ar-p054-s2"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Maricha-as-deer"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "The deer appears close, then vanishes between trees, drawing Rama onward.",
+          "id": "ar-p054-s1",
+          "sourceSargas": [
+            44
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Rama realises the pursuit is taking him far from the hermitage and readies his bow.",
+          "captionIntent": "Make distance and his decision to stop the deceptive quarry explicit.",
+          "id": "ar-p054-s2",
+          "sourceSargas": [
+            44
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Rama’s shot breaks the disguise and triggers the planned false cry.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-055",
+      "number": 55,
+      "title": {
+        "hi": "राम की आवाज़ में पुकार",
+        "en": "The false cry"
+      },
+      "sourceSargas": [
+        44
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p055-s1"
+        ],
+        [
+          "ar-p055-s2",
+          "ar-p055-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Maricha"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "The struck deer returns to Maricha’s rakshasa form, without graphic injury.",
+          "captionIntent": "Identify the revealed deceiver before the voice imitation.",
+          "id": "ar-p055-s1",
+          "sourceSargas": [
+            44
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Maricha",
+          "addressedTo": "Sita,Lakshmana",
+          "artAction": "Maricha calls out with a clearly labelled imitation of Rama’s voice.",
+          "speechIntent": "Cry for Sita and Lakshmana; lettering must identify the actual speaker and deception.",
+          "id": "ar-p055-s2",
+          "sourceSargas": [
+            44
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Rama reacts in alarm and turns back toward the hermitage.",
+          "id": "ar-p055-s3",
+          "sourceSargas": [
+            44
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The deceptive cry reaches Sita and Lakshmana, who interpret it differently.",
+      "editorialRisks": [
+        "Never label the bubble simply Rama; the reader must know whose voice is being copied."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-056",
+      "number": 56,
+      "title": {
+        "hi": "पुकार सुनकर",
+        "en": "Sita hears the cry"
+      },
+      "sourceSargas": [
+        45
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p056-s1"
+        ],
+        [
+          "ar-p056-s2"
+        ],
+        [
+          "ar-p056-s3"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Lakshmana",
+          "artAction": "Sita hears the cry and turns urgently toward Lakshmana.",
+          "speechIntent": "Ask him to go to Rama’s aid; show fear rather than caprice.",
+          "id": "ar-p056-s1",
+          "sourceSargas": [
+            45
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Sita",
+          "artAction": "Lakshmana remains beside her with folded hands.",
+          "speechIntent": "Explain the suspected imitation and Ram Bhaiya’s instruction to protect her.",
+          "id": "ar-p056-s2",
+          "sourceSargas": [
+            45
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Sita’s distress increases despite his reassurance.",
+          "id": "ar-p056-s3",
+          "sourceSargas": [
+            45
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Her continued fear leads to the painful accusation and Lakshmana’s decision.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-057",
+      "number": 57,
+      "title": {
+        "hi": "लक्ष्मण का कठिन निर्णय",
+        "en": "Lakshmana leaves in anguish"
+      },
+      "sourceSargas": [
+        45,
+        46
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p057-s1"
+        ],
+        [
+          "ar-p057-s2"
+        ],
+        [
+          "ar-p057-s3"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Lakshmana",
+          "artAction": "Sita speaks in panic, tears visible.",
+          "speechIntent": "Convey her accusation that his refusal shows indifference to Rama’s danger; exact age-appropriate wording requires editorial review.",
+          "id": "ar-p057-s1",
+          "sourceSargas": [
+            45,
+            46
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Sita",
+          "artAction": "Lakshmana answers in grief while retaining respectful address.",
+          "speechIntent": "Express that her accusation is unjust, explain his dilemma and ask her to remain safe.",
+          "id": "ar-p057-s2",
+          "sourceSargas": [
+            45,
+            46
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "He leaves reluctantly, looking back toward the hut.",
+          "captionIntent": "State that he leaves because of the distressed demand, not because he forgot his duty.",
+          "id": "ar-p057-s3",
+          "sourceSargas": [
+            45,
+            46
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Sita is now alone, allowing the hidden intruder to approach.",
+      "editorialRisks": [
+        "Respectful language must preserve the actual conflict and motive.",
+        "No Lakshmana-rekha inserted into this Valmiki-based sequence."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-058",
+      "number": 58,
+      "title": {
+        "hi": "साधु के वेश में",
+        "en": "A visitor in disguise"
+      },
+      "sourceSargas": [
+        46
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p058-s1"
+        ],
+        [
+          "ar-p058-s2"
+        ],
+        [
+          "ar-p058-s3"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Ravana-in-disguise"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Ravana approaches the hut dressed as a mendicant; audience recognises the deception.",
+          "captionIntent": "Name the disguised visitor for the reader without revealing him to Sita prematurely.",
+          "id": "ar-p058-s1",
+          "sourceSargas": [
+            46
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana-in-disguise",
+          "addressedTo": "Sita",
+          "artAction": "The visitor questions the woman at the hut.",
+          "speechIntent": "Begin the inquiry without sexualised description.",
+          "id": "ar-p058-s2",
+          "sourceSargas": [
+            46
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Ravana-in-disguise",
+          "artAction": "Sita offers customary hospitality and a seat.",
+          "speechIntent": "Address the apparent guest respectfully and explain that her husband will return.",
+          "id": "ar-p058-s3",
+          "sourceSargas": [
+            46
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The visitor’s questions lead Sita to identify herself and her family.",
+      "editorialRisks": [
+        "No magic boundary, threshold bargain or crossing condition invented."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-059",
+      "number": 59,
+      "title": {
+        "hi": "सीता का परिचय",
+        "en": "Sita answers the visitor"
+      },
+      "sourceSargas": [
+        47
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p059-s1"
+        ],
+        [
+          "ar-p059-s2"
+        ],
+        [
+          "ar-p059-s3"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Ravana-in-disguise"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Ravana-in-disguise",
+          "artAction": "Sita answers at the modest hut.",
+          "speechIntent": "Identify herself as Janaka’s daughter and Rama’s wife; explain their forest life briefly.",
+          "id": "ar-p059-s1",
+          "sourceSargas": [
+            47
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Ravana-in-disguise",
+          "artAction": "She asks the visitor to identify himself in turn.",
+          "speechIntent": "Provide the direct response cue for his revelation.",
+          "id": "ar-p059-s2",
+          "sourceSargas": [
+            47
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Sita",
+          "artAction": "The visitor names himself while threatening intent becomes evident.",
+          "speechIntent": "Declare Ravana’s identity and intention; do not change to full anatomy before the sourced reveal.",
+          "id": "ar-p059-s3",
+          "sourceSargas": [
+            47
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Once his identity and demand are clear, Sita can reject him.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-060",
+      "number": 60,
+      "title": {
+        "hi": "सीता का स्पष्ट प्रतिरोध",
+        "en": "Sita rejects Ravana"
+      },
+      "sourceSargas": [
+        47,
+        48
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p060-s1"
+        ],
+        [
+          "ar-p060-s2"
+        ],
+        [
+          "ar-p060-s3"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Ravana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Sita",
+          "artAction": "Ravana boasts of power and proposes taking her to Lanka.",
+          "speechIntent": "Show coercive intent, not a mutual courtship.",
+          "id": "ar-p060-s1",
+          "sourceSargas": [
+            47,
+            48
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Ravana",
+          "artAction": "Sita stands firmly and rebukes him.",
+          "speechIntent": "Reject his demand and affirm her commitment to Rama without addressing the aggressor as a revered elder.",
+          "id": "ar-p060-s2",
+          "sourceSargas": [
+            47,
+            48
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Ravana reacts in anger as his disguise begins to fall away.",
+          "id": "ar-p060-s3",
+          "sourceSargas": [
+            47,
+            48
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Her refusal is followed by Ravana’s forceful seizure; his responsibility remains clear.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-061",
+      "number": 61,
+      "title": {
+        "hi": "रावण का वास्तविक रूप",
+        "en": "Ravana’s true form"
+      },
+      "sourceSargas": [
+        49
+      ],
+      "rowCount": 1,
+      "rows": [
+        [
+          "ar-p061-s1"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Ravana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Full portrait action hero shows Ravana’s ten heads and twenty arms as he seizes the resisting, fully clothed Sita beside the aerial chariot.",
+          "captionIntent": "Identify the transformation and abduction plainly; Sita’s resistance and Ravana’s agency remain visible.",
+          "id": "ar-p061-s1",
+          "sourceSargas": [
+            49
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "As she is carried away, Sita appeals to familiar forest witnesses and Jatayu.",
+      "editorialRisks": [
+        "Full-form anatomy must not collapse to a single crowned man.",
+        "Use the sourced aerial chariot; do not casually call it Pushpaka."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-062",
+      "number": 62,
+      "title": {
+        "hi": "जटायु को पुकार",
+        "en": "Sita calls to Jatayu"
+      },
+      "sourceSargas": [
+        49,
+        50
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p062-s1"
+        ],
+        [
+          "ar-p062-s2"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Ravana",
+        "Jatayu"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Jatayu",
+          "artAction": "Sita sees the elder bird and calls for help and a message to the brothers.",
+          "speechIntent": "Address the already introduced family friend respectfully.",
+          "id": "ar-p062-s1",
+          "sourceSargas": [
+            49,
+            50
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Jatayu hears her cry, sees Ravana carrying her and rises to intervene.",
+          "id": "ar-p062-s2",
+          "sourceSargas": [
+            49,
+            50
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Jatayu first demands that Ravana stop, giving the confrontation a stated purpose.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-063",
+      "number": 63,
+      "title": {
+        "hi": "जटायु की चेतावनी",
+        "en": "Jatayu confronts Ravana"
+      },
+      "sourceSargas": [
+        50
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p063-s1"
+        ],
+        [
+          "ar-p063-s2"
+        ],
+        [
+          "ar-p063-s3"
+        ]
+      ],
+      "cast": [
+        "Jatayu",
+        "Ravana",
+        "Sita"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Jatayu",
+          "addressedTo": "Ravana",
+          "artAction": "Jatayu blocks the flying chariot’s path.",
+          "speechIntent": "Identify the wrong and demand Sita’s release.",
+          "id": "ar-p063-s1",
+          "sourceSargas": [
+            50
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Jatayu",
+          "addressedTo": "Ravana",
+          "artAction": "The elder bird holds his ground despite Ravana’s threat.",
+          "speechIntent": "Warn of the consequences and declare his resolve to defend her.",
+          "id": "ar-p063-s2",
+          "sourceSargas": [
+            50
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Ravana attacks and Jatayu meets the assault.",
+          "id": "ar-p063-s3",
+          "sourceSargas": [
+            50
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Ravana’s refusal and attack cause the aerial duel.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-064",
+      "number": 64,
+      "title": {
+        "hi": "जटायु का साहस",
+        "en": "Jatayu breaks the chariot"
+      },
+      "sourceSargas": [
+        51
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p064-s1"
+        ],
+        [
+          "ar-p064-s2"
+        ],
+        [
+          "ar-p064-s3"
+        ]
+      ],
+      "cast": [
+        "Jatayu",
+        "Ravana",
+        "Sita"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "Jatayu withstands the first volley and strikes Ravana’s bow.",
+          "id": "ar-p064-s1",
+          "sourceSargas": [
+            51
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "The bird breaks the chariot and its harness; no graphic injury to animals or attendants.",
+          "id": "ar-p064-s2",
+          "sourceSargas": [
+            51
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Ravana reaches the ground while still restraining Sita.",
+          "captionIntent": "Show the damaged chariot as a lasting change, not a prop that reappears intact.",
+          "id": "ar-p064-s3",
+          "sourceSargas": [
+            51
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "With the chariot broken, Ravana must escape under his own power.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-065",
+      "number": 65,
+      "title": {
+        "hi": "घायल हुए जटायु",
+        "en": "Jatayu falls wounded"
+      },
+      "sourceSargas": [
+        51
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p065-s1"
+        ],
+        [
+          "ar-p065-s1b"
+        ],
+        [
+          "ar-p065-s2"
+        ]
+      ],
+      "cast": [
+        "Jatayu",
+        "Ravana",
+        "Sita"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "Ravana rises carrying Sita directly; Jatayu pursues and renews the obstruction.",
+          "id": "ar-p065-s1",
+          "sourceSargas": [
+            51
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "id": "ar-p065-s1b",
+          "mode": "caption-intent",
+          "artAction": "During the renewed fight, Ravana sets Sita aside before turning fully against Jatayu; stage the pause near the ground so she can approach the fallen defender next.",
+          "captionIntent": "Show that Sita is no longer being carried when Ravana wounds Jatayu; this connects the aerial chase to her subsequent approach on the ground.",
+          "sourceSargas": [
+            51
+          ],
+          "sourceAnchors": [
+            "local 3.51.40–46; equivalent English/Hindi sarga-51 passage"
+          ],
+          "sourceStatus": "Focused local and two-publication passage comparison on 2026-10-26; exact source numbering differs.",
+          "visualInference": "The ground-level staging connects his setting Sita aside with her approaching the fallen Jatayu; it is composition, not a quoted landing description."
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Ravana strikes with his sword; the injured Jatayu falls, with the injury outside the frame.",
+          "captionIntent": "State the serious wounding and failed rescue without gore.",
+          "id": "ar-p065-s2",
+          "sourceSargas": [
+            51
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Sita responds to the fallen defender before Ravana carries her away again.",
+      "editorialRisks": [
+        "No intact flying chariot after its destruction; no immediate Jatayu death.",
+        "Preserve the set-aside beat: Sita cannot still be in Ravana’s arms immediately before she runs to Jatayu."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-066",
+      "number": 66,
+      "title": {
+        "hi": "सीता का दुःख और प्रतिरोध",
+        "en": "Sita grieves for her defender"
+      },
+      "sourceSargas": [
+        51,
+        52
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p066-s1"
+        ],
+        [
+          "ar-p066-s2"
+        ],
+        [
+          "ar-p066-s3"
+        ]
+      ],
+      "cast": [
+        "Jatayu",
+        "Ravana",
+        "Sita"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "Sita reaches the fallen Jatayu during the ground interruption and grieves.",
+          "id": "ar-p066-s1",
+          "sourceSargas": [
+            51,
+            52
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Ravana forcibly takes her away again as she resists.",
+          "id": "ar-p066-s2",
+          "sourceSargas": [
+            51,
+            52
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The injured Jatayu remains alive on the forest floor as Ravana flies onward.",
+          "captionIntent": "Keep his state available for the brothers’ later encounter.",
+          "id": "ar-p066-s3",
+          "sourceSargas": [
+            51,
+            52
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The flight resumes, and Sita continues resisting through speech and actions.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-067",
+      "number": 67,
+      "title": {
+        "hi": "अन्याय को ललकार",
+        "en": "Sita condemns the abduction"
+      },
+      "sourceSargas": [
+        52,
+        53
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p067-s1"
+        ],
+        [
+          "ar-p067-s2"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Ravana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Ravana",
+          "artAction": "In direct flight, Sita speaks with anger and grief.",
+          "speechIntent": "Condemn his deception and attack on the elderly defender; preserve agency rather than silent helplessness.",
+          "id": "ar-p067-s1",
+          "sourceSargas": [
+            52,
+            53
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Flowers and some ornaments fall along the flight path.",
+          "captionIntent": "Differentiate scattered ground clues from the deliberate bundle dropped next.",
+          "id": "ar-p067-s2",
+          "sourceSargas": [
+            52,
+            53
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Seeing possible witnesses below, Sita deliberately leaves a more recognisable clue.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-068",
+      "number": 68,
+      "title": {
+        "hi": "आभूषणों की निशानी",
+        "en": "A deliberate clue"
+      },
+      "sourceSargas": [
+        54
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p068-s1",
+          "ar-p068-s2"
+        ],
+        [
+          "ar-p068-s3"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Ravana",
+        "Five-vanaras"
+      ],
+      "introductions": [
+        "Five vanaras: witnesses on the mountain; name and identify active individuals later in Kishkindha."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "silent-action",
+          "artAction": "Sita notices five vanaras on a distant mountaintop.",
+          "id": "ar-p068-s1",
+          "sourceSargas": [
+            54
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "She bundles ornaments in an upper cloth while remaining fully covered.",
+          "id": "ar-p068-s2",
+          "sourceSargas": [
+            54
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The bundle falls among the five witnesses; Ravana continues without noticing.",
+          "captionIntent": "Explain her hope that these witnesses can help Rama; the brothers do not receive it in this kanda.",
+          "id": "ar-p068-s3",
+          "sourceSargas": [
+            54
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Ravana continues across the sea to Lanka while the clue remains with the witnesses.",
+      "editorialRisks": [
+        "Lock a modest ornament inventory beforehand; dropped items never reappear on Sita.",
+        "No premature conversation with Sugriva or Hanuman."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-069",
+      "number": 69,
+      "title": {
+        "hi": "समुद्र के पार लंका",
+        "en": "Across the sea to Lanka"
+      },
+      "sourceSargas": [
+        54
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p069-s1"
+        ],
+        [
+          "ar-p069-s2"
+        ],
+        [
+          "ar-p069-s3"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Ravana",
+        "Rakshasi-guards"
+      ],
+      "introductions": [
+        "Rakshasi guards: captors assigned to watch Sita."
+      ],
+      "entryCue": "Across the sea, in Lanka.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Ravana carries Sita over the sea, without the destroyed chariot.",
+          "captionIntent": "Make the change of location explicit.",
+          "id": "ar-p069-s1",
+          "sourceSargas": [
+            54
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "They enter the guarded Lankan palace.",
+          "id": "ar-p069-s2",
+          "sourceSargas": [
+            54
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Rakshasi-guards",
+          "artAction": "Ravana orders attendants to hold Sita under watch.",
+          "speechIntent": "Identify the rakshasi guards’ role; possessions offered do not imply Sita’s consent.",
+          "id": "ar-p069-s3",
+          "sourceSargas": [
+            54
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "After securing the captive, Ravana responds to the loss of Janasthana.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-070",
+      "number": 70,
+      "title": {
+        "hi": "जनस्थान पर नज़र",
+        "en": "Ravana sends watchers"
+      },
+      "sourceSargas": [
+        54
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p070-s1"
+        ],
+        [
+          "ar-p070-s2"
+        ],
+        [
+          "ar-p070-s3"
+        ]
+      ],
+      "cast": [
+        "Ravana",
+        "Eight-rakshasa-watchers"
+      ],
+      "introductions": [
+        "Eight watchers: dispatched to observe the situation at Janasthana."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Ravana summons eight rakshasas outside the guarded inner chambers.",
+          "captionIntent": "Introduce them as his watchers, not rescuers or a random new army.",
+          "id": "ar-p070-s1",
+          "sourceSargas": [
+            54
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Eight-rakshasa-watchers",
+          "artAction": "Ravana gives directions for Janasthana.",
+          "speechIntent": "Order them to watch Rama and report, motivated by the previous defeat.",
+          "id": "ar-p070-s2",
+          "sourceSargas": [
+            54
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "The watchers leave Lanka toward the forest.",
+          "id": "ar-p070-s3",
+          "sourceSargas": [
+            54
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Back in the palace Ravana tries persuasion where force has not won Sita’s acceptance.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-071",
+      "number": 71,
+      "title": {
+        "hi": "वैभव से नहीं डिगीं सीता",
+        "en": "Sita rejects the palace offer"
+      },
+      "sourceSargas": [
+        55,
+        56
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p071-s1"
+        ],
+        [
+          "ar-p071-s2"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Ravana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Sita",
+          "artAction": "Ravana displays Lankan wealth and promises status.",
+          "speechIntent": "Make his offer explicit while Sita remains a captive, not a richly dressed queen.",
+          "id": "ar-p071-s1",
+          "sourceSargas": [
+            55,
+            56
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Sita",
+          "addressedTo": "Ravana",
+          "artAction": "Sita places a blade of grass before her and answers firmly.",
+          "speechIntent": "Reject his claim and affirm her commitment; preserve the refusal’s meaning.",
+          "id": "ar-p071-s2",
+          "sourceSargas": [
+            55,
+            56
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Her refusal leads Ravana to threaten and move her under harsher guard.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-072",
+      "number": 72,
+      "title": {
+        "hi": "अशोक वाटिका में",
+        "en": "Sita in Ashoka grove"
+      },
+      "sourceSargas": [
+        56
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p072-s1"
+        ],
+        [
+          "ar-p072-s2"
+        ],
+        [
+          "ar-p072-s3"
+        ]
+      ],
+      "cast": [
+        "Sita",
+        "Ravana",
+        "Rakshasi-guards"
+      ],
+      "introductions": [],
+      "entryCue": "Lanka; Sita remains captive here during the brothers’ search.",
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ravana",
+          "addressedTo": "Sita",
+          "artAction": "Ravana issues a threatening ultimatum.",
+          "speechIntent": "Retain the twelve-month deadline if stated; omit graphic threatened violence from direct child-facing speech.",
+          "id": "ar-p072-s1",
+          "sourceSargas": [
+            56
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Rakshasi guards escort Sita into the Ashoka grove.",
+          "captionIntent": "Introduce the new place and state why she is held there.",
+          "id": "ar-p072-s2",
+          "sourceSargas": [
+            56
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Sita sits apart in grief and resolve under watch.",
+          "id": "ar-p072-s3",
+          "sourceSargas": [
+            56
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The narration now returns explicitly to Rama and Lakshmana in the forest.",
+      "editorialRisks": [
+        "Do not mix this deadline with later elapsed months.",
+        "No sudden Trijata, Hanuman, royal costume or rescued Sita."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-073",
+      "number": 73,
+      "title": {
+        "hi": "उधर लौटते हुए राम",
+        "en": "Meanwhile, Rama returns"
+      },
+      "sourceSargas": [
+        57
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p073-s1"
+        ],
+        [
+          "ar-p073-s2"
+        ],
+        [
+          "ar-p073-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": "Meanwhile, on the path back to Panchavati.",
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Rama hurries back from the deer pursuit and notices Lakshmana approaching.",
+          "captionIntent": "Return explicitly to the forest timeline; neither brother knows the events in Lanka.",
+          "id": "ar-p073-s1",
+          "sourceSargas": [
+            57
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Rama questions his distressed younger brother.",
+          "speechIntent": "Ask why Sita was left unguarded.",
+          "id": "ar-p073-s2",
+          "sourceSargas": [
+            57
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "Lakshmana begins to explain what he heard and what Sita asked.",
+          "speechIntent": "Address Ram Bhaiya respectfully; prepare the account without a full repetitive flashback.",
+          "id": "ar-p073-s3",
+          "sourceSargas": [
+            57
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The brothers’ exchange continues as they hurry toward the dwelling.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-074",
+      "number": 74,
+      "title": {
+        "hi": "खाली कुटिया",
+        "en": "The hut is empty"
+      },
+      "sourceSargas": [
+        58,
+        59
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p074-s1"
+        ],
+        [
+          "ar-p074-s2"
+        ],
+        [
+          "ar-p074-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "Lakshmana gives the remaining explanation while they move.",
+          "speechIntent": "Explain the false cry, his reassurance, Sita’s panic and his reluctant departure.",
+          "id": "ar-p074-s1",
+          "sourceSargas": [
+            58,
+            59
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Rama responds anxiously, recalling his instruction.",
+          "speechIntent": "Keep the hurt and fear grounded in the actual dilemma; no character knows Ravana’s identity yet.",
+          "id": "ar-p074-s2",
+          "sourceSargas": [
+            58,
+            59
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "They arrive at the recognisable hut and find Sita absent.",
+          "id": "ar-p074-s3",
+          "sourceSargas": [
+            58,
+            59
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Finding the empty dwelling turns fear into an urgent search.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-075",
+      "number": 75,
+      "title": {
+        "hi": "सीते, कहाँ हो",
+        "en": "Searching the dwelling"
+      },
+      "sourceSargas": [
+        60,
+        61
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p075-s1"
+        ],
+        [
+          "ar-p075-s2"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Sita",
+          "artAction": "Rama searches the hut and familiar nearby places.",
+          "speechIntent": "Call for Sita; this is grief and uncertainty, not a received answer from an absent person.",
+          "id": "ar-p075-s1",
+          "sourceSargas": [
+            60,
+            61
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "Lakshmana searches beside his elder brother.",
+          "speechIntent": "Encourage checking the surrounding forest and river while acknowledging his distress.",
+          "id": "ar-p075-s2",
+          "sourceSargas": [
+            60,
+            61
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "When the immediate search fails, the brothers widen it.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-076",
+      "number": 76,
+      "title": {
+        "hi": "हर ओर खोज",
+        "en": "The search widens"
+      },
+      "sourceSargas": [
+        62,
+        63
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p076-s1"
+        ],
+        [
+          "ar-p076-s2"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Distinct forest locations show Rama’s repeated searching and grief.",
+          "captionIntent": "Preserve the emotional arc while condensing repeated laments; no invented clue.",
+          "id": "ar-p076-s1",
+          "sourceSargas": [
+            62,
+            63
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "Lakshmana stays beside the exhausted Rama.",
+          "speechIntent": "Offer respectful encouragement to continue searching rather than abandon hope.",
+          "id": "ar-p076-s2",
+          "sourceSargas": [
+            62,
+            63
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The search reaches the Godavari and the first tangible traces.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-077",
+      "number": 77,
+      "title": {
+        "hi": "संघर्ष के चिह्न",
+        "en": "Signs of a struggle"
+      },
+      "sourceSargas": [
+        64
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p077-s1"
+        ],
+        [
+          "ar-p077-s2"
+        ],
+        [
+          "ar-p077-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Deer"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "The brothers search the riverbank; deer look toward the south.",
+          "captionIntent": "Show a directional hint, not omniscient certainty about Lanka.",
+          "id": "ar-p077-s1",
+          "sourceSargas": [
+            64
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Rama recognises fallen flowers and ornaments along the ground.",
+          "speechIntent": "Identify familiar items as the first physical traces.",
+          "id": "ar-p077-s2",
+          "sourceSargas": [
+            64
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "They find broken chariot parts and marks of the struggle nearby.",
+          "id": "ar-p077-s3",
+          "sourceSargas": [
+            64
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The signs suggest violence, causing Rama’s grief to turn to anger.",
+      "editorialRisks": [
+        "Ground remnants are not the ornament bundle held by the vanaras."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-078",
+      "number": 78,
+      "title": {
+        "hi": "क्रोध के बीच विवेक",
+        "en": "Lakshmana speaks through grief"
+      },
+      "sourceSargas": [
+        64,
+        65
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p078-s1"
+        ],
+        [
+          "ar-p078-s2"
+        ],
+        [
+          "ar-p078-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Rama grips his strung bow in grief and fury.",
+          "speechIntent": "Express the impulse to punish the world for the loss; mark it as his anguished response.",
+          "id": "ar-p078-s1",
+          "sourceSargas": [
+            64,
+            65
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "Lakshmana speaks with folded hands.",
+          "speechIntent": "Urge Ram Bhaiya not to punish the innocent for one wrongdoer’s act.",
+          "id": "ar-p078-s2",
+          "sourceSargas": [
+            64,
+            65
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "He points to the limited physical evidence.",
+          "speechIntent": "Encourage identifying the culprit before acting.",
+          "id": "ar-p078-s3",
+          "sourceSargas": [
+            64,
+            65
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Lakshmana continues his counsel until Rama accepts it.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-079",
+      "number": 79,
+      "title": {
+        "hi": "फिर सँभले राम",
+        "en": "Rama accepts his brother’s counsel"
+      },
+      "sourceSargas": [
+        66,
+        67
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p079-s1"
+        ],
+        [
+          "ar-p079-s2"
+        ],
+        [
+          "ar-p079-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "Lakshmana supports his grieving elder brother.",
+          "speechIntent": "Recall Rama’s own wisdom and the need for steadiness.",
+          "id": "ar-p079-s1",
+          "sourceSargas": [
+            66,
+            67
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Rama lowers his bow and agrees to continue the search.",
+          "id": "ar-p079-s2",
+          "sourceSargas": [
+            66,
+            67
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "They notice the injured body of a large bird ahead.",
+          "id": "ar-p079-s3",
+          "sourceSargas": [
+            66,
+            67
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The ambiguous sight leads to a mistaken suspicion that must be corrected.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-080",
+      "number": 80,
+      "title": {
+        "hi": "जटायु की पहचान",
+        "en": "Recognising wounded Jatayu"
+      },
+      "sourceSargas": [
+        67
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p080-s1"
+        ],
+        [
+          "ar-p080-s2"
+        ],
+        [
+          "ar-p080-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Jatayu"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Rama approaches the injured bird, initially mistaking the evidence.",
+          "captionIntent": "Explain his mistaken fear that the bird harmed Sita; do not present it as fact.",
+          "id": "ar-p080-s1",
+          "sourceSargas": [
+            67
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Jatayu",
+          "addressedTo": "Rama",
+          "artAction": "Jatayu speaks before Rama can attack.",
+          "speechIntent": "Identify himself and explain that Ravana abducted Sita while he tried to save her.",
+          "id": "ar-p080-s2",
+          "sourceSargas": [
+            67
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Rama recognises his father’s friend, lowers the weapon and embraces him.",
+          "id": "ar-p080-s3",
+          "sourceSargas": [
+            67
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Rama asks the dying defender for the information needed to continue.",
+      "editorialRisks": [
+        "No unexplained amnesia: recognition follows the damaged, initially ambiguous view."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-081",
+      "number": 81,
+      "title": {
+        "hi": "जटायु का अन्तिम संदेश",
+        "en": "Jatayu’s final message"
+      },
+      "sourceSargas": [
+        68
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p081-s1"
+        ],
+        [
+          "ar-p081-s2"
+        ],
+        [
+          "ar-p081-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Jatayu"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Jatayu",
+          "artAction": "Rama supports Jatayu gently.",
+          "speechIntent": "Ask who took Sita and which direction he went.",
+          "id": "ar-p081-s1",
+          "sourceSargas": [
+            68
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Jatayu",
+          "addressedTo": "Rama",
+          "artAction": "Jatayu gives his last report.",
+          "speechIntent": "Name Ravana and the southward direction; exact extent of his knowledge to be passage-checked.",
+          "id": "ar-p081-s2",
+          "sourceSargas": [
+            68
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Jatayu dies while the brothers grieve beside him.",
+          "captionIntent": "State the death clearly and respectfully after his testimony.",
+          "id": "ar-p081-s3",
+          "sourceSargas": [
+            68
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The brothers honour the defender before resuming their search.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-082",
+      "number": 82,
+      "title": {
+        "hi": "पिता समान सम्मान",
+        "en": "Honouring Jatayu"
+      },
+      "sourceSargas": [
+        68
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p082-s1"
+        ],
+        [
+          "ar-p082-s2"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Jatayu"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "The brothers prepare Jatayu’s funeral with the body respectfully covered.",
+          "captionIntent": "Explain that Rama honours him like his father; no instructional ritual detail.",
+          "id": "ar-p082-s1",
+          "sourceSargas": [
+            68
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "After the final water offering, the brothers turn back toward the forest route.",
+          "id": "ar-p082-s2",
+          "sourceSargas": [
+            68
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "With Jatayu honoured and his clue retained, they continue deeper into the forest.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-083",
+      "number": 83,
+      "title": {
+        "hi": "अयोमुखी का अवरोध",
+        "en": "Ayomukhi blocks the route"
+      },
+      "sourceSargas": [
+        69
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p083-s1"
+        ],
+        [
+          "ar-p083-s2"
+        ],
+        [
+          "ar-p083-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Ayomukhi"
+      ],
+      "introductions": [
+        "Ayomukhi: a separate rakshasi encountered during the search."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "A rakshasi confronts the brothers beside a dark cave on the search route.",
+          "captionIntent": "Introduce Ayomukhi, distinct from Shurpanakha.",
+          "id": "ar-p083-s1",
+          "sourceSargas": [
+            69
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Ayomukhi",
+          "addressedTo": "Lakshmana",
+          "artAction": "She forcibly grabs Lakshmana and demands he remain.",
+          "speechIntent": "Establish the unwanted restraint before the defensive response.",
+          "id": "ar-p083-s2",
+          "sourceSargas": [
+            69
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Lakshmana breaks the attack and she flees; injury remains off-panel.",
+          "captionIntent": "Record the source’s violent response in editorial notes; age adaptation requires review, not a comic humiliation gag.",
+          "id": "ar-p083-s3",
+          "sourceSargas": [
+            69
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The brothers escape this obstruction but meet a different danger ahead.",
+      "editorialRisks": [
+        "Sensitive mutilation scene: no sexualised framing or graphic anatomy; wording needs editorial approval."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-084",
+      "number": 84,
+      "title": {
+        "hi": "लम्बी भुजाओं की पकड़",
+        "en": "The long-armed creature"
+      },
+      "sourceSargas": [
+        69
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p084-s1"
+        ],
+        [
+          "ar-p084-s2"
+        ],
+        [
+          "ar-p084-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Kabandha"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "A headless, long-armed creature with one eye on its torso obstructs the path.",
+          "captionIntent": "Introduce the immediate danger without giving the brothers unexplained knowledge of his name.",
+          "id": "ar-p084-s1",
+          "sourceSargas": [
+            69
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Its long arms seize both brothers.",
+          "id": "ar-p084-s2",
+          "sourceSargas": [
+            69
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Lakshmana",
+          "addressedTo": "Rama",
+          "artAction": "The captured brothers speak within the grip.",
+          "speechIntent": "Show their fear and decision to face the danger together; maintain respectful address.",
+          "id": "ar-p084-s3",
+          "sourceSargas": [
+            69
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Their cooperation supplies the means of escape before any account or blessing.",
+      "editorialRisks": [
+        "Kabandha’s anatomy is distinct: no generic giant with a normal head."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-085",
+      "number": 85,
+      "title": {
+        "hi": "मिलकर किया प्रतिकार",
+        "en": "The brothers fight together"
+      },
+      "sourceSargas": [
+        70
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p085-s1"
+        ],
+        [
+          "ar-p085-s2"
+        ],
+        [
+          "ar-p085-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Kabandha"
+      ],
+      "introductions": [
+        "Kabandha: name is explained after the encounter and introduction."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Rama coordinates their response while restrained.",
+          "speechIntent": "Explain that they must act together against the two arms.",
+          "id": "ar-p085-s1",
+          "sourceSargas": [
+            70
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "The brothers sever the grasping arms, with the impact and injury outside the frame.",
+          "captionIntent": "State the decisive action sufficiently to explain why the threat ends.",
+          "id": "ar-p085-s2",
+          "sourceSargas": [
+            70
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Kabandha",
+          "addressedTo": "Rama,Lakshmana",
+          "artAction": "The subdued creature asks their names; Lakshmana introduces them.",
+          "speechIntent": "Name Kabandha and establish the recognition that leads to his explanation.",
+          "id": "ar-p085-s3",
+          "sourceSargas": [
+            70
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "Learning who the brothers are, Kabandha explains his condition and request.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-086",
+      "number": 86,
+      "title": {
+        "hi": "कबन्ध की विनती",
+        "en": "Kabandha explains his condition"
+      },
+      "sourceSargas": [
+        71
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p086-s1"
+        ],
+        [
+          "ar-p086-s2"
+        ],
+        [
+          "ar-p086-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Kabandha"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Kabandha",
+          "addressedTo": "Rama",
+          "artAction": "Kabandha tells his past while the brothers listen.",
+          "speechIntent": "Explain pride, curse and the deformation associated with Indra; keep this as a told account.",
+          "id": "ar-p086-s1",
+          "sourceSargas": [
+            71
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Kabandha",
+          "artAction": "Rama asks whether he can help find Sita.",
+          "speechIntent": "State the brothers’ purpose and their need for information.",
+          "id": "ar-p086-s2",
+          "sourceSargas": [
+            71
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Kabandha",
+          "addressedTo": "Rama",
+          "artAction": "Kabandha requests the funeral release.",
+          "speechIntent": "Explain that after release he can give guidance; do not grant useful knowledge before the source allows it.",
+          "id": "ar-p086-s3",
+          "sourceSargas": [
+            71
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The brothers carry out the request, enabling his promised guidance.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-087",
+      "number": 87,
+      "title": {
+        "hi": "सुग्रीव का परिचय",
+        "en": "Kabandha recommends Sugriva"
+      },
+      "sourceSargas": [
+        72
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p087-s1"
+        ],
+        [
+          "ar-p087-s2"
+        ],
+        [
+          "ar-p087-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Kabandha-restored"
+      ],
+      "introductions": [
+        "Sugriva: an exiled vanara leader who may help find Sita.",
+        "Vali: Sugriva’s elder brother, mentioned to explain the exile; full dispute belongs to Kishkindha."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "Kabandha’s extraordinary restored form appears after the funeral fire; body and process stay off-panel.",
+          "captionIntent": "Explain the release before he gives counsel.",
+          "id": "ar-p087-s1",
+          "sourceSargas": [
+            72
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Kabandha",
+          "addressedTo": "Rama",
+          "artAction": "The restored figure addresses the two brothers.",
+          "speechIntent": "Introduce Sugriva as an exiled vanara leader separated from his kingdom by Vali.",
+          "id": "ar-p087-s2",
+          "sourceSargas": [
+            72
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Kabandha",
+          "addressedTo": "Rama",
+          "artAction": "He explains how their needs can align.",
+          "speechIntent": "Describe reciprocal help and Sugriva’s search network; friendship has a motive, not an automatic solution.",
+          "id": "ar-p087-s3",
+          "sourceSargas": [
+            72
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The brothers need a route to reach the recommended ally.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-088",
+      "number": 88,
+      "title": {
+        "hi": "पम्पा और शबरी का मार्ग",
+        "en": "The route through Matanga’s forest"
+      },
+      "sourceSargas": [
+        73
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p088-s1"
+        ],
+        [
+          "ar-p088-s2"
+        ],
+        [
+          "ar-p088-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Kabandha-restored"
+      ],
+      "introductions": [
+        "Shabari: the ascetic awaiting Rama in Matanga’s hermitage.",
+        "Matanga: the teacher associated with that hermitage."
+      ],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Kabandha",
+          "addressedTo": "Rama",
+          "artAction": "Kabandha indicates landmarks toward Pampa and Rishyamuka.",
+          "speechIntent": "Give a clear route in story terms without invented modern distances.",
+          "id": "ar-p088-s1",
+          "sourceSargas": [
+            73
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Kabandha",
+          "addressedTo": "Rama",
+          "artAction": "His directions include the hermitage they should visit on the way.",
+          "speechIntent": "Introduce Shabari as an ascetic associated with Matanga’s teachers and explain her waiting.",
+          "id": "ar-p088-s2",
+          "sourceSargas": [
+            73
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "silent-action",
+          "artAction": "Kabandha departs; the brothers start along the described route.",
+          "id": "ar-p088-s3",
+          "sourceSargas": [
+            73
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "The named hermitage on their route makes the meeting with Shabari expected.",
+      "editorialRisks": [],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-089",
+      "number": 89,
+      "title": {
+        "hi": "शबरी का स्वागत",
+        "en": "Shabari welcomes the brothers"
+      },
+      "sourceSargas": [
+        74
+      ],
+      "rowCount": 3,
+      "rows": [
+        [
+          "ar-p089-s1"
+        ],
+        [
+          "ar-p089-s2"
+        ],
+        [
+          "ar-p089-s3"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Shabari"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "caption-intent",
+          "artAction": "The brothers reach the hermitage identified by Kabandha.",
+          "captionIntent": "Identify Shabari as the same waiting ascetic, not a sudden anonymous fruit seller.",
+          "id": "ar-p089-s1",
+          "sourceSargas": [
+            74
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Shabari",
+          "artAction": "Rama receives her welcome and asks about her wellbeing.",
+          "speechIntent": "Use respectful address to the elder ascetic and inquire about her practice.",
+          "id": "ar-p089-s2",
+          "sourceSargas": [
+            74
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Shabari",
+          "addressedTo": "Rama",
+          "artAction": "Shabari offers water and gathered forest food.",
+          "speechIntent": "Explain her teachers’ instruction to await him and her joy at the meeting.",
+          "id": "ar-p089-s3",
+          "sourceSargas": [
+            74
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "She shows the teachers’ hermitage and requests leave to depart.",
+      "editorialRisks": [
+        "No tasted-berry sequence asserted as a Valmiki episode."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-090",
+      "number": 90,
+      "title": {
+        "hi": "शबरी की साधना का फल",
+        "en": "Shabari’s fulfilled waiting"
+      },
+      "sourceSargas": [
+        74
+      ],
+      "rowCount": 2,
+      "rows": [
+        [
+          "ar-p090-s1"
+        ],
+        [
+          "ar-p090-s2"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana",
+        "Shabari"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Shabari",
+          "addressedTo": "Rama",
+          "artAction": "Shabari shows the preserved sacred places of her teachers.",
+          "speechIntent": "Explain the connection to her teachers and ask permission to depart.",
+          "id": "ar-p090-s1",
+          "sourceSargas": [
+            74
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        },
+        {
+          "mode": "caption-intent",
+          "artAction": "Her extraordinary radiant departure is shown through light; the brothers bow reverently.",
+          "captionIntent": "Complete her waiting and departure without a replicable fire act or invented disappearance.",
+          "id": "ar-p090-s2",
+          "sourceSargas": [
+            74
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "After honouring Shabari, the brothers continue toward Pampa and Sugriva.",
+      "editorialRisks": [
+        "Do not end her encounter at fruit hospitality and omit the sourced resolution."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    },
+    {
+      "id": "ar-page-091",
+      "number": 91,
+      "title": {
+        "hi": "पम्पा के तट पर नई आशा",
+        "en": "At Pampa, a new direction"
+      },
+      "sourceSargas": [
+        75
+      ],
+      "rowCount": 1,
+      "rows": [
+        [
+          "ar-p091-s1"
+        ]
+      ],
+      "cast": [
+        "Rama",
+        "Lakshmana"
+      ],
+      "introductions": [],
+      "entryCue": null,
+      "scenes": [
+        {
+          "mode": "dialogue-intent",
+          "speaker": "Rama",
+          "addressedTo": "Lakshmana",
+          "artAction": "Complete portrait hero of the brothers approaching Pampa, with Rishyamuka’s direction indicated by the landscape.",
+          "speechIntent": "Acknowledge grief while renewing the resolve to find Sugriva and seek Sita; end on purposeful continuation.",
+          "id": "ar-p091-s1",
+          "sourceSargas": [
+            75
+          ],
+          "sourceStatus": "sarga-level planning anchor; exact passage check pending before script lock"
+        }
+      ],
+      "nextPageConnection": "End of Aranyakanda: Kishkindha opens with Pampa and the approach to Sugriva; Hanuman’s meeting belongs there.",
+      "editorialRisks": [
+        "No premature friendship pact, Hanuman meeting or rescue of Sita."
+      ],
+      "status": "planning outline; full four-language script and artwork pending"
+    }
+  ],
+  "rulesAuditStatus": "Partial: planning outline reviewed and one additional spatial transition repaired; complete sourced reading, four full scripts and visual/native checks pending."
+}

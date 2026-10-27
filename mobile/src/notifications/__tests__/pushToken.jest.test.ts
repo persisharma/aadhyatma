@@ -19,6 +19,10 @@ jest.mock('expo-notifications', () => ({
   addPushTokenListener: jest.fn(() => ({ remove: jest.fn() })),
 }));
 
+jest.mock('expo-crypto', () => ({
+  randomUUID: jest.fn(() => '11111111-2222-3333-4444-555555555555'),
+}));
+
 jest.mock('../permissionState', () => ({
   readNotificationPermissionState: jest.fn(),
   requestNotificationPermission: jest.fn(),
@@ -47,18 +51,21 @@ beforeEach(async () => {
   });
 });
 
-describe('permission is never requested, only read', () => {
-  test('an undetermined permission stands down without asking for a token', async () => {
+describe('the device id is captured on open, regardless of permission', () => {
+  test('an undetermined permission still captures the install id, without reading a token', async () => {
     readPermission.mockResolvedValue({ status: 'undetermined', canAskAgain: true });
-    expect(await syncPushToken()).toEqual({ status: 'not-granted', token: null });
+    expect(await syncPushToken()).toEqual({ status: 'captured', token: null });
+    // The token needs a grant, so it is never requested here...
     expect(getToken).not.toHaveBeenCalled();
+    // ...but the permission-free install id is minted and persisted on open.
+    expect(isUsableInstallId(await AsyncStorage.getItem(INSTALL_ID_KEY))).toBe(true);
   });
 
-  test('a refusal stands down too', async () => {
+  test('a refusal still captures the install id too', async () => {
     readPermission.mockResolvedValue({ status: 'denied', canAskAgain: false });
-    __resetPushTokenSyncState();
-    expect((await syncPushToken()).status).toBe('not-granted');
+    expect(await syncPushToken()).toEqual({ status: 'captured', token: null });
     expect(getToken).not.toHaveBeenCalled();
+    expect(isUsableInstallId(await AsyncStorage.getItem(INSTALL_ID_KEY))).toBe(true);
   });
 
   test('no path ever raises the OS prompt', async () => {
@@ -74,13 +81,14 @@ describe('permission is never requested, only read', () => {
 });
 
 describe('capture', () => {
-  test('a granted permission captures and persists the token, with no upload', async () => {
+  test('a granted permission captures the install id and the token, with no upload', async () => {
     const result = await syncPushToken();
     expect(result).toEqual({ status: 'captured', token: TOKEN });
     expect(await AsyncStorage.getItem(PUSH_TOKEN_KEY)).toBe(TOKEN);
     expect(await getCapturedPushToken()).toBe(TOKEN);
+    expect(isUsableInstallId(await AsyncStorage.getItem(INSTALL_ID_KEY))).toBe(true);
     expect(global.fetch).not.toHaveBeenCalled();
-    // Capture-only ⇒ no install id is minted and no device id recorded either.
+    // Capture-only ⇒ nothing was registered, so no fingerprint is recorded.
     expect(await AsyncStorage.getItem(PUSH_TOKEN_SYNC_KEY)).toBeNull();
   });
 
@@ -91,25 +99,27 @@ describe('capture', () => {
     });
   });
 
-  test('a simulator or credential-less build resolves to no-token, not a throw', async () => {
+  test('a simulator or credential-less build still captures the install id, with no token', async () => {
     getToken.mockRejectedValue(new Error('Must use physical device for push notifications'));
-    expect(await syncPushToken()).toEqual({ status: 'no-token', token: null });
+    expect(await syncPushToken()).toEqual({ status: 'captured', token: null });
     expect(await getCapturedPushToken()).toBeNull();
+    expect(isUsableInstallId(await AsyncStorage.getItem(INSTALL_ID_KEY))).toBe(true);
   });
 
-  test('an empty token string is treated as no token', async () => {
+  test('an empty token string is treated as no token, but the install id is still captured', async () => {
     getToken.mockResolvedValue({ data: '' });
-    expect((await syncPushToken()).status).toBe('no-token');
+    expect(await syncPushToken()).toEqual({ status: 'captured', token: null });
+    expect(isUsableInstallId(await AsyncStorage.getItem(INSTALL_ID_KEY))).toBe(true);
   });
 
   test('a storage failure is swallowed — capture still reports the token', async () => {
-    // `mockRejectedValueOnce`, NOT `jest.spyOn(...).mockRestore()`: spying on a
-    // function that is already a mock (AsyncStorage's official jest mock is all
-    // jest.fn) returns that same mock, and restoring it strips its
-    // implementation — which silently turns every later setItem in the file
-    // into a no-op.
-    (AsyncStorage.setItem as unknown as jest.Mock).mockRejectedValueOnce(new Error('disk full'));
-    expect((await syncPushToken()).status).toBe('captured');
+    // Fail both of this sync's writes (install id, then token) — but with
+    // `mockRejectedValueOnce`, NOT `mockRejectedValue`: a persistent rejection
+    // on AsyncStorage's shared jest mock would leak into every later test.
+    (AsyncStorage.setItem as unknown as jest.Mock)
+      .mockRejectedValueOnce(new Error('disk full'))
+      .mockRejectedValueOnce(new Error('disk full'));
+    expect(await syncPushToken()).toEqual({ status: 'captured', token: TOKEN });
     expect(await getCapturedPushToken()).toBeNull();
   });
 });
@@ -133,17 +143,18 @@ describe('concurrency', () => {
 });
 
 describe('install id', () => {
-  test('minted once from the token seed, then read back unchanged', async () => {
-    const first = await getInstallId(TOKEN, 1_757_000_000_000);
+  test('minted once, permission-free, then read back unchanged', async () => {
+    const first = await getInstallId();
     expect(isUsableInstallId(first)).toBe(true);
-    // A rotated token must NOT re-mint the id — that is the point of having it.
-    expect(await getInstallId('ExponentPushToken[bbbbbbbbbbbbbbbbbbbbbb]')).toBe(first);
+    expect(first.startsWith('vd-')).toBe(true);
+    // A second call never re-mints — the stored id is the point of having one.
+    expect(await getInstallId()).toBe(first);
     expect(await AsyncStorage.getItem(INSTALL_ID_KEY)).toBe(first);
   });
 
   test('a corrupt stored id is replaced rather than reused', async () => {
     await AsyncStorage.setItem(INSTALL_ID_KEY, '  ');
-    const minted = await getInstallId(TOKEN, 1_757_000_000_000);
+    const minted = await getInstallId();
     expect(isUsableInstallId(minted)).toBe(true);
     expect(minted.startsWith('vd-')).toBe(true);
   });

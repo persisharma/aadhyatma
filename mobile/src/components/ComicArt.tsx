@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Svg, { ClipPath, Defs, Polygon, Image as SvgImage } from 'react-native-svg';
 import { ActivityIndicator, Image, Pressable, Text, View } from 'react-native';
 import type { ComicPanel } from '@/data/comicBooks';
-import manifest from '@/data/comicAssetManifest.json';
+import { getComicManifest } from '@/data/comicBooks';
 import { assetBaseUrl, remoteAssetRequest } from '@/data/assetManifest';
 import { cachedAssetUri } from '@/utils/assetCache';
 import { useTheme } from '@/theme/ThemeContext';
@@ -10,8 +10,8 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import { coverRect } from '@/utils/coverRect';
 
-export function comicArtRequest(art: string) {
-  return remoteAssetRequest(manifest, art, assetBaseUrl());
+export function comicArtRequest(art: string, comicId?: string) {
+  return remoteAssetRequest(getComicManifest(comicId ?? ''), art, assetBaseUrl());
 }
 export function comicArtGeometry(panel: ComicPanel, width: number) {
   const { frame, dimensions } = panel;
@@ -32,8 +32,8 @@ export function comicArtCoverGeometry(panel: ComicPanel, boxWidth: number, boxHe
  * `fill` renders the panel cover-cropped into its parent (absolute fill) — the
  * listing thumb — instead of at the panel's own aspect ratio.
  */
-export default function ComicArt({ panel, label, compact = false, fill = false, focusX = 0.5 }: {
-  panel: ComicPanel; label: string; compact?: boolean; fill?: boolean; focusX?: number;
+export default function ComicArt({ panel, label, comicId, compact = false, fill = false, focusX = 0.5 }: {
+  panel: ComicPanel; label: string; comicId?: string; compact?: boolean; fill?: boolean; focusX?: number;
 }) {
   const { colors } = useTheme();
   const { lang } = useGitaLanguage();
@@ -44,7 +44,7 @@ export default function ComicArt({ panel, label, compact = false, fill = false, 
   useEffect(() => {
     let active = true;
     setState({ art: panel.art });
-    const req = comicArtRequest(panel.art);
+    const req = comicArtRequest(panel.art, comicId);
     if (!req) { setState({ art: panel.art, failed: true }); return; }
     cachedAssetUri(req).then(uri => {
       if (active) setState({ art: panel.art, uri });

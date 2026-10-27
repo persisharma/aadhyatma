@@ -1,0 +1,47 @@
+appId: com.prashantsharma.vedansh
+---
+- extendedWaitUntil: { notVisible: "Downloading.*", timeout: 120000 }
+- extendedWaitUntil: { visible: { id: "tab-vrat" }, timeout: 120000 }
+- tapOn: { id: "tab-vrat" }
+- waitForAnimationToEnd
+- tapOn: { id: "tab-vrat" }
+- waitForAnimationToEnd
+- extendedWaitUntil: { visible: { id: "catalog-search" }, timeout: 90000 }
+- extendedWaitUntil: { notVisible: "Downloading.*", timeout: 120000 }
+- scrollUntilVisible:
+    element: { id: "catalog-search" }
+    direction: UP
+    centerElement: false
+- swipe: { direction: DOWN, duration: 400 }
+- waitForAnimationToEnd
+- takeScreenshot: /Users/prashant/.codex/worktrees/review-pr-542/Aadhyatma/docs/evaluations/vrat-palette-layout-2026-10-27/native-english-first
+- swipe: { start: "88%,50%", end: "24%,50%", duration: 600 }
+- waitForAnimationToEnd
+- takeScreenshot: /Users/prashant/.codex/worktrees/review-pr-542/Aadhyatma/docs/evaluations/vrat-palette-layout-2026-10-27/native-english-middle
+- swipe: { start: "88%,50%", end: "24%,50%", duration: 600 }
+- waitForAnimationToEnd
+- takeScreenshot: /Users/prashant/.codex/worktrees/review-pr-542/Aadhyatma/docs/evaluations/vrat-palette-layout-2026-10-27/native-english-last
+- swipe: { start: "20%,50%", end: "90%,50%", duration: 600 }
+- swipe: { start: "20%,50%", end: "90%,50%", duration: 600 }
+- tapOn: { id: "observance-star-karwa-chauth" }
+- tapOn: { text: "My Vrat.*", index: 0 }
+- waitForAnimationToEnd
+- takeScreenshot: /Users/prashant/.codex/worktrees/review-pr-542/Aadhyatma/docs/evaluations/vrat-palette-layout-2026-10-27/native-english-my-vrat
+- tapOn: "Reminders for Karwa Chauth"
+- tapOn: "Save reminders"
+- waitForAnimationToEnd
+- tapOn: { id: "observance-star-karwa-chauth" }
+- waitForAnimationToEnd
+- takeScreenshot: /Users/prashant/.codex/worktrees/review-pr-542/Aadhyatma/docs/evaluations/vrat-palette-layout-2026-10-27/native-english-empty-my-vrat
+- tapOn: "Back"
+- scrollUntilVisible:
+    element: { text: "Katha library,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Katha library,.*"
+- waitForAnimationToEnd
+- takeScreenshot: /Users/prashant/.codex/worktrees/review-pr-542/Aadhyatma/docs/evaluations/vrat-palette-layout-2026-10-27/native-katha
+- tapOn: "Back"
+- tapOn: "Vrat,.*"
+- waitForAnimationToEnd
+- takeScreenshot: /Users/prashant/.codex/worktrees/review-pr-542/Aadhyatma/docs/evaluations/vrat-palette-layout-2026-10-27/native-vrat-list

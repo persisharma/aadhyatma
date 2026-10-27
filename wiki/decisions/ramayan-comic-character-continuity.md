@@ -2,7 +2,7 @@
 title: Ramayan comic character continuity
 type: decision
 sources: [docs/content-parity/ramayan-comic/README.md, docs/content-parity/ramayan-comic/character-bible.md, docs/content-parity/ramayan-comic/appearance-timeline.json, docs/content-parity/ramayan-comic/source-manifest.json, docs/content-parity/ramayan-comic/asset-review.json, docs/content-parity/ramayan-comic/balakanda-v1/README.md, docs/content-parity/ramayan-comic/balakanda-v1/book.json, docs/content-parity/ramayan-comic/balakanda-v1/asset-review.json, docs/content-parity/ramayan-comic/balakanda-illustrated-v3/book.json, docs/content-parity/ramayan-comic/balakanda-illustrated-v3/script.json, docs/content-parity/ramayan-comic/balakanda-illustrated-v3/continuity-audit-2026-10-19.md, docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/README.md, docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/REVIEW.md, docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/asset-review.json, RULEBOOK.md]
-last_verified_date: 2026-10-25
+last_verified_date: 2026-10-26
 confidence: high
 status: needs-review
 ---
@@ -123,3 +123,11 @@ This is ready for whole-book user review, not accepted native delivery. User acc
 The user found a real missing introduction on page 20 and relationship-inappropriate dialogue. The complete four-language follow-up is recorded in `ayodhyakanda-preview-v1/CONTINUITY-COSTUME-REVIEW.md`: 95 text fields on 52 pages now clarify identities, motives and responses, including Trijata, the messengers, Jabali and the sandal regency. Dialogue uses relationship-specific respectful forms. This corrects the earlier overly broad continuity-complete wording; layout validation alone did not detect these editorial gaps.
 
 Ten selected art replacements fix present forest clothing or recollection chronology. Sita’s fine departure clothing is source-supported (2.38.3–6; 2.39.13–18); simple everyday forest ochre is art direction. Guha’s page-52 flashback matches page 30, while page 79 retains bridal dress only in the wedding recollection. Actual hashes/frames are updated, including the real page-34 divider instead of a false night-sky band. All revisions are built into the local preview and structural validation passes. Final live browser observation was denied by browser security policy, so previous browser geometry evidence does not verify this revision. Human editorial, source collation, native checks and integration remain pending.
+
+## Aranyakanda planning outline — 2026-10-26
+
+The local `docs/content-parity/ramayan-comic/aranyakanda-plan-v1/` plan maps all75 sargas to91 provisional pages/256 scene intents, each with rows, source anchors, speaker/listener purposes, new-character roles and a next-page handoff. `LANGUAGE-GUIDE.md` locks relationship-aware pronouns, verbs and addresses across hi/en/gu/kn; its eleven examples are illustrative adaptations, not four final scripts. Appearance rules track the two Maricha consultations, memories, ten-year passage, Sita’s ornaments, broken chariot, replacement bow, Jatayu’s changing condition and Kabandha’s release before guidance.
+
+The outline ends at Pampa before the Kishkindha/Hanuman meeting. The planning-only package is submitted separately from the merged Ayodhyakanda PR540; no art, app code or CDN object is included. Whole-source contents and critical passages were checked, but full two-publication collation and four full narrative readings remain pending. Local2439-record versus Hindi-index2440 count is recorded for edition reconciliation. See the plan README, source manifest and pacing review for the full evidence boundary.
+
+Planning audit clarification: `aranyakanda-plan-v1/RULES-AUDIT.md` marks the full agreed gate set PARTIAL. A second outline pass added `ar-p065-s1b` (Ravana sets Sita aside before Jatayu falls), fixing the missing spatial bridge before Sita approaches him. Full source reading/collation and four complete scripts remain open; the plan is not cleared for illustration.

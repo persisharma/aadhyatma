@@ -1,0 +1,341 @@
+{
+  "status": "authoring contract and illustrative drafts; four full scripts and human language approval pending",
+  "languages": [
+    "hi",
+    "en",
+    "gu",
+    "kn"
+  ],
+  "principles": [
+    "Map speaker, listener, relationship and knowledge state on every dialogue.",
+    "Check pronoun, possessive, verb agreement and tone together, not only honorific names.",
+    "Narration can name Rama and Sita directly; character speech reflects the relationship.",
+    "Respectful disagreement, grief and sourced conflict remain meaningful. No blanket sanitisation or mechanical insertion of ji.",
+    "Use natural authored translations, never transliteration as translation.",
+    "Keep art text-free and derive per-language balloon layout from actual fonts.",
+    "Annotate adapted speech as adaptation, not a verbatim scripture quotation."
+  ],
+  "relationships": [
+    {
+      "speaker": "Lakshmana",
+      "to": "Rama",
+      "relationship": "younger brother to elder brother",
+      "hi": "राम भैया / भैया; आप, आपकी; respectful verb agreement",
+      "en": "Brother / Rama, my elder brother; Bhabhi explained once when used",
+      "gu": "રામભાઈ / ભાઈ; તમે, તમારી",
+      "kn": "ರಾಮಣ್ಣ / ಅಣ್ಣ; ನೀವು, ನಿಮ್ಮ; plural respectful verbs"
+    },
+    {
+      "speaker": "Lakshmana",
+      "to": "Sita",
+      "relationship": "younger brother-in-law to elder sister-in-law",
+      "hi": "सीता भाभी / भाभी; आप, आपकी",
+      "en": "Sita Bhabhi / Bhabhi after the relationship is introduced",
+      "gu": "સીતા ભાભી / ભાભી; તમે, તમારી",
+      "kn": "ಸೀತಾ ಅತ್ತಿಗೆ / ಅತ್ತಿಗೆ; ನೀವು, ನಿಮ್ಮ"
+    },
+    {
+      "speaker": "Sita",
+      "to": "Rama",
+      "relationship": "wife to husband",
+      "hi": "आर्यपुत्र / प्रिय; natural respectful pronouns; never भैया",
+      "en": "my lord / Rama, chosen by context; avoid inserting archaic titles mechanically",
+      "gu": "આર્યપુત્ર; respectful forms chosen naturally",
+      "kn": "ಆರ್ಯಪುತ್ರ; context-appropriate respectful verbs"
+    },
+    {
+      "speaker": "Rama",
+      "to": "Sita",
+      "relationship": "husband to wife",
+      "hi": "सीते / जानकी; affectionate familiar forms are natural",
+      "en": "Sita / Janaki, warm direct speech",
+      "gu": "સીતે / જાનકી",
+      "kn": "ಸೀತೇ / ಜಾನಕಿ"
+    },
+    {
+      "speaker": "Sita",
+      "to": "Lakshmana",
+      "relationship": "elder sister-in-law to younger brother-in-law",
+      "hi": "लक्ष्मण / सौमित्र; तुम can be natural; panic does not alter identity",
+      "en": "Lakshmana; preserve urgency and conflict where sourced",
+      "gu": "લક્ષ્મણ / સૌમિત્ર; natural elder-to-younger forms",
+      "kn": "ಲಕ್ಷ್ಮಣ / ಸೌಮಿತ್ರ; natural elder-to-younger forms"
+    },
+    {
+      "speaker": "Rama",
+      "to": "Lakshmana",
+      "relationship": "elder brother to younger brother",
+      "hi": "लक्ष्मण / सौमित्र; familiar affection without belittling",
+      "en": "Lakshmana / dear brother where natural",
+      "gu": "લક્ષ્મણ / સૌમિત્ર",
+      "kn": "ಲಕ್ಷ್ಮಣ / ಸೌಮಿತ್ರ"
+    },
+    {
+      "speaker": "Rama,Lakshmana,Sita",
+      "to": "Sages",
+      "relationship": "visitors to revered teachers",
+      "hi": "मुनिवर / गुरुदेव, matching the actual role",
+      "en": "Revered sage / revered sir; role-specific rather than generic Lord",
+      "gu": "મુનિવર / ગુરુદેવ",
+      "kn": "ಮುನಿವರ್ಯರೇ / ಗುರುಗಳೇ"
+    },
+    {
+      "speaker": "Rama",
+      "to": "Jatayu",
+      "relationship": "son to his father’s elder friend",
+      "hi": "तात; honour as father-like elder",
+      "en": "revered elder, with filial tone",
+      "gu": "તાત",
+      "kn": "ತಂದೆಯವರೇ / ಪೂಜ್ಯರೇ, subject to editorial choice"
+    },
+    {
+      "speaker": "Rama",
+      "to": "Shabari",
+      "relationship": "visitor to elder ascetic",
+      "hi": "माता / तपस्विनी; respectful forms",
+      "en": "Mother / revered ascetic, naturally in context",
+      "gu": "માતા / તપસ્વિની",
+      "kn": "ತಾಯಿಯವರೇ / ತಪಸ್ವಿನಿಯರೇ"
+    },
+    {
+      "speaker": "Maricha",
+      "to": "Ravana",
+      "relationship": "adviser/subordinate to ruler, later coerced",
+      "hi": "राजन् / महाराज; fear and refusal remain explicit",
+      "en": "Your Majesty / king",
+      "gu": "રાજન્ / મહારાજ",
+      "kn": "ಮಹಾರಾಜರೇ"
+    },
+    {
+      "speaker": "Sita",
+      "to": "Ravana-in-disguise then Ravana",
+      "relationship": "apparent religious guest, then identified aggressor",
+      "hi": "मुनिवर before recognition; firm non-reverential rejection afterwards",
+      "en": "revered sir before recognition; direct refusal afterwards",
+      "gu": "મુનિવર before recognition; direct refusal afterwards",
+      "kn": "ಮುನಿವರ್ಯರೇ before recognition; direct refusal afterwards"
+    }
+  ],
+  "examples": [
+    {
+      "id": "protect-bhabhi",
+      "plannedPages": [
+        53
+      ],
+      "speaker": "Lakshmana",
+      "addressedTo": "Rama",
+      "sourceAnchors": [
+        "3.43"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "भैया, मैं सीता भाभी की रक्षा करूँगा।",
+        "en": "Brother, I will keep Sita Bhabhi safe.",
+        "gu": "ભાઈ, હું સીતા ભાભીની રક્ષા કરીશ.",
+        "kn": "ಅಣ್ಣ, ನಾನು ಸೀತಾ ಅತ್ತಿಗೆಯನ್ನು ಕಾಪಾಡುತ್ತೇನೆ."
+      },
+      "reviewNote": "An acknowledgement adapted from the assigned duty. English introduces Bhabhi as the elder brother’s wife at first use; direct address stays natural thereafter."
+    },
+    {
+      "id": "sitas-question",
+      "plannedPages": [
+        11
+      ],
+      "speaker": "Sita",
+      "addressedTo": "Rama",
+      "sourceAnchors": [
+        "3.9"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "आर्यपुत्र, बिना कारण किसी से वैर लेना उचित होगा?",
+        "en": "My lord, would it be right to make an enemy without cause?",
+        "gu": "આર્યપુત્ર, કારણ વગર કોઈની સાથે વેર લેવું યોગ્ય થશે?",
+        "kn": "ಆರ್ಯಪುತ್ರ, ಕಾರಣವಿಲ್ಲದೆ ಯಾರೊಂದಿಗಾದರೂ ಹಗೆ ಸಾಧಿಸುವುದು ಸರಿಯೇ?"
+      },
+      "reviewNote": "Respect does not remove Sita’s thoughtful disagreement; Rama’s answer follows on page 13."
+    },
+    {
+      "id": "ramas-answer",
+      "plannedPages": [
+        13
+      ],
+      "speaker": "Rama",
+      "addressedTo": "Sita",
+      "sourceAnchors": [
+        "3.10"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "सीते, ऋषियों ने रक्षा की प्रार्थना की है। मैं उन्हें दिया वचन निभाऊँगा।",
+        "en": "Sita, the sages have asked for protection. I will keep the promise I made them.",
+        "gu": "સીતે, ઋષિઓએ રક્ષા માટે પ્રાર્થના કરી છે. હું તેમને આપેલું વચન પાળીશ.",
+        "kn": "ಸೀತೇ, ಋಷಿಗಳು ರಕ್ಷಣೆ ಕೇಳಿದ್ದಾರೆ. ನಾನು ಅವರಿಗೆ ಕೊಟ್ಟ ಮಾತನ್ನು ಉಳಿಸಿಕೊಳ್ಳುತ್ತೇನೆ."
+      },
+      "reviewNote": "Spousal speech remains warm and natural; no compulsory formal titles in every sentence."
+    },
+    {
+      "id": "guard-duty-dilemma",
+      "plannedPages": [
+        56
+      ],
+      "speaker": "Lakshmana",
+      "addressedTo": "Sita",
+      "sourceAnchors": [
+        "3.45"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "भाभी, यह छल की पुकार हो सकती है। भैया ने मुझे आपकी रक्षा का दायित्व दिया है।",
+        "en": "Bhabhi, that cry may be a trick. My brother entrusted your safety to me.",
+        "gu": "ભાભી, આ પોકાર છળ હોઈ શકે છે. ભાઈએ મને તમારી રક્ષાની જવાબદારી સોંપી છે.",
+        "kn": "ಅತ್ತಿಗೆ, ಆ ಕೂಗು ಮೋಸವಾಗಿರಬಹುದು. ಅಣ್ಣ ನಿಮ್ಮ ರಕ್ಷಣೆಯ ಹೊಣೆಯನ್ನು ನನಗೆ ನೀಡಿದ್ದಾರೆ."
+      },
+      "reviewNote": "Retain the two competing duties and the suspected imitation; do not make Lakshmana dismiss her fear."
+    },
+    {
+      "id": "panic-and-accusation",
+      "plannedPages": [
+        57
+      ],
+      "speaker": "Sita",
+      "addressedTo": "Lakshmana",
+      "sourceAnchors": [
+        "3.45"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "लक्ष्मण, तुम्हारे भैया संकट में हैं। क्या तुम्हें उनकी चिन्ता नहीं?",
+        "en": "Lakshmana, your brother is in danger. Do you not care about him?",
+        "gu": "લક્ષ્મણ, તમારા ભાઈ સંકટમાં છે. તમને તેમની ચિંતા નથી?",
+        "kn": "ಲಕ್ಷ್ಮಣ, ನಿನ್ನ ಅಣ್ಣ ಅಪಾಯದಲ್ಲಿದ್ದಾರೆ. ನಿನಗೆ ಅವರ ಚಿಂತೆ ಇಲ್ಲವೇ?"
+      },
+      "reviewNote": "Tentative child-friendly condensation of a substantially harsher source exchange. Preserve her fear, unfair accusation and his hurt; exact adaptation requires human editorial review. Sita never calls her own husband Bhaiya."
+    },
+    {
+      "id": "elder-sage",
+      "plannedPages": [
+        20
+      ],
+      "speaker": "Lakshmana",
+      "addressedTo": "Agastya-disciple",
+      "sourceAnchors": [
+        "3.12"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "मुनिवर, राम भैया और सीता भाभी गुरुदेव के दर्शन के लिए आए हैं।",
+        "en": "Revered sir, my brother Rama and Sita Bhabhi have come to meet the sage.",
+        "gu": "મુનિવર, રામભાઈ અને સીતા ભાભી ગુરુદેવનાં દર્શન માટે આવ્યાં છે.",
+        "kn": "ಮುನಿವರ್ಯರೇ, ರಾಮಣ್ಣ ಮತ್ತು ಸೀತಾ ಅತ್ತಿಗೆ ಗುರುಗಳ ದರ್ಶನಕ್ಕೆ ಬಂದಿದ್ದಾರೆ."
+      },
+      "reviewNote": "Address the gate disciple in his actual role; do not confuse him with Agastya."
+    },
+    {
+      "id": "jatayu",
+      "plannedPages": [
+        81
+      ],
+      "speaker": "Rama",
+      "addressedTo": "Jatayu",
+      "sourceAnchors": [
+        "3.68"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "तात, सीता को कौन ले गया? वह किस दिशा में गया?",
+        "en": "Revered elder, who took Sita? Which way did he go?",
+        "gu": "તાત, સીતાને કોણ લઈ ગયું? તે કઈ દિશામાં ગયું?",
+        "kn": "ತಂದೆಯವರೇ, ಸೀತೆಯನ್ನು ಯಾರು ಕರೆದೊಯ್ದರು? ಅವರು ಯಾವ ದಿಕ್ಕಿಗೆ ಹೋದರು?"
+      },
+      "reviewNote": "Filial respect for Dasharatha’s friend. Match the final testimony to what Jatayu actually knows, not a full Lanka map."
+    },
+    {
+      "id": "calm-the-elder",
+      "plannedPages": [
+        78
+      ],
+      "speaker": "Lakshmana",
+      "addressedTo": "Rama",
+      "sourceAnchors": [
+        "3.65",
+        "3.66"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "भैया, पहले दोषी का पता करें। सबको दण्ड देना उचित नहीं।",
+        "en": "Brother, let us first find who did this. It would be wrong to punish everyone.",
+        "gu": "ભાઈ, પહેલાં દોષી કોણ છે તે શોધીએ. બધાને દંડ આપવો યોગ્ય નથી.",
+        "kn": "ಅಣ್ಣ, ಮೊದಲು ತಪ್ಪಿತಸ್ಥ ಯಾರು ಎಂದು ಕಂಡುಹಿಡಿಯೋಣ. ಎಲ್ಲರನ್ನೂ ದಂಡಿಸುವುದು ಸರಿಯಲ್ಲ."
+      },
+      "reviewNote": "Respectful younger-to-elder disagreement; retain the corrective meaning instead of removing the disagreement."
+    },
+    {
+      "id": "shabaris-welfare",
+      "plannedPages": [
+        89
+      ],
+      "speaker": "Rama",
+      "addressedTo": "Shabari",
+      "sourceAnchors": [
+        "3.74"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "माता, आप कुशल से हैं? आपकी साधना कैसी चल रही है?",
+        "en": "Mother, have you been well? How is your spiritual practice progressing?",
+        "gu": "માતા, આપ કુશળ છો? આપની સાધના કેવી ચાલી રહી છે?",
+        "kn": "ತಾಯಿಯವರೇ, ನೀವು ಕ್ಷೇಮವಾಗಿದ್ದೀರಾ? ನಿಮ್ಮ ಸಾಧನೆ ಹೇಗೆ ನಡೆಯುತ್ತಿದೆ?"
+      },
+      "reviewNote": "Respect for an elder ascetic; avoid an anonymous fruit-seller introduction."
+    },
+    {
+      "id": "marichas-warning",
+      "plannedPages": [
+        43,
+        48
+      ],
+      "speaker": "Maricha",
+      "addressedTo": "Ravana",
+      "sourceAnchors": [
+        "3.31",
+        "3.37"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "राजन्, इस योजना को छोड़ दीजिए। इससे बड़ा अनर्थ होगा।",
+        "en": "Your Majesty, abandon this plan. It will bring disaster.",
+        "gu": "રાજન્, આ યોજના છોડી દો. તેનાથી મોટો અનર્થ થશે.",
+        "kn": "ಮಹಾರಾಜರೇ, ಈ ಯೋಜನೆಯನ್ನು ಕೈಬಿಡಿ. ಇದರಿಂದ ದೊಡ್ಡ ಅನರ್ಥವಾಗುತ್ತದೆ."
+      },
+      "reviewNote": "Courtly address during advice; coercion on page 50 must not be mistaken for willing assent."
+    },
+    {
+      "id": "sitas-refusal",
+      "plannedPages": [
+        60,
+        71
+      ],
+      "speaker": "Sita",
+      "addressedTo": "Ravana",
+      "sourceAnchors": [
+        "3.47",
+        "3.56"
+      ],
+      "status": "illustrative adapted-language draft; not scripture quotation or approved final script",
+      "text": {
+        "hi": "मैं तुम्हारा प्रस्ताव स्वीकार नहीं करूँगी।",
+        "en": "I will not accept your demand.",
+        "gu": "હું તારો પ્રસ્તાવ સ્વીકારીશ નહીં.",
+        "kn": "ನಿನ್ನ ಪ್ರಸ್ತಾಪವನ್ನು ನಾನು ಒಪ್ಪುವುದಿಲ್ಲ."
+      },
+      "reviewNote": "Firm refusal to an aggressor: do not add reverential titles or weaken the lack of consent."
+    }
+  ],
+  "requiredReviews": {
+    "hi": "Complete beginning-to-ending narrative, address/pronoun/verb/tone, meaning parity and human editorial review pending",
+    "en": "Complete beginning-to-ending narrative, address/pronoun/verb/tone, meaning parity and human editorial review pending",
+    "gu": "Complete beginning-to-ending narrative, address/pronoun/verb/tone, meaning parity and human editorial review pending",
+    "kn": "Complete beginning-to-ending narrative, address/pronoun/verb/tone, meaning parity and human editorial review pending"
+  }
+}

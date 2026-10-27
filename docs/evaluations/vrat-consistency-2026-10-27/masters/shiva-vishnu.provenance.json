@@ -1,0 +1,14 @@
+{
+  "tool": "built-in image_gen",
+  "source": "/Users/prashant/.codex/generated_images/01a17bf6-80d9-7e61-aa98-021789f761e4/exec-bb1dd7a7-9839-4f33-9e3c-5ddb31c68a0a.png",
+  "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/shiva-vishnu.png",
+  "final": "mobile/assets/icons/observance-scenes/shiva-vishnu.webp",
+  "source_sha256": "dcc2a265e2c84bed64d39189a9c85d196176b317edf7a145f15938290f56e070",
+  "final_sha256": "e92f0d3ad526e22e354116529d0ed3c51abc354ee40977da4e64128e7cf75a4d",
+  "dimensions": [
+    320,
+    320
+  ],
+  "bytes": 45712,
+  "review": "Inspected master-derived320px thumbnail: distinct Shiva and four-armed Vishnu seated together; full hair/crown/hands/feet, Shiva trident/crescent and Vishnu conch/discus visible; consistent golden painted courtyard; no text, extra deity, merged body or clipping."
+}

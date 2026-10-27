@@ -1,0 +1,14 @@
+{
+  "tool": "built-in image_gen",
+  "source": "/Users/prashant/.codex/generated_images/01a17bf6-80d9-7e61-aa98-021789f761e4/exec-205f9288-7eed-44ab-816f-f810b0de6648.png",
+  "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/tulsi-puja.png",
+  "final": "mobile/assets/icons/observance-scenes/tulsi-puja.webp",
+  "source_sha256": "3c7c2b8b168720ffd7404821664ec002339b44bb23e5761a8c7daaf4c50e4bab",
+  "final_sha256": "8e53b2ee468d245ae89fe9892226ba23c27e2cc1041c894efb5204460604f935",
+  "dimensions": [
+    320,
+    320
+  ],
+  "bytes": 46356,
+  "review": "Full Tulsi plant and decorated pedestal, diya and marigolds visible; no text or human subject; coherent warm hand-painted scene."
+}

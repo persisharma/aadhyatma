@@ -25,21 +25,26 @@ function monthName(d: Date, lang: Lang): string {
  * The finder's shareable day card (PRD-16; design.md §60) — captured
  * off-screen to a PNG, same pipeline as MuhuratCardBody's share variant.
  * Carries no personal data by construction: occasion, date, panchang line,
- * tier + convention, windows, brand. Never rendered for excluded days.
+ * tier + convention, windows, city. The share provider adds the brand + download
+ * strip (design.md §39.10). Never rendered for excluded days.
  */
 export default function MuhuratFinderShareCard({
   rule,
   verdict,
   p,
   cityLabel,
+  lang: langProp,
 }: {
   rule: EventRule;
   verdict: DayVerdict;
   p: PanchangData;
   cityLabel: string;
+  /** Card language (§39.8 chips); defaults to the reading language. */
+  lang?: Lang;
 }) {
   const { colors, typography, radii } = useTheme();
-  const { lang } = useGitaLanguage();
+  const { lang: readerLang } = useGitaLanguage();
+  const lang = langProp ?? readerLang;
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const date = new Date(verdict.dateMs);
@@ -120,11 +125,9 @@ export default function MuhuratFinderShareCard({
         {contentByLang(lang, 'परम्परागत मार्गदर्शन — पुरोहित से पुष्टि करें।', 'Traditional guidance — confirm with your purohit.')}
       </Text>
 
-      <View style={[styles.brandRow, { borderTopColor: colors.divider }]}>
-        <Text style={{ color: colors.saffron, fontFamily: typography.readerTitle.fontFamily, fontSize: 14 }}>ॐ</Text>
-        <Text style={{ color: colors.saffronDeep, fontFamily: titleFont, fontSize: 13 }}>वेदांश़</Text>
-        <Text style={{ color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily, fontSize: 11 }}>· {cityLabel}</Text>
-      </View>
+      <Text style={{ fontFamily: bodyFont, fontSize: 11, color: colors.inkMuted, textAlign: 'center', lineHeight: 17.5, marginTop: 4 }}>
+        {contentByLang(lang, `सभी समय ${cityLabel} के अनुसार`, `All times for ${cityLabel}`)}
+      </Text>
     </View>
   );
 }
@@ -135,5 +138,4 @@ const styles = StyleSheet.create({
   tierPill: { alignSelf: 'center', paddingHorizontal: 10, paddingVertical: 4, marginTop: 10 },
   best: { borderTopWidth: 1, marginTop: 12, paddingTop: 12, marginBottom: 8 },
   windowRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingVertical: 8, marginTop: 6 },
-  brandRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, borderTopWidth: 1, marginTop: 12, paddingTop: 10 },
 });

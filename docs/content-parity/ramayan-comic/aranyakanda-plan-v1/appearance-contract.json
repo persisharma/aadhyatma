@@ -1,0 +1,72 @@
+{
+  "status": "planning contract; exact final art and prop ledger to be reviewed before generation",
+  "characters": [
+    {
+      "name": "Rama",
+      "identity": "Established adult Rama, blue complexion and broad calm face; no age reset at the kanda boundary.",
+      "present": "Matted locks established in Ayodhya, forest clothing, carried bow/sword/quivers; no crown.",
+      "memory": "Youthful Balakanda Rama only in Maricha’s first recollection; later deer-form encounter is a separate memory.",
+      "props": "Keep the earlier bow and Agastya’s gifted Vaishnava bow distinguishable; broken bow does not reappear."
+    },
+    {
+      "name": "Lakshmana",
+      "identity": "Established younger brother with distinct angular face and forelock; never a duplicate Rama.",
+      "present": "Matted locks, forest clothing and weapons; stays with Sita in the cave during Khara’s main battle.",
+      "props": "Guarding position and assigned duty persist through the golden-deer sequence."
+    },
+    {
+      "name": "Sita",
+      "identity": "Established adult Sita, same facial structure and bindi; no bridal reset.",
+      "present": "Approved modest yellow/ochre forest sari with restrained decoration; minimal consistent ornaments. This visual direction is not a claim that scripture forbids fine garments.",
+      "ornamentLedger": "Source 3.52–54 explicitly describes yellow garments and ornaments. Lock an identifiable limited set before the abduction; track ground losses and deliberate bundle separately. Upper-cloth removal leaves full modest coverage.",
+      "captivity": "Travel-disordered version of the same sari and remaining ornaments; no new royal jewellery merely because she enters Lanka."
+    },
+    {
+      "name": "Jatayu",
+      "identity": "One consistent elder vulture, Dasharatha’s friend; no arbitrary eagle/young-warrior swap.",
+      "states": "Healthy introduction → defender → seriously wounded and alive → testimony → death → honoured funeral. Injury remains non-graphic."
+    },
+    {
+      "name": "Ravana",
+      "identity": "True form has ten heads and twenty arms where fully revealed; established face/costume identity.",
+      "states": "Lankan king → guest/plotter → mendicant disguise → revealed abductor; no costume or anatomy mixing.",
+      "transport": "Aerial chariot during arrival/initial abduction → chariot destroyed by Jatayu → direct flight carrying Sita; no intact vehicle afterward. Do not name Pushpaka without exact source support. During renewed combat he sets Sita aside before the final strike; she can then approach Jatayu before being seized again."
+    },
+    {
+      "name": "Maricha",
+      "identity": "Recognisable rakshasa from Balakanda; retired coastal ascetic context, not a new sage identity.",
+      "states": "Adviser under threat → golden deer → revealed wounded rakshasa → death. Golden deer markings stay stable across shots; false cry names him as the speaker."
+    },
+    {
+      "name": "Shurpanakha and Ayomukhi",
+      "identity": "Two separate characters with distinct silhouettes; neither reduced to a beauty/ugliness joke.",
+      "states": "Approach/request → threat or forcible restraint → defensive response/injury off-panel → retreat. Source severity and age adaptation are editorial decisions."
+    },
+    {
+      "name": "Khara,Dushana,Trishiras",
+      "identity": "Distinct commanders; Trishiras has three heads. First fourteen attackers and later main army are distinct groups.",
+      "states": "Introduce each role before its confrontation; commanders do not return after defeat."
+    },
+    {
+      "name": "Kabandha",
+      "identity": "Headless torso, eye on torso, mouth on belly and very long arms; not Viradha reused.",
+      "states": "Unknown threat → capture → arms disabled → name/curse explained → requested funeral → restored form → guidance → departure."
+    },
+    {
+      "name": "Sages and Shabari",
+      "identity": "Sharabhanga, Sutikshna, Dharmabhrita, Agastya’s brother, Agastya, Matanga and Shabari have separate roles.",
+      "states": "Hosts identified before requests/answers. Illustrative storytellers are labelled; Shabari appears in the route instructions before the actual meeting."
+    }
+  ],
+  "globalArtRules": [
+    "Use the accepted inked Parashurama/Balakanda composition and colour direction as style reference.",
+    "Every scene gets its own action composition; references and model sheets are never passed off as final panel art.",
+    "No embedded lettering, reserved caption band, blank lower fifth, decorative padding or fixed crop percentage.",
+    "Keep hands, feet, faces, garment drapes, weapons, boat/chariot parts and supporting characters inside meaningful painted bounds.",
+    "Design each panel for measured reader width; one, two or three rows remain content-driven.",
+    "Review every output at full size; record actual dimensions, hash, frame and speaker endpoint. No frame approval from text length.",
+    "Natural vertical scrolling preserves full text and art. Verify shortest and longest pages, paired panels and Standard/Large in all four languages.",
+    "Non-graphic injury and radiant mythic departures; no sexualised coercion, explicit severed body parts or procedural fire acts.",
+    "Source-review assets stay out of the app bundle; later integration uses existing hashed CDN/cache and export checks."
+  ]
+}

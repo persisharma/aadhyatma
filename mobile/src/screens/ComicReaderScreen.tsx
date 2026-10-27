@@ -75,7 +75,7 @@ export default function ComicReaderScreen({ route, navigation }: NativeStackScre
           initialNumToRender={1} maxToRenderPerBatch={2} windowSize={3}
           getItemLayout={(_, position) => ({ length: pageWidth, offset: pageWidth * position, index: position })}
           onMomentumScrollEnd={event => { setAnchor(undefined); setIndex(Math.max(0, Math.min(pages.length - 1, Math.round(event.nativeEvent.contentOffset.x / pageWidth)))); }}
-          renderItem={({ item: page }) => <ComicPage page={page} width={pageWidth} language={language}
+          renderItem={({ item: page }) => <ComicPage page={page} width={pageWidth} language={language} comicId={route.params.comicId}
             anchor={page === current ? anchor : undefined} onUserScroll={() => setAnchor(undefined)} />} />
       </View>
     </> : <Text testID="comic-reader-error" style={{ ...meaningToken(lang, typography), color: colors.ink, padding: spacing.readingGutter }}>{pick(lang, { hi: 'कथा नहीं मिली।', en: 'Story not found.', gu: 'વાર્તા મળી નથી.', kn: 'ಕಥೆ ಸಿಗಲಿಲ್ಲ.' })}</Text>}

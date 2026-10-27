@@ -11,7 +11,7 @@
 import React from 'react';
 import { StatusBar, Text } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
-import PanchangSky from '../PanchangSky';
+import PanchangSky, { type SkyInk } from '../PanchangSky';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { formatClock } from '@/panchang/muhuratFormat';
@@ -78,14 +78,14 @@ afterEach(() => {
   act(() => trees.splice(0).forEach((tree) => tree.unmount()));
 });
 
-async function render(focused = true): Promise<TestRenderer.ReactTestRenderer> {
+async function render(focused = true, action?: (ink: SkyInk) => React.ReactNode): Promise<TestRenderer.ReactTestRenderer> {
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
       <FontScaleProvider>
         <ThemeProvider>
           <GitaLanguageProvider initialLang="en">
-            <PanchangSky date={new Date()} calendarSystem="purnimant" topInset={0} focused={focused}>
+            <PanchangSky date={new Date()} calendarSystem="purnimant" topInset={0} focused={focused} action={action}>
               {(ink) => <Text testID="tone">{ink.tone}</Text>}
             </PanchangSky>
           </GitaLanguageProvider>
@@ -151,4 +151,14 @@ test('a browsed date is a day sky led by Abhijit, with no "now"', async () => {
   expect(out).toContain('Abhijit');
   expect(out).toContain('Muhurat');
   expect(out).not.toContain('left');
+});
+
+test('the action slot (the day share) renders on the sky in the current tone', async () => {
+  mockSolve = solve(runAround('night', NIGHT, 5), 5);
+  const tree = await render(true, (ink) => <Text testID="action">{ink.tone}</Text>);
+  expect(tree.root.findByProps({ testID: 'action' }).props.children).toBe('night');
+  // Without one, the zone carries only the hero and the arc.
+  mockSolve = solve(runAround('night', NIGHT, 5), 5);
+  const bare = await render();
+  expect(bare.root.findAllByProps({ testID: 'action' })).toHaveLength(0);
 });

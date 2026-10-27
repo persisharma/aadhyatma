@@ -1,34 +1,21 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { captureRef } from 'react-native-view-shot';
-import * as Sharing from 'expo-sharing';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { titleFontByLang } from '@/utils/langType';
-import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
+import { useObservancesForDate, usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import MuhuratCardBody from '@/components/MuhuratCardBody';
 import ShareButton from '@/components/ShareButton';
+import { usePanchangShare } from '@/utils/panchangShare';
 import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'MuhuratDetail'>;
-
-// Render width (dp) of the hidden share card. Output PNG is captured at 2× for
-// a crisp image, matching the reader share path (shareVerse.tsx).
-const SHARE_CARD_WIDTH = 340;
-const SHARE_SCALE = 2;
-
-// One frame + a short beat so the hidden share card is committed and its fonts
-// are resolved before capture, matching the reader share path (shareVerse.tsx).
-async function waitForLayout() {
-  await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-  await new Promise<void>((resolve) => setTimeout(resolve, 60));
-}
 
 export default function MuhuratDetailScreen({ navigation, route }: Props) {
   const { colors, typography, spacing } = useTheme();
@@ -44,64 +31,18 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
   const cityLabel = contentByLang(lang, location.labelHi, location.labelEn);
   const nowStartMs = muhurat.isToday ? muhurat.nowChoghadiya?.start.getTime() ?? null : null;
 
-  const shotRef = useRef<View>(null);
-  // Measured height of the hidden card (dp). Handed to captureRef as an explicit
-  // output size — a content-sized view captured with no dimensions can come back
-  // blank under the New Architecture.
-  const cardHeightRef = useRef(0);
-  const [busy, setBusy] = useState(false);
-
-  const onShare = useCallback(async () => {
-    if (busy || !ready) return;
-    setBusy(true);
-    try {
-      await waitForLayout();
-      const h = cardHeightRef.current;
-      const uri = await captureRef(shotRef, {
-        format: 'png',
-        quality: 1,
-        result: 'tmpfile',
-        ...(h > 0
-          ? { width: SHARE_CARD_WIDTH * SHARE_SCALE, height: Math.round(h * SHARE_SCALE) }
-          : null),
-      });
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(uri, {
-          mimeType: 'image/png',
-          dialogTitle: pick(lang, { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ' }),
-        });
-      }
-    } catch {
-      /* capture/share unavailable — non-fatal */
-    } finally {
-      setBusy(false);
-    }
-  }, [busy, ready, lang]);
+  // The share is the पूर्ण पंचांग card (design.md §33a), the same one the
+  // Panchang sky header shares — not a capture of this screen — through the
+  // Daily Bhakti picker (§39.10).
+  const observances = useObservancesForDate(date, calendarSystem);
+  const { share, busy } = usePanchangShare();
+  const onShare = useCallback(() => {
+    if (!ready) return;
+    void share({ p, md, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
+  }, [ready, share, p, md, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
 
   return (
     <View style={styles.root}>
-      {/* Share card — captured to a PNG for the OS share sheet. Rendered
-          off-screen (so the full card is captured regardless of screen height —
-          an on-screen card taller than the viewport clips), and handed an
-          explicit measured output size so view-shot renders the whole subtree
-          instead of a blank background. This mirrors the proven reader share
-          path (shareVerse.tsx), which captures a tall off-screen card the same
-          way. collapsable={false} on the captured view keeps it a real native
-          view for view-shot to target. */}
-      {ready && (
-        <View style={styles.captureLayer} pointerEvents="none">
-          <View
-            ref={shotRef}
-            collapsable={false}
-            onLayout={(e) => {
-              cardHeightRef.current = e.nativeEvent.layout.height;
-            }}
-            style={{ width: SHARE_CARD_WIDTH, backgroundColor: colors.parchment, padding: 18 }}
-          >
-            <MuhuratCardBody p={p} md={md} variant="share" cityLabel={cityLabel} brand isToday={muhurat.isToday} />
-          </View>
-        </View>
-      )}
       <LinearGradient colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]} style={StyleSheet.absoluteFill} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={[styles.topBar, { paddingHorizontal: spacing.xxl }]}>
@@ -146,7 +87,4 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   topBar: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, gap: 12 },
   backBtn: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
-  // Fully off-screen so the whole card is captured no matter how tall it is
-  // (an on-screen card taller than the viewport gets clipped in the snapshot).
-  captureLayer: { position: 'absolute', left: -10000, top: -10000, width: SHARE_CARD_WIDTH },
 });

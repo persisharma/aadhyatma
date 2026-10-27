@@ -1,0 +1,8 @@
+Use case: illustration-story
+Asset type: one square78px native calendar thumbnail, delivered320x320.
+Primary request: one coherent devotional group painting containing TWO distinct seated deities, Shri Krishna and Yamaraja, to represent the calendar rule naming them together. This is a serene symbolic group portrait, no invented mythological action.
+Input images: Image1 is Yamaraja identity and style reference: regal dark green-brown complexion, gold crown, moustache, red garments, staff and black buffalo. Image2 is supporting painting/palette reference and Krishna identity: blue complexion, yellow garments, peacockfeather gold crown, flute. Maintain distinct visible identities.
+Scene: both sit calmly sidebyside on separate low golden seats in one warm templecourtyard, soft flowering foliage, goldenhour light. Blue crowned Krishna on left holding flute. Dark regal crowned Yamaraja on right holding staff, his black buffalo resting nearby behind the seat. No violence, no fighting, no gore, no weapons raised.
+Composition: complete seated bodies, full crowns/heads/hands, comfortably within central80percent. Shared square scene, no split panels or pasted portraits. Important faces large enough to remain identifiable at78px. Full painted background to edges.
+Style: premium Indian devotional storybook miniature, detailed soft natural hand-painted brushwork and gold ornament, warm parchment and muted rich pigments, matching both input paintings.
+Avoid: text, typography, captions, numbers, letters, logos, frames, borders, UI, extra humans or deities, extra faces, modern objects, photorealism, flat vector icons,3D.

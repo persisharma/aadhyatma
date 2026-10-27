@@ -1,0 +1,329 @@
+{
+  "prefix": "comics/ayodhyakanda-illustrated-v1",
+  "assets": {
+    "page-001": {
+      "hash": "6d29b68584d18a76",
+      "ext": "png"
+    },
+    "page-002": {
+      "hash": "724edbdeab51df59",
+      "ext": "png"
+    },
+    "page-003": {
+      "hash": "6acf3ff70f5bb460",
+      "ext": "png"
+    },
+    "page-004": {
+      "hash": "0d0e8c4049c77c92",
+      "ext": "png"
+    },
+    "page-005": {
+      "hash": "3de420cee2b8ce1d",
+      "ext": "png"
+    },
+    "page-006": {
+      "hash": "29538c2f73a47df5",
+      "ext": "png"
+    },
+    "page-007": {
+      "hash": "a708620d81e1bb8c",
+      "ext": "png"
+    },
+    "page-008": {
+      "hash": "2ddc9046a9091ecf",
+      "ext": "png"
+    },
+    "page-009": {
+      "hash": "c9e8198eaffcb760",
+      "ext": "png"
+    },
+    "page-010": {
+      "hash": "43eb92a1286072fb",
+      "ext": "png"
+    },
+    "page-011": {
+      "hash": "520dfa63b6597c59",
+      "ext": "png"
+    },
+    "page-012": {
+      "hash": "dad47eae5b52b295",
+      "ext": "png"
+    },
+    "page-013": {
+      "hash": "63cbf81370ceaee1",
+      "ext": "png"
+    },
+    "page-014": {
+      "hash": "b0fdc4b3d5caf9bc",
+      "ext": "png"
+    },
+    "page-015": {
+      "hash": "2c56979a94313d64",
+      "ext": "png"
+    },
+    "page-016": {
+      "hash": "5ef421a567cade8c",
+      "ext": "png"
+    },
+    "page-017": {
+      "hash": "c8bb6e484ac8f1bf",
+      "ext": "png"
+    },
+    "page-018": {
+      "hash": "e0e8d6519b1df6a8",
+      "ext": "png"
+    },
+    "page-019": {
+      "hash": "e9debabf736332a0",
+      "ext": "png"
+    },
+    "page-020": {
+      "hash": "e533a1c4287592fa",
+      "ext": "png"
+    },
+    "page-021": {
+      "hash": "3519556c514fd1ff",
+      "ext": "png"
+    },
+    "page-022": {
+      "hash": "0a76f0c70c67b485",
+      "ext": "png"
+    },
+    "page-023": {
+      "hash": "ebf9f8c5d37fb686",
+      "ext": "png"
+    },
+    "page-024": {
+      "hash": "9807c7a8abd70424",
+      "ext": "png"
+    },
+    "page-025": {
+      "hash": "9371a8e273b2d5b0",
+      "ext": "png"
+    },
+    "page-026": {
+      "hash": "d4a9e365c2e9898f",
+      "ext": "png"
+    },
+    "page-027": {
+      "hash": "b157f0abc2043a89",
+      "ext": "png"
+    },
+    "page-028": {
+      "hash": "38c4bd75afd71e23",
+      "ext": "png"
+    },
+    "page-029": {
+      "hash": "314290de60f3e70f",
+      "ext": "png"
+    },
+    "page-030": {
+      "hash": "572b5f4b190531e6",
+      "ext": "png"
+    },
+    "page-031": {
+      "hash": "2eed2653fc799eeb",
+      "ext": "png"
+    },
+    "page-032": {
+      "hash": "805c2974ef0c2e81",
+      "ext": "png"
+    },
+    "page-033": {
+      "hash": "d98c32f13eecb418",
+      "ext": "png"
+    },
+    "page-034": {
+      "hash": "7486a5567b21682c",
+      "ext": "png"
+    },
+    "page-035": {
+      "hash": "947c0da029fc172f",
+      "ext": "png"
+    },
+    "page-036": {
+      "hash": "e5da317510a10e12",
+      "ext": "png"
+    },
+    "page-037": {
+      "hash": "adf474f8c4634f2b",
+      "ext": "png"
+    },
+    "page-038": {
+      "hash": "fd13c9eeb5c8464c",
+      "ext": "png"
+    },
+    "page-039": {
+      "hash": "e789140efa9e1388",
+      "ext": "png"
+    },
+    "page-040": {
+      "hash": "0ce4f5d89a066ab8",
+      "ext": "png"
+    },
+    "page-041": {
+      "hash": "0610060a61403037",
+      "ext": "png"
+    },
+    "page-042": {
+      "hash": "8555dd36b164fb06",
+      "ext": "png"
+    },
+    "page-043": {
+      "hash": "4bfb676eab86124d",
+      "ext": "png"
+    },
+    "page-044": {
+      "hash": "843f167fcf792fd7",
+      "ext": "png"
+    },
+    "page-045": {
+      "hash": "05fb224e1919dfd9",
+      "ext": "png"
+    },
+    "page-046": {
+      "hash": "d101c089613123aa",
+      "ext": "png"
+    },
+    "page-047": {
+      "hash": "695a90c6133e7e3c",
+      "ext": "png"
+    },
+    "page-048": {
+      "hash": "c32d96f702ae4753",
+      "ext": "png"
+    },
+    "page-049": {
+      "hash": "2007de6e426bb2fc",
+      "ext": "png"
+    },
+    "page-050": {
+      "hash": "24ae8501bcb48041",
+      "ext": "png"
+    },
+    "page-051": {
+      "hash": "3e8de3d61124fbff",
+      "ext": "png"
+    },
+    "page-052": {
+      "hash": "23c10e2f0143c812",
+      "ext": "png"
+    },
+    "page-053": {
+      "hash": "fcfd9f0f9e8f317d",
+      "ext": "png"
+    },
+    "page-054": {
+      "hash": "d93f4c1a259b7d59",
+      "ext": "png"
+    },
+    "page-055": {
+      "hash": "8d1595e2bd60f8aa",
+      "ext": "png"
+    },
+    "page-056": {
+      "hash": "2e014cec7b467d94",
+      "ext": "png"
+    },
+    "page-057": {
+      "hash": "06ca8ac525919900",
+      "ext": "png"
+    },
+    "page-058": {
+      "hash": "2b4b6faca3db5192",
+      "ext": "png"
+    },
+    "page-059": {
+      "hash": "b9c0afd50e8ea2e9",
+      "ext": "png"
+    },
+    "page-060": {
+      "hash": "2895d2e41c6250ef",
+      "ext": "png"
+    },
+    "page-061": {
+      "hash": "532abcb541958ef0",
+      "ext": "png"
+    },
+    "page-062": {
+      "hash": "e7fc8606fa1c137f",
+      "ext": "png"
+    },
+    "page-063": {
+      "hash": "07bf3a288b911818",
+      "ext": "png"
+    },
+    "page-064": {
+      "hash": "988d26597ff11e09",
+      "ext": "png"
+    },
+    "page-065": {
+      "hash": "9f547fea82494309",
+      "ext": "png"
+    },
+    "page-066": {
+      "hash": "683967e06d3e1f37",
+      "ext": "png"
+    },
+    "page-067": {
+      "hash": "c28ca602d4c9f31f",
+      "ext": "png"
+    },
+    "page-068": {
+      "hash": "a66df1e0a3e4e2a4",
+      "ext": "png"
+    },
+    "page-069": {
+      "hash": "796edf7a6d7e274a",
+      "ext": "png"
+    },
+    "page-070": {
+      "hash": "16bcfc140580c7aa",
+      "ext": "png"
+    },
+    "page-071": {
+      "hash": "b087b05cd5d04db1",
+      "ext": "png"
+    },
+    "page-072": {
+      "hash": "0fd5e7c0170ec2d5",
+      "ext": "png"
+    },
+    "page-073": {
+      "hash": "07796799fc39bb12",
+      "ext": "png"
+    },
+    "page-074": {
+      "hash": "580699e0eafa49a5",
+      "ext": "png"
+    },
+    "page-075": {
+      "hash": "be832c73d688a601",
+      "ext": "png"
+    },
+    "page-076": {
+      "hash": "da4141dfdece3b7d",
+      "ext": "png"
+    },
+    "page-077": {
+      "hash": "43c4927403b1e3a5",
+      "ext": "png"
+    },
+    "page-078": {
+      "hash": "30f3a6a927390206",
+      "ext": "png"
+    },
+    "page-079": {
+      "hash": "ee4104015f397a46",
+      "ext": "png"
+    },
+    "page-080": {
+      "hash": "aeff53cd189a53b4",
+      "ext": "png"
+    },
+    "page-081": {
+      "hash": "1514c39522d2934d",
+      "ext": "png"
+    }
+  }
+}

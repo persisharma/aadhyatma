@@ -1177,3 +1177,54 @@ Implemented the approved question-led hub and essence-first continuous reader ac
 ## [2026-10-27] ingest | Gita Saar complete illustrated stories
 
 Updated [[gita-saar]] for sixteen source-grounded story lessons, distinct published 2:1 paintings, continuous three-beat explanations, source separation and current-day examples. Source: `stories.ts`, `GitaSaarStory.tsx`, theme/index/reader screens and evaluation record.
+
+
+## [2026-10-26] ingest | Vrat catalog subject portraits
+
+The calendar cards use actual deity/sage paintings: 25 published source paintings reused with source-specific portrait centres and 35 new 256px icons (952,574 bytes), with exact prompts and hashes retained. Exact identity/composite coverage, existing cache behavior, card/filter tests, TypeScript and launch-budget checks pass. Standard/Large iOS walks passed and were visually inspected; all 25 reused CDN source hashes match. Android and prototype/editorial acceptance remain pending in the evaluation record. No reader/story source or crop changed; no publication or push. [[subsystems/panchang]] and [[concepts/deity-icons]] updated.
+
+
+## [2026-10-26] ingest | Reconcile PR 542 with the latest Panchang header
+
+Merged main at df1b511a while preserving its sky-aware mode/context helpers,
+Choghadiya strip and festival ribbon, plus the illustrated Vrat catalog,
+subject portraits and neutral catalog background. Both wiki histories were
+retained. The merged tree passes TypeScript and all 3,751 local tests. Previous
+iOS artwork captures precede this merge; Android and full post-merge device
+acceptance remain pending.
+
+## [2026-10-26] update | पूर्ण पंचांग share card
+
+A share circle on the Panchang sky (hero-zone top-right, `PanchangSky` `action` slot) and the Muhurat Detail top bar now both share one 4:5 card with the whole day: angas with successors, all 16 choghadiya start times, kaal tiles, vaas tiles, today's पर्व, app icon and vedansh.app/get. Updated [[subsystems/share]] and [[subsystems/panchang]]; design.md §33a, RULEBOOK share rule.
+
+## [2026-10-26] update | Every image share runs through the Daily Bhakti provider
+
+iOS WhatsApp refused the Panchang card ("This item cannot be shared"): its private capture passed pixel sizes that UIKit read as points, giving ~2040×6000 on 3x phones. Panchang, the Muhurat Finder day card, all six Jyotish surfaces and Suvichar now pass a `ShareableCard` to `ShareProvider` (design.md §39.10): the Bhakti picker, whole-card WhatsApp image with the download caption, Instagram post/story fit, Send as text, and a brand + vedansh.app/get strip (`ShareCardMount`). Android delivery uses react-native-share so the caption reaches WhatsApp. `ShareBrandFooter` prints the link; text shares append `withShareLinks`. RULEBOOK §3 share rule, [[subsystems/share]] and [[subsystems/suvichar]] updated. Merging main's #545 (पूर्ण पंचांग card): its `usePanchangShare` hook now hands that card to the provider as a self-branded `ShareableCard` instead of capturing it itself, so the Panchang sky and Muhurat Detail keep the new card and gain the picker, Instagram story and Send as text. Typecheck and lint only; Jest suites, Maestro and device/WhatsApp checks not run.
+
+
+## [2026-10-26] ingest | Refresh PR 542 after sharing updates
+
+Reconciled main at cce27f82 (Panchang sharing, unified image-share provider and
+device registration). The only textual conflict was this append-only history;
+both histories were retained. TypeScript and all 3,762 local tests pass on the
+combined tree. The Vrat portrait/catalog changes remain intact.
+
+
+## [2026-10-26] ingest | Match Vrat reference cards using the Kids Stories listing shell
+
+Supplied landing/list references exposed tall square-avatar Upcoming cards and inconsistent subject cropping. Vrat now renders `ListingCard` variants, with `ListingCardFrame` for Today/category doors. Added explicit Karwa Chauth and child-Krishna event scenes (120,082 shipped bytes), preserved generic deity fallback identities and existing reader/story masters, and fixed Ahoi frame scaling plus English/enlarged category wrapping. Integrated the already-open #550 header/search changes after discovering #542 was merged. TypeScript and 3,778 tests pass; fresh iOS Standard/Large, English, XXXL and Kids Stories shelf evidence is in `docs/evaluations/vrat-reference-rebuild-2026-10-26/`. Android/device/accessibility and exhaustive catalog visual review remain separate.
+
+## [2026-10-27] ingest | Unified Vrat/Parv/Upvas, My Vrat, Katha, search and followed-muhurat listings; audited all 200 rule artwork assignments and documented immediate bundled paintings, eight scene replacements, intrinsic card sizing and native QA limits.
+## [2026-10-26] ingest | Aranyakanda planning only
+
+Recorded the complete75-sarga/91-provisional-page/256-scene outline, relationship-specific four-language address guide, event/prop contracts and explicit source/translation/art/native gaps in [[decisions/ramayan-comic-character-continuity]]. This planning-only package is submitted separately from the merged Ayodhyakanda PR540; no artwork or integration was started.
+
+
+## [2026-10-27] ingest | Vrat prototype proportions and muted artwork
+
+Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×72 art, catalog frame tone, shallow shadows and intrinsic text height. Reviewed all 68 paintings for 200 rules and integrated six versioned matte palette edits. Recorded current native Hindi/English/XXXL/save/reminder/Katha evidence and automated validation in `docs/evaluations/vrat-palette-layout-2026-10-27/`; Android remains pending.
+
+
+## [2026-10-27] ingest | Upcoming full-width banners
+
+The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.

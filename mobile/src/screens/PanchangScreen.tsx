@@ -1,13 +1,19 @@
-import StoryIcon from '@/components/StoryIcon';
+import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
+import CatalogCategoryTile from '@/components/CatalogCategoryTile';
+import ObservancePreviewCard from '@/components/ObservancePreviewCard';
+import { ListingCardFrame } from '@/components/ListingCard';
+import ObservanceTodaySummary from '@/components/ObservanceTodaySummary';
+import { observanceCountdown } from '@/panchang/observancePresentation';
 import AppIcon from '@/components/AppIcon';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { backgroundImages } from '@assets/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import CatalogBackground from '@/components/CatalogBackground';
 import { JyotishChakraSeal, PanchangChakraBackground } from '@/components/CelestialChakra';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
@@ -22,6 +28,8 @@ import MuhuratGlanceCard from '@/components/MuhuratGlanceCard';
 import MuhuratFinderDoor from '@/components/MuhuratFinderDoor';
 import ObservanceNowRibbon from '@/components/ObservanceNowRibbon';
 import PanchangSky, { MonthGlyph, type SkyInk } from '@/components/PanchangSky';
+import { useMuhurat } from '@/panchang/useMuhurat';
+import { usePanchangShare } from '@/utils/panchangShare';
 import ShubhYogaCard from '@/components/ShubhYogaCard';
 import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
@@ -190,6 +198,16 @@ export default function PanchangScreen({ route }: Props) {
   const carryOverDate = useMemo(() => addDays(selectedDate, -1), [selectedDate]);
   const carryOver = useObservancesForDate(preDawnToday ? carryOverDate : selectedDate, calendarSystem);
   const ribbonTonight = preDawnToday && carryOver.length > 0;
+  // The पूर्ण पंचांग share (design.md §33a) from the sky header. `live: false`:
+  // the card needs only the day's windows, never the minute tick, so this
+  // 2,500-line screen does not re-render every minute for it.
+  const { muhurat: shareMd } = useMuhurat(selectedDate, calendarSystem, { live: false });
+  const { share: sharePanchang, busy: shareBusy } = usePanchangShare();
+  const shareUnavailable = shareBusy || !p || !shareMd;
+  const shareDay = useCallback(() => {
+    if (!p || !shareMd) return;
+    void sharePanchang({ p, md: shareMd, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
+  }, [p, shareMd, sharePanchang, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
   // The Panchang sky header (design.md §33) starts under the status bar, so it
   // needs the inset.
   const insets = useSafeAreaInsets();
@@ -396,7 +414,7 @@ export default function PanchangScreen({ route }: Props) {
             style={({ pressed }) => [
               styles.segmentOption,
               { borderRadius: radii.pill },
-              selected && { backgroundColor: sky ? sky.glassActive : colors.saffronTint },
+              selected && { backgroundColor: sky ? sky.glassActive : tab === 'catalog' ? colors.catalogAccent : colors.saffronTint },
               pressed && !selected && { opacity: 0.7 },
             ]}
           >
@@ -404,7 +422,7 @@ export default function PanchangScreen({ route }: Props) {
               style={{
                 fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
                 fontSize: 13,
-                color: selected ? (sky ? sky.glassActiveText : colors.saffronDeep) : (sky ? sky.inkSoft : colors.inkMuted),
+                color: selected ? (sky ? sky.glassActiveText : tab === 'catalog' ? colors.onPrimary : colors.saffronDeep) : (sky ? sky.inkSoft : colors.inkMuted),
               }}
             >
               {contentByLang(lang, labels[tab].hi, labels[tab].en)}
@@ -530,6 +548,7 @@ export default function PanchangScreen({ route }: Props) {
     <View style={styles.root}>
       {panchangTab === 'calendar'
         ? <PanchangChakraBackground />
+        : panchangTab === 'catalog' ? <CatalogBackground />
         : <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />}
       <SafeAreaView style={styles.safe} edges={panchangTab === 'calendar' ? ['left', 'right'] : ['top', 'left', 'right']}>
         <ScrollView
@@ -549,6 +568,25 @@ export default function PanchangScreen({ route }: Props) {
               topInset={insets.top + SCROLL_TOP}
               focused={isFocused}
               style={styles.skyBleed}
+              action={(ink) => (
+                // Share the day as the पूर्ण पंचांग card (design.md §33a).
+                <Pressable
+                  onPress={shareDay}
+                  disabled={shareUnavailable}
+                  accessibilityRole="button"
+                  accessibilityLabel="Share panchang"
+                  accessibilityState={{ disabled: shareUnavailable, busy: shareBusy }}
+                  hitSlop={6}
+                  style={({ pressed }) => [
+                    styles.myVratButton,
+                    { backgroundColor: ink.glass, borderColor: ink.glassBorder, borderRadius: radii.pill },
+                    shareUnavailable && { opacity: 0.5 },
+                    pressed && { opacity: 0.6 },
+                  ]}
+                >
+                  <AppIcon name="share" size={16} color={ink.ink} />
+                </Pressable>
+              )}
             >
               {(ink) => (
                 <>
@@ -1483,6 +1521,8 @@ function JyotishLanding({
           lang={lang}
           titleHi={`आज का ${RASHI_NAMES_HI[moon.rashiIndex]} राशिफल साझा करें`}
           titleEn={`Share today’s ${RASHI_NAMES_EN[moon.rashiIndex]} Rashifal`}
+          captionHi={`आज का ${RASHI_NAMES_HI[moon.rashiIndex]} राशिफल`}
+          captionEn={`Today’s ${RASHI_NAMES_EN[moon.rashiIndex]} Rashifal`}
           privacyHi="केवल चन्द्र-राशि मार्गदर्शन साझा होगा। नाम या जन्म विवरण शामिल नहीं हैं।"
           privacyEn="Only Moon-sign guidance is shared. No name or birth details are included."
           onClose={() => setShareVisible(false)}
@@ -1782,7 +1822,8 @@ function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: s
   );
 }
 
-function ObservanceCard({ item, daySolve, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi }: {
+function ObservanceCard({ item, daySolve, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi, compact = false }: {
+  compact?: boolean;
   item: ResolvedObservance;
   // This date's solved panchang, narrowed to what a day note can read (null
   // until the day's solve lands). Which rules read which field is
@@ -1828,29 +1869,7 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
     ? `${sankashtiName.nameEn}${sankashtiName.isAngarki ? ' (Angarki)' : ''} Vrat`
     : item.rule.nameEn;
 
-  return (
-    <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
-      <View style={styles.observanceTop}>
-        <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
-          <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
-            {item.rule.category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat') : contentByLang(lang, 'पर्व', 'Festival')}
-          </Text>
-        </View>
-        <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted }}>
-          {contentByLang(lang, item.rule.deityHi, item.rule.deityEn)}
-        </Text>
-      </View>
-      <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-        {contentByLang(lang, titleHi, titleEn)}
-      </Text>
-      <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
-        {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
-      </Text>
-      {dayNote && (
-        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
-          {contentByLang(lang, dayNote.hi, dayNote.en)}
-        </Text>
-      )}
+  const actions = (
       <View style={styles.linkRow}>
         {vidhi && (
           <Pressable
@@ -1894,7 +1913,47 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
           </Pressable>
         )}
       </View>
+  );
+  const badge = (
+    <View style={[styles.categoryPill, { alignSelf: 'flex-start', marginBottom: 2, backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
+      <Text style={{ fontFamily: scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
+        {item.rule.category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat') : contentByLang(lang, 'पर्व', 'Festival')}
+      </Text>
     </View>
+  );
+
+  const CardShell = compact ? ListingCardFrame : View;
+  return (
+    <CardShell {...(compact ? { tone: 'catalog' as const } : {})} style={[styles.observanceCard, compact && { padding: 9, marginBottom: 0 }, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
+      {!compact && <View style={styles.observanceTop}>
+        <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
+          <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
+            {item.rule.category === 'vrat' ? contentByLang(lang, 'व्रत', 'Vrat') : contentByLang(lang, 'पर्व', 'Festival')}
+          </Text>
+        </View>
+        {!compact && <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted }}>
+          {contentByLang(lang, item.rule.deityHi, item.rule.deityEn)}
+        </Text>}
+      </View>}
+      {compact ? (
+        <ObservanceTodaySummary rule={item.rule} titleHi={titleHi} titleEn={titleEn} lang={lang} badge={badge}>{actions}</ObservanceTodaySummary>
+      ) : (
+        <>
+          <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
+            {contentByLang(lang, titleHi, titleEn)}
+          </Text>
+          <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
+            {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
+          </Text>
+        </>
+      )}
+      {dayNote && (
+        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
+          {contentByLang(lang, dayNote.hi, dayNote.en)}
+        </Text>
+      )}
+      {!compact && actions}
+    </CardShell>
   );
 }
 
@@ -1989,14 +2048,13 @@ function CatalogLedgerCell({
         pressed && { opacity: 0.6 },
       ]}
     >
-      <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={20} color={colors.iconInk} weight="duotone" />
+      <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={18} color={colors.iconInk} weight="regular" />
       <Text
-        numberOfLines={1}
-        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 3 }}
+        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, lineHeight: 20, color: colors.ink, marginTop: 3 }}
       >
         {label}
       </Text>
-      <Text numberOfLines={1} style={{ ...captionFont(state), fontSize: 11, color: colors.saffronDeep, marginTop: 2 }}>
+      <Text style={{ ...captionFont(state), fontSize: 11, lineHeight: 16, color: colors.saffronDeep, marginTop: 2 }}>
         {state}
       </Text>
     </Pressable>
@@ -2075,7 +2133,7 @@ function CatalogLedgerBar({
     <View
       style={[
         styles.ledgerBar,
-        { backgroundColor: colors.goldTint, borderColor: colors.gold, borderRadius: radii.lg },
+        { backgroundColor: colors.catalogSurface, borderColor: colors.catalogBorder, borderRadius: radii.md },
         elevation.card,
       ]}
     >
@@ -2287,6 +2345,7 @@ function CatalogLanding({
   onOpenKatha: (kathaId: string) => void;
   onOpenVidhi: (vidhiId: string, dateMs: number) => void;
 }) {
+  const { isFollowing, follow, unfollow } = useVratFollows();
   const trimmed = query.trim();
   // Search stays lens-blind on purpose — see `searchObservances`.
   const results = useMemo(() => (trimmed ? searchObservances(trimmed) : []), [trimmed]);
@@ -2301,45 +2360,29 @@ function CatalogLanding({
   const counts = useMemo(() => getCategoryCounts(), []);
   const kathaCount = getKathaCount();
 
-  const tileMeta: Record<BrowseCategory, { glyph: string; hi: string; en: string }> = {
-    vrat: { glyph: 'ॐ', hi: 'व्रत', en: 'Vrat' },
-    festival: { glyph: '✺', hi: 'पर्व', en: 'Festivals' },
-    upavas: { glyph: '☾', hi: 'उपवास', en: 'Upvas' },
+  const tileMeta: Record<BrowseCategory, { art: CatalogArtworkName; hi: string; en: string }> = {
+    vrat: { art: 'vrat', hi: 'व्रत', en: 'Vrat' },
+    festival: { art: 'aarti', hi: 'पर्व', en: 'Festivals' },
+    upavas: { art: 'practice', hi: 'उपवास', en: 'Upvas' },
   };
-  // Same glyph vocabulary as the "Browse by type" tiles (ॐ / ☾ / ✺), reused on the
-  // upcoming cards so they read as devotional, not as a plain list of text.
-  const categoryGlyph = (category: string): string =>
-    category === 'vrat' ? 'ॐ' : category === 'upavas' ? '☾' : '✺';
-
   return (
     <View style={{ marginTop: 12 }}>
-      <TextField
-        value={query}
-        onChangeText={onChangeQuery}
-        placeholder={contentByLang(lang, 'व्रत, पर्व, उपवास, कथा खोजें…', 'Search vrat, festival, upvas, katha…')}
-      />
+      <View style={styles.catalogSearch}>
+        <TextField testID="catalog-search" value={query} onChangeText={onChangeQuery}
+          placeholder={contentByLang(lang, 'व्रत, पर्व, उपवास, कथा खोजें…', 'Search vrat, festival, upvas, katha…')}
+          style={{ height: undefined, minHeight: 44, paddingVertical: 8, paddingLeft: 42, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), borderColor: colors.catalogBorder, backgroundColor: colors.catalogSurface }}
+        />
+        <View pointerEvents="none" style={styles.catalogSearchIcon}><AppIcon name="search" size={20} color={colors.inkMuted} /></View>
+      </View>
 
       {trimmed ? (
         results.length > 0 ? (
           <View style={{ marginTop: 4 }}>
             {results.map((rule) => (
-              <Pressable
-                key={rule.id}
-                onPress={() => onOpenDetail(rule.id)}
-                accessibilityRole="button"
-                accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
-                style={({ pressed }) => [styles.resultRow, { borderBottomColor: colors.divider }, pressed && { opacity: 0.6 }]}
-              >
-                <View style={{ flex: 1, paddingRight: 10 }}>
-                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-                    {contentByLang(lang, rule.nameHi, rule.nameEn)}
-                  </Text>
-                  <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
-                    {lang === 'en' ? rule.nameHi : rule.nameEn}
-                  </Text>
-                </View>
-                <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
-              </Pressable>
+              <ObservancePreviewCard key={rule.id} rule={rule} lang={lang}
+                following={isFollowing(rule.id)}
+                onToggleFollow={() => isFollowing(rule.id) ? unfollow(rule.id) : follow(rule.id)}
+                onPress={() => onOpenDetail(rule.id)} />
             ))}
           </View>
         ) : (
@@ -2349,11 +2392,10 @@ function CatalogLanding({
         )
       ) : (
         <>
-          {/* आज — today's observances as the SAME ObservanceCard the पंचांग day
-              panel renders (pills and all), so the catalog opens on what today
-              is for instead of burying it as one more आगामी chip. */}
+          {/* Same occurrence names, day notes and reading actions as the calendar;
+              the catalog opts into an illustrated, expandable introduction. */}
           {todayItems.length > 0 && (
-            <View testID="catalog-today" style={{ marginBottom: 12 }}>
+            <View testID="catalog-today" style={{ marginBottom: 0 }}>
               <View style={styles.todayHead}>
                 <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
                   {contentByLang(lang, 'आज', 'Today')}
@@ -2364,6 +2406,7 @@ function CatalogLanding({
               </View>
               {todayItems.map((item) => (
                 <ObservanceCard
+                  compact
                   key={`today-${item.rule.id}`}
                   item={item}
                   daySolve={todaySolve}
@@ -2408,112 +2451,58 @@ function CatalogLanding({
             onOpenLenses={onOpenLenses}
           />
           {upcoming.length > 0 && (
-            <View style={{ marginTop: 14 }}>
-              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 8 }}>
+            <View testID="catalog-upcoming" style={{ marginTop: 12 }}>
+              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, lineHeight: 24, color: colors.ink, marginBottom: 6 }}>
                 {contentByLang(lang, 'आगामी', 'Upcoming')}
               </Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10, paddingRight: 8 }}>
+              <ScrollView horizontal testID="catalog-upcoming-rail" showsHorizontalScrollIndicator={false} removeClippedSubviews={false}
+                style={{ marginHorizontal: -14, marginTop: -6, marginBottom: -8 }}
+                contentContainerStyle={{ gap: 6, paddingHorizontal: 14, paddingTop: 6, paddingBottom: 10, alignItems: 'flex-start' }}>
                 {upcoming.map((item) => (
-                  <Pressable
+                  <ObservancePreviewCard
                     key={`${item.rule.id}-${item.date.toDateString()}`}
+                    layout="tile"
+                    rule={item.rule}
+                    lang={lang}
+                    dateLabel={formatShortDate(item.date, lang)}
+                    countdown={observanceCountdown(item.date, today, lang)}
+                    following={isFollowing(item.rule.id)}
+                    onToggleFollow={() => isFollowing(item.rule.id) ? unfollow(item.rule.id) : follow(item.rule.id)}
                     onPress={() => onOpenDetail(item.rule.id)}
-                    accessibilityRole="button"
-                    accessibilityLabel={contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
-                    style={({ pressed }) => [styles.upCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.75 }]}
-                  >
-                    <View style={styles.upCardTop}>
-                      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 14, color: colors.saffron }}>
-                        {categoryGlyph(item.rule.category)}
-                      </Text>
-                      <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 10, color: colors.saffronDeep, letterSpacing: 0.4 }}>
-                        {formatShortDate(item.date, lang).toUpperCase()}
-                      </Text>
-                    </View>
-                    <Text numberOfLines={1} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginTop: 6 }}>
-                      {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
-                    </Text>
-                  </Pressable>
+                  />
                 ))}
               </ScrollView>
             </View>
           )}
 
-          <View style={{ marginTop: 18 }}>
-            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 10 }}>
+          <View style={{ marginTop: 12 }}>
+            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 17, lineHeight: 26, color: colors.ink, marginBottom: 8 }}>
               {contentByLang(lang, 'श्रेणी से देखें', 'Browse by type')}
             </Text>
             <View style={styles.tileGrid}>
               {counts.map(({ category, count }) => {
                 const meta = tileMeta[category];
-                return (
-                  <Pressable
-                    key={category}
-                    onPress={() => onOpenCategory(category)}
-                    accessibilityRole="button"
-                    accessibilityLabel={`${meta.en}, ${count}`}
-                    style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.8 }]}
-                  >
-                    <View style={[styles.tileGlyph, { backgroundColor: colors.saffronTint }]}>
-                      <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 17, color: colors.saffron }}>{meta.glyph}</Text>
-                    </View>
-                    <View style={styles.tileInfo}>
-                      <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-                        {contentByLang(lang, meta.hi, meta.en)}
-                      </Text>
-                      <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 1 }}>
-                        {count} {contentByLang(lang, 'व्रत-पर्व', 'observances')}
-                      </Text>
-                    </View>
-                  </Pressable>
-                );
+                return <CatalogCategoryTile
+                  key={category} lang={lang} artwork={meta.art}
+                  title={contentByLang(lang, meta.hi, meta.en)}
+                  subtitle={`${count} ${contentByLang(lang, 'व्रत-पर्व', category === 'vrat' ? 'vrats' : category === 'festival' ? 'festivals' : 'fasts')}`}
+                  accessibilityLabel={`${meta.en}, ${count}`}
+                  onPress={() => onOpenCategory(category)}
+                />;
               })}
-              <Pressable
-                onPress={onOpenKathaLibrary}
-                accessibilityRole="button"
-                accessibilityLabel={`Katha library, ${kathaCount}`}
-                style={({ pressed }) => [styles.tile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.8 }]}
-              >
-                <View style={[styles.tileGlyph, { backgroundColor: colors.saffronTint }]}>
-                  <StoryIcon name="sanskar" size={34} />
-                </View>
-                <View style={styles.tileInfo}>
-                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-                    {contentByLang(lang, 'कथा', 'Katha')}
-                  </Text>
-                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 1 }}>
-                    {kathaCount} {contentByLang(lang, 'कथाएँ', 'stories')}
-                  </Text>
-                </View>
-              </Pressable>
+              <CatalogCategoryTile lang={lang} artwork="granth"
+                title={contentByLang(lang, 'कथा', 'Katha')}
+                subtitle={`${kathaCount} ${contentByLang(lang, 'कथाएँ', 'stories')}`}
+                accessibilityLabel={`Katha library, ${kathaCount}`} onPress={onOpenKathaLibrary}
+              />
             </View>
             <View style={styles.finalTileRow}>
-              <Pressable
+              <CatalogCategoryTile lang={lang} artwork="vrat" wide testID="vidhi-catalog-tile"
+                title={contentByLang(lang, 'पूजा विधि', 'Puja Vidhi')}
+                subtitle={contentByLang(lang, `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'विधि' : 'विधियाँ'}`, `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'vidhi' : 'vidhis'}`)}
+                accessibilityLabel={contentByLang(lang, `पूजा विधि सूची, ${VIDHI_ENTRIES.length}`, `Puja vidhi catalog, ${VIDHI_ENTRIES.length}`)}
                 onPress={onOpenVidhiCatalog}
-                testID="vidhi-catalog-tile"
-                accessibilityRole="button"
-                accessibilityLabel={contentByLang(
-                  lang,
-                  `पूजा विधि सूची, ${VIDHI_ENTRIES.length}`,
-                  `Puja vidhi catalog, ${VIDHI_ENTRIES.length}`
-                )}
-                style={({ pressed }) => [styles.tile, styles.finalTile, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card, pressed && { opacity: 0.8 }]}
-              >
-                <View style={[styles.tileGlyph, { backgroundColor: colors.saffronTint }]}>
-                  <StoryIcon name="vrat" size={34} />
-                </View>
-                <View style={styles.tileInfo}>
-                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-                    {contentByLang(lang, 'पूजा विधि', 'Puja Vidhi')}
-                  </Text>
-                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 11, color: colors.saffronDeep, marginTop: 1 }}>
-                    {contentByLang(
-                      lang,
-                      `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'विधि' : 'विधियाँ'}`,
-                      `${VIDHI_ENTRIES.length} ${VIDHI_ENTRIES.length === 1 ? 'vidhi' : 'vidhis'}`
-                    )}
-                  </Text>
-                </View>
-              </Pressable>
+              />
             </View>
           </View>
         </>
@@ -2569,7 +2558,7 @@ const styles = StyleSheet.create({
   myVratButton: { width: 34, height: 34, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 16, height: 16, borderRadius: 8, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
-  ledgerBar: { flexDirection: 'row', alignItems: 'stretch', borderWidth: 1.5, paddingVertical: 12, paddingHorizontal: 4, marginTop: 12 },
+  ledgerBar: { flexDirection: 'row', alignItems: 'stretch', borderWidth: 1, paddingVertical: 6, paddingHorizontal: 4, marginTop: 8 },
   ledgerCell: { flex: 1, minHeight: 48, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
@@ -2602,26 +2591,14 @@ const styles = StyleSheet.create({
   // आपके पंचांग से — same card register as the upcoming cards and the tiles.
   additionsCard: { marginTop: 12, borderWidth: 1, paddingHorizontal: 14, paddingTop: 12, paddingBottom: 6 },
   additionsHead: { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
-  // Compact upcoming card (design.md § catalog view): date + glyph top row and a
-  // one-line name — the category caption is dropped, the ॐ/☾/✺ glyph carries it.
+  // Catalog artwork cards live in ObservancePreviewCard; their height follows text.
   todayHead: { flexDirection: 'row', alignItems: 'baseline', marginBottom: 8 },
-  upCard: { width: 136, height: 72, borderWidth: 1, paddingVertical: 10, paddingHorizontal: 12 },
-  upCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  tileGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  tileGrid: { flexDirection: 'row', flexWrap: 'wrap', columnGap: '4%', rowGap: 12 },
   // Explicit two-column width keeps the paired rows stable. The odd final tile
   // lives in its own row below so ScrollView measures it on every renderer.
-  // Slim half-tile (design.md § catalog view): glyph roundel inline-left, title +
-  // count in one column, no secondary-language echo — the primary language stays
-  // in focus and the section costs ~60% less height than the old 104pt tiles.
-  tile: { width: '48%', height: 60, borderWidth: 1, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center', gap: 10 },
+  // Painted subjects and wrapping text retain a two-column grid on narrow screens.
   finalTileRow: { marginTop: 12 },
-  finalTile: { width: '100%' },
-  // Circular tinted roundel: the category glyphs (ॐ ✺ ☾ ॥) come from different
-  // fonts with different line metrics; centring them in a fixed 34pt circle keeps
-  // every tile's leading edge aligned. The glyph renders at its natural line
-  // height (no tight lineHeight, which clipped the tall ॐ).
-  tileGlyph: { width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center' },
-  tileInfo: { flex: 1, minWidth: 0 },
+  // The existing painted category subjects share a 44pt roundel.
   systemToggle: {
     flexDirection: 'row',
     alignSelf: 'center',
@@ -2679,6 +2656,8 @@ const styles = StyleSheet.create({
   observanceTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 },
   categoryPill: { paddingHorizontal: 9, paddingVertical: 4 },
   linkButton: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
+  catalogSearch: { position: 'relative' },
+  catalogSearchIcon: { position: 'absolute', left: 14, top: 12 },
   linkRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
   kathaButton: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
   upcomingSection: { marginTop: 12 },

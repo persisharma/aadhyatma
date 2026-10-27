@@ -1,0 +1,148 @@
+{
+  "tool": "built-in Image Gen",
+  "assets": [
+    {
+      "id": "ahoi-mata-muted",
+      "tool": "built-in image_gen",
+      "intent": "color/rendering-only edit",
+      "generatedSource": "/Users/prashant/.codex/generated_images/01a17c45-0f94-7da3-91b2-d510cee45eb2/exec-232c2372-16fb-4565-914f-110a0add6d8b.png",
+      "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/ahoi-mata-muted.png",
+      "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/ahoi-mata-muted.prompt.txt",
+      "shipped": "mobile/assets/icons/observance-scenes/ahoi-mata-muted.webp",
+      "masterSha256": "659e3292fc087acca637fe300e18425de37296729998b240b760295a3a1f7063",
+      "shippedSha256": "b1537c2b1c4fa298ef48d4be0b37d8483bdd34583c8beee3acd5e745cd9c7f02",
+      "shippedDimensions": [
+        320,
+        320
+      ],
+      "shippedBytes": 42188,
+      "editTarget": "mobile/assets/icons/observance-scenes/ahoi-mata.webp",
+      "styleReferences": [
+        "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+        "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp"
+      ],
+      "mechanicalProcessing": "Whole-canvas Lanczos resize, RGB, WebP quality85 method6 only.",
+      "review": "First result accepted: mother/child faces, poses, complete square figures and animal motifs preserved; red/green intensity visibly softer and matte, matching the warm painted anchors; no text/UI/border.",
+      "inputSha256": "7949c25ec0ecf64a1b67d3117d927760de9a1e6e922c6413e7d4bede90a0cb60"
+    },
+    {
+      "id": "bal-krishna-makhan-muted",
+      "tool": "built-in image_gen",
+      "editTarget": "mobile/assets/icons/observance-scenes/bal-krishna-makhan.webp",
+      "references": [
+        "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+        "mobile/assets/icons/observance-thumbnails/deity-krishna-bansuri.webp"
+      ],
+      "source": "/Users/prashant/.codex/generated_images/01a17c45-b89d-7440-a02d-9172cdb95341/exec-88404cb5-55c6-4f7c-b896-21d31d9a771c.png",
+      "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/bal-krishna-makhan-muted.png",
+      "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/bal-krishna-makhan-muted.prompt.txt",
+      "shipped": "mobile/assets/icons/observance-scenes/bal-krishna-makhan-muted.webp",
+      "masterSha256": "b7fca7b7a49722949b544f0731204d3b5d3cc8876707c495485bd98233a4f822",
+      "shippedSha256": "13dc3a735aa120cb6577ab782fa5dfa2049b0d64b4b2d8b78655ddd5d8ecd7fc",
+      "shippedDimensions": [
+        320,
+        320
+      ],
+      "shippedBytes": 39890,
+      "mechanicalProcessing": "Whole-canvas RGB Lanczos resize320square, WebP quality85 method6, no color processing.",
+      "review": "Original/edited/anchor comparison inspected. Exact child Krishna, blue skin, feather, butter pot and complete square composition remain; foliage, golden highlights and cloth are calmer matte painted colors. Parent also inspected and approved first master.",
+      "inputSha256": "6290b6a337f926b13dd9bf4d09feee6cca250e30b1b5458835c8d28846d034c6"
+    },
+    {
+      "id": "dasha-mata-muted",
+      "tool": "built-in image_gen",
+      "editTarget": "mobile/assets/icons/observance-portraits/dasha-mata.webp",
+      "references": [
+        "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+        "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp"
+      ],
+      "source": "/Users/prashant/.codex/generated_images/01a17c45-b89d-7440-a02d-9172cdb95341/exec-171e030b-71aa-4507-8147-cf3e01b8f960.png",
+      "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/dasha-mata-muted.png",
+      "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/dasha-mata-muted.prompt.txt",
+      "shipped": "mobile/assets/icons/observance-scenes/dasha-mata-muted.webp",
+      "masterSha256": "2d203c22eda8ded57b1bd002228167ffec2d54ff4c47a2ff0ccedc3d58bdbfae",
+      "shippedSha256": "f29df0c83d7cc44461b988c06e29e5e1750e355ca55e9dd46657b3dce3808285",
+      "shippedDimensions": [
+        320,
+        320
+      ],
+      "shippedBytes": 42982,
+      "mechanicalProcessing": "Whole-canvas RGB Lanczos resize320square, WebP quality85 method6, no color processing.",
+      "review": "Original/edited/anchor comparison inspected. Woman worshipping sacred tree, thread, offerings, red sari and foliage remain clear in a complete square composition; greens and red-gold paint are softer matte and no UI/text appears.",
+      "inputSha256": "99159feb2df38ecdd2640756017c6a37effaf7e255c99a691dfa6cb5c977c9f4"
+    },
+    {
+      "id": "jivitputrika-muted",
+      "tool": "built-in image_gen",
+      "intent": "color/rendering-only edit",
+      "generatedSource": "/Users/prashant/.codex/generated_images/01a17c45-0f94-7da3-91b2-d510cee45eb2/exec-2e28ad11-aee0-4cd6-b20c-52c1921b7c02.png",
+      "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/jivitputrika-muted.png",
+      "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/jivitputrika-muted.prompt.txt",
+      "shipped": "mobile/assets/icons/observance-scenes/jivitputrika-muted.webp",
+      "masterSha256": "7d80f7c3ab0639d00a0ca03eb6090e3acc0febfee80b7ca03465e838d8ec250c",
+      "shippedSha256": "5e860bae94845357bfe21dc3d27783e531c6085fb6477cfd1a27102de0aafe67",
+      "shippedDimensions": [
+        320,
+        320
+      ],
+      "shippedBytes": 37504,
+      "editTarget": "mobile/assets/icons/observance-portraits/jivitputrika.webp",
+      "styleReferences": [
+        "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+        "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp"
+      ],
+      "mechanicalProcessing": "Whole-canvas Lanczos resize, RGB, WebP quality85 method6 only.",
+      "review": "First result accepted: mother/child faces and poses, hands, worship arrangement, kalash/diya/fruit/leaves preserved; bright red/yellow/green intensity softened into matte dusty cinnabar/sage/antique-gold family. No text/UI/border.",
+      "inputSha256": "d56eca78f43a6ea7a9a2023a2cc82749dd399e9e6c36eb3f0668686e0658d66f"
+    },
+    {
+      "id": "karwa-chauth-puja-muted",
+      "tool": "built-in image_gen",
+      "intent": "color/rendering-only edit",
+      "generatedSource": "/Users/prashant/.codex/generated_images/01a17c45-0f94-7da3-91b2-d510cee45eb2/exec-9876cb75-6b8e-427b-a41e-9a1ffc9f1702.png",
+      "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/karwa-chauth-puja-muted.png",
+      "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/karwa-chauth-puja-muted.prompt.txt",
+      "shipped": "mobile/assets/icons/observance-scenes/karwa-chauth-puja-muted.webp",
+      "masterSha256": "4f963b9f39767ed0ee15c08b437130c8f7337a45a6511630839caa8b034ad566",
+      "shippedSha256": "920572e626f86840dedc9f79a8da8d761e4b6c1f4e8ca82193a42516579f7de5",
+      "shippedDimensions": [
+        480,
+        240
+      ],
+      "shippedBytes": 43858,
+      "editTarget": "mobile/assets/icons/observance-scenes/karwa-chauth-puja.webp",
+      "styleReferences": [
+        "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+        "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp"
+      ],
+      "mechanicalProcessing": "Whole-canvas Lanczos resize, RGB, WebP quality85 method6 only.",
+      "review": "First result accepted: complete 2:1 kalash/coconut/sieve/lit diya/flowers/red-cloth arrangement retained; softer dusty red/sage foliage and matte gold, gentler background contrast, no text/UI/border.",
+      "inputSha256": "08966d585d7c2ab2e28072e330b64ffd59a43c4dff1069c955d649aad27082ee"
+    },
+    {
+      "id": "karwa-chauth-ritual-muted",
+      "tool": "built-in image_gen",
+      "editTarget": "mobile/assets/icons/observance-scenes/karwa-chauth-ritual.webp",
+      "references": [
+        "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+        "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp"
+      ],
+      "source": "/Users/prashant/.codex/generated_images/01a17c45-b89d-7440-a02d-9172cdb95341/exec-d74d42dd-22ad-4ab1-8644-4436cacf0ac8.png",
+      "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/karwa-chauth-ritual-muted.png",
+      "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/karwa-chauth-ritual-muted.prompt.txt",
+      "shipped": "mobile/assets/icons/observance-scenes/karwa-chauth-ritual-muted.webp",
+      "masterSha256": "570f110fa1052deb5f18d635fef9f925f2cf93380b9d3405fb4e34dbae559ffd",
+      "shippedSha256": "01c29a29cd93af656c497e6e9dee7ed307b6c089c8fa7855bdaab528128524c1",
+      "shippedDimensions": [
+        320,
+        320
+      ],
+      "shippedBytes": 35432,
+      "mechanicalProcessing": "Whole-canvas RGB Lanczos resize320square, WebP quality85 method6, no color processing.",
+      "review": "Original, edited master and Parvati anchor inspected. Complete square scene retains woman/profile/sari/sieve/moon/diya/tray/arch/foliage and nighttime atmosphere. Matte brush rendering reduces glossy highlights and softens reds, greens and gold while retaining natural color.",
+      "inputSha256": "ee672d00b2cdab6d311276ef6c77b504a788a60ad5606944bfb3d33ac6e9f44b"
+    }
+  ],
+  "shippedBytes": 241854,
+  "scope": "Six color/rendering edits. Original approved inputs retained; whole-canvas resize/encoding only after generation."
+}

@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, PixelRatio, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { captureRef, releaseCapture } from 'react-native-view-shot';
-import * as Sharing from 'expo-sharing';
 import ReaderHeader from '@/components/ReaderHeader';
 import SuvicharCard from '@/components/SuvicharCard';
 import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
@@ -17,13 +15,12 @@ import { suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '@/data/s
 import { WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { useGitaLanguage } from '@/data/gita/language';
 import { buildSuvicharShareMessage } from '@/data/shareLinks';
-import { fullPhotoFit, initialSuvichar, parseSuvicharPreferences, suvicharDeities, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
+import { cleanSender, fullPhotoFit, initialSuvichar, parseSuvicharPreferences, suvicharDeities, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
 import { useTheme } from '@/theme/ThemeContext';
 import { androidBoxShadow } from '@/theme/elevation';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
 import { meaningToken, titleFontByLang } from '@/utils/langType';
-import { suvicharCaptureSize } from '@/utils/suvicharCapture';
-import { shareFiles } from '@/utils/multiShare';
+import { useShare } from '@/utils/shareVerse';
 import { deleteSenderPhoto, isSenderPhotoAvailable, pickSenderPhoto, senderPhotoUri } from '@/utils/suvicharPhoto';
 import { useTodayKey } from '@/utils/useTodayKey';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -39,7 +36,6 @@ export default function SuvicharScreen() {
   const width = Math.min(540, windowWidth - spacing.lg * 2);
   const [prefs, setPrefs] = useState(initialSuvichar);
   const [loaded, setLoaded] = useState(false);
-  const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<'ready' | 'custom'>('ready');
   // Today's pairing of thoughts to deity cards and the weekday card, both re-read at midnight and on app return.
   const todayKey = useTodayKey();
@@ -52,11 +48,7 @@ export default function SuvicharScreen() {
   // The sender is typed once and remembered; afterwards it is a compact editable row.
   const [editingName, setEditingName] = useState(false);
   const scroll = useRef<ScrollView>(null);
-  const card = useRef<View>(null);
-  const lock = useRef(false);
   const picking = useRef(false);
-  const measurement = useRef<{ identity: string; height: number } | null>(null);
-  const latestReady = useRef<string | null>(null);
   useEffect(() => { let active = true; void saves.then(() => AsyncStorage.getItem(KEY)).then(raw => { if (active) { const parsed = parseSuvicharPreferences(raw); setPrefs(withTodaysVaar(isSuvicharThought(parsed.message) ? { ...parsed, message: '' } : parsed, new Date())); setEditingName(!parsed.name); setLoaded(true); } }).catch(() => { if (active) { setPrefs(p => withTodaysVaar(p, new Date())); setEditingName(true); setLoaded(true); } }); return () => { active = false; }; }, []);
   // A new day re-opens on its own card, unless the reader has written their own message.
   const openedDay = useRef(todayKey);
@@ -90,28 +82,31 @@ export default function SuvicharScreen() {
     : { deity: template.deity, frame: template.frame, message: contentByLang(lang, template.messageHi, template.messageEn), vaar: false });
   // Each mounted preview owns its readiness, so stale decode callbacks cannot unlock a replacement.
   const activeIdentity = useRef(identity); activeIdentity.current = identity;
-  const onReady = useCallback((value: boolean) => { if (activeIdentity.current === identity) { latestReady.current = value ? identity : null; setReadyIdentity(latestReady.current); } }, [identity]);
-  const onHeight = useCallback((height: number) => {
-    if (activeIdentity.current === identity && Number.isFinite(height) && height > 0) measurement.current = { identity, height };
-  }, [identity]);
-  const share = async () => {
-    if (lock.current || !ready || !loaded) return;
-    lock.current = true; setBusy(true);
-    let uri: string | undefined;
-    try {
-      await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
-      const measured = measurement.current;
-      if (activeIdentity.current !== identity || latestReady.current !== identity || measured?.identity !== identity) throw new Error('Card changed before capture');
-      const captureScale = Platform.OS === 'ios' ? PixelRatio.get() : 1;
-      const size = suvicharCaptureSize(width, measured.height, captureScale);
-      uri = await captureRef(card, { format: 'png', quality: 1, result: 'tmpfile', ...size });
-      // The caption carries the tappable link; the printed vedansh.app/get on the card is not.
-      if (!await shareFiles([uri], { title, message: buildSuvicharShareMessage(lang) })) {
-        if (!await Sharing.isAvailableAsync()) throw new Error('Sharing unavailable');
-        await Sharing.shareAsync(uri, { mimeType: 'image/png', UTI: 'public.png', dialogTitle: title });
-      }
-    } catch { Alert.alert(tr({ hi: 'शेयर नहीं हो पाया', en: 'Could not share', gu: 'શેર થઈ શક્યું નહીં', kn: 'ಹಂಚಿಕೊಳ್ಳಲಾಗಲಿಲ್ಲ' }), tr({ hi: 'कृपया दोबारा कोशिश करें।', en: 'Please try again.', gu: 'કૃપા કરીને ફરી પ્રયાસ કરો.', kn: 'ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' })); }
-    finally { if (uri) releaseCapture(uri); lock.current = false; setBusy(false); }
+  const onReady = useCallback((value: boolean) => { if (activeIdentity.current === identity) setReadyIdentity(value ? identity : null); }, [identity]);
+  // The Daily Bhakti share flow (design.md §39.10): the provider mounts its own 540 dp
+  // copy of this card, waits for its art, and offers WhatsApp (with the invite caption),
+  // Instagram post / story and Send as text. The card prints its own brand and link.
+  const { share: openShare, busy } = useShare();
+  const share = () => {
+    if (!ready || !loaded) return;
+    const deity = suvicharDeities.find(d => d.id === prefs.deity)!;
+    const label = cardTitle ?? tr({ hi: 'आज का सुविचार', en: 'A thought for today', gu: 'આજનો સુવિચાર', kn: 'ಇಂದಿನ ಸುವಿಚಾರ' });
+    const sender = cleanSender(prefs.name);
+    const card = { deity: prefs.deity, frame: prefs.frame, name: prefs.name, photo: cardPhoto, photoFit: prefs.photoFit, message, title: cardTitle, original };
+    void openShare({
+      kind: 'card',
+      sourceId: `suvichar.${prefs.deity}`,
+      width: 540,
+      awaitsArt: true,
+      branded: true,
+      title: { hi: 'सुविचार साझा करें', en: 'Share Suvichar', gu: 'સુવિચાર શેર કરો', kn: 'ಸುವಿಚಾರ ಹಂಚಿಕೊಳ್ಳಿ' },
+      tagNameHi: 'सुविचार',
+      tagNameEn: 'Suvichar',
+      render: ({ onReady: cardReady }) => <SuvicharCard {...card} lang={lang} width={540} onReady={cardReady} />,
+      caption: () => ({ sectionName: label, label: contentByLang(lang, deity.hi, deity.en), firstLine: message }),
+      message: buildSuvicharShareMessage,
+      text: () => [label, '', message, ...(sender ? ['', `${tr({ hi: 'सप्रेम', en: 'With love', gu: 'સપ્રેમ', kn: 'ಪ್ರೀತಿಯಿಂದ' })} — ${sender}`] : [])].join('\n'),
+    }, lang);
   };
   const off = busy || !loaded;
   const face = titleFontByLang(lang);
@@ -177,7 +172,7 @@ export default function SuvicharScreen() {
         <SuvicharFramePicker deity={prefs.deity} frame={prefs.frame} lang={lang} disabled={off} onSelect={frame => update({ frame })} />
       </View>
       <View style={{ gap: spacing.sm }}>
-        <View ref={card} collapsable={false} style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} photo={cardPhoto} photoFit={prefs.photoFit} onPhotoError={() => update({ photo: '', photoFit: fullPhotoFit })} message={message} title={cardTitle} lang={lang} width={width} onReady={onReady} onHeight={onHeight} original={original} /></View>
+        <View style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} photo={cardPhoto} photoFit={prefs.photoFit} onPhotoError={() => update({ photo: '', photoFit: fullPhotoFit })} message={message} title={cardTitle} lang={lang} width={width} onReady={onReady} original={original} /></View>
         {!ready ? <Pressable testID="suvichar-retry" accessibilityRole="button" disabled={off} onPress={() => { setReadyIdentity(null); setRetry(n => n + 1); }} style={{ alignSelf: 'center', minHeight: 44, justifyContent: 'center' }}>
           <Text style={{ fontFamily: face, fontSize: 14, color: colors.saffronDeep }}>{tr({ hi: 'चित्र फिर लाएँ', en: 'Reload artwork', gu: 'ચિત્ર ફરી લાવો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ' })}</Text></Pressable> : null}
       </View>
@@ -237,7 +232,7 @@ export default function SuvicharScreen() {
         style={({ pressed }) => ({ width: 52, height: 52, alignItems: 'center', justifyContent: 'center', borderRadius: radii.md, borderWidth: 1, borderColor: colors.cardActiveBorder, backgroundColor: colors.cardActiveFrom, opacity: pressed ? 0.85 : 1 })}>
         <AppIcon name="heart" color={colors.saffronDeep} weight={savedIndex >= 0 ? 'fill' : 'regular'} />
       </Pressable>
-      <Pressable testID="suvichar-share" accessibilityRole="button" accessibilityState={{ disabled: shareOff, busy }} disabled={shareOff} onPress={() => void share()}
+      <Pressable testID="suvichar-share" accessibilityRole="button" accessibilityState={{ disabled: shareOff, busy }} disabled={shareOff} onPress={share}
         style={({ pressed }) => ({ flex: 1, height: 52, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.sm + 2, borderRadius: radii.md, backgroundColor: colors.saffronDeep,
           opacity: shareOff && !busy ? 0.55 : pressed ? 0.88 : 1, shadowColor: colors.saffronDeep, shadowOpacity: 0.25, shadowRadius: 8, shadowOffset: { width: 0, height: 3 }, ...androidBoxShadow(3, 8, 'rgba(138, 62, 11, 0.25)') })}>
         {busy ? <ActivityIndicator color={colors.parchmentSoft} /> : <AppIcon name="share" size={20} color={colors.parchmentSoft} />}
