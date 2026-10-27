@@ -1,0 +1,11 @@
+{
+  "source": "/Users/prashant/Code/Aadhyatma/prototypes/gita-saar-delight/app/public/art/garden.png",
+  "sourceSha256": "485bc79a7ecd520775f7d440cd17a4d613d115554ec43b699e1078fb338dfb58",
+  "webpSha256": "150bc207bef44d6aeb16585a51ff5dd280de431424b2224988fc447e95fdb936",
+  "size": [
+    960,
+    480
+  ],
+  "approval": "User accepted the continuous Gita Saar prototype and requested mobile implementation on 2026-10-26. This is the same garden scene, resized without cropping.",
+  "generation": "Built-in Image Generation; prompt retained alongside this record."
+}

@@ -1,0 +1,4 @@
+Built-in Image Generation, 26 October 2026.
+Use case: illustration-story. Asset: wide 2:1 educational illustration for Vedansh Gita Saar, no text. A person in cream and saffron cotton kneels and waters a green sapling, while sunshine breaks through monsoon clouds over a quiet Indian garden. Show hands, pot, sapling and sun fully in frame. One continuous landscape. Refined Indian devotional storybook gouache and watercolor, delicate ink detail, warm ivory parchment #F3E7C9, saffron terracotta, muted greens, honey gold. Contemplative and readable at mobile size. No lettering, UI, arrows, charts, deity, logos or photo realism.
+Original generated file: /Users/prashant/.codex/generated_images/01a1771b-6570-73d2-bfd7-6be7db54c9a1/exec-e8e700ed-8cd5-49ba-a5b1-2fb14fb1e01f.png
+Workspace asset: public/art/garden.png

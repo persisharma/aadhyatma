@@ -1,0 +1,168 @@
+{
+  "generatedWith": "built-in image_gen",
+  "styleReference": "Vedansh Style 3 Reader Banner",
+  "date": "2026-10-26",
+  "scope": "User explicitly requested completion of illustrated examples across all themes and implementation in the mobile app.",
+  "assets": [
+    {
+      "theme": "true-prema",
+      "stem": "gita-saar-story-true-prema",
+      "sourceSha256": "1d4514952b31384ecf88ca8fa5e7519bbe222bf530fb58b7994f5d2ebd954d35",
+      "webpSha256": "297a0217bded376832a797a6e6cd7d023df0b1f81ab3790b9a3413e9d303f210",
+      "width": 960,
+      "height": 480,
+      "bytes": 194896,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "bhay-chinta",
+      "stem": "gita-saar-story-bhay-chinta",
+      "sourceSha256": "eaaace4fd4413de10d3fa47c99499591b868a51eb18ebb5636514a13d0d8db1f",
+      "webpSha256": "0b8e20ce38150bae2f0b0f237fd731061bacdd4980e1cdfbd01ceccdbab36021",
+      "width": 960,
+      "height": 480,
+      "bytes": 213282,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "shok",
+      "stem": "gita-saar-story-shok",
+      "sourceSha256": "f2c4040f6b004e14f1475e52a17d902f0d5bf4a356c4dfd18f5570a80762a987",
+      "webpSha256": "5b006eb74bd6d2321b1c949c8aadc1e7e1ce86a7a49336e62c2708dabbfdcfdb",
+      "width": 960,
+      "height": 480,
+      "bytes": 208990,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "krodh",
+      "stem": "gita-saar-story-krodh",
+      "sourceSha256": "5480352b95e913cdf33c7eba01abc3e202603aec3f819be3b5fd4fa3fac63cd3",
+      "webpSha256": "d37a98d61347769563dcb735e7300ad8b451bd0e55bca2b84ec0f76b0736bed6",
+      "width": 960,
+      "height": 480,
+      "bytes": 204878,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "karma",
+      "stem": "gita-saar-story-karma",
+      "sourceSha256": "dddb3a01bbce874f5a1990aa7f9f38e58c6e3d83d2bbc046ef05fc8969d6e8ae",
+      "webpSha256": "cb1a0035fbab49fc713cf4dc2b7436c38a02535d5505631b626a3317d71703fb",
+      "width": 960,
+      "height": 480,
+      "bytes": 238778,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "guna",
+      "stem": "gita-saar-story-guna",
+      "sourceSha256": "31e2b1fc9dcd6207d26e1945ba86f715df93fa21157039dc426e78d1a4369517",
+      "webpSha256": "cd06e07da90ca5e1daadde1b6836929195f146530b86ae1286ca45d9dbed31a0",
+      "width": 960,
+      "height": 480,
+      "bytes": 227142,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "man",
+      "stem": "gita-saar-story-man",
+      "sourceSha256": "2da369da28462782819f4b70023102fc040a2b7be6f230572f4bf278545e46bc",
+      "webpSha256": "e5456f9afcf94a3578b5d65b7c0e7998f3c80aa177cfedbe9a61e4ed91905cef",
+      "width": 960,
+      "height": 480,
+      "bytes": 218730,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "sanshay",
+      "stem": "gita-saar-story-sanshay",
+      "sourceSha256": "0e95e1d51f274f2ff9641e7391047f4be37fd24bb35a1e9af71e3cd5c0c107c3",
+      "webpSha256": "575240f136bfff9451f5f19b6a2ad40dfdc04379e338230753a2d07fd34ec603",
+      "width": 960,
+      "height": 480,
+      "bytes": 217992,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "sharanagati",
+      "stem": "gita-saar-story-sharanagati",
+      "sourceSha256": "e37f567b0418ce8672a9e196d061d7cc54337b5add085e55f96fcbc3ee48f83b",
+      "webpSha256": "c2d6cfaafe04fe61e6f60b516b8b220d49e034adf99b99a27269e5608e783191",
+      "width": 960,
+      "height": 480,
+      "bytes": 202648,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "sthitaprajna",
+      "stem": "gita-saar-story-sthitaprajna",
+      "sourceSha256": "b411a67cd9179586cd213a2ca4dba481ff5a0ad3efb88fee9122a00c44724a69",
+      "webpSha256": "4d3ed19c45c07f2fbbf40fff169e88818912b291b4e89a36ee01903f5b38831e",
+      "width": 960,
+      "height": 480,
+      "bytes": 220500,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "kamna-santosh",
+      "stem": "gita-saar-story-kamna-santosh",
+      "sourceSha256": "9ed4e8632804f6a225cef2fe51d06b54891109e6e968b2dae448a116c76fa3db",
+      "webpSha256": "1c6168bc5a749db837f08f1193e45e6716c0957e773fd4ccb6d02f05b022bcfe",
+      "width": 960,
+      "height": 480,
+      "bytes": 187224,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "safalta",
+      "stem": "gita-saar-story-safalta",
+      "sourceSha256": "a1769ff73f1549c98a8b26f0abae123d563ef6b3bb4c048dafcc5bc450d9de00",
+      "webpSha256": "583999c6f370b3227745fb111c684717cf9ef8fe10ac414fb16ccc706cf096df",
+      "width": 960,
+      "height": 480,
+      "bytes": 203978,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "atma",
+      "stem": "gita-saar-story-atma",
+      "sourceSha256": "46b9efd65f79edd4568f2a75ba65cb7d9f562e9dcf723808c7e63f1c5dc68482",
+      "webpSha256": "9929c41d5a13591573b6796c229fa02995c848403e3ee2f6c99c41b3db8aa0e8",
+      "width": 960,
+      "height": 480,
+      "bytes": 212116,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "akela",
+      "stem": "gita-saar-story-akela",
+      "sourceSha256": "49783b9b9676c2dcd9e29a09e392c00c63f2d162975a21a41665e58e9b2c611c",
+      "webpSha256": "84f8d2956042be6ec9aade4b66fc4533aab6e4e660cbd54e61ebf448feeab9b6",
+      "width": 960,
+      "height": 480,
+      "bytes": 199154,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "daivi",
+      "stem": "gita-saar-story-daivi",
+      "sourceSha256": "f0bc788f8b46e978c446b12c2882c1459babcfa41a9ec8dd5c637d07cc38d96e",
+      "webpSha256": "94fb3c6b5b926d3c831315cd35ac5ebf0f5d7c09acac16a472c191728bf57417",
+      "width": 960,
+      "height": 480,
+      "bytes": 200516,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    },
+    {
+      "theme": "dhyan",
+      "stem": "gita-saar-story-dhyan",
+      "sourceSha256": "34a2fa6b1dfcefed5c6ef928a9b5c00226dc195f91afd03d5214a3fdeaa979ad",
+      "webpSha256": "b4aaa441fa8f8f42c5db6fbea08d709854d027657e05c75c5f84fb38aed6ef2b",
+      "width": 960,
+      "height": 480,
+      "bytes": 200588,
+      "review": "Complete scene, source moment and compact preview inspected; sanshay v1 rejected for clipping, replaced with a full composition."
+    }
+  ]
+}
