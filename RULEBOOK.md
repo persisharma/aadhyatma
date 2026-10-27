@@ -49,6 +49,19 @@ This is a process gate, not a code rule — there is no test to enforce it; trea
 
 ---
 
+## 0.4 Google Play "Automatic protection" stays OFF — it breaks in-place updates
+
+Play Console → *App integrity → Automatic protection* ("prevent unofficial installs") wraps each published release with an anti-tamper/installer check. Enabling it **blocks in-place updates for every user already on a build published before it was turned on**: a fresh install from Play succeeds, but existing users get "update failed" / "App not installed". Diagnosed 27 Oct 2026 — after it was enabled on `com.prashantsharma.vedansh`, beta **and** production users could not update; the fix was to disable the toggle and ship a new `versionCode`.
+
+- **Leave Automatic protection disabled.** The anti-piracy benefit is not worth locking the existing userbase out of updates.
+- **It is Play-side, applied at publish time** — the EAS-built AAB is identical whether the toggle is on or off, so the toggle (not a rebuild) is the lever. To recover after an accidental enable: turn it off, then roll out a fresh release (new `versionCode`) so devices receive an unwrapped build.
+- **Android-only.** iOS has no equivalent — the App Store already enforces its install channel, so iOS releases are unaffected by this failure mode.
+- For anti-tamper, use the **Play Integrity API** (detect in-app, the "0 of 7" row on the same page) instead — it does not block updates.
+
+This is a store-configuration gate, not a code rule — no test enforces it.
+
+---
+
 ## 1. The questions every new section must answer
 
 Every section, regardless of size, must supply these inputs. The slash command will refuse to scaffold until the mandatory ones are present.
