@@ -6,6 +6,7 @@ import ObservanceTodaySummary from '../ObservanceTodaySummary';
 import CatalogCategoryTile from '../CatalogCategoryTile';
 import CachedArtwork from '../CachedArtwork';
 import type { ObservanceRule } from '@/panchang/types';
+import { observanceThumbnail } from '@/panchang/observanceThumbnails';
 import { observancePortraits } from '@/panchang/observancePortraits';
 
 const rule = {
@@ -41,7 +42,7 @@ test('the large hero keeps reading and description expansion independent', () =>
 test('wide panels use the already published single-deity scene', () => {
   const tree = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Shri Ganesh' }} width={144} height={96} variant="upcoming" />);
   const art = tree.root.findByType(CachedArtwork);
-  expect(art.props.source).toEqual(observancePortraits({ deityEn: 'Shri Ganesh' })[0].source);
+  expect(art.props.source).toEqual(observanceThumbnail(observancePortraits({ deityEn: 'Shri Ganesh' })[0].source));
   expect(art.props.resizeMode).toBe('contain');
   expect(art.props.imageStyle).toMatchObject({ width: 192, height: 96, top: 0 });
   expect(art.props.style).toMatchObject({ width: 144, height: 96 });
@@ -58,38 +59,36 @@ test('tall panels keep off-centre Vishnu inside the painted frame', () => {
   expect(style.top + style.height).toBeGreaterThanOrEqual(190);
 });
 
-test('branded Ahoi masters retain their reviewed portrait frame in wider panels', () => {
+test('Ahoi uses a complete square painting without a poster zoom', () => {
   const tree = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Ahoi Mata' }} width={144} height={96} variant="upcoming" />);
   const art = tree.root.findByType(CachedArtwork);
   const portrait = observancePortraits({ deityEn: 'Ahoi Mata' })[0];
   expect(art.props.source).toEqual(portrait.source);
   expect(art.props.resizeMode).toBe('contain');
-  expect(art.props.imageStyle.height).toBe(96 * portrait.frame.zoom);
-  expect(art.props.imageStyle.left).toBe(72 - 96 * portrait.frame.zoom * portrait.frame.aspect * portrait.frame.x);
+  expect(art.props.imageStyle.height).toBe(144);
+  expect(art.props.imageStyle.left).toBe(0);
+  expect(art.props.imageStyle.top).toBe(0);
 });
 
-test('composite panels retain all named portraits and the full-figure list geometry', () => {
-  const subject = { category: 'vrat' as const, deityEn: 'Lord Murugan and Shiva–Parvati' };
-  const portraits = observancePortraits(subject);
-  const wide = render(<ObservanceArtwork rule={subject} width={150} height={100} variant="upcoming" />);
-  const panes = wide.root.findAllByType(CachedArtwork);
-  expect(panes.map(node => node.props.source)).toEqual(portraits.map(p => p.source));
-  expect(panes).toHaveLength(3);
-  panes.forEach(node => expect(node.props.style.width).toBe(50));
-  const row = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Shri Ganesh' }} />);
-  const p = observancePortraits({ deityEn: 'Shri Ganesh' })[0];
-  expect(row.root.findByType(CachedArtwork).props.imageStyle).toEqual({
-    width: 78 * p.frame.aspect, height: 78,
-    left: 39 - 78 * p.frame.aspect * p.frame.x, top: 0, right: 'auto', bottom: 'auto',
-  });
+test('joint subjects use a coherent shared painting instead of a split portrait strip', () => {
+  const tree = render(<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Lord Murugan and Shiva–Parvati' }} />);
+  expect(tree.root.findAllByType(CachedArtwork)).toHaveLength(1);
 });
 
 test.each(['hi', 'en', 'gu', 'kn'] as const)('category destinations remain accessible in %s with wrapping text', lang => {
   const open = jest.fn();
-  const tree = render(<CatalogCategoryTile artwork="sanskar" lang={lang} title="कथा" subtitle="90 कथाएँ" accessibilityLabel="Katha library, 90" onPress={open} />);
+  const tree = render(<CatalogCategoryTile artwork="granth" lang={lang} title="कथा" subtitle="90 कथाएँ" accessibilityLabel="Katha library, 90" onPress={open} />);
   const button = tree.root.find(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === 'Katha library, 90' && typeof node.props.onPress === 'function');
   act(() => button.props.onPress());
   expect(open).toHaveBeenCalledTimes(1);
   expect(StyleSheet.flatten(typeof button.props.style === 'function' ? button.props.style({ pressed: false }) : button.props.style).minHeight).toBeGreaterThanOrEqual(44);
   tree.root.findAllByType(Text).forEach(node => expect(node.props.numberOfLines).toBeUndefined());
+});
+
+
+test('Katha category resolves a painted scene rather than an unmapped legacy symbol', () => {
+  const tree = render(<CatalogCategoryTile artwork="granth" lang="en" title="Katha" subtitle="90 stories" accessibilityLabel="Katha library, 90" onPress={() => {}} />);
+  const art = tree.root.findByType(CachedArtwork);
+  expect(art.props.source).toBeDefined();
+  expect(art.props.fallback).toBeUndefined();
 });

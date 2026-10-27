@@ -27,7 +27,7 @@ import CachedArtwork from './CachedArtwork';
  *   truncated (RULEBOOK §3 budget).
  * - `meta` is the unit count ("4 पृष्ठ"). Age, kind and other tags do not go
  *   on cards; shelf-wide facts belong in `ListingScope`.
- * - Vrat uses `observance` (78dp square) and `upcoming` (144x72 scene)
+ * - Vrat uses `observance` (78dp square) and `upcoming` (112x74 scene)
  *   variants of this same shell. Their bilingual caption/date/save slots are
  *   calendar metadata, not changes to the standard story/reading contract.
  */
@@ -44,6 +44,8 @@ type Props = {
   variant?: 'standard' | 'observance' | 'upcoming';
   language?: Lang;
   action?: React.ReactNode;
+  showChevron?: boolean;
+  actionCount?: 1 | 2;
   /** Read fraction 0–1 where the section tracks progress; omitted otherwise. */
   progress?: number;
   thumbnail: React.ReactNode;
@@ -52,7 +54,7 @@ type Props = {
   accessibilityLabel?: string;
 };
 
-export default function ListingCard({ testID, title, eyebrow, description, meta, progress, thumbnail, onPress, accessibilityLabel, secondary, variant = 'standard', language, action }: Props) {
+export default function ListingCard({ testID, title, eyebrow, description, meta, progress, thumbnail, onPress, accessibilityLabel, secondary, variant = 'standard', language, action, showChevron = true, actionCount = 1 }: Props) {
   const { colors, radii, typography } = useTheme();
   const { lang: readingLang } = useGitaLanguage();
   const lang = language ?? readingLang;
@@ -73,8 +75,8 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
     <ListingCardFrame testID={testID} onPress={onPress} accessibilityLabel={label}
       accessibilityValue={read === undefined ? undefined : { min: 0, max: 100, now: Math.round(read * 100) }}
       action={action}
-      style={special ? (upcoming ? styles.upcomingCard : styles.observanceCard) : styles.card}
-      contentStyle={upcoming ? styles.upcomingContent : styles.observanceContent}>
+      style={special ? (upcoming ? styles.upcomingCard : [styles.observanceCard, actionCount === 2 && { minHeight: 104 }]) : styles.card}
+      contentStyle={special ? (upcoming ? styles.upcomingContent : styles.observanceContent) : undefined}>
       <View testID={testID ? `${testID}-thumb` : undefined} style={[special ? (upcoming ? styles.upcomingThumb : styles.observanceThumb) : styles.thumb, { borderRadius: radii.sm, backgroundColor: colors.parchmentSoft }]}>
         {thumbnail}
       </View>
@@ -82,7 +84,7 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
         {eyebrow ? <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{eyebrow}</Text> : null}
         <Text
           numberOfLines={special ? undefined : 2}
-          style={{ color: colors.ink, fontFamily: titleFontByLang(lang), fontStyle: latin ? 'italic' : 'normal', ...titleSize, ...(special ? { fontSize: upcoming ? 14 : 17, lineHeight: upcoming ? 21 : 24 } : {}) }}
+          style={{ color: colors.ink, fontFamily: titleFontByLang(lang), fontStyle: latin ? 'italic' : 'normal', ...titleSize, ...(special ? { fontSize: upcoming ? 15 : 17, lineHeight: upcoming ? 24 : 27 } : {}) }}
         >
           {title}
         </Text>
@@ -99,7 +101,7 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
           </View>
         )}
       </View>
-      {!upcoming && <Text accessible={false} style={[styles.chev, observance && styles.observanceChevron, { color: colors.saffron }]}>›</Text>}
+      {!upcoming && showChevron && <Text accessible={false} style={[styles.chev, observance && styles.observanceChevron, { color: colors.saffron }]}>›</Text>}
     </ListingCardFrame>
   );
 }
@@ -131,7 +133,7 @@ export function ListingCardFrame({ children, action, onPress, accessibilityLabel
   }
   return <Pressable testID={testID} onPress={onPress} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
     accessibilityValue={accessibilityValue}
-    style={({ pressed }) => [frame, elevation.lifted, style, pressed && { opacity: 0.86 }]}>
+    style={({ pressed }) => [frame, elevation.lifted, style, contentStyle, pressed && { opacity: 0.86 }]}>
     {painting}{children}
   </Pressable>;
 }
@@ -202,11 +204,11 @@ export function ListingThumbImage({ source, focusX = 0.5 }: { source: Background
 const styles = StyleSheet.create({
   observanceCard: { marginBottom: 6, minHeight: 92 },
   upcomingCard: { width: 158 },
-  observanceContent: { flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', padding: 6, paddingRight: 48, gap: 12 },
+  observanceContent: { minWidth: 0, flexDirection: 'row', alignItems: 'center', padding: 6, paddingRight: 48, gap: 12 },
   upcomingContent: { padding: 6, gap: 4 },
   observanceThumb: { width: 78, height: 78, flexShrink: 0, overflow: 'hidden' },
-  upcomingThumb: { width: 144, height: 72, flexShrink: 0, overflow: 'hidden' },
-  upcomingBody: { flexGrow: 0, paddingHorizontal: 2, paddingBottom: 2, gap: 1 },
+  upcomingThumb: { width: 112, height: 74, flexShrink: 0, overflow: 'hidden' },
+  upcomingBody: { flex: 0, alignSelf: 'stretch', paddingHorizontal: 2, paddingBottom: 2, gap: 1 },
   observanceChevron: { position: 'absolute', bottom: 5, right: 16, fontSize: 20 },
   card: {
     position: 'relative',

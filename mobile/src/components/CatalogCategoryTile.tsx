@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import type { StoryIconName } from './StoryIcon';
-import CatalogCategoryArtwork from './CatalogCategoryArtwork';
+import CatalogCategoryArtwork, { type CatalogArtworkName } from './CatalogCategoryArtwork';
 import { ListingCardFrame } from './ListingCard';
 import AppIcon from './AppIcon';
 import type { Lang } from '@/data/gita/language';
@@ -11,7 +10,7 @@ import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 export default function CatalogCategoryTile({ title, subtitle, artwork, lang, accessibilityLabel, onPress, wide = false, testID }: {
   title: string;
   subtitle: string;
-  artwork: StoryIconName;
+  artwork: CatalogArtworkName;
   lang: Lang;
   accessibilityLabel: string;
   onPress: () => void;

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import ListingCard from './ListingCard';
+import ObservanceArtwork from './ObservanceArtwork';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
-import { fontFamilies } from '@/theme/typography';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import {
@@ -69,7 +70,7 @@ export default function MuhuratFollowList({
 }: {
   onOpen: (occasionId: OccasionId, dateMs: number) => void;
 }) {
-  const { colors, typography, radii } = useTheme();
+  const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const { follows } = useMuhuratFollows();
   const { location } = usePanchangLocation();
@@ -121,12 +122,11 @@ export default function MuhuratFollowList({
   if (follows.length === 0) return null;
 
   const today = startOfLocalDay(new Date());
-  const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
   return (
     <View testID="muhurat-follow-list">
-      <Text style={[styles.heading, { color: colors.ink, fontFamily: titleFont }]}>
+      <Text style={[styles.heading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
         {contentByLang(lang, 'अनुसरण किए मुहूर्त', 'Followed muhurats')}
       </Text>
 
@@ -148,57 +148,19 @@ export default function MuhuratFollowList({
                 .join(' · ')
             : contentByLang(lang, 'कोई सूचना नहीं', 'No notices');
         return (
-          <Pressable
-            key={`${r.occasionId}:${r.dateKey}`}
-            testID={`muhurat-follow-row-${r.occasionId}`}
-            accessibilityRole="button"
+          <ListingCard key={`${r.occasionId}:${r.dateKey}`}
+            testID={`muhurat-follow-row-${r.occasionId}`} variant="observance" language={lang}
+            title={contentByLang(lang, r.nameHi, r.nameEn)}
             accessibilityLabel={`${contentByLang(lang, r.nameHi, r.nameEn)} ${shortDate(r.date, lang)}. ${detail}`}
             onPress={() => onOpen(r.occasionId, r.date.getTime())}
-            style={({ pressed }) => [
-              styles.row,
-              { borderColor: colors.border, backgroundColor: colors.surface, borderRadius: radii.md },
-              pressed && { opacity: 0.7 },
-            ]}
-          >
-            <Text style={{ fontFamily: typography.thumb.fontFamily, fontSize: 14, color: colors.gold, lineHeight: 22 }}>★</Text>
-            <View style={styles.body}>
-              <Text numberOfLines={1} style={{ fontFamily: titleFont, fontSize: 14, color: colors.ink, lineHeight: 22 }}>
-                {contentByLang(lang, r.nameHi, r.nameEn)}
-                {r.tier !== 'excluded' && (
-                  <Text style={{ color: colors.inkMuted }}>
-                    {' · '}
-                    {contentByLang(lang, TIER_LABELS[r.tier].hi, TIER_LABELS[r.tier].en)}
-                  </Text>
-                )}
+            thumbnail={<ObservanceArtwork rule={{ category: 'vrat', deityEn: 'Traditional observance' }} />}
+            meta={<>
+              <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 20, color: colors.saffronDeep }}>
+                {shortDate(r.date, lang)} · {relativeLabel(r.date, today, lang)}
+                {r.tier !== 'excluded' ? ` · ${contentByLang(lang, TIER_LABELS[r.tier].hi, TIER_LABELS[r.tier].en)}` : ''}
               </Text>
-              <Text
-                numberOfLines={1}
-                style={{
-                  fontFamily: bodyFont,
-                  fontSize: 12.5,
-                  color: drifted ? colors.avoidDeep : colors.inkSoft,
-                  lineHeight: 19,
-                }}
-              >
-                {detail}
-              </Text>
-            </View>
-            <View style={styles.when}>
-              <Text
-                style={{
-                  fontFamily: lang === 'en' ? fontFamilies.interSemiBold : bodyFont,
-                  fontSize: 13,
-                  color: colors.saffronDeep,
-                  fontVariant: ['tabular-nums'],
-                }}
-              >
-                {shortDate(r.date, lang)}
-              </Text>
-              <Text style={{ fontFamily: bodyFont, fontSize: 11, color: colors.inkMuted }}>
-                {relativeLabel(r.date, today, lang)}
-              </Text>
-            </View>
-          </Pressable>
+              <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 20, color: drifted ? colors.avoidDeep : colors.inkSoft }}>{detail}</Text>
+            </>} />
         );
       })}
 
@@ -211,16 +173,4 @@ export default function MuhuratFollowList({
 
 const styles = StyleSheet.create({
   heading: { fontSize: 15, marginTop: 22, marginBottom: 10 },
-  row: {
-    borderWidth: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    marginBottom: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    minHeight: 56,
-  },
-  body: { flex: 1, minWidth: 0 },
-  when: { alignItems: 'flex-end', flexShrink: 0 },
 });

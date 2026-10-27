@@ -1,7 +1,6 @@
-import type { StoryIconName } from '@/components/StoryIcon';
+import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
 import CatalogCategoryTile from '@/components/CatalogCategoryTile';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
-import ObservanceArtwork from '@/components/ObservanceArtwork';
 import { ListingCardFrame } from '@/components/ListingCard';
 import ObservanceTodaySummary from '@/components/ObservanceTodaySummary';
 import { observanceCountdown } from '@/panchang/observancePresentation';
@@ -14,6 +13,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { backgroundImages } from '@assets/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import CatalogBackground from '@/components/CatalogBackground';
 import { JyotishChakraSeal, PanchangChakraBackground } from '@/components/CelestialChakra';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
@@ -548,7 +548,7 @@ export default function PanchangScreen({ route }: Props) {
     <View style={styles.root}>
       {panchangTab === 'calendar'
         ? <PanchangChakraBackground />
-        : panchangTab === 'catalog' ? <BackgroundLayer />
+        : panchangTab === 'catalog' ? <CatalogBackground />
         : <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />}
       <SafeAreaView style={styles.safe} edges={panchangTab === 'calendar' ? ['left', 'right'] : ['top', 'left', 'right']}>
         <ScrollView
@@ -2360,7 +2360,7 @@ function CatalogLanding({
   const counts = useMemo(() => getCategoryCounts(), []);
   const kathaCount = getKathaCount();
 
-  const tileMeta: Record<BrowseCategory, { art: StoryIconName; hi: string; en: string }> = {
+  const tileMeta: Record<BrowseCategory, { art: CatalogArtworkName; hi: string; en: string }> = {
     vrat: { art: 'vrat', hi: 'व्रत', en: 'Vrat' },
     festival: { art: 'aarti', hi: 'पर्व', en: 'Festivals' },
     upavas: { art: 'practice', hi: 'उपवास', en: 'Upvas' },
@@ -2368,9 +2368,9 @@ function CatalogLanding({
   return (
     <View style={{ marginTop: 12 }}>
       <View style={styles.catalogSearch}>
-        <TextField value={query} onChangeText={onChangeQuery}
+        <TextField testID="catalog-search" value={query} onChangeText={onChangeQuery}
           placeholder={contentByLang(lang, 'व्रत, पर्व, उपवास, कथा खोजें…', 'Search vrat, festival, upvas, katha…')}
-          style={{ paddingLeft: 42, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), borderColor: colors.catalogBorder, backgroundColor: colors.catalogSurface }}
+          style={{ height: undefined, minHeight: 44, paddingVertical: 8, paddingLeft: 42, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), borderColor: colors.catalogBorder, backgroundColor: colors.catalogSurface }}
         />
         <View pointerEvents="none" style={styles.catalogSearchIcon}><AppIcon name="search" size={20} color={colors.inkMuted} /></View>
       </View>
@@ -2379,24 +2379,10 @@ function CatalogLanding({
         results.length > 0 ? (
           <View style={{ marginTop: 4 }}>
             {results.map((rule) => (
-              <Pressable
-                key={rule.id}
-                onPress={() => onOpenDetail(rule.id)}
-                accessibilityRole="button"
-                accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
-                style={({ pressed }) => [styles.resultRow, { borderBottomColor: colors.divider }, pressed && { opacity: 0.6 }]}
-              >
-                <View style={{ marginRight: 12 }}><ObservanceArtwork rule={rule} size={48} /></View>
-                <View style={{ flex: 1, paddingRight: 10 }}>
-                  <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-                    {contentByLang(lang, rule.nameHi, rule.nameEn)}
-                  </Text>
-                  <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
-                    {lang === 'en' ? rule.nameHi : rule.nameEn}
-                  </Text>
-                </View>
-                <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
-              </Pressable>
+              <ObservancePreviewCard key={rule.id} rule={rule} lang={lang}
+                following={isFollowing(rule.id)}
+                onToggleFollow={() => isFollowing(rule.id) ? unfollow(rule.id) : follow(rule.id)}
+                onPress={() => onOpenDetail(rule.id)} />
             ))}
           </View>
         ) : (
@@ -2469,7 +2455,7 @@ function CatalogLanding({
               <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), ...typography.catalogTitle, color: colors.ink, marginBottom: 8 }}>
                 {contentByLang(lang, 'आगामी', 'Upcoming')}
               </Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10, paddingRight: 8 }}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10, paddingRight: 8, paddingBottom: 4, alignItems: 'flex-start' }}>
                 {upcoming.map((item) => (
                   <ObservancePreviewCard
                     key={`${item.rule.id}-${item.date.toDateString()}`}
@@ -2502,7 +2488,7 @@ function CatalogLanding({
                   onPress={() => onOpenCategory(category)}
                 />;
               })}
-              <CatalogCategoryTile lang={lang} artwork="sanskar"
+              <CatalogCategoryTile lang={lang} artwork="granth"
                 title={contentByLang(lang, 'कथा', 'Katha')}
                 subtitle={`${kathaCount} ${contentByLang(lang, 'कथाएँ', 'stories')}`}
                 accessibilityLabel={`Katha library, ${kathaCount}`} onPress={onOpenKathaLibrary}

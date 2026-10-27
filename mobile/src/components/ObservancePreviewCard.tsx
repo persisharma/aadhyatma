@@ -13,7 +13,7 @@ import { scriptBodyFont } from '@/utils/langType';
 /** Scene-led Upcoming tiles and compact list rows; save/detail stay siblings. */
 export default function ObservancePreviewCard({
   rule, lang, dateLabel, countdown, following, onToggleFollow, onPress,
-  starRef, layout = 'row', areaLabel,
+  starRef, layout = 'row', areaLabel, onReminderPress, reminderOn,
 }: {
   rule: ObservanceRule;
   lang: Lang;
@@ -25,6 +25,8 @@ export default function ObservancePreviewCard({
   starRef?: React.Ref<View>;
   layout?: 'row' | 'tile';
   areaLabel?: string;
+  onReminderPress?: () => void;
+  reminderOn?: boolean;
 }) {
   const { colors, typography, radii } = useTheme();
   const tile = layout === 'tile';
@@ -43,18 +45,28 @@ export default function ObservancePreviewCard({
   return (
     <ListingCard testID={`observance-card-${rule.id}`} onPress={onPress}
       title={contentByLang(lang, rule.nameHi, rule.nameEn)} language={lang}
-      accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)} action={star}
+      accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
+      showChevron={!onReminderPress} actionCount={onReminderPress ? 2 : 1}
+      action={<>{star}{onReminderPress && <Pressable onPress={onReminderPress}
+        accessibilityRole="button" accessibilityLabel={`Reminders for ${rule.nameEn}`}
+        accessibilityState={{ selected: reminderOn }}
+        style={({ pressed }) => [styles.star, { top: 48, right: 4 }, pressed && styles.pressed]}>
+        <View style={[styles.starCircle, { width: 34, height: 34, borderColor: colors.divider,
+          backgroundColor: reminderOn ? colors.goldTint : colors.parchmentSoft }]}>
+          <AppIcon name="bell" size={19} color={colors.saffronDeep} weight={reminderOn ? 'fill' : 'regular'} />
+        </View>
+      </Pressable>}</>}
       variant={tile ? 'upcoming' : 'observance'}
       secondary={tile ? undefined : lang === 'en' ? rule.nameHi : rule.nameEn}
-      thumbnail={<ObservanceArtwork rule={rule} width={tile ? 144 : 78} height={tile ? 72 : 78} variant={tile ? 'upcoming' : 'list'} />}
+      thumbnail={<ObservanceArtwork rule={rule} width={tile ? 112 : 78} height={tile ? 74 : 78} variant={tile ? 'upcoming' : 'list'} />}
       meta={<View>
           {(dateLabel || countdown) && <View style={styles.facts}>
             {dateLabel && <View style={styles.dateRow}>
               <AppIcon name="date" size={tile ? 12 : 14} color={colors.saffronDeep} />
-              <Text style={{ fontFamily: bodyFont, fontSize: tile ? 10 : 12, color: colors.inkSoft }}>{dateLabel}</Text>
+              <Text style={{ fontFamily: bodyFont, fontSize: tile ? 11 : 12, lineHeight: tile ? 18 : 20, flexShrink: 1, color: colors.inkSoft }}>{dateLabel}</Text>
             </View>}
             {countdown && <View style={[styles.countdown, { backgroundColor: colors.goldTint, borderRadius: radii.pill }]}>
-              <Text style={{ fontFamily: bodyFont, fontSize: tile ? 10 : 12, color: colors.saffronDeep }}>{countdown}</Text>
+              <Text style={{ fontFamily: bodyFont, fontSize: tile ? 11 : 12, lineHeight: tile ? 18 : 20, flexShrink: 1, color: colors.saffronDeep }}>{countdown}</Text>
             </View>}
           </View>}
           {areaLabel && <Text style={{ fontFamily: bodyFont, fontSize: 11, color: colors.saffronDeep, marginTop: 2 }}>{areaLabel}</Text>}

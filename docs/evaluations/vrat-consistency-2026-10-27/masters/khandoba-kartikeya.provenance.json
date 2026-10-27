@@ -1,0 +1,22 @@
+{
+  "generator": "built-in image_gen",
+  "generatorSource": "/Users/prashant/.codex/generated_images/01a17bf6-af23-7653-b13b-f052548a573c/exec-8b8636c7-0735-416e-a8c0-dafc0b762425.png",
+  "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/khandoba-kartikeya.png",
+  "masterDimensions": [
+    1254,
+    1254
+  ],
+  "masterSHA256": "ee93060d2ecd176652c16232935c0c6f512ec5b7cd6b7f3853e795399fc1cab4",
+  "shipped": "mobile/assets/icons/observance-scenes/khandoba-kartikeya.webp",
+  "shippedDimensions": [
+    320,
+    320
+  ],
+  "shippedSHA256": "308d76452f8ba7bd088d984b22f508dc700183f824b275d36844156b7b5cb590",
+  "shippedBytes": 52340,
+  "references": [
+    "mobile/assets/reader-illustrations/theerth-khandoba-jejuri.webp",
+    "mobile/assets/reader-illustrations/theerth-vetrimalai-murugan.webp"
+  ],
+  "review": "Inspected shipped320px image: distinct mature moustached Khandoba with sword on left, youthful Kartikeya with vel spear and peacock on right, both complete seated figures, matching warm golden hand-painted temple-garden style, no text/border/extra goddess."
+}

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { LinearGradient } from 'expo-linear-gradient';
+import CatalogBackground from '@/components/CatalogBackground';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
@@ -11,6 +11,12 @@ import { useVratFollows, type VratFollow, type VratReminderPref } from '@/contex
 import VratReminderSheet from '@/components/VratReminderSheet';
 import MuhuratFollowList from '@/components/MuhuratFollowList';
 import { useMuhuratFollows } from '@/contexts/MuhuratFollowContext';
+import ObservancePreviewCard from '@/components/ObservancePreviewCard';
+import ReaderHeader from '@/components/ReaderHeader';
+import { ListingCardFrame } from '@/components/ListingCard';
+import CachedArtwork from '@/components/CachedArtwork';
+import AppIcon from '@/components/AppIcon';
+import { observanceCountdown } from '@/panchang/observancePresentation';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
@@ -36,12 +42,6 @@ function shortDate(date: Date, lang: Lang): string {
   return `${date.getDate()} ${months[date.getMonth()]}`;
 }
 
-function relativeLabel(date: Date, from: Date, lang: Lang): string {
-  const days = Math.round((startOfLocalDay(date).getTime() - startOfLocalDay(from).getTime()) / 86400000);
-  if (days <= 0) return contentByLang(lang, 'आज', 'today');
-  if (days === 1) return contentByLang(lang, 'कल', '1d');
-  return contentByLang(lang, `${days}द`, `${days}d`);
-}
 
 type FollowItem = {
   follow: VratFollow;
@@ -50,14 +50,14 @@ type FollowItem = {
 };
 
 export default function MyVratScreen({ navigation }: Props) {
-  const { colors, typography, spacing, radii, elevation } = useTheme();
+  const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   // Feature-tour anchor (design.md §47) — the content region in both the empty
   // (first-launch) and populated states.
   const isFocused = useIsFocused();
   const myVratRef = useTourTarget('myVrat', undefined, isFocused);
   const [calendarSystem] = usePanchangCalendarSystem();
-  const { follows, followCount, reminderCount, reminderDefault, setReminder, setReminderDefault } =
+  const { follows, followCount, reminderCount, reminderDefault, setReminder, setReminderDefault, unfollow } =
     useVratFollows();
   // Muhurat follows (PRD-16 §6.7) share this screen — one ★ inventory, not two.
   // They also gate the empty state: a user may follow a muhurat before any vrat.
@@ -94,16 +94,6 @@ export default function MyVratScreen({ navigation }: Props) {
     [items, today]
   );
 
-  // Upcoming-among-followed, chronological. `items` is already date-sorted, so
-  // this is just the followed rules that have an upcoming occurrence.
-  const upcoming = useMemo(
-    () =>
-      items.filter(
-        (it): it is FollowItem & { next: NonNullable<FollowItem['next']> } => it.next != null
-      ),
-    [items]
-  );
-
   const [sheet, setSheet] = useState<
     { mode: 'vrat'; ruleId: string; name: string; initial: VratReminderPref } | { mode: 'default' } | null
   >(null);
@@ -115,35 +105,18 @@ export default function MyVratScreen({ navigation }: Props) {
 
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <CatalogBackground />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-        <View style={styles.topBar}>
-          <Pressable
-            onPress={() => navigation.goBack()}
-            accessibilityRole="button"
-            accessibilityLabel={contentByLang(lang, 'वापस', 'Back')}
-            hitSlop={12}
-            style={({ pressed }) => [styles.backButton, { borderColor: colors.divider }, pressed && { opacity: 0.6 }]}
-          >
-            <Text style={{ color: colors.inkSoft, fontSize: 20 }}>‹</Text>
-          </Pressable>
-          <View style={{ alignItems: 'center' }}>
-            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, color: colors.ink }}>
-              {contentByLang(lang, 'मेरा व्रत', 'My Vrat')}
-            </Text>
-            <Text style={{ ...captionFont(lang === 'en' ? 'मेरा व्रत' : 'My Vrat'), fontSize: 12, color: colors.inkMuted }}>
-              {lang === 'en' ? 'मेरा व्रत' : 'My Vrat'}
-            </Text>
-          </View>
-          <View style={{ width: 36 }} />
-        </View>
+        <ReaderHeader title={contentByLang(lang, 'मेरा व्रत', 'My Vrat')} onBack={() => navigation.goBack()}
+          titleContent={<>
+            <Text style={{ ...typography.cardHindi, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), color: colors.ink }}>{contentByLang(lang, 'मेरा व्रत', 'My Vrat')}</Text>
+            <Text style={{ ...captionFont(lang === 'en' ? 'मेरा व्रत' : 'My Vrat'), fontSize: 13, lineHeight: 20, color: colors.inkMuted }}>{lang === 'en' ? 'मेरा व्रत' : 'My Vrat'} · {followCount + muhuratFollowCount}</Text>
+          </>} />
 
         {followCount === 0 && muhuratFollowCount === 0 ? (
-          <View ref={myVratRef} collapsable={false} style={styles.empty}>
-            <Text style={{ fontSize: 36, color: colors.gold, marginBottom: 10 }}>★</Text>
+          <ScrollView contentContainerStyle={styles.empty}>
+            <View ref={myVratRef} collapsable={false} style={{ width: '100%', alignItems: 'center' }}>
+            <CachedArtwork source={require("@assets/icons/observance-scenes/karwa-chauth-puja.webp")} style={{ width: 200, height: 100, marginBottom: 16 }} />
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18, color: colors.ink, textAlign: 'center' }}>
               {contentByLang(lang, 'अभी कोई व्रत नहीं', 'No vrats yet')}
             </Text>
@@ -170,7 +143,7 @@ export default function MyVratScreen({ navigation }: Props) {
               accessibilityLabel="Browse Vrat and Parv"
               style={({ pressed }) => [
                 styles.browseBtn,
-                { backgroundColor: colors.saffron, borderRadius: radii.pill },
+                { backgroundColor: colors.catalogAccent, borderRadius: radii.pill },
                 pressed && { opacity: 0.8 },
               ]}
             >
@@ -178,7 +151,8 @@ export default function MyVratScreen({ navigation }: Props) {
                 {contentByLang(lang, 'व्रत-पर्व देखें →', 'Browse व्रत-पर्व →')}
               </Text>
             </Pressable>
-          </View>
+            </View>
+          </ScrollView>
         ) : (
           <ScrollView
             contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
@@ -187,13 +161,13 @@ export default function MyVratScreen({ navigation }: Props) {
             {/* Metric band. The vrat blocks render only when a vrat is actually
                 followed — this screen can now be reached with muhurat follows
                 and none of its own. */}
-            <View ref={myVratRef} collapsable={false} style={[styles.metricBand, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
+            <View ref={myVratRef} collapsable={false}><ListingCardFrame style={styles.metricBand}>
               <Metric value={followCount} label={contentByLang(lang, 'फ़ॉलो', 'Following')} lang={lang} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
               <Metric value={reminderCount} label={contentByLang(lang, 'अनुस्मारक', 'Reminders on')} lang={lang} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
               <Metric value={thisMonthCount} label={contentByLang(lang, 'इस माह', 'This month')} lang={lang} colors={colors} />
-            </View>
+            </ListingCardFrame></View>
 
             {followCount > 0 && (
             <Pressable
@@ -203,9 +177,9 @@ export default function MyVratScreen({ navigation }: Props) {
               style={({ pressed }) => [styles.defaultsRow, pressed && { opacity: 0.6 }]}
             >
               <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.saffronDeep }}>
-                {contentByLang(lang, '🔔 डिफ़ॉल्ट अनुस्मारक', '🔔 Reminder defaults')}
+                {contentByLang(lang, 'डिफ़ॉल्ट अनुस्मारक', 'Reminder defaults')}
               </Text>
-              <Text style={{ fontSize: 16, color: colors.inkMuted }}>›</Text>
+              <AppIcon name="bell" size={20} color={colors.saffronDeep} />
             </Pressable>
             )}
 
@@ -216,50 +190,17 @@ export default function MyVratScreen({ navigation }: Props) {
               {contentByLang(lang, 'मेरी प्राथमिकता', 'My priority')}
             </Text>
             {items.map((it) => (
-              <PriorityRow
-                key={it.rule.id}
-                rule={it.rule}
-                nextDate={it.next?.date ?? null}
-                today={today}
-                lang={lang}
-                colors={colors}
-                typography={typography}
-                radii={radii}
+              <ObservancePreviewCard key={it.rule.id} rule={it.rule} lang={lang} following
+                dateLabel={it.next ? shortDate(it.next.date, lang) : undefined}
+                countdown={it.next ? observanceCountdown(it.next.date, today, lang) : undefined}
                 reminderOn={reminderOnFor(it.follow)}
-                onOpen={() => navigation.navigate('ObservanceDetail', { ruleId: it.rule.id })}
-                onBell={() =>
-                  setSheet({
-                    mode: 'vrat',
-                    ruleId: it.rule.id,
-                    name: contentByLang(lang, it.rule.nameHi, it.rule.nameEn),
-                    initial: it.follow.reminder ?? reminderDefault,
-                  })
-                }
+                onToggleFollow={() => unfollow(it.rule.id)}
+                onPress={() => navigation.navigate('ObservanceDetail', { ruleId: it.rule.id })}
+                onReminderPress={() => setSheet({ mode: 'vrat', ruleId: it.rule.id,
+                  name: contentByLang(lang, it.rule.nameHi, it.rule.nameEn), initial: it.follow.reminder ?? reminderDefault })}
               />
             ))}
 
-            {/* Upcoming timeline (among followed) */}
-            {upcoming.length > 0 && (
-              <>
-                <Text style={[styles.sectionHeading, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), marginTop: 22 }]}>
-                  {contentByLang(lang, 'आगामी', 'Upcoming')}
-                </Text>
-                {upcoming.map((it, i) => (
-                  <View
-                    key={it.rule.id}
-                    style={[styles.upRow, { borderBottomColor: i < upcoming.length - 1 ? colors.divider : 'transparent' }]}
-                  >
-                    <View style={[styles.upDot, { backgroundColor: colors.saffron }]} />
-                    <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 14, color: colors.inkSoft }}>
-                      {contentByLang(lang, it.rule.nameHi, it.rule.nameEn)}
-                    </Text>
-                    <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
-                      {shortDate(it.next.date, lang)} · {relativeLabel(it.next.date, today, lang)}
-                    </Text>
-                  </View>
-                ))}
-              </>
-            )}
             </>
             )}
 
@@ -291,78 +232,9 @@ function Metric({ value, label, lang, colors }: { value: number; label: string; 
   return (
     <View style={styles.metric}>
       <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 22, color: colors.saffronDeep }}>{value}</Text>
-      <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 12, color: colors.inkMuted, marginTop: 2 }}>
+      <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 12, lineHeight: 20, textAlign: 'center', color: colors.inkMuted, marginTop: 2 }}>
         {label}
       </Text>
-    </View>
-  );
-}
-
-function PriorityRow({
-  rule,
-  nextDate,
-  today,
-  lang,
-  colors,
-  typography,
-  radii,
-  reminderOn,
-  onOpen,
-  onBell,
-}: {
-  rule: ObservanceRule;
-  nextDate: Date | null;
-  today: Date;
-  lang: Lang;
-  colors: any;
-  typography: any;
-  radii: any;
-  reminderOn: boolean;
-  onOpen: () => void;
-  onBell: () => void;
-}) {
-  return (
-    <View style={[styles.prow, { borderBottomColor: colors.divider }]}>
-      <Pressable
-        onPress={onOpen}
-        accessibilityRole="button"
-        accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
-        style={({ pressed }) => [{ flex: 1, paddingRight: 10 }, pressed && { opacity: 0.6 }]}
-      >
-        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
-          {contentByLang(lang, rule.nameHi, rule.nameEn)}
-        </Text>
-        <Text style={{ ...captionFont(lang === 'en' ? rule.nameHi : rule.nameEn), fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>
-          {lang === 'en' ? rule.nameHi : rule.nameEn}
-        </Text>
-      </Pressable>
-      {nextDate && (
-        <View style={{ alignItems: 'flex-end' }}>
-          <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft }}>
-            {shortDate(nextDate, lang)}
-          </Text>
-          <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkSoft, marginTop: 1 }}>
-            {relativeLabel(nextDate, today, lang)}
-          </Text>
-        </View>
-      )}
-      <Pressable
-        onPress={onBell}
-        accessibilityRole="button"
-        accessibilityState={{ selected: reminderOn }}
-        accessibilityLabel={`Reminders for ${rule.nameEn}`}
-        hitSlop={6}
-        style={[
-          styles.bell,
-          {
-            borderColor: reminderOn ? colors.saffron : colors.divider,
-            backgroundColor: reminderOn ? colors.saffron : 'transparent',
-            borderRadius: radii.md,
-          },
-        ]}
-      >
-        <Text style={{ fontSize: 13, color: reminderOn ? colors.parchment : colors.inkMuted }}>🔔</Text>
-      </Pressable>
     </View>
   );
 }
@@ -370,18 +242,12 @@ function PriorityRow({
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  topBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 8 },
-  backButton: { width: 36, height: 36, borderWidth: 1, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingTop: 8, paddingBottom: 32 },
-  empty: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 32 },
+  empty: { flexGrow: 1, paddingVertical: 24, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 32 },
   browseBtn: { marginTop: 22, minHeight: 44, paddingHorizontal: 22, alignItems: 'center', justifyContent: 'center' },
-  metricBand: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, paddingVertical: 14, marginTop: 8, marginBottom: 6 },
+  metricBand: { flexDirection: 'row', alignItems: 'center', paddingVertical: 14, marginTop: 8, marginBottom: 6 },
   metric: { flex: 1, alignItems: 'center' },
   metricDivider: { width: StyleSheet.hairlineWidth, alignSelf: 'stretch', marginVertical: 6 },
   sectionHeading: { fontSize: 15, marginTop: 18, marginBottom: 6 },
-  prow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 11, borderBottomWidth: StyleSheet.hairlineWidth },
-  upRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 9, borderBottomWidth: StyleSheet.hairlineWidth, gap: 8 },
-  upDot: { width: 6, height: 6, borderRadius: 3 },
   defaultsRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 8, marginTop: 2 },
-  bell: { width: 34, height: 34, borderWidth: 1, alignItems: 'center', justifyContent: 'center', marginLeft: 8 },
 });

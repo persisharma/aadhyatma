@@ -1,0 +1,24 @@
+{
+  "id": "krishna-gau-mata",
+  "tool": "built-in image_gen",
+  "source": "/Users/prashant/.codex/generated_images/01a17bf6-503e-7181-8283-68318975ed36/exec-43ec63da-e947-4dc3-b3e6-0dd4059c395f.png",
+  "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/krishna-gau-mata.png",
+  "prompt": "docs/evaluations/vrat-consistency-2026-10-27/masters/krishna-gau-mata.prompt.txt",
+  "shipped": "mobile/assets/icons/observance-scenes/krishna-gau-mata.webp",
+  "masterSha256": "b06ed35a3c0363d6b157436970b9d5a5d9de6d42fce612b6a46f0db268f39638",
+  "shippedSha256": "e239dfd3f1c09ad91148deaaa50ed1a8e1874166487979dbc14ec6c2f39c6957",
+  "masterDimensions": [
+    1254,
+    1254
+  ],
+  "shippedDimensions": [
+    320,
+    320
+  ],
+  "shippedBytes": 51572,
+  "mechanicalProcessing": "RGB; Lanczos320x320; WebPquality85method6. No visual editing.",
+  "referenceImages": [
+    "mobile/assets/reader-illustrations/deity-krishna-bansuri.webp"
+  ],
+  "review": "Inspected master and shipped320px thumbnail. Complete Krishna playing flute beside one white cow, full bodies and heads/crown, coherent warm templegarden hand-painted scene, no text/UI."
+}

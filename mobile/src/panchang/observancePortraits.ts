@@ -39,10 +39,9 @@ const portraits: Readonly<Record<string, ObservancePortrait>> = {
   ramdev: reader('theerth-ramdevra', 0.50, 0.22, 2.3),
   tejaji: reader('theerth-tejaji-kharnal', 0.49, 0.24, 2.3),
   khandoba: reader('theerth-khandoba-jejuri', 0.52, 0.32, 2.3),
-  // These already-published scenes have distinct Ahoi and Tulsi subjects.
-  ahoi: { source: { kind: 'devotional-portrait', art: 'ahoi' }, frame: { aspect: 1080 / 1456, x: 0.78, y: 0.16, zoom: 7 } },
-  tulsi: { source: { kind: 'devotional-portrait', art: 'tulsi' }, frame: { aspect: 1080 / 1456, x: 0.77, y: 0.21, zoom: 3.3 } },
-  siddhidatri: { source: { kind: 'kids-story-portrait', stem: 'si-01' }, frame: { aspect: 0.8, x: 0.5, y: 0.27, zoom: 2.2 } },
+  ahoi: { source: require('@assets/icons/observance-scenes/ahoi-mata.webp'), frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } },
+  tulsi: { source: require('@assets/icons/observance-scenes/tulsi-puja.webp'), frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } },
+  siddhidatri: { source: require('@assets/icons/observance-scenes/siddhidatri.webp'), frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } },
   ...Object.fromEntries(Object.entries(observancePortraitSources).map(([key, source]) => [key, {
     source, frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 },
   }])),
@@ -111,9 +110,19 @@ const pujaScene: ObservancePortrait = {
   frame: { aspect: 2, x: 0.5, y: 0.5, zoom: 1 },
 };
 
+const sharedScenes: Readonly<Record<string, number>> = {
+  'Gau Mata and Shri Krishna': require('@assets/icons/observance-scenes/krishna-gau-mata.webp'),
+  'Shri Krishna and Gau Mata': require('@assets/icons/observance-scenes/krishna-gau-mata.webp'),
+  'Lord Shiva and Shri Vishnu': require('@assets/icons/observance-scenes/shiva-vishnu.webp'),
+  'Khandoba and Lord Kartikeya': require('@assets/icons/observance-scenes/khandoba-kartikeya.webp'),
+  'Shri Krishna and Yamaraja': require('@assets/icons/observance-scenes/krishna-yama.webp'),
+  'Lord Shiva and Murugan': require('@assets/icons/observance-scenes/shiva-parvati-murugan.webp'),
+  'Lord Murugan and Shiva–Parvati': require('@assets/icons/observance-scenes/shiva-parvati-murugan.webp'),
+};
+
 /** Event overrides precede identity art; full figures replace face-only crops. */
 export function observanceIllustrations(
-  rule: Pick<ObservanceRule, 'deityEn'> & Partial<Pick<ObservanceRule, 'id'>>,
+  rule: Pick<ObservanceRule, 'deityEn'> & Partial<Pick<ObservanceRule, 'id' | 'category'>>,
   variant: ObservanceArtVariant = 'list',
 ): readonly ObservancePortrait[] {
   if (rule.id && ['masik-krishna-janmashtami', 'janmashtami', 'janmashtami-vaishnava'].includes(rule.id)) {
@@ -123,8 +132,16 @@ export function observanceIllustrations(
   if (rule.id === 'valmiki-jayanti' && variant === 'today') {
     return [reader('category-granth-open-scripture', 0.5, 0.5, 1)];
   }
+  if (sharedScenes[rule.deityEn]) return [{ source: sharedScenes[rule.deityEn], frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } }];
   if (rule.deityEn === 'Sita Ram') return [reader('deity-rama-darbar', 0.5, 0.5, 1)];
-  return observancePortraits(rule).map(portrait => {
+  const paintings = observancePortraits(rule);
+  if (!paintings.length) {
+    // Practices/traditions get complete ritual paintings in the same style,
+    // never an unrelated deity or a legacy symbolic icon.
+    return [reader(['Guru Parampara', 'Veda Parampara', 'Rishi Parampara', 'Jain vrat tradition'].includes(rule.deityEn)
+      ? 'category-granth-open-scripture' : 'category-aarti-diya', 0.5, 0.5, 1)];
+  }
+  return paintings.map(portrait => {
     if (typeof portrait.source !== 'number' && portrait.source.kind === 'reader-illustration') {
       return { ...portrait, frame: { ...portrait.frame, y: 0.5, zoom: 1 } };
     }
