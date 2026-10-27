@@ -951,6 +951,7 @@ function collectJsonFiles(dirRel = ''): string[] {
       entry.name !== 'audioAssetManifest.json' &&
       entry.name !== 'kidsStoryAssetManifest.json' &&
       entry.name !== 'comicAssetManifest.json' &&
+      entry.name !== 'ayodhyaComicAssetManifest.json' &&
       entry.name !== 'backgroundAssetManifest.json' &&
       entry.name !== 'readerIllustrationManifest.json' &&
       // Art aliases are semantic asset mappings, not scripture. Their manifest
