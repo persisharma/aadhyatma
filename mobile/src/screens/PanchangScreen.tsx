@@ -1,7 +1,7 @@
 import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
 import CatalogCategoryTile from '@/components/CatalogCategoryTile';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
-import { ListingCardFrame } from '@/components/ListingCard';
+import { ListingCardFrame, UPCOMING_CARD_WIDTH } from '@/components/ListingCard';
 import ObservanceTodaySummary from '@/components/ObservanceTodaySummary';
 import { observanceCountdown } from '@/panchang/observancePresentation';
 import AppIcon from '@/components/AppIcon';
@@ -2050,13 +2050,15 @@ function CatalogLedgerCell({
     >
       <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={18} color={colors.iconInk} weight="regular" />
       <Text
-        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, lineHeight: 20, color: colors.ink, marginTop: 3 }}
+        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, lineHeight: 22, color: colors.ink, marginTop: 3, textAlign: 'center', alignSelf: 'stretch' }}
       >
         {label}
       </Text>
-      <Text style={{ ...captionFont(state), fontSize: 11, lineHeight: 16, color: colors.saffronDeep, marginTop: 2 }}>
-        {state}
-      </Text>
+      <View style={{ flexGrow: 1, justifyContent: 'flex-end', alignSelf: 'stretch', paddingTop: 2 }}>
+        <Text style={{ ...captionFont(state), fontSize: 11, lineHeight: 16, color: colors.saffronDeep, textAlign: 'center' }}>
+          {state}
+        </Text>
+      </View>
     </Pressable>
   );
 }
@@ -2071,14 +2073,12 @@ function CatalogLedgerCell({
     count still does not tell a user where their extra dates came from (§42).
     The accessibility labels stay full sentences: the compression is visual. */
 function CatalogLedgerBar({
-  lang, colors, typography, radii, elevation, followCount, lenses, lensAvailableCount,
+  lang, colors, typography, followCount, lenses, lensAvailableCount,
   onOpenMyVrat, onOpenPitruSmaran, onOpenLenses,
 }: {
   lang: Lang;
   colors: any;
   typography: any;
-  radii: any;
-  elevation: any;
   followCount: number;
   lenses: ReadonlySet<ObservanceLens>;
   /** Calendars this build offers; 0 collapses the bar to two columns. */
@@ -2130,13 +2130,7 @@ function CatalogLedgerBar({
         : `${lensNames[0]} +${lensNames.length - 1}`;
 
   return (
-    <View
-      style={[
-        styles.ledgerBar,
-        { backgroundColor: colors.catalogSurface, borderColor: colors.catalogBorder, borderRadius: radii.md },
-        elevation.card,
-      ]}
-    >
+    <ListingCardFrame tone="catalog" testID="catalog-ledger" style={styles.ledgerBar}>
       <CatalogLedgerCell
         lang={lang}
         colors={colors}
@@ -2180,7 +2174,7 @@ function CatalogLedgerBar({
           divided
         />
       )}
-    </View>
+    </ListingCardFrame>
   );
 }
 
@@ -2357,6 +2351,12 @@ function CatalogLanding({
   // like when nothing is in focus.
   const todayItems = useMemo(() => upcomingWindow.filter((o) => o.date.getTime() === today.getTime()), [upcomingWindow, today]);
   const upcoming = useMemo(() => upcomingWindow.filter((o) => o.date.getTime() !== today.getTime()).slice(0, 6), [upcomingWindow, today]);
+  const [upcomingRailWidth, setUpcomingRailWidth] = useState(0);
+  const upcomingStep = UPCOMING_CARD_WIDTH + 6;
+  const visibleUpcomingCount = Math.min(upcoming.length, Math.max(1, Math.floor((upcomingRailWidth - 28 + 6) / upcomingStep)));
+  // Make the final stop align complete cards too, instead of clamping midway
+  // through the first visible card when the rail reaches its end.
+  const upcomingEndPadding = Math.max(14, upcomingRailWidth - 14 - visibleUpcomingCount * UPCOMING_CARD_WIDTH - Math.max(0, visibleUpcomingCount - 1) * 6);
   const counts = useMemo(() => getCategoryCounts(), []);
   const kathaCount = getKathaCount();
 
@@ -2427,8 +2427,6 @@ function CatalogLanding({
             lang={lang}
             colors={colors}
             typography={typography}
-            radii={radii}
-            elevation={elevation}
             followCount={followCount}
             lenses={lenses}
             lensAvailableCount={lensAvailableCount}
@@ -2456,8 +2454,10 @@ function CatalogLanding({
                 {contentByLang(lang, 'आगामी', 'Upcoming')}
               </Text>
               <ScrollView horizontal testID="catalog-upcoming-rail" showsHorizontalScrollIndicator={false} removeClippedSubviews={false}
+                onLayout={event => setUpcomingRailWidth(event.nativeEvent.layout.width)}
+                snapToInterval={upcomingStep} snapToAlignment="start" decelerationRate="fast" disableIntervalMomentum
                 style={{ marginHorizontal: -14, marginTop: -6, marginBottom: -8 }}
-                contentContainerStyle={{ gap: 6, paddingHorizontal: 14, paddingTop: 6, paddingBottom: 10, alignItems: 'flex-start' }}>
+                contentContainerStyle={{ gap: 6, paddingLeft: 14, paddingRight: upcomingEndPadding, paddingTop: 6, paddingBottom: 10, alignItems: 'flex-start' }}>
                 {upcoming.map((item) => (
                   <ObservancePreviewCard
                     key={`${item.rule.id}-${item.date.toDateString()}`}
@@ -2559,7 +2559,7 @@ const styles = StyleSheet.create({
   starBadge: { position: 'absolute', top: -2, right: -3, minWidth: 16, height: 16, borderRadius: 8, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
   starBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10, lineHeight: 13 },
   ledgerBar: { flexDirection: 'row', alignItems: 'stretch', borderWidth: 1, paddingVertical: 6, paddingHorizontal: 4, marginTop: 8 },
-  ledgerCell: { flex: 1, minHeight: 48, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },
+  ledgerCell: { flex: 1, minWidth: 0, minHeight: 48, alignItems: 'center', justifyContent: 'flex-start', paddingHorizontal: 4 },
   segmented: { flexDirection: 'row', padding: 3, borderWidth: 1, marginTop: 10 },
   segmentOption: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
   jyotishHero: { borderWidth: 1, padding: 16, marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 13 },

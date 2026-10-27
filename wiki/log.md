@@ -1220,3 +1220,8 @@ Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×7
 ## [2026-10-27] ingest | Upcoming full-width banners
 
 The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.
+
+
+## [2026-10-27] ingest | Vrat card stops and middle-strip alignment
+
+Added card-aligned Upcoming scrolling with responsive end padding. The three-column ledger now shares the catalog frame and aligns icons/status around wrapping labels. Native Hindi/English/XXXL and the three destinations were checked; artwork and calendar rules are unchanged. See `docs/evaluations/vrat-strip-content-2026-10-27/`.
