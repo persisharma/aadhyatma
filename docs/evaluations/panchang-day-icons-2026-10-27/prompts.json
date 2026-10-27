@@ -1,0 +1,43 @@
+{
+  "styleReference": "docs/evaluations/storybook-icons-2026-10-06/selected-storybook-reference.png",
+  "editReference": "mobile/assets/icons/storybook/surya.png",
+  "method": "built-in image_gen; one subject per call; style board attached to every call, surya.png also attached for the two edits",
+  "subjects": [
+    {
+      "name": "chandra",
+      "slot": "चन्द्रमा",
+      "mode": "style",
+      "prompt": "Create ONE production icon asset on a truly transparent RGBA background. Reference role: the supplied image is the approved Storybook miniatures style board — match its style exactly, but paint the NEW subject described below; do not copy any subject from the board. Match the reference matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Crisp simple shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins; the subject occupies about 78% of the canvas in its longest dimension. Flat front-facing miniature, no surrounding frame, no tile, no badge, no ground shadow, no scenery, no cast shadow, no checkerboard, no text, letters, numerals, currency signs or labels. Do not change the palette to shiny yellow, vivid orange or glossy 3D. Subject: An ivory crescent moon opening to the right, soft warm-sepia shading on its inner edge and two faint craters, with one small five-pointed muted-gold star in the crescent's opening."
+    },
+    {
+      "name": "karana",
+      "slot": "करण",
+      "mode": "style",
+      "prompt": "Create ONE production icon asset on a truly transparent RGBA background. Reference role: the supplied image is the approved Storybook miniatures style board — match its style exactly, but paint the NEW subject described below; do not copy any subject from the board. Match the reference matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Crisp simple shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins; the subject occupies about 78% of the canvas in its longest dimension. Flat front-facing miniature, no surrounding frame, no tile, no badge, no ground shadow, no scenery, no cast shadow, no checkerboard, no text, letters, numerals, currency signs or labels. Do not change the palette to shiny yellow, vivid orange or glossy 3D. Subject: A round lunar disc lit exactly in half: the left half warm ivory with faint craters, the right half deep warm sepia-brown, split by a straight vertical terminator, under a thin warm-brown outline."
+    },
+    {
+      "name": "nitya-yoga",
+      "slot": "नित्य योग",
+      "mode": "style",
+      "prompt": "Create ONE production icon asset on a truly transparent RGBA background. Reference role: the supplied image is the approved Storybook miniatures style board — match its style exactly, but paint the NEW subject described below; do not copy any subject from the board. Match the reference matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Crisp simple shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins; the subject occupies about 78% of the canvas in its longest dimension. Flat front-facing miniature, no surrounding frame, no tile, no badge, no ground shadow, no scenery, no cast shadow, no checkerboard, no text, letters, numerals, currency signs or labels. Do not change the palette to shiny yellow, vivid orange or glossy 3D. Subject: A matte muted-gold sun disc with short painted rays, partly overlapped in front at its lower left by an ivory crescent moon — the two bodies joined, sun behind moon."
+    },
+    {
+      "name": "agni-vaas",
+      "slot": "अग्नि वास",
+      "mode": "style",
+      "prompt": "Create ONE production icon asset on a truly transparent RGBA background. Reference role: the supplied image is the approved Storybook miniatures style board — match its style exactly, but paint the NEW subject described below; do not copy any subject from the board. Match the reference matte earthy burnt ochre, muted gold/brass, warm brown outlines, subtle hand-painted shading and delicate grain. Crisp simple shapes must read at 25 logical pixels. Center the visible bounding box exactly in a square canvas; generous equal transparent margins; the subject occupies about 78% of the canvas in its longest dimension. Flat front-facing miniature, no surrounding frame, no tile, no badge, no ground shadow, no scenery, no cast shadow, no checkerboard, no text, letters, numerals, currency signs or labels. Do not change the palette to shiny yellow, vivid orange or glossy 3D. Subject: A small square stepped copper havan kund seen slightly from above, three tongues of matte burnt-orange flame rising from it, and two short sticks of samidha wood crossing at its rim. No people, no ladle, no smoke cloud."
+    },
+    {
+      "name": "sunset",
+      "slot": "सूर्यास्त",
+      "mode": "edit:surya.png",
+      "prompt": "Edit the supplied transparent painted rising-sun icon (surya.png) to create ONE matching icon asset for this same native mobile app; the second supplied image is the approved Storybook miniatures style board for palette and grain. Keep the reference's horizon line, warm brown hand-painted outline weight, matte watercolor grain, frontal composition, canvas size and equal transparent margins essentially identical. Genuine transparent RGBA outside the subject, no tile, scenery beyond the horizon line, cast shadow, glow, glossy metal, checkerboard, text or watermark. Crisp shapes must read at 25 logical pixels. Change ONLY the following: make the sun SETTING — the disc sits lower, more than half below the same horizon line, in a deeper amber-rose pigment, with shorter and fewer rays, and two tiny distant birds in warm brown flying left above the horizon."
+    },
+    {
+      "name": "moonrise",
+      "slot": "चंद्रोदय",
+      "mode": "edit:surya.png",
+      "prompt": "Edit the supplied transparent painted rising-sun icon (surya.png) to create ONE matching icon asset for this same native mobile app; the second supplied image is the approved Storybook miniatures style board for palette and grain. Keep the reference's horizon line, warm brown hand-painted outline weight, matte watercolor grain, frontal composition, canvas size and equal transparent margins essentially identical. Genuine transparent RGBA outside the subject, no tile, scenery beyond the horizon line, cast shadow, glow, glossy metal, checkerboard, text or watermark. Crisp shapes must read at 25 logical pixels. Change ONLY the following: replace the sun with an ivory crescent moon rising over the same horizon line, with a narrow band of deep warm-sepia dusk behind its lower half (no blue or indigo anywhere), and one small muted-gold star at the upper right."
+    }
+  ]
+}
