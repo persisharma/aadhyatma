@@ -1,0 +1,314 @@
+[
+  {
+    "source": "mobile/assets/reader-illustrations/category-aarti-diya.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 32308,
+    "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe",
+    "sourceSha256": "95c197d8fd4637189443a22765d43fd852bcdb8f284b6ff0baf004c90466ca5c",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/category-granth-open-scripture.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/category-granth-open-scripture.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 33188,
+    "sha256": "2b60e1ca37d1c10c62e1bac618732856223979dd04474b7a63c8e1604b2a2073",
+    "sourceSha256": "c54f7e15a8cabdc44125f85cd3a9bcb2ad040708b7a0eb70765a10389e3df208",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/daan-annapurna-bhiksha.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/daan-annapurna-bhiksha.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 36104,
+    "sha256": "cf9cbcb50885a533df401cd976ba157bb278f2e1d150e76560c0c1435728f66d",
+    "sourceSha256": "3ababd21727398228a0fde44ab198cd6bf183d834053de6815c667bc139c0b06",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-dattatreya.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-dattatreya.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 43284,
+    "sha256": "65541e44b36371d43c77b5d0fe2652c7cd8c6408b1a7a8314e9f42a53a466541",
+    "sourceSha256": "3c7883121f519d08e526734103ca345e0950254f4a17a6f207e0822fa5dc2a54",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-durga-lion.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-durga-lion.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 39768,
+    "sha256": "5fc643c7f43c44b54fcc699a5eb048ad305348342cec6ce92415c833a570e561",
+    "sourceSha256": "324b157dc73b990ec996dfd687e08e3a861c77067cfe6d0a0f28237f25855253",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-ganesha-modak.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 41976,
+    "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe",
+    "sourceSha256": "d25b9255ffa1b3f3805b8349f39933d51c09c230e7bd260da5546912e6a8bc69",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-ganga.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-ganga.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 40344,
+    "sha256": "5cfd0a806db53d19c88b137e7eadc78581e8642be265105a851fe513ce5fdbe7",
+    "sourceSha256": "25367a33becc7421405561d8af10c76c5587e7ce6ea6190b18d516faf53b33f1",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-krishna-bansuri.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-krishna-bansuri.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 44542,
+    "sha256": "bb215a66854c248caab9c6338c45a3f669d9c0bf2a776b2d4ea20ff383f8849f",
+    "sourceSha256": "f38054b6023adf221b4de2cf30281dff54fba7a5bd4b007e17277f1cef17b8ae",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-lakshmi.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-lakshmi.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 37560,
+    "sha256": "ec29fd934f2e68eda8a5dd33bba461e8fde3834f0156bd0882550d3200a60442",
+    "sourceSha256": "7b70b090e5eceb11284909e3a7d14d4f724df64ea395ef1f97ada845b2108450",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-narasimha-prahlad.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-narasimha-prahlad.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 43976,
+    "sha256": "6bf79d678a5b8bece4484b2abd97fb8764d9324251ec003e9c869418360f5c44",
+    "sourceSha256": "5b4a63956b5202039bfb8b2f8ac171eec684b6bd601ea7fa367c4ffe3d74a051",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-parvati-bhavani.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 42410,
+    "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244",
+    "sourceSha256": "f489354a2564eaf97d0cf65812db3424fe2a8a48709af9edf1907e7e33a45d62",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-radha-krishna.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-radha-krishna.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 46718,
+    "sha256": "efeb0f58ed46b229146d47be1967fbbffc4d3a6406703c96e6bd7861ab479858",
+    "sourceSha256": "28a425c6391e95f063604f806e5742ce4ccce2ba2b7732a8283f854abed25d4f",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-rama-darbar.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 41680,
+    "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181",
+    "sourceSha256": "934c7e58e18e4c5df2932c0b9f923db76afec7d786002115e80f17004cd04976",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-saraswati-veena.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-saraswati-veena.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 39482,
+    "sha256": "2c9134b3fa98d0e49e602eab0e62001762b67bec844f9942f6ce642283254209",
+    "sourceSha256": "0bfd51fab0c76639ced8675d2ffdbcfd0bfe1e19929109ab760afd8e61b74ddb",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-shani.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-shani.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 37276,
+    "sha256": "960ae2429fcd2a9c5d3d168526183f215d1ed116eb953a83eef86f42895b9207",
+    "sourceSha256": "0dc16111235285d390eb05d9e619644235e34454f2f50fd0a5fe58cbc3036f9f",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/deity-surya.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 39296,
+    "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9",
+    "sourceSha256": "c7d38e9b8588d3766c0a95e38f93a9eb59ccf8fa9d1517f190468ac81b420101",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/hanuman-sita.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/hanuman-sita.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 39964,
+    "sha256": "c065231f464b5546f5515aecc1c9256a712a159325d753c772a871d0f2cd36bd",
+    "sourceSha256": "0acd6590e27d86c1b4e4e3642e536851789344ed2465c43e922d82f5d59da813",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/shiva.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 37056,
+    "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b",
+    "sourceSha256": "7cb9287b40c1bbe01c909389d648fc356a9ee9ad499c09924c024a32de36dfda",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/source-vishnu-narayana.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 36798,
+    "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9",
+    "sourceSha256": "ea3ebd005c439ef456fe757e8b63d8eabb2c700ce58f3026d7de6ee15a3a2a1a",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/theerth-gogaji-gogamedi.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/theerth-gogaji-gogamedi.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 37098,
+    "sha256": "603819aff415081de40d5a7840bc12857732eb5be7061a44cf55a201bb054ff6",
+    "sourceSha256": "54128d157693059df9aa85fb6b909b9fa12f2022418962ee2219264ad0fda54d",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/theerth-khandoba-jejuri.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/theerth-khandoba-jejuri.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 42932,
+    "sha256": "cc73c9b1768642f974e99764617b39e3c10a068c76f1735329957b987aa988d1",
+    "sourceSha256": "e036fbf06d13d127b538919962a65ede571d1bafdc77ae4c7938e613416e7633",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/theerth-ramdevra.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/theerth-ramdevra.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 35608,
+    "sha256": "0f7ebdf0d43c523e317529fc9c038c78a4f01e96e229353e2e80114dc1843979",
+    "sourceSha256": "86de15db64abaf07bbcb2c3db001080ddb9397beab0bf234a749d0b42594efa7",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/theerth-tejaji-kharnal.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/theerth-tejaji-kharnal.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 34354,
+    "sha256": "f02c80682b9c29c7cf9651138418944d3dc9a7a50454f7ed06127970fcb8bef1",
+    "sourceSha256": "7f202702907f142ba3702913d378d1ceecab53581d9c105410424603e5442f1f",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/reader-illustrations/theerth-vetrimalai-murugan.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/theerth-vetrimalai-murugan.webp",
+    "dimensions": [
+      480,
+      240
+    ],
+    "bytes": 39856,
+    "sha256": "3b9446ed84fb37e95be531dd72752daa8bc4f67237e58cf35044d1104dbd2820",
+    "sourceSha256": "4c61af521ee50ee8743163c9d783f22cfcc1c43c421845c665e3918a769062bf",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/vidhi-steps/kalash.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/kalash.webp",
+    "dimensions": [
+      480,
+      320
+    ],
+    "bytes": 25138,
+    "sha256": "d8781075f2963ecb032cac36f8a3e969e57f789577c49e792d231fa9c31471a1",
+    "sourceSha256": "83d4475592cc1a6ae330fdb6798062f165b7326cd0c35d6c906ee365893ec676",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  },
+  {
+    "source": "mobile/assets/vidhi-steps/vrat-naivedya.webp",
+    "file": "mobile/assets/icons/observance-thumbnails/vrat-naivedya.webp",
+    "dimensions": [
+      480,
+      320
+    ],
+    "bytes": 34070,
+    "sha256": "be152ec3c5f2a3739734d99b2f9d0fffd41b22f11e8cb1d9f242d4dfe5d1e025",
+    "sourceSha256": "d05f9fff70097a888abe64fa3cdce3c6febf97bc1fdf23580f8936cb071e4d9c",
+    "operation": "Whole-canvas downsample and WebP encoding only; no new painting or crop."
+  }
+]

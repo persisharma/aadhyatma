@@ -1,0 +1,22 @@
+{
+  "id": "dasha-mata-muted",
+  "tool": "built-in image_gen",
+  "editTarget": "mobile/assets/icons/observance-portraits/dasha-mata.webp",
+  "references": [
+    "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+    "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp"
+  ],
+  "source": "/Users/prashant/.codex/generated_images/01a17c45-b89d-7440-a02d-9172cdb95341/exec-171e030b-71aa-4507-8147-cf3e01b8f960.png",
+  "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/dasha-mata-muted.png",
+  "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/dasha-mata-muted.prompt.txt",
+  "shipped": "mobile/assets/icons/observance-scenes/dasha-mata-muted.webp",
+  "masterSha256": "2d203c22eda8ded57b1bd002228167ffec2d54ff4c47a2ff0ccedc3d58bdbfae",
+  "shippedSha256": "f29df0c83d7cc44461b988c06e29e5e1750e355ca55e9dd46657b3dce3808285",
+  "shippedDimensions": [
+    320,
+    320
+  ],
+  "shippedBytes": 42982,
+  "mechanicalProcessing": "Whole-canvas RGB Lanczos resize320square, WebP quality85 method6, no color processing.",
+  "review": "Original/edited/anchor comparison inspected. Woman worshipping sacred tree, thread, offerings, red sari and foliage remain clear in a complete square composition; greens and red-gold paint are softer matte and no UI/text appears."
+}

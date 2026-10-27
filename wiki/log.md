@@ -1201,6 +1201,22 @@ device registration). The only textual conflict was this append-only history;
 both histories were retained. TypeScript and all 3,762 local tests pass on the
 combined tree. The Vrat portrait/catalog changes remain intact.
 
+
+## [2026-10-26] ingest | Match Vrat reference cards using the Kids Stories listing shell
+
+Supplied landing/list references exposed tall square-avatar Upcoming cards and inconsistent subject cropping. Vrat now renders `ListingCard` variants, with `ListingCardFrame` for Today/category doors. Added explicit Karwa Chauth and child-Krishna event scenes (120,082 shipped bytes), preserved generic deity fallback identities and existing reader/story masters, and fixed Ahoi frame scaling plus English/enlarged category wrapping. Integrated the already-open #550 header/search changes after discovering #542 was merged. TypeScript and 3,778 tests pass; fresh iOS Standard/Large, English, XXXL and Kids Stories shelf evidence is in `docs/evaluations/vrat-reference-rebuild-2026-10-26/`. Android/device/accessibility and exhaustive catalog visual review remain separate.
+
+## [2026-10-27] ingest | Unified Vrat/Parv/Upvas, My Vrat, Katha, search and followed-muhurat listings; audited all 200 rule artwork assignments and documented immediate bundled paintings, eight scene replacements, intrinsic card sizing and native QA limits.
 ## [2026-10-26] ingest | Aranyakanda planning only
 
 Recorded the complete75-sarga/91-provisional-page/256-scene outline, relationship-specific four-language address guide, event/prop contracts and explicit source/translation/art/native gaps in [[decisions/ramayan-comic-character-continuity]]. This planning-only package is submitted separately from the merged Ayodhyakanda PR540; no artwork or integration was started.
+
+
+## [2026-10-27] ingest | Vrat prototype proportions and muted artwork
+
+Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×72 art, catalog frame tone, shallow shadows and intrinsic text height. Reviewed all 68 paintings for 200 rules and integrated six versioned matte palette edits. Recorded current native Hindi/English/XXXL/save/reminder/Katha evidence and automated validation in `docs/evaluations/vrat-palette-layout-2026-10-27/`; Android remains pending.
+
+
+## [2026-10-27] ingest | Upcoming full-width banners
+
+The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.

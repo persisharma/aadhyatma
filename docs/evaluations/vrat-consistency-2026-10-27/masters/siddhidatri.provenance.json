@@ -1,0 +1,22 @@
+{
+  "generator": "built-in image_gen",
+  "generatorSource": "/Users/prashant/.codex/generated_images/01a17bf6-af23-7653-b13b-f052548a573c/exec-93f7d551-39b5-4e86-9fbe-0a45aff4b259.png",
+  "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/siddhidatri.png",
+  "masterDimensions": [
+    1254,
+    1254
+  ],
+  "masterSHA256": "bf16005eca0a7b9c216d229c1a1ef64c3f091c8ee900f852f5611d1bc58f9ece",
+  "shipped": "mobile/assets/icons/observance-scenes/siddhidatri.webp",
+  "shippedDimensions": [
+    320,
+    320
+  ],
+  "shippedSHA256": "990039ff485e4e3e6a16643516fed9e4e663687af49edcb2bd7385d162225eb6",
+  "shippedBytes": 45550,
+  "references": [
+    "mobile/assets/reader-illustrations/deity-durga-lion.webp",
+    "mobile/assets/icons/observance-portraits/baglamukhi.webp"
+  ],
+  "review": "Inspected shipped320px image: one complete square painting, four arms with discus/conch/lotus/mace, complete crown/lotus/limbs, red sari, warm golden storybook palette, no visible text or frame."
+}

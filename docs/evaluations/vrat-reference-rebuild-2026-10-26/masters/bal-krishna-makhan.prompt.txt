@@ -1,0 +1,20 @@
+Tool: built-in image_gen.imagegen
+Reference: /Users/prashant/Downloads/Illustrated Vrat Calendar with Starred Favorites.png
+Initial generator output (not selected; feather tip clipped): /Users/prashant/.codex/generated_images/01a17821-8060-73e3-9ae6-960a5a63b04f/exec-cda6982d-d9be-42ff-b621-22ff77a172fb.png
+Selected final generator output (framing correction): /Users/prashant/.codex/generated_images/01a17821-8060-73e3-9ae6-960a5a63b04f/exec-f23ffee3-df78-462c-9585-284ac7bd9a4c.png
+Selected workspace master: bal-krishna-makhan.png
+
+Generation prompt (exact):
+Use case: illustration-story.
+Asset type: production square artwork thumbnail for a devotional mobile app.
+Input image is a style and composition REFERENCE only: the supplied illustrated Vrat calendar screenshot. Create only the standalone subject of the Masik Krishna Janmashtami thumbnail, not any screen UI.
+Primary request: one text-free square 1:1 richly painted devotional illustration of Bal Krishna with makhan. Baby Krishna sits with blue skin, curly dark hair with a peacock feather, small gold ornaments and yellow dhoti, sweet joyful expression, holding a little white butter next to a decorated earthen butter pot with white butter visible. One child only.
+Scene/backdrop: warm cream-gold garden foliage, softly detailed devotional storybook surroundings.
+Style/medium: warm richly painted Indian devotional storybook, delicate brushwork, dimensional illustrative rendering, finely detailed fabrics and ornaments; blue skin and yellow dhoti distinguish baby Krishna clearly.
+Composition/framing: include complete seated figure, head and hair ornament, both hands, legs and butter pot together, all within central 85% of a square with generous safe inset. Child's face and butter action must be legible at an 80dp thumbnail. Do not zoom into the face.
+Lighting/mood: soft golden daylight, affectionate and serene.
+Text: none.
+Constraints: no adult Krishna, no flute, no additional people, no UI, typography, letters, numbers, logos, watermark, border, collage or blank caption panel.
+
+Framing edit prompt (exact; input was initial generator output):
+Edit this existing square Bal Krishna devotional painting. Preserve the exact child identity, pose, blue skin, butter action, earthen pot, yellow dhoti, jewelry, style, warm gold garden and square aspect ratio. Change only the framing: zoom out so the ENTIRE peacock feather including its top tip and left wisps is inside the frame with at least 10% clear garden margin around its outermost painted edges. Keep both feet and the whole butter pot inside with similar safe inset. Slightly extend the existing garden background to create this margin. No other composition or subject changes. No text, UI, borders or logos.

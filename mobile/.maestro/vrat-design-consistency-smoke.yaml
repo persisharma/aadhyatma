@@ -1,0 +1,58 @@
+# Illustrated Vrat journeys: list/save/reminder/empty state and Katha/Parv/Upvas.
+# The separate artwork coverage report reviews every registered rule's painting.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "English"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-vrat" }
+- scrollUntilVisible:
+    element: { text: "Vrat,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Vrat,.*"
+- waitForAnimationToEnd
+- assertVisible: "Area: all"
+- tapOn: { id: "observance-list-search" }
+- inputText: "Karwa"
+- tapOn: { id: "observance-star-karwa-chauth" }
+- assertVisible: "Unfollow Karwa Chauth"
+- tapOn: "Back"
+- tapOn: { text: "My Vrat.*", index: 0 }
+- waitForAnimationToEnd
+- assertVisible: "Reminders for Karwa Chauth"
+- takeScreenshot: e2e-shots/vrat-design-my-vrat
+- tapOn: "Reminders for Karwa Chauth"
+- waitForAnimationToEnd
+- assertVisible: "Advance notice"
+- tapOn: "Save reminders"
+- assertVisible: "Reminders for Karwa Chauth"
+- tapOn: "Unfollow Karwa Chauth"
+- assertVisible: "Browse Vrat and Parv"
+- takeScreenshot: e2e-shots/vrat-design-empty
+- tapOn: "Browse Vrat and Parv"
+- scrollUntilVisible:
+    element: { text: "Katha library,.*" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: e2e-shots/vrat-design-categories
+- tapOn: "Katha library,.*"
+- waitForAnimationToEnd
+- assertVisible: { id: "katha-search" }
+- takeScreenshot: e2e-shots/vrat-design-katha
+- tapOn: "Back"
+- tapOn: "Festivals,.*"
+- waitForAnimationToEnd
+- assertVisible: "Area: all"
+- takeScreenshot: e2e-shots/vrat-design-parv
+- tapOn: "Back"
+- tapOn: "Upvas,.*"
+- waitForAnimationToEnd
+- assertVisible: "Area: all"
+- takeScreenshot: e2e-shots/vrat-design-upvas

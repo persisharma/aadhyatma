@@ -1,0 +1,22 @@
+{
+  "id": "bal-krishna-makhan-muted",
+  "tool": "built-in image_gen",
+  "editTarget": "mobile/assets/icons/observance-scenes/bal-krishna-makhan.webp",
+  "references": [
+    "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+    "mobile/assets/icons/observance-thumbnails/deity-krishna-bansuri.webp"
+  ],
+  "source": "/Users/prashant/.codex/generated_images/01a17c45-b89d-7440-a02d-9172cdb95341/exec-88404cb5-55c6-4f7c-b896-21d31d9a771c.png",
+  "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/bal-krishna-makhan-muted.png",
+  "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/bal-krishna-makhan-muted.prompt.txt",
+  "shipped": "mobile/assets/icons/observance-scenes/bal-krishna-makhan-muted.webp",
+  "masterSha256": "b7fca7b7a49722949b544f0731204d3b5d3cc8876707c495485bd98233a4f822",
+  "shippedSha256": "13dc3a735aa120cb6577ab782fa5dfa2049b0d64b4b2d8b78655ddd5d8ecd7fc",
+  "shippedDimensions": [
+    320,
+    320
+  ],
+  "shippedBytes": 39890,
+  "mechanicalProcessing": "Whole-canvas RGB Lanczos resize320square, WebP quality85 method6, no color processing.",
+  "review": "Original/edited/anchor comparison inspected. Exact child Krishna, blue skin, feather, butter pot and complete square composition remain; foliage, golden highlights and cloth are calmer matte painted colors. Parent also inspected and approved first master."
+}

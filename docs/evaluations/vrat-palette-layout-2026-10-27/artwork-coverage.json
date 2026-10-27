@@ -1,0 +1,6891 @@
+{
+  "summary": {
+    "rules": 200,
+    "uniquePaintings": 68,
+    "scope": "All unique source paintings reviewed as a palette contact sheet. Native evidence is representative routes and states, not 200 individual native walkthroughs."
+  },
+  "rules": [
+    {
+      "id": "mesha-sankranti",
+      "name": "Mesha Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "vrishabha-sankranti",
+      "name": "Vrishabha Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "mithuna-sankranti",
+      "name": "Mithuna Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "karka-sankranti",
+      "name": "Karka Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "simha-sankranti",
+      "name": "Simha Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "kanya-sankranti",
+      "name": "Kanya Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "tula-sankranti",
+      "name": "Tula Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "vrishchika-sankranti",
+      "name": "Vrishchika Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "dhanu-sankranti",
+      "name": "Dhanu Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "makar-sankranti",
+      "name": "Makar Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "kumbha-sankranti",
+      "name": "Kumbha Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "meena-sankranti",
+      "name": "Meena Sankranti",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "vishwakarma-puja",
+      "name": "Vishwakarma Puja",
+      "deity": "Bhagwan Vishwakarma",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "vishwakarma"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/vishwakarma.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "82ea0bbca4ec1ceee0d02f21b7bfc1b4e0f16b64fe020be347e565625b2f627a"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/vishwakarma.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "82ea0bbca4ec1ceee0d02f21b7bfc1b4e0f16b64fe020be347e565625b2f627a"
+        }
+      ]
+    },
+    {
+      "id": "sakat-chauth",
+      "name": "Sakat Chauth",
+      "deity": "Shri Ganesh",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "sakat-chauth-vrat-katha",
+      "subjects": [
+        "ganesha"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ]
+    },
+    {
+      "id": "vasant-panchami",
+      "name": "Vasant Panchami",
+      "deity": "Maa Saraswati",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "vasant-panchami-katha",
+      "subjects": [
+        "saraswati"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-saraswati-veena.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2c9134b3fa98d0e49e602eab0e62001762b67bec844f9942f6ce642283254209"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-saraswati-veena.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2c9134b3fa98d0e49e602eab0e62001762b67bec844f9942f6ce642283254209"
+        }
+      ]
+    },
+    {
+      "id": "ratha-saptami",
+      "name": "Ratha Saptami",
+      "deity": "Surya Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "maha-shivaratri",
+      "name": "Maha Shivaratri",
+      "deity": "Lord Shiva",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "maha-shivaratri-vrat-katha",
+      "subjects": [
+        "shiva"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ]
+    },
+    {
+      "id": "holi",
+      "name": "Holi",
+      "deity": "Shri Krishna",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "holi-legends",
+      "subjects": [
+        "krishna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-krishna-bansuri.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.48,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "bb215a66854c248caab9c6338c45a3f669d9c0bf2a776b2d4ea20ff383f8849f"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-krishna-bansuri.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.48,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "bb215a66854c248caab9c6338c45a3f669d9c0bf2a776b2d4ea20ff383f8849f"
+        }
+      ]
+    },
+    {
+      "id": "rang-panchami",
+      "name": "Rang Panchami",
+      "deity": "Shri Krishna and Radha Rani",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "radha-krishna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-radha-krishna.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.47,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "efeb0f58ed46b229146d47be1967fbbffc4d3a6406703c96e6bd7861ab479858"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-radha-krishna.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.47,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "efeb0f58ed46b229146d47be1967fbbffc4d3a6406703c96e6bd7861ab479858"
+        }
+      ]
+    },
+    {
+      "id": "shitala-saptami",
+      "name": "Shitala Saptami",
+      "deity": "Shitala Mata",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "sheetala-saptami-vrat-katha",
+      "subjects": [
+        "shitala"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/shitala.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3f914832b207accfad87ec1ac223ce052669e70e738b55921df9b4a557fc12f7"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/shitala.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3f914832b207accfad87ec1ac223ce052669e70e738b55921df9b4a557fc12f7"
+        }
+      ]
+    },
+    {
+      "id": "shitala-ashtami",
+      "name": "Shitala Ashtami (Basoda)",
+      "deity": "Shitala Mata",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "sheetala-saptami-vrat-katha",
+      "subjects": [
+        "shitala"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/shitala.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3f914832b207accfad87ec1ac223ce052669e70e738b55921df9b4a557fc12f7"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/shitala.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3f914832b207accfad87ec1ac223ce052669e70e738b55921df9b4a557fc12f7"
+        }
+      ]
+    },
+    {
+      "id": "dasha-mata-vrat",
+      "name": "Dasha Mata Vrat",
+      "deity": "Dasha Mata",
+      "category": "vrat",
+      "visibility": "default",
+      "subjects": [
+        "dasha-mata"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/dasha-mata-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f29df0c83d7cc44461b988c06e29e5e1750e355ca55e9dd46657b3dce3808285"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/dasha-mata-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f29df0c83d7cc44461b988c06e29e5e1750e355ca55e9dd46657b3dce3808285"
+        }
+      ]
+    },
+    {
+      "id": "chaitra-navratri-start",
+      "name": "Chaitra Navratri Begins",
+      "deity": "Maa Durga",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "durga"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-durga-lion.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.51,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5fc643c7f43c44b54fcc699a5eb048ad305348342cec6ce92415c833a570e561"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-durga-lion.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.51,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5fc643c7f43c44b54fcc699a5eb048ad305348342cec6ce92415c833a570e561"
+        }
+      ]
+    },
+    {
+      "id": "gangaur",
+      "name": "Gangaur",
+      "deity": "Isar Ji and Gauri Mata",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "gangaur-vrat-katha",
+      "subjects": [
+        "gangaur"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/gangaur.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "0dfc4a9937f60d09c8e60b12c59fbf8a0a5b353a0f8d3ba881cb5b736fc72184"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/gangaur.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "0dfc4a9937f60d09c8e60b12c59fbf8a0a5b353a0f8d3ba881cb5b736fc72184"
+        }
+      ]
+    },
+    {
+      "id": "chaiti-chhath",
+      "name": "Chaiti Chhath",
+      "deity": "Surya Deva",
+      "category": "upavas",
+      "visibility": "default",
+      "katha": "chhath-puja-katha",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "ram-navami",
+      "name": "Ram Navami",
+      "deity": "Shri Ram",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "rama-navami-vrat-katha",
+      "subjects": [
+        "rama"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.47,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.47,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181"
+        }
+      ]
+    },
+    {
+      "id": "mahavir-jayanti",
+      "name": "Mahavir Jayanti",
+      "deity": "Bhagwan Mahavir",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "mahavir"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/mahavir.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "444086b16417ece082afa875ef35b8f959415931e34f8c7dd37fa183c97b784d"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/mahavir.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "444086b16417ece082afa875ef35b8f959415931e34f8c7dd37fa183c97b784d"
+        }
+      ]
+    },
+    {
+      "id": "hanuman-jayanti",
+      "name": "Hanuman Jayanti",
+      "deity": "Hanuman Ji",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "hanuman-jayanti-vrat-katha",
+      "subjects": [
+        "hanuman"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/hanuman-sita.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.34,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "c065231f464b5546f5515aecc1c9256a712a159325d753c772a871d0f2cd36bd"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/hanuman-sita.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.34,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "c065231f464b5546f5515aecc1c9256a712a159325d753c772a871d0f2cd36bd"
+        }
+      ]
+    },
+    {
+      "id": "chitra-pournami",
+      "name": "Chitra Pournami",
+      "deity": "Bhagwan Chitragupta",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "chitragupta"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/chitragupta.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "307e4f7e6c430d704fb552b8a5be848ab675a5878f2143510142797d01231d43"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/chitragupta.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "307e4f7e6c430d704fb552b8a5be848ab675a5878f2143510142797d01231d43"
+        }
+      ]
+    },
+    {
+      "id": "akshaya-tritiya",
+      "name": "Akshaya Tritiya",
+      "deity": "Shri Vishnu",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "akshaya-tritiya-vrat-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "parashurama-jayanti",
+      "name": "Parashurama Jayanti",
+      "deity": "Lord Parashurama",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "parashurama-jayanti-vrat-katha",
+      "subjects": [
+        "parashurama"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/parashurama.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b8625bfe4459b63839e97476061a10ad29bffb7dc0858a161bbb6bb8156bdcb0"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/parashurama.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b8625bfe4459b63839e97476061a10ad29bffb7dc0858a161bbb6bb8156bdcb0"
+        }
+      ]
+    },
+    {
+      "id": "ganga-saptami",
+      "name": "Ganga Saptami",
+      "deity": "Maa Ganga",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "ganga-saptami-vrat-katha",
+      "subjects": [
+        "ganga"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganga.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.52,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5cfd0a806db53d19c88b137e7eadc78581e8642be265105a851fe513ce5fdbe7"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganga.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.52,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5cfd0a806db53d19c88b137e7eadc78581e8642be265105a851fe513ce5fdbe7"
+        }
+      ]
+    },
+    {
+      "id": "sita-navami",
+      "name": "Sita Navami",
+      "deity": "Maa Sita",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "sita-navami-vrat-katha",
+      "subjects": [
+        "sita"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.58,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.58,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181"
+        }
+      ]
+    },
+    {
+      "id": "narasimha-jayanti",
+      "name": "Narasimha Jayanti",
+      "deity": "Lord Narasimha",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "narasimha-jayanti-vrat-katha",
+      "subjects": [
+        "narasimha"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-narasimha-prahlad.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.51,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "6bf79d678a5b8bece4484b2abd97fb8764d9324251ec003e9c869418360f5c44"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-narasimha-prahlad.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.51,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "6bf79d678a5b8bece4484b2abd97fb8764d9324251ec003e9c869418360f5c44"
+        }
+      ]
+    },
+    {
+      "id": "buddha-purnima",
+      "name": "Buddha Purnima",
+      "deity": "Lord Buddha",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "buddha-purnima-vrat-katha",
+      "subjects": [
+        "buddha"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/buddha.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "6e13862492c9b9d78721b8756ccab6cb80aa87d8ce359cf4dd257a0b9da2fa94"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/buddha.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "6e13862492c9b9d78721b8756ccab6cb80aa87d8ce359cf4dd257a0b9da2fa94"
+        }
+      ]
+    },
+    {
+      "id": "narada-jayanti",
+      "name": "Narada Jayanti",
+      "deity": "Devarshi Narada",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "narada-jayanti-vrat-katha",
+      "subjects": [
+        "narada"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/narada.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "03ffdc1a2ecb7175e76905104700b7fbfc062b29bdb4142c9397f65eea105a47"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/narada.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "03ffdc1a2ecb7175e76905104700b7fbfc062b29bdb4142c9397f65eea105a47"
+        }
+      ]
+    },
+    {
+      "id": "shani-jayanti",
+      "name": "Shani Jayanti",
+      "deity": "Shani Deva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "shani"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-shani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "960ae2429fcd2a9c5d3d168526183f215d1ed116eb953a83eef86f42895b9207"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-shani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "960ae2429fcd2a9c5d3d168526183f215d1ed116eb953a83eef86f42895b9207"
+        }
+      ]
+    },
+    {
+      "id": "ganga-dussehra",
+      "name": "Ganga Dussehra",
+      "deity": "Maa Ganga",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "ganga-dussehra-katha",
+      "subjects": [
+        "ganga"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganga.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.52,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5cfd0a806db53d19c88b137e7eadc78581e8642be265105a851fe513ce5fdbe7"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganga.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.52,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5cfd0a806db53d19c88b137e7eadc78581e8642be265105a851fe513ce5fdbe7"
+        }
+      ]
+    },
+    {
+      "id": "asha-dashami",
+      "name": "Asha Dashami",
+      "deity": "Maa Parvati",
+      "category": "vrat",
+      "visibility": "default",
+      "subjects": [
+        "parvati"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244"
+        }
+      ]
+    },
+    {
+      "id": "guru-purnima",
+      "name": "Guru Purnima",
+      "deity": "Guru Parampara",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "guru-purnima-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-granth-open-scripture.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2b60e1ca37d1c10c62e1bac618732856223979dd04474b7a63c8e1604b2a2073"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-granth-open-scripture.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2b60e1ca37d1c10c62e1bac618732856223979dd04474b7a63c8e1604b2a2073"
+        }
+      ]
+    },
+    {
+      "id": "hariyali-teej",
+      "name": "Hariyali Teej",
+      "deity": "Maa Parvati",
+      "category": "vrat",
+      "visibility": "default",
+      "subjects": [
+        "parvati"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244"
+        }
+      ]
+    },
+    {
+      "id": "madhushravani",
+      "name": "Madhushravani",
+      "deity": "Shiva\u2013Parvati and Vishahara",
+      "category": "vrat",
+      "visibility": "default",
+      "subjects": [
+        "madhushravani"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/madhushravani.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e080fa224adf4acd8db1d36b319549f894aa6cb82cb405f89b95ddb32489ad9c"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/madhushravani.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e080fa224adf4acd8db1d36b319549f894aa6cb82cb405f89b95ddb32489ad9c"
+        }
+      ]
+    },
+    {
+      "id": "nag-panchami",
+      "name": "Nag Panchami",
+      "deity": "Naga Devata",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "nag-panchami-vrat-katha",
+      "subjects": [
+        "naga"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/naga.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "410c1f2249f557c7216c9855948367156a1191143d517ffcd7359dcb5c54d98f"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/naga.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "410c1f2249f557c7216c9855948367156a1191143d517ffcd7359dcb5c54d98f"
+        }
+      ]
+    },
+    {
+      "id": "raksha-bandhan",
+      "name": "Raksha Bandhan",
+      "deity": "Traditional observance",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "raksha-bandhan-legends",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "avani-avittam",
+      "name": "Avani Avittam (Upakarma)",
+      "deity": "Veda Parampara",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-granth-open-scripture.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2b60e1ca37d1c10c62e1bac618732856223979dd04474b7a63c8e1604b2a2073"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-granth-open-scripture.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2b60e1ca37d1c10c62e1bac618732856223979dd04474b7a63c8e1604b2a2073"
+        }
+      ]
+    },
+    {
+      "id": "kajari-teej",
+      "name": "Kajari Teej",
+      "deity": "Maa Parvati",
+      "category": "vrat",
+      "visibility": "default",
+      "subjects": [
+        "parvati"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244"
+        }
+      ]
+    },
+    {
+      "id": "bahula-chaturthi",
+      "name": "Bahula Chaturthi",
+      "deity": "Gau Mata and Shri Krishna",
+      "category": "vrat",
+      "visibility": "default",
+      "subjects": [
+        "gau-mata",
+        "krishna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/krishna-gau-mata.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e239dfd3f1c09ad91148deaaa50ed1a8e1874166487979dbc14ec6c2f39c6957"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/krishna-gau-mata.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e239dfd3f1c09ad91148deaaa50ed1a8e1874166487979dbc14ec6c2f39c6957"
+        }
+      ]
+    },
+    {
+      "id": "bhadwa-chauth",
+      "name": "Bhadwa Chauth (Chauth Mata Vrat)",
+      "deity": "Chauth Mata and Vinayak Ji",
+      "category": "vrat",
+      "visibility": "default",
+      "subjects": [
+        "chauth-mata"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/chauth-mata.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "c725b01088aeab8085603a9a41fc33b41a4d9699ed87fcf54d778d9c28deaae2"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/chauth-mata.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "c725b01088aeab8085603a9a41fc33b41a4d9699ed87fcf54d778d9c28deaae2"
+        }
+      ]
+    },
+    {
+      "id": "janmashtami",
+      "name": "Janmashtami",
+      "deity": "Shri Krishna",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "janmashtami-katha",
+      "subjects": [
+        "krishna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/bal-krishna-makhan-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "13dc3a735aa120cb6577ab782fa5dfa2049b0d64b4b2d8b78655ddd5d8ecd7fc"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/bal-krishna-makhan-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "13dc3a735aa120cb6577ab782fa5dfa2049b0d64b4b2d8b78655ddd5d8ecd7fc"
+        }
+      ]
+    },
+    {
+      "id": "janmashtami-vaishnava",
+      "name": "Janmashtami (Vaishnava)",
+      "deity": "Shri Krishna",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "janmashtami-katha",
+      "subjects": [
+        "krishna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/bal-krishna-makhan-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "13dc3a735aa120cb6577ab782fa5dfa2049b0d64b4b2d8b78655ddd5d8ecd7fc"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/bal-krishna-makhan-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "13dc3a735aa120cb6577ab782fa5dfa2049b0d64b4b2d8b78655ddd5d8ecd7fc"
+        }
+      ]
+    },
+    {
+      "id": "goga-navami",
+      "name": "Goga Navami",
+      "deity": "Gogaji (Jaharveer)",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "gogaji"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-gogaji-gogamedi.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.48,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "603819aff415081de40d5a7840bc12857732eb5be7061a44cf55a201bb054ff6"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-gogaji-gogamedi.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.48,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "603819aff415081de40d5a7840bc12857732eb5be7061a44cf55a201bb054ff6"
+        }
+      ]
+    },
+    {
+      "id": "bachh-baras",
+      "name": "Bachh Baras",
+      "deity": "Gau Mata",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "bachh-baras-vrat-katha",
+      "subjects": [
+        "gau-mata"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/gau-mata.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7c6b00ccac309fee11ca3ff0fa9ec4a2230718a1eed9968291925e5d2d3519c2"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/gau-mata.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7c6b00ccac309fee11ca3ff0fa9ec4a2230718a1eed9968291925e5d2d3519c2"
+        }
+      ]
+    },
+    {
+      "id": "ramdev-jayanti",
+      "name": "Ramdev Jayanti",
+      "deity": "Baba Ramdevji",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "ramdev"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-ramdevra.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "0f7ebdf0d43c523e317529fc9c038c78a4f01e96e229353e2e80114dc1843979"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-ramdevra.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "0f7ebdf0d43c523e317529fc9c038c78a4f01e96e229353e2e80114dc1843979"
+        }
+      ]
+    },
+    {
+      "id": "hartalika-teej",
+      "name": "Hartalika Teej",
+      "deity": "Maa Parvati",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "hartalika-teej-katha",
+      "subjects": [
+        "parvati"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244"
+        }
+      ]
+    },
+    {
+      "id": "ganesh-chaturthi",
+      "name": "Ganesh Chaturthi",
+      "deity": "Shri Ganesh",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "ganesha-chaturthi-vrat-katha",
+      "subjects": [
+        "ganesha"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ]
+    },
+    {
+      "id": "rishi-panchami",
+      "name": "Rishi Panchami",
+      "deity": "Rishi Parampara",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "rishi-panchami-vrat-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-granth-open-scripture.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2b60e1ca37d1c10c62e1bac618732856223979dd04474b7a63c8e1604b2a2073"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-granth-open-scripture.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2b60e1ca37d1c10c62e1bac618732856223979dd04474b7a63c8e1604b2a2073"
+        }
+      ]
+    },
+    {
+      "id": "durva-ashtami",
+      "name": "Durva Ashtami",
+      "deity": "Shri Ganesh",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "durva-ashtami-vrat-katha",
+      "subjects": [
+        "ganesha"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ]
+    },
+    {
+      "id": "radha-ashtami",
+      "name": "Radha Ashtami",
+      "deity": "Radha Rani",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "radha-krishna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-radha-krishna.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.47,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "efeb0f58ed46b229146d47be1967fbbffc4d3a6406703c96e6bd7861ab479858"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-radha-krishna.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.47,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "efeb0f58ed46b229146d47be1967fbbffc4d3a6406703c96e6bd7861ab479858"
+        }
+      ]
+    },
+    {
+      "id": "teja-dashami",
+      "name": "Teja Dashami",
+      "deity": "Veer Tejaji",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "teja-dashami-katha",
+      "subjects": [
+        "tejaji"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-tejaji-kharnal.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f02c80682b9c29c7cf9651138418944d3dc9a7a50454f7ed06127970fcb8bef1"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-tejaji-kharnal.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f02c80682b9c29c7cf9651138418944d3dc9a7a50454f7ed06127970fcb8bef1"
+        }
+      ]
+    },
+    {
+      "id": "anant-chaturdashi",
+      "name": "Anant Chaturdashi",
+      "deity": "Lord Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "anant-chaturdashi-vrat-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "navratri-start",
+      "name": "Navratri Begins",
+      "deity": "Maa Durga",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "navratri-start-katha",
+      "subjects": [
+        "durga"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-durga-lion.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.51,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5fc643c7f43c44b54fcc699a5eb048ad305348342cec6ce92415c833a570e561"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-durga-lion.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.51,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5fc643c7f43c44b54fcc699a5eb048ad305348342cec6ce92415c833a570e561"
+        }
+      ]
+    },
+    {
+      "id": "maha-navami",
+      "name": "Maha Navami",
+      "deity": "Maa Siddhidatri",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "siddhidatri"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/siddhidatri.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "990039ff485e4e3e6a16643516fed9e4e663687af49edcb2bd7385d162225eb6"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/siddhidatri.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "990039ff485e4e3e6a16643516fed9e4e663687af49edcb2bd7385d162225eb6"
+        }
+      ]
+    },
+    {
+      "id": "dussehra",
+      "name": "Dussehra",
+      "deity": "Shri Ram",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "dussehra-katha",
+      "subjects": [
+        "rama"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.47,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.47,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181"
+        }
+      ]
+    },
+    {
+      "id": "sharad-purnima",
+      "name": "Sharad Purnima",
+      "deity": "Chandra Deva",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "sharad-purnima-vrat-katha",
+      "subjects": [
+        "chandra"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/chandra.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e7619c54f596f697c3939ce5eb4889317f4b3fedf30ac531d313bf2e0e566db"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/chandra.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e7619c54f596f697c3939ce5eb4889317f4b3fedf30ac531d313bf2e0e566db"
+        }
+      ]
+    },
+    {
+      "id": "kojagara-puja",
+      "name": "Kojagara Puja",
+      "deity": "Maa Lakshmi",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "sharad-purnima-vrat-katha",
+      "subjects": [
+        "lakshmi"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-lakshmi.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "ec29fd934f2e68eda8a5dd33bba461e8fde3834f0156bd0882550d3200a60442"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-lakshmi.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "ec29fd934f2e68eda8a5dd33bba461e8fde3834f0156bd0882550d3200a60442"
+        }
+      ]
+    },
+    {
+      "id": "karwa-chauth",
+      "name": "Karwa Chauth",
+      "deity": "Maa Gauri",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "karwa-chauth-vrat-katha",
+      "subjects": [
+        "parvati"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/karwa-chauth-puja-muted.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "920572e626f86840dedc9f79a8da8d761e4b6c1f4e8ca82193a42516579f7de5"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/karwa-chauth-ritual-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "01c29a29cd93af656c497e6e9dee7ed307b6c089c8fa7855bdaab528128524c1"
+        }
+      ]
+    },
+    {
+      "id": "ahoi-ashtami",
+      "name": "Ahoi Ashtami",
+      "deity": "Ahoi Mata",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "ahoi-ashtami-vrat-katha",
+      "subjects": [
+        "ahoi"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/ahoi-mata-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b1537c2b1c4fa298ef48d4be0b37d8483bdd34583c8beee3acd5e745cd9c7f02"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/ahoi-mata-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b1537c2b1c4fa298ef48d4be0b37d8483bdd34583c8beee3acd5e745cd9c7f02"
+        }
+      ]
+    },
+    {
+      "id": "dhanteras",
+      "name": "Dhanteras",
+      "deity": "Dhanvantari Deva",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "dhanteras-legends",
+      "subjects": [
+        "dhanvantari"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/dhanvantari.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "6a53279a59dd3c91432dff1e17ea3801b805c589b8464880f31d0ef7230dac08"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/dhanvantari.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "6a53279a59dd3c91432dff1e17ea3801b805c589b8464880f31d0ef7230dac08"
+        }
+      ]
+    },
+    {
+      "id": "hanuman-jayanti-kartik",
+      "name": "Hanuman Jayanti (Kartik)",
+      "deity": "Hanuman Ji",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "hanuman"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/hanuman-sita.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.34,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "c065231f464b5546f5515aecc1c9256a712a159325d753c772a871d0f2cd36bd"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/hanuman-sita.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.34,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "c065231f464b5546f5515aecc1c9256a712a159325d753c772a871d0f2cd36bd"
+        }
+      ]
+    },
+    {
+      "id": "diwali",
+      "name": "Diwali",
+      "deity": "Maa Lakshmi",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "diwali-legends",
+      "subjects": [
+        "lakshmi"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-lakshmi.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "ec29fd934f2e68eda8a5dd33bba461e8fde3834f0156bd0882550d3200a60442"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-lakshmi.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "ec29fd934f2e68eda8a5dd33bba461e8fde3834f0156bd0882550d3200a60442"
+        }
+      ]
+    },
+    {
+      "id": "govardhan-puja",
+      "name": "Govardhan Puja",
+      "deity": "Shri Krishna",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "govardhan-puja-katha",
+      "subjects": [
+        "krishna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-krishna-bansuri.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.48,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "bb215a66854c248caab9c6338c45a3f669d9c0bf2a776b2d4ea20ff383f8849f"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-krishna-bansuri.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.48,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "bb215a66854c248caab9c6338c45a3f669d9c0bf2a776b2d4ea20ff383f8849f"
+        }
+      ]
+    },
+    {
+      "id": "bhai-dooj",
+      "name": "Bhai Dooj",
+      "deity": "Traditional observance",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "bhai-dooj-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "chitragupta-puja",
+      "name": "Chitragupta Puja",
+      "deity": "Bhagwan Chitragupta",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "chitragupta"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/chitragupta.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "307e4f7e6c430d704fb552b8a5be848ab675a5878f2143510142797d01231d43"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/chitragupta.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "307e4f7e6c430d704fb552b8a5be848ab675a5878f2143510142797d01231d43"
+        }
+      ]
+    },
+    {
+      "id": "chhath-puja",
+      "name": "Chhath Puja",
+      "deity": "Surya Deva",
+      "category": "upavas",
+      "visibility": "default",
+      "katha": "chhath-puja-katha",
+      "subjects": [
+        "surya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "a9774072e1250bb7ee56dc228a245b29d754cb7b2c70b2d606ec9275fcff5bf9"
+        }
+      ]
+    },
+    {
+      "id": "sama-chakeva",
+      "name": "Sama Chakeva",
+      "deity": "Folk tradition",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "dev-uthani-ekadashi",
+      "name": "Dev Uthani Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "kartika-mahatmya",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "tulasi-vivah",
+      "name": "Tulasi Vivah",
+      "deity": "Tulasi Mata",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "kartika-mahatmya",
+      "subjects": [
+        "tulsi"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/tulsi-puja.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "8e53b2ee468d245ae89fe9892226ba23c27e2cc1041c894efb5204460604f935"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/tulsi-puja.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "8e53b2ee468d245ae89fe9892226ba23c27e2cc1041c894efb5204460604f935"
+        }
+      ]
+    },
+    {
+      "id": "gopashtami",
+      "name": "Gopashtami",
+      "deity": "Shri Krishna and Gau Mata",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "krishna",
+        "gau-mata"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/krishna-gau-mata.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e239dfd3f1c09ad91148deaaa50ed1a8e1874166487979dbc14ec6c2f39c6957"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/krishna-gau-mata.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e239dfd3f1c09ad91148deaaa50ed1a8e1874166487979dbc14ec6c2f39c6957"
+        }
+      ]
+    },
+    {
+      "id": "akshaya-navami",
+      "name": "Akshaya Navami",
+      "deity": "Vrat observance",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "akshaya-navami-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "kartik-purnima",
+      "name": "Kartik Purnima",
+      "deity": "Lord Shiva and Shri Vishnu",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "shiva",
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/shiva-vishnu.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e92f0d3ad526e22e354116529d0ed3c51abc354ee40977da4e64128e7cf75a4d"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/shiva-vishnu.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e92f0d3ad526e22e354116529d0ed3c51abc354ee40977da4e64128e7cf75a4d"
+        }
+      ]
+    },
+    {
+      "id": "vivah-panchami",
+      "name": "Vivah Panchami",
+      "deity": "Sita Ram",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "vivah-panchami-katha",
+      "subjects": [
+        "sita",
+        "rama"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181"
+        }
+      ]
+    },
+    {
+      "id": "champa-shashthi",
+      "name": "Champa Shashthi",
+      "deity": "Khandoba and Lord Kartikeya",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "khandoba",
+        "kartikeya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/khandoba-kartikeya.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "308d76452f8ba7bd088d984b22f508dc700183f824b275d36844156b7b5cb590"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/khandoba-kartikeya.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "308d76452f8ba7bd088d984b22f508dc700183f824b275d36844156b7b5cb590"
+        }
+      ]
+    },
+    {
+      "id": "gita-jayanti",
+      "name": "Gita Jayanti",
+      "deity": "Shri Krishna",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "gita-jayanti-katha",
+      "subjects": [
+        "krishna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-krishna-bansuri.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.48,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "bb215a66854c248caab9c6338c45a3f669d9c0bf2a776b2d4ea20ff383f8849f"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-krishna-bansuri.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.48,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "bb215a66854c248caab9c6338c45a3f669d9c0bf2a776b2d4ea20ff383f8849f"
+        }
+      ]
+    },
+    {
+      "id": "dattatreya-jayanti",
+      "name": "Dattatreya Jayanti",
+      "deity": "Lord Dattatreya",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "dattatreya-jayanti-katha",
+      "subjects": [
+        "dattatreya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-dattatreya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "65541e44b36371d43c77b5d0fe2652c7cd8c6408b1a7a8314e9f42a53a466541"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-dattatreya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "65541e44b36371d43c77b5d0fe2652c7cd8c6408b1a7a8314e9f42a53a466541"
+        }
+      ]
+    },
+    {
+      "id": "matsya-jayanti",
+      "name": "Matsya Jayanti",
+      "deity": "Lord Matsya",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "matsya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/matsya.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5d94aa2ca3868be178f70dd0d70562f152cbd13a8856452a2f287803b844f258"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/matsya.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5d94aa2ca3868be178f70dd0d70562f152cbd13a8856452a2f287803b844f258"
+        }
+      ]
+    },
+    {
+      "id": "varaha-jayanti",
+      "name": "Varaha Jayanti",
+      "deity": "Lord Varaha",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "varaha-jayanti-katha",
+      "subjects": [
+        "varaha"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/varaha.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "33cdfb019af3b7c238d3e01790e468cab04e6ee7003b1d6a7d1b9cc09dedfe65"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/varaha.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "33cdfb019af3b7c238d3e01790e468cab04e6ee7003b1d6a7d1b9cc09dedfe65"
+        }
+      ]
+    },
+    {
+      "id": "vamana-jayanti",
+      "name": "Vamana Jayanti",
+      "deity": "Lord Vamana",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "vamana-jayanti-katha",
+      "subjects": [
+        "vamana"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/vamana.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "d4182c0a9f383d0f052044c9e1d525793030ea9da1c1ffe3532bf0120e087fe6"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/vamana.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "d4182c0a9f383d0f052044c9e1d525793030ea9da1c1ffe3532bf0120e087fe6"
+        }
+      ]
+    },
+    {
+      "id": "kalki-jayanti",
+      "name": "Kalki Jayanti",
+      "deity": "Lord Kalki",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "kalki"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/kalki.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "bedcbb3cfa144fff36e24865dc2390e29cc9093e26956e2a0a5531a0d9d11708"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/kalki.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "bedcbb3cfa144fff36e24865dc2390e29cc9093e26956e2a0a5531a0d9d11708"
+        }
+      ]
+    },
+    {
+      "id": "hayagriva-jayanti",
+      "name": "Hayagriva Jayanti",
+      "deity": "Lord Hayagriva",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "hayagriva"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/hayagriva.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "77d51d0712af863fd6275d7cdd39e0458def0afdaf56b4f1a9cefe09f8a43e2e"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/hayagriva.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "77d51d0712af863fd6275d7cdd39e0458def0afdaf56b4f1a9cefe09f8a43e2e"
+        }
+      ]
+    },
+    {
+      "id": "hal-shashthi",
+      "name": "Hal Shashthi",
+      "deity": "Lord Balarama",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "balarama"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/balarama.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5a111e28ba9916edd3176c35876d4b50a843b30a2c99783e78d63b84ba062316"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/balarama.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5a111e28ba9916edd3176c35876d4b50a843b30a2c99783e78d63b84ba062316"
+        }
+      ]
+    },
+    {
+      "id": "surdas-jayanti",
+      "name": "Surdas Jayanti",
+      "deity": "Sant Surdas",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "surdas"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/surdas.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "0c2bf046e7f5356763c777ba1ee0f50b7e3222b185f08fdf3001d256cec293f2"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/surdas.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "0c2bf046e7f5356763c777ba1ee0f50b7e3222b185f08fdf3001d256cec293f2"
+        }
+      ]
+    },
+    {
+      "id": "shankaracharya-jayanti",
+      "name": "Adi Shankaracharya Jayanti",
+      "deity": "Adi Shankaracharya",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "shankaracharya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/shankaracharya.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e9fff3e864255509d8b6a385504df0afbcb769ca319cab242636511cd8e2616f"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/shankaracharya.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e9fff3e864255509d8b6a385504df0afbcb769ca319cab242636511cd8e2616f"
+        }
+      ]
+    },
+    {
+      "id": "tulsidas-jayanti",
+      "name": "Tulsidas Jayanti",
+      "deity": "Goswami Tulsidas",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "tulsidas"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/tulsidas.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "82f5e7a4b18e4d17e47717e9532ba60ab4fd47336ccb59cdf4a5fa5fa8c0e10e"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/tulsidas.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "82f5e7a4b18e4d17e47717e9532ba60ab4fd47336ccb59cdf4a5fa5fa8c0e10e"
+        }
+      ]
+    },
+    {
+      "id": "valmiki-jayanti",
+      "name": "Valmiki Jayanti",
+      "deity": "Maharishi Valmiki",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "valmiki"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/valmiki.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e29c3e01b0a3cc5c73ea645c8d79ceeaf7cae578fc647bef5751c3ce74ace8ec"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/valmiki.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e29c3e01b0a3cc5c73ea645c8d79ceeaf7cae578fc647bef5751c3ce74ace8ec"
+        }
+      ]
+    },
+    {
+      "id": "vallabhacharya-jayanti",
+      "name": "Vallabhacharya Jayanti",
+      "deity": "Shri Vallabhacharya",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "vallabhacharya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/vallabhacharya.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "abcae38346959c69890497658c4620b9e235be00205b7ba77cfb0c7712033085"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/vallabhacharya.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "abcae38346959c69890497658c4620b9e235be00205b7ba77cfb0c7712033085"
+        }
+      ]
+    },
+    {
+      "id": "kabir-jayanti",
+      "name": "Kabir Jayanti",
+      "deity": "Sant Kabir",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "kabir"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/kabir.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e073ead30bbf659512fdb2f968b691ff92d93daf3fad654a8563a1a90ffa5f93"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/kabir.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e073ead30bbf659512fdb2f968b691ff92d93daf3fad654a8563a1a90ffa5f93"
+        }
+      ]
+    },
+    {
+      "id": "baglamukhi-jayanti",
+      "name": "Baglamukhi Jayanti",
+      "deity": "Maa Baglamukhi",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "baglamukhi"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/baglamukhi.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "287f600584b17a977b862d349983196c391711706171c5706cfeb4a0d2241f42"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/baglamukhi.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "287f600584b17a977b862d349983196c391711706171c5706cfeb4a0d2241f42"
+        }
+      ]
+    },
+    {
+      "id": "dhumavati-jayanti",
+      "name": "Dhumavati Jayanti",
+      "deity": "Maa Dhumavati",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "dhumavati"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/dhumavati.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "af403fa2a5da9a2d21fb3bdcebf748baaed7d41cab63a9539fefba1b1c606852"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/dhumavati.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "af403fa2a5da9a2d21fb3bdcebf748baaed7d41cab63a9539fefba1b1c606852"
+        }
+      ]
+    },
+    {
+      "id": "mahesh-navami",
+      "name": "Mahesh Navami",
+      "deity": "Bhagwan Mahesh",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "shiva"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ]
+    },
+    {
+      "id": "annapurna-jayanti",
+      "name": "Annapurna Jayanti",
+      "deity": "Maa Annapurna",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "annapurna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/daan-annapurna-bhiksha.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.65,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "cf9cbcb50885a533df401cd976ba157bb278f2e1d150e76560c0c1435728f66d"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/daan-annapurna-bhiksha.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.65,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "cf9cbcb50885a533df401cd976ba157bb278f2e1d150e76560c0c1435728f66d"
+        }
+      ]
+    },
+    {
+      "id": "narmada-jayanti",
+      "name": "Narmada Jayanti",
+      "deity": "Maa Narmada",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "narmada"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/narmada.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "003ff465a5bfc4a1da430df2e25d8a89da29cd128dbd8edbf4c3a966ac5cc868"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/narmada.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "003ff465a5bfc4a1da430df2e25d8a89da29cd128dbd8edbf4c3a966ac5cc868"
+        }
+      ]
+    },
+    {
+      "id": "janaki-jayanti",
+      "name": "Janaki Jayanti",
+      "deity": "Mata Sita",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "sita"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.58,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.58,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "e0b58684d7ada3a593dd053ec1d2a4506cc103f7b67c1c1447e0b49253a36181"
+        }
+      ]
+    },
+    {
+      "id": "phulera-dooj",
+      "name": "Phulera Dooj",
+      "deity": "Shri Radha-Krishna",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "radha-krishna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-radha-krishna.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.47,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "efeb0f58ed46b229146d47be1967fbbffc4d3a6406703c96e6bd7861ab479858"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-radha-krishna.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.47,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "efeb0f58ed46b229146d47be1967fbbffc4d3a6406703c96e6bd7861ab479858"
+        }
+      ]
+    },
+    {
+      "id": "narak-chaturdashi",
+      "name": "Narak Chaturdashi",
+      "deity": "Shri Krishna and Yamaraja",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "narak-chaturdashi-katha",
+      "subjects": [
+        "krishna",
+        "yama"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/krishna-yama.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "52726efe7a74cbf595f2ba5f2caac948850a6fd9ee683fa211c62254de07af41"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/krishna-yama.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "52726efe7a74cbf595f2ba5f2caac948850a6fd9ee683fa211c62254de07af41"
+        }
+      ]
+    },
+    {
+      "id": "kaal-bhairav-jayanti",
+      "name": "Kaal Bhairav Jayanti",
+      "deity": "Kala Bhairava",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "masik-kalashtami-katha",
+      "subjects": [
+        "bhairava"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/bhairava.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "19fae7fe0943d51c5e173a563eb507205fa6d656d1824891ce19a660523a27c6"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/bhairava.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "19fae7fe0943d51c5e173a563eb507205fa6d656d1824891ce19a660523a27c6"
+        }
+      ]
+    },
+    {
+      "id": "mauni-amavasya",
+      "name": "Mauni Amavasya",
+      "deity": "Sacred snan",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "mauni-amavasya-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "ganesh-jayanti",
+      "name": "Ganesh Jayanti",
+      "deity": "Shri Ganesh",
+      "category": "festival",
+      "visibility": "default",
+      "katha": "ganesh-jayanti-katha",
+      "subjects": [
+        "ganesha"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ]
+    },
+    {
+      "id": "bhishma-ashtami",
+      "name": "Bhishma Ashtami",
+      "deity": "Pitamah Bhishma",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "bhishma"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/bhishma.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "cf6e6075013e05e46a65ee711da1b4de0d370cb40a8d0b3cbb049df46c2032c9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/bhishma.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "cf6e6075013e05e46a65ee711da1b4de0d370cb40a8d0b3cbb049df46c2032c9"
+        }
+      ]
+    },
+    {
+      "id": "magha-purnima",
+      "name": "Magha Purnima",
+      "deity": "Sacred snan",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "ashadha-gupt-navratri",
+      "name": "Ashadha Gupt Navratri Begins",
+      "deity": "The ten Mahavidyas",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "magha-gupt-navratri",
+      "name": "Magha Gupt Navratri Begins",
+      "deity": "The ten Mahavidyas",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "karthigai-deepam",
+      "name": "Karthigai Deepam",
+      "deity": "Lord Shiva and Murugan",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "shiva",
+        "kartikeya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/shiva-parvati-murugan.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "0620f00e763508904b374d6d036e40e1f3e6616ea8efb0871cb4100b1ae22a78"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/shiva-parvati-murugan.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "0620f00e763508904b374d6d036e40e1f3e6616ea8efb0871cb4100b1ae22a78"
+        }
+      ]
+    },
+    {
+      "id": "thai-pusam",
+      "name": "Thai Pusam",
+      "deity": "Lord Murugan",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "kartikeya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-vetrimalai-murugan.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3b9446ed84fb37e95be531dd72752daa8bc4f67237e58cf35044d1104dbd2820"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-vetrimalai-murugan.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3b9446ed84fb37e95be531dd72752daa8bc4f67237e58cf35044d1104dbd2820"
+        }
+      ]
+    },
+    {
+      "id": "panguni-uthiram",
+      "name": "Panguni Uthiram",
+      "deity": "Lord Murugan and Shiva\u2013Parvati",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "kartikeya",
+        "shiva",
+        "parvati"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/shiva-parvati-murugan.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "0620f00e763508904b374d6d036e40e1f3e6616ea8efb0871cb4100b1ae22a78"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/shiva-parvati-murugan.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "0620f00e763508904b374d6d036e40e1f3e6616ea8efb0871cb4100b1ae22a78"
+        }
+      ]
+    },
+    {
+      "id": "vaikasi-visakam",
+      "name": "Vaikasi Visakam",
+      "deity": "Lord Murugan",
+      "category": "festival",
+      "visibility": "default",
+      "subjects": [
+        "kartikeya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-vetrimalai-murugan.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3b9446ed84fb37e95be531dd72752daa8bc4f67237e58cf35044d1104dbd2820"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-vetrimalai-murugan.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3b9446ed84fb37e95be531dd72752daa8bc4f67237e58cf35044d1104dbd2820"
+        }
+      ]
+    },
+    {
+      "id": "karkidaka-vavu",
+      "name": "Karkidaka Vavu",
+      "deity": "Pitru Tarpana",
+      "category": "upavas",
+      "visibility": "default",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "kamada-ekadashi",
+      "name": "Kamada Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "kamada-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "varuthini-ekadashi",
+      "name": "Varuthini Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "varuthini-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "mohini-ekadashi",
+      "name": "Mohini Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "mohini-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "apara-ekadashi",
+      "name": "Apara Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "apara-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "nirjala-ekadashi",
+      "name": "Nirjala Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "nirjala-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "yogini-ekadashi",
+      "name": "Yogini Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "yogini-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "devshayani-ekadashi",
+      "name": "Devshayani Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "devshayani-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "kamika-ekadashi",
+      "name": "Kamika Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "kamika-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "putrada-ekadashi",
+      "name": "Putrada Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "putrada-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "aja-ekadashi",
+      "name": "Aja Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "aja-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "parivartini-ekadashi",
+      "name": "Parivartini Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "parivartini-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "indira-ekadashi",
+      "name": "Indira Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "indira-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "papankusha-ekadashi",
+      "name": "Papankusha Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "papankusha-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "rama-ekadashi",
+      "name": "Rama Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "rama-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "dev-uthani-ekadashi",
+      "name": "Dev Uthani Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "dev-uthani-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "utpanna-ekadashi",
+      "name": "Utpanna Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "utpanna-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "mokshada-ekadashi",
+      "name": "Mokshada Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "mokshada-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "saphala-ekadashi",
+      "name": "Saphala Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "saphala-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "putrada-ekadashi",
+      "name": "Putrada Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "putrada-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "shattila-ekadashi",
+      "name": "Shattila Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "shattila-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "jaya-ekadashi",
+      "name": "Jaya Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "jaya-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vijaya-ekadashi",
+      "name": "Vijaya Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "vijaya-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "amalaki-ekadashi",
+      "name": "Amalaki Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "amalaki-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "papmochani-ekadashi",
+      "name": "Papmochani Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "papmochani-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-kamada-ekadashi",
+      "name": "Vaishnava Kamada Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "kamada-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-varuthini-ekadashi",
+      "name": "Vaishnava Varuthini Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "varuthini-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-mohini-ekadashi",
+      "name": "Vaishnava Mohini Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "mohini-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-apara-ekadashi",
+      "name": "Vaishnava Apara Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "apara-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-nirjala-ekadashi",
+      "name": "Vaishnava Nirjala Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "nirjala-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-yogini-ekadashi",
+      "name": "Vaishnava Yogini Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "yogini-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-devshayani-ekadashi",
+      "name": "Vaishnava Devshayani Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "devshayani-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-kamika-ekadashi",
+      "name": "Vaishnava Kamika Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "kamika-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-putrada-ekadashi",
+      "name": "Vaishnava Putrada Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "putrada-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-aja-ekadashi",
+      "name": "Vaishnava Aja Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "aja-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-parivartini-ekadashi",
+      "name": "Vaishnava Parivartini Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "parivartini-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-indira-ekadashi",
+      "name": "Vaishnava Indira Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "indira-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-papankusha-ekadashi",
+      "name": "Vaishnava Papankusha Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "papankusha-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-rama-ekadashi",
+      "name": "Vaishnava Rama Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "rama-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-dev-uthani-ekadashi",
+      "name": "Vaishnava Dev Uthani Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "dev-uthani-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-utpanna-ekadashi",
+      "name": "Vaishnava Utpanna Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "utpanna-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-mokshada-ekadashi",
+      "name": "Vaishnava Mokshada Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "mokshada-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-saphala-ekadashi",
+      "name": "Vaishnava Saphala Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "saphala-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-putrada-ekadashi",
+      "name": "Vaishnava Putrada Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "putrada-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-shattila-ekadashi",
+      "name": "Vaishnava Shattila Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "shattila-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-jaya-ekadashi",
+      "name": "Vaishnava Jaya Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "jaya-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-vijaya-ekadashi",
+      "name": "Vaishnava Vijaya Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "vijaya-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-amalaki-ekadashi",
+      "name": "Vaishnava Amalaki Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "amalaki-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "vaishnava-papmochani-ekadashi",
+      "name": "Vaishnava Papmochani Ekadashi",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "papmochani-ekadashi-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "sankashti-chaturthi-vrat",
+      "name": "Sankashti Chaturthi Vrat",
+      "deity": "Shri Ganesh",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "sankashti-chaturthi-vrat-katha",
+      "subjects": [
+        "ganesha"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ]
+    },
+    {
+      "id": "vinayaka-chaturthi-vrat",
+      "name": "Shukla Chaturthi Vrat",
+      "deity": "Shri Ganesh",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "ganesha-chaturthi-vrat-katha",
+      "subjects": [
+        "ganesha"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.49,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "7ce9edf09de54ce12b629421fc0766d44881d044bc9d78a0f9e924b281728dbe"
+        }
+      ]
+    },
+    {
+      "id": "pradosh-vrat-shukla",
+      "name": "Shukla Pradosh Vrat",
+      "deity": "Lord Shiva",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "pradosha-vrat-katha",
+      "subjects": [
+        "shiva"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ]
+    },
+    {
+      "id": "pradosh-vrat-krishna",
+      "name": "Krishna Pradosh Vrat",
+      "deity": "Lord Shiva",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "pradosha-vrat-katha",
+      "subjects": [
+        "shiva"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ]
+    },
+    {
+      "id": "dwadashi-vrat-shukla",
+      "name": "Shukla Dwadashi Vrat",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "dwadashi-vrat-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "dwadashi-vrat-krishna",
+      "name": "Krishna Dwadashi Vrat",
+      "deity": "Shri Vishnu",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "dwadashi-vrat-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "masik-shivaratri",
+      "name": "Masik Shivaratri",
+      "deity": "Lord Shiva",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "maha-shivaratri-vrat-katha",
+      "subjects": [
+        "shiva"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ]
+    },
+    {
+      "id": "purnima-vrat",
+      "name": "Purnima Vrat",
+      "deity": "Shri Vishnu",
+      "category": "upavas",
+      "visibility": "default",
+      "katha": "satyanarayana-vrat-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "shree-satyanarayan-vrat",
+      "name": "Shree Satyanarayan Vrat",
+      "deity": "Shree Satyanarayan",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "satyanarayana-vrat-katha",
+      "subjects": [
+        "vishnu"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.29,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4e4d868908e8155e8929bbee0f4465a763ea57a0d41f0bc2199ed63dc6dfe0d9"
+        }
+      ]
+    },
+    {
+      "id": "amavasya-vrat",
+      "name": "Amavasya Vrat",
+      "deity": "Pitru Tarpana",
+      "category": "upavas",
+      "visibility": "default",
+      "katha": "amavasya-vrat-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "darsha-amavasya",
+      "name": "Darsha Amavasya",
+      "deity": "Pitru Tarpana",
+      "category": "upavas",
+      "visibility": "default",
+      "katha": "amavasya-vrat-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "somvati-amavasya",
+      "name": "Somvati Amavasya",
+      "deity": "Pitru Tarpana and Shiva",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "amavasya-vrat-katha",
+      "subjects": [
+        "shiva"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ]
+    },
+    {
+      "id": "skanda-sashti",
+      "name": "Skanda Sashti",
+      "deity": "Lord Kartikeya",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "skanda-sashti-katha",
+      "subjects": [
+        "kartikeya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-vetrimalai-murugan.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3b9446ed84fb37e95be531dd72752daa8bc4f67237e58cf35044d1104dbd2820"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-vetrimalai-murugan.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3b9446ed84fb37e95be531dd72752daa8bc4f67237e58cf35044d1104dbd2820"
+        }
+      ]
+    },
+    {
+      "id": "masik-durgashtami",
+      "name": "Masik Durgashtami",
+      "deity": "Maa Durga",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "masik-durgashtami-katha",
+      "subjects": [
+        "durga"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-durga-lion.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.51,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5fc643c7f43c44b54fcc699a5eb048ad305348342cec6ce92415c833a570e561"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-durga-lion.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.51,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5fc643c7f43c44b54fcc699a5eb048ad305348342cec6ce92415c833a570e561"
+        }
+      ]
+    },
+    {
+      "id": "masik-kalashtami",
+      "name": "Masik Kalashtami",
+      "deity": "Kala Bhairava",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "masik-kalashtami-katha",
+      "subjects": [
+        "bhairava"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/bhairava.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "19fae7fe0943d51c5e173a563eb507205fa6d656d1824891ce19a660523a27c6"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/bhairava.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "19fae7fe0943d51c5e173a563eb507205fa6d656d1824891ce19a660523a27c6"
+        }
+      ]
+    },
+    {
+      "id": "masik-krishna-janmashtami",
+      "name": "Masik Krishna Janmashtami",
+      "deity": "Shri Krishna",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "masik-krishna-janmashtami-katha",
+      "subjects": [
+        "krishna"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/bal-krishna-makhan-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "13dc3a735aa120cb6577ab782fa5dfa2049b0d64b4b2d8b78655ddd5d8ecd7fc"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/bal-krishna-makhan-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "13dc3a735aa120cb6577ab782fa5dfa2049b0d64b4b2d8b78655ddd5d8ecd7fc"
+        }
+      ]
+    },
+    {
+      "id": "sawan-somwar-vrat",
+      "name": "Sawan Somwar Vrat",
+      "deity": "Lord Shiva",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "shravana-mahatmya",
+      "subjects": [
+        "shiva"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.45,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "f5bbe122c6f9f02d59680c7d8ab94f7604a47a343f66d4652dd67fd740688a1b"
+        }
+      ]
+    },
+    {
+      "id": "mangala-gauri-vrat",
+      "name": "Mangala Gauri Vrat",
+      "deity": "Maa Gauri",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "mangala-gauri-vrat-katha",
+      "subjects": [
+        "parvati"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "b6b1048f2e4b90b53aff318d493e3c631d45103dc8166e6213a884d816150244"
+        }
+      ]
+    },
+    {
+      "id": "varalakshmi-vrat",
+      "name": "Varalakshmi Vrat",
+      "deity": "Maa Lakshmi",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "varalakshmi-vrat-katha",
+      "subjects": [
+        "lakshmi"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-lakshmi.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "ec29fd934f2e68eda8a5dd33bba461e8fde3834f0156bd0882550d3200a60442"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-lakshmi.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "ec29fd934f2e68eda8a5dd33bba461e8fde3834f0156bd0882550d3200a60442"
+        }
+      ]
+    },
+    {
+      "id": "vat-savitri-vrat",
+      "name": "Vat Savitri Vrat",
+      "deity": "Maa Savitri",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "vat-savitri-vrat-katha",
+      "subjects": [
+        "savitri"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/savitri.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2a25d33e8b89fa298429a52b3bcbde416575fcb32827deaa948c235a20de66b1"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-portraits/savitri.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2a25d33e8b89fa298429a52b3bcbde416575fcb32827deaa948c235a20de66b1"
+        }
+      ]
+    },
+    {
+      "id": "jivitputrika-vrat",
+      "name": "Jivitputrika Vrat",
+      "deity": "Jivitputrika Mata",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "jivitputrika-vrat-katha",
+      "subjects": [
+        "jivitputrika"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/jivitputrika-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5e860bae94845357bfe21dc3d27783e531c6085fb6477cfd1a27102de0aafe67"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-scenes/jivitputrika-muted.webp",
+          "frame": {
+            "aspect": 1,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "5e860bae94845357bfe21dc3d27783e531c6085fb6477cfd1a27102de0aafe67"
+        }
+      ]
+    },
+    {
+      "id": "mahalakshmi-vrat",
+      "name": "Mahalakshmi Vrat",
+      "deity": "Maa Lakshmi",
+      "category": "vrat",
+      "visibility": "default",
+      "katha": "mahalakshmi-vrat-katha",
+      "subjects": [
+        "lakshmi"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-lakshmi.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "ec29fd934f2e68eda8a5dd33bba461e8fde3834f0156bd0882550d3200a60442"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/deity-lakshmi.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "ec29fd934f2e68eda8a5dd33bba461e8fde3834f0156bd0882550d3200a60442"
+        }
+      ]
+    },
+    {
+      "id": "mahadwadashi",
+      "name": "Mahadwadashi",
+      "deity": "Vrat observance",
+      "category": "vrat",
+      "visibility": "advanced",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "karthigai-vrat",
+      "name": "Karthigai Vrat",
+      "deity": "Lord Kartikeya",
+      "category": "regional",
+      "visibility": "default",
+      "subjects": [
+        "kartikeya"
+      ],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-vetrimalai-murugan.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3b9446ed84fb37e95be531dd72752daa8bc4f67237e58cf35044d1104dbd2820"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/theerth-vetrimalai-murugan.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "3b9446ed84fb37e95be531dd72752daa8bc4f67237e58cf35044d1104dbd2820"
+        }
+      ]
+    },
+    {
+      "id": "shraddha-dates",
+      "name": "Shraddha Dates",
+      "deity": "Traditional observance",
+      "category": "festival",
+      "visibility": "advanced",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "rohini-vrat",
+      "name": "Rohini Vrat",
+      "deity": "Jain vrat tradition",
+      "category": "regional",
+      "visibility": "default",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-granth-open-scripture.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2b60e1ca37d1c10c62e1bac618732856223979dd04474b7a63c8e1604b2a2073"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-granth-open-scripture.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "2b60e1ca37d1c10c62e1bac618732856223979dd04474b7a63c8e1604b2a2073"
+        }
+      ]
+    },
+    {
+      "id": "chandra-darshan",
+      "name": "Chandra Darshan",
+      "deity": "Traditional observance",
+      "category": "festival",
+      "visibility": "advanced",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "ishti-anvadhan",
+      "name": "Ishti and Anvadhan",
+      "deity": "Traditional observance",
+      "category": "festival",
+      "visibility": "advanced",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "iskcon-ekadashi",
+      "name": "ISKCON Ekadashi",
+      "deity": "Vrat observance",
+      "category": "vrat",
+      "visibility": "advanced",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "purushottam-maas",
+      "name": "Purushottam Maas",
+      "deity": "Vrat observance",
+      "category": "vrat",
+      "visibility": "advanced",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "chaturmasa",
+      "name": "Chaturmasa",
+      "deity": "Vrat observance",
+      "category": "vrat",
+      "visibility": "advanced",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "navagraha-weekday-fasts",
+      "name": "Navagraha Weekdays Fasting",
+      "deity": "Vrat observance",
+      "category": "vrat",
+      "visibility": "advanced",
+      "katha": "weekday-vrat-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "deity-weekday-fasts",
+      "name": "Deities Weekdays Fasting",
+      "deity": "Vrat observance",
+      "category": "vrat",
+      "visibility": "advanced",
+      "katha": "weekday-vrat-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "dashavatara-vrat",
+      "name": "Dashavatara Vrat",
+      "deity": "Vrat observance",
+      "category": "vrat",
+      "visibility": "advanced",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "jayaparvati-vrat",
+      "name": "Jayaparvati Vrat",
+      "deity": "Vrat observance",
+      "category": "vrat",
+      "visibility": "advanced",
+      "katha": "jayaparvati-vrat-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    },
+    {
+      "id": "ashoka-ashtami",
+      "name": "Ashoka Ashtami",
+      "deity": "Vrat observance",
+      "category": "vrat",
+      "visibility": "advanced",
+      "katha": "ashoka-ashtami-vrat-katha",
+      "subjects": [],
+      "upcomingPaintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ],
+      "paintings": [
+        {
+          "source": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+          "frame": {
+            "aspect": 2,
+            "x": 0.5,
+            "y": 0.5,
+            "zoom": 1
+          },
+          "sha256": "4d69c9d44a7568db131bbc4d62389a8b18709382e505a001d6b541d1b63d1ffe"
+        }
+      ]
+    }
+  ]
+}

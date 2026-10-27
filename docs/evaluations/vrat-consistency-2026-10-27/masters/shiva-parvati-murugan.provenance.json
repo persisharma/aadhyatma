@@ -1,0 +1,23 @@
+{
+  "generator": "built-in image_gen",
+  "generatorSource": "/Users/prashant/.codex/generated_images/01a17bf6-af23-7653-b13b-f052548a573c/exec-354be2c8-2ba3-4a75-806b-352e90d15eeb.png",
+  "master": "docs/evaluations/vrat-consistency-2026-10-27/masters/shiva-parvati-murugan.png",
+  "masterDimensions": [
+    1254,
+    1254
+  ],
+  "masterSHA256": "18c220612820fa34f0c905e57eb28a1bb27aa11ed9afc0608b73e71f04a2d256",
+  "shipped": "mobile/assets/icons/observance-scenes/shiva-parvati-murugan.webp",
+  "shippedDimensions": [
+    320,
+    320
+  ],
+  "shippedSHA256": "0620f00e763508904b374d6d036e40e1f3e6616ea8efb0871cb4100b1ae22a78",
+  "shippedBytes": 51476,
+  "references": [
+    "mobile/assets/reader-illustrations/shiva.webp",
+    "mobile/assets/reader-illustrations/deity-parvati-bhavani.webp",
+    "mobile/assets/reader-illustrations/theerth-vetrimalai-murugan.webp"
+  ],
+  "review": "Inspected shipped320px image: Shiva seated left, Parvati seated right, youthful Murugan central with vel spear and peacock; complete heads/hands/feet and garments, coherent warm painted temple-garden scene, no text or borders, no extra deities."
+}

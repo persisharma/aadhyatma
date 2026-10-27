@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { LinearGradient } from 'expo-linear-gradient';
+import CatalogBackground from '@/components/CatalogBackground';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -95,10 +95,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
 
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]}
-        style={StyleSheet.absoluteFill}
-      />
+      <CatalogBackground />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <ReaderHeader
           title={contentByLang(lang, title.hi, title.en)}
@@ -137,7 +134,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          <TextField
+          <TextField testID="observance-list-search"
             value={query}
             onChangeText={setQuery}
             placeholder={contentByLang(lang, 'इस सूची में खोजें…', 'Search within this list…')}
@@ -192,7 +189,7 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
   scroll: { paddingTop: 8, paddingBottom: 32 },
-  search: { marginBottom: 8 },
+  search: { marginBottom: 8, height: undefined, minHeight: 44, paddingVertical: 8 },
   monthHeading: { flexDirection: 'row', alignItems: 'center' },
   monthLine: { flex: 1, height: StyleSheet.hairlineWidth },
 });

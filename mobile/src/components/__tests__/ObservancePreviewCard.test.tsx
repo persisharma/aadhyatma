@@ -7,6 +7,8 @@ import AreaFilterChips from '../AreaFilterChips';
 import { observanceCountdown, observanceIcon, observanceMonth } from '@/panchang/observancePresentation';
 import type { ObservanceRule } from '@/panchang/types';
 
+jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'hi' }) }));
+
 const rule = {
   id: 'fixture', category: 'vrat', nameHi: 'संकष्टी चतुर्थी व्रत', nameEn: 'Sankashti Chaturthi Vrat',
   deityHi: 'श्री गणेश', deityEn: 'Shri Ganesh',
@@ -85,4 +87,22 @@ test('month headings distinguish years and countdowns compare civil days', () =>
   expect(observanceCountdown(today, today, 'hi')).toBe('आज');
   expect(observanceCountdown(new Date(2027, 0, 1), today, 'en')).toBe('Tomorrow');
   expect(observanceCountdown(new Date(2027, 0, 3), today, 'hi')).toBe('3 दिन शेष');
+});
+
+
+test('My Vrat reminder, unfollow and open remain independent controls', () => {
+  const open = jest.fn(); const unfollow = jest.fn(); const remind = jest.fn();
+  const tree = render(<ObservancePreviewCard rule={rule} lang="en" following reminderOn
+    onPress={open} onToggleFollow={unfollow} onReminderPress={remind} />);
+  const buttons = tree.root.findAll(node => node.props.accessibilityRole === 'button');
+  const reminder = buttons.find(node => node.props.accessibilityLabel === `Reminders for ${rule.nameEn}`)!;
+  act(() => reminder.props.onPress());
+  expect(remind).toHaveBeenCalledTimes(1);
+  expect(open).not.toHaveBeenCalled();
+  expect(unfollow).not.toHaveBeenCalled();
+  expect(reminder.props.accessibilityState).toEqual({ selected: true });
+  const star = buttons.find(node => node.props.accessibilityLabel === `Unfollow ${rule.nameEn}`)!;
+  act(() => star.props.onPress());
+  expect(unfollow).toHaveBeenCalledTimes(1);
+  expect(open).not.toHaveBeenCalled();
 });

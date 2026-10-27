@@ -1,0 +1,8 @@
+Use case: illustration-story
+Asset type: one square native devotional calendar thumbnail, eventually 320 by 320 pixels.
+Primary request: Create a richly painted Ahoi Mata with her young child, matching the Ahoi Ashtami thumbnail in the supplied illustrated Vrat Calendar reference. The whole screen is visual reference only; output ONLY a single square illustration, never UI or text.
+Input images: Image 1 is the original calendar mockup; refer specifically to its Ahoi Ashtami mother-and-child painting. Image 2 is supporting style reference for warm detailed miniature brushwork, gold ornament, cream backdrop, soft saturated red, temple-garden warmth. Do not copy Ganesha from Image 2.
+Subject: a benevolent crowned mother Ahoi Mata seated in red and green devotional garments, gently holding her young child on her lap. Both complete heads and seated figures comfortably within the central 80 percent of the square. A traditional cream mural backdrop with small unobtrusive animal motifs around the sides, as in the Ahoi visual reference; brass diya and flowers near the base.
+Style/medium: premium Indian devotional storybook miniature, warm parchment, golden light, detailed painterly gouache, natural human faces, soft edges, matching existing warm calendar art. It must remain legible at 78px square.
+Composition: one coherent centered square scene with no panels. Main mother and child large enough to read, without clipping crowns, limbs or faces. Full painted background to all four edges.
+Avoid: typography, letters, logos, numbers, captions, borders, frames, UI, social poster layout, extra deities, Ganesha, photorealism, 3D, flat vector icon style. No blank caption strip.

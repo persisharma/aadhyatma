@@ -81,8 +81,8 @@ export default function AreaFilterChips({
             style={({ pressed }) => [
               styles.chip,
               {
-                borderColor: selected ? colors.saffronDeep : colors.divider,
-                backgroundColor: selected ? colors.saffronTint : colors.parchmentSoft,
+                borderColor: selected ? colors.catalogAccent : colors.catalogBorder,
+                backgroundColor: selected ? colors.catalogAccent : colors.catalogSurface,
                 borderRadius: radii.pill,
               },
               pressed && { opacity: 0.7 },
@@ -92,7 +92,7 @@ export default function AreaFilterChips({
               numberOfLines={1}
               maxFontSizeMultiplier={CHIP_FONT_CAP}
               style={{
-                color: selected ? colors.saffronDeep : colors.inkSoft,
+                color: selected ? colors.parchment : colors.inkSoft,
                 fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily),
                 fontSize: 14,
               }}
