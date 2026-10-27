@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import ObservanceArtwork from './ObservanceArtwork';
 import AppIcon from './AppIcon';
-import ListingCard from './ListingCard';
+import ListingCard, { UPCOMING_ART_HEIGHT, UPCOMING_ART_WIDTH } from './ListingCard';
 import type { Lang } from '@/data/gita/language';
 import type { ObservanceRule } from '@/panchang/types';
 import { useTheme } from '@/theme/ThemeContext';
@@ -58,7 +58,7 @@ export default function ObservancePreviewCard({
       </Pressable>}</>}
       variant={tile ? 'upcoming' : 'observance'}
       secondary={tile ? undefined : lang === 'en' ? rule.nameHi : rule.nameEn}
-      thumbnail={<ObservanceArtwork rule={rule} width={tile ? 110 : 78} height={tile ? 72 : 78} variant={tile ? 'upcoming' : 'list'} />}
+      thumbnail={<ObservanceArtwork rule={rule} width={tile ? UPCOMING_ART_WIDTH : 78} height={tile ? UPCOMING_ART_HEIGHT : 78} variant={tile ? 'upcoming' : 'list'} />}
       meta={<View>
           {(dateLabel || countdown) && <View style={[styles.facts, tile && { marginTop: 2 }]}>
             {dateLabel && <View style={styles.dateRow}>

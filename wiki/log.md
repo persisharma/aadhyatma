@@ -1215,3 +1215,8 @@ Recorded the complete75-sarga/91-provisional-page/256-scene outline, relationshi
 ## [2026-10-27] ingest | Vrat prototype proportions and muted artwork
 
 Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×72 art, catalog frame tone, shallow shadows and intrinsic text height. Reviewed all 68 paintings for 200 rules and integrated six versioned matte palette edits. Recorded current native Hindi/English/XXXL/save/reminder/Katha evidence and automated validation in `docs/evaluations/vrat-palette-layout-2026-10-27/`; Android remains pending.
+
+
+## [2026-10-27] ingest | Upcoming full-width banners
+
+The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.

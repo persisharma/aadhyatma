@@ -27,12 +27,16 @@ import CachedArtwork from './CachedArtwork';
  *   truncated (RULEBOOK §3 budget).
  * - `meta` is the unit count ("4 पृष्ठ"). Age, kind and other tags do not go
  *   on cards; shelf-wide facts belong in `ListingScope`.
- * - Vrat uses `observance` (78dp square) and `upcoming` (110x72 scene)
+ * - Vrat uses `observance` (78dp square) and `upcoming` (full-width banner)
  *   variants of this same shell. Their bilingual caption/date/save slots are
  *   calendar metadata, not changes to the standard story/reading contract.
  */
 export const LISTING_THUMB_WIDTH = 92;
 export const LISTING_THUMB_MIN_HEIGHT = 115;
+export const UPCOMING_CARD_WIDTH = 155;
+// Fill the card inside its 1pt border and 6pt padding; save overlays the art.
+export const UPCOMING_ART_WIDTH = UPCOMING_CARD_WIDTH - 2 - 12;
+export const UPCOMING_ART_HEIGHT = 72;
 
 type Props = {
   testID?: string;
@@ -207,11 +211,11 @@ export function ListingThumbImage({ source, focusX = 0.5 }: { source: Background
 
 const styles = StyleSheet.create({
   observanceCard: { marginBottom: 6, minHeight: 92 },
-  upcomingCard: { width: 155, flexShrink: 0 },
+  upcomingCard: { width: UPCOMING_CARD_WIDTH, flexShrink: 0 },
   observanceContent: { minWidth: 0, flexDirection: 'row', alignItems: 'center', padding: 6, paddingRight: 48, gap: 12 },
   upcomingContent: { padding: 6, gap: 3 },
   observanceThumb: { width: 78, height: 78, flexShrink: 0, overflow: 'hidden' },
-  upcomingThumb: { width: 110, height: 72, flexShrink: 0, overflow: 'hidden' },
+  upcomingThumb: { width: UPCOMING_ART_WIDTH, height: UPCOMING_ART_HEIGHT, flexShrink: 0, overflow: 'hidden' },
   upcomingBody: { flex: 0, alignSelf: 'stretch', paddingHorizontal: 2, gap: 0 },
   observanceChevron: { position: 'absolute', bottom: 5, right: 16, fontSize: 20 },
   card: {
