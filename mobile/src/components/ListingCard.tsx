@@ -27,7 +27,7 @@ import CachedArtwork from './CachedArtwork';
  *   truncated (RULEBOOK §3 budget).
  * - `meta` is the unit count ("4 पृष्ठ"). Age, kind and other tags do not go
  *   on cards; shelf-wide facts belong in `ListingScope`.
- * - Vrat uses `observance` (78dp square) and `upcoming` (112x74 scene)
+ * - Vrat uses `observance` (78dp square) and `upcoming` (110x72 scene)
  *   variants of this same shell. Their bilingual caption/date/save slots are
  *   calendar metadata, not changes to the standard story/reading contract.
  */
@@ -74,7 +74,7 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
   return (
     <ListingCardFrame testID={testID} onPress={onPress} accessibilityLabel={label}
       accessibilityValue={read === undefined ? undefined : { min: 0, max: 100, now: Math.round(read * 100) }}
-      action={action}
+      action={action} tone={special ? 'catalog' : 'reading'}
       style={special ? (upcoming ? styles.upcomingCard : [styles.observanceCard, actionCount === 2 && { minHeight: 104 }]) : styles.card}
       contentStyle={special ? (upcoming ? styles.upcomingContent : styles.observanceContent) : undefined}>
       <View testID={testID ? `${testID}-thumb` : undefined} style={[special ? (upcoming ? styles.upcomingThumb : styles.observanceThumb) : styles.thumb, { borderRadius: radii.sm, backgroundColor: colors.parchmentSoft }]}>
@@ -84,7 +84,7 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
         {eyebrow ? <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{eyebrow}</Text> : null}
         <Text
           numberOfLines={special ? undefined : 2}
-          style={{ color: colors.ink, fontFamily: titleFontByLang(lang), fontStyle: latin ? 'italic' : 'normal', ...titleSize, ...(special ? { fontSize: upcoming ? 15 : 17, lineHeight: upcoming ? 24 : 27 } : {}) }}
+          style={{ color: special ? colors.catalogAccent : colors.ink, fontFamily: titleFontByLang(lang), fontStyle: latin ? 'italic' : 'normal', ...titleSize, ...(special ? { fontSize: upcoming ? 15 : 17, lineHeight: upcoming ? 24 : 27 } : {}) }}
         >
           {title}
         </Text>
@@ -108,7 +108,7 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
 
 /** Shared painted listing surface, also used by Vrat's scene cards. The
  * action is a sibling of the open target, so saving never opens the detail. */
-export function ListingCardFrame({ children, action, onPress, accessibilityLabel, accessibilityValue, testID, style, contentStyle }: {
+export function ListingCardFrame({ children, action, onPress, accessibilityLabel, accessibilityValue, testID, style, contentStyle, tone = 'reading' }: {
   children: React.ReactNode;
   action?: React.ReactNode;
   onPress?: () => void;
@@ -117,14 +117,18 @@ export function ListingCardFrame({ children, action, onPress, accessibilityLabel
   testID?: string;
   style?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
+  tone?: 'reading' | 'catalog';
 }) {
   const { colors, radii } = useTheme();
-  const frame = { borderWidth: 1, borderRadius: radii.lg, borderColor: colors.cardActiveBorder, backgroundColor: colors.cardActiveFrom };
-  const painting = <LinearGradient colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-    start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]} />;
-  if (!onPress) return <View testID={testID} style={[frame, elevation.lifted, style]}>{painting}{children}</View>;
+  const calendar = tone === 'catalog';
+  const corner = calendar ? radii.md : radii.lg;
+  const depth = calendar ? elevation.card : elevation.lifted;
+  const frame = { borderWidth: 1, borderRadius: corner, borderColor: calendar ? colors.catalogBorder : colors.cardActiveBorder, backgroundColor: calendar ? colors.catalogSurface : colors.cardActiveFrom };
+  const painting = <LinearGradient colors={calendar ? [colors.catalogSurface, colors.parchmentSoft] : [colors.cardActiveFrom, colors.cardActiveTo]}
+    start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[StyleSheet.absoluteFillObject, { borderRadius: corner }]} />;
+  if (!onPress) return <View testID={testID} style={[frame, depth, style]}>{painting}{children}</View>;
   if (action) {
-    return <View style={[frame, elevation.lifted, style]}>
+    return <View style={[frame, depth, style]}>
       {painting}
       <Pressable testID={testID} onPress={onPress} accessibilityRole="button" accessibilityLabel={accessibilityLabel} accessibilityValue={accessibilityValue}
         style={({ pressed }) => [contentStyle, pressed && { opacity: 0.86 }]}>{children}</Pressable>
@@ -133,7 +137,7 @@ export function ListingCardFrame({ children, action, onPress, accessibilityLabel
   }
   return <Pressable testID={testID} onPress={onPress} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
     accessibilityValue={accessibilityValue}
-    style={({ pressed }) => [frame, elevation.lifted, style, contentStyle, pressed && { opacity: 0.86 }]}>
+    style={({ pressed }) => [frame, depth, style, contentStyle, pressed && { opacity: 0.86 }]}>
     {painting}{children}
   </Pressable>;
 }
@@ -203,12 +207,12 @@ export function ListingThumbImage({ source, focusX = 0.5 }: { source: Background
 
 const styles = StyleSheet.create({
   observanceCard: { marginBottom: 6, minHeight: 92 },
-  upcomingCard: { width: 158 },
+  upcomingCard: { width: 155, flexShrink: 0 },
   observanceContent: { minWidth: 0, flexDirection: 'row', alignItems: 'center', padding: 6, paddingRight: 48, gap: 12 },
-  upcomingContent: { padding: 6, gap: 4 },
+  upcomingContent: { padding: 6, gap: 3 },
   observanceThumb: { width: 78, height: 78, flexShrink: 0, overflow: 'hidden' },
-  upcomingThumb: { width: 112, height: 74, flexShrink: 0, overflow: 'hidden' },
-  upcomingBody: { flex: 0, alignSelf: 'stretch', paddingHorizontal: 2, paddingBottom: 2, gap: 1 },
+  upcomingThumb: { width: 110, height: 72, flexShrink: 0, overflow: 'hidden' },
+  upcomingBody: { flex: 0, alignSelf: 'stretch', paddingHorizontal: 2, gap: 0 },
   observanceChevron: { position: 'absolute', bottom: 5, right: 16, fontSize: 20 },
   card: {
     position: 'relative',

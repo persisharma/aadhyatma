@@ -58,15 +58,15 @@ export default function ObservancePreviewCard({
       </Pressable>}</>}
       variant={tile ? 'upcoming' : 'observance'}
       secondary={tile ? undefined : lang === 'en' ? rule.nameHi : rule.nameEn}
-      thumbnail={<ObservanceArtwork rule={rule} width={tile ? 112 : 78} height={tile ? 74 : 78} variant={tile ? 'upcoming' : 'list'} />}
+      thumbnail={<ObservanceArtwork rule={rule} width={tile ? 110 : 78} height={tile ? 72 : 78} variant={tile ? 'upcoming' : 'list'} />}
       meta={<View>
-          {(dateLabel || countdown) && <View style={styles.facts}>
+          {(dateLabel || countdown) && <View style={[styles.facts, tile && { marginTop: 2 }]}>
             {dateLabel && <View style={styles.dateRow}>
               <AppIcon name="date" size={tile ? 12 : 14} color={colors.saffronDeep} />
-              <Text style={{ fontFamily: bodyFont, fontSize: tile ? 11 : 12, lineHeight: tile ? 18 : 20, flexShrink: 1, color: colors.inkSoft }}>{dateLabel}</Text>
+              <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: tile ? 18 : 20, flexShrink: 1, color: colors.inkSoft }}>{dateLabel}</Text>
             </View>}
             {countdown && <View style={[styles.countdown, { backgroundColor: colors.goldTint, borderRadius: radii.pill }]}>
-              <Text style={{ fontFamily: bodyFont, fontSize: tile ? 11 : 12, lineHeight: tile ? 18 : 20, flexShrink: 1, color: colors.saffronDeep }}>{countdown}</Text>
+              <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: tile ? 18 : 20, flexShrink: 1, color: colors.saffronDeep }}>{countdown}</Text>
             </View>}
           </View>}
           {areaLabel && <Text style={{ fontFamily: bodyFont, fontSize: 11, color: colors.saffronDeep, marginTop: 2 }}>{areaLabel}</Text>}

@@ -1,0 +1,410 @@
+[
+  {
+    "file": "mobile/assets/icons/observance-scenes/karwa-chauth-puja.webp",
+    "saturation": 0.789,
+    "vivid": 0.887,
+    "name": "Karwa Chauth"
+  },
+  {
+    "file": "mobile/assets/icons/observance-scenes/karwa-chauth-ritual.webp",
+    "saturation": 0.762,
+    "vivid": 0.858,
+    "name": "Karwa Chauth"
+  },
+  {
+    "file": "mobile/assets/icons/observance-scenes/ahoi-mata.webp",
+    "saturation": 0.697,
+    "vivid": 0.7,
+    "name": "Ahoi Ashtami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/jivitputrika.webp",
+    "saturation": 0.671,
+    "vivid": 0.694,
+    "name": "Jivitputrika Vrat"
+  },
+  {
+    "file": "mobile/assets/icons/observance-scenes/bal-krishna-makhan.webp",
+    "saturation": 0.652,
+    "vivid": 0.655,
+    "name": "Janmashtami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/dasha-mata.webp",
+    "saturation": 0.641,
+    "vivid": 0.649,
+    "name": "Dasha Mata Vrat"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/gangaur.webp",
+    "saturation": 0.595,
+    "vivid": 0.534,
+    "name": "Gangaur"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/savitri.webp",
+    "saturation": 0.582,
+    "vivid": 0.48,
+    "name": "Vat Savitri Vrat"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/buddha.webp",
+    "saturation": 0.551,
+    "vivid": 0.421,
+    "name": "Buddha Purnima"
+  },
+  {
+    "file": "mobile/assets/icons/observance-scenes/tulsi-puja.webp",
+    "saturation": 0.55,
+    "vivid": 0.362,
+    "name": "Tulasi Vivah"
+  },
+  {
+    "file": "mobile/assets/icons/observance-scenes/khandoba-kartikeya.webp",
+    "saturation": 0.543,
+    "vivid": 0.385,
+    "name": "Champa Shashthi"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/narada.webp",
+    "saturation": 0.54,
+    "vivid": 0.479,
+    "name": "Narada Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-scenes/krishna-yama.webp",
+    "saturation": 0.535,
+    "vivid": 0.4,
+    "name": "Narak Chaturdashi"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/category-granth-open-scripture.webp",
+    "saturation": 0.527,
+    "vivid": 0.401,
+    "name": "Guru Purnima"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/baglamukhi.webp",
+    "saturation": 0.522,
+    "vivid": 0.469,
+    "name": "Baglamukhi Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/chauth-mata.webp",
+    "saturation": 0.506,
+    "vivid": 0.348,
+    "name": "Bhadwa Chauth (Chauth Mata Vrat)"
+  },
+  {
+    "file": "mobile/assets/icons/observance-scenes/siddhidatri.webp",
+    "saturation": 0.499,
+    "vivid": 0.353,
+    "name": "Maha Navami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/madhushravani.webp",
+    "saturation": 0.495,
+    "vivid": 0.378,
+    "name": "Madhushravani"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/tulsidas.webp",
+    "saturation": 0.494,
+    "vivid": 0.419,
+    "name": "Tulsidas Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/parashurama.webp",
+    "saturation": 0.488,
+    "vivid": 0.362,
+    "name": "Parashurama Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/chitragupta.webp",
+    "saturation": 0.479,
+    "vivid": 0.363,
+    "name": "Chitra Pournami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/vamana.webp",
+    "saturation": 0.464,
+    "vivid": 0.255,
+    "name": "Vamana Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/surdas.webp",
+    "saturation": 0.461,
+    "vivid": 0.375,
+    "name": "Surdas Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/vishwakarma.webp",
+    "saturation": 0.46,
+    "vivid": 0.308,
+    "name": "Vishwakarma Puja"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/valmiki.webp",
+    "saturation": 0.46,
+    "vivid": 0.336,
+    "name": "Valmiki Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-scenes/shiva-parvati-murugan.webp",
+    "saturation": 0.456,
+    "vivid": 0.293,
+    "name": "Karthigai Deepam"
+  },
+  {
+    "file": "mobile/assets/icons/observance-scenes/krishna-gau-mata.webp",
+    "saturation": 0.45,
+    "vivid": 0.243,
+    "name": "Bahula Chaturthi"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/balarama.webp",
+    "saturation": 0.445,
+    "vivid": 0.177,
+    "name": "Hal Shashthi"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/hayagriva.webp",
+    "saturation": 0.443,
+    "vivid": 0.19,
+    "name": "Hayagriva Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/dhumavati.webp",
+    "saturation": 0.442,
+    "vivid": 0.178,
+    "name": "Dhumavati Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/shankaracharya.webp",
+    "saturation": 0.439,
+    "vivid": 0.348,
+    "name": "Adi Shankaracharya Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-narasimha-prahlad.webp",
+    "saturation": 0.428,
+    "vivid": 0.194,
+    "name": "Narasimha Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/naga.webp",
+    "saturation": 0.425,
+    "vivid": 0.192,
+    "name": "Nag Panchami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/category-aarti-diya.webp",
+    "saturation": 0.425,
+    "vivid": 0.161,
+    "name": "Raksha Bandhan"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/gau-mata.webp",
+    "saturation": 0.423,
+    "vivid": 0.171,
+    "name": "Bachh Baras"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-dattatreya.webp",
+    "saturation": 0.419,
+    "vivid": 0.098,
+    "name": "Dattatreya Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/mahavir.webp",
+    "saturation": 0.415,
+    "vivid": 0.154,
+    "name": "Mahavir Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/dhanvantari.webp",
+    "saturation": 0.412,
+    "vivid": 0.179,
+    "name": "Dhanteras"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+    "saturation": 0.408,
+    "vivid": 0.098,
+    "name": "Sakat Chauth"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-surya.webp",
+    "saturation": 0.405,
+    "vivid": 0.151,
+    "name": "Mesha Sankranti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/shitala.webp",
+    "saturation": 0.404,
+    "vivid": 0.159,
+    "name": "Shitala Saptami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/theerth-gogaji-gogamedi.webp",
+    "saturation": 0.398,
+    "vivid": 0.088,
+    "name": "Goga Navami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/bhairava.webp",
+    "saturation": 0.398,
+    "vivid": 0.241,
+    "name": "Kaal Bhairav Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/kabir.webp",
+    "saturation": 0.393,
+    "vivid": 0.176,
+    "name": "Kabir Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/theerth-tejaji-kharnal.webp",
+    "saturation": 0.39,
+    "vivid": 0.121,
+    "name": "Teja Dashami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/kalki.webp",
+    "saturation": 0.389,
+    "vivid": 0.173,
+    "name": "Kalki Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/varaha.webp",
+    "saturation": 0.388,
+    "vivid": 0.2,
+    "name": "Varaha Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-durga-lion.webp",
+    "saturation": 0.382,
+    "vivid": 0.199,
+    "name": "Chaitra Navratri Begins"
+  },
+  {
+    "file": "mobile/assets/icons/observance-scenes/shiva-vishnu.webp",
+    "saturation": 0.382,
+    "vivid": 0.17,
+    "name": "Kartik Purnima"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/hanuman-sita.webp",
+    "saturation": 0.377,
+    "vivid": 0.125,
+    "name": "Hanuman Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/daan-annapurna-bhiksha.webp",
+    "saturation": 0.373,
+    "vivid": 0.147,
+    "name": "Annapurna Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-rama-darbar.webp",
+    "saturation": 0.372,
+    "vivid": 0.153,
+    "name": "Ram Navami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/bhishma.webp",
+    "saturation": 0.368,
+    "vivid": 0.136,
+    "name": "Bhishma Ashtami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/vallabhacharya.webp",
+    "saturation": 0.364,
+    "vivid": 0.115,
+    "name": "Vallabhacharya Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/narmada.webp",
+    "saturation": 0.357,
+    "vivid": 0.198,
+    "name": "Narmada Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-krishna-bansuri.webp",
+    "saturation": 0.355,
+    "vivid": 0.046,
+    "name": "Holi"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-shani.webp",
+    "saturation": 0.344,
+    "vivid": 0.03,
+    "name": "Shani Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-radha-krishna.webp",
+    "saturation": 0.342,
+    "vivid": 0.079,
+    "name": "Rang Panchami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/theerth-vetrimalai-murugan.webp",
+    "saturation": 0.336,
+    "vivid": 0.05,
+    "name": "Thai Pusam"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-lakshmi.webp",
+    "saturation": 0.335,
+    "vivid": 0.085,
+    "name": "Kojagara Puja"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/theerth-ramdevra.webp",
+    "saturation": 0.333,
+    "vivid": 0.055,
+    "name": "Ramdev Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp",
+    "saturation": 0.316,
+    "vivid": 0.064,
+    "name": "Asha Dashami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/matsya.webp",
+    "saturation": 0.294,
+    "vivid": 0.119,
+    "name": "Matsya Jayanti"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-saraswati-veena.webp",
+    "saturation": 0.29,
+    "vivid": 0.025,
+    "name": "Vasant Panchami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/deity-ganga.webp",
+    "saturation": 0.27,
+    "vivid": 0.025,
+    "name": "Ganga Saptami"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/source-vishnu-narayana.webp",
+    "saturation": 0.258,
+    "vivid": 0.086,
+    "name": "Akshaya Tritiya"
+  },
+  {
+    "file": "mobile/assets/icons/observance-portraits/chandra.webp",
+    "saturation": 0.254,
+    "vivid": 0.017,
+    "name": "Sharad Purnima"
+  },
+  {
+    "file": "mobile/assets/icons/observance-thumbnails/shiva.webp",
+    "saturation": 0.25,
+    "vivid": 0.036,
+    "name": "Maha Shivaratri"
+  }
+]

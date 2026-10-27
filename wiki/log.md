@@ -1210,3 +1210,8 @@ Supplied landing/list references exposed tall square-avatar Upcoming cards and i
 ## [2026-10-26] ingest | Aranyakanda planning only
 
 Recorded the complete75-sarga/91-provisional-page/256-scene outline, relationship-specific four-language address guide, event/prop contracts and explicit source/translation/art/native gaps in [[decisions/ramayan-comic-character-continuity]]. This planning-only package is submitted separately from the merged Ayodhyakanda PR540; no artwork or integration was started.
+
+
+## [2026-10-27] ingest | Vrat prototype proportions and muted artwork
+
+Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×72 art, catalog frame tone, shallow shadows and intrinsic text height. Reviewed all 68 paintings for 200 rules and integrated six versioned matte palette edits. Recorded current native Hindi/English/XXXL/save/reminder/Katha evidence and automated validation in `docs/evaluations/vrat-palette-layout-2026-10-27/`; Android remains pending.

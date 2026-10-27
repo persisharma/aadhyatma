@@ -1,0 +1,22 @@
+{
+  "id": "karwa-chauth-ritual-muted",
+  "tool": "built-in image_gen",
+  "editTarget": "mobile/assets/icons/observance-scenes/karwa-chauth-ritual.webp",
+  "references": [
+    "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+    "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp"
+  ],
+  "source": "/Users/prashant/.codex/generated_images/01a17c45-b89d-7440-a02d-9172cdb95341/exec-d74d42dd-22ad-4ab1-8644-4436cacf0ac8.png",
+  "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/karwa-chauth-ritual-muted.png",
+  "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/karwa-chauth-ritual-muted.prompt.txt",
+  "shipped": "mobile/assets/icons/observance-scenes/karwa-chauth-ritual-muted.webp",
+  "masterSha256": "570f110fa1052deb5f18d635fef9f925f2cf93380b9d3405fb4e34dbae559ffd",
+  "shippedSha256": "01c29a29cd93af656c497e6e9dee7ed307b6c089c8fa7855bdaab528128524c1",
+  "shippedDimensions": [
+    320,
+    320
+  ],
+  "shippedBytes": 35432,
+  "mechanicalProcessing": "Whole-canvas RGB Lanczos resize320square, WebP quality85 method6, no color processing.",
+  "review": "Original, edited master and Parvati anchor inspected. Complete square scene retains woman/profile/sari/sieve/moon/diya/tray/arch/foliage and nighttime atmosphere. Matte brush rendering reduces glossy highlights and softens reds, greens and gold while retaining natural color."
+}

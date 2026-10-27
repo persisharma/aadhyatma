@@ -1924,7 +1924,7 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
 
   const CardShell = compact ? ListingCardFrame : View;
   return (
-    <CardShell style={[styles.observanceCard, compact && { padding: 9, marginBottom: 0 }, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
+    <CardShell {...(compact ? { tone: 'catalog' as const } : {})} style={[styles.observanceCard, compact && { padding: 9, marginBottom: 0 }, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
       {!compact && <View style={styles.observanceTop}>
         <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
           <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
@@ -2048,7 +2048,7 @@ function CatalogLedgerCell({
         pressed && { opacity: 0.6 },
       ]}
     >
-      <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={20} color={colors.iconInk} weight="duotone" />
+      <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={18} color={colors.iconInk} weight="regular" />
       <Text
         style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, lineHeight: 20, color: colors.ink, marginTop: 3 }}
       >
@@ -2133,7 +2133,7 @@ function CatalogLedgerBar({
     <View
       style={[
         styles.ledgerBar,
-        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
+        { backgroundColor: colors.catalogSurface, borderColor: colors.catalogBorder, borderRadius: radii.md },
         elevation.card,
       ]}
     >
@@ -2451,11 +2451,13 @@ function CatalogLanding({
             onOpenLenses={onOpenLenses}
           />
           {upcoming.length > 0 && (
-            <View style={{ marginTop: 14 }}>
-              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), ...typography.catalogTitle, color: colors.ink, marginBottom: 8 }}>
+            <View testID="catalog-upcoming" style={{ marginTop: 12 }}>
+              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 16, lineHeight: 24, color: colors.ink, marginBottom: 6 }}>
                 {contentByLang(lang, 'आगामी', 'Upcoming')}
               </Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10, paddingRight: 8, paddingBottom: 4, alignItems: 'flex-start' }}>
+              <ScrollView horizontal testID="catalog-upcoming-rail" showsHorizontalScrollIndicator={false} removeClippedSubviews={false}
+                style={{ marginHorizontal: -14, marginTop: -6, marginBottom: -8 }}
+                contentContainerStyle={{ gap: 6, paddingHorizontal: 14, paddingTop: 6, paddingBottom: 10, alignItems: 'flex-start' }}>
                 {upcoming.map((item) => (
                   <ObservancePreviewCard
                     key={`${item.rule.id}-${item.date.toDateString()}`}
@@ -2473,8 +2475,8 @@ function CatalogLanding({
             </View>
           )}
 
-          <View style={{ marginTop: 18 }}>
-            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), ...typography.catalogTitle, color: colors.ink, marginBottom: 10 }}>
+          <View style={{ marginTop: 12 }}>
+            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 17, lineHeight: 26, color: colors.ink, marginBottom: 8 }}>
               {contentByLang(lang, 'श्रेणी से देखें', 'Browse by type')}
             </Text>
             <View style={styles.tileGrid}>

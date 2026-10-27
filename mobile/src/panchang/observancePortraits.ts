@@ -39,7 +39,7 @@ const portraits: Readonly<Record<string, ObservancePortrait>> = {
   ramdev: reader('theerth-ramdevra', 0.50, 0.22, 2.3),
   tejaji: reader('theerth-tejaji-kharnal', 0.49, 0.24, 2.3),
   khandoba: reader('theerth-khandoba-jejuri', 0.52, 0.32, 2.3),
-  ahoi: { source: require('@assets/icons/observance-scenes/ahoi-mata.webp'), frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } },
+  ahoi: { source: require('@assets/icons/observance-scenes/ahoi-mata-muted.webp'), frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } },
   tulsi: { source: require('@assets/icons/observance-scenes/tulsi-puja.webp'), frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } },
   siddhidatri: { source: require('@assets/icons/observance-scenes/siddhidatri.webp'), frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } },
   ...Object.fromEntries(Object.entries(observancePortraitSources).map(([key, source]) => [key, {
@@ -102,11 +102,11 @@ export function missingObservancePortraits(): string[] {
 
 export type ObservanceArtVariant = 'list' | 'upcoming' | 'today';
 const ritualScene: ObservancePortrait = {
-  source: require('@assets/icons/observance-scenes/karwa-chauth-ritual.webp'),
+  source: require('@assets/icons/observance-scenes/karwa-chauth-ritual-muted.webp'),
   frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 },
 };
 const pujaScene: ObservancePortrait = {
-  source: require('@assets/icons/observance-scenes/karwa-chauth-puja.webp'),
+  source: require('@assets/icons/observance-scenes/karwa-chauth-puja-muted.webp'),
   frame: { aspect: 2, x: 0.5, y: 0.5, zoom: 1 },
 };
 
@@ -126,7 +126,7 @@ export function observanceIllustrations(
   variant: ObservanceArtVariant = 'list',
 ): readonly ObservancePortrait[] {
   if (rule.id && ['masik-krishna-janmashtami', 'janmashtami', 'janmashtami-vaishnava'].includes(rule.id)) {
-    return [{ source: require('@assets/icons/observance-scenes/bal-krishna-makhan.webp'), frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } }];
+    return [{ source: require('@assets/icons/observance-scenes/bal-krishna-makhan-muted.webp'), frame: { aspect: 1, x: 0.5, y: 0.5, zoom: 1 } }];
   }
   if (rule.id === 'karwa-chauth') return [variant === 'upcoming' ? pujaScene : ritualScene];
   if (rule.id === 'valmiki-jayanti' && variant === 'today') {

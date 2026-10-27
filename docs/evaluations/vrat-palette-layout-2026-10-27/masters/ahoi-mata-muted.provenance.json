@@ -1,0 +1,23 @@
+{
+  "id": "ahoi-mata-muted",
+  "tool": "built-in image_gen",
+  "intent": "color/rendering-only edit",
+  "generatedSource": "/Users/prashant/.codex/generated_images/01a17c45-0f94-7da3-91b2-d510cee45eb2/exec-232c2372-16fb-4565-914f-110a0add6d8b.png",
+  "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/ahoi-mata-muted.png",
+  "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/ahoi-mata-muted.prompt.txt",
+  "shipped": "mobile/assets/icons/observance-scenes/ahoi-mata-muted.webp",
+  "masterSha256": "659e3292fc087acca637fe300e18425de37296729998b240b760295a3a1f7063",
+  "shippedSha256": "b1537c2b1c4fa298ef48d4be0b37d8483bdd34583c8beee3acd5e745cd9c7f02",
+  "shippedDimensions": [
+    320,
+    320
+  ],
+  "shippedBytes": 42188,
+  "editTarget": "mobile/assets/icons/observance-scenes/ahoi-mata.webp",
+  "styleReferences": [
+    "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+    "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp"
+  ],
+  "mechanicalProcessing": "Whole-canvas Lanczos resize, RGB, WebP quality85 method6 only.",
+  "review": "First result accepted: mother/child faces, poses, complete square figures and animal motifs preserved; red/green intensity visibly softer and matte, matching the warm painted anchors; no text/UI/border."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "karwa-chauth-puja-muted",
+  "tool": "built-in image_gen",
+  "intent": "color/rendering-only edit",
+  "generatedSource": "/Users/prashant/.codex/generated_images/01a17c45-0f94-7da3-91b2-d510cee45eb2/exec-9876cb75-6b8e-427b-a41e-9a1ffc9f1702.png",
+  "master": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/karwa-chauth-puja-muted.png",
+  "prompt": "docs/evaluations/vrat-palette-layout-2026-10-27/masters/karwa-chauth-puja-muted.prompt.txt",
+  "shipped": "mobile/assets/icons/observance-scenes/karwa-chauth-puja-muted.webp",
+  "masterSha256": "4f963b9f39767ed0ee15c08b437130c8f7337a45a6511630839caa8b034ad566",
+  "shippedSha256": "920572e626f86840dedc9f79a8da8d761e4b6c1f4e8ca82193a42516579f7de5",
+  "shippedDimensions": [
+    480,
+    240
+  ],
+  "shippedBytes": 43858,
+  "editTarget": "mobile/assets/icons/observance-scenes/karwa-chauth-puja.webp",
+  "styleReferences": [
+    "mobile/assets/icons/observance-thumbnails/deity-ganesha-modak.webp",
+    "mobile/assets/icons/observance-thumbnails/deity-parvati-bhavani.webp"
+  ],
+  "mechanicalProcessing": "Whole-canvas Lanczos resize, RGB, WebP quality85 method6 only.",
+  "review": "First result accepted: complete 2:1 kalash/coconut/sieve/lit diya/flowers/red-cloth arrangement retained; softer dusty red/sage foliage and matte gold, gentler background contrast, no text/UI/border."
+}

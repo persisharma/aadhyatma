@@ -21,7 +21,7 @@ export default function CatalogCategoryTile({ title, subtitle, artwork, lang, ac
   const { width, fontScale } = useWindowDimensions();
   const fullWidth = wide || width < 360 || fontScale > 1.2;
   return (
-    <ListingCardFrame testID={testID} accessibilityLabel={accessibilityLabel} onPress={onPress}
+    <ListingCardFrame tone="catalog" testID={testID} accessibilityLabel={accessibilityLabel} onPress={onPress}
       style={[styles.tile, { width: fullWidth ? '100%' : '48%' }]}>
       <CatalogCategoryArtwork name={artwork} />
       <View style={styles.meta}>

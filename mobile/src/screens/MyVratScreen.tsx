@@ -161,7 +161,7 @@ export default function MyVratScreen({ navigation }: Props) {
             {/* Metric band. The vrat blocks render only when a vrat is actually
                 followed — this screen can now be reached with muhurat follows
                 and none of its own. */}
-            <View ref={myVratRef} collapsable={false}><ListingCardFrame style={styles.metricBand}>
+            <View ref={myVratRef} collapsable={false}><ListingCardFrame tone="catalog" style={styles.metricBand}>
               <Metric value={followCount} label={contentByLang(lang, 'फ़ॉलो', 'Following')} lang={lang} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
               <Metric value={reminderCount} label={contentByLang(lang, 'अनुस्मारक', 'Reminders on')} lang={lang} colors={colors} />
