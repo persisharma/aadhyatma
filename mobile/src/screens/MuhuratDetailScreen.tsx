@@ -68,9 +68,9 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
           />
         </View>
 
-        <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={{ paddingHorizontal: 14, paddingTop: 4, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
           {ready ? (
-            <MuhuratCardBody p={p} md={md} variant="full" nowStartMs={nowStartMs} cityLabel={cityLabel} isToday={muhurat.isToday} />
+            <MuhuratCardBody p={p} md={md} nowStartMs={nowStartMs} cityLabel={cityLabel} isToday={muhurat.isToday} />
           ) : (
             <View style={{ paddingVertical: 72, alignItems: 'center' }}>
               <ActivityIndicator color={colors.saffron} />

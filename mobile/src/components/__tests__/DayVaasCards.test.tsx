@@ -51,7 +51,7 @@ test('renders the four vaas cards for a real day', async () => {
   expect(t).toContain('यात्रा टालें');
   // अग्नि वास — पाताल bars havan, and names when it changes + what follows.
   expect(t).toContain('पाताल');
-  expect(t.some((s) => s.startsWith('तक ') && s.includes('फिर पृथ्वी'))).toBe(true);
+  expect(t.some((s) => / तक, फिर पृथ्वी$/.test(s))).toBe(true);
   expect(t).toContain('हवन वर्जित');
 });
 

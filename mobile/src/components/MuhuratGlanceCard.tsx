@@ -9,23 +9,12 @@ import { fontFamilies } from '@/theme/typography';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { prevailingTithi, successorTithiToday } from '@/panchang/prevailingTithi';
 import { formatRangeCompact, formatEndInstant } from '@/panchang/muhuratFormat';
-import { formatSpan } from '@/panchang/muhuratSpan';
+import { windowState } from '@/panchang/muhuratSpan';
 import type { CalendarSystem } from '@/panchang/types';
-import type { Lang } from '@/data/gita/language';
 import ChoghadiyaStrip from './ChoghadiyaStrip';
 
 // Cormorant's default figures are old-style; clock digits read as one height.
 const LINING = ['lining-nums', 'tabular-nums'] as const;
-
-/** Where a today window stands against the clock: "in 5 h 13 m" / running / passed. */
-function windowState(start: Date, end: Date, at: number, lang: Lang): string {
-  if (at < start.getTime()) {
-    const span = formatSpan(start.getTime() - at, lang);
-    return contentByLang(lang, `${span} में`, `in ${span}`);
-  }
-  if (at < end.getTime()) return contentByLang(lang, 'अभी चल रहा', 'running now');
-  return contentByLang(lang, 'बीत गया', 'passed');
-}
 
 /**
  * The Muhurat card (PRD-14; design.md §33) under the Panchang sky. The sky

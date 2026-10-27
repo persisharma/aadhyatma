@@ -6,6 +6,7 @@ import type { Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { formatEndInstant } from '@/panchang/muhuratFormat';
+import PanchangPanel, { PanelGrid } from './PanchangPanel';
 import {
   AGNI_VAAS_LABELS,
   DIRECTION_LABELS,
@@ -16,11 +17,12 @@ import {
 import type { PanchangData } from '@/panchang/types';
 
 /**
- * The day panel's four vaas cards (design.md §33), under Nitya Yoga · Karana — a
- * 2×2 grid of slim cards that replaced the old tall यात्रा (104px compass) + हवन
- * pair. Each card mirrors the anga-tile shape: a header row (label left, its chip
- * right when it has one), the value, and — only when it adds something the label
- * does not already say — one context line. No icons.
+ * The day panel's four vaas readings (design.md §33), under the anga panel — one
+ * `PanchangPanel` split 2×2 by hairlines, the anga panel's shape (it replaced a
+ * box per reading, and before that the tall यात्रा compass + हवन pair). Each cell:
+ * a header row (label left, its chip right when it has one), the value, and —
+ * only when it adds something the label does not already say — one context
+ * line. No icons.
  *   • सूर्य — the Sun's rashi (solar month). Label + value only; the "सूर्य राशि"
  *     caption is dropped as pure duplication of the label.
  *   • चन्द्रमा — the Moon's rashi · चन्द्र वास direction, with the favourable travel
@@ -33,7 +35,7 @@ import type { PanchangData } from '@/panchang/types';
  * path. Colour never carries meaning alone — every chip carries a word.
  */
 export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang }) {
-  const { colors, typography, radii, elevation } = useTheme();
+  const { colors, typography } = useTheme();
   const v = dayVaas(p);
   const t = vaasTiles(v, p.moonRashi);
 
@@ -46,11 +48,7 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
     letterSpacing: lang === 'en' ? 1 : 0,
     textTransform: (lang === 'en' ? 'uppercase' : 'none') as 'uppercase' | 'none',
   };
-  const card = [
-    styles.card,
-    { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
-    elevation.card,
-  ];
+  const card = styles.card;
 
   const vara = contentByLang(lang, p.vara.nameHi, p.vara.nameEn);
   const havanFavourable = AGNI_VAAS_LABELS[v.agni.value].favourableForHavan;
@@ -69,38 +67,38 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
     t.agni.element.endTime && t.agni.successor
       ? contentByLang(
           lang,
-          `तक ${formatEndInstant(t.agni.element.endTime, p.date, lang)}, फिर ${t.agni.successor.nameHi}`,
+          `${formatEndInstant(t.agni.element.endTime, p.date, lang)} तक, फिर ${t.agni.successor.nameHi}`,
           `till ${formatEndInstant(t.agni.element.endTime, p.date, lang)}, then ${t.agni.successor.nameEn}`,
         )
       : contentByLang(lang, 'आज पूरे दिन', 'all day today');
 
-  // Header row: the label, and the card's chip (when it has one) pushed to the
-  // right — the chip rides the header instead of a fourth row, so the card stays
-  // as short as the anga tiles.
+  // Header row: the label, and the cell's chip (when it has one) pushed to the
+  // right — the chip rides the header instead of a fourth row, so the cell stays
+  // as short as the anga cells (it wraps under the label only when it must).
   const Head = ({ text, chip }: { text: string; chip?: { text: string; bg: string; fg: string } | null }) => (
     <View style={styles.head}>
-      <Text style={[label, styles.labelFlex]} numberOfLines={1}>{text}</Text>
+      <Text style={label}>{text}</Text>
       {chip ? (
         <View style={[styles.chip, { backgroundColor: chip.bg }]}>
-          <Text style={{ fontFamily: body, fontSize: 11.5, color: chip.fg }}>{chip.text}</Text>
+          <Text numberOfLines={1} style={{ fontFamily: body, fontSize: 11, color: chip.fg }}>{chip.text}</Text>
         </View>
       ) : null}
     </View>
   );
 
   const Value = ({ children, color }: { children: React.ReactNode; color?: string }) => (
-    <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={{ fontFamily: title, fontSize: 19, color: color ?? colors.ink, marginTop: 4 }}>
+    <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={{ fontFamily: title, fontSize: 18, color: color ?? colors.ink, marginTop: 3 }}>
       {children}
     </Text>
   );
 
   const Line_ = ({ children }: { children: React.ReactNode }) => (
-    <Text style={{ fontFamily: body, fontSize: 13, color: colors.inkMuted, marginTop: 2 }}>{children}</Text>
+    <Text style={{ fontFamily: body, fontSize: 12.5, lineHeight: 18, color: colors.inkMuted, marginTop: 2, fontVariant: ['lining-nums', 'tabular-nums'] }}>{children}</Text>
   );
 
   return (
-    <View style={styles.grid}>
-      <View style={styles.row}>
+    <PanchangPanel testID="vaas-panel" title={contentByLang(lang, 'राशि, दिशा व वास', 'Rashi, direction & vaas')}>
+      <PanelGrid>
         <View
           testID="vaas-surya-card"
           accessible
@@ -131,9 +129,7 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
           </Value>
           <Line_>{contentByLang(lang, 'चन्द्र वास', 'Chandra vaas')}</Line_>
         </View>
-      </View>
 
-      <View style={styles.row}>
         <View
           testID="vaas-shool-card"
           accessible
@@ -163,16 +159,15 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
           <Value>{contentByLang(lang, t.agni.element.nameHi, t.agni.element.nameEn)}</Value>
           <Line_>{agniLine}</Line_>
         </View>
-      </View>
-    </View>
+      </PanelGrid>
+    </PanchangPanel>
   );
 }
 
 const styles = StyleSheet.create({
-  grid: { marginTop: 8, gap: 8 },
-  row: { flexDirection: 'row', gap: 8, alignItems: 'stretch' },
-  card: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 10, paddingHorizontal: 14 },
-  head: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  labelFlex: { flexShrink: 1 },
-  chip: { marginLeft: 'auto', flexShrink: 0, paddingVertical: 2, paddingHorizontal: 9, borderRadius: 999 },
+  card: { flex: 1 },
+  // Wraps rather than truncating: in a half-width cell a long chip ("East, North
+  // favoured") drops under the label instead of cutting it to "MO…".
+  head: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', columnGap: 6, rowGap: 3 },
+  chip: { marginLeft: 'auto', flexShrink: 1, paddingVertical: 2, paddingHorizontal: 9, borderRadius: 999 },
 });

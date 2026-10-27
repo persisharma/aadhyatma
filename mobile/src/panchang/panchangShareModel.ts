@@ -126,6 +126,30 @@ const chog = (lang: Lang) => (c: ChoghadiyaPeriod): ShareChoghadiya => ({
   auspicious: c.quality === 'auspicious',
 });
 
+/**
+ * The four angas, each with how long it runs and what follows — what the share
+ * card prints and the day panel's anga card (`PanchangAngaCard`) shows.
+ */
+export function buildAngaLines(p: PanchangData, lang: Lang): Pick<PanchangShareModel, 'tithi' | 'nakshatra' | 'yoga' | 'karana'> {
+  const day = p.date;
+  return {
+    tithi: anga(lang, p.tithi, p.kshayaTithi, { hi: TITHI_NAMES_HI, en: TITHI_NAMES_EN }, day),
+    nakshatra: anga(lang, p.nakshatra, p.kshayaNakshatra, { hi: NAKSHATRA_NAMES_HI, en: NAKSHATRA_NAMES_EN }, day),
+    yoga: anga(lang, p.yoga, null, { hi: YOGA_NAMES_HI, en: YOGA_NAMES_EN }, day),
+    karana: {
+      name: name(lang, p.karana.nameHi, p.karana.nameEn),
+      lines: [
+        untilLine(
+          lang,
+          p.karana,
+          p.karana.endTime ? { hi: KARANA_NAMES_HI[karanaSuccessorIndex(p)], en: KARANA_NAMES_EN[karanaSuccessorIndex(p)] } : null,
+          day,
+        ),
+      ],
+    },
+  };
+}
+
 export function buildPanchangShareModel(input: {
   p: PanchangData;
   md: MuhuratDay;
@@ -172,20 +196,7 @@ export function buildPanchangShareModel(input: {
     sunset: formatClock(p.sunset),
     moonrise: p.moonrise ? formatClock(p.moonrise) : null,
     festival,
-    tithi: anga(lang, p.tithi, p.kshayaTithi, { hi: TITHI_NAMES_HI, en: TITHI_NAMES_EN }, day),
-    nakshatra: anga(lang, p.nakshatra, p.kshayaNakshatra, { hi: NAKSHATRA_NAMES_HI, en: NAKSHATRA_NAMES_EN }, day),
-    yoga: anga(lang, p.yoga, null, { hi: YOGA_NAMES_HI, en: YOGA_NAMES_EN }, day),
-    karana: {
-      name: name(lang, p.karana.nameHi, p.karana.nameEn),
-      lines: [
-        untilLine(
-          lang,
-          p.karana,
-          p.karana.endTime ? { hi: KARANA_NAMES_HI[karanaSuccessorIndex(p)], en: KARANA_NAMES_EN[karanaSuccessorIndex(p)] } : null,
-          day,
-        ),
-      ],
-    },
+    ...buildAngaLines(p, lang),
     day: md.dayChoghadiya.map(chog(lang)),
     night: md.nightChoghadiya.map(chog(lang)),
     abhijit: md.abhijit ? span(md.abhijit.start, md.abhijit.end) : null,

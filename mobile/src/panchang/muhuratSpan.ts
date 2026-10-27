@@ -1,4 +1,5 @@
 import { transliterateDevanagari } from '@/utils/transliterate';
+import { contentByLang } from '@/utils/localize';
 import type { Lang } from '@/data/gita/language';
 
 /**
@@ -15,4 +16,14 @@ export function formatSpan(ms: number, lang: Lang): string {
       : m === 0 ? [`${h} घं`, `${h} h`]
         : [`${h} घं ${m} मि`, `${h} h ${m} m`];
   return lang === 'en' ? en : lang === 'hi' ? hi : transliterateDevanagari(hi, lang);
+}
+
+/** Where a today window stands against the clock: "in 5 h 13 m" / running / passed. */
+export function windowState(start: Date, end: Date, at: number, lang: Lang): string {
+  if (at < start.getTime()) {
+    const span = formatSpan(start.getTime() - at, lang);
+    return contentByLang(lang, `${span} में`, `in ${span}`);
+  }
+  if (at < end.getTime()) return contentByLang(lang, 'अभी चल रहा', 'running now');
+  return contentByLang(lang, 'बीत गया', 'passed');
 }

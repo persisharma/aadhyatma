@@ -5,190 +5,195 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
-import { formatClock, formatEndInstant, formatRange, formatRangeEndAware } from '@/panchang/muhuratFormat';
-import { panchangDateLabel as fmtDate, panchangElementLine as elementLine } from '@/panchang/panchangShareText';
+import { formatClock, formatRangeCompact } from '@/panchang/muhuratFormat';
+import { formatSpan, windowState } from '@/panchang/muhuratSpan';
+import { panchangDateLabel as fmtDate } from '@/panchang/panchangShareText';
+import { PAKSHA_NAMES_EN, PAKSHA_NAMES_HI } from '@/panchang/names';
 import { computeShubhYogas } from '@/panchang/shubhYoga';
 import type { PanchangData } from '@/panchang/types';
-import type { ChoghadiyaPeriod, KaalWindow, MuhuratDay } from '@/panchang/muhurat';
+import type { ChoghadiyaPeriod, MuhuratDay } from '@/panchang/muhurat';
+import CelestialGlyph from './CelestialGlyph';
+import PanchangAngaCard from './PanchangAngaCard';
+import PanchangPanel from './PanchangPanel';
+import ShubhYogaCard from './ShubhYogaCard';
+import SunMoonCard from './SunMoonCard';
+
+// Cormorant's default figures are old-style; clock digits read as one height.
+const LINING = ['lining-nums', 'tabular-nums'] as const;
 
 /**
- * The reverent, gold-॥-framed "आज का पंचांग" card body (design.md §5). Shared by
- * the Muhurat detail screen (`variant="full"`) and a compact `variant="share"`
- * (the screen now shares the पूर्ण पंचांग card instead, design.md §33a). Dark `ink` text throughout; the auspicious tint
- * signals quality behind the text, never graying it (design.md §12).
+ * The Muhurat detail body (design.md §33, Muhurat Detail): the day's full
+ * timings in the Panchang tab's panel language — the same anga, शुभ योग and
+ * sun/moon panels as the day panel, the four kaal windows as the Muhurat card's
+ * tinted tiles, and all 16 choghadiya as two agenda panels. On today the running
+ * period is ringed with how much is left and a progress track, and passed ones
+ * dim; the parent's minute tick re-renders it. Quality is always a word (शुभ /
+ * त्याज्य) beside its colour bar, never colour alone (design.md §12).
  */
 export default function MuhuratCardBody({
   p,
   md,
-  variant,
   nowStartMs,
   cityLabel,
   isToday = true,
 }: {
   p: PanchangData;
   md: MuhuratDay;
-  variant: 'full' | 'share';
   /** Epoch-ms start of the choghadiya running now, to flag the exact period
    * (never the repeated key). Null/undefined when not today. */
   nowStartMs?: number | null;
   cityLabel: string;
-  /** Titles the card "आज का पंचांग" when true (the daily surface); a specific
-   * future/past day (reached via the Muhurat Finder, design.md §60) reads
-   * "इस दिन का पंचांग" so it can't claim to be today. Defaults true. */
+  /** A specific future/past day (reached via the Muhurat Finder, design.md
+   * §60) shows no live state — nothing is "now" or "passed" there. */
   isToday?: boolean;
 }) {
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
-
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
+  const at = Date.now();
 
-  const GroupLabel = ({ hi, en }: { hi: string; en: string }) => (
-    <Text style={[styles.grplab, { color: colors.saffronDeep, fontFamily: typography.cardLatin.fontFamily }]}>
-      {contentByLang(lang, hi, en)}
-    </Text>
+  // Pure arithmetic over data this body already holds — derived per render
+  // like MuhuratDay itself, never cached or persisted (RULEBOOK §17.6).
+  const shubhYogas = React.useMemo(() => computeShubhYogas(p, md.nextSunrise), [p, md]);
+
+  const masa = contentByLang(
+    lang,
+    `${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[p.tithi.paksha]} ${p.tithi.nameHi}`,
+    `${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} ${p.tithi.nameEn}`,
   );
-  const KV = ({ k, v }: { k: string; v: string }) => (
-    <View style={styles.kv}>
-      <Text style={{ fontFamily: bodyFont, fontSize: 14, color: colors.inkSoft }}>{k}</Text>
-      <Text style={{ fontFamily: titleFont, fontSize: 14, color: colors.ink }}>{v}</Text>
+
+  // A kaal/abhijit window as the Muhurat card's half tile: tint + dot + label
+  // (never colour alone), the window, and on today where it stands.
+  const Tile = ({ label, start, end, avoid }: { label: string; start: Date; end: Date; avoid: boolean }) => (
+    <View
+      style={[
+        styles.tile,
+        { backgroundColor: avoid ? colors.avoidTint : colors.goldTint, borderColor: avoid ? colors.avoidChipBg : colors.goldChipBg, borderRadius: radii.md },
+      ]}
+    >
+      <View style={styles.tileLabel}>
+        <View style={[styles.dot, { backgroundColor: avoid ? colors.avoid : colors.gold }]} />
+        <Text numberOfLines={1} style={{ flexShrink: 1, fontFamily: titleFont, fontSize: 12, color: avoid ? colors.avoidDeep : colors.saffronDeep }}>{label}</Text>
+      </View>
+      <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 15, color: colors.ink, marginTop: 3, fontVariant: [...LINING] }}>
+        {formatRangeCompact(start, end)}
+      </Text>
+      {isToday && (
+        <Text style={{ fontFamily: bodyFont, fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
+          {windowState(start, end, at, lang)}
+        </Text>
+      )}
     </View>
   );
-  const Rule = () => <View style={[styles.rule, { backgroundColor: colors.divider }]} />;
 
-  const Muh = ({ name, time, quality, now }: { name: string; time: string; quality: 'auspicious' | 'avoid'; now?: boolean }) => {
-    const bg = quality === 'avoid' ? colors.avoidTint : colors.goldTint;
-    // Dark ink for the name AND time on BOTH qualities — the tint + the `· avoid`
-    // text tag carry the quality, never graying the text (this component's rule,
-    // design.md §12). Terracotta text on the terracotta `avoidTint` wash was
-    // muddy/low-contrast (~4.8:1); dark ink reads cleanly on either tint.
-    const tone = colors.ink;
+  const Chog = ({ c, first }: { c: ChoghadiyaPeriod; first: boolean }) => {
+    const avoid = c.quality === 'avoid';
+    const now = c.start.getTime() === nowStartMs;
+    const past = isToday && !now && c.end.getTime() <= at;
+    const progress = now ? Math.min(1, Math.max(0, (at - c.start.getTime()) / Math.max(1, c.end.getTime() - c.start.getTime()))) : 0;
     // §12 — quality carries a text cue, never colour alone.
-    const qualityLabel = quality === 'avoid' ? contentByLang(lang, 'त्याज्य', 'avoid') : contentByLang(lang, 'शुभ', 'auspicious');
+    const quality = avoid ? contentByLang(lang, 'त्याज्य', 'avoid') : contentByLang(lang, 'शुभ', 'auspicious');
+    const left = now ? formatSpan(c.end.getTime() - at, lang) : null;
     return (
-      <View style={[styles.muh, { backgroundColor: bg, borderRadius: radii.md }, now && { borderWidth: 1.5, borderColor: colors.saffron }]}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, flex: 1, minWidth: 0 }}>
-          <Text style={{ fontFamily: titleFont, fontSize: 14, color: tone }}>{name}</Text>
-          {/* Quality tag, now-badge, and time use the non-italic semibold face —
-              never the thin italic cardLatin, which washes out on the tint
-              (design.md §3/§12; same fix as MuhuratGlanceCard). */}
-          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 10, color: quality === 'avoid' ? colors.avoid : colors.saffronDeep }}>
-            · {qualityLabel}
-          </Text>
-          {/* The now-badge carries no fontWeight: latinSemiBold is a static 600
-              file, so asking for 700 on top cannot be satisfied — on Android
-              that can drop the custom face entirely and fall back to Roboto.
-              The face carries its own weight (see utils/langType.ts). */}
-          {now && (
-            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 10, color: colors.onPrimary, backgroundColor: colors.saffron, paddingHorizontal: 5, paddingVertical: 1, borderRadius: 5, overflow: 'hidden' }}>
-              अभी
+      <View
+        accessibilityLabel={`${c.nameEn} choghadiya, ${formatRangeCompact(c.start, c.end)}, ${avoid ? 'avoid' : 'auspicious'}${now ? ', now' : past ? ', passed' : ''}`}
+        style={[
+          styles.chog,
+          !first && !now && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.divider },
+          now && [styles.chogNow, { backgroundColor: avoid ? colors.avoidTint : colors.goldTint, borderColor: colors.saffron, borderRadius: radii.md }],
+          past && { opacity: 0.5 },
+        ]}
+      >
+        <View style={styles.chogRow}>
+          <View style={[styles.chogBar, { backgroundColor: avoid ? colors.choghadiyaAvoid : colors.choghadiyaShubh }]} />
+          <View style={{ flex: 1, minWidth: 0 }}>
+            <Text numberOfLines={1} style={{ fontFamily: titleFont, fontSize: 15, color: colors.ink }}>
+              {contentByLang(lang, c.nameHi, c.nameEn)}
             </Text>
-          )}
+            <Text numberOfLines={1} style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : bodyFont, fontSize: 11.5, color: avoid ? colors.avoidDeep : colors.saffronDeep, marginTop: 1 }}>
+              {quality}
+              {now && left ? contentByLang(lang, ` · अभी · ${left} शेष`, ` · now · ${left} left`) : ''}
+            </Text>
+          </View>
+          <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 14.5, color: now ? colors.ink : colors.inkSoft, fontVariant: [...LINING] }}>
+            {formatRangeCompact(c.start, c.end)}
+          </Text>
         </View>
-        <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 12, color: colors.inkSoft }}>
-          {time}
-        </Text>
+        {now && (
+          <View style={[styles.track, { backgroundColor: avoid ? colors.choghadiyaAvoidTrack : colors.choghadiyaShubhTrack }]}>
+            <View style={{ width: `${Math.round(progress * 100)}%`, height: '100%', backgroundColor: avoid ? colors.avoidDeep : colors.gold }} />
+          </View>
+        )}
       </View>
     );
   };
 
-  // Pure arithmetic over data this card already holds — derived per render
-  // like MuhuratDay itself, never cached or persisted (RULEBOOK §17.6).
-  const shubhYogas = React.useMemo(() => computeShubhYogas(p, md.nextSunrise), [p, md]);
-
-  const chogName = (c: ChoghadiyaPeriod) => contentByLang(lang, c.nameHi, c.nameEn);
-  const kaalName = (k: KaalWindow) => contentByLang(lang, k.nameHi, k.nameEn);
-  const auspicious = md.dayChoghadiya.filter((c) => c.quality === 'auspicious');
+  const Half = ({ title, periods, from, to }: { title: string; periods: ChoghadiyaPeriod[]; from: Date; to: Date }) => (
+    <PanchangPanel title={title} meta={`${formatClock(from)} – ${formatClock(to)}`}>
+      <View style={{ marginTop: 4 }}>
+        {periods.map((c, i) => (
+          <Chog key={c.start.getTime()} c={c} first={i === 0} />
+        ))}
+      </View>
+    </PanchangPanel>
+  );
 
   return (
     <View>
-      <Text style={[styles.om, { color: colors.saffron, fontFamily: typography.readerTitle.fontFamily }]}>ॐ</Text>
-      <Text style={[styles.title, { color: colors.ink, fontFamily: titleFont }]}>
-        {isToday
-          ? contentByLang(lang, 'आज का पंचांग', "Today's Panchang")
-          : contentByLang(lang, 'इस दिन का पंचांग', "This Day's Panchang")}
-      </Text>
-      <Text style={[styles.dateline, { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : bodyFont }]}>
-        {contentByLang(lang, p.vara.nameHi, p.vara.nameEn)}, {fmtDate(p.date, lang)} · {contentByLang(lang, `संवत ${p.vikramSamvat}`, `Samvat ${p.vikramSamvat}`)}
-      </Text>
-
-      <View style={[styles.frame, { borderColor: colors.gold, borderRadius: radii.lg, backgroundColor: colors.parchmentSoft }]}>
-        <Text style={[styles.ornL, { color: colors.saffron, fontFamily: typography.readerTitle.fontFamily }]}>॥</Text>
-        <Text style={[styles.ornR, { color: colors.saffron, fontFamily: typography.readerTitle.fontFamily }]}>॥</Text>
-
-        <GroupLabel hi="पंचांग" en="Panchang" />
-        <KV k={contentByLang(lang, 'तिथि', 'Tithi')} v={elementLine(p.tithi, p.date, lang)} />
-        {p.kshayaTithi && <KV k={contentByLang(lang, 'क्षय तिथि', 'Kshaya Tithi')} v={elementLine(p.kshayaTithi, p.date, lang)} />}
-        <KV k={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} v={elementLine(p.nakshatra, p.date, lang)} />
-        {p.kshayaNakshatra && <KV k={contentByLang(lang, 'क्षय नक्षत्र', 'Kshaya Nakshatra')} v={elementLine(p.kshayaNakshatra, p.date, lang)} />}
-        {/* नित्य योग, never bare योग — it must stay distinguishable from the
-            PRD-27 शुभ योग rows below (RULEBOOK §24 naming rule). */}
-        {variant === 'full' && <KV k={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} v={elementLine(p.yoga, p.date, lang)} />}
-        {variant === 'full' && <KV k={contentByLang(lang, 'करण', 'Karana')} v={elementLine(p.karana, p.date, lang)} />}
-        {/* PRD-27: the day's शुभ योग windows — annotation, present-or-absent.
-            End instants go through formatEndInstant (short date past midnight);
-            a sunrise-start window keeps the anga rows' end-only convention, a
-            mid-day onset always shows its start. Full variant only, like the
-            नित्य योग/करण rows above. */}
-        {variant === 'full' &&
-          shubhYogas.map((w) => (
-            <KV
-              key={`${w.key}-${w.start.getTime()}`}
-              k={contentByLang(lang, 'शुभ योग', 'Shubh Yoga')}
-              v={`${contentByLang(lang, w.nameHi, w.nameEn)} · ${
-                w.fromSunrise
-                  ? formatEndInstant(w.end, p.date, lang)
-                  : formatRangeEndAware(w.start, w.end, p.date, lang)
-              }`}
-            />
-          ))}
-        <Rule />
-
-        <GroupLabel hi="सूर्य" en="Sun" />
-        <KV k={contentByLang(lang, 'सूर्योदय', 'Sunrise')} v={formatClock(md.sunrise)} />
-        <KV k={contentByLang(lang, 'सूर्यास्त', 'Sunset')} v={formatClock(md.sunset)} />
-        <Rule />
-
-        <GroupLabel hi="शुभ मुहूर्त · चौघड़िया" en="Auspicious · Choghadiya" />
-        {(variant === 'share' ? auspicious : md.dayChoghadiya).map((c, i) => (
-          <Muh key={`d${i}`} name={chogName(c)} time={formatRange(c.start, c.end)} quality={c.quality} now={c.start.getTime() === nowStartMs} />
-        ))}
-
-        {variant === 'full' && (
-          <>
-            <Rule />
-            <GroupLabel hi="रात्रि चौघड़िया" en="Night Choghadiya" />
-            {md.nightChoghadiya.map((c, i) => (
-              <Muh key={`n${i}`} name={chogName(c)} time={formatRange(c.start, c.end)} quality={c.quality} now={c.start.getTime() === nowStartMs} />
-            ))}
-          </>
-        )}
-
-        <Rule />
-        <GroupLabel hi="विशेष" en="Special" />
-        {md.abhijit && <Muh name={contentByLang(lang, 'अभिजीत मुहूर्त', 'Abhijit Muhurat')} time={formatRange(md.abhijit.start, md.abhijit.end)} quality="auspicious" />}
-        <Muh name={kaalName(md.rahu)} time={formatRange(md.rahu.start, md.rahu.end)} quality="avoid" />
-        {variant === 'full' && <Muh name={kaalName(md.gulika)} time={formatRange(md.gulika.start, md.gulika.end)} quality="avoid" />}
-        {variant === 'full' && <Muh name={kaalName(md.yamaganda)} time={formatRange(md.yamaganda.start, md.yamaganda.end)} quality="avoid" />}
-
-        <Text style={[styles.footnote, { color: colors.inkMuted, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : bodyFont }]}>
-          {contentByLang(lang, `सभी समय ${cityLabel} के अनुसार`, `All times for ${cityLabel}`)}
+      {/* The day, stated once: the moon in its phase (the sky's mark), the
+          date, and masa · paksha · tithi · samvat. */}
+      <View style={styles.head}>
+        <View style={[styles.moon, { backgroundColor: colors.skyNightTop }]}>
+          <CelestialGlyph kind="moon" tithiIndex={p.tithi.index} size={16} />
+        </View>
+        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 19, color: colors.ink, textAlign: 'center', marginTop: 8 }}>
+          {contentByLang(lang, p.vara.nameHi, p.vara.nameEn)}, {fmtDate(p.date, lang)}
+        </Text>
+        <Text style={{ fontFamily: bodyFont, fontSize: 12.5, color: colors.inkMuted, textAlign: 'center', marginTop: 2 }}>
+          {masa} · {contentByLang(lang, `संवत ${p.vikramSamvat}`, `Samvat ${p.vikramSamvat}`)}
         </Text>
       </View>
+
+      <PanchangAngaCard p={p} />
+      <ShubhYogaCard yogas={shubhYogas} referenceDay={p.date} />
+
+      <PanchangPanel title={contentByLang(lang, 'मुहूर्त व काल', 'Muhurat & Kaal')}>
+        <View style={styles.tiles}>
+          {md.abhijit ? (
+            <Tile label={contentByLang(lang, 'अभिजीत मुहूर्त', 'Abhijit Muhurat')} start={md.abhijit.start} end={md.abhijit.end} avoid={false} />
+          ) : null}
+          <Tile label={contentByLang(lang, md.rahu.nameHi, md.rahu.nameEn)} start={md.rahu.start} end={md.rahu.end} avoid />
+          <Tile label={contentByLang(lang, md.gulika.nameHi, md.gulika.nameEn)} start={md.gulika.start} end={md.gulika.end} avoid />
+          <Tile label={contentByLang(lang, md.yamaganda.nameHi, md.yamaganda.nameEn)} start={md.yamaganda.start} end={md.yamaganda.end} avoid />
+        </View>
+      </PanchangPanel>
+
+      <Half title={contentByLang(lang, 'दिन के चौघड़िया', 'Day Choghadiya')} periods={md.dayChoghadiya} from={md.sunrise} to={md.sunset} />
+      <Half title={contentByLang(lang, 'रात्रि के चौघड़िया', 'Night Choghadiya')} periods={md.nightChoghadiya} from={md.sunset} to={md.nextSunrise} />
+
+      <SunMoonCard p={p} />
+
+      <Text style={[styles.footnote, { color: colors.inkMuted, fontFamily: bodyFont }]}>
+        {contentByLang(lang, `सभी समय ${cityLabel} के अनुसार`, `All times for ${cityLabel}`)}
+      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  om: { textAlign: 'center', fontSize: 22 },
-  title: { textAlign: 'center', fontSize: 20, marginTop: 2 },
-  dateline: { textAlign: 'center', fontSize: 12.5, marginTop: 3, marginBottom: 12 },
-  frame: { borderWidth: 1, padding: 16, position: 'relative' },
-  ornL: { position: 'absolute', top: 8, left: 12, fontSize: 14, opacity: 0.55 },
-  ornR: { position: 'absolute', top: 8, right: 12, fontSize: 14, opacity: 0.55 },
-  grplab: { fontSize: 10, letterSpacing: 0.6, textTransform: 'uppercase', textAlign: 'center', marginTop: 6, marginBottom: 8 },
-  kv: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4, paddingHorizontal: 2 },
-  rule: { height: 1, marginVertical: 10 },
-  muh: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8, paddingHorizontal: 11, marginBottom: 5 },
-  footnote: { fontSize: 11, textAlign: 'center', marginTop: 10, fontStyle: 'italic' },
+  head: { alignItems: 'center', paddingTop: 4, paddingBottom: 4 },
+  moon: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  tiles: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8, marginBottom: 8 },
+  // Two per row: (100% − one 8 pt gap) / 2.
+  tile: { flexBasis: '47%', flexGrow: 1, borderWidth: 1, padding: 11 },
+  tileLabel: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  dot: { width: 7, height: 7, borderRadius: 3.5 },
+  chog: { paddingVertical: 9 },
+  // The running period: ringed, inset from the panel edge by its own padding.
+  chogNow: { borderWidth: 1.5, paddingHorizontal: 10, marginHorizontal: -10, marginVertical: 2 },
+  chogRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  chogBar: { width: 4, height: 30, borderRadius: 2 },
+  track: { height: 3, borderRadius: 1.5, overflow: 'hidden', marginTop: 8, marginLeft: 14 },
+  footnote: { fontSize: 11.5, textAlign: 'center', marginTop: 14 },
 });

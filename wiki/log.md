@@ -1204,3 +1204,7 @@ combined tree. The Vrat portrait/catalog changes remain intact.
 ## [2026-10-26] ingest | Aranyakanda planning only
 
 Recorded the complete75-sarga/91-provisional-page/256-scene outline, relationship-specific four-language address guide, event/prop contracts and explicit source/translation/art/native gaps in [[decisions/ramayan-comic-character-continuity]]. This planning-only package is submitted separately from the merged Ayodhyakanda PR540; no artwork or integration was started.
+
+## [2026-10-27] ingest | Panchang bottom half + Muhurat detail in the sky-header language
+
+The day panel below the Muhurat card and the Muhurat detail screen now use one `PanchangPanel` per subject (anga, शुभ योग, vaas, sun·moon, व्रत और पर्व, आगामी) instead of a box per value; आगामी rows open the observance; the detail replaced the gold-॥ key/value card (whose शुभ योग row overflowed) with the same panels plus kaal tiles and choghadiya agenda panels. See [[subsystems/panchang]] UI components and design.md §33.

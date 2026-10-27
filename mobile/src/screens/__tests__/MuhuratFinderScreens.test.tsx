@@ -288,25 +288,28 @@ test('MuhuratFinderDoor carries the NEW badge and fires its onPress', () => {
 });
 
 // A finder result day opens the shipped MuhuratDetail for a FUTURE date
-// (design.md §60). The card must not claim to be "आज का पंचांग" (today's) when
-// it isn't — it reads "इस दिन का पंचांग" instead.
-test('MuhuratCardBody titles a non-today date "इस दिन का पंचांग", not "आज का"', () => {
+// (design.md §60). The screen's top bar names it "इस दिन का पंचांग"; the body
+// must not read that day against today's clock — no running period, and no
+// "… में" / "बीत गया" window states, which only a today view carries.
+test('MuhuratCardBody shows live window states on today only', () => {
   const d = new Date(2026, 10, 26); // 26 Nov 2026 — the golden first-after Griha Pravesh day
   const p = computePanchangForDate(d);
   const next = computePanchangForDate(new Date(2026, 10, 27));
   const md = computeMuhuratDay(p.sunrise, p.sunset, next.sunrise, d.getDay());
+  const live = /में"|अभी चल रहा|बीत गया/;
 
   const today = renderWithLang(
-    <MuhuratCardBody p={p} md={md} variant="full" cityLabel="उज्जैन" isToday />
+    <MuhuratCardBody p={p} md={md} cityLabel="उज्जैन" isToday />
   );
-  expect(texts(today)).toContain('आज का पंचांग');
-  expect(texts(today)).not.toContain('इस दिन का पंचांग');
+  expect(texts(today)).toMatch(live);
   act(() => today.unmount());
 
   const otherDay = renderWithLang(
-    <MuhuratCardBody p={p} md={md} variant="full" cityLabel="उज्जैन" isToday={false} />
+    <MuhuratCardBody p={p} md={md} cityLabel="उज्जैन" isToday={false} />
   );
-  expect(texts(otherDay)).toContain('इस दिन का पंचांग');
-  expect(texts(otherDay)).not.toContain('आज का पंचांग');
+  expect(texts(otherDay)).not.toMatch(live);
+  expect(texts(otherDay)).not.toContain('अभी');
+  expect(texts(otherDay)).toContain('दिन के चौघड़िया');
+  expect(texts(otherDay)).toContain('रात्रि के चौघड़िया');
   act(() => otherDay.unmount());
 });

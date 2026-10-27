@@ -23,7 +23,7 @@ function monthName(d: Date, lang: Lang): string {
 
 /**
  * The finder's shareable day card (PRD-16; design.md §60) — captured
- * off-screen to a PNG, same pipeline as MuhuratCardBody's share variant.
+ * off-screen to a PNG, the pipeline the Panchang share cards use.
  * Carries no personal data by construction: occasion, date, panchang line,
  * tier + convention, windows, city. The share provider adds the brand + download
  * strip (design.md §39.10). Never rendered for excluded days.

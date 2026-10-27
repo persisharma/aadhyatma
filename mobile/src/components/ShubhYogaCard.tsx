@@ -3,15 +3,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
-import { eyebrowTextStyle, scriptBodyFont } from '@/utils/langType';
+import { scriptBodyFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
 import MuhuratChip from '@/components/MuhuratChip';
+import PanchangPanel from '@/components/PanchangPanel';
 import { formatRangeEndAware } from '@/panchang/muhuratFormat';
 import type { ShubhYogaWindow } from '@/panchang/shubhYoga';
 
 /**
- * The शुभ योग line (PRD-27): one quiet card naming the day's yogas with their
- * windows. Shared by the Panchang day panel (under the anga grid) and the
+ * The शुभ योग line (PRD-27): one `PanchangPanel` naming the day's yogas with
+ * their windows. Shared by the Panchang day panel (under the anga grid) and the
  * Muhurat Finder day detail (under the answer block). Renders NOTHING when no
  * yoga forms — present-or-absent is the entire vocabulary; there is no score,
  * no empty state, no "no yoga today" copy.
@@ -30,50 +31,41 @@ export default function ShubhYogaCard({
   yogas: ShubhYogaWindow[];
   referenceDay: Date;
 }) {
-  const { colors, typography, radii, elevation } = useTheme();
+  const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   if (yogas.length === 0) return null;
   return (
-    <View
-      testID="shubh-yoga-card"
-      style={[
-        styles.card,
-        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
-        elevation.card,
-      ]}
-    >
-      <Text style={[eyebrowTextStyle(lang, 11), { color: colors.saffronDeep }]}>
-        {contentByLang(lang, 'शुभ योग', 'Shubh Yoga')}
-      </Text>
-      {yogas.map((w) => (
+    <PanchangPanel testID="shubh-yoga-card" title={contentByLang(lang, 'शुभ योग', 'Shubh Yoga')}>
+      {yogas.map((w, i) => (
         <View
           key={`${w.key}-${w.start.getTime()}`}
-          style={styles.row}
+          style={[styles.row, i > 0 && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.divider }]}
           testID={`shubh-yoga-${w.key}`}
           accessibilityLabel={w.nameEn}
         >
           <MuhuratChip label={contentByLang(lang, w.nameHi, w.nameEn)} tone="yoga" />
           <Text
-            numberOfLines={1}
+            numberOfLines={2}
             style={{
               // The end can carry a Devanagari short-date suffix outside en —
               // never a Latin-only face for it (design.md §3, the anga-tile rule).
               fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 12,
-              color: colors.inkSoft,
+              fontSize: 13,
+              color: colors.ink,
               marginLeft: 'auto',
               flexShrink: 1,
+              textAlign: 'right',
+              fontVariant: ['lining-nums', 'tabular-nums'],
             }}
           >
             {formatRangeEndAware(w.start, w.end, referenceDay, lang)}
           </Text>
         </View>
       ))}
-    </View>
+    </PanchangPanel>
   );
 }
 
 const styles = StyleSheet.create({
-  card: { borderWidth: 1, padding: 14, marginTop: 12 },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 9 },
 });

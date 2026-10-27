@@ -29,11 +29,13 @@ import PanchangSky, { MonthGlyph, type SkyInk } from '@/components/PanchangSky';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { usePanchangShare } from '@/utils/panchangShare';
 import ShubhYogaCard from '@/components/ShubhYogaCard';
-import PanchangTimelineRow from '@/components/PanchangTimelineRow';
+import PanchangPanel from '@/components/PanchangPanel';
+import PanchangAngaCard from '@/components/PanchangAngaCard';
+import SunMoonCard from '@/components/SunMoonCard';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import PitruPakshaDayChip from '@/components/PitruPakshaDayChip';
 import TextField from '@/components/TextField';
-import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
+import { formatClock as formatTime12 } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, calendarWeeks, dateKey } from '@/panchang/calendarGrid';
 import { getEventRule } from '@/panchang/eventMuhurat';
@@ -50,13 +52,12 @@ import {
   usePanchangMonthObservances,
 } from '@/panchang/usePanchang';
 import { useShubhYoga } from '@/panchang/useShubhYoga';
-import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
+import type { CalendarSystem, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { getLensDefinition, serializeLenses, type ObservanceLens } from '@/panchang/lenses';
 import { useLenses } from '@/panchang/useLenses';
 import { seedFromLocationOnce } from '@/panchang/lensStore';
-import { successorTithiToday } from '@/panchang/prevailingTithi';
 import { observanceDayNote, type ObservanceDaySolve } from '@/panchang/observanceDayNote';
 import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
 import { getCategoryCounts, getKathaCount, getLensAdditions, getNextOccurrence, type BrowseCategory } from '@/panchang/vratCatalog';
@@ -814,38 +815,14 @@ export default function PanchangScreen({ route }: Props) {
               decision to make. Additive; nothing above or below moves. */}
           <MuhuratFinderDoor onPress={() => rootNav.navigate('MuhuratFinder')} />
 
-          {/* Two-tier anga grid: Tithi + Nakshatra lead (the two anchors users read
-              first) on elevated off-white cards; Yoga + Karana sit as a quieter,
-              flatter secondary row. */}
-          <View style={styles.angaGrid}>
-            <PanchangTile label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} kshaya={p.kshayaTithi} successor={successorTithiToday(p)} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} kshaya={p.kshayaNakshatra} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-          </View>
-          <View style={styles.angaGridSecondary}>
-            {/* नित्य योग, never bare योग — the 27-cycle Sun+Moon yoga must stay
-                distinguishable from the PRD-27 शुभ योग chips below (one nitya
-                yoga is literally named सिद्धि; RULEBOOK §24 naming rule). */}
-            <PanchangTile label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-          </View>
-          {/* यात्रा (चन्द्रमा · चन्द्र वास · दिशा शूल) + हवन (अग्नि वास) cards —
-              pure readings of the solved day (design.md §33). */}
-          <DayVaasCards p={p} lang={lang} />
-
-          {/* PRD-27: the day's शुभ योग — present-or-absent with its window,
-              annotation only (design.md §69). Absent days render nothing. */}
+          {/* The panchang proper, one panel per subject in the Muhurat card's
+              register (design.md §33): the four angas, the day's शुभ योग (PRD-27,
+              annotation only — absent days render nothing), the rashi · direction
+              · vaas readings, then sun and moon. */}
+          <PanchangAngaCard p={p} />
           <ShubhYogaCard yogas={shubhYogas} referenceDay={p.date} />
-
-          <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
-            <View style={styles.timesRow}>
-              <TimeCell icon="☀" label={contentByLang(lang, 'सूर्योदय', 'Sunrise')} value={formatTime12(p.sunrise)} lang={lang} colors={colors} />
-              <TimeCell icon="☀" label={contentByLang(lang, 'सूर्यास्त', 'Sunset')} value={formatTime12(p.sunset)} lang={lang} colors={colors} />
-            </View>
-            <View style={[styles.timesRow, { marginTop: 12 }]}>
-              <TimeCell icon="☽" label={contentByLang(lang, 'चंद्रोदय', 'Moonrise')} value={formatTime12(p.moonrise)} lang={lang} colors={colors} />
-              <TimeCell icon="☽" label={contentByLang(lang, 'ब्रह्म मुहूर्त', 'Brahma Muhurta')} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} lang={lang} colors={colors} />
-            </View>
-          </View>
+          <DayVaasCards p={p} lang={lang} />
+          <SunMoonCard p={p} />
             </>
           ) : (
             <View style={{ paddingVertical: 72, alignItems: 'center', justifyContent: 'center' }}>
@@ -903,14 +880,15 @@ export default function PanchangScreen({ route }: Props) {
             </Pressable>
           )}
 
-          <View style={styles.observanceSection}>
-            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 10 }}>
-              {contentByLang(lang, 'व्रत और पर्व', 'Vrat & Observances')}
-            </Text>
+          {/* The day's observances share one panel (design.md §33 item 5): each
+              is a hairline-split row in it, not a card of its own. */}
+          <PanchangPanel testID="panchang-observance-panel" title={contentByLang(lang, 'व्रत और पर्व', 'Vrat & Observances')} style={styles.sectionPanel}>
             {observances.length > 0 ? (
               observances.map((item, i) => (
                 <ObservanceCard
                   key={`${item.rule.id}-${i}`}
+                  inPanel
+                  first={i === 0}
                   item={item}
                   daySolve={p ? { sunrise: p.sunrise, sunset: p.sunset, moonrise: p.moonrise, tithiIndex: p.tithi.index, tithiEnd: p.tithi.endTime } : null}
                   lang={lang}
@@ -925,7 +903,7 @@ export default function PanchangScreen({ route }: Props) {
               ))
             ) : (
               <>
-                <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+                <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, lineHeight: 19, color: colors.inkMuted, marginTop: 6 }}>
                   {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
                 </Text>
                 {/* The quiet-day doorway. The क्षेत्र row's HOME is the व्रत-पर्व
@@ -951,24 +929,25 @@ export default function PanchangScreen({ route }: Props) {
                 observance date, muted gold register, device-only. */}
             <PitruPakshaDayChip date={selectedDate} />
             <PitruSmaranDayChip date={selectedDate} />
-          </View>
+          </PanchangPanel>
 
+          {/* आगामी — an agenda in one panel: the date once per day, each row
+              opening its observance (design.md §33 item 6). */}
           {upcoming.length > 0 && (
-            <View style={styles.upcomingSection}>
-              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 10 }}>
-                {contentByLang(lang, 'आगामी', 'Upcoming')}
-              </Text>
+            <PanchangPanel testID="panchang-upcoming-panel" title={contentByLang(lang, 'आगामी', 'Upcoming')} style={styles.sectionPanel}>
               {upcoming.map((item, i) => (
-                <PanchangTimelineRow
+                <UpcomingRow
                   key={`${item.rule.id}-${item.date.toDateString()}`}
-                  markerColor={markerColor(item.rule.marker, colors)}
-                  dateLabel={formatShortDate(item.date, lang)}
-                  title={contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
-                  showDivider={i < upcoming.length - 1}
-                  accessibilityLabel={`${formatShortDate(item.date, 'en')}, ${item.rule.nameEn}`}
+                  item={item}
+                  showDate={i === 0 || upcoming[i - 1].date.toDateString() !== item.date.toDateString()}
+                  divider={i > 0}
+                  lang={lang}
+                  colors={colors}
+                  typography={typography}
+                  onPress={() => openObservanceDetail(item.rule.id)}
                 />
               ))}
-            </View>
+            </PanchangPanel>
           )}
             </>
           ) : panchangTab === 'catalog' ? (
@@ -1728,100 +1707,66 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
   );
 }
 
-function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, colors, typography, radii, elevation }: {
-  label: string;
-  element: PanchangElement;
-  // Kshaya anga (skipped at every sunrise) — rendered as a second, smaller row so
-  // days like 10 Jul 2026 read "दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल".
-  kshaya?: PanchangElement | null;
-  // The anga that takes over later the SAME day (tithi tile only). "तृतीया तक
-  // 8:51 AM" alone leaves the rest of the day unnamed, which is what made a
-  // Chaturthi vrat look like it belonged to the next date instead of this one.
-  successor?: { nameHi: string; nameEn: string } | null;
-  panchangDate: Date;
+/**
+ * One आगामी agenda row (design.md §33 item 6): the date as a calendar leaf (day
+ * over month) on the first row of each date only, the tier dot, the name over
+ * `weekday · deity`, and a chevron — the row opens the observance. The weekday,
+ * not a countdown, because the list runs from the selected date, not today.
+ */
+function UpcomingRow({ item, showDate, divider, lang, colors, typography, onPress }: {
+  item: ResolvedObservance;
+  showDate: boolean;
+  divider: boolean;
   lang: Lang;
   colors: any;
   typography: any;
-  radii: any;
-  elevation: any;
+  onPress: () => void;
 }) {
-  const rows = kshaya ? [element, kshaya] : [element];
+  const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
+  const months = lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
+  const weekdays = lang === 'en' ? WEEKDAYS_EN : lang === 'hi' ? WEEKDAYS_HI : WEEKDAYS_HI.map((d) => transliterateDevanagari(d, lang));
+  const meta = [weekdays[item.date.getDay()], contentByLang(lang, item.rule.deityHi, item.rule.deityEn)].filter(Boolean).join(' · ');
   return (
-    <View
-      style={[
-        styles.angaTile,
-        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg, ...elevation.card },
-      ]}
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`${formatShortDate(item.date, 'en')}, ${item.rule.nameEn}. Opens details.`}
+      style={({ pressed }) => [styles.upcomingRow, pressed && { opacity: 0.6 }]}
     >
-      {/* The type label leads in the active language (TITHI / तिथि …) — same
-          source as the old row, kept uppercase so it reads as a quiet tag. */}
-      <Text
-        style={{
-          fontSize: 12,
-          color: colors.saffronDeep,
-          // English keeps the tracked uppercase Cormorant tag; Indic uses its own
-          // script serif with no tracking (letterSpacing splits the shirorekha).
-          fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.cardHindi.fontFamily),
-          letterSpacing: lang === 'en' ? 1 : 0,
-          textTransform: lang === 'en' ? 'uppercase' : 'none',
-        }}
-      >
-        {label}
-      </Text>
-      {rows.map((row, i) => (
-        <React.Fragment key={i}>
-          {/* Single-language value. adjustsFontSizeToFit shrinks the longest names
-              (e.g. "Uttara Bhadrapada") to one line so every card keeps equal height. */}
-          <Text
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            minimumFontScale={0.8}
-            style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: i === 0 ? 21 : 17, color: colors.ink, marginTop: i === 0 ? 4 : 6 }}
-          >
-            {contentByLang(lang, row.nameHi, row.nameEn)}
-          </Text>
-          {/* formatEndInstant appends a short date when the end falls past
-              midnight — a bare "तक 2:04 AM" would read as this morning. */}
-          {row.endTime && (
-            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15, color: colors.inkSoft, marginTop: i === 0 ? 5 : 3 }}>
-              {contentByLang(lang, 'तक ', 'till ')}{formatEndInstant(row.endTime, panchangDate, lang)}
+      <View style={styles.upcomingDate}>
+        {showDate && (
+          <>
+            <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 19, lineHeight: 22, color: colors.ink, fontVariant: ['lining-nums', 'tabular-nums'] }}>
+              {item.date.getDate()}
             </Text>
-          )}
-        </React.Fragment>
-      ))}
-      {/* Handover line — quieter than the तक line above it, since the tile's
-          headline stays the sunrise (udaya) anga the almanac names the day by. */}
-      {successor && (
-        <Text
-          numberOfLines={1}
-          adjustsFontSizeToFit
-          minimumFontScale={0.8}
-          style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, marginTop: 3 }}
-        >
-          {contentByLang(lang, `फिर ${successor.nameHi} — शेष दिन`, `then ${successor.nameEn} — rest of day`)}
-        </Text>
-      )}
-    </View>
-  );
-}
-
-function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: string; value: string; lang: Lang; colors: any }) {
-  return (
-    <View style={styles.timeCell}>
-      {/* ︎ forces text (monochrome) presentation so ☀ doesn't render as a
-          colour emoji on iOS while ☽ stays a plain glyph — design.md is "no emoji".
-          All four metrics now share one filled-with-accent (gold) glyph style. */}
-      <AppIcon name={icon === "☀" ? "sun" : "moon"} size={20} color={colors.iconInk} weight="duotone" />
-      <View style={{ marginLeft: 9, flex: 1 }}>
-        <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 10, color: colors.inkMuted }}>{label}</Text>
-        <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.ink }}>{value}</Text>
+            <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : bodyFont, fontSize: 11, color: colors.inkMuted }}>
+              {months[item.date.getMonth()]}
+            </Text>
+          </>
+        )}
       </View>
-    </View>
+      <View style={[styles.upcomingMain, divider && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.divider }]}>
+        <View style={[styles.upcomingDot, { backgroundColor: markerColor(item.rule.marker, colors) }]} />
+        <View style={{ flex: 1 }}>
+          <Text numberOfLines={1} style={{ fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: 14.5, color: colors.ink }}>
+            {contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
+          </Text>
+          <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 11.5, color: colors.inkMuted, marginTop: 1 }}>
+            {meta}
+          </Text>
+        </View>
+        <Text style={{ fontSize: 18, color: colors.inkMuted }}>›</Text>
+      </View>
+    </Pressable>
   );
 }
 
-function ObservanceCard({ item, daySolve, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi, compact = false }: {
+function ObservanceCard({ item, daySolve, lang, colors, typography, radii, elevation, onOpenLink, onOpenKatha, onOpenVidhi, compact = false, inPanel = false, first = false }: {
   compact?: boolean;
+  /** A row inside the day panel's व्रत और पर्व panel: no card of its own, a
+   * hairline above every row but the first. */
+  inPanel?: boolean;
+  first?: boolean;
   item: ResolvedObservance;
   // This date's solved panchang, narrowed to what a day note can read (null
   // until the day's solve lands). Which rules read which field is
@@ -1868,7 +1813,13 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
     : item.rule.nameEn;
 
   return (
-    <View style={[styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]}>
+    <View
+      style={
+        inPanel
+          ? [styles.observanceRow, !first && { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.divider }]
+          : [styles.observanceCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }, elevation.card]
+      }
+    >
       <View style={styles.observanceTop}>
         <View style={[styles.categoryPill, { backgroundColor: item.rule.category === 'vrat' ? colors.goldTint : colors.saffronTint, borderRadius: radii.pill }]}>
           <Text style={{ fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.cardHindi.fontFamily), fontSize: 10, color: colors.saffronDeep }}>
@@ -1979,12 +1930,13 @@ function LensDiscoveryRow({
           flexDirection: 'row',
           alignItems: 'center',
           minHeight: 48,
-          marginTop: 12,
+          marginTop: 10,
+          marginBottom: 8,
           paddingVertical: 10,
           paddingHorizontal: 12,
           backgroundColor: colors.goldTint,
           borderWidth: 1,
-          borderColor: colors.divider,
+          borderColor: colors.goldChipBg,
           borderRadius: radii.md,
         },
         pressed && { opacity: 0.8 },
@@ -2693,18 +2645,17 @@ const styles = StyleSheet.create({
   // 14pt line box rather than the old 10pt one.
   dateTag: { minWidth: 28, minHeight: 16, borderRadius: 8, paddingHorizontal: 5, alignItems: 'center', justifyContent: 'center', marginTop: 2 },
   dateTagText: { fontSize: 10, lineHeight: 15 },
-  angaGrid: { flexDirection: 'row', gap: 8, marginTop: 8 },
-  angaGridSecondary: { flexDirection: 'row', gap: 8, marginTop: 8 },
-  angaTile: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 10, paddingHorizontal: 14 },
-  timesCard: { borderWidth: 1, padding: 14, marginTop: 10 },
-  timesRow: { flexDirection: 'row', justifyContent: 'space-between' },
-  timeCell: { flexDirection: 'row', alignItems: 'center', width: '47%', paddingVertical: 4 },
-  observanceSection: { marginTop: 12 },
+  // व्रत और पर्व / आगामी panels sit a step further from the day's readings.
+  sectionPanel: { marginTop: 16, paddingBottom: 8 },
   observanceCard: { borderWidth: 1, padding: 10, marginBottom: 8 },
+  observanceRow: { paddingVertical: 10 },
   observanceTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 },
   categoryPill: { paddingHorizontal: 9, paddingVertical: 4 },
   linkButton: { alignSelf: 'flex-start', borderWidth: 1, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
   linkRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
   kathaButton: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
-  upcomingSection: { marginTop: 12 },
+  upcomingRow: { flexDirection: 'row', alignItems: 'stretch', minHeight: 48 },
+  upcomingDate: { width: 40, alignItems: 'center', paddingTop: 8 },
+  upcomingMain: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 8, marginLeft: 6 },
+  upcomingDot: { width: 7, height: 7, borderRadius: 3.5 },
 });
