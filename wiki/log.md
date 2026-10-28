@@ -1232,3 +1232,8 @@ The user clarified that a 110pt image within a155pt card left an unwanted70-perc
 ## [2026-10-28] ingest | PR #556 painted Panchang day tiles, plain lunar icons and selected-day ribbon plus following-day card; regional/Pitru entry points retained.
 
 ## [2026-10-28] ingest | Shared painted celestial marks: representative full/waxing/waning/dark Tithi phases, painted day-header sun, and running-Tithi night moon.
+## [2026-10-28] ingest | Gita Saar references stay in Vedansh
+
+Every illustrated lesson now opens Gita connection references and Gita source citations in the bundled GitaReader. The browser prototype opens the same corpus verse in its local sheet. Non-Gita story sources are visibly marked as optional external verification. Shok's Chitraketu story is from the Bhagavatam; its Gita 2.13 and 2.20 connections stay inside the app. Updated [[gita-saar]], design.md §77 and RULEBOOK §30.
+
+## [2026-10-28] ingest | Reconcile PR #556 with latest main; retain both append-only histories. Celestial phase implementation remains unchanged.

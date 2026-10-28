@@ -79,8 +79,8 @@ preset scales reading text, so day-tile fixed labels retain their established si
   page/detail/Large checkpoints were verified, but the entire recipe did not finish
   in one green run due startup/navigation harness issues. The iOS smoke now taps
   the real Back control instead of relying on the platform back action.
-- Android verification is pending. GitHub reports no CI checks on this draft head.
-- PR remains a draft; no merge, OTA, store release or external asset publication.
+- Android verification is pending. GitHub reported no CI checks on the initial draft head.
+- PR remains open; no merge, OTA, store release or external asset publication.
 
 ## Painted celestial phase follow-up
 

@@ -5,6 +5,7 @@ import {
 } from '..';
 import { gitaSaarExperiences } from '../experience';
 import { gitaSaarStories } from '../stories';
+import { getGitaChapter } from '../../gita';
 import illustrationManifest from '../../readerIllustrationManifest.json';
 test('all sixteen themes have distinct bilingual learning frames grounded in their own references', () => {
   expect(Object.keys(gitaSaarExperiences).sort()).toEqual(
@@ -60,6 +61,10 @@ test('every theme has its own published illustration and a source-grounded three
     expect(story.beats).toHaveLength(3);
     expect(story.sources.length).toBeGreaterThan(0);
     expect(story.sources.every((source) => source.url.startsWith('https://'))).toBe(true);
+    for (const source of story.sources) {
+      if (!source.inAppRef) continue;
+      expect(getGitaChapter(source.inAppRef.chapter).verses[source.inAppRef.verse - 1]?.number).toBe(source.inAppRef.verse);
+    }
     const refs = theme.groups.flatMap((group) => group.verses.map((verse) => `${verse.ref.chapter}.${verse.ref.verse}`));
     expect(story.gitaRefs.length).toBeGreaterThan(0);
     expect(story.gitaRefs.every((ref) => refs.includes(ref))).toBe(true);
