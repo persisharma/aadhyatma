@@ -109,6 +109,7 @@ export const lightColors = {
   // The sky mark (CelestialGlyph): moon disc + its phase shadow, sun disc, halos.
   moonLight: '#F6E6BC',
   moonShadow: 'rgba(30, 15, 5, 0.88)',
+  moonPaintedShade: 'rgba(60, 40, 24, 0.82)',
   moonHalo: 'rgba(255, 230, 180, 0.18)',
   sunCore: '#F0A23C',
   sunHalo: 'rgba(240, 162, 60, 0.22)',
@@ -136,6 +137,13 @@ export const lightColors = {
   youtube: '#FF0000',
 
   cardSurface: 'rgba(255, 250, 235, 0.72)',
+  // Panchang day-panel tiles, approved board D0.
+  panchangTileFrom: '#FFF8EA',
+  panchangTileTo: '#F5E4BE',
+  panchangTileBorder: 'rgba(166,124,52,0.30)',
+  panchangAvoidFrom: '#FBEBDF',
+  panchangAvoidTo: '#F0D6C4',
+  panchangAvoidBorder: 'rgba(158,74,46,0.28)',
   cardActiveFrom: '#FFF5E0',
   cardActiveTo: '#F5DEAC',
   cardActiveBorder: 'rgba(184, 98, 27, 0.4)',

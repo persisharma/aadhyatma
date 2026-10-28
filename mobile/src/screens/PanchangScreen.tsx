@@ -6,6 +6,11 @@ import { ListingCardFrame, UPCOMING_CARD_WIDTH } from '@/components/ListingCard'
 import ObservanceTodaySummary from '@/components/ObservanceTodaySummary';
 import { observanceCountdown } from '@/panchang/observancePresentation';
 import AppIcon from '@/components/AppIcon';
+import StoryIcon, { type StoryIconName } from '@/components/StoryIcon';
+import MoreIcon from '@/components/MoreIcon';
+import CelestialGlyph from '@/components/CelestialGlyph';
+import PanchangDaySurface from '@/components/PanchangDaySurface';
+import PanchangNextDayCard from '@/components/PanchangNextDayCard';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
@@ -32,7 +37,6 @@ import PanchangSky, { MonthGlyph, type SkyInk } from '@/components/PanchangSky';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { usePanchangShare } from '@/utils/panchangShare';
 import ShubhYogaCard from '@/components/ShubhYogaCard';
-import PanchangTimelineRow from '@/components/PanchangTimelineRow';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import PitruPakshaDayChip from '@/components/PitruPakshaDayChip';
 import TextField from '@/components/TextField';
@@ -191,7 +195,9 @@ export default function PanchangScreen({ route }: Props) {
     canAddPerson: canAddKundaliPerson,
     selectPerson: selectKundaliPerson,
   } = useKundali();
-  const { panchang: p, observances, upcoming } = usePanchangForSelection(selectedDate, calendarSystem);
+  const { panchang: p, observances } = usePanchangForSelection(selectedDate, calendarSystem);
+  const nextDate = useMemo(() => addDays(selectedDate, 1), [selectedDate]);
+  const nextObservances = useObservancesForDate(nextDate, calendarSystem);
   // Before sunrise the Hindu day is still yesterday's, so a festival kept last
   // night is the one running — the ribbon above the Muhurat card carries it over.
   // Read once per render, not ticked: the screen re-renders on any selection.
@@ -472,7 +478,7 @@ export default function PanchangScreen({ route }: Props) {
         hitSlop={10}
         style={({ pressed }) => [styles.myVratButton, surface, { borderRadius: radii.pill }, pressed && { opacity: 0.6 }]}
       >
-        <Text style={{ fontSize: 16, color: sky ? sky.accent : colors.gold }}>★</Text>
+        <AppIcon name="star" size={16} color={sky ? sky.accent : colors.gold} weight="fill" />
         {followCount > 0 && (
           <View style={[styles.starBadge, { backgroundColor: colors.saffron, borderColor: behind }]}>
             <Text style={[styles.starBadgeText, { color: colors.parchment }]}>{followCount}</Text>
@@ -817,19 +823,18 @@ export default function PanchangScreen({ route }: Props) {
               decision to make. Additive; nothing above or below moves. */}
           <MuhuratFinderDoor onPress={() => rootNav.navigate('MuhuratFinder')} />
 
-          {/* Two-tier anga grid: Tithi + Nakshatra lead (the two anchors users read
-              first) on elevated off-white cards; Yoga + Karana sit as a quieter,
-              flatter secondary row. */}
+          {/* The four anga tiles retain their two-row layout and use the
+              same painted surface and decorative miniature family. */}
           <View style={styles.angaGrid}>
-            <PanchangTile label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} kshaya={p.kshayaTithi} successor={successorTithiToday(p)} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            <PanchangTile label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} kshaya={p.kshayaNakshatra} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile icon="moon" tithiIndex={p.tithi.index} label={contentByLang(lang, 'तिथि', 'Tithi')} element={p.tithi} kshaya={p.kshayaTithi} successor={successorTithiToday(p)} panchangDate={p.date} lang={lang} colors={colors} typography={typography} />
+            <PanchangTile icon="nakshatra" label={contentByLang(lang, 'नक्षत्र', 'Nakshatra')} element={p.nakshatra} kshaya={p.kshayaNakshatra} panchangDate={p.date} lang={lang} colors={colors} typography={typography} />
           </View>
           <View style={styles.angaGridSecondary}>
             {/* नित्य योग, never bare योग — the 27-cycle Sun+Moon yoga must stay
                 distinguishable from the PRD-27 शुभ योग chips below (one nitya
                 yoga is literally named सिद्धि; RULEBOOK §24 naming rule). */}
-            <PanchangTile label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
-            <PanchangTile label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} radii={radii} elevation={elevation} />
+            <PanchangTile icon="nitya-yoga" label={contentByLang(lang, 'नित्य योग', 'Nitya Yoga')} element={p.yoga} panchangDate={p.date} lang={lang} colors={colors} typography={typography} />
+            <PanchangTile icon="karana" label={contentByLang(lang, 'करण', 'Karana')} element={p.karana} panchangDate={p.date} lang={lang} colors={colors} typography={typography} />
           </View>
           {/* यात्रा (चन्द्रमा · चन्द्र वास · दिशा शूल) + हवन (अग्नि वास) cards —
               pure readings of the solved day (design.md §33). */}
@@ -837,18 +842,18 @@ export default function PanchangScreen({ route }: Props) {
 
           {/* PRD-27: the day's शुभ योग — present-or-absent with its window,
               annotation only (design.md §69). Absent days render nothing. */}
-          <ShubhYogaCard yogas={shubhYogas} referenceDay={p.date} />
+          <ShubhYogaCard yogas={shubhYogas} referenceDay={p.date} painted />
 
-          <View style={[styles.timesCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}>
+          <PanchangDaySurface testID="panchang-times-card" style={styles.timesCard}>
             <View style={styles.timesRow}>
-              <TimeCell icon="☀" label={contentByLang(lang, 'सूर्योदय', 'Sunrise')} value={formatTime12(p.sunrise)} lang={lang} colors={colors} />
-              <TimeCell icon="☀" label={contentByLang(lang, 'सूर्यास्त', 'Sunset')} value={formatTime12(p.sunset)} lang={lang} colors={colors} />
+              <TimeCell icon="surya" label={contentByLang(lang, 'सूर्योदय', 'Sunrise')} value={formatTime12(p.sunrise)} lang={lang} colors={colors} />
+              <TimeCell icon="sunset" label={contentByLang(lang, 'सूर्यास्त', 'Sunset')} value={formatTime12(p.sunset)} lang={lang} colors={colors} />
             </View>
             <View style={[styles.timesRow, { marginTop: 12 }]}>
-              <TimeCell icon="☽" label={contentByLang(lang, 'चंद्रोदय', 'Moonrise')} value={formatTime12(p.moonrise)} lang={lang} colors={colors} />
-              <TimeCell icon="☽" label={contentByLang(lang, 'ब्रह्म मुहूर्त', 'Brahma Muhurta')} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} lang={lang} colors={colors} />
+              <TimeCell icon="moonrise" label={contentByLang(lang, 'चंद्रोदय', 'Moonrise')} value={formatTime12(p.moonrise)} lang={lang} colors={colors} />
+              <TimeCell icon="aarti" label={contentByLang(lang, 'ब्रह्म मुहूर्त', 'Brahma Muhurta')} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} lang={lang} colors={colors} />
             </View>
-          </View>
+          </PanchangDaySurface>
             </>
           ) : (
             <View style={{ paddingVertical: 72, alignItems: 'center', justifyContent: 'center' }}>
@@ -883,7 +888,7 @@ export default function PanchangScreen({ route }: Props) {
                 pressed && { opacity: 0.8 },
               ]}
             >
-              <Text style={{ fontSize: 14, color: colors.gold }}>❖</Text>
+              <MoreIcon name="regional" />
               <Text style={{ flex: 1, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11.5, lineHeight: 17, color: colors.inkSoft }}>
                 {contentByLang(
                   lang,
@@ -906,73 +911,15 @@ export default function PanchangScreen({ route }: Props) {
             </Pressable>
           )}
 
-          <View style={styles.observanceSection}>
-            <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 10 }}>
-              {contentByLang(lang, 'व्रत और पर्व', 'Vrat & Observances')}
-            </Text>
-            {observances.length > 0 ? (
-              observances.map((item, i) => (
-                <ObservanceCard
-                  key={`${item.rule.id}-${i}`}
-                  item={item}
-                  daySolve={p ? { sunrise: p.sunrise, sunset: p.sunset, moonrise: p.moonrise, tithiIndex: p.tithi.index, tithiEnd: p.tithi.endTime } : null}
-                  lang={lang}
-                  colors={colors}
-                  typography={typography}
-                  radii={radii}
-                  elevation={elevation}
-                  onOpenLink={openLinkedSection}
-                  onOpenKatha={openKatha}
-                  onOpenVidhi={openVidhi}
-                />
-              ))
-            ) : (
-              <>
-                <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
-                  {meaningByLang(lang, 'इस तिथि पर कोई व्रत या पर्व नहीं है।', 'No vrat or festival falls on this date.')}
-                </Text>
-                {/* The quiet-day doorway. The क्षेत्र row's HOME is the व्रत-पर्व
-                    ledger, but that is the other segment — and this is the one the
-                    tab opens on and the one a lens actually changes, so a user who
-                    never taps व्रत-पर्व would never learn the feature exists. It
-                    appears ONLY on a day with nothing on it: on a day that has
-                    something to say, this card is exactly what shipped before.
-                    Hidden entirely when no calendar has content to offer. */}
-                {lensAvailableCount > 0 && (
-                  <LensDiscoveryRow
-                    lang={lang}
-                    colors={colors}
-                    typography={typography}
-                    radii={radii}
-                    availableCount={lensAvailableCount}
-                    onPress={() => setLensSheetVisible(true)}
-                  />
-                )}
-              </>
-            )}
-            {/* PRD-17: the private ॥ स्मरण chip — renders only on a saved
-                observance date, muted gold register, device-only. */}
-            <PitruPakshaDayChip date={selectedDate} />
-            <PitruSmaranDayChip date={selectedDate} />
-          </View>
-
-          {upcoming.length > 0 && (
-            <View style={styles.upcomingSection}>
-              <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, color: colors.ink, marginBottom: 10 }}>
-                {contentByLang(lang, 'आगामी', 'Upcoming')}
-              </Text>
-              {upcoming.map((item, i) => (
-                <PanchangTimelineRow
-                  key={`${item.rule.id}-${item.date.toDateString()}`}
-                  markerColor={markerColor(item.rule.marker, colors)}
-                  dateLabel={formatShortDate(item.date, lang)}
-                  title={contentByLang(lang, item.rule.nameHi, item.rule.nameEn)}
-                  showDivider={i < upcoming.length - 1}
-                  accessibilityLabel={`${formatShortDate(item.date, 'en')}, ${item.rule.nameEn}`}
-                />
-              ))}
-            </View>
+          <PanchangNextDayCard items={nextObservances} lang={lang} isToday={isSelectedToday} onOpen={openObservanceDetail} />
+          {/* Preserve existing regional and private reminder entry points while
+              the owner considers their placement. */}
+          {observances.length === 0 && lensAvailableCount > 0 && (
+            <LensDiscoveryRow lang={lang} colors={colors} typography={typography} radii={radii}
+              availableCount={lensAvailableCount} onPress={() => setLensSheetVisible(true)} />
           )}
+          <PitruPakshaDayChip date={selectedDate} />
+          <PitruSmaranDayChip date={selectedDate} />
             </>
           ) : panchangTab === 'catalog' ? (
             <CatalogLanding
@@ -1669,12 +1616,6 @@ function JyotishLanding({
   );
 }
 
-function markerColor(marker: ResolvedObservance['rule']['marker'], colors: any): string {
-  if (marker === 'star') return colors.saffron;
-  if (marker === 'halfmoon') return colors.ink;
-  return colors.gold;
-}
-
 function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography, sky, bare }: {
   value: CalendarSystem;
   onChange: (next: CalendarSystem) => void;
@@ -1731,7 +1672,9 @@ function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography
   );
 }
 
-function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, colors, typography, radii, elevation }: {
+function PanchangTile({ icon, tithiIndex, label, element, kshaya, successor, panchangDate, lang, colors, typography }: {
+  icon: 'moon' | 'nakshatra' | 'nitya-yoga' | 'karana';
+  tithiIndex?: number;
   label: string;
   element: PanchangElement;
   // Kshaya anga (skipped at every sunrise) — rendered as a second, smaller row so
@@ -1745,21 +1688,23 @@ function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, c
   lang: Lang;
   colors: any;
   typography: any;
-  radii: any;
-  elevation: any;
 }) {
   const rows = kshaya ? [element, kshaya] : [element];
   return (
-    <View
-      style={[
-        styles.angaTile,
-        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg, ...elevation.card },
-      ]}
-    >
+    <PanchangDaySurface testID={`panchang-anga-${icon}`} style={styles.angaTile}>
+      <View style={styles.angaIcon} pointerEvents="none" accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+        {icon === 'moon' ? (
+          <View style={[styles.angaMoon, { backgroundColor: colors.skyNightTop }]}>
+            <CelestialGlyph kind="moon" tithiIndex={tithiIndex} size={26} />
+          </View>
+        ) : <StoryIcon name={icon} size={36} />}
+      </View>
       {/* The type label leads in the active language (TITHI / तिथि …) — same
           source as the old row, kept uppercase so it reads as a quiet tag. */}
       <Text
         style={{
+          minHeight: 34,
+          paddingRight: 30,
           fontSize: 12,
           color: colors.saffronDeep,
           // English keeps the tracked uppercase Cormorant tag; Indic uses its own
@@ -1804,17 +1749,14 @@ function PanchangTile({ label, element, kshaya, successor, panchangDate, lang, c
           {contentByLang(lang, `फिर ${successor.nameHi} — शेष दिन`, `then ${successor.nameEn} — rest of day`)}
         </Text>
       )}
-    </View>
+    </PanchangDaySurface>
   );
 }
 
-function TimeCell({ icon, label, value, lang, colors }: { icon: string; label: string; value: string; lang: Lang; colors: any }) {
+function TimeCell({ icon, label, value, lang, colors }: { icon: Extract<StoryIconName, 'surya' | 'sunset' | 'moonrise' | 'aarti'>; label: string; value: string; lang: Lang; colors: any }) {
   return (
     <View style={styles.timeCell}>
-      {/* ︎ forces text (monochrome) presentation so ☀ doesn't render as a
-          colour emoji on iOS while ☽ stays a plain glyph — design.md is "no emoji".
-          All four metrics now share one filled-with-accent (gold) glyph style. */}
-      <AppIcon name={icon === "☀" ? "sun" : "moon"} size={20} color={colors.iconInk} weight="duotone" />
+      <StoryIcon name={icon} size={40} />
       <View style={{ marginLeft: 9, flex: 1 }}>
         <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latin : scriptBodyFont(lang, fontFamilies.devanagari), fontSize: 10, color: colors.inkMuted }}>{label}</Text>
         <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 13, color: colors.ink }}>{value}</Text>
@@ -2005,7 +1947,7 @@ function LensDiscoveryRow({
         pressed && { opacity: 0.8 },
       ]}
     >
-      <Text style={{ fontSize: 15, color: colors.gold, marginRight: 10 }}>❖</Text>
+      <View style={{ marginRight: 10 }}><MoreIcon name="regional" /></View>
       <View style={{ flex: 1 }}>
         <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 13, color: colors.ink }}>
           {contentByLang(lang, 'क्षेत्रीय पंचांग जोड़ें', 'Add a regional calendar')}
@@ -2650,11 +2592,12 @@ const styles = StyleSheet.create({
   dateTagText: { fontSize: 10, lineHeight: 15 },
   angaGrid: { flexDirection: 'row', gap: 8, marginTop: 8 },
   angaGridSecondary: { flexDirection: 'row', gap: 8, marginTop: 8 },
+  angaIcon: { position: 'absolute', top: 8, right: 8 },
+  angaMoon: { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
   angaTile: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 10, paddingHorizontal: 14 },
   timesCard: { borderWidth: 1, padding: 14, marginTop: 10 },
   timesRow: { flexDirection: 'row', justifyContent: 'space-between' },
   timeCell: { flexDirection: 'row', alignItems: 'center', width: '47%', paddingVertical: 4 },
-  observanceSection: { marginTop: 12 },
   observanceCard: { borderWidth: 1, padding: 10, marginBottom: 8 },
   observanceTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 6 },
   categoryPill: { paddingHorizontal: 9, paddingVertical: 4 },
@@ -2663,5 +2606,4 @@ const styles = StyleSheet.create({
   catalogSearchIcon: { position: 'absolute', left: 14, top: 12 },
   linkRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8 },
   kathaButton: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 7, marginTop: 8 },
-  upcomingSection: { marginTop: 12 },
 });
