@@ -34,7 +34,7 @@ it('gives a stored chaupai couplet one charan per row on the share card', () => 
   expect(dailyBhaktiShareable(gita).scopes[0].prepared!.hi.pages[0].devotional!.verseRows).toBeUndefined();
 });
 it('maps deity families and per-verse exceptions conservatively', () => {
-  expect(new Set(Object.values(devotionalSourceArt)).size).toBe(28);
+  expect(new Set(Object.values(devotionalSourceArt)).size).toBe(29);
   expect(devotionalArtForVerse({ sourceId: 'unknown', verseIndex: 0 })).toBe('prayer');
   expect(devotionalArtForVerse({ sourceId: 'gayatri-mantra', verseIndex: 0 })).toBe('surya');
   expect(devotionalArtForVerse({ sourceId: 'vidyarambha-prarthana', verseIndex: 1 })).toBe('ganesha');

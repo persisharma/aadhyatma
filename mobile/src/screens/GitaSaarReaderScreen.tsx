@@ -466,6 +466,14 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
                         initialIndex: item.gitaVerse - 1,
                       })
                     }
+                    onOpenGitaRef={(gitaChapter, gitaVerse) => {
+                      autoSlide.stop();
+                      readAloud.stop();
+                      navigation.navigate('GitaReader', {
+                        chapter: gitaChapter,
+                        initialIndex: gitaVerse - 1,
+                      });
+                    }}
                     topActions={
                       <>
                         <BookmarkButton

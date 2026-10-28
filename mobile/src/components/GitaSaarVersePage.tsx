@@ -47,6 +47,7 @@ type Props = {
   topActions?: React.ReactNode;
   closing?: { hi: string; en: string };
   onOpenInGita?: () => void;
+  onOpenGitaRef?: (chapter: number, verse: number) => void;
   isSaved?: boolean;
   initialReflection?: string;
   onSaveLearning?: (text: string) => Promise<void>;
@@ -63,6 +64,7 @@ export default function GitaSaarVersePage({
   topActions,
   closing,
   onOpenInGita,
+  onOpenGitaRef,
   isSaved = false,
   initialReflection = '',
   onSaveLearning,
@@ -200,7 +202,12 @@ export default function GitaSaarVersePage({
         >
           {meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
         </ProseParagraph>
-        {verse.number === 1 && <GitaSaarStoryDetails themeId={themeId} />}
+        {verse.number === 1 && (
+          <GitaSaarStoryDetails
+            themeId={themeId}
+            onOpenGitaRef={onOpenGitaRef}
+          />
+        )}
         <Pressable
           testID="gita-saar-source-toggle"
           accessibilityRole="button"

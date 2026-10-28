@@ -1,0 +1,37 @@
+# Shok's Gita bridge opens the exact bundled verse without leaving Vedansh.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element: { text: "Sacred Books.*Tap to open." }
+    direction: DOWN
+- tapOn: "Sacred Books.*Tap to open."
+- scrollUntilVisible:
+    element: { text: "Gita Saar\\..*Tap to open\\..*" }
+    direction: DOWN
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: "Gita Saar\\..*Tap to open\\..*"
+- extendedWaitUntil:
+    visible: { id: gita-saar-featured }
+    timeout: 30000
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-shok }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { id: gita-saar-theme-shok }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-shok }
+    timeout: 20000
+- scrollUntilVisible:
+    element: { id: gita-saar-gita-ref-2.13 }
+    direction: DOWN
+    centerElement: true
+    timeout: 20000
+- takeScreenshot: e2e-shots/gita-saar-shok-reference
+- tapOn: { id: gita-saar-gita-ref-2.13 }
+- assertVisible: "13 / 72"
+- takeScreenshot: e2e-shots/gita-saar-shok-in-app-gita-2-13

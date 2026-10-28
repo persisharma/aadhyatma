@@ -1,0 +1,26 @@
+appId: com.prashantsharma.vedansh
+---
+# Run after prepare-mahakaal.mjs --publish / --activate and reloading that JS.
+# This deliberately requires Mahakaal to be visible; pending publication is not a pass.
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-bhakti" }
+- tapOn: { id: "open-suvichar" }
+- tapOn: { id: "suvichar-mode-custom" }
+- scrollUntilVisible:
+    element: { id: "suvichar-deity-mahakaal" }
+    direction: RIGHT
+- tapOn: { id: "suvichar-deity-mahakaal" }
+- tapOn: { id: "suvichar-frame-mandir-jharokha" }
+- assertVisible: { id: "suvichar-card-message" }
+- takeScreenshot: mahakaal-mandir-jharokha
+- tapOn: { id: "suvichar-frame-pushp-aangan" }
+- assertVisible: { id: "suvichar-card-message" }
+- takeScreenshot: mahakaal-pushp-aangan
+- tapOn: { id: "suvichar-frame-bhakti-patra" }
+- assertVisible: { id: "suvichar-card-message" }
+- takeScreenshot: mahakaal-bhakti-patra
+- scrollUntilVisible:
+    element: { id: "suvichar-share" }
+- assertVisible: { id: "suvichar-share" }
+# Manually inspect the full shared image at Standard and Large sizes.
+# Do not send to a recipient as part of this flow.

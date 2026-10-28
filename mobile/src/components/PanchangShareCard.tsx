@@ -53,6 +53,9 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
   const value = (size: number): TextStyle =>
     en ? { fontFamily: titleFace, fontSize: size + 1, lineHeight: (size + 1) * 1.2, color: colors.ink } : { fontFamily: titleFace, fontSize: size, lineHeight: size * 1.3, color: colors.ink };
   const clock = (size: number): TextStyle => ({ fontFamily: clockFace, fontSize: size, lineHeight: size * 1.25, color: colors.ink });
+  // A standalone clock line needs headroom in English too (fit() skips it there): the
+  // face is Noto Devanagari, so 1.25 leading clips the digits' tops on device.
+  const clockLine = (size: number) => withMarkHeadroom(clock(size));
 
   const One = ({ style, children }: { style: StyleProp<TextStyle>; children: React.ReactNode }) => (
     <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85} style={fit(style)}>
@@ -79,7 +82,7 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
           <One style={en ? { fontFamily: fontFamilies.latinBold, fontSize: 14, lineHeight: 17, color: colors.ink, textAlign: 'center' } : { fontFamily: bodyFace, fontSize: 13, lineHeight: 17, color: colors.ink, textAlign: 'center' }}>
             {c.name}
           </One>
-          <Text style={[clock(13), styles.center]}>{c.start}</Text>
+          <Text style={[clockLine(13), styles.center]}>{c.start}</Text>
         </View>
       ))}
     </View>
@@ -91,7 +94,7 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
         <View style={[styles.dot, { backgroundColor: good ? colors.gold : colors.avoid }]} />
         <One style={[label, { color: good ? colors.saffronDeep : colors.avoid }]}>{title}</One>
       </View>
-      <One style={clock(16)}>{time}</One>
+      <One style={clockLine(16)}>{time}</One>
     </View>
   );
 

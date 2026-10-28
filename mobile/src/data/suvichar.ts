@@ -1,7 +1,7 @@
 import { assetBaseUrl, remoteAssetRequest } from './assetManifest';
 import manifest from './suvicharManifest.json';
 
-export const suvicharDeities = [
+export const suvicharDeityCatalog = [
   {
     "id": "krishna",
     "hi": "श्रीकृष्ण",
@@ -73,7 +73,8 @@ export const suvicharDeities = [
     "en": "Tirupati Balaji"
   },
   { "id": "sanwariya-seth", "hi": "सांवरिया सेठ", "en": "Sanwariya Seth" },
-  { "id": "jagannath", "hi": "भगवान जगन्नाथ", "en": "Lord Jagannath" }
+  { "id": "jagannath", "hi": "भगवान जगन्नाथ", "en": "Lord Jagannath" },
+  { "id": "mahakaal", "hi": "श्री महाकाल", "en": "Shri Mahakaal" }
 ] as const;
 export const suvicharFrames = [
   {
@@ -92,7 +93,10 @@ export const suvicharFrames = [
     "en": "Devotional letter"
   }
 ] as const;
-export type SuvicharDeity = typeof suvicharDeities[number]['id'];
+/** Offer a deity only after every frame has passed publication verification. */
+export const suvicharDeities = suvicharDeityCatalog.filter(deity =>
+  suvicharFrames.every(frame => `${deity.id}--${frame.id}` in manifest.assets));
+export type SuvicharDeity = typeof suvicharDeityCatalog[number]['id'];
 export type SuvicharFrame = typeof suvicharFrames[number]['id'];
 export const NAME_LIMIT = 48;
 export const MESSAGE_LIMIT = 280;
