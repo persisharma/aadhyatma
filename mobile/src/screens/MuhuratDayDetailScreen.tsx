@@ -18,7 +18,7 @@ import {
   getEventRule,
   type DayVerdict,
 } from '@/panchang/eventMuhurat';
-import { formatRangeCompact } from '@/panchang/muhuratFormat';
+import { formatRange } from '@/panchang/muhuratFormat';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI, TITHI_NAMES_EN, TITHI_NAMES_HI, VARA_NAMES_HI, VARA_NAMES_EN, PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
 import { RASHI_NAMES_HI, RASHI_NAMES_EN } from '@/panchang/kundali';
 import { HORA_NAMES_HI, HORA_NAMES_EN } from '@/panchang/hora';
@@ -214,7 +214,7 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
                       {contentByLang(lang, 'सर्वोत्तम समय', 'Best time')}
                     </Text>
                     <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 22, color: colors.ink, textAlign: 'center', lineHeight: 33 }}>
-                      {formatRangeCompact(data.v.windows[0].start, data.v.windows[0].end)}
+                      {formatRange(data.v.windows[0].start, data.v.windows[0].end)}
                     </Text>
                     <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep, textAlign: 'center', lineHeight: 21 }}>
                       {contentByLang(lang, data.v.windows[0].nameHi, data.v.windows[0].nameEn)}
@@ -383,7 +383,7 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
                     {contentByLang(lang, 'भद्रा', 'Bhadra')}
                   </Text>
                   <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 13, color: colors.avoidDeep, marginLeft: 'auto', lineHeight: 21, textDecorationLine: 'line-through' }}>
-                    {formatRangeCompact(data.v.bhadra.start, data.v.bhadra.end)}
+                    {formatRange(data.v.bhadra.start, data.v.bhadra.end)}
                   </Text>
                   <Text style={{ fontFamily: titleFont, fontSize: 11, color: colors.avoidDeep, marginLeft: 8, lineHeight: 18 }}>
                     {contentByLang(lang, 'वर्ज्य', 'Avoid')}
@@ -399,7 +399,7 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
                     {contentByLang(lang, w.nameHi, w.nameEn)}
                   </Text>
                   <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 13, color: colors.ink, marginLeft: 'auto', lineHeight: 21 }}>
-                    {formatRangeCompact(w.start, w.end)}
+                    {formatRange(w.start, w.end)}
                   </Text>
                   <Text style={{ fontFamily: titleFont, fontSize: 11, color: colors.saffronDeep, marginLeft: 8, lineHeight: 18 }}>
                     {contentByLang(lang, TIER_LABELS[w.tier].hi, TIER_LABELS[w.tier].en)}

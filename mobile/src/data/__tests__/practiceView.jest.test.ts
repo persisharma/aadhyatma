@@ -42,25 +42,20 @@ describe('practiceSummary', () => {
 });
 
 describe('formatOfferedTime', () => {
-  it('formats a 12-hour clock with meridiem', () => {
-    expect(formatOfferedTime(new Date(2024, 0, 1, 7, 12).getTime(), 'en')).toBe('7:12 AM');
-    expect(formatOfferedTime(new Date(2024, 0, 1, 19, 5).getTime(), 'en')).toBe('7:05 PM');
+  it('formats a 24-hour clock', () => {
+    expect(formatOfferedTime(new Date(2024, 0, 1, 7, 12).getTime())).toBe('07:12');
+    expect(formatOfferedTime(new Date(2024, 0, 1, 19, 5).getTime())).toBe('19:05');
   });
 
   it('handles midnight and noon', () => {
-    expect(formatOfferedTime(new Date(2024, 0, 1, 0, 0).getTime(), 'en')).toBe('12:00 AM');
-    expect(formatOfferedTime(new Date(2024, 0, 1, 12, 0).getTime(), 'en')).toBe('12:00 PM');
-  });
-
-  it('uses Hindi meridiem', () => {
-    expect(formatOfferedTime(new Date(2024, 0, 1, 7, 12).getTime(), 'hi')).toBe('7:12 पूर्वाह्न');
-    expect(formatOfferedTime(new Date(2024, 0, 1, 19, 5).getTime(), 'hi')).toBe('7:05 अपराह्न');
+    expect(formatOfferedTime(new Date(2024, 0, 1, 0, 0).getTime())).toBe('00:00');
+    expect(formatOfferedTime(new Date(2024, 0, 1, 12, 0).getTime())).toBe('12:00');
   });
 
   it('returns null for missing/sentinel times', () => {
-    expect(formatOfferedTime(0, 'en')).toBeNull();
-    expect(formatOfferedTime(undefined, 'en')).toBeNull();
-    expect(formatOfferedTime(-1, 'en')).toBeNull();
+    expect(formatOfferedTime(0)).toBeNull();
+    expect(formatOfferedTime(undefined)).toBeNull();
+    expect(formatOfferedTime(-1)).toBeNull();
   });
 });
 
@@ -73,8 +68,8 @@ describe('offeredTail', () => {
   });
 
   it('offered with a known time', () => {
-    expect(offeredTail(true, t, 'en')).toBe('offered 7:12 AM');
-    expect(offeredTail(true, t, 'hi')).toBe('7:12 पूर्वाह्न · अर्पित');
+    expect(offeredTail(true, t, 'en')).toBe('offered 07:12');
+    expect(offeredTail(true, t, 'hi')).toBe('07:12 · अर्पित');
   });
 
   it('offered without a time (auto-japam / migrated legacy)', () => {

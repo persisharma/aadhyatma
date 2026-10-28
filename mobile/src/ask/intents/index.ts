@@ -19,7 +19,7 @@ import { EVENT_RULES, DISHA_LABELS } from '@/panchang/eventMuhurat';
 import { getObservancesForDate } from '@/panchang/festivalEngine';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { classifyNow, computeMuhuratDay } from '@/panchang/muhurat';
-import { formatRangeCompact, formatShortDate, formatClock } from '@/panchang/muhuratFormat';
+import { formatRange, formatShortDate, formatClock } from '@/panchang/muhuratFormat';
 import { PAKSHA_NAMES_EN, PAKSHA_NAMES_HI } from '@/panchang/names';
 import { cachedDayInputs, dayStoreFor, scopeKeyFor } from '@/panchang/panchangDayStore';
 import type { PanchangData, ResolvedObservance } from '@/panchang/types';
@@ -177,10 +177,10 @@ const muhuratNow: AskIntent = {
     const next = panchangFor(ctx, dayAt(ctx, offset + 1));
     const md = computeMuhuratDay(p.sunrise, p.sunset, next.sunrise, p.vara.index);
     const rel = relDay(offset);
-    const rahu = formatRangeCompact(md.rahu.start, md.rahu.end);
+    const rahu = formatRange(md.rahu.start, md.rahu.end);
     const lines: AskLine[] = [{ label: L('राहु काल', 'Rahu Kaal'), value: L(rahu, rahu), tone: 'avoid' }];
     if (md.abhijit) {
-      const ab = formatRangeCompact(md.abhijit.start, md.abhijit.end);
+      const ab = formatRange(md.abhijit.start, md.abhijit.end);
       lines.push({ label: L('अभिजित', 'Abhijit'), value: L(ab, ab) });
     }
     if (offset === 0) {
@@ -200,7 +200,7 @@ const muhuratNow: AskIntent = {
       intentId: this.id,
       family: 'muhurat',
       tag: L(`${rel.hi} · ${p.vara.nameHi}`, `${rel.en} · ${p.vara.nameEn}`),
-      headline: L(`राहु काल ${formatRangeCompact(md.rahu.start, md.rahu.end)}`, `Rahu Kaal ${formatRangeCompact(md.rahu.start, md.rahu.end)}`),
+      headline: L(`राहु काल ${formatRange(md.rahu.start, md.rahu.end)}`, `Rahu Kaal ${formatRange(md.rahu.start, md.rahu.end)}`),
       sub: dateLabel(date, ctx),
       lines,
       working: [

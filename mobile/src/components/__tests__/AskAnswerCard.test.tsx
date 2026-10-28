@@ -116,13 +116,13 @@ test('abstain: a stance-guard decline carries its own copy and no chips', () => 
 });
 
 test('गणना देखें shows the plain-language basis, never the engine-call trail', () => {
-  const withBasis: AskAnswer = { ...answer, basis: [{ hi: 'सूर्योदय 6:08 AM · सूर्यास्त 6:14 PM', en: 'Sunrise 6:08 AM · sunset 6:14 PM' }] };
+  const withBasis: AskAnswer = { ...answer, basis: [{ hi: 'सूर्योदय 06:08 · सूर्यास्त 18:14', en: 'Sunrise 06:08 · sunset 18:14' }] };
   act(() => {
     tree = create(<AskAnswerCard answer={withBasis} lang="hi" onAction={jest.fn()} />);
   });
   act(() => tree!.root.findByProps({ accessibilityLabel: 'गणना देखें' }).props.onPress());
   const all = flat(tree!);
-  expect(all).toContain('सूर्योदय 6:08 AM');
+  expect(all).toContain('सूर्योदय 06:08');
   expect(all).not.toContain('bhogId');
 });
 

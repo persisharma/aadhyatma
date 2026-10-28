@@ -30,7 +30,7 @@ import {
   type DoshaKey,
   type MuhuratWindow,
 } from '@/panchang/eventMuhurat';
-import { formatRangeCompact, formatShortDate } from '@/panchang/muhuratFormat';
+import { formatRange, formatShortDate } from '@/panchang/muhuratFormat';
 import { VARA_NAMES_HI, VARA_NAMES_EN } from '@/panchang/names';
 import { RASHI_NAMES_HI, RASHI_NAMES_EN } from '@/panchang/kundali';
 import { transliterateDevanagari } from '@/utils/transliterate';
@@ -180,7 +180,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
       <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep }}>
         {contentByLang(lang, w.nameHi, w.nameEn)}{' '}
       </Text>
-      {formatRangeCompact(w.start, w.end)}
+      {formatRange(w.start, w.end)}
       {w.lagnaRashiIndex != null && <LagnaChip index={w.lagnaRashiIndex} />}
     </Text>
   );
@@ -202,7 +202,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
           `${formatShortDate(d, lang)} · ${weekdayName(v.dateMs, lang)}`,
           contentByLang(lang, TIER_LABELS[tier].hi, TIER_LABELS[tier].en),
           best
-            ? `${contentByLang(lang, best.nameHi, best.nameEn)} ${formatRangeCompact(best.start, best.end)}`
+            ? `${contentByLang(lang, best.nameHi, best.nameEn)} ${formatRange(best.start, best.end)}`
             : null,
           best?.lagnaRashiIndex != null
             ? `${rashiName(best.lagnaRashiIndex, lang)} ${contentByLang(lang, 'लग्न', 'lagna')}`

@@ -21,7 +21,7 @@ import { getUpvasInfo } from '@/panchang/upvasContent';
 import { getBhogContent } from '@/panchang/bhogContent';
 import { getDaanOccasionForRule } from '@/data/daan';
 import { useUpvasParana } from '@/panchang/useUpvasParana';
-import { formatClock, formatRangeCompact, formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
+import { formatClock, formatRange, formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { getVidhiForFestival } from '@/data/vidhi';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -408,7 +408,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                                 {paranaDisplay.kind === 'window'
                                   ? `${contentByLang(lang, 'पारण', 'Parana')} · ${formatDate(paranaDisplay.date, lang)} · ${
                                       isSameLocalDay(paranaDisplay.start, paranaDisplay.end)
-                                        ? formatRangeCompact(paranaDisplay.start, paranaDisplay.end)
+                                        ? formatRange(paranaDisplay.start, paranaDisplay.end)
                                         : `${formatClock(paranaDisplay.start)} – ${formatEndInstant(paranaDisplay.end, paranaDisplay.date, lang)}`
                                     }`
                                   : `${contentByLang(lang, 'चंद्रोदय', 'Moonrise')} · ${formatDate(paranaDisplay.date, lang)} · ${formatClock(paranaDisplay.at)}`}

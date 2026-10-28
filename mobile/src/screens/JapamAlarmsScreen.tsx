@@ -32,7 +32,6 @@ import {
   localDateKey,
   nextAlarmFireTimestamp,
   normalizeRepeatDays,
-  prefers12HourClock,
   repeatSummary,
   type JapamAlarm,
 } from '@/notifications/japamAlarms';
@@ -103,7 +102,6 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
 
   const [editor, setEditor] = useState<EditorState>(null);
   const isHi = lang === 'hi';
-  const use12h = useMemo(() => prefers12HourClock(), []);
   // Countdowns only render on enabled rows — no interval when nothing ticks.
   const nowMs = useNowTick(30_000, alarms.some((a) => a.enabled));
 
@@ -282,7 +280,6 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                   key={alarm.id}
                   alarm={alarm}
                   isHi={isHi}
-                  use12h={use12h}
                   nowMs={nowMs}
                   onPress={() => setEditor({ kind: 'edit', alarm })}
                   onToggle={(v) => toggleAlarm(alarm.id, v)}
@@ -359,14 +356,12 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
 function AlarmRow({
   alarm,
   isHi,
-  use12h,
   nowMs,
   onPress,
   onToggle,
 }: {
   alarm: JapamAlarm;
   isHi: boolean;
-  use12h: boolean;
   nowMs: number;
   onPress: () => void;
   onToggle: (next: boolean) => void;
@@ -426,7 +421,7 @@ function AlarmRow({
             { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
           ]}
         >
-          {formatTimeLabel(alarm.time, use12h)}
+          {formatTimeLabel(alarm.time)}
         </Text>
         <Text
           style={[
@@ -555,7 +550,6 @@ export function AlarmEditorSheet({
     return own && !japamMantras.includes(own) ? [own, ...japamMantras] : japamMantras;
   }, [initial.mantraId]);
   const nowMs = useNowTick(30_000, visible);
-  const use12h = useMemo(() => prefers12HourClock(), []);
 
   const repeatDaysValue = useMemo(
     () => (days.length === 7 ? undefined : normalizeRepeatDays(days)),
@@ -908,8 +902,8 @@ export function AlarmEditorSheet({
             accessibilityLabel="Next ring preview"
           >
             {isHi
-              ? `${formatTimeLabel(time, use12h)} — ${describeUntilFire(previewFireAt, nowMs, true)} बजेगा`
-              : `Rings ${describeUntilFire(previewFireAt, nowMs, false)} — at ${formatTimeLabel(time, use12h)}`}
+              ? `${formatTimeLabel(time)} — ${describeUntilFire(previewFireAt, nowMs, true)} बजेगा`
+              : `Rings ${describeUntilFire(previewFireAt, nowMs, false)} — at ${formatTimeLabel(time)}`}
           </Text>
 
           <Pressable

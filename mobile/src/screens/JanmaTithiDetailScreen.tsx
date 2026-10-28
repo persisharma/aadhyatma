@@ -249,7 +249,7 @@ export default function JanmaTithiDetailScreen({ navigation, route }: Props) {
                   {contentByLang(lang, 'स्मरण', 'REMINDER')}
                 </Text>
                 <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 19, color: colors.inkSoft, marginTop: 3 }}>
-                  {contentByLang(lang, 'एक दिन पहले, सायं 6 बजे', 'The evening before, at 6 pm')}
+                  {contentByLang(lang, 'एक दिन पहले, सायं 18:00 बजे', 'The evening before, at 18:00')}
                 </Text>
               </View>
               <Switch

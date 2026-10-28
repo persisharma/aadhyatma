@@ -94,9 +94,11 @@ export const suvicharFrames = [
   }
 ] as const;
 /** Offer a deity only after every frame has passed publication verification. */
-export const suvicharDeities = suvicharDeityCatalog.filter(deity =>
-  suvicharFrames.every(frame => `${deity.id}--${frame.id}` in manifest.assets));
-export type SuvicharDeity = typeof suvicharDeityCatalog[number]['id'];
+/** Annapurna has reviewed copy but no published master: its card is explicitly text-only. */
+export const suvicharTextOnlyDeities = [{ id: 'annapurna', hi: 'माँ अन्नपूर्णा', en: 'Maa Annapurna' }] as const;
+export const suvicharDeities = [...suvicharDeityCatalog.filter(deity =>
+  suvicharFrames.every(frame => `${deity.id}--${frame.id}` in manifest.assets)), ...suvicharTextOnlyDeities];
+export type SuvicharDeity = typeof suvicharDeityCatalog[number]['id'] | typeof suvicharTextOnlyDeities[number]['id'];
 export type SuvicharFrame = typeof suvicharFrames[number]['id'];
 export const NAME_LIMIT = 48;
 export const MESSAGE_LIMIT = 280;
@@ -136,13 +138,14 @@ export function suvicharPhotoFit(width: number, height: number, faces: readonly 
   return { x: x / width, y: y / height, w: side / width, h: side / height };
 }
 /** `vaar` marks a weekday card: its title is always the current day's, so a saved card never names a past day. */
-export type SuvicharFavorite = { deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; vaar?: true };
+export type SuvicharFavorite = { deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; vaar?: true; thoughtId?: string };
+const savedThoughtId = (value: unknown): string => typeof value === 'string' && /^(SV-\d{4}|APP-\d{2})$/.test(value) ? value : '';
 /**
  * `photo` belongs to the sender, like the name, but favorites never store it: removing the photo removes it everywhere.
  * The photo section is opt-in: `photoOn` (off by default) shows it; turning it off hides the photo but keeps the file.
  */
 export const initialSuvichar = { deity: 'krishna' as SuvicharDeity, frame: 'mandir-jharokha' as SuvicharFrame,
-  name: '', photo: '', photoFit: fullPhotoFit, photoOn: false, message: '', vaar: false, favorites: [] as SuvicharFavorite[] };
+  name: '', photo: '', photoFit: fullPhotoFit, photoOn: false, message: '', thoughtId: '', vaar: false, favorites: [] as SuvicharFavorite[] };
 export type SuvicharPreferences = typeof initialSuvichar;
 export function parseSuvicharPreferences(raw: string | null): SuvicharPreferences {
   try {
@@ -155,11 +158,12 @@ export function parseSuvicharPreferences(raw: string | null): SuvicharPreference
       photoOn: p.photoOn === true,
       photoFit: isPhotoFit(p.photoFit) ? { x: p.photoFit.x, y: p.photoFit.y, w: p.photoFit.w, h: p.photoFit.h } : fullPhotoFit,
       message: typeof p.message === 'string' ? p.message.slice(0, MESSAGE_LIMIT) : '',
+      thoughtId: savedThoughtId(p.thoughtId),
       vaar: p.vaar === true,
       favorites: Array.isArray(p.favorites) ? p.favorites.filter((f: SuvicharFavorite) => f &&
         suvicharDeities.some(d => d.id === f.deity) && suvicharFrames.some(s => s.id === f.frame) &&
         typeof f.name === 'string' && f.name.length <= NAME_LIMIT && typeof f.message === 'string' &&
-        f.message.length <= MESSAGE_LIMIT).slice(0, 50).map((f: SuvicharFavorite) => ({ deity: f.deity, frame: f.frame, message: f.message, name: f.name, ...(f.vaar === true ? { vaar: true as const } : {}) })) : [],
+        f.message.length <= MESSAGE_LIMIT).slice(0, 50).map((f: SuvicharFavorite) => ({ deity: f.deity, frame: f.frame, message: f.message, name: f.name, ...(f.vaar === true ? { vaar: true as const } : {}), ...(savedThoughtId(f.thoughtId) ? { thoughtId: savedThoughtId(f.thoughtId) } : {}) })) : [],
     };
   } catch { return { ...initialSuvichar, favorites: [] }; }
 }

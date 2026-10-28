@@ -59,9 +59,7 @@ function birthDateLabel(dateIso: string, locale: string): string {
 function birthTimeLabel(time: string | undefined): string | null {
   if (!time) return null;
   const [hour, minute] = time.split(':').map(Number);
-  const meridiem = hour < 12 ? 'AM' : 'PM';
-  const clockHour = hour % 12 === 0 ? 12 : hour % 12;
-  return `${clockHour}:${String(minute).padStart(2, '0')} ${meridiem}`;
+  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
 }
 
 export default function KundaliReportScreen({ navigation, route }: Props) {

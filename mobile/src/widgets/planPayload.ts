@@ -33,13 +33,11 @@ function representedDate(key: string): WidgetLocalizedText {
 }
 
 function clockInIst(date: Date): string {
-  return new Intl.DateTimeFormat('en-US', { timeZone: WIDGET_TIME_ZONE, hour: 'numeric', minute: '2-digit', hour12: true }).format(date);
+  return new Intl.DateTimeFormat('en-US', { timeZone: WIDGET_TIME_ZONE, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(date);
 }
 
-function compactRangeInIst(start: Date, end: Date): string {
-  const from = clockInIst(start); const to = clockInIst(end);
-  const meridiem = (value: string) => value.match(/([AP]M)$/)?.[1];
-  return meridiem(from) === meridiem(to) ? `${from.replace(/ [AP]M$/, '')} – ${to}` : `${from} – ${to}`;
+function rangeInIst(start: Date, end: Date): string {
+  return `${clockInIst(start)} – ${clockInIst(end)}`;
 }
 
 function localizedTiming(labelHi: string, labelEn: string, value: string): WidgetLocalizedText {
@@ -47,7 +45,7 @@ function localizedTiming(labelHi: string, labelEn: string, value: string): Widge
 }
 
 /**
- * "तक 3:24 PM" — the तक line the Home glance draws next to its kicker tithi,
+ * "तक 15:24" — the तक line the Home glance draws next to its kicker tithi,
  * precomputed per language because native draws no dates.
  *
  * The short date is appended exactly when the end lands on a LATER IST civil
@@ -125,8 +123,8 @@ export async function planWidgetPayload(input: WidgetPlanInput, isCancelled: () 
       tithiSegments: tithiSegments(panchang, key),
       ...(observance ? { vrat: localizedFromHindi(observance.nameHi, observance.nameEn) } : {}),
       sunrise: localizedTiming('सूर्योदय', 'Sunrise', clockInIst(panchang.sunrise)),
-      rahuKaal: localizedTiming('राहु काल', 'Rahu Kaal', compactRangeInIst(muhurat.rahu.start, muhurat.rahu.end)),
-      ...(muhurat.abhijit ? { abhijit: localizedTiming('अभिजित', 'Abhijit', compactRangeInIst(muhurat.abhijit.start, muhurat.abhijit.end)) } : {}),
+      rahuKaal: localizedTiming('राहु काल', 'Rahu Kaal', rangeInIst(muhurat.rahu.start, muhurat.rahu.end)),
+      ...(muhurat.abhijit ? { abhijit: localizedTiming('अभिजित', 'Abhijit', rangeInIst(muhurat.abhijit.start, muhurat.abhijit.end)) } : {}),
       deepLink: `vedansh://widget/panchang?date=${key}`,
     });
 

@@ -328,8 +328,8 @@ export default function ArcStrip({ rule, calendarSystem, today: todayProp, onOpe
                 <Text style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 16, color: colors.inkMuted, marginTop: 8 }}>
                   {meaningByLang(
                     lang,
-                    'स्मरण: एक दिन पहले सायं 6 बजे और उस दिन प्रातः 7 बजे।',
-                    'Reminder: 6 PM the evening before and 7 AM on the day.'
+                    'स्मरण: एक दिन पहले सायं 18:00 बजे और उस दिन प्रातः 07:00 बजे।',
+                    'Reminder: 18:00 the evening before and 07:00 on the day.'
                   )}
                 </Text>
               )}

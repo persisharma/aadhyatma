@@ -77,7 +77,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Confirm date"
 - waitForAnimationToEnd
 # Birth time via the reminder-style stepper: field commits 06:00, step down 18
-# minutes to 05:42 AM, then collapse so Generate clears the tab bar.
+# minutes to 05:42, then collapse so Generate clears the tab bar.
 - tapOn: { id: "kundali-time-input" }
 - waitForAnimationToEnd
 - repeat:

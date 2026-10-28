@@ -81,7 +81,7 @@ const chained: PanchangWidgetDay = {
   ...panchang('2026-09-17'),
   tithi: tithiName('षष्ठी'),
   tithiSegments: [
-    { name: tithiName('षष्ठी'), endsAt: '2026-09-17T05:18:16.089Z', till: tithiName('तक 10:48 AM') },
+    { name: tithiName('षष्ठी'), endsAt: '2026-09-17T05:18:16.089Z', till: tithiName('तक 10:48') },
     { name: tithiName('सप्तमी') },
   ],
 };
@@ -89,7 +89,7 @@ const chained: PanchangWidgetDay = {
 test('the running tithi turns over ON the handover, not at midnight', () => {
   // Before the handover: the sunrise tithi, with the तक line that dates it.
   assert.equal(runningTithi(chained, new Date('2026-09-17T04:00:00Z')).name.hi, 'षष्ठी');
-  assert.equal(runningTithi(chained, new Date('2026-09-17T04:00:00Z')).till?.hi, 'तक 10:48 AM');
+  assert.equal(runningTithi(chained, new Date('2026-09-17T04:00:00Z')).till?.hi, 'तक 10:48');
   // The boundary is inclusive, exactly as prevailingTithi's walk is.
   assert.equal(runningTithi(chained, new Date('2026-09-17T05:18:16.089Z')).name.hi, 'षष्ठी');
   // One second later the successor runs — the bug this exists for: the widget

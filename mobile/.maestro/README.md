@@ -189,3 +189,8 @@ For multi-instance readers (Chalisa, Aarti, Sanskar), `LibraryCard` uses `${name
 - **Expo dev menu sheet:** `config.yaml` sets `snapshotKeyHonorModalViews: false` so Maestro can read the RN view tree behind iOS native sheets. Without it, the dev menu blocks every flow.
 - **Bundle must be loaded:** Metro must be running (`npm start` in `mobile/`) AND Expo Go's "Recently opened" must show Vedansh. If the dev server changes ports (e.g., 8083 in use), update Expo Go's Recents by tapping Vedansh once after Metro boots.
 - **First-launch state:** The very first time you tap into Vedansh from a fresh Expo Go install, the dev-menu info modal appears. Subsequent runs of `_launch.yaml` reuse the same state.
+
+
+### Referenced Suvichar catalogue
+
+`suvichar-scripture-catalogue.yaml` opens the composer, searches a late catalogue ID, selects it, checks native attribution and verifies custom editing removes the source link. It does not send a message. Use the dedicated device and this worktree's Metro port, for example `maestro --device <device-id> test -e METRO_PORT=8097 .maestro/suvichar-scripture-catalogue.yaml`. The flow is authored and parsed; it has not yet passed native verification for this integration.

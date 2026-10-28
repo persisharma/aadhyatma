@@ -5,7 +5,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
-import { formatClock, formatRangeCompact } from '@/panchang/muhuratFormat';
+import { formatClock, formatRange } from '@/panchang/muhuratFormat';
 import type { ChoghadiyaPeriod } from '@/panchang/muhurat';
 
 // Cormorant's default figures are old-style; clock digits read as one height.
@@ -61,7 +61,7 @@ export default function ChoghadiyaStrip({
               onPress={() => setPicked(i)}
               accessibilityRole="button"
               accessibilityState={{ selected }}
-              accessibilityLabel={`${p.nameEn} choghadiya, ${formatRangeCompact(p.start, p.end)}, ${avoid(p) ? 'avoid' : 'auspicious'}${isNow ? `, now, ${pct}% elapsed` : past ? ', passed' : ''}`}
+              accessibilityLabel={`${p.nameEn} choghadiya, ${formatRange(p.start, p.end)}, ${avoid(p) ? 'avoid' : 'auspicious'}${isNow ? `, now, ${pct}% elapsed` : past ? ', passed' : ''}`}
               style={styles.segment}
             >
               {isNow && <View style={[styles.notch, { left: `${pct}%`, borderTopColor: colors.saffronDeep }]} />}
@@ -114,7 +114,7 @@ export default function ChoghadiyaStrip({
               {contentByLang(lang, detail.nameHi, detail.nameEn)}
             </Text>
             <Text style={{ fontFamily: clockFont, fontSize: 13, color: colors.inkSoft, fontVariant: [...LINING] }}>
-              {'  '}{formatRangeCompact(detail.start, detail.end)}
+              {'  '}{formatRange(detail.start, detail.end)}
             </Text>
           </Text>
           {nowIndex != null && shown != null && (

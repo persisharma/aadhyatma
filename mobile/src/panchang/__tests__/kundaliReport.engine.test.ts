@@ -21,7 +21,7 @@ const META: KundaliReportMeta = {
   name: 'Aarav',
   birthDateLabelHi: '१५ मार्च १९९५',
   birthDateLabelEn: '15 March 1995',
-  birthTimeLabel: '10:00 AM',
+  birthTimeLabel: '10:00',
   cityNameHi: 'उज्जैन',
   cityNameEn: 'Ujjain',
 };

@@ -1,0 +1,24 @@
+{
+  "method": "CoreText typography model, not native export acceptance",
+  "messages": 621,
+  "results": {
+    "en": {
+      "font": "CormorantGaramond-Italic",
+      "size": 21,
+      "width": 280.8,
+      "line_distribution": {
+        "2": 611,
+        "1": 10
+      }
+    },
+    "hi": {
+      "font": "NotoSerifDevanagari-SemiBold",
+      "size": 21,
+      "width": 280.8,
+      "line_distribution": {
+        "2": 575,
+        "1": 46
+      }
+    }
+  }
+}

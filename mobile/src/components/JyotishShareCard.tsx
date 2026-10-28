@@ -102,8 +102,7 @@ function formatBirthDate(date: string): string {
 
 function formatBirthTime(time: string): string {
   const [hour, minute] = time.split(':').map(Number);
-  const suffix = hour >= 12 ? 'PM' : 'AM';
-  return `${hour % 12 || 12}:${String(minute).padStart(2, '0')} ${suffix}`;
+  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
 }
 
 function signPair(lang: Lang, index: number): { primary: string; secondary: string } {

@@ -202,9 +202,9 @@ describe('TodayStrip', () => {
     expect(text).toContain('अभिजीत');
     expect(text).toContain('राहु काल');
     // Cross-noon window keeps both meridiems; same-meridiem window compacts
-    // to a single trailing AM/PM (formatRangeCompact).
-    expect(text).toContain('11:17 AM – 12:05 PM');
-    expect(text).toContain('9:00 – 10:39 AM');
+    // to a single trailing AM/PM (formatRange).
+    expect(text).toContain('11:17 – 12:05');
+    expect(text).toContain('09:00 – 10:39');
   });
 
   it('lays the chips on one horizontal-scroll row (no wrap on narrow devices)', () => {

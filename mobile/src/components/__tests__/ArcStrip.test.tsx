@@ -143,7 +143,7 @@ describe('ArcStrip', () => {
     expect(text).toContain('Friday · 18 Sep');
     expect(text).toContain('Today is day 3 of 5');
     expect(text).toContain('2 left');
-    expect(text).toContain('Reminder: 6 PM the evening before and 7 AM on the day.');
+    expect(text).toContain('Reminder: 18:00 the evening before and 07:00 on the day.');
     expect(has(tree, 'arc-slot-5')).toBe(true);
     expect(has(tree, 'arc-slot-12')).toBe(false);
 
