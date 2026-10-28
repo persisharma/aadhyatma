@@ -672,8 +672,8 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
         bodyEn: [
           'After fourteen years of exile and the victory over Lanka, Rama returned to Ayodhya with Sita and Lakshmana. The folk tale says that on that Amavasya night the people of Ayodhya welcomed him by lighting lamps in every home.',
         ],
-        canonHi: 'लोक-परम्परा (उत्तर भारत) · कथा का मूल: वाल्मीकि रामायण, युद्ध काण्ड',
-        canonEn: 'Folk tradition (North India) · Source of the story: Valmiki Ramayana, Yuddha Kanda',
+        canonHi: 'लोक-परम्परा (उत्तर भारत)',
+        canonEn: 'Folk tradition (North India)',
       },
       {
         tier: 'lok',
