@@ -1255,3 +1255,7 @@ Captured the painted waning Krishna Tritiya moon and sepia night header on the d
 ## [2026-10-28] ingest | Panchang following-day cards share the Vrat listing; strengthen Nakshatra miniature
 
 The day panel reuses `ObservancePreviewCard` / `ListingCard` with event artwork and separate save/reminder controls. Named Sankashti display titles retain the original rule identity for artwork/reminders. Nakshatra's existing six-star painting has stronger sepia contours/connectors in the same 36dp slot; reference, new master, prompt, hashes and exports are retained. Typecheck, focused ESLint, 33 focused tests and Standard/Large iOS visual flow pass; evidence is in `docs/evaluations/panchang-day-icons-2026-10-27/`. Android/VoiceOver remain pending.
+
+## [2026-10-28] ingest | Rise/set-aware Panchang night sky and top moonrise label
+
+The fixed phase illustration appears only while the moon is above the horizon (no bright Amavasya disc). Night stars and sunset/sunrise labels remain; the misleading lunar sunset-to-sunrise path is removed. A moonrise/state footer handles after-midnight and previous-civil-day dates. Exact night/location events are deferred, bounded and cached, with no persisted day-schema changes. Typecheck, focused ESLint, 23 Jest checks and five real-engine tests pass. Three native state captures pass and were visually reviewed; temporary preview clock restored. Evidence is in `docs/evaluations/panchang-day-icons-2026-10-27/night-horizon/`.

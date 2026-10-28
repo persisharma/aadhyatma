@@ -46,6 +46,8 @@ The chakra family is separate from category/deity meanings. `CelestialChakra.tsx
 
 The Home ornament clips in its own absolute layer rather than clipping TodayStrip's shadow-bearing card. The shared asset manifest caps both drawings below 300KB and records final hashes/dimensions/centered bounds; per-asset provenance stores exact built-in Image Gen prompts and master hashes. Indexed-alpha packaging retains transparency and reduces the two PNGs to 274,392 bytes. `CelestialChakra.test.tsx` checks accessibility/touch isolation, and `celestial-chakra-smoke.yaml` covers the real native route and mode switches. Design specifications are in §33, §48 and §51c; source targets and installed evidence live in `docs/evaluations/celestial-chakra-2026-10-06/`.
 
+The night header’s existing painted phase is now shown only between calculated moonrise and moonset, excluding a bright Amavasya disc. It is a fixed phase illustration, with no moon path tied to night duration. The day sun retains its existing progress arc. No bitmap/registry changes are needed for the horizon-aware behavior; see [[panchang]].
+
 ## Dependencies
 
 [[overview]] · [[daan-punya]] · design.md §5/17/42.
