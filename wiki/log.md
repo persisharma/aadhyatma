@@ -1170,6 +1170,14 @@ Recorded the user-reported missing introduction and respectful family dialogue, 
 
 The Suvichar share now passes a one-line caption (`buildSuvicharShareMessage`, data/shareLinks.ts) ending in https://vedansh.app/get, so the recipient gets a tappable download link with the image. design.md §82 and [[subsystems/suvichar]] updated. Typecheck and lint only; no Jest, Maestro or device run.
 
+## [2026-10-26] ingest | Gita Saar continuous native learning
+
+Implemented the approved question-led hub and essence-first continuous reader across all 16 existing themes / 170 stable pages. Added bilingual editorial frames, optional private reflections with serialized durable storage, My learning, direct previous/next, and the approved CDN-only karma garden illustration. Original scripture, Saar, IDs and ordering remain unchanged. Native testing found an Android SVG re-parenting crash during cold routing; `lazyScreen` now resolves cold modules through a cancellable effect while preserving synchronous warm rendering and mounted screen state. Updated design.md §75/§77, RULEBOOK §30 and [[gita-saar]]. Full mobile suite passes 3,748 tests after main reconciliation; iOS and Android core native journeys pass. Restart persistence and Gujarati/Kannada Large reading checks pass on both platforms. Local capture evidence and exact remaining limits are in docs/evaluations/gita-saar-revamp-2026-10-26. No app update or version change published.
+
+## [2026-10-27] ingest | Gita Saar complete illustrated stories
+
+Updated [[gita-saar]] for sixteen source-grounded story lessons, distinct published 2:1 paintings, continuous three-beat explanations, source separation and current-day examples. Source: `stories.ts`, `GitaSaarStory.tsx`, theme/index/reader screens and evaluation record.
+
 
 ## [2026-10-26] ingest | Vrat catalog subject portraits
 

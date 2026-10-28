@@ -6,7 +6,7 @@ import ComicPanel from './ComicPanel';
 import { useTheme } from '@/theme/ThemeContext';
 
 type Page = ReturnType<typeof comicPages>[number];
-export default function ComicPage({ page, width, language, anchor, onUserScroll }: { page: Page; width: number; language: ComicLanguage; anchor?: string; onUserScroll: () => void }) {
+export default function ComicPage({ page, width, language, comicId, anchor, onUserScroll }: { page: Page; width: number; language: ComicLanguage; comicId?: string; anchor?: string; onUserScroll: () => void }) {
   const scroll = useRef<ScrollView>(null);
   const { typography } = useTheme();
   return <AutoSlideScrollView ref={scroll} testID={`comic-page-${page.id}`} directionalLockEnabled nestedScrollEnabled
@@ -15,7 +15,7 @@ export default function ComicPage({ page, width, language, anchor, onUserScroll 
       onLayout={event => { if (anchor && row.some(p => p.id === anchor)) { const y = event.nativeEvent.layout.y; requestAnimationFrame(() => scroll.current?.scrollTo({ y, animated: false })); } }}
       style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 6 }}>
       {row.map(panel => <View key={panel.id} style={{ flex: 1, minWidth: 0 }}>
-        <ComicPanel key={`${panel.id}-${language}-${typography.meaning.fontSize}`} panel={panel} language={language} />
+        <ComicPanel key={`${panel.id}-${language}-${typography.meaning.fontSize}`} panel={panel} language={language} comicId={comicId} />
       </View>)}
     </View>)}
   </AutoSlideScrollView>;
