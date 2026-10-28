@@ -1,0 +1,30 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-bhakti" }
+- tapOn: { id: "open-suvichar" }
+- tapOn: { id: "suvichar-mode-custom" }
+- tapOn: { id: "suvichar-deity-krishna" }
+- scrollUntilVisible:
+    element: { id: "suvichar-browse-thoughts" }
+    timeout: 30000
+- tapOn: { id: "suvichar-browse-thoughts" }
+- assertVisible: { id: "suvichar-thought-search" }
+- tapOn: { id: "suvichar-thought-search" }
+- inputText: "SV-0099"
+- tapOn: { id: "suvichar-thought-SV-0099" }
+- scrollUntilVisible:
+    element: { id: "suvichar-card-source" }
+    direction: UP
+- assertVisible: { id: "suvichar-card-source" }
+- takeScreenshot: suvichar-scripture-krishna
+- scrollUntilVisible:
+    element: { id: "suvichar-message" }
+- tapOn: { id: "suvichar-message" }
+- eraseText: 280
+- inputText: "Our family wishes"
+- hideKeyboard
+- assertNotVisible: { id: "suvichar-source-link" }
+- assertVisible: { id: "suvichar-share" }
+# The source must be visible on the native card; custom editing removes it.
+# No share recipient is selected and no message is sent.

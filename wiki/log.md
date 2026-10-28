@@ -1242,3 +1242,8 @@ Recorded the shared first-use/reuse flow, explicit Vrat preference tracking and 
 ## [2026-10-28] ingest | Gita Saar references stay in Vedansh
 
 Every illustrated lesson now opens Gita connection references and Gita source citations in the bundled GitaReader. The browser prototype opens the same corpus verse in its local sheet. Non-Gita story sources are visibly marked as optional external verification. Shok's Chitraketu story is from the Bhagavatam; its Gita 2.13 and 2.20 connections stay inside the app. Updated [[gita-saar]], design.md §77 and RULEBOOK §30.
+
+
+## [2026-10-28] ingest | Referenced deity-specific Suvichar integration
+
+Replaced the shared 21-thought runtime rotation with 621 approved short meanings/story lessons, stable IDs and 364 source locations. Recorded deity-family pools, searchable browsing, reference-bearing capture/text share, edit attribution removal, favorite migration and explicit text-only Annapurna. Preserved review evidence caveats and the separate greeting/research drafts. Native iOS/Android export acceptance remains pending.
