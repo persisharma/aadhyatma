@@ -1272,3 +1272,15 @@ Every rendered clock is now zero-padded 24-hour `HH:MM`: `formatClock` dropped A
 ## [2026-10-28] ingest | Mahakaal masters published to R2
 
 PR #555 added four Mahakaal masters (three Suvichar frames + the Daily Bhakti card) with `scripts/prepare-mahakaal.mjs` but never ran its publish step, so Suvichar sources were 51 vs a 48-entry manifest and `prepare-suvichar.mjs --verify` failed on main. Uploaded the four with immutable caching, then `prepare-mahakaal.mjs --activate` re-verified public bytes and activated both manifests (Suvichar 51, devotional-share 29).
+
+## [2026-10-28] ingest | PRD-46 प्रथा और मान्यता — Phase 0 registry
+
+New subsystem page `wiki/subsystems/pratha.md`. `mobile/src/data/pratha/` holds all 208 Appendix A customs (304 stories, Hi+En) as invisible drafts, with verified-only accessors, a flipped-row selector test, registry-checked links and the stance guard (RULEBOOK §32). Also recorded: bundled Valmiki sarga 6.107 is a defective corpus row (never quote it), and festival `ruleIds` were derived from katha links, excluding mahatmyas.
+
+## [2026-10-28] gap | PRD-46 rows are unverified
+
+All 208 pratha rows are app-authored retellings that no reviewer has checked against an opened source. Verification is per row and needs network access or the maintainer-attested exception (RULEBOOK §11.1).
+
+## [2026-10-28] ingest | PRD-46 verification continuation and Phase 1
+
+19 entries verified against actually opened publications; 189 drafts remain hidden. Added story-level provenance and exact canon checks, six tiers, ten-Kartik pilot gate and three-entry month gate. Hub/reader, source-preserving prose sharing, observance/month cards and lazy local navigation now implemented. Updated pratha/index/design §86 and §62; source adjudications in `docs/content-parity/pratha-verification-2026-10-28.md`. Monthly source-review backlog and native smoke execution remain open; no build, release, OTA or merge.

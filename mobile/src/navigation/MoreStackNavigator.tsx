@@ -54,6 +54,9 @@ const loadVidhiCatalogRoute = prefetchedRoute('VidhiCatalog', 3, () => require('
 const loadVidhiDetailRoute = prefetchedRoute('VidhiDetail', 3, () => require('@/screens/VidhiDetailScreen').default);
 const loadVidhiConductRoute = prefetchedRoute('VidhiConduct', 3, () => require('@/screens/VidhiConductScreen').default);
 
+const PrathaScreen = lazyScreen('Pratha', 3, () => import('@/screens/PrathaScreen'));
+const PrathaReaderScreen = lazyScreen('PrathaReader', 4, () => import('@/screens/PrathaReaderScreen'));
+
 const Stack = createNativeStackNavigator<MoreStackParamList>();
 
 export default function MoreStackNavigator() {
@@ -64,6 +67,8 @@ export default function MoreStackNavigator() {
         animation: 'slide_from_right',
       }}
     >
+      <Stack.Screen name="Pratha" component={PrathaScreen} />
+      <Stack.Screen name="PrathaReader" component={PrathaReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
       <Stack.Screen name="MoreHome" component={MoreScreen} />
       <Stack.Screen name="Profile" getComponent={loadProfileRoute} />
       <Stack.Screen name="Wishlist" getComponent={loadWishlistRoute} />

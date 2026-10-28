@@ -110,6 +110,9 @@ const FORBIDDEN = [
   // The shared artwork loader is eager, but puja metadata is needed only when
   // opening a guide. Keep that category behind its request-time require().
   /^src\/data\/vidhiArtworkManifest\.json$/,
+  // The प्रथा corpus (PRD-46) is bilingual prose for 208 rows; hosts reach it
+  // only through the require() thunks in data/pratha/index.ts.
+  /^src\/data\/pratha\/(?!index\.ts$|types\.ts$)[^/]+\.ts$/,
 ];
 
 test('no on-demand corpus payload is statically reachable from the app entry', () => {

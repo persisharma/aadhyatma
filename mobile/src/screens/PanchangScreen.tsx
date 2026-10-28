@@ -1,3 +1,4 @@
+import { PrathaMonthCard } from '@/components/PrathaCards';
 import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
 import CatalogCategoryTile from '@/components/CatalogCategoryTile';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
@@ -674,6 +675,10 @@ export default function PanchangScreen({ route }: Props) {
               {panchangTab !== 'jyotish' && renderSystemHeader(null)}
             </>
           )}
+
+          {panchangTab === 'calendar' && p && <PrathaMonthCard month={p.lunarMonth}
+            onOpen={(prathaId) => rootNav.navigate('PrathaReader', { prathaId })}
+            onHub={() => rootNav.navigate('Pratha', { masa: p.lunarMonth.index, isAdhik: p.lunarMonth.isAdhik })} />}
 
           {panchangTab === 'calendar' ? (
             <>

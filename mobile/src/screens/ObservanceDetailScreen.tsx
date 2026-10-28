@@ -1,3 +1,4 @@
+import { PrathaObservanceCard } from '@/components/PrathaCards';
 import StoryIcon from '@/components/StoryIcon';
 import AppIcon from '@/components/AppIcon';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -338,6 +339,8 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 </Pressable>
               </View>
             )}
+            <PrathaObservanceCard ruleId={rule.id} onOpen={(prathaId) => navigation.navigate('PrathaReader', { prathaId })} />
+
             {/* "How to observe" — ONE home, four states (PRD-09/P4 §6.3):
                 (1) verified upvas facts only, (2) vidhi only — exactly the
                 shipped PRD-19 Phase 2B block, (3) both — facts frame the
