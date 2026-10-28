@@ -24,6 +24,7 @@ import { formatClock, formatRangeCompact, formatEndInstant, isSameLocalDay } fro
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { getVidhiForFestival } from '@/data/vidhi';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
+import { useVratReminderAction } from '@/components/useVratReminderAction';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { captionFont } from '@/utils/scriptFont';
@@ -110,7 +111,8 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   // solve is in flight, or on an honest derivation miss — text renders alone).
   const paranaDisplay = useUpvasParana(upvas?.parana ?? null, next?.date ?? null);
 
-  const { isFollowing, follow, unfollow } = useVratFollows();
+  const { isFollowing } = useVratFollows();
+  const { toggleReminder, reminderSheet, reminderOnFor } = useVratReminderAction();
   const following = rule ? isFollowing(rule.id) : false;
   const [justAdded, setJustAdded] = useState(false);
 
@@ -123,13 +125,8 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
 
   const toggleFollow = () => {
     if (!rule) return;
-    if (following) {
-      unfollow(rule.id);
-      setJustAdded(false);
-    } else {
-      follow(rule.id);
-      setJustAdded(true);
-    }
+    setJustAdded(false);
+    toggleReminder(rule, () => setJustAdded(true));
   };
 
   const openKatha = () => {
@@ -216,7 +213,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 onPress={toggleFollow}
                 accessibilityRole="button"
                 accessibilityState={{ selected: following }}
-                accessibilityLabel={following ? 'Following' : 'Follow'}
+                accessibilityLabel={following ? `Remove saved ${rule.nameEn}` : `Save and remind ${rule.nameEn}`}
                 style={({ pressed }) => [
                   styles.actionBtn,
                   {
@@ -227,9 +224,12 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                   pressed && { opacity: 0.8 },
                 ]}
               >
-                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 13, color: following ? colors.parchment : colors.saffronDeep }}>
-                  {following ? (contentByLang(lang, '✓ फ़ॉलो किया', '✓ Following')) : contentByLang(lang, '★ फ़ॉलो करें', '★ Follow')}
-                </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, paddingVertical: 6 }}>
+                  <AppIcon name={following && !reminderOnFor(rule.id) ? "bell-off" : "bell"} size={18} color={following ? colors.parchment : colors.saffronDeep} weight={following ? "fill" : "regular"} />
+                  <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 13, flexShrink: 1, color: following ? colors.parchment : colors.saffronDeep }}>
+                    {contentByLang(lang, following ? 'मेरे व्रत में सहेजा' : 'स्मरण जोड़ें', following ? 'Saved to My Vrat' : 'Add reminder')}
+                  </Text>
+                </View>
               </Pressable>
               {katha && (
                 <Pressable
@@ -560,6 +560,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
           </ScrollView>
         )}
       </SafeAreaView>
+      {reminderSheet}
     </View>
   );
 }
@@ -573,7 +574,7 @@ const styles = StyleSheet.create({
   pill: { paddingHorizontal: 10, paddingVertical: 4 },
   actionRow: { flexDirection: 'row', gap: 8, marginTop: 4, marginBottom: 4 },
   askRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8, marginBottom: 4, paddingHorizontal: 14, minHeight: 40, borderWidth: 1 },
-  actionBtn: { flex: 1, minHeight: 40, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14, borderWidth: 1.5 },
+  actionBtn: { flex: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14, borderWidth: 1.5 },
   confirmBar: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, paddingHorizontal: 12, paddingVertical: 9, marginTop: 8 },
   block: { marginTop: 18 },
   blockHeading: { fontSize: 15, marginBottom: 8 },

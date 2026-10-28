@@ -4,6 +4,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import CatalogBackground from '@/components/CatalogBackground';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
+import { useVratReminderAction } from '@/components/useVratReminderAction';
 import ReaderHeader from '@/components/ReaderHeader';
 import { observanceMonth, observanceCountdown } from '@/panchang/observancePresentation';
 import ShareButton from '@/components/ShareButton';
@@ -50,7 +51,7 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const { share, busy: shareBusy } = useShare();
-  // Feature-tour anchors (design.md §47): the first row (list) and its ★ follow.
+  // Feature-tour anchors (design.md §47): the first row (list) and its reminder action.
   const isFocused = useIsFocused();
   const vratListRef = useTourTarget('vratList', undefined, isFocused);
   const vratFollowRef = useTourTarget('vratFollow', undefined, isFocused);
@@ -58,7 +59,8 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   const [query, setQuery] = useState('');
   const [area, setArea] = useState<AreaFilter>('all');
   const [followingOnly, setFollowingOnly] = useState(false);
-  const { isFollowing, follow, unfollow } = useVratFollows();
+  const { isFollowing } = useVratFollows();
+  const { toggleReminder, reminderSheet, reminderOnFor } = useVratReminderAction();
 
   const category = route.params.category;
   const today = useMemo(() => startOfLocalDay(new Date()), []);
@@ -157,8 +159,8 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
                 areaLabel={getObservanceAreas(rule).map(id => areaName(id, lang)).join(' · ') || undefined}
                 lang={lang}
                 following={following}
-                starRef={i === 0 ? vratFollowRef : undefined}
-                onToggleFollow={() => (following ? unfollow(rule.id) : follow(rule.id))}
+                reminderRef={i === 0 ? vratFollowRef : undefined}
+                reminderOn={reminderOnFor(rule.id)} onToggleReminder={() => toggleReminder(rule)}
                 onPress={() => navigation.navigate('ObservanceDetail', { ruleId: rule.id })}
               />
             );
@@ -176,11 +178,12 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
           })}
           {filtered.length === 0 && (
             <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.inkMuted, marginTop: 24, textAlign: 'center' }}>
-              {followingOnly ? contentByLang(lang, 'यहाँ कोई सहेजा हुआ व्रत नहीं है। सभी में जाकर ☆ दबाएँ।', 'No saved observances here. Choose All and tap a star to save one.') : contentByLang(lang, 'कोई परिणाम नहीं।', 'No matches.')}
+              {followingOnly ? contentByLang(lang, 'यहाँ कोई सहेजा हुआ व्रत नहीं है। सभी में जाकर स्मरण घंटी दबाएँ।', 'No saved observances here. Choose All and tap its reminder bell to save it.') : contentByLang(lang, 'कोई परिणाम नहीं।', 'No matches.')}
             </Text>
           )}
         </ScrollView>
       </SafeAreaView>
+      {reminderSheet}
     </View>
   );
 }

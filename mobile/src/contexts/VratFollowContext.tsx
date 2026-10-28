@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // PRD-09 §5.1 — a thin local-first follow + priority store mirroring
@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const STORAGE_KEY = '@vedansh/vrat-follows';
 // PRD-09 §5.1 — the global reminder default; per-vrat prefs override it.
 const REMINDER_DEFAULT_KEY = '@vedansh/vrat-reminder-default';
+// Retain an earlier per-vrat choice even after that favourite is removed.
+const REMINDER_LAST_KEY = '@vedansh/vrat-reminder-last';
 
 export type VratReminderPref = {
   advanceDays: 0 | 1 | 2 | 3; // evening-before notice; 0 = off
@@ -35,8 +37,10 @@ type VratFollowContextValue = {
   followCount: number;
   reminderCount: number; // follows whose resolved reminder still fires
   reminderDefault: VratReminderPref;
+  hasSavedReminderDefault: boolean;
+  savedReminderPreference: VratReminderPref | null;
   isFollowing: (ruleId: string) => boolean;
-  follow: (ruleId: string) => void;
+  follow: (ruleId: string, reminder?: VratReminderPref) => void;
   unfollow: (ruleId: string) => void;
   setReminder: (ruleId: string, pref: VratReminderPref | undefined) => void;
   setReminderDefault: (pref: VratReminderPref) => void;
@@ -48,6 +52,8 @@ const VratFollowContext = createContext<VratFollowContextValue>({
   followCount: 0,
   reminderCount: 0,
   reminderDefault: DEFAULT_REMINDER,
+  hasSavedReminderDefault: false,
+  savedReminderPreference: null,
   isFollowing: () => false,
   follow: () => {},
   unfollow: () => {},
@@ -65,7 +71,10 @@ function normalizeReminderPref(raw: unknown): VratReminderPref | null {
   if (typeof r.dayOf !== 'boolean') return null;
   let dayOfTime: { hour: number; minute: number } | undefined;
   const t = r.dayOfTime as { hour?: unknown; minute?: unknown } | undefined;
-  if (t && typeof t.hour === 'number' && typeof t.minute === 'number') {
+  if (r.dayOfTime !== undefined) {
+    if (!t || typeof t.hour !== 'number' || typeof t.minute !== 'number' ||
+        !Number.isInteger(t.hour) || !Number.isInteger(t.minute) ||
+        t.hour < 0 || t.hour > 23 || t.minute < 0 || t.minute > 59) return null;
     dayOfTime = { hour: t.hour, minute: t.minute };
   }
   return { advanceDays: adv, dayOf: r.dayOf, ...(dayOfTime ? { dayOfTime } : {}) };
@@ -116,6 +125,9 @@ function reindex(list: VratFollow[]): VratFollow[] {
 
 export function VratFollowProvider({ children }: { children: React.ReactNode }) {
   const [follows, setFollows] = useState<VratFollow[]>([]);
+  const followsRef = useRef<VratFollow[]>([]);
+  const [hasSavedReminderDefault, setHasSavedReminderDefault] = useState(false);
+  const [lastReminderPreference, setLastReminderPreference] = useState<VratReminderPref | null>(null);
   const [reminderDefault, setReminderDefaultState] = useState<VratReminderPref>(DEFAULT_REMINDER);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -123,13 +135,17 @@ export function VratFollowProvider({ children }: { children: React.ReactNode }) 
     let cancelled = false;
     (async () => {
       try {
-        const [rawFollows, rawDefault] = await Promise.all([
+        const [rawFollows, rawDefault, rawLast] = await Promise.all([
           AsyncStorage.getItem(STORAGE_KEY),
           AsyncStorage.getItem(REMINDER_DEFAULT_KEY),
+          AsyncStorage.getItem(REMINDER_LAST_KEY),
         ]);
+        let legacyPreference: VratReminderPref | null = null;
         if (!cancelled && rawFollows) {
           try {
             const { items, changed } = normalize(JSON.parse(rawFollows));
+            legacyPreference = [...items].reverse().find(f => f.reminder)?.reminder ?? null;
+            followsRef.current = items;
             setFollows(items);
             if (changed) {
               AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(items)).catch(() => undefined);
@@ -138,10 +154,19 @@ export function VratFollowProvider({ children }: { children: React.ReactNode }) 
             /* corrupted follows JSON — leave empty */
           }
         }
+        if (!cancelled) {
+          let previous = legacyPreference;
+          try { previous = (rawLast ? normalizeReminderPref(JSON.parse(rawLast)) : null) ?? previous; } catch { /* recover an explicit legacy choice */ }
+          setLastReminderPreference(previous);
+          if (previous && JSON.stringify(previous) !== rawLast) AsyncStorage.setItem(REMINDER_LAST_KEY, JSON.stringify(previous)).catch(() => undefined);
+        }
         if (!cancelled && rawDefault) {
           try {
             const pref = normalizeReminderPref(JSON.parse(rawDefault));
-            if (pref) setReminderDefaultState(pref);
+            if (pref) {
+              setReminderDefaultState(pref);
+              setHasSavedReminderDefault(true);
+            }
           } catch {
             /* corrupted default JSON — keep the built-in default */
           }
@@ -158,26 +183,35 @@ export function VratFollowProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   const persist = useCallback((next: VratFollow[]) => {
+    followsRef.current = next;
     setFollows(next);
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
   }, []);
 
+  const rememberPreference = useCallback((pref: VratReminderPref) => {
+    setLastReminderPreference(pref);
+    AsyncStorage.setItem(REMINDER_LAST_KEY, JSON.stringify(pref)).catch(() => undefined);
+  }, []);
+
   const follow = useCallback(
-    (ruleId: string) => {
+    (ruleId: string, reminder?: VratReminderPref) => {
       if (isLoading) return;
-      if (follows.some((f) => f.ruleId === ruleId)) return; // idempotent
-      persist([...follows, { ruleId, addedAt: Date.now(), order: follows.length }]);
+      const current = followsRef.current;
+      if (current.some((f) => f.ruleId === ruleId)) return; // idempotent
+      if (reminder) rememberPreference(reminder);
+      persist([...current, { ruleId, addedAt: Date.now(), order: current.length, ...(reminder ? { reminder } : {}) }]);
     },
-    [isLoading, follows, persist]
+    [isLoading, persist, rememberPreference]
   );
 
   const unfollow = useCallback(
     (ruleId: string) => {
       if (isLoading) return;
-      if (!follows.some((f) => f.ruleId === ruleId)) return;
-      persist(reindex(follows.filter((f) => f.ruleId !== ruleId)));
+      const current = followsRef.current;
+      if (!current.some((f) => f.ruleId === ruleId)) return;
+      persist(reindex(current.filter((f) => f.ruleId !== ruleId)));
     },
-    [isLoading, follows, persist]
+    [isLoading, persist]
   );
 
   const isFollowing = useCallback(
@@ -187,14 +221,20 @@ export function VratFollowProvider({ children }: { children: React.ReactNode }) 
 
   const setReminderDefault = useCallback((pref: VratReminderPref) => {
     setReminderDefaultState(pref);
+    setHasSavedReminderDefault(true);
     AsyncStorage.setItem(REMINDER_DEFAULT_KEY, JSON.stringify(pref)).catch(() => undefined);
   }, []);
 
   const setReminder = useCallback(
     (ruleId: string, pref: VratReminderPref | undefined) => {
       if (isLoading) return;
-      if (!follows.some((f) => f.ruleId === ruleId)) return; // no-op for non-followed
-      const next = follows.map((f) => {
+      const current = followsRef.current;
+      if (!current.some((f) => f.ruleId === ruleId)) {
+        if (pref) follow(ruleId, pref); // Setting a reminder also saves to My Vrat.
+        return;
+      }
+      if (pref) rememberPreference(pref);
+      const next = current.map((f) => {
         if (f.ruleId !== ruleId) return f;
         if (pref === undefined) {
           const copy = { ...f };
@@ -205,8 +245,13 @@ export function VratFollowProvider({ children }: { children: React.ReactNode }) 
       });
       persist(next);
     },
-    [isLoading, follows, persist]
+    [isLoading, follow, persist, rememberPreference]
   );
+
+  // A factory value is not a saved preference. Existing per-vrat choices also
+  // qualify for one-tap reuse, without changing older default-based follows.
+  const savedReminderPreference = hasSavedReminderDefault ? reminderDefault
+    : lastReminderPreference;
 
   // "reminders on" = follows whose resolved reminder (per-vrat override, else the
   // global default) would still fire at least one notice.
@@ -223,6 +268,8 @@ export function VratFollowProvider({ children }: { children: React.ReactNode }) 
         followCount: follows.length,
         reminderCount,
         reminderDefault,
+        hasSavedReminderDefault,
+        savedReminderPreference,
         isFollowing,
         follow,
         unfollow,
