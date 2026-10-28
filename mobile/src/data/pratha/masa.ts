@@ -3698,8 +3698,8 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
         bodyEn: [
           'King Raghu had already given away all his wealth when Kautsa, a sage\'s disciple, came to ask him for wealth for his guru\'s fee. Raghu prepared to march against Kubera, and that very night gold rained down into his treasury. In the folk tradition of Maharashtra, this gold is believed to have rained onto apta and shami trees, which is why apta leaves are shared as \'gold\' at Dussehra.',
         ],
-        canonHi: 'लोक-परम्परा (महाराष्ट्र) · कथा का मूल: रघुवंश',
-        canonEn: 'Folk tradition (Maharashtra) · Source of the story: Raghuvamsha',
+        canonHi: 'लोक-परम्परा (महाराष्ट्र)',
+        canonEn: 'Folk tradition (Maharashtra)',
       },
     ],
     bhavHi: 'छिपे शस्त्र और बरसा सोना, दोनों कथाएँ धैर्य और उदारता के बाद मिलने वाली विजय और समृद्धि का भाव देती हैं।',
@@ -3716,7 +3716,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Mahabharata, Virata Parva | Folk tradition (Maharashtra) · Source of the story: Raghuvamsha. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. Owner approved the kavya tier. The Raghuvamsha literary passage must still be opened in two publications and distinguished from the Maharashtra apta-leaf festival linkage; no uncollated poem is named in the folk canon. The separate Virata Parva story also lacks exact opened sections. Approval of a tier is not content verification.',
       confidence: 'Certain',
     },
   },
