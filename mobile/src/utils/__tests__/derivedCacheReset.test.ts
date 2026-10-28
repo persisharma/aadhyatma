@@ -53,6 +53,7 @@ const MUST_SURVIVE = [
   // Followed days and private entries.
   '@vedansh/vrat-follows',
   '@vedansh/vrat-reminder-default',
+  '@vedansh/vrat-reminder-last',
   '@vedansh/muhurat-follows',
   '@vedansh/pitru-smaran',
   // Birth details and starred names, several privacy-sensitive by design.

@@ -1,0 +1,82 @@
+# Visual review of all day-panel subjects at Standard and Large reading sizes.
+# Requires completed first-run setup; explicitly checks Standard then Large.
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8106' : '127.0.0.1:' + METRO_PORT}"
+- waitForAnimationToEnd
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Standard"
+- tapOn: "हो गया|Done"
+- openLink: "vedansh://widget/panchang?date=2026-09-28"
+- tapOn:
+    text: Open
+    optional: true
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: Expand calendar
+    direction: UP
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-day-header-hi
+- scrollUntilVisible:
+    element: { id: panchang-anga-moon }
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-day-anga-hi
+- scrollUntilVisible:
+    element:
+      id: vaas-surya-card
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-day-tiles-hi
+- scrollUntilVisible:
+    element:
+      id: panchang-next-day-sankashti-chaturthi-vrat
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-day-bottom-hi
+- assertVisible: 'Next day, Vighnaraja Sankashti Chaturthi \(Angarki\) Vrat\. Opens details\.'
+- tapOn: { id: panchang-next-day-sankashti-chaturthi-vrat }
+- waitForAnimationToEnd
+- assertVisible: "Sankashti Chaturthi Vrat"
+- tapOn: "Back.*"
+- waitForAnimationToEnd
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element:
+      text: "Reading size,.*"
+    direction: DOWN
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "Large"
+- tapOn: "हो गया|Done"
+- tapOn: { id: tab-panchang }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { text: Expand calendar }
+    direction: UP
+- scrollUntilVisible:
+    element:
+      id: vaas-surya-card
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-day-tiles-hi-large
+- scrollUntilVisible:
+    element:
+      id: panchang-next-day-sankashti-chaturthi-vrat
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-day-bottom-hi-large

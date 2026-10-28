@@ -64,7 +64,7 @@ export default function ObservanceNowRibbon({
       ]}
     >
       <View style={[styles.mark, { backgroundColor: colors.skyNightTop }]}>
-        <CelestialGlyph kind="moon" tithiIndex={tithiIndex} size={18} />
+        <CelestialGlyph kind="moon" tithiIndex={tithiIndex} size={24} />
       </View>
       <View style={{ flex: 1 }}>
         <Text numberOfLines={1} style={{ fontFamily: titleFont, fontSize: 15, color: colors.ink }}>

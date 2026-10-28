@@ -42,7 +42,7 @@ jest.mock('react-native-safe-area-context', () => ({
 }));
 
 jest.mock('@/contexts/VratFollowContext', () => ({
-  useVratFollows: () => ({ isFollowing: () => false, follow: jest.fn(), unfollow: jest.fn() }),
+  useVratFollows: () => ({ follows: [], reminderDefault: { advanceDays: 1, dayOf: true }, savedReminderPreference: null, isFollowing: () => false, follow: jest.fn(), unfollow: jest.fn() }),
 }));
 
 jest.mock('@/contexts/PanchangLocationContext', () => ({
