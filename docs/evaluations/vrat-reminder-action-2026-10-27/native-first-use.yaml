@@ -1,0 +1,41 @@
+appId: com.prashantsharma.vedansh
+---
+- launchApp: { clearState: false }
+- tapOn: { text: "Not now|अभी नहीं", optional: true }
+- extendedWaitUntil: { notVisible: "Downloading.*", timeout: 120000 }
+- extendedWaitUntil: { visible: { id: "tab-vrat" }, timeout: 120000 }
+- tapOn: { id: "tab-vrat" }
+- waitForAnimationToEnd
+- tapOn: { id: "tab-vrat" }
+- waitForAnimationToEnd
+- extendedWaitUntil: { visible: { id: "catalog-search" }, timeout: 90000 }
+- extendedWaitUntil: { notVisible: "Downloading.*", timeout: 120000 }
+- scrollUntilVisible:
+    element: { id: "catalog-search" }
+    direction: UP
+    centerElement: false
+- swipe: { direction: DOWN, duration: 400 }
+- waitForAnimationToEnd
+- takeScreenshot: native-bells
+- tapOn: { id: "observance-reminder-karwa-chauth" }
+- assertVisible: { id: "vrat-reminder-setup" }
+- takeScreenshot: native-first-setup
+- tapOn: "2 days"
+- tapOn: "08:00"
+- tapOn: { id: "reminder-sheet-save" }
+- waitForAnimationToEnd
+- assertNotVisible: { id: "vrat-reminder-setup" }
+- assertVisible: "Remove saved Karwa Chauth"
+- tapOn: { id: "observance-reminder-sankashti-chaturthi-vrat" }
+- assertNotVisible: { id: "vrat-reminder-setup" }
+- assertVisible: "Remove saved Sankashti Chaturthi Vrat"
+- takeScreenshot: native-reuse-no-popup
+- tapOn: { text: "My Vrat.*", index: 0 }
+- waitForAnimationToEnd
+- assertVisible: "Reminders for Karwa Chauth"
+- takeScreenshot: native-my-vrat
+- tapOn: "Reminders for Sankashti Chaturthi Vrat"
+- waitForAnimationToEnd
+- assertVisible: { id: "reminder-sheet-save" }
+- takeScreenshot: native-reused-preference
+- tapOn: { id: "reminder-sheet-close" }

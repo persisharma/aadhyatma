@@ -9,6 +9,7 @@ import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { useVratFollows, type VratFollow, type VratReminderPref } from '@/contexts/VratFollowContext';
 import VratReminderSheet from '@/components/VratReminderSheet';
+import VratReminderPermissionNotice from '@/components/VratReminderPermissionNotice';
 import MuhuratFollowList from '@/components/MuhuratFollowList';
 import { useMuhuratFollows } from '@/contexts/MuhuratFollowContext';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
@@ -116,7 +117,7 @@ export default function MyVratScreen({ navigation }: Props) {
         {followCount === 0 && muhuratFollowCount === 0 ? (
           <ScrollView contentContainerStyle={styles.empty}>
             <View ref={myVratRef} collapsable={false} style={{ width: '100%', alignItems: 'center' }}>
-            <CachedArtwork source={require("@assets/icons/observance-scenes/karwa-chauth-puja.webp")} style={{ width: 200, height: 100, marginBottom: 16 }} />
+            <CachedArtwork source={require("@assets/icons/observance-scenes/karwa-chauth-puja-muted.webp")} style={{ width: 200, height: 100, marginBottom: 16 }} />
             <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 18, color: colors.ink, textAlign: 'center' }}>
               {contentByLang(lang, 'अभी कोई व्रत नहीं', 'No vrats yet')}
             </Text>
@@ -133,8 +134,8 @@ export default function MyVratScreen({ navigation }: Props) {
             >
               {meaningByLang(
                 lang,
-                'जिन व्रतों का आप पालन करते हैं उन्हें फ़ॉलो करें — वे यहाँ अगली तिथि के अनुसार दिखेंगे।',
-                'Follow the vrats you observe — they show up here, sorted by which comes next.'
+                'व्रत पर घंटी दबाकर स्मरण जोड़ें — वह यहाँ अगली तिथि के अनुसार दिखेगा।',
+                'Tap a vrat’s reminder bell to save it here, sorted by its next date.'
               )}
             </Text>
             <Pressable
@@ -158,11 +159,12 @@ export default function MyVratScreen({ navigation }: Props) {
             contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
             showsVerticalScrollIndicator={false}
           >
+            {reminderCount > 0 && <VratReminderPermissionNotice />}
             {/* Metric band. The vrat blocks render only when a vrat is actually
                 followed — this screen can now be reached with muhurat follows
                 and none of its own. */}
             <View ref={myVratRef} collapsable={false}><ListingCardFrame tone="catalog" style={styles.metricBand}>
-              <Metric value={followCount} label={contentByLang(lang, 'फ़ॉलो', 'Following')} lang={lang} colors={colors} />
+              <Metric value={followCount} label={contentByLang(lang, 'सहेजे व्रत', 'Saved vrats')} lang={lang} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
               <Metric value={reminderCount} label={contentByLang(lang, 'अनुस्मारक', 'Reminders on')} lang={lang} colors={colors} />
               <View style={[styles.metricDivider, { backgroundColor: colors.divider }]} />
@@ -173,11 +175,11 @@ export default function MyVratScreen({ navigation }: Props) {
             <Pressable
               onPress={() => setSheet({ mode: 'default' })}
               accessibilityRole="button"
-              accessibilityLabel="Reminder defaults"
+              accessibilityLabel="Vrat reminder timings"
               style={({ pressed }) => [styles.defaultsRow, pressed && { opacity: 0.6 }]}
             >
               <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, color: colors.saffronDeep }}>
-                {contentByLang(lang, 'डिफ़ॉल्ट अनुस्मारक', 'Reminder defaults')}
+                {contentByLang(lang, 'व्रत स्मरण का समय', 'Vrat reminder timings')}
               </Text>
               <AppIcon name="bell" size={20} color={colors.saffronDeep} />
             </Pressable>
@@ -194,9 +196,9 @@ export default function MyVratScreen({ navigation }: Props) {
                 dateLabel={it.next ? shortDate(it.next.date, lang) : undefined}
                 countdown={it.next ? observanceCountdown(it.next.date, today, lang) : undefined}
                 reminderOn={reminderOnFor(it.follow)}
-                onToggleFollow={() => unfollow(it.rule.id)}
+                onToggleReminder={() => unfollow(it.rule.id)}
                 onPress={() => navigation.navigate('ObservanceDetail', { ruleId: it.rule.id })}
-                onReminderPress={() => setSheet({ mode: 'vrat', ruleId: it.rule.id,
+                onEditReminder={() => setSheet({ mode: 'vrat', ruleId: it.rule.id,
                   name: contentByLang(lang, it.rule.nameHi, it.rule.nameEn), initial: it.follow.reminder ?? reminderDefault })}
               />
             ))}
@@ -217,6 +219,7 @@ export default function MyVratScreen({ navigation }: Props) {
           visible
           onClose={() => setSheet(null)}
           titleName={sheet.mode === 'vrat' ? sheet.name : null}
+          footnote={contentByLang(lang, 'व्रत के स्मरण और दैनिक भक्ति के स्मरण अलग हैं।', 'Vrat reminders are separate from Daily Bhakti reminders.')}
           initial={sheet.mode === 'vrat' ? sheet.initial : reminderDefault}
           onSave={(pref) => {
             if (sheet.mode === 'vrat') setReminder(sheet.ruleId, pref);

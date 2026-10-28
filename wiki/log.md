@@ -1229,6 +1229,16 @@ Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×7
 
 The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.
 
+
+## [2026-10-27] ingest | Vrat card stops and middle-strip alignment
+
+Added card-aligned Upcoming scrolling with responsive end padding. The three-column ledger now shares the catalog frame and aligns icons/status around wrapping labels. Native Hindi/English/XXXL and the three destinations were checked; artwork and calendar rules are unchanged. See `docs/evaluations/vrat-strip-content-2026-10-27/`.
+
+
+## [2026-10-28] ingest | Vrat reminder bells also save favourites
+
+Recorded the shared first-use/reuse flow, explicit Vrat preference tracking and retained custom choice, upsert-on-reminder, bell-off/removal/settings semantics and separate Daily Bhakti preference ownership. Shared sheet is a native scrollable modal. Native Hindi/English XXXL and controlled preference proof are in `docs/evaluations/vrat-reminder-action-2026-10-27/`; Android/physical delivery remains pending.
+
 ## [2026-10-28] ingest | Gita Saar references stay in Vedansh
 
 Every illustrated lesson now opens Gita connection references and Gita source citations in the bundled GitaReader. The browser prototype opens the same corpus verse in its local sheet. Non-Gita story sources are visibly marked as optional external verification. Shok's Chitraketu story is from the Bhagavatam; its Gita 2.13 and 2.20 connections stay inside the app. Updated [[gita-saar]], design.md §77 and RULEBOOK §30.
