@@ -26,9 +26,9 @@ afterEach(() => act(() => trees.splice(0).forEach(tree => tree.unmount())));
 test.each(['row', 'tile'] as const)('%s keeps save and detail as independent sibling targets', layout => {
   const onOpen = jest.fn();
   const onToggle = jest.fn();
-  const tree = render(<ObservancePreviewCard rule={rule} lang="en" layout={layout} dateLabel="29 Oct" following={false} onPress={onOpen} onToggleFollow={onToggle} />);
+  const tree = render(<ObservancePreviewCard rule={rule} lang="en" layout={layout} dateLabel="29 Oct" following={false} onPress={onOpen} onToggleReminder={onToggle} />);
   const buttons = tree.root.findAll(node => node.props.accessibilityRole === 'button');
-  const star = buttons.find(node => node.props.accessibilityLabel === 'Follow Sankashti Chaturthi Vrat')!;
+  const star = buttons.find(node => node.props.accessibilityLabel === 'Save and remind Sankashti Chaturthi Vrat')!;
   const open = buttons.find(node => node.props.accessibilityLabel === rule.nameEn)!;
   act(() => star.props.onPress());
   expect(onToggle).toHaveBeenCalledTimes(1);
@@ -42,8 +42,8 @@ test.each(['row', 'tile'] as const)('%s keeps save and detail as independent sib
 });
 
 test('selected stars announce the saved state and unfollow action', () => {
-  const tree = render(<ObservancePreviewCard rule={rule} lang="hi" following onPress={jest.fn()} onToggleFollow={jest.fn()} />);
-  const star = tree.root.findAll(node => node.props.accessibilityRole === 'button').find(node => node.props.accessibilityLabel === `Unfollow ${rule.nameEn}`)!;
+  const tree = render(<ObservancePreviewCard rule={rule} lang="hi" following onPress={jest.fn()} onToggleReminder={jest.fn()} />);
+  const star = tree.root.findAll(node => node.props.accessibilityRole === 'button').find(node => node.props.accessibilityLabel === `Remove saved ${rule.nameEn}`)!;
   expect(star.props.accessibilityState).toEqual({ selected: true });
 });
 
@@ -93,7 +93,7 @@ test('month headings distinguish years and countdowns compare civil days', () =>
 test('My Vrat reminder, unfollow and open remain independent controls', () => {
   const open = jest.fn(); const unfollow = jest.fn(); const remind = jest.fn();
   const tree = render(<ObservancePreviewCard rule={rule} lang="en" following reminderOn
-    onPress={open} onToggleFollow={unfollow} onReminderPress={remind} />);
+    onPress={open} onToggleReminder={unfollow} onEditReminder={remind} />);
   const buttons = tree.root.findAll(node => node.props.accessibilityRole === 'button');
   const reminder = buttons.find(node => node.props.accessibilityLabel === `Reminders for ${rule.nameEn}`)!;
   act(() => reminder.props.onPress());
@@ -101,7 +101,7 @@ test('My Vrat reminder, unfollow and open remain independent controls', () => {
   expect(open).not.toHaveBeenCalled();
   expect(unfollow).not.toHaveBeenCalled();
   expect(reminder.props.accessibilityState).toEqual({ selected: true });
-  const star = buttons.find(node => node.props.accessibilityLabel === `Unfollow ${rule.nameEn}`)!;
+  const star = buttons.find(node => node.props.accessibilityLabel === `Remove saved ${rule.nameEn}`)!;
   act(() => star.props.onPress());
   expect(unfollow).toHaveBeenCalledTimes(1);
   expect(open).not.toHaveBeenCalled();

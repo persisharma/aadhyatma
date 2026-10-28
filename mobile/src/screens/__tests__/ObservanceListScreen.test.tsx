@@ -1,4 +1,5 @@
-import React, * as mockReact from 'react';
+import React from 'react';
+import { VratFollowProvider } from '@/contexts/VratFollowContext';
 import TestRenderer, { act } from 'react-test-renderer';
 import { TextInput, View as mockView } from 'react-native';
 import type { ObservanceRule } from '@/panchang/types';
@@ -18,18 +19,13 @@ jest.mock('@react-navigation/native', () => ({ useIsFocused: () => true }));
 jest.mock('@/components/tour/tourTargets', () => ({ useTourTarget: () => undefined }));
 jest.mock('expo-linear-gradient', () => ({ LinearGradient: mockView }));
 jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: mockView }));
+jest.mock('@/contexts/NotificationPreferencesContext', () => ({ useNotificationPreferences: () => ({ permissionStatus: 'granted' }) }));
 const mockShare = jest.fn();
 jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, busy: false }) }));
 jest.mock('@/utils/listingShare', () => ({ buildListingShare: (value: unknown) => value }));
-jest.mock('@/contexts/VratFollowContext', () => ({
-  useVratFollows: () => {
-    const [ids, setIds] = mockReact.useState<string[]>([]);
-    return {
-      isFollowing: (id: string) => ids.includes(id),
-      follow: (id: string) => setIds(prev => [...prev, id]),
-      unfollow: (id: string) => setIds(prev => prev.filter(value => value !== id)),
-    };
-  },
+jest.mock('@react-native-async-storage/async-storage', () => ({
+  getItem: jest.fn(async (key: string) => key === '@vedansh/vrat-reminder-default' ? JSON.stringify({ advanceDays: 1, dayOf: true }) : null),
+  setItem: jest.fn(async () => undefined),
 }));
 
 let tree: TestRenderer.ReactTestRenderer;
@@ -42,28 +38,28 @@ function press(label: string) {
 function cards() {
   return [...new Set(tree.root.findAll(node => node.props.accessibilityRole === 'button' && /^observance-card-/.test(node.props.testID ?? '')).map(node => node.props.testID))];
 }
-beforeEach(() => {
+beforeEach(async () => {
   jest.clearAllMocks();
-  act(() => { tree = TestRenderer.create(<ObservanceListScreen navigation={navigation as never} route={{ params: { category: 'vrat' } } as never} />); });
+  await act(async () => { tree = TestRenderer.create(<VratFollowProvider><ObservanceListScreen navigation={navigation as never} route={{ params: { category: 'vrat' } } as never} /></VratFollowProvider>); });
 });
 afterEach(() => act(() => tree.unmount()));
 
 test('saving from the list never opens detail and the saved filter updates immediately', () => {
-  press('Follow Ekadashi');
+  press('Save and remind Ekadashi');
   expect(navigation.navigate).not.toHaveBeenCalled();
   press('Show saved observances');
   expect(cards()).toEqual(['observance-card-ekadashi']);
   press('Ekadashi');
   expect(navigation.navigate).toHaveBeenCalledWith('ObservanceDetail', { ruleId: 'ekadashi' });
-  press('Unfollow Ekadashi');
+  press('Remove saved Ekadashi');
   expect(cards()).toEqual([]);
   press('Area: all');
   expect(cards()).toHaveLength(2);
 });
 
 test('search, region and saved filters compose and sharing uses the visible results', () => {
-  press('Follow Ekadashi');
-  press('Follow Gangaur');
+  press('Save and remind Ekadashi');
+  press('Save and remind Gangaur');
   press('Show saved observances');
   const regional = tree.root.findAll(node => node.props.accessibilityRole === 'button').find(node => /^Area: Rajasthan/.test(node.props.accessibilityLabel ?? ''))!;
   act(() => regional.props.onPress());

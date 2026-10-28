@@ -21,8 +21,9 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Area: all"
 - tapOn: { id: "observance-list-search" }
 - inputText: "Karwa"
-- tapOn: { id: "observance-star-karwa-chauth" }
-- assertVisible: "Unfollow Karwa Chauth"
+- tapOn: { id: "observance-reminder-karwa-chauth" }
+- tapOn: { id: "reminder-sheet-save", optional: true }
+- assertVisible: "Remove saved Karwa Chauth"
 - tapOn: "Back"
 - tapOn: { text: "My Vrat.*", index: 0 }
 - waitForAnimationToEnd
@@ -33,7 +34,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Advance notice"
 - tapOn: "Save reminders"
 - assertVisible: "Reminders for Karwa Chauth"
-- tapOn: "Unfollow Karwa Chauth"
+- tapOn: "Remove saved Karwa Chauth"
 - assertVisible: "Browse Vrat and Parv"
 - takeScreenshot: e2e-shots/vrat-design-empty
 - tapOn: "Browse Vrat and Parv"

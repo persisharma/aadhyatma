@@ -1,0 +1,46 @@
+appId: com.prashantsharma.vedansh
+---
+- launchApp: { clearState: false }
+- tapOn: { text: "Not now|अभी नहीं", optional: true }
+- extendedWaitUntil: { notVisible: "Downloading.*", timeout: 120000 }
+- extendedWaitUntil: { visible: { id: "tab-vrat" }, timeout: 120000 }
+- tapOn: { id: "tab-vrat" }
+- waitForAnimationToEnd
+- tapOn: { id: "tab-vrat" }
+- waitForAnimationToEnd
+- extendedWaitUntil: { visible: { id: "catalog-search" }, timeout: 90000 }
+- extendedWaitUntil: { notVisible: "Downloading.*", timeout: 120000 }
+- scrollUntilVisible:
+    element: { id: "catalog-search" }
+    direction: UP
+    centerElement: false
+- swipe: { direction: DOWN, duration: 400 }
+- waitForAnimationToEnd
+- takeScreenshot: native-large-bells
+- tapOn: { id: "observance-reminder-karwa-chauth" }
+- assertVisible: { id: "vrat-reminder-setup" }
+- takeScreenshot: native-large-setup-top
+- scrollUntilVisible:
+    element: { id: "reminder-sheet-save" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: native-large-setup-save
+- scrollUntilVisible:
+    element: { id: "reminder-sheet-close" }
+    direction: UP
+    centerElement: true
+- tapOn: { id: "reminder-sheet-close" }
+- assertVisible: "Save and remind Karwa Chauth"
+- assertNotVisible: { id: "vrat-reminder-setup" }
+- tapOn: { id: "observance-reminder-karwa-chauth" }
+- assertVisible: { id: "vrat-reminder-setup" }
+- scrollUntilVisible:
+    element: { id: "reminder-sheet-save" }
+    direction: DOWN
+    centerElement: true
+- tapOn: { id: "reminder-sheet-save" }
+- assertVisible: "Remove saved Karwa Chauth"
+- tapOn: { id: "observance-reminder-sankashti-chaturthi-vrat" }
+- assertNotVisible: { id: "vrat-reminder-setup" }
+- assertVisible: "Remove saved Sankashti Chaturthi Vrat"
+- takeScreenshot: native-large-reuse

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Switch, Text, View, ScrollView } from 'react-native';
 import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -7,6 +7,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import type { VratReminderPref } from '@/contexts/VratFollowContext';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import AppIcon from './AppIcon';
 
 // PRD-09 §6.5 reminder sheet. Per-vrat (titleName set) or the global default
 // (titleName null). Mirrors the v2 prototype: advance-notice pills, an
@@ -158,10 +159,17 @@ export default function VratReminderSheet({
           { backgroundColor: colors.parchment, borderColor: colors.divider, borderTopLeftRadius: radii.lg, borderTopRightRadius: radii.lg },
         ]}
       >
+        <ScrollView style={{ flexGrow: 0 }} contentContainerStyle={styles.sheetContent} bounces={false}>
         <View style={[styles.handle, { backgroundColor: colors.divider }]} />
-        <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 17, color: colors.ink }}>
-          {contentByLang(lang, 'अनुस्मारक', 'Reminders')}
-        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <Text style={{ flex: 1, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 17, color: colors.ink }}>
+            {contentByLang(lang, 'अनुस्मारक', 'Reminders')}
+          </Text>
+          <Pressable testID="reminder-sheet-close" accessibilityRole="button" accessibilityLabel="Close reminders"
+            onPress={onClose} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>
+            <AppIcon name="close" size={22} color={colors.iconInk} />
+          </Pressable>
+        </View>
         <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, color: colors.inkMuted, marginTop: 2, marginBottom: 14 }}>
           {subtitle
             ? subtitle
@@ -272,6 +280,7 @@ export default function VratReminderSheet({
             {footnote}
           </Text>
         ) : null}
+        </ScrollView>
       </View>
     </View>
     </Modal>
@@ -280,7 +289,8 @@ export default function VratReminderSheet({
 
 const styles = StyleSheet.create({
   overlay: { justifyContent: 'flex-end' },
-  sheet: { borderTopWidth: 1, paddingHorizontal: spacing.readingGutter, paddingTop: 10, paddingBottom: 34 },
+  sheet: { borderTopWidth: 1, maxHeight: '90%' },
+  sheetContent: { paddingHorizontal: spacing.readingGutter, paddingTop: 10, paddingBottom: 34 },
   handle: { alignSelf: 'center', width: 40, height: 5, borderRadius: 2.5, marginBottom: 12 },
   optRow: { paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth },
   optRowInline: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 14, borderBottomWidth: StyleSheet.hairlineWidth },

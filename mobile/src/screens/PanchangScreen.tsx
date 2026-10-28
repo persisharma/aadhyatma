@@ -1,6 +1,7 @@
 import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
 import CatalogCategoryTile from '@/components/CatalogCategoryTile';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
+import { useVratReminderAction } from '@/components/useVratReminderAction';
 import { ListingCardFrame, UPCOMING_CARD_WIDTH } from '@/components/ListingCard';
 import ObservanceTodaySummary from '@/components/ObservanceTodaySummary';
 import { observanceCountdown } from '@/panchang/observancePresentation';
@@ -467,7 +468,7 @@ export default function PanchangScreen({ route }: Props) {
       <Pressable
         onPress={openMyVrat}
         accessibilityRole="button"
-        accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
+        accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} saved` : 'My Vrat'}
         hitSlop={10}
         style={({ pressed }) => [styles.myVratButton, surface, { borderRadius: radii.pill }, pressed && { opacity: 0.6 }]}
       >
@@ -2106,7 +2107,7 @@ function CatalogLedgerBar({
   }, [entries]);
 
   const vratState = followCount > 0
-    ? contentByLang(lang, `${followCount} फ़ॉलो`, `${followCount} following`)
+    ? contentByLang(lang, `${followCount} सहेजे`, `${followCount} saved`)
     : contentByLang(lang, 'जोड़ें', 'Add');
 
   const smaranState = entries.length === 0
@@ -2138,7 +2139,7 @@ function CatalogLedgerBar({
         glyph="★"
         label={contentByLang(lang, 'मेरा व्रत', 'My Vrat')}
         state={vratState}
-        accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} following` : 'My Vrat'}
+        accessibilityLabel={followCount > 0 ? `My Vrat, ${followCount} saved` : 'My Vrat'}
         onPress={onOpenMyVrat}
         divided={false}
       />
@@ -2339,7 +2340,8 @@ function CatalogLanding({
   onOpenKatha: (kathaId: string) => void;
   onOpenVidhi: (vidhiId: string, dateMs: number) => void;
 }) {
-  const { isFollowing, follow, unfollow } = useVratFollows();
+  const { isFollowing } = useVratFollows();
+  const { toggleReminder, reminderSheet, reminderOnFor } = useVratReminderAction();
   const trimmed = query.trim();
   // Search stays lens-blind on purpose — see `searchObservances`.
   const results = useMemo(() => (trimmed ? searchObservances(trimmed) : []), [trimmed]);
@@ -2381,7 +2383,7 @@ function CatalogLanding({
             {results.map((rule) => (
               <ObservancePreviewCard key={rule.id} rule={rule} lang={lang}
                 following={isFollowing(rule.id)}
-                onToggleFollow={() => isFollowing(rule.id) ? unfollow(rule.id) : follow(rule.id)}
+                reminderOn={reminderOnFor(rule.id)} onToggleReminder={() => toggleReminder(rule)}
                 onPress={() => onOpenDetail(rule.id)} />
             ))}
           </View>
@@ -2467,7 +2469,7 @@ function CatalogLanding({
                     dateLabel={formatShortDate(item.date, lang)}
                     countdown={observanceCountdown(item.date, today, lang)}
                     following={isFollowing(item.rule.id)}
-                    onToggleFollow={() => isFollowing(item.rule.id) ? unfollow(item.rule.id) : follow(item.rule.id)}
+                    reminderOn={reminderOnFor(item.rule.id)} onToggleReminder={() => toggleReminder(item.rule)}
                     onPress={() => onOpenDetail(item.rule.id)}
                   />
                 ))}
@@ -2507,6 +2509,7 @@ function CatalogLanding({
           </View>
         </>
       )}
+      {reminderSheet}
     </View>
   );
 }
