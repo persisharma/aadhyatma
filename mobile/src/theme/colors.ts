@@ -109,6 +109,7 @@ export const lightColors = {
   // The sky mark (CelestialGlyph): moon disc + its phase shadow, sun disc, halos.
   moonLight: '#F6E6BC',
   moonShadow: 'rgba(30, 15, 5, 0.88)',
+  moonPaintedShade: 'rgba(60, 40, 24, 0.82)',
   moonHalo: 'rgba(255, 230, 180, 0.18)',
   sunCore: '#F0A23C',
   sunHalo: 'rgba(240, 162, 60, 0.22)',

@@ -35,14 +35,13 @@ The anga, vaas, yoga and timing grids retain their text, values and accessibilit
 semantics. Their shared warm surface is `PanchangDaySurface`; only Disha Shool gets
 the avoid gradient. Topic artwork uses the bundled painted registries. The header's
 saved star now uses the shared utility glyph, and regional entry points reuse
-More's painted regional subject. The live Tithi/sky/ribbon phase marks remain
-calculated; they have no star.
+More's painted regional subject. The live Tithi/sky/ribbon phase marks now reuse the painted moon with an elliptical lit limb; they have no star.
 
 ## Icon consistency review
 
 | Slot | Reviewed treatment |
 | --- | --- |
-| Tithi | Live phase in a 32dp dark-sepia disc, no star |
+| Tithi | 26dp painted phase in a 32dp dark-sepia disc, no star |
 | Nakshatra / Nitya Yoga / Karana | 36dp registry paintings at top-right; label reserves space |
 | Sun / Moon / Disha Shool / Agni Vaas | 30dp paintings before labels; chips wrap inside cards |
 | Shubh Yoga | Existing More star at 22dp; plain Finder variant retained |
@@ -82,3 +81,33 @@ preset scales reading text, so day-tile fixed labels retain their established si
   the real Back control instead of relying on the platform back action.
 - Android verification is pending. GitHub reports no CI checks on this draft head.
 - PR remains a draft; no merge, OTA, store release or external asset publication.
+
+## Painted celestial phase follow-up
+
+The owner required a full Moon on Purnima and progression through the other Tithis,
+and asked for the header Sun/Moon to match. `CelestialGlyph` now reuses the original
+full `chandra` and eight-ray `gayatri` paintings. An elliptical terminator reveals
+the right-lit waxing or left-lit waning part of the moon; Purnima has no shade and
+Amavasya has no bright limb. The unlit side retains faint painted texture.
+
+This is an illustration of the named Tithi, not continuous lunar illumination.
+The Tithi tile follows its sunrise Tithi; the live night sky follows the running
+Tithi, including a post-sunrise transition or kshaya link, on its existing minute
+updates. Day/night selection, the arc and reduced-motion behavior are preserved.
+The ribbon reuses the shared renderer at 24dp, and the tile at 26dp in its 32dp disc.
+No source PNGs, registry names or asset hashes were changed.
+
+Validation for this follow-up:
+- Typecheck and focused ESLint pass.
+- Seven affected Jest suites: 25 tests pass, including all 30 phase steps, full/dark
+  endpoints, opposite waxing/waning limbs, painted assets and the night header's
+  running-Tithi handover.
+- Prevailing-Tithi and widget payload checks: 16 tests pass.
+- Painted-art and launch-graph checks: 4 tests pass.
+- `panchang-celestial-phase-smoke.yaml` passes end to end on the dedicated iOS 26.5
+  simulator with completed setup: 26 October 2026 Purnima, 3 October waning Saptami,
+  10 October Amavasya and 19 October waxing Ashtami. The dates/indices were checked
+  against the bundled engine before the run. Its captures in `celestial-phase/`
+  were visually inspected, including the painted daytime header sun.
+- Native nighttime header, Android and VoiceOver are not certified by these
+  daytime captures; the night-kind and live-Tithi wiring are covered by unit tests.

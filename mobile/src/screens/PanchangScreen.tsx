@@ -1694,7 +1694,7 @@ function PanchangTile({ icon, tithiIndex, label, element, kshaya, successor, pan
       <View style={styles.angaIcon} pointerEvents="none" accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
         {icon === 'moon' ? (
           <View style={[styles.angaMoon, { backgroundColor: colors.skyNightTop }]}>
-            <CelestialGlyph kind="moon" tithiIndex={tithiIndex} size={20} />
+            <CelestialGlyph kind="moon" tithiIndex={tithiIndex} size={26} />
           </View>
         ) : <StoryIcon name={icon} size={36} />}
       </View>
