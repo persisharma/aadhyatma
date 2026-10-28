@@ -4628,8 +4628,8 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     phase: 2,
     questionHi: 'षट्तिला एकादशी पर तिल का छह तरह से उपयोग क्यों?',
     questionEn: 'Why is sesame used in six ways on Shattila Ekadashi?',
-    practiceHi: 'षट्तिला एकादशी पर तिल का छह तरह से उपयोग होता है — स्नान, उबटन, हवन, तर्पण, भोजन और दान में।',
-    practiceEn: 'On Shattila Ekadashi, sesame is used in six ways — in bathing, in ubtan body paste, in havan, in tarpan, in food and in charity.',
+    practiceHi: 'षट्तिला एकादशी की परम्परा में तिल का छह तरह से उपयोग वर्णित है — स्नान, उबटन, हवन, जल-अर्पण, दान और भोजन में।',
+    practiceEn: 'The Shattila Ekadashi tradition describes six uses of sesame — bathing, body paste, fire offerings, water offerings, giving and eating.',
     kathas: [
       {
         tier: 'purana',
@@ -4643,8 +4643,12 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
           'In the account of Shattila Ekadashi, the Padma Purana describes six uses of sesame — bathing in water mixed with sesame, a sesame ubtan, a havan with sesame, an offering of water mixed with sesame, eating sesame, and giving sesame in charity.',
           'The name \'Shattila\' comes from these six uses, and the story of this Ekadashi speaks especially of the importance of giving.',
         ],
-        canonHi: 'पद्म पुराण (अध्याय समीक्षाधीन)',
-        canonEn: 'Padma Purana (adhyaya under review)',
+        canonHi: 'पद्म पुराण, उत्तरखण्ड 42 · अंग्रेज़ी अनुवाद 20b–23; संस्कृत संस्करण 19–22',
+        canonEn: 'Padma Purana, Uttara Khanda 42 · English translation 20b–23; Sanskrit edition 19–22',
+        referenceUrls: [
+          'https://www.wisdomlib.org/hinduism/book/the-padma-purana/d/doc365619.html',
+          'https://sa.wikisource.org/wiki/पद्मपुराणम्/खण्डः_६_(उत्तरखण्डः)/अध्यायः_०४२',
+        ],
       },
     ],
     bhavHi: 'एक ही वस्तु को स्नान से दान तक हर कर्म में शामिल करना, पूरे दिन को एक व्रत-भाव में पिरो देता है।',
@@ -4655,10 +4659,13 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
         'shattila-ekadashi-katha',
       ],
     },
-    status: 'draft',
+    status: 'verified',
     source: {
-      referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Padma Purana (adhyaya under review). Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      referenceUrls: [
+        'https://www.wisdomlib.org/hinduism/book/the-padma-purana/d/doc365619.html',
+        'https://sa.wikisource.org/wiki/पद्मपुराणम्/खण्डः_६_(उत्तरखण्डः)/अध्यायः_०४२',
+      ],
+      verificationNote: '2026-10-28: Verified by opening and reading Deshpande’s Padma Purana Uttara 42 translation and the separately published Sanskrit chapter on Wikisource. Six uses agree; verse numbering differs because the Sanskrit page restarts after the opening dialogue. Replaced the narrower tarpan label with water offering, the wording actually supported here. No verse text transcribed.',
       confidence: 'Likely',
     },
   },
