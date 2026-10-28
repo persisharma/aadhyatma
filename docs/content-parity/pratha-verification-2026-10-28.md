@@ -32,4 +32,14 @@ K3, K4, K7, K8, K9, K12, K13, K14, K16, K18, K20, K21, K24, K26, K27 and K28 are
 
 ## Checks
 
+## Margashirsha
+
+- **M1 verified:** opened Mukundananda and Prabhupada/BBT Gita 10.35 pages and the existing bundled index 34; same month/season teaching. IIT Kanpur’s unavailable page is not counted.
+- **M2 verified as tradition:** Drik Panchang’s Gita Jayanti/Mokshada listing and ISKCON Bangalore’s independently published advent/observance page. No historical battle date is asserted; ISKCON Dwarka’s 406/timeout is excluded.
+- **M3 verified as local tradition:** Drik’s wedding-festival description; Vibha Rani’s Sangeet Natak Akademi fieldwork report (printed p7/PDF p6) interviewing Taranand Viyogi; Madhukar Mishra’s NDTV reporting interviewing Rajnath Jha. Removed the unrelated bow detail. Describes some families’ remembrance without making a marriage verdict.
+- **M4 stays draft:** opened Shiva Shatarudra 8 in Shastri and Wikisource. This verifies the origin/Kashi portion but not two publications of the dog-feeding/date explanation; mixed story needs splitting and collation.
+- **M5 stays draft:** a generic practice description is not a collated booklet narrative. A named publication and an independent telling, including variations, remain outstanding. Its universal claim about every booklet is unestablished.
+
+## Checks and limitations
+
 The content suite now tests story-level evidence, rejection of unresolved canons and the 9/10 Kartik activation boundary. Complete `npm test` results are recorded with each pushed batch. No native simulator, Android SDK or Maestro executable is available in this Linux workspace; device/e2e execution remains pending and is never represented by a unit-test pass.
