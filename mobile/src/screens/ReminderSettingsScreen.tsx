@@ -31,7 +31,7 @@ type Props = NativeStackScreenProps<MoreStackParamList, 'Reminders'>;
 const DEFAULT_NEW_TIME: TimeOfDay = { hour: 18, minute: 0 };
 
 /** The festive fire time, read off the planner so the copy can't drift from it. */
-const FESTIVE_CLOCK = `${FESTIVE_HOUR}:${`${FESTIVE_MINUTE}`.padStart(2, '0')}`;
+const FESTIVE_CLOCK = `${`${FESTIVE_HOUR}`.padStart(2, '0')}:${`${FESTIVE_MINUTE}`.padStart(2, '0')}`;
 const FESTIVE_COUNT = FESTIVE_REMINDERS.length;
 
 export default function ReminderSettingsScreen({ navigation }: Props) {
@@ -414,7 +414,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 >
                   {pick(lang, {
                     hi: `${FESTIVE_COUNT} प्रमुख पर्वों पर सुबह ${FESTIVE_CLOCK} बजे शुभकामना, और उस दिन के पाठ का न्यौता।`,
-                    en: `A greeting at ${FESTIVE_CLOCK} am on ${FESTIVE_COUNT} major festivals, with the reading for that day one tap away.`,
+                    en: `A greeting at ${FESTIVE_CLOCK} on ${FESTIVE_COUNT} major festivals, with the reading for that day one tap away.`,
                     gu: `${FESTIVE_COUNT} મુખ્ય પર્વો પર સવારે ${FESTIVE_CLOCK} વાગ્યે શુભકામના, અને તે દિવસના પાઠનું આમંત્રણ.`,
                     kn: `${FESTIVE_COUNT} ಪ್ರಮುಖ ಹಬ್ಬಗಳಂದು ಬೆಳಿಗ್ಗೆ ${FESTIVE_CLOCK} ಕ್ಕೆ ಶುಭಾಶಯ, ಮತ್ತು ಆ ದಿನದ ಪಾಠಕ್ಕೆ ಆಹ್ವಾನ.`,
                   })}

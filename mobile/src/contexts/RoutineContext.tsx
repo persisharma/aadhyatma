@@ -199,7 +199,7 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
 
   const markManualDone = useCallback(
     (key: string) => {
-      // Record the moment it was offered, so the Today row can show "offered 7:12 AM".
+      // Record the moment it was offered, so the Today row can show "offered 07:12".
       persistDone({ ...doneMarks, [key]: Date.now() });
     },
     [doneMarks, persistDone]

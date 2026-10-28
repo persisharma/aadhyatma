@@ -2,7 +2,7 @@ import type { Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { TIER_LABELS, type DayVerdict, type EventRule } from './eventMuhurat';
-import { formatRangeCompact } from './muhuratFormat';
+import { formatRange } from './muhuratFormat';
 import { VARA_NAMES_EN, VARA_NAMES_HI } from './names';
 import { panchangDateLabel } from './panchangShareText';
 import type { PanchangData } from './types';
@@ -21,7 +21,7 @@ export function muhuratDayShareCaption({ rule, verdict, lang }: Pick<MuhuratDayS
     sectionName: contentByLang(lang, rule.nameHi, rule.nameEn),
     label: `${weekdayLabel(date, lang)}, ${panchangDateLabel(date, lang)}`,
     firstLine: best
-      ? `${contentByLang(lang, tier.hi, tier.en)} · ${formatRangeCompact(best.start, best.end)}`
+      ? `${contentByLang(lang, tier.hi, tier.en)} · ${formatRange(best.start, best.end)}`
       : contentByLang(lang, tier.hi, tier.en),
   };
 }
@@ -44,7 +44,7 @@ export function buildMuhuratDayShareText({ rule, verdict, p, lang, cityLabel }: 
   const windows = verdict.windows.slice(0, 3);
   if (windows.length) {
     lines.push('', `${t('शुभ समय', 'Auspicious windows')}:`);
-    for (const w of windows) lines.push(`• ${t(w.nameHi, w.nameEn)} ${formatRangeCompact(w.start, w.end)}`);
+    for (const w of windows) lines.push(`• ${t(w.nameHi, w.nameEn)} ${formatRange(w.start, w.end)}`);
   }
   lines.push('', t('परम्परागत मार्गदर्शन — पुरोहित से पुष्टि करें।', 'Traditional guidance — confirm with your purohit.'));
   lines.push(t(`सभी समय ${cityLabel} के अनुसार`, `All times for ${cityLabel}`));

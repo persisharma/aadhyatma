@@ -22,7 +22,6 @@ import {
   normalizeRepeatDays,
   notificationIdentifierFor,
   parseStoredAlarms,
-  prefers12HourClock,
   repeatSummary,
   repeatsDaily,
   snoozeIdentifierFor,
@@ -378,20 +377,12 @@ import {
   );
 }
 
-// formatTimeLabel: 24 h zero-padded; 12 h with AM/PM and 12-o'clock handling.
+// formatTimeLabel: always 24 h, zero-padded.
 {
-  assert.equal(formatTimeLabel({ hour: 6, minute: 5 }, false), '06:05');
-  assert.equal(formatTimeLabel({ hour: 6, minute: 5 }, true), '6:05 AM');
-  assert.equal(formatTimeLabel({ hour: 0, minute: 0 }, true), '12:00 AM');
-  assert.equal(formatTimeLabel({ hour: 12, minute: 30 }, true), '12:30 PM');
-  assert.equal(formatTimeLabel({ hour: 21, minute: 30 }, false), '21:30');
-  assert.equal(formatTimeLabel({ hour: 21, minute: 30 }, true), '9:30 PM');
-}
-
-// prefers12HourClock follows the locale's hour-cycle convention.
-{
-  assert.equal(prefers12HourClock('en-US'), true);
-  assert.equal(prefers12HourClock('fr-FR'), false);
+  assert.equal(formatTimeLabel({ hour: 6, minute: 5 }), '06:05');
+  assert.equal(formatTimeLabel({ hour: 0, minute: 0 }), '00:00');
+  assert.equal(formatTimeLabel({ hour: 12, minute: 30 }), '12:30');
+  assert.equal(formatTimeLabel({ hour: 21, minute: 30 }), '21:30');
 }
 
 // Snooze identifiers are namespaced under the japam prefix but recognisable,

@@ -15,7 +15,7 @@ const HOLD_INTERVAL_MS = 90;
  * onPress after onLongPress, so a held press doesn't double-step.)
  *
  * Extracted from TimeStepper so both the reminder time stepper and the
- * birth-time AM/PM picker (ClockTimePicker) share one press implementation.
+ * birth-time picker (ClockTimePicker) share one press implementation.
  */
 function RepeatChevron({
   onStep,

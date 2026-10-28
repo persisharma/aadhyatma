@@ -203,7 +203,7 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             // made this card disagree with the app's own Panchang glance.
             val (tithi, till) = WidgetPayloadContract.runningTithi(pd, System.currentTimeMillis())
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_title, tithi.getString(locale))
-            // "तक 10:48 AM" — absent only when this day's solve does not know the
+            // "तक 10:48" — absent only when this day's solve does not know the
             // end (the successor's belongs to tomorrow's), as in the app.
             val tillText = till?.getString(locale)
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_till, tillText ?: "")

@@ -37,7 +37,7 @@ type CountFilter = 'all' | 2 | 3 | 4;
 
 function formatWindow(candidate: CharanaCandidate): string {
   if (!candidate.window) return '';
-  const formatter = new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: '2-digit', hour12: true });
+  const formatter = new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
   return `${formatter.format(candidate.window.startMs)} – ${formatter.format(candidate.window.endMs)} IST`;
 }
 

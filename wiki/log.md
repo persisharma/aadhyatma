@@ -1228,3 +1228,8 @@ Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×7
 ## [2026-10-27] ingest | Upcoming full-width banners
 
 The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.
+
+
+## [2026-10-28] ingest | App-wide 24-hour time format
+
+Every rendered clock is now zero-padded 24-hour `HH:MM`: `formatClock` dropped AM/PM, `formatRangeCompact` was removed (callers use `formatRange`), and the hand-rolled 12-hour formatters (Kundali/Jyotish birth time, Namkaran windows, widget IST clock, Routine offered time, Japam alarm label + `prefers12HourClock`) were converted. `ClockTimePicker` lost its AM/PM toggle (HR column `00`–`23`). Fixed reminder copy (ArcStrip, Janma Tithi, festive greeting, Prashna transit note) now reads 24-hour. design.md §3.2 added; [[panchang]] display helpers updated.

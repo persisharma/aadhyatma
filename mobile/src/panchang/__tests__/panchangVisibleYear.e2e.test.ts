@@ -3,6 +3,7 @@ import { test } from 'node:test';
 
 import { buildCalendarMonth, dateKey } from '../calendarGrid';
 import { computePanchangForDate } from '../engine';
+import { formatClock } from '../muhuratFormat';
 import {
   getObservancesForDate,
   getObservancesForMonth,
@@ -53,21 +54,12 @@ function addMonths(date: Date, months: number): Date {
   return new Date(date.getFullYear(), date.getMonth() + months, 1);
 }
 
-function formatTime12(date: Date | null): string {
-  if (!date) return '';
-  const h = date.getHours();
-  const m = date.getMinutes();
-  const ampm = h >= 12 ? 'PM' : 'AM';
-  const h12 = h % 12 || 12;
-  return `${h12}:${String(m).padStart(2, '0')} ${ampm}`;
-}
-
 function visibleElement(element: PanchangElement): VisibleElement {
   return {
     index: element.index,
     nameHi: element.nameHi,
     nameEn: element.nameEn,
-    endTime: formatTime12(element.endTime),
+    endTime: formatClock(element.endTime),
   };
 }
 
@@ -116,10 +108,10 @@ function visibleSnapshot(date: Date, system: CalendarSystem): VisibleSnapshot {
       karana: visibleElement(panchang.karana),
     },
     timeCards: {
-      sunrise: formatTime12(panchang.sunrise),
-      sunset: formatTime12(panchang.sunset),
-      moonrise: formatTime12(panchang.moonrise),
-      brahmaMuhurta: `${formatTime12(panchang.brahmaMuhurta.start)} - ${formatTime12(panchang.brahmaMuhurta.end)}`,
+      sunrise: formatClock(panchang.sunrise),
+      sunset: formatClock(panchang.sunset),
+      moonrise: formatClock(panchang.moonrise),
+      brahmaMuhurta: `${formatClock(panchang.brahmaMuhurta.start)} - ${formatClock(panchang.brahmaMuhurta.end)}`,
     },
     observanceCards: getObservancesForDate(date, system).map(visibleObservance),
     upcomingRows: getUpcomingObservances(date, UPCOMING_VISIBLE_COUNT, system).map(visibleUpcomingRow),

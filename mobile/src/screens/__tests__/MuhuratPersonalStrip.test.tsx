@@ -290,7 +290,7 @@ test('reminder copy never carries bala words (it lands on a lock screen)', () =>
     fireAt: new Date(2026, 7, 17, 5, 37),
     nameHi: 'वाहन क्रय',
     nameEn: 'Vehicle Purchase',
-    windowLabelHi: 'अमृत 6:07 – 7:41 AM',
+    windowLabelHi: 'अमृत 06:07 – 07:41',
   } as never);
   for (const s of [title, body]) {
     expect(s).not.toContain('तारा');

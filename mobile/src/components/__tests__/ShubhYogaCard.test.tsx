@@ -76,7 +76,7 @@ describe('ShubhYogaCard', () => {
     const text = allText(tree);
     expect(text).toContain('सर्वार्थ सिद्धि योग');
     expect(text).toContain('शुभ योग'); // the group eyebrow — never the bare योग field label
-    expect(text).toContain('2:12 AM, 15 अक्टू');
+    expect(text).toContain('02:12, 15 अक्टू');
     expect(text).not.toContain('26:12');
   });
 
@@ -102,6 +102,6 @@ describe('ShubhYogaCard', () => {
     const text = allText(tree);
     expect(text).toContain('अमृत सिद्धि योग');
     expect(text).toContain('रवि योग');
-    expect(text).toContain('11:05 PM – 6:32 AM, 20 अक्टू');
+    expect(text).toContain('23:05 – 06:32, 20 अक्टू');
   });
 });

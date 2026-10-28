@@ -29,7 +29,7 @@ import { classifyNow, computeMuhuratDay } from '../muhurat';
 import { auspiciousWindows, computeAstaFlags, evaluateDay, getEventRule, isChaturmasDay, summarize } from '../eventMuhurat';
 import { lagnaSpansForDay } from '../lagnaSweep';
 import { pushyaYogaFor } from '../abujhMuhurat';
-import { formatClock, formatEndInstant, formatRange, formatRangeCompact } from '../muhuratFormat';
+import { formatClock, formatEndInstant, formatRange } from '../muhuratFormat';
 import { serializeDayInputs, reviveDayInputs } from '../panchangDaySerde';
 import { cachedDayInputs, dayStoreFor, scopeKeyFor, __resetPanchangDayStore } from '../panchangDayStore';
 import type { DayInputs } from '../panchangDayStore';
@@ -121,7 +121,7 @@ test('the display formatters never mutate the day', () => {
     formatClock(today.p.sunrise);
     formatClock(today.p.moonrise);
     formatRange(today.p.sunrise, today.p.sunset);
-    formatRangeCompact(today.p.brahmaMuhurta.start, today.p.brahmaMuhurta.end);
+    formatRange(today.p.brahmaMuhurta.start, today.p.brahmaMuhurta.end);
     // Day-crossing end instants are where a formatter would be tempted to
     // normalise a Date in place.
     formatEndInstant(new Date(today.p.sunset.getTime() + 8 * 3_600_000), today.p.date, 'hi');

@@ -40,7 +40,7 @@ export type PanchangWidgetTithi = {
    * returns a null `endTime` there).
    */
   endsAt?: string;
-  /** Rendered "तक 3:24 PM" / "till 3:24 PM" line. Present exactly when `endsAt` is. */
+  /** Rendered "तक 15:24" / "till 15:24" line. Present exactly when `endsAt` is. */
   till?: WidgetLocalizedText;
 };
 

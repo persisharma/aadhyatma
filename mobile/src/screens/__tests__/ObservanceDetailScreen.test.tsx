@@ -182,7 +182,7 @@ test('state 1 — the computed moonrise line renders beneath the rule text when 
   const body = texts(r);
   expect(has(r, 'observance-upvas-parana-computed')).toBe(true);
   expect(body).toContain('चंद्रोदय');
-  expect(body).toContain('8:07 PM');
+  expect(body).toContain('20:07');
   expect(body).toContain('उज्जैन'); // the location the line was computed for
 });
 

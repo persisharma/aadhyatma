@@ -74,7 +74,7 @@ export default function PrashnaPhaseContent({ phase, lang, children }: { phase: 
     </Pressable>
     {expanded && <View style={card}>
       {label('गणना और आधार', 'Calculation and basis')}
-      <Text style={body}>{contentByLang(lang, 'जन्मकुंडली, महादशा–अन्तर्दशा और गुरु–शनि का गोचर व दृष्टि साथ पढ़े गए हैं। गोचर आज सुबह 6 बजे IST का है।', 'This combines the natal chart, Mahadasha–Antardasha, and Jupiter–Saturn transits and aspects. Transits use today’s 06:00 IST positions.')}</Text>
+      <Text style={body}>{contentByLang(lang, 'जन्मकुंडली, महादशा–अन्तर्दशा और गुरु–शनि का गोचर व दृष्टि साथ पढ़े गए हैं। गोचर आज 06:00 IST का है।', 'This combines the natal chart, Mahadasha–Antardasha, and Jupiter–Saturn transits and aspects. Transits use today’s 06:00 IST positions.')}</Text>
       {phase.signals.map((signal, index) => <View key={signal.id} style={styles.reason}>
         <Text style={body}>{t(signal.text)}</Text>
         <BasisChain basis={signal.basis} lang={lang} labelHi={signal.title.hi} labelEn={signal.title.en} testID={`prashna-chain-${index}`} />

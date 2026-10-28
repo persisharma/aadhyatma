@@ -73,7 +73,7 @@ export function prevailingTithi(p: PanchangData, at: Date): PrevailingTithi {
  * handover happens within it.
  *
  * A day is labelled by its sunrise tithi (udaya-vyapini), and that tithi
- * usually ends mid-morning — so "तृतीया तक 8:51 AM" states when the label stops
+ * usually ends mid-morning — so "तृतीया तक 08:51" states when the label stops
  * being true without ever saying what is true for the remaining fifteen hours.
  * That is the gap this fills: the rest of the day belongs to the successor, and
  * a vrat fixed on the successor's tithi is kept on THIS date, not the next one

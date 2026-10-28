@@ -1,36 +1,18 @@
 /**
- * Display helpers for muhurat times. Pure — 12-hour clock with AM/PM, matching
- * the Panchang tab's existing time cells.
+ * Display helpers for muhurat times. Pure — 24-hour `HH:MM` clock, the one
+ * time format the whole app uses.
  */
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { Lang } from '@/data/gita/language';
 
-/** 12-hour clock with AM/PM. Null → '' (matches the Panchang tab's time cells). */
+/** 24-hour `HH:MM` clock, e.g. `06:24` / `17:13`. Null → ''. */
 export function formatClock(d: Date | null): string {
   if (!d) return '';
-  const h = d.getHours();
-  const m = d.getMinutes();
-  const ampm = h >= 12 ? 'PM' : 'AM';
-  const h12 = h % 12 || 12;
-  return `${h12}:${String(m).padStart(2, '0')} ${ampm}`;
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
 
 export function formatRange(a: Date, b: Date): string {
   return `${formatClock(a)} – ${formatClock(b)}`;
-}
-
-/**
- * Range with the shared meridiem written once — `11:17 – 12:05 PM` instead of
- * `11:17 AM – 12:05 PM` — for tight glance surfaces (Home Today strip). Falls
- * back to the full range when the window crosses noon/midnight. Meridiem
- * equality is computed from the Dates (not by parsing formatClock's string),
- * so a future change to the clock format can't silently corrupt the range.
- */
-export function formatRangeCompact(a: Date, b: Date): string {
-  const from = formatClock(a);
-  const to = formatClock(b);
-  const sameMeridiem = (a.getHours() >= 12) === (b.getHours() >= 12);
-  return sameMeridiem ? `${from.replace(/ [AP]M$/, '')} – ${to}` : `${from} – ${to}`;
 }
 
 const MONTHS_SHORT_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -53,13 +35,13 @@ export function formatShortDate(d: Date, lang: Lang): string {
 
 /**
  * Clock for an anga/muhurat end instant, with a short-date suffix whenever it
- * falls on a different civil day than `referenceDay` — a bare "2:04 AM" for
+ * falls on a different civil day than `referenceDay` — a bare "02:04" for
  * tonight otherwise reads as this morning. Shared by every end-time surface
  * (Panchang anga tiles, Muhurat detail/share card).
  */
 /**
  * Start–end range whose END goes through `formatEndInstant`, for windows that
- * routinely outlive midnight (the शुभ योग windows, PRD-27): `6:24 AM – 2:12 AM,
+ * routinely outlive midnight (the शुभ योग windows, PRD-27): `06:24 – 02:12,
  * 15 अक्टू`. Never the printed-panchang extended-hour style (26:12).
  */
 export function formatRangeEndAware(start: Date, end: Date, referenceDay: Date, lang: Lang): string {

@@ -17,7 +17,7 @@ function solveFor(y: number, m: number, d: number): ObservanceDaySolve {
   };
 }
 const hhmm = (d: Date) =>
-  `${((d.getHours() + 11) % 12) + 1}:${String(d.getMinutes()).padStart(2, '0')} ${d.getHours() < 12 ? 'AM' : 'PM'}`;
+  `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 const noteFor = (id: string, y: number, m: number, d: number) => {
   const rule = getRuleById(id);
   assert.ok(rule, `${id} must exist`);
@@ -43,8 +43,8 @@ test('the two amavasya rows say what their own day is for (10 vs 11 Sep 2026)', 
 
   const udaya = noteFor('amavasya-vrat', 2026, 9, 11);
   assert.ok(udaya, 'the udaya row 11 Sep must carry a note');
-  assert.equal(udaya!.hi, 'स्नान व दान प्रातः — अमावस्या तिथि 8:56 AM तक');
-  assert.equal(udaya!.en, 'Snan and daan at dawn — Amavasya tithi until 8:56 AM');
+  assert.equal(udaya!.hi, 'स्नान व दान प्रातः — अमावस्या तिथि 08:56 तक');
+  assert.equal(udaya!.en, 'Snan and daan at dawn — Amavasya tithi until 08:56');
 });
 
 test('on a coinciding day both notes still describe their own rite (10 Oct 2026)', () => {

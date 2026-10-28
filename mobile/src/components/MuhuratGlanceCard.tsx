@@ -8,7 +8,7 @@ import { scriptTitleFont, scriptBodyFont, eyebrowTextStyle } from '@/utils/langT
 import { fontFamilies } from '@/theme/typography';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { prevailingTithi, successorTithiToday } from '@/panchang/prevailingTithi';
-import { formatRangeCompact, formatEndInstant } from '@/panchang/muhuratFormat';
+import { formatRange, formatEndInstant } from '@/panchang/muhuratFormat';
 import { formatSpan } from '@/panchang/muhuratSpan';
 import type { CalendarSystem } from '@/panchang/types';
 import type { Lang } from '@/data/gita/language';
@@ -110,7 +110,7 @@ export default function MuhuratGlanceCard({
       ? prevailingTithi(panchang, new Date(at))
       : { nameHi: panchang.tithi.nameHi, nameEn: panchang.tithi.nameEn, endTime: panchang.tithi.endTime }
     : null;
-  // "तक 8:51 AM" states when the day's label stops being true and nothing else —
+  // "तक 08:51" states when the day's label stops being true and nothing else —
   // leaving the remaining fifteen hours unnamed, and a reader unable to tell that
   // a Chaturthi vrat is kept on THIS date rather than the next one headed
   // Chaturthi. The handover line names the successor whenever it takes over
@@ -198,7 +198,7 @@ export default function MuhuratGlanceCard({
             <Text style={{ fontFamily: titleFont, fontSize: 12, color: colors.avoidDeep }}>{contentByLang(lang, 'राहु काल', 'Rahu Kaal')}</Text>
           </View>
           <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 15, color: colors.ink, marginTop: 3, fontVariant: [...LINING] }}>
-            {formatRangeCompact(rahu.start, rahu.end)}
+            {formatRange(rahu.start, rahu.end)}
           </Text>
           {isToday && (
             <Text style={{ fontFamily: bodyFont, fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
@@ -212,7 +212,7 @@ export default function MuhuratGlanceCard({
             <Text style={{ fontFamily: titleFont, fontSize: 12, color: colors.saffronDeep }}>{contentByLang(lang, 'अभिजीत', 'Abhijit')}</Text>
           </View>
           <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 15, color: colors.ink, marginTop: 3, fontVariant: [...LINING] }}>
-            {abhijit ? formatRangeCompact(abhijit.start, abhijit.end) : '—'}
+            {abhijit ? formatRange(abhijit.start, abhijit.end) : '—'}
           </Text>
           {isToday && abhijit && (
             <Text style={{ fontFamily: bodyFont, fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>

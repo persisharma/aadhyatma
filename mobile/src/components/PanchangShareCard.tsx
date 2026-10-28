@@ -208,7 +208,7 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
           <Strip title={t('रात', 'Night')} periods={model.night} />
         </View>
 
-        {/* ---- kaal windows (all daytime, so no AM/PM) */}
+        {/* ---- kaal windows (24-hour ranges) */}
         <View style={styles.tileRow}>
           <Kaal good title={t('अभिजीत', 'Abhijit')} time={model.abhijit ?? '—'} />
           <Kaal title={t('राहु काल', 'Rahu Kaal')} time={model.rahu} />
@@ -217,7 +217,7 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
         </View>
 
         {/* ---- the four वास. Widths follow content: अग्नि वास carries the only line
-            that can run long ("हवन वर्जित · 2:04 AM, 1 अक्टू से पाताल"), so it takes
+            that can run long ("हवन वर्जित · 02:04, 1 अक्टू से पाताल"), so it takes
             what the one-word सूर्य tile does not need and still holds two lines. */}
         <View style={styles.tileRow}>
           <Vaas weight={0.75} title={t('सूर्य', 'Sun')} v={model.surya} />

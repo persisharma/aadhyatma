@@ -207,7 +207,7 @@ test('the followed row states the RESOLVED fire times, with day-of clamped behin
   const expected = formatClock(new Date(best.start.getTime() - WINDOW_LEAD_MINUTES * 60_000));
   expect(shown).toContain(expected);
   // The evening-before notice is stated too, so the user can see both.
-  expect(shown).toContain('6:00 PM');
+  expect(shown).toContain('18:00');
   act(() => r.unmount());
 });
 
