@@ -1,4 +1,4 @@
-# Gita Saar's Bhagiratha citation opens the cited Bala Kanda sarga in Vedansh.
+# All Valmiki citations in Gita Saar open their cited sargas in Vedansh.
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
@@ -29,3 +29,39 @@ appId: com.prashantsharma.vedansh
     visible: "1278 / 2217"
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-in-app-bala-43
+- tapOn: "Back to chapters"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { id: gita-saar-source-valmiki-1.44 }
+- extendedWaitUntil:
+    visible: "1319 / 2217"
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-in-app-bala-44
+- tapOn: "Back to chapters"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: "Back"
+- extendedWaitUntil:
+    visible: { id: gita-saar-featured }
+    timeout: 30000
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-sharanagati }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- tapOn: { id: gita-saar-theme-sharanagati }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-sharanagati }
+    timeout: 30000
+- scrollUntilVisible:
+    element: { id: gita-saar-source-valmiki-6.18 }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { id: gita-saar-source-valmiki-6.18 }
+- extendedWaitUntil:
+    visible: "565 / 5693"
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-in-app-yuddha-18
