@@ -4165,7 +4165,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. Opened BhaktiBharat Kharmas page: it describes Dhanu/Meena and wedding avoidance but does not contain the horses-and-donkeys episode. A search snippet is not evidence. Two independently published tellings of that episode remain uncollated.',
       confidence: 'Guessing',
     },
   },
@@ -4186,15 +4186,19 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
         titleHi: 'दुल्ला भट्टी',
         titleEn: 'Dulla Bhatti',
         bodyHi: [
-          'पंजाब की लोक-स्मृति में दुल्ला भट्टी एक वीर हैं, जिन्होंने बेची जा रही लड़कियों को छुड़ाकर उनकी रक्षा की।',
+          'पंजाब की लोक-स्मृति में दुल्ला भट्टी सुन्दरी और मुन्दरी नाम की लड़कियों के रक्षक हैं। लोक-कथा में वे उन्हें मुग़ल दरबार के लिए ले जाए जाने से बचाते हैं और पिता की तरह उनके विवाह करवाते हैं।',
           'लोहड़ी पर गाए जाने वाले गीत \'सुन्दर मुन्दरिये\' में उन्हीं का नाम आता है, और अलाव के चारों ओर यह गीत गाकर उन्हें याद किया जाता है।',
         ],
         bodyEn: [
-          'In Punjab\'s folk memory, Dulla Bhatti is a hero who rescued girls who were being sold and protected them.',
+          'In Punjab\'s folk memory, Dulla Bhatti protects the girls Sundri and Mundri. In the folk telling, he saves them from being taken to the Mughal court and arranges their weddings as a father would.',
           'His name appears in \'Sunder Mundriye\', the song sung on Lohri, and he is remembered by singing this song around the bonfire.',
         ],
         canonHi: 'लोक-परम्परा (पंजाब)',
         canonEn: 'Folk tradition (Punjab)',
+        referenceUrls: [
+          'https://centreforcontemporaryfolklore.org/2024/09/10/dulla-bhattis-lohri-punjab/',
+          'https://scroll.in/article/864736/null',
+        ],
       },
     ],
     bhavHi: 'अलाव के चारों ओर गाया गीत एक लोक-नायक के साहस और करुणा को हर वर्ष फिर से जीवित कर देता है।',
@@ -4202,10 +4206,13 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     anchors: {
       masa: [10],
     },
-    status: 'draft',
+    status: 'verified',
     source: {
-      referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition (Punjab). Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      referenceUrls: [
+        'https://centreforcontemporaryfolklore.org/2024/09/10/dulla-bhattis-lohri-punjab/',
+        'https://scroll.in/article/864736/null',
+      ],
+      verificationNote: '2026-10-28: Verified as Punjab folk memory against Ashmeen Bains, Centre for Contemporary Folklore (2024-09-10), and Haroon Khalid, Scroll (2018-01-12), both opened and read. Named Sundri and Mundri and their weddings; removed unsupported sale detail. This verifies a transmitted story, not the historicity of its rescue episode.',
       confidence: 'Guessing',
     },
   },
