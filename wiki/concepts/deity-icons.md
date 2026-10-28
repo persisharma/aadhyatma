@@ -52,6 +52,7 @@ The Home ornament clips in its own absolute layer rather than clipping TodayStri
 
 ## Gotchas
 
+- Home tile width is snapped one physical pixel below the exact-fit track (`homeLayout.ts`). Exact fits wrapped the third launcher of every row on fractional-dp Android widths (e.g. 411.43dp at density 2.625), because Yoga sums the row in float32 and saw a ~3e-5dp overflow. Never compute flex-wrap tracks that sum exactly to the container.
 - Keep full eight-ray Gayatri sun distinct from Surya's rising half-disc.
 - Durga open lotus, Lakshmi coin lotus, Radha closed bud and Parvati five rounded petals must stay distinct.
 - Navagraha is exactly nine plain discs with gold center; no planetary letters. Daan's bowl has exactly three seed-shaped offerings, without payment symbols.
