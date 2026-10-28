@@ -1246,6 +1246,10 @@ Recorded the shared first-use/reuse flow, explicit Vrat preference tracking and 
 
 Every illustrated lesson now opens Gita connection references and Gita source citations in the bundled GitaReader. The browser prototype opens the same corpus verse in its local sheet. Non-Gita story sources are visibly marked as optional external verification. Shok's Chitraketu story is from the Bhagavatam; its Gita 2.13 and 2.20 connections stay inside the app. Updated [[gita-saar]], design.md §77 and RULEBOOK §30.
 
+## [2026-10-28] ingest | Gita Saar original text follows the reader's tap
+
+The optional original shloka panel now scrolls into view after layout. A long illustrated lesson previously left the newly opened text above the current viewport. A focused native iPhone check and component regression test pin this behavior; the complete Gita Saar lesson and saved-learning steps were also exercised on the installed app.
+
 ## [2026-10-28] ingest | Reconcile PR #556 with latest main; retain both append-only histories. Celestial phase implementation remains unchanged.
 
 ## [2026-10-28] ingest | Panchang night-header native evidence

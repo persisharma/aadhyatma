@@ -46,8 +46,10 @@ Design: design.md §77; contract: RULEBOOK §30.
   painting and title, then the complete existing Saar, three visible story beats, Gita connection,
   everyday example and source citations. Gita connection references and Gita story-source citations open exact bundled verses in `GitaReader`; other primary-text links are optional external verification and say they open a browser. Other verses offer a direct illustrated door back to this
   story, then the usual takeaway, optional reflection and one save action. Group context, optional
-  original verse/corpus meaning and full-Gita handoff remain available. Original
-  scripture disclosure and writing are optional, never required stages. The full-Gita handoff
+  original verse/corpus meaning and full-Gita handoff remain available. Opening the
+  original scripture disclosure scrolls its newly laid out panel into view so a reader
+  sees the text immediately, even deep in a long story. Disclosure and writing are
+  optional, never required stages. The full-Gita handoff
   opens `GitaReader {chapter: gitaChapter, initialIndex: gitaVerse - 1}`.
 - **Private reflections** — `learningStore.ts`, AsyncStorage key
   `@vedansh/gita-saar-reflections-v1`, stores version 1 rows keyed by theme chapter + page index,
