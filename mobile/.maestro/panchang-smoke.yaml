@@ -189,7 +189,7 @@ appId: com.prashantsharma.vedansh
     id: "panchang-next-day-sankashti-chaturthi-vrat"
 - waitForAnimationToEnd
 - assertVisible: "Sankashti Chaturthi Vrat"
-- back
+- tapOn: "Back.*"
 - waitForAnimationToEnd
 
 # ── Step 7: Restore Panchang + language defaults (best-effort) ──
