@@ -4,6 +4,7 @@ import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import { DevotionalVerseBody, DevotionalFooter, DevotionalHero } from '../DevotionalFrame';
 import manifest from '../../../assets/devotional-share/manifest.json';
 import { devotionalArtRequest, devotionalSubjectArt, devotionalPlateArt } from '@/data/devotionalShareArt';
+import * as devotionalArtData from '@/data/devotionalShareArt';
 import { devotionalFrameSpec } from '@/data/devotionalFrameSpec';
 import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 import { splitDevotionalMeaning } from '@/utils/devotionalShareLayout';
@@ -86,7 +87,7 @@ it('keeps the scenic footer after content', () => {
   expect((StyleSheet.flatten(footer.props.style) ?? {}).position).toBeUndefined(); act(() => tree!.unmount());
 });
 it.each([288, 358, 540])('uses explicit full-master dimensions at width %s', width => {
-  for (const art of [...Object.keys(manifest.assets), ...Object.keys(manifest.subjects)] as DevotionalArt[]) {
+  for (const art of ([...Object.keys(manifest.assets), ...Object.keys(manifest.subjects)] as DevotionalArt[]).filter(a => devotionalArtRequest(a))) {
     let tree: ReactTestRenderer; act(() => { tree = create(<><DevotionalHero art={art} lang="hi" width={width} /><DevotionalFooter art={art} width={width} /></>); });
     const images = tree!.root.findAllByType(Image);
     const footer = StyleSheet.flatten(images.find(n => n.props.testID === 'devotional-footer-image')!.props.style);
@@ -94,6 +95,17 @@ it.each([288, 358, 540])('uses explicit full-master dimensions at width %s', wid
     const hero = StyleSheet.flatten(images.find(n => n.props.testID === 'devotional-hero-image')!.props.style);
     expect(hero.width).toBe(width); expect(hero.height).toBe(art === 'prayer' ? devotionalFrameSpec(art).hero * width / 1080 : width * 1456 / 1080); act(() => tree!.unmount());
   }
+});
+it('adds native Vedansh branding to the text-free Mahakaal hero and footer', () => {
+  const original = devotionalArtData.devotionalArtRequest;
+  const spy = jest.spyOn(devotionalArtData, 'devotionalArtRequest').mockImplementation(art => original(art === 'mahakaal' ? 'shiva' : art));
+  let tree: ReactTestRenderer;
+  act(() => { tree = create(<><DevotionalHero art="mahakaal" lang="hi" width={360} /><DevotionalFooter art="mahakaal" width={360} /></>); });
+  expect(tree!.root.findByProps({ testID: 'mahakaal-brand' }).findAllByType(Image)).toHaveLength(0);
+  expect(tree!.root.findByProps({ testID: 'mahakaal-footer-brand' }).props.children).toBe('Vedansh.app');
+  expect(tree!.root.findAllByType(Image).map(n => n.props.testID)).toEqual(['devotional-hero-image', 'devotional-footer-image']);
+  act(() => tree!.unmount());
+  spy.mockRestore();
 });
 it('grows the meaning box without distorting decorative caps or hiding scripture', () => {
   let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalVerseBody header="Test" verse="A complete verse" meaning={'Complete meaning. '.repeat(200)} lang="en" art="vishnu" verseStyle={{}} meaningStyle={{}} exportMode />); });
@@ -146,7 +158,7 @@ it.each(['hi', 'en', 'gu', 'kn'] as const)('gives every %s first line room for t
   act(() => tree!.unmount());
 });
 
-it.each(Object.keys(devotionalSubjectArt) as (keyof typeof devotionalSubjectArt)[])('uses the same complete %s master for scene, reading areas and footer', art => {
+it.each((Object.keys(devotionalSubjectArt) as (keyof typeof devotionalSubjectArt)[]).filter(a => devotionalArtRequest(a)))('uses the same complete %s master for scene, reading areas and footer', art => {
   let tree: ReactTestRenderer;
   act(() => { tree = create(<><DevotionalHero art={art} lang="hi" width={324} /><DevotionalVerseBody header="Source" verse="Om" meaning="Complete meaning." lang="hi" art={art} width={324} verseStyle={{}} meaningStyle={{}} /><DevotionalFooter art={art} width={324} /></>); });
   const hero = tree!.root.findAllByType(Image).find(n => n.props.testID === 'devotional-hero-image')!;

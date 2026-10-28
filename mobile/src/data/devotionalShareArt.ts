@@ -7,6 +7,7 @@ const devotionalShareManifest: RemoteAssetManifest = devotionalShareManifestJson
 
 /** Complete portrait paintings; every card slice uses its own master. */
 export const devotionalSubjectArt = {
+  'mahakaal': 'mahakaal',
   'lakshmi': 'lakshmi',
   'khatu-shyam': 'khatu-shyam',
   'shani': 'shani',
@@ -36,7 +37,7 @@ export function devotionalPlateArt(art: DevotionalArt) {
 
 export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   'bhagavad-gita': 'krishna', 'krishna-stotram': 'krishna',
-  'shiva-strotam': 'shiva', 'om-namah-shivaya': 'shiva', 'mahamrityunjaya-mantra': 'shiva',
+  'shiva-strotam': 'shiva', 'om-namah-shivaya': 'mahakaal', 'mahamrityunjaya-mantra': 'shiva',
   'durga-stotram': 'durga', 'saraswati-stotram': 'saraswati',
   'saraswati-moola-mantra': 'saraswati', 'vidyarambha-prarthana': 'saraswati',
   'ganesh-stotram': 'ganesha', 'vishnu-sahasranama': 'vishnu',
@@ -62,7 +63,7 @@ export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   'shani-ashtakam': 'shani', 'kalika-ashtakam': 'kali',
   'kubera-stotram': 'kubera', 'navagraha-stotram': 'navagraha',
   'hanuman-chalisa': 'hanuman', 'hanuman-aarti': 'hanuman',
-  'shiv-chalisa': 'shiva', 'om-jai-shiv-omkara': 'shiva', lingashtakam: 'shiva',
+  'shiv-chalisa': 'shiva', 'om-jai-shiv-omkara': 'shiva', lingashtakam: 'mahakaal',
   rudrashtakam: 'shiva', 'shiva-kavacham': 'shiva',
   'durga-chalisa': 'durga', 'jai-ambe-gauri': 'durga', 'jay-adhya-shakti': 'durga',
   'bhavani-ashtakam': 'durga', 'devi-suktam': 'durga', 'durga-kavach': 'durga',
@@ -83,7 +84,9 @@ const verseArt: Readonly<Record<string, DevotionalArt>> = {
   'bhojan-mantra:2': 'prayer', 'bhojan-mantra:3': 'prayer',
 };
 export function devotionalArtForVerse(v: { sourceId: string; verseIndex: number }): DevotionalArt {
-  return verseArt[`${v.sourceId}:${v.verseIndex}`] ?? devotionalSourceArt[v.sourceId] ?? 'prayer';
+  const art = verseArt[`${v.sourceId}:${v.verseIndex}`] ?? devotionalSourceArt[v.sourceId] ?? 'prayer';
+  // Keep the existing Shiva painting until Mahakaal's public object is byte-verified.
+  return art === 'mahakaal' && !devotionalShareManifest.assets.mahakaal ? 'shiva' : art;
 }
 /**
  * The complete portrait masters ship from R2 (prefix `devotional-share`), not the bundle.

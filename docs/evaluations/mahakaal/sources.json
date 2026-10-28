@@ -1,0 +1,50 @@
+{
+  "daily": {
+    "file": "master-mahakaal.webp",
+    "width": 1080,
+    "height": 1456,
+    "bytes": 423940,
+    "sha256": "8d909c45775f6491474287eddc9fef01a099425c6f58560ef79b2ecc0f9618aa",
+    "sourceImage": "exec-3444537a-98c9-4a10-8fe5-e17e8c9db495.png",
+    "sourceSha256": "b67eeb56893b4571a125bf6a312a6ba490e387346e3b316d734192e76c031189",
+    "prompt": "Use case: illustration-story. Create one production devotional card master for Vedansh. Subject: Shri Mahakaleshwar Jyotirlinga of Ujjain, an artistic devotional interpretation, not a documentary photograph. Rounded dark stone Shiva lingam in its silver yoni pedestal, traditional white horizontal tripundra with central red tilak, reverent painted shringar eyes and curved moustache on the lingam, silver serpent canopy behind, white jasmine and marigold garlands around base, bilva leaves, softly glowing brass lamps within an ornate temple sanctum. NO human Shiva figure, NO human body or arms, no other deity. Refined warm full-colour Indian miniature painting, antique ivory parchment, gold/terracotta detailing matching reference. No lettering, glyphs, watermarks, sample text or Om anywhere. Keep entire shrine and garlands in upper painted portion. Reference image is STYLE/FRAME reference only, replace subject. Keep reference's precise heritage border and lower blank verse/meaning panels and landscape footer. Replace ONLY upper Shiva/Himalaya illustration with Mahakaleshwar temple shrine. Portrait 1080x1456. The complete shrine must fit in top y=0-36%; fade to plain paper by y=38%. Preserve body ornament dividers, meaning box and bottom landscape footer. Remove ALL text and branding from reference: app paints its real brand separately. NO writing anywhere.",
+    "tool": "built-in imagegen",
+    "review": "2026-10-27: all four full images inspected; shrine, text-free body and frame bounds checked. Artistic interpretation, not an exact photograph of the sanctum. Native and export QA pending."
+  },
+  "pushp-aangan": {
+    "file": "mahakaal--pushp-aangan.webp",
+    "width": 1122,
+    "height": 1402,
+    "bytes": 479556,
+    "sha256": "fe7ff3914e8434eebc9966b5bae38466420896f7cd8b8d156a9cf8c4b10f0821",
+    "sourceImage": "exec-195bccab-76aa-4b63-a744-ce479c990e07.png",
+    "sourceSha256": "4576ed3855c4846c99751a411d25fd8959274ce1cf7d1e2c2e1a3788fbc7ab74",
+    "prompt": "Use case: illustration-story. Create one production devotional card master for Vedansh. Subject: Shri Mahakaleshwar Jyotirlinga of Ujjain, an artistic devotional interpretation, not a documentary photograph. Rounded dark stone Shiva lingam in its silver yoni pedestal, traditional white horizontal tripundra with central red tilak, reverent painted shringar eyes and curved moustache on the lingam, silver serpent canopy behind, white jasmine and marigold garlands around base, bilva leaves, softly glowing brass lamps within an ornate temple sanctum. NO human Shiva figure, NO human body or arms, no other deity. Refined warm full-colour Indian miniature painting, antique ivory parchment, gold/terracotta detailing matching reference. No lettering, glyphs, watermarks, sample text or Om anywhere. Keep entire shrine and garlands in upper painted portion. Reference image is STYLE/FRAME reference only, replace subject. Retain reference's delicate lotus-vine botanical border and dissolving painted scene edge. Portrait 4:5 1120x1400. Shrine contained inside upper 8-55%, nothing from shrine below 56%. Keep lower y=58-94% quiet BLANK cream paper for native text. Footer blank.",
+    "tool": "built-in imagegen",
+    "review": "2026-10-27: all four full images inspected; shrine, text-free body and frame bounds checked. Artistic interpretation, not an exact photograph of the sanctum. Native and export QA pending."
+  },
+  "bhakti-patra": {
+    "file": "mahakaal--bhakti-patra.webp",
+    "width": 1122,
+    "height": 1402,
+    "bytes": 405170,
+    "sha256": "7621991b6799e06c0dfc9cad7f97d7acff3361ae6289dba6f0ed59943d22f207",
+    "sourceImage": "exec-ac363041-5565-4590-8069-d0a264465252.png",
+    "sourceSha256": "9116626aaa63c07d0325e42711d54f3c682abff342b3e8afafec92d6880e1a05",
+    "prompt": "Use case: illustration-story. Create one production devotional card master for Vedansh. Subject: Shri Mahakaleshwar Jyotirlinga of Ujjain, an artistic devotional interpretation, not a documentary photograph. Rounded dark stone Shiva lingam in its silver yoni pedestal, traditional white horizontal tripundra with central red tilak, reverent painted shringar eyes and curved moustache on the lingam, silver serpent canopy behind, white jasmine and marigold garlands around base, bilva leaves, softly glowing brass lamps within an ornate temple sanctum. NO human Shiva figure, NO human body or arms, no other deity. Refined warm full-colour Indian miniature painting, antique ivory parchment, gold/terracotta detailing matching reference. No lettering, glyphs, watermarks, sample text or Om anywhere. Keep entire shrine and garlands in upper painted portion. Reference image is STYLE/FRAME reference only, replace subject. Retain reference's deckled parchment, inset painting, antique gold double rules and sparse botanical corner details. Portrait 4:5 1120x1400. Shrine contained inside upper 8-55%, nothing from shrine below 56%. Lower y=58-94% quiet BLANK paper for native text; footer blank.",
+    "tool": "built-in imagegen",
+    "review": "2026-10-27: all four full images inspected; shrine, text-free body and frame bounds checked. Artistic interpretation, not an exact photograph of the sanctum. Native and export QA pending."
+  },
+  "mandir-jharokha": {
+    "file": "mahakaal--mandir-jharokha.webp",
+    "width": 1122,
+    "height": 1402,
+    "bytes": 524624,
+    "sha256": "ef98ac739993f540b46c7b38faa75ca56436dccf66057a43ba81c1d689d09263",
+    "sourceImage": "exec-b17ce80d-8c84-436a-a09b-ada4057c7b35.png",
+    "sourceSha256": "c7b83e87f9862e167479d9394750ad905042ef72576fa373b3a4d7f1a9f8ab31",
+    "prompt": "Use case: illustration-story. Create one production devotional card master for Vedansh. Subject: Shri Mahakaleshwar Jyotirlinga of Ujjain, an artistic devotional interpretation, not a documentary photograph. Rounded dark stone Shiva lingam in its silver yoni pedestal, traditional white horizontal tripundra with central red tilak, reverent painted shringar eyes and curved moustache on the lingam, silver serpent canopy behind, white jasmine and marigold garlands around base, bilva leaves, softly glowing brass lamps within an ornate temple sanctum. NO human Shiva figure, NO human body or arms, no other deity. Refined warm full-colour Indian miniature painting, antique ivory parchment, gold/terracotta detailing matching reference. No lettering, glyphs, watermarks, sample text or Om anywhere. Keep entire shrine and garlands in upper painted portion. Reference image is STYLE/FRAME reference only, replace subject. Retain reference's terracotta-and-gold jharokha arch and floral border exactly in character. Portrait 4:5 1120x1400. Shrine contained inside upper 8-55% of canvas, nothing from shrine below 56%. Keep entire lower y=58-94% quiet BLANK cream paper for native text. Footer y=94-100% blank.",
+    "tool": "built-in imagegen",
+    "review": "2026-10-27: all four full images inspected; shrine, text-free body and frame bounds checked. Artistic interpretation, not an exact photograph of the sanctum. Native and export QA pending."
+  }
+}
