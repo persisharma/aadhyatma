@@ -3,6 +3,9 @@ import { AppState, Pressable, TextInput, View } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import SuvicharScreen from '../SuvicharScreen';
 import SuvicharCard from '@/components/SuvicharCard';
+import SuvicharThoughtPicker from '@/components/SuvicharThoughtPicker';
+import { suvicharDeities } from '@/data/suvichar';
+import { suvicharThoughtsFor, sourceForSuvichar } from '@/data/suvicharContent';
 import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
 import { suvicharDay, suvicharTemplatesFor } from '@/data/suvicharTemplates';
 // Built when called, so it pairs thoughts for the faked date rather than the import-time date.
@@ -12,6 +15,7 @@ import type { ShareableCard } from '@/utils/shareVerse';
 jest.mock('@/components/ReaderHeader', () => () => null);
 jest.mock('@/components/SuvicharCard', () => 'SuvicharCard');
 jest.mock('@/components/SuvicharPresetPicker', () => 'SuvicharPresetPicker');
+jest.mock('@/components/SuvicharThoughtPicker', () => 'SuvicharThoughtPicker');
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'hi' }) }));
 jest.mock('@react-navigation/native', () => ({ useNavigation: () => ({ goBack: jest.fn() }) }));
 jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: 'SafeAreaView' }));
@@ -111,7 +115,7 @@ it('opens ready-made cards first and shares one without editing a message', asyn
   expect(node('suvichar-message').props.value).toBe('');
   act(() => node('suvichar-presets-daily').props.onPress());
   const picker = tree.root.findByType(SuvicharPresetPicker);
-  expect(picker.props.templates).toHaveLength(16);
+  expect(picker.props.templates).toHaveLength(suvicharDeities.length);
   act(() => node('suvichar-name').props.onChangeText('Sharma family'));
   const preset = templatesToday().find(t => t.id === 'daily-salasar-balaji')!;
   act(() => picker.props.onSelect(preset));
@@ -136,7 +140,7 @@ it('offers seven ready-made wishes and keeps the selected card when switching to
 it('picks deities from compact painted tiles in custom mode', async () => {
   await mount();
   const picker = tree.root.findByType(SuvicharPresetPicker);
-  expect(picker.props).toMatchObject({ compact: true }); expect(picker.props.templates).toHaveLength(16);
+  expect(picker.props).toMatchObject({ compact: true }); expect(picker.props.templates).toHaveLength(suvicharDeities.length);
   expect(picker.props.testIDFor(picker.props.templates[0])).toBe(`suvichar-deity-${picker.props.templates[0].deity}`);
   pickDeity('rama');
   expect(tree.root.findByType(SuvicharCard).props.deity).toBe('rama');
@@ -221,4 +225,31 @@ describe('weekday cards', () => {
     act(() => node('suvichar-saved-0').props.onPress());
     expect(card()).toMatchObject({ deity: 'hanuman', title: 'शुभ बुधवार' });
   });
+});
+
+it('browses a late catalogue entry, shares its reference, restores it from favorites and drops the reference on edit', async () => {
+  await mount();pickDeity('krishna');
+  act(() => node('suvichar-browse-thoughts').props.onPress());
+  expect(tree.root.findByType(SuvicharThoughtPicker).props.visible).toBe(true);
+  const late = suvicharThoughtsFor('krishna').find(t => t.id === 'SV-0099')!;
+  act(() => tree.root.findByType(SuvicharThoughtPicker).props.onSelect(late));
+  let card = tree.root.findByType(SuvicharCard).props;
+  expect(card.message).toBe(late.hi);expect(card.attribution).toContain(sourceForSuvichar(late).referenceHi);
+  act(() => node('suvichar-favorite').props.onPress());
+  act(() => card.onReady(true));await act(async () => node('suvichar-share').props.onPress());
+  expect(sharedCard().text?.('hi')).toContain(card.attribution);
+  act(() => node('suvichar-message').props.onChangeText('मेरा अपना नया संदेश'));
+  expect(tree.root.findByType(SuvicharCard).props.attribution).toBeUndefined();
+  act(() => node('suvichar-saved-0').props.onPress());
+  expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ message: late.hi, attribution: card.attribution });
+});
+
+it('switches a supplied thought with its deity while preserving custom writing', async () => {
+  await mount();pickDeity('krishna');act(() => node('suvichar-next').props.onPress());
+  pickDeity('ganesha');
+  const card = tree.root.findByType(SuvicharCard).props;
+  expect(suvicharThoughtsFor('ganesha').some(t => t.hi === card.message)).toBe(true);
+  expect(card.attribution).toContain('गणपत्यथर्वशीर्ष');
+  act(() => node('suvichar-message').props.onChangeText('मेरी शुभकामना'));
+  pickDeity('rama');expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ message: 'मेरी शुभकामना', attribution: undefined });
 });

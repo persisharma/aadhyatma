@@ -58,7 +58,7 @@ test('before sunrise, last night\'s festival is carried over until sunrise', asy
   );
   const out = texts(tree);
   expect(out).toContain('Sharad Purnima night');
-  expect(out).toContain('Chandra Deva · until sunrise 6:11 AM');
+  expect(out).toContain('Chandra Deva · until sunrise 06:11');
   expect(out).toContain('+1');
   // Pressable is a memo'd forwardRef, so find the press target by its props.
   const ribbon = tree.root.findAll((n) => n.props.testID === 'observance-now-ribbon' && typeof n.props.onPress === 'function')[0];

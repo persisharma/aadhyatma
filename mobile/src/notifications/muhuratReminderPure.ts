@@ -19,7 +19,7 @@
 
 import { ROLLING_WINDOW_DAYS } from './pure';
 import { ADVANCE_HOUR } from './vratReminderPure';
-import { formatRangeCompact } from '@/panchang/muhuratFormat';
+import { formatRange } from '@/panchang/muhuratFormat';
 
 /** Identifier prefix for all PRD-16 muhurat notifications. Lets us cancel just ours. */
 export const MUHURAT_NOTIF_PREFIX = 'muhurat-reminder';
@@ -78,7 +78,7 @@ export type PlannedMuhuratNotification = {
   nameHi: string;
   nameEn: string;
   advanceDays: number; // 0 for day-of
-  windowLabelHi: string | null; // "अमृत 6:07 – 7:41 AM" for the day-of body
+  windowLabelHi: string | null; // "अमृत 06:07 – 07:41" for the day-of body
   windowLabelEn: string | null;
 };
 
@@ -90,7 +90,7 @@ function startOfLocalDay(d: Date): Date {
  * Resolve the day-of fire time, then clamp it behind the window.
  *
  * The clamp is the whole point. On 17 Aug 2026 in Bengaluru the best Vahan
- * window is Amrit 6:07–7:41 AM; the shipped vrat default day-of time is 07:00,
+ * window is Amrit 06:07–07:41; the shipped vrat default day-of time is 07:00,
  * which would arrive 53 minutes AFTER the muhurat opened. So whatever the user
  * picked, the notice is pulled back to `windowStart - WINDOW_LEAD_MINUTES`
  * when it would otherwise land too late.
@@ -148,11 +148,11 @@ export function planMuhuratReminders(
     const day = startOfLocalDay(it.date);
     const windowLabelHi =
       it.windowStart && it.windowEnd && it.windowNameHi
-        ? `${it.windowNameHi} ${formatRangeCompact(it.windowStart, it.windowEnd)}`
+        ? `${it.windowNameHi} ${formatRange(it.windowStart, it.windowEnd)}`
         : null;
     const windowLabelEn =
       it.windowStart && it.windowEnd && it.windowNameEn
-        ? `${it.windowNameEn} ${formatRangeCompact(it.windowStart, it.windowEnd)}`
+        ? `${it.windowNameEn} ${formatRange(it.windowStart, it.windowEnd)}`
         : null;
 
     if (it.pref.advanceDays > 0) {

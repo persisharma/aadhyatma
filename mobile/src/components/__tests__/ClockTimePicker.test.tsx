@@ -6,10 +6,9 @@ import { ThemeProvider } from '@/theme/ThemeContext';
 import ClockTimePicker from '../ClockTimePicker';
 
 /**
- * The AM/PM birth-time picker reuses the reminder stepper's HR/MIN columns and
- * adds a period toggle. HR/MIN step the underlying 24-hour minute-of-day; the
- * 12-hour display and AM/PM are derived from it, and the toggle shifts ±12h.
- * The emitted value is always zero-padded 24-hour `HH:mm`.
+ * The birth-time picker reuses the reminder stepper's HR/MIN columns in 24-hour
+ * form. HR/MIN step the underlying minute-of-day; the emitted value is always
+ * zero-padded 24-hour `HH:mm`.
  */
 
 async function renderPicker(
@@ -46,12 +45,18 @@ function displayedTexts(tree: TestRenderer.ReactTestRenderer): string {
 }
 
 describe('ClockTimePicker', () => {
-  test('renders the 12-hour display of a 24-hour value', async () => {
-    const tree = await renderPicker('05:42', () => {});
+  test('renders the 24-hour value with no meridiem', async () => {
+    const tree = await renderPicker('17:42', () => {});
     const text = displayedTexts(tree);
-    expect(text).toContain('5');
+    expect(text).toContain('17');
     expect(text).toContain('42');
-    expect(text).toContain('AM');
+    expect(text).not.toMatch(/AM|PM/);
+    await act(async () => tree.unmount());
+  });
+
+  test('pads a morning hour to two digits', async () => {
+    const tree = await renderPicker('05:42', () => {});
+    expect(displayedTexts(tree)).toContain('05');
     await act(async () => tree.unmount());
   });
 
@@ -59,7 +64,7 @@ describe('ClockTimePicker', () => {
     const onChange = jest.fn();
     const tree = await renderPicker('11:42', onChange);
     await act(async () => press(tree, 'Increase Hour').props.onPress());
-    expect(onChange).toHaveBeenCalledWith('12:42'); // 11 AM -> 12 PM
+    expect(onChange).toHaveBeenCalledWith('12:42');
     await act(async () => tree.unmount());
   });
 
@@ -84,32 +89,6 @@ describe('ClockTimePicker', () => {
     const tree = await renderPicker('23:30', onChange);
     await act(async () => press(tree, 'Increase Hour').props.onPress());
     expect(onChange).toHaveBeenCalledWith('00:30');
-    await act(async () => tree.unmount());
-  });
-
-  test('toggling period shifts an AM time to PM', async () => {
-    const onChange = jest.fn();
-    const tree = await renderPicker('05:42', onChange);
-    await act(async () => press(tree, 'Toggle AM/PM').props.onPress());
-    expect(onChange).toHaveBeenCalledWith('17:42'); // 5 AM -> 5 PM
-    await act(async () => tree.unmount());
-  });
-
-  test('12 AM (midnight) toggles to 12 PM (noon)', async () => {
-    const onChange = jest.fn();
-    const tree = await renderPicker('00:15', onChange);
-    // Displayed as 12 AM.
-    expect(displayedTexts(tree)).toContain('12');
-    await act(async () => press(tree, 'Toggle AM/PM').props.onPress());
-    expect(onChange).toHaveBeenCalledWith('12:15');
-    await act(async () => tree.unmount());
-  });
-
-  test('12 PM (noon) toggles to 12 AM (midnight)', async () => {
-    const onChange = jest.fn();
-    const tree = await renderPicker('12:00', onChange);
-    await act(async () => press(tree, 'Toggle AM/PM').props.onPress());
-    expect(onChange).toHaveBeenCalledWith('00:00');
     await act(async () => tree.unmount());
   });
 });

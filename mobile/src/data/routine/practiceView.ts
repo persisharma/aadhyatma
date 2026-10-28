@@ -45,28 +45,21 @@ export function practiceSummary(doneCount: number, total: number, lang: Lang): P
 }
 
 /**
- * Formats an epoch-ms completion time as a 12-hour clock, e.g. "7:12 AM".
+ * Formats an epoch-ms completion time as a 24-hour clock, e.g. "07:12".
  * Returns null for a missing/sentinel time (0 = "offered, time unknown" — a
  * migrated legacy mark or an auto-japam completion that carries no timestamp),
  * so callers fall back to a plain "offered".
  */
-export function formatOfferedTime(ms: number | undefined, lang: Lang): string | null {
+export function formatOfferedTime(ms: number | undefined): string | null {
   if (ms == null || ms <= 0 || !Number.isFinite(ms)) return null;
   const d = new Date(ms);
-  let h = d.getHours();
-  const m = d.getMinutes();
-  const isPm = h >= 12;
-  h %= 12;
-  if (h === 0) h = 12;
-  const mm = String(m).padStart(2, '0');
-  const meridiem = contentByLang(lang, isPm ? 'अपराह्न' : 'पूर्वाह्न', isPm ? 'PM' : 'AM');
-  return `${h}:${mm} ${meridiem}`;
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
 
-/** The state tail shown on an item row: "offered 7:12 AM" / "offered" / "Tap to read". */
+/** The state tail shown on an item row: "offered 07:12" / "offered" / "Tap to read". */
 export function offeredTail(done: boolean, doneAt: number | undefined, lang: Lang): string {
   if (!done) return contentByLang(lang, 'पढ़ने के लिए टैप करें', 'Tap to read');
-  const t = formatOfferedTime(doneAt, lang);
+  const t = formatOfferedTime(doneAt);
   if (t) return contentByLang(lang, `${t} · अर्पित`, `offered ${t}`);
   return contentByLang(lang, 'अर्पित', 'offered');
 }

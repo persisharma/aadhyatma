@@ -4,7 +4,7 @@
 // on the share tap without a solve.
 import type { Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
-import { formatClock, formatEndInstant, formatRangeCompact } from './muhuratFormat';
+import { formatClock, formatEndInstant, formatRange } from './muhuratFormat';
 import type { ChoghadiyaPeriod, MuhuratDay } from './muhurat';
 import {
   KARANA_NAMES_EN,
@@ -51,7 +51,7 @@ export type PanchangShareModel = {
   karana: ShareAnga;
   day: ShareChoghadiya[];
   night: ShareChoghadiya[];
-  /** Daytime windows, so no AM/PM: "11:40 – 12:26". Abhijit is null when it collapses. */
+  /** 24-hour ranges: "11:40 – 12:26". Abhijit is null when it collapses. */
   abhijit: string | null;
   rahu: string;
   gulika: string;
@@ -62,8 +62,7 @@ export type PanchangShareModel = {
   agni: ShareVaas;
 };
 
-const bareClock = (d: Date) => formatClock(d).replace(/ [AP]M$/, '');
-const span = (a: Date, b: Date) => `${bareClock(a)} – ${bareClock(b)}`;
+const span = (a: Date, b: Date) => `${formatClock(a)} – ${formatClock(b)}`;
 const name = (lang: Lang, hi: string, en: string) => contentByLang(lang, hi, en);
 
 /** The tithi running at `at` — the sunrise tithi, its kshaya follower, or the next. */
@@ -122,7 +121,7 @@ function anga(
 
 const chog = (lang: Lang) => (c: ChoghadiyaPeriod): ShareChoghadiya => ({
   name: name(lang, c.nameHi, c.nameEn),
-  start: bareClock(c.start),
+  start: formatClock(c.start),
   auspicious: c.quality === 'auspicious',
 });
 
@@ -167,7 +166,7 @@ export function buildPanchangShareModel(input: {
       `${masaHi} ${PAKSHA_NAMES_HI[p.tithi.paksha]} ${p.tithi.nameHi} · ${system.hi} · विक्रम संवत् ${p.vikramSamvat}`,
       `${masaEn} ${PAKSHA_NAMES_EN[p.tithi.paksha]} ${p.tithi.nameEn} · ${system.en} · Vikram Samvat ${p.vikramSamvat}`,
     ),
-    brahma: formatRangeCompact(p.brahmaMuhurta.start, p.brahmaMuhurta.end),
+    brahma: formatRange(p.brahmaMuhurta.start, p.brahmaMuhurta.end),
     sunrise: formatClock(p.sunrise),
     sunset: formatClock(p.sunset),
     moonrise: p.moonrise ? formatClock(p.moonrise) : null,

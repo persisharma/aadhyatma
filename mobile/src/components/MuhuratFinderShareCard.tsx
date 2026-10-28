@@ -5,7 +5,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { TIER_LABELS, type DayVerdict, type EventRule } from '@/panchang/eventMuhurat';
-import { formatRangeCompact } from '@/panchang/muhuratFormat';
+import { formatRange } from '@/panchang/muhuratFormat';
 import { VARA_NAMES_HI, VARA_NAMES_EN, PAKSHA_NAMES_HI, PAKSHA_NAMES_EN } from '@/panchang/names';
 import { RASHI_NAMES_HI, RASHI_NAMES_EN } from '@/panchang/kundali';
 import { transliterateDevanagari } from '@/utils/transliterate';
@@ -89,7 +89,7 @@ export default function MuhuratFinderShareCard({
             {contentByLang(lang, 'सर्वोत्तम समय', 'Best time')}
           </Text>
           <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 22, color: colors.ink, textAlign: 'center', lineHeight: 33, marginTop: 2 }}>
-            {formatRangeCompact(best.start, best.end)}
+            {formatRange(best.start, best.end)}
           </Text>
           <Text style={{ fontFamily: titleFont, fontSize: 13, color: colors.saffronDeep, textAlign: 'center', lineHeight: 21 }}>
             {contentByLang(lang, best.nameHi, best.nameEn)}
@@ -116,7 +116,7 @@ export default function MuhuratFinderShareCard({
             {contentByLang(lang, w.nameHi, w.nameEn)}
           </Text>
           <Text style={{ fontFamily: typography.cardHindi.fontFamily, fontSize: 12.5, color: colors.ink, marginLeft: 'auto', lineHeight: 20 }}>
-            {formatRangeCompact(w.start, w.end)}
+            {formatRange(w.start, w.end)}
           </Text>
         </View>
       ))}

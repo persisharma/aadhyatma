@@ -31,8 +31,8 @@ test('every dated day carries a chain that agrees with the app’s live tithi', 
   assert.equal(day.dateKey, '2026-09-17');
   // 17 Sept 2026, Bengaluru: षष्ठी runs till 10:48 AM IST, then सप्तमी.
   assert.equal(day.tithi.hi, 'षष्ठी');
-  assert.equal(day.tithiSegments![0].till!.hi, 'तक 10:48 AM');
-  assert.equal(day.tithiSegments![0].till!.en, 'till 10:48 AM');
+  assert.equal(day.tithiSegments![0].till!.hi, 'तक 10:48');
+  assert.equal(day.tithiSegments![0].till!.en, 'till 10:48');
   assert.equal(runningTithi(day, new Date('2026-09-17T04:00:00Z')).name.hi, 'षष्ठी');
   assert.equal(runningTithi(day, new Date('2026-09-17T09:00:00Z')).name.hi, 'सप्तमी');
 
@@ -49,7 +49,7 @@ test('every dated day carries a chain that agrees with the app’s live tithi', 
   }
 });
 
-test('a handover past midnight carries its date, so “तक 5:22 AM” never reads as this morning', async () => {
+test('a handover past midnight carries its date, so “तक 05:22” never reads as this morning', async () => {
   // Bengaluru 10 Jul 2026 — the documented kshaya day: Dashami till 8:16 AM,
   // then a kshaya Ekadashi that ends at ~5:22 AM the NEXT morning.
   const bengaluru = toPanchangLocation(CITIES.find((city) => city.id === 'bengaluru') ?? CITIES[0], 'city');
