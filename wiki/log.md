@@ -1251,3 +1251,7 @@ Every illustrated lesson now opens Gita connection references and Gita source ci
 ## [2026-10-28] ingest | Panchang night-header native evidence
 
 Captured the painted waning Krishna Tritiya moon and sepia night header on the dedicated iOS simulator with a temporary 10 PM app-runtime clock. Restored the clock after capture; no source clock override. Evidence and limits are in `docs/evaluations/panchang-day-icons-2026-10-27/README.md`. Latest main's Vrat strip/reminder changes are reconciled with both log histories retained.
+
+## [2026-10-28] ingest | Panchang following-day cards share the Vrat listing; strengthen Nakshatra miniature
+
+The day panel reuses `ObservancePreviewCard` / `ListingCard` with event artwork and separate save/reminder controls. Named Sankashti display titles retain the original rule identity for artwork/reminders. Nakshatra's existing six-star painting has stronger sepia contours/connectors in the same 36dp slot; reference, new master, prompt, hashes and exports are retained. Typecheck, focused ESLint, 33 focused tests and Standard/Large iOS visual flow pass; evidence is in `docs/evaluations/panchang-day-icons-2026-10-27/`. Android/VoiceOver remain pending.

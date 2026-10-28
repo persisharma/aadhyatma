@@ -15,6 +15,8 @@ The native app uses 62 bundled transparent Storybook assets for Home/deity/Muhur
 
 - Thirteen Muhurat occasions use distinct `occasion-*` paintings through a total typed map. Vastu doors share `vastu-disha` and `ghar`; Namkaran browse uses `nakshatra` and `rashi`. Existing art also replaces the Namkaran Muhurat link, both Daan bridges, custom Kuldevta initials, Panchang Katha/Puja Vidhi marks, and Kundali Lagna. Actual syllables, name-index initials, 108 and dates remain content. Muhurat/Vastu screen-level letter exceptions are removed. Retained original masters and reproducible normalization live in `docs/evaluations/remaining-icons-2026-10-16/`; native Standard/Large review and recovery of the two late naming prompt strings remain pending.
 
+- Nakshatra's existing six-star constellation was strengthened with darker sepia contours and thicker painted connectors for the 36dp Panchang tile. Its registry name, canvas and geometry stay fixed; the updated master, original reference, exact Image Gen prompt and normalization script are retained in `docs/evaluations/panchang-day-icons-2026-10-27/nakshatra-rework/`. The original October 16 master remains intact.
+
 - `storybookSources.ts` statically requires local PNGs; `StoryIcon` displays them as decorative images. No remote icon fetches or duplicate accessible labels.
 - `deityArtwork.ts` covers all 21 existing keys with a total typed mapping. `deities.icon-contract.ts` still pins deity IDs to semantic attributes.
 - `DeityIcon` retains a 36×36 layout box and transform scaling for 26/36/150dp consumers. Unknown keys draw the painted `deity` seal — `DeityIcon` takes no text fallback (RULEBOOK §3 *Painted art only*, guarded by `paintedIconsOnly.test.ts`).

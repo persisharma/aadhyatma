@@ -1,7 +1,7 @@
 # Panchang day-panel icon rework
 
 Six individually generated transparent Storybook miniatures: `chandra`, `karana`,
-`nitya-yoga`, `agni-vaas`, `sunset`, and `moonrise`. Existing icons are reused.
+`nitya-yoga`, `agni-vaas`, `sunset`, and `moonrise`. Existing icons are reused; the Nakshatra legibility replacement is recorded in the follow-up below.
 
 Generated with the built-in `image_gen` tool. Every call included the approved
 Storybook style board; sunset and moonrise also included `surya.png` as the edit
@@ -46,11 +46,11 @@ More's painted regional subject. The live Tithi/sky/ribbon phase marks now reuse
 | Sun / Moon / Disha Shool / Agni Vaas | 30dp paintings before labels; chips wrap inside cards |
 | Shubh Yoga | Existing More star at 22dp; plain Finder variant retained |
 | Sunrise / Sunset / Moonrise / Brahma Muhurta | 40dp surya / sunset / moonrise / aarti paintings |
-| Following-day observances | Existing 42dp vrat painting; same shared utility chevron |
+| Following-day observances | Shared Vrat `ObservancePreviewCard` with 78dp event artwork, bilingual title and independent save/reminder control |
 | Regional calendar | Existing More regional painting on discovery and seeded feedback |
 | Header actions | Existing small utility controls and live sky mark; saved star normalized |
 
-No further generated artwork was needed. Reused paintings and all six new subjects
+The initial implementation reused the other paintings; a later Nakshatra legibility edit is recorded below. Reused paintings and all six new subjects
 were compared at 30px and 72px. Native Hindi captures in `ios/` were visually
 inspected at Standard and Large reading settings; no artwork/text collision was
 observed. The time labels retain the brief's existing small typography. The Large
@@ -120,3 +120,35 @@ Validation for this follow-up:
   histories. Typecheck and all 25 focused Jest tests pass on merge `f8bb89a9`.
   The celestial implementation is unchanged by this merge.
 - Android and VoiceOver verification remain pending.
+
+## Listing consistency and Nakshatra follow-up
+
+The lower following-day cards now render the same `ObservancePreviewCard` and
+`ListingCard variant="observance"` as the Vrat listing, rather than custom kalash
+rows. This brings the existing event artwork, 78dp square scene, bilingual title,
+cream catalog frame, shared chevron and independent 44dp bell target. The day
+label uses the countdown slot. Sankashti occurrence names are display overrides;
+artwork, save/reminder state and detail navigation keep the original rule identity.
+First-use reminders and saved-preference reuse use the existing shared hook.
+
+Nakshatra retains its six-star arrangement and 36dp layout slot, with stronger
+sepia outlines and thicker painted connectors. Built-in Image Gen edited the
+existing icon; `nakshatra-rework/prompt.json` retains the exact prompt, reference
+and master hashes, `export.py` reproduces normalization, and `comparison.png`
+compares 30/36/72px exports on cream. The replacement is 21,798 bytes, 5,009 bytes
+above the old export; the existing Nakshatra/Rashi budget and total icon counts
+are unchanged. The old October 16 master is retained.
+
+Local verification: typecheck and focused ESLint pass; listing/preview/next-day
+card suites pass (23 tests), reminder-action and painted asset suites pass
+(10 tests). The focused `panchang-next-day-listing-smoke.yaml` passes end to
+end on the dedicated iOS 26.5 simulator with completed setup at Standard and Large
+reading sizes. All four screenshots in `listing-consistency/` were visually
+inspected: stronger constellation lines, complete scene, full bilingual occurrence
+title, Next day badge and separate bell/chevron are clear with no collision.
+
+The first native route tap opened Sankashti Detail (confirmed visually), then the
+Maestro driver returned `kAXErrorInvalidUIElement` while querying the transition.
+The green focused flow covers visual/layout states and the accessible detail/bell
+targets; correct navigation and independent reminder actions are also pinned by
+Jest. This is not an Android or VoiceOver acceptance result.

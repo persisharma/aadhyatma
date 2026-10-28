@@ -851,22 +851,22 @@
       "file": "nakshatra.png",
       "width": 512,
       "height": 512,
-      "bytes": 16789,
-      "sha256": "2824f330a6dd5de1670da4f282ab3f819eea9948e53d36ddaaa2b509c901e3df",
-      "masterSha256": "be7626b8ee413f9ceba10ebb06236baec879559bae3828f8062b7dbfb3483d61",
-      "sourceSha256": "be7626b8ee413f9ceba10ebb06236baec879559bae3828f8062b7dbfb3483d61",
+      "bytes": 21798,
+      "sha256": "53325eb61848c3a5110c9bd334d6f0968de4e0df801b41f257af6e0076e6a4f5",
+      "masterSha256": "f937119ee0cd45cb3290987634cd634e6c4f9acfd82a8cf0cafdccfba185c8eb",
+      "sourceSha256": "f937119ee0cd45cb3290987634cd634e6c4f9acfd82a8cf0cafdccfba185c8eb",
       "visibleBounds": [
         40,
-        69,
+        66,
         472,
-        443
+        446
       ],
       "alphaExtrema": [
         0,
-        254
+        253
       ],
-      "provenanceFile": "../../../../docs/evaluations/remaining-icons-2026-10-16/masters/nakshatra.png",
-      "source": "Original individually generated transparent master; generation-brief.md and sources.json retain provenance"
+      "provenanceFile": "../../../../docs/evaluations/panchang-day-icons-2026-10-27/nakshatra-rework/master.png",
+      "source": "Image Gen edit of retained reference; prompt.json and export.py retain provenance"
     },
     {
       "name": "rashi",

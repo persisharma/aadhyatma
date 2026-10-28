@@ -5,8 +5,18 @@ import PanchangNextDayCard from '../PanchangNextDayCard';
 import type { ResolvedObservance } from '@/panchang/types';
 import { OBSERVANCE_RULES } from '@/panchang/festivals';
 
+const mockToggleReminder = jest.fn();
+jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'en' }) }));
+jest.mock('@/contexts/VratFollowContext', () => ({ useVratFollows: () => ({ isFollowing: () => false }) }));
+jest.mock('../useVratReminderAction', () => ({
+  useVratReminderAction: () => ({ toggleReminder: mockToggleReminder, reminderSheet: null, reminderOnFor: () => false }),
+}));
+
 const trees: TestRenderer.ReactTestRenderer[] = [];
-afterEach(() => act(() => trees.splice(0).forEach(tree => tree.unmount())));
+afterEach(() => {
+  act(() => trees.splice(0).forEach(tree => tree.unmount()));
+  mockToggleReminder.mockClear();
+});
 
 function render(items: ResolvedObservance[], isToday = true, onOpen = jest.fn()) {
   let tree!: TestRenderer.ReactTestRenderer;
@@ -43,5 +53,17 @@ test('browsing another date says next day instead of claiming tomorrow', () => {
 test('keeps the published Sankashti occurrence and Angarki title', () => {
   const tree = render([item('sankashti-chaturthi-vrat')]);
   expect(text(tree)).toContain('(Angarki) Vrat');
+  expect(text(tree)).toContain('Vighnaraja Sankashti Chaturthi');
+});
+
+test('saving a named occurrence uses its original rule without opening details', () => {
+  const onOpen = jest.fn();
+  const occurrence = item('sankashti-chaturthi-vrat');
+  const tree = render([occurrence], false, onOpen);
+  const reminder = tree.root.findAll(node => node.props.accessibilityRole === 'button')
+    .find(node => node.props.testID === 'observance-reminder-sankashti-chaturthi-vrat')!;
+  act(() => reminder.props.onPress());
+  expect(mockToggleReminder).toHaveBeenCalledWith(occurrence.rule);
+  expect(onOpen).not.toHaveBeenCalled();
   expect(text(tree)).toContain('Vighnaraja Sankashti Chaturthi');
 });
