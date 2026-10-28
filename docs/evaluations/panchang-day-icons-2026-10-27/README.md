@@ -109,5 +109,14 @@ Validation for this follow-up:
   10 October Amavasya and 19 October waxing Ashtami. The dates/indices were checked
   against the bundled engine before the run. Its captures in `celestial-phase/`
   were visually inspected, including the painted daytime header sun.
-- Native nighttime header, Android and VoiceOver are not certified by these
-  daytime captures; the night-kind and live-Tithi wiring are covered by unit tests.
+- Native nighttime header visually inspected on the same simulator at a temporary
+  simulated 28 October 2026, 10 PM IST. `celestial-phase/panchang-painted-moon-night-header.png`
+  shows the dark sepia sky, cream controls, sunset-to-sunrise arc and painted waning
+  Krishna Tritiya moon. Only the app runtime's `Date.now` was temporarily overridden
+  through its local debug inspector; it was restored immediately after capture.
+  The iOS status-bar clock retains the real capture time. No clock override was
+  added to source or committed. The development warning was dismissed for capture.
+- Reconciled main at `78d34ea6` (Vrat strip/reminder work); retained both wiki log
+  histories. Typecheck and all 25 focused Jest tests pass on merge `f8bb89a9`.
+  The celestial implementation is unchanged by this merge.
+- Android and VoiceOver verification remain pending.

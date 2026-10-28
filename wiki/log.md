@@ -1247,3 +1247,7 @@ Recorded the shared first-use/reuse flow, explicit Vrat preference tracking and 
 Every illustrated lesson now opens Gita connection references and Gita source citations in the bundled GitaReader. The browser prototype opens the same corpus verse in its local sheet. Non-Gita story sources are visibly marked as optional external verification. Shok's Chitraketu story is from the Bhagavatam; its Gita 2.13 and 2.20 connections stay inside the app. Updated [[gita-saar]], design.md §77 and RULEBOOK §30.
 
 ## [2026-10-28] ingest | Reconcile PR #556 with latest main; retain both append-only histories. Celestial phase implementation remains unchanged.
+
+## [2026-10-28] ingest | Panchang night-header native evidence
+
+Captured the painted waning Krishna Tritiya moon and sepia night header on the dedicated iOS simulator with a temporary 10 PM app-runtime clock. Restored the clock after capture; no source clock override. Evidence and limits are in `docs/evaluations/panchang-day-icons-2026-10-27/README.md`. Latest main's Vrat strip/reminder changes are reconciled with both log histories retained.
