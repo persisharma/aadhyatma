@@ -1228,3 +1228,7 @@ Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×7
 ## [2026-10-27] ingest | Upcoming full-width banners
 
 The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.
+
+## [2026-10-28] ingest | Suvichar weekday-card rotation
+
+The weekday card ranked its thought by catalog index while its deity changed daily, so it repeated within 8 days and never showed 3 of the 21 thoughts. `suvicharTemplatesFor(day, lead)` now ranks the day's deities first; `suvicharTodayTemplates(date)` is the single call site for the screen and weekday cards. Updated [[subsystems/suvichar]].

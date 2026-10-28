@@ -4,9 +4,9 @@ import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import SuvicharScreen from '../SuvicharScreen';
 import SuvicharCard from '@/components/SuvicharCard';
 import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
-import { suvicharDay, suvicharTemplatesFor } from '@/data/suvicharTemplates';
+import { suvicharTodayTemplates } from '@/data/suvicharVaar';
 // Built when called, so it pairs thoughts for the faked date rather than the import-time date.
-const templatesToday = () => suvicharTemplatesFor(suvicharDay(new Date()));
+const templatesToday = () => suvicharTodayTemplates(new Date());
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { ShareableCard } from '@/utils/shareVerse';
 jest.mock('@/components/ReaderHeader', () => () => null);

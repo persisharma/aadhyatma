@@ -21,17 +21,23 @@ export function suvicharDay(date: Date): number {
 }
 
 const gcd = (a: number, b: number): number => b ? gcd(b, a % b) : a;
-// Each day the thoughts advance by a whole rail of deity cards, so the first card always carries a thought
-// yesterday's rail did not show; the stride stays coprime so every card cycles all thoughts before repeating one.
+// Each day the thoughts advance by a whole rail of deity cards, so the day's own deity always carries a thought
+// yesterday's rail did not show; the stride stays coprime so the card in a fixed rank cycles all thoughts before
+// repeating one. Ranks start from the day's deities: the weekday card changes deity daily, and ranking by catalog
+// index let it land on yesterday's or last week's thought and skip some thoughts altogether.
 let stride = suvicharDeities.length;
 while (gcd(stride, suvicharThoughts.length) !== 1) stride++;
 
-/** Curated complete compositions over the existing artwork for one day; no extra image payload. */
-export function suvicharTemplatesFor(day: number): SuvicharTemplate[] {
+/**
+ * Curated complete compositions over the existing artwork for one day; no extra image payload. `lead` is the
+ * day's own deities (the weekday card's), ranked first for the thought rotation; the rail keeps catalog order.
+ */
+export function suvicharTemplatesFor(day: number, lead: readonly SuvicharDeity[] = []): SuvicharTemplate[] {
   const offset = day * stride;
+  const ranked = [...lead, ...suvicharDeities.map(d => d.id).filter(id => !lead.includes(id))];
   return [
     ...suvicharDeities.map((deity, index): SuvicharTemplate => {
-      const thought = suvicharThoughts[(offset + index) % suvicharThoughts.length];
+      const thought = suvicharThoughts[(offset + ranked.indexOf(deity.id)) % suvicharThoughts.length];
       return { id: `daily-${deity.id}`, kind: 'daily', deity: deity.id,
         frame: (['mandir-jharokha', 'pushp-aangan', 'bhakti-patra'] as const)[index % 3],
         hi: deity.hi, en: deity.en, messageHi: thought.hi, messageEn: thought.en };

@@ -10,8 +10,8 @@ import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
 import SuvicharFramePicker from '@/components/SuvicharFramePicker';
 import SuvicharSenderPhoto from '@/components/SuvicharSenderPhoto';
 import AppIcon from '@/components/AppIcon';
-import { isSuvicharThought, suvicharDay, suvicharTemplatesFor, suvicharThoughts, type SuvicharTemplate } from '@/data/suvicharTemplates';
-import { suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '@/data/suvicharVaar';
+import { isSuvicharThought, suvicharThoughts, type SuvicharTemplate } from '@/data/suvicharTemplates';
+import { suvicharTodayTemplates, suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '@/data/suvicharVaar';
 import { WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { useGitaLanguage } from '@/data/gita/language';
 import { buildSuvicharShareMessage } from '@/data/shareLinks';
@@ -62,7 +62,7 @@ export default function SuvicharScreen() {
   const tr = (s: LocalizedStrings) => pick(lang, s);
   const title = tr({ hi: 'सुविचार', en: 'Suvichar', gu: 'સુવિચાર', kn: 'ಸುವಿಚಾರ' });
   // An unedited thought is not kept, so each visit opens on today's.
-  const templates = useMemo(() => suvicharTemplatesFor(suvicharDay(now)), [now]);
+  const templates = useMemo(() => suvicharTodayTemplates(now), [now]);
   const vaarTemplates = useMemo(() => suvicharVaarTemplates(now, templates), [now, templates]);
   const cardTitle = prefs.vaar && vaar ? contentByLang(lang, vaar.hi, vaar.en) : undefined;
   const dailyTemplates = templates.filter(t => t.kind === 'daily');

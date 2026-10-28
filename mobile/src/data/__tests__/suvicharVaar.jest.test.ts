@@ -1,6 +1,6 @@
 import { initialSuvichar, suvicharArtRequest, suvicharDeities, suvicharFrames, suvicharReflections } from '../suvichar';
-import { suvicharDay, suvicharTemplatesFor, suvicharThoughts } from '../suvicharTemplates';
-import { isAuthoredSuvicharMessage, suvicharVaar, suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '../suvicharVaar';
+import { suvicharThoughts } from '../suvicharTemplates';
+import { isAuthoredSuvicharMessage, suvicharTodayTemplates, suvicharVaar, suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '../suvicharVaar';
 import { WEEKDAY_LABELS } from '../routine/vaar';
 import { contentByLang } from '@/utils/localize';
 
@@ -55,10 +55,20 @@ it('offers every deity of the day in all three frames', () => {
   const cards = suvicharVaarTemplates(tuesday);
   expect(cards.map(c => c.id)).toEqual(['hanuman', 'salasar-balaji'].flatMap(d => suvicharFrames.map(f => `vaar-${d}-${f.id}`)));
   // Each weekday tile carries its deity's thought for the day, the same one its deity card shows.
-  const daily = suvicharTemplatesFor(suvicharDay(tuesday)).filter(t => t.kind === 'daily');
+  const daily = suvicharTodayTemplates(tuesday).filter(t => t.kind === 'daily');
   for (const c of cards) expect([c.kind, c.messageHi, c.messageEn]).toEqual(['vaar', daily.find(t => t.deity === c.deity)!.messageHi, daily.find(t => t.deity === c.deity)!.messageEn]);
   expect(suvicharVaarTemplates(monday)).toHaveLength(3);
   expect(suvicharVaarTemplates(sunday).map(c => c.deity)).toEqual(['vishnu', 'vishnu', 'vishnu', 'tirupati-balaji', 'tirupati-balaji', 'tirupati-balaji']);
+});
+
+it('gives the day’s own card a new thought every day until all have been shown', () => {
+  const first = new Date(2026, 9, 26);
+  const shown = suvicharThoughts.map((_, i) => {
+    const date = new Date(first.getFullYear(), first.getMonth(), first.getDate() + i);
+    const lead = suvicharVaarFor(date)!.deities[0];
+    return suvicharTodayTemplates(date).find(t => t.kind === 'daily' && t.deity === lead)!.messageEn;
+  });
+  expect(new Set(shown).size).toBe(suvicharThoughts.length);
 });
 
 it('opens on today’s card unless the reader wrote the message', () => {

@@ -33,8 +33,13 @@ export function suvicharVaarFor(date: Date): SuvicharVaar | null {
   return deities.length ? { ...vaar, deities } : null;
 }
 
+/** The day's ready-made cards, with the thought rotation ranked from the day's own deities. */
+export function suvicharTodayTemplates(date: Date): SuvicharTemplate[] {
+  return suvicharTemplatesFor(suvicharDay(date), suvicharVaarFor(date)?.deities);
+}
+
 /** Today's weekday cards: each of the day's deities in every frame, carrying that deity's thought for the day. */
-export function suvicharVaarTemplates(date: Date, templates: SuvicharTemplate[] = suvicharTemplatesFor(suvicharDay(date))): SuvicharTemplate[] {
+export function suvicharVaarTemplates(date: Date, templates: SuvicharTemplate[] = suvicharTodayTemplates(date)): SuvicharTemplate[] {
   const vaar = suvicharVaarFor(date);
   if (!vaar) return [];
   return vaar.deities.flatMap(id => {
