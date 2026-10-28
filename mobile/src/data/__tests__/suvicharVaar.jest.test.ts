@@ -1,4 +1,4 @@
-import { initialSuvichar, suvicharArtRequest, suvicharDeities, suvicharDeityCatalog, suvicharFrames, suvicharReflections } from '../suvichar';
+import { initialSuvichar, suvicharArtRequest, suvicharDeities, suvicharDeityCatalog, suvicharTextOnlyDeities, suvicharFrames, suvicharReflections } from '../suvichar';
 import { suvicharDay, suvicharTemplatesFor, suvicharThoughts } from '../suvicharTemplates';
 import { isAuthoredSuvicharMessage, suvicharVaar, suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '../suvicharVaar';
 import { WEEKDAY_LABELS } from '../routine/vaar';
@@ -14,11 +14,11 @@ it('gives every day a published deity, with Vishnu as Surya-Narayan on Sunday un
     expect(vaar.deities.length).toBeGreaterThan(0);
     for (const deity of vaar.deities) {
       expect(suvicharDeities.some(d => d.id === deity)).toBe(true);
-      for (const frame of suvicharFrames) expect(suvicharArtRequest(deity, frame.id)).not.toBeNull();
+      for (const frame of suvicharFrames) { if (deity === 'annapurna') expect(suvicharArtRequest(deity, frame.id)).toBeNull(); else expect(suvicharArtRequest(deity, frame.id)).not.toBeNull(); }
     }
   }
   expect(suvicharVaarFor(sunday)).toMatchObject({ hi: 'शुभ रविवार', deities: ['vishnu', 'tirupati-balaji'] });
-  expect(suvicharVaarFor(friday)!.deities).toEqual(['lakshmi', 'durga']);
+  expect(suvicharVaarFor(friday)!.deities).toEqual(['lakshmi', 'durga', 'annapurna']);
 });
 
 it('links every catalog deity to at least one day', () => {
@@ -29,7 +29,7 @@ it('links every catalog deity to at least one day', () => {
 });
 
 it('lists only catalog deities and leaves out any whose masters are not yet published', () => {
-  for (const vaar of suvicharVaar) for (const deity of vaar.deities) expect(suvicharDeityCatalog.some(d => d.id === deity)).toBe(true);
+  for (const vaar of suvicharVaar) for (const deity of vaar.deities) expect([...suvicharDeityCatalog, ...suvicharTextOnlyDeities].some(d => d.id === deity)).toBe(true);
   const thursday = suvicharVaar[4].deities;
   const live = thursday.filter(d => suvicharFrames.every(f => suvicharArtRequest(d, f.id)));
   expect(suvicharVaarFor(on(29))!.deities).toEqual(live);

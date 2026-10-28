@@ -23,7 +23,7 @@ function FrameTile({ deity, id, label, lang, selected, disabled, onSelect }: { d
     style={({ pressed }) => ({ flex: 1, alignItems: 'center', gap: spacing.xs + 2, paddingVertical: spacing.sm, paddingHorizontal: spacing.xs, borderRadius: radii.md,
       borderWidth: 2, borderColor: selected ? colors.saffron : colors.divider, backgroundColor: colors.parchmentSoft, opacity: pressed ? 0.85 : 1 })}>
     <View style={{ width: 52, height: 65, borderRadius: 4, overflow: 'hidden', backgroundColor: colors.parchmentDeep }}>
-      {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width: 52, height: 65 }} onError={() => setArt(null)} /> : null}
+      {deity === 'annapurna' ? <View style={{ margin: 5, flex: 1, borderWidth: 1, borderColor: colors.gold, borderRadius: id === 'pushp-aangan' ? 9 : id === 'mandir-jharokha' ? 4 : 0, justifyContent: 'center', gap: 4, padding: 5 }}>{[1,2,3].map(n => <View key={n} style={{ height: 2, backgroundColor: colors.gold }} />)}</View> : uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width: 52, height: 65 }} onError={() => setArt(null)} /> : null}
     </View>
     <Text numberOfLines={1} style={{ fontFamily: titleFontByLang(lang), fontSize: 12, lineHeight: 20, color: selected ? colors.saffronDeep : colors.inkSoft }}>{label}</Text>
   </Pressable>;
