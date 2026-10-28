@@ -10,7 +10,7 @@ import SuvicharPresetPicker from '@/components/SuvicharPresetPicker';
 import SuvicharFramePicker from '@/components/SuvicharFramePicker';
 import SuvicharSenderPhoto from '@/components/SuvicharSenderPhoto';
 import AppIcon from '@/components/AppIcon';
-import { isSuvicharThought, suvicharThoughts, type SuvicharTemplate } from '@/data/suvicharTemplates';
+import { isSuvicharThought, suvicharThoughtIndex, suvicharThoughts, type SuvicharTemplate } from '@/data/suvicharTemplates';
 import { suvicharTodayTemplates, suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '@/data/suvicharVaar';
 import { WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -69,7 +69,7 @@ export default function SuvicharScreen() {
   const todays = dailyTemplates.find(t => t.deity === prefs.deity)!;
   const message = prefs.message.trim() || contentByLang(lang, todays.messageHi, todays.messageEn);
   const selectedTemplate = prefs.vaar ? undefined : templates.find(t => t.deity === prefs.deity && contentByLang(lang, t.messageHi, t.messageEn) === message);
-  const original = !prefs.message.trim() || selectedTemplate?.kind === 'daily' || suvicharThoughts.some(t => contentByLang(lang, t.hi, t.en) === message);
+  const original = !prefs.message.trim() || selectedTemplate?.kind === 'daily' || suvicharThoughtIndex(lang, message) >= 0;
   const favorite = { deity: prefs.deity, frame: prefs.frame, message: prefs.message, name: prefs.name, ...(prefs.vaar ? { vaar: true as const } : {}) };
   const savedIndex = prefs.favorites.findIndex(f => JSON.stringify(f) === JSON.stringify(favorite));
   const photoUri = useMemo(() => prefs.photo ? senderPhotoUri(prefs.photo) : null, [prefs.photo]);
@@ -124,7 +124,7 @@ export default function SuvicharScreen() {
     <Text style={{ fontFamily: face, fontSize: 14, lineHeight: 22, color: colors.inkSoft }}>{label}</Text></Pressable>;
   const inputStyle = { color: colors.ink, fontFamily: face, fontSize: 16, lineHeight: 26, backgroundColor: colors.cardActiveFrom, borderColor: colors.cardActiveBorder, borderWidth: 1, borderRadius: radii.md, padding: spacing.md };
   const nextReflection = () => {
-    const index = suvicharThoughts.findIndex(t => contentByLang(lang, t.hi, t.en) === message);
+    const index = suvicharThoughtIndex(lang, message);
     const next = suvicharThoughts[(index + 1) % suvicharThoughts.length];
     update({ message: contentByLang(lang, next.hi, next.en) });
   };

@@ -1,0 +1,2962 @@
+[
+  {
+    "id": "SV-0001",
+    "hi": "अपने हिस्से का काम आज पूरी निष्ठा से कीजिए।",
+    "en": "Do your share of today’s work with full sincerity."
+  },
+  {
+    "id": "SV-0002",
+    "hi": "परिणाम की चिंता में आज का अवसर मत खोइए।",
+    "en": "Don’t lose today’s chance worrying about the outcome."
+  },
+  {
+    "id": "SV-0003",
+    "hi": "छोटी जिम्मेदारी को भी पूरे मन से निभाइए।",
+    "en": "Give even a small responsibility your whole heart."
+  },
+  {
+    "id": "SV-0004",
+    "hi": "सही प्रयास का मूल्य तालियों से नहीं घटता।",
+    "en": "Honest effort is worth no less for lack of applause."
+  },
+  {
+    "id": "SV-0005",
+    "hi": "सफलता मिले तो विनम्रता को साथ रखिए।",
+    "en": "When success comes, keep humility beside you."
+  },
+  {
+    "id": "SV-0006",
+    "hi": "असफलता के बाद अपने प्रयास को फिर परखिए।",
+    "en": "After a setback, take a fresh look at your effort."
+  },
+  {
+    "id": "SV-0007",
+    "hi": "काम शुरू करने के लिए मन का बिल्कुल शांत होना जरूरी नहीं।",
+    "en": "You don’t need a perfectly calm mind to begin the work."
+  },
+  {
+    "id": "SV-0008",
+    "hi": "अपनी गति धीमी हो तो भी दिशा सही रखिए।",
+    "en": "Even if your pace is slow, keep your direction right."
+  },
+  {
+    "id": "SV-0009",
+    "hi": "कल की प्रशंसा आज की मेहनत का विकल्प नहीं।",
+    "en": "Yesterday’s praise is no substitute for today’s effort."
+  },
+  {
+    "id": "SV-0010",
+    "hi": "आज की गलती अगला प्रयास सुधार सकती है।",
+    "en": "Today’s mistake can improve your next attempt."
+  },
+  {
+    "id": "SV-0011",
+    "hi": "ईमानदार काम अपने आप में एक संतोष है।",
+    "en": "Honest work is a contentment of its own."
+  },
+  {
+    "id": "SV-0012",
+    "hi": "दूसरों की गति देखकर अपनी राह मत छोड़िए।",
+    "en": "Don’t leave your own path because others move faster."
+  },
+  {
+    "id": "SV-0013",
+    "hi": "हर परिणाम पूरी तरह आपके हाथ में नहीं होता।",
+    "en": "Not every outcome is fully in your hands."
+  },
+  {
+    "id": "SV-0014",
+    "hi": "जो बदल सकते हैं, वहाँ अपना प्रयास लगाइए।",
+    "en": "Put your effort where you can make a difference."
+  },
+  {
+    "id": "SV-0015",
+    "hi": "कर्तव्य निभाते समय विश्राम की जरूरत भी समझिए।",
+    "en": "While doing your duty, recognise your need for rest too."
+  },
+  {
+    "id": "SV-0016",
+    "hi": "सेवा का काम बिना दर्शकों के भी कीजिए।",
+    "en": "Do the work of service even when no one is watching."
+  },
+  {
+    "id": "SV-0017",
+    "hi": "प्रशंसा मिले तो साथ देने वालों को याद कीजिए।",
+    "en": "When praise comes, remember those who helped you."
+  },
+  {
+    "id": "SV-0018",
+    "hi": "मुश्किल काम को छोटे कदमों में बाँटिए।",
+    "en": "Break a difficult task into small steps."
+  },
+  {
+    "id": "SV-0019",
+    "hi": "सिर्फ इच्छा से आगे बढ़कर पहला कदम रखिए।",
+    "en": "Go beyond wishing and take the first step."
+  },
+  {
+    "id": "SV-0020",
+    "hi": "बीते परिणाम से सीखिए, उसी में ठहर मत जाइए।",
+    "en": "Learn from past results, but don’t stay stuck in them."
+  },
+  {
+    "id": "SV-0021",
+    "hi": "अपनी तैयारी की तुलना अपने पिछले प्रयास से कीजिए।",
+    "en": "Measure your preparation against your own last effort."
+  },
+  {
+    "id": "SV-0022",
+    "hi": "ईमानदारी से कमाया थोड़ा भी सम्मान के योग्य है।",
+    "en": "Even a little, earned honestly, deserves respect."
+  },
+  {
+    "id": "SV-0023",
+    "hi": "जल्दबाजी में लिया रास्ता हमेशा छोटा नहीं होता।",
+    "en": "The hurried road is not always the shorter one."
+  },
+  {
+    "id": "SV-0024",
+    "hi": "काम की गुणवत्ता पर ध्यान दीजिए, दिखावे पर कम।",
+    "en": "Focus on the quality of your work, less on the show."
+  },
+  {
+    "id": "SV-0025",
+    "hi": "सफलता के साथ जिम्मेदारी भी बढ़ती है।",
+    "en": "Responsibility grows along with success."
+  },
+  {
+    "id": "SV-0026",
+    "hi": "अच्छा काम किसी छोटे पद का मोहताज नहीं।",
+    "en": "Good work does not depend on a high position."
+  },
+  {
+    "id": "SV-0027",
+    "hi": "हर दिन एक अधूरा काम थोड़ा आगे बढ़ाइए।",
+    "en": "Each day, move one unfinished task a little forward."
+  },
+  {
+    "id": "SV-0028",
+    "hi": "गलती मानना भी जिम्मेदारी निभाने का हिस्सा है।",
+    "en": "Admitting a mistake is part of being responsible."
+  },
+  {
+    "id": "SV-0029",
+    "hi": "प्रयास के बीच अपने उद्देश्य को याद रखिए।",
+    "en": "In the middle of the effort, remember your purpose."
+  },
+  {
+    "id": "SV-0030",
+    "hi": "जीत में दूसरों का अपमान मत कीजिए।",
+    "en": "Do not humiliate others in victory."
+  },
+  {
+    "id": "SV-0031",
+    "hi": "हार में अपने सम्मान को मत भूलिए।",
+    "en": "Do not forget your dignity in defeat."
+  },
+  {
+    "id": "SV-0032",
+    "hi": "बिना श्रेय मिले भी सही काम करना मूल्यवान है।",
+    "en": "Doing the right thing without credit is still valuable."
+  },
+  {
+    "id": "SV-0033",
+    "hi": "जो वादा निभा सकते हैं, वही वादा कीजिए।",
+    "en": "Make only the promises you can keep."
+  },
+  {
+    "id": "SV-0034",
+    "hi": "परिणाम आने तक धैर्य से तैयारी जारी रखिए।",
+    "en": "Keep preparing patiently until the results arrive."
+  },
+  {
+    "id": "SV-0035",
+    "hi": "हर अवसर को प्रतियोगिता बनाना जरूरी नहीं।",
+    "en": "Not every opportunity has to be a competition."
+  },
+  {
+    "id": "SV-0036",
+    "hi": "अपने काम से किसी का जीवन थोड़ा आसान बनाइए।",
+    "en": "Let your work make someone’s life a little easier."
+  },
+  {
+    "id": "SV-0037",
+    "hi": "मेहनत के साथ सीखने की नम्रता रखिए।",
+    "en": "Pair hard work with the humility to learn."
+  },
+  {
+    "id": "SV-0038",
+    "hi": "जिम्मेदारी बाँटना भी जिम्मेदारी निभाना है।",
+    "en": "Sharing responsibility is also a way of fulfilling it."
+  },
+  {
+    "id": "SV-0039",
+    "hi": "बदलती परिस्थिति में तरीका बदलिए, ईमानदारी नहीं।",
+    "en": "When circumstances change, change your method, not your honesty."
+  },
+  {
+    "id": "SV-0040",
+    "hi": "आज का छोटा सुधार कल का सहारा बन सकता है।",
+    "en": "Today’s small improvement can be tomorrow’s support."
+  },
+  {
+    "id": "SV-0041",
+    "hi": "केवल व्यस्त रहने से उद्देश्य पूरा नहीं होता।",
+    "en": "Being busy alone does not fulfil a purpose."
+  },
+  {
+    "id": "SV-0042",
+    "hi": "काम पूरा हो तो मन को विश्राम भी दीजिए।",
+    "en": "When the work is done, let your mind rest too."
+  },
+  {
+    "id": "SV-0043",
+    "hi": "दूसरों की सहायता स्वीकार करना कमजोरी नहीं।",
+    "en": "Accepting help from others is not a weakness."
+  },
+  {
+    "id": "SV-0044",
+    "hi": "जहाँ आपका योगदान जरूरी है, वहाँ उपस्थित रहिए।",
+    "en": "Be present where your contribution is needed."
+  },
+  {
+    "id": "SV-0045",
+    "hi": "उचित समय पर रुककर सोचना भी उपयोगी प्रयास है।",
+    "en": "Pausing to think at the right time is useful effort too."
+  },
+  {
+    "id": "SV-0046",
+    "hi": "अपने श्रम का सम्मान कीजिए, दूसरों के श्रम का भी।",
+    "en": "Respect your own labour, and the labour of others too."
+  },
+  {
+    "id": "SV-0047",
+    "hi": "नया काम सीखते समय शुरुआती कठिनाई को जगह दीजिए।",
+    "en": "When learning something new, allow room for early difficulty."
+  },
+  {
+    "id": "SV-0048",
+    "hi": "सही साधन चुनना भी अच्छे परिणाम की तैयारी है।",
+    "en": "Choosing the right tools is part of preparing for good results."
+  },
+  {
+    "id": "SV-0049",
+    "hi": "लंबी राह में नियमित कदम बहुत काम आते हैं।",
+    "en": "On a long road, steady steps go a long way."
+  },
+  {
+    "id": "SV-0050",
+    "hi": "दिन के अंत में पूछिए, आज मैंने क्या बेहतर किया।",
+    "en": "At the end of the day, ask: what did I do better today?"
+  },
+  {
+    "id": "SV-0051",
+    "hi": "हर विचार को तुरंत सच मान लेना जरूरी नहीं।",
+    "en": "Not every thought needs to be believed at once."
+  },
+  {
+    "id": "SV-0052",
+    "hi": "मन बेचैन हो तो पहले अपनी साँस पर ध्यान दीजिए।",
+    "en": "When the mind is restless, first attend to your breath."
+  },
+  {
+    "id": "SV-0053",
+    "hi": "कठिन भावना के साथ भी शांत बैठना सीखा जा सकता है।",
+    "en": "You can learn to sit calmly even with a difficult feeling."
+  },
+  {
+    "id": "SV-0054",
+    "hi": "तुलना कम कीजिए, अपनी जरूरत साफ समझिए।",
+    "en": "Compare less; understand your own needs clearly."
+  },
+  {
+    "id": "SV-0055",
+    "hi": "प्रतिक्रिया देने से पहले एक पल ठहरिए।",
+    "en": "Pause for a moment before you react."
+  },
+  {
+    "id": "SV-0056",
+    "hi": "मन की थकान को भी विश्राम चाहिए।",
+    "en": "A tired mind needs rest too."
+  },
+  {
+    "id": "SV-0057",
+    "hi": "अपने भीतर की बात किसी भरोसेमंद व्यक्ति से कहिए।",
+    "en": "Share what is within you with someone you trust."
+  },
+  {
+    "id": "SV-0058",
+    "hi": "हर बहस में उतरना जरूरी नहीं।",
+    "en": "You need not step into every argument."
+  },
+  {
+    "id": "SV-0059",
+    "hi": "शांति के लिए अपनी सीमाएँ स्पष्ट रखिए।",
+    "en": "For peace, keep your boundaries clear."
+  },
+  {
+    "id": "SV-0060",
+    "hi": "बीते हुए दिन से सीखिए, उसे हर दिन मत दोहराइए।",
+    "en": "Learn from the day gone by; don’t relive it every day."
+  },
+  {
+    "id": "SV-0061",
+    "hi": "जो अभी नहीं सुलझा, उसे थोड़ा समय दीजिए।",
+    "en": "Give a little time to what is not yet resolved."
+  },
+  {
+    "id": "SV-0062",
+    "hi": "दूसरों की राय आपका पूरा परिचय नहीं है।",
+    "en": "Others’ opinions are not the whole of who you are."
+  },
+  {
+    "id": "SV-0063",
+    "hi": "धीरे बोलने से कठिन बात भी सुनी जा सकती है।",
+    "en": "Spoken gently, even a hard truth can be heard."
+  },
+  {
+    "id": "SV-0064",
+    "hi": "अधीरता में अपने प्रति कठोर मत बनिए।",
+    "en": "Don’t be harsh with yourself in impatience."
+  },
+  {
+    "id": "SV-0065",
+    "hi": "अच्छे दिनों की याद कठिन दिन में सहारा बन सकती है।",
+    "en": "Memories of good days can carry you through hard ones."
+  },
+  {
+    "id": "SV-0066",
+    "hi": "हर चिंता को आज ही हल करना जरूरी नहीं।",
+    "en": "Not every worry has to be solved today."
+  },
+  {
+    "id": "SV-0067",
+    "hi": "मन भटके तो प्रेम से उसे वापस लाइए।",
+    "en": "When the mind wanders, bring it back with kindness."
+  },
+  {
+    "id": "SV-0068",
+    "hi": "अपने लिए कुछ शांत क्षण बचाकर रखिए।",
+    "en": "Keep a few quiet moments for yourself."
+  },
+  {
+    "id": "SV-0069",
+    "hi": "संतोष का अर्थ कोशिश छोड़ देना नहीं।",
+    "en": "Contentment does not mean giving up on effort."
+  },
+  {
+    "id": "SV-0070",
+    "hi": "किसी और की खुशी आपकी कमी नहीं है।",
+    "en": "Someone else’s happiness is not your loss."
+  },
+  {
+    "id": "SV-0071",
+    "hi": "क्षमा की राह अपनी सुरक्षा के साथ चुनिए।",
+    "en": "Choose the path of forgiveness while keeping yourself safe."
+  },
+  {
+    "id": "SV-0072",
+    "hi": "अनिश्चितता में भी अगला छोटा कदम दिख सकता है।",
+    "en": "Even in uncertainty, the next small step can be seen."
+  },
+  {
+    "id": "SV-0073",
+    "hi": "मन की बात सुनिए, तथ्य भी जाँचिए।",
+    "en": "Listen to your heart, and check the facts as well."
+  },
+  {
+    "id": "SV-0074",
+    "hi": "दुख को छिपाने की जगह सहारा खोजिए।",
+    "en": "Instead of hiding sorrow, look for support."
+  },
+  {
+    "id": "SV-0075",
+    "hi": "प्रसन्नता के छोटे कारणों को अनदेखा मत कीजिए।",
+    "en": "Don’t overlook the small reasons to be happy."
+  },
+  {
+    "id": "SV-0076",
+    "hi": "अपने दिन में थोड़ा मौन रखिए।",
+    "en": "Keep a little silence in your day."
+  },
+  {
+    "id": "SV-0077",
+    "hi": "भावना बदल सकती है, निर्णय थोड़ा रुक सकता है।",
+    "en": "Feelings can change; a decision can wait a little."
+  },
+  {
+    "id": "SV-0078",
+    "hi": "हर प्रश्न का उत्तर तुरंत मिलना जरूरी नहीं।",
+    "en": "Not every question needs an answer right away."
+  },
+  {
+    "id": "SV-0079",
+    "hi": "स्वयं को समझने में धैर्य रखिए।",
+    "en": "Be patient in understanding yourself."
+  },
+  {
+    "id": "SV-0080",
+    "hi": "चिंता लिख देने से अगला कदम साफ हो सकता है।",
+    "en": "Writing a worry down can make the next step clear."
+  },
+  {
+    "id": "SV-0081",
+    "hi": "सिर्फ दूसरों को खुश रखने में खुद को मत भूलिए।",
+    "en": "Don’t forget yourself while trying to keep everyone else happy."
+  },
+  {
+    "id": "SV-0082",
+    "hi": "मन शांत हो तो कठिन निर्णय पर फिर विचार कीजिए।",
+    "en": "When the mind is calm, think again about a hard decision."
+  },
+  {
+    "id": "SV-0083",
+    "hi": "अपनी प्रगति को केवल बाहरी उपलब्धियों से मत मापिए।",
+    "en": "Don’t measure your progress by outward achievements alone."
+  },
+  {
+    "id": "SV-0084",
+    "hi": "अकेलेपन में किसी परिचित को स्नेह से याद कीजिए।",
+    "en": "In loneliness, remember someone dear with affection."
+  },
+  {
+    "id": "SV-0085",
+    "hi": "किसी बात का न जानना स्वीकार कीजिए।",
+    "en": "Accept that you don’t know something."
+  },
+  {
+    "id": "SV-0086",
+    "hi": "हर दिन अपने लिए एक सरल अपेक्षा रखिए।",
+    "en": "Keep one simple expectation of yourself each day."
+  },
+  {
+    "id": "SV-0087",
+    "hi": "सुनना भी मन को धीमा करना सिखाता है।",
+    "en": "Listening, too, teaches the mind to slow down."
+  },
+  {
+    "id": "SV-0088",
+    "hi": "अपने भीतर की आलोचना को थोड़ा करुणामय बनाइए।",
+    "en": "Make your inner critic a little more compassionate."
+  },
+  {
+    "id": "SV-0089",
+    "hi": "परिवर्तन को समझने के लिए समय लेना ठीक है।",
+    "en": "It is all right to take time to understand change."
+  },
+  {
+    "id": "SV-0090",
+    "hi": "सब कुछ नियंत्रित करने की कोशिश थका सकती है।",
+    "en": "Trying to control everything can wear you out."
+  },
+  {
+    "id": "SV-0091",
+    "hi": "एक शांत सुबह पूरे दिन की गारंटी नहीं, अच्छा आरंभ है।",
+    "en": "A calm morning doesn’t guarantee the whole day, but it is a good start."
+  },
+  {
+    "id": "SV-0092",
+    "hi": "कृतज्ञता और कठिनाई एक साथ महसूस हो सकती हैं।",
+    "en": "Gratitude and hardship can be felt together."
+  },
+  {
+    "id": "SV-0093",
+    "hi": "आज की बेचैनी आपका पूरा भविष्य नहीं है।",
+    "en": "Today’s unease is not your whole future."
+  },
+  {
+    "id": "SV-0094",
+    "hi": "अपना ध्यान बार-बार उसी काम पर लाइए जो जरूरी है।",
+    "en": "Keep bringing your attention back to the work that matters."
+  },
+  {
+    "id": "SV-0095",
+    "hi": "अच्छी संगति में मन की उलझन साझा कीजिए।",
+    "en": "Share your confusion in good company."
+  },
+  {
+    "id": "SV-0096",
+    "hi": "थकान में बड़े निर्णय टालना कभी उपयोगी होता है।",
+    "en": "When tired, putting off big decisions can help."
+  },
+  {
+    "id": "SV-0097",
+    "hi": "अपनी बात कहने के लिए सही समय चुनिए।",
+    "en": "Choose the right moment to say what you need to say."
+  },
+  {
+    "id": "SV-0098",
+    "hi": "धैर्य का अभ्यास छोटी असुविधाओं से शुरू कीजिए।",
+    "en": "Practise patience starting with small inconveniences."
+  },
+  {
+    "id": "SV-0099",
+    "hi": "बिना खुद को दोष दिए फिर से शुरुआत कीजिए।",
+    "en": "Begin again without blaming yourself."
+  },
+  {
+    "id": "SV-0100",
+    "hi": "मन को जीतने की जल्दी में उससे लड़ते मत रहिए।",
+    "en": "In the hurry to master the mind, don’t keep fighting it."
+  },
+  {
+    "id": "SV-0101",
+    "hi": "सम्मान की शुरुआत रोज के छोटे व्यवहार से होती है।",
+    "en": "Respect begins with small everyday conduct."
+  },
+  {
+    "id": "SV-0102",
+    "hi": "वचन देने से पहले उसकी जिम्मेदारी समझिए।",
+    "en": "Understand the responsibility before you give your word."
+  },
+  {
+    "id": "SV-0103",
+    "hi": "सत्य कहिए और सामने वाले की गरिमा भी रखिए।",
+    "en": "Speak the truth and preserve the other person’s dignity too."
+  },
+  {
+    "id": "SV-0104",
+    "hi": "अपनों की बात पूरी सुनने का समय निकालिए।",
+    "en": "Make time to hear your loved ones out fully."
+  },
+  {
+    "id": "SV-0105",
+    "hi": "मर्यादा का अभ्यास अनजान लोगों के साथ भी कीजिए।",
+    "en": "Practise courtesy with strangers too."
+  },
+  {
+    "id": "SV-0106",
+    "hi": "अधिकार के साथ नम्रता रखना सुंदर गुण है।",
+    "en": "Humility alongside authority is a beautiful quality."
+  },
+  {
+    "id": "SV-0107",
+    "hi": "कठिन परिस्थिति में अपने मूल्यों को याद रखिए।",
+    "en": "In difficult situations, remember your values."
+  },
+  {
+    "id": "SV-0108",
+    "hi": "साथ चलने वालों के योगदान को स्वीकार कीजिए।",
+    "en": "Acknowledge the contribution of those who walk with you."
+  },
+  {
+    "id": "SV-0109",
+    "hi": "घर में सम्मान सबको मिलना चाहिए।",
+    "en": "Everyone at home deserves respect."
+  },
+  {
+    "id": "SV-0110",
+    "hi": "अपनी शक्ति से किसी कमजोर को भय मत दीजिए।",
+    "en": "Never use your strength to frighten someone weaker."
+  },
+  {
+    "id": "SV-0111",
+    "hi": "मतभेद हो तो भी भाषा में आदर रखिए।",
+    "en": "Even when you disagree, keep respect in your words."
+  },
+  {
+    "id": "SV-0112",
+    "hi": "किसी की सहायता करते समय उसका सम्मान बचाइए।",
+    "en": "When helping someone, protect their dignity."
+  },
+  {
+    "id": "SV-0113",
+    "hi": "दूर रहने पर भी स्नेह का संपर्क बनाए रखिए।",
+    "en": "Even when far apart, stay in loving touch."
+  },
+  {
+    "id": "SV-0114",
+    "hi": "माफी माँगने में अपने पद को बीच में मत लाइए।",
+    "en": "Don’t let your position get in the way of an apology."
+  },
+  {
+    "id": "SV-0115",
+    "hi": "संबंध भरोसे से गहरे होते हैं।",
+    "en": "Relationships grow deeper through trust."
+  },
+  {
+    "id": "SV-0116",
+    "hi": "किसी की अनुपस्थिति में भी उसका मान रखिए।",
+    "en": "Honour people even when they are not present."
+  },
+  {
+    "id": "SV-0117",
+    "hi": "नेतृत्व में सबसे पहले सुनने की जिम्मेदारी आती है।",
+    "en": "Leadership begins with the duty to listen."
+  },
+  {
+    "id": "SV-0118",
+    "hi": "घर का निर्णय लेते समय सभी की जरूरत समझिए।",
+    "en": "When making a family decision, understand everyone’s needs."
+  },
+  {
+    "id": "SV-0119",
+    "hi": "वफादारी का अर्थ अन्याय पर चुप रहना नहीं।",
+    "en": "Loyalty does not mean staying silent about injustice."
+  },
+  {
+    "id": "SV-0120",
+    "hi": "कठिन रास्ते पर सच्चा साथ बहुत मूल्यवान है।",
+    "en": "On a hard road, true companionship is precious."
+  },
+  {
+    "id": "SV-0121",
+    "hi": "अतिथि का स्वागत अपनी सामर्थ्य के अनुसार कीजिए।",
+    "en": "Welcome guests as well as your means allow."
+  },
+  {
+    "id": "SV-0122",
+    "hi": "अच्छे संस्कार व्यवहार में दिखाई देते हैं।",
+    "en": "Good upbringing shows in conduct."
+  },
+  {
+    "id": "SV-0123",
+    "hi": "छोटे व्यक्ति की बात में भी बड़ी सीख हो सकती है।",
+    "en": "Even someone younger can teach a great lesson."
+  },
+  {
+    "id": "SV-0124",
+    "hi": "अपने शब्दों से घर में भरोसा बढ़ाइए।",
+    "en": "Let your words build trust at home."
+  },
+  {
+    "id": "SV-0125",
+    "hi": "संबंध में अधिकार से पहले अपनापन दीजिए।",
+    "en": "In a relationship, offer warmth before asserting rights."
+  },
+  {
+    "id": "SV-0126",
+    "hi": "दूसरे की परिस्थिति जाने बिना निर्णय मत सुनाइए।",
+    "en": "Don’t pass judgement without knowing another’s situation."
+  },
+  {
+    "id": "SV-0127",
+    "hi": "वादा बदलना पड़े तो समय पर साफ बताइए।",
+    "en": "If you must change a promise, say so clearly and in time."
+  },
+  {
+    "id": "SV-0128",
+    "hi": "आदर का उत्तर आदर से देना आसान है, शुरुआत भी कीजिए।",
+    "en": "Returning respect is easy; be the one to offer it first."
+  },
+  {
+    "id": "SV-0129",
+    "hi": "किसी की कठिनाई को मजाक मत बनाइए।",
+    "en": "Never make fun of someone’s hardship."
+  },
+  {
+    "id": "SV-0130",
+    "hi": "अपने परिवार की तरह दूसरों के परिवार का भी सम्मान कीजिए।",
+    "en": "Respect other families as you would your own."
+  },
+  {
+    "id": "SV-0131",
+    "hi": "सही बात के लिए खड़े होते समय संयम रखिए।",
+    "en": "Keep your composure when standing up for what is right."
+  },
+  {
+    "id": "SV-0132",
+    "hi": "अच्छी नीयत के साथ सही व्यवहार भी जरूरी है।",
+    "en": "Good intentions need good conduct too."
+  },
+  {
+    "id": "SV-0133",
+    "hi": "विश्वास टूटे तो उसे लौटने का समय दीजिए।",
+    "en": "When trust is broken, give it time to return."
+  },
+  {
+    "id": "SV-0134",
+    "hi": "दूसरों का श्रेय अपने नाम मत कीजिए।",
+    "en": "Don’t take credit for others’ work."
+  },
+  {
+    "id": "SV-0135",
+    "hi": "मर्यादा में करुणा के लिए हमेशा जगह रखिए।",
+    "en": "Always leave room for compassion within propriety."
+  },
+  {
+    "id": "SV-0136",
+    "hi": "साथ निभाने में छोटे काम बड़ी भूमिका निभाते हैं।",
+    "en": "In standing by others, small acts play a big part."
+  },
+  {
+    "id": "SV-0137",
+    "hi": "मनुष्य का मान उसके धन से तय मत कीजिए।",
+    "en": "Don’t judge a person’s worth by their wealth."
+  },
+  {
+    "id": "SV-0138",
+    "hi": "कृतज्ञता को मन में ही नहीं, शब्दों में भी लाइए।",
+    "en": "Bring gratitude not only to your heart but to your words."
+  },
+  {
+    "id": "SV-0139",
+    "hi": "कठिन समाचार भी संवेदनशीलता से कहे जा सकते हैं।",
+    "en": "Even hard news can be shared with sensitivity."
+  },
+  {
+    "id": "SV-0140",
+    "hi": "सार्वजनिक प्रशंसा के साथ निजी सम्मान भी रखिए।",
+    "en": "With public praise, keep private respect as well."
+  },
+  {
+    "id": "SV-0141",
+    "hi": "बच्चों को आदर सिखाने के लिए उन्हें आदर दीजिए।",
+    "en": "To teach children respect, show them respect."
+  },
+  {
+    "id": "SV-0142",
+    "hi": "अपने निर्णय की जिम्मेदारी दूसरों पर मत डालिए।",
+    "en": "Don’t shift the responsibility for your decisions onto others."
+  },
+  {
+    "id": "SV-0143",
+    "hi": "सच्चे संबंध में असहमति की भी जगह होती है।",
+    "en": "A true relationship has room for disagreement."
+  },
+  {
+    "id": "SV-0144",
+    "hi": "किसी की मदद को अपना अधिकार मत मानिए।",
+    "en": "Don’t treat anyone’s help as your right."
+  },
+  {
+    "id": "SV-0145",
+    "hi": "स्नेह को केवल विशेष अवसर तक सीमित मत रखिए।",
+    "en": "Don’t save affection only for special occasions."
+  },
+  {
+    "id": "SV-0146",
+    "hi": "अन्याय दिखे तो उचित सहायता का रास्ता खोजिए।",
+    "en": "When you see injustice, look for the right way to help."
+  },
+  {
+    "id": "SV-0147",
+    "hi": "नम्रता से कही गई बात भी दृढ़ हो सकती है।",
+    "en": "Words spoken with humility can still be firm."
+  },
+  {
+    "id": "SV-0148",
+    "hi": "अपने से छोटे की गलती समझाते समय धैर्य रखिए।",
+    "en": "Be patient when explaining a mistake to someone younger."
+  },
+  {
+    "id": "SV-0149",
+    "hi": "परिवार की शांति में सबकी आवाज शामिल हो।",
+    "en": "Let every voice be part of the family’s peace."
+  },
+  {
+    "id": "SV-0150",
+    "hi": "आज ऐसा व्यवहार कीजिए जिसे याद कर मन शांत रहे।",
+    "en": "Act today in a way you will remember with a calm heart."
+  },
+  {
+    "id": "SV-0151",
+    "hi": "डर लगे तो भरोसेमंद साथ लेकर आगे बढ़िए।",
+    "en": "When afraid, move forward with someone you trust."
+  },
+  {
+    "id": "SV-0152",
+    "hi": "साहस का पहला कदम सहायता माँगना भी हो सकता है।",
+    "en": "Courage can begin with asking for help."
+  },
+  {
+    "id": "SV-0153",
+    "hi": "सेवा में अपना नाम बड़ा करना जरूरी नहीं।",
+    "en": "Service does not need to make your name bigger."
+  },
+  {
+    "id": "SV-0154",
+    "hi": "अपनी क्षमता पहचानिए और उसका सदुपयोग कीजिए।",
+    "en": "Recognise your abilities and put them to good use."
+  },
+  {
+    "id": "SV-0155",
+    "hi": "कठिन कार्य से पहले उद्देश्य को याद कीजिए।",
+    "en": "Before a hard task, remember its purpose."
+  },
+  {
+    "id": "SV-0156",
+    "hi": "शक्ति का सुंदर उपयोग किसी को सहारा देना है।",
+    "en": "The finest use of strength is to support someone."
+  },
+  {
+    "id": "SV-0157",
+    "hi": "निष्ठा छोटे कामों में भी दिखाई देती है।",
+    "en": "Dedication shows in small tasks too."
+  },
+  {
+    "id": "SV-0158",
+    "hi": "आत्मविश्वास के साथ तैयारी भी रखिए।",
+    "en": "Pair self-confidence with preparation."
+  },
+  {
+    "id": "SV-0159",
+    "hi": "थके हुए साथी का बोझ थोड़ा बाँटिए।",
+    "en": "Share a little of a tired companion’s load."
+  },
+  {
+    "id": "SV-0160",
+    "hi": "किसी की बात पहुँचाते समय सत्य बनाए रखिए।",
+    "en": "When passing on someone’s words, keep them true."
+  },
+  {
+    "id": "SV-0161",
+    "hi": "दृढ़ संकल्प को नियमित अभ्यास का साथ दीजिए।",
+    "en": "Back firm resolve with regular practice."
+  },
+  {
+    "id": "SV-0162",
+    "hi": "साहस का अर्थ जोखिम समझकर कदम रखना भी है।",
+    "en": "Courage also means stepping forward with the risk understood."
+  },
+  {
+    "id": "SV-0163",
+    "hi": "अच्छे उद्देश्य के लिए सहयोग खोजिए।",
+    "en": "Seek cooperation for a good cause."
+  },
+  {
+    "id": "SV-0164",
+    "hi": "अपनी ताकत का प्रदर्शन हर जगह जरूरी नहीं।",
+    "en": "You need not display your strength everywhere."
+  },
+  {
+    "id": "SV-0165",
+    "hi": "सेवा का अवसर मिले तो विनम्र रहिए।",
+    "en": "When you get a chance to serve, stay humble."
+  },
+  {
+    "id": "SV-0166",
+    "hi": "अनजान रास्ते पर पूछ लेना बुद्धिमानी है।",
+    "en": "On an unfamiliar road, asking the way is wise."
+  },
+  {
+    "id": "SV-0167",
+    "hi": "अपनी सीमा जानना भी शक्ति है।",
+    "en": "Knowing your limits is also strength."
+  },
+  {
+    "id": "SV-0168",
+    "hi": "मुश्किल देखकर काम को हिस्सों में बाँटिए।",
+    "en": "Faced with difficulty, divide the work into parts."
+  },
+  {
+    "id": "SV-0169",
+    "hi": "भक्ति को दूसरों की सहायता में भी व्यक्त कीजिए।",
+    "en": "Express devotion in helping others too."
+  },
+  {
+    "id": "SV-0170",
+    "hi": "आभार मिलने से पहले भी सेवा का मूल्य होता है।",
+    "en": "Service has value even before thanks arrive."
+  },
+  {
+    "id": "SV-0171",
+    "hi": "सच्ची लगन में सीखने की जगह बनी रहती है।",
+    "en": "True dedication always leaves room to learn."
+  },
+  {
+    "id": "SV-0172",
+    "hi": "एक असफल कोशिश से अपनी क्षमता तय मत कीजिए।",
+    "en": "Don’t judge your ability by one failed attempt."
+  },
+  {
+    "id": "SV-0173",
+    "hi": "मन डगमगाए तो अपना संकल्प फिर पढ़िए।",
+    "en": "When your mind wavers, read your resolve again."
+  },
+  {
+    "id": "SV-0174",
+    "hi": "साथी को उत्साह देना भी योगदान है।",
+    "en": "Encouraging a companion is a contribution too."
+  },
+  {
+    "id": "SV-0175",
+    "hi": "किसी की उम्मीद का भार सावधानी से उठाइए।",
+    "en": "Carry the weight of someone’s hopes with care."
+  },
+  {
+    "id": "SV-0176",
+    "hi": "कर्तव्य के साथ अपने शरीर का ध्यान रखिए।",
+    "en": "Along with your duty, take care of your body."
+  },
+  {
+    "id": "SV-0177",
+    "hi": "संकट में घबराए व्यक्ति को पहले सुनिए।",
+    "en": "In a crisis, first listen to the person who is frightened."
+  },
+  {
+    "id": "SV-0178",
+    "hi": "छोटी सहायता भी सही समय पर बड़ी होती है।",
+    "en": "Even small help is great when it comes at the right time."
+  },
+  {
+    "id": "SV-0179",
+    "hi": "शोर किए बिना भी उपयोगी काम हो सकता है।",
+    "en": "Useful work can be done without noise."
+  },
+  {
+    "id": "SV-0180",
+    "hi": "दूसरे की सफलता पर सच्चे मन से प्रसन्न होइए।",
+    "en": "Be truly glad at another’s success."
+  },
+  {
+    "id": "SV-0181",
+    "hi": "किसी को नीचा दिखाकर साहस सिद्ध नहीं होता।",
+    "en": "Courage is not proved by putting someone down."
+  },
+  {
+    "id": "SV-0182",
+    "hi": "जिस काम का वचन दिया है, उसकी खबर देते रहिए।",
+    "en": "Keep people updated on the work you have promised."
+  },
+  {
+    "id": "SV-0183",
+    "hi": "भरोसा शब्दों से शुरू होकर कर्मों से बढ़ता है।",
+    "en": "Trust begins with words and grows through deeds."
+  },
+  {
+    "id": "SV-0184",
+    "hi": "भय को स्वीकार करके भी आगे बढ़ा जा सकता है।",
+    "en": "You can move forward while admitting your fear."
+  },
+  {
+    "id": "SV-0185",
+    "hi": "सेवा के लिए सम्मानजनक अनुमति लेना सीखिए।",
+    "en": "Learn to ask respectfully before you serve."
+  },
+  {
+    "id": "SV-0186",
+    "hi": "कठिन समय में धैर्यवान साथी बनिए।",
+    "en": "In hard times, be a patient companion."
+  },
+  {
+    "id": "SV-0187",
+    "hi": "सही जानकारी जुटाना भी तैयारी है।",
+    "en": "Gathering the right information is preparation too."
+  },
+  {
+    "id": "SV-0188",
+    "hi": "अपनी ऊर्जा जरूरी काम के लिए बचाइए।",
+    "en": "Save your energy for the work that matters."
+  },
+  {
+    "id": "SV-0189",
+    "hi": "समर्पण में विवेक को भी स्थान दीजिए।",
+    "en": "Make room for good judgement in devotion."
+  },
+  {
+    "id": "SV-0190",
+    "hi": "किसी की समस्या का मजाक उड़ाने से बचिए।",
+    "en": "Avoid making fun of anyone’s problem."
+  },
+  {
+    "id": "SV-0191",
+    "hi": "जहाँ तुरंत सहायता चाहिए, वहाँ व्यर्थ सलाह कम दीजिए।",
+    "en": "Where help is needed at once, give less idle advice."
+  },
+  {
+    "id": "SV-0192",
+    "hi": "अपने कौशल से समुदाय का कोई काम आसान कीजिए।",
+    "en": "Use your skills to make some community task easier."
+  },
+  {
+    "id": "SV-0193",
+    "hi": "मदद करते समय दूसरे की इच्छा पूछिए।",
+    "en": "When helping, ask what the other person wants."
+  },
+  {
+    "id": "SV-0194",
+    "hi": "अभ्यास से बढ़ी क्षमता पर विनम्र रहिए।",
+    "en": "Stay humble about abilities that practice has grown."
+  },
+  {
+    "id": "SV-0195",
+    "hi": "साथ की ताकत को अकेले के गर्व से मत तौलिए।",
+    "en": "Don’t weigh the strength of togetherness against solitary pride."
+  },
+  {
+    "id": "SV-0196",
+    "hi": "अच्छे काम में निरंतरता बनाए रखिए।",
+    "en": "Keep doing good work steadily."
+  },
+  {
+    "id": "SV-0197",
+    "hi": "दृढ़ता में दूसरों के प्रति कोमलता रखिए।",
+    "en": "Within firmness, keep gentleness towards others."
+  },
+  {
+    "id": "SV-0198",
+    "hi": "जब राह कठिन हो, अगला सुरक्षित कदम खोजिए।",
+    "en": "When the road is hard, look for the next safe step."
+  },
+  {
+    "id": "SV-0199",
+    "hi": "सेवा पूरी हो तो अगले व्यक्ति के लिए जगह छोड़िए।",
+    "en": "When your service is done, make room for the next person."
+  },
+  {
+    "id": "SV-0201",
+    "hi": "कुछ क्षण मौन में बैठकर अपना दिन सुनिए।",
+    "en": "Sit in silence for a few moments and listen to your day."
+  },
+  {
+    "id": "SV-0202",
+    "hi": "सरल जीवन में अपनी जरूरी चीजें पहचानिए।",
+    "en": "In a simple life, recognise what you truly need."
+  },
+  {
+    "id": "SV-0203",
+    "hi": "क्रोध आए तो उत्तर देने से पहले रुकिए।",
+    "en": "When anger comes, pause before you reply."
+  },
+  {
+    "id": "SV-0204",
+    "hi": "छोड़ना सीखिए जो केवल मन का बोझ बढ़ाता है।",
+    "en": "Learn to let go of what only adds weight to the mind."
+  },
+  {
+    "id": "SV-0205",
+    "hi": "ध्यान के छोटे अभ्यास को नियमित समय दीजिए।",
+    "en": "Give a small meditation practice a regular time."
+  },
+  {
+    "id": "SV-0206",
+    "hi": "बाहरी शोर से थोड़ी दूरी बनाना ठीक है।",
+    "en": "It is all right to step a little away from outside noise."
+  },
+  {
+    "id": "SV-0207",
+    "hi": "अपनी कमियों को समझकर सुधार की राह चुनिए।",
+    "en": "Understand your shortcomings and choose the path of improvement."
+  },
+  {
+    "id": "SV-0208",
+    "hi": "प्रकृति के पास कुछ शांत पल बिताइए।",
+    "en": "Spend a few quiet moments close to nature."
+  },
+  {
+    "id": "SV-0209",
+    "hi": "हर खाली समय को शोर से भरना जरूरी नहीं।",
+    "en": "Not every free moment needs to be filled with noise."
+  },
+  {
+    "id": "SV-0210",
+    "hi": "सरल भोजन और स्नेह भरी संगति का आनंद लीजिए।",
+    "en": "Enjoy simple food and loving company."
+  },
+  {
+    "id": "SV-0211",
+    "hi": "परिवर्तन से पहले अपनी तैयारी को समय दीजिए।",
+    "en": "Before a change, give yourself time to prepare."
+  },
+  {
+    "id": "SV-0212",
+    "hi": "जो टूट गया है, उसके दुख को जगह दीजिए।",
+    "en": "Make room for the grief of what has been broken."
+  },
+  {
+    "id": "SV-0213",
+    "hi": "मन के बोझ को अकेले उठाना जरूरी नहीं।",
+    "en": "You don’t have to carry the mind’s burden alone."
+  },
+  {
+    "id": "SV-0214",
+    "hi": "सादगी में भी सौंदर्य देखा जा सकता है।",
+    "en": "Beauty can be found in simplicity too."
+  },
+  {
+    "id": "SV-0215",
+    "hi": "अपने घर में शांति का एक कोना बनाइए।",
+    "en": "Make a corner of peace in your home."
+  },
+  {
+    "id": "SV-0216",
+    "hi": "क्रोध की ऊर्जा को उपयोगी काम में लगाइए।",
+    "en": "Turn the energy of anger into useful work."
+  },
+  {
+    "id": "SV-0217",
+    "hi": "कुछ उत्तर मौन में सोचने से साफ होते हैं।",
+    "en": "Some answers become clear in quiet reflection."
+  },
+  {
+    "id": "SV-0218",
+    "hi": "कम वस्तुओं के साथ भी भरपूर अपनापन हो सकता है।",
+    "en": "Even with few possessions there can be abundant warmth."
+  },
+  {
+    "id": "SV-0219",
+    "hi": "किसी की अलग जीवनशैली का सम्मान कीजिए।",
+    "en": "Respect the different way someone else lives."
+  },
+  {
+    "id": "SV-0220",
+    "hi": "त्याग अपनी समझ और सामर्थ्य से कीजिए।",
+    "en": "Make sacrifices according to your understanding and ability."
+  },
+  {
+    "id": "SV-0221",
+    "hi": "अपने लिए ठहरने का समय माँगना ठीक है।",
+    "en": "It is all right to ask for time to pause for yourself."
+  },
+  {
+    "id": "SV-0222",
+    "hi": "ध्यान भटके तो अभ्यास को असफल मत मानिए।",
+    "en": "If your attention wanders, don’t count the practice a failure."
+  },
+  {
+    "id": "SV-0223",
+    "hi": "अपने भीतर की कठोरता को करुणा से देखिए।",
+    "en": "Look at the hardness within you with compassion."
+  },
+  {
+    "id": "SV-0224",
+    "hi": "परिवर्तन छोटे निर्णयों से भी शुरू होता है।",
+    "en": "Change can begin with small decisions too."
+  },
+  {
+    "id": "SV-0225",
+    "hi": "रात होने पर दिन की अधूरी बातों को थोड़ी छुट्टी दीजिए।",
+    "en": "When night comes, give the day’s unfinished matters a little leave."
+  },
+  {
+    "id": "SV-0226",
+    "hi": "दूसरे के मौन का अर्थ अपनी ओर से मत तय कीजिए।",
+    "en": "Don’t decide for yourself what another’s silence means."
+  },
+  {
+    "id": "SV-0227",
+    "hi": "कठिन भावना को नाम देना उसे समझने की शुरुआत है।",
+    "en": "Naming a difficult feeling is the start of understanding it."
+  },
+  {
+    "id": "SV-0228",
+    "hi": "अपने मन का घर अनावश्यक तुलना से मत भरिए।",
+    "en": "Don’t fill the home of your mind with needless comparison."
+  },
+  {
+    "id": "SV-0229",
+    "hi": "पुरानी आदत छोड़ते समय नया सहारा खोजिए।",
+    "en": "When dropping an old habit, find a new support."
+  },
+  {
+    "id": "SV-0230",
+    "hi": "सुनसान रास्ते से ज्यादा जरूरी मन का सुरक्षित ठिकाना है।",
+    "en": "More than a lonely road, the mind needs a safe place to rest."
+  },
+  {
+    "id": "SV-0231",
+    "hi": "जल बचाना भी प्रकृति के प्रति आदर है।",
+    "en": "Saving water is also respect for nature."
+  },
+  {
+    "id": "SV-0232",
+    "hi": "सरलता को अभाव समझकर कम मत आँकिए।",
+    "en": "Don’t undervalue simplicity by mistaking it for lack."
+  },
+  {
+    "id": "SV-0233",
+    "hi": "किसी से मिलते समय अपना ध्यान सचमुच उसे दीजिए।",
+    "en": "When you meet someone, truly give them your attention."
+  },
+  {
+    "id": "SV-0234",
+    "hi": "आज एक अनावश्यक शिकायत कम कीजिए।",
+    "en": "Make one less needless complaint today."
+  },
+  {
+    "id": "SV-0235",
+    "hi": "अच्छे परिवर्तन के लिए पुराने ढंग पर प्रश्न कीजिए।",
+    "en": "For good change, question the old ways."
+  },
+  {
+    "id": "SV-0236",
+    "hi": "सच्ची शांति में अपनी बात कहने की जगह होती है।",
+    "en": "True peace has room for you to speak your mind."
+  },
+  {
+    "id": "SV-0237",
+    "hi": "मन की सफाई में अधूरी माफी भी याद कीजिए।",
+    "en": "In clearing the mind, remember any unfinished apologies too."
+  },
+  {
+    "id": "SV-0238",
+    "hi": "बोलने की स्वतंत्रता के साथ सुनने का धैर्य रखिए।",
+    "en": "With the freedom to speak, keep the patience to listen."
+  },
+  {
+    "id": "SV-0239",
+    "hi": "अपने समय को अर्थहीन जल्दी से बचाइए।",
+    "en": "Protect your time from pointless hurry."
+  },
+  {
+    "id": "SV-0240",
+    "hi": "एक दीप और कुछ शांत क्षण भी संध्या सुंदर बना सकते हैं।",
+    "en": "A single lamp and a few quiet moments can make an evening beautiful."
+  },
+  {
+    "id": "SV-0241",
+    "hi": "दिखावे से हटकर अपनी वास्तविक जरूरत देखिए।",
+    "en": "Look past appearances to what you truly need."
+  },
+  {
+    "id": "SV-0242",
+    "hi": "हर परिवर्तन को दूसरों की स्वीकृति नहीं मिलती।",
+    "en": "Not every change will win others’ approval."
+  },
+  {
+    "id": "SV-0243",
+    "hi": "अच्छी आदत को छोटा रखिए ताकि निभा सकें।",
+    "en": "Keep a good habit small so you can keep it up."
+  },
+  {
+    "id": "SV-0244",
+    "hi": "जो कहना जरूरी है, उसे शांत होकर कहिए।",
+    "en": "Say what needs to be said, calmly."
+  },
+  {
+    "id": "SV-0245",
+    "hi": "अपने आसपास की सफाई में थोड़ा योगदान दीजिए।",
+    "en": "Do a little to keep your surroundings clean."
+  },
+  {
+    "id": "SV-0246",
+    "hi": "मौन को नाराजगी का हथियार मत बनाइए।",
+    "en": "Don’t make silence a weapon of resentment."
+  },
+  {
+    "id": "SV-0247",
+    "hi": "सरल दिन भी याद रखने योग्य हो सकता है।",
+    "en": "A simple day can also be worth remembering."
+  },
+  {
+    "id": "SV-0248",
+    "hi": "अपने लिए दयालु भाषा चुनिए।",
+    "en": "Choose kind words for yourself."
+  },
+  {
+    "id": "SV-0249",
+    "hi": "ठहराव के बाद नया कदम अधिक साफ दिख सकता है।",
+    "en": "After a pause, the next step can look clearer."
+  },
+  {
+    "id": "SV-0251",
+    "hi": "नए काम की शुरुआत छोटी तैयारी से कीजिए।",
+    "en": "Begin new work with a little preparation."
+  },
+  {
+    "id": "SV-0252",
+    "hi": "प्रश्न पूछना सीखने का शुभ आरंभ है।",
+    "en": "Asking questions is an auspicious start to learning."
+  },
+  {
+    "id": "SV-0253",
+    "hi": "बाधा समझ में आए तो उपाय साफ हो सकता है।",
+    "en": "Once you understand the obstacle, the solution can become clear."
+  },
+  {
+    "id": "SV-0254",
+    "hi": "पहले सुनिए, फिर अपनी बात रखिए।",
+    "en": "Listen first, then share your view."
+  },
+  {
+    "id": "SV-0255",
+    "hi": "हर समस्या को एक ही तरीके से मत देखिए।",
+    "en": "Don’t look at every problem in the same way."
+  },
+  {
+    "id": "SV-0256",
+    "hi": "शुरुआत अधूरी हो तो भी अगला कदम संभव है।",
+    "en": "Even if the start was incomplete, the next step is possible."
+  },
+  {
+    "id": "SV-0257",
+    "hi": "बड़ों के अनुभव और नए विचार दोनों सुनिए।",
+    "en": "Listen to both the experience of elders and new ideas."
+  },
+  {
+    "id": "SV-0258",
+    "hi": "निर्णय से पहले जरूरी जानकारी जुटाइए।",
+    "en": "Gather the information you need before deciding."
+  },
+  {
+    "id": "SV-0259",
+    "hi": "सही राह पर धीरे चलना, गलत राह पर जल्दी चलने से बेहतर है।",
+    "en": "Walking slowly on the right path is better than hurrying on the wrong one."
+  },
+  {
+    "id": "SV-0260",
+    "hi": "शुभ संकल्प को आज के काम में बदलिए।",
+    "en": "Turn a good intention into today’s work."
+  },
+  {
+    "id": "SV-0261",
+    "hi": "अभ्यास की शुरुआत आसान स्तर से कीजिए।",
+    "en": "Begin practice at an easy level."
+  },
+  {
+    "id": "SV-0262",
+    "hi": "नई जिम्मेदारी में सहायता का रास्ता जानिए।",
+    "en": "In a new responsibility, find out where help is available."
+  },
+  {
+    "id": "SV-0263",
+    "hi": "धैर्य से सुलझी गाँठ दोबारा कसने से बच सकती है।",
+    "en": "A knot untied with patience is less likely to tighten again."
+  },
+  {
+    "id": "SV-0264",
+    "hi": "बुद्धि का उपयोग दूसरों को भ्रमित करने में मत कीजिए।",
+    "en": "Don’t use your intelligence to mislead others."
+  },
+  {
+    "id": "SV-0265",
+    "hi": "बात की जड़ समझने के लिए ध्यान से सुनिए।",
+    "en": "Listen carefully to understand the root of the matter."
+  },
+  {
+    "id": "SV-0266",
+    "hi": "काम बड़ा हो तो सूची छोटी-छोटी बनाइए।",
+    "en": "When the task is big, make the list in small pieces."
+  },
+  {
+    "id": "SV-0267",
+    "hi": "पहली कोशिश में सब आना जरूरी नहीं।",
+    "en": "You don’t have to get everything right on the first try."
+  },
+  {
+    "id": "SV-0268",
+    "hi": "अच्छी सलाह स्वीकार करने में संकोच मत कीजिए।",
+    "en": "Don’t hesitate to accept good advice."
+  },
+  {
+    "id": "SV-0269",
+    "hi": "नई शुरुआत में पुराने अनुभव साथ रखिए।",
+    "en": "Bring past experience with you into a new beginning."
+  },
+  {
+    "id": "SV-0270",
+    "hi": "दिखने वाली हर जल्दी आपकी प्राथमिकता नहीं।",
+    "en": "Not every apparent rush is your priority."
+  },
+  {
+    "id": "SV-0271",
+    "hi": "सही प्रश्न कई उलझनें कम कर सकता है।",
+    "en": "The right question can ease many confusions."
+  },
+  {
+    "id": "SV-0272",
+    "hi": "सीखते समय गलती सुधारने का अवसर दीजिए।",
+    "en": "While learning, allow room to correct mistakes."
+  },
+  {
+    "id": "SV-0273",
+    "hi": "किसी सरल उपाय को छोटा समझकर मत छोड़िए।",
+    "en": "Don’t dismiss a simple solution as too small."
+  },
+  {
+    "id": "SV-0274",
+    "hi": "निर्णय में भावना और विवेक दोनों को सुनिए।",
+    "en": "In a decision, listen to both feeling and reason."
+  },
+  {
+    "id": "SV-0275",
+    "hi": "अपनी योजना में विश्राम की जगह भी रखिए।",
+    "en": "Leave room for rest in your plans too."
+  },
+  {
+    "id": "SV-0276",
+    "hi": "बाधा के पीछे किसी अनदेखी जरूरत को खोजिए।",
+    "en": "Look for an unseen need behind an obstacle."
+  },
+  {
+    "id": "SV-0277",
+    "hi": "एक काम पूरा करके अगला उठाइए।",
+    "en": "Finish one task, then take up the next."
+  },
+  {
+    "id": "SV-0278",
+    "hi": "नए मार्ग पर विनम्र जिज्ञासा रखिए।",
+    "en": "On a new path, keep a humble curiosity."
+  },
+  {
+    "id": "SV-0279",
+    "hi": "अच्छी शुरुआत के बाद निरंतरता जरूरी है।",
+    "en": "After a good start, steadiness matters."
+  },
+  {
+    "id": "SV-0280",
+    "hi": "जो समझ न आए उसे दोबारा पूछिए।",
+    "en": "Ask again about what you did not understand."
+  },
+  {
+    "id": "SV-0281",
+    "hi": "सिर्फ परिचित होने से कोई तरीका सही नहीं हो जाता।",
+    "en": "A method is not right just because it is familiar."
+  },
+  {
+    "id": "SV-0282",
+    "hi": "तैयारी के छोटे कदम समय बचा सकते हैं।",
+    "en": "Small steps of preparation can save time."
+  },
+  {
+    "id": "SV-0283",
+    "hi": "अपनी बात स्पष्ट कहिए, अनुमान पर मत छोड़िए।",
+    "en": "Say what you mean clearly; don’t leave it to guesswork."
+  },
+  {
+    "id": "SV-0284",
+    "hi": "अच्छे विचार को लिखकर अगला कदम तय कीजिए।",
+    "en": "Write down a good idea and decide the next step."
+  },
+  {
+    "id": "SV-0285",
+    "hi": "समस्या बताने वाले का आभार मानिए।",
+    "en": "Thank the person who points out a problem."
+  },
+  {
+    "id": "SV-0286",
+    "hi": "अनुभव से मिली सीख अगली पीढ़ी से बाँटिए।",
+    "en": "Share the lessons of experience with the next generation."
+  },
+  {
+    "id": "SV-0287",
+    "hi": "हर सुझाव अपनाना जरूरी नहीं, सुनना उपयोगी है।",
+    "en": "You need not adopt every suggestion, but listening helps."
+  },
+  {
+    "id": "SV-0288",
+    "hi": "दूसरे की समझ का उपहास मत कीजिए।",
+    "en": "Don’t mock another’s understanding."
+  },
+  {
+    "id": "SV-0289",
+    "hi": "नई आदत के लिए याद दिलाने वाला छोटा संकेत रखिए।",
+    "en": "Keep a small reminder for a new habit."
+  },
+  {
+    "id": "SV-0290",
+    "hi": "पहला कदम रखने से पहले रास्ते की सुरक्षा देखिए।",
+    "en": "Before taking the first step, check that the path is safe."
+  },
+  {
+    "id": "SV-0291",
+    "hi": "ध्यान बाँटने वाली चीजों को थोड़ी देर दूर रखिए।",
+    "en": "Put distractions away for a little while."
+  },
+  {
+    "id": "SV-0292",
+    "hi": "किसी मुश्किल काम की शुरुआत साथ मिलकर कीजिए।",
+    "en": "Begin a difficult task together with others."
+  },
+  {
+    "id": "SV-0293",
+    "hi": "जहाँ भूल हुई है, वहीं से सुधार शुरू कीजिए।",
+    "en": "Begin to improve right where the mistake was made."
+  },
+  {
+    "id": "SV-0294",
+    "hi": "नया सीखने के लिए उम्र को बाधा मत मानिए।",
+    "en": "Don’t treat age as a barrier to learning something new."
+  },
+  {
+    "id": "SV-0295",
+    "hi": "आज एक काम को सरल बनाने का उपाय खोजिए।",
+    "en": "Today, find a way to make one task simpler."
+  },
+  {
+    "id": "SV-0296",
+    "hi": "निर्णय बदलने के लिए अच्छे कारण स्वीकार कीजिए।",
+    "en": "Accept good reasons to change a decision."
+  },
+  {
+    "id": "SV-0297",
+    "hi": "शुभ अवसर में शामिल हर हाथ का सम्मान कीजिए।",
+    "en": "Honour every hand that takes part in an auspicious occasion."
+  },
+  {
+    "id": "SV-0298",
+    "hi": "अधूरी तैयारी पहचानना भी समझदारी है।",
+    "en": "Recognising that you are not fully prepared is also wisdom."
+  },
+  {
+    "id": "SV-0299",
+    "hi": "काम की शुरुआत में उद्देश्य साफ कहिए।",
+    "en": "At the start of a task, state its purpose clearly."
+  },
+  {
+    "id": "SV-0301",
+    "hi": "अपने सम्मान के लिए शांत और स्पष्ट खड़े रहिए।",
+    "en": "Stand calm and clear for your own dignity."
+  },
+  {
+    "id": "SV-0302",
+    "hi": "करुणा के साथ अपनी सीमाएँ भी रखिए।",
+    "en": "Keep your boundaries along with compassion."
+  },
+  {
+    "id": "SV-0303",
+    "hi": "साहस में अपनी सुरक्षा का ध्यान शामिल है।",
+    "en": "Courage includes taking care of your own safety."
+  },
+  {
+    "id": "SV-0304",
+    "hi": "किसी की आवाज दबे तो उसे सुनने की जगह दीजिए।",
+    "en": "When someone’s voice is drowned out, make room to hear it."
+  },
+  {
+    "id": "SV-0305",
+    "hi": "शक्ति का उपयोग संरक्षण में कीजिए।",
+    "en": "Use strength to protect."
+  },
+  {
+    "id": "SV-0306",
+    "hi": "थक जाने पर विश्राम लेना आपके प्रयास का सम्मान है।",
+    "en": "Resting when tired honours your effort."
+  },
+  {
+    "id": "SV-0307",
+    "hi": "बेटियों की बात को निर्णय में बराबर स्थान दीजिए।",
+    "en": "Give daughters’ views an equal place in decisions."
+  },
+  {
+    "id": "SV-0308",
+    "hi": "अनुचित मांग को मना करना सीखिए।",
+    "en": "Learn to refuse an unfair demand."
+  },
+  {
+    "id": "SV-0309",
+    "hi": "किसी डर को कह पाना भी हिम्मत है।",
+    "en": "Being able to name a fear is courage too."
+  },
+  {
+    "id": "SV-0310",
+    "hi": "संकट में सही सहायता तक पहुँचिए।",
+    "en": "In a crisis, reach the right help."
+  },
+  {
+    "id": "SV-0311",
+    "hi": "दूसरे के संघर्ष को छोटा मत कहिए।",
+    "en": "Don’t belittle another’s struggle."
+  },
+  {
+    "id": "SV-0312",
+    "hi": "अपने भीतर की क्षमता को अवसर दीजिए।",
+    "en": "Give the ability within you a chance."
+  },
+  {
+    "id": "SV-0313",
+    "hi": "दृढ़ आवाज में भी सम्मान रखा जा सकता है।",
+    "en": "A firm voice can still be respectful."
+  },
+  {
+    "id": "SV-0314",
+    "hi": "करुणा का आरंभ स्वयं से भी कीजिए।",
+    "en": "Let compassion begin with yourself too."
+  },
+  {
+    "id": "SV-0315",
+    "hi": "घर के काम और जिम्मेदारियाँ न्याय से बाँटिए।",
+    "en": "Share household work and responsibilities fairly."
+  },
+  {
+    "id": "SV-0316",
+    "hi": "किसी के साहस की चुपचाप सराहना कीजिए।",
+    "en": "Quietly appreciate someone’s courage."
+  },
+  {
+    "id": "SV-0317",
+    "hi": "सुरक्षित साथ में कठिन बात कहना आसान हो सकता है।",
+    "en": "In safe company, hard things can be easier to say."
+  },
+  {
+    "id": "SV-0318",
+    "hi": "सहयोग देने से पहले सामने वाले की जरूरत पूछिए।",
+    "en": "Before offering support, ask what the other person needs."
+  },
+  {
+    "id": "SV-0319",
+    "hi": "किसी की चुप्पी को सहमति मत मानिए।",
+    "en": "Don’t take someone’s silence as agreement."
+  },
+  {
+    "id": "SV-0320",
+    "hi": "बच्चों को सम्मान और अपनी बात कहने का साहस दीजिए।",
+    "en": "Give children respect and the courage to speak their mind."
+  },
+  {
+    "id": "SV-0321",
+    "hi": "परिवार की महिलाओं के श्रम को पहचानिए।",
+    "en": "Recognise the labour of the women in your family."
+  },
+  {
+    "id": "SV-0322",
+    "hi": "शक्ति को केवल कठोरता में मत खोजिए।",
+    "en": "Don’t look for strength only in harshness."
+  },
+  {
+    "id": "SV-0323",
+    "hi": "अन्याय का विरोध विवेकपूर्ण ढंग से कीजिए।",
+    "en": "Oppose injustice wisely."
+  },
+  {
+    "id": "SV-0324",
+    "hi": "साथ माँगना अपने प्रयास को सहारा देना है।",
+    "en": "Asking for company is a way of supporting your own effort."
+  },
+  {
+    "id": "SV-0325",
+    "hi": "अपनी खुशी के लिए भी समय रखिए।",
+    "en": "Keep time for your own happiness too."
+  },
+  {
+    "id": "SV-0326",
+    "hi": "मुश्किल निर्णय में भरोसेमंद सलाह लीजिए।",
+    "en": "In a hard decision, seek trustworthy advice."
+  },
+  {
+    "id": "SV-0327",
+    "hi": "किसी की स्वतंत्रता का सम्मान भक्ति का सुंदर व्यवहार है।",
+    "en": "Respecting another’s freedom is a beautiful act of devotion."
+  },
+  {
+    "id": "SV-0328",
+    "hi": "विचार अलग हों तो भी गरिमा समान रखिए।",
+    "en": "When views differ, keep dignity equal."
+  },
+  {
+    "id": "SV-0329",
+    "hi": "मदद पाने वाले को निर्णय का अधिकार दीजिए।",
+    "en": "Let the person being helped have the right to decide."
+  },
+  {
+    "id": "SV-0330",
+    "hi": "अपनी मेहनत को दूसरों की अपेक्षाओं में मत खोइए।",
+    "en": "Don’t lose your own effort in others’ expectations."
+  },
+  {
+    "id": "SV-0331",
+    "hi": "धैर्य से सीखी बात भी आपकी शक्ति है।",
+    "en": "What you learn through patience is also your strength."
+  },
+  {
+    "id": "SV-0332",
+    "hi": "स्नेह में किसी पर नियंत्रण जरूरी नहीं।",
+    "en": "Affection does not need control over anyone."
+  },
+  {
+    "id": "SV-0333",
+    "hi": "जब मन टूटे तो सहारा स्वीकार कीजिए।",
+    "en": "When your heart breaks, accept support."
+  },
+  {
+    "id": "SV-0334",
+    "hi": "बच्चियों को प्रश्न पूछने का अवसर दीजिए।",
+    "en": "Give young girls the chance to ask questions."
+  },
+  {
+    "id": "SV-0335",
+    "hi": "आपकी सीमा का सम्मान होना जरूरी है।",
+    "en": "Your boundaries deserve respect."
+  },
+  {
+    "id": "SV-0336",
+    "hi": "किसी के आत्मविश्वास को कटु शब्दों से मत तोड़िए।",
+    "en": "Don’t break someone’s confidence with bitter words."
+  },
+  {
+    "id": "SV-0337",
+    "hi": "अपने भीतर की आवाज को ध्यान से सुनिए।",
+    "en": "Listen carefully to your inner voice."
+  },
+  {
+    "id": "SV-0338",
+    "hi": "सही अवसर मिलना भी क्षमता को खिलाता है।",
+    "en": "The right opportunity helps ability blossom."
+  },
+  {
+    "id": "SV-0339",
+    "hi": "असुरक्षित स्थिति में सहायता को प्राथमिकता दीजिए।",
+    "en": "In an unsafe situation, put getting help first."
+  },
+  {
+    "id": "SV-0340",
+    "hi": "दूसरे की उपलब्धि से अपनी शक्ति कम नहीं होती।",
+    "en": "Another’s achievement does not lessen your strength."
+  },
+  {
+    "id": "SV-0341",
+    "hi": "घरेलू जिम्मेदारी को अदृश्य मत होने दीजिए।",
+    "en": "Don’t let household responsibilities go unseen."
+  },
+  {
+    "id": "SV-0342",
+    "hi": "कठिनाई के बीच छोटी राहत को स्वीकार कीजिए।",
+    "en": "In the midst of hardship, accept small relief."
+  },
+  {
+    "id": "SV-0343",
+    "hi": "सम्मानजनक संबंध में भय की जगह भरोसा होता है।",
+    "en": "In a respectful relationship, trust takes the place of fear."
+  },
+  {
+    "id": "SV-0344",
+    "hi": "दृढ़ रहने के साथ सीखते रहना संभव है।",
+    "en": "You can stay firm and keep learning."
+  },
+  {
+    "id": "SV-0345",
+    "hi": "अपने निर्णय के लिए सोचने का समय लीजिए।",
+    "en": "Take time to think about your decisions."
+  },
+  {
+    "id": "SV-0346",
+    "hi": "सेवा में अपनी क्षमता से अधिक भार मत उठाइए।",
+    "en": "Don’t take on more in service than you can carry."
+  },
+  {
+    "id": "SV-0347",
+    "hi": "किसी का साथ देने के लिए उसे दोष देना जरूरी नहीं।",
+    "en": "You need not blame someone in order to stand by them."
+  },
+  {
+    "id": "SV-0348",
+    "hi": "एक-दूसरे की हिम्मत बनना भी शक्ति है।",
+    "en": "Being each other’s courage is strength too."
+  },
+  {
+    "id": "SV-0349",
+    "hi": "नए अवसर के लिए अपनी योग्यता पहचानिए।",
+    "en": "Recognise your own worth for new opportunities."
+  },
+  {
+    "id": "SV-0351",
+    "hi": "विश्वास के साथ अपने हिस्से की तैयारी रखिए।",
+    "en": "With faith, keep your own share of preparation."
+  },
+  {
+    "id": "SV-0352",
+    "hi": "जीवन के संतुलन में विश्राम को स्थान दीजिए।",
+    "en": "Give rest its place in a balanced life."
+  },
+  {
+    "id": "SV-0353",
+    "hi": "जो संभालना है, उसकी नियमित देखभाल कीजिए।",
+    "en": "Look after what you need to sustain, regularly."
+  },
+  {
+    "id": "SV-0354",
+    "hi": "रिश्तों को समय देना भी जिम्मेदारी है।",
+    "en": "Giving time to relationships is a responsibility too."
+  },
+  {
+    "id": "SV-0355",
+    "hi": "दिन की शुरुआत में अपनी प्राथमिकता पहचानिए।",
+    "en": "At the start of the day, identify your priority."
+  },
+  {
+    "id": "SV-0356",
+    "hi": "अच्छे समय में भी विनम्र रहिए।",
+    "en": "Stay humble in good times too."
+  },
+  {
+    "id": "SV-0357",
+    "hi": "कठिन समय में आशा के छोटे कारण खोजिए।",
+    "en": "In hard times, look for small reasons to hope."
+  },
+  {
+    "id": "SV-0358",
+    "hi": "सहारा देने वाले लोगों का आभार मानिए।",
+    "en": "Thank the people who support you."
+  },
+  {
+    "id": "SV-0359",
+    "hi": "नियमित प्रयास से भरोसा धीरे-धीरे बढ़ता है।",
+    "en": "Trust grows slowly through steady effort."
+  },
+  {
+    "id": "SV-0360",
+    "hi": "परिवर्तन के बीच अपनी अच्छी आदतें बचाइए।",
+    "en": "Amid change, hold on to your good habits."
+  },
+  {
+    "id": "SV-0361",
+    "hi": "किसी की देखभाल में उसकी इच्छा सुनिए।",
+    "en": "When caring for someone, listen to what they want."
+  },
+  {
+    "id": "SV-0362",
+    "hi": "अपने भरोसे को जाँचने के लिए प्रश्न पूछना ठीक है।",
+    "en": "It is fine to ask questions to test your trust."
+  },
+  {
+    "id": "SV-0363",
+    "hi": "कल की चिंता से आज का स्नेह मत चूकिए।",
+    "en": "Don’t miss today’s affection worrying about tomorrow."
+  },
+  {
+    "id": "SV-0364",
+    "hi": "संबंधों का संरक्षण रोज के व्यवहार से होता है।",
+    "en": "Relationships are kept safe through everyday conduct."
+  },
+  {
+    "id": "SV-0365",
+    "hi": "अपने दिन में काम और परिवार दोनों को समय दीजिए।",
+    "en": "Give time in your day to both work and family."
+  },
+  {
+    "id": "SV-0366",
+    "hi": "आस्था के साथ विवेक बनाए रखिए।",
+    "en": "Keep good judgement alongside faith."
+  },
+  {
+    "id": "SV-0367",
+    "hi": "विनम्र हृदय दूसरों से सीख सकता है।",
+    "en": "A humble heart can learn from others."
+  },
+  {
+    "id": "SV-0368",
+    "hi": "जिस पर भरोसा किया जाए, उसके प्रति जिम्मेदार रहिए।",
+    "en": "Be responsible towards those who trust you."
+  },
+  {
+    "id": "SV-0369",
+    "hi": "शांति के लिए जरूरी बातचीत मत टालिए।",
+    "en": "Don’t put off the conversations peace requires."
+  },
+  {
+    "id": "SV-0370",
+    "hi": "धैर्य रखते हुए उचित कदम भी उठाइए।",
+    "en": "While being patient, take the right steps too."
+  },
+  {
+    "id": "SV-0371",
+    "hi": "घर की छोटी जरूरत समय पर समझिए।",
+    "en": "Notice the small needs of your home in time."
+  },
+  {
+    "id": "SV-0372",
+    "hi": "किसी की मदद याद रखिए, उसका बोझ मत बनाइए।",
+    "en": "Remember someone’s help, but don’t make it a burden on them."
+  },
+  {
+    "id": "SV-0373",
+    "hi": "सुख के क्षणों को भविष्य की चिंता में मत गँवाइए।",
+    "en": "Don’t lose moments of joy to worry about the future."
+  },
+  {
+    "id": "SV-0374",
+    "hi": "किसी का भरोसा पाने में समय लगता है।",
+    "en": "Earning someone’s trust takes time."
+  },
+  {
+    "id": "SV-0375",
+    "hi": "अपनी क्षमता के अनुसार स्थिर सहारा बनिए।",
+    "en": "Be a steady support as far as you are able."
+  },
+  {
+    "id": "SV-0376",
+    "hi": "हर दिन थोड़ा अच्छा पढ़ने का समय रखिए।",
+    "en": "Keep some time each day to read something good."
+  },
+  {
+    "id": "SV-0377",
+    "hi": "अनिश्चित राह पर साथ चलने वालों को पहचानिए।",
+    "en": "On an uncertain road, recognise those who walk with you."
+  },
+  {
+    "id": "SV-0378",
+    "hi": "ईश्वर स्मरण के साथ अपने कर्म पर ध्यान दीजिए।",
+    "en": "Remember the divine and attend to your work."
+  },
+  {
+    "id": "SV-0379",
+    "hi": "संयम का अभ्यास छोटी इच्छाओं में भी होता है।",
+    "en": "Self-restraint is practised in small desires too."
+  },
+  {
+    "id": "SV-0380",
+    "hi": "संतुलन हर दिन एक जैसा दिखाई नहीं देता।",
+    "en": "Balance does not look the same every day."
+  },
+  {
+    "id": "SV-0381",
+    "hi": "किसी प्रिय की जरूरत बदल सकती है, पूछते रहिए।",
+    "en": "A loved one’s needs can change; keep asking."
+  },
+  {
+    "id": "SV-0382",
+    "hi": "जीवन की जिम्मेदारियाँ साझा करने से हल्की हो सकती हैं।",
+    "en": "Life’s responsibilities can feel lighter when shared."
+  },
+  {
+    "id": "SV-0383",
+    "hi": "धैर्यपूर्ण उत्तर घर का वातावरण बदल सकता है।",
+    "en": "A patient reply can change the mood of a home."
+  },
+  {
+    "id": "SV-0384",
+    "hi": "आभार की आदत को विशेष दिन का इंतजार नहीं।",
+    "en": "The habit of gratitude does not wait for a special day."
+  },
+  {
+    "id": "SV-0385",
+    "hi": "अपने आस-पास के जीवन की रक्षा में सहयोग दीजिए।",
+    "en": "Help protect the life around you."
+  },
+  {
+    "id": "SV-0386",
+    "hi": "अच्छी संगति को सहेजने के लिए संपर्क रखिए।",
+    "en": "Stay in touch to keep good company close."
+  },
+  {
+    "id": "SV-0387",
+    "hi": "दूसरे के भरोसे का गलत लाभ मत उठाइए।",
+    "en": "Don’t take unfair advantage of another’s trust."
+  },
+  {
+    "id": "SV-0388",
+    "hi": "किसी बात का वचन हो तो उसे याद रखने का उपाय कीजिए।",
+    "en": "If you have given your word, find a way to remember it."
+  },
+  {
+    "id": "SV-0389",
+    "hi": "जीवन के बदलते मौसम में खुद को समय दीजिए।",
+    "en": "Give yourself time through life’s changing seasons."
+  },
+  {
+    "id": "SV-0390",
+    "hi": "आपके शांत सहयोग का भी मूल्य है।",
+    "en": "Your quiet support has value too."
+  },
+  {
+    "id": "SV-0391",
+    "hi": "प्रार्थना में केवल मांग नहीं, धन्यवाद भी रखिए।",
+    "en": "In prayer, offer thanks, not only requests."
+  },
+  {
+    "id": "SV-0392",
+    "hi": "अपने छोटे सुखों को दूसरों से तुलना करके मत घटाइए।",
+    "en": "Don’t shrink your small joys by comparing them with others’."
+  },
+  {
+    "id": "SV-0393",
+    "hi": "संतुलित दिन में अपने शरीर की आवाज सुनिए।",
+    "en": "On a balanced day, listen to your body."
+  },
+  {
+    "id": "SV-0394",
+    "hi": "जो अच्छा मिला है, उसकी देखभाल कीजिए।",
+    "en": "Take care of the good you have received."
+  },
+  {
+    "id": "SV-0395",
+    "hi": "अपने मन की चिंता को भरोसेमंद संगति में बाँटिए।",
+    "en": "Share your worries with company you trust."
+  },
+  {
+    "id": "SV-0396",
+    "hi": "श्रद्धा को सम्मानजनक व्यवहार में उतारिए।",
+    "en": "Carry your faith into respectful conduct."
+  },
+  {
+    "id": "SV-0397",
+    "hi": "किसी की राह में अनावश्यक बाधा मत बनिए।",
+    "en": "Don’t become a needless obstacle in someone’s path."
+  },
+  {
+    "id": "SV-0398",
+    "hi": "हर नई सुबह विश्वास को नए कर्म का साथ दीजिए।",
+    "en": "With each new morning, pair faith with fresh action."
+  },
+  {
+    "id": "SV-0399",
+    "hi": "कठिनाई में अपनी दिनचर्या को सरल रखिए।",
+    "en": "In difficult times, keep your routine simple."
+  },
+  {
+    "id": "SV-0401",
+    "hi": "समृद्धि में अपने साथ दूसरों का भी ध्यान रखिए।",
+    "en": "In prosperity, care for others as well as yourself."
+  },
+  {
+    "id": "SV-0402",
+    "hi": "जरूरत और इच्छा का फर्क समझकर खर्च कीजिए।",
+    "en": "Spend with an understanding of need versus want."
+  },
+  {
+    "id": "SV-0403",
+    "hi": "मेहनत की कमाई का सम्मान कीजिए।",
+    "en": "Respect money earned through hard work."
+  },
+  {
+    "id": "SV-0404",
+    "hi": "अपने घर में आने वाले हर श्रमिक को आदर दीजिए।",
+    "en": "Show respect to every worker who comes to your home."
+  },
+  {
+    "id": "SV-0405",
+    "hi": "थोड़ा बाँटना भी उदारता का आरंभ है।",
+    "en": "Sharing a little is the beginning of generosity."
+  },
+  {
+    "id": "SV-0406",
+    "hi": "किसी की आर्थिक स्थिति से उसका मान मत तौलिए।",
+    "en": "Don’t weigh someone’s worth by their finances."
+  },
+  {
+    "id": "SV-0407",
+    "hi": "संतोष के साथ भविष्य की तैयारी कीजिए।",
+    "en": "Prepare for the future with contentment."
+  },
+  {
+    "id": "SV-0408",
+    "hi": "खरीदने से पहले उपयोग की जरूरत सोचिए।",
+    "en": "Before buying, consider whether you need it."
+  },
+  {
+    "id": "SV-0409",
+    "hi": "उपहार का मूल्य केवल कीमत से तय नहीं होता।",
+    "en": "A gift’s value is not set by its price alone."
+  },
+  {
+    "id": "SV-0410",
+    "hi": "समय पर मेहनताना देना भी अच्छा व्यवहार है।",
+    "en": "Paying wages on time is good conduct too."
+  },
+  {
+    "id": "SV-0411",
+    "hi": "सामर्थ्य के अनुसार सहायता कीजिए, दिखावे के लिए नहीं।",
+    "en": "Help according to your means, not for show."
+  },
+  {
+    "id": "SV-0412",
+    "hi": "घर की स्वच्छता में सबका योगदान हो।",
+    "en": "Let everyone contribute to keeping the home clean."
+  },
+  {
+    "id": "SV-0413",
+    "hi": "किसी की सहायता को सार्वजनिक करना जरूरी नहीं।",
+    "en": "You need not make your help to anyone public."
+  },
+  {
+    "id": "SV-0414",
+    "hi": "जो वस्तु उपयोग में नहीं, जरूरतमंद तक सम्मान से पहुँचाइए।",
+    "en": "Pass on what you don’t use, respectfully, to someone in need."
+  },
+  {
+    "id": "SV-0415",
+    "hi": "अपने संसाधनों का हिसाब समझकर रखिए।",
+    "en": "Keep a clear account of your resources."
+  },
+  {
+    "id": "SV-0416",
+    "hi": "अभाव में जी रहे व्यक्ति को दोष मत दीजिए।",
+    "en": "Don’t blame someone living in want."
+  },
+  {
+    "id": "SV-0417",
+    "hi": "कृतज्ञता से अपने घर की छोटी सुविधा देखिए।",
+    "en": "Look at the small comforts of your home with gratitude."
+  },
+  {
+    "id": "SV-0418",
+    "hi": "बचत की शुरुआत छोटी रकम से भी हो सकती है।",
+    "en": "Saving can begin with a small amount."
+  },
+  {
+    "id": "SV-0419",
+    "hi": "उदारता में दूसरे की गरिमा बचाइए।",
+    "en": "In generosity, protect the other person’s dignity."
+  },
+  {
+    "id": "SV-0420",
+    "hi": "अपने श्रम का उचित मूल्य पूछना ठीक है।",
+    "en": "It is fine to ask a fair price for your labour."
+  },
+  {
+    "id": "SV-0421",
+    "hi": "परिवार में खर्च की बात स्पष्टता से कीजिए।",
+    "en": "Talk about family spending openly."
+  },
+  {
+    "id": "SV-0422",
+    "hi": "व्यर्थ खर्च घटाकर जरूरी जरूरत को जगह दीजिए।",
+    "en": "Cut wasteful spending to make room for real needs."
+  },
+  {
+    "id": "SV-0423",
+    "hi": "समृद्धि का सुंदर उपयोग जीवन आसान बनाना है।",
+    "en": "The finest use of prosperity is to make life easier."
+  },
+  {
+    "id": "SV-0424",
+    "hi": "किसी की सफलता देखकर ईर्ष्या की जगह शुभकामना दीजिए।",
+    "en": "When you see someone succeed, offer good wishes instead of envy."
+  },
+  {
+    "id": "SV-0425",
+    "hi": "दान देते समय अपनी जरूरी जिम्मेदारी भी समझिए।",
+    "en": "When giving, keep your own essential responsibilities in mind."
+  },
+  {
+    "id": "SV-0426",
+    "hi": "अच्छी वस्तु की देखभाल भी संसाधन बचाती है।",
+    "en": "Caring for good things also saves resources."
+  },
+  {
+    "id": "SV-0427",
+    "hi": "साझा चीजों का उपयोग जिम्मेदारी से कीजिए।",
+    "en": "Use shared things responsibly."
+  },
+  {
+    "id": "SV-0428",
+    "hi": "दिखावे के लिए लिया निर्णय फिर परखिए।",
+    "en": "Take another look at a decision made for show."
+  },
+  {
+    "id": "SV-0429",
+    "hi": "भोजन की बर्बादी कम करने से शुरुआत कीजिए।",
+    "en": "Start by wasting less food."
+  },
+  {
+    "id": "SV-0430",
+    "hi": "अपने परिवार के अदृश्य श्रम का मूल्य पहचानिए।",
+    "en": "Recognise the value of the unseen labour in your family."
+  },
+  {
+    "id": "SV-0431",
+    "hi": "सुविधा मिली हो तो उसका उपयोग संवेदनशीलता से कीजिए।",
+    "en": "If you have comforts, use them with sensitivity."
+  },
+  {
+    "id": "SV-0432",
+    "hi": "किसी की जरूरत अनुमान से नहीं, पूछकर समझिए।",
+    "en": "Understand someone’s needs by asking, not by guessing."
+  },
+  {
+    "id": "SV-0433",
+    "hi": "उधार का वचन देते समय साफ शर्तें रखिए।",
+    "en": "When promising a loan, keep the terms clear."
+  },
+  {
+    "id": "SV-0434",
+    "hi": "धन के साथ विश्वास को भी सहेजिए।",
+    "en": "Along with wealth, safeguard trust."
+  },
+  {
+    "id": "SV-0435",
+    "hi": "संतोष में अपने श्रम की उपेक्षा मत कीजिए।",
+    "en": "In contentment, don’t neglect your own effort."
+  },
+  {
+    "id": "SV-0436",
+    "hi": "घर की खुशी में साथ बैठने का समय भी जुड़ता है।",
+    "en": "Time spent sitting together adds to a home’s happiness."
+  },
+  {
+    "id": "SV-0437",
+    "hi": "दूसरे के पास अधिक है तो आपका सुख झूठा नहीं।",
+    "en": "If others have more, your happiness is no less real."
+  },
+  {
+    "id": "SV-0438",
+    "hi": "सामर्थ्य बढ़े तो जिम्मेदारी भी याद रखिए।",
+    "en": "As your means grow, remember your responsibilities too."
+  },
+  {
+    "id": "SV-0439",
+    "hi": "जरूरी चीज की मरम्मत भी समझदार विकल्प हो सकती है।",
+    "en": "Repairing something you need can be the wise choice."
+  },
+  {
+    "id": "SV-0440",
+    "hi": "सहायता का उद्देश्य सामने वाले का भला रखिए।",
+    "en": "Let the aim of help be the other person’s good."
+  },
+  {
+    "id": "SV-0441",
+    "hi": "अपने लिए खरीदी खुशी पर अपराधबोध जरूरी नहीं।",
+    "en": "You need not feel guilty about a joy you buy for yourself."
+  },
+  {
+    "id": "SV-0442",
+    "hi": "भौतिक सुविधा के साथ संबंधों को समय दीजिए।",
+    "en": "Along with material comforts, give time to relationships."
+  },
+  {
+    "id": "SV-0443",
+    "hi": "त्योहार का आनंद अपने बजट में भी संभव है।",
+    "en": "Festivals can be enjoyed within your budget too."
+  },
+  {
+    "id": "SV-0444",
+    "hi": "जो साझा कर सकते हैं, उसे स्नेह से साझा कीजिए।",
+    "en": "Share lovingly what you are able to share."
+  },
+  {
+    "id": "SV-0445",
+    "hi": "किसी की छोटी कमाई का उपहास मत कीजिए।",
+    "en": "Don’t mock someone’s small earnings."
+  },
+  {
+    "id": "SV-0446",
+    "hi": "आभार में घर चलाने वाले सभी हाथ याद कीजिए।",
+    "en": "In gratitude, remember all the hands that run the home."
+  },
+  {
+    "id": "SV-0447",
+    "hi": "समृद्धि को केवल वस्तुओं की गिनती मत बनाइए।",
+    "en": "Don’t reduce prosperity to a count of possessions."
+  },
+  {
+    "id": "SV-0448",
+    "hi": "अपने उपयोग के बाद जगह साफ छोड़िए।",
+    "en": "Leave a place clean after you use it."
+  },
+  {
+    "id": "SV-0449",
+    "hi": "सुखद घर बनाने में सम्मान का बड़ा योगदान है।",
+    "en": "Respect contributes greatly to a happy home."
+  },
+  {
+    "id": "SV-0451",
+    "hi": "सीखने की इच्छा हर उम्र में सुंदर है।",
+    "en": "The wish to learn is beautiful at every age."
+  },
+  {
+    "id": "SV-0452",
+    "hi": "अपना ज्ञान सरल भाषा में बाँटिए।",
+    "en": "Share your knowledge in simple words."
+  },
+  {
+    "id": "SV-0453",
+    "hi": "मधुर वाणी में सत्य को स्थान दीजिए।",
+    "en": "Give truth a place in sweet speech."
+  },
+  {
+    "id": "SV-0454",
+    "hi": "किसी को समझाने से पहले उसकी बात सुनिए।",
+    "en": "Listen to someone before you try to explain."
+  },
+  {
+    "id": "SV-0455",
+    "hi": "नया शब्द सीखिए और उसका अर्थ समझिए।",
+    "en": "Learn a new word and understand its meaning."
+  },
+  {
+    "id": "SV-0456",
+    "hi": "प्रश्न पूछने वाले को प्रोत्साहन दीजिए।",
+    "en": "Encourage those who ask questions."
+  },
+  {
+    "id": "SV-0457",
+    "hi": "अधूरी जानकारी आगे बढ़ाने से पहले जाँचिए।",
+    "en": "Check incomplete information before passing it on."
+  },
+  {
+    "id": "SV-0458",
+    "hi": "अपनी भूल सुधारना सीखने का हिस्सा है।",
+    "en": "Correcting your mistakes is part of learning."
+  },
+  {
+    "id": "SV-0459",
+    "hi": "पुस्तक पढ़ने के बाद थोड़ा विचार भी कीजिए।",
+    "en": "After reading a book, take a little time to reflect."
+  },
+  {
+    "id": "SV-0460",
+    "hi": "किसी की भाषा या उच्चारण का उपहास मत कीजिए।",
+    "en": "Never mock anyone’s language or accent."
+  },
+  {
+    "id": "SV-0461",
+    "hi": "ज्ञान के साथ नम्रता उसे उपयोगी बनाती है।",
+    "en": "Humility makes knowledge useful."
+  },
+  {
+    "id": "SV-0462",
+    "hi": "जो नहीं जानते, उसे ईमानदारी से स्वीकार कीजिए।",
+    "en": "Honestly admit what you don’t know."
+  },
+  {
+    "id": "SV-0463",
+    "hi": "कठिन विषय को छोटे हिस्सों में समझिए।",
+    "en": "Understand a difficult subject in small parts."
+  },
+  {
+    "id": "SV-0464",
+    "hi": "सुनने का अभ्यास संवाद को सुंदर बनाता है।",
+    "en": "Practising listening makes conversation beautiful."
+  },
+  {
+    "id": "SV-0465",
+    "hi": "बच्चे के प्रश्न को झुंझलाहट से मत रोकिए।",
+    "en": "Don’t silence a child’s question with irritation."
+  },
+  {
+    "id": "SV-0466",
+    "hi": "अपनी बात कहने से पहले शब्दों का असर सोचिए।",
+    "en": "Before speaking, consider the effect of your words."
+  },
+  {
+    "id": "SV-0467",
+    "hi": "सीखी बात को जीवन में परखिए।",
+    "en": "Test what you have learned in your life."
+  },
+  {
+    "id": "SV-0468",
+    "hi": "पढ़ने का छोटा नियमित समय बनाइए।",
+    "en": "Make a small, regular time for reading."
+  },
+  {
+    "id": "SV-0469",
+    "hi": "असहमति व्यक्त करने की भाषा सभ्य रखिए।",
+    "en": "Keep the language of disagreement civil."
+  },
+  {
+    "id": "SV-0470",
+    "hi": "दूसरे के अनुभव से भी ज्ञान मिलता है।",
+    "en": "Knowledge comes from others’ experience too."
+  },
+  {
+    "id": "SV-0471",
+    "hi": "सही स्रोत खोजने में समय लगाना उपयोगी है।",
+    "en": "Time spent finding the right source is well spent."
+  },
+  {
+    "id": "SV-0472",
+    "hi": "किसी विचार को समझना उससे सहमत होना नहीं।",
+    "en": "Understanding an idea is not the same as agreeing with it."
+  },
+  {
+    "id": "SV-0473",
+    "hi": "कला का अभ्यास धैर्य और आनंद के साथ कीजिए।",
+    "en": "Practise your art with patience and joy."
+  },
+  {
+    "id": "SV-0474",
+    "hi": "सीखने में हुई देरी से अपना मूल्य मत आँकिए।",
+    "en": "Don’t judge your worth by how long learning takes."
+  },
+  {
+    "id": "SV-0475",
+    "hi": "किसी की रचना साझा करते समय श्रेय दीजिए।",
+    "en": "Give credit when you share someone’s work."
+  },
+  {
+    "id": "SV-0476",
+    "hi": "कड़वी बात को कहने का संवेदनशील तरीका खोजिए।",
+    "en": "Find a sensitive way to say a bitter truth."
+  },
+  {
+    "id": "SV-0477",
+    "hi": "अपनी बोली के स्नेह भरे शब्द बचाइए।",
+    "en": "Keep alive the loving words of your own dialect."
+  },
+  {
+    "id": "SV-0478",
+    "hi": "शिक्षक के साथ सीखने वाले का भी सम्मान हो।",
+    "en": "Let the learner be respected as well as the teacher."
+  },
+  {
+    "id": "SV-0479",
+    "hi": "अफवाह की जगह जाँची हुई जानकारी भेजिए।",
+    "en": "Send verified information instead of rumours."
+  },
+  {
+    "id": "SV-0480",
+    "hi": "आज किसी उपयोगी बात की जड़ तक जाइए।",
+    "en": "Today, get to the root of something useful."
+  },
+  {
+    "id": "SV-0481",
+    "hi": "वाणी की कोमलता में स्पष्टता भी रखिए।",
+    "en": "Keep clarity within gentle speech."
+  },
+  {
+    "id": "SV-0482",
+    "hi": "हर उत्तर याद करने से पहले प्रश्न समझिए।",
+    "en": "Before memorising every answer, understand the question."
+  },
+  {
+    "id": "SV-0483",
+    "hi": "सीखने की अलग गति का सम्मान कीजिए।",
+    "en": "Respect that people learn at different speeds."
+  },
+  {
+    "id": "SV-0484",
+    "hi": "किसी पुस्तक को पूरा करना दौड़ नहीं है।",
+    "en": "Finishing a book is not a race."
+  },
+  {
+    "id": "SV-0485",
+    "hi": "आलोचना में सुधार का रास्ता भी बताइए।",
+    "en": "When you criticise, also show the way to improve."
+  },
+  {
+    "id": "SV-0486",
+    "hi": "ज्ञान को श्रेष्ठता दिखाने का साधन मत बनाइए।",
+    "en": "Don’t make knowledge a way to show superiority."
+  },
+  {
+    "id": "SV-0487",
+    "hi": "अच्छा संवाद जीत से अधिक समझ बढ़ाता है।",
+    "en": "Good dialogue builds more understanding than winning."
+  },
+  {
+    "id": "SV-0488",
+    "hi": "एकाग्र होकर पढ़े कुछ पन्ने भी मूल्यवान हैं।",
+    "en": "Even a few pages read with focus are valuable."
+  },
+  {
+    "id": "SV-0489",
+    "hi": "गलत सूचना सुधारते समय सामने वाले का अपमान मत कीजिए।",
+    "en": "When correcting misinformation, don’t humiliate the other person."
+  },
+  {
+    "id": "SV-0490",
+    "hi": "अपनी रचना में अभ्यास के निशान देखकर प्रसन्न होइए।",
+    "en": "Be glad to see the marks of practice in your work."
+  },
+  {
+    "id": "SV-0491",
+    "hi": "किसी की चुप्पी में सोचने का समय हो सकता है।",
+    "en": "Someone’s silence may be time to think."
+  },
+  {
+    "id": "SV-0492",
+    "hi": "जिज्ञासा को केवल बच्चों का गुण मत मानिए।",
+    "en": "Don’t think of curiosity as a quality only of children."
+  },
+  {
+    "id": "SV-0493",
+    "hi": "जो संदेश मन विचलित करे, उसे भेजने से पहले जाँचिए।",
+    "en": "Check a disturbing message before you forward it."
+  },
+  {
+    "id": "SV-0494",
+    "hi": "सीखने के लिए अपनी पुरानी धारणा पर प्रश्न कीजिए।",
+    "en": "To learn, question your old assumptions."
+  },
+  {
+    "id": "SV-0495",
+    "hi": "संगीत और साहित्य के लिए दिन में थोड़ा स्थान रखिए।",
+    "en": "Keep a little room in your day for music and literature."
+  },
+  {
+    "id": "SV-0496",
+    "hi": "तथ्य और अपनी राय का अंतर साफ रखिए।",
+    "en": "Keep fact and opinion clearly apart."
+  },
+  {
+    "id": "SV-0497",
+    "hi": "किसी विद्यार्थी को उसकी एक गलती से मत पहचानिए।",
+    "en": "Don’t define a student by a single mistake."
+  },
+  {
+    "id": "SV-0498",
+    "hi": "सार्थक शब्दों में अनावश्यक कठोरता कम कीजिए।",
+    "en": "Take needless harshness out of meaningful words."
+  },
+  {
+    "id": "SV-0499",
+    "hi": "हर दिन कुछ सीखने का छोटा अवसर खोजिए।",
+    "en": "Find a small chance to learn something every day."
+  },
+  {
+    "id": "SV-0501",
+    "hi": "थाली में उतना लीजिए जितना खा सकें।",
+    "en": "Take only as much on your plate as you can eat."
+  },
+  {
+    "id": "SV-0502",
+    "hi": "भोजन बनाने वाले हाथों को धन्यवाद दीजिए।",
+    "en": "Thank the hands that cook your food."
+  },
+  {
+    "id": "SV-0503",
+    "hi": "किसी को भोजन देते समय उसका सम्मान रखिए।",
+    "en": "When giving someone food, preserve their dignity."
+  },
+  {
+    "id": "SV-0504",
+    "hi": "एक साथ बैठकर खाना भी अपनापन बढ़ाता है।",
+    "en": "Eating together also deepens closeness."
+  },
+  {
+    "id": "SV-0505",
+    "hi": "अन्न की यात्रा में किसान का श्रम याद कीजिए।",
+    "en": "In the journey of grain, remember the farmer’s labour."
+  },
+  {
+    "id": "SV-0506",
+    "hi": "पानी का गिलास भरते समय जरूरत का ध्यान रखिए।",
+    "en": "When filling a glass of water, keep need in mind."
+  },
+  {
+    "id": "SV-0507",
+    "hi": "घर के भोजन में प्रेम और स्वच्छता दोनों रखिए।",
+    "en": "Keep both love and cleanliness in home cooking."
+  },
+  {
+    "id": "SV-0508",
+    "hi": "भूख की बात सुनकर दोष मत खोजिए।",
+    "en": "When you hear of someone’s hunger, don’t look for faults."
+  },
+  {
+    "id": "SV-0509",
+    "hi": "साझा रसोई में अपना हिस्सा सहयोग दीजिए।",
+    "en": "In a shared kitchen, do your part."
+  },
+  {
+    "id": "SV-0510",
+    "hi": "बचे भोजन को सुरक्षित रखने का समय पर उपाय कीजिए।",
+    "en": "Store leftover food safely and in time."
+  },
+  {
+    "id": "SV-0511",
+    "hi": "दान में उपयोगी और सुरक्षित वस्तु दीजिए।",
+    "en": "Donate things that are useful and safe."
+  },
+  {
+    "id": "SV-0512",
+    "hi": "अन्न का आदर उसे व्यर्थ जाने से बचाना है।",
+    "en": "Respecting food means not letting it go to waste."
+  },
+  {
+    "id": "SV-0513",
+    "hi": "किसी का भोजन उसकी पसंद और जरूरत पूछकर दीजिए।",
+    "en": "When offering food, ask about preferences and needs."
+  },
+  {
+    "id": "SV-0514",
+    "hi": "भोजन पर टिप्पणी से पहले संवेदनशील रहिए।",
+    "en": "Be sensitive before commenting on food."
+  },
+  {
+    "id": "SV-0515",
+    "hi": "सेवा करने वाले को भी आराम चाहिए।",
+    "en": "Those who serve need rest too."
+  },
+  {
+    "id": "SV-0516",
+    "hi": "अपनी सहायता की तस्वीर लेना जरूरी नहीं।",
+    "en": "You need not take a photo of your help."
+  },
+  {
+    "id": "SV-0517",
+    "hi": "साफ पानी उपलब्ध कराना भी उपयोगी सेवा है।",
+    "en": "Providing clean water is useful service too."
+  },
+  {
+    "id": "SV-0518",
+    "hi": "किसी अकेले पड़ोसी का हाल पूछिए।",
+    "en": "Ask after a neighbour who lives alone."
+  },
+  {
+    "id": "SV-0519",
+    "hi": "किसी जरूरतमंद की बात धैर्य से सुनिए।",
+    "en": "Listen patiently to someone in need."
+  },
+  {
+    "id": "SV-0520",
+    "hi": "सेवा में समय देना भी बड़ा योगदान है।",
+    "en": "Giving your time to service is a big contribution."
+  },
+  {
+    "id": "SV-0521",
+    "hi": "भोजन साझा करें तो स्वच्छता का ध्यान रखिए।",
+    "en": "When sharing food, take care of cleanliness."
+  },
+  {
+    "id": "SV-0522",
+    "hi": "रसोई का काम सबकी जिम्मेदारी हो सकता है।",
+    "en": "Kitchen work can be everyone’s responsibility."
+  },
+  {
+    "id": "SV-0523",
+    "hi": "किसान और श्रमिक का आदर व्यवहार में दिखाइए।",
+    "en": "Show respect for farmers and labourers in your conduct."
+  },
+  {
+    "id": "SV-0524",
+    "hi": "किसी से भोजन के बदले कृतज्ञता की मांग मत कीजिए।",
+    "en": "Don’t demand gratitude in return for food."
+  },
+  {
+    "id": "SV-0525",
+    "hi": "अपनी थाली के छोटे सुख को महसूस कीजिए।",
+    "en": "Feel the small joy on your plate."
+  },
+  {
+    "id": "SV-0526",
+    "hi": "किसी अतिथि को सहज होकर खाने की जगह दीजिए।",
+    "en": "Let a guest eat at ease."
+  },
+  {
+    "id": "SV-0527",
+    "hi": "सेवा का निर्णय वास्तविक जरूरत देखकर कीजिए।",
+    "en": "Decide on service by looking at the real need."
+  },
+  {
+    "id": "SV-0528",
+    "hi": "भोजन की तैयारी में मदद के लिए हाथ बढ़ाइए।",
+    "en": "Lend a hand in preparing the meal."
+  },
+  {
+    "id": "SV-0529",
+    "hi": "किसी की भूख को उसकी पहचान मत बनाइए।",
+    "en": "Don’t let someone’s hunger become their identity."
+  },
+  {
+    "id": "SV-0530",
+    "hi": "सामुदायिक भोजन में कतार और गरिमा बनाए रखिए।",
+    "en": "At community meals, keep order and dignity."
+  },
+  {
+    "id": "SV-0531",
+    "hi": "किसी की आहार संबंधी जरूरत का सम्मान कीजिए।",
+    "en": "Respect someone’s dietary needs."
+  },
+  {
+    "id": "SV-0532",
+    "hi": "बच्चे को अन्न का आदर प्रेम से सिखाइए।",
+    "en": "Teach a child to respect food with love."
+  },
+  {
+    "id": "SV-0533",
+    "hi": "बर्बादी घटाने के लिए पहले से योजना बनाइए।",
+    "en": "Plan ahead to reduce waste."
+  },
+  {
+    "id": "SV-0534",
+    "hi": "निस्वार्थ सहायता में सामने वाले की इच्छा भी सुनिए।",
+    "en": "In selfless help, also hear what the other person wants."
+  },
+  {
+    "id": "SV-0535",
+    "hi": "अपनी सामर्थ्य में नियमित सेवा चुनिए।",
+    "en": "Choose regular service within your means."
+  },
+  {
+    "id": "SV-0536",
+    "hi": "भोजन के समय कटु बात थोड़ी देर टालिए।",
+    "en": "At mealtimes, put off harsh words for a while."
+  },
+  {
+    "id": "SV-0537",
+    "hi": "किसी श्रमिक को बैठने और पानी की जगह दीजिए।",
+    "en": "Give a worker a place to sit and some water."
+  },
+  {
+    "id": "SV-0538",
+    "hi": "सेवा के बाद जगह साफ करना भी सेवा है।",
+    "en": "Cleaning up after service is service too."
+  },
+  {
+    "id": "SV-0539",
+    "hi": "जो पकाते हैं, उनकी पसंद भी पूछिए।",
+    "en": "Ask the people who cook what they would like too."
+  },
+  {
+    "id": "SV-0540",
+    "hi": "खाने के साथ मिलने वाला सम्मान भी जरूरी है।",
+    "en": "The respect that comes with a meal matters too."
+  },
+  {
+    "id": "SV-0541",
+    "hi": "अन्न की कीमत में अनेक लोगों का परिश्रम जुड़ा है।",
+    "en": "The price of grain carries the labour of many people."
+  },
+  {
+    "id": "SV-0542",
+    "hi": "अनावश्यक सामान की जगह उपयोगी सहायता चुनिए।",
+    "en": "Choose useful help over unneeded things."
+  },
+  {
+    "id": "SV-0543",
+    "hi": "भोजन बाँटते समय किसी को छोटा महसूस मत कराइए।",
+    "en": "When sharing food, make no one feel small."
+  },
+  {
+    "id": "SV-0544",
+    "hi": "परिवार में सबको साथ खाने का अवसर दीजिए।",
+    "en": "Give everyone in the family a chance to eat together."
+  },
+  {
+    "id": "SV-0545",
+    "hi": "सेवा के लिए विशेष दिन की प्रतीक्षा जरूरी नहीं।",
+    "en": "You need not wait for a special day to serve."
+  },
+  {
+    "id": "SV-0546",
+    "hi": "सुरक्षित भोजन की जरूरत को गंभीरता से लीजिए।",
+    "en": "Take the need for safe food seriously."
+  },
+  {
+    "id": "SV-0547",
+    "hi": "किसी की मदद का वादा हो तो समय पर पहुँचिए।",
+    "en": "If you have promised help, arrive on time."
+  },
+  {
+    "id": "SV-0548",
+    "hi": "अपने घर के सहायक को भी त्योहार का स्नेह दीजिए।",
+    "en": "Share festival warmth with those who help in your home too."
+  },
+  {
+    "id": "SV-0549",
+    "hi": "खाली थाली देखकर निर्णय नहीं, संवेदना रखिए।",
+    "en": "Seeing an empty plate, offer compassion, not judgement."
+  },
+  {
+    "id": "SV-0551",
+    "hi": "अपनों से बात करने के लिए विशेष दिन मत खोजिए।",
+    "en": "Don’t wait for a special day to talk to your loved ones."
+  },
+  {
+    "id": "SV-0552",
+    "hi": "बड़ों का हाल पूछिए और जवाब ध्यान से सुनिए।",
+    "en": "Ask after your elders and listen carefully to the answer."
+  },
+  {
+    "id": "SV-0553",
+    "hi": "घर की छोटी मदद भी प्रेम का व्यवहार है।",
+    "en": "Even small help at home is an act of love."
+  },
+  {
+    "id": "SV-0554",
+    "hi": "किसी पुराने मित्र को स्नेह भरा संदेश भेजिए।",
+    "en": "Send a warm message to an old friend."
+  },
+  {
+    "id": "SV-0555",
+    "hi": "परिवार में धन्यवाद कहना कभी पुराना नहीं होता।",
+    "en": "Saying thank you in a family never grows old."
+  },
+  {
+    "id": "SV-0556",
+    "hi": "बच्चों के साथ थोड़ा निर्बाध समय बिताइए।",
+    "en": "Spend a little uninterrupted time with children."
+  },
+  {
+    "id": "SV-0557",
+    "hi": "हर सदस्य की पसंद को जगह दीजिए।",
+    "en": "Make room for everyone’s preferences."
+  },
+  {
+    "id": "SV-0558",
+    "hi": "यादें साझा कीजिए, तुलना का बोझ नहीं।",
+    "en": "Share memories, not the burden of comparison."
+  },
+  {
+    "id": "SV-0559",
+    "hi": "किसी की थकान को आलस्य मत कहिए।",
+    "en": "Don’t call someone’s tiredness laziness."
+  },
+  {
+    "id": "SV-0560",
+    "hi": "घर में हँसी के लिए किसी को छोटा मत बनाइए।",
+    "en": "Don’t belittle anyone for a laugh at home."
+  },
+  {
+    "id": "SV-0561",
+    "hi": "साथ रहने वालों की सीमाओं का सम्मान कीजिए।",
+    "en": "Respect the boundaries of those you live with."
+  },
+  {
+    "id": "SV-0562",
+    "hi": "दूर बसे अपने भी ध्यान में रह सकते हैं।",
+    "en": "Loved ones far away can still be in your thoughts."
+  },
+  {
+    "id": "SV-0563",
+    "hi": "प्रियजन की बात सुधारने से पहले समझिए।",
+    "en": "Understand a loved one before correcting them."
+  },
+  {
+    "id": "SV-0564",
+    "hi": "परिवार का स्नेह सहमति से बड़ा हो सकता है।",
+    "en": "Family affection can be bigger than agreement."
+  },
+  {
+    "id": "SV-0565",
+    "hi": "जिसने साथ दिया, उसे समय रहते धन्यवाद कहिए।",
+    "en": "Thank those who stood by you while there is still time."
+  },
+  {
+    "id": "SV-0566",
+    "hi": "बड़ों को नई तकनीक धैर्य से सिखाइए।",
+    "en": "Teach elders new technology with patience."
+  },
+  {
+    "id": "SV-0567",
+    "hi": "बच्चों से अपनी गलती पर माफी माँगिए।",
+    "en": "Apologise to children for your mistakes."
+  },
+  {
+    "id": "SV-0568",
+    "hi": "किसी का जन्मदिन याद रखना छोटा सुंदर प्रयास है।",
+    "en": "Remembering someone’s birthday is a small, lovely effort."
+  },
+  {
+    "id": "SV-0569",
+    "hi": "रिश्ते में संदेश के साथ सुनने का समय भी दीजिए।",
+    "en": "In a relationship, give time to listen as well as to message."
+  },
+  {
+    "id": "SV-0570",
+    "hi": "अकेले रहने वाले परिचित को याद कीजिए।",
+    "en": "Remember an acquaintance who lives alone."
+  },
+  {
+    "id": "SV-0571",
+    "hi": "घर के काम में योगदान पूछने का इंतजार मत कीजिए।",
+    "en": "Don’t wait to be asked to help with housework."
+  },
+  {
+    "id": "SV-0572",
+    "hi": "सुखद समाचार में दूर के अपनों को शामिल कीजिए।",
+    "en": "Include faraway loved ones in good news."
+  },
+  {
+    "id": "SV-0573",
+    "hi": "दुख में सलाह से पहले साथ दीजिए।",
+    "en": "In sorrow, offer company before advice."
+  },
+  {
+    "id": "SV-0574",
+    "hi": "पुरानी तस्वीर के साथ एक स्नेह भरी याद भेजिए।",
+    "en": "Send a warm memory with an old photograph."
+  },
+  {
+    "id": "SV-0575",
+    "hi": "किसी प्रिय की उपलब्धि पर बिना तुलना प्रसन्न होइए।",
+    "en": "Be glad at a loved one’s achievement without comparison."
+  },
+  {
+    "id": "SV-0576",
+    "hi": "त्योहार पर घर के हर सहायक का धन्यवाद कीजिए।",
+    "en": "At festival time, thank everyone who helps in your home."
+  },
+  {
+    "id": "SV-0577",
+    "hi": "परिवार में अपनी जरूरत स्पष्ट कहना सीखिए।",
+    "en": "Learn to state your needs clearly within the family."
+  },
+  {
+    "id": "SV-0578",
+    "hi": "हर पीढ़ी से सीखने की कोई बात मिल सकती है।",
+    "en": "There is something to learn from every generation."
+  },
+  {
+    "id": "SV-0579",
+    "hi": "किसी की चुप चिंता पर स्नेह से ध्यान दीजिए।",
+    "en": "Gently notice someone’s silent worry."
+  },
+  {
+    "id": "SV-0580",
+    "hi": "साथ बिताया शांत समय भी मूल्यवान है।",
+    "en": "Quiet time spent together is precious too."
+  },
+  {
+    "id": "SV-0581",
+    "hi": "किसी रिश्ते को सुधारने की शुरुआत छोटी हो सकती है।",
+    "en": "Mending a relationship can begin small."
+  },
+  {
+    "id": "SV-0582",
+    "hi": "घर की परंपरा में सबकी सहजता का ध्यान रखिए।",
+    "en": "In family traditions, keep everyone’s comfort in mind."
+  },
+  {
+    "id": "SV-0583",
+    "hi": "प्रेम जताने की अपनी सरल भाषा खोजिए।",
+    "en": "Find your own simple way of expressing love."
+  },
+  {
+    "id": "SV-0584",
+    "hi": "बड़ों के अनुभव सुनिए और उनकी वर्तमान जरूरत पूछिए।",
+    "en": "Listen to elders’ experiences and ask what they need now."
+  },
+  {
+    "id": "SV-0585",
+    "hi": "किसी की निजी बात परिवार में भी सम्मान से रखिए।",
+    "en": "Keep someone’s private matters respectfully, even within the family."
+  },
+  {
+    "id": "SV-0586",
+    "hi": "समारोह के बाद भी स्नेह का संपर्क बनाए रखिए।",
+    "en": "Stay in loving touch even after the celebration ends."
+  },
+  {
+    "id": "SV-0587",
+    "hi": "प्रियजन को उनकी पसंद से पुकारिए।",
+    "en": "Call loved ones by the name they prefer."
+  },
+  {
+    "id": "SV-0588",
+    "hi": "अच्छे संबंध में सुनना और कहना दोनों जरूरी हैं।",
+    "en": "A good relationship needs both listening and speaking."
+  },
+  {
+    "id": "SV-0589",
+    "hi": "दूरी में याद दिलाने वाला छोटा संदेश भेजिए।",
+    "en": "Across distance, send a small message to stay in mind."
+  },
+  {
+    "id": "SV-0590",
+    "hi": "किसी के शोक में उत्सव का दबाव मत दीजिए।",
+    "en": "Don’t press someone in mourning to celebrate."
+  },
+  {
+    "id": "SV-0591",
+    "hi": "घर लौटने वाले का स्वागत सरल स्नेह से कीजिए।",
+    "en": "Welcome someone coming home with simple warmth."
+  },
+  {
+    "id": "SV-0592",
+    "hi": "किसी को अपना समय देना भी उपहार है।",
+    "en": "Giving someone your time is a gift too."
+  },
+  {
+    "id": "SV-0593",
+    "hi": "परिवार की स्मृतियाँ अगली पीढ़ी तक पहुँचाइए।",
+    "en": "Pass family memories on to the next generation."
+  },
+  {
+    "id": "SV-0594",
+    "hi": "हर मिलन में पुरानी शिकायत खोलना जरूरी नहीं।",
+    "en": "Not every reunion needs old complaints reopened."
+  },
+  {
+    "id": "SV-0595",
+    "hi": "किसी प्रिय का बदलना समझने की कोशिश कीजिए।",
+    "en": "Try to understand how a loved one is changing."
+  },
+  {
+    "id": "SV-0596",
+    "hi": "साझा खुशी में श्रेय सबके साथ बाँटिए।",
+    "en": "In shared joy, share the credit with everyone."
+  },
+  {
+    "id": "SV-0597",
+    "hi": "रिश्ते में भरोसा छोटी ईमानदारी से बनता है।",
+    "en": "Trust in a relationship is built through small honesty."
+  },
+  {
+    "id": "SV-0598",
+    "hi": "मन में आभार हो तो आज ही कह दीजिए।",
+    "en": "If your heart is grateful, say so today."
+  },
+  {
+    "id": "SV-0599",
+    "hi": "भक्ति के साथ घर में स्नेह का व्यवहार बढ़ाइए।",
+    "en": "Along with devotion, grow loving conduct at home."
+  },
+  {
+    "id": "SV-0600",
+    "hi": "आज किसी अपने को महसूस कराइए कि वह याद आता है।",
+    "en": "Today, let someone dear know you think of them."
+  }
+]

@@ -1232,3 +1232,7 @@ The user clarified that a 110pt image within a155pt card left an unwanted70-perc
 ## [2026-10-28] ingest | Suvichar weekday-card rotation
 
 The weekday card ranked its thought by catalog index while its deity changed daily, so it repeated within 8 days and never showed 3 of the 21 thoughts. `suvicharTemplatesFor(day, lead)` now ranks the day's deities first; `suvicharTodayTemplates(date)` is the single call site for the screen and weekday cards. Updated [[subsystems/suvichar]].
+
+## [2026-10-28] ingest | Suvichar approved library
+
+The 1,000-record editorial directory was approved. Its 592 day-free, deity-agnostic suvichar now ship with English renderings in `mobile/src/data/suvicharLibrary.json` (pool 21 → 613); eight deity-named thoughts, 200 greetings and 200 occasion wishes are approved but unsurfaced. Thought lookups moved to a per-language cached index. Updated [[subsystems/suvichar]].

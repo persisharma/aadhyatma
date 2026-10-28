@@ -1,18 +1,34 @@
 import { defaultSuvichar, suvicharDeities, suvicharReflections, suvicharWishes, type SuvicharDeity, type SuvicharFrame } from './suvichar';
 import type { Lang } from './gita/language';
 import { contentByLang } from '@/utils/localize';
+import library from './suvicharLibrary.json';
 
 export type SuvicharTemplate = {
   id: string; kind: 'daily' | 'wish' | 'vaar'; deity: SuvicharDeity; frame: SuvicharFrame;
   hi: string; en: string; messageHi: string; messageEn: string;
 };
 
-/** Every authored daily thought: the opening thought, then the rotating reflections. */
-export const suvicharThoughts: readonly { hi: string; en: string }[] = [defaultSuvichar, ...suvicharReflections];
+/**
+ * Every authored daily thought: the opening thought, the rotating reflections, then the approved library from
+ * docs/content/suvichar/editorial-directory.json (its day-free suvichar, minus the eight that name one deity,
+ * since the rotation puts any thought on any deity's card).
+ */
+export const suvicharThoughts: readonly { hi: string; en: string }[] = [defaultSuvichar, ...suvicharReflections, ...library];
 const LANGS: Lang[] = ['hi', 'en', 'gu', 'kn'];
+const thoughtIndexes = new Map<Lang, Map<string, number>>();
+/** The position of an unedited authored thought in one reading language, or -1. Built once per language. */
+export function suvicharThoughtIndex(lang: Lang, message: string): number {
+  let index = thoughtIndexes.get(lang);
+  if (!index) {
+    const built = new Map<string, number>();
+    suvicharThoughts.forEach((t, i) => { const text = contentByLang(lang, t.hi, t.en); if (!built.has(text)) built.set(text, i); });
+    thoughtIndexes.set(lang, index = built);
+  }
+  return index.get(message) ?? -1;
+}
 /** An unedited authored thought in any reading language (not a wish or a user's own words). */
 export function isSuvicharThought(message: string): boolean {
-  return suvicharThoughts.some(t => LANGS.some(lang => contentByLang(lang, t.hi, t.en) === message));
+  return LANGS.some(lang => suvicharThoughtIndex(lang, message) >= 0);
 }
 
 /** The local calendar day as a day count; daily cards turn over at local midnight. */
