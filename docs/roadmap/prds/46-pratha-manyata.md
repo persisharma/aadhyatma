@@ -242,7 +242,7 @@ type PrathaEntry = {
 | K13 | **दीवाली के दीप** | Six kathas, by region: Rama's return (north); Lakshmi's emergence from the churning; Bali Pratipada (MH/KA); Kali Puja (Bengal); Mahavira's nirvana (Jain); Bandi Chhor (Sikh) (M) | Return [Certain] Valmiki but **lamps not in Valmiki** — bundled Yuddha 120–131 checked; lamps [lok]; Jain/Sikh [itihas] | `diwali-legends` |
 | K14 | **द्वार खुले रखना, रंगोली, लक्ष्मी के पदचिह्न** | Lakshmi walks the earth on Kartik amavasya and enters the lit, clean, open home | [Guessing] folk | `diwali-legends` |
 | K15 | **दीवाली पर द्यूत** | Shiva and Parvati played dice on this night; Parvati blessed those who play with prosperity | [Guessing] folk (some cite Skanda — unopened) | — |
-| K16 | **चोपड़ा / बही-खाता पूजन** — new account books (Gujarat, Marwari, Bengal *haal khata*) | The trading year starts at Diwali; Lakshmi and Ganesha are installed in the new ledger | [itihas] mercantile practice | — |
+| K16 | **चोपड़ा / बही-खाता पूजन** — new account books (Gujarat, Marwari; Bengal's *haal khata* is on Poila Baishakh, not Diwali) | The trading year starts at Diwali; Lakshmi and Ganesha are installed in the new ledger | [itihas] mercantile practice | — |
 | K17 | **गोवर्धन पूजा / अन्नकूट**; a Govardhan of cow-dung | Krishna turned Vraj from Indra-yajna to the hill that fed them, then held it up for seven days (M) | [Certain] Bhagavata 10.24–25; cow-dung form [lok] | `govardhan-puja-katha` |
 | K18 | **छप्पन भोग** | Krishna went seven days without eating while holding the hill: 7 days × 8 meals = 56 | [Guessing] Pushti-marg telling | `govardhan-puja-katha` |
 | K19 | **भाई दूज तिलक; यमुना स्नान** | Yama visited his sister Yamuna (Yami) after long years; her welcome won the boon that brothers who visit sisters today are spared (M) | [Likely] | `bhai-dooj-katha` |
@@ -266,7 +266,7 @@ Also Kartik, as regional rows: **सामा-चकेवा** (Mithila — Kri
 | C3 | **कन्या पूजन** | The Devi worshipped as young girls, by age (Kumari to Subhadra) | [Likely] Devi Bhagavata 3.26–27 | — |
 | C4 | **बसोड़ा / शीतला अष्टमी — ठण्डा खाना, चूल्हा न जलाना** | Sheetala is the cooling goddess of pox and fever; no fire is lit for her (M) | [Guessing] folk | `sheetala-saptami-vrat-katha` |
 | C5 | **गणगौर** — clay Isar-Gauri, unmarried and married women | Gauri returns to her parents' home and is sent back to Shiva (M) | [Guessing] Rajasthani folk | `gangaur-vrat-katha` |
-| C6 | **राम नवमी — मध्याह्न जन्मोत्सव** | Rama was born at noon, Chaitra Navami, Punarvasu nakshatra | [Certain] **Valmiki 1.18.8 ★** | `rama-navami-vrat-katha` |
+| C6 | **राम नवमी — मध्याह्न जन्मोत्सव** | Rama was born on Chaitra Navami (1.18.8), Punarvasu nakshatra (the next verse). The noon hour is tradition; Valmiki does not state it | Birth date [Certain] **Valmiki 1.18.8 ★**; noon [lok] | `rama-navami-vrat-katha` |
 | C7 | **हनुमान जयंती — दो तिथियाँ** (Chaitra Purnima / Kartik Chaturdashi) | Two traditions: birth vs. the day of Sita's blessing | [Likely] | `hanuman-jayanti`, `hanuman-jayanti-kartik` |
 | C8 | **बैसाखी / विषु कणि / बोहाग बिहू** | Solar new year and harvest; Vishu *kani* — the year's first sight should be auspicious; Khalsa 1699 | [Likely]; Khalsa [itihas] | — |
 
