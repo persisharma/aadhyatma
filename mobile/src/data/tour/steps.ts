@@ -276,10 +276,10 @@ export const tourSteps: readonly TourStep[] = [
     targetId: 'vratFollow',
     anchor: 'top',
     pointer: 'down',
-    titleHi: 'व्रत फ़ॉलो करें',
-    titleEn: 'Follow a Vrat',
-    bodyHi: '★ दबाकर व्रत फ़ॉलो करें — यह "मेरे व्रत" में जुड़ जाएगा।',
-    bodyEn: 'Tap ★ to follow a vrat — it is added to your "My Vrat" list.',
+    titleHi: 'व्रत का स्मरण जोड़ें',
+    titleEn: 'Save a Vrat reminder',
+    bodyHi: 'घंटी दबाकर स्मरण जोड़ें — व्रत "मेरे व्रत" में भी जुड़ जाएगा। पहली बार स्मरण का समय चुनें।',
+    bodyEn: 'Tap the bell to add a reminder and save the vrat to My Vrat. Choose Vrat timings once; later bells reuse them.',
   },
   {
     id: 'my-vrat',
@@ -289,8 +289,8 @@ export const tourSteps: readonly TourStep[] = [
     pointer: 'down',
     titleHi: 'मेरे व्रत व स्मरण',
     titleEn: 'My Vrat & Reminders',
-    bodyHi: 'फ़ॉलो किए व्रत यहाँ रहते हैं; 🔔 से हर व्रत का स्मरण चालू करें।',
-    bodyEn: 'Followed vrats live here; use the 🔔 to set a reminder for each one.',
+    bodyHi: 'फ़ॉलो किए व्रत यहाँ रहते हैं; सेटिंग्स से हर व्रत के स्मरण का समय बदलें।',
+    bodyEn: 'Saved vrats live here; use the settings control to adjust an individual reminder.',
   },
 
   // ── Bhajan: what's inside ───────────────────────────────────────────────────

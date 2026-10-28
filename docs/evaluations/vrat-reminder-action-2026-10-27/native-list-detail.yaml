@@ -1,0 +1,36 @@
+appId: com.prashantsharma.vedansh
+---
+- launchApp: { clearState: false }
+- extendedWaitUntil: { visible: { id: "tab-vrat" }, timeout: 120000 }
+- tapOn: { id: "tab-vrat" }
+- tapOn: { id: "tab-vrat" }
+- waitForAnimationToEnd
+- extendedWaitUntil: { visible: { id: "catalog-search" }, timeout: 90000 }
+- assertNotVisible: { id: "vrat-reminder-setup" }
+- assertVisible: "Remove saved Karwa Chauth"
+- takeScreenshot: native-final-bells
+- scrollUntilVisible:
+    element: { text: "Vrat,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Vrat,.*"
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: "observance-reminder-ahoi-ashtami" }
+    direction: DOWN
+    centerElement: true
+- tapOn: { id: "observance-reminder-ahoi-ashtami" }
+- assertNotVisible: { id: "vrat-reminder-setup" }
+- assertVisible: "Remove saved Ahoi Ashtami"
+- takeScreenshot: native-list-save
+- tapOn: { id: "observance-card-masik-kalashtami" }
+- waitForAnimationToEnd
+- tapOn: "Save and remind Masik Kalashtami"
+- assertNotVisible: { id: "vrat-reminder-setup" }
+- assertVisible: "Remove saved Masik Kalashtami"
+- takeScreenshot: native-detail-save
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: { text: "My Vrat.*", index: 0 }
+- waitForAnimationToEnd
+- takeScreenshot: native-final-my-vrat

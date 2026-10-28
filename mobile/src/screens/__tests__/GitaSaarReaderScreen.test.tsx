@@ -61,7 +61,7 @@ afterEach(async () => {
   });
 });
 
-function render(initialIndex = 0, lang: 'hi' | 'en' = 'hi') {
+function render(initialIndex = 0, lang: 'hi' | 'en' = 'hi', themeChapter = 1) {
   const navigate = jest.fn();
   const navigation = {} as ReaderProps['navigation'];
   navigation.goBack = () => undefined;
@@ -72,7 +72,7 @@ function render(initialIndex = 0, lang: 'hi' | 'en' = 'hi') {
   const route = {
     key: 'GitaSaarReader-test',
     name: 'GitaSaarReader',
-    params: { chapter: 1, initialIndex },
+    params: { chapter: themeChapter, initialIndex },
   } as ReaderProps['route'];
 
   let tree: TestRenderer.ReactTestRenderer | undefined;
@@ -165,7 +165,7 @@ test('the opening story is continuous and later verses offer one-tap return', ()
   assert.equal(new Set(tree.root.findAll((n) => String(n.props.testID).startsWith('gita-saar-story-beat-')).map((n) => n.props.testID)).size, 3);
   assert.ok(tree.root.findAll((n) => n.props.testID === 'gita-saar-story-connection').length > 0);
   assert.ok(tree.root.findAll((n) => n.props.testID === 'gita-saar-story-everyday').length > 0);
-  assert.ok(tree.root.findAll((n) => n.props.accessibilityRole === 'link' && String(n.props.accessibilityLabel).startsWith('Read story source')).length > 0);
+  assert.ok(tree.root.findAll((n) => n.props.accessibilityRole === 'link' && String(n.props.accessibilityLabel).startsWith('Open external story source')).length > 0);
   act(() => { tree.update(page(chapter.verses[1])); });
   assert.equal(tree.root.findAll((n) => n.props.testID === 'gita-saar-story-hero-true-prema').length, 0);
   const door = tree.root.findAll((n) => n.props.accessibilityLabel === "Read this theme's illustrated story" && typeof n.props.onPress === 'function')[0];
@@ -173,6 +173,28 @@ test('the opening story is continuous and later verses offer one-tap return', ()
   act(() => door.props.onPress());
   expect(openStory).toHaveBeenCalledTimes(1);
   act(() => tree.unmount());
+});
+
+test('Shok story references open exact Gita verses inside the app', () => {
+  const { tree, navigate } = render(0, 'hi', 3);
+  const ref = tree.root.findAll(
+    (node) => node.props.testID === 'gita-saar-gita-ref-2.13' && typeof node.props.onPress === 'function'
+  )[0];
+  assert.ok(ref);
+  act(() => ref.props.onPress());
+  expect(navigate).toHaveBeenCalledWith('GitaReader', { chapter: 2, initialIndex: 12 });
+  assert.ok(tree.root.findAll((node) => node.props.accessibilityRole === 'link' && String(node.props.accessibilityLabel).includes('external story source')).length > 0);
+});
+
+test('Gita passages cited as story sources stay inside the app', () => {
+  const { tree, navigate } = render(0, 'en', 6);
+  const source = tree.root.findAll(
+    (node) => node.props.testID === 'gita-saar-source-gita-17.20' && typeof node.props.onPress === 'function'
+  )[0];
+  assert.ok(source);
+  assert.equal(source.props.accessibilityRole, 'button');
+  act(() => source.props.onPress());
+  expect(navigate).toHaveBeenCalledWith('GitaReader', { chapter: 17, initialIndex: 19 });
 });
 
 test('reader pages receive the measured viewport so long vertical content stays bounded', () => {

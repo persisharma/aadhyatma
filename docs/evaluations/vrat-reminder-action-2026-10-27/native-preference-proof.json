@@ -1,0 +1,25 @@
+{
+  "vratPreference": {
+    "advanceDays": 2,
+    "dayOf": true,
+    "dayOfTime": {
+      "hour": 8,
+      "minute": 0
+    }
+  },
+  "savedVrats": [
+    "karwa-chauth",
+    "sankashti-chaturthi-vrat"
+  ],
+  "dailyBhaktiFixtureAfterVratActions": {
+    "dailyVerseEnabled": false,
+    "times": [
+      {
+        "hour": 5,
+        "minute": 45
+      }
+    ],
+    "festiveRemindersEnabled": false
+  },
+  "dailyBhaktiUnchanged": true
+}

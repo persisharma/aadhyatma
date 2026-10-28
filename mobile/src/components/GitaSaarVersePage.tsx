@@ -3,8 +3,8 @@ import {
   GitaSaarStoryDoor,
   GitaSaarStoryDetails,
 } from './GitaSaarStory';
-import React, { useEffect, useMemo, useState } from 'react';
-import { Keyboard, Pressable, StyleSheet, View } from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Keyboard, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import AutoSlideScrollView from './AutoSlideScrollView';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -47,6 +47,7 @@ type Props = {
   topActions?: React.ReactNode;
   closing?: { hi: string; en: string };
   onOpenInGita?: () => void;
+  onOpenGitaRef?: (chapter: number, verse: number) => void;
   isSaved?: boolean;
   initialReflection?: string;
   onSaveLearning?: (text: string) => Promise<void>;
@@ -63,6 +64,7 @@ export default function GitaSaarVersePage({
   topActions,
   closing,
   onOpenInGita,
+  onOpenGitaRef,
   isSaved = false,
   initialReflection = '',
   onSaveLearning,
@@ -74,6 +76,8 @@ export default function GitaSaarVersePage({
   const themeId = gitaSaarChaptersManifest[verse.chapter - 1]?.id;
   const experience = gitaSaarExperiences[themeId];
   const [sourceOpen, setSourceOpen] = useState(false);
+  const scrollRef = useRef<ScrollView>(null);
+  const scrollToOriginal = useRef(false);
   const [writing, setWriting] = useState(false);
   const [reflection, setReflection] = useState(initialReflection);
   const [dirty, setDirty] = useState(false);
@@ -139,6 +143,7 @@ export default function GitaSaarVersePage({
     >
       <BackgroundLayer source={getReaderBackground(sourceId, verse)} />
       <AutoSlideScrollView
+        ref={scrollRef}
         style={styles.scroll}
         contentContainerStyle={[
           styles.content,
@@ -200,13 +205,21 @@ export default function GitaSaarVersePage({
         >
           {meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
         </ProseParagraph>
-        {verse.number === 1 && <GitaSaarStoryDetails themeId={themeId} />}
+        {verse.number === 1 && (
+          <GitaSaarStoryDetails
+            themeId={themeId}
+            onOpenGitaRef={onOpenGitaRef}
+          />
+        )}
         <Pressable
           testID="gita-saar-source-toggle"
           accessibilityRole="button"
           accessibilityLabel="Show original Gita verse and meaning"
           accessibilityState={{ expanded: sourceOpen }}
-          onPress={() => setSourceOpen((open) => !open)}
+          onPress={() => {
+            scrollToOriginal.current = !sourceOpen;
+            setSourceOpen((open) => !open);
+          }}
           style={[styles.sourceToggle, { borderColor: colors.divider }]}
         >
           <AppIcon name="text" size={19} color={colors.saffronDeep} />
@@ -227,6 +240,12 @@ export default function GitaSaarVersePage({
         {sourceOpen && (
           <View
             testID="gita-saar-original"
+            onLayout={(event) => {
+              if (!scrollToOriginal.current) return;
+              scrollToOriginal.current = false;
+              const y = Math.max(0, event.nativeEvent.layout.y - 12);
+              requestAnimationFrame(() => scrollRef.current?.scrollTo({ y, animated: true }));
+            }}
             style={[
               styles.original,
               {

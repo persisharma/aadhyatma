@@ -19,6 +19,7 @@ import { RepeatIcon } from 'phosphor-react-native/src/icons/Repeat';
 import { HouseIcon } from 'phosphor-react-native/src/icons/House';
 import { SunHorizonIcon } from 'phosphor-react-native/src/icons/SunHorizon';
 import { DotsThreeIcon } from 'phosphor-react-native/src/icons/DotsThree';
+import { BellSlashIcon } from 'phosphor-react-native/src/icons/BellSlash';
 import { BellIcon } from 'phosphor-react-native/src/icons/Bell';
 import { AlarmIcon } from 'phosphor-react-native/src/icons/Alarm';
 import { BookmarkSimpleIcon } from 'phosphor-react-native/src/icons/BookmarkSimple';
@@ -82,6 +83,7 @@ const icons = {
   more: DotsThreeIcon,
   settings: GearSixIcon,
   bell: BellIcon,
+  'bell-off': BellSlashIcon,
   alarm: AlarmIcon,
   saved: BookmarkSimpleIcon,
   family: UsersThreeIcon,

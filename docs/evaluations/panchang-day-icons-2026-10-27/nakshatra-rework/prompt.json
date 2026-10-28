@@ -1,0 +1,12 @@
+{
+  "prompt": "Edit target: the supplied existing Nakshatra constellation icon from a devotional mobile app. Create ONE improved version of this same painted constellation for legibility at 36 logical pixels. Preserve exactly its six five-pointed stars, relative arrangement, connection graph, broad composition, matte hand-painted golden ochre facets, sepia-brown edges and subtle watercolor grain. Make the connections about four times thicker than in the reference, in dark warm burnt-umber ink, so they remain visibly continuous at small icon size on pale cream. Give each star a stronger dark sepia outer contour and slightly larger simpler warm-gold faces, keeping one largest central star and the other five smaller stars. Aim for calm solid miniatures, not a web of hairlines. Darken the warm brown contours and midtones enough to stand beside the app's painted sun, moon and ritual icons. No glossy yellow metal, neon, blue, flat UI-vector styling, extra sparkles, halos, moon, crescent, religious emblem, text, badge, tile, ground shadow, background scenery or watermark. Transparent RGBA background. Equal transparent margins, centered visible bounds, square canvas. This is an improved small-size export of the existing icon, not a different constellation.",
+  "tool": "Built-in image_gen",
+  "mode": "edit",
+  "editTarget": "reference.png",
+  "generatedImagePath": "/Users/prashant/.codex/generated_images/01a17e78-521f-71a0-a838-e9a60f41add4/exec-63faefc9-6f79-4315-b40c-0406332c4b80.png",
+  "master": "master.png",
+  "purpose": "Increase Nakshatra constellation contrast and connector weight at the existing 36dp size",
+  "date": "2026-10-28",
+  "referenceSha256": "2824f330a6dd5de1670da4f282ab3f819eea9948e53d36ddaaa2b509c901e3df",
+  "masterSha256": "f937119ee0cd45cb3290987634cd634e6c4f9acfd82a8cf0cafdccfba185c8eb"
+}

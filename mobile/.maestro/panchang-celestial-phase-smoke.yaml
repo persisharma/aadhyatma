@@ -1,0 +1,65 @@
+# Completed first-run setup, isolated native debug build and this checkout's Metro.
+# The shared moon painting must change with the selected Tithi, never stay full.
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8106' : '127.0.0.1:' + METRO_PORT}"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|Expand calendar"
+    timeout: 90000
+- openLink: "vedansh://widget/panchang?date=2026-10-26"
+- tapOn: { text: Open, optional: true }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { text: Expand calendar }
+    direction: UP
+- assertVisible: "26 October 2026.*"
+- takeScreenshot: e2e-shots/panchang-painted-sun-header
+- scrollUntilVisible:
+    element: { id: panchang-anga-moon }
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-moon-purnima
+- openLink: "vedansh://widget/panchang?date=2026-10-03"
+- tapOn: { text: Open, optional: true }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { text: Expand calendar }
+    direction: UP
+- assertVisible: "3 October 2026.*"
+- scrollUntilVisible:
+    element: { id: panchang-anga-moon }
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-moon-waning
+- openLink: "vedansh://widget/panchang?date=2026-10-10"
+- tapOn: { text: Open, optional: true }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { text: Expand calendar }
+    direction: UP
+- assertVisible: "10 October 2026.*"
+- scrollUntilVisible:
+    element: { id: panchang-anga-moon }
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-moon-amavasya
+- openLink: "vedansh://widget/panchang?date=2026-10-19"
+- tapOn: { text: Open, optional: true }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { text: Expand calendar }
+    direction: UP
+- assertVisible: "19 October 2026.*"
+- scrollUntilVisible:
+    element: { id: panchang-anga-moon }
+    direction: DOWN
+    centerElement: true
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-moon-waxing

@@ -1,0 +1,13 @@
+PASS src/components/__tests__/PanchangSky.test.tsx
+PASS src/components/__tests__/CelestialGlyph.test.tsx
+PASS src/components/__tests__/ObservanceNowRibbon.test.tsx
+PASS src/components/__tests__/ShubhYogaCard.test.tsx
+PASS src/components/__tests__/storybookAssets.test.ts
+PASS src/components/__tests__/DayVaasCards.test.tsx
+PASS src/utils/__tests__/moonPhase.test.ts
+
+Test Suites: 7 passed, 7 total
+Tests:       25 passed, 25 total
+Snapshots:   0 total
+Time:        2.673 s, estimated 5 s
+Ran all test suites matching /src\/utils\/__tests__\/moonPhase.test.ts|src\/components\/__tests__\/CelestialGlyph.test.tsx|src\/components\/__tests__\/PanchangSky.test.tsx|src\/components\/__tests__\/ObservanceNowRibbon.test.tsx|src\/components\/__tests__\/DayVaasCards.test.tsx|src\/components\/__tests__\/ShubhYogaCard.test.tsx|src\/components\/__tests__\/storybookAssets.test.ts/i.

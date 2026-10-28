@@ -13,6 +13,7 @@ import { useMuhurat } from '@/panchang/useMuhurat';
 import { nextAuspiciousPeriod } from '@/panchang/muhurat';
 import { formatClock, formatRange } from '@/panchang/muhuratFormat';
 import { formatSpan } from '@/panchang/muhuratSpan';
+import { prevailingTithi } from '@/panchang/prevailingTithi';
 import type { CalendarSystem } from '@/panchang/types';
 import CelestialGlyph from './CelestialGlyph';
 
@@ -144,6 +145,9 @@ export default function PanchangSky({
 
   const { muhurat, nowChoghadiya, nowRun, isToday, panchang } = sky;
   const at = Date.now();
+  const moonTithiIndex = panchang
+    ? (isToday ? prevailingTithi(panchang, new Date(at)).index : panchang.tithi.index)
+    : undefined;
   const showNow = isToday && nowChoghadiya != null && nowRun != null;
   const run = showNow ? nowRun! : muhurat?.dayChoghadiya ?? null;
   const nowIndex = showNow ? nowRun!.findIndex((p) => p.start.getTime() === nowChoghadiya!.start.getTime()) : -1;
@@ -243,7 +247,7 @@ export default function PanchangSky({
                 },
               ]}
             >
-              <CelestialGlyph kind={night ? 'moon' : 'sun'} tithiIndex={panchang?.tithi.index} size={30} />
+              <CelestialGlyph kind={night ? 'moon' : 'sun'} tithiIndex={moonTithiIndex} size={30} />
             </Animated.View>
             <Text numberOfLines={1} style={[styles.arcLabel, { left: p0.x - 60, width: 120, textAlign: 'center', fontFamily: clockFont, color: ink.inkMuted }]}>
               {startLabel}

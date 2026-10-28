@@ -1,0 +1,6 @@
+
+Running on Vedansh-Panchang-556 - iOS 26.5 - 489288DE-9051-4BFA-A154-3A1E51273DF5
+ > Flow panchang-556-anga
+Scrolling UP until id: panchang-anga-moon is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot /Users/prashant/.codex/worktrees/panchang-day-refresh/Aadhyatma/mobile/e2e-shots/panchang-day-anga-hi-large... COMPLETED

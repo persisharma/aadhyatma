@@ -74,6 +74,12 @@ export function DevotionalHero({ art, width, onLoad, onError }: {
       </View> : <DevotionalSlice key={art} art={art} width={width} top={0} bottom={h}
         testID="devotional-hero-image" onLoad={loaded} onError={failed} />}
     </View>
+    {art === 'mahakaal' ? <View testID="mahakaal-brand" pointerEvents="none" style={{ position: 'absolute', left: 42 * width / canvas.width,
+      top: 52 * width / canvas.width, width: 176 * width / canvas.width, paddingVertical: 12 * width / canvas.width,
+      backgroundColor: devotionalFrameColors.paper, borderColor: '#B28745', borderWidth: width / canvas.width, alignItems: 'center' }}>
+      <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.devanagariBold, fontSize: 38 * width / canvas.width, color: '#6D231A' }}>वेदांश</Text>
+      <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 19 * width / canvas.width, color: '#6D231A' }}>Vedansh.app</Text>
+    </View> : null}
   </View>;
 }
 /** Mirror-tile a clean band of paper and rules into `height`, each tile `stretch`× the band, so a
@@ -198,5 +204,9 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
 }
 export function DevotionalFooter({ art, width, onLoad, onError }: { art: DevotionalArt; width: number; onLoad?: () => void; onError?: () => void }) {
   return <View testID="devotional-footer" accessible accessibilityLabel="Vedansh.app"><DevotionalSlice art={art} width={width} top={canvas.footerTop} bottom={canvas.height}
-    testID="devotional-footer-image" onLoad={onLoad} onError={onError} /></View>;
+    testID="devotional-footer-image" onLoad={onLoad} onError={onError} />
+    {art === 'mahakaal' ? <Text testID="mahakaal-footer-brand" allowFontScaling={false} style={{ position: 'absolute', left: 0, right: 0,
+      bottom: 56 * width / canvas.width, textAlign: 'center', fontFamily: fontFamilies.latinSemiBold,
+      fontSize: 28 * width / canvas.width, color: '#4A210F' }}>Vedansh.app</Text> : null}
+  </View>;
 }
