@@ -37,6 +37,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
     timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
 - tapOn: "Show original Gita verse and meaning"
 - waitForAnimationToEnd:
     timeout: 30000
