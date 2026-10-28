@@ -128,7 +128,13 @@ export function GitaSaarStoryDoor({
 }
 
 /** Three visible beats, a Gita connection and an applied example; no stage tabs. */
-export function GitaSaarStoryDetails({ themeId }: { themeId: string }) {
+export function GitaSaarStoryDetails({
+  themeId,
+  onOpenGitaRef,
+}: {
+  themeId: string;
+  onOpenGitaRef?: (chapter: number, verse: number) => void;
+}) {
   const story = gitaSaarStories[themeId];
   const { colors, lang, copy, body, heading, label } = useStoryStyle();
   const [sourceError, setSourceError] = useState(false);
@@ -205,6 +211,32 @@ export function GitaSaarStoryDetails({ themeId }: { themeId: string }) {
         <ProseParagraph style={[body, { color: colors.ink, marginTop: 10 }]}>
           {copy(story.connection)}
         </ProseParagraph>
+        <View style={styles.gitaRefs}>
+          {story.gitaRefs.map((ref) => {
+            const [chapter, verse] = ref.split('.').map(Number);
+            return (
+              <Pressable
+                key={ref}
+                testID={`gita-saar-gita-ref-${ref}`}
+                accessibilityRole="button"
+                accessibilityLabel={`Read Gita ${ref} in Vedansh`}
+                disabled={!onOpenGitaRef}
+                onPress={() => onOpenGitaRef?.(chapter, verse)}
+                style={[styles.gitaRef, { borderColor: colors.gold }]}
+              >
+                <ProseParagraph style={label}>
+                  {pick(lang, {
+                    hi: `गीता ${ref} · यहीं पढ़ें`,
+                    en: `Gita ${ref} · Read here`,
+                    gu: `ગીતા ${ref} · અહીં વાંચો`,
+                    kn: `ಗೀತೆ ${ref} · ಇಲ್ಲೇ ಓದಿ`,
+                  })}
+                </ProseParagraph>
+                <AppIcon name="next" color={colors.saffronDeep} size={14} />
+              </Pressable>
+            );
+          })}
+        </View>
       </View>
       <View
         testID="gita-saar-story-everyday"
@@ -226,18 +258,44 @@ export function GitaSaarStoryDetails({ themeId }: { themeId: string }) {
         style={[label, { color: colors.inkMuted, marginTop: 14 }]}
       >
         {pick(lang, {
-          hi: 'कथा का स्रोत नीचे है। गीता से संबंध और दैनिक उदाहरण संपादकीय मनन हैं।',
-          en: 'Story sources are below. The Gita connection and everyday example are editorial reflections.',
-          gu: 'કથાના સ્રોત નીચે છે. ગીતા સાથેનો સંબંધ અને દૈનિક ઉદાહરણ સંપાદકીય મનન છે.',
-          kn: 'ಕಥೆಯ ಮೂಲಗಳು ಕೆಳಗಿವೆ. ಗೀತೆಯ ಸಂಪರ್ಕ ಮತ್ತು ದಿನನಿತ್ಯದ ಉದಾಹರಣೆ ಸಂಪಾದಕೀಯ ಚಿಂತನೆಗಳು.',
+          hi: 'कथा के मूल ग्रंथ नीचे हैं। दूसरे ग्रंथ का स्रोत ब्राउज़र में खुलेगा; गीता के श्लोक यहीं वेदांश में खुलते हैं। संबंध और दैनिक उदाहरण संपादकीय मनन हैं।',
+          en: 'Original story sources are below. Other texts open in a browser; Gita verses open here in Vedansh. The connection and everyday example are editorial reflections.',
+          gu: 'કથાના મૂળ ગ્રંથ નીચે છે. અન્ય ગ્રંથના સ્રોત બ્રાઉઝરમાં ખૂલશે; ગીતાના શ્લોક અહીં વેદાંશમાં ખૂલશે. સંબંધ અને ઉદાહરણ સંપાદકીય મનન છે.',
+          kn: 'ಕಥೆಯ ಮೂಲ ಗ್ರಂಥಗಳು ಕೆಳಗಿವೆ. ಇತರ ಗ್ರಂಥಗಳ ಮೂಲಗಳು ಬ್ರೌಸರ್‌ನಲ್ಲಿ ತೆರೆಯುತ್ತವೆ; ಗೀತೆಯ ಶ್ಲೋಕಗಳು ಇಲ್ಲೇ ವೇದಾಂಶದಲ್ಲಿ ತೆರೆಯುತ್ತವೆ. ಸಂಪರ್ಕ ಮತ್ತು ಉದಾಹರಣೆ ಸಂಪಾದಕೀಯ ಚಿಂತನೆಗಳು.',
         })}
       </ProseParagraph>
-      {story.sources.map((source) => (
-        <Pressable
+      {story.sources.map((source) => {
+        const passage =
+          lang === 'hi' ? source.passageHi ?? source.passage : source.passage;
+        const location = source.inAppRef
+          ? pick(lang, {
+              hi: 'ऐप में',
+              en: 'In app',
+              gu: 'ઍપમાં',
+              kn: 'ಆ್ಯಪ್‌ನಲ್ಲಿ',
+            })
+          : pick(lang, {
+              hi: 'ब्राउज़र में',
+              en: 'Opens browser',
+              gu: 'બ્રાઉઝરમાં',
+              kn: 'ಬ್ರೌಸರ್‌ನಲ್ಲಿ',
+            });
+        return (
+          <Pressable
           key={source.url}
-          accessibilityRole="link"
-          accessibilityLabel={`Read story source ${lang === 'hi' ? source.passageHi ?? source.passage : source.passage}`}
+          testID={
+            source.inAppRef
+              ? `gita-saar-source-gita-${source.inAppRef.chapter}.${source.inAppRef.verse}`
+              : undefined
+          }
+          accessibilityRole={source.inAppRef ? 'button' : 'link'}
+          accessibilityLabel={`${source.inAppRef ? 'Read in Vedansh' : 'Open external story source'} ${source.passage}`}
+          disabled={Boolean(source.inAppRef && !onOpenGitaRef)}
           onPress={() => {
+            if (source.inAppRef) {
+              onOpenGitaRef?.(source.inAppRef.chapter, source.inAppRef.verse);
+              return;
+            }
             setSourceError(false);
             void Linking.openURL(source.url).catch(() => setSourceError(true));
           }}
@@ -245,11 +303,12 @@ export function GitaSaarStoryDetails({ themeId }: { themeId: string }) {
         >
           <AppIcon name="text" color={colors.saffronDeep} size={16} />
           <ProseParagraph style={[label, { flex: 1 }]}>
-            {`${copy(source.title)} · ${lang === 'hi' ? source.passageHi ?? source.passage : source.passage}`}
+            {`${copy(source.title)} · ${passage} · ${location}`}
           </ProseParagraph>
           <AppIcon name="next" color={colors.saffronDeep} size={16} />
-        </Pressable>
-      ))}
+          </Pressable>
+        );
+      })}
       {sourceError && (
         <ProseParagraph accessibilityLiveRegion="polite" style={label}>
           {pick(lang, {
@@ -290,6 +349,16 @@ const styles = StyleSheet.create({
     padding: 19,
     borderRadius: 13,
     marginTop: 2,
+  },
+  gitaRefs: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 16 },
+  gitaRef: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 18,
+    paddingHorizontal: 11,
+    paddingVertical: 7,
   },
   everyday: {
     paddingVertical: 22,
