@@ -15,7 +15,8 @@ export type PrathaContentStatus = 'draft' | 'verified';
  * Where a story comes from, rendered as a label on every katha (PRD-46 §4).
  * `shastra` = Veda/Upanishad/Itihasa/Gita/Smriti/Grihya-sutra with the verse
  * named; `purana` = a named Purana or Mahatmya with its adhyaya named;
- * `lok` = folk telling, names no text; `itihas` = a dated historical origin.
+ * `lok` = folk telling, names no text; `itihas` = a dated historical origin;
+ * `kavya` = a collated poem/canto; `agama` = a collated Agama passage.
  */
 export type PrathaTier = 'shastra' | 'purana' | 'lok' | 'itihas' | 'kavya' | 'agama';
 

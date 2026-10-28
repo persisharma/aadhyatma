@@ -12,13 +12,14 @@ it('reuses More artwork for shared Discover subjects', () => {
   expect(featureIconSources['home-widgets']).toBe(moreIconSources.widgets);
   expect(featureIconSources['daan-punya']).toBe(moreIconSources.daan);
   expect(featureIconSources.routine).toBe(storybookSources.practice);
+  expect(featureIconSources.pratha).toBe(moreIconSources.question);
 });
 
 it('covers every Discover feature with centered, untinted decorative artwork', () => {
   const source = fs.readFileSync(path.resolve(__dirname, '../../screens/HomeScreen.tsx'), 'utf8');
   const wiredNames = [...source.matchAll(/<FeatureIcon name="([^"]+)"/g)].map((m) => m[1]);
   expect(wiredNames.sort()).toEqual(Object.keys(featureIconSources).sort());
-  expect(wiredNames).toHaveLength(9);
+  expect(wiredNames).toHaveLength(10);
   for (const name of wiredNames as FeatureIconName[]) {
     let tree!: TestRenderer.ReactTestRenderer;
     act(() => { tree = TestRenderer.create(<FeatureIcon name={name} />); });

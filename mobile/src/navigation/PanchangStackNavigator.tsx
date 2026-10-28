@@ -46,6 +46,9 @@ const VastuDishaScreen = lazyScreen('VastuDisha', 5, () => import('@/screens/Vas
 // depth 6
 const DaanDirectoryDetailScreen = lazyScreen('DaanDirectoryDetail', 6, () => import('@/screens/DaanDirectoryDetailScreen'));
 
+const PrathaScreen = lazyScreen('Pratha', 3, () => import('@/screens/PrathaScreen'));
+const PrathaReaderScreen = lazyScreen('PrathaReader', 4, () => import('@/screens/PrathaReaderScreen'));
+
 const Stack = createNativeStackNavigator<PanchangStackParamList>();
 
 // The Panchang tab is a stack so the "Vrat & Parv" catalog journey
@@ -54,6 +57,8 @@ const Stack = createNativeStackNavigator<PanchangStackParamList>();
 export default function PanchangStackNavigator({ initialMode = 'calendar' }: { initialMode?: PanchangHomeMode }) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Pratha" component={PrathaScreen} />
+      <Stack.Screen name="PrathaReader" component={PrathaReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
       <Stack.Screen name="PanchangHome" component={PanchangScreen} initialParams={{ initialTab: initialMode }} />
       <Stack.Screen
         name="ObservanceList"

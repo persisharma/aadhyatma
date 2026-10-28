@@ -1,3 +1,4 @@
+import { hasPratha } from '@/data/pratha';
 import React, { useState } from 'react';
 import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -363,6 +364,9 @@ export default function MoreScreen({ navigation }: Props) {
                   accessibilityLabel={kulHasRecord ? 'Kul Parampara' : 'Kul Parampara, new'}
                   testID="more-kul-parampara"
                 />
+                {hasPratha() && <SettingsRow icon="question" label={pick(lang, { hi: 'ऐसा क्यों?', en: 'Why do we do this?', gu: 'આવું શા માટે?', kn: 'ಹೀಗೆ ಏಕೆ?' })}
+                  labelFontFamily={labelFont} onPress={() => navigation.navigate('Pratha')}
+                  accessibilityLabel="Why do we do this? Explore customs" testID="more-pratha" />}
                 {/* पितृ स्मरण (PRD-17) — private tithi remembrance; the standard
                     More-row NEW state for one release, then count + soonest date. */}
                 <SettingsRow

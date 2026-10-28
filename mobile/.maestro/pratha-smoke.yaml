@@ -1,0 +1,92 @@
+# PRD-46 Phase 1. Authored and parsed 2026-10-28; device run PENDING.
+# Requires a binary with Phase 1 already installed. This flow never builds it.
+# Month-card checks are SEASON GATED: only months with >=3 verified entries
+# show a card (currently Kartik / Margashirsha). A skipped block is not a pass
+# for that seasonal door. Run in both a qualifying month and an empty month.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+- tapOn: "Language,.*"
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- scrollUntilVisible:
+    element:
+      id: "more-pratha"
+    direction: UP
+    centerElement: true
+- tapOn:
+    id: "more-pratha"
+- assertVisible:
+    id: "pratha-hub"
+# Search spans months; no need to spoof a civil date or invoke astronomy.
+- tapOn:
+    id: "pratha-search"
+- inputText: "Kartik"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: "pratha-question-K1"
+- tapOn:
+    id: "pratha-question-K1"
+- assertVisible:
+    id: "pratha-reader"
+- assertVisible:
+    id: "pratha-counter"
+- swipe:
+    direction: LEFT
+- assertVisible:
+    id: "pratha-canon"
+- assertVisible: ".*Skanda.*"
+- tapOn: "Back"
+- assertVisible:
+    id: "pratha-hub"
+- tapOn: "Back"
+- assertVisible:
+    id: "more-pratha"
+# Native back must retrace the More journey above. Calendar entry is local too.
+- tapOn:
+    id: "tab-panchang"
+- runFlow:
+    when:
+      visible:
+        id: "pratha-month-card"
+    commands:
+      - tapOn:
+          id: "pratha-month-hub"
+      - assertVisible:
+          id: "pratha-hub"
+      - tapOn: "Back"
+      - assertVisible:
+          id: "pratha-month-card"
+# The catalog door is available all year, independently of the month card.
+- tapOn:
+    id: "tab-vrat"
+- scrollUntilVisible:
+    element:
+      text: "Search vrat, festival, upvas, katha…"
+    direction: UP
+- tapOn: "Search vrat, festival, upvas, katha…"
+- inputText: "Dhantera"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: "Dhanteras"
+    timeout: 15000
+- tapOn: "Dhanteras"
+- scrollUntilVisible:
+    element:
+      id: "pratha-context-K10"
+- assertVisible:
+    id: "pratha-observance-card"
+- tapOn:
+    id: "pratha-context-K10"
+- assertVisible:
+    id: "pratha-reader"
+- tapOn: "Back"
+- assertVisible:
+    id: "pratha-observance-card"

@@ -17,6 +17,8 @@ import { garudPuranImages } from '@assets/garud-puran';
 import type { DaanKathaEntry, DaanPrincipleEntry } from '@/data/daan/types';
 import type { KathaContentEntry } from '@/panchang/types';
 import type { TempleEntry } from '@/data/theerth/temples';
+import type { PrathaEntry } from '@/data/pratha/types';
+import { prathaPages, PRATHA_TIERS } from '@/data/pratha/presentation';
 import { getTheerthBackground, getDaanBackground } from '@/data/backgrounds';
 import { getKathaBackground } from '@/data/kathaBackgrounds';
 import type {
@@ -28,6 +30,26 @@ import type {
 
 const para = (hi: string, en: string): ShareableProseBlock => ({ kind: 'para', hi, en });
 const heading = (hi: string, en: string): ShareableProseBlock => ({ kind: 'heading', hi, en });
+
+/** Source labels travel with every shared story, using the existing prose card. */
+export function prathaShareable(entry: PrathaEntry, pageIndex: number): ShareableProse {
+  const pages = prathaPages(entry);
+  const page = pages[Math.max(0, Math.min(pages.length - 1, pageIndex))];
+  return {
+    kind: 'prose', sourceId: `pratha-${entry.id}`, background: null,
+    sectionNameHi: 'ऐसा क्यों?', sectionNameEn: 'Why do we do this?',
+    tagNameHi: entry.questionHi, tagNameEn: entry.questionEn,
+    scopes: [{
+      id: page.id, labelHi: 'यह पृष्ठ', labelEn: 'This page',
+      headerHi: entry.questionHi, headerEn: entry.questionEn,
+      titleHi: page.titleHi, titleEn: page.titleEn,
+      blocks: [
+        ...(page.tier ? [para(`${PRATHA_TIERS[page.tier].hi} · ${page.canonHi}`, `${PRATHA_TIERS[page.tier].en} · ${page.canonEn}`)] : []),
+        ...pairParagraphs(page.bodyHi, page.bodyEn),
+      ],
+    }],
+  };
+}
 
 /** Split a single prose field on blank lines/newlines into paragraphs, pairing hi with en. */
 function paragraphs(hi: string, en: string): ShareableProseBlock[] {

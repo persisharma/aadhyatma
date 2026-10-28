@@ -99,6 +99,9 @@ const VidhiConductScreen = lazyScreen('VidhiConduct', 4, () => import('@/screens
 // depth 5 — reached from a depth-4 screen
 const RoutineAddItemsScreen = lazyScreen('RoutineAddItems', 5, () => import('@/screens/RoutineAddItemsScreen'));
 
+const PrathaScreen = lazyScreen('Pratha', 2, () => import('@/screens/PrathaScreen'));
+const PrathaReaderScreen = lazyScreen('PrathaReader', 3, () => import('@/screens/PrathaReaderScreen'));
+
 const Stack = createNativeStackNavigator<HomeStackParamList>();
 
 export default function HomeStackNavigator() {
@@ -110,6 +113,8 @@ export default function HomeStackNavigator() {
         animation: 'slide_from_right',
       }}
     >
+      <Stack.Screen name="Pratha" component={PrathaScreen} />
+      <Stack.Screen name="PrathaReader" component={PrathaReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Suvichar" component={SuvicharScreen} />
       <Stack.Screen

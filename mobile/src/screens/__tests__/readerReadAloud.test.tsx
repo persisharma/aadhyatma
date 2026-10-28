@@ -99,6 +99,8 @@ import StutiReaderScreen from '../StutiReaderScreen';
 import SuktamReaderScreen from '../SuktamReaderScreen';
 import SanskarReaderScreen from '../SanskarReaderScreen';
 import VratKathaReaderScreen from '../VratKathaReaderScreen';
+import PrathaReaderScreen from '../PrathaReaderScreen';
+import { getPratha } from '@/data/pratha';
 import PitruParichayReaderScreen from '../PitruParichayReaderScreen';
 import BajrangBaanReaderScreen from '../BajrangBaanReaderScreen';
 import HanumanAshtakReaderScreen from '../HanumanAshtakReaderScreen';
@@ -244,6 +246,11 @@ const READERS: readonly ReaderEntry[] = [
     name: 'VratKathaReaderScreen (nirjala-ekadashi-katha)',
     ...screen(VratKathaReaderScreen, 'VratKathaReader', { kathaId: 'nirjala-ekadashi-katha' }),
     firstSpokenLine: firstLine(katha.sections.map((s) => s.bodyHi)),
+  },
+  {
+    name: 'PrathaReaderScreen (K1)',
+    ...screen(PrathaReaderScreen, 'PrathaReader', { prathaId: 'K1' }),
+    firstSpokenLine: getPratha('K1')!.practiceHi,
   },
   {
     // Prose, same branch as the katha: a परिचय lesson's body IS the text.

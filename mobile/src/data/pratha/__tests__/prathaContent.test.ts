@@ -94,7 +94,7 @@ describe('provenance (PRD-46 §4)', () => {
 
   test('a folk story says so and names no text', () => {
     for (const { k } of kathas.filter(({ k }) => k.tier === 'lok')) {
-      expect(k.canonHi).toMatch(/लोक-परम्परा/u);
+      expect(k.canonHi).toMatch(/^लोक-परम्परा(?: \([^)]*\))?$/u);
       expect(k.canonEn).toMatch(/Folk tradition/);
     }
   });

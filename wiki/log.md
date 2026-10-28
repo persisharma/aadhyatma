@@ -1267,3 +1267,7 @@ New subsystem page `wiki/subsystems/pratha.md`. `mobile/src/data/pratha/` holds 
 ## [2026-10-28] gap | PRD-46 rows are unverified
 
 All 208 pratha rows are app-authored retellings that no reviewer has checked against an opened source. Verification is per row and needs network access or the maintainer-attested exception (RULEBOOK §11.1).
+
+## [2026-10-28] ingest | PRD-46 verification continuation and Phase 1
+
+19 entries verified against actually opened publications; 189 drafts remain hidden. Added story-level provenance and exact canon checks, six tiers, ten-Kartik pilot gate and three-entry month gate. Hub/reader, source-preserving prose sharing, observance/month cards and lazy local navigation now implemented. Updated pratha/index/design §86 and §62; source adjudications in `docs/content-parity/pratha-verification-2026-10-28.md`. Monthly source-review backlog and native smoke execution remain open; no build, release, OTA or merge.
