@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Text } from 'react-native';
 import { act, create } from 'react-test-renderer';
 import {
@@ -216,10 +216,11 @@ describe('lazyScreen — what actually paints', () => {
   it('a screen that mounted cold is NOT remounted when it later re-renders warm', async () => {
     let mounts = 0;
     function Counted({ n }: { n: number }) {
+      const [count, setCount] = useState(0);
       useEffect(() => {
         mounts += 1;
       }, []);
-      return <Text>{`n=${n}`}</Text>;
+      return <Text onPress={() => setCount((value) => value + 1)}>{`n=${n}; count=${count}`}</Text>;
     }
     let release!: () => void;
     const gate = new Promise<void>((r) => (release = r));
@@ -236,13 +237,14 @@ describe('lazyScreen — what actually paints', () => {
       release();
       await gate;
     });
+    act(() => tree.root.findByType(Text).props.onPress());
     // New props after it resolved: the warm path now runs. Same tree shape, so
     // this must be an update, not a remount — a remount would lose the screen's
     // state (scroll position, form input) the moment it finished loading.
     await act(async () => {
       tree.update(<Screen n={2} />);
     });
-    expect(hasText(tree, 'n=2')).toBe(true);
+    expect(hasText(tree, 'n=2; count=1')).toBe(true);
     expect(mounts).toBe(1);
   });
 

@@ -17,7 +17,7 @@ export type SuvicharVaar = { hi: string; en: string; deities: readonly SuvicharD
  */
 export const suvicharVaar: readonly SuvicharVaar[] = [
   { hi: 'शुभ रविवार', en: 'Shubh Ravivar', deities: ['vishnu', 'tirupati-balaji'] },
-  { hi: 'शुभ सोमवार', en: 'Shubh Somvar', deities: ['shiva'] },
+  { hi: 'शुभ सोमवार', en: 'Shubh Somvar', deities: ['shiva', 'mahakaal'] },
   { hi: 'शुभ मंगलवार', en: 'Shubh Mangalwar', deities: ['hanuman', 'salasar-balaji'] },
   { hi: 'शुभ बुधवार', en: 'Shubh Budhwar', deities: ['ganesha', 'saraswati', 'krishna', 'radha-krishna', 'sanwariya-seth', 'khatu-shyam'] },
   { hi: 'शुभ गुरुवार', en: 'Shubh Guruvar', deities: ['vishnu', 'tirupati-balaji', 'jagannath', 'rama', 'ram-darbar'] },

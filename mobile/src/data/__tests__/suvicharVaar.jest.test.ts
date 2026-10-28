@@ -1,4 +1,4 @@
-import { initialSuvichar, suvicharArtRequest, suvicharDeities, suvicharFrames, suvicharReflections } from '../suvichar';
+import { initialSuvichar, suvicharArtRequest, suvicharDeities, suvicharDeityCatalog, suvicharFrames, suvicharReflections } from '../suvichar';
 import { suvicharDay, suvicharTemplatesFor, suvicharThoughts } from '../suvicharTemplates';
 import { isAuthoredSuvicharMessage, suvicharVaar, suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '../suvicharVaar';
 import { WEEKDAY_LABELS } from '../routine/vaar';
@@ -23,13 +23,13 @@ it('gives every day a published deity, with Vishnu as Surya-Narayan on Sunday un
 
 it('links every catalog deity to at least one day', () => {
   const linked = new Set(suvicharVaar.flatMap(v => v.deities));
-  expect(suvicharDeities.filter(d => !linked.has(d.id)).map(d => d.id)).toEqual([]);
+  expect(suvicharDeityCatalog.filter(d => !linked.has(d.id)).map(d => d.id)).toEqual([]);
   expect(suvicharVaarFor(on(28))!.deities).toEqual(['ganesha', 'saraswati', 'krishna', 'radha-krishna', 'sanwariya-seth', 'khatu-shyam']);
   expect(suvicharVaarFor(on(29))!.deities).toEqual(['vishnu', 'tirupati-balaji', 'jagannath', 'rama', 'ram-darbar']);
 });
 
 it('lists only catalog deities and leaves out any whose masters are not yet published', () => {
-  for (const vaar of suvicharVaar) for (const deity of vaar.deities) expect(suvicharDeities.some(d => d.id === deity)).toBe(true);
+  for (const vaar of suvicharVaar) for (const deity of vaar.deities) expect(suvicharDeityCatalog.some(d => d.id === deity)).toBe(true);
   const thursday = suvicharVaar[4].deities;
   const live = thursday.filter(d => suvicharFrames.every(f => suvicharArtRequest(d, f.id)));
   expect(suvicharVaarFor(on(29))!.deities).toEqual(live);
@@ -57,7 +57,7 @@ it('offers every deity of the day in all three frames', () => {
   // Each weekday tile carries its deity's thought for the day, the same one its deity card shows.
   const daily = suvicharTemplatesFor(suvicharDay(tuesday)).filter(t => t.kind === 'daily');
   for (const c of cards) expect([c.kind, c.messageHi, c.messageEn]).toEqual(['vaar', daily.find(t => t.deity === c.deity)!.messageHi, daily.find(t => t.deity === c.deity)!.messageEn]);
-  expect(suvicharVaarTemplates(monday)).toHaveLength(3);
+  expect(suvicharVaarTemplates(monday)).toHaveLength(suvicharVaarFor(monday)!.deities.length * 3);
   expect(suvicharVaarTemplates(sunday).map(c => c.deity)).toEqual(['vishnu', 'vishnu', 'vishnu', 'tirupati-balaji', 'tirupati-balaji', 'tirupati-balaji']);
 });
 

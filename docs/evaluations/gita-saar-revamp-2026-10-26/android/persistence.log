@@ -1,0 +1,17 @@
+Running on emulator-5582
+ > Flow gita-saar-persistence
+Stop com.prashantsharma.vedansh... COMPLETED
+Launch app "com.prashantsharma.vedansh" (launch arguments: {RCT_jsLocation=${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}})... COMPLETED
+Assert that ".*Today.s Panchang.*|.*आज का पंचांग.*" is visible... COMPLETED
+Scrolling DOWN until "Sacred Books.*Tap to open." is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Sacred Books.*Tap to open."... COMPLETED
+Scrolling DOWN until "Gita Saar\..*Tap to open\..*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Tap on "Gita Saar\..*Tap to open\..*"... COMPLETED
+Tap on id: lang-toggle-en... COMPLETED
+Scrolling DOWN until "Saved Gita Saar learning" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Tap on "Saved Gita Saar learning"... COMPLETED
+Scrolling DOWN until "I will give one task my full attention." is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Assert that "I will give one task my full attention." is visible... COMPLETED
+Take screenshot e2e-shots/gita-saar-reflection-after-restart... COMPLETED
+Tap on "Open saved Gita Saar 2.47"... COMPLETED
+Assert that "Right to the work, not the fruit" is visible... COMPLETED

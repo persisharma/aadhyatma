@@ -1,0 +1,271 @@
+# Native gallery sweep: every theme card opens its distinct story and picture.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element: { text: "Sacred Books.*Tap to open." }
+    direction: DOWN
+- tapOn: "Sacred Books.*Tap to open."
+- scrollUntilVisible:
+    element: { text: "Gita Saar\\..*Tap to open\\..*" }
+    direction: DOWN
+- tapOn: "Gita Saar\\..*Tap to open\\..*"
+- extendedWaitUntil:
+    visible: { id: gita-saar-featured }
+    timeout: 30000
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-true-prema }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-true-prema }
+- tapOn: { id: gita-saar-theme-true-prema }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-true-prema }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-true-prema
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-bhay-chinta }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-bhay-chinta }
+- tapOn: { id: gita-saar-theme-bhay-chinta }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-bhay-chinta }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-bhay-chinta
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-shok }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-shok }
+- tapOn: { id: gita-saar-theme-shok }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-shok }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-shok
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-krodh }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-krodh }
+- tapOn: { id: gita-saar-theme-krodh }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-krodh }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-krodh
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-karma }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-karma }
+- tapOn: { id: gita-saar-theme-karma }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-karma }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-karma
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-guna }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-guna }
+- tapOn: { id: gita-saar-theme-guna }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-guna }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-guna
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-man }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-man }
+- tapOn: { id: gita-saar-theme-man }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-man }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-man
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-sanshay }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-sanshay }
+- tapOn: { id: gita-saar-theme-sanshay }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-sanshay }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-sanshay
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-sharanagati }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-sharanagati }
+- tapOn: { id: gita-saar-theme-sharanagati }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-sharanagati }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-sharanagati
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-sthitaprajna }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-sthitaprajna }
+- tapOn: { id: gita-saar-theme-sthitaprajna }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-sthitaprajna }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-sthitaprajna
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-kamna-santosh }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-kamna-santosh }
+- tapOn: { id: gita-saar-theme-kamna-santosh }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-kamna-santosh }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-kamna-santosh
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-safalta }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-safalta }
+- tapOn: { id: gita-saar-theme-safalta }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-safalta }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-safalta
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-atma }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-atma }
+- tapOn: { id: gita-saar-theme-atma }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-atma }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-atma
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-akela }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-akela }
+- tapOn: { id: gita-saar-theme-akela }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-akela }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-akela
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-daivi }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-daivi }
+- tapOn: { id: gita-saar-theme-daivi }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-daivi }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-daivi
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-dhyan }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- assertVisible: { id: gita-saar-theme-art-dhyan }
+- tapOn: { id: gita-saar-theme-dhyan }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-dhyan }
+    timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-story-dhyan
+- tapOn: Back

@@ -1,6 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   FlatList,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
@@ -34,9 +44,12 @@ import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, pick } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
-import HomeWordmark from '@/components/HomeWordmark';
+import AppIcon from '@/components/AppIcon';
+import ProseParagraph from '@/components/ProseParagraph';
+import { meaningToken } from '@/utils/langType';
+import { useGitaSaarLearning } from '@/data/gita-saar/learningStore';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
@@ -78,15 +91,28 @@ const DOT_COUNT = 5;
 export default function GitaSaarReaderScreen({ navigation, route }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
+  const {
+    addBookmark,
+    removeBookmark,
+    isBookmarked,
+    bookmarks,
+    isLoading: bookmarksLoading,
+  } = useBookmarks();
   const { setProgress } = useReadingProgress();
+  const learning = useGitaSaarLearning();
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
 
-  const chapter = useSafeChapter(route.params.chapter, getGitaSaarChapter, navigation, 'GitaSaarChapters');
+  const chapter = useSafeChapter(
+    route.params.chapter,
+    getGitaSaarChapter,
+    navigation,
+    'GitaSaarChapters'
+  );
   const verseCount = chapter?.verses.length ?? 0;
   const initialIndex = clampIndex(route.params.initialIndex, verseCount);
-  const isLastChapter = chapter == null ? true : chapter.chapter >= gitaSaarChaptersManifest.length;
+  const isLastChapter =
+    chapter == null ? true : chapter.chapter >= gitaSaarChaptersManifest.length;
   const isFirstChapter = chapter == null ? true : chapter.chapter <= 1;
   const data: FlatListItem[] = useMemo(() => {
     if (chapter == null) return [];
@@ -149,45 +175,57 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
-  const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
-    if (viewableItems.length === 0) return;
-    const first = viewableItems[0];
-    if (first.index == null) return;
-    const item = first.item as FlatListItem;
-    if ('__type' in item && item.__type === 'transition') {
-      if (!hasNavigatedRef.current) {
-        hasNavigatedRef.current = true;
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
-        setTimeout(() => {
-          navigation.replace('GitaSaarReader', { chapter: item.nextChapter });
-        }, 400);
+  const onViewableItemsChanged = useRef(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      if (viewableItems.length === 0) return;
+      const first = viewableItems[0];
+      if (first.index == null) return;
+      const item = first.item as FlatListItem;
+      if ('__type' in item && item.__type === 'transition') {
+        if (!hasNavigatedRef.current) {
+          hasNavigatedRef.current = true;
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(
+            () => undefined
+          );
+          setTimeout(() => {
+            navigation.replace('GitaSaarReader', { chapter: item.nextChapter });
+          }, 400);
+        }
+        return;
       }
-      return;
+      if ('__type' in item && item.__type === 'prev-transition') {
+        if (!hasNavigatedRef.current) {
+          hasNavigatedRef.current = true;
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(
+            () => undefined
+          );
+          setTimeout(() => {
+            navigation.replace('GitaSaarReader', {
+              chapter: item.prevChapter,
+              initialIndex: item.prevVerseCount - 1,
+            });
+          }, 400);
+        }
+        return;
+      }
+      const verseIdx = first.index - offset;
+      setCurrentIndex((prev) => {
+        if (prev !== verseIdx) {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(
+            () => undefined
+          );
+        }
+        return verseIdx >= 0 ? verseIdx : prev;
+      });
     }
-    if ('__type' in item && item.__type === 'prev-transition') {
-      if (!hasNavigatedRef.current) {
-        hasNavigatedRef.current = true;
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
-        setTimeout(() => {
-          navigation.replace('GitaSaarReader', {
-            chapter: item.prevChapter,
-            initialIndex: item.prevVerseCount - 1,
-          });
-        }, 400);
-      }
-      return;
-    }
-    const verseIdx = first.index - offset;
-    setCurrentIndex((prev) => {
-      if (prev !== verseIdx) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
-      }
-      return verseIdx >= 0 ? verseIdx : prev;
-    });
-  }).current;
+  ).current;
 
   const getItemLayout = useCallback(
-    (_: unknown, index: number) => ({ length: width, offset: width * index, index }),
+    (_: unknown, index: number) => ({
+      length: width,
+      offset: width * index,
+      index,
+    }),
     [width]
   );
 
@@ -203,10 +241,31 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
   }, [verseCount, currentIndex]);
 
   const topTitle = chapter
-    ? contentByLang(lang, `${gitaSaarTitleHi} · ${chapter.titleHi}`, `${gitaSaarTitleEn} · ${chapter.titleEn}`)
+    ? contentByLang(
+        lang,
+        `${gitaSaarTitleHi} · ${chapter.titleHi}`,
+        `${gitaSaarTitleEn} · ${chapter.titleEn}`
+      )
     : '';
 
-  const listExtraData = useMemo(() => ({ lang, bookmarks, shareBusy, pageHeight }), [lang, bookmarks, shareBusy, pageHeight]);
+  const listExtraData = useMemo(
+    () => ({
+      lang,
+      bookmarks,
+      shareBusy,
+      pageHeight,
+      reflections: learning.reflections,
+      bookmarksLoading,
+    }),
+    [
+      lang,
+      bookmarks,
+      shareBusy,
+      pageHeight,
+      learning.reflections,
+      bookmarksLoading,
+    ]
+  );
 
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -215,7 +274,9 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
       if (idx < 0 || idx >= verseCount) return;
       setCurrentIndex((prev) => {
         if (prev !== idx) {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(
+            () => undefined
+          );
           return idx;
         }
         return prev;
@@ -224,180 +285,383 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
     [width, verseCount, offset]
   );
 
-  if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
+  const move = (delta: number) => {
+    if (!chapter) return;
+    Keyboard.dismiss();
+    autoSlide.stop();
+    readAloud.stop();
+    const target = currentIndex + delta;
+    if (target < 0 && !isFirstChapter) {
+      const previous = gitaSaarChaptersManifest[chapter.chapter - 2];
+      navigation.replace('GitaSaarReader', {
+        chapter: chapter.chapter - 1,
+        initialIndex: previous.verseCount - 1,
+      });
+    } else if (target >= verseCount && !isLastChapter) {
+      navigation.replace('GitaSaarReader', { chapter: chapter.chapter + 1 });
+    } else if (target >= 0 && target < verseCount) {
+      listRef.current?.scrollToIndex({
+        index: target + offset,
+        animated: true,
+      });
+      setCurrentIndex(target);
+    }
+  };
+  const footerType = meaningToken(lang, typography);
+
+  if (!chapter)
+    return (
+      <View style={[styles.root, { backgroundColor: colors.parchment }]} />
+    );
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
-        <ReaderHeader
-          title={topTitle}
-          titleContent={<HomeWordmark compact showTagline={false} />}
-          onBack={() => navigation.goBack()}
-          sideWidth={48}
-          right={
-            <Text
-              style={[
-                styles.counter,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.pageCounter.fontFamily,
-                  fontSize: typography.pageCounter.fontSize,
-                  fontStyle: 'italic',
-                },
-              ]}
-            >
-              {currentIndex + 1} / {verseCount}
-            </Text>
-          }
-        />
-
-        <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
-
-        <View style={styles.toggleRow}>
-          <LanguageToggle />
-          <AddToRoutineButton sourceId={SOURCE_ID} chapter={chapter.chapter} />
-          <View style={styles.readAloudSlot}>
-            <ReadAloudButton control={readAloud} />
-          </View>
-        </View>
-
-        <View style={styles.listContainer} onLayout={(event) => setPageHeight(event.nativeEvent.layout.height)}>
-          <FlatList
-            CellRendererComponent={autoSlide.Cell}
-            ref={listRef}
-            data={data}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item, index }) => {
-              if ('__type' in item && item.__type === 'transition') {
-                return (
-                  <NextChapterCard
-                    width={width}
-                    nextTitle={contentByLang(lang, item.nextTitleHi, item.nextTitleEn)}
-                    lang={lang}
-                  />
-                );
-              }
-              if ('__type' in item && item.__type === 'prev-transition') {
-                return (
-                  <PrevChapterCard
-                    width={width}
-                    prevTitle={contentByLang(lang, item.prevTitleHi, item.prevTitleEn)}
-                    lang={lang}
-                  />
-                );
-              }
-              const verseIdx = index - offset;
-              const bookmarkId = `${SOURCE_ID}:${chapter.chapter}:${verseIdx}`;
-              const isLastPage = verseIdx === verseCount - 1;
-              return (
-                <GitaSaarVersePage
-                  chapterTitle={contentByLang(lang, chapter.titleHi, chapter.titleEn)}
-                  verse={item}
-                  sourceId={SOURCE_ID}
-                  width={width}
-                  height={pageHeight}
-                  closing={isLastPage ? { hi: chapter.closingHi, en: chapter.closingEn } : undefined}
-                  onOpenInGita={() =>
-                    navigation.navigate('GitaReader', {
-                      chapter: item.gitaChapter,
-                      initialIndex: item.gitaVerse - 1,
-                    })
-                  }
-                  topActions={
-                    <>
-                      <BookmarkButton
-                        isBookmarked={isBookmarked(bookmarkId)}
-                        onToggle={() => {
-                          if (isBookmarked(bookmarkId)) {
-                            removeBookmark(bookmarkId);
-                          } else {
-                            addBookmark({
-                              id: bookmarkId,
-                              sourceId: SOURCE_ID,
-                              chapter: chapter.chapter,
-                              verseIndex: verseIdx,
-                              savedAt: Date.now(),
-                              previewHi: item.sanskrit.slice(0, 2).join(' '),
-                              previewEn: item.transliteration.slice(0, 2).join(' '),
-                            });
-                          }
-                        }}
-                      />
-                      <ShareButton
-                        busy={shareBusy}
-                        onPress={() => {
-                          share(
-                            {
-                              sourceId: SOURCE_ID,
-                              sectionNameHi: `${gitaSaarTitleHi} · ${chapter.titleHi}`,
-                              sectionNameEn: `${gitaSaarTitleEn} · ${chapter.titleEn}`,
-                              verseLabelHi: `श्लोक ${item.gitaChapter}.${item.gitaVerse}`,
-                              verseLabelEn: `Verse ${item.gitaChapter}.${item.gitaVerse}`,
-                              linesHi: [...item.sanskrit],
-                              linesEn: [...item.transliteration],
-                              // The card carries what the page carries: the theme line
-                              // over the saar, and the theme's closing line on its last page.
-                              meaningTitleHi: item.themeHi,
-                              meaningTitleEn: item.themeEn,
-                              meaningHi: isLastPage
-                                ? `${item.meaningHi}\n\n${chapter.closingHi}`
-                                : item.meaningHi,
-                              meaningEn: isLastPage
-                                ? `${item.meaningEn}\n\n${chapter.closingEn}`
-                                : item.meaningEn,
-                            },
-                            lang
-                          );
-                        }}
-                      />
-                    </>
-                  }
-                />
-              );
-            }}
-            extraData={listExtraData}
-            horizontal
-            directionalLockEnabled
-            nestedScrollEnabled
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            initialNumToRender={1}
-            windowSize={3}
-            removeClippedSubviews={false}
-            maxToRenderPerBatch={2}
-            viewabilityConfig={viewabilityConfig}
-            onViewableItemsChanged={onViewableItemsChanged}
-            onScroll={handleScroll}
-            scrollEventThrottle={16}
-            getItemLayout={getItemLayout}
-            initialScrollIndex={initialIndex + offset}
-            onScrollToIndexFailed={() => undefined}
-            style={styles.list}
+      <SafeAreaView
+        style={styles.safe}
+        edges={['top', 'left', 'right', 'bottom']}
+      >
+        <KeyboardAvoidingView
+          style={styles.safe}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
+          <ReaderHeader
+            title={topTitle}
+            onBack={() => navigation.goBack()}
+            sideWidth={48}
+            right={
+              <Text
+                style={[
+                  styles.counter,
+                  {
+                    color: colors.inkMuted,
+                    fontFamily: typography.pageCounter.fontFamily,
+                    fontSize: typography.pageCounter.fontSize,
+                    fontStyle: 'italic',
+                  },
+                ]}
+              >
+                {currentIndex + 1} / {verseCount}
+              </Text>
+            }
           />
-          <AutoSlideButton control={autoSlide} />
 
-          {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
-          <View style={styles.dotsOverlay}>
-            <View style={styles.dots}>
-              {dotStyles.map((isCurrent, i) => (
-                <View
-                  key={i}
-                  style={
-                    isCurrent
-                      ? [styles.dotCurrent, { backgroundColor: colors.saffronDeep }]
-                      : [styles.dot, { backgroundColor: colors.dotRest }]
-                  }
-                />
-              ))}
+          <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
+
+          <View style={styles.toggleRow}>
+            <LanguageToggle />
+            <AddToRoutineButton
+              sourceId={SOURCE_ID}
+              chapter={chapter.chapter}
+            />
+            <View style={styles.readAloudSlot}>
+              <ReadAloudButton control={readAloud} />
             </View>
           </View>
-        </View>
+
+          <View
+            testID="gita-saar-pager"
+            style={styles.listContainer}
+            onLayout={(event) => setPageHeight(event.nativeEvent.layout.height)}
+          >
+            <FlatList
+              CellRendererComponent={autoSlide.Cell}
+              ref={listRef}
+              data={data}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item, index }) => {
+                if ('__type' in item && item.__type === 'transition') {
+                  return (
+                    <NextChapterCard
+                      width={width}
+                      nextTitle={contentByLang(
+                        lang,
+                        item.nextTitleHi,
+                        item.nextTitleEn
+                      )}
+                      lang={lang}
+                    />
+                  );
+                }
+                if ('__type' in item && item.__type === 'prev-transition') {
+                  return (
+                    <PrevChapterCard
+                      width={width}
+                      prevTitle={contentByLang(
+                        lang,
+                        item.prevTitleHi,
+                        item.prevTitleEn
+                      )}
+                      lang={lang}
+                    />
+                  );
+                }
+                const verseIdx = index - offset;
+                const bookmarkId = `${SOURCE_ID}:${chapter.chapter}:${verseIdx}`;
+                const isLastPage = verseIdx === verseCount - 1;
+                return (
+                  <GitaSaarVersePage
+                    onOpenStory={() => {
+                      Keyboard.dismiss();
+                      autoSlide.stop();
+                      readAloud.stop();
+                      listRef.current?.scrollToIndex({
+                        index: offset,
+                        animated: true,
+                      });
+                      setCurrentIndex(0);
+                    }}
+                    chapterTitle={contentByLang(
+                      lang,
+                      chapter.titleHi,
+                      chapter.titleEn
+                    )}
+                    verse={item}
+                    sourceId={SOURCE_ID}
+                    width={width}
+                    height={pageHeight}
+                    isSaved={isBookmarked(bookmarkId)}
+                    initialReflection={
+                      learning.reflections.find(
+                        (r) =>
+                          r.chapter === chapter.chapter &&
+                          r.verseIndex === verseIdx
+                      )?.text ?? ''
+                    }
+                    onReflectionFocus={() => {
+                      autoSlide.stop();
+                      readAloud.stop();
+                    }}
+                    onSaveLearning={async (text) => {
+                      if (bookmarksLoading)
+                        throw new Error('Bookmarks are still loading');
+                      if (text.trim())
+                        await learning.save(chapter.chapter, verseIdx, text);
+                      else if (
+                        learning.reflections.some(
+                          (r) =>
+                            r.chapter === chapter.chapter &&
+                            r.verseIndex === verseIdx
+                        )
+                      )
+                        await learning.remove(chapter.chapter, verseIdx);
+                      if (!isBookmarked(bookmarkId))
+                        addBookmark({
+                          id: bookmarkId,
+                          sourceId: SOURCE_ID,
+                          chapter: chapter.chapter,
+                          verseIndex: verseIdx,
+                          savedAt: Date.now(),
+                          previewHi: item.sanskrit.slice(0, 2).join(' '),
+                          previewEn: item.transliteration.slice(0, 2).join(' '),
+                        });
+                    }}
+                    closing={
+                      isLastPage
+                        ? { hi: chapter.closingHi, en: chapter.closingEn }
+                        : undefined
+                    }
+                    onOpenInGita={() =>
+                      navigation.navigate('GitaReader', {
+                        chapter: item.gitaChapter,
+                        initialIndex: item.gitaVerse - 1,
+                      })
+                    }
+                    onOpenGitaRef={(gitaChapter, gitaVerse) => {
+                      autoSlide.stop();
+                      readAloud.stop();
+                      navigation.navigate('GitaReader', {
+                        chapter: gitaChapter,
+                        initialIndex: gitaVerse - 1,
+                      });
+                    }}
+                    topActions={
+                      <>
+                        <BookmarkButton
+                          isBookmarked={isBookmarked(bookmarkId)}
+                          onToggle={() => {
+                            if (isBookmarked(bookmarkId)) {
+                              removeBookmark(bookmarkId);
+                            } else {
+                              addBookmark({
+                                id: bookmarkId,
+                                sourceId: SOURCE_ID,
+                                chapter: chapter.chapter,
+                                verseIndex: verseIdx,
+                                savedAt: Date.now(),
+                                previewHi: item.sanskrit.slice(0, 2).join(' '),
+                                previewEn: item.transliteration
+                                  .slice(0, 2)
+                                  .join(' '),
+                              });
+                            }
+                          }}
+                        />
+                        <ShareButton
+                          busy={shareBusy}
+                          onPress={() => {
+                            share(
+                              {
+                                sourceId: SOURCE_ID,
+                                sectionNameHi: `${gitaSaarTitleHi} · ${chapter.titleHi}`,
+                                sectionNameEn: `${gitaSaarTitleEn} · ${chapter.titleEn}`,
+                                verseLabelHi: `श्लोक ${item.gitaChapter}.${item.gitaVerse}`,
+                                verseLabelEn: `Verse ${item.gitaChapter}.${item.gitaVerse}`,
+                                linesHi: [...item.sanskrit],
+                                linesEn: [...item.transliteration],
+                                // The card carries what the page carries: the theme line
+                                // over the saar, and the theme's closing line on its last page.
+                                meaningTitleHi: item.themeHi,
+                                meaningTitleEn: item.themeEn,
+                                meaningHi: isLastPage
+                                  ? `${item.meaningHi}\n\n${chapter.closingHi}`
+                                  : item.meaningHi,
+                                meaningEn: isLastPage
+                                  ? `${item.meaningEn}\n\n${chapter.closingEn}`
+                                  : item.meaningEn,
+                              },
+                              lang
+                            );
+                          }}
+                        />
+                      </>
+                    }
+                  />
+                );
+              }}
+              extraData={listExtraData}
+              horizontal
+              directionalLockEnabled
+              nestedScrollEnabled
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              initialNumToRender={1}
+              windowSize={3}
+              removeClippedSubviews={false}
+              maxToRenderPerBatch={2}
+              viewabilityConfig={viewabilityConfig}
+              onViewableItemsChanged={onViewableItemsChanged}
+              onScroll={handleScroll}
+              scrollEventThrottle={16}
+              getItemLayout={getItemLayout}
+              initialScrollIndex={initialIndex + offset}
+              onScrollToIndexFailed={() => undefined}
+              style={styles.list}
+            />
+            <AutoSlideButton control={autoSlide} />
+
+            {currentIndex > 0 && (
+              <JumpToStartButton onPress={goToStart} lang={lang} />
+            )}
+            <View style={styles.dotsOverlay}>
+              <View style={styles.dots}>
+                {dotStyles.map((isCurrent, i) => (
+                  <View
+                    key={i}
+                    style={
+                      isCurrent
+                        ? [
+                            styles.dotCurrent,
+                            { backgroundColor: colors.saffronDeep },
+                          ]
+                        : [styles.dot, { backgroundColor: colors.dotRest }]
+                    }
+                  />
+                ))}
+              </View>
+            </View>
+          </View>
+          <View
+            style={[
+              styles.lessonFooter,
+              {
+                borderColor: colors.divider,
+                backgroundColor: colors.parchmentSoft,
+              },
+            ]}
+          >
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Previous Gita Saar teaching"
+              disabled={isFirstChapter && currentIndex === 0}
+              accessibilityState={{
+                disabled: isFirstChapter && currentIndex === 0,
+              }}
+              onPress={() => move(-1)}
+              style={[
+                styles.footerBack,
+                isFirstChapter && currentIndex === 0 && { opacity: 0.3 },
+              ]}
+            >
+              <AppIcon name="back" size={22} color={colors.saffronDeep} />
+            </Pressable>
+            <ProseParagraph
+              style={{
+                color: colors.inkMuted,
+                fontFamily: footerType.fontFamily,
+                fontSize: 13,
+                lineHeight: 23,
+              }}
+            >{`${currentIndex + 1} / ${verseCount}`}</ProseParagraph>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Next Gita Saar teaching"
+              disabled={isLastChapter && currentIndex === verseCount - 1}
+              accessibilityState={{
+                disabled: isLastChapter && currentIndex === verseCount - 1,
+              }}
+              onPress={() => move(1)}
+              style={[
+                styles.footerNext,
+                isLastChapter &&
+                  currentIndex === verseCount - 1 && { opacity: 0.3 },
+              ]}
+            >
+              <ProseParagraph
+                style={{
+                  color: colors.saffronDeep,
+                  fontFamily: footerType.fontFamily,
+                  fontSize: 13,
+                  lineHeight: 23,
+                }}
+              >
+                {pick(lang, {
+                  hi: 'अगली सीख',
+                  en: 'Next teaching',
+                  gu: 'આગળની શીખ',
+                  kn: 'ಮುಂದಿನ ಕಲಿಕೆ',
+                })}
+              </ProseParagraph>
+              <AppIcon name="next" size={18} color={colors.saffronDeep} />
+            </Pressable>
+          </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  lessonFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 18,
+    paddingVertical: 5,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    minHeight: 56,
+  },
+  footerBack: {
+    minWidth: 44,
+    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  footerNext: {
+    minHeight: 44,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   root: {
     flex: 1,
   },

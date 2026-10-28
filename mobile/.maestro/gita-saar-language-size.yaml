@@ -1,0 +1,89 @@
+# Run after the core journey. Regional scripts at Large reading size,
+# including the sixteenth theme, must remain scrollable and complete.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: DOWN
+- tapOn: "Language,.*"
+- tapOn: "Gujarati"
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    direction: DOWN
+- tapOn: "Reading size,.*"
+- tapOn: Large
+- tapOn: "Done|हो गया|થઈ ગયું|ಮುಗಿಯಿತು"
+- tapOn: { id: tab-home }
+- scrollUntilVisible:
+    element: { text: "Sacred Books.*Tap to open." }
+    direction: DOWN
+- tapOn: "Sacred Books.*Tap to open."
+- scrollUntilVisible:
+    element: { text: "Gita Saar\\..*Tap to open\\..*" }
+    direction: DOWN
+- tapOn: "Gita Saar\\..*Tap to open\\..*"
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-dhyan }
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- takeScreenshot: e2e-shots/gita-saar-gu-last-theme
+- tapOn: { id: gita-saar-theme-dhyan }
+- assertVisible: { id: gita-saar-essence }
+- takeScreenshot: e2e-shots/gita-saar-gu-large-reader
+- scrollUntilVisible:
+    element: { text: "Write a Gita Saar reflection" }
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- takeScreenshot: e2e-shots/gita-saar-gu-large-takeaway
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: DOWN
+- tapOn: "Language,.*"
+- tapOn: "Kannada"
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    direction: DOWN
+- tapOn: "Reading size,.*"
+- tapOn: Large
+- tapOn: "Done|हो गया|થઈ ગયું|ಮುಗಿಯಿತು"
+- tapOn: { id: tab-home }
+- scrollUntilVisible:
+    element: { text: "Sacred Books.*Tap to open." }
+    direction: DOWN
+- tapOn: "Sacred Books.*Tap to open."
+- scrollUntilVisible:
+    element: { text: "Gita Saar\\..*Tap to open\\..*" }
+    direction: DOWN
+- tapOn: "Gita Saar\\..*Tap to open\\..*"
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-dhyan }
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- takeScreenshot: e2e-shots/gita-saar-kn-last-theme
+- tapOn: { id: gita-saar-theme-dhyan }
+- assertVisible: { id: gita-saar-essence }
+- takeScreenshot: e2e-shots/gita-saar-kn-large-reader
+- scrollUntilVisible:
+    element: { text: "Write a Gita Saar reflection" }
+    direction: DOWN
+    timeout: 30000
+    centerElement: true
+- takeScreenshot: e2e-shots/gita-saar-kn-large-takeaway
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: DOWN
+- tapOn: "Language,.*"
+- tapOn: Hindi
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    direction: DOWN
+- tapOn: "Reading size,.*"
+- tapOn: Standard
+- tapOn: "Done|हो गया|થઈ ગયું|ಮುಗಿಯಿತು"
+- tapOn: { id: tab-home }

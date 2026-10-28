@@ -7,9 +7,12 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "home-kids-stories-card" }
 - scrollUntilVisible:
-    element: { id: "kids-story-comic-balakanda-v1" }
+    element: { id: "kids-story-ramayan-comic" }
     centerElement: true
-- tapOn: { id: "kids-story-comic-balakanda-v1" }
+- tapOn: { id: "kids-story-ramayan-comic" }
+# The seven-kanda shelf (design.md §76.2): open Bālakāṇḍa.
+- assertVisible: { id: "ramayan-kanda-ayodhya" }
+- tapOn: { id: "ramayan-kanda-bala" }
 - extendedWaitUntil:
     visible: { id: "comic-episodes" }
     timeout: 60000

@@ -84,7 +84,8 @@ const VERSE_LATIN = typography.verseLatin.fontSize;
 function fontSizeOf(
   element: React.ReactElement,
   lang: 'hi' | 'en',
-  text: string
+  text: string,
+  openOriginal = false
 ): number | undefined {
   let tree: TestRenderer.ReactTestRenderer | undefined;
   act(() => {
@@ -92,6 +93,10 @@ function fontSizeOf(
       <GitaLanguageProvider initialLang={lang}>{element}</GitaLanguageProvider>
     );
   });
+  if (openOriginal) {
+    const toggle = tree!.root.findAll(n => n.props.testID === 'gita-saar-source-toggle' && typeof n.props.onPress === 'function')[0];
+    act(() => toggle.props.onPress());
+  }
   const node = tree!.root.findAllByType(Text).find((n) => n.props.children === text);
   if (!node) throw new Error(`Text node not found for: ${text}`);
   return StyleSheet.flatten(node.props.style).fontSize;
@@ -137,10 +142,10 @@ describe('reader type scale — rendered per component', () => {
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });
 
-  test('GitaSaarVersePage: verse above meaning at the token sizes', () => {
+  test('GitaSaarVersePage: optional original and first essence keep shared token sizes', () => {
     const verse = getGitaSaarChapter(1).verses[0];
     const el = <GitaSaarVersePage verse={verse} sourceId="gita-saar" width={375} />;
-    expect(fontSizeOf(el, 'en', readableRomanization(verse.transliteration)[0])).toBe(VERSE_LATIN);
+    expect(fontSizeOf(el, 'en', readableRomanization(verse.transliteration)[0], true)).toBe(VERSE_LATIN);
     expect(fontSizeOf(el, 'en', verse.meaningEn)).toBe(MEANING_EN);
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });

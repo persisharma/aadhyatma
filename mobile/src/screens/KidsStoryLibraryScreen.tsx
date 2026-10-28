@@ -43,24 +43,21 @@ export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreen
             />
           );
         })}
-        {comics.map(comic => (
-          <DeityCard
-            key={comic.id}
-            testID={`kids-story-comic-${comic.id}`}
-            nameHi={comic.title.hi}
-            nameEn={comic.title.en}
-            nameGu={comic.title.gu}
-            nameKn={comic.title.kn}
-            iconKey="bowArrow"
-            itemCount={pick(lang, {
-              hi: '29 प्रसंग · सचित्र',
-              en: '29 episodes · illustrated',
-              gu: '29 પ્રસંગ · સચિત્ર',
-              kn: '29 ಪ್ರಸಂಗಗಳು · ಚಿತ್ರಸಹಿತ',
-            })}
-            onPress={() => navigation.navigate('ComicChapters', { comicId: comic.id })}
-          />
-        ))}
+        <DeityCard
+          testID="kids-story-ramayan-comic"
+          nameHi="रामायण कॉमिक"
+          nameEn="Ramayana Comic"
+          nameGu="રામાયણ કોમિક"
+          nameKn="ರಾಮಾಯಣ ಕಾಮಿಕ್"
+          iconKey="bowArrow"
+          itemCount={pick(lang, {
+            hi: `${comics.length} काण्ड · सचित्र`,
+            en: `${comics.length} kandas · illustrated`,
+            gu: `${comics.length} કાંડ · સચિત્ર`,
+            kn: `${comics.length} ಕಾಂಡಗಳು · ಚಿತ್ರಸಹಿತ`,
+          })}
+          onPress={() => navigation.navigate('RamayanComic')}
+        />
       </ScrollView>
     </SafeAreaView>
   );
