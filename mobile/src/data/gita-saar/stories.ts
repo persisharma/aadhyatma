@@ -9,7 +9,13 @@ export type GitaSaarStory = {
   connection: LearningCopy;
   everyday: LearningCopy;
   gitaRefs: readonly string[];
-  sources: readonly { title: LearningCopy; passage: string; passageHi?: string; url: string }[];
+  sources: readonly {
+    title: LearningCopy;
+    passage: string;
+    passageHi?: string;
+    url: string;
+    inAppRef?: { chapter: number; verse: number };
+  }[];
 };
 const c = (hi: string, en: string): LearningCopy => ({ hi, en });
 const b = (hi: string, en: string, bodyHi: string, bodyEn: string) => ({
@@ -27,11 +33,16 @@ const ram = (passage: string, url: string) => ({
   passageHi: passage,
   url,
 });
-const bg = (passage: string, url: string) => ({
-  title: c('भगवद्गीता', 'Bhagavad Gita'),
-  passage,
-  url,
-});
+const bg = (passage: string, url: string) => {
+  const ref = passage.match(/^(\d+)\.(\d+)/);
+  if (!ref) throw new Error(`Invalid Gita source reference: ${passage}`);
+  return {
+    title: c('भगवद्गीता', 'Bhagavad Gita'),
+    passage,
+    url,
+    inAppRef: { chapter: Number(ref[1]), verse: Number(ref[2]) },
+  };
+};
 
 /** Original, abridged bilingual adaptations, researched 2026-10-26.
  * Story passages are separate from the Gita references used to discuss them.

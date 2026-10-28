@@ -1228,3 +1228,7 @@ Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×7
 ## [2026-10-27] ingest | Upcoming full-width banners
 
 The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.
+
+## [2026-10-28] ingest | Gita Saar references stay in Vedansh
+
+Every illustrated lesson now opens Gita connection references and Gita source citations in the bundled GitaReader. The browser prototype opens the same corpus verse in its local sheet. Non-Gita story sources are visibly marked as optional external verification. Shok's Chitraketu story is from the Bhagavatam; its Gita 2.13 and 2.20 connections stay inside the app. Updated [[gita-saar]], design.md §77 and RULEBOOK §30.
