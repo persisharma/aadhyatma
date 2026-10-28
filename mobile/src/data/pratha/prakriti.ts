@@ -312,7 +312,7 @@ export const PRATHA_PRAKRITI_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Mahabharata, Virata Parva. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. The actual row contains only the Virata Parva weapons account, not Raghuvamsha. Exact epic sections and the separate Dussehra custom linkage still need two opened publications. The approved kavya tier does not apply automatically to this row.',
       confidence: 'Certain',
     },
   },

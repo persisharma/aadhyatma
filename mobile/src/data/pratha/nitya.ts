@@ -790,7 +790,7 @@ export const PRATHA_NITYA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. Owner approved an agama tier, but this draft identifies no named Agama or exact passage. The bell explanation remains uncollated folk prose until two independent publications are opened; it cannot be relabelled agama from memory.',
       confidence: 'Likely',
     },
   },
