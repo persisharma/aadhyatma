@@ -4278,7 +4278,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
       referenceUrls: [
         'repo:mobile/src/data/gita/chapter-08.json',
       ],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Mahabharata, Bhishma Parva · Bhagavad Gita 8.24 | Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. Both stories still need two opened publications each. The Bhishma Parva attribution is unresolved, the Sun/Shani sesame reconciliation has not been collated, and the draft conflates sidereal Makar ingress with the astronomical northward turn at the solstice. Hidden pending correction from actual sources.',
       confidence: 'Certain',
     },
   },
@@ -4333,7 +4333,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition | Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. Two independent opened tellings are still missing for the Rama kite episode, and the regional kite custom needs its own evidence. No Ramcharitmanas attribution can be inferred from this folk draft.',
       confidence: 'Guessing',
     },
   },
@@ -4390,7 +4390,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition (Tamil Nadu) | Folk tradition (Tamil Nadu). Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. Pongal overflow and the Nandi mistaken-message episode require separate pairs of independently published tellings. These have not yet been opened and collated; the Tamil folk stories remain hidden.',
       confidence: 'Guessing',
     },
   },
@@ -4428,7 +4428,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Padma Purana / Matsya Purana (adhyaya under review). Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. No exact Padma or Matsya chapter has been established for this Kalpavas explanation. A calendar description cannot resolve a pending Purana canon; two opened publications of the actual passage are still needed.',
       confidence: 'Likely',
     },
   },
@@ -4469,7 +4469,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. The explanation connecting Mauni Amavasya and silence has not yet been collated in two independently published accounts. No source-free etymology is promoted to verified.',
       confidence: 'Likely',
     },
   },
@@ -4535,7 +4535,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
       referenceUrls: [
         'repo:mobile/src/data/gita/chapter-10.json',
       ],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Bhagavad Gita 10.35 | Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. Gita 10.35 was opened in Mukundananda and BBT for M1 and supports spring, but does not establish the festival date or the mustard-yellow and first-letters customs. The second story and the festival linkage still lack two collated publications, so the whole entry remains hidden.',
       confidence: 'Likely',
     },
   },
@@ -4576,7 +4576,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. The arka-leaf and chariot-turn telling still lacks two opened accounts. In particular, the seventh tithi must not be presented as the astronomical solstice without source support. Uncorrected draft stays hidden.',
       confidence: 'Likely',
     },
   },
@@ -4617,7 +4617,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. The Bhishmashtami tarpan account and the broad eligibility claim have not been collated against two opened sources. No family ritual entitlement is inferred from this app-authored draft.',
       confidence: 'Likely',
     },
   },
