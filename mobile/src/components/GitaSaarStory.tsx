@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Linking, Pressable, StyleSheet, View } from 'react-native';
+import React from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { gitaSaarStories } from '@/data/gita-saar/stories';
@@ -131,13 +131,14 @@ export function GitaSaarStoryDoor({
 export function GitaSaarStoryDetails({
   themeId,
   onOpenGitaRef,
+  onOpenRamayanRef,
 }: {
   themeId: string;
   onOpenGitaRef?: (chapter: number, verse: number) => void;
+  onOpenRamayanRef?: (kanda: number, sarga: number) => void;
 }) {
   const story = gitaSaarStories[themeId];
   const { colors, lang, copy, body, heading, label } = useStoryStyle();
-  const [sourceError, setSourceError] = useState(false);
   if (!story) return null;
   return (
     <View testID={`gita-saar-story-details-${themeId}`} style={styles.details}>
@@ -258,67 +259,55 @@ export function GitaSaarStoryDetails({
         style={[label, { color: colors.inkMuted, marginTop: 14 }]}
       >
         {pick(lang, {
-          hi: 'कथा के मूल ग्रंथ नीचे हैं। दूसरे ग्रंथ का स्रोत ब्राउज़र में खुलेगा; गीता के श्लोक यहीं वेदांश में खुलते हैं। संबंध और दैनिक उदाहरण संपादकीय मनन हैं।',
-          en: 'Original story sources are below. Other texts open in a browser; Gita verses open here in Vedansh. The connection and everyday example are editorial reflections.',
-          gu: 'કથાના મૂળ ગ્રંથ નીચે છે. અન્ય ગ્રંથના સ્રોત બ્રાઉઝરમાં ખૂલશે; ગીતાના શ્લોક અહીં વેદાંશમાં ખૂલશે. સંબંધ અને ઉદાહરણ સંપાદકીય મનન છે.',
-          kn: 'ಕಥೆಯ ಮೂಲ ಗ್ರಂಥಗಳು ಕೆಳಗಿವೆ. ಇತರ ಗ್ರಂಥಗಳ ಮೂಲಗಳು ಬ್ರೌಸರ್‌ನಲ್ಲಿ ತೆರೆಯುತ್ತವೆ; ಗೀತೆಯ ಶ್ಲೋಕಗಳು ಇಲ್ಲೇ ವೇದಾಂಶದಲ್ಲಿ ತೆರೆಯುತ್ತವೆ. ಸಂಪರ್ಕ ಮತ್ತು ಉದಾಹರಣೆ ಸಂಪಾದಕೀಯ ಚಿಂತನೆಗಳು.',
+          hi: 'कथा के मूल ग्रंथ नीचे दिए हैं। उपलब्ध पाठ वेदांश में खुलते हैं; बाकी संदर्भ यहाँ केवल उद्धरण के रूप में हैं। संबंध और दैनिक उदाहरण संपादकीय मनन हैं।',
+          en: 'Story sources are listed below. Available texts open in Vedansh; the rest are citations only. The connection and everyday example are editorial reflections.',
+          gu: 'કથાના મૂળ ગ્રંથ નીચે આપ્યા છે. ઉપલબ્ધ પાઠ વેદાંશમાં ખૂલે છે; બાકીના ફક્ત સંદર્ભ છે. સંબંધ અને ઉદાહરણ સંપાદકીય ચિંતન છે.',
+          kn: 'ಕಥೆಯ ಮೂಲ ಗ್ರಂಥಗಳು ಕೆಳಗಿವೆ. ಲಭ್ಯವಿರುವ ಪಾಠಗಳು ವೇದಾಂಶದಲ್ಲೇ ತೆರೆಯುತ್ತವೆ; ಉಳಿದವು ಉಲ್ಲೇಖಗಳು ಮಾತ್ರ. ಸಂಪರ್ಕ ಮತ್ತು ಉದಾಹರಣೆ ಸಂಪಾದಕೀಯ ಚಿಂತನೆಗಳು.',
         })}
       </ProseParagraph>
       {story.sources.map((source) => {
         const passage =
           lang === 'hi' ? source.passageHi ?? source.passage : source.passage;
-        const location = source.inAppRef
-          ? pick(lang, {
-              hi: 'ऐप में',
-              en: 'In app',
-              gu: 'ઍપમાં',
-              kn: 'ಆ್ಯಪ್‌ನಲ್ಲಿ',
-            })
-          : pick(lang, {
-              hi: 'ब्राउज़र में',
-              en: 'Opens browser',
-              gu: 'બ્રાઉઝરમાં',
-              kn: 'ಬ್ರೌಸರ್‌ನಲ್ಲಿ',
-            });
+        const ref = source.inAppRef;
+        const citation = `${copy(source.title)} · ${passage}`;
+        if (!ref) {
+          return (
+            <View key={source.url} style={[styles.source, { borderColor: colors.divider }]}>
+              <AppIcon name="text" color={colors.saffronDeep} size={16} />
+              <ProseParagraph style={[label, { flex: 1 }]}>{citation}</ProseParagraph>
+            </View>
+          );
+        }
+        const canOpen =
+          ref.kind === 'gita' ? Boolean(onOpenGitaRef) : Boolean(onOpenRamayanRef);
         return (
           <Pressable
-          key={source.url}
-          testID={
-            source.inAppRef
-              ? `gita-saar-source-gita-${source.inAppRef.chapter}.${source.inAppRef.verse}`
-              : undefined
-          }
-          accessibilityRole={source.inAppRef ? 'button' : 'link'}
-          accessibilityLabel={`${source.inAppRef ? 'Read in Vedansh' : 'Open external story source'} ${source.passage}`}
-          disabled={Boolean(source.inAppRef && !onOpenGitaRef)}
-          onPress={() => {
-            if (source.inAppRef) {
-              onOpenGitaRef?.(source.inAppRef.chapter, source.inAppRef.verse);
-              return;
+            key={source.url}
+            testID={
+              ref.kind === 'gita'
+                ? `gita-saar-source-gita-${ref.chapter}.${ref.verse}`
+                : `gita-saar-source-valmiki-${ref.kanda}.${ref.sarga}`
             }
-            setSourceError(false);
-            void Linking.openURL(source.url).catch(() => setSourceError(true));
-          }}
-          style={[styles.source, { borderColor: colors.divider }]}
-        >
-          <AppIcon name="text" color={colors.saffronDeep} size={16} />
-          <ProseParagraph style={[label, { flex: 1 }]}>
-            {`${copy(source.title)} · ${passage} · ${location}`}
-          </ProseParagraph>
-          <AppIcon name="next" color={colors.saffronDeep} size={16} />
+            accessibilityRole="button"
+            accessibilityLabel={`Read in Vedansh ${source.passage}`}
+            disabled={!canOpen}
+            onPress={() => {
+              if (ref.kind === 'gita') {
+                onOpenGitaRef?.(ref.chapter, ref.verse);
+              } else {
+                onOpenRamayanRef?.(ref.kanda, ref.sarga);
+              }
+            }}
+            style={[styles.source, { borderColor: colors.divider }]}
+          >
+            <AppIcon name="text" color={colors.saffronDeep} size={16} />
+            <ProseParagraph style={[label, { flex: 1 }]}>
+              {`${citation} · ${pick(lang, { hi: 'यहीं पढ़ें', en: 'Read here', gu: 'અહીં વાંચો', kn: 'ಇಲ್ಲೇ ಓದಿ' })}`}
+            </ProseParagraph>
+            <AppIcon name="next" color={colors.saffronDeep} size={16} />
           </Pressable>
         );
       })}
-      {sourceError && (
-        <ProseParagraph accessibilityLiveRegion="polite" style={label}>
-          {pick(lang, {
-            hi: 'स्रोत नहीं खुल सका। फिर कोशिश करें।',
-            en: 'Could not open the source. Try again.',
-            gu: 'સ્રોત ખૂલી શક્યો નથી. ફરી પ્રયાસ કરો.',
-            kn: 'ಮೂಲವನ್ನು ತೆರೆಯಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
-          })}
-        </ProseParagraph>
-      )}
     </View>
   );
 }

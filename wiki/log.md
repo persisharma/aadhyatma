@@ -1268,3 +1268,7 @@ The day panel reuses `ObservancePreviewCard` / `ListingCard` with event artwork 
 ## [2026-10-28] ingest | App-wide 24-hour time format
 
 Every rendered clock is now zero-padded 24-hour `HH:MM`: `formatClock` dropped AM/PM, `formatRangeCompact` was removed (callers use `formatRange`), and the hand-rolled 12-hour formatters (Kundali/Jyotish birth time, Namkaran windows, widget IST clock, Routine offered time, Japam alarm label + `prefers12HourClock`) were converted. `ClockTimePicker` lost its AM/PM toggle (HR column `00`–`23`). Fixed reminder copy (ArcStrip, Janma Tithi, festive greeting, Prashna transit note) now reads 24-hour. design.md §3.2 added; [[panchang]] display helpers updated.
+
+## [2026-10-28] ingest | Gita Saar story citations stay inside Vedansh
+
+Valmiki Ramayan citations for Bala Kanda 43–44 and Yuddha Kanda 18 now open the first verse of the cited sarga in the bundled reader. Gita citations retain their exact in-app handoff. Bhagavatam and other sources without a bundled reader remain visible as plain attribution, with no browser action; source URLs remain in research metadata.
