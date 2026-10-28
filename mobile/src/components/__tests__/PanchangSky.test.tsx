@@ -12,6 +12,7 @@ import React from 'react';
 import { StatusBar, Text } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import PanchangSky, { type SkyInk } from '../PanchangSky';
+import CelestialGlyph from '../CelestialGlyph';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { formatClock } from '@/panchang/muhuratFormat';
@@ -141,6 +142,15 @@ test('a live day read is a day sky', async () => {
   expect(tone(tree)).toBe('day');
   expect(texts(tree)).toContain('Shubh');
   expect(lightStatusBar(tree)).toBe(false);
+  expect(tree.root.findByType(CelestialGlyph).props.kind).toBe('sun');
+});
+
+test('the night moon follows the running tithi after the sunrise tithi has ended', async () => {
+  mockSolve = solve(runAround('night', NIGHT, 5), 5);
+  mockSolve.panchang = { tithi: { index: 14, nameHi: 'पूर्णिमा', nameEn: 'Purnima', paksha: 'shukla', endTime: new Date(Date.now() - 60_000) }, kshayaTithi: null };
+  const glyph = (await render()).root.findByType(CelestialGlyph);
+  expect(glyph.props.kind).toBe('moon');
+  expect(glyph.props.tithiIndex).toBe(15);
 });
 
 test('a browsed date is a day sky led by Abhijit, with no "now"', async () => {

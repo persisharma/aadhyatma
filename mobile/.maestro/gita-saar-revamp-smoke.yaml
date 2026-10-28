@@ -23,6 +23,8 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: { id: gita-saar-story-image-karma }
     timeout: 15000
+- waitForAnimationToEnd:
+    timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-revamp-reader-en
 - scrollUntilVisible:
     element: { id: gita-saar-story-connection }
@@ -35,7 +37,11 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
     timeout: 20000
+- waitForAnimationToEnd:
+    timeout: 30000
 - tapOn: "Show original Gita verse and meaning"
+- waitForAnimationToEnd:
+    timeout: 30000
 - assertVisible: { id: gita-saar-original }
 - tapOn: "Show original Gita verse and meaning"
 - scrollUntilVisible:

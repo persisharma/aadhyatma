@@ -16,7 +16,7 @@
 #      — the segmented pill is now the only calendar-system indicator).
 #   5. Compact date navigation changes the selected date.
 #   6. The expandable calendar can move months and select a date.
-#   7. The "Vrat & Observances" and "Upcoming" sections render.
+#   7. Painted day tiles and the next-day observance detail hand-off render.
 #   8. Global reading-language switching (useGitaLanguage) reflects on the screen.
 #   9. The Daily Muhurat glance card renders and lands (its "Today's Timings"
 #      frame plus the solved Rahu Kaal / Abhijit tiles) — covering the
@@ -48,8 +48,7 @@
 #     "Panchang, tab.*" / "More, tab.*". Bare "Panchang" does NOT match (the
 #     regex is anchored). Bonus: "Panchang, tab.*" targets ONLY the tab, never
 #     the "Panchang" disclosure card on the More screen — no ambiguity.
-#   - "Sunrise"/"Sunset"/"Moonrise"/"Brahma Muhurta"/"Vrat & Observances"/
-#     "Upcoming" are plain <Text> and appear ONLY on the Panchang screen → reliable.
+#   - The four time labels remain plain Text on the Panchang screen.
 #   - Calendar controls expose accessibility labels: "Next month",
 #     "Previous month", and "Select <date>".
 #   - The anga *names* (Shashthi, Ashwini, …) change with the run date and the
@@ -169,20 +168,29 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Sunset"
 - assertVisible: "Moonrise"
 - assertVisible: "Brahma Muhurta"
-# Upcoming observances are resolved off the render path (just after first paint),
-# so wait for the section to populate rather than asserting immediately.
+# The next-day card replaces the old full observance and upcoming sections.
+- assertNotVisible: "Vrat & Observances"
+- assertNotVisible: "Upcoming"
+# The following day is Angarki Sankashti. A browsed date says Next day.
+- openLink: "vedansh://widget/panchang?date=2026-09-28"
+- tapOn:
+    text: "Open"
+    optional: true
+- waitForAnimationToEnd
 - scrollUntilVisible:
     element:
-      text: "Vrat & Observances"
-    direction: DOWN
-    centerElement: true
-    timeout: 10000
-- scrollUntilVisible:
-    element:
-      text: "Upcoming"              # observances section heading
+      id: "panchang-next-day-sankashti-chaturthi-vrat"
     direction: DOWN
     centerElement: true
     timeout: 20000
+- assertVisible: 'Next day, Vighnaraja Sankashti Chaturthi \(Angarki\) Vrat\. Opens details\.'
+- takeScreenshot: e2e-shots/panchang-day-painted
+- tapOn:
+    id: "panchang-next-day-sankashti-chaturthi-vrat"
+- waitForAnimationToEnd
+- assertVisible: "Sankashti Chaturthi Vrat"
+- tapOn: "Back.*"
+- waitForAnimationToEnd
 
 # ── Step 7: Restore Panchang + language defaults (best-effort) ──
 - scrollUntilVisible:

@@ -197,11 +197,12 @@ describe('VratFollowContext reminders (P3)', () => {
     expect(f?.reminder).toBeUndefined();
   });
 
-  test('setReminder on a non-followed vrat is a no-op', async () => {
+  test('setting a reminder also adds a non-followed vrat to favourites', async () => {
     await mountAndHydrate();
     await actSync(() => captured.setReminder('not-followed', { advanceDays: 1, dayOf: true, dayOfTime: { hour: 7, minute: 0 } }));
-    expect(captured.isFollowing('not-followed')).toBe(false);
-    expect(captured.followCount).toBe(0);
+    expect(captured.isFollowing('not-followed')).toBe(true);
+    expect(captured.followCount).toBe(1);
+    expect(captured.follows[0].reminder?.advanceDays).toBe(1);
   });
 
   test('reminderCount counts follows whose resolved reminder still fires', async () => {
@@ -211,5 +212,55 @@ describe('VratFollowContext reminders (P3)', () => {
     expect(captured.reminderCount).toBe(2); // global default is on → both count
     await actSync(() => captured.setReminder('a', { advanceDays: 0, dayOf: false, dayOfTime: { hour: 7, minute: 0 } }));
     expect(captured.reminderCount).toBe(1); // 'a' now fully off
+  });
+});
+
+
+describe('saved Vrat preference detection', () => {
+  test('factory defaults and Daily Bhakti times are not a saved Vrat choice', async () => {
+    const daily = JSON.stringify({ dailyVerseEnabled: true, times: [{ hour: 5, minute: 30 }] });
+    mockStore['@vedansh/notif-prefs'] = daily;
+    await mountAndHydrate();
+    expect(captured.savedReminderPreference).toBeNull();
+    expect(captured.hasSavedReminderDefault).toBe(false);
+    await actSync(() => captured.setReminderDefault({ advanceDays: 2, dayOf: true, dayOfTime: { hour: 8, minute: 0 } }));
+    expect(mockStore['@vedansh/notif-prefs']).toBe(daily);
+  });
+
+  test('an explicitly stored off preference counts as configured', async () => {
+    mockStore[REMINDER_DEFAULT_KEY] = JSON.stringify({ advanceDays: 0, dayOf: false });
+    await mountAndHydrate();
+    expect(captured.hasSavedReminderDefault).toBe(true);
+    expect(captured.savedReminderPreference).toMatchObject({ advanceDays: 0, dayOf: false });
+  });
+
+  test('legacy per-vrat timing is remembered after unfollow and reload', async () => {
+    const pref = { advanceDays: 3, dayOf: true, dayOfTime: { hour: 8, minute: 30 } };
+    mockStore[STORAGE_KEY] = JSON.stringify([{ ruleId: 'legacy', order: 0, addedAt: 1, reminder: pref }]);
+    const first = await mountAndHydrate();
+    expect(captured.savedReminderPreference).toEqual(pref);
+    await actSync(() => captured.unfollow('legacy'));
+    act(() => first.unmount());
+    await mountAndHydrate();
+    expect(captured.follows).toEqual([]);
+    expect(captured.savedReminderPreference).toEqual(pref);
+    expect(captured.hasSavedReminderDefault).toBe(false);
+  });
+
+  test('malformed saved times require setup instead of being silently reused', async () => {
+    mockStore[REMINDER_DEFAULT_KEY] = JSON.stringify({ advanceDays: 1, dayOf: true, dayOfTime: { hour: 27, minute: 0 } });
+    mockStore['@vedansh/vrat-reminder-last'] = '{broken';
+    await mountAndHydrate();
+    expect(captured.savedReminderPreference).toBeNull();
+  });
+
+  test('two reminder saves in one event preserve both favourites and their order', async () => {
+    await mountAndHydrate();
+    await actSync(() => {
+      captured.setReminder('a', { advanceDays: 1, dayOf: true });
+      captured.setReminder('b', { advanceDays: 2, dayOf: false });
+    });
+    expect(captured.follows.map(f => [f.ruleId, f.order, f.reminder?.advanceDays])).toEqual([['a', 0, 1], ['b', 1, 2]]);
+    expect(JSON.parse(mockStore[STORAGE_KEY])).toHaveLength(2);
   });
 });

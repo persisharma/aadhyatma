@@ -1,0 +1,54 @@
+# Completed first-run setup; compare following-day cards with shared Vrat rows.
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8106' : '127.0.0.1:' + METRO_PORT}"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: { id: tab-home }
+    timeout: 90000
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: 'Reading size,.*' }
+    direction: DOWN
+    centerElement: true
+- tapOn: 'Reading size,.*'
+- tapOn: Standard
+- tapOn: 'हो गया|Done'
+- openLink: 'vedansh://widget/panchang?date=2026-09-28'
+- tapOn: { text: Open, optional: true }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: panchang-anga-nakshatra }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: e2e-shots/panchang-nakshatra-rework-hi
+- scrollUntilVisible:
+    element: { id: panchang-next-day-sankashti-chaturthi-vrat }
+    direction: DOWN
+    centerElement: true
+- assertVisible: 'Next day, Vighnaraja Sankashti Chaturthi \(Angarki\) Vrat\. Opens details\.'
+- assertVisible: { id: observance-reminder-sankashti-chaturthi-vrat }
+- takeScreenshot: e2e-shots/panchang-next-day-listing-hi
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: 'Reading size,.*' }
+    direction: DOWN
+    centerElement: true
+- tapOn: 'Reading size,.*'
+- tapOn: Large
+- tapOn: 'हो गया|Done'
+- tapOn: { id: tab-panchang }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { id: panchang-anga-nakshatra }
+    direction: UP
+    centerElement: true
+- takeScreenshot: e2e-shots/panchang-nakshatra-rework-hi-large
+- scrollUntilVisible:
+    element: { id: panchang-next-day-sankashti-chaturthi-vrat }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: e2e-shots/panchang-next-day-listing-hi-large

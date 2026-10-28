@@ -1,4 +1,6 @@
 import React from 'react';
+import PanchangDaySurface from './PanchangDaySurface';
+import StoryIcon, { type StoryIconName } from './StoryIcon';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -20,7 +22,7 @@ import type { PanchangData } from '@/panchang/types';
  * 2×2 grid of slim cards that replaced the old tall यात्रा (104px compass) + हवन
  * pair. Each card mirrors the anga-tile shape: a header row (label left, its chip
  * right when it has one), the value, and — only when it adds something the label
- * does not already say — one context line. No icons.
+ * does not already say — one context line. Each heading carries a decorative painted icon.
  *   • सूर्य — the Sun's rashi (solar month). Label + value only; the "सूर्य राशि"
  *     caption is dropped as pure duplication of the label.
  *   • चन्द्रमा — the Moon's rashi · चन्द्र वास direction, with the favourable travel
@@ -33,7 +35,7 @@ import type { PanchangData } from '@/panchang/types';
  * path. Colour never carries meaning alone — every chip carries a word.
  */
 export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang }) {
-  const { colors, typography, radii, elevation } = useTheme();
+  const { colors, typography } = useTheme();
   const v = dayVaas(p);
   const t = vaasTiles(v, p.moonRashi);
 
@@ -46,11 +48,7 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
     letterSpacing: lang === 'en' ? 1 : 0,
     textTransform: (lang === 'en' ? 'uppercase' : 'none') as 'uppercase' | 'none',
   };
-  const card = [
-    styles.card,
-    { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
-    elevation.card,
-  ];
+  const card = styles.card;
 
   const vara = contentByLang(lang, p.vara.nameHi, p.vara.nameEn);
   const havanFavourable = AGNI_VAAS_LABELS[v.agni.value].favourableForHavan;
@@ -77,9 +75,12 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
   // Header row: the label, and the card's chip (when it has one) pushed to the
   // right — the chip rides the header instead of a fourth row, so the card stays
   // as short as the anga tiles.
-  const Head = ({ text, chip }: { text: string; chip?: { text: string; bg: string; fg: string } | null }) => (
+  const Head = ({ text, icon, chip }: { text: string; icon: StoryIconName; chip?: { text: string; bg: string; fg: string } | null }) => (
     <View style={styles.head}>
-      <Text style={[label, styles.labelFlex]} numberOfLines={1}>{text}</Text>
+      <View style={styles.headingLabel}>
+        <StoryIcon name={icon} size={30} />
+        <Text style={[label, styles.labelFlex]}>{text}</Text>
+      </View>
       {chip ? (
         <View style={[styles.chip, { backgroundColor: chip.bg }]}>
           <Text style={{ fontFamily: body, fontSize: 11.5, color: chip.fg }}>{chip.text}</Text>
@@ -101,17 +102,17 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
   return (
     <View style={styles.grid}>
       <View style={styles.row}>
-        <View
+        <PanchangDaySurface
           testID="vaas-surya-card"
           accessible
           accessibilityLabel={contentByLang(lang, `सूर्य राशि ${p.sunRashi.nameHi}`, `Sun sign ${p.sunRashi.nameEn}`)}
           style={card}
         >
-          <Head text={contentByLang(lang, 'सूर्य', 'Sun')} />
+          <Head icon="gayatri" text={contentByLang(lang, 'सूर्य', 'Sun')} />
           <Value>{contentByLang(lang, p.sunRashi.nameHi, p.sunRashi.nameEn)}</Value>
-        </View>
+        </PanchangDaySurface>
 
-        <View
+        <PanchangDaySurface
           testID="vaas-chandra-card"
           accessible
           accessibilityLabel={contentByLang(
@@ -121,7 +122,7 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
           )}
           style={card}
         >
-          <Head text={contentByLang(lang, 'चन्द्रमा', 'Moon')} chip={{ text: chandraChip, bg: colors.goldChipBg, fg: colors.inkSoft }} />
+          <Head icon="chandra" text={contentByLang(lang, 'चन्द्रमा', 'Moon')} chip={{ text: chandraChip, bg: colors.goldChipBg, fg: colors.inkSoft }} />
           <Value>
             {contentByLang(
               lang,
@@ -130,12 +131,13 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
             )}
           </Value>
           <Line_>{contentByLang(lang, 'चन्द्र वास', 'Chandra vaas')}</Line_>
-        </View>
+        </PanchangDaySurface>
       </View>
 
       <View style={styles.row}>
-        <View
+        <PanchangDaySurface
           testID="vaas-shool-card"
+          avoid
           accessible
           accessibilityLabel={contentByLang(
             lang,
@@ -144,12 +146,12 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
           )}
           style={card}
         >
-          <Head text={contentByLang(lang, 'दिशा शूल', 'Disha Shool')} chip={{ text: contentByLang(lang, 'यात्रा टालें', 'avoid travel'), bg: colors.avoidChipBg, fg: colors.avoidDeep }} />
+          <Head icon="vastu-disha" text={contentByLang(lang, 'दिशा शूल', 'Disha Shool')} chip={{ text: contentByLang(lang, 'यात्रा टालें', 'avoid travel'), bg: colors.avoidChipBg, fg: colors.avoidDeep }} />
           <Value color={colors.avoidDeep}>{contentByLang(lang, t.dishaShool.element.nameHi, t.dishaShool.element.nameEn)}</Value>
           <Line_>{contentByLang(lang, `${vara} — इस दिशा की`, `${vara} — this way`)}</Line_>
-        </View>
+        </PanchangDaySurface>
 
-        <View
+        <PanchangDaySurface
           testID="vaas-agni-card"
           accessible
           accessibilityLabel={contentByLang(
@@ -159,10 +161,10 @@ export default function DayVaasCards({ p, lang }: { p: PanchangData; lang: Lang 
           )}
           style={card}
         >
-          <Head text={contentByLang(lang, 'अग्नि वास', 'Agni vaas')} chip={havanFavourable ? null : { text: contentByLang(lang, 'हवन वर्जित', 'avoid havan'), bg: colors.avoidChipBg, fg: colors.avoidDeep }} />
+          <Head icon="agni-vaas" text={contentByLang(lang, 'अग्नि वास', 'Agni vaas')} chip={havanFavourable ? null : { text: contentByLang(lang, 'हवन वर्जित', 'avoid havan'), bg: colors.avoidChipBg, fg: colors.avoidDeep }} />
           <Value>{contentByLang(lang, t.agni.element.nameHi, t.agni.element.nameEn)}</Value>
           <Line_>{agniLine}</Line_>
-        </View>
+        </PanchangDaySurface>
       </View>
     </View>
   );
@@ -172,7 +174,8 @@ const styles = StyleSheet.create({
   grid: { marginTop: 8, gap: 8 },
   row: { flexDirection: 'row', gap: 8, alignItems: 'stretch' },
   card: { flexGrow: 1, flexBasis: '47%', borderWidth: 1, paddingVertical: 10, paddingHorizontal: 14 },
-  head: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  head: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 6 },
+  headingLabel: { flexDirection: 'row', alignItems: 'center', gap: 6, flexShrink: 1, maxWidth: '100%' },
   labelFlex: { flexShrink: 1 },
-  chip: { marginLeft: 'auto', flexShrink: 0, paddingVertical: 2, paddingHorizontal: 9, borderRadius: 999 },
+  chip: { marginLeft: 'auto', maxWidth: '100%', flexShrink: 1, paddingVertical: 2, paddingHorizontal: 9, borderRadius: 999 },
 });

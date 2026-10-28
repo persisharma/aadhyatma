@@ -1,0 +1,11 @@
+PASS src/components/__tests__/PanchangNextDayCard.test.tsx
+PASS src/components/__tests__/ObservanceNowRibbon.test.tsx
+PASS src/components/__tests__/ShubhYogaCard.test.tsx
+PASS src/components/__tests__/DayVaasCards.test.tsx
+PASS src/components/__tests__/storybookAssets.test.ts
+
+Test Suites: 5 passed, 5 total
+Tests:       16 passed, 16 total
+Snapshots:   0 total
+Time:        1.149 s, estimated 2 s
+Ran all test suites matching /src\/components\/__tests__\/DayVaasCards.test.tsx|src\/components\/__tests__\/ShubhYogaCard.test.tsx|src\/components\/__tests__\/storybookAssets.test.ts|src\/components\/__tests__\/PanchangNextDayCard.test.tsx|src\/components\/__tests__\/ObservanceNowRibbon.test.tsx/i.

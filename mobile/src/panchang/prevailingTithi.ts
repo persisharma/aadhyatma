@@ -2,6 +2,7 @@ import type { PanchangData, PanchangElement, Paksha } from './types';
 import { TITHI_NAMES_HI, TITHI_NAMES_EN } from './names';
 
 export type PrevailingTithi = {
+  index: number;
   nameHi: string;
   nameEn: string;
   paksha: PanchangData['tithi']['paksha'];
@@ -42,6 +43,7 @@ export type PrevailingTithi = {
 export function tithiChain(p: PanchangData): PrevailingTithi[] {
   const { tithi, kshayaTithi } = p;
   const link = (element: PanchangElement & { paksha: Paksha }): PrevailingTithi => ({
+    index: element.index,
     nameHi: element.nameHi,
     nameEn: element.nameEn,
     paksha: element.paksha,
@@ -55,6 +57,7 @@ export function tithiChain(p: PanchangData): PrevailingTithi[] {
   }
   const successor = ((kshayaTithi ?? tithi).index + 1) % 30;
   chain.push({
+    index: successor,
     nameHi: TITHI_NAMES_HI[successor],
     nameEn: TITHI_NAMES_EN[successor],
     paksha: successor < 15 ? 'shukla' : 'krishna',

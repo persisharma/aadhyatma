@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import PanchangDaySurface from './PanchangDaySurface';
+import { moreIconSources } from './MoreIcon';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
@@ -26,25 +28,31 @@ import type { ShubhYogaWindow } from '@/panchang/shubhYoga';
 export default function ShubhYogaCard({
   yogas,
   referenceDay,
+  painted = false,
 }: {
   yogas: ShubhYogaWindow[];
   referenceDay: Date;
+  painted?: boolean;
 }) {
   const { colors, typography, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   if (yogas.length === 0) return null;
+  const Frame = painted ? PanchangDaySurface : View;
   return (
-    <View
+    <Frame
       testID="shubh-yoga-card"
       style={[
         styles.card,
-        { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
+        !painted && { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
         elevation.card,
       ]}
     >
-      <Text style={[eyebrowTextStyle(lang, 11), { color: colors.saffronDeep }]}>
-        {contentByLang(lang, 'शुभ योग', 'Shubh Yoga')}
-      </Text>
+      <View style={styles.heading}>
+        {painted && <Image source={moreIconSources.star} style={{ width: 22, height: 22 }} resizeMode="contain" accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" />}
+        <Text style={[eyebrowTextStyle(lang, 11), { color: colors.saffronDeep }]}>
+          {contentByLang(lang, 'शुभ योग', 'Shubh Yoga')}
+        </Text>
+      </View>
       {yogas.map((w) => (
         <View
           key={`${w.key}-${w.start.getTime()}`}
@@ -69,11 +77,12 @@ export default function ShubhYogaCard({
           </Text>
         </View>
       ))}
-    </View>
+    </Frame>
   );
 }
 
 const styles = StyleSheet.create({
+  heading: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   card: { borderWidth: 1, padding: 14, marginTop: 12 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8 },
 });
