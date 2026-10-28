@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Pratha &amp; Manyata Prototype</title>
+<meta name="claude:viewport-fit-sides" content="cover" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&amp;family=Inter:wght@400;500;600&amp;family=Tiro+Devanagari+Sanskrit&amp;display=swap" rel="stylesheet" />
+<style>
+  /* Layout: a dark presentation canvas (the repo's prototype convention) holding parchment phones
+     that mirror mobile/src/theme/colors.ts; captions annotate numbered dots. Single deliberate look. */
+  :root{
+    color-scheme: dark;
+    /* canvas */
+    --canvas:#1a140c; --canvas-2:#241b10; --canvas-3:#2e2314; --canvas-line:#3a2c18;
+    --canvas-text:#e9d9b1; --canvas-muted:#b7a377; --canvas-head:#fff5e0; --bezel:#0d0804;
+    --built:#7fc48a; --later:#d9a24a;
+    /* app tokens (design.md §2) */
+    --parchment:#F3E7C9; --parchment-soft:#F8EFD6; --parchment-deep:#E9D9B1; --parchment-hi:#F6ECD0; --gradient-end:#F1E3BF;
+    --gold:#A67C34; --gold-deep:#6B4A12; --gold-soft:#C9B896; --gold-tint:rgba(166,124,52,0.14);
+    --saffron:#B8621B; --saffron-deep:#8A3E0B; --saffron-tint:rgba(184,98,27,0.12);
+    --ink:#1A0E03; --ink-soft:#5A3A1E; --ink-muted:#6E5230; --divider:rgba(138,62,11,0.18);
+    --sky-top:#F2C77F; --sky-upper:#F6D79F; --sky-lower:#F9E6C0; --sky-horizon:#F7E3B8;
+    --day-glass:rgba(255,250,238,0.55); --day-glass-border:rgba(138,62,11,0.16); --day-glass-active:#FFF9EE;
+    --discover-top:#FFF5E0; --discover-bottom:#F5DEAC;
+    --lock-top:#3b2a17; --lock-bottom:#120c06; --lock-text:#fff5e0; --notif-bg:rgba(255,250,235,0.96);
+    --shadow-card:0 2px 6px rgba(60,30,10,0.10); --code:#f0d9a8;
+    /* type */
+    --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --serif:'Cormorant Garamond','Iowan Old Style',Georgia,serif;
+    --deva:'Noto Serif Devanagari','Kohinoor Devanagari','Nirmala UI',serif;
+    --iast:'Tiro Devanagari Sanskrit','Noto Serif Devanagari',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--canvas);color:var(--canvas-text);line-height:1.5;
+    padding-block:28px 48px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+  .page{max-width:1180px;margin:0 auto}
+  h1{font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.15;color:var(--canvas-head);text-wrap:balance}
+  h1 .deva{font-family:var(--deva);font-weight:600;font-size:26px}
+  .sub{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--gold-soft);margin-top:6px;max-width:72ch}
+  .legend{font-size:13px;color:var(--canvas-muted);margin-top:12px;max-width:80ch}
+  .legend b{color:var(--canvas-text)}
+  .built{color:var(--built);font-weight:600} .later{color:var(--later);font-weight:600}
+  .warn{margin-top:14px;max-width:80ch;font-size:13px;color:var(--canvas-text);background:var(--canvas-2);border:1px solid var(--canvas-line);border-radius:10px;padding:10px 14px}
+  .warn b{color:var(--later)}
+
+  .ia{margin-top:18px;background:var(--canvas-2);border:1px solid var(--canvas-line);border-radius:12px;overflow-x:auto}
+  .ia table{border-collapse:collapse;width:100%;min-width:720px;font-size:12.5px}
+  .ia th,.ia td{border-bottom:1px solid var(--canvas-line);padding:8px 12px;text-align:left;vertical-align:top}
+  .ia th{color:var(--canvas-head);background:var(--canvas-3);font-weight:600}
+  .ia td .deva{font-family:var(--deva)}
+  .ia code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--code)}
+  .ia a{color:var(--canvas-head)}
+
+  .tierkey{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:16px;font-size:12.5px;color:var(--canvas-muted);align-items:center}
+  .tierkey .k{display:flex;align-items:center;gap:8px}
+
+  .phase{display:flex;flex-direction:column;gap:4px;margin-top:40px}
+  .phaselabel{align-self:flex-start;font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--saffron);background:var(--saffron-tint);padding:4px 12px;border-radius:999px}
+  .phasedesc{font-size:13px;color:var(--canvas-muted);max-width:80ch}
+  .wrap{display:flex;flex-wrap:wrap;gap:28px;margin-top:14px;align-items:flex-start}
+  .col{display:flex;flex-direction:column;gap:10px;width:min(340px,100%)}
+  .cap{font-size:12.5px;color:var(--canvas-muted);line-height:1.6}
+  .cap b{color:var(--canvas-text)}
+  .cap .n{display:inline-flex;width:17px;height:17px;border-radius:50%;background:var(--gold);color:var(--canvas);font-weight:600;font-size:10.5px;align-items:center;justify-content:center;margin-right:5px;vertical-align:1px}
+  .cap code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--code)}
+
+  /* phone */
+  .phone{width:min(340px,100%);height:720px;background:var(--parchment);border-radius:38px;border:10px solid var(--bezel);box-shadow:0 24px 60px rgba(0,0,0,.55);position:relative;overflow:hidden}
+  .statusbar{position:absolute;top:0;left:0;right:0;height:30px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:12px;font-weight:600;color:var(--ink);z-index:4}
+  .screen{position:absolute;inset:30px 0 0 0;overflow-y:auto;background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .screen::-webkit-scrollbar{width:0}
+  .pad{padding:6px 18px 28px}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--gold);color:var(--canvas);font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.35);z-index:6;font-family:var(--sans)}
+  .rel{position:relative}
+
+  .topbar{display:flex;align-items:center;gap:10px;padding:6px 0 10px}
+  .back{width:44px;height:44px;flex:none;border-radius:50%;border:1px solid var(--divider);background:var(--parchment-soft);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-size:20px}
+  .toptitle{font-family:var(--deva);font-size:19px;color:var(--ink);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .counter{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--ink-muted);font-variant-numeric:tabular-nums}
+  .deva{font-family:var(--deva)}
+  .label{font-family:var(--deva);font-weight:600;font-size:12.5px;color:var(--saffron-deep)}
+  .seclabel{font-family:var(--deva);font-weight:600;font-size:13px;color:var(--ink-muted);margin:18px 0 8px}
+  .muted{color:var(--ink-muted)}
+
+  /* tier chips — text always carries the meaning; colour only groups */
+  .tier{display:inline-flex;align-items:center;font-family:var(--deva);font-size:11px;line-height:1;padding:4px 8px 5px;border-radius:999px;border:1px solid;white-space:nowrap}
+  .t-shastra{color:var(--saffron-deep);background:var(--saffron-tint);border-color:rgba(138,62,11,.35)}
+  .t-purana{color:var(--gold-deep);background:var(--gold-tint);border-color:var(--gold)}
+  .t-lok{color:var(--ink-soft);background:transparent;border-color:rgba(90,58,30,.45);border-style:dashed}
+  .t-itihas{color:var(--ink-muted);background:var(--parchment-deep);border-color:var(--divider)}
+  .tiers{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+  .region{font-family:var(--deva);font-size:11.5px;color:var(--ink-muted)}
+
+  /* buttons styled as rows */
+  .btn{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%}
+  .btn:focus-visible,.tab:focus-visible,.pg:focus-visible{outline:2px solid var(--saffron);outline-offset:2px;border-radius:12px}
+  .qrow{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--divider)}
+  .qrow .m{flex:1;min-width:0}
+  .qrow .q{font-family:var(--deva);font-size:15px;line-height:23px;color:var(--ink)}
+  .qrow .p{font-family:var(--deva);font-size:12.5px;line-height:19px;color:var(--ink-soft);margin-top:2px}
+  .qrow .chev{color:var(--saffron);font-size:18px;padding-top:2px}
+  .qrow.draft{opacity:.45;position:relative;cursor:default}
+  .badge{display:inline-block;font-family:var(--sans);font-size:9.5px;letter-spacing:.04em;color:var(--saffron-deep);background:var(--saffron-tint);padding:2px 7px;border-radius:999px;margin-left:4px;vertical-align:2px}
+
+  .search{display:flex;align-items:center;gap:8px;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:999px;padding:9px 14px;font-family:var(--deva);font-size:13.5px;color:var(--ink-muted)}
+  .tabs{display:flex;gap:7px;overflow-x:auto;padding:12px 0 4px;margin:0 -18px;padding-left:18px;padding-right:18px}
+  .tabs::-webkit-scrollbar{height:0}
+  .tab{all:unset;cursor:pointer;flex:none;font-family:var(--deva);font-size:13px;padding:6px 13px;border-radius:999px;border:1px solid var(--divider);background:var(--parchment-soft);color:var(--ink-soft)}
+  .tab[aria-selected="true"]{background:var(--saffron-deep);border-color:var(--saffron-deep);color:var(--parchment-soft)}
+  .tabmeta{font-family:var(--deva);font-size:12.5px;color:var(--ink-muted);margin-top:10px}
+
+  .card{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:13px 14px}
+  .door{display:flex;align-items:center;gap:12px;border:1px solid var(--gold);background:var(--gold-tint);border-radius:12px;padding:12px 14px;min-height:52px}
+  .door.quiet{background:var(--parchment-soft);border-color:var(--divider)}
+  .door .g{font-family:var(--deva);color:var(--gold);letter-spacing:3px;font-size:15px}
+  .door .m{flex:1;min-width:0}
+  .door .t{font-family:var(--deva);font-size:14.5px;line-height:21px;color:var(--ink)}
+  .door .s{font-family:var(--deva);font-size:12px;line-height:18px;color:var(--ink-muted);margin-top:2px}
+  .door .chev{color:var(--ink-soft);font-size:17px}
+  .stack{display:flex;flex-direction:column;gap:9px}
+
+  /* reader */
+  .rd{position:absolute;inset:30px 0 0 0;display:flex;flex-direction:column;background:linear-gradient(var(--parchment-hi),var(--gradient-end))}
+  .rd-head{padding:6px 16px 0}
+  .rd-prog{height:3px;background:var(--divider);border-radius:2px;margin:2px 0 8px;overflow:hidden}
+  .rd-prog i{display:block;height:100%;background:var(--saffron);border-radius:2px}
+  .rd-tools{display:flex;justify-content:space-between;align-items:center;padding:0 0 6px}
+  .lang{display:flex;border:1px solid var(--divider);border-radius:999px;overflow:hidden;background:var(--parchment-soft)}
+  .lang span{padding:4px 12px;font-family:var(--deva);font-size:13px;color:var(--ink-muted)}
+  .lang span.on{color:var(--saffron-deep);font-weight:600;background:var(--day-glass-active)}
+  .lang span.en{font-family:var(--serif);font-style:italic;font-size:14px}
+  .listen{display:flex;align-items:center;gap:6px;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep)}
+  .rd-body{flex:1;overflow-y:auto;padding:4px 20px 16px}
+  .rd-body::-webkit-scrollbar{width:0}
+  .rd-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 16px 14px;border-top:1px solid var(--divider);background:var(--parchment-hi)}
+  .pg{all:unset;cursor:pointer;font-family:var(--deva);font-size:13px;color:var(--saffron-deep);padding:8px 6px;min-width:56px}
+  .pg[disabled]{color:var(--ink-muted);opacity:.45;cursor:default}
+  .pg.r{text-align:right}
+  .dots{display:flex;gap:6px;align-items:center}
+  .dots i{width:6px;height:6px;border-radius:999px;background:rgba(138,62,11,.25)}
+  .dots i.on{width:18px;background:var(--saffron-deep)}
+  .banner{height:92px;border-radius:12px;margin:2px 0 14px;background:
+      radial-gradient(circle at 50% 120%,rgba(242,199,127,.95) 0 26%,transparent 27%),
+      radial-gradient(circle at 50% 74%,rgba(184,98,27,.85) 0 7%,transparent 8%),
+      linear-gradient(var(--parchment-deep),var(--sky-horizon));border:1px solid var(--divider);position:relative;overflow:hidden}
+  .banner::after{content:'';position:absolute;left:50%;top:30%;width:10px;height:22px;margin-left:-5px;border-radius:50% 50% 45% 45%;background:radial-gradient(ellipse at 50% 70%,#fff3c4,var(--saffron) 70%);filter:blur(.3px)}
+  .rq{font-family:var(--deva);font-size:21px;line-height:31px;color:var(--ink);margin-top:4px;text-wrap:balance}
+  .rp{font-family:var(--deva);font-size:15px;line-height:26px;color:var(--ink-soft);margin-top:8px}
+  .para{font-family:var(--deva);font-size:14.5px;line-height:26px;color:var(--ink-soft);margin-top:10px}
+  .kt{font-family:var(--deva);font-size:18px;line-height:27px;color:var(--ink);margin-top:8px}
+  .canon{font-family:var(--deva);font-size:11.5px;line-height:18px;color:var(--ink-muted);margin-top:14px;padding-top:10px;border-top:1px solid var(--divider)}
+  .verse{margin-top:14px;text-align:center}
+  .verse .l{font-family:var(--deva);font-size:15px;line-height:25px;color:var(--saffron-deep)}
+  .verse .i{font-family:var(--iast);font-size:12.5px;line-height:20px;color:var(--ink-muted);margin-top:4px}
+  .verse .c{font-family:var(--serif);font-weight:600;font-size:12.5px;color:var(--gold);margin-top:6px}
+  .divider{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--saffron);opacity:.7;margin:12px 0 2px;font-family:var(--deva)}
+  .divider::before,.divider::after{content:'';width:34px;height:1px;background:var(--saffron)}
+  .pill{display:inline-block;border:1px solid var(--gold);border-radius:999px;padding:7px 14px;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);margin-top:10px}
+  .kidx{display:flex;flex-direction:column;margin-top:12px;border-top:1px solid var(--divider)}
+  .kidx .btn{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--divider)}
+  .kidx .m{flex:1;min-width:0}
+  .kidx .t{font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .teaching{background:var(--gold-tint);border:1px solid var(--gold);border-radius:16px;padding:14px 15px;margin-top:8px}
+  .teaching .t{font-family:var(--deva);font-size:15px;line-height:25px;color:var(--saffron-deep)}
+  .bodh{border:1px dashed rgba(90,58,30,.45);background:var(--parchment-soft);border-radius:14px;padding:13px 14px;margin-top:14px}
+  .bodh .t{font-family:var(--deva);font-size:14px;line-height:24px;color:var(--ink-soft);margin-top:4px}
+  .foot{font-family:var(--deva);font-size:12px;line-height:19px;color:var(--ink-muted);text-align:center;margin-top:18px}
+
+  /* panchang */
+  .sky{background:linear-gradient(var(--sky-top),var(--sky-upper) 45%,var(--sky-lower) 80%,var(--sky-horizon));padding:6px 16px 16px}
+  .modes{display:flex;background:var(--day-glass);border:1px solid var(--day-glass-border);border-radius:999px;padding:3px}
+  .modes span{flex:1;text-align:center;font-family:var(--deva);font-size:12.5px;padding:6px 0;border-radius:999px;color:var(--ink-soft)}
+  .modes span.on{background:var(--day-glass-active);color:var(--saffron-deep);font-weight:600}
+  .skyline{font-family:var(--deva);font-size:13px;color:var(--ink);text-align:center;margin-top:12px}
+  .skydate{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--ink);text-align:center}
+  .skysub{font-family:var(--deva);font-size:12px;color:var(--ink-muted);text-align:center;margin-top:2px}
+  .masa{margin:14px 16px 0;background:var(--parchment-soft);border:1px solid var(--gold);border-radius:16px;padding:13px 14px;box-shadow:var(--shadow-card)}
+  .masa .h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .masa .h .t{font-family:var(--deva);font-size:15.5px;color:var(--ink)}
+  .masa .h .d{font-family:var(--serif);font-weight:600;font-size:13px;color:var(--ink-muted)}
+  .masa .btn{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--divider);font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .masa .btn:last-child{border-bottom:0}
+  .masa .btn .chev{margin-left:auto;color:var(--saffron)}
+  .masa .all{color:var(--saffron-deep);font-size:13px}
+  .grid{margin:16px 16px 0;display:grid;grid-template-columns:repeat(7,1fr);gap:4px;opacity:.75}
+  .grid div{font-family:var(--serif);font-weight:600;font-size:13px;color:var(--ink-soft);text-align:center;padding:7px 0;border-radius:8px;background:var(--parchment-soft);font-variant-numeric:tabular-nums}
+  .grid div.h{background:transparent;font-family:var(--deva);font-weight:500;font-size:11px;color:var(--ink-muted)}
+  .grid div.today{background:var(--saffron-deep);color:var(--parchment-soft)}
+  .grid div.fest{box-shadow:inset 0 -2px 0 var(--gold)}
+  .grid div.blank{background:transparent}
+  .gridcap{margin:8px 16px 0;font-family:var(--deva);font-size:12px;color:var(--ink-muted)}
+
+  /* observance detail */
+  .ohero{text-align:center;padding:4px 0 6px}
+  .ohero .n{font-family:var(--deva);font-size:24px;color:var(--ink)}
+  .ohero .d{font-family:var(--serif);font-weight:600;font-size:14px;color:var(--ink-muted);margin-top:2px}
+  .actions{display:flex;gap:8px;justify-content:center;margin-top:10px}
+  .act{font-family:var(--deva);font-size:13px;padding:8px 14px;border-radius:999px;border:1px solid var(--divider);background:var(--parchment-soft);color:var(--ink-soft)}
+  .act.pri{background:var(--saffron-deep);border-color:var(--saffron-deep);color:var(--parchment-soft)}
+  .osec{margin-top:16px}
+  .osec .h{font-family:var(--deva);font-weight:600;font-size:13px;color:var(--ink-muted);margin-bottom:6px}
+  .osec .b{font-family:var(--deva);font-size:13.5px;line-height:22px;color:var(--ink-soft)}
+  .why{border:1px solid var(--gold);background:var(--parchment-soft);border-radius:16px;padding:12px 14px;box-shadow:var(--shadow-card)}
+  .why .h{display:flex;align-items:center;gap:8px;font-family:var(--deva);font-weight:600;font-size:15px;color:var(--ink)}
+  .why .h .g{color:var(--gold);letter-spacing:3px}
+  .why .btn{display:flex;align-items:flex-start;gap:8px;padding:10px 0;border-bottom:1px solid var(--divider)}
+  .why .btn:last-child{border-bottom:0;padding-bottom:2px}
+  .why .q{font-family:var(--deva);font-size:14px;line-height:21px;color:var(--ink);flex:1;min-width:0}
+  .why .chev{color:var(--saffron)}
+  .collapsed{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:1px solid var(--divider);border-radius:12px;background:var(--parchment-soft);font-family:var(--deva);font-size:14px;color:var(--ink)}
+
+  /* home */
+  .wordmark{display:flex;align-items:center;justify-content:center;gap:9px;padding:6px 0 2px;color:var(--saffron-deep)}
+  .wordmark .r{width:22px;height:1px;background:var(--saffron)}
+  .wordmark .o{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--saffron);display:flex;align-items:center;justify-content:center;font-family:var(--deva);font-size:14px}
+  .wordmark .w{font-family:var(--deva);font-size:23px}
+  .tagline{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ink-muted);text-align:center}
+  .strip{margin-top:12px;display:flex;justify-content:space-between;align-items:center;background:var(--parchment-soft);border:1px solid var(--divider);border-radius:14px;padding:10px 12px}
+  .strip .a{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .strip .b{font-family:var(--serif);font-weight:600;font-size:13px;color:var(--ink-muted)}
+  .hrow{display:flex;gap:10px;overflow-x:auto;margin:0 -18px;padding:10px 18px 6px}
+  .hrow::-webkit-scrollbar{height:0}
+  .tcard{flex:none;width:150px;border-radius:14px;border:1px solid var(--divider);background:var(--parchment-soft);padding:11px 12px;min-height:118px;display:flex;flex-direction:column;gap:4px;text-align:left}
+  .tcard .k{font-family:var(--deva);font-size:11.5px;color:var(--ink-muted)}
+  .tcard .t{font-family:var(--deva);font-size:14px;line-height:21px;color:var(--ink)}
+  .tcard .s{font-family:var(--deva);font-size:12px;line-height:18px;color:var(--ink-soft);margin-top:auto}
+  .tcard.tw{border-color:var(--gold);background:linear-gradient(var(--discover-top),var(--discover-bottom))}
+  .launch{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
+  .launch div{display:flex;flex-direction:column;align-items:center;gap:5px;font-family:var(--deva);font-size:11.5px;color:var(--ink-soft);text-align:center}
+  .launch i{width:52px;height:52px;border-radius:16px;background:var(--parchment-soft);border:1px solid var(--divider);display:flex;align-items:center;justify-content:center;font-style:normal;font-family:var(--deva);font-size:20px;color:var(--gold)}
+
+  /* bhog */
+  .bhog-item{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--divider)}
+  .bhog-item .t{font-family:var(--deva);font-size:14px;color:var(--ink)}
+  .bhog-item .s{font-family:var(--deva);font-size:12px;line-height:18px;color:var(--ink-muted);margin-top:2px}
+  .avoid{background:rgba(158,74,46,0.12);border-radius:12px;padding:4px 12px;margin-top:6px}
+  .whylink{all:unset;cursor:pointer;flex:none;font-family:var(--deva);font-size:12.5px;color:var(--saffron-deep);border:1px solid var(--gold);border-radius:999px;padding:4px 10px;margin-top:2px}
+  .whylink:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
+
+  /* search + ask */
+  .sbar{display:flex;align-items:center;gap:8px;background:var(--parchment-soft);border:1px solid var(--saffron);border-radius:999px;padding:9px 14px;font-family:var(--sans);font-size:14px;color:var(--ink)}
+  .sbar .cur{width:1px;height:16px;background:var(--saffron-deep)}
+  .sgroup{font-family:var(--deva);font-weight:600;font-size:12.5px;color:var(--ink-muted);margin:16px 0 2px}
+  .ask-q{align-self:flex-end;max-width:84%;background:var(--saffron-deep);color:var(--parchment-soft);font-family:var(--deva);font-size:14px;line-height:21px;padding:9px 13px;border-radius:16px 16px 4px 16px}
+  .ask-a{background:var(--parchment-soft);border:1px solid var(--divider);border-radius:16px 16px 16px 4px;padding:12px 13px;max-width:94%}
+  .ask-a .t{font-family:var(--deva);font-size:14px;line-height:23px;color:var(--ink)}
+  .ask-a .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .ask-a .acts .whylink{margin:0}
+  .ask-a.quiet .t{color:var(--ink-soft);font-size:13.5px}
+  .thread{display:flex;flex-direction:column;gap:10px}
+
+  /* share */
+  .sharecard{background:linear-gradient(var(--parchment-hi),var(--parchment));border:1px solid var(--gold);border-radius:18px;padding:18px 16px;box-shadow:0 10px 26px rgba(60,30,10,.18);text-align:center}
+  .sharecard .q{font-family:var(--deva);font-size:19px;line-height:28px;color:var(--ink);text-wrap:balance}
+  .sharecard .a{font-family:var(--deva);font-size:13.5px;line-height:23px;color:var(--ink-soft);margin-top:10px;text-align:left}
+  .sharecard .brand{font-family:var(--deva);font-size:13px;color:var(--saffron-deep);margin-top:14px}
+  .strip-pages{display:flex;gap:6px;justify-content:center;margin-top:12px}
+  .strip-pages i{width:30px;height:40px;border-radius:5px;border:1px solid var(--divider);background:var(--parchment-soft)}
+  .strip-pages i.on{border-color:var(--saffron);box-shadow:0 0 0 1px var(--saffron)}
+  .sharebtn{display:block;text-align:center;margin-top:14px;font-family:var(--deva);font-size:14px;color:var(--parchment-soft);background:var(--saffron-deep);border-radius:999px;padding:11px}
+
+  /* lock screen */
+  .lock{position:absolute;inset:0;background:linear-gradient(var(--lock-top),var(--lock-bottom));padding:44px 14px 0}
+  .lock .time{font-family:var(--serif);font-weight:600;font-size:64px;line-height:1;color:var(--lock-text);text-align:center;font-variant-numeric:tabular-nums}
+  .lock .date{font-family:var(--deva);font-size:14px;color:var(--lock-text);text-align:center;opacity:.85;margin-top:4px}
+  .notif{background:var(--notif-bg);border-radius:18px;padding:11px 13px;margin-top:26px;box-shadow:0 6px 20px rgba(0,0,0,.28)}
+  .notif .h{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-muted);font-weight:600}
+  .notif .t{font-family:var(--deva);font-size:14px;color:var(--ink);margin-top:3px;font-weight:600}
+  .notif .b{font-family:var(--deva);font-size:13px;line-height:19px;color:var(--ink-soft);margin-top:2px}
+  .settings{position:absolute;left:12px;right:12px;bottom:18px;background:var(--parchment-soft);border-radius:16px;padding:12px 14px}
+  .setrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--divider)}
+  .setrow:last-child{border-bottom:0}
+  .setrow .t{font-family:var(--deva);font-size:13.5px;color:var(--ink)}
+  .setrow .s{font-family:var(--deva);font-size:11.5px;color:var(--ink-muted)}
+  .sw{width:40px;height:24px;border-radius:999px;background:var(--parchment-deep);border:1px solid var(--divider);position:relative;flex:none}
+  .sw::after{content:'';position:absolute;left:2px;top:2px;width:18px;height:18px;border-radius:50%;background:var(--parchment-soft);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+  .sw.on{background:var(--saffron)}
+  .sw.on::after{left:18px}
+
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:14px}
+  .rule{background:var(--canvas-2);border:1px solid var(--canvas-line);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--canvas-muted)}
+  .rule b{display:block;color:var(--canvas-head);font-size:13px;margin-bottom:4px}
+  .rule .deva{font-family:var(--deva);color:var(--canvas-text)}
+
+  @media (prefers-reduced-motion: no-preference){ .flash{animation:flash 1.1s ease-out} }
+  @keyframes flash{0%{box-shadow:0 0 0 0 rgba(217,162,74,.8),0 24px 60px rgba(0,0,0,.55)}100%{box-shadow:0 0 0 18px rgba(217,162,74,0),0 24px 60px rgba(0,0,0,.55)}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>PRD-46 · <span class="deva">ऐसा क्यों करते हैं?</span> — the why behind every custom</h1>
+<p class="sub">Every custom gets its practice, its story or stories, its meaning, and an honest label saying where the story comes from. The answer appears where the question comes up: in the month, inside the observance, on the day, in Ask and in search.</p>
+<p class="legend"><b>How to use:</b> it is clickable. Tap any question (on the month card, the hub, an observance, Ask, search or bhog) and the <b>reader</b> phone opens on it; page through with <b>अगला ›</b>. Numbered dots are explained in the caption under each phone. <span class="built">Phase 1</span> = the Kartik pilot; <span class="later">Phase 2–5</span> = later.</p>
+<div class="warn"><b>Sample copy, not verified.</b> The Hindi text here was drafted only to show the layout. Under RULEBOOK §11, none of it can ship until two sources are opened for each row. Canon lines marked <span class="deva">(अध्याय समीक्षाधीन)</span> would stay draft, and drafts are invisible in the app. The Gita 8.24 / 10.26 / 10.28 / 10.31 / 10.35 lines are copied from the bundled corpus.</div>
+
+<div class="ia"><table>
+  <tr><th>#</th><th>Surface</th><th>Where it plugs in</th><th>Phase</th></tr>
+  <tr><td>1</td><td><span class="deva">इस मास की प्रथाएँ</span> card — the app's first masa surface</td><td><code>PanchangScreen</code> under the sky line; masa from <code>PanchangData.lunarMonth</code></td><td class="built">1</td></tr>
+  <tr><td>2</td><td>Hub <span class="deva">ऐसा क्यों?</span></td><td><code>PrathaScreen</code> · Home + More stacks · DISCOVER key <code>pratha</code></td><td class="built">1</td></tr>
+  <tr><td>3</td><td>Reader</td><td><code>PrathaReader {prathaId}</code> on the Vrat Katha reader shell</td><td class="built">1</td></tr>
+  <tr><td>4</td><td><span class="deva">यह क्यों?</span> card</td><td><code>ObservanceDetailScreen</code>, between Story and How to observe</td><td class="built">1</td></tr>
+  <tr><td>5</td><td><span class="deva">आज क्यों?</span> card</td><td><code>TodayRecommendationsRow</code> (daan-card precedent)</td><td class="later">2</td></tr>
+  <tr><td>6</td><td>Bhog <span class="deva">क्यों?</span> link</td><td>the three reasonless <code>doNotOffer</code> rows</td><td class="later">2</td></tr>
+  <tr><td>7</td><td>Search rows</td><td><code>section:pratha:&lt;id&gt;</code> in <code>buildSectionEntries</code></td><td class="later">2</td></tr>
+  <tr><td>8</td><td><span class="deva">जिज्ञासा</span> <code>pratha.why</code></td><td><code>ask/intents</code> + a <code>pratha</code> lexicon entity; omens get a non-answer</td><td class="later">3</td></tr>
+  <tr><td>9</td><td>Share card</td><td>the existing prose story card via <code>ShareProvider</code></td><td class="built">1</td></tr>
+  <tr><td>10</td><td>Month notification</td><td>off by default; arms last under the iOS budget</td><td class="later">5</td></tr>
+</table></div>
+
+<div class="tierkey">
+  <span>Source tier, shown on every story:</span>
+  <span class="k"><span class="tier t-shastra">शास्त्र</span> Veda · Gita · Itihasa · Smriti, verse named</span>
+  <span class="k"><span class="tier t-purana">पुराण</span> a named Purana, adhyaya named</span>
+  <span class="k"><span class="tier t-lok">लोक-परम्परा</span> folk telling; names no text</span>
+  <span class="k"><span class="tier t-itihas">इतिहास</span> a dated historical origin</span>
+</div>
+
+<!-- ─────────────── 1 · ENTRY ─────────────── -->
+<section class="phase">
+  <span class="phaselabel">1 · Where people meet it — the month</span>
+  <p class="phasedesc">Panchang has never said anything about the month itself. Now one card sits under the sky line, and it appears only when the current masa has verified rows.</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen">
+          <div class="sky">
+            <div class="modes"><span class="on">पंचांग</span><span>व्रत और पर्व</span><span>ज्योतिष</span></div>
+            <div class="skyline">बुधवार · कार्तिक कृष्ण पक्ष</div>
+            <div class="skydate">28 October 2026</div>
+            <div class="skysub">पूर्णिमांत · नई दिल्ली</div>
+          </div>
+          <div class="masa rel"><div class="dot" style="left:-8px;top:-8px">1</div>
+            <div class="h"><span class="t">॥ इस मास की प्रथाएँ · कार्तिक</span><span class="d">26 Oct – 24 Nov</span></div>
+            <button class="btn" data-open="k-deepdaan">कार्तिक में दीपदान क्यों? <span class="chev">›</span></button>
+            <button class="btn" data-open="k-tulsi">तुलसी विवाह क्यों होता है? <span class="chev">›</span></button>
+            <button class="btn" data-open="k-yamdeep">यम का दीया दक्षिण की ओर क्यों? <span class="chev">›</span></button>
+            <button class="btn all rel" data-hub="masa">कार्तिक की 26 प्रथाएँ <span class="chev">›</span><span class="dot" style="right:-10px;top:4px">2</span></button>
+          </div>
+          <div class="grid">
+            <div class="h">सो</div><div class="h">मं</div><div class="h">बु</div><div class="h">गु</div><div class="h">शु</div><div class="h">श</div><div class="h">र</div>
+            <div>26</div><div>27</div><div class="today">28</div><div class="fest">29</div><div>30</div><div>31</div><div class="blank"></div>
+            <div>2</div><div>3</div><div>4</div><div>5</div><div class="fest">6</div><div>7</div><div class="fest">8</div>
+          </div>
+          <div class="gridcap">29 करवा चौथ · 6 धनतेरस · 8 दीपावली</div>
+        </div></div>
+      <p class="cap"><span class="n">1</span>The masa card. Its title says the month and the date range, which are facts rather than a slogan (design.md §1). It shows the three customs people ask about most, picked by a <code>headline</code> flag on the row. Each opens the reader. <span class="n">2</span>Opens the hub on the <span class="deva">इस मास</span> tab. Calendar, rows and modes are unchanged.</p>
+    </div>
+
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen">
+          <div class="sky">
+            <div class="modes"><span class="on">पंचांग</span><span>व्रत और पर्व</span><span>ज्योतिष</span></div>
+            <div class="skyline">शनिवार · पौष कृष्ण पक्ष</div>
+            <div class="skydate">26 December 2026</div>
+            <div class="skysub">पूर्णिमांत · नई दिल्ली</div>
+          </div>
+          <div class="rel" style="margin:18px 16px 0"><div class="dot" style="left:-8px;top:-10px">3</div>
+          <div class="grid" style="margin:0">
+            <div class="h">सो</div><div class="h">मं</div><div class="h">बु</div><div class="h">गु</div><div class="h">शु</div><div class="h">श</div><div class="h">र</div>
+            <div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div class="today">26</div><div>27</div>
+            <div>28</div><div>29</div><div>30</div><div>31</div><div>1</div><div>2</div><div>3</div>
+          </div></div>
+          <div class="gridcap">पौष — इस मास की कोई प्रथा अभी सत्यापित नहीं</div>
+          <div class="pad" style="margin-top:6px"><div class="card"><div class="deva" style="font-size:13px;line-height:21px;color:var(--ink-muted)">(This grey line is only a prototype note. The app shows no teaser and no “coming soon”. The card is simply absent.)</div></div></div>
+        </div></div>
+      <p class="cap"><span class="n">3</span><b>Empty state = no card.</b> A month with fewer than 3 verified rows shows nothing, following the PRD-44 rule: an all-draft registry renders no door. The month opens later, when its rows are verified.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── 2 · HUB + READER ─────────────── -->
+<section class="phase">
+  <span class="phaselabel">2 · The hub and the reader</span>
+  <p class="phasedesc">The hub is a list of questions, because that is how people think of these customs (“why do we…?”), not as topics. The reader is the Vrat Katha reader shell, component for component: प्रथा → one page per कथा → भाव and बोध → आगे पढ़ें.</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone" id="hub-phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">ऐसा क्यों?</div></div>
+          <div class="search rel"><span>⌕</span><span>प्रथा या प्रश्न खोजें</span><div class="dot" style="right:-6px;top:-8px">4</div></div>
+          <div class="tabs rel" role="tablist" id="hub-tabs"></div>
+          <div class="tabmeta" id="hub-meta"></div>
+          <div id="hub-list"></div>
+          <div class="foot">यह परिचय है, विधान नहीं — परिवार की परम्परा सर्वोपरि है।</div>
+        </div></div></div>
+      <p class="cap"><span class="n">4</span>Search filters this list as you type; app-wide search is surface 7. <b>Tabs</b> (try them): <span class="deva">इस मास</span> (the default, from the engine) · <span class="deva">पर्व · वार · घर-आँगन · पूजा-नियम · प्रकृति · संस्कार · तीर्थ</span>. Every row is a <b>question</b> with a one-line practice and its tier chips. The faded <b>DRAFT</b> row is shown only to illustrate a rule: in the app, a draft row is not in the list at all. <span class="deva">संस्कार</span> and <span class="deva">तीर्थ</span> are Phase 4.</p>
+    </div>
+
+    <div class="col">
+      <div class="phone" id="reader-phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="rd" id="reader"></div></div>
+      <p class="cap"><b>The reader (interactive).</b> Page 1 is the <b>practice</b>, followed by an index of its stories with tier and region. Each story gets its own page: tier chip, region, retelling, and a <b>canon line</b> that names exactly where it comes from. A folk story says <span class="deva">लोक-परम्परा</span> and names no text. A verse is quoted <b>only</b> when it resolves in a bundled reader, and then it hands off (<span class="deva">गीता में पढ़ें ›</span>). Otherwise the page gives the meaning only. Then come भाव, बोध (when the popular story and the text differ), and onward doors. Read-aloud and हिं/EN follow the shell.</p>
+    </div>
+
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="rd" id="reader-diwali"></div></div>
+      <p class="cap"><b>Many stories, side by side.</b> Diwali has six stories. They are listed in the order of the row's data, each with its region, and none is ranked above another. Later, the PRD-42 regional lens may put the user's region <i>first</i>, but it never hides the others.</p>
+    </div>
+
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="rd" id="reader-bodh"></div></div>
+      <p class="cap"><b>बोध: where the popular story and the text differ.</b> The tone stays gentle and specific (<span class="deva">“लोक में… ; ग्रन्थ में… नहीं मिलता”</span>). It never says “myth” or “wrong”. This one is checked against the shipped text: the bundled Valmiki Yuddha Kanda sargas 120–131 contain no festival of lamps.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── 3 · IN CONTEXT ─────────────── -->
+<section class="phase">
+  <span class="phaselabel">3 · Inside the day — observance, today, bhog</span>
+  <p class="phasedesc">A rule can hold only one <code>kathaId</code>, so a custom's story cannot live on the observance. Instead the observance asks the registry, <code>getPrathaForRule(ruleId)</code>, and shows up to three questions.</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle"></div></div>
+          <div class="ohero"><div class="n">धनतेरस</div><div class="d">शुक्रवार, 6 November 2026 · कार्तिक कृष्ण त्रयोदशी</div></div>
+          <div class="actions"><span class="act pri">अनुसरण करें</span><span class="act">कथा पढ़ें</span></div>
+          <div class="osec"><div class="h">महत्व</div><div class="b">धन्वन्तरि त्रयोदशी — आरोग्य के देवता धन्वन्तरि का प्राकट्य दिवस; संध्या को यम के लिए दीपदान।</div></div>
+          <div class="osec"><div class="h">कथा</div><div class="door quiet"><span class="g">॥</span><div class="m"><div class="t">धनतेरस की कथाएँ</div><div class="s">राजा हिम का पुत्र · धन्वन्तरि</div></div><span class="chev">›</span></div></div>
+          <div class="osec rel"><div class="dot" style="left:-8px;top:-8px">5</div>
+            <div class="why">
+              <div class="h"><span class="g">॥</span>यह क्यों?</div>
+              <button class="btn" data-open="k-yamdeep"><span class="q">यम का दीया दक्षिण की ओर क्यों?<span class="tiers"><span class="tier t-lok">लोक-परम्परा</span><span class="tier t-purana">पुराण</span></span></span><span class="chev">›</span></button>
+              <button class="btn" data-open="k-bartan"><span class="q">धनतेरस पर नया बर्तन क्यों?<span class="tiers"><span class="tier t-purana">पुराण</span><span class="tier t-lok">लोक-परम्परा</span></span></span><span class="chev">›</span></button>
+            </div>
+          </div>
+          <div class="osec"><div class="collapsed">कैसे मनाएँ <span class="muted">›</span></div></div>
+          <div class="osec"><div class="collapsed">भोग <span class="muted">›</span></div></div>
+          <div class="osec"><div class="collapsed">दान <span class="muted">›</span></div></div>
+        </div></div></div>
+      <p class="cap"><span class="n">5</span><b><span class="deva">यह क्यों?</span></b> sits in the slot between Story (<code>:316</code>) and How to observe (<code>:341</code>), so the order reads: what it is, its katha, why we do it, how to do it, food, giving. The rows link the existing <code>dhanteras-legends</code> katha through <code>anchors.kathaIds</code> instead of retelling it. When there are no verified rows, there is no card.</p>
+    </div>
+
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="wordmark"><span class="r"></span><span class="o">ॐ</span><span class="w">वेदांश़</span><span class="o">ॐ</span><span class="r"></span></div>
+          <div class="tagline">Sacred Texts · Daily Reading</div>
+          <div class="strip"><span class="a">गुरुवार · करवा चौथ</span><span class="b">चन्द्रोदय 8:12 pm</span></div>
+          <div class="seclabel">आज के लिए</div>
+          <div class="hrow rel">
+            <div class="tcard"><span class="k">व्रत</span><span class="t">करवा चौथ</span><span class="s">चन्द्र-दर्शन के बाद पारण</span></div>
+            <button class="btn tcard tw rel" data-open="k-karva" style="width:150px"><span class="dot" style="right:-6px;top:-8px">6</span><span class="k">आज क्यों?</span><span class="t">छलनी से चाँद क्यों देखते हैं?</span><span class="s"><span class="tier t-lok">लोक-परम्परा</span></span></button>
+            <div class="tcard"><span class="k">कथा</span><span class="t">करवा चौथ व्रत कथा</span><span class="s">वीरावती</span></div>
+          </div>
+          <div class="seclabel">खोजें</div>
+          <div class="launch"><div><i>॥</i>गीता</div><div><i>ॐ</i>चालीसा</div><div><i>☀</i>पंचांग</div><div><i>?</i>ऐसा क्यों?</div></div>
+        </div></div></div>
+      <p class="cap"><span class="n">6</span><b><span class="deva">आज क्यों?</span></b> (Phase 2) is one card in the existing FOR TODAY row. It appears only when today's observance has a verified pratha, and it follows the row's existing cap and priority, as the daan card does today. The DISCOVER launcher gains an <span class="deva">ऐसा क्यों?</span> tile.</p>
+    </div>
+
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">भोग · गणेश चतुर्थी</div></div>
+          <div class="seclabel" style="margin-top:4px">क्या चढ़ाएँ</div>
+          <div class="bhog-item"><div><div class="t">मोदक</div><div class="s">२१ मोदक — परम्परा में प्रचलित संख्या</div></div></div>
+          <div class="bhog-item"><div><div class="t">दूर्वा</div><div class="s">२१ दूर्वा-दल</div></div><button class="whylink" data-open="pn-durva">क्यों? ›</button></div>
+          <div class="seclabel">क्या न चढ़ाएँ</div>
+          <div class="avoid rel"><div class="dot" style="right:-8px;top:-8px">7</div>
+            <div class="bhog-item" style="border-bottom:0"><div><div class="t">तुलसी</div><div class="s">गणेश पूजा में वर्जित मानी जाती है; कई परम्पराएँ इसी तिथि को अपवाद मानती हैं।</div></div><button class="whylink" data-open="pn-ganesha-tulsi">क्यों? ›</button></div>
+          </div>
+          <div class="seclabel">पारण</div>
+          <div class="bhog-item" style="border-bottom:0"><div><div class="t">पूजा का प्रसाद</div><div class="s">परिवार की रीति के अनुसार</div></div></div>
+        </div></div></div>
+      <p class="cap"><span class="n">7</span><b>Bhog <span class="deva">क्यों?</span></b> (Phase 2). Today the three verified <code>doNotOffer</code> rows (Ganesha/Tulsi ×2, Shiva/Ketaki) state a rule with no reason. The link opens the story behind the rule. Bhog's copy is unchanged; the reason lives in one place, the pratha registry.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── 4 · ASK + SEARCH ─────────────── -->
+<section class="phase">
+  <span class="phaselabel">4 · Asked and searched</span>
+  <p class="phasedesc">People type these questions word for word, so they belong in जिज्ञासा and in search. An answer never comes from a draft row. An omen with no story gets a polite non-answer that names no remedy (Appendix B.1).</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">खोजें</div></div>
+          <div class="sbar"><span>diya kyon</span><span class="cur"></span></div>
+          <div class="sgroup rel">क्यों? · प्रथा<div class="dot" style="right:0;top:-2px">8</div></div>
+          <button class="btn qrow" data-open="k-deepdaan"><div class="m"><div class="q">कार्तिक में दीपदान क्यों?</div><div class="tiers"><span class="tier t-purana">पुराण</span><span class="tier t-lok">लोक-परम्परा</span></div></div><span class="chev">›</span></button>
+          <button class="btn qrow" data-open="k-diwali"><div class="m"><div class="q">दीवाली पर दीये क्यों जलाते हैं?</div><div class="tiers"><span class="tier t-lok">लोक-परम्परा</span><span class="tier t-purana">पुराण</span><span class="tier t-itihas">इतिहास</span></div></div><span class="chev">›</span></button>
+          <button class="btn qrow" data-open="k-yamdeep"><div class="m"><div class="q">यम का दीया दक्षिण की ओर क्यों?</div><div class="tiers"><span class="tier t-lok">लोक-परम्परा</span><span class="tier t-purana">पुराण</span></div></div><span class="chev">›</span></button>
+          <button class="btn qrow" data-open="n-lamp-blow"><div class="m"><div class="q">दीया फूँककर क्यों नहीं बुझाते?</div><div class="tiers"><span class="tier t-shastra">शास्त्र</span></div></div><span class="chev">›</span></button>
+          <div class="sgroup">कथा</div>
+          <div class="qrow"><div class="m"><div class="q">कार्तिक माहात्म्य</div><div class="p">व्रत कथा · दीपदान का मास</div></div><span class="chev">›</span></div>
+          <div class="sgroup">आरती</div>
+          <div class="qrow" style="border-bottom:0"><div class="m"><div class="q">दीप आरती</div><div class="p">संध्या दीप</div></div><span class="chev">›</span></div>
+        </div></div></div>
+      <p class="cap"><span class="n">8</span>Each verified row adds one search entry, <code>section:pratha:&lt;id&gt;</code>. It matches the question, the practice text, the region and romanised forms (<i>diya kyon</i>, <i>deepdaan</i>). The <span class="deva">क्यों?</span> group ranks above kathas when the query contains <i>kyon/क्यों/why</i>.</p>
+    </div>
+
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">जिज्ञासा</div></div>
+          <div class="thread">
+            <div class="ask-q">कार्तिक में दीया क्यों जलाते हैं?</div>
+            <div class="ask-a rel"><div class="dot" style="left:-8px;top:-8px">9</div>
+              <div class="t">कार्तिक माहात्म्य इस मास के व्रतों में दीपदान को प्रमुख बताता है — संध्या को मंदिर, तुलसी, द्वार और नदी-तट पर दीया। लोक में चूहे और दीये की बाती की कथा भी कही जाती है।</div>
+              <div class="tiers"><span class="tier t-purana">पुराण</span><span class="tier t-lok">लोक-परम्परा</span></div>
+              <div class="acts"><button class="whylink" data-open="k-deepdaan">पूरी कथा पढ़ें ›</button><button class="whylink" data-open="k-tulsi">तुलसी क्यों? ›</button></div>
+            </div>
+            <div class="ask-q">बिल्ली रास्ता काट दे तो क्या करें?</div>
+            <div class="ask-a quiet rel"><div class="dot" style="left:-8px;top:-8px">10</div>
+              <div class="t">यह शकुन से जुड़ा लोक-विश्वास है। इसके पीछे कोई कथा या ग्रन्थ नहीं मिलता, इसलिए वेदांश इस पर कुछ नहीं कहता।</div>
+              <div class="acts"><button class="whylink" data-hub="nitya">घर-आँगन की प्रथाएँ ›</button></div>
+            </div>
+          </div>
+        </div></div></div>
+      <p class="cap"><span class="n">9</span><b><code>pratha.why</code></b> (Phase 3) returns the short answer and its tiers, then acts: <span class="deva">पूरी कथा पढ़ें</span> opens the reader on that row. <span class="n">10</span><b>Omens</b> (Appendix B.1) match an abstain intent. It names no remedy and neither confirms nor mocks the belief. It points to the nearest real content instead.</p>
+    </div>
+
+    <div class="col">
+      <div class="phone"><div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="screen"><div class="pad">
+          <div class="topbar"><div class="back">‹</div><div class="toptitle">साझा करें</div></div>
+          <div class="sharecard rel"><div class="dot" style="left:-8px;top:-8px">11</div>
+            <div class="label">ऐसा क्यों?</div>
+            <div class="q" style="margin-top:6px">कार्तिक में दीपदान क्यों?</div>
+            <div class="divider">॥</div>
+            <div class="a">कार्तिक माहात्म्य इस मास के व्रतों में दीपदान को प्रमुख बताता है। लोक-कथा में एक चूहे के छूने से मंदिर के दीये की बुझती बाती फिर उठ गई, और उस अनजाने दीपदान का फल भी उसे मिला।</div>
+            <div class="tiers" style="justify-content:center;margin-top:10px"><span class="tier t-purana">पुराण</span><span class="tier t-lok">लोक-परम्परा</span></div>
+            <div class="brand">॥ वेदांश़ ॥</div>
+          </div>
+          <div class="strip-pages"><i class="on"></i><i></i><i></i></div>
+          <div class="sharebtn">सभी 3 पृष्ठ साझा करें</div>
+        </div></div></div>
+      <p class="cap"><span class="n">11</span><b>Share</b> uses the existing prose story card and the measured paginator through the one <code>ShareProvider</code>. The <b>tier chips travel with the card</b>, so a folk story forwarded on WhatsApp still says it is folk.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────── 5 · NOTIFICATION ─────────────── -->
+<section class="phase">
+  <span class="phaselabel">5 · Optional — the month notice (Phase 5)</span>
+  <p class="phasedesc">Take this only if the masa card shows real use. It is off by default, fires once at the start of the month, and arms last because the shared iOS pending budget is already over-subscribed.</p>
+  <div class="wrap">
+    <div class="col">
+      <div class="phone"><div class="statusbar" style="color:var(--lock-text)"><span>9:41</span><span>●●● ▮</span></div>
+        <div class="lock">
+          <div class="time">7:30</div>
+          <div class="date">सोमवार, 26 अक्टूबर</div>
+          <div class="notif rel"><div class="dot" style="left:-8px;top:-8px">12</div>
+            <div class="h"><span>वेदांश़</span><span>अभी</span></div>
+            <div class="t">कार्तिक आरम्भ · इस मास क्यों?</div>
+            <div class="b">दीपदान, आकाशदीप, तुलसी विवाह — कार्तिक की प्रथाएँ और उनकी कथाएँ।</div>
+          </div>
+          <div class="settings rel"><div class="dot" style="left:-8px;top:-8px">13</div>
+            <div class="setrow"><div><div class="t">दैनिक श्लोक</div><div class="s">प्रातः 7:00</div></div><span class="sw on"></span></div>
+            <div class="setrow"><div><div class="t">मास की प्रथाएँ</div><div class="s">हर मास के आरम्भ पर एक बार</div></div><span class="sw"></span></div>
+          </div>
+        </div></div>
+      <p class="cap"><span class="n">12</span>The copy names the month and its customs, with no fear and no urgency. Tapping it opens the hub on <span class="deva">इस मास</span>. <span class="n">13</span>The toggle in Reminder Settings is <b>off</b> by default. It never fires for a month with fewer than 3 verified rows.</p>
+    </div>
+
+    <div class="col" style="width:min(520px,100%)">
+      <div class="rules">
+        <div class="rule"><b>Explain, never prescribe</b>The stance guard runs on <code>practice</code>, <code>bhav</code> and <code>bodh</code>. It bans <span class="deva">अवश्य करें · चाहिए · अशुभ · दोष · पाप लगेगा · अनिष्ट · दुर्भाग्य</span> and “must / bad luck”. A curse <i>inside a story</i> is part of the narrative and is allowed.</div>
+        <div class="rule"><b>Folk is labelled, not hidden</b>A <span class="deva">लोक-परम्परा</span> canon line names its region and no text. It is verified when two sources describe the custom and the story told about it.</div>
+        <div class="rule"><b>Quote only what resolves</b>Verse lines are shown only when the <code>ref</code> resolves in a bundled reader (Gita, Valmiki). Manusmriti and the Puranas get the meaning only, with no quote.</div>
+        <div class="rule"><b>Reuse, don't retell</b>When the katha library already tells the story (<code>dhanteras-legends</code>, <code>ganesha-chaturthi-vrat-katha</code>), the row gives the short answer and links there.</div>
+        <div class="rule"><b>Family practice is right</b>Every reader ends with <span class="deva">“यह परिचय है, विधान नहीं — परिवार की परम्परा सर्वोपरि है।”</span></div>
+        <div class="rule"><b>Drafts are invisible</b>Flipping a row to <code>verified</code> lights every surface with no code change: masa card, hub, observance, today, bhog, search and Ask.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var TIER={shastra:'शास्त्र',purana:'पुराण',lok:'लोक-परम्परा',itihas:'इतिहास'};
+  var TABS=[['masa','इस मास'],['parv','पर्व'],['vaar','वार'],['nitya','घर-आँगन'],['puja-niyam','पूजा-नियम'],['prakriti','प्रकृति'],['sanskar','संस्कार'],['tirth','तीर्थ']];
+  var TABMETA={masa:'कार्तिक · 26 अक्टूबर – 24 नवम्बर · 26 प्रथाएँ',parv:'वर्ष भर के पर्व · मास-क्रम में',vaar:'सात वार',nitya:'रोज़ के घर-आँगन की रीतियाँ',
+    'puja-niyam':'क्या चढ़ाया जाता है, क्या नहीं — और क्यों','prakriti':'वृक्ष, पशु और नदियाँ','sanskar':'जीवन के संस्कार · चरण 4','tirth':'तीर्थ की रीतियाँ · चरण 4 · तीर्थ से जुड़ी'};
+
+  var E={
+  'k-deepdaan':{tab:'masa',q:'कार्तिक में दीपदान क्यों?',practice:'कार्तिक भर संध्या को मंदिर, तुलसी, घर के द्वार और नदी-तट पर दीया रखा जाता है — एक दिन नहीं, पूरे महीने।',
+    kathas:[
+      {tier:'purana',title:'दीपों का मास',body:['कार्तिक माहात्म्य इस मास के व्रतों — प्रातः स्नान, तुलसी-सेवा, दान और दीपदान — में दीपदान को विशेष स्थान देता है।','माहात्म्य की कथाओं में जलाया हुआ दीया विष्णु को अर्पित माना गया है, और महीने भर का नियम ही इसकी साधना है।'],canon:'पद्म पुराण, उत्तर खण्ड — कार्तिक माहात्म्य (अध्याय समीक्षाधीन)'},
+      {tier:'lok',title:'चूहा और दीये की बाती',body:['एक मंदिर में रात को एक चूहा घी के लिए दीये तक पहुँचा। उसके छूने से बुझती हुई बाती ऊपर खिसक गई और लौ फिर तेज़ हो गई।','कथा कहती है कि अनजाने में किए उस दीपदान का फल भी उसे मिला। इसीलिए कहा जाता है कि छोटा-सा दीया भी व्यर्थ नहीं जाता।'],canon:'लोक-परम्परा · एक रूप में यही कथा राजा बलि के पूर्वजन्म से जोड़ी जाती है (स्कन्द पुराण — समीक्षाधीन)'}
+    ],bhav:'छोटा दीया भी अँधेरे को कम करता है। जो दीया नियम से रोज़ जले, वह साधना बन जाता है।',
+    next:['कथा: कार्तिक माहात्म्य','आकाशदीप ऊँचे बाँस पर क्यों?','तुलसी विवाह क्यों होता है?']},
+  'k-yamdeep':{tab:'masa',q:'यम का दीया दक्षिण की ओर क्यों?',practice:'धनतेरस की संध्या घर के बाहर दक्षिण की ओर मुख करके एक चौमुखा दीया रखा जाता है — यमराज के नाम।',
+    kathas:[
+      {tier:'lok',title:'राजा हिम का पुत्र',body:['कथा है कि राजा हिम के पुत्र के भाग्य में विवाह के चौथे दिन सर्प-दंश से मृत्यु लिखी थी। उस रात उसकी पत्नी ने द्वार पर गहनों और सिक्कों का ढेर लगाया और चारों ओर दीये जला दिए।','सर्प के रूप में आए यम उस चमक से चौंधिया गए। वे ढेर पर बैठकर रात भर उसकी कथाएँ और गीत सुनते रहे, और भोर होते ही लौट गए।'],canon:'लोक-परम्परा · पूरी कथा: कथा-संग्रह, “धनतेरस की कथाएँ”'},
+      {tier:'purana',title:'त्रयोदशी का यम-दीप',body:['कार्तिक कृष्ण त्रयोदशी की संध्या यम के लिए घर के बाहर दीपदान का उल्लेख पुराण-परम्परा में मिलता है।'],canon:'स्कन्द पुराण (अध्याय समीक्षाधीन)'}
+    ],bhav:'दक्षिण यम की दिशा मानी गई है। यह दीया भय का नहीं, स्मरण का है — कि जीवन की रक्षा सजगता से होती है।',
+    next:['कथा: धनतेरस की कथाएँ','पर्व: धनतेरस · 6 नवम्बर']},
+  'k-bartan':{tab:'masa',q:'धनतेरस पर नया बर्तन क्यों?',practice:'धनतेरस पर नया बर्तन या धातु की कोई वस्तु घर लाई जाती है।',
+    kathas:[
+      {tier:'purana',title:'धन्वन्तरि का कलश',body:['समुद्र-मंथन से आयुर्वेद के देवता धन्वन्तरि अमृत से भरा कलश लेकर प्रकट हुए। इसी से यह तिथि धन्वन्तरि त्रयोदशी भी कहलाती है।'],canon:'श्रीमद्भागवत, स्कन्ध 8, अध्याय 8'},
+      {tier:'lok',title:'नया पात्र',body:['लोक में नया पात्र उसी कलश का स्मरण माना जाता है। सोना-चाँदी ख़रीदने का चलन बाद में जुड़ा।'],canon:'लोक-परम्परा'}
+    ],bhav:'“धन” का पहला अर्थ आरोग्य है — धन्वन्तरि वैद्य हैं।',next:['कथा: धनतेरस की कथाएँ','यम का दीया दक्षिण की ओर क्यों?']},
+  'k-diwali':{tab:'masa',q:'दीवाली पर दीये क्यों जलाते हैं?',practice:'कार्तिक अमावस्या की रात घर-आँगन, छत और द्वार दीयों से सजाए जाते हैं; लक्ष्मी-गणेश का पूजन होता है।',
+    kathas:[
+      {tier:'lok',region:'उत्तर भारत',title:'श्रीराम का अयोध्या आगमन',body:['वनवास और लंका-विजय के बाद श्रीराम अयोध्या लौटे। लोक-कथा कहती है कि उस अमावस्या की रात नगरवासियों ने घर-घर दीये जलाकर उनका स्वागत किया।'],canon:'लोक-परम्परा (उत्तर भारत) · लौटने की कथा: वाल्मीकि रामायण, युद्ध काण्ड'},
+      {tier:'purana',region:'सर्वत्र',title:'लक्ष्मी का प्राकट्य',body:['समुद्र-मंथन से लक्ष्मी प्रकट हुईं और उन्होंने विष्णु का वरण किया। कार्तिक अमावस्या का लक्ष्मी-पूजन उसी स्मरण से जुड़ा है।'],canon:'श्रीमद्भागवत, स्कन्ध 8, अध्याय 8 (प्राकट्य) · तिथि-सम्बन्ध: परम्परा'},
+      {tier:'lok',region:'महाराष्ट्र · कर्नाटक',title:'बलि प्रतिपदा',body:['वामन ने राजा बलि को पाताल भेजा, पर उसकी दानशीलता से प्रसन्न होकर वर दिया कि वर्ष में एक बार पृथ्वी पर उसकी पूजा होगी। दीपावली के अगले दिन बलि का स्मरण होता है।'],canon:'लोक-परम्परा · वामन-कथा: श्रीमद्भागवत, स्कन्ध 8'},
+      {tier:'lok',region:'बंगाल · ओडिशा · असम',title:'काली पूजा',body:['पूर्वी भारत में यही अमावस्या माँ काली की रात है। दीयों के साथ आधी रात को काली-पूजा होती है।'],canon:'लोक-परम्परा (पूर्वी भारत)'},
+      {tier:'itihas',region:'जैन परम्परा',title:'महावीर निर्वाण',body:['जैन परम्परा में इसी अमावस्या को भगवान महावीर ने निर्वाण पाया। ज्ञान का दीप बुझा, तो भक्तों ने बाहर दीप जलाए।'],canon:'इतिहास · जैन परम्परा (कल्पसूत्र)'},
+      {tier:'itihas',region:'सिख परम्परा',title:'बन्दी छोड़ दिवस',body:['गुरु हरगोबिन्द जी ग्वालियर के किले से बन्दी राजाओं के साथ मुक्त होकर अमृतसर पहुँचे, और हरमंदिर साहिब दीपों से सजा।'],canon:'इतिहास · सिख परम्परा'}
+    ],bhav:'एक रात, छह कथाएँ। हर कथा में अँधेरे से उजाले की ओर लौटना है।',
+    bodh:'लोक में अयोध्या के दीपों की कथा सबसे प्रचलित है। ऐप में उपलब्ध वाल्मीकि रामायण के अयोध्या-आगमन प्रसंग (युद्ध काण्ड, सर्ग 120–131) में दीपोत्सव का वर्णन नहीं मिलता; यह कथा लोक-परम्परा से आती है।',
+    next:['कथा: दीपावली की कथाएँ','रामायण में पढ़ें: युद्ध काण्ड, सर्ग 127']},
+  'k-tulsi':{tab:'masa',q:'तुलसी विवाह क्यों होता है?',practice:'कार्तिक भर तुलसी को जल और संध्या को दीया; देव उठनी के बाद तुलसी का शालिग्राम से विवाह।',
+    kathas:[
+      {tier:'purana',title:'वृन्दा और जालन्धर',body:['असुर जालन्धर तब तक अजेय था जब तक उसकी पत्नी वृन्दा का पतिव्रत अखण्ड था। देवताओं के लिए विष्णु ने छल से वह व्रत भंग किया, और जालन्धर मारा गया।','सत्य जानकर वृन्दा ने विष्णु को शिला होने का शाप दिया — वे शालिग्राम हुए। वृन्दा तुलसी बनीं, और कहा गया कि तुलसी के बिना विष्णु की पूजा पूरी नहीं होती।'],canon:'शिव पुराण, रुद्र संहिता, युद्ध खण्ड · पद्म पुराण, उत्तर खण्ड (अध्याय समीक्षाधीन)'}
+    ],bhav:'छल से जीता युद्ध भी अपना मूल्य माँगता है — देवता भी उससे मुक्त नहीं।',next:['कथा: कार्तिक माहात्म्य','संस्कार: तुलसी पूजा','पर्व: तुलसी विवाह · 21 नवम्बर']},
+  'k-karva':{tab:'masa',q:'करवा चौथ पर छलनी से चाँद क्यों देखते हैं?',practice:'दिन भर निर्जल व्रत; रात में छलनी से चाँद को देखकर अर्घ्य, फिर पति का मुख।',
+    kathas:[
+      {tier:'lok',title:'वीरावती',body:['सात भाइयों की लाड़ली बहन वीरावती भूख से व्याकुल थी। भाइयों ने पेड़ के पीछे आग जलाकर छलनी की ओट से झूठा चाँद दिखा दिया, और उसने व्रत खोल दिया।','उसी समय पति के अस्वस्थ होने का समाचार आया। वर्ष भर की तपस्या से वह फिर स्वस्थ हुआ। तभी से छलनी से सच्चा चाँद देखने की रीति कही जाती है।'],canon:'लोक-परम्परा (व्रत-कथा) · पूरी कथा: कथा-संग्रह, “करवा चौथ व्रत कथा”'}
+    ],bhav:'जिस धैर्य को छल से छोटा किया जाए, उसका फल अधूरा रहता है।',next:['कथा: करवा चौथ व्रत कथा','पर्व: करवा चौथ · 29 अक्टूबर']},
+  'k-akashdeep':{tab:'masa',draft:true,q:'आकाशदीप ऊँचे बाँस पर क्यों?',practice:'कार्तिक भर ऊँचे बाँस पर टँगा दीया',kathas:[{tier:'purana'},{tier:'lok'}]},
+
+  'b-ganesh-moon':{tab:'parv',q:'गणेश चतुर्थी पर चाँद क्यों नहीं देखते?',practice:'भाद्रपद शुक्ल चतुर्थी की रात चाँद देखने से बचा जाता है।',
+    kathas:[
+      {tier:'lok',title:'चन्द्रमा का उपहास',body:['प्रचलित कथा में चन्द्रमा ने गणेश के रूप की हँसी उड़ाई। गणेश ने कहा कि इस तिथि जो उसे देखेगा, उस पर झूठा कलंक लगेगा। चन्द्रमा की प्रार्थना पर यह एक ही तिथि तक सीमित हुआ।'],canon:'लोक-परम्परा · पूरी कथा: कथा-संग्रह, “गणेश चतुर्थी व्रत कथा”'},
+      {tier:'purana',title:'स्यमन्तक मणि',body:['स्यमन्तक मणि खोने पर श्रीकृष्ण पर ही चोरी का सन्देह किया गया। कृष्ण ने जाम्बवान से मणि वापस लाकर अपना नाम साफ़ किया। इस कथा को सुनना कलंक-निवारण माना जाता है।'],canon:'श्रीमद्भागवत, स्कन्ध 10, अध्याय 56–57'}
+    ],bhav:'उपहास लौटकर आता है; झूठे आरोप का उत्तर सत्य से दिया जाता है।',next:['कथा: गणेश चतुर्थी व्रत कथा','पर्व: गणेश चतुर्थी']},
+  'mg-til':{tab:'parv',q:'मकर संक्रांति पर तिल-गुड़ क्यों?',practice:'तिल-गुड़ बाँटना, खिचड़ी का दान, नदी-स्नान।',
+    kathas:[
+      {tier:'shastra',title:'उत्तरायण की प्रतीक्षा',body:['शर-शय्या पर भीष्म ने देह-त्याग के लिए सूर्य के उत्तरायण होने की प्रतीक्षा की। गीता भी उत्तरायण के छह मासों को प्रकाश का मार्ग कहती है।'],
+       verse:{l:['अग्निर्ज्योतिरहः शुक्लः षण्मासा उत्तरायणम्।','तत्र प्रयाता गच्छन्ति ब्रह्म ब्रह्मविदो जनाः॥'],i:'agnir jyotir ahaḥ śhuklaḥ ṣhaṇ-māsā uttarāyaṇam',c:'गीता 8.24',btn:'गीता में पढ़ें ›'},canon:'महाभारत, भीष्म पर्व · भगवद्गीता 8.24 (ऐप में)'},
+      {tier:'lok',title:'सूर्य और शनि',body:['कथा है कि इस दिन सूर्य अपने पुत्र शनि के घर — मकर राशि — जाते हैं। तिल से पिता-पुत्र की कड़वाहट मिठास में बदलती है।'],canon:'लोक-परम्परा'}
+    ],bhav:'“तिळगुळ घ्या, गोड गोड बोला” — मीठा लो, मीठा बोलो।',next:['दान: मकर संक्रांति','पतंग की कथा मानस में है?']},
+  'mg-kite':{tab:'parv',kind:'bodh',q:'पतंग उड़ाने की कथा क्या मानस में है?',practice:'मकर संक्रांति पर पतंग उड़ाई जाती है।',
+    kathas:[{tier:'lok',title:'राम की पतंग',body:['प्रचलित है कि बालक राम ने पतंग उड़ाई और वह इन्द्रलोक तक जा पहुँची।'],canon:'लोक-परम्परा'}],
+    bhav:'पर्व का आनन्द अपनी जगह; ग्रन्थ का नाम तभी, जब पंक्ति मिले।',
+    bodh:'यह पंक्ति प्रायः रामचरितमानस के नाम से उद्धृत होती है। ऐप के मानस-अंश में यह नहीं मिलती, और पूरे पाठ से मिलान बाकी है — इसलिए वेदांश इसे मानस का कथन नहीं कहता।',next:['मकर संक्रांति पर तिल-गुड़ क्यों?']},
+
+  'w-sunday':{tab:'vaar',q:'रविवार को सूर्य को जल क्यों?',practice:'प्रातः ताँबे के लोटे से सूर्य को अर्घ्य; कई घरों में रविवार का व्रत।',
+    kathas:[
+      {tier:'shastra',title:'आदित्यहृदय',body:['रावण से अन्तिम युद्ध से पहले थके हुए श्रीराम को अगस्त्य मुनि ने सूर्य की स्तुति — आदित्यहृदय — का उपदेश दिया।'],canon:'वाल्मीकि रामायण, युद्ध काण्ड, सर्ग 107 (ऐप में)',btn:'रामायण में पढ़ें ›'},
+      {tier:'shastra',title:'मन्देह राक्षस',body:['तैत्तिरीय आरण्यक के अनुसार सन्ध्या के समय मन्देह नाम के राक्षस सूर्य पर आक्रमण करते हैं; अर्घ्य का जल वज्र बनकर उन्हें दूर करता है।'],canon:'तैत्तिरीय आरण्यक 2.2 · यह ग्रन्थ ऐप में नहीं, इसलिए मूल पाठ उद्धृत नहीं'}
+    ],bhav:'अर्घ्य कृतज्ञता है — जिससे दिन है, उसे दिन का पहला जल।',next:['रामायण: युद्ध काण्ड, सर्ग 107']},
+  'w-saturday':{tab:'vaar',q:'शनिवार को तेल और पीपल पर दीया क्यों?',practice:'शनि देव को सरसों का तेल; पीपल के नीचे दीया।',
+    kathas:[
+      {tier:'purana',title:'पिप्पलाद और शनि',body:['पिप्पलाद मुनि ने अपने अनाथ होने का कारण शनि को माना और उन्हें दण्ड दिया। देवताओं के कहने पर क्षमा किया, इस वचन पर कि शनि बालकों को कष्ट नहीं देंगे। पिप्पलाद का स्मरण पीपल से जुड़ा।'],canon:'शिव पुराण, शतरुद्र संहिता (अध्याय समीक्षाधीन)'},
+      {tier:'lok',title:'हनुमान और तेल',body:['कहते हैं हनुमान ने शनि को रावण की क़ैद से छुड़ाया। घायल शनि के घावों पर तेल लगाया गया, और शनि ने हनुमान के भक्तों पर कृपा का वचन दिया।'],canon:'लोक-परम्परा'}
+    ],bhav:'जो पीड़ा देता दिखे, कथा उसे भी वचन से बँधा दिखाती है।',next:['पीपल की पूजा क्यों?']},
+  'w-monday':{tab:'vaar',q:'सोमवार शिव का दिन क्यों?',practice:'सोमवार को शिव का व्रत और जल-अभिषेक।',
+    kathas:[{tier:'purana',title:'सोम का उपचार',body:['दक्ष के शाप से क्षीण होते चन्द्रमा (सोम) ने प्रभास में शिव की आराधना की। शिव ने शाप को घटने-बढ़ने में बदल दिया। सोम के देव शिव — यही सोमवार।'],canon:'शिव पुराण · स्कन्द पुराण, प्रभास खण्ड (अध्याय समीक्षाधीन)'}],
+    bhav:'जो घटता है, वह फिर बढ़ता भी है।',next:['तीर्थ: सोमनाथ']},
+
+  'n-lamp-blow':{tab:'nitya',q:'दीया फूँककर क्यों नहीं बुझाते?',practice:'दीया फूँक मारकर नहीं, हाथ की हवा से या बत्ती दबाकर शान्त किया जाता है; कई घरों में “बुझाना” नहीं, “बढ़ाना” कहा जाता है।',
+    kathas:[{tier:'shastra',title:'अग्नि देवता हैं',body:['मनुस्मृति का नियम है कि अग्नि को मुँह से न फूँका जाए। अग्नि देवता हैं, और श्वास उन्हें अर्पित की जाने वाली वस्तु नहीं।'],canon:'मनुस्मृति 4.53 · यह ग्रन्थ ऐप में नहीं, इसलिए मूल श्लोक उद्धृत नहीं'}],
+    bhav:'दीया शान्त करना भी पूजा का भाग है।',next:['संस्कार: संध्या दीप']},
+  'n-first-roti':{tab:'nitya',q:'पहली रोटी गाय की क्यों?',practice:'पहली रोटी गाय की, आख़िरी कुत्ते की; चींटियों को आटा, पक्षियों को दाना।',
+    kathas:[{tier:'shastra',title:'पञ्च महायज्ञ',body:['गृहस्थ के पाँच दैनिक यज्ञों में एक “भूत-यज्ञ” है — सब प्राणियों को अन्न देना। गीता में श्रीकृष्ण कहते हैं कि गायों में वे कामधेनु हैं।'],
+      verse:{l:['आयुधानामहं वज्रं धेनूनामस्मि कामधुक्।','प्रजनश्चास्मि कन्दर्पः सर्पाणामस्मि वासुकिः॥'],i:'āyudhānām ahaṁ vajraṁ dhenūnām asmi kāmadhuk',c:'गीता 10.28',btn:'गीता में पढ़ें ›'},canon:'शतपथ ब्राह्मण 11.5.6.1 · मनुस्मृति 3.70 · भगवद्गीता 10.28 (ऐप में)'}],
+    bhav:'रसोई केवल परिवार की नहीं, आँगन के हर प्राणी की है।',next:['संस्कार: गौ सेवा','दान']},
+  'n-charan':{tab:'nitya',q:'बड़ों के चरण क्यों छूते हैं?',practice:'घर के बड़ों, गुरु और अतिथि-बुज़ुर्गों के चरण छूकर प्रणाम।',
+    kathas:[{tier:'shastra',title:'चार चीज़ें बढ़ती हैं',body:['मनुस्मृति कहती है कि जो अभिवादन करता है और बड़ों की सेवा करता है, उसकी चार चीज़ें बढ़ती हैं — आयु, विद्या, यश और बल।'],canon:'मनुस्मृति 2.121 · मूल श्लोक उद्धृत नहीं'}],
+    bhav:'झुकना छोटा होना नहीं; अनुभव के आगे सिर रखना है।',next:[]},
+
+  'pn-ganesha-tulsi':{tab:'puja-niyam',q:'गणेश को तुलसी क्यों नहीं चढ़ाते?',practice:'गणेश पूजा में तुलसी वर्जित मानी जाती है; कई परम्पराएँ गणेश चतुर्थी को अपवाद मानती हैं।',
+    kathas:[{tier:'purana',title:'तुलसी और गणेश',body:['गंगा-तट पर तप करते गणेश के सामने तुलसी ने विवाह का प्रस्ताव रखा। ब्रह्मचर्य में स्थित गणेश ने अस्वीकार किया, और दोनों ने एक-दूसरे को शाप दिया।','तुलसी का विवाह असुर शंखचूड़ से हुआ, और गणेश की पूजा में तुलसी वर्जित मानी गई।'],canon:'ब्रह्मवैवर्त पुराण, गणपति खण्ड (अध्याय समीक्षाधीन)'}],
+    bhav:'किसी के व्रत का सम्मान — “ना” भी एक उत्तर है।',next:['भोग: गणेश चतुर्थी','गणेश को दूर्वा क्यों?']},
+  'pn-durva':{tab:'puja-niyam',q:'गणेश को दूर्वा क्यों?',practice:'गणेश को 21 दूर्वा-दल अर्पित किए जाते हैं।',
+    kathas:[{tier:'purana',title:'अनलासुर',body:['अग्नि-सा तपता असुर अनलासुर देवताओं को जला रहा था। गणेश ने उसे निगल लिया, और भीतर की जलन से व्याकुल हुए। ऋषियों ने उनके सिर पर दूर्वा रखी, और जलन शान्त हुई।'],canon:'गणेश पुराण / मुद्गल पुराण (अध्याय समीक्षाधीन)'}],
+    bhav:'सबसे साधारण घास भी सबसे बड़ी जलन शान्त कर सकती है।',next:['भोग: गणेश चतुर्थी']},
+  'pn-ketaki':{tab:'puja-niyam',q:'शिव को केतकी क्यों नहीं?',practice:'शिव पूजा में केतकी (केवड़ा) का फूल नहीं चढ़ाया जाता।',
+    kathas:[{tier:'purana',title:'ज्योति-स्तम्भ',body:['ब्रह्मा और विष्णु अनन्त ज्योति-स्तम्भ का छोर ढूँढ़ने निकले। ब्रह्मा ने कहा कि उन्होंने शिखर देख लिया, और केतकी ने उसकी झूठी गवाही दी।','शिव ने केतकी को अपनी पूजा से बाहर कर दिया।'],canon:'शिव पुराण, विद्येश्वर संहिता (अध्याय समीक्षाधीन)'}],
+    bhav:'झूठ बोलना और झूठ की गवाही देना — कथा दोनों को एक तराज़ू पर रखती है।',next:['भोग: महाशिवरात्रि']},
+  'pn-33':{tab:'puja-niyam',kind:'bodh',q:'“तैंतीस करोड़ देवता” का अर्थ क्या है?',practice:'प्रचलित कहावत: तैंतीस करोड़ देवी-देवता।',
+    kathas:[{tier:'shastra',title:'याज्ञवल्क्य का उत्तर',body:['बृहदारण्यक उपनिषद में शाकल्य पूछते हैं — देवता कितने हैं? याज्ञवल्क्य संख्या घटाते-घटाते तैंतीस पर आते हैं: आठ वसु, ग्यारह रुद्र, बारह आदित्य, इन्द्र और प्रजापति।'],canon:'बृहदारण्यक उपनिषद 3.9.1–2 · मूल पाठ उद्धृत नहीं'}],
+    bhav:'गिनती के पीछे एक ही प्रश्न है — देवता कितने हैं, और अन्त में कौन एक है।',
+    bodh:'उपनिषद तैंतीस की गिनती देता है। “कोटि” का अर्थ करोड़ भी है और प्रकार भी; “तैंतीस कोटि” को तैंतीस प्रकार पढ़ना एक व्याख्या है।',next:[]},
+
+  'pr-peepal':{tab:'prakriti',q:'पीपल की पूजा क्यों?',practice:'पीपल को जल, शनिवार को दीया; पीपल काटा नहीं जाता।',
+    kathas:[{tier:'shastra',title:'वृक्षों में अश्वत्थ',body:['विभूति-योग में श्रीकृष्ण कहते हैं कि वृक्षों में वे अश्वत्थ — पीपल — हैं।'],
+      verse:{l:['अश्वत्थः सर्ववृक्षाणां देवर्षीणां च नारदः।','गन्धर्वाणां चित्ररथः सिद्धानां कपिलो मुनिः॥'],i:'aśhvatthaḥ sarva-vṛikṣhāṇāṁ devarṣhīṇāṁ cha nāradaḥ',c:'गीता 10.26',btn:'गीता में पढ़ें ›'},canon:'भगवद्गीता 10.26 (ऐप में)'}],
+    bhav:'जिस वृक्ष में भगवान अपना रूप बताएँ, उसकी छाया आँगन का तीर्थ है।',next:['शनिवार को तेल और पीपल पर दीया क्यों?']},
+  'pr-ganga':{tab:'prakriti',q:'घर में गंगाजल क्यों रखते हैं?',practice:'घर में गंगाजल रखा जाता है; पूजा, संस्कार और अन्तिम समय में उपयोग।',
+    kathas:[{tier:'shastra',title:'भगीरथ की तपस्या',body:['कपिल मुनि के शाप से भस्म हुए सगर के साठ हज़ार पुत्रों के उद्धार के लिए भगीरथ ने तप किया, और गंगा पृथ्वी पर उतरीं। गीता में श्रीकृष्ण कहते हैं — नदियों में मैं जाह्नवी हूँ।'],
+      verse:{l:['पवनः पवतामस्मि रामः शस्त्रभृतामहम्।','झषाणां मकरश्चास्मि स्रोतसामस्मि जाह्नवी॥'],i:'pavanaḥ pavatām asmi rāmaḥ śhastra-bhṛitām aham',c:'गीता 10.31',btn:'गीता में पढ़ें ›'},canon:'वाल्मीकि रामायण, बाल काण्ड, सर्ग 38–44 (ऐप में) · भगवद्गीता 10.31 (ऐप में)'}],
+    bhav:'तीन पीढ़ियों का एक ही प्रश्न था — जल। गंगाजल उसी उत्तर का स्मरण है।',next:['पितृ कथा: भगीरथ और साठ हज़ार']},
+
+  'sn-saptapadi':{tab:'sanskar',q:'विवाह में सात फेरे क्यों?',practice:'वर-वधू साथ सात कदम चलते हैं; उत्तर भारत में अग्नि के सात फेरे।',
+    kathas:[{tier:'shastra',title:'सप्तपदी',body:['गृह्यसूत्रों में वर-वधू साथ सात कदम चलते हैं। सातवें कदम का वचन मित्रता का है — सात कदम साथ चले, तो सखा हुए।'],canon:'आश्वलायन / पारस्कर गृह्यसूत्र · ऋग्वेद 10.85 · मूल पाठ उद्धृत नहीं'}],
+    bhav:'विवाह का अन्तिम वचन प्रेम का नहीं, मित्रता का है।',next:['संस्कार: विवाह']},
+
+  't-tirupati':{tab:'tirth',q:'तिरुपति में केश-दान क्यों?',practice:'भक्त तिरुमला में सिर के बाल अर्पित करते हैं।',
+    kathas:[
+      {tier:'lok',title:'नीला देवी',body:['कथा है कि भगवान वेंकटेश्वर के सिर पर लगी चोट से एक भाग के बाल चले गए। गन्धर्व-कन्या नीला देवी ने अपने केश काटकर अर्पित किए, और भगवान ने वर दिया कि भक्तों के अर्पित केश उन तक पहुँचेंगे।'],canon:'लोक-परम्परा · वेंकटाचल माहात्म्य (समीक्षाधीन)'},
+      {tier:'lok',title:'कुबेर का ऋण',body:['पद्मावती से विवाह के लिए भगवान ने कुबेर से ऋण लिया। भक्तों का दान उस ऋण को चुकाने में भागीदारी माना जाता है।'],canon:'लोक-परम्परा'}
+    ],bhav:'केश — रूप का अभिमान — अर्पित।',next:['तीर्थ: तिरुपति बालाजी']}
+  };
+
+  function chip(t){return '<span class="tier t-'+t+'">'+TIER[t]+'</span>';}
+  function tiersOf(e){var s=[];e.kathas.forEach(function(k){if(s.indexOf(k.tier)<0)s.push(k.tier);});return s;}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+  /* ── hub ── */
+  var hubTab='masa';
+  function renderHub(){
+    var tabs=document.getElementById('hub-tabs');
+    tabs.innerHTML=TABS.map(function(t){return '<button class="tab" role="tab" aria-selected="'+(t[0]===hubTab)+'" data-tab="'+t[0]+'">'+t[1]+'</button>';}).join('');
+    document.getElementById('hub-meta').textContent=TABMETA[hubTab];
+    var rows=Object.keys(E).filter(function(id){return E[id].tab===hubTab;}).map(function(id){
+      var e=E[id],chips=tiersOf(e).map(chip).join('');
+      if(e.draft) return '<div class="qrow draft" aria-hidden="true"><div class="m"><div class="q">'+esc(e.q)+' <span class="badge">DRAFT · hidden in app</span></div><div class="p">'+esc(e.practice)+'</div><div class="tiers">'+chips+'</div></div></div>';
+      var kind=e.kind==='bodh'?' <span class="badge">बोध</span>':'';
+      return '<button class="btn qrow" data-open="'+id+'"><div class="m"><div class="q">'+esc(e.q)+kind+'</div><div class="p">'+esc(e.practice)+'</div><div class="tiers">'+chips+'</div></div><span class="chev">›</span></button>';
+    });
+    document.getElementById('hub-list').innerHTML=rows.join('');
+  }
+
+  /* ── reader ── */
+  function pagesOf(e){var p=[{k:'practice'}];e.kathas.forEach(function(_,i){p.push({k:'katha',i:i});});p.push({k:'bhav'});p.push({k:'next'});return p;}
+  function pageHTML(e,pg,id){
+    if(pg.k==='practice'){
+      var idx=e.kathas.map(function(k,i){return '<button class="btn" data-open="'+id+'" data-page="'+(i+1)+'"><span class="m"><span class="t">'+esc(k.title)+'</span><span class="tiers">'+chip(k.tier)+(k.region?'<span class="region">'+esc(k.region)+'</span>':'')+'</span></span><span class="chev" style="color:var(--saffron)">›</span></button>';}).join('');
+      return '<div class="banner" role="img" aria-label="चित्र-स्थान"></div><div class="label">'+(e.kind==='bodh'?'बोध · प्रचलित मान्यता':'प्रथा')+'</div><div class="rq">'+esc(e.q)+'</div><div class="rp">'+esc(e.practice)+'</div><div class="seclabel">'+(e.kathas.length>1?e.kathas.length+' कथाएँ':'कथा')+'</div><div class="kidx">'+idx+'</div>';
+    }
+    if(pg.k==='katha'){
+      var k=e.kathas[pg.i],h='<div class="tiers" style="margin-top:4px;align-items:center">'+chip(k.tier)+(k.region?'<span class="region">'+esc(k.region)+'</span>':'')+'</div><div class="kt">'+esc(k.title)+'</div>';
+      h+=k.body.map(function(b){return '<p class="para">'+esc(b)+'</p>';}).join('');
+      if(k.verse){h+='<div class="divider">॥</div><div class="verse">'+k.verse.l.map(function(l){return '<div class="l">'+esc(l)+'</div>';}).join('')+'<div class="i">'+esc(k.verse.i)+'</div><div class="c">'+esc(k.verse.c)+'</div><span class="pill">'+esc(k.verse.btn)+'</span></div>';}
+      else if(k.btn){h+='<div style="text-align:center"><span class="pill">'+esc(k.btn)+'</span></div>';}
+      return h+'<div class="canon">'+esc(k.canon)+'</div>';
+    }
+    if(pg.k==='bhav'){
+      var b='<div class="label" style="margin-top:6px">भाव</div><div class="teaching"><div class="t">'+esc(e.bhav)+'</div></div>';
+      if(e.bodh) b+='<div class="bodh"><div class="label">बोध · लोक और ग्रन्थ</div><div class="t">'+esc(e.bodh)+'</div></div>';
+      return b;
+    }
+    var doors=(e.next||[]).map(function(n){return '<div class="door quiet"><span class="g">॥</span><div class="m"><div class="t">'+esc(n)+'</div></div><span class="chev">›</span></div>';}).join('');
+    return '<div class="label" style="margin-top:6px">आगे पढ़ें</div><div class="stack" style="margin-top:8px">'+(doors||'<div class="muted deva" style="font-size:13px">—</div>')+'</div><div style="text-align:center"><span class="pill">साझा करें</span></div><div class="foot">यह परिचय है, विधान नहीं — परिवार की परम्परा सर्वोपरि है।</div>';
+  }
+  function renderReader(root,id,page,interactive){
+    var e=E[id],pages=pagesOf(e);page=Math.max(0,Math.min(page,pages.length-1));
+    root.dataset.id=id;root.dataset.page=page;
+    var pct=Math.round((page+1)/pages.length*100);
+    var dots=pages.map(function(_,i){return '<i class="'+(i===page?'on':'')+'"></i>';}).join('');
+    root.innerHTML='<div class="rd-head"><div class="topbar" style="padding-bottom:6px"><div class="back">‹</div><div class="toptitle" style="font-size:16px">'+esc(e.q)+'</div><span class="counter">'+(page+1)+' / '+pages.length+'</span></div>'+
+      '<div class="rd-prog"><i style="width:'+pct+'%"></i></div>'+
+      '<div class="rd-tools"><div class="lang"><span class="on">हिं</span><span class="en">EN</span></div><span class="listen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>सुनें</span></div></div>'+
+      '<div class="rd-body">'+pageHTML(e,pages[page],id)+'</div>'+
+      '<div class="rd-foot"><button class="pg" data-step="-1"'+(page===0?' disabled':'')+'>‹ पिछला</button><div class="dots" aria-label="पृष्ठ '+(page+1)+' / '+pages.length+'">'+dots+'</div><button class="pg r" data-step="1"'+(page===pages.length-1?' disabled':'')+'>अगला ›</button></div>';
+    root.dataset.interactive=interactive?'1':'';
+  }
+
+  var mainReader=document.getElementById('reader');
+  function reduced(){try{return window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(_){return true;}}
+  function focusPhone(el){
+    el.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'center'});
+    el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');
+  }
+  function openReader(id,page){
+    if(!E[id]||E[id].draft) return;
+    renderReader(mainReader,id,page||0,true);
+    focusPhone(document.getElementById('reader-phone'));
+  }
+
+  document.addEventListener('click',function(ev){
+    var t=ev.target.closest('[data-tab]');
+    if(t){hubTab=t.getAttribute('data-tab');renderHub();return;}
+    var s=ev.target.closest('[data-step]');
+    if(s){var root=s.closest('.rd');if(!root||s.disabled) return;renderReader(root,root.dataset.id,(+root.dataset.page)+(+s.getAttribute('data-step')),!!root.dataset.interactive);return;}
+    var o=ev.target.closest('[data-open]');
+    if(o){
+      var id=o.getAttribute('data-open'),pg=+(o.getAttribute('data-page')||0),inReader=o.closest('.rd');
+      if(inReader){renderReader(inReader,id,pg,!!inReader.dataset.interactive);return;}
+      openReader(id,pg);return;
+    }
+    var h=ev.target.closest('[data-hub]');
+    if(h){hubTab=h.getAttribute('data-hub');renderHub();focusPhone(document.getElementById('hub-phone'));}
+  });
+
+  renderHub();
+  renderReader(mainReader,'k-deepdaan',0,true);
+  renderReader(document.getElementById('reader-diwali'),'k-diwali',0,false);
+  renderReader(document.getElementById('reader-bodh'),'k-diwali',7,false);
+})();
+</script>
+</body>
+</html>
