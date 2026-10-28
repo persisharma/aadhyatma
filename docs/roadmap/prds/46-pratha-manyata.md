@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | **Phase 0 built (2026-10-28):** registry `mobile/src/data/pratha/` holds all 208 Appendix A rows (204 numbered + K27–K29 + AD1; 304 stories) in Hindi and English, every one `status: 'draft'` and invisible. Tests and RULEBOOK §32 are in place. No surface reads the registry yet (Phase 1). None of the rows is verified. |
+| **Status** | **Verification continuation (2026-10-28):** registry `mobile/src/data/pratha/` holds all 208 Appendix A rows. The first 13 Kartik entries are verified against opened publications; all others remain draft until separately reviewed. Story-level provenance, the ten-row pilot gate and regression tests are in place. Phase 1 surfaces are next. |
 | **T-shirt size** | Code: **M** (one registry, one hub, one reader, five contextual hooks — all existing patterns). Content: **XL** — 204 rows × (author + two-source verification). Content, not code, sets the schedule. |
 | **Parent / siblings** | Pattern parent: [PRD-44 पितृ पक्ष परिचय](./44-pitru-paksha-shiksha.md) (verified-only education registry, RULEBOOK §28). Siblings it must link to, never duplicate: the katha library (`panchang/kathaContent/`), [PRD-23 bhog](./23-bhog-naivedya-vrat-food.md), [PRD-19 vidhi](./19-puja-vidhi.md), [PRD-26 daan](./26-daan-punya.md), Theerth (`data/theerth/`), [PRD-41 जिज्ञासा](./41-jijnasa-ask-vedansh.md), [PRD-42 regional lens](./42-regional-parv.md). |
 | **Research input** | [`docs/content-parity/manyata-kathas.md`](../../content-parity/manyata-kathas.md) — ~200 rows of beliefs + stories with source tags. This PRD narrows that to **customs people actually perform or avoid**, and adds what it lacks (Kartik itself, weekdays, household, sanskar, nature). |
@@ -15,7 +15,7 @@
 
 ## 0. The honest content gate (read first)
 
-1. **Outbound access is still blocked by policy** (retested 2026-10-28: `CONNECT tunnel failed, response 403` for wisdomlib.org, sacred-texts.com). RULEBOOK §11.1 requires two independent sources per religious claim. Nothing in Appendix A can be marked `verified` from an agent session. Verification needs either a networked reviewer or the maintainer-attested exception (§11.1). Agents author **drafts**; drafts render nowhere.
+1. **Phase 0 was authored without opened sources.** Its session could not reach wisdomlib.org or sacred-texts.com. In the continuation on 2026-10-28, external source pages were opened successfully. RULEBOOK §11.1 still requires two independent publications per story; access alone never verifies a row. The reviewer records the pages actually read and the adjudication, or leaves the row draft with the specific missing evidence. An inaccessible second source is never replaced by a search snippet or model memory.
 2. **The bundled corpus is the strongest rung, but it is thin for this topic.** The Gita and Valmiki are bundled. Only 19 verses of Ramcharitmanas Bal Kand are bundled. **No Purana is bundled**, and most customs trace to Puranas. Anchors verified in-repo today:
    - Gita 1.15, 3.13, 4.24, 8.24, 9.26, 10.21, 10.25, 10.26, 10.28, 10.31, 10.35 and 17.7–10.
    - Valmiki 1.18.8 (Rama's birth, Chaitra Shukla Navami).
@@ -74,6 +74,8 @@ Every katha on a row carries exactly one tier. The tier renders as a small label
 | `purana` | **पुराण** | A named Purana or Mahatmya; khanda/adhyaya named | ≥2 refs naming the same adhyaya. A row that names a Purana without a chapter stays draft |
 | `lok` | **लोक-परम्परा** | Folk telling; no text claimed | ≥2 sources that **describe the custom and the story told about it**. The canon line says लोक-परम्परा (+ region). It must never name a text |
 | `itihas` | **इतिहास** | A dated historical origin (Tilak's public Ganesh Utsav, 1893; Khalsa, 1699; Mysore Dasara under the Wodeyars, 1610) | ≥2 refs, one of which is non-devotional |
+| `kavya` | **काव्य** | Named literary work, sarga/verse; not presented as scripture or folk | Two independent opened publications of the cited passage |
+| `agama` | **आगम** | Named Agama, section/verse | Two independent opened publications of the cited passage |
 
 - **Several kathas per row.** Diwali has six (Rama's return, Lakshmi, Bali Pratipada, Kali Puja, Mahavira, Bandi Chhor). The row shows them side by side with region labels. It never ranks one above another. A `region` field can later let the PRD-42 lens put the user's region first; it never hides the others.
 - **The tier is a fact about the source, not a judgement of the custom.** Copy never says "only folk". It says *लोक में यह कथा कही जाती है*.
@@ -81,7 +83,7 @@ Every katha on a row carries exactly one tier. The tier renders as a small label
 ## 5. Data model — `mobile/src/data/pratha/` (the §28 pattern)
 
 ```ts
-type PrathaTier = 'shastra' | 'purana' | 'lok' | 'itihas';
+type PrathaTier = 'shastra' | 'purana' | 'lok' | 'itihas' | 'kavya' | 'agama';
 type PrathaAxis = 'masa' | 'parv' | 'vaar' | 'nitya' | 'puja-niyam' | 'prakriti' | 'sanskar' | 'tirth';
 
 type PrathaKatha = {
@@ -201,6 +203,8 @@ type PrathaEntry = {
 
 ## 11. Open questions (product decisions)
 
+**Owner decisions, 2026-10-28:** folk verification approved; hub name **“ऐसा क्यों?”**; separate **`kavya` and `agama`** tiers approved. This does not waive source verification, approve a single-source exception, or settle the remaining regional/art/sensitive-custom choices. Existing mixed draft stories stay draft until split and collated.
+
 1. **Name.** "ऐसा क्यों?" (question-first; recommended — it is what people type) vs "प्रथा और मान्यता" vs "परम्परा परिचय".
 2. **Who verifies, and how fast?** Agents cannot open sources (§0.1). Choose a networked reviewer, or the maintainer-attested exception per row (§11.1). This decision sets the whole schedule.
 3. **Approve the folk-verification rule** (§4 `lok`): "two sources describe the custom and the story told about it". Without it, Phase 1 shrinks to about 8 Kartik rows.
@@ -268,7 +272,7 @@ In the order of §6, each with its tests and the same-PR docs (§10):
 The clickable prototype (`docs/pratha-manyata-prototype.html`) is the visual reference. Its copy is the pre-correction draft, so the registry is the source of truth for text.
 
 ### 12.5 Decisions only the product owner makes
-§11 items 1–7, plus the tier gap in §12.3 (`kavya`/Agama). Until item 3 (the folk-verification rule) is approved, verify only `shastra`/`purana`/`itihas` stories and leave `lok` stories draft.
+The owner approved §11 items 1 and 3 and separate `kavya`/`agama` tiers on 2026-10-28. Folk stories can now be verified as folk against two independent opened publications. Remaining choices in §11 stay open; none changes the source threshold. See `docs/content-parity/pratha-verification-2026-10-28.md` for the continuation’s source adjudications.
 
 ---
 

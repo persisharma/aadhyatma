@@ -16,6 +16,7 @@ import { PRATHA_SANSKAR_ENTRIES } from './sanskar';
 import { PRATHA_TIRTH_ENTRIES } from './tirth';
 import { PRATHA_VAAR_ENTRIES } from './vaar';
 import type { PrathaAxis, PrathaEntry } from './types';
+import { isPrathaPilotReady } from './verification';
 
 export const PRATHA_ENTRIES: readonly PrathaEntry[] = [
   ...PRATHA_MASA_ENTRIES,
@@ -34,6 +35,10 @@ export function verifiedOnly(entries: readonly PrathaEntry[]): readonly PrathaEn
 
 export function getVerifiedPratha(): readonly PrathaEntry[] {
   return verifiedOnly(PRATHA_ENTRIES);
+}
+
+export function isPilotReady(): boolean {
+  return isPrathaPilotReady(PRATHA_ENTRIES);
 }
 
 export function selectById(entries: readonly PrathaEntry[], id: string): PrathaEntry | null {

@@ -53,10 +53,15 @@ export function getPrathaForVaar(weekday: number): readonly PrathaEntry[] {
 }
 
 /**
- * The one door predicate every host uses: true only when at least one
- * verified row exists. An all-draft registry renders NO door anywhere —
+ * The one door predicate every host uses: at least ten verified Kartik
+ * rows open the pilot (PRD-46 §8). An all-draft registry renders NO door —
  * absent, never a teaser.
  */
 export function hasPratha(): boolean {
-  return getAllPratha().length > 0;
+  return registry().isPilotReady();
+}
+
+/** Month chip/card gate; individual verified rows remain available to contextual readers. */
+export function hasPrathaForMasa(lunarMonth: number, isAdhik = false): boolean {
+  return hasPratha() && getPrathaForMasa(lunarMonth, isAdhik).length >= 3;
 }

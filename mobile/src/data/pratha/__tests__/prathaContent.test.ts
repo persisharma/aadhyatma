@@ -26,6 +26,7 @@ import {
   getPrathaForRule,
   getPrathaForVaar,
   hasPratha,
+  hasPrathaForMasa,
 } from '../index';
 import {
   PRATHA_ENTRIES,
@@ -36,6 +37,7 @@ import {
   verifiedOnly,
 } from '../registry';
 import type { PrathaEntry, PrathaReaderRef } from '../types';
+import { isPrathaPilotReady, prathaVerificationIssues } from '../verification';
 
 const REPO = join(__dirname, '..', '..', '..', '..', '..');
 const DATA = join(__dirname, '..', '..');
@@ -118,6 +120,7 @@ describe('provenance (PRD-46 §4)', () => {
       for (const u of referenceUrls) expect(u).toMatch(/^(https:\/\/|repo:)/);
       expect(verificationNote).toMatch(/^\d{4}-\d{2}-\d{2}/);
       if (e.status === 'verified') {
+        expect(prathaVerificationIssues(e)).toEqual([]);
         expect(referenceUrls.length).toBeGreaterThanOrEqual(2);
         expect(referenceUrls.some((u) => u.startsWith('https://'))).toBe(true);
         expect(verificationNote).not.toMatch(/DRAFT/);
@@ -195,7 +198,7 @@ describe('draft invisibility', () => {
     for (const e of getAllPratha()) expect(e.status).toBe('verified');
     expect(getPratha(drafts[0].id)).toBeNull();
     expect(getPrathaByAxis(drafts[0].axis).some((e) => e.id === drafts[0].id)).toBe(false);
-    expect(hasPratha()).toBe(getAllPratha().length > 0);
+    expect(hasPratha()).toBe(isPrathaPilotReady(PRATHA_ENTRIES));
     for (const e of [...getPrathaForRule('dhanteras'), ...getPrathaForMasa(8), ...getPrathaForVaar(0)]) {
       expect(e.status).toBe('verified');
     }
@@ -216,6 +219,30 @@ describe('draft invisibility', () => {
     expect(selectForMasa(visible, 8).map((e) => e.id)).toContain('K10');
     expect(selectForMasa(visible, 8, true).map((e) => e.id)).not.toContain('K10');
     expect(selectForVaar(visible, 0).map((e) => e.id)).toContain('W8');
+  });
+});
+
+describe('activation and provenance regression cases', () => {
+  const seed = PRATHA_ENTRIES.find((entry) => entry.id === 'K1')!;
+  const rows = (count: number): PrathaEntry[] => Array.from({ length: count }, (_, i) => ({ ...seed, id: `fixture-${i}` }));
+
+  test('nine Kartik rows, drafts and other months cannot open the pilot; ten can', () => {
+    expect(isPrathaPilotReady(rows(9))).toBe(false);
+    expect(isPrathaPilotReady(rows(10))).toBe(true);
+    expect(isPrathaPilotReady(rows(10).map((e) => ({ ...e, status: 'draft' })))).toBe(false);
+    expect(isPrathaPilotReady(rows(10).map((e) => ({ ...e, anchors: { masa: [9] } })))).toBe(false);
+    expect(hasPrathaForMasa(8)).toBe(hasPratha() && getPrathaForMasa(8).length >= 3);
+    expect(hasPrathaForMasa(8, true)).toBe(hasPratha() && getPrathaForMasa(8, true).length >= 3);
+  });
+
+  test('two row references do not verify every story automatically', () => {
+    const invalid = { ...seed, kathas: [{ ...seed.kathas[0], referenceUrls: [seed.source.referenceUrls[0]] }] };
+    expect(prathaVerificationIssues(invalid)).toContain('K1.kathas[0]: two opened sources required for this story');
+  });
+
+  test('pending chapter cannot be published by merely flipping status', () => {
+    const invalid = { ...seed, kathas: [{ ...seed.kathas[0], canonEn: 'Padma Purana (adhyaya under review)' }] };
+    expect(prathaVerificationIssues(invalid)).toContain('K1.kathas[0]: unresolved canon');
   });
 });
 

@@ -17,7 +17,7 @@ export type PrathaContentStatus = 'draft' | 'verified';
  * named; `purana` = a named Purana or Mahatmya with its adhyaya named;
  * `lok` = folk telling, names no text; `itihas` = a dated historical origin.
  */
-export type PrathaTier = 'shastra' | 'purana' | 'lok' | 'itihas';
+export type PrathaTier = 'shastra' | 'purana' | 'lok' | 'itihas' | 'kavya' | 'agama';
 
 /** The hub tab a row belongs to. Festival customs live under `masa`. */
 export type PrathaAxis = 'masa' | 'vaar' | 'nitya' | 'puja-niyam' | 'prakriti' | 'sanskar' | 'tirth' | 'bodh';
@@ -56,6 +56,8 @@ export type PrathaKatha = {
   /** Rendered source line. A `lok` canon says लोक-परम्परा and names no text. */
   canonHi: string;
   canonEn: string;
+  /** Two independently published sources actually read for THIS story; required when its row is verified. */
+  referenceUrls?: readonly string[];
   ref?: PrathaReaderRef;
 };
 
