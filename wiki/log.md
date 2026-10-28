@@ -1269,6 +1269,10 @@ The day panel reuses `ObservancePreviewCard` / `ListingCard` with event artwork 
 
 Every rendered clock is now zero-padded 24-hour `HH:MM`: `formatClock` dropped AM/PM, `formatRangeCompact` was removed (callers use `formatRange`), and the hand-rolled 12-hour formatters (Kundali/Jyotish birth time, Namkaran windows, widget IST clock, Routine offered time, Japam alarm label + `prefers12HourClock`) were converted. `ClockTimePicker` lost its AM/PM toggle (HR column `00`–`23`). Fixed reminder copy (ArcStrip, Janma Tithi, festive greeting, Prashna transit note) now reads 24-hour. design.md §3.2 added; [[panchang]] display helpers updated.
 
+## [2026-10-28] ingest | Mahakaal masters published to R2
+
+PR #555 added four Mahakaal masters (three Suvichar frames + the Daily Bhakti card) with `scripts/prepare-mahakaal.mjs` but never ran its publish step, so Suvichar sources were 51 vs a 48-entry manifest and `prepare-suvichar.mjs --verify` failed on main. Uploaded the four with immutable caching, then `prepare-mahakaal.mjs --activate` re-verified public bytes and activated both manifests (Suvichar 51, devotional-share 29).
+
 ## [2026-10-28] ingest | PRD-46 प्रथा और मान्यता — Phase 0 registry
 
 New subsystem page `wiki/subsystems/pratha.md`. `mobile/src/data/pratha/` holds all 208 Appendix A customs (304 stories, Hi+En) as invisible drafts, with verified-only accessors, a flipped-row selector test, registry-checked links and the stance guard (RULEBOOK §32). Also recorded: bundled Valmiki sarga 6.107 is a defective corpus row (never quote it), and festival `ruleIds` were derived from katha links, excluding mahatmyas.
