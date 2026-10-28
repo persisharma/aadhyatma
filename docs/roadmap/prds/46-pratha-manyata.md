@@ -19,8 +19,8 @@
 2. **The bundled corpus is the strongest rung, but it is thin for this topic.** The Gita and Valmiki are bundled. Only 19 verses of Ramcharitmanas Bal Kand are bundled. **No Purana is bundled**, and most customs trace to Puranas. Anchors verified in-repo today:
    - Gita 1.15, 3.13, 4.24, 8.24, 9.26, 10.21, 10.25, 10.26, 10.28, 10.31, 10.35 and 17.7–10.
    - Valmiki 1.18.8 (Rama's birth, Chaitra Shukla Navami).
-   - Valmiki 6.107 (आदित्यहृदय).
    - Valmiki Bala 38–44 (भगीरथ — already anchors a Pitru katha).
+   - **Not usable:** Valmiki 6.107 (आदित्यहृदय). The bundled sarga has collapsed word spacing and Hindi meanings shifted by one verse (6.107.2 repeats 6.107.1's meaning). It is a defective corpus row under RULEBOOK §28.4, so W8 is meaning-only until the corpus is repaired.
 3. **A finding that shapes the copy:** the bundled Valmiki Yuddha Kanda sargas 120–131 (the return to Ayodhya) contain **no lamp festival**; the only दीप is servants carrying oil lamps at 6.131.47. "Diwali lamps for Rama's return" must therefore render as **लोक-परम्परा**, not as Valmiki. The research manifest already suspected this (`[Likely] later`). It is now confirmed against the shipped text.
 4. **Folk does not mean unshippable; it means labelled.** Most famous customs (Karva Chauth's sieve, Ahoi, Diwali gambling, Basoda) have no scriptural source. If this layer shipped only scripture it would miss most of what people ask about. If it shipped folk stories as scripture it would repeat the misattribution that RULEBOOK §11 was written to stop. §4 resolves this: a folk row is verifiable as **"this is what is practised and what is told"**, and its canon line says so.
 
@@ -385,7 +385,7 @@ Also Kartik, as regional rows: **सामा-चकेवा** (Mithila — Kri
 | W5 | **शुक्रवार — सन्तोषी माँ, खट्टा नहीं** | Popularised by the 1975 film *Jai Santoshi Maa* (M) | [itihas] |
 | W6 | **शनिवार — तेल, पीपल पर दीया, काला तिल** | Pippalada and Shani; Hanuman freed Shani from Ravana and Shani spared his devotees (M) | Pippalada [Likely] Shiva Purana, Shatarudra Samhita; Hanuman [Guessing] |
 | W7 | **शनि देव की आँखों में न देखना / सामने से नहीं, बगल से दर्शन** | Shani's gaze — the cause of Ganesha's lost head (M) | [Likely] Brahmavaivarta, Ganapati Khanda |
-| W8 | **रविवार — सूर्य को अर्घ्य; नमक नहीं (रविवार व्रत)** | Rama recited the Aditya Hridaya to Surya before the last battle | **Valmiki 6.107 ★** [Certain]; no-salt [Guessing] |
+| W8 | **रविवार — सूर्य को अर्घ्य; नमक नहीं (रविवार व्रत)** | Rama recited the Aditya Hridaya to Surya before the last battle | [Certain] Valmiki 6.107 — **bundled sarga defective, meaning-only**; no-salt [Guessing] |
 | W9 | **मंगल / गुरु / शनि को बाल-नाखून न काटना** | Folk (M §7) — no story; renders as a short lok note or is dropped | [Guessing] |
 
 ### A.4 घर-आँगन — Daily household customs (Phase 3 · 25 rows)
