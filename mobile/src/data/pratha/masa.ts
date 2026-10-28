@@ -4791,7 +4791,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Bhagavata Purana, Skandha 7 | Folk tradition | Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. All three stories must pass separately: exact Bhagavata chapters for Prahlada, two folk publications for Holika, and two for the new-grain custom. The broad Skandha 7 label does not source the Holika episode. These pairs have not yet been collated.',
       confidence: 'Likely',
     },
   },
@@ -4854,7 +4854,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition (Braj) | Folk tradition (Braj). Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. The Radha/Krishna colour telling and Barsana Lathmar telling each still need two independently published, opened accounts. No Purana attribution is assumed for either Braj folk story.',
       confidence: 'Guessing',
     },
   },
@@ -4907,7 +4907,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition | Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. Neither the eight-day Prahlada linkage nor the Kama linkage has yet been collated in two independent opened publications. No verse or exact eight-day chronology is established by the draft.',
       confidence: 'Guessing',
     },
   },
@@ -4947,7 +4947,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Shiva Purana · Kalidasa\'s Kumarasambhava (adhyaya under review). Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. Owner approved a separate kavya tier, but this mixed Shiva Purana/Kumarasambhava canon remains uncollated. The exact chapters, narrative differences and southern festival linkage still need opened sources; tier approval alone does not verify the entry.',
       confidence: 'Certain',
     },
   },
@@ -4988,7 +4988,7 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
     status: 'draft',
     source: {
       referenceUrls: [],
-      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. PRD-46 Phase 0 retelling (Hindi authored, English translated); no source was opened. To open: Folk tradition. Leads: none recorded — outbound access is blocked by policy (PRD-46 §0).',
+      verificationNote: '2026-10-28: DRAFT — NOT VERIFIED. The Brahma-tear amla origin has not been collated in two opened independent publications, and an opened amla-origin account alone cannot establish its Amalaki Ekadashi linkage. It remains a hidden folk draft.',
       confidence: 'Likely',
     },
   },
