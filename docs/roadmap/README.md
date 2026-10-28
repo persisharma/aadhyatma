@@ -14,7 +14,7 @@ This folder holds the product roadmap and PRDs for upcoming releases.
   askable in one line — and every future feature is discoverable on the day it ships. Companion
   build for the quarter: PRD-20 सङ्कल्प.
 - [**PRD-42 — क्षेत्रीय पर्व · Regional, Sampradaya & Jain calendar**](./prds/42-regional-parv.md) — **Wave 1 shipped 2026-09-06** (17 observances: Rajasthan, Bihar/Mithila, and three pan-Hindu gaps the same audit surfaced). Waves 2–8 proposed: a per-region / per-sampradaya **lens** — a calendar the user turns on, seeded silently from the city they already chose, never a question about who they are — and behind it **22 lenses covering every state** plus the Jain and Sindhi calendars. Appendix A registers **141 candidate observances**, Appendix C **8 universal gaps** that belong to no region and are simply missing (Radhashtami, Gopashtami, Ratha Saptami…). Wave 2 is the gate and ships as a deliberate no-op; realistically a three-to-four-quarter content programme behind a one-sprint code gate. Owns RULEBOOK §23a, written by wave 1.
-- [**PRD-46 — प्रथा और मान्यता · "ऐसा क्यों करते हैं?"**](./prds/46-pratha-manyata.md) — **proposed 2026-10-28.**
+- [**PRD-46 — प्रथा और मान्यता · "ऐसा क्यों करते हैं?"**](./prds/46-pratha-manyata.md) — **Phase 0 built 2026-10-28** (all 208 rows as invisible bilingual drafts in `data/pratha/`, RULEBOOK §32).
   The why behind every famous custom: practice → story(ies) → meaning → an always-visible source tier
   (शास्त्र · पुराण · लोक-परम्परा · इतिहास), verified-only on the PRD-44 pattern. It surfaces on the
   observance, the Panchang's first month-level card, the day, Ask and search. Appendix A catalogues

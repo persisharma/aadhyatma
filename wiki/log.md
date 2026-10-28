@@ -1228,3 +1228,11 @@ Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×7
 ## [2026-10-27] ingest | Upcoming full-width banners
 
 The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.
+
+## [2026-10-28] ingest | PRD-46 प्रथा और मान्यता — Phase 0 registry
+
+New subsystem page `wiki/subsystems/pratha.md`. `mobile/src/data/pratha/` holds all 208 Appendix A customs (304 stories, Hi+En) as invisible drafts, with verified-only accessors, a flipped-row selector test, registry-checked links and the stance guard (RULEBOOK §32). Also recorded: bundled Valmiki sarga 6.107 is a defective corpus row (never quote it), and festival `ruleIds` were derived from katha links, excluding mahatmyas.
+
+## [2026-10-28] gap | PRD-46 rows are unverified
+
+All 208 pratha rows are app-authored retellings that no reviewer has checked against an opened source. Verification is per row and needs network access or the maintainer-attested exception (RULEBOOK §11.1).

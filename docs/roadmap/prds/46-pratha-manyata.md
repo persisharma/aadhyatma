@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Proposed (2026-10-28). Nothing built. Appendix A is the full candidate catalogue (204 numbered rows); none is verified. |
+| **Status** | **Phase 0 built (2026-10-28):** registry `mobile/src/data/pratha/` holds all 208 Appendix A rows (204 numbered + K27–K29 + AD1; 304 stories) in Hindi and English, every one `status: 'draft'` and invisible. Tests and RULEBOOK §32 are in place. No surface reads the registry yet (Phase 1). None of the rows is verified. |
 | **T-shirt size** | Code: **M** (one registry, one hub, one reader, five contextual hooks — all existing patterns). Content: **XL** — 204 rows × (author + two-source verification). Content, not code, sets the schedule. |
 | **Parent / siblings** | Pattern parent: [PRD-44 पितृ पक्ष परिचय](./44-pitru-paksha-shiksha.md) (verified-only education registry, RULEBOOK §28). Siblings it must link to, never duplicate: the katha library (`panchang/kathaContent/`), [PRD-23 bhog](./23-bhog-naivedya-vrat-food.md), [PRD-19 vidhi](./19-puja-vidhi.md), [PRD-26 daan](./26-daan-punya.md), Theerth (`data/theerth/`), [PRD-41 जिज्ञासा](./41-jijnasa-ask-vedansh.md), [PRD-42 regional lens](./42-regional-parv.md). |
 | **Research input** | [`docs/content-parity/manyata-kathas.md`](../../content-parity/manyata-kathas.md) — ~200 rows of beliefs + stories with source tags. This PRD narrows that to **customs people actually perform or avoid**, and adds what it lacks (Kartik itself, weekdays, household, sanskar, nature). |
@@ -116,7 +116,7 @@ type PrathaEntry = {
 };
 ```
 
-- **Files:** `types.ts`, then `masa.ts`, `parv.ts`, `vaar.ts`, `nitya.ts`, `pujaNiyam.ts`, `prakriti.ts`, `sanskar.ts` and `tirth.ts` (one per axis), then `index.ts`.
+- **Files (built):** `types.ts` (canonical shape — it adds `phase`, `source.confidence`, and the anchors `adhikMasa`, `libraryIds`, `prathaIds`, `pitru`; `masa` uses the engine's Chaitra = 1 … Phalgun = 12); one content file per axis — `masa.ts` (festival customs live here, keyed by month and `ruleIds`; there is no separate `parv.ts`), `vaar.ts`, `nitya.ts`, `pujaNiyam.ts`, `prakriti.ts`, `sanskar.ts`, `tirth.ts`, `bodh.ts`; `registry.ts` (joins the axes, holds the pure selectors); `index.ts` (verified-only accessors behind a `require()` thunk). `ruleIds` were derived from each row's katha link where that katha opens three or fewer observances (month-wide mahatmyas excluded).
 - **Accessors in `index.ts`** expose verified rows only, loaded through `require()` thunks:
   - `getPratha(id)`
   - `getPrathaForRule(ruleId)`
@@ -157,7 +157,7 @@ type PrathaEntry = {
 
 | Phase | Scope | Rows | Gate |
 |---|---|---|---|
-| **0** (S) | Registry + types + accessors + stance guard + RULEBOOK §32 (tiers, folk-verification rule). No UI. | 0 visible | Tests green |
+| **0** (S) — **built** | Registry + types + accessors + stance guard + RULEBOOK §32 (tiers, folk-verification rule). All 208 rows imported as bilingual drafts. No UI. | 0 visible | Tests green |
 | **1** (M) | **Kartik pilot**: hub, reader, Observance Detail card, Panchang masa card. Appendix A §A.1 authored (26 rows). | 26 | ≥10 verified Kartik rows before the hub door shows |
 | **2** | Festival customs for the other 11 months, shipped **ahead of each season** in calendar order: Margashirsha → Paush → Magh (Makar Sankranti) → Phalgun (Holi) → … Also FOR TODAY chip, bhog links, search. | ~70 | Per-month: the hub's masa tab for a month opens only with ≥3 verified rows for it |
 | **3** | Year-round axes: वार, घर-आँगन, पूजा-नियम, प्रकृति + `bodh` corrections. Ask intent. | ~80 | — |
