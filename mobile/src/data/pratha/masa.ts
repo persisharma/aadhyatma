@@ -1968,8 +1968,8 @@ export const PRATHA_MASA_ENTRIES: readonly PrathaEntry[] = [
         bodyEn: [
           'At the start of the exile in the forest, Yudhishthira worshipped the sun, and the sun gave him a vessel whose food never ran out until Draupadi had eaten. Folk tradition links the story of this \'akshaya\' vessel — one that never diminishes — to this tithi.',
         ],
-        canonHi: 'लोक-परम्परा · कथा का मूल: महाभारत, वन पर्व',
-        canonEn: 'Folk tradition · Source of the story: Mahabharata, Vana Parva',
+        canonHi: 'लोक-परम्परा',
+        canonEn: 'Folk tradition',
       },
       {
         tier: 'lok',
