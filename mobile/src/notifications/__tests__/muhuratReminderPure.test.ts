@@ -221,7 +221,7 @@ test('day-of copy carries the window; advance copy names the day', () => {
   assert.equal(dayOf.title, 'मुहूर्त स्मरण');
   assert.ok(dayOf.body.includes('वाहन क्रय'), dayOf.body);
   assert.ok(dayOf.body.includes('अमृत'), dayOf.body);
-  assert.ok(dayOf.body.includes('6:07'), dayOf.body);
+  assert.ok(dayOf.body.includes('06:07'), dayOf.body);
   assert.ok(dayOf.body.includes('Vehicle Purchase'), dayOf.body);
 
   assert.ok(advance.body.startsWith('कल '), advance.body);

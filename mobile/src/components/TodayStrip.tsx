@@ -10,7 +10,7 @@ import { useTilePress } from '@/contexts/TilePressContext';
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { prevailingTithi } from '@/panchang/prevailingTithi';
-import { formatClock, formatRangeCompact } from '@/panchang/muhuratFormat';
+import { formatClock, formatRange } from '@/panchang/muhuratFormat';
 import { useMuhuratFollows } from '@/contexts/MuhuratFollowContext';
 import { useNextFollowedMuhurat } from '@/panchang/useMuhuratFinder';
 import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN, VARA_NAMES_EN, VARA_NAMES_HI } from '@/panchang/names';
@@ -222,7 +222,7 @@ export default function TodayStrip() {
   // the pill spec exists once. Chip text colors are the DEEP cuts: the tint
   // composites darker than the raw card surface (colors.contrast.test.ts pins
   // avoidDeep/saffronDeep against the composited chip surfaces). Ranges are
-  // compact (shared meridiem written once) so the row needs less width.
+  // 24-hour `HH:MM – HH:MM`.
   type Chip = { key: string; labelHi: string; labelEn: string; range?: string; bg: string; fg: string; onPress?: () => void };
   const chips: Chip[] = [
     // A followed muhurat leads the row when one is near (PRD-16 §6.7). Purely
@@ -268,7 +268,7 @@ export default function TodayStrip() {
             key: 'abhijit',
             labelHi: 'अभिजीत',
             labelEn: 'Abhijit',
-            range: formatRangeCompact(muhurat.abhijit.start, muhurat.abhijit.end),
+            range: formatRange(muhurat.abhijit.start, muhurat.abhijit.end),
             bg: colors.goldChipBg,
             fg: colors.saffronDeep,
           },
@@ -282,7 +282,7 @@ export default function TodayStrip() {
             key: muhurat.rahu.key,
             labelHi: muhurat.rahu.nameHi,
             labelEn: muhurat.rahu.nameEn,
-            range: formatRangeCompact(muhurat.rahu.start, muhurat.rahu.end),
+            range: formatRange(muhurat.rahu.start, muhurat.rahu.end),
             bg: colors.avoidChipBg,
             fg: colors.avoidDeep,
           },

@@ -40,7 +40,7 @@ import ShubhYogaCard from '@/components/ShubhYogaCard';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import PitruPakshaDayChip from '@/components/PitruPakshaDayChip';
 import TextField from '@/components/TextField';
-import { formatClock as formatTime12, formatEndInstant } from '@/panchang/muhuratFormat';
+import { formatClock, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, calendarWeeks, dateKey } from '@/panchang/calendarGrid';
 import { getEventRule } from '@/panchang/eventMuhurat';
@@ -846,12 +846,12 @@ export default function PanchangScreen({ route }: Props) {
 
           <PanchangDaySurface testID="panchang-times-card" style={styles.timesCard}>
             <View style={styles.timesRow}>
-              <TimeCell icon="surya" label={contentByLang(lang, 'सूर्योदय', 'Sunrise')} value={formatTime12(p.sunrise)} lang={lang} colors={colors} />
-              <TimeCell icon="sunset" label={contentByLang(lang, 'सूर्यास्त', 'Sunset')} value={formatTime12(p.sunset)} lang={lang} colors={colors} />
+              <TimeCell icon="surya" label={contentByLang(lang, 'सूर्योदय', 'Sunrise')} value={formatClock(p.sunrise)} lang={lang} colors={colors} />
+              <TimeCell icon="sunset" label={contentByLang(lang, 'सूर्यास्त', 'Sunset')} value={formatClock(p.sunset)} lang={lang} colors={colors} />
             </View>
             <View style={[styles.timesRow, { marginTop: 12 }]}>
-              <TimeCell icon="moonrise" label={contentByLang(lang, 'चंद्रोदय', 'Moonrise')} value={formatTime12(p.moonrise)} lang={lang} colors={colors} />
-              <TimeCell icon="aarti" label={contentByLang(lang, 'ब्रह्म मुहूर्त', 'Brahma Muhurta')} value={`${formatTime12(p.brahmaMuhurta.start)} - ${formatTime12(p.brahmaMuhurta.end)}`} lang={lang} colors={colors} />
+              <TimeCell icon="moonrise" label={contentByLang(lang, 'चंद्रोदय', 'Moonrise')} value={formatClock(p.moonrise)} lang={lang} colors={colors} />
+              <TimeCell icon="aarti" label={contentByLang(lang, 'ब्रह्म मुहूर्त', 'Brahma Muhurta')} value={`${formatClock(p.brahmaMuhurta.start)} - ${formatClock(p.brahmaMuhurta.end)}`} lang={lang} colors={colors} />
             </View>
           </PanchangDaySurface>
             </>
@@ -1678,10 +1678,10 @@ function PanchangTile({ icon, tithiIndex, label, element, kshaya, successor, pan
   label: string;
   element: PanchangElement;
   // Kshaya anga (skipped at every sunrise) — rendered as a second, smaller row so
-  // days like 10 Jul 2026 read "दशमी तक 8:16 AM · एकादशी तक 5:22 AM, 11 जुल".
+  // days like 10 Jul 2026 read "दशमी तक 08:16 · एकादशी तक 05:22, 11 जुल".
   kshaya?: PanchangElement | null;
   // The anga that takes over later the SAME day (tithi tile only). "तृतीया तक
-  // 8:51 AM" alone leaves the rest of the day unnamed, which is what made a
+  // 08:51" alone leaves the rest of the day unnamed, which is what made a
   // Chaturthi vrat look like it belonged to the next date instead of this one.
   successor?: { nameHi: string; nameEn: string } | null;
   panchangDate: Date;
@@ -1729,7 +1729,7 @@ function PanchangTile({ icon, tithiIndex, label, element, kshaya, successor, pan
             {contentByLang(lang, row.nameHi, row.nameEn)}
           </Text>
           {/* formatEndInstant appends a short date when the end falls past
-              midnight — a bare "तक 2:04 AM" would read as this morning. */}
+              midnight — a bare "तक 02:04" would read as this morning. */}
           {row.endTime && (
             <Text style={{ fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15, color: colors.inkSoft, marginTop: i === 0 ? 5 : 3 }}>
               {contentByLang(lang, 'तक ', 'till ')}{formatEndInstant(row.endTime, panchangDate, lang)}
@@ -1792,7 +1792,7 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
   // moonrise that breaks a chandrodaya fast, the aparahna दर्श अमावस्या is fixed
   // by, the snan-daan morning of the udaya अमावस्या row. Pure helper, so the copy
   // and the day logic are test-pinned away from the render path.
-  const dayNote = observanceDayNote(item.rule, daySolve, formatTime12);
+  const dayNote = observanceDayNote(item.rule, daySolve, formatClock);
   // The one generic monthly rule whose occurrences carry PUBLISHED names: the
   // Bhadrapada Sankashti is the Heramba day, an adhik lunation is Vibhuvana, a
   // Tuesday is अंगारकी — the rule name alone hid all of that. Occurrence-titled

@@ -12,7 +12,7 @@ import {
   type MuhuratReminderPref,
 } from '@/contexts/MuhuratFollowContext';
 import { clampDayOf, ADVANCE_HOUR } from '@/notifications/muhuratReminderPure';
-import { formatClock, formatRangeCompact } from '@/panchang/muhuratFormat';
+import { formatClock, formatRange } from '@/panchang/muhuratFormat';
 import { VARA_NAMES_EN, VARA_NAMES_HI } from '@/panchang/names';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { OccasionId, MuhuratWindow } from '@/panchang/eventMuhurat';
@@ -115,7 +115,7 @@ export default function MuhuratFollowControl({
     contentByLang(lang, occasionNameHi, occasionNameEn),
     `${shortWeekday(date, lang)} ${date.getDate()}`,
     bestWindow
-      ? `${contentByLang(lang, bestWindow.nameHi, bestWindow.nameEn)} ${formatRangeCompact(bestWindow.start, bestWindow.end)}`
+      ? `${contentByLang(lang, bestWindow.nameHi, bestWindow.nameEn)} ${formatRange(bestWindow.start, bestWindow.end)}`
       : null,
   ]
     .filter(Boolean)

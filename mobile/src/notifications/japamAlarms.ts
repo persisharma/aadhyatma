@@ -369,28 +369,7 @@ export function describeUntilFire(
   return isHi ? `${span} में` : `in ${span}`;
 }
 
-/** "06:30" (24 h) or "6:30 AM" (12 h). */
-export function formatTimeLabel(time: TimeOfDay, hour12: boolean): string {
-  const mm = `${time.minute}`.padStart(2, '0');
-  if (!hour12) return `${`${time.hour}`.padStart(2, '0')}:${mm}`;
-  const suffix = time.hour < 12 ? 'AM' : 'PM';
-  const h = time.hour % 12 === 0 ? 12 : time.hour % 12;
-  return `${h}:${mm} ${suffix}`;
-}
-
-/**
- * Whether the current locale prefers a 12-hour clock. Resolved via `Intl`
- * (available on Hermes) — reflects the device locale's convention. Defaults
- * to 24 h when `Intl` is unavailable, matching the app's prior display.
- */
-export function prefers12HourClock(locale?: string): boolean {
-  try {
-    const opts = new Intl.DateTimeFormat(locale, {
-      hour: 'numeric',
-    }).resolvedOptions() as { hour12?: boolean; hourCycle?: string };
-    if (typeof opts.hour12 === 'boolean') return opts.hour12;
-    return opts.hourCycle === 'h11' || opts.hourCycle === 'h12';
-  } catch {
-    return false;
-  }
+/** "06:30" — 24-hour, whatever the device locale prefers. */
+export function formatTimeLabel(time: TimeOfDay): string {
+  return `${`${time.hour}`.padStart(2, '0')}:${`${time.minute}`.padStart(2, '0')}`;
 }

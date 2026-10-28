@@ -259,7 +259,7 @@ struct VedanshWidgetView: View {
           Text(running.name.value(lang))
             .font(.custom(fontName(lang, bold: true), size: family == .systemLarge ? 32 : family == .systemSmall ? 20 : 21))
             .foregroundStyle(WidgetTheme.ink).lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.75)
-          // "तक 10:48 AM" — when the headline stops being true, the one fact a
+          // "तक 10:48" — when the headline stops being true, the one fact a
           // dated tithi glance is useless without. Absent only when this day's
           // solve does not know the end (the successor's end belongs to
           // tomorrow's solve), matching the Home glance's own omission.

@@ -1259,3 +1259,7 @@ Captured the painted waning Krishna Tritiya moon and sepia night header on the d
 ## [2026-10-28] ingest | Panchang following-day cards share the Vrat listing; strengthen Nakshatra miniature
 
 The day panel reuses `ObservancePreviewCard` / `ListingCard` with event artwork and separate save/reminder controls. Named Sankashti display titles retain the original rule identity for artwork/reminders. Nakshatra's existing six-star painting has stronger sepia contours/connectors in the same 36dp slot; reference, new master, prompt, hashes and exports are retained. Typecheck, focused ESLint, 33 focused tests and Standard/Large iOS visual flow pass; evidence is in `docs/evaluations/panchang-day-icons-2026-10-27/`. Android/VoiceOver remain pending.
+
+## [2026-10-28] ingest | App-wide 24-hour time format
+
+Every rendered clock is now zero-padded 24-hour `HH:MM`: `formatClock` dropped AM/PM, `formatRangeCompact` was removed (callers use `formatRange`), and the hand-rolled 12-hour formatters (Kundali/Jyotish birth time, Namkaran windows, widget IST clock, Routine offered time, Japam alarm label + `prefers12HourClock`) were converted. `ClockTimePicker` lost its AM/PM toggle (HR column `00`–`23`). Fixed reminder copy (ArcStrip, Janma Tithi, festive greeting, Prashna transit note) now reads 24-hour. design.md §3.2 added; [[panchang]] display helpers updated.
