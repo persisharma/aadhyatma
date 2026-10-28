@@ -990,7 +990,7 @@
       "kind": "generated-full-card-master",
       "bodyPlate": "mahakaal",
       "promptKey": "mahakaal",
-      "provenance": "Full shrine illustration generated from Shiva frame reference; original Shiva master retained. R2 publication pending.",
+      "provenance": "Full shrine illustration generated from Shiva frame reference; original Shiva master retained. Public R2 bytes verified by prepare-mahakaal.mjs.",
       "frameSpec": {
         "hero": 550,
         "sourceEnd": 650,
@@ -1001,8 +1001,7 @@
         "sourceFont": 20,
         "sourceTop": 14,
         "meaningPad": 95
-      },
-      "publication": "pending"
+      }
     }
   }
 }
