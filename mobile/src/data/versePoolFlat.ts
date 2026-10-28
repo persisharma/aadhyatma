@@ -1,17 +1,17 @@
-import { aartiIdByIndex } from './aarti/ids';
 import * as verseCounts from './verseCounts';
 import type { PoolSegment, UniformVerse } from './versePool';
 
 /**
  * Daily Bhakti's single-list sources: one verse list per text, no chapter
- * (chalisas, aartis, ashtakams, suktams, kavachs, stutis). `versePool.ts`
- * `require()`s this module the first time the pool is used, so neither this
- * registry nor `verseCounts.ts` sits on the launch path, and each corpus loads
- * through its own thunk only when one of its verses is picked.
+ * (ashtakams, suktams, kavachs, stutis). `versePool.ts` `require()`s this module
+ * the first time the pool is used, so neither this registry nor `verseCounts.ts`
+ * sits on the launch path, and each corpus loads through its own thunk only when
+ * one of its verses is picked.
  *
- * Deliberately left out: Garud Puran (rites after death — not a morning
- * devotional card), Gita Saar (re-presents Gita verses already pooled) and
- * `ram-aarti` (reuses the Ram Stuti content already pooled).
+ * Deliberately left out: chalisas and aartis (they keep their own readers but no
+ * longer surface in the daily rotation), Garud Puran (rites after death — not a
+ * morning devotional card), Gita Saar (re-presents Gita verses already pooled)
+ * and `ram-aarti` (reuses the Ram Stuti content already pooled).
  */
 type FlatVerse = {
   labelHi: string;
@@ -27,11 +27,6 @@ type FlatSource = {
   load: () => readonly FlatVerse[];
 };
 
-const chalisa = (id: string, length: number): FlatSource => ({
-  id,
-  length,
-  load: () => (require('./chalisaRegistry') as typeof import('./chalisaRegistry')).getChalisa(id).verses,
-});
 const ashtakam = (id: string, length: number): FlatSource => ({
   id,
   length,
@@ -54,23 +49,6 @@ const stuti = (id: string, length: number): FlatSource => ({
 });
 
 const FLAT_SOURCES: readonly FlatSource[] = [
-  chalisa('hanuman-chalisa', verseCounts.hanumanChalisaTotal),
-  chalisa('shiv-chalisa', verseCounts.shivChalisaCounts.totalVerses),
-  chalisa('durga-chalisa', verseCounts.durgaChalisaCounts.totalVerses),
-  chalisa('ganesh-chalisa', verseCounts.ganeshChalisaCounts.totalVerses),
-  chalisa('gayatri-chalisa', verseCounts.gayatriChalisaCounts.totalVerses),
-  chalisa('ram-chalisa', verseCounts.ramChalisaCounts.totalVerses),
-  chalisa('krishna-chalisa', verseCounts.krishnaChalisaCounts.totalVerses),
-  chalisa('vishnu-chalisa', verseCounts.vishnuChalisaCounts.totalVerses),
-  chalisa('saraswati-chalisa', verseCounts.saraswatiChalisaCounts.totalVerses),
-  chalisa('khatu-shyam-chalisa', verseCounts.khatuShyamChalisaCounts.totalVerses),
-  chalisa('lakshmi-chalisa', verseCounts.lakshmiChalisaCounts.totalVerses),
-  chalisa('surya-chalisa', verseCounts.suryaChalisaCounts.totalVerses),
-  ...aartiIdByIndex.map((id, index): FlatSource => ({
-    id,
-    length: verseCounts.aartiVerseCounts[id],
-    load: () => (require('./aarti') as typeof import('./aarti')).getAarti(index).verses,
-  })),
   ashtakam('lingashtakam', verseCounts.lingashtakamTotal),
   ashtakam('madhurashtakam', verseCounts.madhurashtakamTotal),
   ashtakam('achyutashtakam', verseCounts.achyutashtakamTotal),
