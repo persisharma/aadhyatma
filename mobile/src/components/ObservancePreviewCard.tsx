@@ -14,6 +14,7 @@ import { scriptBodyFont } from '@/utils/langType';
 export default function ObservancePreviewCard({
   rule, lang, dateLabel, countdown, following, onToggleReminder, onPress,
   reminderRef, layout = 'row', areaLabel, onEditReminder, reminderOn,
+  title, testID, accessibilityLabel,
 }: {
   rule: ObservanceRule;
   lang: Lang;
@@ -27,10 +28,16 @@ export default function ObservancePreviewCard({
   areaLabel?: string;
   onEditReminder?: () => void;
   reminderOn?: boolean;
+  /** Occurrence names (e.g. Angarki Sankashti) keep the rule's artwork/save identity. */
+  title?: { hi: string; en: string };
+  testID?: string;
+  accessibilityLabel?: string;
 }) {
   const { colors, typography, radii } = useTheme();
   const tile = layout === 'tile';
   const bodyFont = lang === 'en' ? fontFamilies.inter : scriptBodyFont(lang, typography.meaning.fontFamily);
+  const nameHi = title?.hi ?? rule.nameHi;
+  const nameEn = title?.en ?? rule.nameEn;
   const reminder = (
       <Pressable ref={reminderRef} collapsable={false} testID={`observance-reminder-${rule.id}`}
         accessibilityRole="button" accessibilityState={{ selected: following }}
@@ -44,9 +51,9 @@ export default function ObservancePreviewCard({
       </Pressable>
   );
   return (
-    <ListingCard testID={`observance-card-${rule.id}`} onPress={onPress}
-      title={contentByLang(lang, rule.nameHi, rule.nameEn)} language={lang}
-      accessibilityLabel={contentByLang(lang, rule.nameHi, rule.nameEn)}
+    <ListingCard testID={testID ?? `observance-card-${rule.id}`} onPress={onPress}
+      title={contentByLang(lang, nameHi, nameEn)} language={lang}
+      accessibilityLabel={accessibilityLabel ?? contentByLang(lang, nameHi, nameEn)}
       showChevron={!onEditReminder} actionCount={onEditReminder ? 2 : 1}
       action={<>{reminder}{onEditReminder && <Pressable onPress={onEditReminder}
         accessibilityRole="button" accessibilityLabel={`Reminders for ${rule.nameEn}`}
@@ -58,7 +65,7 @@ export default function ObservancePreviewCard({
         </View>
       </Pressable>}</>}
       variant={tile ? 'upcoming' : 'observance'}
-      secondary={tile ? undefined : lang === 'en' ? rule.nameHi : rule.nameEn}
+      secondary={tile ? undefined : lang === 'en' ? nameHi : nameEn}
       thumbnail={<ObservanceArtwork rule={rule} width={tile ? UPCOMING_ART_WIDTH : 78} height={tile ? UPCOMING_ART_HEIGHT : 78} variant={tile ? 'upcoming' : 'list'} />}
       meta={<View>
           {(dateLabel || countdown) && <View style={[styles.facts, tile && { marginTop: 2 }]}>

@@ -1,0 +1,52 @@
+
+Running on Vedansh-Panchang-556 - iOS 26.5 - 489288DE-9051-4BFA-A154-3A1E51273DF5
+ > Flow panchang-celestial-phase-smoke
+Launch app "com.prashantsharma.vedansh" (launch arguments: {RCT_jsLocation=${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8106' : '127.0.0.1:' + METRO_PORT}})...WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+ COMPLETED
+Wait for animation to end... COMPLETED
+Assert that ".*Today.s Panchang.*|Expand calendar" is visible... COMPLETED
+Open vedansh://widget/panchang?date=2026-10-26... COMPLETED
+Tap on (Optional) "Open"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Open
+Wait for animation to end... COMPLETED
+Scrolling UP until "Expand calendar" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Assert that "26 October 2026.*" is visible... COMPLETED
+Take screenshot e2e-shots/panchang-painted-sun-header... COMPLETED
+Scrolling DOWN until id: panchang-anga-moon is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot e2e-shots/panchang-moon-purnima... COMPLETED
+Open vedansh://widget/panchang?date=2026-10-03... COMPLETED
+Tap on (Optional) "Open"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Open
+Wait for animation to end... COMPLETED
+Scrolling UP until "Expand calendar" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Assert that "3 October 2026.*" is visible... COMPLETED
+Scrolling DOWN until id: panchang-anga-moon is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot e2e-shots/panchang-moon-waning... COMPLETED
+Open vedansh://widget/panchang?date=2026-10-10... COMPLETED
+Tap on (Optional) "Open"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Open
+Wait for animation to end... COMPLETED
+Scrolling UP until "Expand calendar" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Assert that "10 October 2026.*" is visible... COMPLETED
+Scrolling DOWN until id: panchang-anga-moon is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot e2e-shots/panchang-moon-amavasya... COMPLETED
+Open vedansh://widget/panchang?date=2026-10-19... COMPLETED
+Tap on (Optional) "Open"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Open
+Wait for animation to end... COMPLETED
+Scrolling UP until "Expand calendar" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Assert that "19 October 2026.*" is visible... COMPLETED
+Scrolling DOWN until id: panchang-anga-moon is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering enabled... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot e2e-shots/panchang-moon-waxing... COMPLETED

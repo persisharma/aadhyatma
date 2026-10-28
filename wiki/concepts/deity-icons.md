@@ -1,19 +1,21 @@
 ---
 title: Shared Storybook Icon System
 type: concept
-sources: [mobile/src/panchang/observancePortraits.ts, mobile/src/components/ObservanceArtwork.tsx, mobile/src/components/observancePortraitSources.ts, mobile/src/data/__tests__/paintedIconsOnly.test.ts, mobile/src/components/FeatureIcon.tsx, mobile/src/components/HomeWordmark.tsx, docs/evaluations/home-gutter-2026-10-06/README.md, mobile/src/components/CelestialChakra.tsx, mobile/assets/decorations/celestial-chakra/manifest.json, docs/evaluations/celestial-chakra-2026-10-06/README.md, mobile/src/components/MoreIcon.tsx, mobile/src/screens/MoreScreen.tsx, mobile/assets/icons/more-storybook/manifest.json, docs/evaluations/storybook-icons-2026-10-06/more-alignment/README.md, mobile/src/components/DeityIcon.tsx, mobile/src/components/deityArtwork.ts, mobile/src/components/storybookSources.ts, mobile/src/components/StoryIcon.tsx, mobile/src/components/AppIcon.tsx, mobile/assets/icons/storybook/manifest.json, mobile/src/navigation/tabBarIcons.tsx, design.md, docs/evaluations/storybook-icons-2026-10-06/README.md, design-qa.md, mobile/src/screens/HomeScreen.tsx, mobile/src/components/CategoryCard.tsx, mobile/src/utils/homeLayout.ts, mobile/src/components/ReaderHeader.tsx, mobile/src/components/BookmarkButton.tsx, mobile/src/components/ShareButton.tsx, mobile/src/components/HomeWordmark.tsx, mobile/src/components/TodayRecommendationsRow.tsx, docs/evaluations/storybook-icons-2026-10-06/size-audit/README.md]
-last_verified_date: 2026-10-27
+sources: [mobile/src/components/CelestialGlyph.tsx, mobile/src/utils/moonPhase.ts, mobile/src/panchang/observancePortraits.ts, mobile/src/components/ObservanceArtwork.tsx, mobile/src/components/observancePortraitSources.ts, mobile/src/data/__tests__/paintedIconsOnly.test.ts, mobile/src/components/FeatureIcon.tsx, mobile/src/components/HomeWordmark.tsx, docs/evaluations/home-gutter-2026-10-06/README.md, mobile/src/components/CelestialChakra.tsx, mobile/assets/decorations/celestial-chakra/manifest.json, docs/evaluations/celestial-chakra-2026-10-06/README.md, mobile/src/components/MoreIcon.tsx, mobile/src/screens/MoreScreen.tsx, mobile/assets/icons/more-storybook/manifest.json, docs/evaluations/storybook-icons-2026-10-06/more-alignment/README.md, mobile/src/components/DeityIcon.tsx, mobile/src/components/deityArtwork.ts, mobile/src/components/storybookSources.ts, mobile/src/components/StoryIcon.tsx, mobile/src/components/AppIcon.tsx, mobile/assets/icons/storybook/manifest.json, mobile/src/navigation/tabBarIcons.tsx, design.md, docs/evaluations/storybook-icons-2026-10-06/README.md, design-qa.md, mobile/src/screens/HomeScreen.tsx, mobile/src/components/CategoryCard.tsx, mobile/src/utils/homeLayout.ts, mobile/src/components/ReaderHeader.tsx, mobile/src/components/BookmarkButton.tsx, mobile/src/components/ShareButton.tsx, mobile/src/components/HomeWordmark.tsx, mobile/src/components/TodayRecommendationsRow.tsx, docs/evaluations/storybook-icons-2026-10-06/size-audit/README.md]
+last_verified_date: 2026-10-28
 confidence: high
 status: current
 ---
 
 ## Summary
 
-The native app uses 56 bundled transparent Storybook assets for Home/deity/Muhurat/Vastu/naming subjects and 17 additional painted utility assets for More/Discover (73 total). Shared Phosphor glyphs remain for reader and navigation controls. This replaces the View-composition deity registry and font/emoji approximations on the changed surfaces.
+The native app uses 62 bundled transparent Storybook assets for Home/deity/Muhurat/Vastu/naming subjects and 17 additional painted utility assets for More/Discover (79 total). Shared Phosphor glyphs remain for reader and navigation controls. This replaces the View-composition deity registry and font/emoji approximations on the changed surfaces.
 
 ## Details
 
 - Thirteen Muhurat occasions use distinct `occasion-*` paintings through a total typed map. Vastu doors share `vastu-disha` and `ghar`; Namkaran browse uses `nakshatra` and `rashi`. Existing art also replaces the Namkaran Muhurat link, both Daan bridges, custom Kuldevta initials, Panchang Katha/Puja Vidhi marks, and Kundali Lagna. Actual syllables, name-index initials, 108 and dates remain content. Muhurat/Vastu screen-level letter exceptions are removed. Retained original masters and reproducible normalization live in `docs/evaluations/remaining-icons-2026-10-16/`; native Standard/Large review and recovery of the two late naming prompt strings remain pending.
+
+- Nakshatra's existing six-star constellation was strengthened with darker sepia contours and thicker painted connectors for the 36dp Panchang tile. Its registry name, canvas and geometry stay fixed; the updated master, original reference, exact Image Gen prompt and normalization script are retained in `docs/evaluations/panchang-day-icons-2026-10-27/nakshatra-rework/`. The original October 16 master remains intact.
 
 - `storybookSources.ts` statically requires local PNGs; `StoryIcon` displays them as decorative images. No remote icon fetches or duplicate accessible labels.
 - `deityArtwork.ts` covers all 21 existing keys with a total typed mapping. `deities.icon-contract.ts` still pins deity IDs to semantic attributes.
@@ -34,6 +36,10 @@ Calendar art belongs to `ObservanceArtwork`, with exact rule/identity decisions 
 
 Vrat/Parv/Upvas, landing search, My Vrat, Katha and followed muhurats share `ListingCard`. Upcoming's 112×74 illustration sits beside its star in a 158pt tile. Row and tile copy grow intrinsically; vertical `flex: 1` on the open target or zero-basis Upcoming body previously clipped long/enlarged text. The Katha category uses typed `granth`; passing its earlier `sanskar` name produced an unmapped source and the old icon. Utility star/bell/date controls retain the existing Phosphor system. Global deity attribute icons remain separate from these calendar illustrations.
 
+## Phase-aware celestial marks
+
+`CelestialGlyph` shares the existing plain `chandra` painting and eight-ray `gayatri` sun across the Panchang Tithi tile, observance ribbon and sky header. `utils/moonPhase.ts` draws a spherical lit limb over the moon texture: right-lit waxing, full Purnima, left-lit waning, dark Amavasya. The 30 named-Tithi steps are representative illustrations, not continuous ephemeris samples. `PanchangSky` reads `prevailingTithi(...).index` for its live night mark; the Tithi tile keeps its named sunrise Tithi. The existing day/night selection, time arc and reduce-motion behavior remain unchanged. No bitmap, registry or provenance hashes change. See design.md §33 and `docs/evaluations/panchang-day-icons-2026-10-27/celestial-phase/` for native proof and test limits.
+
 ## Celestial decorations
 
 The chakra family is separate from category/deity meanings. `CelestialChakra.tsx` statically requires two alpha PNGs in `assets/decorations/celestial-chakra/`: one detailed 1024px wheel reused by Home's Today card and calendar-mode Panchang, plus one simplified 512px seal used only in the guest Jyotish introduction. Catalog/Jyotish keep the previous geometric background; Create Kundali keeps its house-chart tool icon. All three decorations are static, non-interactive and hidden from accessibility, and do not represent calculated chart positions.
@@ -46,6 +52,7 @@ The Home ornament clips in its own absolute layer rather than clipping TodayStri
 
 ## Gotchas
 
+- Home tile width is snapped one physical pixel below the exact-fit track (`homeLayout.ts`). Exact fits wrapped the third launcher of every row on fractional-dp Android widths (e.g. 411.43dp at density 2.625), because Yoga sums the row in float32 and saw a ~3e-5dp overflow. Never compute flex-wrap tracks that sum exactly to the container.
 - Keep full eight-ray Gayatri sun distinct from Surya's rising half-disc.
 - Durga open lotus, Lakshmi coin lotus, Radha closed bud and Parvati five rounded petals must stay distinct.
 - Navagraha is exactly nine plain discs with gold center; no planetary letters. Daan's bowl has exactly three seed-shaped offerings, without payment symbols.

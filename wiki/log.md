@@ -1229,6 +1229,9 @@ Measured the original Upcoming/ledger reference, adopted 155pt tiles with 110×7
 
 The user clarified that a 110pt image within a155pt card left an unwanted70-percent strip. Upcoming now fills the141pt inner width and overlays the independent save star. Shared constants keep shell/art sizing identical. Other calendar/reading geometry is unchanged; current native evidence is in `docs/evaluations/vrat-full-banner-2026-10-27/`.
 
+## [2026-10-28] ingest | PR #556 painted Panchang day tiles, plain lunar icons and selected-day ribbon plus following-day card; regional/Pitru entry points retained.
+
+## [2026-10-28] ingest | Shared painted celestial marks: representative full/waxing/waning/dark Tithi phases, painted day-header sun, and running-Tithi night moon.
 
 ## [2026-10-27] ingest | Vrat card stops and middle-strip alignment
 
@@ -1247,3 +1250,17 @@ Every illustrated lesson now opens Gita connection references and Gita source ci
 ## [2026-10-28] ingest | Referenced deity-specific Suvichar integration
 
 Replaced the shared 21-thought runtime rotation with 621 approved short meanings/story lessons, stable IDs and 364 source locations. Recorded deity-family pools, searchable browsing, reference-bearing capture/text share, edit attribution removal, favorite migration and explicit text-only Annapurna. Preserved review evidence caveats and the separate greeting/research drafts. Native iOS/Android export acceptance remains pending.
+
+## [2026-10-28] ingest | Gita Saar original text follows the reader's tap
+
+The optional original shloka panel now scrolls into view after layout. A long illustrated lesson previously left the newly opened text above the current viewport. A focused native iPhone check and component regression test pin this behavior; the complete Gita Saar lesson and saved-learning steps were also exercised on the installed app.
+
+## [2026-10-28] ingest | Reconcile PR #556 with latest main; retain both append-only histories. Celestial phase implementation remains unchanged.
+
+## [2026-10-28] ingest | Panchang night-header native evidence
+
+Captured the painted waning Krishna Tritiya moon and sepia night header on the dedicated iOS simulator with a temporary 10 PM app-runtime clock. Restored the clock after capture; no source clock override. Evidence and limits are in `docs/evaluations/panchang-day-icons-2026-10-27/README.md`. Latest main's Vrat strip/reminder changes are reconciled with both log histories retained.
+
+## [2026-10-28] ingest | Panchang following-day cards share the Vrat listing; strengthen Nakshatra miniature
+
+The day panel reuses `ObservancePreviewCard` / `ListingCard` with event artwork and separate save/reminder controls. Named Sankashti display titles retain the original rule identity for artwork/reminders. Nakshatra's existing six-star painting has stronger sepia contours/connectors in the same 36dp slot; reference, new master, prompt, hashes and exports are retained. Typecheck, focused ESLint, 33 focused tests and Standard/Large iOS visual flow pass; evidence is in `docs/evaluations/panchang-day-icons-2026-10-27/`. Android/VoiceOver remain pending.

@@ -73,6 +73,7 @@ test('a null end terminates the walk — no guessing past what the day solved', 
 test('successor index wraps: Amavasya → Pratipada and Purnima → krishna Pratipada', () => {
   assert.equal(prevailingTithi(day(29, at(10)), at(11)).nameEn, 'Pratipada'); // 29 → 0
   const afterPurnima = prevailingTithi(day(14, at(10)), at(11));
+  assert.equal(afterPurnima.index, 15);
   assert.equal(afterPurnima.nameEn, 'Pratipada'); // 14 → 15 (krishna)
   assert.equal(afterPurnima.nameHi, TITHI_NAMES_HI[15]);
   assert.equal(afterPurnima.paksha, 'krishna');
