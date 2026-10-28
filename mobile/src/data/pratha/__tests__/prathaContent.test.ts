@@ -44,7 +44,10 @@ const nonEmpty = (s: string | undefined) => expect((s ?? '').trim().length).toBe
 describe('catalogue coverage', () => {
   test('every PRD-46 Appendix A row is in the registry exactly once, and nothing else is', () => {
     const prd = readFileSync(join(REPO, 'docs/roadmap/prds/46-pratha-manyata.md'), 'utf8');
-    const listed = [...prd.matchAll(/^\| ((?:K|C|V|J|A|S|B|AS|M|P|MG|F|W|N|PN|PR|SN|T|BD)\d+) \|/gm)].map((m) => m[1]);
+    // Only Appendix A is the catalogue; other tables (e.g. the §12 handover) cite row ids too.
+    const appendixA = prd.slice(prd.indexOf('## Appendix A'), prd.indexOf('## Appendix B'));
+    expect(appendixA.length).toBeGreaterThan(0);
+    const listed = [...appendixA.matchAll(/^\| ((?:K|C|V|J|A|S|B|AS|M|P|MG|F|W|N|PN|PR|SN|T|BD)\d+) \|/gm)].map((m) => m[1]);
     // The unnumbered Kartik regional rows and the Adhik Maas line carry these ids.
     const expected = [...listed, 'K27', 'K28', 'K29', 'AD1'].sort();
     const ids = PRATHA_ENTRIES.map((e) => e.id);

@@ -210,6 +210,66 @@ type PrathaEntry = {
 7. **Art:** reuse observance portraits (zero cost) or commission reader illustrations per row (expensive; §11.8 rules apply)?
 8. **Small fix seen during research:** the `kartik-purnima` rule does not link `kartika-mahatmya` (`festivals.ts:449`). This could be fixed independently.
 
+
+## 12. Handover — what the next session does
+
+Phase 0 was built in a session that could not open any source (§0.1). The next session should have open web access. That changes **who can verify, not the bar**: every rule below still holds, whatever model or tool does the work.
+
+### 12.1 Rules that do not change
+- **Two opened sources per story** (RULEBOOK §11.1, §32.2). A search-results summary, a model's memory, or the existing draft text is not a source. Cite only pages actually read (§11.2). If one source is reachable and the second is not, the row stays draft, or the maintainer records an explicit attestation (§11.1 exception).
+- **No generated scripture** (§11.3). Rows quote no verse text; surfaces render verses from the bundled corpus through `ref`. Never type Sanskrit into a row.
+- **Stance** (§32.3) and **tier honesty** (§32.1). A folk story never gains a text name because a website claims one. A Purana story names the adhyaya the reviewer actually opened.
+- **No build, release or OTA without explicit approval** (RULEBOOK §0.3).
+- **Every change ships with tests** (§0). `prathaContent.test.ts` must stay green. Phase 1 adds screen tests and a Maestro flow.
+
+### 12.2 Verify rows (content, Phase 1 gate)
+Work in `mobile/src/data/pratha/<axis>.ts`. The files are canonical: hand-edit them and never regenerate. For each row:
+1. Open two sources for **each** katha's canon line. The draft note's "To open:" lists them.
+2. Correct the Hindi and English to what the sources say. Make the canon line exact (adhyaya/verse); drop details the sources do not support; split or merge stories if the sources disagree. Keep `bodyHi`/`bodyEn` paragraph counts equal.
+3. Set `source.referenceUrls` to the pages read (≥2, ≥1 `https://`; bundled corpus as `repo:`). Replace `verificationNote` with `YYYY-MM-DD: <what was opened and what changed>`, without "DRAFT".
+4. Flip `status: 'verified'`. Run `npx jest --config jest.config.js src/data/pratha`.
+
+**Order.**
+1. Kartik first: K1, K6 and K10 (the masa-card headline rows), then at least 10 Kartik rows, which is the Phase 1 hub gate.
+2. Then by upcoming season: Margashirsha (from 25 Nov 2026), Paush, Magh (Makar Sankranti, 14 Jan 2027), Phalgun (Holi).
+3. The year-round axes last.
+
+### 12.3 Known open points from drafting (check these first)
+| Row | Point |
+|---|---|
+| K6, PR3, N6 | Which text gives Vrinda's curse and the Shaligram/Tulsi-vivah promise: Shiva Purana (Rudra Samhita, Yuddha Khanda) vs Padma Purana. The drafts split them; confirm. |
+| K16 | Covers Gujarati/Marwari chopda pujan only. Bengal's haal khata is Poila Baishakh and could be its own Chaitra/Vaishakh row. |
+| K21 | Karna's daily Surya worship is Mahabharata; waist-deep arghya, Draupadi and Sita at Munger are folk. Keep the split. |
+| C6 | Valmiki 1.18.8 gives Chaitra Navami; Punarvasu is in the next verse; noon is tradition. |
+| C7 | Hanuman Jayanti's two dates: which tradition calls Kartik the birth. |
+| J3 | Bada Mangal origin: the begum and the vow are left unnamed until a source is read. |
+| B2 | Whether Bhagavata 10.56–57 itself links the Syamantaka story to the Chaturthi moon, or only later tellings do. |
+| AS1 | Devi Mahatmya does not state "nine nights"; the nine-day form is the observance. |
+| AS5, PR6 | **Tier gap:** Raghuvamsha is kavya, so it fits none of the four tiers. Decide whether to add a `kavya` tier or keep it as lok with "कथा का मूल: रघुवंश". |
+| N19 | **Tier gap:** Agama texts are not in the `shastra` list. Same decision. |
+| F1 | The hunter's name in the Shiva Purana Shivaratri story. |
+| PR9 | Valmiki places Sita under a shimshapa tree inside the Ashoka grove. A `bodh` note may fit. |
+| T1 | Whether the Neela Devi hair story is in the Venkatachala Mahatmya (the draft has it as lok). |
+| SN2 | Manusmriti 2.30's naming-day count is read differently by commentators. |
+| SN13 | "राम नाम सत्य है" has no agreed origin; it may be a drop candidate. |
+| W8 | Bundled Valmiki sarga 6.107 is defective. Repairing the corpus (spacing + the meaning offset) would let the Aditya Hridaya be quoted. That is a separate corpus PR. |
+| W9, N24, N25 | Rows with no story (omen-like). Drop candidates under Appendix B.1. |
+| PN8, PN13, PN17 | Their catalogue links were generic ("bhog", "vidhi") and were dropped. Link the specific bhog/vidhi ids. |
+| AD1 | 33 malpua: the meaning of 33 and the recipient vary; left open. |
+
+### 12.4 Build Phase 1 (code)
+In the order of §6, each with its tests and the same-PR docs (§10):
+1. `PrathaReader {prathaId}` on the Vrat Katha reader shell (one row in `readerReadAloud.test.tsx`).
+2. Hub `PrathaScreen` on the Home and More stacks (route registration in both; `vidhiBackNavigation`-style stack tests).
+3. Observance Detail "यह क्यों?" card between Story (`ObservanceDetailScreen.tsx:316`) and How to observe (`:341`), via `getPrathaForRule`.
+4. Panchang masa card under the sky line (`PanchangScreen.tsx:242–255`), via `getPrathaForMasa(lunarMonth.index, lunarMonth.isAdhik)`; absent below 3 verified rows.
+5. design.md §86 + §62; a wiki update; `.maestro/pratha-smoke.yaml` (season-gated like `pitru-paksha-smoke`).
+
+The clickable prototype (`docs/pratha-manyata-prototype.html`) is the visual reference. Its copy is the pre-correction draft, so the registry is the source of truth for text.
+
+### 12.5 Decisions only the product owner makes
+§11 items 1–7, plus the tier gap in §12.3 (`kavya`/Agama). Until item 3 (the folk-verification rule) is approved, verify only `shastra`/`purana`/`itihas` stories and leave `lok` stories draft.
+
 ---
 
 ## Appendix A — The catalogue: famous customs and the story behind each
