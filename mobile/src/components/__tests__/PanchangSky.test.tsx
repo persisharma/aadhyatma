@@ -15,8 +15,9 @@ import PanchangSky, { type SkyInk } from '../PanchangSky';
 import CelestialGlyph from '../CelestialGlyph';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
-import { formatClock } from '@/panchang/muhuratFormat';
+import { formatClock, formatEndInstant } from '@/panchang/muhuratFormat';
 import type { ChoghadiyaKey, ChoghadiyaPeriod } from '@/panchang/muhurat';
+import type { MoonHorizon } from '@/panchang/moonHorizon';
 
 jest.mock('expo-linear-gradient', () => {
   const { View } = jest.requireActual('react-native');
@@ -27,6 +28,17 @@ jest.mock('@/utils/useReducedMotion', () => ({ useReducedMotion: () => true }));
 
 let mockSolve: Record<string, unknown> = {};
 jest.mock('@/panchang/useMuhurat', () => ({ useMuhurat: () => mockSolve }));
+let mockMoonHorizon: MoonHorizon | null;
+jest.mock('@/panchang/useMoonHorizon', () => ({ useMoonHorizon: () => mockMoonHorizon }));
+
+beforeEach(() => {
+  const at = Date.now();
+  mockMoonHorizon = {
+    previousRise: new Date(at - 3 * 3600000), previousSet: new Date(at - 15 * 3600000),
+    nextRise: new Date(at + 22 * 3600000), nextSet: new Date(at + 9 * 3600000),
+    nightRise: new Date(at - 3 * 3600000),
+  };
+});
 
 const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/language')>(
   '@/data/gita/language'
@@ -151,6 +163,64 @@ test('the night moon follows the running tithi after the sunrise tithi has ended
   const glyph = (await render()).root.findByType(CelestialGlyph);
   expect(glyph.props.kind).toBe('moon');
   expect(glyph.props.tithiIndex).toBe(15);
+});
+
+test('before moonrise the night shows the rise time and stars without a moon', async () => {
+  mockSolve = solve(runAround('night', NIGHT, 1), 1);
+  const rise = new Date(Date.now() + 2 * 3600000);
+  mockMoonHorizon = { ...mockMoonHorizon!, previousRise: new Date(Date.now() - 24 * 3600000), nextRise: rise, nightRise: rise };
+  const tree = await render();
+  expect(texts(tree)).toContain(`Moonrise ${formatClock(rise)}`);
+  expect(texts(tree)).toContain('Yet to rise');
+  expect(tree.root.findAllByType(CelestialGlyph)).toHaveLength(0);
+});
+
+test('after moonset the phase painting disappears and the rise time is retained', async () => {
+  mockSolve = solve(runAround('night', NIGHT, 6), 6);
+  mockMoonHorizon = { ...mockMoonHorizon!, nextSet: new Date(Date.now() - 60000) };
+  const tree = await render();
+  expect(texts(tree)).toContain('Moon has set');
+  expect(texts(tree)).toContain('Moonrise');
+  expect(tree.root.findAllByType(CelestialGlyph)).toHaveLength(0);
+});
+
+test('Amavasya does not show a bright moon even while above the horizon', async () => {
+  mockSolve = solve(runAround('night', NIGHT, 2), 2);
+  mockSolve.panchang = { tithi: { index: 29 } };
+  const tree = await render();
+  expect(texts(tree)).toContain('Amavasya');
+  expect(tree.root.findAllByType(CelestialGlyph)).toHaveLength(0);
+});
+
+test('missing rise/set data never invents a time or displays a moon', async () => {
+  mockSolve = solve(runAround('night', NIGHT, 2), 2);
+  mockMoonHorizon = null;
+  const tree = await render();
+  expect(texts(tree)).toContain('Moonrise —');
+  expect(tree.root.findAllByType(CelestialGlyph)).toHaveLength(0);
+});
+
+test('a moonrise after midnight includes its civil date relative to the active night', async () => {
+  const night = runAround('night', NIGHT, 1);
+  mockSolve = solve(night, 1);
+  const rise = new Date(night[0].start.getTime() + 24 * 3600000);
+  mockMoonHorizon = { ...mockMoonHorizon!, nightRise: rise, nextRise: rise };
+  expect(texts(await render())).toContain(`Moonrise ${formatEndInstant(rise, night[0].start, 'en')}`);
+});
+
+test('before dawn, a moonrise on the previous civil date is explicitly dated', async () => {
+  const today = new Date();
+  const at = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 2).getTime();
+  const clock = jest.spyOn(Date, 'now').mockReturnValue(at);
+  try {
+    const night = runAround('night', NIGHT, 5);
+    mockSolve = solve(night, 5);
+    const rise = new Date(at - 13 * 3600000);
+    mockMoonHorizon = { ...mockMoonHorizon!, nightRise: rise };
+    expect(texts(await render())).toContain(`Moonrise ${formatEndInstant(rise, today, 'en')}`);
+  } finally {
+    clock.mockRestore();
+  }
 });
 
 test('a browsed date is a day sky led by Abhijit, with no "now"', async () => {

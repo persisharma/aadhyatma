@@ -2,7 +2,7 @@
 title: Shared Storybook Icon System
 type: concept
 sources: [mobile/src/components/CelestialGlyph.tsx, mobile/src/utils/moonPhase.ts, mobile/src/panchang/observancePortraits.ts, mobile/src/components/ObservanceArtwork.tsx, mobile/src/components/observancePortraitSources.ts, mobile/src/data/__tests__/paintedIconsOnly.test.ts, mobile/src/components/FeatureIcon.tsx, mobile/src/components/HomeWordmark.tsx, docs/evaluations/home-gutter-2026-10-06/README.md, mobile/src/components/CelestialChakra.tsx, mobile/assets/decorations/celestial-chakra/manifest.json, docs/evaluations/celestial-chakra-2026-10-06/README.md, mobile/src/components/MoreIcon.tsx, mobile/src/screens/MoreScreen.tsx, mobile/assets/icons/more-storybook/manifest.json, docs/evaluations/storybook-icons-2026-10-06/more-alignment/README.md, mobile/src/components/DeityIcon.tsx, mobile/src/components/deityArtwork.ts, mobile/src/components/storybookSources.ts, mobile/src/components/StoryIcon.tsx, mobile/src/components/AppIcon.tsx, mobile/assets/icons/storybook/manifest.json, mobile/src/navigation/tabBarIcons.tsx, design.md, docs/evaluations/storybook-icons-2026-10-06/README.md, design-qa.md, mobile/src/screens/HomeScreen.tsx, mobile/src/components/CategoryCard.tsx, mobile/src/utils/homeLayout.ts, mobile/src/components/ReaderHeader.tsx, mobile/src/components/BookmarkButton.tsx, mobile/src/components/ShareButton.tsx, mobile/src/components/HomeWordmark.tsx, mobile/src/components/TodayRecommendationsRow.tsx, docs/evaluations/storybook-icons-2026-10-06/size-audit/README.md]
-last_verified_date: 2026-10-28
+last_verified_date: 2026-10-29
 confidence: high
 status: current
 ---
@@ -45,6 +45,8 @@ Vrat/Parv/Upvas, landing search, My Vrat, Katha and followed muhurats share `Lis
 The chakra family is separate from category/deity meanings. `CelestialChakra.tsx` statically requires two alpha PNGs in `assets/decorations/celestial-chakra/`: one detailed 1024px wheel reused by Home's Today card and calendar-mode Panchang, plus one simplified 512px seal used only in the guest Jyotish introduction. Catalog/Jyotish keep the previous geometric background; Create Kundali keeps its house-chart tool icon. All three decorations are static, non-interactive and hidden from accessibility, and do not represent calculated chart positions.
 
 The Home ornament clips in its own absolute layer rather than clipping TodayStrip's shadow-bearing card. The shared asset manifest caps both drawings below 300KB and records final hashes/dimensions/centered bounds; per-asset provenance stores exact built-in Image Gen prompts and master hashes. Indexed-alpha packaging retains transparency and reduces the two PNGs to 274,392 bytes. `CelestialChakra.test.tsx` checks accessibility/touch isolation, and `celestial-chakra-smoke.yaml` covers the real native route and mode switches. Design specifications are in §33, §48 and §51c; source targets and installed evidence live in `docs/evaluations/celestial-chakra-2026-10-06/`.
+
+The night header’s existing painted phase is now shown only between calculated moonrise and moonset, excluding a bright Amavasya disc. It is a fixed phase illustration, with no moon path tied to night duration. The day sun retains its existing progress arc. No bitmap/registry changes are needed for the horizon-aware behavior; see [[panchang]].
 
 ## Dependencies
 
