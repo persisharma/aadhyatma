@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Linking, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -13,7 +13,7 @@ import SuvicharThoughtPicker from '@/components/SuvicharThoughtPicker';
 import AppIcon from '@/components/AppIcon';
 import { isSuvicharThought, suvicharDay, suvicharTemplatesFor, type SuvicharTemplate } from '@/data/suvicharTemplates';
 import { suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '@/data/suvicharVaar';
-import { findSuvicharThought, nextSuvicharThought, sourceForSuvichar, suvicharSourceLabel, suvicharThoughtsFor, type SuvicharThought } from '@/data/suvicharContent';
+import { findSuvicharThought, nextSuvicharThought, suvicharSourceLabel, suvicharThoughtsFor, type SuvicharThought } from '@/data/suvicharContent';
 import { WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { useGitaLanguage } from '@/data/gita/language';
 import { buildSuvicharShareMessage } from '@/data/shareLinks';
@@ -193,9 +193,6 @@ export default function SuvicharScreen() {
         <Pressable testID="suvichar-browse-thoughts" accessibilityRole="button" disabled={off} onPress={() => setThoughtsOpen(true)} style={{ minHeight: 44, justifyContent: 'center' }}>
           <Text style={{ fontFamily: face, fontSize: 15, color: colors.saffronDeep }}>{tr({ hi: 'सभी सुविचार देखें', en: 'Browse all thoughts', gu: 'બધા સુવિચાર જુઓ', kn: 'ಎಲ್ಲ ಸುವಿಚಾರಗಳನ್ನು ನೋಡಿ' })} · {suvicharThoughtsFor(prefs.deity).length}</Text>
         </Pressable>
-        {thought ? <Pressable testID="suvichar-source-link" accessibilityRole="link" onPress={() => { void Linking.openURL(sourceForSuvichar(thought).url).catch(() => undefined); }} style={{ minHeight: 44, justifyContent: 'center' }}>
-          <Text style={hint}>{attribution} ↗</Text>
-        </Pressable> : null}
         <TextInput testID="suvichar-message" accessibilityLabel={tr({ hi: 'आपका संदेश', en: 'Your message', gu: 'તમારો સંદેશ', kn: 'ನಿಮ್ಮ ಸಂದೇಶ' })} multiline value={prefs.message ? message : ''} maxLength={MESSAGE_LIMIT} editable={!busy} onChangeText={message => update({ message, thoughtId: '' })} placeholder={message} placeholderTextColor={colors.inkMuted} style={inputStyle} />
         <Text style={hint}>{tr({ hi: 'तैयार संदेश बदलें या अपने शब्दों में लिखें', en: 'Edit the ready message or write your own', gu: 'તૈયાર સંદેશ બદલો અથવા તમારા શબ્દોમાં લખો', kn: 'ಸಿದ್ಧ ಸಂದೇಶ ಬದಲಿಸಿ ಅಥವಾ ನಿಮ್ಮ ಮಾತಿನಲ್ಲಿ ಬರೆಯಿರಿ' })} · {prefs.message.length}/{MESSAGE_LIMIT}</Text>
       </View>
