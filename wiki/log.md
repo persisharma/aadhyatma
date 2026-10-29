@@ -1275,3 +1275,7 @@ Every rendered clock is now zero-padded 24-hour `HH:MM`: `formatClock` dropped A
 ## [2026-10-28] ingest | Mahakaal masters published to R2
 
 PR #555 added four Mahakaal masters (three Suvichar frames + the Daily Bhakti card) with `scripts/prepare-mahakaal.mjs` but never ran its publish step, so Suvichar sources were 51 vs a 48-entry manifest and `prepare-suvichar.mjs --verify` failed on main. Uploaded the four with immutable caching, then `prepare-mahakaal.mjs --activate` re-verified public bytes and activated both manifests (Suvichar 51, devotional-share 29).
+
+## [2026-10-29] ingest | Native horizon previews refreshed on current 24-hour main
+
+PR #556 is merged; the night-horizon follow-up is on `codex/panchang-night-moonrise`. Main's 24-hour formatter and subsequent share-card work are reconciled. Typecheck and 23 focused Jest checks pass on the combined tree; the five real-engine horizon checks also pass. Current native before-rise, after-rise and after-set captures all pass and are visually reviewed at Large size. Preview Date/Date.now overrides are restored, confirmed at 29 October 13:31 IST. No release action. See `docs/evaluations/panchang-day-icons-2026-10-27/night-horizon/README.md`.
