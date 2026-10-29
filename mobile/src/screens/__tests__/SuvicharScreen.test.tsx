@@ -235,6 +235,9 @@ it('browses a late catalogue entry, shares its reference, restores it from favor
   act(() => tree.root.findByType(SuvicharThoughtPicker).props.onSelect(late));
   let card = tree.root.findByType(SuvicharCard).props;
   expect(card.message).toBe(late.hi);expect(card.attribution).toContain(sourceForSuvichar(late).referenceHi);
+  // The source is credited on the card, but never a tappable external link in the composer (RULEBOOK §11.16).
+  expect(tree.root.findAll(n => n.props.testID === 'suvichar-source-link').length).toBe(0);
+  expect(tree.root.findAll(n => n.props.accessibilityRole === 'link').length).toBe(0);
   act(() => node('suvichar-favorite').props.onPress());
   act(() => card.onReady(true));await act(async () => node('suvichar-share').props.onPress());
   expect(sharedCard().text?.('hi')).toContain(card.attribution);
