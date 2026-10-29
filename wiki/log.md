@@ -1272,3 +1272,7 @@ Every rendered clock is now zero-padded 24-hour `HH:MM`: `formatClock` dropped A
 ## [2026-10-28] ingest | Mahakaal masters published to R2
 
 PR #555 added four Mahakaal masters (three Suvichar frames + the Daily Bhakti card) with `scripts/prepare-mahakaal.mjs` but never ran its publish step, so Suvichar sources were 51 vs a 48-entry manifest and `prepare-suvichar.mjs --verify` failed on main. Uploaded the four with immutable caching, then `prepare-mahakaal.mjs --activate` re-verified public bytes and activated both manifests (Suvichar 51, devotional-share 29).
+
+## [2026-10-29] ingest | Annapurna painted in Suvichar
+
+Annapurna had reviewed Suvichar copy but no master, so her Bhakti Sandesh cards were a mostly blank text-only parchment. Codex generated three masters in the existing frame pipeline (1122×1402, hero 0.60/0.64/0.60, provenance in docs/evaluations/annapurna/sources.json); the user approved them; they were uploaded to R2 (immutable), added to sources and the manifest (54), and every text-only branch was removed from SuvicharCard, both pickers and the weekday filter.

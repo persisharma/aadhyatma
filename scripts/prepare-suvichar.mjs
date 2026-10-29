@@ -10,7 +10,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const sources = resolve(root, 'mobile/assets/suvichar');
 const destination = resolve(root, 'mobile/src/data/suvicharManifest.json');
 const sha = bytes => createHash('sha256').update(bytes).digest('hex').slice(0, 16);
-const deities = ['krishna','rama','hanuman','shiva','ganesha','durga','lakshmi','saraswati','vishnu','radha-krishna','ram-darbar','salasar-balaji','khatu-shyam','tirupati-balaji','sanwariya-seth','jagannath','mahakaal'];
+const deities = ['krishna','rama','hanuman','shiva','ganesha','durga','lakshmi','saraswati','vishnu','radha-krishna','ram-darbar','salasar-balaji','khatu-shyam','tirupati-balaji','sanwariya-seth','jagannath','mahakaal','annapurna'];
 const frames = ['mandir-jharokha','pushp-aangan','bhakti-patra'];
 const keys = deities.flatMap(d => frames.map(f => `${d}--${f}`));
 async function verify(manifest) {
