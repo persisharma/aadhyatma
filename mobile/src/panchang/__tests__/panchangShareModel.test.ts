@@ -19,6 +19,11 @@ const valmiki = {
   rule: { nameHi: 'वाल्मीकि जयंती', nameEn: 'Valmiki Jayanti', deityHi: 'महर्षि वाल्मीकि', deityEn: 'Maharshi Valmiki' },
 } as unknown as ResolvedObservance;
 
+const sharadPurnima = {
+  date: new Date(2026, 9, 26),
+  rule: { nameHi: 'शरद पूर्णिमा', nameEn: 'Sharad Purnima', deityHi: 'लक्ष्मी', deityEn: 'Lakshmi' },
+} as unknown as ResolvedObservance;
+
 test('26 Oct 2026, Bengaluru: the card carries the engine solve, in the order the card reads', () => {
   const { p, md } = solve(new Date(2026, 9, 26));
   const m = buildPanchangShareModel({ p, md, observances: [valmiki], placeHi: 'बेंगलुरु', placeEn: 'Bengaluru', calendarSystem: 'purnimant', lang: 'hi' });
@@ -27,7 +32,7 @@ test('26 Oct 2026, Bengaluru: the card carries the engine solve, in the order th
   assert.equal(m.date, 'सोमवार, 26 अक्टूबर 2026');
   assert.equal(m.identity, 'आश्विन शुक्ल पूर्णिमा · पूर्णिमांत · विक्रम संवत् 2083');
   assert.deepEqual([m.brahma, m.sunrise, m.sunset, m.moonrise], ['04:35 – 05:23', '06:11', '17:55', '17:58']);
-  assert.deepEqual(m.festival, { name: 'वाल्मीकि जयंती · महर्षि वाल्मीकि', more: 0 });
+  assert.deepEqual(m.festival, { name: 'वाल्मीकि जयंती · महर्षि वाल्मीकि' });
 
   assert.deepEqual(m.tithi, { name: 'पूर्णिमा', lines: ['09:41 तक, फिर प्रतिपदा'] });
   assert.deepEqual(m.nakshatra, { name: 'अश्विनी', lines: ['17:39 तक, फिर भरणी'] });
@@ -47,13 +52,14 @@ test('26 Oct 2026, Bengaluru: the card carries the engine solve, in the order th
 
 test('English and Gujarati render the same day without Devanagari leaking into English', () => {
   const { p, md } = solve(new Date(2026, 9, 26));
-  const en = buildPanchangShareModel({ p, md, observances: [valmiki, valmiki], placeHi: 'बेंगलुरु', placeEn: 'Bengaluru', calendarSystem: 'amanta', lang: 'en' });
+  const en = buildPanchangShareModel({ p, md, observances: [valmiki, sharadPurnima], placeHi: 'बेंगलुरु', placeEn: 'Bengaluru', calendarSystem: 'amanta', lang: 'en' });
   assert.equal(en.place, 'Bengaluru');
   assert.equal(en.identity, 'Ashwin Shukla Purnima · Amanta · Vikram Samvat 2083');
   assert.equal(en.date, 'Monday, 26 October 2026');
   assert.deepEqual(en.tithi.lines, ['till 09:41, then Pratipada']);
   assert.equal(en.agni.line, 'avoid havan · Prithvi from 09:41');
-  assert.deepEqual(en.festival, { name: 'Valmiki Jayanti · Maharshi Valmiki', more: 1 });
+  // Two or more observances: every name is shown (no deity, no "+N"), joined by ·.
+  assert.deepEqual(en.festival, { name: 'Valmiki Jayanti · Sharad Purnima' });
   assert.ok(!/[ऀ-ॿ]/.test(JSON.stringify(en)), 'no Devanagari in the English card');
 
   const gu = buildPanchangShareModel({ p, md, observances: [], placeHi: 'बेंगलुरु', placeEn: 'Bengaluru', calendarSystem: 'purnimant', lang: 'gu' });

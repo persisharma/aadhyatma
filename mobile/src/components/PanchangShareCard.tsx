@@ -176,11 +176,6 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
               <Text style={{ color: colors.saffronDeep, fontSize: 12, fontFamily: bodyFace }}>{t('आज', 'Today')} · </Text>
               {model.festival.name}
             </One>
-            {model.festival.more > 0 && (
-              <View style={[styles.more, { backgroundColor: colors.goldChipBg }]}>
-                <Text style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>+{model.festival.more}</Text>
-              </View>
-            )}
           </View>
         )}
 
@@ -271,7 +266,6 @@ const styles = StyleSheet.create({
   ribbon: { height: 36, flexDirection: 'row', alignItems: 'center', gap: 9, paddingLeft: 6, paddingRight: 12, borderRadius: 14, borderWidth: 1 },
   moonMark: { width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
   moonDisc: { width: 12, height: 12, borderRadius: 6 },
-  more: { paddingHorizontal: 6, paddingVertical: 1, borderRadius: 8 },
   section: { paddingTop: 6, paddingBottom: 7, paddingHorizontal: 12, borderRadius: 14, borderWidth: 1 },
   angaRow: { flexDirection: 'row', columnGap: 14 },
   angaRowRule: { marginTop: 5, paddingTop: 5, borderTopWidth: 1 },
