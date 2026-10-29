@@ -1,6 +1,6 @@
 /** Illustrated prose page, adapted from KathaSectionPage (not a verse renderer). */
 import React, { useState } from 'react';
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { garudPuranImages } from '@assets/garud-puran';
 import type { GarudPuranPage as Page, GarudPuranSource } from '@/data/garud-puran';
@@ -49,13 +49,6 @@ export default function GarudPuranPage({ verse, source, width, topActions }: Pro
             'यह चुने हुए प्रसंगों की सरल व्याख्या है, पूरा अध्याय या शब्दशः अनुवाद नहीं। संस्कृत पाठ और गीताप्रेस के संक्षिप्त हिन्दी पाठ से तुलना की गई है। चित्र सांकेतिक हैं।',
             'This is an editorial explanation of selected passages, not a complete chapter or a word-for-word translation. It was compared with the Sanskrit text and the Gita Press Hindi abridgement. The illustrations are interpretive.')}</Text>
           <Text selectable style={[styles.sourceText, bodyStyle]}>{source.sanskritReferences.join(', ')}</Text>
-          {[source.referenceUrls[0], source.referenceUrls[1]].map((url, index) => (
-            <Pressable key={url} onPress={() => { Linking.openURL(url).catch(() => undefined); }} accessibilityRole="link" style={styles.link}>
-              <Text style={[bodyStyle, { color: colors.saffronDeep, textDecorationLine: 'underline' }]}>
-                {index === 0 ? contentByLang(lang, 'संस्कृत स्रोत खोलें', 'Open Sanskrit source') : contentByLang(lang, 'हिन्दी स्रोत खोलें', 'Open Hindi source')}
-              </Text>
-            </Pressable>
-          ))}
         </View>}
       </AutoSlideScrollView>
     </View>
@@ -68,5 +61,4 @@ const styles = StyleSheet.create({
   title: { fontSize: 20, lineHeight: 30, marginTop: 8, marginBottom: 4 },
   paragraph: { marginBottom: 14 }, sourceText: { marginTop: 14 },
   sourceButton: { borderTopWidth: 1, marginTop: 24, minHeight: 48, justifyContent: 'center' },
-  link: { minHeight: 48, justifyContent: 'center', marginTop: 8 },
 });
