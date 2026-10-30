@@ -131,9 +131,11 @@ export function GitaSaarStoryDoor({
 export function GitaSaarStoryDetails({
   themeId,
   onOpenGitaRef,
+  onOpenRamayanRef,
 }: {
   themeId: string;
   onOpenGitaRef?: (chapter: number, verse: number) => void;
+  onOpenRamayanRef?: (kanda: number, sarga: number) => void;
 }) {
   const story = gitaSaarStories[themeId];
   const { colors, lang, copy, body, heading, label } = useStoryStyle();
@@ -257,58 +259,52 @@ export function GitaSaarStoryDetails({
         style={[label, { color: colors.inkMuted, marginTop: 14 }]}
       >
         {pick(lang, {
-          hi: 'कथा के मूल ग्रंथ नीचे हैं। दूसरे ग्रंथ केवल संदर्भ के लिए दिए हैं; गीता के श्लोक यहीं वेदांश में खुलते हैं। संबंध और दैनिक उदाहरण संपादकीय मनन हैं।',
-          en: 'Original story sources are below. Other texts are listed for reference; Gita verses open here in Vedansh. The connection and everyday example are editorial reflections.',
-          gu: 'કથાના મૂળ ગ્રંથ નીચે છે. અન્ય ગ્રંથ ફક્ત સંદર્ભ માટે આપ્યા છે; ગીતાના શ્લોક અહીં વેદાંશમાં ખૂલે છે. સંબંધ અને ઉદાહરણ સંપાદકીય મનન છે.',
-          kn: 'ಕಥೆಯ ಮೂಲ ಗ್ರಂಥಗಳು ಕೆಳಗಿವೆ. ಇತರ ಗ್ರಂಥಗಳನ್ನು ಉಲ್ಲೇಖಕ್ಕಾಗಿ ಮಾತ್ರ ನೀಡಲಾಗಿದೆ; ಗೀತೆಯ ಶ್ಲೋಕಗಳು ಇಲ್ಲೇ ವೇದಾಂಶದಲ್ಲಿ ತೆರೆಯುತ್ತವೆ. ಸಂಪರ್ಕ ಮತ್ತು ಉದಾಹರಣೆ ಸಂಪಾದಕೀಯ ಚಿಂತನೆಗಳು.',
+          hi: 'कथा के मूल ग्रंथ नीचे दिए हैं। उपलब्ध पाठ वेदांश में खुलते हैं; बाकी संदर्भ यहाँ केवल उद्धरण के रूप में हैं। संबंध और दैनिक उदाहरण संपादकीय मनन हैं।',
+          en: 'Story sources are listed below. Available texts open in Vedansh; the rest are citations only. The connection and everyday example are editorial reflections.',
+          gu: 'કથાના મૂળ ગ્રંથ નીચે આપ્યા છે. ઉપલબ્ધ પાઠ વેદાંશમાં ખૂલે છે; બાકીના ફક્ત સંદર્ભ છે. સંબંધ અને ઉદાહરણ સંપાદકીય ચિંતન છે.',
+          kn: 'ಕಥೆಯ ಮೂಲ ಗ್ರಂಥಗಳು ಕೆಳಗಿವೆ. ಲಭ್ಯವಿರುವ ಪಾಠಗಳು ವೇದಾಂಶದಲ್ಲೇ ತೆರೆಯುತ್ತವೆ; ಉಳಿದವು ಉಲ್ಲೇಖಗಳು ಮಾತ್ರ. ಸಂಪರ್ಕ ಮತ್ತು ಉದಾಹರಣೆ ಸಂಪಾದಕೀಯ ಚಿಂತನೆಗಳು.',
         })}
       </ProseParagraph>
       {story.sources.map((source) => {
         const passage =
           lang === 'hi' ? source.passageHi ?? source.passage : source.passage;
         const ref = source.inAppRef;
-        const location = ref
-          ? pick(lang, {
-              hi: 'ऐप में',
-              en: 'In app',
-              gu: 'ઍપમાં',
-              kn: 'ಆ್ಯಪ್‌ನಲ್ಲಿ',
-            })
-          : pick(lang, {
-              hi: 'संदर्भ',
-              en: 'Reference',
-              gu: 'સંદર્ભ',
-              kn: 'ಉಲ್ಲೇಖ',
-            });
-        const rowContent = (
-          <>
-            <AppIcon name="text" color={colors.saffronDeep} size={16} />
-            <ProseParagraph style={[label, { flex: 1 }]}>
-              {`${copy(source.title)} · ${passage} · ${location}`}
-            </ProseParagraph>
-            {ref ? <AppIcon name="next" color={colors.saffronDeep} size={16} /> : null}
-          </>
-        );
-        // Only in-app Gita references are tappable; other texts are plain citations,
-        // never an external link out of the app (RULEBOOK §11.16).
+        const citation = `${copy(source.title)} · ${passage}`;
         if (!ref) {
           return (
             <View key={source.url} style={[styles.source, { borderColor: colors.divider }]}>
-              {rowContent}
+              <AppIcon name="text" color={colors.saffronDeep} size={16} />
+              <ProseParagraph style={[label, { flex: 1 }]}>{citation}</ProseParagraph>
             </View>
           );
         }
+        const canOpen =
+          ref.kind === 'gita' ? Boolean(onOpenGitaRef) : Boolean(onOpenRamayanRef);
         return (
           <Pressable
             key={source.url}
-            testID={`gita-saar-source-gita-${ref.chapter}.${ref.verse}`}
+            testID={
+              ref.kind === 'gita'
+                ? `gita-saar-source-gita-${ref.chapter}.${ref.verse}`
+                : `gita-saar-source-valmiki-${ref.kanda}.${ref.sarga}`
+            }
             accessibilityRole="button"
             accessibilityLabel={`Read in Vedansh ${source.passage}`}
-            disabled={!onOpenGitaRef}
-            onPress={() => onOpenGitaRef?.(ref.chapter, ref.verse)}
+            disabled={!canOpen}
+            onPress={() => {
+              if (ref.kind === 'gita') {
+                onOpenGitaRef?.(ref.chapter, ref.verse);
+              } else {
+                onOpenRamayanRef?.(ref.kanda, ref.sarga);
+              }
+            }}
             style={[styles.source, { borderColor: colors.divider }]}
           >
-            {rowContent}
+            <AppIcon name="text" color={colors.saffronDeep} size={16} />
+            <ProseParagraph style={[label, { flex: 1 }]}>
+              {`${citation} · ${pick(lang, { hi: 'यहीं पढ़ें', en: 'Read here', gu: 'અહીં વાંચો', kn: 'ಇಲ್ಲೇ ಓದಿ' })}`}
+            </ProseParagraph>
+            <AppIcon name="next" color={colors.saffronDeep} size={16} />
           </Pressable>
         );
       })}
