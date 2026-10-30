@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | **Plan, for review.** Nothing in §5–§8 is built yet. The Bhakti-tab widget pair (§6.4's add flow) is already built on this branch. |
+| **Status** | **Plan, for review.** Nothing in §5–§10 is built yet. §10 is the revised plan after the design and engineering reviews (§9) and lists the owner decisions still open. The Bhakti-tab widget pair is already built on this branch. |
 | **T-shirt size** | M. All JS/TS, **OTA-shippable**; no native module, entitlement or Info.plist change. |
 | **Parent** | design.md §23 (Daily Bhakti setup strip), §38 (reminder opt-in), §47 (tour + first-run setup), §59 (widgets). wiki `subsystems/notifications`, `subsystems/home-widgets`, `integrations/meta-app-events`. |
 | **Prototype** | [`docs/first-launch-asks-prototype.html`](../../first-launch-asks-prototype.html) — every control at launch, open by open, today vs proposed, clickable on Android and iPhone. Sunrise times in it come from the app's engine for 30 Oct 2026. |
@@ -13,7 +13,7 @@
 
 1. **The OS notification prompt cannot be repeated.** iOS shows it once per install; after "Don't Allow" only the Settings app can turn notifications on. Android 13+ shows it at most twice; after the second refusal, Settings only. Android ≤12 has no prompt (notifications start on). "Keep asking until yes" can therefore only mean **our own screen** asks again. After a hard denial it can only send the user to Settings.
 2. **No app can place a widget by itself.** iOS has no API. Android's `requestPinAppWidget` always shows the launcher's confirmation, one widget per dialog.
-3. **The tracking (ATT) prompt cannot move far.** App Review rejected 1.5.0 under 2.1 because reviewers could not find the ATT prompt (wiki `integrations/meta-app-events`). Meta is never activated while ATT is unanswered, so delaying ATT also delays install measurement for every user who leaves before it appears. This plan keeps ATT on the first open but moves it from launch to after setup and the tour (§6.5). The prototype's earlier "3rd open" idea is withdrawn for this reason.
+3. **The tracking (ATT) prompt cannot move far.** App Review rejected 1.5.0 under 2.1 because reviewers could not find the ATT prompt (wiki `integrations/meta-app-events`). Meta is never activated while ATT is unanswered, so delaying ATT also delays install measurement for every user who leaves before it appears. This plan keeps ATT on the first open but moves it from launch to right after setup, before the tour (§10). The prototype's earlier "3rd open" idea is withdrawn for this reason.
 
 ## 1. Problem: what a fresh install sees today
 
@@ -129,6 +129,97 @@ Disagreements for the owner:
 2. **"फिर न पूछें · Don't ask again"** from the third decline, which stops the sheet while the strip and the Settings banner remain. This conflicts with "until yes". **Owner to decide.**
 3. **ATT between setup and the tour**, not after the tour. After the tour it lands on the first real screen. Both keep it on the first open (§0.3), so either works.
 
-### 9.2 Engineering review (Claude agent)
+### 9.2 Engineering review (Claude agent, 30 Oct 2026)
 
-_Pending; appended when it completes._
+Severity is the reviewer's. Items marked ✔ were re-checked against the code before they were recorded here.
+
+1. **Critical: setup-before-tour breaks `TourContext`.**
+   - ✔ What's New is gated only on `!shouldShowFirstLaunchTour` (`TourContext.tsx` ~L184), and only `markTourCompleted` stamps it seen. On a fresh install, What's New 1.5.5 would therefore open during setup.
+   - ✔ `setLang` writes `@vedansh/language`, which is one of `UPGRADER_SIGNAL_KEYS` (`NewContentContext.tsx`). Any relaunch after step 1 (a kill, a crash, or `UpdateReadyModal`'s `reloadAsync`) reclassifies the install as an upgrader. The user then loses the tour and steps 2–3, and gets What's New instead.
+   - `resetTour` clears the setup key, so a tour-only replay gated on setup would never show.
+   - **Fix:** an explicit persisted `@vedansh/onboarding-phase` (`setup → tour → done`), written on the first hydrate of a genuine fresh install. All three surfaces gate on it, and What's New shows only when the phase is `done`.
+2. **High: the re-ask gate nags real "no"s.**
+   - A Settings toggle-off and a "later" share `lastDeclinedAt`.
+   - Existing decliners' running 15-day snooze would be lost.
+   - Today, iOS hard-denied users see no sheet at all.
+   - Returning from Settings with the grant leaves both toggles off, because the denial effect flipped them.
+   - **Fix:** a separate `optedOutAt` (a toggle-off ends auto-asks). Migrate `declineCount = lastDeclinedAt ? 1 : 0`, honouring a running snooze once. When the grant appears after Settings, turn both toggles on. Add the new fields to `parseMeta`'s whitelist, or they are dropped on the next hydrate.
+3. **High: "बाद में" must persist both toggles as `false`.**
+   - Prefs default on, and other features request the shared grant: the Vrat bell, Pitru save, Routine, Japam alarms.
+   - A user who said "later" and then sets a japam alarm would silently get the 07:00 verse, festival notices, Pitru eves and the return ladder.
+   - The return ladder has no pref at all (`ReturnReminderScheduler.tsx`). Android ≤12 is granted by default.
+   - Name what the grant covers in step 3's copy.
+4. **High: ATT.**
+   - Waiting for setup plus a 25-step tour risks a reviewer never reaching ATT, which repeats the 1.5.0 rejection.
+   - Android has no ATT, so delaying Meta there only loses activations.
+   - **Fix:** Android stays unchanged. On iOS, request ATT when setup closes, and mount the tour only after ATT resolves. On later opens, an unanswered ATT counts as that open's one ask. Add App Review notes saying where ATT appears.
+5. **High: the latch has to sit above `RatingPromptProvider`.**
+   - `RatingPromptProvider` sits above `NavigationContainer` in `App.tsx`, so the latch must be a provider or module store above it.
+   - Make "setup or tour ran this open" a sticky ref.
+   - What's New uses up the open.
+   - Skip all asks on a cold start from a notification or widget tap.
+   - Decide only after notification prefs (with `firstOpenDay` written in the same hydrate), the tour state and the nudge store have all hydrated. Decide from derived state, because the denial flip lands one render late.
+   - Route `UpdateReadyModal` through the latch.
+   - Cap asks at one per day, not one per open, so a second open on the same day doesn't get a second ask.
+6. **Medium-high: iOS modal stacking.**
+   - Sibling `Modal`s presented while another is open or mid-dismiss can fail silently. Render one Modal from the host and swap its content, and sequence anything after What's New or setup on `onDismiss`.
+   - No `LocationPickerModal` inside the setup Modal.
+   - `await enableReminders()` before finishing setup, so the tour never runs under the system alert.
+   - Step 2 needs `KeyboardAvoidingView`. Cap search results at about 30 rows rendered plainly, not a FlatList nested in a ScrollView.
+7. **Medium: live-applying the city is the cost.**
+   - `sunriseForDate` is cheap: one memoized rise/set, and the engine is already on the launch graph.
+   - Each `applyLocation` triggers an observance scan, a widget replan (14 day solves on a fresh install), muhurat re-arming and the anga bridge.
+   - **Fix:** stage the choice and commit once on "आगे". Warm the 2.5 MB pincode and place tables only on the first pincode or place keystroke.
+8. **Medium: the widget sheet's pin chain must live in a module store, not a component hook.** Otherwise closing the sheet kills the AppState listener and the Panchang pin is lost.
+   - The strip must write through the same store.
+   - The verse facsimile cannot take lines from `DailyBhaktiScreen` in a launch-path component: ✔ it is forbidden in `launchGraph.test.ts`. Use `readWidgetPayload` or `getVerseAtPoolIndex`.
+9. **Medium: tests the change will trip.**
+   - These encode the removed or reordered behaviour: `NotificationPreferencesContext.test.tsx` (L73, L172, the L138–292 block), `.ios.test.tsx` (L76, L85, L96), `dailyBhaktiNudgeView.test.ts:52`, `DailyBhaktiNudge.test.tsx:186`, `TourContext.test.tsx` (L149, L164, L200, L223), `OnboardingSetupSheet.test.tsx` (L150, L157) and `RatingPromptSheet.test.tsx:60`.
+   - The setup-sheet test will throw once the sheet calls `useNotificationPreferences` outside the provider.
+   - ✔ `.maestro/_launch.yaml` is the shared boot for about 88 flows. Update it and `feature-tour-e2e.yaml` in the same PR, with stable English a11y labels, and never tap "yes" in the boot flow.
+   - Pure tsx tests run only if they are listed in `test:data`. Keep the gates as `components/*View.ts` under Jest, importing only types from `permissionState`.
+   - design.md §54 (the rating gate) also changes.
+10. **Low-medium: store policy.**
+    - A daily custom screen *before* the single iOS prompt is standard.
+    - A recurring modal pushing people to Settings after an OS denial is the part that invites a 5.1.1(iv) or "respect the user's choice" problem.
+    - **Fix:** add a lifetime cap (for example, 90 days or 12 asks). Keep the Settings variant passive (strip and Reminder Settings only).
+11. **Low: upgraders.** Seed `firstOpenDay` in the past when `appOpenCount > 1`, so the widget-offer timing is right for existing users.
+
+Reviewer's cuts to keep it shippable:
+- Drop the widget offer sheet from this PR; the strip already offers the pair.
+- Drop the Settings launch variant.
+- Drop pincode/place search from step 2. Keep the popular cities, a name search over `CITIES`, GPS, and a hand-off to the full picker after setup.
+- Drop per-city sunrise lists.
+
+## 10. Revised plan (supersedes §3, §5 and §6 where they differ)
+
+Adopted from both reviews, no owner decision needed:
+
+| Area | Revision |
+|---|---|
+| Onboarding state | Persisted `@vedansh/onboarding-phase` (`setup → tour → done`) gates setup, tour and What's New. Replay re-arms the tour only. |
+| First-open order | language → city → reminders → **(iOS) ATT** → tour. The tour mounts after the system alerts resolve. Android Meta start is unchanged. |
+| "बाद में / अभी नहीं" | Persists both reminder toggles as `false`. Step 3's copy names what the one grant covers. |
+| Toggle-off in Reminder Settings | Sets `optedOutAt`; no auto re-ask after it. |
+| Migration | `declineCount` seeded from `lastDeclinedAt`; a running 15-day snooze honoured once; `firstOpenDay` seeded in the past for `appOpenCount > 1`; new fields added to `parseMeta`. |
+| Settings round-trip | When the grant appears after Settings, both toggles turn on, with a short confirmation. |
+| Launch-ask latch | A provider above `RatingPromptProvider`. One ask per day. What's New, ATT and `UpdateReadyModal` count as asks. Nothing on a notification or widget cold start. Decides after all stores hydrate. |
+| iOS presentation | One host Modal that swaps content; sequencing on `onDismiss`. |
+| City step | Stage the choice, commit on "आगे". Two sunrise solves only (Ujjain + chosen). `KeyboardAvoidingView`; ≤30 plain result rows; pincode/place tables warmed on first such keystroke. "आगे" always enabled. |
+| Step 3 | One notification facsimile, no time picker, the "फ़ोन अनुमति माँगेगा" line only when the OS will prompt. |
+| Visuals | Shared sheet shell; primary on `saffronDeep` (AA); tour-style dots; back on steps 2–3; the §9.1 copy fixes ("सेटिंग्स" tab, "ठीक है", tour steps 24–25). |
+| Tests | As §9.2 item 9; `_launch.yaml` and `feature-tour-e2e.yaml` in the same PR. |
+
+**Owner decisions still open** (Codex review welcome on each):
+
+1. **Re-ask cadence.**
+   - (a) Once a day until yes, weekly after five "later" (as approved).
+   - (b) Design: day-opens 3, 5 and 8, then weekly, so the widget offer gets day 2.
+   - (c) Engineering: (a) plus a lifetime cap (90 days or 12 asks).
+2. **The Settings variant after an OS denial.**
+   - Engineering says keep it passive, for policy risk.
+   - The owner asked to keep asking.
+   - Recommendation: passive, plus one launch reminder at most weekly.
+3. **"फिर न पूछें · Don't ask again"** from the third decline (design). It conflicts with "until yes".
+4. **Widget offer sheet on a later day.** Keep it in this PR (owner ask; needs the module-store pin chain), or ship the asks first and add the sheet after (engineering).
+5. **City search depth in step 2.** Full pincode/place search, or cities plus GPS with a hand-off to the full picker.

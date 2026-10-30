@@ -356,8 +356,8 @@ button.item:hover { border-color: var(--rule); background: var(--accent-soft); }
                 <li><button class="item" data-scene="lang"><b>Language &amp; reading size</b><em>Step 1 of 3 · no system prompt</em></button></li>
                 <li><button class="item" data-scene="city"><b>Your city</b><em>Step 2 of 3 · location prompt only if they tap “use my location”</em></button></li>
                 <li><button class="item" data-scene="notifPrimer"><b>Reminders</b><em>Step 3 of 3 · system prompt only after “हाँ”</em></button></li>
+                <li><button class="item" data-scene="att" data-os="ios"><b>Tracking prompt</b><em>iPhone · after setup, before the tour, no longer at launch</em></button></li>
                 <li><button class="item" data-scene="tour"><b>Feature tour</b><em>Unchanged, after setup · Skip at the top</em></button></li>
-                <li><button class="item" data-scene="att" data-os="ios"><b>Tracking prompt</b><em>iPhone · after the tour, no longer at launch</em></button></li>
               </ol>
             </div>
           </div>
@@ -591,7 +591,7 @@ button.item:hover { border-color: var(--rule); background: var(--accent-soft); }
       '<div class="t">Allow “Vedansh” to track your activity across other companies’ apps and websites?</div>' +
       '<div class="m">So we know how you found Vedansh.</div>' +
       '<div class="row"><button data-go="attDone">Ask App Not to Track</button><button data-go="attDone">Allow</button></div></div></div>' +
-      '<div class="who">iOS system prompt · after the tour</div>';
+      '<div class="who">iOS system prompt · after setup</div>';
   }
 
   function pinDialog(which, of) {
@@ -700,7 +700,7 @@ button.item:hover { border-color: var(--rule); background: var(--accent-soft); }
     reask: function () { return '<b>Proposed re-ask.</b> Reminders are still off. At most once per day the app is opened, until “हाँ”; this open asks nothing else.'; },
     reaskSettings: function () { return '<b>Proposed, after a system “Don’t allow”.</b> The system prompt can’t come back, so the screen sends the user to Settings.'; },
     att: function () { return state.os === 'ios'
-      ? '<b>Proposed: tracking after setup and the tour.</b> Still on the 1st open, because App Review must find it and Meta counts nothing before it is answered.'
+      ? '<b>Proposed: tracking right after setup, before the tour.</b> Still on the 1st open, because App Review must find it and Meta counts nothing before it is answered.'
       : '<b>Android has no tracking prompt.</b> Switch to iPhone to see it.'; },
     pair: function () { return '<b>Today: the Bhakti tab strip.</b> Seen only if the user opens that tab.'; },
     denied: function () { return '<b>Notifications refused.</b> Tomorrow’s open shows the reminder screen again: the system prompt on Android if one ask remains, Settings otherwise.'; },
@@ -762,18 +762,19 @@ button.item:hover { border-color: var(--rule); background: var(--accent-soft); }
     else if (a === 'toNotif') go('notifPrimer');
     else if (a === 'skipCity') { state.city = null; go('notifPrimer'); }
     else if (a === 'notifYes') go('notifPrompt');
-    else if (a === 'notifLater') { state.toast = 'No system prompt shown; asked again on the next day’s open'; go('tour'); }
+    else if (a === 'notifLater') { state.toast = 'No system prompt shown; asked again on a later day'; go(state.os === 'ios' ? 'att' : 'tour'); }
     else if (a === 'allow') {
       if (today) go(state.os === 'ios' ? 't1Att' : 't1Tour');
       else if (state.reasking) { state.reasking = false; state.toast = 'Reminders on. Widgets come on the next open'; go('done'); }
-      else go('tour');
+      else go(state.os === 'ios' ? 'att' : 'tour');
     }
     else if (a === 'deny') {
       if (today) go(state.os === 'ios' ? 't1Att' : 't1Tour');
-      else { state.reasking = false; state.toast = 'Refused. The next day’s open shows the reminder screen again'; go(state.os === 'ios' ? 'reaskSettings' : 'reask'); }
+      else if (state.reasking) { state.reasking = false; state.toast = 'Refused. A later day shows the reminder screen again'; go(state.os === 'ios' ? 'reaskSettings' : 'reask'); }
+      else { state.toast = 'Refused. A later day shows the reminder screen again'; go(state.os === 'ios' ? 'att' : 'tour'); }
     }
-    else if (a === 'attDone') go(today ? 't1Tour' : 'home1');
-    else if (a === 'tourSkip' || a === 'tourNext') go(today ? 't1Lang' : (state.os === 'ios' ? 'att' : 'home1'));
+    else if (a === 'attDone') go(today ? 't1Tour' : 'tour');
+    else if (a === 'tourSkip' || a === 'tourNext') go(today ? 't1Lang' : 'home1');
     else if (a === 'reaskLater') { state.toast = 'Asked again tomorrow; after five “बाद में”, once a week'; go('done'); }
     else if (a === 'openSettings') { state.toast = 'Opens Vedansh’s page in the phone’s Settings'; go('reaskSettings'); }
     else if (a === 'add') go(state.os === 'ios' ? 'open2Widget' : 'pin1');
