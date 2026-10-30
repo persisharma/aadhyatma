@@ -79,7 +79,9 @@ export default function ChoghadiyaStrip({
                 adjustsFontSizeToFit
                 minimumFontScale={0.8}
                 maxFontSizeMultiplier={1.3}
-                style={{ fontFamily: isNow ? titleFont : bodyFont, fontSize: 10.5, lineHeight: 15, color: isNow ? colors.saffronDeep : past ? colors.inkMuted : colors.inkSoft }}
+                // No fixed lineHeight: with adjustsFontSizeToFit it lets iOS ratchet
+                // the size down past minimumFontScale on every live re-render (§3.0).
+                style={{ fontFamily: isNow ? titleFont : bodyFont, fontSize: 10.5, color: isNow ? colors.saffronDeep : past ? colors.inkMuted : colors.inkSoft }}
               >
                 {contentByLang(lang, p.nameHi, p.nameEn)}
               </Text>
