@@ -1279,3 +1279,7 @@ PR #555 added four Mahakaal masters (three Suvichar frames + the Daily Bhakti ca
 ## [2026-10-29] ingest | Native horizon previews refreshed on current 24-hour main
 
 PR #556 is merged; the night-horizon follow-up is on `codex/panchang-night-moonrise`. Main's 24-hour formatter and subsequent share-card work are reconciled. Typecheck and 23 focused Jest checks pass on the combined tree; the five real-engine horizon checks also pass. Current native before-rise, after-rise and after-set captures all pass and are visually reviewed at Large size. Preview Date/Date.now overrides are restored, confirmed at 29 October 13:31 IST. No release action. See `docs/evaluations/panchang-day-icons-2026-10-27/night-horizon/README.md`.
+
+## [2026-10-29] ingest | Annapurna painted in Suvichar
+
+Annapurna had reviewed Suvichar copy but no master, so her Bhakti Sandesh cards were a mostly blank text-only parchment. Codex generated three masters in the existing frame pipeline (1122×1402, hero 0.60/0.64/0.60, provenance in docs/evaluations/annapurna/sources.json); the user approved them; they were uploaded to R2 (immutable), added to sources and the manifest (54), and every text-only branch was removed from SuvicharCard, both pickers and the weekday filter.

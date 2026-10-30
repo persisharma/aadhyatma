@@ -38,8 +38,7 @@ function MeasuredCard({ deity, frame, message, name, lang, width, title, attribu
   uri: string | null; onFailure: () => void;
 }) {
   const { colors } = useTheme();
-  const textOnly = deity === 'annapurna';
-  const heroFraction = textOnly ? .12 : suvicharHeroFraction(deity, frame);
+  const heroFraction = suvicharHeroFraction(deity, frame);
   const band = suvicharFooterBand(frame);
   const brand = suvicharBrandSlot(frame);
   const full = width * t.aspect;
@@ -49,7 +48,7 @@ function MeasuredCard({ deity, frame, message, name, lang, width, title, attribu
   const [rootHeight, setRootHeight] = useState(0);
   const [measured, setMeasured] = useState(false);
   const [bodyHeight, setBodyHeight] = useState(full * (band.start - heroFraction));
-  useEffect(() => { onReady((textOnly || !!uri && painted.hero && painted.body && painted.footer) && painted.mark && painted.photo && measured && Math.abs(rootHeight - (hero + bodyHeight + footer)) < 1); }, [uri, textOnly, painted, measured, rootHeight, bodyHeight, hero, footer, onReady]);
+  useEffect(() => { onReady((!!uri && painted.hero && painted.body && painted.footer) && painted.mark && painted.photo && measured && Math.abs(rootHeight - (hero + bodyHeight + footer)) < 1); }, [uri, painted, measured, rootHeight, bodyHeight, hero, footer, onReady]);
   const scale = width / t.baseWidth;
   const face = titleFontByLang(lang);
   const text = (size: number) => ({ color: colors.ink, fontFamily: face, fontSize: size * scale, lineHeight: size * scale * t.leading, textAlign: 'center' as const });
@@ -67,7 +66,6 @@ function MeasuredCard({ deity, frame, message, name, lang, width, title, attribu
     <View testID="suvichar-card-body" onLayout={e => { setBodyHeight(e.nativeEvent.layout.height); setMeasured(Number.isFinite(e.nativeEvent.layout.height) && e.nativeEvent.layout.height > 0); }} style={{ minHeight: full * (band.start - heroFraction), justifyContent: 'center', overflow: 'hidden' }}>
       {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ position: 'absolute', width, height: backgroundHeight, top: -backgroundHeight * heroFraction }} onLoad={() => setPainted(p => ({ ...p, body: true }))} onError={failed} /> : null}
       <View style={{ paddingHorizontal: width * t.horizontalInset, paddingTop: (deity === 'saraswati' && frame === 'mandir-jharokha' ? 20 : 8) * scale, paddingBottom: 8 * scale }}>
-        {textOnly ? <Text style={[text(t.name), { color: colors.saffronDeep }]}>{pick(lang, { hi: 'माँ अन्नपूर्णा', en: 'Maa Annapurna', gu: 'મા અન્નપૂર્ણા', kn: 'ಅನ್ನಪೂರ್ಣೆ ತಾಯಿ' })}</Text> : null}
         {title ? <Text testID="suvichar-card-title" allowFontScaling={false} style={[text(t.title), { color: colors.saffronDeep }]}>{title}</Text>
           : attribution ? null : <Text allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{pick(lang, { hi: 'आज का सुविचार', en: 'A thought for today', gu: 'આજનો સુવિચાર', kn: 'ಇಂದಿನ ಸುವಿಚಾರ' })}</Text>}
         {attribution ? <Text testID="suvichar-card-source" allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{attribution}</Text> : null}
@@ -89,7 +87,6 @@ function MeasuredCard({ deity, frame, message, name, lang, width, title, attribu
         <Text allowFontScaling={false} numberOfLines={1} style={[text(t.footer), { color: colors.inkSoft }]}>vedansh.app/get</Text>
       </View>
     </View>
-    {textOnly ? <View pointerEvents="none" style={{ ...StyleSheet.absoluteFillObject, borderWidth: 1, borderColor: colors.gold, borderRadius: frame === 'pushp-aangan' ? 20 : frame === 'mandir-jharokha' ? 8 : 0 }} /> : null}
   </View>;
 }
 function Diamond({ size }: { size: number }) {

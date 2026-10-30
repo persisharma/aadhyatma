@@ -26,7 +26,7 @@ export const suvicharVaar: readonly SuvicharVaar[] = [
   { hi: 'शुभ शनिवार', en: 'Shubh Shanivar', deities: ['hanuman', 'salasar-balaji'] },
 ];
 
-const published = (deity: SuvicharDeity) => deity === 'annapurna' || suvicharFrames.every(frame => suvicharArtRequest(deity, frame.id));
+const published = (deity: SuvicharDeity) => suvicharFrames.every(frame => suvicharArtRequest(deity, frame.id));
 /** Today's weekday card, or null on a day with no published deity. Uses the device's civil date. */
 export function suvicharVaarFor(date: Date): SuvicharVaar | null {
   const vaar = suvicharVaar[date.getDay()];

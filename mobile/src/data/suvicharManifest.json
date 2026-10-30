@@ -1,6 +1,18 @@
 {
   "prefix": "suvichar",
   "assets": {
+    "annapurna--bhakti-patra": {
+      "hash": "8cca17e5c79294f9",
+      "ext": "webp"
+    },
+    "annapurna--mandir-jharokha": {
+      "hash": "c697182ff6a0e580",
+      "ext": "webp"
+    },
+    "annapurna--pushp-aangan": {
+      "hash": "e8cbbc4a178756c0",
+      "ext": "webp"
+    },
     "durga--bhakti-patra": {
       "hash": "6965a4e677d399b8",
       "ext": "webp"
@@ -83,6 +95,18 @@
     },
     "lakshmi--pushp-aangan": {
       "hash": "1fbea91a07ea23e2",
+      "ext": "webp"
+    },
+    "mahakaal--bhakti-patra": {
+      "hash": "7621991b6799e06c",
+      "ext": "webp"
+    },
+    "mahakaal--mandir-jharokha": {
+      "hash": "ef98ac739993f540",
+      "ext": "webp"
+    },
+    "mahakaal--pushp-aangan": {
+      "hash": "fe7ff3914e8434ee",
       "ext": "webp"
     },
     "radha-krishna--bhakti-patra": {
@@ -191,18 +215,6 @@
     },
     "vishnu--pushp-aangan": {
       "hash": "cd145fe21e14d2cc",
-      "ext": "webp"
-    },
-    "mahakaal--pushp-aangan": {
-      "hash": "fe7ff3914e8434ee",
-      "ext": "webp"
-    },
-    "mahakaal--bhakti-patra": {
-      "hash": "7621991b6799e06c",
-      "ext": "webp"
-    },
-    "mahakaal--mandir-jharokha": {
-      "hash": "ef98ac739993f540",
       "ext": "webp"
     }
   }
