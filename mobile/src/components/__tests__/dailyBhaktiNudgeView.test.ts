@@ -2,10 +2,13 @@ import {
   EMPTY_NUDGE_RECORD,
   NUDGE_SNOOZE_DAYS,
   formatReminderTimes,
+  isWidgetNudge,
   nudgeCopy,
+  nudgeWidgets,
   parseNudgeRecord,
   reminderOnLine,
   selectNudge,
+  widgetAddedPatch,
   type NudgeInputs,
 } from '../dailyBhaktiNudgeView';
 
@@ -77,8 +80,18 @@ describe('selectNudge', () => {
     expect(selectNudge(inputs({ dailyVerseEnabled: true, record }))).toBeNull();
   });
 
-  test('an add flow ends the widget ask for good', () => {
+  test('a completed verse add flow leaves the Panchang ask', () => {
     const record = { ...EMPTY_NUDGE_RECORD, widgetAddedAt: NOW - 400 * DAY };
+    expect(selectNudge(inputs({ dailyVerseEnabled: true, record }))).toBe('panchangWidget');
+  });
+
+  test('a widget "not now" also ends the Panchang ask', () => {
+    const record = { ...EMPTY_NUDGE_RECORD, widgetAddedAt: NOW - DAY, widgetDismissedAt: NOW };
+    expect(selectNudge(inputs({ dailyVerseEnabled: true, record }))).toBeNull();
+  });
+
+  test('both add flows end the widget ask for good', () => {
+    const record = { ...EMPTY_NUDGE_RECORD, widgetAddedAt: NOW - 400 * DAY, panchangAddedAt: NOW - 400 * DAY };
     expect(selectNudge(inputs({ dailyVerseEnabled: true, record }))).toBeNull();
   });
 });
@@ -94,7 +107,7 @@ describe('parseNudgeRecord', () => {
   });
 
   test('round-trips the stored stamps', () => {
-    const stored = { reminderDismissedAt: NOW - DAY, widgetDismissedAt: null, widgetAddedAt: NOW };
+    const stored = { reminderDismissedAt: NOW - DAY, widgetDismissedAt: null, widgetAddedAt: NOW, panchangAddedAt: NOW };
     expect(parseNudgeRecord(JSON.stringify(stored))).toEqual(stored);
   });
 });
@@ -106,7 +119,7 @@ describe('copy', () => {
   });
 
   test('every kind has copy in all four reading languages', () => {
-    for (const kind of ['reminder', 'reminderBlocked', 'widget'] as const) {
+    for (const kind of ['reminder', 'reminderBlocked', 'widget', 'panchangWidget'] as const) {
       for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
         const copy = nudgeCopy(kind, lang, [{ hour: 7, minute: 0 }]);
         expect(copy.title.length).toBeGreaterThan(0);
@@ -120,5 +133,20 @@ describe('copy', () => {
     expect(nudgeCopy('reminder', 'en', [{ hour: 6, minute: 30 }]).subtitle).toBe('Daily at 06:30');
     expect(nudgeCopy('reminder', 'hi', [{ hour: 6, minute: 30 }]).subtitle).toContain('06:30');
     expect(reminderOnLine('en', [{ hour: 6, minute: 30 }])).toBe('Reminder on · 06:30');
+  });
+});
+
+describe('widget asks', () => {
+  test('the pair adds the verse first, then the Panchang; the follow-up adds the Panchang alone', () => {
+    expect(nudgeWidgets('widget')).toEqual(['verse', 'panchang']);
+    expect(nudgeWidgets('panchangWidget')).toEqual(['panchang']);
+    expect(nudgeWidgets('reminder')).toEqual([]);
+    expect(isWidgetNudge('panchangWidget')).toBe(true);
+    expect(isWidgetNudge('reminderBlocked')).toBe(false);
+  });
+
+  test('each widget stamps its own add flow', () => {
+    expect(widgetAddedPatch('verse', NOW)).toEqual({ widgetAddedAt: NOW });
+    expect(widgetAddedPatch('panchang', NOW)).toEqual({ panchangAddedAt: NOW });
   });
 });

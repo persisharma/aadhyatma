@@ -1279,3 +1279,7 @@ PR #555 added four Mahakaal masters (three Suvichar frames + the Daily Bhakti ca
 ## [2026-10-29] ingest | Native horizon previews refreshed on current 24-hour main
 
 PR #556 is merged; the night-horizon follow-up is on `codex/panchang-night-moonrise`. Main's 24-hour formatter and subsequent share-card work are reconciled. Typecheck and 23 focused Jest checks pass on the combined tree; the five real-engine horizon checks also pass. Current native before-rise, after-rise and after-set captures all pass and are visually reviewed at Large size. Preview Date/Date.now overrides are restored, confirmed at 29 October 13:31 IST. No release action. See `docs/evaluations/panchang-day-icons-2026-10-27/night-horizon/README.md`.
+
+## [2026-10-30] ingest | Daily Bhakti strip offers the verse + Panchang widget pair
+
+The setup strip's widget ask now adds both widgets from one Add. Android pins verse, then Panchang when the first launcher dialog closes (AppState return to `active`); iOS's how-to sheet previews both (Panchang facsimile reads the published widget snapshot). A new `panchangAddedAt` stamp drives a Panchang-only follow-up for verse-only users. Neither OS can place a widget without the user's confirmation — recorded as a [[home-widgets]] gotcha. design.md §23/§59 updated.
