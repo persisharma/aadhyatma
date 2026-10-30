@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>PRD-46 · First-launch asks — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+Devanagari:wght@500;600&family=Noto+Serif+Gujarati:wght@600&family=Noto+Serif+Kannada:wght@600&display=swap">
+<style>
+/* Layout: an open-by-open inventory (today vs proposed) beside one live phone; each row jumps the phone to that screen. */
+:root {
+  --bg: #E9DCBC;
+  --panel: #F6ECD0;
+  --fg: #1A0E03;
+  --muted: #5A3A1E;
+  --rule: rgba(90, 58, 30, 0.22);
+  --accent: #8A3E0B;
+  --accent-soft: rgba(138, 62, 11, 0.1);
+  --frame: #2A1D11;
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --deva: "Noto Serif Devanagari", "Kohinoor Devanagari", "Nirmala UI", serif;
+
+  /* The app's own tokens (mobile/src/theme/colors.ts) — the phone stays in the shipped light palette. */
+  --a-parchment: #F3E7C9;
+  --a-soft: #F8EFD6;
+  --a-ink: #1A0E03;
+  --a-ink-soft: #5A3A1E;
+  --a-ink-muted: #6E5230;
+  --a-saffron-deep: #8A3E0B;
+  --a-gold: #A67C34;
+  --a-divider: rgba(138, 62, 11, 0.18);
+  --a-saffron-tint: rgba(184, 98, 27, 0.12);
+  --a-gold-tint: rgba(166, 124, 52, 0.14);
+  --a-gold-chip: rgba(166, 124, 52, 0.22);
+  --a-on-primary: #FFFFFF;
+  /* WIDGET_TEXT_TOKENS (mobile/src/widgets/catalog.ts) */
+  --w-ink: #1A0E03;
+  --w-muted: #4A3420;
+  --w-saffron: #6B2E05;
+  --w-gold: #7E5A1E;
+  /* System chrome drawn by the OS, not the app */
+  --sys-sheet: #FFFFFF;
+  --sys-text: #1C1B1F;
+  --sys-sub: #49454F;
+  --sys-blue: #0A64D6;
+  --sys-scrim: rgba(0, 0, 0, 0.42);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17100A; --panel: #241910; --fg: #F3E7C9; --muted: #CDB894;
+    --rule: rgba(243, 231, 201, 0.16); --accent: #E39A55; --accent-soft: rgba(227, 154, 85, 0.14);
+    --frame: #0B0705; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17100A; --panel: #241910; --fg: #F3E7C9; --muted: #CDB894;
+  --rule: rgba(243, 231, 201, 0.16); --accent: #E39A55; --accent-soft: rgba(227, 154, 85, 0.14);
+  --frame: #0B0705; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 48px;
+}
+.wrap { max-width: 1080px; margin: 0 auto; display: grid; gap: 28px; }
+header h1 { font-family: var(--display); font-weight: 600; font-size: clamp(30px, 5vw, 42px); line-height: 1.1; margin: 0 0 8px; text-wrap: balance; }
+header p { margin: 0; color: var(--muted); max-width: 62ch; }
+.flag { margin-top: 14px; display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border: 1px solid var(--rule); border-radius: 10px; background: var(--accent-soft); max-width: 72ch; }
+.flag b { color: var(--accent); }
+.tag { font: 600 10.5px/1 var(--body); letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 6px; border-radius: 4px; border: 1px solid currentColor; color: var(--accent); white-space: nowrap; }
+
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 36px; align-items: start; }
+@media (max-width: 860px) { .main { grid-template-columns: minmax(0, 1fr); } .stage { order: -1; } }
+
+/* Timeline */
+.timeline h2, .facts h2 { font-family: var(--display); font-weight: 600; font-size: 24px; margin: 0 0 12px; }
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: s; }
+ol.steps > li { counter-increment: s; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-top: 1px solid var(--rule); }
+ol.steps > li::before { content: counter(s); font: 600 13px/28px var(--body); text-align: center; width: 28px; height: 28px; border-radius: 50%; background: var(--panel); border: 1px solid var(--rule); color: var(--accent); font-variant-numeric: tabular-nums; }
+.step-title { font-weight: 600; margin: 3px 0 4px; }
+.step p { margin: 0 0 6px; color: var(--muted); font-size: 14px; }
+.branches { display: grid; gap: 6px; margin-top: 6px; }
+.branch { font-size: 14px; color: var(--muted); padding-left: 12px; border-left: 2px solid var(--rule); }
+.branch b { color: var(--fg); font-weight: 600; }
+.jumps { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+button { font: inherit; cursor: pointer; }
+.jump { font: 500 12.5px/1 var(--body); padding: 7px 10px; border-radius: 999px; border: 1px solid var(--rule); background: var(--panel); color: var(--fg); }
+.jump:hover { border-color: var(--accent); color: var(--accent); }
+.jump[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; word-break: break-word; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.facts { border-top: 1px solid var(--rule); padding-top: 18px; }
+.facts dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 18px; margin: 0; font-size: 14px; }
+.facts dt { font-weight: 600; }
+.facts dd { margin: 0; color: var(--muted); }
+@media (max-width: 520px) { .facts dl { grid-template-columns: minmax(0, 1fr); } .facts dd { margin-bottom: 6px; } }
+
+/* Stage */
+.stage { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); display: grid; gap: 12px; justify-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; padding: 3px; background: var(--panel); }
+.seg button { border: 0; background: transparent; color: var(--muted); padding: 7px 16px; border-radius: 999px; font: 600 13px/1 var(--body); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+.caption { max-width: 320px; text-align: center; font-size: 13.5px; color: var(--muted); min-height: 3.2em; }
+.caption b { color: var(--fg); }
+.reset { font: 500 12.5px/1 var(--body); color: var(--accent); background: none; border: 0; text-decoration: underline; text-underline-offset: 3px; padding: 6px; }
+
+.phone { width: 320px; max-width: 100%; aspect-ratio: 320 / 680; border-radius: 46px; padding: 10px; background: var(--frame); box-shadow: 0 18px 40px rgba(26, 14, 3, 0.28); }
+.screen { position: relative; width: 100%; height: 100%; border-radius: 37px; overflow: hidden; background: linear-gradient(180deg, var(--a-soft), var(--a-parchment)); color: var(--a-ink); display: flex; flex-direction: column; }
+.statusbar { display: flex; justify-content: space-between; padding: 12px 24px 4px; font: 600 12px/1 var(--body); color: var(--a-ink); flex: none; }
+.app { flex: 1; min-height: 0; overflow: hidden; padding: 6px 12px 0; display: flex; flex-direction: column; gap: 9px; }
+
+/* Setup strip (design.md §23) */
+.strip { display: flex; align-items: center; gap: 8px; background: var(--a-soft); border: 1px solid var(--a-gold-chip); border-radius: 12px; padding: 6px 0 6px 10px; animation: arrive 0.35s ease-out; }
+@keyframes arrive { from { transform: translateY(-4px); opacity: 0.4; } to { transform: none; opacity: 1; } }
+.disc { width: 30px; height: 30px; border-radius: 50%; background: var(--a-saffron-tint); display: grid; place-items: center; flex: none; color: var(--a-saffron-deep); }
+.disc.blocked { background: var(--a-gold-tint); color: var(--a-ink-muted); }
+.disc svg { width: 16px; height: 16px; }
+.strip-copy { flex: 1; min-width: 0; }
+.strip-title { font: 600 12.5px/1.45 var(--deva); }
+.strip-sub { font: 500 10.5px/1.45 var(--deva); color: var(--a-ink-muted); }
+.strip-confirm { font: 600 10px/1.4 var(--deva); color: var(--a-saffron-deep); }
+.pill { border: 0; border-radius: 999px; background: var(--a-saffron-deep); color: var(--a-on-primary); font: 600 11.5px/1 var(--deva); padding: 9px 11px; flex: none; }
+.pill.outline { background: transparent; color: var(--a-saffron-deep); box-shadow: inset 0 0 0 1px var(--a-saffron-deep); }
+.x { width: 30px; height: 36px; border: 0; background: none; color: var(--a-ink-muted); display: grid; place-items: center; flex: none; }
+.x svg { width: 13px; height: 13px; }
+.pulse { animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(138, 62, 11, 0.45); } 50% { box-shadow: 0 0 0 6px rgba(138, 62, 11, 0); } }
+
+.controls { display: flex; gap: 6px; align-items: center; }
+.chip { font: 500 10.5px/1 var(--body); padding: 7px 9px; border-radius: 999px; background: var(--a-gold-tint); color: var(--a-ink-soft); }
+.chip.on { background: var(--a-saffron-deep); color: var(--a-on-primary); }
+.spacer { flex: 1; }
+.card { flex: 1; min-height: 0; border: 1px solid var(--a-divider); border-radius: 16px; background: var(--a-soft); padding: 14px 14px 0; text-align: center; overflow: hidden; display: flex; flex-direction: column; gap: 8px; }
+.card-art { height: 70px; border-radius: 10px; background-size: cover; background-position: center 35%; opacity: 0.9; flex: none; }
+.src { font: 600 11px/1.4 var(--deva); color: var(--a-saffron-deep); }
+.verse { font: 500 14px/1.75 var(--deva); }
+.orn { color: var(--a-gold); font-size: 11px; letter-spacing: 6px; }
+.meaning { border: 1px solid var(--a-gold-chip); border-radius: 10px; padding: 8px 10px; font: 500 11px/1.65 var(--deva); color: var(--a-ink-soft); text-align: left; }
+.meaning b { display: block; color: var(--a-saffron-deep); font-size: 10px; margin-bottom: 2px; }
+
+.tabbar { flex: none; display: grid; grid-template-columns: repeat(6, 1fr); padding: 7px 6px 18px; border-top: 1px solid var(--a-divider); background: var(--a-soft); }
+.tab { display: grid; justify-items: center; gap: 3px; font: 500 9px/1 var(--deva); color: var(--a-ink-muted); }
+.tab i { width: 18px; height: 18px; border-radius: 6px; background: var(--a-gold-tint); display: block; }
+.tab.on { color: var(--a-saffron-deep); }
+.tab.on i { background: var(--a-saffron-deep); }
+
+/* Overlays */
+.overlay { position: absolute; inset: 0; z-index: 5; display: flex; }
+.scrim { position: absolute; inset: 0; background: var(--sys-scrim); }
+.scrim.app-scrim { background: rgba(26, 14, 3, 0.45); }
+.alert-ios { position: relative; margin: auto; width: 230px; border-radius: 14px; background: rgba(242, 242, 247, 0.97); text-align: center; color: #000; overflow: hidden; }
+.alert-ios .t { font: 600 14px/1.3 var(--body); padding: 16px 14px 4px; }
+.alert-ios .m { font: 400 12px/1.4 var(--body); padding: 0 14px 14px; }
+.alert-ios .row { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid rgba(60, 60, 67, 0.3); }
+.alert-ios .row button { border: 0; background: none; padding: 11px 0; font: 400 15px/1 var(--body); color: #007AFF; }
+.alert-ios .row button + button { border-left: 0.5px solid rgba(60, 60, 67, 0.3); font-weight: 600; }
+.dlg-and { position: relative; margin: auto 14px; width: 100%; border-radius: 26px; background: var(--sys-sheet); color: var(--sys-text); padding: 20px 18px 14px; display: grid; gap: 12px; }
+.dlg-and.bottom { margin: auto 10px 22px; }
+.dlg-and .t { font: 500 17px/1.3 var(--body); text-align: center; }
+.dlg-and .m { font: 400 12.5px/1.45 var(--body); color: var(--sys-sub); text-align: center; }
+.dlg-and .actions { display: flex; justify-content: flex-end; gap: 6px; }
+.dlg-and .actions button { border: 0; background: none; color: var(--sys-blue); font: 600 13px/1 var(--body); padding: 10px 12px; border-radius: 999px; }
+.dlg-and .actions button.filled { background: var(--sys-blue); color: #fff; }
+.dlg-and .stack { display: grid; gap: 8px; }
+.dlg-and .stack button { border: 0; border-radius: 999px; padding: 11px; font: 600 13px/1 var(--body); background: #E8EEF8; color: var(--sys-blue); }
+.dlg-and .stack button.filled { background: var(--sys-blue); color: #fff; }
+.who { position: absolute; top: 9px; left: 50%; transform: translateX(-50%); z-index: 6; font: 600 9.5px/1 var(--body); letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: rgba(0, 0, 0, 0.55); padding: 5px 8px; border-radius: 999px; white-space: nowrap; }
+.count { font: 600 10.5px/1 var(--body); color: var(--sys-sub); text-align: center; letter-spacing: 0.04em; }
+
+/* Widget facsimiles */
+.wg { border-radius: 18px; border: 1px solid var(--a-divider); background-color: var(--a-soft); background-size: cover; background-position: center; padding: 11px 12px; display: flex; flex-direction: column; justify-content: space-between; color: var(--w-ink); overflow: hidden; }
+.wg.verse-w { min-height: 106px; }
+.wg.pan-w { width: 116px; aspect-ratio: 1; max-width: 100%; }
+.wg .eb { font: 600 9.5px/1.3 var(--deva); color: var(--w-saffron); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wg .vt { font: 500 11.5px/1.65 var(--deva); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin: 4px 0; }
+.wg .tithi { font: 600 17px/1.4 var(--deva); }
+.wg .meta { font: 400 9.5px/1.45 var(--body); color: var(--w-muted); }
+.wg .meta.d { font-family: var(--deva); }
+.wg .brand { font: 600 9px/1 var(--deva); color: var(--w-gold); }
+
+/* iOS how-to sheet (DailyBhaktiNudge.tsx WidgetHowToSheet) */
+.sheet { position: relative; margin-top: auto; width: 100%; max-height: 92%; background: var(--a-soft); border-radius: 22px 22px 0 0; padding: 8px 0 20px; display: flex; flex-direction: column; animation: up 0.3s ease-out; }
+@keyframes up { from { transform: translateY(30px); } to { transform: none; } }
+.grab { width: 34px; height: 4px; border-radius: 2px; background: var(--a-divider); margin: 0 auto 6px; flex: none; }
+.sheet-body { overflow-y: auto; padding: 4px 20px 0; display: flex; flex-direction: column; gap: 12px; }
+.sheet-title { font: 600 15.5px/1.4 var(--deva); text-align: center; }
+.isteps { display: grid; gap: 7px; }
+.istep { display: flex; gap: 9px; align-items: center; font: 500 11px/1.5 var(--deva); color: var(--a-ink-soft); }
+.istep span { width: 21px; height: 21px; border-radius: 50%; background: var(--a-saffron-tint); color: var(--a-saffron-deep); display: grid; place-items: center; font: 600 11px/1 var(--body); flex: none; }
+.big-pill { border: 0; border-radius: 999px; background: var(--a-saffron-deep); color: var(--a-on-primary); font: 600 13px/1 var(--deva); padding: 13px; }
+.link { border: 0; background: none; color: var(--a-saffron-deep); font: 500 11.5px/1 var(--deva); padding: 8px; }
+
+/* Home screen result */
+.home { position: absolute; inset: 0; z-index: 4; background: linear-gradient(160deg, #6F8FA8 0%, #A7B79A 45%, #C9A27A 100%); padding: 44px 16px 0; display: flex; flex-direction: column; gap: 12px; }
+.home .row { display: grid; grid-template-columns: 116px 1fr; gap: 12px; align-items: start; }
+.apps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 10px; }
+.appicon { aspect-ratio: 1; border-radius: 13px; background: rgba(255, 255, 255, 0.55); }
+.home .lbl { font: 500 9px/1 var(--body); color: #fff; text-align: center; margin-top: -6px; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
+.home .done { margin-top: auto; margin-bottom: 26px; align-self: center; font: 600 11px/1 var(--body); background: rgba(0, 0, 0, 0.5); color: #fff; padding: 8px 12px; border-radius: 999px; }
+.home .empty { width: 116px; aspect-ratio: 1; border-radius: 18px; border: 1.5px dashed rgba(255, 255, 255, 0.7); display: grid; place-items: center; font: 500 9.5px/1.3 var(--body); color: #fff; text-align: center; padding: 8px; }
+.toast { position: absolute; left: 50%; bottom: 74px; transform: translateX(-50%); z-index: 7; background: rgba(26, 14, 3, 0.88); color: #fff; font: 500 11px/1.4 var(--body); padding: 8px 12px; border-radius: 10px; width: max-content; max-width: 86%; text-align: center; }
+
+/* Legend tags */
+.tag.proposed { color: var(--accent); }
+.tag.built { color: var(--muted); }
+.group-head { display: flex; align-items: center; gap: 10px; margin: 18px 0 6px; }
+.group-head:first-of-type { margin-top: 0; }
+.group-head h3 { font: 600 19px/1.2 var(--display); margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 12px; font-size: 13.5px; color: var(--muted); }
+.legend span { display: inline-flex; gap: 8px; align-items: center; }
+
+/* First-run setup sheet (OnboardingSetupSheet.tsx look: parchmentHighlight, 22 top radius) */
+.setup { position: relative; margin-top: auto; width: 100%; height: 90%; background: #F6ECD0; border-radius: 22px 22px 0 0; padding: 8px 0 18px; display: flex; flex-direction: column; animation: up 0.3s ease-out; }
+.setup-body { flex: 1; min-height: 0; overflow-y: auto; padding: 4px 18px 0; display: flex; flex-direction: column; gap: 9px; }
+.setup-foot { padding: 10px 18px 0; display: grid; gap: 2px; flex: none; }
+.eyebrow { display: flex; justify-content: space-between; align-items: center; font: 600 10.5px/1.3 var(--deva); color: var(--a-saffron-deep); }
+.dots { display: inline-flex; gap: 4px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--a-gold-chip); display: block; }
+.dots i.on { background: var(--a-saffron-deep); width: 16px; border-radius: 3px; }
+.s-title { font: 600 19px/1.35 var(--deva); }
+.s-sub { font: italic 400 13.5px/1.3 var(--display); color: var(--a-ink-muted); margin-top: -6px; }
+.reason { font: 500 11px/1.7 var(--deva); color: var(--a-ink-soft); }
+.reason b { color: var(--a-saffron-deep); font-weight: 600; font-variant-numeric: tabular-nums; }
+.list { border: 1px solid var(--a-divider); border-radius: 14px; background: var(--a-soft); overflow: hidden; }
+.lrow { display: flex; align-items: center; gap: 8px; width: 100%; padding: 9px 12px; border: 0; background: none; text-align: left; color: var(--a-ink); }
+.lrow + .lrow { border-top: 1px solid var(--a-divider); }
+.lrow.on { background: var(--a-saffron-tint); }
+.lrow .nm { flex: 1; font: 600 13.5px/1.3 var(--deva); }
+.lrow.on .nm { color: var(--a-saffron-deep); }
+.lrow .en { font: 400 10px/1 var(--body); color: var(--a-ink-muted); }
+.lrow .sr { font: 500 10.5px/1 var(--body); color: var(--a-ink-muted); font-variant-numeric: tabular-nums; }
+.lrow .ck { color: #B8621B; width: 12px; font-size: 13px; }
+.lang-gu { font-family: "Noto Serif Gujarati", var(--deva); }
+.lang-kn { font-family: "Noto Serif Kannada", var(--deva); }
+.lang-en { font-family: var(--display); font-size: 15px !important; }
+.pills { display: flex; gap: 8px; }
+.pills span { flex: 1; text-align: center; padding: 8px; border-radius: 999px; border: 1px solid var(--a-gold-chip); font: 600 11.5px/1.2 var(--deva); color: var(--a-ink-soft); }
+.pills span.on { background: var(--a-saffron-deep); border-color: var(--a-saffron-deep); color: var(--a-on-primary); }
+.sec { font: 600 12.5px/1.3 var(--deva); margin-top: 4px; }
+.gps { display: flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--a-saffron-deep); color: var(--a-saffron-deep); background: transparent; border-radius: 999px; padding: 10px; font: 600 12px/1 var(--deva); }
+.gps svg { width: 14px; height: 14px; }
+.gps.done { background: var(--a-saffron-tint); border-color: transparent; }
+.privacy { font: 500 9.5px/1.5 var(--deva); color: var(--a-ink-muted); text-align: center; margin-top: -4px; }
+.search { border: 1px solid var(--a-divider); border-radius: 10px; background: var(--a-soft); padding: 9px 11px; font: 500 11px/1 var(--deva); color: var(--a-ink-muted); }
+.big-pill:disabled { opacity: 0.4; cursor: default; }
+.later { border: 0; background: none; color: var(--a-ink-muted); font: 500 10.5px/1.4 var(--deva); padding: 7px; }
+
+/* Notification previews on the reminders primer */
+.notif { display: flex; gap: 9px; align-items: flex-start; background: rgba(255, 255, 255, 0.78); border-radius: 14px; padding: 9px 10px; box-shadow: 0 2px 8px rgba(26, 14, 3, 0.1); }
+.notif .ic { width: 26px; height: 26px; border-radius: 7px; background: var(--a-saffron-deep); color: #fff; display: grid; place-items: center; font: 600 11px/1 var(--deva); flex: none; }
+.notif .tx { flex: 1; min-width: 0; }
+.notif .hd { display: flex; justify-content: space-between; gap: 6px; font: 600 11px/1.35 var(--deva); }
+.notif .hd small { font: 400 9.5px/1.35 var(--body); color: #6b6b6b; white-space: nowrap; }
+.notif .bd { font: 500 10.5px/1.5 var(--deva); color: #333; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.expect { font: 500 9.5px/1.5 var(--deva); color: var(--a-ink-muted); text-align: center; }
+
+/* OS location prompts */
+.alert-ios.tall .row { grid-template-columns: 1fr; }
+.alert-ios.tall .row button + button { border-left: 0; border-top: 0.5px solid rgba(60, 60, 67, 0.3); font-weight: 400; }
+.alert-ios .map { height: 78px; margin: 0 14px 12px; border-radius: 10px; background: radial-gradient(circle at 50% 50%, #5B8DEF 0 5px, rgba(91, 141, 239, 0.25) 6px 20px, transparent 21px), linear-gradient(135deg, #E8E4D8, #D7E3D0); }
+.loc-and .opts { display: flex; justify-content: center; gap: 26px; }
+.loc-and .opt { display: grid; justify-items: center; gap: 6px; font: 500 11px/1 var(--body); color: var(--sys-text); }
+.loc-and .opt i { width: 52px; height: 52px; border-radius: 50%; display: block; background: radial-gradient(circle, #0A64D6 0 4px, rgba(10, 100, 214, 0.2) 5px 22px, #E8EEF8 23px); }
+.loc-and .opt.approx i { background: radial-gradient(circle, rgba(10, 100, 214, 0.25) 0 22px, #E8EEF8 23px); }
+.loc-and .opt.sel { color: var(--sys-blue); }
+.loc-and .opt.sel i { box-shadow: 0 0 0 2px var(--sys-blue); }
+
+/* Open-by-open inventory */
+.opens { display: grid; gap: 18px; }
+.open { border-top: 1px solid var(--rule); padding-top: 12px; }
+.open-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.open-head h3 { font: 600 21px/1.2 var(--display); margin: 0; }
+.open-head span { font-size: 13px; color: var(--muted); }
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 560px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+.col { min-width: 0; border: 1px solid var(--rule); border-radius: 12px; padding: 10px; background: var(--panel); display: flex; flex-direction: column; gap: 8px; }
+.col.proposed { border-color: var(--accent); }
+.col-label { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--muted); }
+ol.ctl { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; counter-reset: c; }
+ol.ctl > li { counter-increment: c; display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: start; }
+ol.ctl > li::before { content: counter(c); font: 600 11.5px/22px var(--body); text-align: center; width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--rule); color: var(--accent); font-variant-numeric: tabular-nums; }
+.item { display: grid; gap: 2px; width: 100%; text-align: left; border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--fg); padding: 3px 6px; }
+button.item:hover { border-color: var(--rule); background: var(--accent-soft); }
+.item[aria-current="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.item b { font-weight: 600; font-size: 14px; }
+.item em { font-style: normal; font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+.item.static { cursor: default; }
+.col-note { margin: 0; font-size: 12.5px; color: var(--muted); border-top: 1px dashed var(--rule); padding-top: 7px; }
+
+.reask { margin-top: 26px; border-top: 1px solid var(--rule); padding-top: 16px; }
+.reask h2 { font-family: var(--display); font-weight: 600; font-size: 24px; margin: 0 0 12px; text-wrap: balance; }
+.rules { display: grid; gap: 10px; }
+.rule { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; align-items: start; }
+.rule .tag { justify-self: start; }
+.rule p { margin: 0; font-size: 14px; color: var(--muted); }
+.rule p b { color: var(--fg); }
+@media (max-width: 520px) { .rule { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+.replays { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.foot { color: var(--muted); font-size: 13px; margin: 0; border-top: 1px solid var(--rule); padding-top: 14px; }
+
+/* Feature tour (FeatureTour.tsx): dark scrim, counter + Skip, card above the tab bar */
+.tour-top { position: absolute; top: 34px; left: 18px; right: 18px; z-index: 5; display: flex; justify-content: space-between; font: 500 11px/1 var(--body); color: var(--a-parchment); }
+.tour-card { position: absolute; left: 14px; right: 14px; bottom: 74px; z-index: 5; background: var(--a-soft); border-radius: 14px; padding: 12px; display: grid; gap: 6px; color: var(--a-ink); }
+.tour-card::after { content: ""; position: absolute; bottom: -7px; left: 26px; width: 14px; height: 14px; background: var(--a-soft); transform: rotate(45deg); }
+.tour-card .tt { font: 600 14px/1.4 var(--deva); }
+.tour-card .te { font: italic 400 12.5px/1.2 var(--display); color: var(--a-ink-muted); margin-top: -4px; }
+.tour-card .tb { font: 500 10.5px/1.6 var(--deva); color: var(--a-ink-soft); }
+.tour-card .tbtns { display: flex; justify-content: flex-end; gap: 6px; }
+.tour-card .tbtns span { font: 500 11px/1 var(--body); padding: 8px 11px; border-radius: 8px; border: 1px solid var(--a-divider); color: var(--a-ink-soft); }
+.tour-card .tbtns span.p { background: var(--a-saffron-deep); color: #fff; border-color: transparent; }
+.tour-ring { position: absolute; left: 8px; bottom: 16px; width: 48px; height: 44px; border-radius: 12px; box-shadow: 0 0 0 2px #E39A55; z-index: 5; }
+.blink { animation: blink 1.6s ease-in-out infinite; }
+@keyframes blink { 50% { opacity: 0.35; } }
+.osteps { display: grid; gap: 6px; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>What a new user sees, open by open</h1>
+    <p>Every prompt, sheet and walkthrough Vedansh can put on screen at launch, today and in the proposed order: language, city and reminders on the first open, widgets on the second. Tap any row to see it on the phone, and switch between Android and iPhone.</p>
+    <div class="legend">
+      <span><span class="tag built">Today</span> What the shipped code does</span>
+      <span><span class="tag proposed">Proposed</span> Not built yet</span>
+    </div>
+  </header>
+
+  <div class="main">
+    <section class="timeline" aria-labelledby="inv">
+      <h2 id="inv">Every control at launch</h2>
+
+      <div class="opens">
+        <div class="open">
+          <div class="open-head"><h3>1st open</h3><span>fresh install</span></div>
+          <div class="cols">
+            <div class="col today">
+              <div class="col-label"><span class="tag built">Today</span>4 interruptions</div>
+              <ol class="ctl">
+                <li><button class="item" data-scene="t1Notif"><b>Notification prompt</b><em>System · fires at launch, before a language is chosen</em></button></li>
+                <li><button class="item" data-scene="t1Att" data-os="ios"><b>Tracking prompt</b><em>System · iPhone, production builds</em></button></li>
+                <li><button class="item" data-scene="t1Tour"><b>Feature tour</b><em>25 steps · Skip at the top</em></button></li>
+                <li><button class="item" data-scene="t1Lang"><b>Language &amp; reading size</b><em>Sheet · Hindi over English</em></button></li>
+              </ol>
+              <p class="col-note">City is never asked: Panchang silently uses Ujjain.</p>
+            </div>
+            <div class="col proposed">
+              <div class="col-label"><span class="tag proposed">Proposed</span>3 asks with reasons, then tour</div>
+              <ol class="ctl">
+                <li><button class="item" data-scene="lang"><b>Language &amp; reading size</b><em>Step 1 of 3 · no system prompt</em></button></li>
+                <li><button class="item" data-scene="city"><b>Your city</b><em>Step 2 of 3 · location prompt only if they tap “use my location”</em></button></li>
+                <li><button class="item" data-scene="notifPrimer"><b>Reminders</b><em>Step 3 of 3 · system prompt only after “हाँ”</em></button></li>
+                <li><button class="item" data-scene="tour"><b>Feature tour</b><em>Unchanged, after setup · Skip at the top</em></button></li>
+                <li><button class="item" data-scene="att" data-os="ios"><b>Tracking prompt</b><em>iPhone · after the tour, no longer at launch</em></button></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="open">
+          <div class="open-head"><h3>2nd open</h3><span>proposed: the next day the app is opened</span></div>
+          <div class="cols">
+            <div class="col today">
+              <div class="col-label"><span class="tag built">Today</span></div>
+              <ol class="ctl">
+                <li><button class="item" data-scene="pair"><b>Bhakti tab strip</b><em>Only when that tab is opened · reminder, then widgets</em></button></li>
+              </ol>
+              <p class="col-note">The reminder sheet returns only after 15 days if the user said no.</p>
+            </div>
+            <div class="col proposed">
+              <div class="col-label"><span class="tag proposed">Proposed</span>one ask per open</div>
+              <ol class="ctl">
+                <li><button class="item" data-scene="open2Widget"><b>Widget pair sheet</b><em>Verse + Panchang · Android: 2 launcher dialogs · iPhone: steps</em></button></li>
+                <li><button class="item" data-scene="reask"><b>If reminders are still off</b><em>The reminder screen takes this open; widgets wait one more open</em></button></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <div class="open">
+          <div class="open-head"><h3>3rd open and later</h3></div>
+          <div class="cols">
+            <div class="col today">
+              <div class="col-label"><span class="tag built">Today</span></div>
+              <ol class="ctl">
+                <li><span class="item static"><b>What’s New</b><em>Only after an app update</em></span></li>
+                <li><span class="item static"><b>Rating request</b><em>Never at launch; after a meaningful moment</em></span></li>
+              </ol>
+            </div>
+            <div class="col proposed">
+              <div class="col-label"><span class="tag proposed">Proposed</span></div>
+              <ol class="ctl">
+                <li><button class="item" data-scene="reask"><b>Reminder re-ask</b><em>Once a day until “हाँ”</em></button></li>
+                <li><button class="item" data-scene="reaskSettings"><b>After a system “Don’t allow”</b><em>Same cadence, but it opens phone Settings</em></button></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="reask" aria-labelledby="ra">
+        <h2 id="ra">“Keep asking until yes”: what's possible</h2>
+        <div class="rules">
+          <div class="rule"><span class="tag">Hard limit</span><p><b>iPhone shows its system prompt once, ever.</b> After “Don’t Allow” the app can’t show it again; only the Settings app can turn notifications on.</p></div>
+          <div class="rule"><span class="tag">Hard limit</span><p><b>Android 13+ shows it at most twice.</b> After the second refusal, Settings only. Android 12 and older have no prompt; notifications start on.</p></div>
+          <div class="rule"><span class="tag proposed">Our side</span><p><b>Our own reminder screen can come back as often as we decide.</b> Before a refusal it leads to the system prompt; after one it becomes a “turn on in Settings” screen with a button straight to Vedansh’s settings.</p></div>
+          <div class="rule"><span class="tag proposed">Cadence</span><p><b>At most once per day the app is opened, until “हाँ”.</b> After five “बाद में”, once a week. Only at launch, never mid-reading. Exact numbers are a product call.</p></div>
+          <div class="rule"><span class="tag">Risk</span><p>Apple doesn’t allow an app to require notifications, so the screen must always be dismissable. Daily asks to someone who keeps declining can cost uninstalls and reviews.</p></div>
+        </div>
+      </section>
+    </section>
+
+    <aside class="stage" aria-label="Phone prototype">
+      <div class="seg" role="group" aria-label="Platform">
+        <button id="os-android" aria-pressed="true" data-os-btn="android">Android</button>
+        <button id="os-ios" aria-pressed="false" data-os-btn="ios">iPhone</button>
+      </div>
+      <div class="phone"><div class="screen" id="screen"></div></div>
+      <div class="caption" id="caption" aria-live="polite"></div>
+      <div class="replays">
+        <button class="reset" id="playToday">Play today’s 1st open</button>
+        <button class="reset" id="playNew">Play proposed 1st open</button>
+      </div>
+    </aside>
+  </div>
+
+  <p class="foot">Sunrise times come from the app’s own engine for 30 Oct 2026. The Panchang widget’s tithi and “तक” time are example values. System prompts use each OS’s wording; the location reason is the app’s real permission text.</p>
+</div>
+
+<script>
+(function () {
+  var VERSE_BG = "data:image/jpeg;base64,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";
+  var PAN_BG = "data:image/jpeg;base64,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";
+  var screen = document.getElementById('screen');
+  var caption = document.getElementById('caption');
+
+  // Sunrise on 30 Oct 2026, IST — computed with mobile/src/panchang/engine.ts sunriseForDate.
+  var CITIES = [
+    { id: 'varanasi', hi: 'वाराणसी', en: 'Varanasi', sr: '06:04' },
+    { id: 'delhi', hi: 'दिल्ली', en: 'Delhi', sr: '06:31' },
+    { id: 'mumbai', hi: 'मुंबई', en: 'Mumbai', sr: '06:37' },
+    { id: 'ahmedabad', hi: 'अहमदाबाद', en: 'Ahmedabad', sr: '06:43' },
+    { id: 'bengaluru', hi: 'बेंगलुरु', en: 'Bengaluru', sr: '06:12' },
+    { id: 'kolkata', hi: 'कोलकाता', en: 'Kolkata', sr: '05:39' }
+  ];
+  var UJJAIN = { id: 'ujjain', hi: 'उज्जैन', en: 'Ujjain', sr: '06:30' };
+
+  var fresh = function () { return { os: state ? state.os : 'android', scene: 'lang', city: null, gps: false, home: { verse: true, panchang: true }, toast: '' }; };
+  var state = null;
+  state = fresh();
+
+  var ICON = {
+    widgets: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>',
+    bell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>',
+    close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+    pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>'
+  };
+
+  var VERSE = 'मोघाशा मोघकर्माणो मोघज्ञाना विचेतसः। राक्षसीमासुरीं चैव प्रकृतिं मोहिनीं श्रिताः॥';
+  function city() { return state.city || UJJAIN; }
+
+  function verseWidget() {
+    return '<div class="wg verse-w" style="background-image:url(' + VERSE_BG + ')">' +
+      '<div class="eb">आज का श्लोक</div><div class="vt">' + VERSE + '</div>' +
+      '<div class="brand">ॐ वेदांश़</div></div>';
+  }
+  function panWidget() {
+    var c = city();
+    return '<div class="wg pan-w" style="background-image:url(' + PAN_BG + ')">' +
+      '<div class="eb">30 अक्तू॰ · ' + c.hi + '</div>' +
+      '<div><div class="tithi">पंचमी</div><div class="meta d">तक 19:25</div><div class="meta d">सूर्योदय ' + c.sr + '</div></div>' +
+      '<div class="brand">ॐ वेदांश़</div></div>';
+  }
+
+  function strip(kind) {
+    var c = {
+      pair: { icon: 'widgets', title: 'श्लोक और पंचांग विजेट', sub: 'ऐप खोले बिना आज का श्लोक और तिथि', action: 'जोड़ें', go: 'add' },
+      panOnly: { icon: 'widgets', title: 'होम-स्क्रीन पर पंचांग', sub: 'आज की तिथि और सूर्योदय, एक नज़र में', action: 'जोड़ें', go: 'addPan' },
+      blocked: { icon: 'bell', title: 'सूचनाएँ बंद हैं', sub: 'फ़ोन की सेटिंग में चालू करें', action: 'सेटिंग खोलें', go: 'settings', outline: true, muted: true },
+      reminder: { icon: 'bell', title: 'रोज़ सुबह श्लोक पाएँ', sub: 'हर दिन 07:00 बजे', action: 'चालू करें', go: 'turnOn' }
+    }[kind];
+    return '<div class="strip">' +
+      '<div class="disc' + (c.muted ? ' blocked' : '') + '">' + ICON[c.icon] + '</div>' +
+      '<div class="strip-copy"><div class="strip-title">' + c.title + '</div><div class="strip-sub">' + c.sub + '</div></div>' +
+      '<button class="pill pulse' + (c.outline ? ' outline' : '') + '" data-go="' + c.go + '">' + c.action + '</button>' +
+      '<button class="x" aria-label="अभी नहीं (not now)" data-go="dismiss-' + kind + '">' + ICON.close + '</button></div>';
+  }
+
+  function bhakti(stripHtml) {
+    return '<div class="statusbar"><span>2:18</span><span>5G ▮▮▮</span></div>' +
+      '<div class="app">' + (stripHtml || '') +
+      '<div class="controls"><span class="chip on">हि</span><span class="chip">En</span><span class="spacer"></span><span class="chip">♡</span><span class="chip">⤴</span><span class="chip">अगला ↻</span></div>' +
+      '<div class="card"><div class="card-art" style="background-image:url(' + VERSE_BG + ')"></div>' +
+      '<div class="src">श्रीमद्भगवद्गीता · ९.१२</div><div class="verse">' + VERSE + '</div><div class="orn">❖ ❖ ❖</div>' +
+      '<div class="meaning"><b>अर्थ</b>व्यर्थ आशा, व्यर्थ कर्म और व्यर्थ ज्ञान वाले विचारहीन लोग मोह में डालने वाली राक्षसी और आसुरी प्रकृति का ही आश्रय लेते हैं।</div></div>' +
+      '</div>' +
+      '<div class="tabbar">' + ['होम', 'भक्ति', 'पंचांग', 'व्रत', 'भजन', 'सेटिंग्स'].map(function (t) {
+        return '<div class="tab' + (t === 'भक्ति' ? ' on' : '') + '"><i></i>' + t + '</div>';
+      }).join('') + '</div>';
+  }
+
+  function dots(n) {
+    return '<span class="dots">' + [1, 2, 3].map(function (i) { return '<i class="' + (i === n ? 'on' : '') + '"></i>'; }).join('') + '</span>';
+  }
+
+  function setupLang(today) {
+    var langs = [['हिन्दी', 'Hindi', '', true], ['English', 'English', 'lang-en', false], ['ગુજરાતી', 'Gujarati', 'lang-gu', false], ['ಕನ್ನಡ', 'Kannada', 'lang-kn', false]];
+    return '<div class="overlay"><div class="scrim app-scrim"></div><div class="setup" role="dialog" aria-label="Choose language">' +
+      '<div class="grab"></div><div class="setup-body">' +
+      '<div class="eyebrow"><span>स्वागत है · Welcome</span>' + (today ? '' : dots(1)) + '</div>' +
+      '<div class="s-title">भाषा चुनें</div><div class="s-sub">Choose your reading language</div>' +
+      '<div class="list">' + langs.map(function (l) {
+        return '<div class="lrow' + (l[3] ? ' on' : '') + '"><span class="nm ' + l[2] + '">' + l[0] + '</span><span class="en">' + l[1] + '</span><span class="ck">' + (l[3] ? '✓' : '') + '</span></div>';
+      }).join('') + '</div>' +
+      '<div class="sec">पाठ का आकार · Reading size</div>' +
+      '<div class="pills"><span class="on">मानक · Standard</span><span>बड़ा · Large</span></div>' +
+      '</div><div class="setup-foot">' + (today ? '<button class="big-pill" data-go="begin">आरंभ करें · Begin</button>' : '<button class="big-pill" data-go="toCity">आगे · Next</button>') + '</div></div></div>';
+  }
+
+  function setupCity() {
+    var sel = state.city;
+    var rows = CITIES.map(function (c) {
+      var on = sel && sel.id === c.id;
+      return '<button class="lrow' + (on ? ' on' : '') + '" data-go="pick-' + c.id + '"><span class="nm">' + c.hi + '</span><span class="sr">सूर्योदय ' + c.sr + '</span><span class="ck">' + (on ? '✓' : '') + '</span></button>';
+    }).join('');
+    var gpsLabel = state.gps && sel ? ICON.pin + 'मेरा स्थान: ' + sel.hi : ICON.pin + 'मेरा स्थान उपयोग करें';
+    return '<div class="overlay"><div class="scrim app-scrim"></div><div class="setup" role="dialog" aria-label="Your city">' +
+      '<div class="grab"></div><div class="setup-body">' +
+      '<div class="eyebrow"><span>पंचांग के लिए</span>' + dots(2) + '</div>' +
+      '<div class="s-title">आपका शहर</div>' +
+      '<div class="reason">सूर्योदय, राहु काल और मुहूर्त आपके शहर से तय होते हैं। आज उज्जैन में सूर्योदय <b>06:30</b> है और कोलकाता में <b>05:39</b>।</div>' +
+      '<button class="gps' + (state.gps && sel ? ' done' : '') + '" data-go="gps">' + gpsLabel + '</button>' +
+      '<div class="privacy">स्थान केवल आपके फ़ोन पर रहता है</div>' +
+      '<div class="search">शहर, गाँव या पिनकोड खोजें…</div>' +
+      '<div class="list">' + rows + '</div>' +
+      '</div><div class="setup-foot"><button class="big-pill" data-go="toNotif"' + (sel ? '' : ' disabled') + '>आगे</button>' +
+      '<button class="later" data-go="skipCity">बाद में · अभी उज्जैन का समय दिखेगा</button></div></div></div>';
+  }
+
+  function setupNotif() {
+    return '<div class="overlay"><div class="scrim app-scrim"></div><div class="setup" role="dialog" aria-label="Reminders">' +
+      '<div class="grab"></div><div class="setup-body">' +
+      '<div class="eyebrow"><span>स्मरण</span>' + dots(3) + '</div>' +
+      '<div class="s-title">रोज़ याद दिलाएँ?</div>' +
+      '<div class="reason">हर सुबह <b>07:00</b> बजे दिन का श्लोक। दीपावली, होली जैसे <b>18</b> बड़े पर्वों पर उसी दिन <b>07:30</b> बजे एक सूचना। समय सेटिंग में बदल सकते हैं।</div>' +
+      '<div class="notif"><div class="ic">ॐ</div><div class="tx"><div class="hd"><span>पंचमी · दैनिक भक्ति</span><small>07:00</small></div><div class="bd">' + VERSE + '</div></div></div>' +
+      '<div class="notif"><div class="ic">ॐ</div><div class="tx"><div class="hd"><span>दीपावली</span><small>07:30</small></div><div class="bd">शुभ दीपावली · दीप जलाएँ और महालक्ष्म्यष्टकम् का पाठ करें।</div></div></div>' +
+      '</div><div class="setup-foot"><div class="expect">अगली स्क्रीन पर फ़ोन अनुमति माँगेगा</div>' +
+      '<button class="big-pill" data-go="notifYes">हाँ, याद दिलाएँ</button>' +
+      '<button class="later" data-go="notifLater">बाद में</button></div></div></div>';
+  }
+
+  function notifPrompt() {
+    if (state.os === 'ios') {
+      return '<div class="overlay"><div class="scrim"></div><div class="alert-ios" role="dialog" aria-label="Notification permission">' +
+        '<div class="t">“Vedansh” Would Like to Send You Notifications</div>' +
+        '<div class="m">Notifications may include alerts, sounds and icon badges.</div>' +
+        '<div class="row"><button data-go="deny">Don’t Allow</button><button data-go="allow">Allow</button></div></div></div>' +
+        '<div class="who">iOS system prompt</div>';
+    }
+    return '<div class="overlay"><div class="scrim"></div><div class="dlg-and" role="dialog" aria-label="Notification permission">' +
+      '<div class="t">Allow Vedansh to send you notifications?</div>' +
+      '<div class="stack"><button class="filled" data-go="allow">Allow</button><button data-go="deny">Don’t allow</button></div></div></div>' +
+      '<div class="who">Android system prompt</div>';
+  }
+
+  function locPrompt() {
+    if (state.os === 'ios') {
+      return '<div class="overlay"><div class="scrim"></div><div class="alert-ios tall" role="dialog" aria-label="Location permission">' +
+        '<div class="t">Allow “Vedansh” to use your location?</div>' +
+        '<div class="m">Vedansh uses your location only to compute accurate sunrise and panchang times for your city. Location never leaves your device.</div>' +
+        '<div class="map"></div>' +
+        '<div class="row"><button data-go="locAllow">Allow Once</button><button data-go="locAllow">Allow While Using App</button><button data-go="locDeny">Don’t Allow</button></div></div></div>' +
+        '<div class="who">iOS system prompt</div>';
+    }
+    return '<div class="overlay"><div class="scrim"></div><div class="dlg-and loc-and" role="dialog" aria-label="Location permission">' +
+      '<div class="t">Allow Vedansh to access this device’s location?</div>' +
+      '<div class="opts"><div class="opt"><i></i>Precise</div><div class="opt approx sel"><i></i>Approximate</div></div>' +
+      '<div class="stack"><button class="filled" data-go="locAllow">While using the app</button><button data-go="locAllow">Only this time</button><button data-go="locDeny">Don’t allow</button></div></div></div>' +
+      '<div class="who">Android system prompt</div>';
+  }
+
+  function attPrompt() {
+    return '<div class="overlay"><div class="scrim"></div><div class="alert-ios tall" role="dialog" aria-label="Tracking permission">' +
+      '<div class="t">Allow “Vedansh” to track your activity across other companies’ apps and websites?</div>' +
+      '<div class="m">So we know how you found Vedansh.</div>' +
+      '<div class="row"><button data-go="attDone">Ask App Not to Track</button><button data-go="attDone">Allow</button></div></div></div>' +
+      '<div class="who">iOS system prompt · after the tour</div>';
+  }
+
+  function pinDialog(which, of) {
+    var name = which === 'verse' ? 'Vedansh · Verse' : 'Vedansh · Panchang';
+    var preview = which === 'verse' ? verseWidget() : '<div style="display:grid;justify-items:center">' + panWidget() + '</div>';
+    return '<div class="overlay"><div class="scrim"></div><div class="dlg-and bottom" role="dialog" aria-label="Add widget">' +
+      (of ? '<div class="count">' + of + '</div>' : '') +
+      '<div class="t">Add to home screen</div>' + preview +
+      '<div class="m">' + name + ' · Touch &amp; hold the widget to move it around your home screen</div>' +
+      '<div class="actions"><button data-go="pinCancel-' + which + '">Cancel</button><button class="filled" data-go="pinAdd-' + which + '">Add to home screen</button></div></div></div>' +
+      '<div class="who">Launcher dialog</div>';
+  }
+
+  function sheet(both) {
+    var steps = ['होम स्क्रीन को दबाकर रखें', 'संपादित करें या + चुनें'];
+    if (both) {
+      steps.push('“Vedansh” खोजें, “Vedansh · Verse” को चौड़ा आकार में जोड़ें');
+      steps.push('फिर + चुनें, “Vedansh · Panchang” को छोटा आकार में जोड़ें');
+    } else {
+      steps.push('“Vedansh” खोजें, “Vedansh · Panchang” को छोटा आकार में जोड़ें');
+    }
+    return '<div class="overlay"><div class="scrim app-scrim" data-go="closeSheet"></div><div class="sheet" role="dialog" aria-label="How to add the widgets">' +
+      '<div class="grab"></div><div class="sheet-body">' +
+      '<div class="sheet-title">' + (both ? 'होम-स्क्रीन पर श्लोक और पंचांग' : 'होम-स्क्रीन पर पंचांग') + '</div>' +
+      (both ? verseWidget() : '') + panWidget() +
+      '<div class="isteps">' + steps.map(function (s, i) { return '<div class="istep"><span>' + (i + 1) + '</span>' + s + '</div>'; }).join('') + '</div>' +
+      '<button class="big-pill" data-go="gotIt">समझ गया</button><button class="link" data-go="gallery">सभी विजेट देखें</button>' +
+      '</div></div></div>';
+  }
+
+  function homeScreen() {
+    var h = state.home;
+    var apps = '<div class="apps">' + [0, 1, 2, 3].map(function () { return '<div class="appicon"></div>'; }).join('') + '</div>';
+    return '<div class="home">' +
+      '<div class="statusbar" style="padding:0 8px 4px;color:#fff"><span>2:19</span><span>5G ▮▮▮</span></div>' +
+      (h.verse ? verseWidget() + '<div class="lbl">Vedansh</div>' : '') +
+      '<div class="row">' + (h.panchang ? '<div>' + panWidget() + '<div class="lbl" style="margin-top:6px">Vedansh</div></div>' : '<div class="empty">Panchang dialog cancelled</div>') + apps + '</div>' +
+      '<button class="done" data-go="backToApp">Back to the app: strip is gone</button></div>';
+  }
+
+
+  function tour() {
+    return '<div class="overlay"><div class="scrim" style="background:rgba(26,14,3,0.72)"></div></div>' +
+      '<div class="tour-top"><span>1 / 25</span><span data-go="tourSkip" style="cursor:pointer">Skip</span></div>' +
+      '<div class="tour-ring"></div>' +
+      '<div class="tour-card" role="dialog" aria-label="Feature tour"><div class="tt">मुख पृष्ठ</div><div class="te">Home</div>' +
+      '<div class="tb">यहीं से सब शुरू — श्रेणियाँ, नित्य साधना और "आज की खोज"।</div>' +
+      '<div class="tbtns"><span>Back</span><span class="p" data-go="tourNext" style="cursor:pointer">Next · आगे</span></div></div>';
+  }
+
+  function previews() { return verseWidget() + panWidget(); }
+
+  function open2Widget() {
+    var ios = state.os === 'ios';
+    var steps = ['होम स्क्रीन को दबाकर रखें', 'संपादित करें या + चुनें', '“Vedansh” खोजें, “Vedansh · Verse” को चौड़ा आकार में जोड़ें', 'फिर + चुनें, “Vedansh · Panchang” को छोटा आकार में जोड़ें'];
+    return '<div class="overlay"><div class="scrim app-scrim"></div><div class="setup" role="dialog" aria-label="Widgets">' +
+      '<div class="grab"></div><div class="setup-body">' +
+      '<div class="eyebrow"><span>होम-स्क्रीन विजेट</span></div>' +
+      '<div class="s-title">श्लोक और पंचांग, ऐप खोले बिना</div>' +
+      '<div class="reason">आज का श्लोक और <b>' + city().hi + '</b> की तिथि व सूर्योदय सीधे होम-स्क्रीन पर।</div>' +
+      previews() +
+      (ios ? '<div class="isteps">' + steps.map(function (s, i) { return '<div class="istep"><span>' + (i + 1) + '</span>' + s + '</div>'; }).join('') + '</div>' : '') +
+      '</div><div class="setup-foot">' +
+      (ios ? '<button class="big-pill" data-go="gotIt">समझ गया</button>' : '<button class="big-pill" data-go="add">दोनों जोड़ें</button>') +
+      '<button class="later" data-go="widgetLater">अभी नहीं</button></div></div></div>';
+  }
+
+  function reaskSheet(blocked) {
+    var ios = state.os === 'ios';
+    var steps = ios
+      ? ['सेटिंग खोलें', '“Vedansh” चुनें', 'सूचनाएँ → अनुमति दें चालू करें']
+      : ['सेटिंग खोलें', 'सूचनाएँ चुनें', '“सूचनाएँ दिखाएँ” चालू करें'];
+    return '<div class="overlay"><div class="scrim app-scrim"></div><div class="setup" role="dialog" aria-label="Reminders again">' +
+      '<div class="grab"></div><div class="setup-body">' +
+      '<div class="eyebrow"><span>स्मरण</span></div>' +
+      '<div class="s-title">' + (blocked ? 'सूचनाएँ फ़ोन की सेटिंग में बंद हैं' : 'सुबह का श्लोक अभी बंद है') + '</div>' +
+      '<div class="reason">' + (blocked
+        ? 'आपने फ़ोन की अनुमति नहीं दी थी, इसलिए अब इसे केवल सेटिंग से चालू किया जा सकता है।'
+        : 'हर सुबह <b>07:00</b> बजे दिन का श्लोक, और <b>18</b> बड़े पर्वों पर उसी दिन एक सूचना।') + '</div>' +
+      '<div class="notif"><div class="ic">ॐ</div><div class="tx"><div class="hd"><span>पंचमी · दैनिक भक्ति</span><small>07:00</small></div><div class="bd">' + VERSE + '</div></div></div>' +
+      (blocked ? '<div class="isteps">' + steps.map(function (s, i) { return '<div class="istep"><span>' + (i + 1) + '</span>' + s + '</div>'; }).join('') + '</div>' : '') +
+      '</div><div class="setup-foot">' +
+      (blocked ? '<button class="big-pill" data-go="openSettings">सेटिंग खोलें</button>' : '<div class="expect">अगली स्क्रीन पर फ़ोन अनुमति माँगेगा</div><button class="big-pill" data-go="notifYes">हाँ, चालू करें</button>') +
+      '<button class="later" data-go="reaskLater">बाद में · कल फिर पूछेंगे</button></div></div></div>';
+  }
+
+  var CAPTIONS = {
+    t1Notif: function () { return '<b>Today, 1st open.</b> The system prompt appears at launch with no reason given, before a language exists.'; },
+    t1Att: function () { return state.os === 'ios'
+      ? '<b>Today, 1st open.</b> The tracking prompt follows once the app loads.'
+      : '<b>Android has no tracking prompt.</b> Switch to iPhone to see it.'; },
+    t1Tour: function () { return '<b>Today, 1st open.</b> A 25-step feature tour. Skip sits at the top.'; },
+    t1Lang: function () { return '<b>Today, 1st open.</b> Language and size come last, after the tour. Begin ends setup; no city is asked.'; },
+    lang: function () { return '<b>Proposed, step 1 of 3.</b> Language first, so every later reason is in the user’s own language.'; },
+    city: function () { return state.city
+      ? '<b>Proposed, step 2 of 3.</b> ' + state.city.en + ' picked; sunrise ' + state.city.sr + '. Tap आगे.'
+      : '<b>Proposed, step 2 of 3.</b> Pick a city, or tap “मेरा स्थान उपयोग करें”. Skipping keeps Ujjain, and the button says so.'; },
+    locPrompt: function () { return '<b>Location prompt, only after the tap.</b> The reason was already on screen. Refusing falls back to the city list.'; },
+    notifPrimer: function () { return '<b>Proposed, step 3 of 3.</b> Our own screen first. “बाद में” never shows the system prompt.'; },
+    notifPrompt: function () { return '<b>System prompt after “हाँ”.</b> The user already knows what they’re agreeing to.'; },
+    tour: function () { return '<b>Proposed: the tour runs after setup.</b> Unchanged, 25 steps, Skip at the top.'; },
+    home1: function () { return '<b>1st open done.</b> No widget ask today. Use the 2nd-open rows to continue.'; },
+    open2Widget: function () { return state.os === 'ios'
+      ? '<b>Proposed, 2nd open.</b> One sheet with both previews and the four steps. Apple gives apps no way to add a widget.'
+      : '<b>Proposed, 2nd open.</b> “दोनों जोड़ें” opens the launcher’s dialog for the verse, then the Panchang one.'; },
+    reask: function () { return '<b>Proposed re-ask.</b> Reminders are still off. At most once per day the app is opened, until “हाँ”; this open asks nothing else.'; },
+    reaskSettings: function () { return '<b>Proposed, after a system “Don’t allow”.</b> The system prompt can’t come back, so the screen sends the user to Settings.'; },
+    att: function () { return state.os === 'ios'
+      ? '<b>Proposed: tracking after setup and the tour.</b> Still on the 1st open, because App Review must find it and Meta counts nothing before it is answered.'
+      : '<b>Android has no tracking prompt.</b> Switch to iPhone to see it.'; },
+    pair: function () { return '<b>Today: the Bhakti tab strip.</b> Seen only if the user opens that tab.'; },
+    denied: function () { return '<b>Notifications refused.</b> Tomorrow’s open shows the reminder screen again: the system prompt on Android if one ask remains, Settings otherwise.'; },
+    pin1: function () { return '<b>Launcher dialog 1 of 2.</b> Either button closes it, and the Panchang dialog follows. The app can’t tell Add from Cancel.'; },
+    pin2: function () { return '<b>Launcher dialog 2 of 2</b> opens by itself once the first closes.'; },
+    home: function () { return '<b>Result.</b> Both widgets on the Home Screen, with the city from step 2.'; },
+    widgetLater: function () { return '<b>“अभी नहीं” on widgets.</b> No more widget asks; More → Widgets stays available.'; },
+    done: function () { return '<b>Nothing else this open.</b>'; }
+  };
+
+  function render() {
+    var s = state.scene, html;
+    if (s === 't1Notif') html = bhakti('') + tour() + notifPrompt();
+    else if (s === 't1Att') html = bhakti('') + tour() + (state.os === 'ios' ? attPrompt() : '');
+    else if (s === 't1Tour') html = bhakti('') + tour();
+    else if (s === 't1Lang') html = bhakti('') + setupLang(true);
+    else if (s === 'lang') html = bhakti('') + setupLang(false);
+    else if (s === 'city') html = bhakti('') + setupCity();
+    else if (s === 'locPrompt') html = bhakti('') + setupCity() + locPrompt();
+    else if (s === 'notifPrimer') html = bhakti('') + setupNotif();
+    else if (s === 'notifPrompt') html = bhakti('') + (state.reasking ? reaskSheet(false) : setupNotif()) + notifPrompt();
+    else if (s === 'tour') html = bhakti('') + tour();
+    else if (s === 'open2Widget') html = bhakti('') + open2Widget();
+    else if (s === 'reask') html = bhakti('') + reaskSheet(false);
+    else if (s === 'reaskSettings') html = bhakti('') + reaskSheet(true);
+    else if (s === 'att') html = bhakti('') + (state.os === 'ios' ? attPrompt() : '');
+    else if (s === 'pair') html = bhakti(strip('pair'));
+    else if (s === 'pin1') html = bhakti('') + pinDialog('verse', 'Widget 1 of 2');
+    else if (s === 'pin2') html = bhakti('') + pinDialog('panchang', 'Widget 2 of 2');
+    else if (s === 'sheet') html = bhakti(strip('pair')) + sheet(true);
+    else if (s === 'home') html = bhakti('') + homeScreen();
+    else html = bhakti('');
+    if (state.toast) html += '<div class="toast">' + state.toast + '</div>';
+    screen.innerHTML = html;
+    caption.innerHTML = (CAPTIONS[s] || CAPTIONS.done)();
+    document.querySelectorAll('[data-os-btn]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.osBtn === state.os)); });
+    var alias = { pin1: 'open2Widget', pin2: 'open2Widget', home: 'open2Widget', locPrompt: 'city', notifPrompt: state.reasking ? 'reask' : 'notifPrimer', denied: 'reaskSettings' };
+    document.querySelectorAll('button.item').forEach(function (b) {
+      var on = b.dataset.scene === s || b.dataset.scene === alias[s];
+      b.setAttribute('aria-current', String(on && (!b.dataset.os || b.dataset.os === state.os)));
+    });
+    state.toast = '';
+  }
+
+  function go(scene) { state.scene = scene; render(); }
+  function cityById(id) { return CITIES.filter(function (c) { return c.id === id; })[0]; }
+
+  screen.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-go]');
+    if (!t || t.disabled) return;
+    var a = t.dataset.go;
+    var today = state.flow === 'today';
+    if (a === 'toCity') go('city');
+    else if (a === 'begin') { state.toast = 'Setup ends here today: no city, no reminder screen'; go('done'); }
+    else if (a.indexOf('pick-') === 0) { state.city = cityById(a.slice(5)); state.gps = false; go('city'); }
+    else if (a === 'gps') go('locPrompt');
+    else if (a === 'locAllow') { state.city = cityById('varanasi'); state.gps = true; state.toast = 'Example: the nearest pincode resolves to Varanasi'; go('city'); }
+    else if (a === 'locDeny') { state.gps = false; state.toast = 'No location: search or pick a city instead'; go('city'); }
+    else if (a === 'toNotif') go('notifPrimer');
+    else if (a === 'skipCity') { state.city = null; go('notifPrimer'); }
+    else if (a === 'notifYes') go('notifPrompt');
+    else if (a === 'notifLater') { state.toast = 'No system prompt shown; asked again on the next day’s open'; go('tour'); }
+    else if (a === 'allow') {
+      if (today) go(state.os === 'ios' ? 't1Att' : 't1Tour');
+      else if (state.reasking) { state.reasking = false; state.toast = 'Reminders on. Widgets come on the next open'; go('done'); }
+      else go('tour');
+    }
+    else if (a === 'deny') {
+      if (today) go(state.os === 'ios' ? 't1Att' : 't1Tour');
+      else { state.reasking = false; state.toast = 'Refused. The next day’s open shows the reminder screen again'; go(state.os === 'ios' ? 'reaskSettings' : 'reask'); }
+    }
+    else if (a === 'attDone') go(today ? 't1Tour' : 'home1');
+    else if (a === 'tourSkip' || a === 'tourNext') go(today ? 't1Lang' : (state.os === 'ios' ? 'att' : 'home1'));
+    else if (a === 'reaskLater') { state.toast = 'Asked again tomorrow; after five “बाद में”, once a week'; go('done'); }
+    else if (a === 'openSettings') { state.toast = 'Opens Vedansh’s page in the phone’s Settings'; go('reaskSettings'); }
+    else if (a === 'add') go(state.os === 'ios' ? 'open2Widget' : 'pin1');
+    else if (a === 'pinAdd-verse' || a === 'pinCancel-verse') { state.home = { verse: a === 'pinAdd-verse', panchang: true }; go('pin2'); }
+    else if (a === 'pinAdd-panchang' || a === 'pinCancel-panchang') { state.home = { verse: state.home.verse, panchang: a === 'pinAdd-panchang' }; go('home'); }
+    else if (a === 'gotIt') { state.home = { verse: true, panchang: true }; go('home'); }
+    else if (a === 'widgetLater') go('widgetLater');
+    else if (a === 'backToApp') go('done');
+    else if (a === 'gallery') { state.toast = 'Opens More → Widgets'; go('done'); }
+    else if (a === 'closeSheet') go('pair');
+    else if (a.indexOf('dismiss-') === 0) go('done');
+  });
+
+  document.querySelectorAll('button.item').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (b.dataset.os) state.os = b.dataset.os;
+      state.home = { verse: true, panchang: true };
+      state.flow = b.dataset.scene.indexOf('t1') === 0 ? 'today' : 'new';
+      state.reasking = b.dataset.scene === 'reask';
+      go(b.dataset.scene);
+    });
+  });
+  document.querySelectorAll('[data-os-btn]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.os = b.dataset.osBtn;
+      if (state.os === 'ios' && (state.scene === 'pin1' || state.scene === 'pin2')) state.scene = 'open2Widget';
+      render();
+    });
+  });
+  document.getElementById('playToday').addEventListener('click', function () { var os = state.os; state = fresh(); state.os = os; state.flow = 'today'; go('t1Notif'); });
+  document.getElementById('playNew').addEventListener('click', function () { var os = state.os; state = fresh(); state.os = os; state.flow = 'new'; go('lang'); });
+  state.flow = 'new';
+  render();
+})();
+</script>
+</body>
+</html>
