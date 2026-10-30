@@ -4,9 +4,10 @@ import { createHash } from 'node:crypto';
 import { cleanSender, parseSuvicharPreferences, suvicharArtKey, suvicharArtRequest, suvicharHeroFraction, suvicharDeities, suvicharDeityCatalog, suvicharFrames, NAME_LIMIT } from '../suvichar';
 import { suvicharTemplatesFor } from '../suvicharTemplates';
 const suvicharTemplates = suvicharTemplatesFor(0);
-it('maps all seventeen catalog subjects to three distinct masters without fallback', () => {
+it('maps all eighteen catalog subjects to three distinct masters without fallback', () => {
   const keys = suvicharDeityCatalog.flatMap(d => suvicharFrames.map(f => suvicharArtKey(d.id, f.id)));
-  expect(keys).toHaveLength(51); expect(new Set(keys).size).toBe(51);
+  expect(keys).toHaveLength(54); expect(new Set(keys).size).toBe(54);
+  expect(keys).toContain('annapurna--mandir-jharokha');
   expect(keys).toContain('ram-darbar--mandir-jharokha');
   expect(keys).toContain('salasar-balaji--bhakti-patra');
   expect(keys).toContain('khatu-shyam--pushp-aangan');
@@ -48,7 +49,7 @@ it('never activates unpublished artwork or substitutes an unrelated deity', () =
   if (result) expect(result.remoteUrl).toContain('/suvichar/'); else expect(result).toBeNull();
 });
 
-it('keeps exactly 51 complete unique source masters with matching provenance hashes', () => {
+it('keeps exactly 54 complete unique source masters with matching provenance hashes', () => {
   const folder = path.resolve(__dirname, '../../../assets/suvichar');
   const provenance = JSON.parse(fs.readFileSync(path.join(folder, 'sources.json'), 'utf8'));
   const expected = suvicharDeityCatalog.flatMap(d => suvicharFrames.map(f => suvicharArtKey(d.id, f.id))).sort();
@@ -64,5 +65,5 @@ it('keeps exactly 51 complete unique source masters with matching provenance has
     expect(a.width).toBeGreaterThanOrEqual(1080); expect(a.prompt).toMatch(/Subject:|Use case: precise-object-edit/);
     expect(a.authoringPngSha256).toMatch(/^[a-f0-9]{64}$/);
   }
-  expect(hashes.size).toBe(51); expect(total).toBeLessThan(30 * 1024 * 1024);
+  expect(hashes.size).toBe(54); expect(total).toBeLessThan(30 * 1024 * 1024);
 });

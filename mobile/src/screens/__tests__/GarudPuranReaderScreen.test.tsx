@@ -103,6 +103,8 @@ test('source disclosure opens on the rendered page', () => {
   expect(tree.root.findAll(n => n.props.testID === 'garud-source-details').length).toBeGreaterThan(0);
   const text = tree.root.findAllByType(Text).map(n => n.props.children).flat(Infinity).join(' ');
   expect(text).toContain(chapter.source.citeHi);
+  // Sources are shown as citations only — never a tappable external link (RULEBOOK §11.16).
+  expect(tree.root.findAll(n => n.props.accessibilityRole === 'link').length).toBe(0);
 });
 
 test('out-of-range saved progress is clamped to the final page', () => {

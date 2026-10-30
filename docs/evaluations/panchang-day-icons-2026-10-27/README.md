@@ -152,3 +152,23 @@ Maestro driver returned `kAXErrorInvalidUIElement` while querying the transition
 The green focused flow covers visual/layout states and the accessible detail/bell
 targets; correct navigation and independent reminder actions are also pinned by
 Jest. This is not an Android or VoiceOver acceptance result.
+
+## Rise/set-aware night header
+
+The night header now shows the painted moon only between calculated rise and set,
+excluding bright Amavasya artwork. Stars remain before rise/after set. The moon is
+a fixed phase illustration; the earlier sunset-to-sunrise lunar path is removed.
+The day sun's arc is unchanged. A night footer exposes moonrise and horizon state,
+with explicit dates across midnight or for a rise on the previous civil date.
+
+`moonHorizon.ts` uses Astronomy Engine's existing rise/set model and selected
+coordinates/elevation. `useMoonHorizon` defers work until the location settles,
+caches 32 exact night/location results, and cancels stale pending work. Minute
+ticks only read the events. Day/browsed headers schedule no extra solves, and
+no persisted Panchang schema or artwork assets change.
+
+Validation: typecheck and focused ESLint pass; four Jest suites pass 23 tests;
+five real-engine horizon tests cover Krishna's late rise, waxing nighttime set,
+a rise after midnight, exact-location caching and unavailable-event handling.
+`night-horizon/` records the current native preview, which supersedes the earlier
+`celestial-phase/panchang-painted-moon-night-header.png` trajectory treatment.

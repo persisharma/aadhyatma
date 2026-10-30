@@ -74,7 +74,8 @@ export const suvicharDeityCatalog = [
   },
   { "id": "sanwariya-seth", "hi": "सांवरिया सेठ", "en": "Sanwariya Seth" },
   { "id": "jagannath", "hi": "भगवान जगन्नाथ", "en": "Lord Jagannath" },
-  { "id": "mahakaal", "hi": "श्री महाकाल", "en": "Shri Mahakaal" }
+  { "id": "mahakaal", "hi": "श्री महाकाल", "en": "Shri Mahakaal" },
+  { "id": "annapurna", "hi": "माँ अन्नपूर्णा", "en": "Maa Annapurna" }
 ] as const;
 export const suvicharFrames = [
   {
@@ -94,11 +95,9 @@ export const suvicharFrames = [
   }
 ] as const;
 /** Offer a deity only after every frame has passed publication verification. */
-/** Annapurna has reviewed copy but no published master: its card is explicitly text-only. */
-export const suvicharTextOnlyDeities = [{ id: 'annapurna', hi: 'माँ अन्नपूर्णा', en: 'Maa Annapurna' }] as const;
-export const suvicharDeities = [...suvicharDeityCatalog.filter(deity =>
-  suvicharFrames.every(frame => `${deity.id}--${frame.id}` in manifest.assets)), ...suvicharTextOnlyDeities];
-export type SuvicharDeity = typeof suvicharDeityCatalog[number]['id'] | typeof suvicharTextOnlyDeities[number]['id'];
+export const suvicharDeities = suvicharDeityCatalog.filter(deity =>
+  suvicharFrames.every(frame => `${deity.id}--${frame.id}` in manifest.assets));
+export type SuvicharDeity = typeof suvicharDeityCatalog[number]['id'];
 export type SuvicharFrame = typeof suvicharFrames[number]['id'];
 export const NAME_LIMIT = 48;
 export const MESSAGE_LIMIT = 280;

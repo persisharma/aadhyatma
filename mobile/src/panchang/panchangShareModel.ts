@@ -43,8 +43,8 @@ export type PanchangShareModel = {
   sunset: string;
   /** Null on the rare day the Moon does not rise. */
   moonrise: string | null;
-  /** The first observance (name · deity) and how many more share the day. */
-  festival: { name: string; more: number } | null;
+  /** The day's observances: a lone one as name · deity, or every name joined by ·. */
+  festival: { name: string } | null;
   tithi: ShareAnga;
   nakshatra: ShareAnga;
   yoga: ShareAnga;
@@ -143,8 +143,10 @@ export function buildPanchangShareModel(input: {
   const first = observances[0]?.rule;
   const festival = first
     ? {
-        name: [name(lang, first.nameHi, first.nameEn), name(lang, first.deityHi, first.deityEn)].filter(Boolean).join(' · '),
-        more: observances.length - 1,
+        name:
+          observances.length === 1
+            ? [name(lang, first.nameHi, first.nameEn), name(lang, first.deityHi, first.deityEn)].filter(Boolean).join(' · ')
+            : observances.map((o) => name(lang, o.rule.nameHi, o.rule.nameEn)).join(' · '),
       }
     : null;
 

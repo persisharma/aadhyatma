@@ -1265,6 +1265,9 @@ Captured the painted waning Krishna Tritiya moon and sepia night header on the d
 
 The day panel reuses `ObservancePreviewCard` / `ListingCard` with event artwork and separate save/reminder controls. Named Sankashti display titles retain the original rule identity for artwork/reminders. Nakshatra's existing six-star painting has stronger sepia contours/connectors in the same 36dp slot; reference, new master, prompt, hashes and exports are retained. Typecheck, focused ESLint, 33 focused tests and Standard/Large iOS visual flow pass; evidence is in `docs/evaluations/panchang-day-icons-2026-10-27/`. Android/VoiceOver remain pending.
 
+## [2026-10-28] ingest | Rise/set-aware Panchang night sky and top moonrise label
+
+The fixed phase illustration appears only while the moon is above the horizon (no bright Amavasya disc). Night stars and sunset/sunrise labels remain; the misleading lunar sunset-to-sunrise path is removed. A moonrise/state footer handles after-midnight and previous-civil-day dates. Exact night/location events are deferred, bounded and cached, with no persisted day-schema changes. Typecheck, focused ESLint, 23 Jest checks and five real-engine tests pass. Three native state captures pass and were visually reviewed; temporary preview clock restored. Evidence is in `docs/evaluations/panchang-day-icons-2026-10-27/night-horizon/`.
 ## [2026-10-28] ingest | App-wide 24-hour time format
 
 Every rendered clock is now zero-padded 24-hour `HH:MM`: `formatClock` dropped AM/PM, `formatRangeCompact` was removed (callers use `formatRange`), and the hand-rolled 12-hour formatters (Kundali/Jyotish birth time, Namkaran windows, widget IST clock, Routine offered time, Japam alarm label + `prefers12HourClock`) were converted. `ClockTimePicker` lost its AM/PM toggle (HR column `00`–`23`). Fixed reminder copy (ArcStrip, Janma Tithi, festive greeting, Prashna transit note) now reads 24-hour. design.md §3.2 added; [[panchang]] display helpers updated.
@@ -1272,3 +1275,15 @@ Every rendered clock is now zero-padded 24-hour `HH:MM`: `formatClock` dropped A
 ## [2026-10-28] ingest | Gita Saar story citations stay inside Vedansh
 
 Valmiki Ramayan citations for Bala Kanda 43–44 and Yuddha Kanda 18 now open the first verse of the cited sarga in the bundled reader. Gita citations retain their exact in-app handoff. Bhagavatam and other sources without a bundled reader remain visible as plain attribution, with no browser action; source URLs remain in research metadata.
+
+## [2026-10-28] ingest | Mahakaal masters published to R2
+
+PR #555 added four Mahakaal masters (three Suvichar frames + the Daily Bhakti card) with `scripts/prepare-mahakaal.mjs` but never ran its publish step, so Suvichar sources were 51 vs a 48-entry manifest and `prepare-suvichar.mjs --verify` failed on main. Uploaded the four with immutable caching, then `prepare-mahakaal.mjs --activate` re-verified public bytes and activated both manifests (Suvichar 51, devotional-share 29).
+
+## [2026-10-29] ingest | Native horizon previews refreshed on current 24-hour main
+
+PR #556 is merged; the night-horizon follow-up is on `codex/panchang-night-moonrise`. Main's 24-hour formatter and subsequent share-card work are reconciled. Typecheck and 23 focused Jest checks pass on the combined tree; the five real-engine horizon checks also pass. Current native before-rise, after-rise and after-set captures all pass and are visually reviewed at Large size. Preview Date/Date.now overrides are restored, confirmed at 29 October 13:31 IST. No release action. See `docs/evaluations/panchang-day-icons-2026-10-27/night-horizon/README.md`.
+
+## [2026-10-29] ingest | Annapurna painted in Suvichar
+
+Annapurna had reviewed Suvichar copy but no master, so her Bhakti Sandesh cards were a mostly blank text-only parchment. Codex generated three masters in the existing frame pipeline (1122×1402, hero 0.60/0.64/0.60, provenance in docs/evaluations/annapurna/sources.json); the user approved them; they were uploaded to R2 (immutable), added to sources and the manifest (54), and every text-only branch was removed from SuvicharCard, both pickers and the weekday filter.
