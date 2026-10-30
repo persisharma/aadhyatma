@@ -50,6 +50,7 @@ import AppIcon from '@/components/AppIcon';
 import ProseParagraph from '@/components/ProseParagraph';
 import { meaningToken } from '@/utils/langType';
 import { useGitaSaarLearning } from '@/data/gita-saar/learningStore';
+import { getValmikiRamayanChapter } from '@/data/valmiki-ramayan';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
@@ -472,6 +473,18 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
                       navigation.navigate('GitaReader', {
                         chapter: gitaChapter,
                         initialIndex: gitaVerse - 1,
+                      });
+                    }}
+                    onOpenRamayanRef={(kanda, sarga) => {
+                      const initialIndex = getValmikiRamayanChapter(kanda).verses.findIndex(
+                        (candidate) => candidate.reference.startsWith(`${kanda}.${sarga}.`)
+                      );
+                      if (initialIndex < 0) return;
+                      autoSlide.stop();
+                      readAloud.stop();
+                      navigation.navigate('ValmikiRamayanReader', {
+                        chapter: kanda,
+                        initialIndex,
                       });
                     }}
                     topActions={

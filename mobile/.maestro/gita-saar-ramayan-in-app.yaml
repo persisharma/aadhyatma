@@ -1,0 +1,67 @@
+# All Valmiki citations in Gita Saar open their cited sargas in Vedansh.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element: { text: "Sacred Books.*Tap to open." }
+    direction: DOWN
+- tapOn: "Sacred Books.*Tap to open."
+- scrollUntilVisible:
+    element: { text: "Gita Saar\\..*Tap to open\\..*" }
+    direction: DOWN
+- tapOn: "Gita Saar\\..*Tap to open\\..*"
+- extendedWaitUntil:
+    visible: { id: gita-saar-featured }
+    timeout: 30000
+- tapOn: { id: gita-saar-featured }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-karma }
+    timeout: 20000
+- scrollUntilVisible:
+    element: { id: gita-saar-source-valmiki-1.43 }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { id: gita-saar-source-valmiki-1.43 }
+- extendedWaitUntil:
+    visible: "1278 / 2217"
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-in-app-bala-43
+- tapOn: "Back to chapters"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { id: gita-saar-source-valmiki-1.44 }
+- extendedWaitUntil:
+    visible: "1319 / 2217"
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-in-app-bala-44
+- tapOn: "Back to chapters"
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: "Back"
+- extendedWaitUntil:
+    visible: { id: gita-saar-featured }
+    timeout: 30000
+- scrollUntilVisible:
+    element: { id: gita-saar-theme-sharanagati }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- tapOn: { id: gita-saar-theme-sharanagati }
+- extendedWaitUntil:
+    visible: { id: gita-saar-story-image-sharanagati }
+    timeout: 30000
+- scrollUntilVisible:
+    element: { id: gita-saar-source-valmiki-6.18 }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- waitForAnimationToEnd:
+    timeout: 30000
+- tapOn: { id: gita-saar-source-valmiki-6.18 }
+- extendedWaitUntil:
+    visible: "565 / 5693"
+    timeout: 30000
+- takeScreenshot: e2e-shots/gita-saar-in-app-yuddha-18

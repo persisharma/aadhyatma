@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, StatusBar, StyleSheet, Text, View, type LayoutChangeEvent, type StyleProp, type ViewStyle } from 'react-native';
+import { Animated, StatusBar, StyleSheet, Text, View, useWindowDimensions, type LayoutChangeEvent, type StyleProp, type ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Circle, Ellipse, Path } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeContext';
@@ -18,6 +18,7 @@ import { moonHorizonState } from '@/panchang/moonHorizon';
 import { useMoonHorizon } from '@/panchang/useMoonHorizon';
 import type { CalendarSystem } from '@/panchang/types';
 import CelestialGlyph from './CelestialGlyph';
+import { fitChoghadiyaName } from './ChoghadiyaStrip';
 
 export type SkyTone = 'night' | 'day';
 
@@ -119,6 +120,8 @@ export default function PanchangSky({
   const reduceMotion = useReducedMotion();
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [zoneTop, setZoneTop] = useState(0);
+  const { fontScale } = useWindowDimensions();
+  const [chipWidth, setChipWidth] = useState<number | null>(null);
   const glow = useRef(new Animated.Value(0)).current;
   const night = tone === 'night';
   const ink = skyInk(tone, colors);
@@ -184,6 +187,11 @@ export default function PanchangSky({
   const following = showNow && !nowAvoid && nowIndex < 7 ? nowRun![nowIndex + 1] : null;
 
   const W = size.w;
+  const heroWidth = Math.max(160, W * 0.5 - 24);
+  // The running name shares its row with the quality chip only; Abhijit has the row to itself.
+  const heroNameSize = showNow
+    ? fitChoghadiyaName(lang, 30, fontScale, chipWidth == null ? null : heroWidth - chipWidth - 6)
+    : 30 * Math.min(fontScale, 1.3);
   const p0 = { x: W * 0.52, y: HORIZON };
   const p2 = { x: W - 24, y: HORIZON };
   const p1 = { x: (p0.x + p2.x) / 2, y: -30 };
@@ -288,23 +296,22 @@ export default function PanchangSky({
                 ? `Now ${nowChoghadiya!.nameEn} choghadiya, ${nowAvoid ? 'avoid' : 'auspicious'}, ${formatSpan(nowChoghadiya!.end.getTime() - at, 'en')} left, till ${formatClock(nowChoghadiya!.end)}`
                 : `Abhijit muhurat ${muhurat.abhijit ? formatRange(muhurat.abhijit.start, muhurat.abhijit.end) : ''}`
             }
-            style={[styles.hero, { width: Math.max(160, W * 0.5 - 24) }]}
+            style={[styles.hero, { width: heroWidth }]}
           >
             <View style={styles.eyebrowRow}>
               {showNow && <View style={[styles.nowDot, { backgroundColor: nowAvoid ? (night ? colors.nightAvoid : colors.avoid) : (night ? colors.nightGold : colors.gold) }]} />}
               <Text style={[eyebrowTextStyle(lang, 11, 0.6), { color: ink.inkMuted, textTransform: lang === 'en' ? 'uppercase' : 'none' }]}>
-                {showNow ? contentByLang(lang, 'अभी', 'Now') : contentByLang(lang, 'शुभ मुहूर्त', 'Auspicious')}
+                {showNow ? contentByLang(lang, 'अभी · चौघड़िया', 'Now · Choghadiya') : contentByLang(lang, 'शुभ मुहूर्त', 'Auspicious Muhurat')}
               </Text>
             </View>
             <View style={styles.titleRow}>
-              <Text numberOfLines={1} style={{ flexShrink: 1, fontFamily: titleFont, fontSize: 30, color: ink.ink }}>
+              {/* The kind word lives in the eyebrow: beside the name it left
+                  ~30 pt, cutting Udveg to "U." and Abhijit to "Abhi…" (Oct 2026). */}
+              <Text numberOfLines={1} allowFontScaling={false} style={{ flexShrink: 1, fontFamily: titleFont, fontSize: heroNameSize, color: ink.ink }}>
                 {showNow ? contentByLang(lang, nowChoghadiya!.nameHi, nowChoghadiya!.nameEn) : contentByLang(lang, 'अभिजीत', 'Abhijit')}
               </Text>
-              <Text style={{ fontFamily: bodyFont, fontSize: 15, color: ink.inkSoft }}>
-                {showNow ? contentByLang(lang, 'चौघड़िया', 'Choghadiya') : contentByLang(lang, 'मुहूर्त', 'Muhurat')}
-              </Text>
               {showNow && (
-                <Text style={[styles.chip, { fontFamily: lang === 'en' ? fontFamilies.latinBold : titleFont, color: chipText, backgroundColor: chipBg }]}>
+                <Text onLayout={(e) => setChipWidth(e.nativeEvent.layout.width)} style={[styles.chip, { fontFamily: lang === 'en' ? fontFamilies.latinBold : titleFont, color: chipText, backgroundColor: chipBg }]}>
                   {quality}
                 </Text>
               )}
@@ -325,7 +332,8 @@ export default function PanchangSky({
             )}
             {nextShubh && (
               <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 12, color: ink.accent, marginTop: 2 }}>
-                {contentByLang(lang, `अगला शुभ: ${nextShubh.nameHi} ${formatClock(nextShubh.start)} से`, `Next auspicious: ${nextShubh.nameEn} from ${formatClock(nextShubh.start)}`)}
+                {/* Time before name: when the line runs out, it is the name that is cut. */}
+                {contentByLang(lang, `अगला शुभ ${formatClock(nextShubh.start)} से · ${nextShubh.nameHi}`, `Auspicious from ${formatClock(nextShubh.start)} · ${nextShubh.nameEn}`)}
               </Text>
             )}
             {following && (

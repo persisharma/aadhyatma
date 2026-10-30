@@ -14,7 +14,9 @@ export type GitaSaarStory = {
     passage: string;
     passageHi?: string;
     url: string;
-    inAppRef?: { chapter: number; verse: number };
+    inAppRef?:
+      | { kind: 'gita'; chapter: number; verse: number }
+      | { kind: 'valmiki-ramayan'; kanda: number; sarga: number };
   }[];
 };
 const c = (hi: string, en: string): LearningCopy => ({ hi, en });
@@ -27,11 +29,12 @@ const sb = (passage: string, url: string) => ({
   passage,
   url,
 });
-const ram = (passage: string, url: string) => ({
+const ram = (passage: string, url: string, kanda: number, sarga: number) => ({
   title: c('वाल्मीकि रामायण', 'Valmiki Ramayana'),
   passage: passage.replace('बालकाण्ड', 'Bala Kanda').replace('युद्धकाण्ड', 'Yuddha Kanda'),
   passageHi: passage,
   url,
+  inAppRef: { kind: 'valmiki-ramayan' as const, kanda, sarga },
 });
 const bg = (passage: string, url: string) => {
   const ref = passage.match(/^(\d+)\.(\d+)/);
@@ -40,7 +43,7 @@ const bg = (passage: string, url: string) => {
     title: c('भगवद्गीता', 'Bhagavad Gita'),
     passage,
     url,
-    inAppRef: { chapter: Number(ref[1]), verse: Number(ref[2]) },
+    inAppRef: { kind: 'gita' as const, chapter: Number(ref[1]), verse: Number(ref[2]) },
   };
 };
 
@@ -267,11 +270,15 @@ export const gitaSaarStories: Readonly<Record<string, GitaSaarStory>> = {
     sources: [
       ram(
         'बालकाण्ड 43',
-        'https://www.valmikiramayan.net/utf8/baala/sarga43/balasans43.htm'
+        'https://www.valmikiramayan.net/utf8/baala/sarga43/balasans43.htm',
+        1,
+        43
       ),
       ram(
         'बालकाण्ड 44',
-        'https://www.valmikiramayan.net/utf8/baala/sarga44/balasans44.htm'
+        'https://www.valmikiramayan.net/utf8/baala/sarga44/balasans44.htm',
+        1,
+        44
       ),
     ],
   },
@@ -442,7 +449,9 @@ export const gitaSaarStories: Readonly<Record<string, GitaSaarStory>> = {
     sources: [
       ram(
         'युद्धकाण्ड 18',
-        'https://www.valmikiramayan.net/yuddha/sarga18/yuddha_18_prose.htm'
+        'https://www.valmikiramayan.net/yuddha/sarga18/yuddha_18_prose.htm',
+        6,
+        18
       ),
     ],
   },
