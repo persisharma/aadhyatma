@@ -139,8 +139,8 @@ test('before sunrise, the next auspicious period is found in last night, not thi
   const night = runAround('night', NIGHT, 6); // Udveg running, Shubh still to come tonight
   mockSolve = solve(night, 6);
   const out = texts(await render());
-  expect(out).toContain(`Next auspicious: Shubh from ${formatClock(night[7].start)}`);
-  expect(out).not.toContain('Next auspicious: Amrit');
+  expect(out).toContain(`Auspicious from ${formatClock(night[7].start)} · Shubh`);
+  expect(out).not.toContain('· Amrit');
 });
 
 test('the status bar is left alone when the screen is not the one showing', async () => {
