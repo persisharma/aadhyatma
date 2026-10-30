@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
@@ -10,6 +10,24 @@ import type { ChoghadiyaPeriod } from '@/panchang/muhurat';
 
 // Cormorant's default figures are old-style; clock digits read as one height.
 const LINING = ['lining-nums', 'tabular-nums'] as const;
+
+const ROW_GAP = 3;
+const NAME_SIZE = 10.5;
+const NAME_MAX_SCALE = 1.3;
+// Widest of the seven names per script, in em, at the semibold cut the running
+// segment uses (Chromium measure of the shipped Noto Serif faces, Oct 2026):
+// अमृत · Shubh · અમૃત · ಉದ್ವೇಗ, rounded up for shaping differences.
+const WIDEST_NAME_EM: Record<Lang, number> = { hi: 1.9, en: 3.25, gu: 2.1, kn: 3.0 };
+
+/**
+ * The segment name's size, decided in JS (design.md §3.0): the system text scale
+ * up to 1.3×, then capped so the widest name fits one segment. No platform
+ * auto-fit — on iOS it ignores minimumFontScale and floors at 4 pt.
+ */
+export function choghadiyaNameSize(lang: Lang, fontScale: number, segmentWidth: number | null): number {
+  const wanted = NAME_SIZE * Math.min(fontScale, NAME_MAX_SCALE);
+  return segmentWidth == null ? wanted : Math.min(wanted, segmentWidth / WIDEST_NAME_EM[lang]);
+}
 
 /**
  * One half (day or night) of choghadiya as eight segments (design.md §33): past
@@ -32,6 +50,9 @@ export default function ChoghadiyaStrip({
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const [picked, setPicked] = useState<number | null>(null);
+  const { fontScale } = useWindowDimensions();
+  const [segmentWidth, setSegmentWidth] = useState<number | null>(null);
+  const nameSize = choghadiyaNameSize(lang, fontScale, segmentWidth);
   const shown = picked ?? nowIndex;
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
@@ -50,7 +71,7 @@ export default function ChoghadiyaStrip({
       <Text style={{ fontFamily: titleFont, fontSize: 14, color: colors.ink }}>
         {night ? contentByLang(lang, 'रात्रि के चौघड़िया', 'Night choghadiya') : contentByLang(lang, 'दिन के चौघड़िया', 'Day choghadiya')}
       </Text>
-      <View style={styles.row}>
+      <View style={styles.row} onLayout={(e) => setSegmentWidth((e.nativeEvent.layout.width - ROW_GAP * 7) / 8)}>
         {periods.map((p, i) => {
           const isNow = i === nowIndex;
           const past = nowIndex != null && i < nowIndex;
@@ -76,11 +97,8 @@ export default function ChoghadiyaStrip({
               </View>
               <Text
                 numberOfLines={1}
-                // Fixed size, no adjustsFontSizeToFit: on iOS (new arch) auto-fit ignores
-                // minimumFontScale and floors at 4 pt, and the live strip's re-renders
-                // drove every name there (§3.0). The widest name fits at this cap.
-                maxFontSizeMultiplier={1.3}
-                style={{ fontFamily: isNow ? titleFont : bodyFont, fontSize: 10.5, color: isNow ? colors.saffronDeep : past ? colors.inkMuted : colors.inkSoft }}
+                allowFontScaling={false}
+                style={{ fontFamily: isNow ? titleFont : bodyFont, fontSize: nameSize, color: isNow ? colors.saffronDeep : past ? colors.inkMuted : colors.inkSoft }}
               >
                 {contentByLang(lang, p.nameHi, p.nameEn)}
               </Text>
@@ -147,7 +165,7 @@ export default function ChoghadiyaStrip({
 
 const styles = StyleSheet.create({
   wrap: { marginTop: 12 },
-  row: { flexDirection: 'row', gap: 3, marginTop: 4 },
+  row: { flexDirection: 'row', gap: ROW_GAP, marginTop: 4 },
   // ≥ 44 dp tall so each of the eight is a real touch target.
   segment: { flex: 1, minHeight: 44, alignItems: 'center', paddingTop: 9, gap: 5 },
   notch: {
