@@ -58,7 +58,7 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
   const clockLine = (size: number) => withMarkHeadroom(clock(size));
 
   const One = ({ style, children }: { style: StyleProp<TextStyle>; children: React.ReactNode }) => (
-    <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85} style={fit(style)}>
+    <Text allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85} style={fit(style)}>
       {children}
     </Text>
   );
@@ -75,14 +75,14 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
 
   const Strip = ({ title, periods }: { title: string; periods: ShareChoghadiya[] }) => (
     <View style={styles.stripRow}>
-      <Text style={[fit(label), styles.stripLabel]}>{title}</Text>
+      <Text allowFontScaling={false} style={[fit(label), styles.stripLabel]}>{title}</Text>
       {periods.map((c, i) => (
         <View key={i} style={styles.stripCol}>
           <View style={[styles.bar, { backgroundColor: c.auspicious ? colors.choghadiyaShubh : colors.choghadiyaAvoid }]} />
           <One style={en ? { fontFamily: fontFamilies.latinBold, fontSize: 14, lineHeight: 17, color: colors.ink, textAlign: 'center' } : { fontFamily: bodyFace, fontSize: 13, lineHeight: 17, color: colors.ink, textAlign: 'center' }}>
             {c.name}
           </One>
-          <Text style={[clockLine(13), styles.center]}>{c.start}</Text>
+          <Text allowFontScaling={false} style={[clockLine(13), styles.center]}>{c.start}</Text>
         </View>
       ))}
     </View>
@@ -102,15 +102,15 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
     <View style={[styles.tile, { flex: weight, backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
       <One style={label}>{title}</One>
       <One style={[value(15), v.valueWarn && { color: colors.avoid }]}>{v.value}</One>
-      <Text numberOfLines={2} style={fit([line, v.lineWarn && { color: colors.avoid, fontFamily: en ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold) }])}>
+      <Text allowFontScaling={false} numberOfLines={2} style={fit([line, v.lineWarn && { color: colors.avoid, fontFamily: en ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold) }])}>
         {v.line}
       </Text>
     </View>
   );
 
   const SkyTime = ({ k, v, right }: { k: string; v: string; right?: boolean }) => (
-    <Text numberOfLines={1} style={[fit(line), right && styles.right]}>
-      {k} <Text style={clock(14)}>{v}</Text>
+    <Text allowFontScaling={false} numberOfLines={1} style={[fit(line), right && styles.right]}>
+      {k} <Text allowFontScaling={false} style={clock(14)}>{v}</Text>
     </Text>
   );
 
@@ -138,15 +138,15 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
           <View style={styles.brand}>
             <Image source={brandMark} onLoad={onIconLoad} style={styles.brandIcon} accessibilityIgnoresInvertColors />
             <View>
-              <Text style={withMarkHeadroom({ fontFamily: fontFamilies.devanagariBold, fontSize: 16, lineHeight: 18, color: colors.ink })}>वेदांश़</Text>
-              <Text style={fit({ fontFamily: fontFamilies.latinSemiBoldItalic, fontSize: 12, lineHeight: 14, color: colors.saffronDeep })}>
-                Vedansh · <Text style={en ? undefined : { fontFamily: scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 11.5 }}>{t('पूर्ण पंचांग', 'Full Panchang')}</Text>
+              <Text allowFontScaling={false} style={withMarkHeadroom({ fontFamily: fontFamilies.devanagariBold, fontSize: 16, lineHeight: 18, color: colors.ink })}>वेदांश़</Text>
+              <Text allowFontScaling={false} style={fit({ fontFamily: fontFamilies.latinSemiBoldItalic, fontSize: 12, lineHeight: 14, color: colors.saffronDeep })}>
+                Vedansh · <Text allowFontScaling={false} style={en ? undefined : { fontFamily: scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 11.5 }}>{t('पूर्ण पंचांग', 'Full Panchang')}</Text>
               </Text>
             </View>
           </View>
           <View style={[styles.cityChip, { backgroundColor: colors.dayGlass, borderColor: colors.dayGlassBorder }]}>
             <View style={[styles.pin, { backgroundColor: colors.saffron }]} />
-            <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[fit({ fontFamily: en ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: en ? 14 : 13, lineHeight: 17, color: colors.ink }), styles.shrink]}>
+            <Text allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[fit({ fontFamily: en ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: en ? 14 : 13, lineHeight: 17, color: colors.ink }), styles.shrink]}>
               {model.place}
             </Text>
           </View>
@@ -173,7 +173,7 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
               <View style={[styles.moonDisc, { backgroundColor: colors.moonLight }]} />
             </View>
             <One style={[value(15), styles.shrink]}>
-              <Text style={{ color: colors.saffronDeep, fontSize: 12, fontFamily: bodyFace }}>{t('आज', 'Today')} · </Text>
+              <Text allowFontScaling={false} style={{ color: colors.saffronDeep, fontSize: 12, fontFamily: bodyFace }}>{t('आज', 'Today')} · </Text>
               {model.festival.name}
             </One>
           </View>
@@ -194,12 +194,12 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
         {/* ---- all 16 choghadiya with start times */}
         <View style={[styles.section, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, gap: 4 }]}>
           <View style={styles.chogHead}>
-            <Text style={fit(label)}>{t('चौघड़िया · आरंभ समय', 'Choghadiya · start times')}</Text>
+            <Text allowFontScaling={false} style={fit(label)}>{t('चौघड़िया · आरंभ समय', 'Choghadiya · start times')}</Text>
             <View style={styles.legend}>
               <View style={[styles.legendSwatch, { backgroundColor: colors.choghadiyaShubh }]} />
-              <Text style={fit([label, { color: colors.inkMuted }])}>{t('शुभ', 'auspicious')}</Text>
+              <Text allowFontScaling={false} style={fit([label, { color: colors.inkMuted }])}>{t('शुभ', 'auspicious')}</Text>
               <View style={[styles.legendSwatch, { backgroundColor: colors.choghadiyaAvoid, marginLeft: 8 }]} />
-              <Text style={fit([label, { color: colors.inkMuted }])}>{t('त्याज्य', 'avoid')}</Text>
+              <Text allowFontScaling={false} style={fit([label, { color: colors.inkMuted }])}>{t('त्याज्य', 'avoid')}</Text>
             </View>
           </View>
           <Strip title={t('दिन', 'Day')} periods={model.day} />
@@ -239,9 +239,9 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
         {/* One Text with the link as a span, so the two share a baseline: as sibling
             Texts their boxes centre, and Devanagari sits high in its box. */}
         <View style={[styles.pill, { backgroundColor: colors.nightGold }]}>
-          <Text style={fit({ fontFamily: en ? fontFamilies.interSemiBold : scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 12, lineHeight: 15, color: colors.ink })}>
+          <Text allowFontScaling={false} style={fit({ fontFamily: en ? fontFamilies.interSemiBold : scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 12, lineHeight: 15, color: colors.ink })}>
             {t('डाउनलोड', 'Download')}{'  '}
-            <Text style={{ fontFamily: fontFamilies.interSemiBold }}>{SMART_LINK.replace(/^https:\/\//, '')}</Text>
+            <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.interSemiBold }}>{SMART_LINK.replace(/^https:\/\//, '')}</Text>
           </Text>
         </View>
       </LinearGradient>
