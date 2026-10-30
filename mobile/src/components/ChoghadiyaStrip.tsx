@@ -20,13 +20,14 @@ const NAME_MAX_SCALE = 1.3;
 const WIDEST_NAME_EM: Record<Lang, number> = { hi: 1.9, en: 3.25, gu: 2.1, kn: 3.0 };
 
 /**
- * The segment name's size, decided in JS (design.md §3.0): the system text scale
- * up to 1.3×, then capped so the widest name fits one segment. No platform
- * auto-fit — on iOS it ignores minimumFontScale and floors at 4 pt.
+ * A choghadiya name's size, decided in JS (design.md §3.0): `base` × the system
+ * text scale up to 1.3×, then capped so the script's widest name fits `width`.
+ * Render it with `allowFontScaling={false}`. No platform auto-fit — on iOS it
+ * ignores minimumFontScale and floors at 4 pt. Shared with the sky hero.
  */
-export function choghadiyaNameSize(lang: Lang, fontScale: number, segmentWidth: number | null): number {
-  const wanted = NAME_SIZE * Math.min(fontScale, NAME_MAX_SCALE);
-  return segmentWidth == null ? wanted : Math.min(wanted, segmentWidth / WIDEST_NAME_EM[lang]);
+export function fitChoghadiyaName(lang: Lang, base: number, fontScale: number, width: number | null): number {
+  const wanted = base * Math.min(fontScale, NAME_MAX_SCALE);
+  return width == null ? wanted : Math.min(wanted, width / WIDEST_NAME_EM[lang]);
 }
 
 /**
@@ -52,7 +53,7 @@ export default function ChoghadiyaStrip({
   const [picked, setPicked] = useState<number | null>(null);
   const { fontScale } = useWindowDimensions();
   const [segmentWidth, setSegmentWidth] = useState<number | null>(null);
-  const nameSize = choghadiyaNameSize(lang, fontScale, segmentWidth);
+  const nameSize = fitChoghadiyaName(lang, NAME_SIZE, fontScale, segmentWidth);
   const shown = picked ?? nowIndex;
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
