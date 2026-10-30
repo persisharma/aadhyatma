@@ -76,11 +76,10 @@ export default function ChoghadiyaStrip({
               </View>
               <Text
                 numberOfLines={1}
-                adjustsFontSizeToFit
-                minimumFontScale={0.8}
+                // Fixed size, no adjustsFontSizeToFit: on iOS (new arch) auto-fit ignores
+                // minimumFontScale and floors at 4 pt, and the live strip's re-renders
+                // drove every name there (§3.0). The widest name fits at this cap.
                 maxFontSizeMultiplier={1.3}
-                // No fixed lineHeight: with adjustsFontSizeToFit it lets iOS ratchet
-                // the size down past minimumFontScale on every live re-render (§3.0).
                 style={{ fontFamily: isNow ? titleFont : bodyFont, fontSize: 10.5, color: isNow ? colors.saffronDeep : past ? colors.inkMuted : colors.inkSoft }}
               >
                 {contentByLang(lang, p.nameHi, p.nameEn)}
