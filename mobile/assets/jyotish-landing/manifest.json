@@ -1,0 +1,83 @@
+{
+  "method": "Built-in image generation using approved landing reference; whole-canvas delivery resizing and WebP encoding only. No image UI labels.",
+  "referenceSha256": "e20346bcd8ce1154f5947f45c43ca90f782564d5e7701bbe5c542f4b9e7444a7",
+  "assets": {
+    "kundali": {
+      "file": "kundali.webp",
+      "size": [
+        640,
+        427
+      ],
+      "bytes": 52116,
+      "sha256": "051a2468a6943848f7056f580e9a223d2a1b53b5336942529e543be524ca1967",
+      "masterSha256": "1f166fcb730c9142f59eb2cc889de59511f2517d81758e7cee1795498ad515f8",
+      "prompt": "Create one standalone text-free production illustration matching the corresponding artwork in the approved UI reference. Subject: North Indian diamond kundali parchment, sun seal, stacked books, brass diya and jasmine. Landscape 3:2. Keep exact warm golden watercolor storybook aesthetic and composition. No UI, labels, card borders, buttons or typography. Cream ivory paper. Decorative illustration, not calculated chart."
+    },
+    "rashifal": {
+      "file": "rashifal.webp",
+      "size": [
+        640,
+        427
+      ],
+      "bytes": 58468,
+      "sha256": "eee77b818fd8e4ed7a047a1a35d4c0a0b542c81d9fa342c946bd9e567ecc8154",
+      "masterSha256": "a861b80b987553308bfc20a7fa6be3202644adea1a1aad7dbd2f2d03f45413b0",
+      "prompt": "Create one standalone text-free production illustration matching the corresponding artwork in the approved UI reference. Subject: Golden sun face and pale crescent moon on muted teal zodiac wheel with clouds. Landscape 3:2. Keep exact warm golden watercolor storybook aesthetic and composition. No UI, labels, card borders, buttons or typography. Cream ivory paper. Decorative illustration, not calculated chart."
+    },
+    "milan": {
+      "file": "milan.webp",
+      "size": [
+        640,
+        427
+      ],
+      "bytes": 61562,
+      "sha256": "fbf2f009fbaffdf76fa52cb3dd5654ff1137385c8bb7723e86411d6507ff6d00",
+      "masterSha256": "1338307c943fc4b68b5959e263060a4a30b951e47c933fabf4b9805ed2917fa7",
+      "prompt": "Create one standalone text-free production illustration matching the corresponding artwork in the approved UI reference. Subject: Two gold wedding rings, red and jasmine wedding garlands, flowers and draped fabric. Landscape 3:2. Keep exact warm golden watercolor storybook aesthetic and composition. No UI, labels, card borders, buttons or typography. Cream ivory paper. Decorative illustration, not calculated chart."
+    },
+    "namkaran": {
+      "file": "namkaran.webp",
+      "size": [
+        640,
+        427
+      ],
+      "bytes": 74370,
+      "sha256": "c535eb9b401b7326d22c6ebe60b1297260abe1e813f862e7475b661c51356db9",
+      "masterSha256": "e75e74c6a1cd47bb2050f287b8a2a67127a51146231fef947ff32f12408bd627",
+      "prompt": "Create one standalone text-free production illustration matching the corresponding artwork in the approved UI reference. Subject: Gold cradle with white cloth, hanging gold star and jasmine foliage. No baby. Landscape 3:2. Keep exact warm golden watercolor storybook aesthetic and composition. No UI, labels, card borders, buttons or typography. Cream ivory paper. Decorative illustration, not calculated chart."
+    },
+    "hero": {
+      "file": "hero.webp",
+      "size": [
+        640,
+        320
+      ],
+      "bytes": 24150,
+      "sha256": "9a5c5c9ae9185917286563c1c45719901f6660cfb957e76e3486292816d96aae",
+      "masterSha256": "e735909272bd326b2b62236cf47ede340bb8993fded38f3e522e79625885685e",
+      "prompt": "Create one standalone text-free production illustration matching the corresponding artwork in the approved UI reference. Subject: Header landscape: golden morning sun, river, Indian temple at right, foliage and brass hanging bell far right; fade to ivory left for native title. Wide 2:1. Keep exact warm golden watercolor storybook aesthetic and composition. No UI, labels, card borders, buttons or typography. Cream ivory paper. Decorative illustration, not calculated chart."
+    },
+    "learn": {
+      "file": "learn.webp",
+      "size": [
+        640,
+        640
+      ],
+      "bytes": 44332,
+      "sha256": "019be1556b234a01735b1496a8759216aa392fc4a835e1ee7fe96bc55fb466d7",
+      "masterSha256": "2d12fe9b4b91f9b2c16046610cf12bb51e7aa2edb82f506f996fe31628d1e0db",
+      "prompt": "Create one standalone text-free production illustration matching the corresponding artwork in the approved UI reference. Subject: Open golden book with fine glowing rays. Square ivory background. Keep exact warm golden watercolor storybook aesthetic and composition. No UI, labels, card borders, buttons or typography. Cream ivory paper. Decorative illustration, not calculated chart."
+    },
+    "navagraha": {
+      "file": "navagraha.webp",
+      "size": [
+        640,
+        640
+      ],
+      "bytes": 60676,
+      "sha256": "1e3b44b160f73e022f45c2f87a124d89544b0f574ef4f1a42df3068ede00aefb",
+      "masterSha256": "04ff9640ac8fb3597ad1be5222c57732a518692da3071eff9f1940332de29dfd",
+      "prompt": "Create one standalone text-free production illustration matching the corresponding artwork in the approved UI reference. Subject: Golden sun face encircled by EIGHT different painted celestial spheres on fine orbital rings. Square ivory background. Keep exact warm golden watercolor storybook aesthetic and composition. No UI, labels, card borders, buttons or typography. Cream ivory paper. Decorative illustration, not calculated chart."
+    }
+  }
+}

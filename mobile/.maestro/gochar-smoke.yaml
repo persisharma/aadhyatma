@@ -92,7 +92,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Kundali. New. Tap to open."
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Understand Jyotish"
+    visible: { id: "jyotish-illustrated-landing" }
     timeout: 15000
 
 # Create the golden-fixture chart (same steps as kundali-smoke).

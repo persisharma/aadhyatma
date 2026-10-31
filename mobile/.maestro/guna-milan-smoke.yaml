@@ -54,7 +54,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: "Jyotish"
 - extendedWaitUntil:
-    visible: "Understand Jyotish"
+    visible: { id: "jyotish-illustrated-landing" }
     timeout: 20000
 
 # First save a Kundali profile so autofill is real, not a test-only seed.

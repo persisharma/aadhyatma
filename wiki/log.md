@@ -1295,3 +1295,7 @@ The setup strip's widget ask now adds both widgets from one Add. Android pins ve
 ## [2026-10-31] ingest | Quiet companion first-launch and widget asks
 
 Implemented the selected compact sheet direction, setup-before-tour phase persistence, explicit notification consent, staged city/GPS, later-day launch arbitration, and shared process-owned widget flow. Updated notification/widget wiki and design.md. Native device and pixel review remains pending.
+
+## [2026-10-31] ingest | Gita Saar keeps story copy concise
+
+Removed visible painting descriptions and the paragraph explaining source-link behavior. Image descriptions remain as accessibility labels. Source rows retain work/passage citations and chevrons for in-app readers; repeated “Read here” labels are omitted. The concise story labels still identify abridged retellings separately from scripture.
