@@ -2,7 +2,7 @@
 title: Gita Saar (गीता सार)
 type: subsystem
 sources: [mobile/src/data/gita-saar/types.ts, mobile/src/data/gita-saar/index.ts, mobile/src/data/gita-saar/themes/index.ts, mobile/src/data/gita-saar/themes/true-prema.ts, mobile/src/data/gita-saar/experience.ts, mobile/src/data/gita-saar/stories.ts, mobile/src/data/gita-saar/learningStore.ts, mobile/src/navigation/lazyScreen.tsx, mobile/src/navigation/__tests__/screenPrefetch.test.tsx, mobile/src/components/GitaSaarStory.tsx, mobile/src/components/GitaSaarVersePage.tsx, mobile/src/screens/GitaSaarReaderScreen.tsx, mobile/src/screens/GitaSaarThemesScreen.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/data/searchIndex.ts, mobile/src/data/texts.ts, mobile/src/data/gita-saar/__tests__/gitaSaarContent.test.ts, mobile/src/screens/__tests__/GitaSaarReaderScreen.test.tsx, mobile/.maestro/granth-smoke.yaml, design.md, RULEBOOK.md]
-last_verified_date: 2026-10-28
+last_verified_date: 2026-10-31
 confidence: high
 status: current
 ---
@@ -33,7 +33,7 @@ Design: design.md §77; contract: RULEBOOK §30.
   isGroupStart }`. Progress and bookmarks key on `gita-saar:<theme>:<pageIndex>`.
 - **Illustrated lessons** — `experience.ts` keeps bilingual questions, categories, takeaways and
   reflection prompts. `stories.ts` gives each stable theme a distinct sourced story or scriptural
-  example: three bilingual beats, one captioned painting, source citations, a separate Gita bridge and
+  example: three bilingual beats, one painting with an accessible description, source citations, a separate Gita bridge and
   one everyday application. The sixteen original Hindi/English adaptations are editorial prose;
   they do not alter the corpus, Saar, theme order or the 170 page IDs. Research and scene review:
   `docs/evaluations/gita-saar-stories-2026-10-26/research/README.md`.
@@ -51,6 +51,7 @@ Design: design.md §77; contract: RULEBOOK §30.
   sees the text immediately, even deep in a long story. Disclosure and writing are
   optional, never required stages. The full-Gita handoff
   opens `GitaReader {chapter: gitaChapter, initialIndex: gitaVerse - 1}`.
+  Painting descriptions remain available to screen readers without visible image captions. Source rows show the work and passage under a short heading; repeated action labels and link-behavior explanations are omitted.
 - **Private reflections** — `learningStore.ts`, AsyncStorage key
   `@vedansh/gita-saar-reflections-v1`, stores version 1 rows keyed by theme chapter + page index,
   with text (max 1000 characters) and timestamp. Lazy hydration and serialized durable writes
