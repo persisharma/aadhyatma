@@ -46,7 +46,7 @@ export function GitaSaarStoryHero({
   width: number;
 }) {
   const story = gitaSaarStories[themeId];
-  const { colors, lang, copy, heading, label } = useStoryStyle();
+  const { lang, copy, heading, label } = useStoryStyle();
   if (!story) return null;
   return (
     <View testID={`gita-saar-story-hero-${themeId}`} style={styles.hero}>
@@ -78,11 +78,6 @@ export function GitaSaarStoryHero({
           style={{ width, maxWidth: 560, maxHeight: 280 }}
         />
       </View>
-      <ProseParagraph
-        style={[label, { color: colors.inkMuted, marginTop: 10 }]}
-      >
-        {copy(story.imageCaption)}
-      </ProseParagraph>
     </View>
   );
 }
@@ -147,16 +142,16 @@ export function GitaSaarStoryDetails({
           lang,
           story.kind === 'scriptural-example'
             ? {
-                hi: 'ग्रंथ का उदाहरण · संक्षिप्त प्रस्तुति',
-                en: 'A scriptural example · abridged',
-                gu: 'ગ્રંથનું ઉદાહરણ · સંક્ષિપ્ત રજૂઆત',
-                kn: 'ಗ್ರಂಥದ ಉದಾಹರಣೆ · ಸಂಕ್ಷಿಪ್ತ ನಿರೂಪಣೆ',
+                hi: 'ग्रंथ प्रसंग · संक्षेप',
+                en: 'From scripture · abridged',
+                gu: 'ગ્રંથ પ્રસંગ · સંક્ષેપ',
+                kn: 'ಗ್ರಂಥ ಪ್ರಸಂಗ · ಸಂಕ್ಷೇಪ',
               }
             : {
-                hi: 'कथा का सूत्र · संक्षिप्त रूपांतर',
-                en: 'The story · an abridged retelling',
-                gu: 'કથાનું સૂત્ર · સંક્ષિપ્ત રૂપાંતર',
-                kn: 'ಕಥೆಯ ಸಾರ · ಸಂಕ್ಷಿಪ್ತ ರೂಪಾಂತರ',
+                hi: 'कथा · संक्षिप्त रूपांतर',
+                en: 'Story · abridged retelling',
+                gu: 'કથા · સંક્ષિપ્ત રૂપાંતર',
+                kn: 'ಕಥೆ · ಸಂಕ್ಷಿಪ್ತ ರೂಪಾಂತರ',
               }
         )}
       </ProseParagraph>
@@ -227,10 +222,10 @@ export function GitaSaarStoryDetails({
               >
                 <ProseParagraph style={label}>
                   {pick(lang, {
-                    hi: `गीता ${ref} · यहीं पढ़ें`,
-                    en: `Gita ${ref} · Read here`,
-                    gu: `ગીતા ${ref} · અહીં વાંચો`,
-                    kn: `ಗೀತೆ ${ref} · ಇಲ್ಲೇ ಓದಿ`,
+                    hi: `गीता ${ref}`,
+                    en: `Gita ${ref}`,
+                    gu: `ગીતા ${ref}`,
+                    kn: `ಗೀತೆ ${ref}`,
                   })}
                 </ProseParagraph>
                 <AppIcon name="next" color={colors.saffronDeep} size={14} />
@@ -255,14 +250,12 @@ export function GitaSaarStoryDetails({
           {copy(story.everyday)}
         </ProseParagraph>
       </View>
-      <ProseParagraph
-        style={[label, { color: colors.inkMuted, marginTop: 14 }]}
-      >
+      <ProseParagraph style={[label, { color: colors.inkMuted, marginTop: 18 }]}>
         {pick(lang, {
-          hi: 'कथा के मूल ग्रंथ नीचे दिए हैं। उपलब्ध पाठ वेदांश में खुलते हैं; बाकी संदर्भ यहाँ केवल उद्धरण के रूप में हैं। संबंध और दैनिक उदाहरण संपादकीय मनन हैं।',
-          en: 'Story sources are listed below. Available texts open in Vedansh; the rest are citations only. The connection and everyday example are editorial reflections.',
-          gu: 'કથાના મૂળ ગ્રંથ નીચે આપ્યા છે. ઉપલબ્ધ પાઠ વેદાંશમાં ખૂલે છે; બાકીના ફક્ત સંદર્ભ છે. સંબંધ અને ઉદાહરણ સંપાદકીય ચિંતન છે.',
-          kn: 'ಕಥೆಯ ಮೂಲ ಗ್ರಂಥಗಳು ಕೆಳಗಿವೆ. ಲಭ್ಯವಿರುವ ಪಾಠಗಳು ವೇದಾಂಶದಲ್ಲೇ ತೆರೆಯುತ್ತವೆ; ಉಳಿದವು ಉಲ್ಲೇಖಗಳು ಮಾತ್ರ. ಸಂಪರ್ಕ ಮತ್ತು ಉದಾಹರಣೆ ಸಂಪಾದಕೀಯ ಚಿಂತನೆಗಳು.',
+          hi: 'मूल ग्रंथ',
+          en: 'Story sources',
+          gu: 'મૂળ ગ્રંથ',
+          kn: 'ಮೂಲ ಗ್ರಂಥಗಳು',
         })}
       </ProseParagraph>
       {story.sources.map((source) => {
@@ -302,7 +295,7 @@ export function GitaSaarStoryDetails({
           >
             <AppIcon name="text" color={colors.saffronDeep} size={16} />
             <ProseParagraph style={[label, { flex: 1 }]}>
-              {`${citation} · ${pick(lang, { hi: 'यहीं पढ़ें', en: 'Read here', gu: 'અહીં વાંચો', kn: 'ಇಲ್ಲೇ ಓದಿ' })}`}
+              {citation}
             </ProseParagraph>
             <AppIcon name="next" color={colors.saffronDeep} size={16} />
           </Pressable>
