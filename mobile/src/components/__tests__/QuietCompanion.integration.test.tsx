@@ -299,7 +299,9 @@ test('unsupported Android pinning opens the widget gallery without stamping an a
   mockPinSupported.mockResolvedValue(false);
   await boot();
   await pressText('Add both widgets');
-  expect(mockNavigate).toHaveBeenCalledWith('MoreTab', { screen: 'WidgetGallery' });
+  expect(mockNavigate).toHaveBeenCalledWith('MoreTab', {
+    screen: 'WidgetGallery', params: undefined, initial: false,
+  });
   expect(mockPin).not.toHaveBeenCalled();
   expect((await stored('@vedansh/daily-bhakti-nudge'))?.widgetAddedAt ?? null).toBeNull();
 });

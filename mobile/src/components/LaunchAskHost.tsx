@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useTour } from '@/contexts/TourContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { moreTabTarget } from '@/navigation/entryRoutes';
 import { hasWidgetHost, readWidgetPayload } from '@/widgets/native';
 import { widgetDateKey, WIDGET_TIME_ZONE } from '@/widgets/contract';
 import {
@@ -153,7 +154,7 @@ export default function LaunchAskHost({
     return <OnboardingSetupSheet />;
   const gallery = () => {
     setKind(null);
-    navigation.navigate('MoreTab', { screen: 'WidgetGallery' });
+    navigation.navigate('MoreTab', moreTabTarget('WidgetGallery'));
   };
   if (kind === 'reminder')
     return <ReminderOptInModal onClose={() => setKind(null)} />;
