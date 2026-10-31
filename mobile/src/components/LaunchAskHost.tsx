@@ -16,6 +16,7 @@ import ReminderOptInModal from './ReminderOptInModal';
 import { WidgetHowToSheet } from './DailyBhaktiNudge';
 import {
   claimLaunchAsk,
+  completeLaunchSelection,
   suppressLaunchAsks,
   hydrateLaunchAsks,
   localDay,
@@ -98,6 +99,7 @@ export default function LaunchAskHost({
     }
     if (launch.taken || launch.record.lastDay === localDay()) {
       decided.current = true;
+      completeLaunchSelection();
       return;
     }
     // Existing snoozes and manual Settings opt-outs survive this migration.
@@ -115,7 +117,7 @@ export default function LaunchAskHost({
       !(prefs.permissionStatus === 'denied' && !prefs.canAskAgain) &&
       reminderDue(launch.record)
     ) {
-      if (claimLaunchAsk()) {
+      if (claimLaunchAsk(false, 'reminder')) {
         decided.current = true;
         setKind('reminder');
       }
@@ -149,6 +151,7 @@ export default function LaunchAskHost({
       return;
     }
     decided.current = true;
+    completeLaunchSelection();
   }, [loaded, tour, prefs, launch, targeted, lang, trackingReady]);
   if (tour.shouldShowOnboardingSetup && !targeted)
     return <OnboardingSetupSheet />;

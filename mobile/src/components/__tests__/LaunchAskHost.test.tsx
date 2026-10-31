@@ -26,7 +26,8 @@ let mockLaunch: any = {
   },
 };
 const mockClaim = jest.fn(() => true),
-  mockSuppress = jest.fn();
+  mockSuppress = jest.fn(),
+  mockComplete = jest.fn();
 jest.mock('@/contexts/TourContext', () => ({ useTour: () => mockTour }));
 jest.mock('@/contexts/NotificationPreferencesContext', () => ({
   useNotificationPreferences: () => mockPrefs,
@@ -60,16 +61,17 @@ jest.mock('../launchAskStore', () => ({
   hydrateLaunchAsks: () => Promise.resolve(),
   claimLaunchAsk: () => mockClaim(),
   suppressLaunchAsks: () => mockSuppress(),
+  completeLaunchSelection: () => mockComplete(),
   localDay: () => '2026-10-31',
   reminderDue: () => true,
 }));
 jest.mock('../OnboardingSetupSheet', () => {
   const React = require('react');
-  return () => React.createElement('Setup');
+  return function MockSetup() { return React.createElement('Setup'); };
 });
 jest.mock('../ReminderOptInModal', () => {
   const React = require('react');
-  return () => React.createElement('Reminder');
+  return function MockReminder() { return React.createElement('Reminder'); };
 });
 jest.mock('../DailyBhaktiNudge', () => {
   const React = require('react');
@@ -145,6 +147,7 @@ test('widgets wait until a later day', async () => {
   mockLaunch.record.firstDay = '2026-10-31';
   await mount();
   expect(tree.toJSON()).toBeNull();
+  expect(mockComplete).toHaveBeenCalledTimes(1);
 });
 
 test('an old default-on preference without an OS grant still gets an explanation', async () => {

@@ -4,6 +4,7 @@ export const LAUNCH_ASK_KEY = '@vedansh/launch-asks-v1';
 export type LaunchAskRecord = {
   firstDay: string;
   lastDay: string | null;
+  lastReminderDay?: string | null;
   declines: number;
   stopped: boolean;
 };
@@ -15,19 +16,21 @@ export function reminderDue(
   now = new Date(),
 ): boolean {
   if (record.stopped || record.lastDay === localDay(now)) return false;
-  if (!record.lastDay) return true;
+  const lastReminderDay = record.lastReminderDay === undefined ? record.lastDay : record.lastReminderDay;
+  if (!lastReminderDay) return true;
   const days = record.declines < 3 ? 2 : record.declines === 3 ? 3 : 7;
-  const [y, m, d] = record.lastDay.split('-').map(Number);
+  const [y, m, d] = lastReminderDay.split('-').map(Number);
   const since =
     (Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) -
       Date.UTC(y, m - 1, d)) /
     86400000;
   return since >= days;
 }
-let snapshot: { ready: boolean; taken: boolean; record: LaunchAskRecord } = {
+let snapshot: { ready: boolean; selectionComplete: boolean; taken: boolean; record: LaunchAskRecord } = {
   ready: false,
+  selectionComplete: false,
   taken: false,
-  record: { firstDay: localDay(), lastDay: null, declines: 0, stopped: false },
+  record: { firstDay: localDay(), lastDay: null, lastReminderDay: null, declines: 0, stopped: false },
 };
 let writes = Promise.resolve();
 function persistRecord() {
@@ -55,6 +58,9 @@ export function hydrateLaunchAsks() {
               /^\d{4}-\d{2}-\d{2}$/.test(r.lastDay)
                 ? r.lastDay
                 : null,
+            lastReminderDay: r.lastReminderDay === null ? null
+              : typeof r.lastReminderDay === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(r.lastReminderDay) ? r.lastReminderDay
+              : typeof r.lastDay === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(r.lastDay) ? r.lastDay : null,
             declines:
               Number.isSafeInteger(r.declines) && r.declines >= 0
                 ? r.declines
@@ -74,10 +80,16 @@ export function hydrateLaunchAsks() {
     }));
 }
 export function suppressLaunchAsks() {
-  snapshot = { ...snapshot, taken: true };
+  snapshot = { ...snapshot, selectionComplete: true, taken: true };
   emit();
 }
-export function claimLaunchAsk(resumeSetup = false) {
+/** Lower-priority surfaces wait until the host has selected a prompt or passed. */
+export function completeLaunchSelection() {
+  if (snapshot.selectionComplete) return;
+  snapshot = { ...snapshot, selectionComplete: true };
+  emit();
+}
+export function claimLaunchAsk(resumeSetup = false, kind: 'reminder' | 'other' = 'other') {
   if (
     !snapshot.ready ||
     snapshot.taken ||
@@ -86,8 +98,9 @@ export function claimLaunchAsk(resumeSetup = false) {
     return false;
   snapshot = {
     ...snapshot,
+    selectionComplete: true,
     taken: true,
-    record: { ...snapshot.record, lastDay: localDay() },
+    record: { ...snapshot.record, lastDay: localDay(), ...(kind === 'reminder' ? { lastReminderDay: localDay() } : {}) },
   };
   emit();
   persistRecord();
@@ -99,6 +112,7 @@ export function declineLaunchReminder(stopped = false) {
     record: {
       ...snapshot.record,
       declines: snapshot.record.declines + 1,
+      lastReminderDay: localDay(),
       stopped,
     },
   };

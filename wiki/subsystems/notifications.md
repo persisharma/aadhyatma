@@ -103,3 +103,5 @@ raw annual/day solves from Home's deferred startup callbacks.
 ## Quiet companion consent (31 October 2026)
 
 Fresh preferences start off and never prompt from hydration. Setup owns one modal with language, staged city and reminder steps before ATT/tour; `TourContext` persists its phase before language becomes an upgrader signal. `enableReminders` requests once for both built-in families; `declineReminders` persists both off. Manual daily-verse toggle-off records `optedOutAt`. The return ladder now follows daily-verse consent too. `LaunchAskHost` and `launchAskStore` arbitrate later asks, preserve old snoozes and suppress targeted cold starts. See design.md's Quiet companion section for cadence and the remaining native QA gate.
+
+Lower-priority launch consumers wait for `launchAskStore.selectionComplete` after hydration; `LaunchAskHost` publishes it on a claim, targeted suppression, or explicit pass. Automatic rating waits for host selection before claiming the shared local-day opportunity.

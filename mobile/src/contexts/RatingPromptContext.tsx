@@ -171,6 +171,7 @@ export function RatingPromptProvider({
   const blockedBySurface =
     launch.taken ||
     !launch.ready ||
+    !launch.selectionComplete ||
     shouldShowFirstLaunchTour ||
     shouldShowOnboardingSetup ||
     shouldShowWhatsNew;

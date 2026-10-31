@@ -1286,3 +1286,7 @@ Follow design.md §82. Names, original reflections, user messages and Vedansh br
 ### First-launch consent integration — Quiet companion (31 October 2026)
 
 Setup phase must persist independently of language/upgrader keys. Only explicit explained actions request notifications/location; Later leaves daily and festival toggles off, and an unrelated grant cannot subscribe a user. Stage a city/GPS result until Continue. One launch host arbitrates later prompts and skips notification/widget cold starts; tour replay cannot erase setup. Widget flow stamps are not proof of placement. Reuse the existing cached-artwork descriptors and loaded script fonts, keep the body scrollable at Large, and record native ATT/launcher/font/device QA before merging. design.md's Quiet companion section owns the surface spec and cadence.
+
+Lower-priority automatic surfaces must wait for `launchAskStore.selectionComplete` and atomically claim the shared daily opportunity before opening. Storage hydration is not host selection completion. Automatic rating must wait too.
+
+Keep reminder-rest dates separate from the shared daily prompt date: an intervening widget/discovery prompt must not restart a reminder rest. Legacy records migrate their prior shared date once.
