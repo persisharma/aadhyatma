@@ -92,9 +92,6 @@ export function selectNudge(input: NudgeInputs): NudgeKind | null {
   if (!input.ready) return null;
   const reminderOn = input.dailyVerseEnabled && input.permissionStatus === 'granted';
   if (!reminderOn) {
-    // The default-on reminder with an unanswered permission means the provider is
-    // putting the OS prompt up this launch — never stack a second ask on it.
-    if (input.dailyVerseEnabled && input.permissionStatus === 'undetermined') return null;
     if (!snoozed(input.record.reminderDismissedAt, input.now)) {
       return input.permissionStatus === 'denied' && !input.canAskAgain ? 'reminderBlocked' : 'reminder';
     }

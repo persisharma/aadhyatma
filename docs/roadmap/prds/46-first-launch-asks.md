@@ -223,3 +223,7 @@ Adopted from both reviews, no owner decision needed:
 3. **"फिर न पूछें · Don't ask again"** from the third decline (design). It conflicts with "until yes".
 4. **Widget offer sheet on a later day.** Keep it in this PR (owner ask; needs the module-store pin chain), or ship the asks first and add the sheet after (engineering).
 5. **City search depth in step 2.** Full pincode/place search, or cities plus GPS with a hand-off to the full picker.
+
+## 11. Quiet companion implementation — 31 October 2026
+
+The owner selected Quiet companion for all setup and nudge surfaces and requested implementation. The follow-up uses the shared native sheet and the revised order in §10. Decisions implemented from the preview: passive hard-denial recovery, bundled-city search + staged GPS, later-day widget offer, two/two/three-day reminder rests then weekly, and a stop control from the third decline. These are calendar-day rests, not a count of opens; sparse users are not asked repeatedly within a day. Source and validation details live in design.md's Quiet companion section. Device QA is explicitly pending.

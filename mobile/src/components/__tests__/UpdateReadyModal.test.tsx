@@ -1,3 +1,5 @@
+jest.mock('@/contexts/TourContext',()=>({useTour:()=>({isLoading:false,shouldShowOnboardingSetup:false,shouldShowFirstLaunchTour:false,shouldShowWhatsNew:false})}));
+jest.mock('@/components/launchAskStore',()=>({useLaunchAsks:()=>({ready:true,taken:false}),claimLaunchAsk:()=>true}));
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Modal, Text } from 'react-native';

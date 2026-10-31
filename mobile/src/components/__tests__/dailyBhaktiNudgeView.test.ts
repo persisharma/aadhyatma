@@ -49,8 +49,8 @@ describe('selectNudge', () => {
     expect(selectNudge(inputs({ permissionStatus: 'denied', canAskAgain: false }))).toBe('reminderBlocked');
   });
 
-  test('never stacks on the launch-time OS prompt of the default-on reminder', () => {
-    expect(selectNudge(inputs({ dailyVerseEnabled: true, permissionStatus: 'undetermined' }))).toBeNull();
+  test('an old on preference with unanswered permission gets an explained action', () => {
+    expect(selectNudge(inputs({ dailyVerseEnabled: true, permissionStatus: 'undetermined' }))).toBe('reminder');
   });
 
   test('a reminder that is off with the permission unanswered gets the strip', () => {

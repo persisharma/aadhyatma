@@ -1,5 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
+import { CheckIcon } from 'phosphor-react-native/src/icons/Check';
+import { MapPinIcon } from 'phosphor-react-native/src/icons/MapPin';
 import { useTheme } from '@/theme/ThemeContext';
 import { QuestionIcon } from 'phosphor-react-native/src/icons/Question';
 import { SquaresFourIcon } from 'phosphor-react-native/src/icons/SquaresFour';
@@ -61,6 +63,8 @@ import { PencilSimpleIcon } from 'phosphor-react-native/src/icons/PencilSimple';
 
 // Direct imports keep the full icon catalogue out of the launch bundle.
 const icons = {
+  check: CheckIcon,
+  location: MapPinIcon,
   search: MagnifyingGlassIcon,
   question: QuestionIcon,
   widgets: SquaresFourIcon,

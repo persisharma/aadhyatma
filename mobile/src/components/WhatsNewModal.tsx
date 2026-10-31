@@ -1,5 +1,13 @@
+import { useLaunchAsks, localDay } from './launchAskStore';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -20,10 +28,24 @@ import { useTour } from '@/contexts/TourContext';
  * `contentByLang` (gu/kn re-script the Hindi) and fonts through the
  * `langType` helpers so gu/kn don't render as tofu in a Devanagari face.
  */
-export default function WhatsNewModal() {
+export default function WhatsNewModal({
+  suppressed = false,
+}: {
+  suppressed?: boolean;
+}) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const { shouldShowWhatsNew, whatsNewEntry, markWhatsNewSeen } = useTour();
+  const {
+    shouldShowWhatsNew: gate,
+    whatsNewEntry,
+    markWhatsNewSeen,
+  } = useTour();
+  const launch = useLaunchAsks();
+  const shouldShowWhatsNew =
+    gate &&
+    !suppressed &&
+    launch.ready &&
+    (launch.taken || launch.record.lastDay !== localDay());
   const [visible, setVisible] = useState(false);
   // Rising-edge guard — open once per episode, keyed on shouldShowWhatsNew
   // alone so the optimistic hide in close() can't bounce it back open before
@@ -70,19 +92,28 @@ export default function WhatsNewModal() {
       onRequestClose={close}
     >
       <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-        <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
+        <SafeAreaView
+          style={styles.safe}
+          edges={['top', 'left', 'right', 'bottom']}
+        >
           <View style={[styles.header, { borderBottomColor: colors.divider }]}>
             <View>
               <Text
                 accessibilityRole="header"
-                style={[styles.title, { color: colors.ink, fontFamily: titleFontByLang(lang) }]}
+                style={[
+                  styles.title,
+                  { color: colors.ink, fontFamily: titleFontByLang(lang) },
+                ]}
               >
                 {headerTitle}
               </Text>
               <Text
                 style={[
                   styles.version,
-                  { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                  {
+                    color: colors.inkMuted,
+                    fontFamily: typography.cardLatin.fontFamily,
+                  },
                 ]}
               >
                 v{whatsNewEntry.version}
@@ -93,9 +124,14 @@ export default function WhatsNewModal() {
               accessibilityRole="button"
               accessibilityLabel="Close"
               hitSlop={16}
-              style={({ pressed }) => [styles.close, pressed && { opacity: 0.7 }]}
+              style={({ pressed }) => [
+                styles.close,
+                pressed && { opacity: 0.7 },
+              ]}
             >
-              <Text style={[styles.closeGlyph, { color: colors.saffron }]}>✕</Text>
+              <Text style={[styles.closeGlyph, { color: colors.saffron }]}>
+                ✕
+              </Text>
             </Pressable>
           </View>
 
@@ -115,11 +151,19 @@ export default function WhatsNewModal() {
                 />
                 <View style={styles.itemContent}>
                   <Text
-                    style={[styles.itemTitle, { color: colors.ink, fontFamily: titleFontByLang(lang) }]}
+                    style={[
+                      styles.itemTitle,
+                      { color: colors.ink, fontFamily: titleFontByLang(lang) },
+                    ]}
                   >
                     {contentByLang(lang, item.titleHi, item.titleEn)}
                   </Text>
-                  <Text style={[styles.itemBody, { color: colors.inkSoft, fontFamily: bodyFont }]}>
+                  <Text
+                    style={[
+                      styles.itemBody,
+                      { color: colors.inkSoft, fontFamily: bodyFont },
+                    ]}
+                  >
                     {contentByLang(lang, item.bodyHi, item.bodyEn)}
                   </Text>
                 </View>
@@ -142,7 +186,13 @@ export default function WhatsNewModal() {
               ]}
             >
               <Text
-                style={[styles.primaryLabel, { color: colors.onPrimary, fontFamily: titleFontByLang(lang) }]}
+                style={[
+                  styles.primaryLabel,
+                  {
+                    color: colors.onPrimary,
+                    fontFamily: titleFontByLang(lang),
+                  },
+                ]}
               >
                 {gotIt}
               </Text>

@@ -46,7 +46,7 @@ appId: com.prashantsharma.vedansh
 # Gate on the FIRST real surface (native alert, tour, setup sheet, What's New,
 # or Home itself) before dismissing anything.
 - extendedWaitUntil:
-    visible: "Allow|Skip tour|Begin|Close|Got it|.*Today.s Panchang.*|.*आज का पंचांग.*"
+    visible: "Setup language continue|Allow|Skip tour|Begin|Close|Got it|.*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 90000
 # clearState resets iOS permission grants, so a fresh launch pops the native
 # "…Would Like to Send You Notifications" alert over Home (the app requests
@@ -59,6 +59,21 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Don't Allow"
     optional: true
+# Quiet companion setup precedes ATT and the tour; never opt into notifications in boot.
+- tapOn:
+    text: "Setup language continue"
+    optional: true
+- tapOn:
+    text: "Setup city continue"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Ask App Not to Track"
+    optional: true
+- waitForAnimationToEnd
 # Dismiss whichever first-launch onboarding surface auto-appeared BEFORE
 # asserting Home — a fresh install can show the feature tour (an OVERLAY), a
 # returning user on a debut release gets the What's New sheet, and notification

@@ -1,3 +1,4 @@
+jest.mock('@/components/launchAskStore',()=>({useLaunchAsks:()=>({ready:true,taken:mockOptInShowing}),claimLaunchAsk:()=>true}));
 /**
  * Rating prompt (design.md §54) — sheet rendering plus the provider wiring
  * behind it: the moment-triggered open and its settle delay, what each star and

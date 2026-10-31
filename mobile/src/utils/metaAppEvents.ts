@@ -6,20 +6,35 @@ import { createMetaActivationController } from './metaActivationController';
 type ActivationModule = { enabled?: boolean; activate: () => Promise<boolean> };
 let started = false;
 
+export function metaTrackingAvailable(): boolean {
+  const native = requireOptionalNativeModule<ActivationModule>(
+    'VedanshMetaAppEvents',
+  );
+  return (
+    !!native &&
+    (typeof native.enabled === 'boolean'
+      ? native.enabled
+      : Constants.expoConfig?.extra?.metaTrackingEnabled === true)
+  );
+}
+
 /** Called after navigation is ready. No screen, scripture, location, name,
  * birth details or practice progress are collected by this integration. */
-export function startMetaAppEvents(): void {
+export async function startMetaAppEvents(): Promise<void> {
   if (started || (Platform.OS !== 'ios' && Platform.OS !== 'android')) return;
-  const native = requireOptionalNativeModule<ActivationModule>('VedanshMetaAppEvents');
+  const native = requireOptionalNativeModule<ActivationModule>(
+    'VedanshMetaAppEvents',
+  );
   // Expo Go and older store builds lack the new module. A future JS bundle
   // reaching either must remain usable; it cannot add this native SDK.
   if (!native) return;
   // The binary's own flag wins: an OTA manifest's `extra` reflects the shell
   // that ran `eas update`, not the build, and silently suppressed ATT. 1.5.0
   // (72) predates the constant, so it alone still reads `extra`.
-  const enabled = typeof native.enabled === 'boolean'
-    ? native.enabled
-    : Constants.expoConfig?.extra?.metaTrackingEnabled === true;
+  const enabled =
+    typeof native.enabled === 'boolean'
+      ? native.enabled
+      : Constants.expoConfig?.extra?.metaTrackingEnabled === true;
   if (!enabled) return;
   started = true;
   const controller = createMetaActivationController({
@@ -36,5 +51,21 @@ export function startMetaAppEvents(): void {
     activate: () => native.activate(),
   });
   AppState.addEventListener('change', controller.onStateChange);
-  void controller.start();
+  // Modal dismissal can reach JS before UIKit has made the app active. Keep
+  // the setup/tour hand-off pending until an actual foreground can own ATT.
+  if (Platform.OS === 'ios' && AppState.currentState !== 'active') {
+    await new Promise<void>((resolve) => {
+      const subscription = AppState.addEventListener('change', (state) => {
+        if (state === 'active') {
+          subscription.remove();
+          resolve();
+        }
+      });
+      if (AppState.currentState === 'active') {
+        subscription.remove();
+        resolve();
+      }
+    });
+  }
+  await controller.start();
 }
