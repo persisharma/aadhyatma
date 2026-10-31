@@ -32,11 +32,13 @@ jest.mock('@/data/gita/language', () => ({
 }));
 
 const mockGet = Notifications.getPermissionsAsync as unknown as jest.Mock;
-const mockRequest = Notifications.requestPermissionsAsync as unknown as jest.Mock;
+const mockRequest =
+  Notifications.requestPermissionsAsync as unknown as jest.Mock;
 const mockSchedule = scheduleDailyVerseRollingWindow as jest.Mock;
 
 type Ctx = ReturnType<typeof useNotificationPreferences>;
 let captured!: Ctx;
+let mounted: TestRenderer.ReactTestRenderer;
 function Probe() {
   captured = useNotificationPreferences();
   return null;
@@ -50,10 +52,10 @@ async function flush() {
 
 async function mountAndHydrate() {
   await act(async () => {
-    TestRenderer.create(
+    mounted = TestRenderer.create(
       <NotificationPreferencesProvider>
         <Probe />
-      </NotificationPreferencesProvider>
+      </NotificationPreferencesProvider>,
     );
   });
   await flush();
@@ -72,87 +74,71 @@ beforeEach(async () => {
   mockSchedule.mockResolvedValue(0);
 });
 
-describe('first install on iOS', () => {
-  test('asks on first launch and keeps the default-on reminder when granted', async () => {
-    await mountAndHydrate();
-
-    expect(mockRequest).toHaveBeenCalledTimes(1);
-    expect(captured.permissionStatus).toBe('granted');
-    expect(captured.prefs.dailyVerseEnabled).toBe(true);
-    expect(mockSchedule).toHaveBeenCalled();
-  });
-
-  test('a refusal lands in the hard-block state and turns the toggle off', async () => {
-    mockRequest.mockResolvedValue(IOS_REFUSED);
-
-    await mountAndHydrate();
-
-    expect(captured.permissionStatus).toBe('denied');
-    expect(captured.canAskAgain).toBe(false);
-    expect(captured.prefs.dailyVerseEnabled).toBe(false);
-    expect(await AsyncStorage.getItem(NOTIF_PROMPTED_KEY)).toBe('1');
-  });
-
-  test('after a refusal the opt-in sheet stays hidden — Enable could never succeed', async () => {
-    await AsyncStorage.setItem(NOTIF_PROMPTED_KEY, '1');
-    await AsyncStorage.setItem(
-      '@vedansh/notif-prefs',
-      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
-    );
-    await AsyncStorage.setItem(
-      '@vedansh/notif-meta',
-      JSON.stringify({ appOpenCount: 12, optInPromptShown: false })
-    );
-    mockGet.mockResolvedValue(IOS_REFUSED);
-
-    await mountAndHydrate();
-
-    expect(mockRequest).not.toHaveBeenCalled();
-    expect(captured.shouldShowOptIn).toBe(false);
-  });
+afterEach(() => {
+  act(() => mounted?.unmount());
 });
-
-describe('later launches on iOS', () => {
-  test('an existing grant neither re-prompts nor changes anything', async () => {
-    await AsyncStorage.setItem(NOTIF_PROMPTED_KEY, '1');
-    mockGet.mockResolvedValue({ status: 'granted', canAskAgain: true });
-
-    await mountAndHydrate();
-
-    expect(mockRequest).not.toHaveBeenCalled();
-    expect(captured.permissionStatus).toBe('granted');
-    expect(captured.prefs.dailyVerseEnabled).toBe(true);
+test('fresh ios launch does not request OS permission or opt into reminders', async () => {
+  mockGet.mockResolvedValue({ status: 'undetermined', canAskAgain: true });
+  await mountAndHydrate();
+  expect(mockRequest).not.toHaveBeenCalled();
+  expect(captured.prefs.dailyVerseEnabled).toBe(false);
+  expect(captured.prefs.festiveRemindersEnabled).toBe(false);
+});
+test('one explained enable action grants both reminder toggles with one OS request', async () => {
+  await mountAndHydrate();
+  await act(async () => {
+    await captured.enableReminders();
   });
-
-  test('revoking in Settings and returning flips the toggle off (foreground path uses the same read)', async () => {
-    // Simulated as a cold start after revocation: iOS reports a hard denial.
-    await AsyncStorage.setItem(NOTIF_PROMPTED_KEY, '1');
-    mockGet.mockResolvedValue(IOS_REFUSED);
-
-    await mountAndHydrate();
-
-    expect(captured.permissionStatus).toBe('denied');
-    expect(captured.prefs.dailyVerseEnabled).toBe(false);
+  expect(mockRequest).toHaveBeenCalledTimes(1);
+  expect(captured.prefs.dailyVerseEnabled).toBe(true);
+  expect(captured.prefs.festiveRemindersEnabled).toBe(true);
+});
+test('Not now persists both toggles off even if another feature later gains permission', async () => {
+  await mountAndHydrate();
+  await act(async () => {
+    await captured.declineReminders();
+    await captured.requestPermission();
   });
-
-  test('a pre-fix iOS install (no prompted flag) is not misread: hard denial stays denied', async () => {
-    // Existing iOS users predate NOTIF_PROMPTED_KEY. canAskAgain=false alone
-    // must classify their refusal as a real denial — no phantom re-offer.
-    mockGet.mockResolvedValue(IOS_REFUSED);
-    await AsyncStorage.setItem(
-      '@vedansh/notif-prefs',
-      JSON.stringify({ dailyVerseEnabled: false, times: [{ hour: 7, minute: 0 }] })
-    );
-    await AsyncStorage.setItem(
-      '@vedansh/notif-meta',
-      JSON.stringify({ appOpenCount: 12, optInPromptShown: true })
-    );
-
-    await mountAndHydrate();
-
-    expect(captured.permissionStatus).toBe('denied');
-    expect(captured.canAskAgain).toBe(false);
-    expect(captured.shouldShowOptIn).toBe(false);
-    expect(mockRequest).not.toHaveBeenCalled();
+  expect(captured.permissionStatus).toBe('granted');
+  expect(captured.prefs.dailyVerseEnabled).toBe(false);
+  expect(captured.prefs.festiveRemindersEnabled).toBe(false);
+});
+test('OS denial keeps both toggles off', async () => {
+  mockRequest.mockResolvedValue({ status: 'denied', canAskAgain: false });
+  await mountAndHydrate();
+  await act(async () => {
+    await captured.enableReminders();
   });
+  expect(captured.permissionStatus).toBe('denied');
+  expect(captured.prefs.dailyVerseEnabled).toBe(false);
+  expect(captured.prefs.festiveRemindersEnabled).toBe(false);
+  expect(captured.shouldShowOptIn).toBe(false);
+});
+test('a manual Settings switch-off survives restart as an explicit opt-out', async () => {
+  mockGet.mockResolvedValue({ status: 'granted', canAskAgain: false });
+  await mountAndHydrate();
+  await act(async () => {
+    await captured.enableReminders();
+    await captured.setDailyVerseEnabled(false);
+  });
+  expect(captured.meta.optedOutAt).toEqual(expect.any(Number));
+  expect(captured.shouldShowOptIn).toBe(false);
+  act(() => mounted.unmount());
+  await mountAndHydrate();
+  expect(captured.meta.optedOutAt).toEqual(expect.any(Number));
+});
+test('existing saved on preferences remain on without a prompt', async () => {
+  await AsyncStorage.setItem(
+    '@vedansh/notif-prefs',
+    JSON.stringify({
+      dailyVerseEnabled: true,
+      festiveRemindersEnabled: true,
+      times: [{ hour: 8, minute: 15 }],
+    }),
+  );
+  mockGet.mockResolvedValue({ status: 'granted', canAskAgain: false });
+  await mountAndHydrate();
+  expect(mockRequest).not.toHaveBeenCalled();
+  expect(captured.prefs.dailyVerseEnabled).toBe(true);
+  expect(captured.prefs.times).toEqual([{ hour: 8, minute: 15 }]);
 });

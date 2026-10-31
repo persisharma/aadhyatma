@@ -1,278 +1,426 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '@/theme/ThemeContext';
-import { elevation } from '@/theme/elevation';
 import { fontFamilies } from '@/theme/typography';
 import { useTour } from '@/contexts/TourContext';
-import { useGitaLanguage, LANGUAGES, type LangScript } from '@/data/gita/language';
+import { useGitaLanguage, LANGUAGES } from '@/data/gita/language';
 import { useFontScale } from '@/contexts/FontScaleContext';
-import { verseToken } from '@/utils/langType';
-import { FONT_SCALES, type FontScale } from '@/theme/fontScale';
-import { READING_SIZE_SAMPLE } from '@/components/ReadingSizePickerSheet';
-
-/**
- * First-run setup sheet — the step *after* the feature tour (design.md §47).
- *
- * The walkthrough's last two steps ring the More hub's **Language** and
- * **Reading Size** rows; this sheet is where the user actually picks them, so a
- * fresh install never has to hunt for either setting to read comfortably. Both
- * choices apply **live** (same `useGitaLanguage()` / `useFontScale()` state every
- * other surface uses) and the sample line re-renders in the chosen script at the
- * chosen size, so the sheet is its own preview.
- *
- * **Bilingual chrome, always** — like the tour, this runs *before* a reading
- * language exists, so every label renders Hindi over English and nothing
- * branches on `lang` (§47 "bilingual, always"; wiki `concepts/languages`
- * ternary hazard). The language options need no translation: each is written in
- * its own script.
- *
- * Self-mounts when `useTour().shouldShowOnboardingSetup` is true.
- */
-
-const SIZE_OPTIONS: readonly { value: FontScale; hi: string; en: string }[] = [
-  { value: 'M', hi: 'मानक', en: 'Standard' },
-  { value: 'L', hi: 'बड़ा', en: 'Large' },
-];
-
-// Compile-time sanity: the pills cover every preset in FONT_SCALES (§43).
-type _SizeCoverage = keyof typeof FONT_SCALES extends (typeof SIZE_OPTIONS)[number]['value']
-  ? true
-  : never;
-const _sizeCoverage: _SizeCoverage = true;
-void _sizeCoverage;
-
-/** Native face for a language's own name, so no option renders as tofu. */
-function familyFor(script: LangScript, devanagariFallback: string): string {
-  switch (script) {
-    case 'latin':
-      return fontFamilies.latin;
-    case 'gujarati':
-      return fontFamilies.gujaratiBold;
-    case 'kannada':
-      return fontFamilies.kannadaBold;
-    default:
-      return devanagariFallback;
-  }
-}
-
+import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
+import {
+  CITIES,
+  cityMatchesQuery,
+  toPanchangLocation,
+} from '@/panchang/locations';
+import type { PanchangLocation } from '@/panchang/types';
+import { sunriseForDate } from '@/panchang/engine';
+import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { scriptBodyFont } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
+import { startMetaAppEvents } from '@/utils/metaAppEvents';
+import { declineLaunchReminder } from './launchAskStore';
+import QuietCompanionSheet from './QuietCompanionSheet';
+import QuietReminderBody from './QuietReminderBody';
+import TextField from './TextField';
+import AppIcon from './AppIcon';
+import { quietCopy as q } from './quietCompanionCopy';
+const STEP_KEY = '@vedansh/setup-step-v1';
 export default function OnboardingSetupSheet() {
-  const { colors, typography, spacing, radii } = useTheme();
-  const { shouldShowOnboardingSetup, markOnboardingSetupCompleted } = useTour();
+  const { colors, typography } = useTheme();
   const { lang, setLang } = useGitaLanguage();
   const { scale, setScale } = useFontScale();
-
-  const [visible, setVisible] = useState(false);
-  // Rising-edge guard: open once per "should show" episode, keyed on the gate
-  // alone (never on `visible`), so the optimistic hide in finish() can't be
-  // misread as "not shown yet" and re-open before the gate flips off. Mirrors
-  // FeatureTour's guard.
-  const openedRef = useRef(false);
+  const { width } = useWindowDimensions();
+  const { shouldShowOnboardingSetup, markOnboardingSetupCompleted } = useTour();
+  const { location, commitLocation, resolveDeviceLocation } =
+    usePanchangLocation();
+  const { permissionStatus, canAskAgain, enableReminders, declineReminders } =
+    useNotificationPreferences();
+  const [step, setStep] = useState(1),
+    [visible, setVisible] = useState(false),
+    [busy, setBusy] = useState(false),
+    [query, setQuery] = useState(''),
+    [error, setError] = useState('');
+  const [choice, setChoice] = useState<PanchangLocation>(location);
+  const completeRef = useRef(false);
   useEffect(() => {
-    if (shouldShowOnboardingSetup) {
-      if (!openedRef.current) {
-        openedRef.current = true;
-        setVisible(true);
-      }
-    } else {
-      openedRef.current = false;
-    }
-  }, [shouldShowOnboardingSetup]);
-
-  const finish = () => {
-    setVisible(false);
-    void markOnboardingSetupCompleted();
+    if (!shouldShowOnboardingSetup) return;
+    let active = true;
+    void AsyncStorage.getItem(STEP_KEY)
+      .then((raw) => {
+        if (active) {
+          setStep(raw === '2' ? 2 : raw === '3' ? 3 : 1);
+          setChoice(location);
+          setVisible(true);
+        }
+      })
+      .catch(() => {
+        if (active) setVisible(true);
+      });
+    return () => {
+      active = false;
+    };
+  }, [shouldShowOnboardingSetup, location]);
+  const go = (n: number) => {
+    setStep(n);
+    setError('');
+    void AsyncStorage.setItem(STEP_KEY, String(n)).catch(() => undefined);
   };
-
-  if (!visible) return null;
-
-  const verseTok = verseToken(lang, typography);
-
+  const finish = () => {
+    completeRef.current = true;
+    setVisible(false);
+    if (Platform.OS !== 'ios') void afterDismiss();
+  };
+  async function afterDismiss() {
+    if (!completeRef.current) return;
+    completeRef.current = false;
+    try {
+      if (Platform.OS === 'ios') await startMetaAppEvents();
+    } finally {
+      await markOnboardingSetupCompleted();
+      setBusy(false);
+    }
+  }
+  async function next() {
+    if (busy) return;
+    if (step === 1) {
+      go(2);
+      return;
+    }
+    if (step === 2) {
+      commitLocation(choice);
+      go(3);
+      return;
+    }
+    setBusy(true);
+    try {
+      if (!(await enableReminders())) declineLaunchReminder();
+      finish();
+    } catch {
+      setBusy(false);
+      setError(q(lang, 'gpsFailed'));
+    }
+  }
+  async function skip() {
+    if (busy) return;
+    setBusy(true);
+    await declineReminders();
+    declineLaunchReminder();
+    finish();
+  }
+  const body = scriptBodyFont(lang, typography.cardHindi.fontFamily),
+    factor = scale === 'L' ? 1.15 : 1;
+  const para = {
+    fontFamily: body,
+    fontSize: 15 * factor,
+    lineHeight: 25 * factor,
+    color: colors.inkSoft,
+    marginTop: 14,
+  };
+  const candidates = query.trim()
+    ? CITIES.filter((c) => cityMatchesQuery(c, query)).slice(0, 30)
+    : ['varanasi', 'delhi', 'mumbai', 'bengaluru', 'ahmedabad', 'kolkata']
+        .map((id) => CITIES.find((c) => c.id === id)!)
+        .filter(Boolean);
+  const sunrise =
+    step === 2
+      ? sunriseForDate(new Date(), { location: choice }).toLocaleTimeString(
+          lang === 'en' ? 'en-GB' : 'hi-IN',
+          { hour: '2-digit', minute: '2-digit', hour12: false },
+        )
+      : '';
+  const title = q(
+    lang,
+    step === 1 ? 'welcome' : step === 2 ? 'cityTitle' : 'reminderTitle',
+  );
   return (
-    <Modal visible animationType="slide" transparent onRequestClose={finish}>
-      {/* No backdrop dismissal: this is a one-time setup with an explicit
-          "Begin" — a stray tap outside must not skip the language choice. */}
-      <View style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}>
-        <View
-          style={[
-            styles.sheet,
-            {
-              backgroundColor: colors.parchmentHighlight,
-              paddingHorizontal: spacing.xxl,
-              borderTopLeftRadius: 22,
-              borderTopRightRadius: 22,
-            },
-          ]}
-        >
-          <View style={[styles.grabber, { backgroundColor: colors.divider }]} />
-
-          <ScrollView
-            style={styles.scroll}
-            contentContainerStyle={styles.scrollContent}
-            showsVerticalScrollIndicator={false}
-          >
-            <Text
-              style={[styles.eyebrow, { color: colors.saffronDeep, fontFamily: typography.readerTitle.fontFamily }]}
-            >
-              स्वागत है · Welcome
-            </Text>
-            <Text
-              accessibilityRole="header"
-              style={[styles.titleHi, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
-            >
-              भाषा चुनें
-            </Text>
-            <Text style={[styles.titleEn, { color: colors.inkMuted, fontFamily: typography.subtitle.fontFamily }]}>
-              Choose your reading language
-            </Text>
-            <Text style={[styles.note, { color: colors.inkSoft, fontFamily: typography.meaning.fontFamily }]}>
-              बाद में कभी भी “अधिक” से बदल सकते हैं।{'\n'}
-              You can change this any time from More.
-            </Text>
-
-            <View
-              accessibilityRole="radiogroup"
-              accessibilityLabel="Reading language"
-              style={[styles.list, { borderColor: colors.divider, borderRadius: radii.lg, backgroundColor: colors.parchmentSoft }]}
-            >
-              {LANGUAGES.map((opt, i) => {
-                const selected = lang === opt.value;
-                return (
-                  <Pressable
-                    key={opt.value}
-                    onPress={() => setLang(opt.value)}
-                    accessibilityRole="radio"
-                    accessibilityState={{ selected }}
-                    accessibilityLabel={opt.a11yLabel}
-                    style={({ pressed }) => [
-                      styles.row,
-                      i > 0 && { borderTopWidth: 1, borderTopColor: colors.divider },
-                      selected && { backgroundColor: colors.saffronTint },
-                      pressed && { opacity: 0.7 },
-                    ]}
-                  >
+    <QuietCompanionSheet
+      visible={visible}
+      step={step}
+      title={title}
+      kicker={q(
+        lang,
+        step === 1 ? 'language' : step === 2 ? 'city' : 'reminder',
+      )}
+      art={
+        step === 1
+          ? 'category-granth-open-scripture'
+          : step === 2
+            ? 'deity-ganga'
+            : 'category-aarti-diya'
+      }
+      onBack={step > 1 ? () => go(step - 1) : undefined}
+      onDismiss={() => {
+        void afterDismiss();
+      }}
+      primary={q(lang, step === 3 ? 'yes' : 'next')}
+      primaryLabel={
+        step === 1
+          ? 'Setup language continue'
+          : step === 2
+            ? 'Setup city continue'
+            : 'Enable reminders'
+      }
+      onPrimary={() => {
+        void next();
+      }}
+      secondary={step === 3 ? q(lang, 'later') : undefined}
+      onSecondary={() => {
+        void skip();
+      }}
+      busy={busy}
+      meta={
+        step === 1
+          ? q(lang, 'settings')
+          : step === 3 && permissionStatus !== 'granted' && canAskAgain
+            ? q(lang, 'os')
+            : undefined
+      }
+    >
+      {step === 1 ? (
+        <>
+          <Text style={para}>{q(lang, 'languageNote')}</Text>
+          <View style={styles.languages}>
+            {LANGUAGES.map((opt) => {
+              const selected = lang === opt.value;
+              const family =
+                opt.script === 'gujarati'
+                  ? fontFamilies.gujaratiBold
+                  : opt.script === 'kannada'
+                    ? fontFamilies.kannadaBold
+                    : opt.script === 'latin'
+                      ? fontFamilies.interSemiBold
+                      : fontFamilies.devanagariBold;
+              return (
+                <Pressable
+                  key={opt.value}
+                  accessibilityRole="radio"
+                  accessibilityState={{ selected }}
+                  accessibilityLabel={opt.a11yLabel}
+                  onPress={() => setLang(opt.value)}
+                  style={[
+                    styles.language,
+                    {
+                      width: scale === 'L' || width < 350 ? '100%' : '48%',
+                      borderColor: selected
+                        ? colors.saffronDeep
+                        : colors.divider,
+                      backgroundColor: selected
+                        ? colors.saffronTint
+                        : colors.parchmentHighlight,
+                    },
+                  ]}
+                >
+                  <View style={{ flex: 1 }}>
                     <Text
                       style={{
-                        flex: 1,
-                        fontFamily: familyFor(opt.script, typography.readerTitle.fontFamily),
-                        fontSize: 19,
-                        color: selected ? colors.saffronDeep : colors.ink,
+                        fontFamily: family,
+                        fontSize: 20 * factor,
+                        color: colors.ink,
                       }}
                     >
                       {opt.nativeLabel}
                     </Text>
-                    <Text style={[styles.rowEn, { color: colors.inkMuted }]}>{opt.a11yLabel}</Text>
-                    {selected && <Text style={{ color: colors.saffron, fontSize: 16 }}>✓</Text>}
-                  </Pressable>
-                );
-              })}
-            </View>
-
-            <Text
-              style={[styles.sectionHi, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
-            >
-              पाठ का आकार
-            </Text>
-            <Text style={[styles.sectionEn, { color: colors.inkMuted, fontFamily: typography.subtitle.fontFamily }]}>
-              Reading size
-            </Text>
-
-            <View style={styles.pillRow} accessibilityRole="radiogroup" accessibilityLabel="Reading size">
-              {SIZE_OPTIONS.map((opt) => {
-                const selected = scale === opt.value;
-                return (
-                  <Pressable
-                    key={opt.value}
-                    onPress={() => setScale(opt.value)}
-                    accessibilityRole="radio"
-                    accessibilityState={{ selected }}
-                    // Qualified label, not a bare "Standard"/"Large": Maestro's
-                    // snapshotKeyHonorModalViews:false reads the More rows
-                    // *behind* this sheet, whose reading-size state text is the
-                    // bare word — a bare label would be ambiguous in e2e.
-                    accessibilityLabel={`${opt.en} reading size`}
-                    style={[
-                      styles.pill,
-                      { borderColor: selected ? colors.saffron : colors.divider, borderRadius: radii.md },
-                      selected && { backgroundColor: colors.saffronTint },
-                    ]}
-                  >
-                    {selected && <Text style={[styles.check, { color: colors.saffron }]}>✓</Text>}
                     <Text
-                      style={[
-                        styles.pillLabel,
-                        { color: selected ? colors.saffronDeep : colors.ink, fontFamily: typography.readerTitle.fontFamily },
-                      ]}
+                      style={{
+                        fontFamily: fontFamilies.inter,
+                        fontSize: 12,
+                        color: colors.inkMuted,
+                        marginTop: 3,
+                      }}
                     >
-                      {opt.hi} · {opt.en}
+                      {opt.a11yLabel}
                     </Text>
-                  </Pressable>
-                );
-              })}
-            </View>
-
-            {/* Live preview — the reader's own verse token, so it re-renders in
-                the chosen script at the chosen size. */}
+                  </View>
+                  {selected && (
+                    <AppIcon
+                      name="check"
+                      size={18}
+                      color={colors.saffronDeep}
+                    />
+                  )}
+                </Pressable>
+              );
+            })}
+          </View>
+          <Text style={para}>
+            {contentByLang(lang, 'पढ़ने का आकार', 'Reading size')}
+          </Text>
+          <View style={styles.sizes}>
+            {(['M', 'L'] as const).map((value) => (
+              <Pressable
+                key={value}
+                accessibilityRole="radio"
+                accessibilityLabel={`${value === 'M' ? 'Standard' : 'Large'} reading size`}
+                accessibilityState={{ selected: scale === value }}
+                onPress={() => setScale(value)}
+                style={[
+                  styles.size,
+                  {
+                    borderColor:
+                      scale === value ? colors.saffronDeep : colors.divider,
+                    backgroundColor:
+                      scale === value
+                        ? colors.saffronTint
+                        : colors.parchmentHighlight,
+                  },
+                ]}
+              >
+                <Text
+                  style={{
+                    fontFamily: body,
+                    fontSize: 15 * factor,
+                    color: colors.ink,
+                  }}
+                >
+                  {contentByLang(
+                    lang,
+                    value === 'M' ? 'मानक' : 'बड़ा',
+                    value === 'M' ? 'Standard' : 'Large',
+                  )}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        </>
+      ) : step === 2 ? (
+        <>
+          <Text style={para}>{q(lang, 'cityNote')}</Text>
+          <View
+            style={[styles.sunrise, { backgroundColor: colors.saffronTint }]}
+          >
+            <AppIcon name="morning" size={22} color={colors.saffronDeep} />
             <Text
-              testID="onboarding-setup-sample"
               style={{
-                fontFamily: verseTok.fontFamily,
-                fontSize: verseTok.fontSize,
-                lineHeight: verseTok.lineHeight,
+                fontFamily: body,
+                fontSize: 15 * factor,
                 color: colors.ink,
-                textAlign: 'center',
-                marginTop: 18,
+                flex: 1,
               }}
             >
-              {READING_SIZE_SAMPLE[lang]}
+              {contentByLang(lang, choice.labelHi, choice.labelEn)} · {sunrise}
             </Text>
-          </ScrollView>
-
+          </View>
+          <TextField
+            variant="form"
+            value={query}
+            onChangeText={setQuery}
+            placeholder={q(lang, 'search')}
+            accessibilityLabel="Search onboarding cities"
+          />
           <Pressable
-            onPress={finish}
+            disabled={busy}
+            onPress={() => {
+              setBusy(true);
+              void resolveDeviceLocation()
+                .then((next) => {
+                  if (next) setChoice(next);
+                  else setError(q(lang, 'gpsFailed'));
+                })
+                .catch(() => setError(q(lang, 'gpsFailed')))
+                .finally(() => setBusy(false));
+            }}
             accessibilityRole="button"
-            accessibilityLabel="Begin"
-            style={({ pressed }) => [
-              styles.begin,
-              { backgroundColor: colors.saffron, borderRadius: radii.md },
-              pressed && { opacity: 0.85 },
-            ]}
+            style={styles.gps}
           >
-            <Text style={{ color: colors.onPrimary, fontFamily: typography.readerTitle.fontFamily, fontSize: 16 }}>
-              आरंभ करें · Begin
+            <AppIcon name="location" size={19} color={colors.saffronDeep} />
+            <Text
+              style={{
+                fontFamily: body,
+                fontSize: 14 * factor,
+                color: colors.saffronDeep,
+                flex: 1,
+              }}
+            >
+              {q(lang, 'gps')}
             </Text>
           </Pressable>
-        </View>
-      </View>
-    </Modal>
+          <View style={styles.languages}>
+            {candidates.map((c) => (
+              <Pressable
+                key={c.id}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: choice.cityId === c.id }}
+                onPress={() => setChoice(toPanchangLocation(c, 'city'))}
+                style={[
+                  styles.city,
+                  {
+                    borderColor:
+                      choice.cityId === c.id
+                        ? colors.saffronDeep
+                        : colors.divider,
+                    width: scale === 'L' ? '100%' : '48%',
+                  },
+                ]}
+              >
+                <Text
+                  style={{
+                    fontFamily: body,
+                    fontSize: 14 * factor,
+                    color: colors.ink,
+                  }}
+                >
+                  {contentByLang(lang, c.nameHi, c.nameEn)}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+          <Text style={[para, { fontSize: 12 * factor }]}>
+            {contentByLang(lang, 'अभी चुना हुआ शहर: ', 'Selected city: ')}
+            {contentByLang(lang, choice.labelHi, choice.labelEn)}
+          </Text>
+        </>
+      ) : (
+        <QuietReminderBody />
+      )}
+      {!!error && (
+        <Text accessibilityRole="alert" style={para}>
+          {error}
+        </Text>
+      )}
+    </QuietCompanionSheet>
   );
 }
-
 const styles = StyleSheet.create({
-  backdrop: { flex: 1, justifyContent: 'flex-end' },
-  sheet: { paddingTop: 10, paddingBottom: 28, maxHeight: '88%', ...elevation.overlay },
-  grabber: { width: 40, height: 4, borderRadius: 2, alignSelf: 'center', marginBottom: 12 },
-  scroll: { flexGrow: 0 },
-  scrollContent: { paddingBottom: 4 },
-  eyebrow: { fontSize: 13, textAlign: 'center', includeFontPadding: false },
-  titleHi: { fontSize: 24, textAlign: 'center', marginTop: 4, includeFontPadding: false },
-  titleEn: { fontSize: 14, fontStyle: 'italic', textAlign: 'center', marginTop: 2, includeFontPadding: false },
-  note: { fontSize: 12, lineHeight: 19, textAlign: 'center', marginTop: 10, opacity: 0.9 },
-  list: { borderWidth: 1, marginTop: 16, overflow: 'hidden' },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 14, paddingHorizontal: 14, minHeight: 48 },
-  rowEn: { fontFamily: fontFamilies.inter, fontSize: 12 },
-  sectionHi: { fontSize: 18, textAlign: 'center', marginTop: 22, includeFontPadding: false },
-  sectionEn: { fontSize: 12, fontStyle: 'italic', textAlign: 'center', marginTop: 1, includeFontPadding: false },
-  pillRow: { flexDirection: 'row', justifyContent: 'center', gap: 12, marginTop: 12 },
-  pill: {
+  languages: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 16 },
+  language: {
+    borderWidth: 1,
+    borderRadius: 15,
+    padding: 14,
+    minHeight: 76,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    paddingHorizontal: 18,
-    paddingVertical: 11,
-    minHeight: 44,
-    borderWidth: 1,
   },
-  check: { fontSize: 13 },
-  pillLabel: { fontSize: 15, includeFontPadding: false },
-  begin: { marginTop: 18, paddingVertical: 14, minHeight: 48, alignItems: 'center', justifyContent: 'center' },
+  sizes: { flexDirection: 'row', gap: 12, marginTop: 10 },
+  size: {
+    flex: 1,
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 12,
+    alignItems: 'center',
+    minHeight: 44,
+  },
+  city: { borderWidth: 1, borderRadius: 12, padding: 12, minHeight: 44 },
+  sunrise: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    padding: 13,
+    borderRadius: 14,
+    marginVertical: 14,
+  },
+  gps: {
+    minHeight: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 9,
+    paddingVertical: 10,
+  },
 });

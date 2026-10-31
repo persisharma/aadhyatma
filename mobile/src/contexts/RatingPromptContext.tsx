@@ -1,3 +1,4 @@
+import { useLaunchAsks, claimLaunchAsk } from '@/components/launchAskStore';
 import React, {
   createContext,
   useCallback,
@@ -80,7 +81,9 @@ type RatingPromptContextValue = {
   requestAsk: (trigger: RatingAskTrigger) => void;
 };
 
-const RatingPromptContext = createContext<RatingPromptContextValue | null>(null);
+const RatingPromptContext = createContext<RatingPromptContextValue | null>(
+  null,
+);
 
 /**
  * Delay between a moment being requested and the sheet appearing. Long enough
@@ -100,8 +103,13 @@ function appVersion(): string {
   }
 }
 
-export function RatingPromptProvider({ children }: { children: React.ReactNode }) {
-  const { meta, isLoading: notifLoading, shouldShowOptIn } = useNotificationPreferences();
+export function RatingPromptProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const launch = useLaunchAsks();
+  const { meta, isLoading: notifLoading } = useNotificationPreferences();
   const { lifetimeTotals, isLoading: activityLoading } = useUserActivity();
   const {
     isLoading: tourLoading,
@@ -139,7 +147,9 @@ export function RatingPromptProvider({ children }: { children: React.ReactNode }
   const persist = useCallback((next: RatingPromptState) => {
     stateRef.current = next;
     setState(next);
-    AsyncStorage.setItem(RATING_PROMPT_STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
+    AsyncStorage.setItem(RATING_PROMPT_STORAGE_KEY, JSON.stringify(next)).catch(
+      () => undefined,
+    );
   }, []);
 
   const { activeDays, totalReads } = lifetimeTotals();
@@ -152,15 +162,25 @@ export function RatingPromptProvider({ children }: { children: React.ReactNode }
    * callback would churn every consumer's effects while the user reads.
    */
   const engagementRef = useRef({ appOpens: 0, activeDays: 0, totalReads: 0 });
-  engagementRef.current = { appOpens: meta.appOpenCount, activeDays, totalReads };
+  engagementRef.current = {
+    appOpens: meta.appOpenCount,
+    activeDays,
+    totalReads,
+  };
 
   const blockedBySurface =
-    shouldShowOptIn || shouldShowFirstLaunchTour || shouldShowOnboardingSetup || shouldShowWhatsNew;
+    launch.taken ||
+    !launch.ready ||
+    !launch.selectionComplete ||
+    shouldShowFirstLaunchTour ||
+    shouldShowOnboardingSetup ||
+    shouldShowWhatsNew;
   const blockedRef = useRef(blockedBySurface);
   blockedRef.current = blockedBySurface;
 
   const readyRef = useRef(false);
-  readyRef.current = hydrated && !notifLoading && !activityLoading && !tourLoading;
+  readyRef.current =
+    hydrated && !notifLoading && !activityLoading && !tourLoading;
 
   /** The one pending open, so two moments in quick succession queue one card, not two. */
   const pendingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -168,7 +188,7 @@ export function RatingPromptProvider({ children }: { children: React.ReactNode }
     () => () => {
       if (pendingRef.current) clearTimeout(pendingRef.current);
     },
-    []
+    [],
   );
 
   const requestAsk = useCallback(
@@ -191,12 +211,13 @@ export function RatingPromptProvider({ children }: { children: React.ReactNode }
         pendingRef.current = null;
         // A first-run surface may have claimed the screen during the delay.
         if (blockedRef.current || askedThisSessionRef.current) return;
+        if (!claimLaunchAsk()) return;
         askedThisSessionRef.current = true;
         persist(afterAsked(stateRef.current, Date.now(), trigger));
         setVisible(true);
       }, RATING_PROMPT_DELAY_MS);
     },
-    [persist]
+    [persist],
   );
 
   const open = useCallback(() => setVisible(true), []);
@@ -224,25 +245,48 @@ export function RatingPromptProvider({ children }: { children: React.ReactNode }
     const email = feedbackEmail();
     if (!email) return;
     // No mail app: fail silently, as the store hand-off does.
-    Linking.openURL(feedbackMailto(email, stars, Platform.OS, appVersion())).catch(() => undefined);
+    Linking.openURL(
+      feedbackMailto(email, stars, Platform.OS, appVersion()),
+    ).catch(() => undefined);
   }, []);
 
   const value = useMemo<RatingPromptContextValue>(
-    () => ({ visible, state, open, dismiss, rate, recordLowRating, writeToUs, requestAsk }),
-    [visible, state, open, dismiss, rate, recordLowRating, writeToUs, requestAsk]
+    () => ({
+      visible,
+      state,
+      open,
+      dismiss,
+      rate,
+      recordLowRating,
+      writeToUs,
+      requestAsk,
+    }),
+    [
+      visible,
+      state,
+      open,
+      dismiss,
+      rate,
+      recordLowRating,
+      writeToUs,
+      requestAsk,
+    ],
   );
 
   return (
     <RatingPromptContext.Provider value={value}>
       {/* The light "report a moment" context (contexts/ratingAsk.ts) — the
           surfaces that call it must not import this file. */}
-      <RatingAskContext.Provider value={requestAsk}>{children}</RatingAskContext.Provider>
+      <RatingAskContext.Provider value={requestAsk}>
+        {children}
+      </RatingAskContext.Provider>
     </RatingPromptContext.Provider>
   );
 }
 
 export function useRatingPrompt(): RatingPromptContextValue {
   const ctx = useContext(RatingPromptContext);
-  if (!ctx) throw new Error('useRatingPrompt must be used inside RatingPromptProvider');
+  if (!ctx)
+    throw new Error('useRatingPrompt must be used inside RatingPromptProvider');
   return ctx;
 }
