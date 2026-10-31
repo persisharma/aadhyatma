@@ -12,6 +12,20 @@ Artwork reuses published `reader-illustrations` descriptors for scripture, Ganga
 
 Focused provider, onboarding, launch arbitration, nudge, pin queue, rating/update arbitration and Meta-controller Jest tests. TypeScript and lint. All 37 widget contract/planner/startup tests, plus both static startup graph/budget checks. `tsx` CLI's IPC socket is unavailable in this executor; equivalent suites run through `node --import tsx --test`.
 
+### Cross-component integration coverage
+
+`mobile/src/components/__tests__/QuietCompanion.integration.test.tsx` adds 12 scenarios using the real launch host, rendered setup/reminder/widget sheets, six providers (language, reading size, theme, location, notification preferences and tour), launch/nudge stores, permission mapping and daily scheduler. Cold boots reset application modules while preserving in-memory AsyncStorage contents and native permission state; reopening a sheet alone would not exercise persisted launch arbitration.
+
+- Fresh setup stages the city until Continue, persists choices, requests notification permission once, enables both reminder families and hands off to the tour without another launch ask.
+- Interrupted language/city and reminder steps resume; saved language does not misclassify an unfinished setup as an upgrade. An unfinished tour resumes independently.
+- Not now remains off after an unrelated feature gains OS permission. Same-day launches, reminder rest days, third-decline stop, hard denial and a manual Settings opt-out preserve the intended invitation behaviour.
+- iOS setup waits for the native Modal dismissal callback before exposing the tour. Targeted cold starts suppress launch surfaces without consuming an ordinary launch opportunity.
+- Later-day widget offers share persisted records. Android requests verse then Panchang across background/foreground even after host unmount; unsupported pinning navigates to the gallery without recording an add. An existing verse flow produces a Panchang-only offer, and dismissing that offer survives another cold boot.
+
+Run from `mobile`: `npx jest --runInBand src/components/__tests__/QuietCompanion.integration.test.tsx`. The related regression run passes **137 tests across 16 suites**, including these 12 integration scenarios. `npx tsc --noEmit` and scoped ESLint with `--max-warnings 0` pass.
+
+Native notification/location/widget APIs, navigation and safe-area input are mocked, as are decorative icon/artwork leaves. InteractionManager cache warming is deferred. The Meta native module is unavailable in this harness: this suite checks the iOS Modal hand-off, while existing Meta-controller tests check ATT logic. These are component integration tests, not installed-app or OS-dialog end-to-end tests; festive delivery and actual widget placement still require native validation.
+
 ## Pending native review before merge
 
 - Physical iPhone/iPad: notification/ATT order, one-Modal dismissal sequencing, relaunch during every setup step, Settings round-trip and notification/widget cold starts.
