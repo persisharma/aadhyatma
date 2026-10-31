@@ -24,7 +24,7 @@ import {
  * user's mute path; on iOS it is the app-wide notification switch.
  */
 export default function ReturnReminderScheduler() {
-  const { permissionStatus, isLoading } = useNotificationPreferences();
+  const { permissionStatus, isLoading, prefs } = useNotificationPreferences();
   const { lang } = useGitaLanguage();
   const [foregroundTick, setForegroundTick] = useState(0);
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
@@ -43,7 +43,7 @@ export default function ReturnReminderScheduler() {
 
     let cancelled = false;
 
-    if (permissionStatus !== 'granted') {
+    if (permissionStatus !== 'granted' || !prefs.dailyVerseEnabled) {
       cancelAllReturnReminders().catch(() => undefined);
       return () => {
         cancelled = true;
@@ -61,7 +61,7 @@ export default function ReturnReminderScheduler() {
       cancelled = true;
       task.cancel();
     };
-  }, [isLoading, permissionStatus, lang, foregroundTick]);
+  }, [isLoading, permissionStatus, prefs.dailyVerseEnabled, lang, foregroundTick]);
 
   return null;
 }

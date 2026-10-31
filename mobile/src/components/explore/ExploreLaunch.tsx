@@ -7,6 +7,7 @@ import { Magnetometer } from 'expo-sensors';
 import { useTour } from '@/contexts/TourContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useRatingPrompt } from '@/contexts/RatingPromptContext';
+import { claimLaunchAsk, localDay, useLaunchAsks } from '@/components/launchAskStore';
 import { navigationRef } from '@/notifications/deepLink';
 import { startTargetToNavigateAction } from '@/navigation/startTarget';
 import { HOUR, pickExplore, recordDecline, recordShown, recordVisit } from '@/data/discovery/policy';
@@ -15,10 +16,11 @@ import { exploreSnapshot, loadExplore, setExploreVisible, updateExplore, useExpl
 import ExploreSheet from './ExploreSheet';
 export default function ExploreLaunch() {
     const snapshot = useExploreStore(), tour = useTour(), reminders = useNotificationPreferences(), rating = useRatingPrompt();
+    const launch = useLaunchAsks();
     const { isUpdatePending } = Updates.useUpdates();
     const [section, setSection] = useState<ExploreSection | null>(null), [ready, setReady] = useState(false), [unavailable, setUnavailable] = useState<string[]>([]), [episode, setEpisode] = useState(0), [routeTick, setRouteTick] = useState(0);
-    const intent = useRef(false), claimed = useRef(false), closing = useRef(false), background = useRef<number | null>(null);
-    const higher = tour.shouldShowFirstLaunchTour || tour.shouldShowOnboardingSetup || tour.shouldShowWhatsNew || reminders.shouldShowOptIn || rating.visible || (Updates.isEnabled && isUpdatePending);
+    const intent = useRef(false), claimed = useRef(false), closing = useRef(false), ownsLaunch = useRef(false), background = useRef<number | null>(null);
+    const higher = tour.shouldShowFirstLaunchTour || tour.shouldShowOnboardingSetup || tour.shouldShowWhatsNew || rating.visible || (!ownsLaunch.current && ((Updates.isEnabled && isUpdatePending) || launch.taken || launch.record.lastDay === localDay()));
     const higherRef = useRef(higher);
     higherRef.current = higher;
     function recordCurrent() { const route = navigationRef.getCurrentRoute(); if (route) {
@@ -64,7 +66,7 @@ export default function ExploreLaunch() {
             }
             return;
         }
-        if (!snapshot.ready || snapshot.firstCollectionSession || !ready || tour.isLoading || reminders.isLoading || intent.current || claimed.current || section)
+        if (!snapshot.ready || snapshot.firstCollectionSession || !ready || !launch.ready || !launch.selectionComplete || tour.isLoading || reminders.isLoading || intent.current || claimed.current || section)
             return;
         if (!navigationRef.isReady() || navigationRef.getCurrentRoute()?.name !== 'Home')
             return;
@@ -87,6 +89,13 @@ export default function ExploreLaunch() {
                 if (!candidate)
                     return;
                 claimed.current = true;
+                // Reserve the same daily slot as onboarding, reminders, widgets and rating.
+                // Set ownership first so our own store notification is not a preemption.
+                ownsLaunch.current = true;
+                if (!claimLaunchAsk()) {
+                    ownsLaunch.current = false;
+                    return;
+                }
                 if (!await updateExplore(s => recordShown(s, candidate.id, now)))
                     return;
                 if (cancelled || intent.current || higherRef.current || navigationRef.getCurrentRoute()?.name !== 'Home') {
@@ -100,7 +109,7 @@ export default function ExploreLaunch() {
         });
         return () => { cancelled = true; task.cancel(); if (timer)
             clearTimeout(timer); };
-    }, [snapshot.ready, snapshot.firstCollectionSession, ready, tour.isLoading, reminders.isLoading, higher, episode, routeTick, section, unavailable]);
+    }, [snapshot.ready, snapshot.firstCollectionSession, ready, launch.ready, launch.selectionComplete, tour.isLoading, reminders.isLoading, higher, episode, routeTick, section, unavailable]);
     const finish = () => { if (closing.current)
         return false; closing.current = true; setSection(null); setExploreVisible(false); return true; };
     if (!section)

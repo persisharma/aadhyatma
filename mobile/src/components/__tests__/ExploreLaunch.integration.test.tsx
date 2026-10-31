@@ -3,6 +3,9 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { AppState, InteractionManager, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExploreLaunch from '@/components/explore/ExploreLaunch';
+// This suite exercises Explore's own policy. The shared host/store arbitration
+// and persisted daily slot are exercised together in LaunchSurfaces.integration.
+jest.mock('@/components/launchAskStore', () => ({ useLaunchAsks: () => ({ ready: true, selectionComplete: true, taken: false, record: { lastDay: null } }), localDay: () => '2026-10-25', claimLaunchAsk: () => true }));
 import { EXPLORE_SECTIONS } from '@/data/discovery/sections';
 import { EXPLORE_KEY, HOUR, initialExploreState } from '@/data/discovery/policy';
 import { exploreSnapshot, updateExplore } from '@/data/discovery/store';

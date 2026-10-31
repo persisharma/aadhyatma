@@ -1287,3 +1287,11 @@ PR #556 is merged; the night-horizon follow-up is on `codex/panchang-night-moonr
 ## [2026-10-29] ingest | Annapurna painted in Suvichar
 
 Annapurna had reviewed Suvichar copy but no master, so her Bhakti Sandesh cards were a mostly blank text-only parchment. Codex generated three masters in the existing frame pipeline (1122×1402, hero 0.60/0.64/0.60, provenance in docs/evaluations/annapurna/sources.json); the user approved them; they were uploaded to R2 (immutable), added to sources and the manifest (54), and every text-only branch was removed from SuvicharCard, both pickers and the weekday filter.
+
+## [2026-10-30] ingest | Daily Bhakti strip offers the verse + Panchang widget pair
+
+The setup strip's widget ask now adds both widgets from one Add. Android pins verse, then Panchang when the first launcher dialog closes (AppState return to `active`); iOS's how-to sheet previews both (Panchang facsimile reads the published widget snapshot). A new `panchangAddedAt` stamp drives a Panchang-only follow-up for verse-only users. Neither OS can place a widget without the user's confirmation — recorded as a [[home-widgets]] gotcha. design.md §23/§59 updated.
+
+## [2026-10-31] ingest | Quiet companion first-launch and widget asks
+
+Implemented the selected compact sheet direction, setup-before-tour phase persistence, explicit notification consent, staged city/GPS, later-day launch arbitration, and shared process-owned widget flow. Updated notification/widget wiki and design.md. Native device and pixel review remains pending.

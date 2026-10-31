@@ -1,5 +1,7 @@
+import { useTour } from '@/contexts/TourContext';
+import { useLaunchAsks, claimLaunchAsk } from './launchAskStore';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Text } from 'react-native';
 import * as Updates from 'expo-updates';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -32,9 +34,18 @@ import { fontFamilies } from '@/theme/typography';
 export default function UpdateReadyModal() {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
+  const scriptSerif =
+    lang === 'gu'
+      ? fontFamilies.gujarati
+      : lang === 'kn'
+        ? fontFamilies.kannada
+        : null;
   const scriptSerifBold =
-    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
+    lang === 'gu'
+      ? fontFamilies.gujaratiBold
+      : lang === 'kn'
+        ? fontFamilies.kannadaBold
+        : null;
 
   const { isUpdatePending } = Updates.useUpdates();
   const [dismissed, setDismissed] = useState(false);
@@ -46,7 +57,24 @@ export default function UpdateReadyModal() {
     if (isUpdatePending) setDismissed(false);
   }, [isUpdatePending]);
 
-  const visible = Updates.isEnabled && isUpdatePending && !dismissed;
+  const tour = useTour();
+  const launch = useLaunchAsks();
+  const [owned, setOwned] = useState(false);
+  const eligible =
+    launch.ready &&
+    !launch.taken &&
+    !tour.isLoading &&
+    !tour.shouldShowOnboardingSetup &&
+    !tour.shouldShowFirstLaunchTour &&
+    !tour.shouldShowWhatsNew &&
+    Updates.isEnabled &&
+    isUpdatePending &&
+    !dismissed;
+
+  useEffect(() => {
+    if (eligible && claimLaunchAsk()) setOwned(true);
+  }, [eligible]);
+  const visible = owned && Updates.isEnabled && isUpdatePending && !dismissed;
 
   const onLater = useCallback(() => setDismissed(true), []);
 
@@ -64,10 +92,20 @@ export default function UpdateReadyModal() {
   }, [busy]);
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onLater}>
+    <Modal
+      visible={visible}
+      transparent
+      animationType="fade"
+      onRequestClose={onLater}
+    >
       <Pressable
         onPress={busy ? undefined : onLater}
-        accessibilityLabel={pick(lang, { hi: 'बंद करें', en: 'Dismiss', gu: 'બંધ કરો', kn: 'ಮುಚ್ಚಿ' })}
+        accessibilityLabel={pick(lang, {
+          hi: 'बंद करें',
+          en: 'Dismiss',
+          gu: 'બંધ કરો',
+          kn: 'ಮುಚ್ಚಿ',
+        })}
         style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}
       >
         {/* Absorb taps on the card so only backdrop presses dismiss. */}
@@ -85,7 +123,11 @@ export default function UpdateReadyModal() {
           <Text
             style={[
               styles.title,
-              { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
+              {
+                color: colors.ink,
+                fontFamily:
+                  scriptSerifBold ?? typography.readerTitle.fontFamily,
+              },
             ]}
           >
             {pick(lang, {
@@ -98,7 +140,10 @@ export default function UpdateReadyModal() {
           <Text
             style={[
               styles.body,
-              { color: colors.inkSoft, fontFamily: scriptSerif ?? typography.meaning.fontFamily },
+              {
+                color: colors.inkSoft,
+                fontFamily: scriptSerif ?? typography.meaning.fontFamily,
+              },
             ]}
           >
             {pick(lang, {
@@ -112,7 +157,12 @@ export default function UpdateReadyModal() {
           <Pressable
             onPress={onUpdate}
             accessibilityRole="button"
-            accessibilityLabel={pick(lang, { hi: 'अभी अपडेट करें', en: 'Update now', gu: 'હમણાં અપડેટ કરો', kn: 'ಈಗ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ' })}
+            accessibilityLabel={pick(lang, {
+              hi: 'अभी अपडेट करें',
+              en: 'Update now',
+              gu: 'હમણાં અપડેટ કરો',
+              kn: 'ಈಗ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ',
+            })}
             disabled={busy}
             style={({ pressed }) => [
               styles.primary,
@@ -126,10 +176,19 @@ export default function UpdateReadyModal() {
             <Text
               style={[
                 styles.primaryText,
-                { color: colors.onPrimary, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
+                {
+                  color: colors.onPrimary,
+                  fontFamily:
+                    scriptSerifBold ?? typography.readerTitle.fontFamily,
+                },
               ]}
             >
-              {pick(lang, { hi: 'अभी अपडेट करें', en: 'Update now', gu: 'હમણાં અપડેટ કરો', kn: 'ಈಗ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ' })}
+              {pick(lang, {
+                hi: 'अभी अपडेट करें',
+                en: 'Update now',
+                gu: 'હમણાં અપડેટ કરો',
+                kn: 'ಈಗ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ',
+              })}
             </Text>
           </Pressable>
         </Pressable>

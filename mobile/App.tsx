@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { InteractionManager, Linking, View } from 'react-native';
+import { InteractionManager, Linking, Platform, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
@@ -61,10 +61,9 @@ import { childRoutes } from '@/navigation/routeGraph';
 // Side-effect import: enrols the non-screen warm-ups (search index) with the
 // walk. Must be imported before `startScreenPrefetch` runs.
 import '@/navigation/dataWarmups';
-import ReminderOptInModal from '@/components/ReminderOptInModal';
+import LaunchAskHost from '@/components/LaunchAskHost';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
-import OnboardingSetupSheet from '@/components/OnboardingSetupSheet';
 import WhatsNewModal from '@/components/WhatsNewModal';
 import ExploreLaunch from '@/components/explore/ExploreLaunch';
 import RatingPromptSheet from '@/components/RatingPromptSheet';
@@ -240,7 +239,7 @@ export default function App() {
   const handleNavigationReady = useCallback(() => {
     startScreenPrefetch();
     // Show the app before asking ATT; don't add tracking to the splash gate.
-    InteractionManager.runAfterInteractions(startMetaAppEvents);
+    if (Platform.OS !== 'ios') InteractionManager.runAfterInteractions(() => { void startMetaAppEvents(); });
   }, []);
 
   // The handler is a no-op until `navigationRef.isReady()` so we don't lose
@@ -383,9 +382,9 @@ export default function App() {
                             >
                               <StatusBar style="dark" />
                               <RootNavigator />
-                              <ReminderOptInModal />
+                              <LaunchAskHost targeted={!!initialTarget} />
                               <UpdateReadyModal />
-                              <WhatsNewModal />
+                              <WhatsNewModal suppressed={!!initialTarget} />
                               <ExploreLaunch />
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
@@ -440,11 +439,8 @@ export default function App() {
                             {/* Top-level so the spotlight overlays the tab bar +
                                 mini-player, and is in-tree (not a Modal) so it can
                                 ring the live UI and stay visible to a11y/Maestro. */}
-                            <FeatureTour />
-                            {/* Opens the moment the tour closes on a fresh
-                                install (or a replay) — language + reading size,
-                                the two settings the last tour steps point at. */}
-                            <OnboardingSetupSheet />
+                            <FeatureTour suppressed={!!initialTarget} />
+
                           {/* Last in the stack: the rating ask never competes
                               with the tour, onboarding, or What's New — its gate
                               stands down while any of those want the screen. */}

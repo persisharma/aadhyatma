@@ -1283,6 +1283,14 @@ Follow design.md §82. Names, original reflections, user messages and Vedansh br
 
 **Publication of additional shrine forms.** A source-catalog entry alone must not expose an unavailable image. `suvicharDeities` filters the source catalog by all three verified runtime entries. Mahakaal adds three Suvichar masters and one Daily Bhakti master; publish with `scripts/prepare-mahakaal.mjs --publish` (or byte-verify existing uploads with `--activate`) before the new selections become live. While its provenance is marked `publication: pending`, the generic Daily Bhakti preparation excludes it, and the two Mahakaal-mapped sources continue using their existing Shiva master. Keep full source hashes, generation prompts and measured frame bounds with the sources; native/export QA is still required.
 
+### First-launch consent integration — Quiet companion (31 October 2026)
+
+Setup phase must persist independently of language/upgrader keys. Only explicit explained actions request notifications/location; Later leaves daily and festival toggles off, and an unrelated grant cannot subscribe a user. Stage a city/GPS result until Continue. One launch host arbitrates later prompts and skips notification/widget cold starts; tour replay cannot erase setup. Widget flow stamps are not proof of placement. Reuse the existing cached-artwork descriptors and loaded script fonts, keep the body scrollable at Large, and record native ATT/launcher/font/device QA before merging. design.md's Quiet companion section owns the surface spec and cadence.
+
+Lower-priority automatic surfaces must wait for `launchAskStore.selectionComplete` and atomically claim the shared daily opportunity before opening. Storage hydration is not host selection completion. Automatic rating must wait too.
+
+Keep reminder-rest dates separate from the shared daily prompt date: an intervening widget/discovery prompt must not restart a reminder rest. Legacy records migrate their prior shared date once.
+
 ### Explore launch integration contract
 
 The discovery ledger (`data/discovery/policy.ts`, key `@vedansh/explore-sheet-v1`)
@@ -1299,3 +1307,5 @@ rating and external launch intents. Preserve the silent collection window,
 fail-closed persistence, count-on-show limit and single-action dismissal guard.
 Changes require policy, surface and asset tests plus the native Maestro fixture
 flow (`explore-sheet.yaml`); see design.md §86 for the current accepted behavior.
+
+Explore participates in the Quiet companion daily gate: wait for host selection, reserve with `claimLaunchAsk`, and preserve its own ownership during the store notification. Keep both the shared claim and Explore visibility checks in automatic rating. Combined launch tests must cover widget/reminder priority, stopped reminders, slow host initialization, concurrent claims and persisted same-day suppression.

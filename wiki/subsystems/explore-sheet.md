@@ -23,3 +23,7 @@ hands a draft to the real composer; reopening applies a draft once.
 The separate 1.5MB hero budget and manifest pin crops and shipped hashes. Gita Saar shows Krishna–Arjuna, Sankalp shows Hanuman,
 and Suvichar composes a Ram Darbar greeting. No Home/More icon registry is altered.
 Native visual, keyboard, gesture and screen-reader QA remain required before merge.
+
+Explore waits for the Quiet companion host to finish selection and claims the same persisted one-per-local-day prompt opportunity. Legacy reminder eligibility no longer blocks a stopped reminder user. Reminder rests use their own date, so showing discovery cannot postpone them. Combined regression coverage is in `LaunchSurfaces.integration.test.tsx`; native ATT/modal and launcher QA remain pending.
+
+A newly staged background update cannot preempt an Explore sheet that already owns the shared opportunity; existing pending updates still block its initial claim.
