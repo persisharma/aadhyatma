@@ -1282,3 +1282,20 @@ Follow design.md §82. Names, original reflections, user messages and Vedansh br
 **Weekday Suvichar cards.** Follow design.md §82 *Suvichar weekday cards*. The weekday appears only in the card title; every message offered under it must be day-free (no weekday name in any language — `suvicharVaar.jest.test.ts` enforces this for the shipped pool). Every catalog deity must belong to at least one weekday (a new deity needs a day in `suvicharVaar.ts`). An image-based weekday deity is offered only when all three of its masters are in the verified runtime manifest. Annapurna is explicitly text-only (native parchment, deity name and real app badge), with no substitute artwork; never fill a day with an unrelated deity (Sunday shows Vishnu as Surya-Narayan until Surya masters are published, then Surya goes first). Opening the composer may replace a shipped message with today's card but never a message the reader wrote, and a saved weekday card stores a flag, not a dated title.
 
 **Publication of additional shrine forms.** A source-catalog entry alone must not expose an unavailable image. `suvicharDeities` filters the source catalog by all three verified runtime entries. Mahakaal adds three Suvichar masters and one Daily Bhakti master; publish with `scripts/prepare-mahakaal.mjs --publish` (or byte-verify existing uploads with `--activate`) before the new selections become live. While its provenance is marked `publication: pending`, the generic Daily Bhakti preparation excludes it, and the two Mahakaal-mapped sources continue using their existing Shiva master. Keep full source hashes, generation prompts and measured frame bounds with the sources; native/export QA is still required.
+
+### Explore launch integration contract
+
+The discovery ledger (`data/discovery/policy.ts`, key `@vedansh/explore-sheet-v1`)
+counts a visit from any owned route, not only a launch-sheet CTA. New section
+promotions must register their typed stack destination, route ownership, localized
+copy, preview kind and explicit hero artwork in `sections.ts`/`artwork.ts`. No
+reader corpus or solver is loaded on the launch graph for a preview. Hero scenes
+have a separate 1.5MB bundle budget and hash manifest under `assets/explore/`.
+The Home/More square-icon budgets and registries are unchanged.
+
+Launch surfaces must respect `isExploreSurfaceOpen()` while the sheet is visible;
+Explore itself stands down for onboarding, reminder asks, What's New, pending OTA,
+rating and external launch intents. Preserve the silent collection window,
+fail-closed persistence, count-on-show limit and single-action dismissal guard.
+Changes require policy, surface and asset tests plus the native Maestro fixture
+flow (`explore-sheet.yaml`); see design.md §86 for the current accepted behavior.

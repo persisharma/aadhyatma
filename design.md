@@ -4057,3 +4057,54 @@ The Vrat landing, all category lists, My Vrat, Katha and observance details shar
 ### Mahakaal artwork — 27 October 2026
 
 The reviewed Mahakaleshwar shrine painting is a separate subject, `mahakaal`; the existing seated Shiva masters remain. After publication, Daily Bhakti uses it for Lingashtakam and Om Namah Shivaya, through `devotionalSourceArt`. The full-card master reuses Shiva’s measured frame coordinates. Suvichar’s source catalog (`suvicharDeityCatalog`) contains seventeen subjects and 51 distinct masters; its public chooser (`suvicharDeities`) includes a subject only when every frame exists in the verified runtime manifest. Mahakaal appears as श्री महाकाल / Shri Mahakaal, with all three frames, a ready-made daily reflection and Monday cards beside Shiva. Until publication, those options stay hidden and the two Daily Bhakti sources retain their Shiva painting. Native branding, sender and message remain separate text layers. `scripts/prepare-mahakaal.mjs --publish` uploads just the four additions and verifies every public byte before activating either manifest; `--activate` verifies already-uploaded objects. Image and provenance review is recorded in `docs/evaluations/mahakaal/`; native/device/export review remains pending.
+
+## 86. Explore launch sheet — Immersive Story
+
+Approved direction: a 190dp painted scene over a rounded parchment bottom sheet. The
+single-language section eyebrow, script-safe headline and short description lead to
+one useful preview. The close target is 44dp; the body scrolls independently of a
+pinned primary action, Not now and suggestion opt-out. The sheet is capped at 88%
+of the available screen. Theme reading-size tokens and the four-language localization
+helpers govern copy; content must grow rather than truncate. Reduce Motion removes
+the entrance animation. Dragging the handle down, backdrop, Android back and Not now
+share one dismissal path. No arrival haptic, looping animation or explored score.
+
+`data/discovery/sections.ts` is the sixteen-section registry and destination source.
+Gita Saar uses Krishna teaching Arjuna; Sankalp uses Hanuman doing japa. Suvichar
+composes a real Ram Darbar painting with localized greeting and sender text. The
+sender changes only the preview until the primary action hands the draft to the
+Suvichar composer. Other previews open their real section; they never simulate a
+saved ritual, a computed chart, device heading or completed practice.
+
+Artwork is bundled under `assets/explore/`; its separate 1.5MB byte budget, source
+master hashes, Library provenance, crops and shipped hashes are pinned by the
+manifest and asset tests. These are section hero scenes, not additions to the Home
+or More square icon registries. Native visual/device QA is still required before
+merge; a passing renderer test is not evidence of native rendering.
+
+### Eligibility and rollout
+
+The ledger collects silently for the first 24 hours, seeds existing routine,
+sankalp and Pitru records, and observes owned routes from every navigation source.
+This conservative first-release collection window replaces an immediate launch
+promotion; historical routes without persisted evidence cannot be reconstructed.
+No sheet appears on the fresh install's first session or after another automatic
+surface has claimed the launch. Onboarding, reminder consent, What's New, staged
+updates and rating take precedence. Notification, widget and URL entries stand down.
+Warm foreground returns count only after 30 minutes away; navigation away from Home
+cancels the delayed offer. Storage or platform-probe failures suppress suggestions.
+
+At most two shown sheets per phone-local calendar day, six hours apart. A regression
+in the phone clock starts a fresh six-hour wait. Declined sections rest fourteen
+days; two consecutive declines pause all suggestions for seven days, including when
+both declines happen on one day. Visiting a section removes it from the pool. The
+highest-priority eligible section wins; an unvisited previous suggestion is skipped
+when another eligible section exists. No analytics or festival boosts are added in
+this implementation. A permanent off control is available both in the sheet and
+Settings (where suggestions can be re-enabled). No native build, release or OTA is
+part of this change.
+
+Files: `components/explore/ExploreLaunch.tsx`, `ExploreSheet.tsx`,
+`data/discovery/{sections,policy,store,artwork}.ts`. This implements the selected
+visual direction from draft PR #575; its earlier prototype disagreements no longer
+define the native layout.

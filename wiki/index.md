@@ -49,3 +49,5 @@ _(none yet — add per-model pages as they warrant)_
 - [[decisions/ramayan-comic-character-continuity]] — approved comic direction, event-based continuity, 29-episode Hindi/English edition and complete62-page/four-language illustrated preview drafts, measured frames, complete81-page/four-language Ayodhyakanda preview and editorial/native/production boundaries.
 
 - [[subsystems/suvichar]] — personalized devotional wishes, sender persistence, weekday (शुभ मंगलवार) cards, 621 referenced deity-specific meanings, searchable browsing, 54 published masters across 18 painted deities (Annapurna painted since 29 Oct).
+
+- [[subsystems/explore-sheet]] — Immersive Story launch sheet, sixteen destinations, cadence, persisted visit ledger and artwork provenance.

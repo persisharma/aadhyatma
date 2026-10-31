@@ -66,6 +66,7 @@ import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import OnboardingSetupSheet from '@/components/OnboardingSetupSheet';
 import WhatsNewModal from '@/components/WhatsNewModal';
+import ExploreLaunch from '@/components/explore/ExploreLaunch';
 import RatingPromptSheet from '@/components/RatingPromptSheet';
 import { TourProvider } from '@/contexts/TourContext';
 import { RatingPromptProvider } from '@/contexts/RatingPromptContext';
@@ -385,6 +386,7 @@ export default function App() {
                               <ReminderOptInModal />
                               <UpdateReadyModal />
                               <WhatsNewModal />
+                              <ExploreLaunch />
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
                             <SadhanaCompletionOverlay />
