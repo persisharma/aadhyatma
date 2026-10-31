@@ -1287,3 +1287,7 @@ PR #556 is merged; the night-horizon follow-up is on `codex/panchang-night-moonr
 ## [2026-10-29] ingest | Annapurna painted in Suvichar
 
 Annapurna had reviewed Suvichar copy but no master, so her Bhakti Sandesh cards were a mostly blank text-only parchment. Codex generated three masters in the existing frame pipeline (1122×1402, hero 0.60/0.64/0.60, provenance in docs/evaluations/annapurna/sources.json); the user approved them; they were uploaded to R2 (immutable), added to sources and the manifest (54), and every text-only branch was removed from SuvicharCard, both pickers and the weekday filter.
+
+## [2026-10-31] ingest | Gita Saar keeps story copy concise
+
+Removed visible painting descriptions and the paragraph explaining source-link behavior. Image descriptions remain as accessibility labels. Source rows retain work/passage citations and chevrons for in-app readers; repeated “Read here” labels are omitted. The concise story labels still identify abridged retellings separately from scripture.
