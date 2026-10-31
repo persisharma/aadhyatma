@@ -1290,3 +1290,22 @@ Setup phase must persist independently of language/upgrader keys. Only explicit 
 Lower-priority automatic surfaces must wait for `launchAskStore.selectionComplete` and atomically claim the shared daily opportunity before opening. Storage hydration is not host selection completion. Automatic rating must wait too.
 
 Keep reminder-rest dates separate from the shared daily prompt date: an intervening widget/discovery prompt must not restart a reminder rest. Legacy records migrate their prior shared date once.
+
+### Explore launch integration contract
+
+The discovery ledger (`data/discovery/policy.ts`, key `@vedansh/explore-sheet-v1`)
+counts a visit from any owned route, not only a launch-sheet CTA. New section
+promotions must register their typed stack destination, route ownership, localized
+copy, preview kind and explicit hero artwork in `sections.ts`/`artwork.ts`. No
+reader corpus or solver is loaded on the launch graph for a preview. Hero scenes
+have a separate 1.5MB bundle budget and hash manifest under `assets/explore/`.
+The Home/More square-icon budgets and registries are unchanged.
+
+Launch surfaces must respect `isExploreSurfaceOpen()` while the sheet is visible;
+Explore itself stands down for onboarding, reminder asks, What's New, pending OTA,
+rating and external launch intents. Preserve the silent collection window,
+fail-closed persistence, count-on-show limit and single-action dismissal guard.
+Changes require policy, surface and asset tests plus the native Maestro fixture
+flow (`explore-sheet.yaml`); see design.md §86 for the current accepted behavior.
+
+Explore participates in the Quiet companion daily gate: wait for host selection, reserve with `claimLaunchAsk`, and preserve its own ownership during the store notification. Keep both the shared claim and Explore visibility checks in automatic rating. Combined launch tests must cover widget/reminder priority, stopped reminders, slow host initialization, concurrent claims and persisted same-day suppression.

@@ -4072,3 +4072,58 @@ The approved direction is **Quiet companion throughout**. `QuietCompanionSheet.t
 - Widget pair and Panchang-only recovery share `widgetNudgeStore.ts`, including serialized writes and a process-owned Android pin queue. A launcher that never pauses permits a manual Panchang tap. Dismissal ends the offer; an add-flow stamp does not prove installation. iPhone uses actual widget snapshot previews and manual WidgetKit instructions in the shared Quiet companion shell. Missing snapshot data does not invent a tithi. Widgets remain available from the gallery. If Android pinning is unavailable or fails, `LaunchAskHost` opens `MoreTab` with `moreTabTarget('WidgetGallery')` (`initial: false`), preserving MoreHome beneath the gallery so Back reaches the hub even when More has never mounted.
 
 Implementation: `LaunchAskHost`, `OnboardingSetupSheet`, `QuietReminderBody`, `launchAskStore`, `DailyBhaktiNudge`, `widgetNudgeStore`, `TourContext`, `NotificationPreferencesContext`. Native installed visual review on compact phones, all four scripts at both sizes, iPhone ATT/Modal sequencing and Android launcher behaviour remain required before merge; unit tests do not establish pixel or device acceptance.
+
+## 86. Explore launch sheet — Immersive Story
+
+Approved direction: a 190dp painted scene over a rounded parchment bottom sheet. The
+single-language section eyebrow, script-safe headline and short description lead to
+one useful preview. The close target is 44dp; the body scrolls independently of a
+pinned primary action, Not now and suggestion opt-out. The sheet is capped at 88%
+of the available screen. Theme reading-size tokens and the four-language localization
+helpers govern copy; content must grow rather than truncate. Reduce Motion removes
+the entrance animation. Dragging the handle down, backdrop, Android back and Not now
+share one dismissal path. No arrival haptic, looping animation or explored score.
+
+`data/discovery/sections.ts` is the sixteen-section registry and destination source.
+Gita Saar uses Krishna teaching Arjuna; Sankalp uses Hanuman doing japa. Suvichar
+composes a real Ram Darbar painting with localized greeting and sender text. The
+sender changes only the preview until the primary action hands the draft to the
+Suvichar composer. Other previews open their real section; they never simulate a
+saved ritual, a computed chart, device heading or completed practice.
+
+Artwork is bundled under `assets/explore/`; its separate 1.5MB byte budget, source
+master hashes, Library provenance, crops and shipped hashes are pinned by the
+manifest and asset tests. These are section hero scenes, not additions to the Home
+or More square icon registries. Native visual/device QA is still required before
+merge; a passing renderer test is not evidence of native rendering.
+
+### Eligibility and rollout
+
+The ledger collects silently for the first 24 hours, seeds existing routine,
+sankalp and Pitru records, and observes owned routes from every navigation source.
+This conservative first-release collection window replaces an immediate launch
+promotion; historical routes without persisted evidence cannot be reconstructed.
+No sheet appears on the fresh install's first session or after another automatic
+surface has claimed the launch. Onboarding, reminder consent, What's New, staged
+updates and rating take precedence. Notification, widget and URL entries stand down.
+Warm foreground returns count only after 30 minutes away; navigation away from Home
+cancels the delayed offer. Storage or platform-probe failures suppress suggestions.
+
+At most two shown sheets per phone-local calendar day, six hours apart. A regression
+in the phone clock starts a fresh six-hour wait. Declined sections rest fourteen
+days; two consecutive declines pause all suggestions for seven days, including when
+both declines happen on one day. Visiting a section removes it from the pool. The
+highest-priority eligible section wins; an unvisited previous suggestion is skipped
+when another eligible section exists. No analytics or festival boosts are added in
+this implementation. A permanent off control is available both in the sheet and
+Settings (where suggestions can be re-enabled). No native build, release or OTA is
+part of this change.
+
+Files: `components/explore/ExploreLaunch.tsx`, `ExploreSheet.tsx`,
+`data/discovery/{sections,policy,store,artwork}.ts`. This implements the selected
+visual direction from draft PR #575; its earlier prototype disagreements no longer
+define the native layout.
+
+**Shared launch coordination (§86).** Explore waits for `launchAskStore.selectionComplete` and atomically claims the same daily opportunity as reminders, widgets, updates and automatic rating. Its own six-hour/two-per-day policy remains a ceiling; the app-wide cap permits at most one automatic prompt per local day. A stopped reminder is not a pending reminder surface. The host decides reminder eligibility from its current cadence, not the legacy 15-day flag.
+
+A background update staged after Explore has claimed its slot does not dismiss the active sheet; the update offer waits for the next shared opportunity. Already-pending updates retain priority before Explore claims.

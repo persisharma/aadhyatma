@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "provenance": "Owner-approved generated section artwork. Public manifest contains shipped-file integrity and rendering metadata only.",
+  "assets": [
+    {
+      "id": "routine",
+      "file": "routine.jpg",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 384,
+        "height": 256
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "9997f31e13476e0ea9b0f5ed47f48d79d2eff90114b5290547a2d741dca1a090",
+      "bytes": 69199
+    },
+    {
+      "id": "japam",
+      "file": "japam.jpg",
+      "crop": {
+        "left": 384,
+        "top": 0,
+        "width": 384,
+        "height": 256
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "3c92efc60ddae812cbe926b7400325c54b2c974a69e66f7f46e8f537e45f9142",
+      "bytes": 70591
+    },
+    {
+      "id": "puja",
+      "file": "puja.jpg",
+      "crop": {
+        "left": 768,
+        "top": 0,
+        "width": 384,
+        "height": 256
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "6c9543e2463858bb7b11f7662d8940c396cf6c264aba2aaf79c1dd54087c7571",
+      "bytes": 68971
+    },
+    {
+      "id": "sankalp",
+      "file": "sankalp.jpg",
+      "crop": {
+        "left": 768,
+        "top": 0,
+        "width": 768,
+        "height": 512
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "99724b950598002f391f68cebb5e6dfd2a623f3a24f36c703f9ed71058631105",
+      "bytes": 118994
+    },
+    {
+      "id": "gita",
+      "file": "gita.jpg",
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 768,
+        "height": 512
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "7bea64bba6d734c066604254f41b8baa81e83b8f0dc62a1d828a5b1800ad76e6",
+      "bytes": 119543
+    },
+    {
+      "id": "jijnasa",
+      "file": "jijnasa.jpg",
+      "crop": {
+        "left": 384,
+        "top": 256,
+        "width": 384,
+        "height": 256
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "b788464d0c57d1f9afce2f33a651be881fcd9ca91a3f8dba4f8e061ce7aabfc6",
+      "bytes": 56835
+    },
+    {
+      "id": "kundali",
+      "file": "kundali.jpg",
+      "crop": {
+        "left": 768,
+        "top": 256,
+        "width": 384,
+        "height": 256
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "1052bd6fa81c4d338d29ffa3b62cf495234a90bacb4b754be291b2e070f739f1",
+      "bytes": 69662
+    },
+    {
+      "id": "pitru",
+      "file": "pitru.jpg",
+      "crop": {
+        "left": 1152,
+        "top": 256,
+        "width": 384,
+        "height": 256
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "51bef9da565589782ddffc1dd1bc6343d85d23fda5897ed06308d305e266dd59",
+      "bytes": 60649
+    },
+    {
+      "id": "muhurat",
+      "file": "muhurat.jpg",
+      "crop": {
+        "left": 0,
+        "top": 512,
+        "width": 384,
+        "height": 234
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "b2a5317b5db3f90b8f96a6ebea6effdbb60bcf9cc79e7be62e366ef3775d8a01",
+      "bytes": 64276
+    },
+    {
+      "id": "daan",
+      "file": "daan.jpg",
+      "crop": {
+        "left": 384,
+        "top": 512,
+        "width": 384,
+        "height": 234
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "968d00b0c8c4aab1aa00bc65ab972871b38bfcf63dc899dd5547e45399b54590",
+      "bytes": 62920
+    },
+    {
+      "id": "theerth",
+      "file": "theerth.jpg",
+      "crop": {
+        "left": 768,
+        "top": 512,
+        "width": 384,
+        "height": 234
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "a0f2179ecbc1ca9a0b7e737f3e956f447b9fb538ee606b0af469042a75d2c266",
+      "bytes": 62609
+    },
+    {
+      "id": "rashifal",
+      "file": "rashifal.jpg",
+      "crop": {
+        "left": 1152,
+        "top": 512,
+        "width": 384,
+        "height": 234
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "b89f56c4e791b86ecbf3aa00cb15ca18c64f998f516d7a07dbe980b25e78f155",
+      "bytes": 84114
+    },
+    {
+      "id": "kids",
+      "file": "kids.jpg",
+      "crop": {
+        "left": 0,
+        "top": 746,
+        "width": 384,
+        "height": 278
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "72dbf2eb58e3317644a735dacd72b9ed2802239576ecd2a697d66075291a8ca5",
+      "bytes": 83918
+    },
+    {
+      "id": "suvichar",
+      "file": "suvichar.jpg",
+      "crop": {
+        "left": 0,
+        "top": 512,
+        "width": 768,
+        "height": 512
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "071172298f755f568116ca082d0e47e003eb4611d6925874a4ed9e35d6b32bee",
+      "bytes": 128185
+    },
+    {
+      "id": "vastu",
+      "file": "vastu.jpg",
+      "crop": {
+        "left": 768,
+        "top": 746,
+        "width": 384,
+        "height": 278
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "2492ccddaf93890529597fd487a6433b404f115cb1d1c62cddee10cd6aee6741",
+      "bytes": 65903
+    },
+    {
+      "id": "widgets",
+      "file": "widgets.jpg",
+      "crop": {
+        "left": 1152,
+        "top": 746,
+        "width": 384,
+        "height": 278
+      },
+      "width": 768,
+      "height": 512,
+      "sha256": "7a0b7304377843d157961cf2775f2eeeae3cf07f5601936d031ea0293d4e64b6",
+      "bytes": 43324
+    }
+  ]
+}

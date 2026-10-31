@@ -65,6 +65,7 @@ import LaunchAskHost from '@/components/LaunchAskHost';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import WhatsNewModal from '@/components/WhatsNewModal';
+import ExploreLaunch from '@/components/explore/ExploreLaunch';
 import RatingPromptSheet from '@/components/RatingPromptSheet';
 import { TourProvider } from '@/contexts/TourContext';
 import { RatingPromptProvider } from '@/contexts/RatingPromptContext';
@@ -384,6 +385,7 @@ export default function App() {
                               <LaunchAskHost targeted={!!initialTarget} />
                               <UpdateReadyModal />
                               <WhatsNewModal suppressed={!!initialTarget} />
+                              <ExploreLaunch />
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
                             <SadhanaCompletionOverlay />

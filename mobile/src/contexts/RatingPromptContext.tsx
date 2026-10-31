@@ -1,4 +1,5 @@
 import { useLaunchAsks, claimLaunchAsk } from '@/components/launchAskStore';
+import { isExploreSurfaceOpen } from '@/data/discovery/store';
 import React, {
   createContext,
   useCallback,
@@ -205,12 +206,12 @@ export function RatingPromptProvider({
         now: Date.now(),
         blockedBySurface: blockedRef.current,
       });
-      if (!eligible) return;
+      if (!eligible || isExploreSurfaceOpen()) return;
 
       pendingRef.current = setTimeout(() => {
         pendingRef.current = null;
         // A first-run surface may have claimed the screen during the delay.
-        if (blockedRef.current || askedThisSessionRef.current) return;
+        if (blockedRef.current || askedThisSessionRef.current || isExploreSurfaceOpen()) return;
         if (!claimLaunchAsk()) return;
         askedThisSessionRef.current = true;
         persist(afterAsked(stateRef.current, Date.now(), trigger));

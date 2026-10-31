@@ -142,3 +142,7 @@ appId: com.prashantsharma.vedansh
 - swipe:
     direction: DOWN
 - waitForAnimationToEnd
+
+- tapOn:
+    id: explore-not-now
+    optional: true
