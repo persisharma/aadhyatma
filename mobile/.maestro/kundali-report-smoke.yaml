@@ -95,7 +95,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Kundali. New. Tap to open."
 - waitForAnimationToEnd
 - extendedWaitUntil:
-    visible: "Understand Jyotish"
+    visible: { id: "jyotish-illustrated-landing" }
     timeout: 60000
 - tapOn: "Create Kundali"
 - waitForAnimationToEnd

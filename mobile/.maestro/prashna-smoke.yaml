@@ -63,7 +63,7 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: "Kundali. New. Tap to open."
 - waitForAnimationToEnd
-- extendedWaitUntil: { visible: "Understand Jyotish", timeout: 60000 }
+- extendedWaitUntil: { visible: { id: "jyotish-illustrated-landing" }, timeout: 60000 }
 - tapOn: "Create Kundali"
 - waitForAnimationToEnd
 - tapOn: { text: "Edit birth details", optional: true }
