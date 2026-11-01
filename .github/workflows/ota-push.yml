@@ -11,8 +11,28 @@ name: OTA Push
 # Requires repo secret EXPO_TOKEN (expo.dev → Account → Access Tokens).
 
 on:
+  pull_request:
+    paths:
+      - '.github/workflows/ota-push.yml'
+      - 'push.sh'
+      - 'scripts/tests/ota-push.test.mjs'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ota-push.yml'
+      - 'push.sh'
+      - 'scripts/tests/ota-push.test.mjs'
   workflow_dispatch:
     inputs:
+      platform:
+        description: Platform to publish (iOS includes matching TestFlight builds)
+        required: true
+        default: ios
+        type: choice
+        options:
+          - ios
+          - android
+          - all
       message:
         description: OTA update message (shown in EAS dashboard)
         required: true
@@ -37,7 +57,20 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Verify platform isolation without publishing
+        run: node --test scripts/tests/ota-push.test.mjs
+
   push:
+    if: github.event_name == 'workflow_dispatch'
+    needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -64,5 +97,7 @@ jobs:
         run: ./push.sh "${MESSAGE}"
         env:
           CHANNEL: ${{ github.event.inputs.channel }}
+          PLATFORM: ${{ github.event.inputs.platform }}
           MESSAGE: ${{ github.event.inputs.message }}
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
