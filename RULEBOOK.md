@@ -66,6 +66,16 @@ This is a store-configuration gate, not a code rule — no test enforces it.
 
 ---
 
+## 0.5 Shared implementation acceptance and remote preservation
+
+Every implementation follows [the Vedansh build checklist](docs/engineering/vedansh-build-checklist.md): universal checks U1–U12, relevant conditional checks C1–C10, and the evidence report. AGENTS.md, CLAUDE.md and assistant-specific entry points route to this one policy; preserve the existing specialised rules.
+
+A requested early PR is a durable recovery checkpoint. Commit and push coherent work, including required code, tests, docs and asset/provenance records, before worktree cleanup can erase it. Verify the remote branch contains the checkpoint; reconcile untracked task files and record the PR, commit and remaining steps before cleanup. Never delete the sole copy of unfinished work. Open a draft while checks continue; this does not relax §0 or authorise a merge/build/release.
+
+Report executed and pending checks separately using PASS / FAIL / PENDING / N/A and evidence. A pending required check prevents a ready-for-merge claim. Use .github/PULL_REQUEST_TEMPLATE.md for the review record.
+
+---
+
 ## 1. The questions every new section must answer
 
 Every section, regardless of size, must supply these inputs. The slash command will refuse to scaffold until the mandatory ones are present.
