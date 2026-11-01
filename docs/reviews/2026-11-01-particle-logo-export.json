@@ -1,0 +1,22 @@
+{
+  "commit": "see PR head",
+  "source_sha256": "db7562e0e9605fb9c4794315879fa8869f100e7ffb0adb18bffe28d4f6f0ded7",
+  "duration_seconds": 3,
+  "native_reveal_seconds": 1.5,
+  "size": [
+    720,
+    900
+  ],
+  "fonts": "existing Cormorant/Noto; custom reference lettering pending",
+  "status": "source-based draft review export; not native device evidence",
+  "files": {
+    "vedansh-particle-logo.mp4": {
+      "bytes": 111794,
+      "sha256": "44396cc7ca37e540475d77a952cde5d04a48270d1573d0a54e8f868a46035c2c"
+    },
+    "vedansh-particle-logo.gif": {
+      "bytes": 326098,
+      "sha256": "be86e5f8de323be9fd8192fcc2342d27efe839e4753161ce20081ba114e7b8d1"
+    }
+  }
+}

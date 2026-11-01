@@ -32,6 +32,17 @@ Applicable: U1–U12; C3, C4, C6, C9. C1/C2/C5/C7/C8/C10 are N/A: no scripture, 
 - U9 PENDING: focused tests/typecheck and full suite results will be recorded after execution; updated shared Maestro launch flow must run on both platforms.
 - U10 PENDING: bounded 148 native particles, one non-interaction animation clock, no per-frame JS state. Actual startup/device performance still unmeasured.
 - U11 PASS for current-main integration/docs at the recorded base; recheck latest main before merge.
-- U12 PENDING until remote commit and draft PR are verified. No cleanup of task work is allowed before that point.
+- U12 PASS: draft PR https://github.com/persisharma/aadhyatma/pull/587 and initial remote checkpoint e0fd74c93fdd6bdcb93ccaf69252453f26094e75 verified. No cleanup of task work is allowed before that point.
 
 C3/C4/C6/C9 remain PENDING for native/actual-export evidence. This change is integrated source, not native-verified, merge-ready or released.
+
+## Executed checks and downloadable export
+
+- Focused Jest PASS: 5 suites / 45 tests across BrandLaunchGate, HomeWordmark, ShareCardMount, shareCardFit and SuvicharCard. The launch suite exercises cancellation, reduced motion, screen-reader bypass, watchdog, query failure, and cleanup; typography tests use real language/font-scale/theme providers and cover all four languages at M/L.
+- Typecheck PASS at initial remote e0fd74c; final startup-preload follow-up is being rechecked. Changed-source ESLint PASS; particle regeneration/hash check PASS (148 samples); shared Maestro two-document YAML parses with loadAll; git diff --check PASS.
+- Initial npm test ran during a partial checkout and stopped on missing existing docs/evaluations/mahakaal/sources.json. That file is present after checkout completes; no application fix or test weakening was made. Full npm test has been restarted against the complete checkout.
+- New scripts/export-particle-logo.py reproduces the downloadable review exports. Requires npm ci in mobile, Python Pillow with RAQM, and ffmpeg. Run python scripts/export-particle-logo.py --output /absolute/output/path. No app/native dependency changes.
+- MP4: H.264, 720×900, 3 seconds (1.5-second reveal plus final hold), 111,794 bytes. GIF: 480×600, looping, 326,098 bytes. Source colours/hash validated, poster visually inspected for intact icon, Hindi shaping and uncropped labels; ffprobe confirms codec/size/duration. These are source-based review exports, not native-screen evidence.
+- Native iOS/Android, Maestro execution, exported-card handoff, compact/enlarged system-text visual checks, performance and original custom-lettering fidelity remain PENDING. No simulator/emulator/Maestro runner is available here.
+
+Remaining: final full-suite/CI result; native launch and early notification/widget event journeys; replace provisional custom-lettering fallback with the recovered/approved assets before merge.
