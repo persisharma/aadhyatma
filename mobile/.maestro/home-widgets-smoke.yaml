@@ -49,7 +49,7 @@ appId: com.prashantsharma.vedansh
 - openLink: "vedansh://widget/japam?mantraId=om-namah-shivaya"
 - tapOn: { text: "Open", optional: true }
 - extendedWaitUntil:
-    visible: "Om Namah Shivaya|ॐ नमः शिवाय"
+    visible: ".*Om Namah Shivaya.*|.*ॐ नमः शिवाय.*"
     timeout: 15000
 - openLink: "vedansh://widget/japam"
 - tapOn: { text: "Open", optional: true }

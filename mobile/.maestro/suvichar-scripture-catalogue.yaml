@@ -25,6 +25,14 @@ appId: com.prashantsharma.vedansh
 - inputText: "Our family wishes"
 - hideKeyboard
 - assertNotVisible: { id: "suvichar-source-link" }
+# A custom message grows the live card preview, pushing the share button below
+# the fold on taller devices; scroll it back into view before asserting.
+- scrollUntilVisible:
+    element: { id: "suvichar-share" }
+    direction: DOWN
+    timeout: 25000
+    visibilityPercentage: 10
+    centerElement: true
 - assertVisible: { id: "suvichar-share" }
 # The source must be visible on the native card; custom editing removes it.
 # No share recipient is selected and no message is sent.
