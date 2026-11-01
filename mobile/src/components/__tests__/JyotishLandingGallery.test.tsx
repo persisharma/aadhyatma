@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Image, StyleSheet, Text } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import Gallery from '../JyotishLandingGallery';
 import type { Lang } from '@/data/gita/language';
@@ -41,5 +41,23 @@ test('saved gallery keeps daily content and supplementary tools, with unambiguou
   expect(tree.root.findByProps({ testID: 'gochar' })).toBeTruthy();
   press(tree, 'Browse Daily Rashifal'); expect(actions.onOpenRashifal).toHaveBeenCalled();
   expect(tree.root.findAllByProps({ accessibilityLabel: 'Open Daily Rashifal' })).toHaveLength(0);
+  act(() => tree.unmount());
+});
+
+// Bundled RN Images supply source width/height. An aspectRatio on the Image
+// itself leaves that intrinsic height in place on device (640×427 became 427 dp).
+test.each(['M', 'L'])('%s artwork uses a frame independent of intrinsic image dimensions', scale => {
+  mockScale = scale;
+  const tree = render(<Gallery {...actions} lang="hi" />);
+  for (const label of ['Create Kundali', 'Open Daily Rashifal', 'Open Guna Milan', 'Open Namkaran']) {
+    const card = tree.root.findByProps({ accessibilityLabel: label, accessibilityRole: 'button' });
+    const image = card.findByType(Image);
+    expect(StyleSheet.flatten(image.props.style)).toEqual({ ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' });
+    const frame = StyleSheet.flatten(image.parent!.props.style);
+    expect(frame.width).toBe(scale === 'L' ? '36%' : '100%');
+    expect(frame.aspectRatio).toBe(1.5);
+    expect(frame.flexShrink).toBe(0);
+    expect(frame.height).toBeUndefined();
+  }
   act(() => tree.unmount());
 });
