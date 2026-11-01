@@ -44,7 +44,7 @@ import type { MoreStackParamList } from '@/navigation/types';
 // graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
 // `TabNavigator` gives the Panchang stack.
 // eslint-disable-next-line @typescript-eslint/no-require-imports -- Evaluate replay only after an explicit Settings tap.
-const ExplorePreview = React.lazy(async () => ({ default: require('@/components/explore/ExplorePreview').default }));
+const ExplorePreview = React.lazy<React.ComponentType<{ onClose: () => void }>>(async () => ({ default: require('@/components/explore/ExplorePreview').default }));
 const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
 
 function formatReminderTimes(times: TimeOfDay[]): string {
