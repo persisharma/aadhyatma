@@ -3,6 +3,7 @@
 #   ./push.sh                        publish to production, auto-message from last commit
 #   ./push.sh "your message"         publish to production with message
 #   CHANNEL=preview ./push.sh "msg"  override channel
+#   PLATFORM=ios ./push.sh "msg"     publish only iOS (android/all also supported)
 
 set -euo pipefail
 
@@ -15,7 +16,13 @@ if [[ ! -d "${MOBILE_DIR}" ]]; then
 fi
 
 CHANNEL="${CHANNEL:-production}"
+PLATFORM="${PLATFORM-all}"
 MESSAGE="${1:-}"
+
+case "${PLATFORM}" in
+  ios|android|all) ;;
+  *) echo "ERROR: PLATFORM must be ios, android, or all." >&2; exit 1 ;;
+esac
 
 cd "${MOBILE_DIR}"
 
@@ -36,10 +43,13 @@ fi
 export META_TRACKING_ENABLED
 
 echo "Channel: ${CHANNEL}"
+echo "Platform: ${PLATFORM}"
 echo "Meta tracking: ${META_TRACKING_ENABLED:-unset (disabled)}"
 echo "Message: ${MESSAGE}"
 
 exec npx eas-cli update \
   --channel "${CHANNEL}" \
+  --platform "${PLATFORM}" \
   --message "${MESSAGE}" \
   --non-interactive
+
