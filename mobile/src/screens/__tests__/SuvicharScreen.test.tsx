@@ -17,9 +17,10 @@ jest.mock('@/components/SuvicharCard', () => 'SuvicharCard');
 jest.mock('@/components/SuvicharPresetPicker', () => 'SuvicharPresetPicker');
 jest.mock('@/components/SuvicharThoughtPicker', () => 'SuvicharThoughtPicker');
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'hi' }) }));
-jest.mock('@react-navigation/native', () => ({ useNavigation: () => ({ goBack: jest.fn() }) }));
+jest.mock('@react-navigation/native', () => ({ useNavigation: () => ({ goBack: jest.fn(), setParams: mockSetParams }) }));
 jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: 'SafeAreaView' }));
 // Capture, picker and delivery belong to the shared provider (its own suites); this screen hands it the card.
+const mockSetParams=jest.fn();
 const mockShare = jest.fn(async (..._args: unknown[]) => undefined);
 jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, dismiss: jest.fn(), busy: false }) }));
 const sharedCard = () => mockShare.mock.calls[mockShare.mock.calls.length - 1][0] as ShareableCard;
@@ -255,4 +256,13 @@ it('switches a supplied thought with its deity while preserving custom writing',
   expect(card.attribution).toContain('गणपत्यथर्वशीर्ष');
   act(() => node('suvichar-message').props.onChangeText('मेरी शुभकामना'));
   pickDeity('rama');expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ message: 'मेरी शुभकामना', attribution: undefined });
+});
+
+it('applies an Explore draft once and clears its route handoff',async()=>{
+  const route={key:'explore',name:'Suvichar' as const,params:{exploreDraft:{name:'Prashant',deity:'ram-darbar' as const}}};
+  await act(async()=>{tree=create(<SuvicharScreen route={route}/>);});await flush();
+  expect(tree.root.findByType(SuvicharCard).props).toMatchObject({name:'Prashant',deity:'ram-darbar'});
+  act(()=>tree.update(<SuvicharScreen route={route}/>));await flush();
+  expect(mockSetParams).toHaveBeenCalledTimes(1);
+  expect(mockSetParams).toHaveBeenCalledWith({exploreDraft:undefined});
 });

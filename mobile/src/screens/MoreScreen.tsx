@@ -1,3 +1,4 @@
+import { useExploreStore, updateExplore } from '@/data/discovery/store';
 import React, { useState } from 'react';
 import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -136,6 +137,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
   const { resetTour } = useTour();
+  const explore = useExploreStore();
   const { open: openRatingPrompt } = useRatingPrompt();
   const { alarms: japamAlarms } = useJapamAlarms();
   const { scale } = useFontScale();
@@ -464,6 +466,13 @@ export default function MoreScreen({ navigation }: Props) {
                     accessibilityLabel={`Language, ${currentLang.a11yLabel}`}
                   />
                 </View>
+                <SettingsRow icon="question"
+                  label={pick(lang,{hi:'नए भाग सुझाएँ',en:'Suggest sections on launch',gu:'નવા વિભાગો સૂચવો',kn:'ಹೊಸ ವಿಭಾಗಗಳನ್ನು ಸೂಚಿಸಿ'})}
+                  labelFontFamily={labelFont}
+                  state={explore.state.enabled?pick(lang,{hi:'चालू',en:'On',gu:'ચાલુ',kn:'ಆನ್'}):pick(lang,{hi:'बंद',en:'Off',gu:'બંધ',kn:'ಆಫ್'})}
+                  stateFontFamily={chromeFont}
+                  onPress={()=>{void updateExplore(s=>({...s,enabled:!s.enabled}));}}
+                  accessibilityLabel={pick(lang,{hi:'नए भाग सुझाएँ',en:'Suggest sections on launch',gu:'નવા વિભાગો સૂચવો',kn:'ಹೊಸ ವಿಭಾಗಗಳನ್ನು ಸೂಚಿಸಿ'})}/>
                 <View ref={readingSizeRowRef} collapsable={false}>
                   <SettingsRow
                     icon="textSize"

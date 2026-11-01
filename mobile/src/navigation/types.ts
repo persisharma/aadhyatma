@@ -62,7 +62,7 @@ export type GharVastuStackParamList = {
 
 export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   Home: undefined;
-  Suvichar: undefined;
+  Suvichar: { exploreDraft?: { name:string; deity:'ram-darbar' } } | undefined;
   KidsStoryLibrary: undefined;
   KidsStoryDeity: { deityId: StoryDeityId };
   KidsStoryReader: { storyId: string; pageId?: string };
