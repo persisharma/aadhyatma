@@ -1,0 +1,68 @@
+name: OTA Push
+
+# Manually publish an EAS Update (OTA) to a store runtime from the GitHub app/web.
+#
+# app.json uses runtimeVersion { policy: "appVersion" }, so the bundle is tagged
+# with whatever expo.version is at publish time. The live store/TestFlight builds
+# usually lag app.json (which tracks the NEXT release), so we temporarily set the
+# version to `runtime_version` before publishing — otherwise current users never
+# receive the update. The checkout is ephemeral, so nothing is committed back.
+#
+# Requires repo secret EXPO_TOKEN (expo.dev → Account → Access Tokens).
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: OTA update message (shown in EAS dashboard)
+        required: true
+        type: string
+      runtime_version:
+        description: Target store runtime (appVersion of the live build, e.g. 1.5.3)
+        required: true
+        default: "1.5.3"
+        type: string
+      channel:
+        description: EAS channel to publish to
+        required: true
+        default: production
+        type: choice
+        options:
+          - production
+          - preview
+
+# One OTA at a time per channel.
+concurrency:
+  group: ota-push-${{ github.event.inputs.channel }}
+  cancel-in-progress: false
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install dependencies
+        working-directory: mobile
+        run: npm ci
+
+      - name: Target the store runtime (appVersion policy)
+        run: |
+          node -e "const fs=require('fs');const p='mobile/app.json';const j=JSON.parse(fs.readFileSync(p));j.expo.version=process.env.RT;fs.writeFileSync(p,JSON.stringify(j,null,2)+'\n')"
+          echo "app.json version set to ${RT} for this OTA"
+        env:
+          RT: ${{ github.event.inputs.runtime_version }}
+
+      - name: Publish OTA
+        run: ./push.sh "${MESSAGE}"
+        env:
+          CHANNEL: ${{ github.event.inputs.channel }}
+          MESSAGE: ${{ github.event.inputs.message }}
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
