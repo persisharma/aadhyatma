@@ -1,5 +1,16 @@
 # Aadhyatma
 
+## Mandatory Vedansh acceptance checks
+
+Before implementing or revising Vedansh, read [the shared build checklist](docs/engineering/vedansh-build-checklist.md) and applicable RULEBOOK.md, design.md and wiki/PRD sections. Apply universal checks U1–U12 and relevant conditional checks C1–C10; preserve the existing instructions below.
+
+- Match the approved design and check all four languages, Standard/Large, compact screens and enlarged system text for changed UI.
+- Verify the whole app journey, saved/fresh states, Back behaviour, persistence and relevant failure/lifecycle paths. Check actual content/artwork/manifest/CDN integration.
+- Inspect sibling surfaces for the same defect; protect startup performance, platform accessibility and stable data IDs.
+- Preserve work: commit and push coherent checkpoints early, open a draft PR when requested, and verify the remote branch before any worktree cleanup. Reconcile untracked required assets; never delete the only copy of unfinished work.
+- Report PASS / FAIL / PENDING / N/A with evidence and the tested/remote commit. Required pending checks keep the PR draft. Tests, bundle exports and YAML parsing do not prove native visual verification.
+- Honour the explicit task and current release rules. Apply these checks to implementation; read-only questions do not authorise writes.
+
 ## Wiki
 
 This repo has a persistent knowledge wiki at `wiki/`. Full schema and operations live in the `llm-wiki` skill (`.claude/skills/llm-wiki/SKILL.md`).

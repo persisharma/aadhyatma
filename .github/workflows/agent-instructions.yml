@@ -1,0 +1,45 @@
+name: Agent instruction policy
+
+on:
+  pull_request:
+    paths:
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'RULEBOOK.md'
+      - 'wiki/index.md'
+      - '.claude/rules/**'
+      - '.github/copilot-instructions.md'
+      - '.github/PULL_REQUEST_TEMPLATE.md'
+      - '.github/workflows/agent-instructions.yml'
+      - 'docs/engineering/vedansh-build-checklist.md'
+      - 'scripts/verify-agent-instructions*'
+  push:
+    branches: [main]
+    paths:
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - 'RULEBOOK.md'
+      - 'wiki/index.md'
+      - '.claude/rules/**'
+      - '.github/copilot-instructions.md'
+      - '.github/PULL_REQUEST_TEMPLATE.md'
+      - '.github/workflows/agent-instructions.yml'
+      - 'docs/engineering/vedansh-build-checklist.md'
+      - 'scripts/verify-agent-instructions*'
+
+permissions:
+  contents: read
+
+jobs:
+  instruction-policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Verify assistant discovery and policy links
+        run: node scripts/verify-agent-instructions.mjs
+      - name: Exercise missing and broken instruction cases
+        run: node --test scripts/verify-agent-instructions.test.mjs

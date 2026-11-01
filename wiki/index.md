@@ -4,6 +4,7 @@
 - [[overview]] — Vedansh: offline-first Hindu devotional-text reader (Expo/React Native), stack, module map, content pipeline.
 
 ## Reference Docs (in place — not copied into the wiki)
+- [`docs/engineering/vedansh-build-checklist.md`](../docs/engineering/vedansh-build-checklist.md) — shared assistant acceptance checks, remote work preservation, conditional checks and evidence report.
 - [`RULEBOOK.md`](../RULEBOOK.md) — integration contract for adding a content section.
 - [`design.md`](../design.md) — visual system spec (tokens, type scale, romanization rules).
 - [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap + PRDs 01–42 (incl. 28 पर्व-अर्क, 42 क्षेत्रीय पर्व — the Jain/per-state lens plan).
