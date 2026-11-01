@@ -10,37 +10,11 @@ appId: com.prashantsharma.vedansh
 # A clean launch clears the dev-client's remembered URL on iOS. Pass the
 # worktree Metro address explicitly, matching the established Kundali flow.
 # Android ignores the iOS launch argument and uses the debug build's port.
-- launchApp:
-    appId: com.prashantsharma.vedansh
-    clearState: true
-    arguments:
-      RCT_jsLocation: "127.0.0.1:8084"
-- waitForAnimationToEnd:
-    timeout: 30000
-- tapOn: { text: "Allow", optional: true }
-- tapOn: { text: "Don't Allow", optional: true }
-- tapOn: { text: "Skip tour", optional: true }
-- waitForAnimationToEnd
-# Post-tour setup sheet: pick English (baseline) then confirm with Begin.
-- tapOn: { text: "English", optional: true }
-- tapOn: { text: "Begin|आरंभ करें", optional: true }
-- tapOn: { text: "Close", optional: true }
-- tapOn: { text: "Got it", optional: true }
-- tapOn: { text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ", optional: true }
-- waitForAnimationToEnd
-- extendedWaitUntil:
-    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
-    timeout: 60000
+- runFlow: _launch.yaml
 
-# The React Navigation tab labels are visually rendered but are not exposed as
-# text nodes to Maestro on iOS. Percentage coordinates keep this platform-neutral
-# across phone sizes: More is the fifth tab and Panchang is the middle tab.
-- tapOn:
-    point: "90%,95%"
-- waitForAnimationToEnd
-# The ऐप section (Language/Reading size) sits below the fold on standard-height
-# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
-# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+# English for stable visible-text assertions. Settings now opens from Home's
+# top-right gear (not a bottom tab), so reuse the shared _open-settings subflow.
+- runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element:
       text: "Language,.*"
@@ -49,8 +23,8 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: "English"
 - waitForAnimationToEnd
-- tapOn:
-    point: "50%,95%"
+# Tab testIDs are exposed to Maestro even though the visible labels are not.
+- tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd
 - tapOn: "Jyotish"
 - extendedWaitUntil:
@@ -149,7 +123,7 @@ appId: com.prashantsharma.vedansh
 - assertNotVisible: "1992-08-14"
 - assertNotVisible: "05:42"
 - assertNotVisible: "Ujjain"
-- tapOn: "Close share preview"
+- tapOn: "Cancel"
 - waitForAnimationToEnd
 
 # Unknown time is a full IST-day range, never noon and never an exact share.
@@ -191,6 +165,12 @@ appId: com.prashantsharma.vedansh
 
 - tapOn: "Back to Jyotish"
 - waitForAnimationToEnd
-- assertVisible: "Jyotish"
+# Returning to the illustrated landing remounts it scrolled to the lower cards,
+# so the "Jyotish" header is off-screen above — confirm the return via the
+# landing testID and a currently-visible door instead.
+- extendedWaitUntil:
+    visible: { id: "jyotish-illustrated-landing" }
+    timeout: 20000
+- assertVisible: "Open Guna Milan"
 - stopApp:
     appId: com.prashantsharma.vedansh

@@ -12,64 +12,7 @@
 
 appId: com.prashantsharma.vedansh
 ---
-- launchApp:
-    appId: com.prashantsharma.vedansh
-    clearState: true
-    arguments:
-      RCT_jsLocation: "127.0.0.1:8084"
-- waitForAnimationToEnd:
-    timeout: 30000
-# clearState resets the notification permission — dismiss the boot alert first
-# (native alert; it blocks everything underneath).
-- tapOn:
-    text: "Allow"
-    optional: true
-- tapOn:
-    text: "Don't Allow"
-    optional: true
-- tapOn:
-    text: "Skip tour"
-    optional: true
-- waitForAnimationToEnd:
-    timeout: 5000
-# The first native bundle load can remount the first-launch tour once while
-# Metro settles; a second optional dismissal keeps the smoke deterministic.
-- tapOn:
-    text: "Skip tour"
-    optional: true
-# Skipping the tour on a fresh install hands over to the language + reading-size
-# sheet — accept defaults ("Begin") so the flow lands on Home (hi/Standard baseline).
-- tapOn:
-    text: "Begin"
-    optional: true
-# The post-tour setup sheet asks for reading language + size before Home is
-# reachable. Pick English (also satisfies the English-assertion baseline) and
-# confirm with Begin.
-- tapOn:
-    text: "English"
-    optional: true
-- tapOn:
-    text: "Begin|आरंभ करें"
-    optional: true
-- tapOn:
-    text: "Close"
-    optional: true
-- tapOn:
-    text: "Got it"
-    optional: true
-- tapOn:
-    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
-    optional: true
-- tapOn: { text: "Allow", optional: true }
-- tapOn: { text: "Don.t Allow", optional: true }
-- waitForAnimationToEnd
-- tapOn: { text: "SKIP|Skip|Skip tour", optional: true }
-- tapOn: { text: "Begin", optional: true }
-- extendedWaitUntil:
-    # Canary: the above-the-fold Panchang card — the Good Habits tile sits below
-    # the first viewport since Home gained the daily recommendation cards.
-    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
-    timeout: 60000
+- runFlow: _launch.yaml
 
 # Use English for stable visible-text assertions; accessibility labels stay
 # English in every language, but the explanatory headings below are localized.
@@ -111,13 +54,15 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Jyotish"
 - assertVisible: "Create Kundali"
 - assertVisible: "Open Daily Rashifal"
-# These two sit below the fold on Android's shorter viewport — scroll to them
-# (no-op when already visible, as on iOS), then scroll back up to the CTA.
+# The Navagraha practice card sits at the foot of the illustrated landing and is
+# taller than the space left below the door grid, so it can never be 100% visible
+# (the default). Scroll until it is substantially on screen instead.
 - scrollUntilVisible:
     element:
       text: "Open Navagraha Stotram"
     direction: DOWN
-    timeout: 10000
+    timeout: 25000
+    visibilityPercentage: 10
     centerElement: true
 - assertNotVisible: ".*reflection aid, not a certain prediction.*"
 - scrollUntilVisible:
