@@ -44,7 +44,11 @@ export default function JyotishLandingGallery({ lang, saved = false, children, a
     { id: 'milan', source: art.milan, action: actions.onOpenGunaMilan, label: 'Open Guna Milan' },
     { id: 'namkaran', source: art.namkaran, action: actions.onOpenNamkaran, label: 'Open Namkaran' },
   ];
-  const painting = (source: number, style: object) => <Image source={source} resizeMode="cover" style={style} accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" />;
+  // A bundled Image supplies its intrinsic height before Yoga applies aspectRatio.
+  // Let a View own geometry so a 640×427 source cannot make a card 427 dp tall.
+  const painting = (source: number, style: object) => <View style={[styles.artFrame, style]} accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+    <Image source={source} resizeMode="cover" style={styles.painting} accessible={false} />
+  </View>;
   const arrow = <View style={[styles.arrow, { backgroundColor: colors.saffronTint }]}><ArrowRightIcon size={20} color={colors.catalogAccent} /></View>;
   return <View testID="jyotish-illustrated-landing" accessibilityLabel={saved ? 'Jyotish tools landing, saved profile' : 'Jyotish tools landing'}>
     <View style={styles.hero}>
@@ -103,7 +107,9 @@ const styles = StyleSheet.create({
   sectionTitle: { fontSize: 21, lineHeight: 34, marginTop: 16, marginBottom: 12 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', rowGap: 12 },
   card: { borderWidth: 1, borderRadius: 14, overflow: 'hidden' }, cardLarge: { flexDirection: 'row', alignItems: 'center' },
-  art: { width: '100%', aspectRatio: 1.5 }, artLarge: { width: '36%', aspectRatio: 1 },
+  artFrame: { overflow: 'hidden', flexShrink: 0 },
+  painting: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
+  art: { width: '100%', aspectRatio: 1.5 }, artLarge: { width: '36%', aspectRatio: 1.5 },
   cardCopy: { flexGrow: 1, flexShrink: 1, minWidth: 0, padding: 12 }, arrowEnd: { alignItems: 'flex-end', marginTop: 8 },
   arrow: { width: 34, height: 34, borderRadius: 17, alignItems: 'center', justifyContent: 'center' },
   info: { borderWidth: 1, borderRadius: 14, padding: 12, gap: 12, marginTop: 16, flexDirection: 'row', alignItems: 'center', minHeight: 88 },
