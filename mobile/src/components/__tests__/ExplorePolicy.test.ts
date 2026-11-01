@@ -26,7 +26,7 @@ it('two consecutive declines pause seven days and sections rest fourteen', () =>
 });
 it('respects availability, opt-out and regressed clocks', () => {
     expect(pickExplore(fresh(), now, ['routine', 'japam'])?.id).toBe('puja');
-    expect(pickExplore({ ...fresh(), enabled: false }, now)).toBeUndefined();
+    expect(pickExplore({ ...fresh(), enabled: false }, now)).toBeDefined(); // Retired preference cannot hide suggestions.
     expect(pickExplore(recordShown(fresh(), 'routine', now), now - HOUR)).toBeUndefined();
 });
 it('validates the ledger and recognizes every route into a section', () => {

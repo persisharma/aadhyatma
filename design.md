@@ -4080,7 +4080,7 @@ Implementation: `LaunchAskHost`, `OnboardingSetupSheet`, `QuietReminderBody`, `l
 Approved direction: a 190dp painted scene over a rounded parchment bottom sheet. The
 single-language section eyebrow, script-safe headline and short description lead to
 one useful preview. The close target is 44dp; the body scrolls independently of a
-pinned primary action, Not now and suggestion opt-out. The sheet is capped at 88%
+pinned primary action and Not now. Settings replay also offers Next section. The sheet is capped at 88%
 of the available screen. Theme reading-size tokens and the four-language localization
 helpers govern copy; content must grow rather than truncate. Reduce Motion removes
 the entrance animation. Dragging the handle down, backdrop, Android back and Not now
@@ -4117,8 +4117,13 @@ days; two consecutive declines pause all suggestions for seven days, including w
 both declines happen on one day. Visiting a section removes it from the pool. The
 highest-priority eligible section wins; an unvisited previous suggestion is skipped
 when another eligible section exists. No analytics or festival boosts are added in
-this implementation. A permanent off control is available both in the sheet and
-Settings (where suggestions can be re-enabled). No native build, release or OTA is
+this implementation. There is no enable/disable preference in Settings or the sheet. Legacy stored
+`enabled: false` is ignored. Settings → Explore sections opens an explicit replay
+of all sixteen cards, with Next section, Close and their real destination actions.
+Replay bypasses automatic eligibility without changing visit/decline/cadence records
+or consuming the shared automatic prompt budget. Closed replay does not mount.
+Notification responses are read and cleared once per process by `launchResponse.ts`;
+Explore uses the resolved cold-start target rather than rereading historical taps. No native build, release or OTA is
 part of this change.
 
 Files: `components/explore/ExploreLaunch.tsx`, `ExploreSheet.tsx`,

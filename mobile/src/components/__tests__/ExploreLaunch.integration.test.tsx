@@ -3,6 +3,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { AppState, InteractionManager, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExploreLaunch from '@/components/explore/ExploreLaunch';
+import * as Notifications from 'expo-notifications';
 // This suite exercises Explore's own policy. The shared host/store arbitration
 // and persisted daily slot are exercised together in LaunchSurfaces.integration.
 jest.mock('@/components/launchAskStore', () => ({ useLaunchAsks: () => ({ ready: true, selectionComplete: true, taken: false, record: { lastDay: null } }), localDay: () => '2026-10-25', claimLaunchAsk: () => true }));
@@ -35,7 +36,7 @@ async function tick() { await flush(); for (let i = 0; i < 12; i++) {
     await act(async () => { await jest.advanceTimersByTimeAsync(250); });
     await flush();
 } }
-async function mount() { await act(async () => { tree = TestRenderer.create(<ExploreLaunch />); }); await tick(); }
+async function mount(targeted = false) { await act(async () => { tree = TestRenderer.create(<ExploreLaunch targeted={targeted} />); }); await tick(); }
 function unmount() { act(() => tree.unmount()); }
 function visible() { return tree.root.findAllByProps({ testID: 'explore-heading' }).length > 0; }
 function press(id: string) { act(() => tree.root.findByProps({ testID: id }).props.onPress()); }
@@ -60,6 +61,11 @@ it('integrates launch arbitration, persistence, navigation, six-hour/daily limit
     expect(exploreSnapshot().state.shown).toEqual([]);
     unmount();
     mockHigher = false;
+    // An arbitrary cached response must not veto an ordinary icon launch.
+    jest.mocked(Notifications.getLastNotificationResponseAsync).mockResolvedValue({ notification: { request: { identifier: 'historical-tap' } } } as never);
+    await mount(true);
+    expect(visible()).toBe(false);
+    unmount();
     await mount();
     expect(visible()).toBe(true);
     expect(exploreSnapshot().state.last).toBe('routine');
@@ -96,9 +102,9 @@ it('integrates launch arbitration, persistence, navigation, six-hour/daily limit
     tomorrow(24 * 9);
     await mount();
     expect(visible()).toBe(true);
-    press('explore-disable');
+    expect(tree.root.findAllByProps({ testID: 'explore-disable' })).toHaveLength(0);
+    press('explore-not-now');
     await flush();
-    expect(exploreSnapshot().state.enabled).toBe(false);
     unmount();
     tomorrow(24 * 10);
     await mount();
@@ -128,3 +134,4 @@ it('integrates launch arbitration, persistence, navigation, six-hour/daily limit
     expect(saved).toBe(false);
     expect(exploreSnapshot().ready).toBe(false);
 });
+

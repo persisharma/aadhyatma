@@ -27,3 +27,5 @@ Native visual, keyboard, gesture and screen-reader QA remain required before mer
 Explore waits for the Quiet companion host to finish selection and claims the same persisted one-per-local-day prompt opportunity. Legacy reminder eligibility no longer blocks a stopped reminder user. Reminder rests use their own date, so showing discovery cannot postpone them. Combined regression coverage is in `LaunchSurfaces.integration.test.tsx`; native ATT/modal and launcher QA remain pending.
 
 A newly staged background update cannot preempt an Explore sheet that already owns the shared opportunity; existing pending updates still block its initial claim.
+
+Settings offers Explore sections as an immediate replay action, with no on/off toggle. The sheet has no permanent disable action; legacy enabled=false is ignored. Replay cycles all cards without automatic ledger/budget writes. Notification launch responses are consumed and cleared once; Explore uses App’s resolved targeted flag rather than rereading cached responses.

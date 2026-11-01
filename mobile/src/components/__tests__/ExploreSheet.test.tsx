@@ -18,7 +18,7 @@ it.each(['hi', 'en', 'gu', 'kn'].flatMap(lang => [1, 1.15].map(factor => ({ lang
     mockFactor = factor;
     for (const section of EXPLORE_SECTIONS) {
         const open = jest.fn(), dismiss = jest.fn();
-        act(() => { tree = TestRenderer.create(<ThemeProvider><ExploreSheet section={section} onOpen={open} onDismiss={dismiss} onDisable={jest.fn()}/></ThemeProvider>); });
+        act(() => { tree = TestRenderer.create(<ThemeProvider><ExploreSheet section={section} onOpen={open} onDismiss={dismiss}/></ThemeProvider>); });
         expect(tree.root.findByProps({ testID: 'explore-heading' })).toBeTruthy();
         act(() => tree.root.findByProps({ testID: 'explore-open' }).props.onPress());
         expect(open).toHaveBeenCalled();
@@ -30,10 +30,11 @@ it.each(['hi', 'en', 'gu', 'kn'].flatMap(lang => [1, 1.15].map(factor => ({ lang
 it('only previews the sender until an explicit open action', () => {
     mockLang = 'en';
     const open = jest.fn();
-    act(() => { tree = TestRenderer.create(<ExploreSheet section={EXPLORE_SECTIONS.find(s => s.id === 'suvichar')!} onOpen={open} onDismiss={jest.fn()} onDisable={jest.fn()}/>); });
+    act(() => { tree = TestRenderer.create(<ExploreSheet section={EXPLORE_SECTIONS.find(s => s.id === 'suvichar')!} onOpen={open} onDismiss={jest.fn()}/>); });
     act(() => tree.root.findByType(TextInput).props.onChangeText('  Prashant  '));
     expect(open).not.toHaveBeenCalled();
     expect(tree.root.findByProps({ testID: 'explore-greeting-signature' }).props.children).toBe('Prashant');
     act(() => tree.root.findByProps({ testID: 'explore-open' }).props.onPress());
     expect(open).toHaveBeenCalledWith('Prashant');
 });
+

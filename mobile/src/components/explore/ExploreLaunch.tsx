@@ -14,12 +14,12 @@ import { HOUR, pickExplore, recordDecline, recordShown, recordVisit } from '@/da
 import { sectionForRoute, type ExploreSection } from '@/data/discovery/sections';
 import { exploreSnapshot, loadExplore, setExploreVisible, updateExplore, useExploreStore } from '@/data/discovery/store';
 import ExploreSheet from './ExploreSheet';
-export default function ExploreLaunch() {
+export default function ExploreLaunch({ targeted = false }: { targeted?: boolean }) {
     const snapshot = useExploreStore(), tour = useTour(), reminders = useNotificationPreferences(), rating = useRatingPrompt();
     const launch = useLaunchAsks();
     const { isUpdatePending } = Updates.useUpdates();
     const [section, setSection] = useState<ExploreSection | null>(null), [ready, setReady] = useState(false), [unavailable, setUnavailable] = useState<string[]>([]), [episode, setEpisode] = useState(0), [routeTick, setRouteTick] = useState(0);
-    const intent = useRef(false), claimed = useRef(false), closing = useRef(false), ownsLaunch = useRef(false), background = useRef<number | null>(null);
+    const intent = useRef(targeted), claimed = useRef(false), closing = useRef(false), ownsLaunch = useRef(false), background = useRef<number | null>(null);
     const higher = tour.shouldShowFirstLaunchTour || tour.shouldShowOnboardingSetup || tour.shouldShowWhatsNew || rating.visible || (!ownsLaunch.current && ((Updates.isEnabled && isUpdatePending) || launch.taken || launch.record.lastDay === localDay()));
     const higherRef = useRef(higher);
     higherRef.current = higher;
@@ -31,8 +31,8 @@ export default function ExploreLaunch() {
     useEffect(() => {
         void loadExplore();
         let active = true;
-        Promise.all([Linking.getInitialURL(), Notifications.getLastNotificationResponseAsync(), Magnetometer.isAvailableAsync()]).then(([url, response, sensor]) => { if (!active)
-            return; intent.current = !!url || !!response; setUnavailable([...(sensor ? [] : ['vastu']), ...(Platform.OS === 'ios' || Platform.OS === 'android' ? [] : ['widgets'])]); setReady(true); }).catch(() => { if (active) {
+        Promise.all([Linking.getInitialURL(), Magnetometer.isAvailableAsync()]).then(([url, sensor]) => { if (!active)
+            return; intent.current = intent.current || !!url; setUnavailable([...(sensor ? [] : ['vastu']), ...(Platform.OS === 'ios' || Platform.OS === 'android' ? [] : ['widgets'])]); setReady(true); }).catch(() => { if (active) {
             intent.current = true;
             setReady(true);
         } });
@@ -115,7 +115,7 @@ export default function ExploreLaunch() {
     if (!section)
         return null;
     return <ExploreSheet key={section.id} section={section} onDismiss={() => { if (finish())
-        void updateExplore(s => recordDecline(s, section.id, Date.now())); }} onDisable={() => { if (finish())
-        void updateExplore(s => ({ ...s, enabled: false })); }} onOpen={name => { if (!finish())
+        void updateExplore(s => recordDecline(s, section.id, Date.now())); }} onOpen={name => { if (!finish())
         return; void updateExplore(s => ({ ...recordVisit(s, section.id), streak: 0 })); const target = section.id === 'suvichar' ? { ...section.target, params: { exploreDraft: { name, deity: 'ram-darbar' } } } : section.target; navigationRef.dispatch(CommonActions.navigate(startTargetToNavigateAction(target))); }}/>;
 }
+
