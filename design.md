@@ -1090,7 +1090,9 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 
 1. Status bar
 2. **Top bar**: back button (44px circle) + bilingual title block — primary "संग्रह" / "Saved Verses" swaps with the reading language (title face 16), the other language demoted to an 11px `ink-muted` caption beneath
-3. **Bookmark list** (28px side padding, 10px gap):
+3. **Automatic source filters** above the bookmark list, only when at least two canonical sources are saved. The horizontal rail starts with localized All and the full collection count, then one source/count chip per `canonicalSourceId`, in first-saved-appearance order. Counts derive from all bookmarks; filters preserve the existing saved order. Reuse parchment/saffron-deep colors, script-safe title fonts at 14pt, pill radius and ≥44pt targets. Each chip wraps within the viewport gutter with intrinsic height and unrestricted system font scaling. Selected state and localized name/count are exposed to screen readers; stable test IDs use canonical IDs. No search, folders, network dependency or storage migration.
+   - Selection is a session-only UI preference, retained across Home-reader visits, Settings screen recreation and language/provider updates; hydration must finish before invalidating it. It is not persisted across app restarts. If the selected source disappears or the collection becomes single-source, reset to All immediately; hide the redundant rail.
+4. **Bookmark list** (28px side padding, 10px gap):
    - Each card:
      - Background: `parchment-soft`
      - Border: 1px `divider`
@@ -1099,10 +1101,10 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
      - Layout (horizontal): verse info (flex-1) + ♥ remove button + chevron
      - Preview text: **first 2 lines** of the verse (numberOfLines=2), 14/22, `ink`, in the reading language's serif
      - Meta row below the preview: verse pill (`श्लोक N` / `Shloka N.M`, Cormorant SemiBold 10 on saffron-tint, radius 999) + source line (Cormorant 12 400 italic, `ink-muted`, e.g. "हनुमान चालीसा")
-     - **♥ remove button**: `saffron`, 18px glyph inside a 44×44 tap target — opens a **confirm modal** ("Remove from wishlist?" with Remove / Cancel, both ≥44px tall) rather than deleting immediately
+     - **♥ remove button**: a sibling of the verse-opening Pressable, with a localized Remove + source/verse accessibility label; `saffron`, 21px glyph inside a 44×44 tap target — opens a **confirm modal** ("Remove from wishlist?" with Remove / Cancel, both ≥44px tall) rather than deleting immediately
      - Chevron: `›`, `saffron`, right-aligned (decorative — hidden from a11y)
    - Row tap → navigates to that verse in its reader via `buildBookmarkTarget` (`mobile/src/navigation/entryRoutes.ts`), bubbling up to the Home tab stack
-4. **Empty state** (when no bookmarks):
+5. **Empty state** (when no bookmarks):
    - Centered
    - `॥` ornament (24px, ink-muted, 40% opacity)
    - Text: "अभी तक कोई श्लोक सहेजा नहीं" (15, ink-muted, centered — script serif for gu/kn)
