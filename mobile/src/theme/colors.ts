@@ -1,4 +1,5 @@
 export const lightColors = {
+  brandIvory: '#FFF1D5',
   parchment: '#F3E7C9',
   parchmentSoft: '#F8EFD6',
   parchmentDeep: '#E9D9B1',

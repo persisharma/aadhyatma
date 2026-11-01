@@ -48,6 +48,11 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Setup language continue|Allow|Skip tour|Begin|Close|Got it|.*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 90000
+# Automatic launch surfaces must wait for the bounded brand introduction.
+- extendedWaitUntil:
+    notVisible:
+      id: "brand-launch-reveal"
+    timeout: 5000
 # clearState resets iOS permission grants, so a fresh launch pops the native
 # "…Would Like to Send You Notifications" alert over Home (the app requests
 # permission on boot for reminders/japam alarms). It's a NATIVE alert that

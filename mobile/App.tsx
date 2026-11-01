@@ -62,6 +62,7 @@ import { childRoutes } from '@/navigation/routeGraph';
 // walk. Must be imported before `startScreenPrefetch` runs.
 import '@/navigation/dataWarmups';
 import LaunchAskHost from '@/components/LaunchAskHost';
+import BrandLaunchGate from '@/components/BrandLaunchGate';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import WhatsNewModal from '@/components/WhatsNewModal';
@@ -276,6 +277,11 @@ export default function App() {
 
     const sub = Notifications.addNotificationResponseReceivedListener((response) => {
       if (maybeHandleJapamSnoozeResponse(response)) return;
+      if (!navigationRef.isReady()) {
+        const target = startTargetFromNotification(response);
+        if (target) setInitialTarget(target);
+        return;
+      }
       handleNotificationResponse(response);
     });
 
@@ -294,7 +300,13 @@ export default function App() {
   useEffect(() => {
     if (!fontsReady || initialTarget === undefined) return undefined;
     const sub = Linking.addEventListener('url', ({ url }) => {
-      if (url.startsWith('vedansh://widget/')) handleWidgetDeepLink(url);
+      if (!url.startsWith('vedansh://widget/')) return;
+      if (!navigationRef.isReady()) {
+        const parsed = parseWidgetDeepLink(url);
+        if (parsed) setInitialTarget(widgetStartTarget(parsed));
+        return;
+      }
+      handleWidgetDeepLink(url);
     });
     return () => sub.remove();
   }, [fontsReady, initialTarget]);
@@ -350,7 +362,7 @@ export default function App() {
                             asking" flags so prompts can't stack (§54). */}
                         <RatingPromptProvider>
                         <ShareProvider>
-                          <AppReadyGate>
+                          <AppReadyGate targeted={!!initialTarget}>
                           <View style={{ flex: 1 }}>
                             {/* The cold-start destination is the container's
                                 INITIAL STATE, not a tab's initialParams: state
@@ -480,7 +492,7 @@ export default function App() {
  * visible frame is already its final frame and an immediate press cannot be
  * cancelled by preference hydration moving the category grid.
  */
-function AppReadyGate({ children }: { children: React.ReactNode }) {
+function AppReadyGate({ children, targeted }: { children: React.ReactNode; targeted: boolean }) {
   const { isLoading: fontScaleLoading } = useFontScale();
   const { isLoading: languageLoading } = useGitaLanguage();
   const ready = !fontScaleLoading && !languageLoading;
@@ -500,7 +512,7 @@ function AppReadyGate({ children }: { children: React.ReactNode }) {
 
   return (
     <View style={{ flex: 1 }} onLayout={hideSplash}>
-      {children}
+      <BrandLaunchGate targeted={targeted}>{children}</BrandLaunchGate>
     </View>
   );
 }
