@@ -1,4 +1,3 @@
-import { useExploreStore, updateExplore } from '@/data/discovery/store';
 import React, { useState } from 'react';
 import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -44,6 +43,8 @@ import type { MoreStackParamList } from '@/navigation/types';
 // Lazy: a sheet that only exists after a tap has no business on the launch
 // graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
 // `TabNavigator` gives the Panchang stack.
+// eslint-disable-next-line @typescript-eslint/no-require-imports -- Evaluate replay only after an explicit Settings tap.
+const ExplorePreview = React.lazy(async () => ({ default: require('@/components/explore/ExplorePreview').default }));
 const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
 
 function formatReminderTimes(times: TimeOfDay[]): string {
@@ -137,7 +138,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
   const { resetTour } = useTour();
-  const explore = useExploreStore();
+  const [showExplore, setShowExplore] = useState(false);
   const { open: openRatingPrompt } = useRatingPrompt();
   const { alarms: japamAlarms } = useJapamAlarms();
   const { scale } = useFontScale();
@@ -467,12 +468,12 @@ export default function MoreScreen({ navigation }: Props) {
                   />
                 </View>
                 <SettingsRow icon="question"
-                  label={pick(lang,{hi:'नए भाग सुझाएँ',en:'Suggest sections on launch',gu:'નવા વિભાગો સૂચવો',kn:'ಹೊಸ ವಿಭಾಗಗಳನ್ನು ಸೂಚಿಸಿ'})}
+                  label={pick(lang, { hi: 'नए भाग देखें', en: 'Explore sections', gu: 'નવા વિભાગો જુઓ', kn: 'ವಿಭಾಗಗಳನ್ನು ನೋಡಿ' })}
                   labelFontFamily={labelFont}
-                  state={explore.state.enabled?pick(lang,{hi:'चालू',en:'On',gu:'ચાલુ',kn:'ಆನ್'}):pick(lang,{hi:'बंद',en:'Off',gu:'બંધ',kn:'ಆಫ್'})}
-                  stateFontFamily={chromeFont}
-                  onPress={()=>{void updateExplore(s=>({...s,enabled:!s.enabled}));}}
-                  accessibilityLabel={pick(lang,{hi:'नए भाग सुझाएँ',en:'Suggest sections on launch',gu:'નવા વિભાગો સૂચવો',kn:'ಹೊಸ ವಿಭಾಗಗಳನ್ನು ಸೂಚಿಸಿ'})}/>
+                  onPress={() => setShowExplore(true)}
+                  accessibilityLabel="Explore sections"
+                  testID="settings-explore"
+                />
                 <View ref={readingSizeRowRef} collapsable={false}>
                   <SettingsRow
                     icon="textSize"
@@ -584,6 +585,7 @@ export default function MoreScreen({ navigation }: Props) {
           </View>
         </ScrollView>
       </SafeAreaView>
+      {showExplore && <React.Suspense fallback={null}><ExplorePreview onClose={() => setShowExplore(false)} /></React.Suspense>}
 
       {langSheet && <LanguagePickerSheet visible onClose={() => setLangSheet(false)} />}
       {sizeSheet && <ReadingSizePickerSheet visible onClose={() => setSizeSheet(false)} />}
@@ -759,3 +761,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+

@@ -65,7 +65,7 @@ async function boot({ host = true } = {}) {
   const Host = require('../LaunchAskHost').default;
   const Explore = require('../explore/ExploreLaunch').default;
   await act(async () => {
-    tree = TestRenderer.create(<>{host && <Host targeted={mockTargeted} />}<Explore /></>);
+    tree = TestRenderer.create(<>{host && <Host targeted={mockTargeted} />}<Explore targeted={mockTargeted} /></>);
   });
   await tick();
 }
@@ -155,8 +155,9 @@ test('a staged update waits for the next opportunity once Explore owns the curre
   expect(exploreVisible()).toBe(true);
   mockPendingUpdate = true;
   const Host = require('../LaunchAskHost').default, Explore = require('../explore/ExploreLaunch').default;
-  await act(async () => { tree!.update(<><Host /><Explore /></>); });
+  await act(async () => { tree!.update(<><Host /><Explore targeted={mockTargeted} /></>); });
   await tick();
   expect(exploreVisible()).toBe(true);
   expect((require('../launchAskStore') as typeof import('../launchAskStore')).claimLaunchAsk()).toBe(false);
 });
+

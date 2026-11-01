@@ -48,6 +48,7 @@ jest.mock('@/contexts/NotificationPreferencesContext', () => ({
 jest.mock('@/contexts/JapamAlarmsContext', () => ({
   useJapamAlarms: () => ({ alarms: [] }),
 }));
+jest.mock('@/components/explore/ExplorePreview', () => ({ __esModule: true, default: ({ onClose }: { onClose: () => void }) => require('react').createElement('ExplorePreview', { onClose }) }));
 const mockResetTour = jest.fn();
 jest.mock('@/contexts/TourContext', () => ({
   useTour: () => ({ resetTour: mockResetTour }),
@@ -118,6 +119,17 @@ describe('MoreScreen (redesign)', () => {
     expect(byLabel(tree, 'About and disclaimer')).toBeDefined();
     expect(byLabel(tree, 'Report an error')).toBeDefined();
     expect(byLabel(tree, 'Show App Tour')).toBeDefined();
+  });
+
+  test('Explore is a replay action with no preference toggle', async () => {
+    const tree = await renderMore(makeNav());
+    expect(tree.root.findAllByType('ExplorePreview' as never)).toHaveLength(0);
+    expect(tree.root.findAllByProps({ accessibilityLabel: 'Suggest sections on launch' })).toHaveLength(0);
+    await act(async () => byLabel(tree, 'Explore sections').props.onPress());
+    expect(tree.root.findAllByType('ExplorePreview' as never)).toHaveLength(1);
+    act(() => tree.root.findByType('ExplorePreview' as never).props.onClose());
+    expect(tree.root.findAllByType('ExplorePreview' as never)).toHaveLength(0);
+    act(() => tree.unmount());
   });
 
   test('tapping Show App Tour replays the feature tour', async () => {
@@ -244,3 +256,4 @@ describe('MoreScreen (redesign)', () => {
     );
   });
 });
+

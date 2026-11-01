@@ -4,6 +4,7 @@ export const HOUR = 3600000;
 const DAY = 24 * HOUR;
 export type ExploreState = {
     version: 1;
+    /** Legacy storage field only; no longer an eligibility preference. */
     enabled: boolean;
     createdAt: number;
     visited: string[];
@@ -24,7 +25,7 @@ export function parseExploreState(raw: string | null, now: number): ExploreState
 }
 function day(t: number) { const d = new Date(t); return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`; }
 export function pickExplore(s: ExploreState, now: number, unavailable: readonly string[] = []): ExploreSection | undefined {
-    if (!s.enabled || now - s.createdAt < DAY || s.sleepUntil > now)
+    if (now - s.createdAt < DAY || s.sleepUntil > now)
         return;
     const last = s.shown.at(-1);
     if (last !== undefined && (now < last || now - last < 6 * HOUR))

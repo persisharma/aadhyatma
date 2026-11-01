@@ -11,11 +11,11 @@ import { EXPLORE_ART } from '@/data/discovery/artwork';
 import type { ExploreSection } from '@/data/discovery/sections';
 import AppIcon from '@/components/AppIcon';
 import TextField from '@/components/TextField';
-export default function ExploreSheet({ section, onDismiss, onOpen, onDisable }: {
+export default function ExploreSheet({ section, onDismiss, onOpen, onNext }: {
     section: ExploreSection;
     onDismiss: () => void;
     onOpen: (name: string) => void;
-    onDisable: () => void;
+    onNext?: () => void;
 }) {
     const { colors, typography } = useTheme(), { lang } = useGitaLanguage();
     const reduced = useReducedMotion();
@@ -58,10 +58,11 @@ export default function ExploreSheet({ section, onDismiss, onOpen, onDisable }: 
       </View>
      </View>
     </ScrollView>
-    <View style={styles.footer}><Pressable testID="explore-open" accessibilityRole="button" onPress={() => onOpen(name.trim())} style={[styles.primary, { backgroundColor: colors.saffronDeep }]}><Text style={[text, { color: colors.parchmentHighlight, textAlign: 'center', flexShrink: 1 }]}>{tr(section.cta)}</Text><AppIcon name="next" size={20} color={colors.parchmentHighlight}/></Pressable><Pressable testID="explore-not-now" accessibilityRole="button" accessibilityLabel="Not now" onPress={onDismiss} style={styles.secondary}><Text style={small}>{notNow}</Text></Pressable><Pressable testID="explore-disable" accessibilityRole="button" onPress={onDisable} style={styles.secondary}><Text style={small}>{pick(lang, { hi: 'ऐसे सुझाव बंद करें', en: 'Turn off suggestions', gu: 'આવા સૂચનો બંધ કરો', kn: 'ಇಂತಹ ಸಲಹೆಗಳನ್ನು ನಿಲ್ಲಿಸಿ' })}</Text></Pressable></View>
+    <View style={styles.footer}><Pressable testID="explore-open" accessibilityRole="button" onPress={() => onOpen(name.trim())} style={[styles.primary, { backgroundColor: colors.saffronDeep }]}><Text style={[text, { color: colors.parchmentHighlight, textAlign: 'center', flexShrink: 1 }]}>{tr(section.cta)}</Text><AppIcon name="next" size={20} color={colors.parchmentHighlight}/></Pressable><Pressable testID="explore-not-now" accessibilityRole="button" accessibilityLabel="Not now" onPress={onDismiss} style={styles.secondary}><Text style={small}>{notNow}</Text></Pressable>{onNext && <Pressable testID="explore-next" accessibilityRole="button" onPress={onNext} style={styles.secondary}><Text style={small}>{pick(lang, { hi: 'अगला भाग देखें', en: 'Next section', gu: 'આગળનો વિભાગ જુઓ', kn: 'ಮುಂದಿನ ವಿಭಾಗ ನೋಡಿ' })}</Text></Pressable>}</View>
     <Pressable accessibilityRole="button" accessibilityLabel={notNow} onPress={onDismiss} style={[styles.close, { backgroundColor: colors.parchmentHighlight }]}><AppIcon name="close" size={20}/></Pressable>
    </SafeAreaView>
   </KeyboardAvoidingView>
  </Modal>;
 }
 const styles = StyleSheet.create({ overlay: { flex: 1, justifyContent: 'flex-end' }, sheet: { maxHeight: '88%', borderTopLeftRadius: 28, borderTopRightRadius: 28, overflow: 'hidden' }, handleTarget: { height: 24, alignItems: 'center', justifyContent: 'center' }, handle: { height: 4, width: 36, borderRadius: 4 }, scroll: { paddingBottom: 8 }, hero: { height: 190, overflow: 'hidden' }, heroImage: { width: '100%', height: '100%' }, fade: { position: 'absolute', bottom: 0, left: 0, right: 0, height: 58 }, heroLabel: { position: 'absolute', bottom: 10, left: 24, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 14 }, close: { position: 'absolute', right: 14, top: 25, width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' }, copy: { paddingHorizontal: 24, paddingTop: 4 }, preview: { borderWidth: 1, borderRadius: 16, padding: 13, marginTop: 14 }, row: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 50 }, thumb: { width: 52, height: 52, borderRadius: 12 }, grow: { flex: 1 }, footer: { paddingHorizontal: 24, paddingTop: 8, paddingBottom: 4 }, primary: { minHeight: 52, padding: 12, borderRadius: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 }, secondary: { minHeight: 44, alignItems: 'center', justifyContent: 'center', paddingVertical: 7 }, chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, chip: { minHeight: 44, borderWidth: 1, borderRadius: 12, padding: 10 }, steps: { flexDirection: 'row', gap: 12 }, step: { flex: 1, gap: 7 }, wishHero: { padding: 24, paddingTop: 4 }, wishCard: { borderWidth: 1, borderRadius: 10, flexDirection: 'row', overflow: 'hidden' }, wishArt: { width: '50%', minHeight: 170 }, wishCopy: { width: '50%', padding: 12, gap: 6 } });
+
