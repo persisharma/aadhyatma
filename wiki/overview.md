@@ -165,3 +165,7 @@ See [[integrations/reading-artwork]] for publishing, caching and QA limits.
 ## Approved particle launch boundary (1 November 2026)
 
 `AppReadyGate` wraps navigation/launch surfaces in `BrandLaunchGate` after language/size hydration. The native splash is released on actual canvas readiness; ordinary navigation and automatic asks wait for completion. The approved 3,809-particle fragment is embedded verbatim and the existing WebView is loaded on demand; no substitute font/motion is used. Targeted launches bypass it, and cancellation/error/watchdog paths fail open. `scripts/prepare-approved-brand.mjs --check` verifies the accepted source and lossless name crops; `scripts/export-approved-particle-logo.mjs` executes the same source for downloads. Shared mark decodes join `ArtworkCaptureContext` before capture. Native fidelity/performance and font-registration confirmation remain separate release checks.
+
+## Home crest restoration (2 November 2026)
+
+Home retains the previous compact 42pt row, saffron Om circles/rules and dark-ink name. It uses the approved lettering at a 28pt image height, plus the Hindi dot below श, rather than mounting the larger launch/share lockup. The companion subtitle remains localized at 14/22; system text can grow/wrap. Original launch source, export colours, crops and capture readiness are unchanged. See design.md §§5/18 and `HomeWordmark.test.tsx`.

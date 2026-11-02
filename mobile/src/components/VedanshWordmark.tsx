@@ -20,7 +20,9 @@ export function companionTagline(lang: Lang): string {
   });
 }
 
-function WordmarkArtwork({ kind, width }: { kind: 'hi' | 'en'; width: number }) {
+export function WordmarkArtwork({ kind, width, tintColor }: {
+  kind: 'hi' | 'en'; width: number; tintColor?: string;
+}) {
   const capture = useContext(ArtworkCaptureContext);
   const painted = useRef(false);
   const release = useRef<(() => void) | undefined>(undefined);
@@ -34,7 +36,7 @@ function WordmarkArtwork({ kind, width }: { kind: 'hi' | 'en'; width: number }) 
   const metrics = manifest.names[kind];
   return <Image testID={`vedansh-wordmark-${kind}`} source={marks[kind]} accessible={false}
     accessibilityIgnoresInvertColors resizeMode="contain" onLoad={finish} onError={finish}
-    style={{ width, maxWidth: '100%', aspectRatio: metrics.width / metrics.height }} />;
+    style={{ width, maxWidth: '100%', aspectRatio: metrics.width / metrics.height, tintColor }} />;
 }
 
 /** Approved lettering is artwork, independent of app-language script selection. */

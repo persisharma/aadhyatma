@@ -8,7 +8,11 @@ appId: com.prashantsharma.vedansh
     id: brand-particle-webview
 - assertVisible:
     id: vedansh-wordmark-hi
-- takeScreenshot: e2e-shots/brand-home-approved-lettering
+- assertVisible:
+    id: home-wordmark-crest
+- assertVisible:
+    id: home-settings
+- takeScreenshot: e2e-shots/brand-home-compact-om-crest
 - stopApp
 - launchApp:
     arguments:
