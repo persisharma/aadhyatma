@@ -25,8 +25,8 @@ Executed successfully: **PASS, 2,324 structural checks, zero errors**. Counts: 1
 | U8 Related surfaces | PASS | Existing deity registry, eight essays and generic graha reference audited for reuse. |
 | U9 Unit/integration/E2E/native | PENDING | App suites and native journeys not executed; RULEBOOK §0 evidence not claimed. Draft PR remains draft. |
 | U10 Performance/saved data | N/A | No production data, imports, assets or persisted identities changed. |
-| U11 Branch integration | PENDING | Final remote docs-only diff and PR status must be checked after commit. |
-| U12 Preservation | PENDING | Initial research checkpoint was preserved remotely; final research commit/readback must be verified. |
+| U11 Branch integration | PASS | Remote comparison of c03866f against the current PR base reports 22 documentation paths only; PR is mergeable and remains draft. Branch is one base commit behind main; no rebase or merge performed. |
+| U12 Preservation | PASS | Full research commit c03866f721d039542dce066ef70e02abb4929387 verified remotely; all 21 authored files matched the intended content exactly. This final handover edit is a separate documentation checkpoint. |
 
 Conditional C1/C2 content and illustration concerns are addressed as research notes; publication collation, artwork and actual reader checks remain pending. Other runtime conditional groups are N/A for this documentation-only pass.
 
@@ -41,6 +41,8 @@ Two independent authoritative publications, Sanskrit collation, complete-story r
 - PR: [#605](https://github.com/persisharma/aadhyatma/pull/605), draft.
 - Scope checkpoint: ae12c6e4925550e303d02fd366ddc5e0c76f7b1d.
 - Early research checkpoint: 1e1547185f80ea7e2bb012176f25370091a6b747.
-- The final research commit is reported in the PR's handover after verification; a document cannot embed its own Git commit SHA without changing that SHA.
+- Full research checkpoint: [c03866f721d039542dce066ef70e02abb4929387](https://github.com/persisharma/aadhyatma/commit/c03866f721d039542dce066ef70e02abb4929387), verified with 21/21 exact file readbacks.
+- PR at that checkpoint: draft, mergeable, 22 documentation-only changed paths. No pull-request workflow runs were listed.
+- The final handover commit is reported in the PR after verification; this document records the verified full research checkpoint without attempting to embed its own SHA.
 
 design.md and RULEBOOK have no new UI/integration contract to document in this pass; the repository's design-doc-sync rule exempts docs-only changes.
