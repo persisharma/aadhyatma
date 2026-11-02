@@ -1,3 +1,4 @@
+import { wrapApprovedParticles } from './brand-particle-host.mjs';
 import { correctHindiDots } from './brand-wordmark-corrections.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -36,9 +37,7 @@ const hindi=crop('hi','hindi');
 
 // These additions affect only native hosting/bridge. The approved fragment,
 // including every particle, trajectory, colour and timing expression is intact.
-const bridge=`<script>(()=>{const root=document.getElementById('vedansh-calligraphic-particles');let started=false;const send=type=>window.ReactNativeWebView&&window.ReactNativeWebView.postMessage(JSON.stringify({type}));const timer=setInterval(()=>{const animation=root.vpAnimation;if(!animation||!animation.ready)return;if(!started){started=true;send('brand-ready');}if(animation.elapsed>=3350){clearInterval(timer);send('brand-complete');}},32);window.addEventListener('pagehide',()=>clearInterval(timer));})()</script>`;
-const style=`html,body{margin:0;width:100%;height:100%;background:#fff1d5;overflow:hidden}body{display:flex;align-items:center;justify-content:center}#vedansh-calligraphic-particles{width:100%;max-width:460px}#vedansh-calligraphic-particles .vp-actions{display:none!important}#vedansh-calligraphic-particles .vp-stage{max-width:100%}@media(max-height:540px){#vedansh-calligraphic-particles{width:min(100vw,calc(100vh * 12 / 13))}}`;
-const html=`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; script-src 'unsafe-inline'; style-src 'unsafe-inline'"><style>${style}</style></head><body>${fragment}${bridge}</body></html>`;
+const html=wrapApprovedParticles(fragment);
 output.set('mobile/src/branding/approvedParticleDocument.json',JSON.stringify({html})+'\n');
 const manifest={approvedSourceSha256:expected,approvedPngSha256:sha(bytes),canvas:{width:720,height:780},particles:4012,durationMs:3350,
   names:{en:latin,hi:hindi},assets:{},lettering:{masterSha256:provenance.masterSha256,style:'approved-flute-peacock',hindiNukta:'round separated dot below sh',hindiDotCorrections:provenance.hindiDotCorrections,fontBinariesBundled:false,samarkanRegistration:'earlier Samarkan-inspired reference registration not verified; confirm before production use'}};

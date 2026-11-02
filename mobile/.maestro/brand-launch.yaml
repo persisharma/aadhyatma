@@ -21,6 +21,15 @@ appId: com.prashantsharma.vedansh
       RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
 - extendedWaitUntil:
     visible:
+      id: brand-launch-reveal
+    timeout: 5000
+- takeScreenshot: e2e-shots/brand-cold-particles
+- extendedWaitUntil:
+    notVisible:
+      id: brand-launch-reveal
+    timeout: 8000
+- extendedWaitUntil:
+    visible:
       id: vedansh-wordmark-hi
     timeout: 30000
 - assertNotVisible:
@@ -36,6 +45,22 @@ appId: com.prashantsharma.vedansh
     visible:
       id: brand-launch-reveal
     timeout: 5000
+- extendedWaitUntil:
+    notVisible:
+      id: brand-launch-reveal
+    timeout: 8000
+- assertVisible:
+    id: home-wordmark-crest
+
+# Repeat immediately, with no minimum background delay.
+- pressKey: Home
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible:
+      id: brand-launch-reveal
+    timeout: 5000
+- takeScreenshot: e2e-shots/brand-immediate-reopen
 - extendedWaitUntil:
     notVisible:
       id: brand-launch-reveal

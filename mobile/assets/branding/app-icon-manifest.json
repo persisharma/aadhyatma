@@ -25,6 +25,11 @@
       "width": 512,
       "height": 512
     },
+    "splash-blank.png": {
+      "sha256": "13429c2a016f14f1b2ed78792f67496f3655151c6e272769c7481ecb1d6d7d7f",
+      "width": 64,
+      "height": 64
+    },
     "favicon.png": {
       "sha256": "dfd53e7e4bc2700f0644f622022d704a43800c8c9cd830b8547355be477738d9",
       "width": 64,
