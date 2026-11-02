@@ -11,7 +11,7 @@
 import KundaliArtwork from '@/components/KundaliArtwork';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -166,19 +166,22 @@ export default function GrahaReferenceScreen({ navigation, route }: Props) {
 
 function Detail({ lang, labelHi, labelEn, hi, en }: { lang: ReturnType<typeof useGitaLanguage>['lang']; labelHi: string; labelEn: string; hi: string; en: string }) {
   const { colors, typography } = useTheme();
+  const { factor } = useFontScale();
+  const { width, fontScale } = useWindowDimensions();
+  const stacked = width < 360 || factor > 1 || fontScale > 1.2;
   return (
-    <View style={styles.detailRow}>
+    <View style={[styles.detailRow, stacked && { flexDirection: 'column' }]}>
       <Text
         style={[
           pillTextStyle(lang, typography.sectionLabel),
-          { width: 96, color: colors.saffronDeep, fontSize: lang === 'en' ? 10 : 12 },
+          { width: stacked ? '100%' : 96, color: colors.saffronDeep, fontSize: (lang === 'en' ? 10 : 12) * factor },
         ]}
       >
         {contentByLang(lang, labelHi, labelEn)}
       </Text>
       <Text
         style={{
-          flex: 1,
+          flex: stacked ? undefined : 1,
           color: colors.inkSoft,
           fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
           fontSize: 12.5 * factor,
@@ -193,7 +196,7 @@ function Detail({ lang, labelHi, labelEn, hi, en }: { lang: ReturnType<typeof us
 
 const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 10 },
-  back: { width: 32, height: 32, alignItems: 'center', justifyContent: 'center' },
+  back: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingHorizontal: 16, paddingBottom: 48, gap: 10 },
   card: { borderWidth: 1, paddingHorizontal: 13, paddingVertical: 4 },
   row: { minHeight: 56, flexDirection: 'row', alignItems: 'center', gap: 8 },
