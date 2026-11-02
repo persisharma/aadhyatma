@@ -139,7 +139,8 @@ test('Kundali result leads with plain-language insights and exposes all expert t
 
   let text = textOf(tree);
   assert.ok(text.includes('Understand your chart first'));
-  assert.ok(text.includes('not certain predictions'));
+  assert.ok(text.includes('Tap each card to understand its meaning.'));
+  assert.ok(!text.includes('not certain predictions'));
   assert.ok(text.includes('Aarav'));
 
   assert.ok(tree.root.findByProps({ accessibilityLabel: 'Overview tab' }));
@@ -183,7 +184,8 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   });
   text = textOf(tree);
   assert.ok(text.includes('Vimshottari Dasha'));
-  assert.ok(text.includes('not an event guarantee'));
+  assert.ok(text.includes('Explore the current period, its progress, and the timeline ahead.'));
+  assert.ok(!text.includes('not an event guarantee'));
   // The Mahadasha lord's beej mantra opens its japam counter.
   const mahaLord = getCurrentDasha(mockChart, new Date())!.maha.lord;
   mockNavigation.navigate.mockClear();

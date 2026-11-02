@@ -57,8 +57,8 @@ export default function KundaliOverview({
         >
           {meaningByLang(
             lang,
-            'ये पारम्परिक संकेत आपकी कुंडली पढ़ने की शुरुआत हैं—निश्चित भविष्यवाणी नहीं।',
-            'These traditional lenses are a starting point for reading your chart—not certain predictions.'
+            'लग्न से शुरुआत करें, फिर चन्द्र राशि और वर्तमान दशा को समझें। हर कार्ड को छूकर उसका अर्थ जानें।',
+            'Start with the rising sign, then explore your Moon sign and current dasha. Tap each card to understand its meaning.'
           )}
         </Text>
       </View>

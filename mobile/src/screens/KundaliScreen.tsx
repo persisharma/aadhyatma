@@ -1109,8 +1109,8 @@ function KundaliResult({
           <SectionIntro
             hi="विम्शोत्तरी दशा"
             en="Vimshottari Dasha"
-            bodyHi="चन्द्र नक्षत्र से निकली ग्रह-अवधियाँ। ये समय पर चिंतन का पारम्परिक ढाँचा हैं, घटना की गारंटी नहीं।"
-            bodyEn="Planetary periods derived from the Moon's nakshatra. They are a traditional timing lens, not an event guarantee."
+            bodyHi="चन्द्र नक्षत्र से गणना की गई ग्रह-अवधियाँ। वर्तमान अवधि, उसकी प्रगति और आगे का क्रम देखें।"
+            bodyEn="Planetary periods calculated from the Moon’s nakshatra. Explore the current period, its progress, and the timeline ahead."
             lang={lang}
             colors={colors}
             typography={typography}
