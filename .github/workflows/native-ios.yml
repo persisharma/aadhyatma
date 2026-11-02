@@ -62,6 +62,7 @@ jobs:
             native-output/*.png
             native-output/*.json
             native-output/*.zip
+            native-output/*.ips
           retention-days: 7
           if-no-files-found: warn
       - name: Stop simulator

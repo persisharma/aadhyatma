@@ -1,10 +1,30 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -Eeuo pipefail
 
 # This script runs on a macOS CI runner, from mobile/. No publishing or signing
 # credentials are used. Simulator compilation is separate from signed-device QA.
 OUTPUT="${GITHUB_WORKSPACE:-$(pwd)/..}/native-output"
 mkdir -p "$OUTPUT"
+# Keep the command failure after xcodebuild in the artifact, not only Actions logs.
+exec > >(tee -a "$OUTPUT/native-smoke.log") 2>&1
+PHASE=prepare
+failure_evidence() {
+  local rc=$?
+  trap - ERR
+  set +e
+  printf 'FAIL phase=%s exit=%s line=%s\n' "$PHASE" "$rc" "${BASH_LINENO[0]:-unknown}" > "$OUTPUT/failure.log"
+  if [[ -n "${SIMULATOR_UDID:-}" ]]; then
+    xcrun simctl spawn "$SIMULATOR_UDID" launchctl list > "$OUTPUT/processes-at-failure.log" 2>&1
+    xcrun simctl io "$SIMULATOR_UDID" screenshot "$OUTPUT/failure.png"
+    xcrun simctl spawn "$SIMULATOR_UDID" log show --last 5m --style compact --predicate 'process == "Vedansh" OR process == "SpringBoard"' > "$OUTPUT/device-failure.log" 2>&1
+  fi
+  shopt -s nullglob
+  for report in "$HOME"/Library/Logs/DiagnosticReports/Vedansh*.ips; do
+    cp "$report" "$OUTPUT/$(basename "$report")"
+  done
+  exit "$rc"
+}
+trap failure_evidence ERR
 xcrun simctl list devices available --json > "$OUTPUT/simulators.json"
 SIMULATOR_UDID=$(python3 - "$OUTPUT/simulators.json" <<'PY'
 import json, sys
@@ -38,6 +58,7 @@ from pathlib import Path
 print(next(Path('ios').glob('*.xcworkspace')))
 PY
 )
+PHASE=native-build
 xcodebuild -workspace "$WORKSPACE" -scheme Vedansh -configuration Release \
   -sdk iphonesimulator -destination "id=$SIMULATOR_UDID" \
   -derivedDataPath "$OUTPUT/DerivedData" CODE_SIGNING_ALLOWED=NO \
@@ -53,7 +74,10 @@ PY
 )
 test -d "$APP_PATH/PlugIns/VedanshWidgets.appex"
 APP_ID=$(node -p 'require("./app.json").expo.ios.bundleIdentifier')
+PHASE=install
 xcrun simctl install "$SIMULATOR_UDID" "$APP_PATH"
+# Retain the successfully built app even when a later UI/deep-link check fails.
+ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$OUTPUT/Vedansh-simulator.zip"
 
 assert_running() {
   xcrun simctl spawn "$SIMULATOR_UDID" launchctl list | awk -v app="$APP_ID" \
@@ -66,18 +90,22 @@ capture() {
   xcrun simctl io "$SIMULATOR_UDID" screenshot "$OUTPUT/$1.png"
 }
 
+PHASE=initial-launch
 xcrun simctl launch "$SIMULATOR_UDID" "$APP_ID" | tee "$OUTPUT/launch.log"
 capture launch
 
 # Exercise an existing widget destination on a cold launch. This checks the host
 # app route, not placement or rendering of the Home Screen widget itself.
 TODAY=$(TZ=Asia/Kolkata date +%F)
+PHASE=terminate-before-cold-widget
 xcrun simctl terminate "$SIMULATOR_UDID" "$APP_ID"
+PHASE=cold-panchang-widget-link
 xcrun simctl openurl "$SIMULATOR_UDID" "vedansh://widget/panchang?date=$TODAY"
 capture panchang-widget-link
+PHASE=warm-verse-widget-link
 xcrun simctl openurl "$SIMULATOR_UDID" 'vedansh://widget/verse?sourceId=bhagavad-gita&chapter=2&verseIndex=0'
 capture verse-widget-link
 
-ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$OUTPUT/Vedansh-simulator.zip"
+
 printf '%s\n' 'PASS: native host + embedded widget extension compiled; host launched and remained running after widget URLs.' > "$OUTPUT/result.log"
 printf '%s\n' 'PENDING: Home Screen widget placement/rendering, four-language/size matrix, signed-device entitlements and visual review.' >> "$OUTPUT/result.log"
