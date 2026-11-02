@@ -55,14 +55,14 @@ try {
           const box = button.getBoundingClientRect();
           return box.width > 0 && box.height > 0 && box.x >= 0 && box.y >= 0 && box.right <= innerWidth + 1 && box.bottom <= innerHeight + 1;
         }).catch(async error => {
-          await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-sheet-failure.png`), fullPage: true });
+          await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-sheet-failure.png`), fullPage: false });
           await fs.writeFile(path.join(output, `${lang}-${size}-${width}-failure.html`), await page.content());
           throw error;
         });
         await page.evaluate(() => document.fonts.ready);
         const done = await page.getByRole('button', { name: 'Done with Kundali explanation', exact: true }).boundingBox();
         assert.ok(done && done.x >= 0 && done.y >= 0 && done.x + done.width <= width + 1 && done.y + done.height <= height + 1, 'Sheet Done button is outside the viewport');
-        await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-sheet.png`), fullPage: true });
+        await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-sheet.png`), fullPage: false });
         await page.getByRole('button', { name: 'Done with Kundali explanation', exact: true }).click();
         results.push({ width, height, lang, size, view, columns: 3, rows: 3, fonts: usedFonts });
       } else {
