@@ -228,6 +228,19 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   assert.ok(textOf(tree).includes('Review it before sharing'));
 });
 
+test('compact enlarged-text Dasha keeps both progress captions within the card', () => {
+  const native = jest.requireActual<typeof import('react-native')>('react-native');
+  const dimensions = jest.spyOn(native, 'useWindowDimensions').mockReturnValue({ width: 320, height: 640, scale: 2, fontScale: 1.8 });
+  try {
+    const tree = render(<KundaliScreen navigation={mockNavigation as any} route={{ key: 'Kundali-compact', name: 'Kundali' } as any} />);
+    act(() => tree.root.findByProps({ accessibilityLabel: 'Dasha tab' }).props.onPress());
+    for (const key of ['maha', 'antar']) {
+      const row = tree.root.findByProps({ testID: `dasha-progress-labels-${key}` });
+      assert.equal(native.StyleSheet.flatten(row.props.style).flexDirection, 'column');
+    }
+  } finally { dimensions.mockRestore(); }
+});
+
 test('Daily Rashifal uses the saved Moon sign and remains guidance, not certainty', () => {
   const tree = render(
     <RashifalScreen

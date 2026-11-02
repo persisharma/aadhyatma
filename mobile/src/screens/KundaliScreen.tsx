@@ -1112,7 +1112,7 @@ function KundaliResult({
                         ]}
                       />
                     </View>
-                    <View style={resultStyles.progressCaptions}>
+                    <View testID={`dasha-progress-labels-${window.key}`} style={[resultStyles.progressCaptions, compact && { flexDirection: 'column', alignItems: 'flex-start' }]}>
                       <Text style={[resultStyles.progressCaption, { color: colors.inkMuted }]}>
                         {formatDuration(elapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
                       </Text>
@@ -1604,14 +1604,14 @@ const styles = StyleSheet.create({
   dashaReading: { borderWidth: 1, padding: 14, marginBottom: 14 },
   dashaReadingBody: { fontSize: 12, lineHeight: 19, marginTop: 6 },
   currentDashaTitle: { fontFamily: fontFamilies.interSemiBold, fontSize: 14, marginTop: 5 },
-  beejJapaLink: { minHeight: 44, marginBottom: 14, paddingHorizontal: 14, borderWidth: 1, alignSelf: 'flex-start', justifyContent: 'center' },
+  beejJapaLink: { minHeight: 44, maxWidth: '100%', marginBottom: 14, paddingHorizontal: 14, paddingVertical: 10, borderWidth: 1, alignSelf: 'flex-start', justifyContent: 'center' },
   beejJapaText: { fontFamily: fontFamilies.interSemiBold, fontSize: 13 },
   progressTrack: { height: 6, marginTop: 10, overflow: 'hidden' },
   progressFill: { height: '100%' },
   progressCaptions: { marginTop: 5, flexDirection: 'row', justifyContent: 'space-between', gap: 8 },
-  progressCaption: { fontFamily: fontFamilies.inter, fontSize: 12 },
+  progressCaption: { fontFamily: fontFamilies.inter, fontSize: 12, maxWidth: '100%' },
   antarChips: { marginTop: 9, flexDirection: 'row', flexWrap: 'wrap', gap: 5 },
-  antarChip: { paddingHorizontal: 7, paddingVertical: 4, borderWidth: 1 },
+  antarChip: { maxWidth: '100%', paddingHorizontal: 7, paddingVertical: 4, borderWidth: 1 },
   antarChipText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   dashaRow: { flexDirection: 'row', minHeight: 68 },
   timelineRail: { width: 22, alignItems: 'center' },
