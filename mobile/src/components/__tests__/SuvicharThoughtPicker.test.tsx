@@ -19,3 +19,17 @@ it('finds and selects a late reviewed ID from the complete deity collection', ()
   act(() => tree.update(<SuvicharThoughtPicker visible deity="ganesha" lang="en" onSelect={onSelect} onClose={onClose} />));
   expect(tree.root.findByType(FlatList).props.data).toEqual([]);
 });
+
+it('searches the approved humility copy and excludes a different shrine in the same family', () => {
+  const onSelect = jest.fn(), onClose = jest.fn();
+  const thought = suvicharThoughtsFor('hanuman').find(t => t.id === 'VD-0055')!;
+  act(() => { tree = create(<SuvicharThoughtPicker visible deity="hanuman" lang="hi" onSelect={onSelect} onClose={onClose} />); });
+  act(() => tree.root.findAllByProps({ testID: 'suvichar-thought-search' }).find(n => n.props.onChangeText)!.props.onChangeText('विनम्रता'));
+  expect(tree.root.findByType(FlatList).props.data).toContain(thought);
+  act(() => tree.root.findAllByProps({ testID: `suvichar-thought-${thought.id}` }).find(n => n.props.onPress)!.props.onPress());
+  expect(onSelect).toHaveBeenCalledWith(thought);
+  expect(onClose).toHaveBeenCalledTimes(1);
+  act(() => tree.update(<SuvicharThoughtPicker visible deity="jagannath" lang="en" onSelect={onSelect} onClose={onClose} />));
+  act(() => tree.root.findAllByProps({ testID: 'suvichar-thought-search' }).find(n => n.props.onChangeText)!.props.onChangeText('VD-0037'));
+  expect(tree.root.findByType(FlatList).props.data).toEqual([]);
+});
