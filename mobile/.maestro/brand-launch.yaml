@@ -25,3 +25,20 @@ appId: com.prashantsharma.vedansh
     timeout: 30000
 - assertNotVisible:
     id: brand-particle-webview
+
+# A warm reopen must replay while the existing navigator remains mounted.
+- pressKey: Home
+- launchApp:
+    stopApp: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- extendedWaitUntil:
+    visible:
+      id: brand-launch-reveal
+    timeout: 5000
+- extendedWaitUntil:
+    notVisible:
+      id: brand-launch-reveal
+    timeout: 8000
+- assertVisible:
+    id: home-wordmark-crest

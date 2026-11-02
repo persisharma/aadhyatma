@@ -1,3 +1,4 @@
+import { useBrandLaunchVisible } from '@/navigation/brandLaunchIntent';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -42,6 +43,7 @@ export default function LaunchAskHost({
   const tour = useTour(),
     prefs = useNotificationPreferences();
   const launch = useLaunchAsks();
+  const brandVisible = useBrandLaunchVisible();
   const { lang } = useGitaLanguage();
   const navigation = useNavigation<any>();
   const [kind, setKind] = useState<'reminder' | 'widgets' | null>(null),
@@ -61,7 +63,7 @@ export default function LaunchAskHost({
     };
   }, []);
   useEffect(() => {
-    if (!loaded || tour.isLoading || prefs.isLoading || decided.current) return;
+    if (brandVisible || !loaded || tour.isLoading || prefs.isLoading || decided.current) return;
     if (targeted) {
       suppressLaunchAsks();
       decided.current = true;
@@ -152,7 +154,7 @@ export default function LaunchAskHost({
     }
     decided.current = true;
     completeLaunchSelection();
-  }, [loaded, tour, prefs, launch, targeted, lang, trackingReady]);
+  }, [loaded, tour, prefs, launch, targeted, lang, trackingReady, brandVisible]);
   if (tour.shouldShowOnboardingSetup && !targeted)
     return <OnboardingSetupSheet />;
   const gallery = () => {

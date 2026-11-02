@@ -1,3 +1,4 @@
+import { isBrandLaunchVisible, useBrandLaunchVisible } from '@/navigation/brandLaunchIntent';
 import React, { useEffect, useRef, useState } from 'react';
 import { AppState, InteractionManager, Linking, Platform } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
@@ -17,6 +18,7 @@ import ExploreSheet from './ExploreSheet';
 export default function ExploreLaunch({ targeted = false }: { targeted?: boolean }) {
     const snapshot = useExploreStore(), tour = useTour(), reminders = useNotificationPreferences(), rating = useRatingPrompt();
     const launch = useLaunchAsks();
+    const brandVisible = useBrandLaunchVisible();
     const { isUpdatePending } = Updates.useUpdates();
     const [section, setSection] = useState<ExploreSection | null>(null), [ready, setReady] = useState(false), [unavailable, setUnavailable] = useState<string[]>([]), [episode, setEpisode] = useState(0), [routeTick, setRouteTick] = useState(0);
     const intent = useRef(targeted), claimed = useRef(false), closing = useRef(false), ownsLaunch = useRef(false), background = useRef<number | null>(null);
@@ -58,6 +60,7 @@ export default function ExploreLaunch({ targeted = false }: { targeted?: boolean
     useEffect(() => { if (snapshot.ready)
         recordCurrent(); }, [snapshot.ready]);
     useEffect(() => {
+        if (brandVisible) return;
         if (higher && !tour.isLoading) {
             claimed.current = true;
             if (section) {
@@ -74,7 +77,7 @@ export default function ExploreLaunch({ targeted = false }: { targeted?: boolean
         let timer: ReturnType<typeof setTimeout> | undefined;
         const task = InteractionManager.runAfterInteractions(() => {
             timer = setTimeout(async () => {
-                if (cancelled || claimed.current || intent.current || higherRef.current || AppState.currentState !== 'active' || navigationRef.getCurrentRoute()?.name !== 'Home')
+                if (cancelled || isBrandLaunchVisible() || claimed.current || intent.current || higherRef.current || AppState.currentState !== 'active' || navigationRef.getCurrentRoute()?.name !== 'Home')
                     return;
                 const before = exploreSnapshot().state, now = Date.now();
                 if (before.shown.some(t => t > now)) {
@@ -109,7 +112,7 @@ export default function ExploreLaunch({ targeted = false }: { targeted?: boolean
         });
         return () => { cancelled = true; task.cancel(); if (timer)
             clearTimeout(timer); };
-    }, [snapshot.ready, snapshot.firstCollectionSession, ready, launch.ready, launch.selectionComplete, tour.isLoading, reminders.isLoading, higher, episode, routeTick, section, unavailable]);
+    }, [snapshot.ready, snapshot.firstCollectionSession, ready, launch.ready, launch.selectionComplete, tour.isLoading, reminders.isLoading, higher, episode, routeTick, section, unavailable, brandVisible]);
     const finish = () => { if (closing.current)
         return false; closing.current = true; setSection(null); setExploreVisible(false); return true; };
     if (!section)

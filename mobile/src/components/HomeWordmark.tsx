@@ -16,10 +16,11 @@ export default function HomeWordmark({ compact = false, showTagline = true }: {
   const { colors, typography } = useTheme();
   const kind = lang === 'hi' ? 'hi' : 'en';
   const metrics = manifest.names[kind];
-  // Keep the previous complete name footprint. The feather fits inside it;
+  // Align the visible dark lettering to the 30pt Om circles; decorative
+  // flute/feather bounds must not shrink or vertically displace the name.
   // never tint the master, which would erase its copper/green accents.
   const frame = metrics.homeFrame;
-  const width = Math.min(frame.width, frame.height * metrics.width / metrics.height);
+  const width = frame.artworkWidth;
   const mark = (side: 'left' | 'right') => (
     <View testID={`home-wordmark-om-${side}`} style={[styles.mark, { borderColor: colors.iconAccent }]}>
       <Text accessible={false} allowFontScaling={false} style={[styles.markText,
@@ -32,7 +33,7 @@ export default function HomeWordmark({ compact = false, showTagline = true }: {
       style={[styles.lockup, compact && styles.compact]}>
       {!compact && <View testID="home-wordmark-rule-left" style={[styles.rule, { backgroundColor: colors.iconAccent }]} />}
       {mark('left')}
-      <View testID="home-wordmark-artwork-frame" style={{ width: frame.width, height: frame.height, alignItems: 'center', justifyContent: 'center' }}>
+      <View testID="home-wordmark-artwork-frame" style={{ width: frame.width, height: frame.height, alignItems: 'center', justifyContent: 'center', transform: [{ translateY: frame.translateY }] }}>
         <WordmarkArtwork kind={kind} width={width} />
       </View>
       {mark('right')}
@@ -47,7 +48,7 @@ export default function HomeWordmark({ compact = false, showTagline = true }: {
 
 const styles = StyleSheet.create({
   wrap: { alignItems: 'center', maxWidth: '100%' },
-  lockup: { height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 11 },
+  lockup: { height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 },
   compact: { gap: 6 },
   rule: { width: 22, height: 1, opacity: 0.6 },
   mark: { width: 30, height: 30, borderRadius: 15, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },

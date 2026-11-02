@@ -28,9 +28,12 @@ export default function BrandLaunchReveal({ onComplete, onReady }: BrandParticle
     const watchdog = setTimeout(complete, BRAND_REVEAL_TIMEOUT_MS);
     const reduced = AccessibilityInfo.addEventListener('reduceMotionChanged', enabled => { if (enabled) complete(); });
     const reader = AccessibilityInfo.addEventListener('screenReaderChanged', enabled => { if (enabled) complete(); });
-    const app = AppState.addEventListener('change', state => { if (state !== 'active') complete(); });
-    const link = Linking.addEventListener('url', complete);
-    void Promise.all([AccessibilityInfo.isReduceMotionEnabled(), AccessibilityInfo.isScreenReaderEnabled()])
+    let hasBeenActive = AppState.currentState === 'active';
+    let started = false;
+    const start = () => {
+      if (started || !active.current || completed.current) return;
+      started = true;
+      void Promise.all([AccessibilityInfo.isReduceMotionEnabled(), AccessibilityInfo.isScreenReaderEnabled()])
       .then(([reduceMotion, screenReader]) => {
         if (!active.current || completed.current) return;
         if (reduceMotion || screenReader) { complete(); return; }
@@ -39,6 +42,16 @@ export default function BrandLaunchReveal({ onComplete, onReady }: BrandParticle
         const { default: Surface } = require('./BrandParticleWebView') as typeof import('./BrandParticleWebView');
         setRenderer(() => Surface);
       }).catch(complete);
+    };
+    const app = AppState.addEventListener('change', state => {
+      if (state === 'active') { hasBeenActive = true; start(); }
+      else if (state === 'background' || hasBeenActive) complete();
+    });
+    const link = Linking.addEventListener('url', complete);
+    // Cached preferences can mount this gate before iOS becomes active. Do not
+    // play behind the native splash or treat that startup 'inactive' as exit.
+    if (hasBeenActive) start();
+    else if (AppState.currentState === 'background') complete();
     return () => {
       active.current = false;
       clearTimeout(watchdog);

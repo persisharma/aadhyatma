@@ -1,3 +1,4 @@
+import { isBrandLaunchVisible, useBrandLaunchVisible } from '@/navigation/brandLaunchIntent';
 import { useLaunchAsks, claimLaunchAsk } from '@/components/launchAskStore';
 import { isExploreSurfaceOpen } from '@/data/discovery/store';
 import React, {
@@ -110,6 +111,7 @@ export function RatingPromptProvider({
   children: React.ReactNode;
 }) {
   const launch = useLaunchAsks();
+  const brandVisible = useBrandLaunchVisible();
   const { meta, isLoading: notifLoading } = useNotificationPreferences();
   const { lifetimeTotals, isLoading: activityLoading } = useUserActivity();
   const {
@@ -170,6 +172,7 @@ export function RatingPromptProvider({
   };
 
   const blockedBySurface =
+    brandVisible ||
     launch.taken ||
     !launch.ready ||
     !launch.selectionComplete ||
@@ -206,12 +209,12 @@ export function RatingPromptProvider({
         now: Date.now(),
         blockedBySurface: blockedRef.current,
       });
-      if (!eligible || isExploreSurfaceOpen()) return;
+      if (!eligible || isBrandLaunchVisible() || isExploreSurfaceOpen()) return;
 
       pendingRef.current = setTimeout(() => {
         pendingRef.current = null;
         // A first-run surface may have claimed the screen during the delay.
-        if (blockedRef.current || askedThisSessionRef.current || isExploreSurfaceOpen()) return;
+        if (blockedRef.current || isBrandLaunchVisible() || askedThisSessionRef.current || isExploreSurfaceOpen()) return;
         if (!claimLaunchAsk()) return;
         askedThisSessionRef.current = true;
         persist(afterAsked(stateRef.current, Date.now(), trigger));
