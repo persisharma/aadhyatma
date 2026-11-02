@@ -3,7 +3,7 @@ import { Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensio
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { GRAHA_NAMES_EN, GRAHA_NAMES_HI, RASHI_NAMES_EN, RASHI_NAMES_HI, RASHI_NAMES_WESTERN, getCurrentDasha, type Graha, type GrahaPosition, type KundaliChart, type KundaliResultTab } from '@/panchang/kundali';
+import { GRAHA_NAMES_EN, GRAHA_NAMES_HI, GRAHA_ORDER, RASHI_NAMES_EN, RASHI_NAMES_HI, RASHI_NAMES_WESTERN, getCurrentDasha, type Graha, type GrahaPosition, type KundaliChart, type KundaliResultTab } from '@/panchang/kundali';
 import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from '@/panchang/names';
 import { GRAHA_REFERENCE } from '@/panchang/grahaReference';
 import { basisLabelEn, basisLabelHi, signLordOf } from '@/panchang/kundaliBasis';
@@ -185,11 +185,11 @@ export function KundaliSummary({ chart, at, onOpenTab }: { chart: KundaliChart; 
 
 export function KundaliExplorer({ chart, mode, onReference }: { chart: KundaliChart; mode: 'chart' | 'grahas'; onReference: (graha: Graha) => void }) {
   const ui = useReadingUI();
-  const { width, fontScale } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [view, setView] = useState<'picture' | 'topics'>('picture');
   const { selection, select, close } = useSelection(chart);
   useEffect(() => setView('picture'), [chart, mode]);
-  const singleColumn = width < 390 || ui.factor > 1 || fontScale > 1.2;
+  const grahaRows = [0, 3, 6].map(start => GRAHA_ORDER.slice(start, start + 3));
   return <View>
     {mode === 'chart' ? <>
       <View accessibilityRole="tablist" style={[styles.switcher, { borderColor: ui.colors.divider }]}>{(['picture', 'topics'] as const).map(id => <Pressable key={id} testID={`kundali-view-${id}`} accessibilityRole="tab" accessibilityState={{ selected: view === id }} onPress={() => setView(id)} style={[styles.switchButton, { backgroundColor: view === id ? ui.colors.saffronTint : 'transparent' }]}><Text style={ui.label}>{id === 'picture' ? pick(ui.lang, { hi: 'कुंडली चित्र', en: 'Chart picture', gu: 'કુંડળી ચિત્ર', kn: 'ಕುಂಡಲಿ ಚಿತ್ರ' }) : pick(ui.lang, { hi: 'जीवन के विषय', en: 'Life areas', gu: 'જીવનના વિષયો', kn: 'ಜೀವನದ ವಿಷಯಗಳು' })}</Text></Pressable>)}</View>
@@ -203,9 +203,19 @@ export function KundaliExplorer({ chart, mode, onReference }: { chart: KundaliCh
     </> : <>
       <Text style={ui.title}>{pick(ui.lang, { hi: 'अपने ग्रहों को जानें', en: 'Meet your grahas', gu: 'તમારા ગ્રહોને જાણો', kn: 'ನಿಮ್ಮ ಗ್ರಹಗಳನ್ನು ತಿಳಿಯಿರಿ' })}</Text>
       <Text style={[ui.body, { marginTop: 6, marginBottom: 16 }]}>{pick(ui.lang, { hi: 'ग्रह को छूकर उसका परिचय, स्थिति का अर्थ और राशि से संबंध समझें।', en: 'Tap a graha for its nature, the meaning of its placement and its sign relationship.', gu: 'ગ્રહનો પરિચય, સ્થિતિનો અર્થ અને રાશિ સાથેનો સંબંધ જાણવા તેને સ્પર્શ કરો.', kn: 'ಗ್ರಹದ ಸ್ವಭಾವ, ಸ್ಥಾನದ ಅರ್ಥ ಮತ್ತು ರಾಶಿಯೊಂದಿಗಿನ ಸಂಬಂಧ ತಿಳಿಯಲು ಅದನ್ನು ಸ್ಪರ್ಶಿಸಿ.' })}</Text>
-      <View style={styles.grid}>{chart.grahas.map(position => <Pressable key={position.graha} testID={`kundali-graha-${position.graha}`} accessibilityRole="button" accessibilityLabel={`Learn about ${GRAHA_NAMES_EN[position.graha]}`} onPress={() => select({ kind: 'graha', graha: position.graha })} style={[ui.card, styles.tile, { width: singleColumn ? '100%' : '48%' }]}>
-        <KundaliArtwork name={position.graha} size={80} /><Text style={[ui.title, { fontSize: 19 * ui.factor }]}>{ui.name(position.graha)}</Text><Text style={ui.label}>{ui.c(`भाव ${position.house}`, `House ${position.house}`)} · {ui.sign(position.rashiIndex)}</Text><Text style={ui.body}>{ui.m(GRAHA_REFERENCE[position.graha].signifiesHi, GRAHA_REFERENCE[position.graha].signifiesEn)}</Text><Text style={ui.label}>{ui.c('स्थिति समझें', 'Understand the placement')} ›</Text>
-      </Pressable>)}</View>
+      <View testID="kundali-graha-grid" style={styles.grid}>
+        {grahaRows.map((row, rowIndex) => <View key={rowIndex} testID={`kundali-graha-row-${rowIndex + 1}`} style={styles.gridRow}>
+          {row.map(graha => {
+            const position = chart.grahas.find(item => item.graha === graha)!;
+            return <Pressable key={graha} testID={`kundali-graha-${graha}`} accessibilityRole="button" accessibilityLabel={`Learn about ${GRAHA_NAMES_EN[graha]}`} accessibilityValue={{ text: `House ${position.house}, ${RASHI_NAMES_EN[position.rashiIndex]} (${RASHI_NAMES_WESTERN[position.rashiIndex]})` }} onPress={() => select({ kind: 'graha', graha })} style={[ui.card, styles.tile]}>
+              <KundaliArtwork name={graha} size={56} />
+              <Text style={[ui.title, styles.tileText, { fontSize: 16 * ui.factor, lineHeight: 24 * ui.factor }]}>{ui.name(graha)}</Text>
+              <Text style={[ui.label, styles.tileText, { fontSize: 12 * ui.factor, lineHeight: 19 * ui.factor }]}>{ui.c(`भाव ${position.house}`, `House ${position.house}`)}</Text>
+              <Text style={[ui.body, styles.tileText, { fontSize: 12 * ui.factor, lineHeight: 19 * ui.factor }]}>{ui.c(RASHI_NAMES_HI[position.rashiIndex], RASHI_NAMES_WESTERN[position.rashiIndex])}</Text>
+            </Pressable>;
+          })}
+        </View>)}
+      </View>
     </>}
     <LearningSheet chart={chart} selection={selection} onClose={close} onReference={onReference} />
   </View>;
@@ -227,6 +237,8 @@ const styles = StyleSheet.create({
   switcher: { flexDirection: 'row', borderWidth: 1, borderRadius: 16, padding: 4, gap: 4 },
   switchButton: { flex: 1, minHeight: 48, padding: 10, alignItems: 'center', justifyContent: 'center', borderRadius: 12 },
   topic: { padding: 14, gap: 4, marginTop: 10 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 12 },
-  tile: { padding: 16, gap: 6 },
+  grid: { gap: 8 },
+  gridRow: { flexDirection: 'row', alignItems: 'stretch', gap: 8 },
+  tile: { flex: 1, minWidth: 0, minHeight: 156, paddingHorizontal: 6, paddingVertical: 12, gap: 4, alignItems: 'center' },
+  tileText: { alignSelf: 'stretch', textAlign: 'center' },
 });
