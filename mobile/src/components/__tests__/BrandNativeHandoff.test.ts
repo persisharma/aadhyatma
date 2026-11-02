@@ -22,11 +22,15 @@ test('all native splash configuration uses the transparent placeholder and match
   expect(createHash('sha256').update(bytes).digest('hex')).toBe(manifest.files['splash-blank.png'].sha256);
 });
 
-test('generated bridge holds frame zero until native start, then completes once', () => {
+test('generated bridge skips the first second after native start and preserves the final frame', () => {
   const messages: string[] = [];
   const canvas = { style: { visibility: 'hidden' } };
   const animation = { ready: false, elapsed: 3350, renderAt: jest.fn((ms: number) => { animation.elapsed = ms; }) };
   const button = { click: jest.fn(() => { animation.elapsed = 0; }) };
+  let now = 9000;
+  let nextFrame!: (time: number) => void;
+  const schedule = jest.fn((callback: (time: number) => void) => { nextFrame = callback; return 7; });
+  const cancel = jest.fn();
   let poll!: () => void;
   let pagehide!: () => void;
   const clear = jest.fn();
@@ -38,6 +42,7 @@ test('generated bridge holds frame zero until native start, then completes once'
   const scripts = [...document.html.matchAll(/<script>([\s\S]*?)<\/script>/g)];
   vm.runInNewContext(scripts[scripts.length - 1][1], {
     window, document: { getElementById: () => ({ vpAnimation: animation, querySelector: (selector: string) => selector === 'canvas' ? canvas : button }) },
+    performance: { now: () => now }, requestAnimationFrame: schedule, cancelAnimationFrame: cancel,
     setInterval: (callback: () => void) => { poll = callback; return 9; }, clearInterval: clear,
   });
   window.__vedanshStart!(); expect(button.click).not.toHaveBeenCalled();
@@ -49,9 +54,16 @@ test('generated bridge holds frame zero until native start, then completes once'
   animation.elapsed = 3350; poll(); poll();
   expect(messages).toEqual(['brand-ready']); expect(canvas.style.visibility).toBe('hidden');
   window.__vedanshStart!(); window.__vedanshStart!();
-  expect(canvas.style.visibility).toBe('visible'); expect(button.click).toHaveBeenCalledTimes(1);
+  expect(canvas.style.visibility).toBe('visible'); expect(button.click).not.toHaveBeenCalled();
+  expect(animation.elapsed).toBe(1000); expect(schedule).toHaveBeenCalledTimes(1);
   poll(); expect(messages).toEqual(['brand-ready']);
-  animation.elapsed = 3350; poll();
+  now += 2349; nextFrame(now); poll();
+  expect(animation.elapsed).toBe(3349); expect(messages).toEqual(['brand-ready']);
+  now += 1; nextFrame(now); poll();
+  expect(animation.elapsed).toBe(3350);
   expect(messages).toEqual(['brand-ready', 'brand-complete']); expect(clear).toHaveBeenCalledWith(9);
-  pagehide(); expect(clear).toHaveBeenCalledTimes(2);
+  pagehide(); expect(clear).toHaveBeenCalledTimes(2); expect(cancel).toHaveBeenCalledWith(7);
+  const paints = animation.renderAt.mock.calls.length;
+  nextFrame(now + 1000); window.__vedanshStart!();
+  expect(animation.renderAt).toHaveBeenCalledTimes(paints);
 });

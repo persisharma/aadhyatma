@@ -1,0 +1,74 @@
+name: Native iOS brand lifecycle
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'mobile/src/components/Brand*.tsx'
+      - 'mobile/src/branding/**'
+      - 'mobile/src/data/tour/whatsNew.ts'
+      - 'mobile/.maestro/brand*.yaml'
+      - 'mobile/scripts/native-brand-ios.sh'
+      - '.github/workflows/native-brand-ios.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: native-brand-ios-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  simulator:
+    runs-on: macos-15
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    env:
+      CI: '1'
+      MAESTRO_CLI_NO_ANALYTICS: 'true'
+      MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+      MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: mobile
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: npm ci
+      - name: Install Maestro
+        run: |
+          curl -fsSL https://get.maestro.mobile.dev | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Generate native project
+        run: npx expo prebuild --platform ios --clean --no-install
+      - name: Install CocoaPods
+        run: pod install --project-directory=ios
+      - name: Build and exercise cold versus warm launch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/native-brand-ios.sh
+      - name: Retain native lifecycle evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-brand-ios-${{ github.run_id }}
+          path: |
+            native-brand-output/**
+            mobile/e2e-shots/brand-*.png
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Stop simulator
+        if: always() && env.SIMULATOR_UDID != ''
+        run: xcrun simctl shutdown "$SIMULATOR_UDID"

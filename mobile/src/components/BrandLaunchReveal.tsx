@@ -3,7 +3,8 @@ import { AccessibilityInfo, AppState, Linking, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import type { BrandParticleProps } from './BrandParticleWebView';
 
-export const BRAND_REVEAL_MS = 3350;
+// Native launch skips the approved timeline's first 1000ms.
+export const BRAND_REVEAL_MS = 2350;
 export const BRAND_REVEAL_TIMEOUT_MS = 7000;
 
 /** Owns launch cancellation; the approved renderer owns every pixel and frame. */

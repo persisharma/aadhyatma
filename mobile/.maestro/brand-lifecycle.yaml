@@ -1,0 +1,42 @@
+# Release simulator flow after _launch.yaml has completed setup.
+appId: com.prashantsharma.vedansh
+---
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: brand-launch-reveal
+    timeout: 5000
+- takeScreenshot: e2e-shots/brand-cold-particles
+- extendedWaitUntil:
+    notVisible:
+      id: brand-launch-reveal
+    timeout: 4000
+- assertVisible:
+    id: home-wordmark-crest
+- takeScreenshot: e2e-shots/brand-cold-home
+- repeat:
+    times: 3
+    commands:
+      - pressKey: Home
+      - launchApp:
+          stopApp: false
+      - assertNotVisible:
+          id: brand-launch-reveal
+      - assertNotVisible:
+          id: brand-resume-modal
+      - assertVisible:
+          id: home-wordmark-crest
+- takeScreenshot: e2e-shots/brand-warm-home
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: brand-launch-reveal
+    timeout: 5000
+- extendedWaitUntil:
+    notVisible:
+      id: brand-launch-reveal
+    timeout: 4000
+- assertVisible:
+    id: home-wordmark-crest

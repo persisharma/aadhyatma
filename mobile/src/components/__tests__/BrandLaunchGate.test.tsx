@@ -78,13 +78,13 @@ test('a native query rejection fails open', async () => {
 test.each(['onError','onHttpError','onContentProcessDidTerminate','onRenderProcessGone'])('%s fails open to the application', async event => {
   await mount(); act(() => tree!.root.findByType(WebView).props[event]()); expect(ready()).toBe(true); expect(surfaceReady).toHaveBeenCalledTimes(1);
 });
-test('backgrounding cancels the renderer and the next app open starts a new one', async () => {
+test('backgrounding cancels the cold renderer and returning never restarts it', async () => {
   await mount(); act(() => onState('background')); expect(ready()).toBe(true);
   await act(async () => { onState('active'); });
-  expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
-  expect(tree!.root.findAllByType(Modal)).toHaveLength(1);
-  await finishReveal(); expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
+  expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
+  expect(tree!.root.findAllByType(Modal)).toHaveLength(0);
 });
+
 test('an incoming URL cancels the renderer immediately', async () => { await mount(); act(() => onLink()); expect(ready()).toBe(true); });
 test('unmount cleans up and late bridge callbacks cannot complete', async () => {
   const done = jest.fn(); await act(async () => { tree = TestRenderer.create(<BrandLaunchReveal onComplete={done} />); });
@@ -99,19 +99,19 @@ test('the approved canvas cannot navigate to external pages', async () => {
 });
 
 
-test('second and third opens replay without remounting the existing app', async () => {
+test('background and inactive returns keep the existing app without another reveal', async () => {
   const mounted = jest.fn(), unmounted = jest.fn();
   function Application() { React.useEffect(() => { mounted(); return unmounted; }, []); return <Text>Application ready</Text>; }
   await act(async () => { tree = TestRenderer.create(<GitaLanguageProvider initialLang="hi"><BrandLaunchGate targeted={false}><Application /></BrandLaunchGate></GitaLanguageProvider>); });
   await finishReveal(); expect(mounted).toHaveBeenCalledTimes(1);
-  for (let i = 0; i < 2; i++) {
-    act(() => onState('background'));
-    await act(async () => { onState('active'); });
-    expect(tree!.root.findAllByType(WebView)).toHaveLength(1); expect(ready()).toBe(true);
-    await finishReveal();
+  for (const states of [['inactive', 'active'], ['inactive', 'background', 'active'], ['background', 'active']] as AppStateStatus[][]) {
+    await act(async () => { for (const state of states) onState(state); });
+    expect(tree!.root.findAllByType(WebView)).toHaveLength(0); expect(ready()).toBe(true);
+    expect(tree!.root.findAllByType(Modal)).toHaveLength(0);
   }
   expect(mounted).toHaveBeenCalledTimes(1); expect(unmounted).not.toHaveBeenCalled();
 });
+
 test('cached-preference cold startup waits through inactive before starting', async () => {
   Object.assign(AppState, { currentState: 'inactive' });
   await mount(); expect(tree!.root.findAllByType(WebView)).toHaveLength(0); expect(ready()).toBe(false);
@@ -120,26 +120,33 @@ test('cached-preference cold startup waits through inactive before starting', as
   await send('brand-ready'); expect(surfaceReady).toHaveBeenCalledTimes(1); expect(ready()).toBe(false);
   await finishReveal(); expect(ready()).toBe(true);
 });
-test('an immediate inactive/active return replays without waiting for background', async () => {
+test('only a new cold process plays again after the previous process completed', async () => {
   await mount(); await finishReveal();
   await act(async () => { onState('inactive'); onState('active'); });
-  expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
-  await finishReveal();
   expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
+  act(() => tree!.unmount()); tree = undefined;
+  await mount();
+  expect(tree!.root.findAllByType(WebView)).toHaveLength(1); expect(ready()).toBe(false);
+  await finishReveal(); expect(ready()).toBe(true);
 });
-test('warm notification/widget targets bypass branding before and after active', async () => {
+
+test('warm notification/widget targets and later ordinary returns never show branding', async () => {
   await mount(); await finishReveal();
   act(() => { onState('background'); signalBrandLaunchTarget(); });
   await act(async () => { onState('active'); }); expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
   act(() => onState('background')); await act(async () => { onState('active'); });
-  expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
+  expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
   act(() => signalBrandLaunchTarget()); expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
 });
-test('a cold targeted visit does not permanently disable ordinary opens', async () => {
+
+test('a cold targeted process skips branding and the next ordinary cold process plays', async () => {
   await mount(true); expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
   act(() => onState('background')); await act(async () => { onState('active'); });
-  expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
+  expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
+  act(() => tree!.unmount()); tree = undefined;
+  await mount(); expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
 });
+
 test('reduced motion stays respected on subsequent opens', async () => {
   await mount(); await finishReveal();
   jest.mocked(AccessibilityInfo.isReduceMotionEnabled).mockResolvedValue(true);
@@ -159,7 +166,7 @@ test('frame zero waits for native splash dismissal and duplicate readiness start
   expect(mockInject).toHaveBeenCalledWith(expect.stringContaining('__vedanshStart'));
   await send('brand-complete'); expect(ready()).toBe(true);
 });
-test('a cancelled splash handoff cannot start the discarded canvas', async () => {
+test('a cancelled splash handoff cannot start the discarded canvas or replay on resume', async () => {
   let hidden!: () => void;
   surfaceReady.mockImplementationOnce(() => new Promise<void>(resolve => { hidden = resolve; }));
   await mount(); await send('brand-ready');
@@ -167,15 +174,15 @@ test('a cancelled splash handoff cannot start the discarded canvas', async () =>
   await act(async () => { hidden(); });
   expect(mockInject).not.toHaveBeenCalled();
   await act(async () => { onState('active'); });
-  await finishReveal(); expect(mockInject).toHaveBeenCalledTimes(1);
+  expect(tree!.root.findAllByType(WebView)).toHaveLength(0); expect(ready()).toBe(true);
 });
-test('an inactive target stays prioritized through background and duplicate active events', async () => {
+
+test('inactive targets and duplicate active events cannot reactivate completed branding', async () => {
   await mount(); await finishReveal();
   act(() => { onState('inactive'); signalBrandLaunchTarget(); onState('background'); });
   await act(async () => { onState('active'); onState('active'); });
   expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
   act(() => onState('inactive'));
   await act(async () => { onState('active'); onState('active'); });
-  expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
-  await finishReveal();
+  expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
 });
