@@ -6,40 +6,116 @@
   "panchang": {
     "timeZone": "Asia/Kolkata",
     "cityId": "ujjain",
-    "cityLabel": { "hi": "उज्जैन", "en": "Ujjain", "gu": "ઉજ્જૈન", "kn": "ಉಜ್ಜೈನ" },
+    "cityLabel": {
+      "hi": "उज्जैन",
+      "en": "Ujjain",
+      "gu": "ઉજ્જૈન",
+      "kn": "ಉಜ್ಜೈನ"
+    },
     "calendarSystem": "purnimant",
     "validThrough": "2099-01-14T18:29:59.000Z",
-    "days": [{
-      "dateKey": "2099-01-01",
-      "representedDate": { "hi": "1 जन", "en": "1 Jan", "gu": "1 જાન્યુ", "kn": "1 ಜನ" },
-      "tithi": { "hi": "शुक्ल प्रतिपदा", "en": "Shukla Pratipada", "gu": "શુક્લ પ્રતિપદા", "kn": "ಶುಕ್ಲ ಪ್ರತಿಪದಾ" },
-      "tithiSegments": [
-        {
-          "name": { "hi": "शुक्ल प्रतिपदा", "en": "Shukla Pratipada", "gu": "શુક્લ પ્રતિપદા", "kn": "ಶುಕ್ಲ ಪ್ರತಿಪದಾ" },
-          "endsAt": "2099-01-01T09:54:00.000Z",
-          "till": { "hi": "तक 15:24", "en": "till 15:24", "gu": "તક 15:24", "kn": "ತಕ 15:24" }
+    "days": [
+      {
+        "dateKey": "2099-01-01",
+        "representedDate": {
+          "hi": "1 जन",
+          "en": "1 Jan",
+          "gu": "1 જાન્યુ",
+          "kn": "1 ಜನ"
         },
-        { "name": { "hi": "शुक्ल द्वितीया", "en": "Shukla Dwitiya", "gu": "શુક્લ દ્વિતીયા", "kn": "ಶುಕ್ಲ ದ್ವಿತೀಯಾ" } }
-      ],
-      "sunrise": { "hi": "सूर्योदय 06:00", "en": "Sunrise 06:00", "gu": "સૂર્યોદય 06:00", "kn": "ಸೂರ್ಯೋದಯ 06:00" },
-      "rahuKaal": { "hi": "राहु काल 07:30 – 09:00", "en": "Rahu Kaal 07:30 – 09:00", "gu": "રાહુ કાલ 07:30 – 09:00", "kn": "ರಾಹು ಕಾಲ 07:30 – 09:00" },
-      "deepLink": "vedansh://widget/panchang?date=2099-01-01"
-    }]
+        "tithi": {
+          "hi": "शुक्ल प्रतिपदा",
+          "en": "Shukla Pratipada",
+          "gu": "શુક્લ પ્રતિપદા",
+          "kn": "ಶುಕ್ಲ ಪ್ರತಿಪದಾ"
+        },
+        "tithiSegments": [
+          {
+            "name": {
+              "hi": "शुक्ल प्रतिपदा",
+              "en": "Shukla Pratipada",
+              "gu": "શુક્લ પ્રતિપદા",
+              "kn": "ಶುಕ್ಲ ಪ್ರತಿಪದಾ"
+            },
+            "endsAt": "2099-01-01T09:54:00.000Z",
+            "till": {
+              "hi": "तक 15:24",
+              "en": "till 15:24",
+              "gu": "તક 15:24",
+              "kn": "ತಕ 15:24"
+            }
+          },
+          {
+            "name": {
+              "hi": "शुक्ल द्वितीया",
+              "en": "Shukla Dwitiya",
+              "gu": "શુક્લ દ્વિતીયા",
+              "kn": "ಶುಕ್ಲ ದ್ವಿತೀಯಾ"
+            }
+          }
+        ],
+        "sunrise": {
+          "hi": "सूर्योदय 06:00",
+          "en": "Sunrise 06:00",
+          "gu": "સૂર્યોદય 06:00",
+          "kn": "ಸೂರ್ಯೋದಯ 06:00"
+        },
+        "rahuKaal": {
+          "hi": "राहु काल 07:30 – 09:00",
+          "en": "Rahu Kaal 07:30 – 09:00",
+          "gu": "રાહુ કાલ 07:30 – 09:00",
+          "kn": "ರಾಹು ಕಾಲ 07:30 – 09:00"
+        },
+        "deepLink": "vedansh://widget/panchang?date=2099-01-01",
+        "sunriseAt": "2099-01-01T00:43:00.000Z",
+        "sunsetAt": "2099-01-01T12:30:00.000Z"
+      }
+    ]
   },
   "verses": {
     "timeZone": "America/Los_Angeles",
     "validThrough": "2099-01-15T07:59:59.000Z",
-    "days": [{
-      "dateKey": "2099-01-01",
-      "sourceId": "bhagavad-gita",
-      "chapter": 1,
-      "verseIndex": 0,
-      "lines": { "hi": ["धर्मक्षेत्रे कुरुक्षेत्रे"], "en": ["On the field of dharma"], "gu": ["ધર્મક્ષેત્રે કુરુક્ષેત્રે"], "kn": ["ಧರ್ಮಕ್ಷೇತ್ರೇ ಕುರುಕ್ಷೇತ್ರೇ"] },
-      "excerpt": { "hi": "धर्मक्षेत्रे कुरुक्षेत्रे", "en": "On the field of dharma", "gu": "ધર્મક્ષેત્રે કુરુક્ષેત્રે", "kn": "ಧರ್ಮಕ್ಷೇತ್ರೇ ಕುರುಕ್ಷೇತ್ರೇ" },
-      "source": { "hi": "भगवद्गीता · 1.1", "en": "Bhagavad Gita · 1.1", "gu": "ભગવદ્ગીતા · 1.1", "kn": "ಭಗವದ್ಗೀತೆ · 1.1" },
-      "accessibilityLabel": { "hi": "धर्मक्षेत्रे कुरुक्षेत्रे। भगवद्गीता 1.1", "en": "On the field of dharma. Bhagavad Gita 1.1", "gu": "ધર્મક્ષેત્રે કુરુક્ષેત્રે. ભગવદ્ગીતા 1.1", "kn": "ಧರ್ಮಕ್ಷೇತ್ರೇ ಕುರುಕ್ಷೇತ್ರೇ. ಭಗವದ್ಗೀತೆ 1.1" },
-      "deepLink": "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=1&verseIndex=0"
-    }]
+    "days": [
+      {
+        "dateKey": "2099-01-01",
+        "sourceId": "bhagavad-gita",
+        "chapter": 1,
+        "verseIndex": 0,
+        "lines": {
+          "hi": [
+            "धर्मक्षेत्रे कुरुक्षेत्रे"
+          ],
+          "en": [
+            "On the field of dharma"
+          ],
+          "gu": [
+            "ધર્મક્ષેત્રે કુરુક્ષેત્રે"
+          ],
+          "kn": [
+            "ಧರ್ಮಕ್ಷೇತ್ರೇ ಕುರುಕ್ಷೇತ್ರೇ"
+          ]
+        },
+        "excerpt": {
+          "hi": "धर्मक्षेत्रे कुरुक्षेत्रे",
+          "en": "On the field of dharma",
+          "gu": "ધર્મક્ષેત્રે કુરુક્ષેત્રે",
+          "kn": "ಧರ್ಮಕ್ಷೇತ್ರೇ ಕುರುಕ್ಷೇತ್ರೇ"
+        },
+        "source": {
+          "hi": "भगवद्गीता · 1.1",
+          "en": "Bhagavad Gita · 1.1",
+          "gu": "ભગવદ્ગીતા · 1.1",
+          "kn": "ಭಗವದ್ಗೀತೆ · 1.1"
+        },
+        "accessibilityLabel": {
+          "hi": "धर्मक्षेत्रे कुरुक्षेत्रे। भगवद्गीता 1.1",
+          "en": "On the field of dharma. Bhagavad Gita 1.1",
+          "gu": "ધર્મક્ષેત્રે કુરુક્ષેત્રે. ભગવદ્ગીતા 1.1",
+          "kn": "ಧರ್ಮಕ್ಷೇತ್ರೇ ಕುರುಕ್ಷೇತ್ರೇ. ಭಗವದ್ಗೀತೆ 1.1"
+        },
+        "deepLink": "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=1&verseIndex=0"
+      }
+    ]
   },
   "japam": {
     "dateKey": "2099-01-01",

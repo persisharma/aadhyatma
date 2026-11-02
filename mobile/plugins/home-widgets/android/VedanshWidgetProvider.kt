@@ -8,6 +8,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -93,6 +94,9 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             // Recovery is always the plain parchment card, and it must say so: the
             // launcher keeps a previous render's art visible unless this hides it.
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.GONE)
+            applyAppearance(views, surface, false)
+            contentPadding(context, views)
+            views.setViewPadding(__APP_PACKAGE__.R.id.widget_kicker, 0, 0, 0, 0)
             val today = WidgetPayloadContract.currentDateKey("Asia/Kolkata")
             views.setOnClickPendingIntent(__APP_PACKAGE__.R.id.widget_root, link(context, "vedansh://widget/panchang?date=$today", requestCode(id, surface)))
             manager.updateAppWidget(id, views)
@@ -126,15 +130,45 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
          * the root cannot clip to its rounded outline, so the plate's square corners
          * would poke past the card's — those devices keep the flat card.
          */
-        private fun applyArt(views: RemoteViews, surface: Surface, width: Int, height: Int) {
+        private fun applyAppearance(views: RemoteViews, surface: Surface, night: Boolean) {
+            val ink = Color.parseColor(if (night) "#FFF4DC" else "#511B19")
+            val muted = Color.parseColor(if (night) "#E8D6B4" else "#4A3420")
+            val accent = Color.parseColor(if (night) "#EBC784" else "#6B2E05")
+            val gold = Color.parseColor(if (night) "#D9B66E" else "#7E5A1E")
+            views.setInt(__APP_PACKAGE__.R.id.widget_root, "setBackgroundResource", if (night) __APP_PACKAGE__.R.drawable.vedansh_widget_background_night else __APP_PACKAGE__.R.drawable.vedansh_widget_background)
+            views.setTextColor(__APP_PACKAGE__.R.id.widget_kicker, accent)
+            views.setTextColor(__APP_PACKAGE__.R.id.widget_title, ink)
+            for (id in listOf(__APP_PACKAGE__.R.id.widget_subtitle, __APP_PACKAGE__.R.id.widget_meta)) views.setTextColor(id, muted)
+            if (surface == Surface.PANCHANG) views.setTextColor(__APP_PACKAGE__.R.id.widget_till, muted)
+            views.setTextColor(__APP_PACKAGE__.R.id.widget_brand, gold)
+        }
+
+        private fun contentPadding(context: Context, views: RemoteViews, right: Int = 16) {
+            val d = context.resources.displayMetrics.density
+            views.setViewPadding(__APP_PACKAGE__.R.id.widget_content, (16*d).toInt(), (12*d).toInt(), (right*d).toInt(), (12*d).toInt())
+        }
+
+        private fun applyArt(context: Context, views: RemoteViews, root: JSONObject, surface: Surface, width: Int, height: Int, night: Boolean): Boolean {
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.GONE)
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return false
+            if (surface == Surface.VERSE && width < 180) return false
+            val size = if (width < 180) "small" else if (height >= 180) "large" else "medium"
+            val mode = if (night) "night" else "day"
+            val verses = root.getJSONObject("verses")
+            val today = WidgetPayloadContract.currentDateKey(verses.getString("timeZone"))
+            val days = verses.getJSONArray("days")
+            val verse = (0 until days.length()).map { days.getJSONObject(it) }.firstOrNull { it.getString("dateKey") == today }
+            val subject = if (surface == Surface.PANCHANG) "panchang" else verse?.optString("artKey", "prayer") ?: "prayer"
             try {
-                views.setImageViewResource(__APP_PACKAGE__.R.id.widget_art, artFor(surface, width, height))
-                views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.VISIBLE)
-            } catch (_: Exception) {
-                views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.GONE)
-            }
+                for (key in listOf(subject, "prayer")) {
+                    val resource = context.resources.getIdentifier("vedansh_widget_bg_heritage_${key}_${size}_${mode}", "drawable", context.packageName)
+                    if (resource == 0) continue
+                    views.setImageViewResource(__APP_PACKAGE__.R.id.widget_art, resource)
+                    views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.VISIBLE)
+                    return true
+                }
+            } catch (_: Exception) { views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.GONE) }
+            return false
         }
 
         private fun boundaryIntent(context: Context, surface: Surface): PendingIntent {
@@ -180,11 +214,17 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
                     Surface.PANCHANG -> renderPanchang(context, views, root, locale, id, width)
                     Surface.VERSE -> renderVerse(context, views, root, locale, id, width, height)
                 } ?: return recovery(context, manager, id, surface, true)
-                applyArt(views, surface, width, height)
+                val nowMs = System.currentTimeMillis()
+                val night = WidgetPayloadContract.isNight(root, nowMs)
+                applyAppearance(views, surface, night)
+                val hasArt = applyArt(context, views, root, surface, width, height, night)
+                contentPadding(context, views, if (hasArt && surface == Surface.VERSE) 16 + (width * 0.29).toInt() else 16)
+                val cameoInset = if (hasArt && surface == Surface.PANCHANG) (width * 0.24 * context.resources.displayMetrics.density).toInt() else 0
+                views.setViewPadding(__APP_PACKAGE__.R.id.widget_kicker, 0, 0, cameoInset, 0)
                 manager.updateAppWidget(id, views)
                 val slice = root.getJSONObject(if (surface == Surface.PANCHANG) "panchang" else "verses")
-                scheduleNextRender(context, surface, WidgetPayloadContract.nextBoundaryMs(
-                    slice, slice.getString("timeZone"), surface == Surface.PANCHANG, System.currentTimeMillis()))
+                scheduleNextRender(context, surface, minOf(WidgetPayloadContract.nextBoundaryMs(
+                    slice, slice.getString("timeZone"), surface == Surface.PANCHANG, nowMs), WidgetPayloadContract.nextSolarBoundaryMs(root, nowMs)))
             } catch (_: Exception) { recovery(context, manager, id, surface, false) }
         }
 
@@ -242,7 +282,7 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             }
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_kicker, verseKicker(locale))
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_title, body)
-            views.setInt(__APP_PACKAGE__.R.id.widget_title, "setMaxLines", if (tall) 8 else if (narrow) 4 else 3)
+            views.setInt(__APP_PACKAGE__.R.id.widget_title, "setMaxLines", if (tall) 8 else if (narrow) 4 else if (height >= 140) 4 else 3)
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_subtitle, vd.getJSONObject("source").getString(locale))
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_subtitle, if (narrow) View.GONE else View.VISIBLE)
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_meta, View.GONE)
@@ -266,3 +306,4 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
 
 class VedanshPanchangWidgetProvider : VedanshWidgetProvider(VedanshWidgetProvider.Surface.PANCHANG)
 class VedanshVerseWidgetProvider : VedanshWidgetProvider(VedanshWidgetProvider.Surface.VERSE)
+

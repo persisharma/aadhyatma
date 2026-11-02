@@ -33,7 +33,7 @@ export async function cachedWidgetPlan(
   });
   const { cityId, latitude, longitude, elevation } = input.location;
   const key = JSON.stringify([
-    currentBuildFingerprint(), PANCHANG_DAY_CACHE_VERSION, pStart, vStart,
+    'solar-heritage-v1', currentBuildFingerprint(), PANCHANG_DAY_CACHE_VERSION, pStart, vStart,
     cityId, latitude, longitude, elevation, input.calendarSystem, input.deviceTimeZone, observances,
   ]);
   await awaitDerivedCacheReset();
@@ -65,3 +65,4 @@ export async function cachedWidgetPlan(
     panchangDays: window.panchang.days, verseDays: window.verses.days,
   });
 }
+

@@ -1,3 +1,4 @@
+import { widgetVerseSubject } from './heritage';
 import appConfig from '../../app.json';
 import { getVerseAtPoolIndex, getVersePoolSize } from '@/data/versePool';
 import { verseIndexForDateKey } from '@/notifications/seed';
@@ -122,6 +123,8 @@ export async function planWidgetPayload(input: WidgetPlanInput, isCancelled: () 
       tithi: localizedFromHindi(panchang.tithi.nameHi, panchang.tithi.nameEn),
       tithiSegments: tithiSegments(panchang, key),
       ...(observance ? { vrat: localizedFromHindi(observance.nameHi, observance.nameEn) } : {}),
+      sunriseAt: panchang.sunrise.toISOString(),
+      sunsetAt: panchang.sunset.toISOString(),
       sunrise: localizedTiming('सूर्योदय', 'Sunrise', clockInIst(panchang.sunrise)),
       rahuKaal: localizedTiming('राहु काल', 'Rahu Kaal', rangeInIst(muhurat.rahu.start, muhurat.rahu.end)),
       ...(muhurat.abhijit ? { abhijit: localizedTiming('अभिजित', 'Abhijit', rangeInIst(muhurat.abhijit.start, muhurat.abhijit.end)) } : {}),
@@ -141,7 +144,7 @@ export async function planWidgetPayload(input: WidgetPlanInput, isCancelled: () 
     const excerpt = Object.fromEntries((['hi', 'en', 'gu', 'kn'] as Lang[]).map((lang) => [lang, twoLineExcerpt(lines[lang])])) as Record<Lang, string>;
     const accessibilityLabel = Object.fromEntries((['hi', 'en', 'gu', 'kn'] as Lang[]).map((lang) => [lang, `${lines[lang].join(' ')}. ${source[lang]}`])) as Record<Lang, string>;
     const query = new URLSearchParams({ sourceId: verse.sourceId, verseIndex: String(verse.verseIndex), ...(verse.chapter == null ? {} : { chapter: String(verse.chapter) }) });
-    verseDays.push({ dateKey: verseKey, sourceId: verse.sourceId, ...(verse.chapter == null ? {} : { chapter: verse.chapter }), verseIndex: verse.verseIndex, lines, excerpt, source, accessibilityLabel, deepLink: `vedansh://widget/verse?${query.toString()}` });
+    verseDays.push({ dateKey: verseKey, sourceId: verse.sourceId, artKey: widgetVerseSubject(verse.sourceId), ...(verse.chapter == null ? {} : { chapter: verse.chapter }), verseIndex: verse.verseIndex, lines, excerpt, source, accessibilityLabel, deepLink: `vedansh://widget/verse?${query.toString()}` });
     // Avoid monopolising Hermes while preparing the offline window. This is an
     // orchestration yield; the payload transformation itself remains pure.
     await new Promise<void>((resolve) => setTimeout(resolve, 0));
@@ -149,3 +152,4 @@ export async function planWidgetPayload(input: WidgetPlanInput, isCancelled: () 
 
   return buildWidgetPayload({ ...input, writerAppVersion: appConfig.expo.version, panchangDays, verseDays });
 }
+
