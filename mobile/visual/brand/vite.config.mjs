@@ -24,10 +24,11 @@ export default defineConfig({
   build: { rollupOptions: { input: path.join(root, 'visual/brand/index.html') } },
   esbuild: { jsx: 'automatic' },
   define: { __DEV__: 'false', global: 'globalThis' },
-  optimizeDeps: { esbuildOptions: { resolveExtensions: webExtensions } },
+  optimizeDeps: { include: ['react-dom/client'], esbuildOptions: { resolveExtensions: webExtensions } },
   resolve: {
     alias: [
       { find: 'react', replacement: path.join(root, 'node_modules/react') },
+      { find: 'react-dom', replacement: path.join(browserModules, 'react-dom') },
       { find: /^react-native$/, replacement: path.join(browserModules, 'react-native-web/dist/index.js') },
       { find: /^react-native-svg$/, replacement: path.join(root, 'visual/kundali/svg.jsx') },
       { find: /^react-native-svg-web$/, replacement: path.join(root, 'node_modules/react-native-svg/src/ReactNativeSVG.web.ts') },

@@ -20,8 +20,14 @@ try {
     const page = await browser.newPage({ viewport: { width, height: 300 }, deviceScaleFactor: 3 });
     const errors = [];
     page.on('pageerror', error => errors.push(String(error)));
+    page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
     await page.goto(`${base}?lang=${lang}&size=${size}`);
-    await page.waitForSelector('html[data-ready="true"]');
+    try { await page.waitForSelector('html[data-ready="true"]'); }
+    catch (error) {
+      await fs.writeFile(path.join(output, 'startup-errors.json'), JSON.stringify({ errors, html: await page.content() }, null, 2));
+      await page.screenshot({ path: path.join(output, 'startup-failure.png') });
+      throw new Error(`Header fixture failed to mount: ${errors.join('\n')}`, { cause: error });
+    }
     await page.evaluate(() => document.fonts.ready);
     await page.waitForFunction(() => [...document.images].every(i => i.complete && i.naturalWidth > 0));
     const crest = await page.getByTestId('home-wordmark-crest').boundingBox();

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { createRoot } from '../kundali/node_modules/react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { Pressable, View } from 'react-native';
 import { GitaLanguageProvider } from '../../src/data/gita/language';
 import { FontScaleProvider, useFontScale } from '../../src/contexts/FontScaleContext';
