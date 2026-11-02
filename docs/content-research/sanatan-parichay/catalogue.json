@@ -1,0 +1,3403 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-11-02",
+  "purpose": "Research inventory only; not a mobile content payload.",
+  "publication_cleared": false,
+  "evidence_statuses": {
+    "draft_summary": "Original short bilingual copy exists; religious/editorial review still required.",
+    "reference_seed": "Identity, definition or short synopsis and source location exist; not necessarily a full article.",
+    "follow_up": "Reference gap, disputed mapping or deeper source work remains. Do not publish as complete."
+  },
+  "collections": [
+    {
+      "id": "foundations",
+      "title": {
+        "hi": "मूल परिचय",
+        "en": "Foundations"
+      },
+      "dossier": "04-foundations.md"
+    },
+    {
+      "id": "deities",
+      "title": {
+        "hi": "देव परिचय",
+        "en": "Deity introductions"
+      },
+      "dossier": "05-deities-and-navagraha.md"
+    },
+    {
+      "id": "thirty_three",
+      "title": {
+        "hi": "33 कोटि देवता",
+        "en": "Thirty-three devata"
+      },
+      "dossier": "01-thirty-three-devata.md"
+    },
+    {
+      "id": "directions",
+      "title": {
+        "hi": "दस दिशाएँ और दिक्पाल",
+        "en": "Directions and guardians"
+      },
+      "dossier": "02-dikpal.md"
+    },
+    {
+      "id": "navagraha",
+      "title": {
+        "hi": "नवग्रह परिचय",
+        "en": "Navagraha"
+      },
+      "dossier": "05-deities-and-navagraha.md"
+    },
+    {
+      "id": "symbols",
+      "title": {
+        "hi": "शुभ चिह्न और पूजा के प्रतीक",
+        "en": "Sacred symbols"
+      },
+      "dossier": "03-symbols.md"
+    },
+    {
+      "id": "forms",
+      "title": {
+        "hi": "स्वरूप और अवतार",
+        "en": "Forms and avataras"
+      },
+      "dossier": "06-forms-and-avataras.md"
+    },
+    {
+      "id": "materials",
+      "title": {
+        "hi": "पूजा सामग्री और पवित्र वनस्पतियाँ",
+        "en": "Materials and sacred plants"
+      },
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "elements",
+      "title": {
+        "hi": "प्रकृति और तत्त्व",
+        "en": "Nature and elements"
+      },
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "time",
+      "title": {
+        "hi": "काल और पंचांग की समझ",
+        "en": "Panchang and time"
+      },
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "scriptures",
+      "title": {
+        "hi": "ग्रंथ परिचय",
+        "en": "Scriptures"
+      },
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "temples",
+      "title": {
+        "hi": "मंदिर और दर्शन",
+        "en": "Temples and darshan"
+      },
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "rishis",
+      "title": {
+        "hi": "ऋषि और ज्ञान परम्परा",
+        "en": "Rishis and knowledge traditions"
+      },
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    }
+  ],
+  "topics": [
+    {
+      "id": "sp.foundations.deva",
+      "collection": "foundations",
+      "title": {
+        "hi": "देव देवी और देवता",
+        "en": "Deva, Devi and devata"
+      },
+      "source_refs": [
+        "HA-DENOMINATIONS",
+        "VEDIC-INTRO"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "04-foundations.md"
+    },
+    {
+      "id": "sp.foundations.divine_terms",
+      "collection": "foundations",
+      "title": {
+        "hi": "ईश्वर भगवान और ब्रह्म",
+        "en": "Ishvara, Bhagavan and Brahman"
+      },
+      "source_refs": [
+        "HA-DENOMINATIONS",
+        "MET-EDUCATORS"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "04-foundations.md"
+    },
+    {
+      "id": "sp.foundations.categories",
+      "collection": "foundations",
+      "title": {
+        "hi": "अवतार स्वरूप और देवसमूह",
+        "en": "Avatara, form and collection"
+      },
+      "source_refs": [
+        "BG47-MUKUND",
+        "BG47-BBT",
+        "SB1326-BBT"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "04-foundations.md"
+    },
+    {
+      "id": "sp.foundations.names_forms",
+      "collection": "foundations",
+      "title": {
+        "hi": "एक देवता के अनेक नाम और रूप",
+        "en": "Many names and forms"
+      },
+      "source_refs": [
+        "MET-NATARAJA",
+        "MET-SOMASKANDA"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "04-foundations.md"
+    },
+    {
+      "id": "sp.foundations.reading_symbols",
+      "collection": "foundations",
+      "title": {
+        "hi": "कथा प्रतीक और परम्परा",
+        "en": "Story, symbol and tradition"
+      },
+      "source_refs": [
+        "BG510-MUKUND",
+        "BG510-BBT",
+        "MET-SARASVATI"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "04-foundations.md"
+    },
+    {
+      "id": "sp.foundations.reading_sources",
+      "collection": "foundations",
+      "title": {
+        "hi": "ग्रंथ और क्षेत्रीय मान्यता",
+        "en": "Text and regional practice"
+      },
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA",
+        "ASHTALAKSHMI-TEMPLE"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "04-foundations.md"
+    },
+    {
+      "id": "sp.deities.rama",
+      "collection": "deities",
+      "title": {
+        "hi": "राम",
+        "en": "Rama"
+      },
+      "source_refs": [
+        "VR-RAMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "rama"
+    },
+    {
+      "id": "sp.deities.krishna",
+      "collection": "deities",
+      "title": {
+        "hi": "कृष्ण",
+        "en": "Krishna"
+      },
+      "source_refs": [
+        "BG47-MUKUND",
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "krishna"
+    },
+    {
+      "id": "sp.deities.vishnu",
+      "collection": "deities",
+      "title": {
+        "hi": "विष्णु",
+        "en": "Vishnu"
+      },
+      "source_refs": [
+        "HA-DENOMINATIONS",
+        "MET-RECOGNIZING"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "vishnu"
+    },
+    {
+      "id": "sp.deities.shiva",
+      "collection": "deities",
+      "title": {
+        "hi": "शिव",
+        "en": "Shiva"
+      },
+      "source_refs": [
+        "MET-NATARAJA",
+        "HA-SYMBOLS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "shiva"
+    },
+    {
+      "id": "sp.deities.hanuman",
+      "collection": "deities",
+      "title": {
+        "hi": "हनुमान",
+        "en": "Hanuman"
+      },
+      "source_refs": [
+        "VR-HANUMAN"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "hanuman"
+    },
+    {
+      "id": "sp.deities.durga",
+      "collection": "deities",
+      "title": {
+        "hi": "दुर्गा",
+        "en": "Durga"
+      },
+      "source_refs": [
+        "MET-DURGA",
+        "DEVI-KAVACHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "durga"
+    },
+    {
+      "id": "sp.deities.ganesha",
+      "collection": "deities",
+      "title": {
+        "hi": "गणेश",
+        "en": "Ganesha"
+      },
+      "source_refs": [
+        "MET-GANESHA",
+        "GANAPATI-ATHARVA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "ganesha"
+    },
+    {
+      "id": "sp.deities.savitr",
+      "collection": "deities",
+      "title": {
+        "hi": "गायत्री और सवितृ पहचान",
+        "en": "Gayatri and Savitr identity"
+      },
+      "source_refs": [
+        "RV36210"
+      ],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "savitr"
+    },
+    {
+      "id": "sp.deities.saraswati",
+      "collection": "deities",
+      "title": {
+        "hi": "सरस्वती",
+        "en": "Saraswati"
+      },
+      "source_refs": [
+        "MET-SARASVATI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "saraswati"
+    },
+    {
+      "id": "sp.deities.lakshmi",
+      "collection": "deities",
+      "title": {
+        "hi": "लक्ष्मी",
+        "en": "Lakshmi"
+      },
+      "source_refs": [
+        "HOH-LAKSHMI",
+        "SHRI-SUKTA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "lakshmi"
+    },
+    {
+      "id": "sp.deities.surya",
+      "collection": "deities",
+      "title": {
+        "hi": "सूर्य",
+        "en": "Surya"
+      },
+      "source_refs": [
+        "AGNI51",
+        "NAVAGRAHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "surya"
+    },
+    {
+      "id": "sp.deities.radha",
+      "collection": "deities",
+      "title": {
+        "hi": "राधा",
+        "en": "Radha"
+      },
+      "source_refs": [
+        "RADHA-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "radha"
+    },
+    {
+      "id": "sp.deities.kartikeya",
+      "collection": "deities",
+      "title": {
+        "hi": "कार्तिकेय",
+        "en": "Karttikeya"
+      },
+      "source_refs": [
+        "MET-KARTTIKEYA",
+        "MET-SOMASKANDA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "kartikeya"
+    },
+    {
+      "id": "sp.deities.kubera",
+      "collection": "deities",
+      "title": {
+        "hi": "कुबेर",
+        "en": "Kubera"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "AGNI51"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "kubera"
+    },
+    {
+      "id": "sp.deities.ganga",
+      "collection": "deities",
+      "title": {
+        "hi": "गंगा",
+        "en": "Ganga"
+      },
+      "source_refs": [
+        "NM-GANGA",
+        "VR-GANGA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "ganga"
+    },
+    {
+      "id": "sp.deities.parvati",
+      "collection": "deities",
+      "title": {
+        "hi": "पार्वती",
+        "en": "Parvati"
+      },
+      "source_refs": [
+        "MET-PARVATI",
+        "MET-SOMASKANDA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "parvati"
+    },
+    {
+      "id": "sp.deities.narasimha",
+      "collection": "deities",
+      "title": {
+        "hi": "नरसिंह",
+        "en": "Narasimha"
+      },
+      "source_refs": [
+        "SB78-BBT",
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "narasimha"
+    },
+    {
+      "id": "sp.deities.dattatreya",
+      "collection": "deities",
+      "title": {
+        "hi": "दत्तात्रेय",
+        "en": "Dattatreya"
+      },
+      "source_refs": [
+        "SB4133-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "dattatreya"
+    },
+    {
+      "id": "sp.deities.shani",
+      "collection": "deities",
+      "title": {
+        "hi": "शनि",
+        "en": "Shani"
+      },
+      "source_refs": [
+        "NAVAGRAHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "shani"
+    },
+    {
+      "id": "sp.deities.kali",
+      "collection": "deities",
+      "title": {
+        "hi": "काली",
+        "en": "Kali"
+      },
+      "source_refs": [
+        "DM-KALI-PARGITER",
+        "DM-KALI-AURO"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "kali"
+    },
+    {
+      "id": "sp.deities.navagraha",
+      "collection": "deities",
+      "title": {
+        "hi": "नवग्रह समूह",
+        "en": "Navagraha collection"
+      },
+      "source_refs": [
+        "NAVAGRAHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "existing_deity_id": "navagraha"
+    },
+    {
+      "id": "sp.deities.panchayatana",
+      "collection": "deities",
+      "title": {
+        "hi": "पञ्चायतन",
+        "en": "Panchayatana"
+      },
+      "source_refs": [
+        "SRINGERI-PANCHAYATANA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md"
+    },
+    {
+      "id": "sp.deities.trimurti",
+      "collection": "deities",
+      "title": {
+        "hi": "त्रिमूर्ति",
+        "en": "Trimurti"
+      },
+      "source_refs": [
+        "MET-EDUCATORS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md"
+    },
+    {
+      "id": "sp.deities.tridevi",
+      "collection": "deities",
+      "title": {
+        "hi": "त्रिदेवी",
+        "en": "Tridevi"
+      },
+      "source_refs": [
+        "HA-SHAKTI"
+      ],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md"
+    },
+    {
+      "id": "sp.thirty_three.overview",
+      "collection": "thirty_three",
+      "title": {
+        "hi": "तैंतीस देवता का संवाद",
+        "en": "Dialogue on thirty-three devata"
+      },
+      "source_refs": [
+        "BU-MADH",
+        "BU-MULLER"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "01-thirty-three-devata.md"
+    },
+    {
+      "id": "sp.thirty_three.vasu",
+      "collection": "thirty_three",
+      "title": {
+        "hi": "आठ वसु",
+        "en": "Eight Vasus"
+      },
+      "source_refs": [
+        "BU-MADH",
+        "BU-MULLER"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "01-thirty-three-devata.md"
+    },
+    {
+      "id": "sp.thirty_three.rudra",
+      "collection": "thirty_three",
+      "title": {
+        "hi": "ग्यारह रुद्र",
+        "en": "Eleven Rudras"
+      },
+      "source_refs": [
+        "BU-MADH",
+        "BU-MULLER"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "01-thirty-three-devata.md"
+    },
+    {
+      "id": "sp.thirty_three.aditya",
+      "collection": "thirty_three",
+      "title": {
+        "hi": "बारह आदित्य",
+        "en": "Twelve Adityas"
+      },
+      "source_refs": [
+        "BU-MADH",
+        "BU-MULLER"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "01-thirty-three-devata.md"
+    },
+    {
+      "id": "sp.thirty_three.indra",
+      "collection": "thirty_three",
+      "title": {
+        "hi": "इन्द्र का संदर्भ",
+        "en": "Indra in the passage"
+      },
+      "source_refs": [
+        "BU-MADH",
+        "BU-MULLER"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "01-thirty-three-devata.md"
+    },
+    {
+      "id": "sp.thirty_three.prajapati",
+      "collection": "thirty_three",
+      "title": {
+        "hi": "प्रजापति का संदर्भ",
+        "en": "Prajapati in the passage"
+      },
+      "source_refs": [
+        "BU-MADH",
+        "BU-MULLER"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "01-thirty-three-devata.md"
+    },
+    {
+      "id": "sp.thirty_three.koti",
+      "collection": "thirty_three",
+      "title": {
+        "hi": "कोटि के अर्थ",
+        "en": "Koti terminology"
+      },
+      "source_refs": [
+        "KOTI-APTE"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "01-thirty-three-devata.md"
+    },
+    {
+      "id": "sp.thirty_three.variants",
+      "collection": "thirty_three",
+      "title": {
+        "hi": "अन्य पाठों की सूचियाँ",
+        "en": "Other textual rosters"
+      },
+      "source_refs": [
+        "SB-SANSKRIT",
+        "SB-EGGELING",
+        "VP1-TAYLOR"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "01-thirty-three-devata.md"
+    },
+    {
+      "id": "sp.directions.east",
+      "collection": "directions",
+      "title": {
+        "hi": "पूर्व",
+        "en": "East"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md",
+      "guardian": "Indra",
+      "lens": "Kamika Purvapada 4.481–487"
+    },
+    {
+      "id": "sp.directions.southeast",
+      "collection": "directions",
+      "title": {
+        "hi": "आग्नेय",
+        "en": "Southeast"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md",
+      "guardian": "Agni",
+      "lens": "Kamika Purvapada 4.481–487"
+    },
+    {
+      "id": "sp.directions.south",
+      "collection": "directions",
+      "title": {
+        "hi": "दक्षिण",
+        "en": "South"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md",
+      "guardian": "Yama",
+      "lens": "Kamika Purvapada 4.481–487"
+    },
+    {
+      "id": "sp.directions.southwest",
+      "collection": "directions",
+      "title": {
+        "hi": "नैऋत्य",
+        "en": "Southwest"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md",
+      "guardian": "Nirriti",
+      "lens": "Kamika Purvapada 4.481–487"
+    },
+    {
+      "id": "sp.directions.west",
+      "collection": "directions",
+      "title": {
+        "hi": "पश्चिम",
+        "en": "West"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md",
+      "guardian": "Varuna",
+      "lens": "Kamika Purvapada 4.481–487"
+    },
+    {
+      "id": "sp.directions.northwest",
+      "collection": "directions",
+      "title": {
+        "hi": "वायव्य",
+        "en": "Northwest"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md",
+      "guardian": "Vayu",
+      "lens": "Kamika Purvapada 4.481–487"
+    },
+    {
+      "id": "sp.directions.north",
+      "collection": "directions",
+      "title": {
+        "hi": "उत्तर",
+        "en": "North"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md",
+      "guardian": "Kubera",
+      "lens": "Kamika Purvapada 4.481–487"
+    },
+    {
+      "id": "sp.directions.northeast",
+      "collection": "directions",
+      "title": {
+        "hi": "ईशान",
+        "en": "Northeast"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md",
+      "guardian": "Ishana",
+      "lens": "Kamika Purvapada 4.481–487"
+    },
+    {
+      "id": "sp.directions.above",
+      "collection": "directions",
+      "title": {
+        "hi": "ऊर्ध्व",
+        "en": "Above"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md",
+      "guardian": "Brahma",
+      "lens": "Kamika Purvapada 4.481–487"
+    },
+    {
+      "id": "sp.directions.below",
+      "collection": "directions",
+      "title": {
+        "hi": "अधो",
+        "en": "Below"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md",
+      "guardian": "Vishnu",
+      "lens": "Kamika Purvapada 4.481–487"
+    },
+    {
+      "id": "sp.directions.below_ananta",
+      "collection": "directions",
+      "title": {
+        "hi": "अधो: अनन्त परम्परा",
+        "en": "Below: Ananta convention"
+      },
+      "source_refs": [
+        "UOU-KARMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "02-dikpal.md"
+    },
+    {
+      "id": "sp.navagraha.surya",
+      "collection": "navagraha",
+      "title": {
+        "hi": "सूर्य",
+        "en": "Surya"
+      },
+      "source_refs": [
+        "NAVAGRAHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "locator": "Navagraha Stotra 1"
+    },
+    {
+      "id": "sp.navagraha.chandra",
+      "collection": "navagraha",
+      "title": {
+        "hi": "चन्द्र",
+        "en": "Chandra"
+      },
+      "source_refs": [
+        "NAVAGRAHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "locator": "Navagraha Stotra 2"
+    },
+    {
+      "id": "sp.navagraha.mangala",
+      "collection": "navagraha",
+      "title": {
+        "hi": "मंगल",
+        "en": "Mangala"
+      },
+      "source_refs": [
+        "NAVAGRAHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "locator": "Navagraha Stotra 3"
+    },
+    {
+      "id": "sp.navagraha.budha",
+      "collection": "navagraha",
+      "title": {
+        "hi": "बुध",
+        "en": "Budha"
+      },
+      "source_refs": [
+        "NAVAGRAHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "locator": "Navagraha Stotra 4"
+    },
+    {
+      "id": "sp.navagraha.brihaspati",
+      "collection": "navagraha",
+      "title": {
+        "hi": "बृहस्पति",
+        "en": "Brihaspati"
+      },
+      "source_refs": [
+        "NAVAGRAHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "locator": "Navagraha Stotra 5"
+    },
+    {
+      "id": "sp.navagraha.shukra",
+      "collection": "navagraha",
+      "title": {
+        "hi": "शुक्र",
+        "en": "Shukra"
+      },
+      "source_refs": [
+        "NAVAGRAHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "locator": "Navagraha Stotra 6"
+    },
+    {
+      "id": "sp.navagraha.shani",
+      "collection": "navagraha",
+      "title": {
+        "hi": "शनि",
+        "en": "Shani"
+      },
+      "source_refs": [
+        "NAVAGRAHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "locator": "Navagraha Stotra 7"
+    },
+    {
+      "id": "sp.navagraha.rahu",
+      "collection": "navagraha",
+      "title": {
+        "hi": "राहु",
+        "en": "Rahu"
+      },
+      "source_refs": [
+        "NAVAGRAHA",
+        "NASA-NODES"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "locator": "Navagraha Stotra 8"
+    },
+    {
+      "id": "sp.navagraha.ketu",
+      "collection": "navagraha",
+      "title": {
+        "hi": "केतु",
+        "en": "Ketu"
+      },
+      "source_refs": [
+        "NAVAGRAHA",
+        "NASA-NODES"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "05-deities-and-navagraha.md",
+      "locator": "Navagraha Stotra 9"
+    },
+    {
+      "id": "sp.symbols.swastika",
+      "collection": "symbols",
+      "title": {
+        "hi": "स्वस्तिक",
+        "en": "Swastika"
+      },
+      "source_refs": [
+        "HAF-SWASTIKA",
+        "HOH-SYMBOLS"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.om",
+      "collection": "symbols",
+      "title": {
+        "hi": "ॐ",
+        "en": "Om"
+      },
+      "source_refs": [
+        "MANDUKYA-MI",
+        "HOH-SYMBOLS"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.shri",
+      "collection": "symbols",
+      "title": {
+        "hi": "श्री",
+        "en": "Shri"
+      },
+      "source_refs": [
+        "SHRI-SUKTA",
+        "HOH-LAKSHMI"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.kalasha",
+      "collection": "symbols",
+      "title": {
+        "hi": "कलश",
+        "en": "Kalasha"
+      },
+      "source_refs": [
+        "DRIK-KALASH",
+        "DRIK-GHATA"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.coconut",
+      "collection": "symbols",
+      "title": {
+        "hi": "नारियल",
+        "en": "Coconut"
+      },
+      "source_refs": [
+        "CHINMAYA-WHY",
+        "DRIK-KALASH"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.lamp",
+      "collection": "symbols",
+      "title": {
+        "hi": "दीपक",
+        "en": "Lamp"
+      },
+      "source_refs": [
+        "SDS-RITUALS",
+        "CHINMAYA-WHY"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.conch",
+      "collection": "symbols",
+      "title": {
+        "hi": "शंख",
+        "en": "Conch"
+      },
+      "source_refs": [
+        "MET-RECOGNIZING",
+        "HOH-SYMBOLS"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.bell",
+      "collection": "symbols",
+      "title": {
+        "hi": "घंटी",
+        "en": "Bell"
+      },
+      "source_refs": [
+        "KAMIKA",
+        "CHINMAYA-WHY"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.lotus",
+      "collection": "symbols",
+      "title": {
+        "hi": "कमल",
+        "en": "Lotus"
+      },
+      "source_refs": [
+        "BG510-MUKUND",
+        "BG510-BBT"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.tilaka",
+      "collection": "symbols",
+      "title": {
+        "hi": "तिलक",
+        "en": "Tilaka"
+      },
+      "source_refs": [
+        "BAPS-TILAK",
+        "SDS-TILAK"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.mauli",
+      "collection": "symbols",
+      "title": {
+        "hi": "मौली",
+        "en": "Mauli"
+      },
+      "source_refs": [
+        "DRIK-KALASH",
+        "HOH-RAKSHA"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.akshata",
+      "collection": "symbols",
+      "title": {
+        "hi": "अक्षत",
+        "en": "Akshata"
+      },
+      "source_refs": [
+        "DRIK-GHATA",
+        "CHINMAYA-WHY"
+      ],
+      "evidence": "draft_summary",
+      "publication_status": "draft",
+      "dossier": "03-symbols.md",
+      "phase": 1
+    },
+    {
+      "id": "sp.symbols.footprints",
+      "collection": "symbols",
+      "title": {
+        "hi": "चरण-चिह्न",
+        "en": "Footprints"
+      },
+      "source_refs": [
+        "RADHA-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.rudraksha",
+      "collection": "symbols",
+      "title": {
+        "hi": "रुद्राक्ष",
+        "en": "Rudraksha"
+      },
+      "source_refs": [
+        "HA-SYMBOLS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.tulasi_mala",
+      "collection": "symbols",
+      "title": {
+        "hi": "तुलसी माला",
+        "en": "Tulasi mala"
+      },
+      "source_refs": [
+        "SDS-TULASI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.yajnopavita",
+      "collection": "symbols",
+      "title": {
+        "hi": "यज्ञोपवीत",
+        "en": "Yajnopavita"
+      },
+      "source_refs": [
+        "SB818-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.bhasma",
+      "collection": "symbols",
+      "title": {
+        "hi": "भस्म",
+        "en": "Bhasma"
+      },
+      "source_refs": [
+        "SDS-RITUALS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.rangoli",
+      "collection": "symbols",
+      "title": {
+        "hi": "रंगोली और कोलम",
+        "en": "Rangoli and kolam"
+      },
+      "source_refs": [
+        "IGNCA-KOLAM"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.dhvaja",
+      "collection": "symbols",
+      "title": {
+        "hi": "ध्वजा",
+        "en": "Dhvaja"
+      },
+      "source_refs": [
+        "HA-SYMBOLS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.yantra",
+      "collection": "symbols",
+      "title": {
+        "hi": "यंत्र",
+        "en": "Yantra"
+      },
+      "source_refs": [
+        "BEER-YANTRA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.shubh_labh",
+      "collection": "symbols",
+      "title": {
+        "hi": "शुभ–लाभ",
+        "en": "Shubh-Labh"
+      },
+      "source_refs": [],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.torana",
+      "collection": "symbols",
+      "title": {
+        "hi": "तोरण",
+        "en": "Torana"
+      },
+      "source_refs": [
+        "DSOURCE-TORAN"
+      ],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.mandala",
+      "collection": "symbols",
+      "title": {
+        "hi": "मण्डल",
+        "en": "Mandala"
+      },
+      "source_refs": [],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.symbols.lakshmi_footprints",
+      "collection": "symbols",
+      "title": {
+        "hi": "लक्ष्मी-पदचिह्न",
+        "en": "Lakshmi footprints"
+      },
+      "source_refs": [],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "12-further-symbols-and-visual-references.md",
+      "phase": 2
+    },
+    {
+      "id": "sp.forms.dashavatara",
+      "collection": "forms",
+      "title": {
+        "hi": "दशावतार",
+        "en": "Dashavatara"
+      },
+      "source_refs": [
+        "DRIK-DASHAVATARA",
+        "JAYADEVA",
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md"
+    },
+    {
+      "id": "sp.forms.navdurga",
+      "collection": "forms",
+      "title": {
+        "hi": "नवदुर्गा",
+        "en": "Navdurga"
+      },
+      "source_refs": [
+        "DEVI-KAVACHA",
+        "DRIK-NAVRATRI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md"
+    },
+    {
+      "id": "sp.forms.ashtalakshmi",
+      "collection": "forms",
+      "title": {
+        "hi": "अष्टलक्ष्मी",
+        "en": "Ashtalakshmi"
+      },
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA",
+        "ASHTALAKSHMI-TEMPLE"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md"
+    },
+    {
+      "id": "sp.forms.avatara_matsya",
+      "collection": "forms",
+      "title": {
+        "hi": "मत्स्य",
+        "en": "Matsya"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.avatara_kurma",
+      "collection": "forms",
+      "title": {
+        "hi": "कूर्म",
+        "en": "Kurma"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.avatara_varaha",
+      "collection": "forms",
+      "title": {
+        "hi": "वराह",
+        "en": "Varaha"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.avatara_narasimha",
+      "collection": "forms",
+      "title": {
+        "hi": "नरसिंह",
+        "en": "Narasimha"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.avatara_vamana",
+      "collection": "forms",
+      "title": {
+        "hi": "वामन",
+        "en": "Vamana"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.avatara_parashurama",
+      "collection": "forms",
+      "title": {
+        "hi": "परशुराम",
+        "en": "Parashurama"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.avatara_rama",
+      "collection": "forms",
+      "title": {
+        "hi": "राम",
+        "en": "Rama"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.avatara_balarama",
+      "collection": "forms",
+      "title": {
+        "hi": "बलराम",
+        "en": "Balarama"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.avatara_krishna",
+      "collection": "forms",
+      "title": {
+        "hi": "कृष्ण",
+        "en": "Krishna"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.avatara_buddha",
+      "collection": "forms",
+      "title": {
+        "hi": "बुद्ध",
+        "en": "Buddha"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.avatara_kalki",
+      "collection": "forms",
+      "title": {
+        "hi": "कल्कि",
+        "en": "Kalki"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "avatara"
+    },
+    {
+      "id": "sp.forms.navdurga_shailaputri",
+      "collection": "forms",
+      "title": {
+        "hi": "शैलपुत्री",
+        "en": "Shailaputri"
+      },
+      "source_refs": [
+        "DEVI-KAVACHA",
+        "DRIK-SHAILAPUTRI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "navdurga",
+      "order": 1
+    },
+    {
+      "id": "sp.forms.navdurga_brahmacharini",
+      "collection": "forms",
+      "title": {
+        "hi": "ब्रह्मचारिणी",
+        "en": "Brahmacharini"
+      },
+      "source_refs": [
+        "DEVI-KAVACHA",
+        "DRIK-BRAHMACHARINI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "navdurga",
+      "order": 2
+    },
+    {
+      "id": "sp.forms.navdurga_chandraghanta",
+      "collection": "forms",
+      "title": {
+        "hi": "चन्द्रघण्टा",
+        "en": "Chandraghanta"
+      },
+      "source_refs": [
+        "DEVI-KAVACHA",
+        "DRIK-CHANDRAGHANTA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "navdurga",
+      "order": 3
+    },
+    {
+      "id": "sp.forms.navdurga_kushmanda",
+      "collection": "forms",
+      "title": {
+        "hi": "कूष्माण्डा",
+        "en": "Kushmanda"
+      },
+      "source_refs": [
+        "DEVI-KAVACHA",
+        "DRIK-KUSHMANDA"
+      ],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "navdurga",
+      "order": 4
+    },
+    {
+      "id": "sp.forms.navdurga_skandamata",
+      "collection": "forms",
+      "title": {
+        "hi": "स्कन्दमाता",
+        "en": "Skandamata"
+      },
+      "source_refs": [
+        "DEVI-KAVACHA",
+        "DRIK-SKANDAMATA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "navdurga",
+      "order": 5
+    },
+    {
+      "id": "sp.forms.navdurga_katyayani",
+      "collection": "forms",
+      "title": {
+        "hi": "कात्यायनी",
+        "en": "Katyayani"
+      },
+      "source_refs": [
+        "DEVI-KAVACHA",
+        "DRIK-KATYAYANI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "navdurga",
+      "order": 6
+    },
+    {
+      "id": "sp.forms.navdurga_kalaratri",
+      "collection": "forms",
+      "title": {
+        "hi": "कालरात्रि",
+        "en": "Kalaratri"
+      },
+      "source_refs": [
+        "DEVI-KAVACHA",
+        "DRIK-KALARATRI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "navdurga",
+      "order": 7
+    },
+    {
+      "id": "sp.forms.navdurga_mahagauri",
+      "collection": "forms",
+      "title": {
+        "hi": "महागौरी",
+        "en": "Mahagauri"
+      },
+      "source_refs": [
+        "DEVI-KAVACHA",
+        "DRIK-MAHAGAURI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "navdurga",
+      "order": 8
+    },
+    {
+      "id": "sp.forms.navdurga_siddhidatri",
+      "collection": "forms",
+      "title": {
+        "hi": "सिद्धिदात्री",
+        "en": "Siddhidatri"
+      },
+      "source_refs": [
+        "DEVI-KAVACHA",
+        "DRIK-SIDDHIDATRI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "navdurga",
+      "order": 9
+    },
+    {
+      "id": "sp.forms.lakshmi_adi",
+      "collection": "forms",
+      "title": {
+        "hi": "आदि लक्ष्मी",
+        "en": "Adi Lakshmi"
+      },
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "ashtalakshmi_stotra"
+    },
+    {
+      "id": "sp.forms.lakshmi_dhanya",
+      "collection": "forms",
+      "title": {
+        "hi": "धान्य लक्ष्मी",
+        "en": "Dhanya Lakshmi"
+      },
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "ashtalakshmi_stotra"
+    },
+    {
+      "id": "sp.forms.lakshmi_dhairya",
+      "collection": "forms",
+      "title": {
+        "hi": "धैर्य लक्ष्मी",
+        "en": "Dhairya Lakshmi"
+      },
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "ashtalakshmi_stotra"
+    },
+    {
+      "id": "sp.forms.lakshmi_gaja",
+      "collection": "forms",
+      "title": {
+        "hi": "गज लक्ष्मी",
+        "en": "Gaja Lakshmi"
+      },
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "ashtalakshmi_stotra"
+    },
+    {
+      "id": "sp.forms.lakshmi_santana",
+      "collection": "forms",
+      "title": {
+        "hi": "सन्तान लक्ष्मी",
+        "en": "Santana Lakshmi"
+      },
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "ashtalakshmi_stotra"
+    },
+    {
+      "id": "sp.forms.lakshmi_vijaya",
+      "collection": "forms",
+      "title": {
+        "hi": "विजय लक्ष्मी",
+        "en": "Vijaya Lakshmi"
+      },
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "ashtalakshmi_stotra"
+    },
+    {
+      "id": "sp.forms.lakshmi_vidya",
+      "collection": "forms",
+      "title": {
+        "hi": "विद्या लक्ष्मी",
+        "en": "Vidya Lakshmi"
+      },
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "ashtalakshmi_stotra"
+    },
+    {
+      "id": "sp.forms.lakshmi_dhana",
+      "collection": "forms",
+      "title": {
+        "hi": "धन लक्ष्मी",
+        "en": "Dhana Lakshmi"
+      },
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "06-forms-and-avataras.md",
+      "subcollection": "ashtalakshmi_stotra"
+    },
+    {
+      "id": "sp.materials.tulasi",
+      "collection": "materials",
+      "title": {
+        "hi": "तुलसी",
+        "en": "Tulasi"
+      },
+      "source_refs": [
+        "SDS-TULASI",
+        "CPREEC-PLANTS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.bilva",
+      "collection": "materials",
+      "title": {
+        "hi": "बिल्व",
+        "en": "Bilva"
+      },
+      "source_refs": [
+        "SHIVA-BILVA",
+        "HA-SYMBOLS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.durva",
+      "collection": "materials",
+      "title": {
+        "hi": "दूर्वा",
+        "en": "Durva"
+      },
+      "source_refs": [
+        "GANAPATI-ATHARVA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.mango_leaves",
+      "collection": "materials",
+      "title": {
+        "hi": "आम-पल्लव",
+        "en": "Mango leaves"
+      },
+      "source_refs": [
+        "DRIK-GHATA",
+        "DRIK-KALASH"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.banyan",
+      "collection": "materials",
+      "title": {
+        "hi": "वट",
+        "en": "Banyan"
+      },
+      "source_refs": [
+        "CPREEC-PLANTS",
+        "HA-SYMBOLS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.peepal",
+      "collection": "materials",
+      "title": {
+        "hi": "पीपल",
+        "en": "Peepal"
+      },
+      "source_refs": [
+        "CPREEC-PLANTS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.sthalavriksha",
+      "collection": "materials",
+      "title": {
+        "hi": "स्थलवृक्ष",
+        "en": "Sthalavriksha"
+      },
+      "source_refs": [
+        "CPREEC-PLANTS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.water",
+      "collection": "materials",
+      "title": {
+        "hi": "जल",
+        "en": "Water"
+      },
+      "source_refs": [
+        "DRIK-GHATA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.betel_nut",
+      "collection": "materials",
+      "title": {
+        "hi": "सुपारी",
+        "en": "Betel nut"
+      },
+      "source_refs": [
+        "DRIK-KALASH"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.scent",
+      "collection": "materials",
+      "title": {
+        "hi": "गन्ध",
+        "en": "Scent"
+      },
+      "source_refs": [
+        "DRIK-KALASH"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.roli_turmeric",
+      "collection": "materials",
+      "title": {
+        "hi": "रोली और हल्दी",
+        "en": "Roli and turmeric"
+      },
+      "source_refs": [
+        "DRIK-KALASH"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.flower",
+      "collection": "materials",
+      "title": {
+        "hi": "पुष्प",
+        "en": "Flower"
+      },
+      "source_refs": [
+        "BG926-MUKUND",
+        "BG926-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.naivedya",
+      "collection": "materials",
+      "title": {
+        "hi": "नैवेद्य",
+        "en": "Naivedya"
+      },
+      "source_refs": [
+        "SDS-PRASADA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.prasada",
+      "collection": "materials",
+      "title": {
+        "hi": "प्रसाद",
+        "en": "Prasada"
+      },
+      "source_refs": [
+        "SDS-PRASADA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.materials.incense",
+      "collection": "materials",
+      "title": {
+        "hi": "धूप",
+        "en": "Incense"
+      },
+      "source_refs": [
+        "DRIK-GHATA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.akasha",
+      "collection": "elements",
+      "title": {
+        "hi": "आकाश",
+        "en": "Akasha"
+      },
+      "source_refs": [
+        "TAITTIRIYA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.vayu",
+      "collection": "elements",
+      "title": {
+        "hi": "वायु",
+        "en": "Vayu"
+      },
+      "source_refs": [
+        "TAITTIRIYA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.agni",
+      "collection": "elements",
+      "title": {
+        "hi": "अग्नि",
+        "en": "Agni"
+      },
+      "source_refs": [
+        "TAITTIRIYA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.ap",
+      "collection": "elements",
+      "title": {
+        "hi": "आप",
+        "en": "Ap"
+      },
+      "source_refs": [
+        "TAITTIRIYA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.prithivi",
+      "collection": "elements",
+      "title": {
+        "hi": "पृथ्वी",
+        "en": "Prithivi"
+      },
+      "source_refs": [
+        "TAITTIRIYA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.loka",
+      "collection": "elements",
+      "title": {
+        "hi": "लोक",
+        "en": "Loka"
+      },
+      "source_refs": [
+        "VP2-TAYLOR"
+      ],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.meru",
+      "collection": "elements",
+      "title": {
+        "hi": "मेरु",
+        "en": "Meru"
+      },
+      "source_refs": [
+        "VP2-TAYLOR"
+      ],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.jambudvipa",
+      "collection": "elements",
+      "title": {
+        "hi": "जम्बूद्वीप",
+        "en": "Jambudvipa"
+      },
+      "source_refs": [
+        "VP2-TAYLOR"
+      ],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.yuga",
+      "collection": "elements",
+      "title": {
+        "hi": "युग",
+        "en": "Yuga"
+      },
+      "source_refs": [
+        "VP2-TAYLOR"
+      ],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.manvantara",
+      "collection": "elements",
+      "title": {
+        "hi": "मन्वन्तर",
+        "en": "Manvantara"
+      },
+      "source_refs": [
+        "VP2-TAYLOR"
+      ],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.elements.kalpa",
+      "collection": "elements",
+      "title": {
+        "hi": "कल्प",
+        "en": "Kalpa"
+      },
+      "source_refs": [
+        "VP2-TAYLOR"
+      ],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "07-materials-plants-and-elements.md"
+    },
+    {
+      "id": "sp.time.vara",
+      "collection": "time",
+      "title": {
+        "hi": "वार",
+        "en": "Vara"
+      },
+      "source_refs": [
+        "IMD-PANCHANG"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.tithi",
+      "collection": "time",
+      "title": {
+        "hi": "तिथि",
+        "en": "Tithi"
+      },
+      "source_refs": [
+        "IMD-PANCHANG"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.nakshatra",
+      "collection": "time",
+      "title": {
+        "hi": "नक्षत्र",
+        "en": "Nakshatra"
+      },
+      "source_refs": [
+        "IMD-PANCHANG"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.yoga",
+      "collection": "time",
+      "title": {
+        "hi": "योग",
+        "en": "Yoga"
+      },
+      "source_refs": [
+        "IMD-PANCHANG"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.karana",
+      "collection": "time",
+      "title": {
+        "hi": "करण",
+        "en": "Karana"
+      },
+      "source_refs": [
+        "IMD-PANCHANG"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.shukla",
+      "collection": "time",
+      "title": {
+        "hi": "शुक्ल पक्ष",
+        "en": "Shukla paksha"
+      },
+      "source_refs": [
+        "IMD-PANCHANG",
+        "DRIK-MONTHS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.krishna_paksha",
+      "collection": "time",
+      "title": {
+        "hi": "कृष्ण पक्ष",
+        "en": "Krishna paksha"
+      },
+      "source_refs": [
+        "IMD-PANCHANG",
+        "DRIK-MONTHS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.purnima",
+      "collection": "time",
+      "title": {
+        "hi": "पूर्णिमा",
+        "en": "Purnima"
+      },
+      "source_refs": [
+        "IMD-PANCHANG",
+        "DRIK-MONTHS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.amavasya",
+      "collection": "time",
+      "title": {
+        "hi": "अमावस्या",
+        "en": "Amavasya"
+      },
+      "source_refs": [
+        "IMD-PANCHANG",
+        "DRIK-MONTHS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.sankranti",
+      "collection": "time",
+      "title": {
+        "hi": "संक्रान्ति",
+        "en": "Sankranti"
+      },
+      "source_refs": [
+        "IMD-PANCHANG",
+        "DRIK-MONTHS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.amanta",
+      "collection": "time",
+      "title": {
+        "hi": "अमान्त",
+        "en": "Amanta"
+      },
+      "source_refs": [
+        "DRIK-MONTHS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.purnimanta",
+      "collection": "time",
+      "title": {
+        "hi": "पूर्णिमान्त",
+        "en": "Purnimanta"
+      },
+      "source_refs": [
+        "DRIK-MONTHS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.adhika",
+      "collection": "time",
+      "title": {
+        "hi": "अधिक मास",
+        "en": "Adhika masa"
+      },
+      "source_refs": [
+        "DRIK-ADHIK"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.time_labels",
+      "collection": "time",
+      "title": {
+        "hi": "पंचांग का समय पढ़ना",
+        "en": "Reading time labels"
+      },
+      "source_refs": [
+        "DRIK-TIMINGS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.time.location",
+      "collection": "time",
+      "title": {
+        "hi": "स्थान और पर्व का दिन",
+        "en": "Location and observance date"
+      },
+      "source_refs": [
+        "IMD-PANCHANG",
+        "DRIK-TIMINGS",
+        "DRIK-MONTHS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "08-panchang-and-sacred-time.md"
+    },
+    {
+      "id": "sp.scriptures.rigveda",
+      "collection": "scriptures",
+      "title": {
+        "hi": "ऋग्वेद",
+        "en": "Rigveda"
+      },
+      "source_refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.yajurveda",
+      "collection": "scriptures",
+      "title": {
+        "hi": "यजुर्वेद",
+        "en": "Yajurveda"
+      },
+      "source_refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.samaveda",
+      "collection": "scriptures",
+      "title": {
+        "hi": "सामवेद",
+        "en": "Samaveda"
+      },
+      "source_refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.atharvaveda",
+      "collection": "scriptures",
+      "title": {
+        "hi": "अथर्ववेद",
+        "en": "Atharvaveda"
+      },
+      "source_refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.samhita",
+      "collection": "scriptures",
+      "title": {
+        "hi": "संहिता",
+        "en": "Samhita"
+      },
+      "source_refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.brahmana",
+      "collection": "scriptures",
+      "title": {
+        "hi": "ब्राह्मण",
+        "en": "Brahmana"
+      },
+      "source_refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.aranyaka",
+      "collection": "scriptures",
+      "title": {
+        "hi": "आरण्यक",
+        "en": "Aranyaka"
+      },
+      "source_refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.upanishad",
+      "collection": "scriptures",
+      "title": {
+        "hi": "उपनिषद्",
+        "en": "Upanishad"
+      },
+      "source_refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.shruti",
+      "collection": "scriptures",
+      "title": {
+        "hi": "श्रुति",
+        "en": "Shruti"
+      },
+      "source_refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.smriti",
+      "collection": "scriptures",
+      "title": {
+        "hi": "स्मृति",
+        "en": "Smriti"
+      },
+      "source_refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.ramayana",
+      "collection": "scriptures",
+      "title": {
+        "hi": "रामायण",
+        "en": "Ramayana"
+      },
+      "source_refs": [
+        "VR-RAMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.mahabharata",
+      "collection": "scriptures",
+      "title": {
+        "hi": "महाभारत",
+        "en": "Mahabharata"
+      },
+      "source_refs": [],
+      "evidence": "follow_up",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.gita",
+      "collection": "scriptures",
+      "title": {
+        "hi": "भगवद्गीता",
+        "en": "Bhagavad Gita"
+      },
+      "source_refs": [
+        "BG47-MUKUND",
+        "BG47-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.purana",
+      "collection": "scriptures",
+      "title": {
+        "hi": "पुराण",
+        "en": "Purana"
+      },
+      "source_refs": [
+        "VP-INTRO"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.agama",
+      "collection": "scriptures",
+      "title": {
+        "hi": "आगम",
+        "en": "Agama"
+      },
+      "source_refs": [
+        "KAMIKA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.devi_mahatmya",
+      "collection": "scriptures",
+      "title": {
+        "hi": "देवी-माहात्म्य",
+        "en": "Devi Mahatmya"
+      },
+      "source_refs": [
+        "DM-KALI-PARGITER",
+        "DM-KALI-AURO"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.stotra",
+      "collection": "scriptures",
+      "title": {
+        "hi": "स्तोत्र",
+        "en": "Stotra"
+      },
+      "source_refs": [
+        "NAVAGRAHA",
+        "ASHTALAKSHMI-STOTRA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.scriptures.bhashya",
+      "collection": "scriptures",
+      "title": {
+        "hi": "भाष्य",
+        "en": "Bhashya"
+      },
+      "source_refs": [
+        "BU-MADH"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "09-scriptures-and-reading-map.md"
+    },
+    {
+      "id": "sp.temples.garbhagriha",
+      "collection": "temples",
+      "title": {
+        "hi": "गर्भगृह",
+        "en": "Garbhagriha"
+      },
+      "source_refs": [
+        "TEMPLE-GOV"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.mandapa",
+      "collection": "temples",
+      "title": {
+        "hi": "मण्डप",
+        "en": "Mandapa"
+      },
+      "source_refs": [
+        "TEMPLE-GOV"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.shikhara",
+      "collection": "temples",
+      "title": {
+        "hi": "शिखर",
+        "en": "Shikhara"
+      },
+      "source_refs": [
+        "TEMPLE-GOV"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.vimana",
+      "collection": "temples",
+      "title": {
+        "hi": "विमान",
+        "en": "Vimana"
+      },
+      "source_refs": [
+        "TEMPLE-GOV"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.gopura",
+      "collection": "temples",
+      "title": {
+        "hi": "गोपुर",
+        "en": "Gopura"
+      },
+      "source_refs": [
+        "HA-TEMPLE"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.dhvajastambha",
+      "collection": "temples",
+      "title": {
+        "hi": "ध्वजस्तम्भ",
+        "en": "Dhvajastambha"
+      },
+      "source_refs": [
+        "TEMPLE-GOV"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.vahana",
+      "collection": "temples",
+      "title": {
+        "hi": "वाहन",
+        "en": "Vahana"
+      },
+      "source_refs": [
+        "TEMPLE-GOV"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.prakara",
+      "collection": "temples",
+      "title": {
+        "hi": "प्राकार",
+        "en": "Prakara"
+      },
+      "source_refs": [
+        "HA-TEMPLE"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.darshan",
+      "collection": "temples",
+      "title": {
+        "hi": "दर्शन",
+        "en": "Darshan"
+      },
+      "source_refs": [
+        "MET-EDUCATORS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.puja",
+      "collection": "temples",
+      "title": {
+        "hi": "पूजा",
+        "en": "Puja"
+      },
+      "source_refs": [
+        "HA-TEMPLE"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.arati",
+      "collection": "temples",
+      "title": {
+        "hi": "आरती",
+        "en": "Arati"
+      },
+      "source_refs": [
+        "SDS-RITUALS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.pradakshina",
+      "collection": "temples",
+      "title": {
+        "hi": "प्रदक्षिणा",
+        "en": "Pradakshina"
+      },
+      "source_refs": [
+        "MET-EDUCATORS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.abhisheka",
+      "collection": "temples",
+      "title": {
+        "hi": "अभिषेक",
+        "en": "Abhisheka"
+      },
+      "source_refs": [
+        "MET-EDUCATORS"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.archana",
+      "collection": "temples",
+      "title": {
+        "hi": "अर्चना",
+        "en": "Archana"
+      },
+      "source_refs": [
+        "HA-TEMPLE"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.temples.procession_image",
+      "collection": "temples",
+      "title": {
+        "hi": "उत्सव की प्रतिमा",
+        "en": "Processional image"
+      },
+      "source_refs": [
+        "MET-SOMASKANDA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "10-temples-darshan-and-practice.md"
+    },
+    {
+      "id": "sp.rishis.kashyapa",
+      "collection": "rishis",
+      "title": {
+        "hi": "कश्यप",
+        "en": "Kashyapa"
+      },
+      "source_refs": [
+        "SB818-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.atri",
+      "collection": "rishis",
+      "title": {
+        "hi": "अत्रि",
+        "en": "Atri"
+      },
+      "source_refs": [
+        "VR-ATRI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.vasistha",
+      "collection": "rishis",
+      "title": {
+        "hi": "वसिष्ठ",
+        "en": "Vasistha"
+      },
+      "source_refs": [
+        "VR-VASISHTHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.vishvamitra",
+      "collection": "rishis",
+      "title": {
+        "hi": "विश्वामित्र",
+        "en": "Vishvamitra"
+      },
+      "source_refs": [
+        "VR-VASISHTHA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.gautama",
+      "collection": "rishis",
+      "title": {
+        "hi": "गौतम",
+        "en": "Gautama"
+      },
+      "source_refs": [
+        "VR-GAUTAMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.jamadagni",
+      "collection": "rishis",
+      "title": {
+        "hi": "जमदग्नि",
+        "en": "Jamadagni"
+      },
+      "source_refs": [
+        "SB915-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.bharadvaja",
+      "collection": "rishis",
+      "title": {
+        "hi": "भरद्वाज",
+        "en": "Bharadvaja"
+      },
+      "source_refs": [
+        "VR-BHARADVAJA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.valmiki",
+      "collection": "rishis",
+      "title": {
+        "hi": "वाल्मीकि",
+        "en": "Valmiki"
+      },
+      "source_refs": [
+        "VR-RAMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.narada",
+      "collection": "rishis",
+      "title": {
+        "hi": "नारद",
+        "en": "Narada"
+      },
+      "source_refs": [
+        "VR-RAMA"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.vyasa",
+      "collection": "rishis",
+      "title": {
+        "hi": "व्यास",
+        "en": "Vyasa"
+      },
+      "source_refs": [
+        "SB13-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.gargi",
+      "collection": "rishis",
+      "title": {
+        "hi": "गार्गी",
+        "en": "Gargi"
+      },
+      "source_refs": [
+        "BU-GARGI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.maitreyi",
+      "collection": "rishis",
+      "title": {
+        "hi": "मैत्रेयी",
+        "en": "Maitreyi"
+      },
+      "source_refs": [
+        "BU-MAITREYI"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.yajnavalkya",
+      "collection": "rishis",
+      "title": {
+        "hi": "याज्ञवल्क्य",
+        "en": "Yajnavalkya"
+      },
+      "source_refs": [
+        "BU-MADH"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    },
+    {
+      "id": "sp.rishis.saptarshi",
+      "collection": "rishis",
+      "title": {
+        "hi": "सप्तऋषि",
+        "en": "Saptarshi"
+      },
+      "source_refs": [
+        "SB8135-BBT"
+      ],
+      "evidence": "reference_seed",
+      "publication_status": "draft",
+      "dossier": "11-rishis-and-knowledge-traditions.md"
+    }
+  ],
+  "rosters": {
+    "brihadaranyaka_3_9": {
+      "source_refs": [
+        "BU-MADH",
+        "BU-MULLER"
+      ],
+      "groups": [
+        {
+          "name": "Vasus",
+          "count": 8,
+          "members": [
+            "Agni",
+            "Prithivi",
+            "Vayu",
+            "Antariksha",
+            "Aditya",
+            "Dyau",
+            "Chandramas",
+            "Nakshatras"
+          ]
+        },
+        {
+          "name": "Rudras",
+          "count": 11,
+          "explanation": "Ten pranas and atman; translation/commentary distinction required. No invented eleven-name roster."
+        },
+        {
+          "name": "Adityas",
+          "count": 12,
+          "explanation": "Twelve months; no silently substituted Puranic names."
+        },
+        {
+          "name": "Indra",
+          "count": 1
+        },
+        {
+          "name": "Prajapati",
+          "count": 1
+        }
+      ],
+      "total": 33
+    },
+    "satapatha_4_5_7_2": {
+      "source_refs": [
+        "SB-SANSKRIT",
+        "SB-EGGELING"
+      ],
+      "groups": [
+        {
+          "name": "Vasus",
+          "count": 8
+        },
+        {
+          "name": "Rudras",
+          "count": 11
+        },
+        {
+          "name": "Adityas",
+          "count": 12
+        },
+        {
+          "name": "Heaven",
+          "count": 1
+        },
+        {
+          "name": "Earth",
+          "count": 1
+        }
+      ],
+      "total": 33,
+      "prajapati_context": "Thirty-fourth in this ritual passage."
+    },
+    "vishnu_purana_1_15": {
+      "source_refs": [
+        "VP1-TAYLOR"
+      ],
+      "vasus": [
+        "Apa",
+        "Dhruva",
+        "Soma",
+        "Dhara",
+        "Anila",
+        "Anala",
+        "Pratyusha",
+        "Prabhasa"
+      ],
+      "rudras": [
+        "Hara",
+        "Bahurupa",
+        "Tryambaka",
+        "Aparajita",
+        "Vrishakapi",
+        "Shambhu",
+        "Kapardin",
+        "Raivata",
+        "Mrigavyadha",
+        "Sharva",
+        "Kapalin"
+      ],
+      "adityas": [
+        "Vishnu",
+        "Indra",
+        "Aryaman",
+        "Dhatri",
+        "Tvashtri",
+        "Pushan",
+        "Vivasvat",
+        "Savitr",
+        "Mitra",
+        "Varuna",
+        "Amsha",
+        "Bhaga"
+      ],
+      "note": "Named groups in Taylor's edition; not asserted as the Upanishad's individualized thirty-three."
+    },
+    "dikpal_kamika": {
+      "source_refs": [
+        "KAMIKA"
+      ],
+      "horizontal": [
+        {
+          "direction": "east",
+          "hindi": "पूर्व",
+          "guardian": "Indra"
+        },
+        {
+          "direction": "southeast",
+          "hindi": "आग्नेय",
+          "guardian": "Agni"
+        },
+        {
+          "direction": "south",
+          "hindi": "दक्षिण",
+          "guardian": "Yama"
+        },
+        {
+          "direction": "southwest",
+          "hindi": "नैऋत्य",
+          "guardian": "Nirriti"
+        },
+        {
+          "direction": "west",
+          "hindi": "पश्चिम",
+          "guardian": "Varuna"
+        },
+        {
+          "direction": "northwest",
+          "hindi": "वायव्य",
+          "guardian": "Vayu"
+        },
+        {
+          "direction": "north",
+          "hindi": "उत्तर",
+          "guardian": "Kubera"
+        },
+        {
+          "direction": "northeast",
+          "hindi": "ईशान",
+          "guardian": "Ishana"
+        }
+      ],
+      "vertical": [
+        {
+          "direction": "above",
+          "hindi": "ऊर्ध्व",
+          "guardian": "Brahma"
+        },
+        {
+          "direction": "below",
+          "hindi": "अधो",
+          "guardian": "Vishnu"
+        }
+      ],
+      "alternative_below": {
+        "guardian": "Ananta",
+        "source_refs": [
+          "UOU-KARMA"
+        ]
+      }
+    },
+    "dashavatara_drik": {
+      "source_refs": [
+        "DRIK-DASHAVATARA"
+      ],
+      "members": [
+        "Matsya",
+        "Kurma",
+        "Varaha",
+        "Narasimha",
+        "Vamana",
+        "Parashurama",
+        "Rama",
+        "Balarama",
+        "Krishna",
+        "Kalki"
+      ]
+    },
+    "dashavatara_jayadeva": {
+      "source_refs": [
+        "JAYADEVA"
+      ],
+      "members": [
+        "Matsya",
+        "Kurma",
+        "Varaha",
+        "Narasimha",
+        "Vamana",
+        "Parashurama",
+        "Rama",
+        "Balarama",
+        "Buddha",
+        "Kalki"
+      ],
+      "addressee": "Krishna/Keshava"
+    },
+    "navdurga_kavacha": {
+      "source_refs": [
+        "DEVI-KAVACHA"
+      ],
+      "members": [
+        "Shailaputri",
+        "Brahmacharini",
+        "Chandraghanta",
+        "Kushmanda",
+        "Skandamata",
+        "Katyayani",
+        "Kalaratri",
+        "Mahagauri",
+        "Siddhidatri"
+      ]
+    },
+    "ashtalakshmi_stotra": {
+      "source_refs": [
+        "ASHTALAKSHMI-STOTRA"
+      ],
+      "members": [
+        "Adi Lakshmi",
+        "Dhanya Lakshmi",
+        "Dhairya Lakshmi",
+        "Gaja Lakshmi",
+        "Santana Lakshmi",
+        "Vijaya Lakshmi",
+        "Vidya Lakshmi",
+        "Dhana Lakshmi"
+      ]
+    },
+    "ashtalakshmi_temple": {
+      "source_refs": [
+        "ASHTALAKSHMI-TEMPLE"
+      ],
+      "members": [
+        "Maha",
+        "Dhanya",
+        "Dhairya",
+        "Rajya",
+        "Santhana",
+        "Jaya",
+        "Veera",
+        "Dhana"
+      ]
+    },
+    "saptarshi_bhagavata_8_13_5": {
+      "source_refs": [
+        "SB8135-BBT"
+      ],
+      "members": [
+        "Kashyapa",
+        "Atri",
+        "Vasistha",
+        "Vishvamitra",
+        "Gautama",
+        "Jamadagni",
+        "Bharadvaja"
+      ]
+    }
+  }
+}

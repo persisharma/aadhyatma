@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "retrieved_on": "2026-11-02",
-  "scope": "PR 605 research only",
+  "research_date": "2026-11-02",
+  "scope": "Sanatan Parichay research references; records are not all independent editions or publication-clearance evidence.",
   "sources": [
     {
       "id": "BU-MADH",
@@ -16,7 +16,9 @@
       "checked_locator": "Brihadaranyaka 3.9.1–9",
       "notes": "Read Sanskrit and interpretation separately; prana/atman wording must not be silently replaced by named Puranic Rudras.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "BU-MULLER",
@@ -31,7 +33,9 @@
       "checked_locator": "Brihadaranyaka 3.9.1–9",
       "notes": "Independent translation; Sacred Texts migrated URLs. Full Sanskrit collation remains editorial work.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SB-SANSKRIT",
@@ -46,7 +50,9 @@
       "checked_locator": "4.5.7.2",
       "notes": "Final pair here is Heaven and Earth; Prajapati is thirty-fourth in this ritual context.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SB-EGGELING",
@@ -61,7 +67,9 @@
       "checked_locator": "4.5.7.2",
       "notes": "Different work/context from Brihadaranyaka; not a source for changing its final pair.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "KOTI-APTE",
@@ -76,7 +84,9 @@
       "checked_locator": "Sanskrit dictionary section, senses 6 and 9",
       "notes": "Crore and class both occur in Sanskrit dictionary entries. Distinguish Sanskrit from Marathi/Pali subsections; a dictionary does not settle a specific compound.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "KAMIKA",
@@ -91,7 +101,9 @@
       "checked_locator": "Purvapada 4.481–491; 4.505–510; 4.441–448",
       "notes": "Shaiva ritual context. Below Vishnu, above Brahma; separate from Ananta convention. Sanskrit edition/translator identification still to collate.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "AGNI51",
@@ -106,7 +118,9 @@
       "checked_locator": "51.14–16 and 51.1–13",
       "notes": "Explicit iconographic prescriptions; do not universalize Kubera mount or Varuna mount.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "UOU-KARMA",
@@ -121,7 +135,9 @@
       "checked_locator": "Dikpal unit, printed pp 155–157 especially Brahma and Ananta",
       "notes": "OCR is badly corrupted in mantras. Use prose as supporting teaching evidence only; do not copy Sanskrit or fear-based Shani descriptions.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "CHINMAYA-WHY",
@@ -136,7 +152,9 @@
       "checked_locator": "Why Do We exhibits 5–8 and Japa",
       "notes": "Named Vedantic symbolic explanations; omit unsubstantiated medical/astronomical assertions elsewhere on page.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SDS-RITUALS",
@@ -151,7 +169,9 @@
       "checked_locator": "Rituals Lamps Holy Ash",
       "notes": "Contemporary practitioner explanation; source-specific symbolism.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "HAF-SWASTIKA",
@@ -166,7 +186,9 @@
       "checked_locator": "Word meaning, usage and symbolism sections",
       "notes": "Explain auspicious Indic usage; multiple limb interpretations are interpretations, not one proven origin.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "HOH-SYMBOLS",
@@ -181,22 +203,26 @@
       "checked_locator": "Hindu Symbols",
       "notes": "Vaishnava educational context; symbol lists are illustrative.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MANDUKYA-MI",
-      "title": "",
+      "title": "Mandukya Upanishad: an English version, with notes and commentary",
       "url": "https://www.sriaurobindoashram.org/journals/motherindia/issues/1957/3._MotherIndia_-_Mar1957.pdf",
       "ref": "turn58view3",
       "wordlim": 200,
       "retrieval": "opened_excerpt",
       "failed": false,
       "role": "primary_text_translation",
-      "edition": "Mother India March 1957 journal hosted by Sri Aurobindo Ashram",
-      "checked_locator": "Mandukya Upanishad article",
-      "notes": "Identify article author before reproducing a translation; do not automatically attribute journal commentary to Sri Aurobindo.",
+      "edition": "Adhyeta, Mother India, March 1957, printed pp 13–18; Sri Aurobindo Ashram journal",
+      "checked_locator": "Twelve passages on printed pp 13–14; notes pp 14–18",
+      "notes": "Article credited to Adhyeta in contents and at conclusion; not attributed to Sri Aurobindo. All twelve English passages located. Independent Sanskrit collation remains pending.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MANDUKYA-GATEWAY",
@@ -211,7 +237,9 @@
       "checked_locator": "Mandukya chapter and linked twelve passages",
       "notes": "Gateway landing page only; not counted as an independent primary edition or complete textual collation.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "gateway_only",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SHRI-SUKTA",
@@ -226,7 +254,9 @@
       "checked_locator": "Core verses 1–15",
       "notes": "Page also contains later appended verses. Distinguish core and appendices; no reconstructed liturgy.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DRIK-KALASH",
@@ -241,7 +271,9 @@
       "checked_locator": "Kalasha Sthapana steps 5 and 17",
       "notes": "Supports materials and ritual use; does not establish one universal explanation.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DRIK-GHATA",
@@ -256,7 +288,9 @@
       "checked_locator": "Ghatasthapana items and Kalash Preparation",
       "notes": "Akshat, thread, coconut and leaves in this procedure; independent meaning still needs its own evidence.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "BAPS-TILAK",
@@ -271,7 +305,9 @@
       "checked_locator": "Tilak Chandlo",
       "notes": "Specific Swaminarayan form and interpretation; do not generalize gender rules or theology.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SDS-TILAK",
@@ -286,7 +322,9 @@
       "checked_locator": "Why do Hindus wear marks on the forehead",
       "notes": "Use for diversity of marks; omit speculative physiology.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "HOH-RAKSHA",
@@ -301,7 +339,9 @@
       "checked_locator": "Raksha Bandhana fact sheet",
       "notes": "Documents protective/vow symbolism; no blanket instruction on which wrist every person must use.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "BG510-MUKUND",
@@ -316,7 +356,9 @@
       "checked_locator": "Bhagavad Gita 5.10",
       "notes": "Lotus leaf simile in karma-yoga; not every lotus symbol is explained by this verse.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "BG510-BBT",
@@ -331,7 +373,9 @@
       "checked_locator": "Bhagavad Gita 5.10",
       "notes": "Independent translation publication; copyrighted translation consulted for facts only.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "BG926-MUKUND",
@@ -346,7 +390,9 @@
       "checked_locator": "Bhagavad Gita 9.26",
       "notes": "Devotion and simple offerings; do not use to erase every tradition-specific offering rule.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "BG926-BBT",
@@ -361,7 +407,9 @@
       "checked_locator": "Bhagavad Gita 9.26",
       "notes": "No modern translation copied into app payload.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "NAVAGRAHA",
@@ -376,7 +424,9 @@
       "checked_locator": "Navagraha Stotra traditionally attributed to Vyasa, verses 1–9",
       "notes": "Poetic deity descriptions are not astronomy or guaranteed results; historical attribution remains traditional.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DEVI-KAVACHA",
@@ -391,7 +441,9 @@
       "checked_locator": "Devi Kavacha 3–5 and 17–20",
       "notes": "Navdurga names are in the Kavacha; distinguish this recitation adjunct from the thirteen-chapter narrative.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "ASHTALAKSHMI-STOTRA",
@@ -406,7 +458,9 @@
       "checked_locator": "Eight headed sections",
       "notes": "Contains Adi Dhanya Dhairya Gaja Santana Vijaya Vidya Dhana. Authorship/date not established here.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "ASHTALAKSHMI-TEMPLE",
@@ -421,7 +475,9 @@
       "checked_locator": "About page",
       "notes": "Temple lists Maha Dhanya Dhairya Rajya Santana Jaya Veera Dhana; preserve this local enumeration.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DRIK-NAVRATRI",
@@ -436,7 +492,9 @@
       "checked_locator": "Navratri Deities",
       "notes": "Confirms regional/sampradaya variation. Do not treat nine forms as a single biography of nine sequential births.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SB13-BBT",
@@ -451,7 +509,9 @@
       "checked_locator": "Bhagavata Purana 1.3",
       "notes": "Longer avatara enumeration than ten; factual story seeds only, not complete retellings.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SB1326-BBT",
@@ -466,7 +526,9 @@
       "checked_locator": "Bhagavata Purana 1.3.26",
       "notes": "States innumerable avataras.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DRIK-DASHAVATARA",
@@ -481,7 +543,9 @@
       "checked_locator": "Vishnu Dashavatara list",
       "notes": "Balarama and Krishna version; differs from Jayadeva version.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "JAYADEVA",
@@ -496,7 +560,9 @@
       "checked_locator": "Gita Govinda first sarga opening avatara hymn",
       "notes": "Haladhara and Buddha checked. Krishna is addressee in this hymn; do not flatten variant lists.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "VEDIC-INTRO",
@@ -511,7 +577,9 @@
       "checked_locator": "Introduction and classification of Vedic literature",
       "notes": "Traditional literary taxonomy; distinguish authorial claims and modern academic dates.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "VEDIC-UPANISHADS",
@@ -526,7 +594,9 @@
       "checked_locator": "Upanishads number, main texts and themes",
       "notes": "108 belongs to Muktika list; not a universal count of all extant Upanishads.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "VEDIC-BRIHAD",
@@ -541,7 +611,9 @@
       "checked_locator": "Brihadaranyaka recensions",
       "notes": "Supports recensional context, not a substitute for checking 3.9.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "VP-INTRO",
@@ -556,7 +628,9 @@
       "checked_locator": "Introduction, five Purana characteristics",
       "notes": "CC BY NC ND publication. Consult as scholarship; do not copy or adapt translation text into a commercial app.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "VP1-TAYLOR",
@@ -571,7 +645,9 @@
       "checked_locator": "Vishnu Purana 1.15.110–131; 1.8–9",
       "notes": "Named Vasus, Rudras and Adityas are a separate source-specific lens. Preserve Dhara/Dharma edition variant.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "VP2-TAYLOR",
@@ -586,7 +662,9 @@
       "checked_locator": "Vishnu Purana Book Two",
       "notes": "Traditional cosmography; not a contemporary scientific map.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "TAITTIRIYA",
@@ -601,7 +679,9 @@
       "checked_locator": "Taittiriya Upanishad 2.1.1",
       "notes": "Sanskrit source credited to Sringeri on page; traditional element sequence distinct from chemistry.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "IMD-PANCHANG",
@@ -616,22 +696,26 @@
       "checked_locator": "Explanation, five limbs and ending times",
       "notes": "Astronomical definitions; geocentric instants vs local sunrise observance must be distinguished.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DRIK-TIMINGS",
       "title": "Reading Panchang Timings in Drik Panchang",
       "url": "https://www.drikpanchang.com/faq/faq-ans1.html?lang=en",
-      "ref": "turn10search4",
+      "ref": "turn69view2",
       "wordlim": 200,
-      "retrieval": "search_lead",
+      "retrieval": "opened_excerpt",
       "failed": false,
       "role": "practice_publication",
       "edition": "Drik Panchang",
       "checked_locator": "FAQ reading Panchang end timings",
-      "notes": "Search lead until full open performed.",
+      "notes": "FAQ confirms end timings and local display. Does not cover every publisher or 24+ hour formatting.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DRIK-MONTHS",
@@ -646,22 +730,26 @@
       "checked_locator": "Lunar Month Type settings",
       "notes": "Full/new-moon month boundary convention.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DRIK-ADHIK",
       "title": "Adhik Maas | Mal Maas | Purushottam Maas | Malimmacha | Londa Maas",
       "url": "https://www.drikpanchang.com/calendars/hindu/months/purushottam/hindu-calendar-adhik-maas.html?year=-2047",
-      "ref": "turn39search3",
+      "ref": "turn67view3",
       "wordlim": 200,
-      "retrieval": "search_lead",
+      "retrieval": "opened_excerpt",
       "failed": false,
       "role": "practice_publication",
       "edition": "Drik Panchang",
       "checked_locator": "Adhik Maas explanation",
-      "notes": "Search lead until full open performed; do not say random or exactly every three years.",
+      "notes": "No-Sankranti rule checked. Position is calculable, not random; no blanket personal restriction or guaranteed result adopted.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "NASA-NODES",
@@ -676,7 +764,9 @@
       "checked_locator": "Moon Essentials Orbit, nodes paragraph",
       "notes": "Supports astronomical nodes only, not devotional claims.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "ASI-TEMPLE",
@@ -684,14 +774,16 @@
       "url": "https://tspasibhopal.nic.in/temple/about_the_temple.html",
       "ref": "turn10search8",
       "wordlim": 200,
-      "retrieval": "search_lead",
-      "failed": false,
+      "retrieval": "fetch_failed",
+      "failed": true,
       "role": "government_heritage",
       "edition": "Archaeological Survey of India Temple Survey Project",
       "checked_locator": "About the Temple",
       "notes": "Source could not be opened; discovery lead, not checked evidence.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "unavailable",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MET-NATARAJA",
@@ -706,7 +798,9 @@
       "checked_locator": "Object 39329",
       "notes": "Drum fire and dance iconography, specific Chola object.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MET-SARASVATI",
@@ -721,7 +815,9 @@
       "checked_locator": "Object 849503",
       "notes": "Vina manuscript lotus and swan in this object.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MET-DURGA",
@@ -736,7 +832,9 @@
       "checked_locator": "Object 38130",
       "notes": "Mahishasuramardini composition in this object.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MET-KARTTIKEYA",
@@ -751,7 +849,9 @@
       "checked_locator": "Object 38181",
       "notes": "Peacock and rooster context. Do not universalize birth order.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MET-RECOGNIZING",
@@ -766,7 +866,9 @@
       "checked_locator": "Recognizing the Gods Hindu Deities",
       "notes": "Identity attributes and differences between traditions.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MET-GANESHA",
@@ -781,7 +883,9 @@
       "checked_locator": "Object 37397",
       "notes": "Attributes in one Chola image; speculative tribal-origin claim excluded.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "NM-GANGA",
@@ -796,7 +900,9 @@
       "checked_locator": "Accession L.2",
       "notes": "Personified river deity and makara in this object.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SDS-TULASI",
@@ -811,7 +917,9 @@
       "checked_locator": "A Sacred Plant Tulasi",
       "notes": "Vaishnava devotional context. Exclude medical advice and universal household requirements.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SHIVA-BILVA",
@@ -826,7 +934,9 @@
       "checked_locator": "Vidyeshvara Samhita 22.21–31",
       "notes": "Praises tree and root worship; no guaranteed financial or medical claims.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "GANAPATI-ATHARVA",
@@ -841,11 +951,13 @@
       "checked_locator": "Ganapati Atharvashirsha 9 and 13",
       "notes": "Dhyana and durva offering checked; do not equate late Upanishad automatically with an ancient Samhita verse.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "IGNCA-KOLAM",
-      "title": "",
+      "title": "Martha Strawn Kolam Collection (IGNCA Vihangama archive)",
       "url": "https://ignca.gov.in/PDF_data/Martha_Strawn_collecction_Kolam.pdf",
       "ref": "turn52view1",
       "wordlim": 200,
@@ -856,7 +968,9 @@
       "checked_locator": "Martha Strawn Kolam collection",
       "notes": "Regional floor art and rice flour; historical-origin legend remains attributed.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DSOURCE-TORAN",
@@ -871,7 +985,9 @@
       "checked_locator": "Traditional Toran from Kolhapur",
       "notes": "Relevant body found, but current page has unrelated spam-like navigation. Excluded from publication-grade corroboration pending clean archival source.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "excluded_pending_clean_archival_copy"
     },
     {
       "id": "BEER-YANTRA",
@@ -886,7 +1002,9 @@
       "checked_locator": "Shri Yantra PID 268",
       "notes": "Artist commentary and precise geometry; ritual construction/empowerment not inferred.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SB8135-BBT",
@@ -901,7 +1019,9 @@
       "checked_locator": "Bhagavata Purana 8.13.5",
       "notes": "Seven sages in this manvantara context; other lists are not errors by default.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "VR-GANGA",
@@ -916,7 +1036,9 @@
       "checked_locator": "Bala Kanda 1.43",
       "notes": "Descent narrative; full story arc requires preceding/subsequent sargas before retelling.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "VR-HANUMAN",
@@ -931,7 +1053,9 @@
       "checked_locator": "Sundara Kanda 5.1",
       "notes": "Ocean journey to find Sita; Mainaka Surasa Simhika.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DM-KALI-PARGITER",
@@ -946,7 +1070,9 @@
       "checked_locator": "Canto 87, Devi Mahatmya chapter 7",
       "notes": "Kali and Chamunda naming in narrative.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "DM-KALI-AURO",
@@ -961,7 +1087,9 @@
       "checked_locator": "Devi Mahatmyam chapter 7",
       "notes": "Second publication for checked narrative; translation attribution to confirm before reproduction.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SB4133-BBT",
@@ -976,7 +1104,9 @@
       "checked_locator": "Bhagavata Purana 4.1.33",
       "notes": "Datta as Vishnu-related in this passage; do not erase later composite Datta traditions.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SB78-BBT",
@@ -991,7 +1121,9 @@
       "checked_locator": "Bhagavata Purana 7.8",
       "notes": "Narasimha and Prahlada narrative; selected safe synopsis only.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "BG47-MUKUND",
@@ -1006,7 +1138,9 @@
       "checked_locator": "Bhagavad Gita 4.7",
       "notes": "Avatara explanation; theological classifications attributed to this commentary.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "BG47-BBT",
@@ -1021,7 +1155,9 @@
       "checked_locator": "Bhagavad Gita 4.7",
       "notes": "Independent translation publication.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SRINGERI-PANCHAYATANA",
@@ -1036,7 +1172,9 @@
       "checked_locator": "Sri Shiva Panchayatana Pooja Vidhi book description",
       "notes": "Five deities verified from description; full book was not read.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "HA-DENOMINATIONS",
@@ -1051,7 +1189,9 @@
       "checked_locator": "Four Denominations of Hinduism",
       "notes": "Useful Shaiva-published overview, not a universal census or exhaustive taxonomy.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "HOH-LAKSHMI",
@@ -1066,7 +1206,9 @@
       "checked_locator": "Lakshmi photocard",
       "notes": "Shri association and iconographic description.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MET-DURGA-FAMILY",
@@ -1081,7 +1223,9 @@
       "checked_locator": "Object 786763",
       "notes": "Bengali Durga tableau; not a universal family genealogy.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MET-VARUNA-HORSE",
@@ -1096,7 +1240,9 @@
       "checked_locator": "Object 72310",
       "notes": "Sri Lankan Buddhist four-lokapala context; cannot silently replace Hindu dikpala depiction.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "MET-VARUNA-SWAN",
@@ -1111,7 +1257,9 @@
       "checked_locator": "Object 37533",
       "notes": "Historical Hindu depiction with swan demonstrates variation.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "SDS-PRASADA",
@@ -1126,7 +1274,9 @@
       "checked_locator": "Divine Blessings Prasada",
       "notes": "Difference between offering and what is received back.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "RV16446",
@@ -1141,7 +1291,9 @@
       "checked_locator": "Rig Veda 1.164.46",
       "notes": "Names and One/many phrase checked; interpretation is not identical across schools.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "RV36210",
@@ -1156,7 +1308,9 @@
       "checked_locator": "Rig Veda 3.62.10",
       "notes": "Savitri body checked. Auto-generated rishi metadata looks inconsistent; excluded pending collation.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "CPREEC-PLANTS",
@@ -1171,7 +1325,9 @@
       "checked_locator": "Sacred Plants",
       "notes": "Sacred associations and sthalavriksha; not a pharmacological authority.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     },
     {
       "id": "TRANSLITERAL-DIKPAL",
@@ -1186,20 +1342,25 @@
       "checked_locator": "Dikpal installation compilation",
       "notes": "Includes Brahma and Ananta but gives ritual mandala placement; no reference edition supplied. Supporting lead only.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "supporting_compilation_edition_unidentified"
     },
     {
       "id": "NCERT-TEMPLE",
       "url": "https://ncert.nic.in/textbook/pdf/kefa106.pdf",
       "ref": "turn63view0",
       "failed": true,
-      "retrieval": "opened_excerpt",
+      "retrieval": "fetch_failed",
       "role": "government_textbook",
       "edition": "NCERT An Introduction to Indian Art Part I",
       "checked_locator": "Chapter 6 kefa106",
       "notes": "PDF inaccessible through tool; not treated as a checked source.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "unavailable",
+      "editorial_status": "research_reference_not_publication_clearance",
+      "title": "Temple Architecture and Sculpture (NCERT Chapter 6)"
     },
     {
       "id": "IIT-GITA",
@@ -1214,7 +1375,451 @@
       "checked_locator": "Gita verse pages",
       "notes": "Current reader returns a short shell despite rich search cache. Full commentary not counted as read.",
       "retrieved_on": "2026-11-02",
-      "publication_reuse": "Reference only; no reproduction licence inferred."
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "reader_shell_only",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Valmiki Ramayana - Bala Kanda - Sarga 1",
+      "url": "https://www.valmikiramayan.net/utf8/baala/sarga1/balasans1.htm",
+      "ref": "turn67view1",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "VR-RAMA",
+      "role": "primary_text_translation",
+      "edition": "Valmiki Ramayana online, verses/translation/commentary",
+      "checked_locator": "Bala Kanda 1.1.1–18",
+      "notes": "Rama qualities and Narada-Valmiki dialogue; distinguish commentator additions from Sanskrit.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Śrīmad-Bhāgavatam 10.30.28",
+      "url": "https://vedabase.io/en/library/sb/10/30/28/",
+      "ref": "turn67view2",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "RADHA-BBT",
+      "role": "primary_text_with_commentary",
+      "edition": "BBT Vedabase",
+      "checked_locator": "Bhagavata Purana 10.30.28, purport",
+      "notes": "Verse does not explicitly name Radha; Gaudiya commentary identifies Her through aradhita. Keep layers distinct.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Employment News",
+      "url": "https://employmentnews.gov.in/NewEmp/MoreContentNew.aspx?k=70430&n=SpecialContent",
+      "ref": "turn68view0",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "TEMPLE-GOV",
+      "role": "institutional_education",
+      "edition": "Employment News, Publications Division, issue 45, 5–11 February 2022",
+      "checked_locator": "Temple Architecture In India, Basic Form",
+      "notes": "Checked institutional explanation. Closely parallels NCERT, so not an independent textual edition of NCERT.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Visiting a Hindu Temple",
+      "url": "https://www.himalayanacademy.com/media/books/visiting-a-hindu-temple_ei/web/c_37_52c.html",
+      "ref": "turn69view0",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "HA-TEMPLE",
+      "role": "tradition_explanation",
+      "edition": "Himalayan Academy, Visiting a Hindu Temple",
+      "checked_locator": "18 Steps for Visiting a Hindu Temple",
+      "notes": "Shaiva-oriented practical account. Temple-specific order, counts and gender prescriptions are not universal.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Standing Parvati - Indian (Tamil Nadu) - Chola period - The Metropolitan Museum of Art",
+      "url": "https://www.metmuseum.org/art/collection/search/39325",
+      "ref": "turn70view0",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "MET-PARVATI",
+      "role": "museum_object",
+      "edition": "Metropolitan Museum",
+      "checked_locator": "Standing Parvati, object 57.51.3",
+      "notes": "Checked object text; image marked Public Domain. No universal anatomical or dress template inferred.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Shiva, Parvati, and Their Son Skanda (Somaskandamurti) - India (Tamil Nadu) - Chola period (880–1279) - The Metropolitan Museum of Art",
+      "url": "https://www.metmuseum.org/art/collection/search/39327",
+      "ref": "turn70view1",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "MET-SOMASKANDA",
+      "role": "museum_object",
+      "edition": "Metropolitan Museum",
+      "checked_locator": "Somaskandamurti, object 1982.220.10",
+      "notes": "Shiva-Parvati-Skanda and processional carrying rings, specific Chola object.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "The Art of South and Southeast Asia: A Resource for Educators",
+      "url": "https://www.metmuseum.org/-/media/files/learn/for-educators/publications-for-educators/sseasia.pdf",
+      "ref": "turn70view2",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "MET-EDUCATORS",
+      "role": "museum_education",
+      "edition": "Steven M. Kossak and Edith W. Watts, The Art of South and Southeast Asia (2001)",
+      "checked_locator": "Hindu Temples pp 33–34; glossary Brahma/Brahman",
+      "notes": "Use selected educational explanation, not every dated historical generalization. Copyrighted teaching text.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Quotes & Quips — Hinduism Today",
+      "url": "https://www.hinduismtoday.com/magazine/jan-feb-mar-2020/quotes-quips/",
+      "ref": "turn69view1",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "HA-SHAKTI",
+      "role": "tradition_explanation",
+      "edition": "Hinduism Today, Jan/Feb/Mar 2020, Shakti subsection",
+      "checked_locator": "In a Few Words Shakti",
+      "notes": "Shaiva Siddhanta framing and deity forms, not a complete account of every Shakta school.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Goddess Shailputri | Devi Shailputri | Maa Shailputri",
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-shailputri.html",
+      "ref": "turn74view0",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "DRIK-SHAILAPUTRI",
+      "role": "practice_publication",
+      "edition": "Drik Panchang",
+      "checked_locator": "Navdurga shailaputri, Iconography section",
+      "notes": "Contemporary devotional iconography; graha remedies, benefits and liturgical text not approved.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Goddess Brahmacharini | Devi Brahmacharini | Maa Brahmacharini",
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-brahmacharini.html",
+      "ref": "turn74view1",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "DRIK-BRAHMACHARINI",
+      "role": "practice_publication",
+      "edition": "Drik Panchang",
+      "checked_locator": "Navdurga brahmacharini, Iconography section",
+      "notes": "Contemporary devotional iconography; graha remedies, benefits and liturgical text not approved.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Goddess Chandraghanta | Devi Chandraghanta | Maa Chandraghanta",
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-chandraghanta.html",
+      "ref": "turn74view2",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "DRIK-CHANDRAGHANTA",
+      "role": "practice_publication",
+      "edition": "Drik Panchang",
+      "checked_locator": "Navdurga chandraghanta, Iconography section",
+      "notes": "Contemporary devotional iconography; graha remedies, benefits and liturgical text not approved.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Goddess Kushmanda | Devi Kushmanda | Maa Kushmanda",
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-kushmanda.html",
+      "ref": "turn74view3",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "DRIK-KUSHMANDA",
+      "role": "practice_publication",
+      "edition": "Drik Panchang",
+      "checked_locator": "Navdurga kushmanda, Iconography section",
+      "notes": "Kushmanda page has a copy/paste identity error: iconography paragraph says Siddhidatri. Do not auto-correct or publish its detailed hand mapping.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "identity_error_detailed_iconography_withheld"
+    },
+    {
+      "title": "Goddess Skandamata | Devi Skandamata | Maa Skandamata",
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-skandamata.html",
+      "ref": "turn74view4",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "DRIK-SKANDAMATA",
+      "role": "practice_publication",
+      "edition": "Drik Panchang",
+      "checked_locator": "Navdurga skandamata, Iconography section",
+      "notes": "Contemporary devotional iconography; graha remedies, benefits and liturgical text not approved.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Goddess Katyayani | Devi Katyayani | Maa Katyayani",
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-katyayani.html",
+      "ref": "turn74view5",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "DRIK-KATYAYANI",
+      "role": "practice_publication",
+      "edition": "Drik Panchang",
+      "checked_locator": "Navdurga katyayani, Iconography section",
+      "notes": "Contemporary devotional iconography; graha remedies, benefits and liturgical text not approved.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Goddess Kalaratri | Devi Kalaratri | Maa Kalaratri",
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-kalaratri.html",
+      "ref": "turn74view6",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "DRIK-KALARATRI",
+      "role": "practice_publication",
+      "edition": "Drik Panchang",
+      "checked_locator": "Navdurga kalaratri, Iconography section",
+      "notes": "Contemporary devotional iconography; graha remedies, benefits and liturgical text not approved.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Goddess Mahagauri | Devi Mahagauri | Maa Mahagauri",
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-mahagauri.html",
+      "ref": "turn74view7",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "DRIK-MAHAGAURI",
+      "role": "practice_publication",
+      "edition": "Drik Panchang",
+      "checked_locator": "Navdurga mahagauri, Iconography section",
+      "notes": "Contemporary devotional iconography; graha remedies, benefits and liturgical text not approved.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Goddess Siddhidatri | Devi Siddhidatri | Maa Siddhidatri",
+      "url": "https://www.drikpanchang.com/hindu-goddesses/parvati/durga/navdurga-siddhidatri.html",
+      "ref": "turn74view8",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "DRIK-SIDDHIDATRI",
+      "role": "practice_publication",
+      "edition": "Drik Panchang",
+      "checked_locator": "Navdurga siddhidatri, Iconography section",
+      "notes": "Contemporary devotional iconography; graha remedies, benefits and liturgical text not approved.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Sacred Symbols",
+      "url": "https://www.himalayanacademy.com/media/books/sacred-symbols_ei/sacred-symbols_ei.pdf",
+      "ref": "turn75view0",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "HA-SYMBOLS",
+      "role": "tradition_explanation",
+      "edition": "Himalayan Academy, What Is Hinduism? Sacred Symbols, chapter 9",
+      "checked_locator": "Printed pp 92–99",
+      "notes": "Shaiva symbolic readings; avoid unverified origin/dating and energy claims. Not an independent publisher from HA-TEMPLE.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Valmiki Ramayana - Bala Kanda - Sarga 48",
+      "url": "https://www.valmikiramayan.net/utf8/baala/sarga48/balasans48.htm",
+      "ref": "turn77view1",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "VR-GAUTAMA",
+      "role": "primary_text_translation",
+      "edition": "Valmiki Ramayana online",
+      "checked_locator": "Bala Kanda 1.48",
+      "notes": "Gautama and Ahalya narrative; resolution in 1.49 not collated. Do not import the stone transformation from another telling.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Valmiki Ramayana - Ayodhya Kanda - Sarga 117",
+      "url": "https://www.valmikiramayan.net/utf8/ayodhya/sarga117/ayodhyaitrans117.htm",
+      "ref": "turn78view0",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "VR-ATRI",
+      "role": "primary_text_translation",
+      "edition": "Valmiki Ramayana online",
+      "checked_locator": "Ayodhya Kanda 2.117.5–8",
+      "notes": "Atri receives Rama, Sita and Lakshmana; Anasuya is introduced. Traditional gender prescriptions are not universal product instructions.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Valmiki Ramayana - Ayodhya Kanda - Sarga 54",
+      "url": "https://sanskritdocuments.org/sites/valmikiramayan/ayodhya/sarga54/ayodhyaitrans54.htm",
+      "ref": "turn79view0",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "VR-BHARADVAJA",
+      "role": "primary_text_translation",
+      "edition": "Valmiki Ramayana online mirrored at Sanskrit Documents",
+      "checked_locator": "Ayodhya Kanda 2.54",
+      "notes": "Hospitality at Prayaga and advice about Chitrakuta. Mirror is the same translation, not independent corroboration.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Valmiki Ramayana - Baala Kanda - Sarga 53",
+      "url": "https://sanskritdocuments.org/sites/valmikiramayan/baala/sarga53/balasans53.htm",
+      "ref": "turn80view0",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "VR-VASISHTHA",
+      "role": "primary_text_translation",
+      "edition": "Valmiki Ramayana online mirrored at Sanskrit Documents",
+      "checked_locator": "Bala Kanda 1.53",
+      "notes": "Vasistha, Vishvamitra and Shabala episode; full conflict/transformation arc requires later chapters.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "CHAPTER EIGHTEEN",
+      "url": "https://vedabase.io/en/library/sb/8/18/",
+      "ref": "turn78view3",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "SB818-BBT",
+      "role": "primary_text_translation",
+      "edition": "BBT Vedabase",
+      "checked_locator": "Bhagavata Purana 8.18, summary and verse index",
+      "notes": "Kashyapa and Aditi in Vamana account; only selected identity seed, not a complete narrative.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "CHAPTER FIFTEEN",
+      "url": "https://vedabase.io/en/library/sb/9/15/",
+      "ref": "turn78view4",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "SB915-BBT",
+      "role": "primary_text_translation",
+      "edition": "BBT Vedabase",
+      "checked_locator": "Bhagavata Purana 9.15, summary and verse index",
+      "notes": "Jamadagni and Parashurama identity; no endorsement of narrative warfare as modern social conduct.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Yajnavalkya and Gargi (II) [Section VIII]",
+      "url": "https://www.wisdomlib.org/hinduism/book/the-brihadaranyaka-upanishad/d/doc118359.html",
+      "ref": "turn78view1",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "BU-GARGI",
+      "role": "primary_text_translation",
+      "edition": "Madhavananda with Shankara commentary",
+      "checked_locator": "Brihadaranyaka 3.8.1–12",
+      "notes": "Gargi's questions and the Immutable; not an experimental astronomy account.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
+    },
+    {
+      "title": "Yajnavalkya and Maitreyi (I) [Section IV]",
+      "url": "https://www.wisdomlib.org/hinduism/book/the-brihadaranyaka-upanishad/d/doc117950.html",
+      "ref": "turn78view2",
+      "wordlim": 200,
+      "retrieval": "opened_excerpt",
+      "failed": false,
+      "id": "BU-MAITREYI",
+      "role": "primary_text_translation",
+      "edition": "Madhavananda with Shankara commentary",
+      "checked_locator": "Brihadaranyaka 2.4.1–5",
+      "notes": "Maitreyi's question about wealth and immortality. Keep commentary distinct from base text.",
+      "retrieved_on": "2026-11-02",
+      "publication_reuse": "Reference only; no reproduction licence inferred.",
+      "access_status": "passage_excerpt_read",
+      "editorial_status": "research_reference_not_publication_clearance"
     }
   ]
 }

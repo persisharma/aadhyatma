@@ -22,7 +22,7 @@ Sources: [HAF-SWASTIKA](sources.md#haf-swastika), [HOH-SYMBOLS](sources.md#hoh-s
 
 **English draft:** Om, also called pranava, is explored in the Mandukya Upanishad through the Self and states of awareness. Its other devotional uses should be explained in their own context.
 
-Sources: [MANDUKYA-MI](sources.md#mandukya-mi), [HOH-SYMBOLS](sources.md#hoh-symbols). The Gateway page is a navigation aid, not a second collated edition. Do not claim a medically established frequency or that a sound recording cures disease.
+Sources: [MANDUKYA-MI](sources.md#mandukya-mi), [HOH-SYMBOLS](sources.md#hoh-symbols). The journal article is credited to Adhyeta (March 1957, pp 13–18); its twelve English passages were located. The Gateway page is a navigation aid, not a second collated edition. Do not claim a medically established frequency or that a sound recording cures disease.
 
 ## Shri
 

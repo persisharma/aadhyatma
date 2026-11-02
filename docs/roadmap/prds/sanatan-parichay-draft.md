@@ -377,3 +377,7 @@ The following references ground the existing integration points and the defined 
 - [Pratha integration work in PR 564](https://github.com/persisharma/aadhyatma/pull/564)
 
 - [Brihadaranyaka Upanishad section 3.9 with Sanskrit and translation](https://www.wisdomlib.org/hinduism/book/the-brihadaranyaka-upanishad/d/doc118360.html)
+
+## Research pack
+
+The [Sanatan Parichay research pack](../../content-research/sanatan-parichay/README.md) gathers source-linked dossiers, original introductory drafts, source-specific rosters, an existing-content audit and explicit editorial gaps. Research material remains separate from the active app; individual units require publication review before later integration.
