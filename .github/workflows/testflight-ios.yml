@@ -1,0 +1,117 @@
+name: iOS TestFlight build and upload
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/testflight-ios.yml'
+      - 'scripts/testflight-plan.mjs'
+      - 'scripts/tests/testflight-plan.test.mjs'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/testflight-ios.yml'
+      - 'scripts/testflight-plan.mjs'
+      - 'scripts/tests/testflight-plan.test.mjs'
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Build a new signed iOS binary or submit an existing completed build
+        type: choice
+        default: build-and-submit
+        options: [build-and-submit, submit-existing]
+        required: true
+      build_number:
+        description: For a new build, unused iOS number greater than app.json and previous TestFlight uploads
+        type: string
+        required: false
+      existing_build_id:
+        description: For submit-existing only, the exact completed EAS build UUID
+        type: string
+        required: false
+
+permissions:
+  contents: read
+concurrency:
+  group: ios-testflight-release
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test scripts/tests/testflight-plan.test.mjs
+
+  testflight:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      EAS_CLI_VERSION: '27.2.0'
+      IOS_OPERATION: ${{ inputs.operation }}
+      IOS_TESTFLIGHT_BUILD_NUMBER: ${{ inputs.build_number }}
+      IOS_EXISTING_BUILD_ID: ${{ inputs.existing_build_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - name: Verify release inputs
+        run: |
+          node scripts/testflight-plan.mjs validate-input mobile
+          if [[ "$IOS_OPERATION" == 'build-and-submit' ]]; then
+            node scripts/testflight-plan.mjs prepare mobile
+          fi
+          echo "Source commit: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify Expo authentication
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [[ -z "$EXPO_TOKEN" ]]; then
+            echo '::error::Configure EXPO_TOKEN in the repository Actions secrets.'
+            exit 1
+          fi
+          npx --yes "eas-cli@$EAS_CLI_VERSION" whoami
+      - name: Install mobile dependencies
+        working-directory: mobile
+        run: npm ci
+      - name: Build signed iOS binary or inspect the selected build
+        id: selected
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        working-directory: mobile
+        run: |
+          if [[ "$IOS_OPERATION" == 'build-and-submit' ]]; then
+            npx --yes "eas-cli@$EAS_CLI_VERSION" build --platform ios --profile ci-testflight --non-interactive --wait --json > "$RUNNER_TEMP/testflight-build.json"
+          else
+            npx --yes "eas-cli@$EAS_CLI_VERSION" build:view "$IOS_EXISTING_BUILD_ID" --json > "$RUNNER_TEMP/testflight-build.json"
+          fi
+          node ../scripts/testflight-plan.mjs record . "$RUNNER_TEMP/testflight-build.json"
+      - name: Upload the exact build to TestFlight
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          IOS_SELECTED_BUILD_ID: ${{ steps.selected.outputs.build_id }}
+        working-directory: mobile
+        run: npx --yes "eas-cli@$EAS_CLI_VERSION" submit --platform ios --profile production --id "$IOS_SELECTED_BUILD_ID" --non-interactive --wait
+      - name: Record upload result
+        run: echo 'EAS Submit completed. Apple processing and TestFlight availability must still be checked.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Retain sanitized build identity
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: testflight-build-identity-${{ github.run_id }}
+          path: testflight-output/build-info.json
+          if-no-files-found: ignore
+          retention-days: 7
