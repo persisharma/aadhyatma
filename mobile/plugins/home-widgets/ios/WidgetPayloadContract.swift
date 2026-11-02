@@ -12,13 +12,13 @@ struct LocalizedLines: Codable {
   let hi: [String]; let en: [String]; let gu: [String]; let kn: [String]
   func value(_ locale: String) -> [String] { locale == "en" ? en : locale == "gu" ? gu : locale == "kn" ? kn : hi }
 }
-struct VerseDay: Codable { let dateKey, sourceId: String; let chapter: Int?; let verseIndex: Int; let lines: LocalizedLines; let excerpt, source, accessibilityLabel: LocalizedText; let deepLink: String }
+struct VerseDay: Codable { let dateKey, sourceId: String; let artKey: String?; let chapter: Int?; let verseIndex: Int; let lines: LocalizedLines; let excerpt, source, accessibilityLabel: LocalizedText; let deepLink: String }
 struct VerseSlice: Codable { let timeZone, validThrough: String; let days: [VerseDay] }
 /// One link of the day's tithi chain (contract.ts `PanchangWidgetTithi`), in
 /// order, link 0 always the sunrise tithi `PanchangDay.tithi` names. Optional
 /// end: the last link's end belongs to tomorrow's solve, never a guess.
 struct PanchangTithi: Codable { let name: LocalizedText; let endsAt: String?; let till: LocalizedText? }
-struct PanchangDay: Codable { let dateKey: String; let representedDate, tithi: LocalizedText; let tithiSegments: [PanchangTithi]?; let vrat: LocalizedText?; let sunrise, rahuKaal: LocalizedText; let abhijit: LocalizedText?; let deepLink: String }
+struct PanchangDay: Codable { let dateKey: String; let representedDate, tithi: LocalizedText; let tithiSegments: [PanchangTithi]?; let vrat: LocalizedText?; let sunrise, rahuKaal: LocalizedText; let sunriseAt, sunsetAt: String?; let abhijit: LocalizedText?; let deepLink: String }
 struct PanchangSlice: Codable { let timeZone, cityId: String; let cityLabel: LocalizedText; let calendarSystem, validThrough: String; let days: [PanchangDay] }
 struct JapamSlice: Codable { let dateKey, timeZone: String; let totalBeads, totalRounds, japaStreak: Int; let lastUsedMantraId: String?; let deepLink: String }
 struct WidgetPayload: Codable { let schemaVersion: Int; let generatedAt, writerAppVersion, locale: String; let panchang: PanchangSlice; let verses: VerseSlice; let japam: JapamSlice }
@@ -103,10 +103,10 @@ private func validate(_ value: WidgetPayload) -> Bool {
         exactLink(value.japam.deepLink, path: "/japam", query: value.japam.lastUsedMantraId.map { ["mantraId": $0] } ?? [:]) else { return false }
   for day in value.panchang.days {
     guard validDateKey(day.dateKey), day.deepLink == "vedansh://widget/panchang?date=\(day.dateKey)",
-          validTithiSegments(day.tithiSegments, sunriseTithi: day.tithi) else { return false }
+          validTithiSegments(day.tithiSegments, sunriseTithi: day.tithi), validSolarWindow(day) else { return false }
   }
   for day in value.verses.days {
-    guard validDateKey(day.dateKey), !day.sourceId.isEmpty, day.verseIndex >= 0, (day.chapter == nil || day.chapter! >= 1),
+    guard (day.artKey == nil || day.artKey!.range(of: #"^[a-z]{1,32}$"#, options: .regularExpression) != nil), validDateKey(day.dateKey), !day.sourceId.isEmpty, day.verseIndex >= 0, (day.chapter == nil || day.chapter! >= 1),
           [day.lines.hi, day.lines.en, day.lines.gu, day.lines.kn].allSatisfy({ !$0.isEmpty && $0.allSatisfy({ !$0.isEmpty }) }),
           exactLink(day.deepLink, path: "/verse", query: ["sourceId": day.sourceId, "verseIndex": String(day.verseIndex)].merging(day.chapter.map { ["chapter": String($0)] } ?? [:]) { current, _ in current }) else { return false }
   }
@@ -114,7 +114,7 @@ private func validate(_ value: WidgetPayload) -> Bool {
 }
 
 func decodeWidgetPayload(_ data: Data, now: Date = Date()) -> PayloadState {
-  guard let value = try? JSONDecoder().decode(WidgetPayload.self, from: data), validate(value),
+  guard validAppearanceFields(data), let value = try? JSONDecoder().decode(WidgetPayload.self, from: data), validate(value),
         let pValid = widgetIso.date(from: value.panchang.validThrough),
         let vValid = widgetIso.date(from: value.verses.validThrough) else { return .invalid }
   return pValid < now || vValid < now ? .expired : .ready(value)
@@ -124,4 +124,36 @@ func widgetPayloadExpiry(_ value: WidgetPayload) -> Date? {
   guard let pValid = widgetIso.date(from: value.panchang.validThrough),
         let vValid = widgetIso.date(from: value.verses.validThrough) else { return nil }
   return min(pValid, vValid)
+}
+
+
+// Sunrise inclusive, sunset exclusive. Both widget kinds use the selected city's
+// IST solar window even when the devotional verse follows another device zone.
+func widgetIsNight(_ payload: WidgetPayload, at: Date) -> Bool {
+  let key = widgetDateKey(at, timeZone: widgetIstTimeZone)
+  guard let day = payload.panchang.days.first(where: { $0.dateKey == key }),
+        let riseRaw = day.sunriseAt, let setRaw = day.sunsetAt,
+        let rise = widgetInstant(riseRaw), let set = widgetInstant(setRaw), rise < set else { return false }
+  return at < rise || at >= set
+}
+
+private func validSolarWindow(_ day: PanchangDay) -> Bool {
+  if day.sunriseAt == nil && day.sunsetAt == nil { return true }
+  guard let r = day.sunriseAt, let s = day.sunsetAt,
+        let rise = widgetInstant(r), let set = widgetInstant(s), rise < set else { return false }
+  return widgetDateKey(rise, timeZone: widgetIstTimeZone) == day.dateKey && widgetDateKey(set, timeZone: widgetIstTimeZone) == day.dateKey
+}
+
+// Codable optionals merge absent and null. Preserve the TypeScript/Kotlin
+// distinction: additive fields may be absent, but a present field must be typed.
+private func validAppearanceFields(_ data: Data) -> Bool {
+  guard let root = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
+        let p = root["panchang"] as? [String: Any], let days = p["days"] as? [[String: Any]],
+        let v = root["verses"] as? [String: Any], let verses = v["days"] as? [[String: Any]] else { return false }
+  for day in days where day.keys.contains("sunriseAt") || day.keys.contains("sunsetAt") {
+    guard let rise = day["sunriseAt"] as? String, let set = day["sunsetAt"] as? String,
+          rise.range(of: #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$"#, options: .regularExpression) != nil,
+          set.range(of: #"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$"#, options: .regularExpression) != nil else { return false }
+  }
+  return verses.allSatisfy { !$0.keys.contains("artKey") || $0["artKey"] is String }
 }

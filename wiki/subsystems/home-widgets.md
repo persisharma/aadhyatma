@@ -2,7 +2,7 @@
 title: Home Widgets
 type: subsystem
 sources: [mobile/src/widgets, mobile/assets/widget-backgrounds, mobile/scripts/build-widget-backgrounds.mts, mobile/src/data/versePool.ts, mobile/src/screens/WidgetGalleryScreen.tsx, mobile/src/components/DailyBhaktiNudge.tsx, mobile/plugins/withHomeWidgets.js, mobile/plugins/withHomeWidgetsIos.js, mobile/plugins/home-widgets, mobile/modules/home-widgets-ios, mobile/App.tsx]
-last_verified_date: 2026-10-30
+last_verified_date: 2026-11-02
 confidence: high
 status: current
 ---
@@ -64,3 +64,12 @@ Every home-screen cell (not Lock Screen) draws a faded sketch plate behind its t
 ## Shared Quiet companion offer (31 October 2026)
 
 The strip and later-day offer share `widgetNudgeStore.ts`, serialized record writes and a process-owned pin queue. A dismissed/unmounted sheet cannot remove the listener before the second Android dialog. On launchers without lifecycle transitions, a manual Panchang follow-up still pins it. iPhone's snapshot previews and manual instructions now use `QuietCompanionSheet`. Flow stamps still do not establish actual placement. The parent PR's Android-device validation gap remains open.
+
+
+## Solar widget appearance (2 November 2026)
+
+Verse and Panchang share the selected city's solved sunrise/sunset window. Day is Illustrated Heritage; night is Midnight Temple. Optional `sunriseAt`/`sunsetAt` fields are validated as one ordered same-IST-day pair in all readers; absent means legacy daytime, malformed means invalid. The offline iOS timeline and Android next-boundary alarm include both solar events. Verse date rollover remains device-local while solar appearance remains selected-city/IST.
+
+`appearance.ts` owns preview selection/palettes; `heritage.ts` owns the source-to-reviewed-subject mapping. The deferred planner emits `artKey?`, and the cache key explicitly versions this solar payload addition. `scripts/build-widget-heritage.mjs` generates 66 budgeted plates from existing reader art and records hashes. Native paint sits in a separate right region; small verse keeps full-width text. Missing art has a palette-correct plain fallback. Recovery/iOS tinted modes keep day styling; Japam retains its existing artwork. Android's dynamic resource lookup requires `res/raw/vedansh_widget_keep.xml` to survive release shrinking.
+
+Native compilation, signed device timelines, four-language/size visual and accessibility review remain pending until executed; generated plates and source tests do not establish native fidelity. A new binary is required.

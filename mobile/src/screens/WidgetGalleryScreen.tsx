@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, AppState, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -14,6 +14,8 @@ import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/wid
 import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
 import { WIDGET_TEXT_TOKENS, widgetBackgroundName, widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
 import { widgetBackgroundImages } from '@assets/widget-backgrounds';
+import { widgetAppearance, WIDGET_APPEARANCE_TOKENS, type WidgetAppearance } from '@/widgets/appearance';
+import { widgetHeritageName } from '@/widgets/heritage';
 import { flowedVerse, runningTithi } from '@/widgets/planner';
 import type { MoreStackParamList } from '@/navigation/types';
 
@@ -24,6 +26,12 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   const { lang } = useGitaLanguage();
   const [payloadState, setPayloadState] = useState<WidgetPayloadState>({ kind: 'missing' });
   const [pinSupported, setPinSupported] = useState(false);
+  const [heritageImages, setHeritageImages] = useState<Record<string, number>>({});
+  useEffect(() => {
+    let live = true;
+    import('@assets/widget-backgrounds/heritage').then((module) => { if (live) setHeritageImages(module.widgetHeritageImages); });
+    return () => { live = false; };
+  }, []);
   const titleFont = scriptTitleFont(lang, fontFamilies.devanagariBold);
   const bodyFont = scriptBodyFont(lang, fontFamilies.devanagari);
   // Card eyebrow follows the app's eyebrow convention (design.md §48/§55): italic
@@ -54,6 +62,10 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
     && payloadState.payload.japam.dateKey === widgetDateKey(now, payloadState.payload.japam.timeZone)
     ? payloadState.payload.japam
     : undefined;
+  const appearance = payloadState.kind === 'ready' ? widgetAppearance(payloadState.payload, now) : 'day';
+  const palette = WIDGET_APPEARANCE_TOKENS[appearance];
+  const versePalette = verse ? palette : WIDGET_APPEARANCE_TOKENS.day;
+  const panchangPalette = day ? palette : WIDGET_APPEARANCE_TOKENS.day;
   const tithi = day ? runningTithi(day, now) : undefined;
   const recovery = payloadState.kind === 'expired'
     ? pick(lang, { hi: 'विजेट ताज़ा करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to refresh widgets', gu: 'વિજેટ તાજું કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ನವೀಕರಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ' })
@@ -72,19 +84,21 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
           {pick(lang, { hi: 'हर विजेट अलग है — जो चाहें, जिस आकार में चाहें जोड़ें। श्लोक चौड़े आकार में पूरा दिखता है, पंचांग छोटे में एक नज़र का रहता है।', en: 'Each widget is separate — add the one you want, in the size you want. The verse reads whole at Wide; the Panchang stays a glance at Small.', gu: 'દરેક વિજેટ અલગ છે — જે જોઈએ તે, જે કદમાં જોઈએ તે ઉમેરો. શ્લોક પહોળામાં આખો દેખાય છે, પંચાંગ નાનામાં એક નજરનું રહે છે.', kn: 'ಪ್ರತಿ ವಿಜೆಟ್ ಪ್ರತ್ಯೇಕ — ಬೇಕಾದದ್ದನ್ನು, ಬೇಕಾದ ಗಾತ್ರದಲ್ಲಿ ಸೇರಿಸಿ. ಶ್ಲೋಕ ಅಗಲದಲ್ಲಿ ಪೂರ್ಣ ಕಾಣುತ್ತದೆ, ಪಂಚಾಂಗ ಚಿಕ್ಕದರಲ್ಲಿ ಒಂದೇ ನೋಟ.' })}
         </Text>
         <View style={styles.grid}>
-          <Preview content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
+          <Preview heritageImages={heritageImages} contentReady={!!verse} appearance={verse ? appearance : 'day'} subject={verse?.artKey ?? 'prayer'} content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* The facsimile stands in for the recommended (wide) cell, which
                 renders the whole verse flowed across three lines — not the
                 small-cell excerpt (design.md §59). */}
-            <Text numberOfLines={3} style={[styles.verse, { color: colors.ink, fontFamily: bodyFont }]}>{verse ? flowedVerse(verse.lines[lang]) : recovery}</Text>
-            {verse ? <Text style={[styles.meta, { color: WIDGET_TEXT_TOKENS.inkMuted }]}>{verse.source[lang]}</Text> : null}
+            <Text numberOfLines={4} style={[styles.verse, { color: versePalette.ink, fontFamily: bodyFont }]}>{verse ? flowedVerse(verse.lines[lang]) : recovery}</Text>
+            {verse ? <Text style={[styles.meta, { color: versePalette.inkMuted }]}>{verse.source[lang]}</Text> : null}
           </Preview>
-          <Preview content="panchang" title={contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
+          <Preview heritageImages={heritageImages} contentReady={!!day} appearance={day ? appearance : 'day'} subject="panchang" content="panchang" title={day && payloadState.kind === 'ready' ? `${day.representedDate[lang]} · ${payloadState.payload.panchang.cityLabel[lang]}` : contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* The tithi RUNNING NOW plus its तक line — a tithi hands over
                 mid-day, so the facsimile would otherwise show the sunrise tithi
                 while the placed widget (and the Home glance) had moved on. */}
-            <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{tithi ? tithi.name[lang] : recovery}</Text>
-            {day ? <Text style={[styles.meta, { color: WIDGET_TEXT_TOKENS.inkMuted }]}>{[tithi?.till?.[lang], day.representedDate[lang], day.sunrise[lang], day.rahuKaal[lang]].filter(Boolean).join(' · ')}</Text> : null}
+            <Text style={[styles.headline, { color: panchangPalette.ink, fontFamily: titleFont }]}>{tithi ? tithi.name[lang] : recovery}</Text>
+            {tithi?.till ? <Text style={[styles.meta, { color: panchangPalette.inkMuted }]}>{tithi.till[lang]}</Text> : null}
+            {day?.vrat ? <Text style={[styles.meta, { color: panchangPalette.inkMuted, fontFamily: bodyFont }]}>{day.vrat[lang]}</Text> : null}
+            {day ? <Text style={[styles.meta, { color: panchangPalette.inkMuted }]}>{day.sunrise[lang]}</Text> : null}
           </Preview>
           <Preview content="japam" title={contentByLang(lang, 'जप-साधना', 'Japam practice')} accessibilityLabel="Japam widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{japam ? `${japam.totalBeads} / 108` : recovery}</Text>
@@ -104,6 +118,10 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
 }
 
 type PreviewProps = {
+  heritageImages?: Record<string, number>;
+  contentReady?: boolean;
+  appearance?: WidgetAppearance;
+  subject?: string;
   content: WidgetContent;
   title: string;
   accessibilityLabel: string;
@@ -120,21 +138,24 @@ type PreviewProps = {
 // (its best size marked), and — where the launcher supports pinning — an add
 // action for that kind alone. The sizes come from the shared catalog the native
 // surfaces mirror, so this screen can never advertise a size iOS/Android refuses.
-function Preview({ content, title, accessibilityLabel, colors, eyebrowStyle, lang, bodyFont, pinSupported, onPin, children }: PreviewProps) {
+function Preview({ heritageImages = {}, contentReady = true, appearance = 'day', subject = 'prayer', content, title, accessibilityLabel, colors, eyebrowStyle, lang, bodyFont, pinSupported, onPin, children }: PreviewProps) {
   const entry = widgetCatalogEntry(content);
   const canPin = Platform.OS === 'android' && !!entry.androidProvider;
   const best = pick(lang, { hi: 'सुझाव', en: 'best', gu: 'સૂચિત', kn: 'ಶಿಫಾರಸು' });
   const sizeLabels = entry.sizes.map((size) => `${widgetSizeLabel(size, lang)}${size === entry.recommended ? ` · ${best}` : ''}`);
   // The same sketch plate the native widget draws at this kind's recommended size;
   // without one the card is the plain parchment it was.
-  const art = entry.recommended === 'lock' ? undefined : widgetBackgroundImages[widgetBackgroundName(content, entry.recommended)];
+  const palette = WIDGET_APPEARANCE_TOKENS[appearance];
+  const art = !contentReady || entry.recommended === 'lock' ? undefined : content === 'japam' ? widgetBackgroundImages[widgetBackgroundName(content, entry.recommended)] : heritageImages[widgetHeritageName(subject, entry.recommended, appearance)];
   const cardStyle = [styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }];
+  const previewStyle = [styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }, { padding: spacing.md, paddingRight: content === 'verse' && art ? 90 : spacing.md, backgroundColor: palette.background, borderRadius: radii.lg }];
+  const previewBody = <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={previewStyle}>
+    <Text style={[eyebrowStyle, { color: palette.accent }]}>{title}</Text>{children}<Text style={[styles.brand, { color: palette.gold }]}>ॐ वेदांश़</Text>
+  </View>;
   const body = <>
-    <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={styles.preview}>
-      {/* The facsimile draws in the widgets' own deeper text tokens (design.md §59) —
-          the app's lighter inkMuted/saffronDeep/gold are what kept the art faint. */}
-      <Text style={[eyebrowStyle, { color: WIDGET_TEXT_TOKENS.saffronDeep }]}>{title}</Text>{children}<Text style={[styles.brand, { color: WIDGET_TEXT_TOKENS.gold }]}>ॐ वेदांश़</Text>
-    </View>
+    {art ? <ImageBackground testID={`widget-art-${content}`} source={art} resizeMode="cover" style={[styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }]} imageStyle={styles.cardArt}>
+      {React.cloneElement(previewBody, { style: [previewStyle, { backgroundColor: 'transparent' }] })}
+    </ImageBackground> : previewBody}
     <View accessible accessibilityLabel={`${pick(lang, { hi: 'आकार', en: 'Sizes', gu: 'કદ', kn: 'ಗಾತ್ರ' })}: ${sizeLabels.join(', ')}`} style={styles.sizeRow}>
       {entry.sizes.map((size, index) => {
         const recommended = size === entry.recommended;
@@ -147,9 +168,7 @@ function Preview({ content, title, accessibilityLabel, colors, eyebrowStyle, lan
       <Text style={[styles.buttonText, { color: colors.onPrimary }]}>{pinSupported ? contentByLang(lang, 'यह विजेट जोड़ें', 'Add this widget') : contentByLang(lang, 'जोड़ने के चरण देखें', 'View add steps')}</Text>
     </Pressable> : null}
   </>;
-  return art
-    ? <ImageBackground testID={`widget-art-${content}`} source={art} resizeMode="cover" style={cardStyle} imageStyle={styles.cardArt}>{body}</ImageBackground>
-    : <View style={cardStyle}>{body}</View>;
+  return <View style={cardStyle}>{body}</View>;
 }
 
 const styles = StyleSheet.create({
@@ -159,3 +178,4 @@ const styles = StyleSheet.create({
   // design.md §59) and stay ≥10 pt per the chrome floor.
   root: { flex: 1 }, scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl + spacing.lg }, intro: { fontSize: 15, lineHeight: 23, marginBottom: spacing.xl }, grid: { gap: spacing.md }, card: { borderRadius: radii.lg, borderWidth: 1, padding: spacing.lg }, cardArt: { borderRadius: radii.lg }, preview: { minHeight: 142, justifyContent: 'space-between' }, verse: { fontSize: 18, lineHeight: 29, marginVertical: spacing.md }, headline: { fontSize: 22, lineHeight: 33, marginVertical: spacing.md }, meta: { fontFamily: fontFamilies.inter, fontSize: 12, lineHeight: 18 }, brand: { fontFamily: fontFamilies.devanagariBold, fontSize: 11, marginTop: spacing.md }, sizeRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.xs, marginTop: spacing.md }, sizeChip: { borderWidth: 1, borderRadius: radii.pill, paddingHorizontal: spacing.sm, paddingVertical: 4 }, sizeText: { fontSize: 12, lineHeight: 18 }, instructions: { borderWidth: 1, borderRadius: radii.lg, padding: spacing.lg, marginTop: spacing.xxl }, instructionsTitle: { fontSize: 20, marginBottom: spacing.sm }, instruction: { fontSize: 14, lineHeight: 23 }, button: { minHeight: 48, borderRadius: radii.pill, alignItems: 'center', justifyContent: 'center', marginTop: spacing.md }, buttonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 15 }, note: { fontSize: 13, lineHeight: 20, textAlign: 'center', marginTop: spacing.lg },
 });
+

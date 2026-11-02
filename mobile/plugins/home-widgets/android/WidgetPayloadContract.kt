@@ -112,11 +112,40 @@ internal object WidgetPayloadContract {
         return true
     }
 
+    private fun validSolarWindow(day: JSONObject): Boolean {
+        if (!day.has("sunriseAt") && !day.has("sunsetAt")) return true
+        val rise = parseIso(string(day, "sunriseAt")) ?: return false
+        val set = parseIso(string(day, "sunsetAt")) ?: return false
+        return rise < set && currentDateKey("Asia/Kolkata", Date(rise)) == string(day, "dateKey") && currentDateKey("Asia/Kolkata", Date(set)) == string(day, "dateKey")
+    }
+
+    fun isNight(root: JSONObject, nowMs: Long): Boolean {
+        val days = root.getJSONObject("panchang").getJSONArray("days")
+        val key = currentDateKey("Asia/Kolkata", Date(nowMs))
+        val day = (0 until days.length()).map { days.getJSONObject(it) }.firstOrNull { it.getString("dateKey") == key } ?: return false
+        val rise = parseIso(string(day, "sunriseAt")) ?: return false
+        val set = parseIso(string(day, "sunsetAt")) ?: return false
+        return nowMs < rise || nowMs >= set
+    }
+
+    fun nextSolarBoundaryMs(root: JSONObject, nowMs: Long): Long {
+        var next = nextMidnightMs("Asia/Kolkata", nowMs)
+        val days = root.getJSONObject("panchang").getJSONArray("days")
+        for (index in 0 until days.length()) {
+            val day = days.getJSONObject(index)
+            for (field in listOf("sunriseAt", "sunsetAt")) {
+                val instant = parseIso(string(day, field)) ?: continue
+                if (instant > nowMs && instant < next) next = instant
+            }
+        }
+        return next
+    }
+
     private fun validPanchangDay(day: JSONObject): Boolean {
         val key = string(day, "dateKey") ?: return false
         return validDateKey(key) && localized(objectValue(day, "representedDate")) && localized(objectValue(day, "tithi")) &&
             (!day.has("vrat") || localized(objectValue(day, "vrat"))) && localized(objectValue(day, "sunrise")) &&
-            validTithiSegments(day) &&
+            validTithiSegments(day) && validSolarWindow(day) &&
             localized(objectValue(day, "rahuKaal")) && (!day.has("abhijit") || localized(objectValue(day, "abhijit"))) &&
             string(day, "deepLink") == "vedansh://widget/panchang?date=$key"
     }
@@ -148,7 +177,7 @@ internal object WidgetPayloadContract {
     }
 
     private fun validVerseDay(day: JSONObject): Boolean {
-        if (!validDateKey(string(day, "dateKey")) || string(day, "sourceId") == null ||
+        if ((day.has("artKey") && string(day, "artKey")?.matches(Regex("^[a-z]{1,32}$")) != true) || !validDateKey(string(day, "dateKey")) || string(day, "sourceId") == null ||
             (integer(day, "verseIndex") ?: -1) < 0 || (day.has("chapter") && (integer(day, "chapter") ?: 0) < 1)) return false
         val lines = objectValue(day, "lines") ?: return false
         if (!languages.all { lang ->
@@ -192,3 +221,4 @@ internal object WidgetPayloadContract {
     private fun objectValue(value: JSONObject, key: String): JSONObject? = value.opt(key) as? JSONObject
     private fun arrayValue(value: JSONObject, key: String): JSONArray? = value.opt(key) as? JSONArray
 }
+

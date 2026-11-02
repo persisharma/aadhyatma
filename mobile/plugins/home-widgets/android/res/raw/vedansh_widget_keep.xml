@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- getIdentifier reads these by validated subject/size/appearance at runtime. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@drawable/vedansh_widget_bg_heritage_*" />

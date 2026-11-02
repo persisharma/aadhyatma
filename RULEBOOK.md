@@ -938,6 +938,13 @@ The compiled report reads each of the nine grahas the way a family pandit does �
 - Native readers validate schema, required fields, dates, and freshness and **fail closed** — never a partially decoded value, never an old entry labelled as today. Every missing/corrupt/incompatible/expired state resolves to a safe "open वेदांश़" recovery card (per design.md §59). No wrong-date Panchang is a hard release gate.
 - All four languages (`hi`/`en`/`gu`/`kn`) are required in the payload and their serif faces (Noto Serif Devanagari/Gujarati/Kannada + Inter) must be bundled into the native targets. A Hindi-only native surface would be a separate product decision, not a silent omission.
 
+### 15.2.1 Solar appearance additions (November 2026)
+
+- `PanchangWidgetDay.sunriseAt` and `sunsetAt` are an optional pair of solved ISO instants on that IST date. Neither may be inferred from localized clock labels. Both absent keeps Heritage for legacy payloads; partial, null, reversed or wrong-date pairs fail closed in TypeScript, Swift and Kotlin.
+- `VerseWidgetDay.artKey?` is an additive lowercase resource key. The deferred planner writes it from a named reviewed source mapping; absent/unavailable art uses neutral scripture. Do not use unrelated deity fallbacks.
+- Verse and Panchang select Heritage at sunrise through just before sunset, Midnight Temple otherwise. Every native timeline/alarm must include the solar boundaries in addition to content boundaries, so switching does not depend on reopening JS.
+- `scripts/build-widget-heritage.mjs` owns all new day/night plates, source/derivative hashes and gallery index. Preserve pixel budgets, opaque text-safe regions, AA contrast and resource-shrinker retention. Schema stays v1; native layout/art changes still require a binary.
+
 ### 15.3 Native delivery and OTA safety
 
 - Initial delivery is **store-binary-only**. No OTA may add or change native target code, entitlements, SwiftUI/RemoteViews layout, or fonts. A JS planner/copy change may ship OTA only to a runtime whose native reader already supports that schema — mind the store runtime version ([[ota-runtime-version-mismatch]] gotcha).
