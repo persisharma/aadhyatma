@@ -33,3 +33,16 @@ it('searches the approved humility copy and excludes a different shrine in the s
   act(() => tree.root.findAllByProps({ testID: 'suvichar-thought-search' }).find(n => n.props.onChangeText)!.props.onChangeText('VD-0037'));
   expect(tree.root.findByType(FlatList).props.data).toEqual([]);
 });
+
+it('finds the new Hare Ka Sahara messages by theme and selects the complete final ID', () => {
+  const onSelect = jest.fn();
+  act(() => { tree = create(<SuvicharThoughtPicker visible deity="khatu-shyam" lang="hi" onSelect={onSelect} onClose={jest.fn()} />); });
+  const search = () => tree.root.findAllByProps({ testID: 'suvichar-thought-search' }).find(n => n.props.onChangeText)!;
+  act(() => search().props.onChangeText('हारे का सहारा'));
+  expect(tree.root.findByType(FlatList).props.data.map((t: { id: string }) => t.id)).toEqual(Array.from({ length: 8 }, (_, i) => `VD-${String(i + 77).padStart(4, '0')}`));
+  act(() => search().props.onChangeText('VD-0084'));
+  const thought = suvicharThoughtsFor('khatu-shyam').find(t => t.id === 'VD-0084')!;
+  expect(tree.root.findByType(FlatList).props.data).toEqual([thought]);
+  act(() => tree.root.findAllByProps({ testID: 'suvichar-thought-VD-0084' }).find(n => n.props.onPress)!.props.onPress());
+  expect(onSelect).toHaveBeenCalledWith(thought);
+});

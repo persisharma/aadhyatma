@@ -1315,3 +1315,5 @@ Recorded the Home-only size/colour treatment, restored Om circles/rules and reta
 ## [2026-11-02] ingest | Launch placeholder, explicit native-to-particle start handoff and immediate inactive-return replay; native acceptance pending.
 
 ## [2026-11-02] ingest | Add 76 approved original Suvichar reflections, explicit shrine scope and original daily rotation; preserve 621 referenced entries and stable favorites. Native/export review pending.
+
+## [2026-11-02] ingest | Add eight Khatu Shyam-only Hare Ka Sahara original reflections after merged #603; preserve earlier 76 IDs and expand late-ID/theme-search coverage. Native/export review pending.
