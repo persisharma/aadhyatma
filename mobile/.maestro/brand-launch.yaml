@@ -1,3 +1,4 @@
+# Native reveal trims the first 1000ms: normal visible playback is 2350ms.
 # Installed native evidence still required: this file is not a visual verdict.
 appId: com.prashantsharma.vedansh
 ---
@@ -27,7 +28,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     notVisible:
       id: brand-launch-reveal
-    timeout: 8000
+    timeout: 4000
 - extendedWaitUntil:
     visible:
       id: vedansh-wordmark-hi
@@ -48,7 +49,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     notVisible:
       id: brand-launch-reveal
-    timeout: 8000
+    timeout: 4000
 - assertVisible:
     id: home-wordmark-crest
 
@@ -64,6 +65,6 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     notVisible:
       id: brand-launch-reveal
-    timeout: 8000
+    timeout: 4000
 - assertVisible:
     id: home-wordmark-crest

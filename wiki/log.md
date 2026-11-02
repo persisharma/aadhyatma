@@ -1313,3 +1313,5 @@ Recorded the accepted-source hash, one-renderer app/export contract, splash read
 Recorded the Home-only size/colour treatment, restored Om circles/rules and retained Hindi brand dot. Launch animation and share/export treatment remain unchanged. Native comparison is pending.
 
 ## [2026-11-02] ingest | Launch placeholder, explicit native-to-particle start handoff and immediate inactive-return replay; native acceptance pending.
+
+## [2026-11-02] ingest | Native launch skips the first 1,000ms of the unchanged approved renderer; 2,350ms visible playback and exact final frame. Native timing checks pending.
