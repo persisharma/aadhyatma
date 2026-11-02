@@ -24,6 +24,7 @@ try {
       await page.goto(`${base}?lang=${lang}&size=${size}&view=${view}`);
       await page.waitForFunction(() => document.documentElement.dataset.ready === 'true');
       await page.evaluate(() => document.fonts.ready);
+      await page.waitForFunction(() => [...document.images].every(img => img.complete && img.naturalWidth > 0));
       assert.equal(errors.length, 0, errors.join('\n'));
       const usedFonts = await page.evaluate(() => [...document.fonts].filter(face => face.status === 'loaded').map(face => face.family));
       assert.ok(usedFonts.length > 0, 'No app fonts loaded');
