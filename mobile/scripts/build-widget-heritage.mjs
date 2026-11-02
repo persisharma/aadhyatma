@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, 'assets/widget-backgrounds');
 const sources = {
   prayer: ['category-granth-open-scripture.webp', 0.5], vishnu: ['source-vishnu-narayana.webp', 0.28],
-  krishna: ['deity-krishna-bansuri.webp', 0.5], shiva: ['shiva.webp', 0.5], hanuman: ['ram-hanuman.webp', 0.7],
+  krishna: ['deity-krishna-bansuri.webp', 0.5], shiva: ['shiva.webp', 0.43], hanuman: ['ram-hanuman.webp', 0.42],
   rama: ['deity-rama-darbar.webp', 0.5], ganesha: ['deity-ganesha-modak.webp', 0.5], durga: ['deity-durga-lion.webp', 0.5],
   saraswati: ['deity-saraswati-veena.webp', 0.5], surya: ['deity-surya.webp', 0.5], panchang: ['panchang-celestial-almanac.webp', 0.5],
 };
