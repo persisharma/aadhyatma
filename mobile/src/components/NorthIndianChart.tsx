@@ -7,6 +7,7 @@ import {
   GRAHA_NAMES_HI,
   RASHI_NAMES_EN,
   RASHI_NAMES_HI,
+  RASHI_NAMES_WESTERN,
   type KundaliChart,
 } from '@/panchang/kundali';
 import { useTheme } from '@/theme/ThemeContext';
@@ -101,7 +102,7 @@ export default function NorthIndianChart({ chart, size = 300, lang = 'en', onSel
             .join(' ');
           return (
             <G key={index} accessible={!!onSelectHouse} accessibilityRole={onSelectHouse ? 'button' : undefined}
-              accessibilityLabel={`Explore house ${index + 1}, ${RASHI_NAMES_EN[rashiIndex]}${occupants.length ? `, ${occupants.map(position => GRAHA_NAMES_EN[position.graha]).join(', ')}` : ', empty house'}`}
+              accessibilityLabel={`Explore house ${index + 1}, ${RASHI_NAMES_EN[rashiIndex]} (${RASHI_NAMES_WESTERN[rashiIndex]})${occupants.length ? `, ${occupants.map(position => GRAHA_NAMES_EN[position.graha]).join(', ')}` : ', empty house'}`}
               onPress={onSelectHouse ? () => onSelectHouse(index + 1) : undefined}
               testID={onSelectHouse ? `kundali-house-${index + 1}` : undefined}>
               {onSelectHouse && <Polygon points={HOUSE_POLYGONS[index]} fill="transparent" />}
@@ -115,7 +116,7 @@ export default function NorthIndianChart({ chart, size = 300, lang = 'en', onSel
               >
                 {onSelectHouse ? contentByLang(lang, `भाव ${index + 1}`, `House ${index + 1}`) : rashiIndex + 1}
               </SvgText>
-              {onSelectHouse && <SvgText x={x} y={y} fill={colors.inkSoft} fontFamily={scriptBodyFont(lang, lang === 'hi' ? fontFamilies.devanagariBold : fontFamilies.interSemiBold)} fontSize="8" textAnchor="middle">{contentByLang(lang, RASHI_NAMES_HI[rashiIndex], RASHI_NAMES_EN[rashiIndex])}</SvgText>}
+              {onSelectHouse && <SvgText x={x} y={y} fill={colors.inkSoft} fontFamily={scriptBodyFont(lang, lang === 'hi' ? fontFamilies.devanagariBold : fontFamilies.interSemiBold)} fontSize="8" textAnchor="middle">{contentByLang(lang, RASHI_NAMES_HI[rashiIndex], RASHI_NAMES_WESTERN[rashiIndex])}</SvgText>}
               <SvgText
                 x={x}
                 y={y + (onSelectHouse ? 12 : 8)}

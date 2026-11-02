@@ -1,6 +1,6 @@
 # Illustrated Kundali integration — 2 November 2026
 
-PR: #591, branch `codex/kundali-illustrated-reading`. Base main: `caa457921a39202a83dc34e5b345a4e1f54cde28`. Canonical design, RULEBOOK and wiki updates are included with the owner’s approval.
+PR: #591, branch `codex/kundali-illustrated-reading`. Integrated against main: `af7f356228c6c90b5bd765c6c8ba787d94fee0bc`. Canonical design, RULEBOOK and wiki updates are included with the owner’s approval.
 
 ## Implemented acceptance
 
