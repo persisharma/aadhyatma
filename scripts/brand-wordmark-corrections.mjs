@@ -1,7 +1,8 @@
 // User-requested correction of the two Hindi dots. Coordinates are relative to
 // the pinned Hindi crop; every other master pixel, including flute/feather, stays.
 export const hindiDotCorrections = {
-  upper: { erase: [607, 48, 70, 65], center: [641, 81], radius: 12 },
+  // Bindu aligns with the दा aa stroke (x=537..579), not the श curve.
+  upper: { erase: [607, 48, 70, 65], center: [558, 81], radius: 18 },
   lower: { erase: [733, 358, 37, 33], center: [751, 381], radius: 7 },
 };
 export function correctHindiDots(master, PNG, crop) {

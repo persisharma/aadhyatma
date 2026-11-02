@@ -3,9 +3,9 @@
   "master": "docs/branding/flute/approved-master.png",
   "masterSha256": "6c49799a3be827159046f82d0bfe0b401b00a677e4b43d5e9bebdf4004d805c6",
   "originalRendererSha256": "af052692ac2477860ae6c0e69ed7ce6754ed5dcf1400f10bd7e78665c6ad69d5",
-  "approvedSourceSha256": "0c1fb6d3b102d25a00fc304d918aafb67ff0efef5b70e6437fb02dadcb66d1ed",
-  "approvedPngSha256": "8bf5eff6723eac00932f898f2f8a8de93615a0b48e5853e4e8fafd76e8544e3e",
-  "particles": 4011,
+  "approvedSourceSha256": "437c1c12f44d42b61453ffbfd9c17fdf63254a4fd55ecc821c6fae93de443788",
+  "approvedPngSha256": "429bcb2891c232364764f7ae7802505c5232f2792b099da72626f4ca18ccd97a",
+  "particles": 4012,
   "durationMs": 3350,
   "hindiDotCorrections": {
     "upper": {
@@ -16,10 +16,10 @@
         65
       ],
       "center": [
-        641,
+        558,
         81
       ],
-      "radius": 12
+      "radius": 18
     },
     "lower": {
       "erase": [

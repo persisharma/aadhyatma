@@ -9,9 +9,9 @@ const document = JSON.parse(fs.readFileSync(path.join(root, 'mobile/src/branding
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'mobile/assets/branding/wordmarks/manifest.json'), 'utf8'));
 
 test('native document embeds the accepted animation byte for byte, not a rewritten effect', () => {
-  expect(sha(source)).toBe('0c1fb6d3b102d25a00fc304d918aafb67ff0efef5b70e6437fb02dadcb66d1ed');
+  expect(sha(source)).toBe('437c1c12f44d42b61453ffbfd9c17fdf63254a4fd55ecc821c6fae93de443788');
   expect(document.html).toContain(source);
-  expect(manifest.particles).toBe(4011); expect(manifest.durationMs).toBe(3350);
+  expect(manifest.particles).toBe(4012); expect(manifest.durationMs).toBe(3350);
   expect(document.html).toContain("send('brand-ready')"); expect(document.html).toContain("send('brand-complete')");
 });
 test('native hosting hides preview controls and permits no network resources', () => {
@@ -31,7 +31,7 @@ test('the entire composition and all shipped derivatives match their approved ma
 });
 
 
-test('shipped names preserve the master except the two corrected Hindi dot regions', () => {
+test('shipped names preserve the master except the documented Hindi dot correction regions', () => {
   const { PNG } = jest.requireActual('pngjs');
   const masterBytes = fs.readFileSync(path.join(root, 'docs/branding/flute/approved-master.png'));
   expect(sha(masterBytes)).toBe('6c49799a3be827159046f82d0bfe0b401b00a677e4b43d5e9bebdf4004d805c6');
@@ -42,7 +42,7 @@ test('shipped names preserve the master except the two corrected Hindi dot regio
     const exact = new PNG({ width: metrics.width, height: metrics.height });
     PNG.bitblt(master, exact, metrics.crop[0], metrics.crop[1], metrics.width, metrics.height, 0, 0);
     for (let y = 0; y < metrics.height; y++) for (let x = 0; x < metrics.width; x++) {
-      if (kind === 'hi' && ((x >= 607 && x < 677 && y >= 48 && y < 113) || (x >= 733 && x < 770 && y >= 358 && y < 391))) continue;
+      if (kind === 'hi' && ((x >= 607 && x < 677 && y >= 48 && y < 113) || (x >= 540 && x < 576 && y >= 63 && y < 99) || (x >= 733 && x < 770 && y >= 358 && y < 391))) continue;
       const i = (y * metrics.width + x) * 4;
       if (!shipped.data.subarray(i, i + 4).equals(exact.data.subarray(i, i + 4))) throw Error(`Unexpected pixel edit at ${kind}:${x},${y}`);
     }
@@ -69,12 +69,20 @@ test('flute revision changes only composition pixels, preserving the original an
   expect(count).toBe(manifest.particles);
 });
 
-test('Hindi bindu is round and nukta is separated from the sh tail', () => {
+test('Hindi bindu sits over the da aa stroke and nukta is separated from the sh tail', () => {
   const { PNG } = jest.requireActual('pngjs');
   const png = PNG.sync.read(fs.readFileSync(path.join(root, manifest.names.hi.file)));
   const alpha = (x: number, y: number) => png.data[(y * png.width + x) * 4 + 3];
-  expect(alpha(630, 70)).toBe(0); expect(alpha(652, 70)).toBe(0); expect(alpha(641, 81)).toBe(255);
-  expect(alpha(641, 100)).toBe(0);
+  expect(alpha(558, 81)).toBe(255);
+  const upperDotPixels = Array.from({ length: 60 }, (_, i) => 528 + i).filter(x => alpha(x, 81) >= 128);
+  const visibleDiameter = upperDotPixels.length * manifest.names.hi.homeFrame.artworkWidth / png.width;
+  expect(visibleDiameter).toBeGreaterThanOrEqual(3); // visible at the actual Home header size
+  expect(alpha(541, 64)).toBe(0); expect(alpha(575, 64)).toBe(0);
+  expect(alpha(558, 100)).toBe(0);
+  // The mistaken dot above sh is removed, not duplicated.
+  for (let y = 69; y < 93; y++) for (let x = 629; x < 653; x++) expect(alpha(x, y)).toBe(0);
+  // The new dot shares the center of the aa stroke (source x=537..579).
+  expect(alpha(558, 250)).toBeGreaterThan(200);
   expect(alpha(751, 381)).toBe(255);
   for (let y = 360; y <= 373; y++) expect(alpha(751, y)).toBe(0);
 });

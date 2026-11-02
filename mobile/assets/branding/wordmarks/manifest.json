@@ -1,11 +1,11 @@
 {
-  "approvedSourceSha256": "0c1fb6d3b102d25a00fc304d918aafb67ff0efef5b70e6437fb02dadcb66d1ed",
-  "approvedPngSha256": "8bf5eff6723eac00932f898f2f8a8de93615a0b48e5853e4e8fafd76e8544e3e",
+  "approvedSourceSha256": "437c1c12f44d42b61453ffbfd9c17fdf63254a4fd55ecc821c6fae93de443788",
+  "approvedPngSha256": "429bcb2891c232364764f7ae7802505c5232f2792b099da72626f4ca18ccd97a",
   "canvas": {
     "width": 720,
     "height": 780
   },
-  "particles": 4011,
+  "particles": 4012,
   "durationMs": 3350,
   "names": {
     "en": {
@@ -63,20 +63,20 @@
   },
   "assets": {
     "mobile/assets/branding/wordmarks/approved-lockup.png": {
-      "sha256": "8bf5eff6723eac00932f898f2f8a8de93615a0b48e5853e4e8fafd76e8544e3e",
-      "bytes": 159930
+      "sha256": "429bcb2891c232364764f7ae7802505c5232f2792b099da72626f4ca18ccd97a",
+      "bytes": 159959
     },
     "mobile/assets/branding/wordmarks/english.png": {
       "sha256": "75a1942786a124f10bd6d3dc150f2820b8dc85228ee95c96545b40b58bdfdcce",
       "bytes": 313880
     },
     "mobile/assets/branding/wordmarks/hindi.png": {
-      "sha256": "97bf197c25c025818ab3ac2657e68848bf89284ef089df846df0cd36146702b7",
-      "bytes": 212002
+      "sha256": "9dbb463108f0bf37e07aac027452095895fbc49b1e8b4e28c22b245fbc02e2bf",
+      "bytes": 212207
     },
     "mobile/src/branding/approvedParticleDocument.json": {
-      "sha256": "3584986745879cbe7ea5a2cc3ba8eaf6560d7c9de3ab03abd12ff056fa5b23cf",
-      "bytes": 218739
+      "sha256": "0eed24f0d6402d0238541bb5a804897ab4cb7bcd3f10932b95894a29355993b2",
+      "bytes": 218779
     }
   },
   "lettering": {
@@ -92,10 +92,10 @@
           65
         ],
         "center": [
-          641,
+          558,
           81
         ],
-        "radius": 12
+        "radius": 18
       },
       "lower": {
         "erase": [
