@@ -36,35 +36,22 @@ appId: com.prashantsharma.vedansh
 - assertNotVisible:
     id: brand-particle-webview
 
-# A warm reopen must replay while the existing navigator remains mounted.
+# Warm returns must keep Home visible, with no replay.
 - pressKey: Home
 - launchApp:
     stopApp: false
     arguments:
       RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
-- extendedWaitUntil:
-    visible:
-      id: brand-launch-reveal
-    timeout: 5000
-- extendedWaitUntil:
-    notVisible:
-      id: brand-launch-reveal
-    timeout: 4000
+- assertNotVisible:
+    id: brand-launch-reveal
+- assertNotVisible:
+    id: brand-resume-modal
 - assertVisible:
     id: home-wordmark-crest
-
-# Repeat immediately, with no minimum background delay.
 - pressKey: Home
 - launchApp:
     stopApp: false
-- extendedWaitUntil:
-    visible:
-      id: brand-launch-reveal
-    timeout: 5000
-- takeScreenshot: e2e-shots/brand-immediate-reopen
-- extendedWaitUntil:
-    notVisible:
-      id: brand-launch-reveal
-    timeout: 4000
+- assertNotVisible:
+    id: brand-launch-reveal
 - assertVisible:
     id: home-wordmark-crest
