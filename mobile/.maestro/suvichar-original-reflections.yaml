@@ -4,6 +4,9 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "tab-bhakti" }
 - tapOn: { id: "open-suvichar" }
 - tapOn: { id: "suvichar-mode-custom" }
+# The custom picker is a nested horizontal rail (same gesture as suvichar-mahakaal).
+- swipe: { start: "85%,46%", end: "20%,46%", duration: 350 }
+- waitForAnimationToEnd
 - tapOn: { id: "suvichar-deity-hanuman" }
 - scrollUntilVisible:
     element: { id: "suvichar-browse-thoughts" }
@@ -35,8 +38,16 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "suvichar-card-source" }
 # Verify specific shrine copy cannot leak through the former shared Krishna pool.
 - scrollUntilVisible:
-    element: { id: "suvichar-deity-jagannath" }
+    element: { id: "suvichar-mode-custom" }
     direction: UP
+- repeat:
+    times: 12
+    while: { notVisible: { id: "suvichar-deity-jagannath" } }
+    commands:
+      - swipe: { start: "85%,46%", end: "20%,46%", duration: 350 }
+      - waitForAnimationToEnd
+- swipe: { start: "85%,46%", end: "20%,46%", duration: 350 }
+- waitForAnimationToEnd
 - tapOn: { id: "suvichar-deity-jagannath" }
 - scrollUntilVisible:
     element: { id: "suvichar-browse-thoughts" }

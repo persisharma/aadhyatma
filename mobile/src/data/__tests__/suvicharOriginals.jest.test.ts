@@ -8,6 +8,8 @@ it('ships all 74 approved numbered thoughts and two distinct earlier examples wi
   expect(originals.entries).toHaveLength(76);
   expect(new Set(originals.entries.map(t => t.id)).size).toBe(76);
   expect(new Set(originals.entries.map(t => t.hi)).size).toBe(76);
+  expect(originals.source.kind).toBe('app-written-original-reflections');
+  expect(originals.source.referenceUrls).toEqual([]);
   const deities = new Set<string>(suvicharDeityCatalog.map(d => d.id));
   for (const t of originals.entries) {
     expect(t.id).toMatch(/^VD-\d{4}$/);
