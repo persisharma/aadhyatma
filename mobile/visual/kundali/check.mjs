@@ -69,10 +69,14 @@ try {
         const labels = await page.locator('svg text').allTextContents();
         const paintedLabels = await page.locator('svg text').evaluateAll(elements => elements.map(element => {
           const box = element.getBBox();
-          return { text: element.textContent, width: box.width, height: box.height, fontSize: getComputedStyle(element).fontSize };
+          const style = getComputedStyle(element);
+          return { text: element.textContent, width: box.width, height: box.height, fontSize: style.fontSize, display: style.display, visibility: style.visibility, outerHTML: element.outerHTML };
         }));
+        await fs.writeFile(path.join(output, `${lang}-${size}-${width}-chart-labels.json`), JSON.stringify(paintedLabels, null, 2));
+        await fs.writeFile(path.join(output, `${lang}-${size}-${width}-chart.html`), await page.content());
+        await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-chart.png`), fullPage: true });
         assert.equal(paintedLabels.length, 36, 'Every house needs house, sign and graha labels');
-        assert.ok(paintedLabels.every(label => label.width > 0 && label.height > 0 && parseFloat(label.fontSize) > 0), 'Chart text exists but is not painted');
+        assert.ok(paintedLabels.every(label => label.width > 0 && label.height > 0 && parseFloat(label.fontSize) > 0), `Chart text exists but is not painted: ${JSON.stringify(paintedLabels.filter(label => !label.width || !label.height || !parseFloat(label.fontSize)))}`);
         if (lang === 'en') { assert.ok(labels.some(label => label.trim() === 'Su Me')); assert.ok(labels.some(label => label.trim() === 'Mo Ra')); }
         assert.ok(!labels.some(label => /\d+ grahas/.test(label)), 'Count replaced graha abbreviations');
         await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-chart.png`), fullPage: true });
