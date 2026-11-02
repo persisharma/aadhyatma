@@ -49,7 +49,7 @@ export default function VedanshWordmark({ lang = 'hi', compact = false,
   const width = (kind: 'hi' | 'en', small = false) => kind === 'en'
     ? (compact ? 86 : small ? 132 : 180) : (compact ? 58 : small ? 78 : 110);
   return <View testID="vedansh-wordmark" style={styles.wrap} accessible accessibilityRole="image"
-    accessibilityLabel={`${contentByLang(lang, 'वेदांश', 'Vedansh')}${showTagline ? ` · ${companionTagline(lang)}` : ''}`}>
+    accessibilityLabel={`${contentByLang(lang, 'वेदांश़', 'Vedansh')}${showTagline ? ` · ${companionTagline(lang)}` : ''}`}>
     <WordmarkArtwork key={primary} kind={primary} width={width(primary)} />
     {bilingual && <WordmarkArtwork key={secondary} kind={secondary} width={width(secondary, true)} />}
     {showTagline && <Text allowFontScaling={!fixedExport} style={{ color: colors.inkSoft,

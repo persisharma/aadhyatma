@@ -32,9 +32,12 @@ for (const lang of languages) for (const scale of ['M', 'L']) {
     const image = tree.root.findByType(Image);
     const imageStyle = StyleSheet.flatten(image.props.style);
     expect(image.props.testID).toBe(`vedansh-wordmark-${lang === 'hi' ? 'hi' : 'en'}`);
-    expect(imageStyle.tintColor).toBe(lightColors.ink);
-    expect(imageStyle.width / imageStyle.aspectRatio).toBeCloseTo(28);
-    expect(tree.root.findAllByType(View).filter(n => n.props.testID === 'home-wordmark-nukta')).toHaveLength(lang === 'hi' ? 1 : 0);
+    expect(imageStyle.tintColor).toBeUndefined();
+    const frame = StyleSheet.flatten(tree.root.findByProps({ testID: 'home-wordmark-artwork-frame' }).props.style);
+    expect(frame.height).toBe(28);
+    expect(frame.width).toBeCloseTo(lang === 'hi' ? 61.973333333333336 : 98.22222222222223);
+    expect(imageStyle.width).toBeLessThanOrEqual(frame.width);
+    expect(imageStyle.width / imageStyle.aspectRatio).toBeLessThanOrEqual(frame.height);
     act(() => tree.unmount());
   });
 }
@@ -59,7 +62,7 @@ test.each(languages)('export footer respects card language %s and keeps the down
 
 // Source geometry checks protect the actual regressions in the supplied device
 // screenshots: a launch-sized copper heading and the missing side ornaments.
-test.each([false, true])('restores the compact Home crest, ink and nukta (compact=%s)', async compact => {
+test.each([false, true])('keeps the compact Home crest and unmodified flute artwork (compact=%s)', async compact => {
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => { tree = TestRenderer.create(<ThemeProvider><GitaLanguageProvider initialLang="hi"><HomeWordmark compact={compact} /></GitaLanguageProvider></ThemeProvider>); });
   const crest = tree.root.findByProps({ testID: 'home-wordmark-crest' });
@@ -72,9 +75,8 @@ test.each([false, true])('restores the compact Home crest, ink and nukta (compac
     expect(tree.root.findAllByType(View).filter(n => n.props.testID === `home-wordmark-rule-${side}`)).toHaveLength(compact ? 0 : 1);
   }
   const image = tree.root.findByType(Image);
-  expect(StyleSheet.flatten(image.props.style)).toMatchObject({ tintColor: lightColors.ink });
-  const nukta = tree.root.findByProps({ testID: 'home-wordmark-nukta' });
-  expect(StyleSheet.flatten(nukta.props.style)).toMatchObject({ backgroundColor: lightColors.ink, left: '80%', bottom: -0.4 });
+  expect(StyleSheet.flatten(image.props.style).tintColor).toBeUndefined();
+  expect(manifest.lettering.hindiNukta).toBe('baked into approved master');
   const subtitle = tree.root.findByProps({ testID: 'home-wordmark-tagline' });
   expect(StyleSheet.flatten(subtitle.props.style)).toMatchObject({ fontSize: 14, color: lightColors.inkSoft });
   act(() => tree.unmount());
@@ -85,7 +87,7 @@ test.each([320, 360, 375, 390, 393.45, 414, 430, 768])('Home crest leaves the se
   const compact = content < 350;
   for (const lang of languages) {
     const metrics = manifest.names[lang === 'hi' ? 'hi' : 'en'];
-    const name = 28 * metrics.width / metrics.height;
+    const name = metrics.homeFrame.width;
     const width = name + 2 * 30 + (compact ? 2 * 6 : 2 * 22 + 4 * 11);
     // A centered crest must finish before the right-aligned 44dp Settings hit target.
     expect((content + width) / 2).toBeLessThanOrEqual(content - 44);

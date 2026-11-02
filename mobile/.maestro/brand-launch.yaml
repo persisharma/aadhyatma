@@ -11,8 +11,10 @@ appId: com.prashantsharma.vedansh
 - assertVisible:
     id: home-wordmark-crest
 - assertVisible:
+    id: home-wordmark-artwork-frame
+- assertVisible:
     id: home-settings
-- takeScreenshot: e2e-shots/brand-home-compact-om-crest
+- takeScreenshot: e2e-shots/brand-home-flute-compact-om-crest
 - stopApp
 - launchApp:
     arguments:

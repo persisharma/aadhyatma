@@ -1,59 +1,79 @@
 {
-  "approvedSourceSha256": "af052692ac2477860ae6c0e69ed7ce6754ed5dcf1400f10bd7e78665c6ad69d5",
-  "approvedPngSha256": "61ab501ea93ef4d026dbc20f15847a841f01ccade216dfebcec13d2146c24213",
+  "approvedSourceSha256": "80603c5af3b2095a3092b177de8c8414698869960ec0ef0ecbd52108de3243c9",
+  "approvedPngSha256": "4f8fda58b1399b61026cf97376a6ee893c94b7e3959c69dce5bdaf716ab32421",
   "canvas": {
     "width": 720,
     "height": 780
   },
-  "particles": 3809,
+  "particles": 4016,
   "durationMs": 3350,
   "names": {
     "en": {
-      "file": "mobile/assets/branding/wordmarks/english.png",
-      "width": 442,
-      "height": 126,
       "crop": [
-        139,
-        363,
-        581,
-        489
-      ]
+        122,
+        16,
+        1687,
+        435
+      ],
+      "width": 1565,
+      "height": 419,
+      "homeFrame": {
+        "width": 98.22222222222223,
+        "height": 28
+      },
+      "launchFrame": {
+        "x": 139,
+        "y": 366.8313099041534,
+        "width": 442,
+        "height": 118.33738019169328
+      },
+      "file": "mobile/assets/branding/wordmarks/english.png"
     },
     "hi": {
-      "file": "mobile/assets/branding/wordmarks/hindi.png",
-      "width": 166,
-      "height": 75,
       "crop": [
-        277,
-        502,
-        443,
-        577
-      ]
+        419,
+        460,
+        1523,
+        851
+      ],
+      "width": 1104,
+      "height": 391,
+      "homeFrame": {
+        "width": 61.973333333333336,
+        "height": 28
+      },
+      "launchFrame": {
+        "x": 277,
+        "y": 510.1041666666667,
+        "width": 166,
+        "height": 58.791666666666664
+      },
+      "file": "mobile/assets/branding/wordmarks/hindi.png"
     }
   },
   "assets": {
     "mobile/assets/branding/wordmarks/approved-lockup.png": {
-      "sha256": "61ab501ea93ef4d026dbc20f15847a841f01ccade216dfebcec13d2146c24213",
-      "bytes": 126560
+      "sha256": "4f8fda58b1399b61026cf97376a6ee893c94b7e3959c69dce5bdaf716ab32421",
+      "bytes": 160113
     },
     "mobile/assets/branding/wordmarks/english.png": {
-      "sha256": "8b016b5ed2b879dcb199b181d37da636e39363de40da77b88566adb5a3700d2a",
-      "bytes": 9960
+      "sha256": "75a1942786a124f10bd6d3dc150f2820b8dc85228ee95c96545b40b58bdfdcce",
+      "bytes": 313880
     },
     "mobile/assets/branding/wordmarks/hindi.png": {
-      "sha256": "8490190d5b94e2d61d73901fae31a35cc5216138523f5f8fb86228dab9c07516",
-      "bytes": 3628
+      "sha256": "5a02f9f73c65dd293d06b1065c972e56df0e836a70846abd79d0a6981497a5bc",
+      "bytes": 217360
     },
     "mobile/src/branding/approvedParticleDocument.json": {
-      "sha256": "2b85028a9acf77bfe148b5e2654549cf2e1953b5ec9c09ed13596414be09263f",
-      "bytes": 174247
+      "sha256": "0ef0bd78790331e36276c47b99f9cc35a91b8112ae1c077a6c710c9e87057c2d",
+      "bytes": 218983
     }
   },
   "lettering": {
-    "latin": "Samarkan",
-    "hindi": "Yatra One",
-    "subtitle": "Hind",
+    "masterSha256": "6c49799a3be827159046f82d0bfe0b401b00a677e4b43d5e9bebdf4004d805c6",
+    "style": "approved-flute-peacock",
+    "hindiNukta": "baked into approved master",
     "fontBinariesBundled": false,
-    "samarkanRegistration": "not verified; confirm before production use"
+    "samarkanRegistration": "earlier Samarkan-inspired reference registration not verified; confirm before production use"
   }
 }

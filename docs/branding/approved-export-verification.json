@@ -1,8 +1,8 @@
 {
-  "source_sha256": "af052692ac2477860ae6c0e69ed7ce6754ed5dcf1400f10bd7e78665c6ad69d5",
-  "source_bytes": 172871,
+  "source_sha256": "80603c5af3b2095a3092b177de8c8414698869960ec0ef0ecbd52108de3243c9",
+  "source_bytes": 217607,
   "method": "Executes the original preview JavaScript directly with Canvas2D; no rewritten animation",
-  "particles": 3809,
+  "particles": 4016,
   "duration_seconds": 4.6,
   "frames": 138,
   "size": [
@@ -11,16 +11,16 @@
   ],
   "files": {
     "vedansh-approved-preview-exact.mp4": {
-      "bytes": 3198951,
-      "sha256": "0269c93ab44b15bf0eb3fb08d88d8e64f9eb227b260bfdd8ff312e0832c01e07"
+      "bytes": 3361419,
+      "sha256": "1ad655f8e4c82a37abc1a565326a9f7ae4a3a1d012ae9c50e2e94fc3130f3635"
     },
     "vedansh-approved-preview-exact.gif": {
-      "bytes": 3909592,
-      "sha256": "62b8e8ecd363181c4b878f31e982948d8514931029f1b0f0a4f014db27031582"
+      "bytes": 3738663,
+      "sha256": "413469602e0f29c1ab601fb97e4f2ce30e0b93c2e84300325888f8fab66cf0c7"
     },
     "vedansh-approved-preview-exact.html": {
-      "bytes": 173263,
-      "sha256": "6bdcc86ee5fbdbc91edea66cf5dc06bd32149d66b6e9c7ec1464991726baab42"
+      "bytes": 217999,
+      "sha256": "af6e5fdcf7c90c99c82f1737627aa670c380278d3752d9480f770d80665092af"
     }
   }
 }
