@@ -6,7 +6,7 @@
  */
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { PixelRatio, Platform, Pressable, Share } from 'react-native';
+import { Image, PixelRatio, Platform, Pressable, Share } from 'react-native';
 import * as Sharing from 'expo-sharing';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { computePanchangForDate } from '@/panchang/engine';
@@ -43,6 +43,7 @@ const settle = async (ms = 170) => { await act(async () => { await new Promise((
 const sheet = () => tree.root.findByType('ShareTargetSheet' as React.ElementType);
 
 async function shareToSystem(taps = 1) {
+  const capturesBefore = mockCapture.mock.calls.length;
   function Trigger() {
     const { share } = usePanchangShare();
     return <Pressable accessibilityLabel="trigger" onPress={() => void share(input)} />;
@@ -57,6 +58,14 @@ async function shareToSystem(taps = 1) {
   // The card captures once it has laid out and its brand mark has decoded.
   act(() => tree.root.findByProps({ testID: 'share-card-mount' }).props.onLayout({ nativeEvent: { layout: { height: 675 } } }));
   act(() => tree.root.findByType(PanchangShareCard).props.onIconLoad());
+  // The approved lettering is a separate image registered with the real
+  // capture barrier. Loading the icon alone must not capture an empty name.
+  await settle();
+  expect(mockCapture).toHaveBeenCalledTimes(capturesBefore);
+  const wordmarks = tree.root.findByType(PanchangShareCard).findAllByType(Image)
+    .filter(n => n.props.testID === 'vedansh-wordmark-hi');
+  expect(wordmarks).toHaveLength(1);
+  act(() => wordmarks.forEach(image => image.props.onLoad()));
   await settle(); await settle();
 }
 
