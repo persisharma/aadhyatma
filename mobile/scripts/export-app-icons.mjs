@@ -58,6 +58,9 @@ function featherSplash(bytes) {
 
 save('icon.png', await resize(1024));
 save('splash-icon.png', featherSplash(await resize(512)));
+// Explicit transparent native placeholder prevents fallback to the launcher
+// emblem. The first visible identity is the particle composition in JS.
+save('splash-blank.png', PNG.sync.write(new PNG({ width: 64, height: 64 })));
 save('favicon.png', await resize(64));
 // In-app brand mark (Suvichar card badge): 20 dp at up to 3x export density.
 save('branding/brand-mark.png', await resize(96));

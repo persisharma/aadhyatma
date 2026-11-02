@@ -30,3 +30,11 @@ The original gate completed once per JS session and did not replay on foreground
 The old complete-art footprint made visible letters smaller because flute/feather consumed that box. The follow-up alignment uses 124×36pt English and 97×36pt Hindi frames so the actual lettering, including Hindi dots, is exactly 30pt high and centered on the Om circles. The crest remains 42pt and companion text 14/22. Screenshots IMG_9069(1), IMG_9068(1), and the earlier IMG_9032(1) establish the reported mismatch. Browser verification renders the actual production HomeWordmark with real language/theme/size providers; it remains separate from native device verification.
 
 While the reveal is visible, the launch host, Explore, update offer and rating-request eligibility pause without consuming their daily slots. Their existing selection and cadence resume after branding finishes. The brand visibility signal is transient and never persisted.
+
+## Native handoff and immediate reopening (2 November 2026)
+
+Native launch uses `splash-blank.png` on the same ivory as the canvas, replacing the static emblem before the particles. The old feathered splash export remains preserved. Changing this config requires a new native binary; an OTA cannot remove the static image from an existing binary.
+
+`brand-particle-host.mjs` embeds the approved fragment unchanged, keeps the canvas hidden, cancels its initial autoplay at frame zero after decode, and reports readiness. The WebView awaits the native hide promise before injecting the explicit start command; the original replay action restarts the accepted clock. Completion is ignored before start. Unmount cancels a pending handoff; existing accessibility/error/watchdog and targeted-navigation exits remain.
+
+Quick inactive → active returns replay, even without background. iOS AppState cannot distinguish a quick app-switcher visit from Control Center/notification interruptions, so both replay. Initial inactive cold startup still waits for active; duplicate active events do not replay. No minimum-away cooldown or persistence flag is used. Native visual/lifecycle checks remain required.

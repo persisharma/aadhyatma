@@ -7,10 +7,14 @@ import BrandLaunchReveal, { BRAND_REVEAL_TIMEOUT_MS } from '../BrandLaunchReveal
 import { WebView } from 'react-native-webview';
 import { signalBrandLaunchTarget } from '@/navigation/brandLaunchIntent';
 
+const mockInject = jest.fn();
 jest.mock('react-native-webview', () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
-  return { WebView: (props: object) => React.createElement('ParticleWebView', props) };
+  return { WebView: React.forwardRef(function MockWebView(props: object, ref: React.Ref<unknown>) {
+    React.useImperativeHandle(ref, () => ({ injectJavaScript: mockInject }));
+    return React.createElement('ParticleWebView', props);
+  }) };
 });
 let tree: TestRenderer.ReactTestRenderer | undefined;
 const removed = jest.fn();
@@ -26,9 +30,10 @@ async function mount(targeted = false) {
   </GitaLanguageProvider>); });
 }
 function ready() { return tree!.root.findAllByType(Text).some(n => n.props.children === 'Application ready'); }
-function send(type: string) { act(() => tree!.root.findByType(WebView).props.onMessage({ nativeEvent: { data: JSON.stringify({ type }) } })); }
+async function send(type: string) { await act(async () => tree!.root.findByType(WebView).props.onMessage({ nativeEvent: { data: JSON.stringify({ type }) } })); }
+async function finishReveal() { await send('brand-ready'); await send('brand-complete'); }
 beforeEach(() => {
-  jest.useFakeTimers(); surfaceReady.mockClear(); removed.mockClear();
+  jest.useFakeTimers(); surfaceReady.mockClear(); removed.mockClear(); mockInject.mockClear();
   stateListeners.clear(); linkListeners.clear();
   Object.defineProperty(AppState, 'currentState', { configurable: true, writable: true, value: 'active' });
   onState = next => { Object.assign(AppState, { currentState: next }); for (const listener of [...stateListeners]) listener(next); };
@@ -43,12 +48,12 @@ beforeEach(() => {
 afterEach(() => { act(() => tree?.unmount()); tree = undefined; jest.restoreAllMocks(); Object.assign(AppState, { currentState: originalState }); jest.useRealTimers(); });
 test('native splash waits for the actual canvas; launch asks wait for animation completion', async () => {
   await mount(); expect(ready()).toBe(false); expect(surfaceReady).not.toHaveBeenCalled();
-  send('brand-ready'); expect(surfaceReady).toHaveBeenCalledTimes(1); expect(ready()).toBe(false);
-  send('brand-complete'); expect(ready()).toBe(true); expect(tree!.root.findAllByType(BrandLaunchReveal)).toHaveLength(0);
+  await send('brand-ready'); expect(surfaceReady).toHaveBeenCalledTimes(1); expect(ready()).toBe(false);
+  await finishReveal(); expect(ready()).toBe(true); expect(tree!.root.findAllByType(BrandLaunchReveal)).toHaveLength(0);
   expect(removed).toHaveBeenCalledTimes(4);
 });
 test('unknown and malformed bridge messages do not dismiss launch', async () => {
-  await mount(); send('anything');
+  await mount(); await send('anything');
   act(() => tree!.root.findByType(WebView).props.onMessage({ nativeEvent: { data: 'broken json' } }));
   expect(ready()).toBe(false); expect(surfaceReady).not.toHaveBeenCalled();
 });
@@ -65,7 +70,7 @@ test('stalled native accessibility and silent canvas startup are both bounded', 
   expect(ready()).toBe(false); act(() => jest.advanceTimersByTime(BRAND_REVEAL_TIMEOUT_MS)); expect(ready()).toBe(true);
 });
 test('a canvas that sends no completion cannot trap launch', async () => {
-  await mount(); send('brand-ready'); act(() => jest.advanceTimersByTime(BRAND_REVEAL_TIMEOUT_MS)); expect(ready()).toBe(true);
+  await mount(); await send('brand-ready'); act(() => jest.advanceTimersByTime(BRAND_REVEAL_TIMEOUT_MS)); expect(ready()).toBe(true);
 });
 test('a native query rejection fails open', async () => {
   jest.mocked(AccessibilityInfo.isReduceMotionEnabled).mockRejectedValue(new Error('unavailable')); await mount(); expect(ready()).toBe(true);
@@ -78,7 +83,7 @@ test('backgrounding cancels the renderer and the next app open starts a new one'
   await act(async () => { onState('active'); });
   expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
   expect(tree!.root.findAllByType(Modal)).toHaveLength(1);
-  send('brand-complete'); expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
+  await finishReveal(); expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
 });
 test('an incoming URL cancels the renderer immediately', async () => { await mount(); act(() => onLink()); expect(ready()).toBe(true); });
 test('unmount cleans up and late bridge callbacks cannot complete', async () => {
@@ -98,12 +103,12 @@ test('second and third opens replay without remounting the existing app', async 
   const mounted = jest.fn(), unmounted = jest.fn();
   function Application() { React.useEffect(() => { mounted(); return unmounted; }, []); return <Text>Application ready</Text>; }
   await act(async () => { tree = TestRenderer.create(<GitaLanguageProvider initialLang="hi"><BrandLaunchGate targeted={false}><Application /></BrandLaunchGate></GitaLanguageProvider>); });
-  send('brand-complete'); expect(mounted).toHaveBeenCalledTimes(1);
+  await finishReveal(); expect(mounted).toHaveBeenCalledTimes(1);
   for (let i = 0; i < 2; i++) {
     act(() => onState('background'));
     await act(async () => { onState('active'); });
     expect(tree!.root.findAllByType(WebView)).toHaveLength(1); expect(ready()).toBe(true);
-    send('brand-complete');
+    await finishReveal();
   }
   expect(mounted).toHaveBeenCalledTimes(1); expect(unmounted).not.toHaveBeenCalled();
 });
@@ -112,16 +117,18 @@ test('cached-preference cold startup waits through inactive before starting', as
   await mount(); expect(tree!.root.findAllByType(WebView)).toHaveLength(0); expect(ready()).toBe(false);
   await act(async () => { onState('inactive'); }); expect(ready()).toBe(false);
   await act(async () => { onState('active'); }); expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
-  send('brand-ready'); expect(surfaceReady).toHaveBeenCalledTimes(1); expect(ready()).toBe(false);
-  send('brand-complete'); expect(ready()).toBe(true);
+  await send('brand-ready'); expect(surfaceReady).toHaveBeenCalledTimes(1); expect(ready()).toBe(false);
+  await finishReveal(); expect(ready()).toBe(true);
 });
-test('an inactive/active system interruption does not replay completed branding', async () => {
-  await mount(); send('brand-complete');
+test('an immediate inactive/active return replays without waiting for background', async () => {
+  await mount(); await finishReveal();
   await act(async () => { onState('inactive'); onState('active'); });
+  expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
+  await finishReveal();
   expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
 });
 test('warm notification/widget targets bypass branding before and after active', async () => {
-  await mount(); send('brand-complete');
+  await mount(); await finishReveal();
   act(() => { onState('background'); signalBrandLaunchTarget(); });
   await act(async () => { onState('active'); }); expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
   act(() => onState('background')); await act(async () => { onState('active'); });
@@ -134,8 +141,41 @@ test('a cold targeted visit does not permanently disable ordinary opens', async 
   expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
 });
 test('reduced motion stays respected on subsequent opens', async () => {
-  await mount(); send('brand-complete');
+  await mount(); await finishReveal();
   jest.mocked(AccessibilityInfo.isReduceMotionEnabled).mockResolvedValue(true);
   act(() => onState('background')); await act(async () => { onState('active'); });
   expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
+});
+
+test('frame zero waits for native splash dismissal and duplicate readiness starts once', async () => {
+  let hidden!: () => void;
+  surfaceReady.mockImplementationOnce(() => new Promise<void>(resolve => { hidden = resolve; }));
+  await mount();
+  await send('brand-ready'); await send('brand-ready');
+  expect(mockInject).not.toHaveBeenCalled();
+  await send('brand-complete'); expect(ready()).toBe(false);
+  await act(async () => { hidden(); });
+  expect(mockInject).toHaveBeenCalledTimes(1);
+  expect(mockInject).toHaveBeenCalledWith(expect.stringContaining('__vedanshStart'));
+  await send('brand-complete'); expect(ready()).toBe(true);
+});
+test('a cancelled splash handoff cannot start the discarded canvas', async () => {
+  let hidden!: () => void;
+  surfaceReady.mockImplementationOnce(() => new Promise<void>(resolve => { hidden = resolve; }));
+  await mount(); await send('brand-ready');
+  act(() => onState('inactive'));
+  await act(async () => { hidden(); });
+  expect(mockInject).not.toHaveBeenCalled();
+  await act(async () => { onState('active'); });
+  await finishReveal(); expect(mockInject).toHaveBeenCalledTimes(1);
+});
+test('an inactive target stays prioritized through background and duplicate active events', async () => {
+  await mount(); await finishReveal();
+  act(() => { onState('inactive'); signalBrandLaunchTarget(); onState('background'); });
+  await act(async () => { onState('active'); onState('active'); });
+  expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
+  act(() => onState('inactive'));
+  await act(async () => { onState('active'); onState('active'); });
+  expect(tree!.root.findAllByType(WebView)).toHaveLength(1);
+  await finishReveal();
 });

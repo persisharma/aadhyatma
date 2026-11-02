@@ -514,7 +514,7 @@ function AppReadyGate({ children, targeted }: { children: React.ReactNode; targe
   const hideSplash = useCallback(() => {
     if (!ready) return;
     launchMarkOnce('splash-hidden (first frame)');
-    SplashScreen.hideAsync().catch(() => undefined);
+    return SplashScreen.hideAsync().catch(() => undefined);
   }, [ready]);
 
   if (!ready) {

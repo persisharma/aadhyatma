@@ -36,8 +36,9 @@ context providers (Theme, GitaLanguage, Bookmarks, UserActivity, NewContent, Rea
 JapamCounter, Routine, RoutineSheet, NotificationPreferences, Share) around a
 `NavigationContainer` → `RootNavigator` → a **5-tab bottom navigator**:
 
-The native splash stays visible until fonts plus the persisted font-size and reading-language
-preferences have hydrated. Those preferences alter Home geometry, so this gate makes the first
+The native splash is an explicit transparent placeholder on brand ivory, held through fonts and persisted font-size/language hydration and particle-canvas readiness. The canvas waits at frame zero until native splash dismissal resolves; only then does the approved particle clock start. This requires a new native binary to remove the old static emblem. Quick inactive → active returns replay even without background (also covering indistinguishable Control Center interruptions), while target intents and accessibility bypass remain. The existing navigator stays mounted under warm reveals.
+
+The persisted font-size and reading-language preferences hydrate before Home mounts. Those preferences alter Home geometry, so this gate makes the first
 visible Home frame stable instead of moving the launcher grid immediately after landing.
 
 1. **Home** → `HomeStackNavigator` (native-stack, 30+ reader screens: Gita, chalisas,

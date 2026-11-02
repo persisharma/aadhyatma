@@ -21,7 +21,9 @@ export default function BrandLaunchReveal({ onComplete, onReady }: BrandParticle
     completed.current = true;
     completeCallback.current();
   }, []);
-  const ready = useCallback(() => { if (active.current && !completed.current) readyCallback.current?.(); }, []);
+  const ready = useCallback(() => {
+    if (active.current && !completed.current) return readyCallback.current?.();
+  }, []);
 
   useEffect(() => {
     active.current = true;

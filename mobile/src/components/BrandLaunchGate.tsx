@@ -5,7 +5,7 @@ import BrandLaunchReveal from './BrandLaunchReveal';
 
 /** Cold launches gate navigation; later foreground visits cover it without remounting it. */
 export default function BrandLaunchGate({ targeted, children, onReady }: {
-  targeted: boolean; children: React.ReactNode; onReady?: () => void;
+  targeted: boolean; children: React.ReactNode; onReady?: () => void | Promise<void>;
 }) {
   const [entered, setEntered] = useState(targeted);
   const enteredRef = useRef(targeted);
@@ -25,12 +25,19 @@ export default function BrandLaunchGate({ targeted, children, onReady }: {
   }, [targeted, finish]);
   useEffect(() => { if (!playing || targeted) onReady?.(); }, [playing, targeted, onReady]);
   useEffect(() => {
-    let backgrounded = AppState.currentState === 'background';
+    let previous = AppState.currentState;
+    let away = previous === 'background';
     const target = () => { skipResume.current = true; finish(); };
     const state = AppState.addEventListener('change', next => {
-      if (next === 'background') { backgrounded = true; skipResume.current = false; }
-      if (next === 'active' && backgrounded) {
-        backgrounded = false;
+      // A quick iOS app-switcher return can emit active → inactive → active
+      // without background. There is no reliable duration threshold for a visit.
+      if (next !== 'active' && previous === 'active') {
+        away = true;
+        skipResume.current = false;
+      }
+      previous = next;
+      if (next === 'active' && away) {
+        away = false;
         if (skipResume.current) { finish(); return; }
         setBrandLaunchVisible(true);
         setGeneration(value => value + 1);

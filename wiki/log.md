@@ -1311,3 +1311,5 @@ Recorded the accepted-source hash, one-renderer app/export contract, splash read
 ## [2026-11-02] ingest | Restore the compact Home crest
 
 Recorded the Home-only size/colour treatment, restored Om circles/rules and retained Hindi brand dot. Launch animation and share/export treatment remain unchanged. Native comparison is pending.
+
+## [2026-11-02] ingest | Launch placeholder, explicit native-to-particle start handoff and immediate inactive-return replay; native acceptance pending.
