@@ -1,3 +1,4 @@
+import VedanshWordmark from './VedanshWordmark';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -145,20 +146,12 @@ function BrandHeader({
   lang: Lang;
   right: React.ReactNode;
 }) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   return (
     <>
       <View style={styles.brandRow}>
         <Text style={[styles.om, { color: colors.saffronDeep }]}>ॐ</Text>
-        <Text
-          style={{
-            color: colors.ink,
-            fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-            fontSize: 17,
-          }}
-        >
-          {contentByLang(lang, 'वेदांश', 'Vedansh')}
-        </Text>
+        <VedanshWordmark lang={lang} compact showTagline={false} fixedExport />
         <View style={styles.brandRight}>{right}</View>
       </View>
       <View style={[styles.rule, { backgroundColor: colors.divider }]} />

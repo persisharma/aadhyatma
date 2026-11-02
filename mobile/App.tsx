@@ -62,6 +62,7 @@ import { childRoutes } from '@/navigation/routeGraph';
 // walk. Must be imported before `startScreenPrefetch` runs.
 import '@/navigation/dataWarmups';
 import LaunchAskHost from '@/components/LaunchAskHost';
+import BrandLaunchGate from '@/components/BrandLaunchGate';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import WhatsNewModal from '@/components/WhatsNewModal';
@@ -135,6 +136,16 @@ InteractionManager.runAfterInteractions(() => launchMark('first-ui-idle'));
 
 const INITIAL_TARGET_TIMEOUT_MS = 1_000;
 
+async function prepareStartTarget(target: StartTarget | null): Promise<StartTarget | null> {
+      if (target?.tab !== 'PanchangTab' && target?.tab !== 'VratTab') return target;
+      try {
+        await preloadPanchangStack();
+        return target;
+      } catch {
+        return { tab: 'HomeTab', screen: 'Home' } as StartTarget;
+      }
+}
+
 export default function App() {
   launchMarkOnce('app-render');
   const [initialTarget, setInitialTarget] = useState<StartTarget | null | undefined>(
@@ -202,15 +213,7 @@ export default function App() {
     // mounts, and a chunk that cannot evaluate falls back to Home instead of
     // throwing past every boundary into a dead screen. Bounded by the same
     // timeout as the reads above.
-    const ready = async (target: StartTarget | null) => {
-      if (target?.tab !== 'PanchangTab' && target?.tab !== 'VratTab') return target;
-      try {
-        await preloadPanchangStack();
-        return target;
-      } catch {
-        return { tab: 'HomeTab', screen: 'Home' } as StartTarget;
-      }
-    };
+    const ready = prepareStartTarget;
     // A widget URL wins outright and need not wait on the notification read.
     widgetTarget.then(async (target) => { if (target) finish(await ready(target)); });
     Promise.all([widgetTarget, notificationTarget]).then(async ([fromWidget, fromNotification]) => {
@@ -279,6 +282,15 @@ export default function App() {
     const sub = Notifications.addNotificationResponseReceivedListener((response) => {
       void clearLaunchNotificationResponse();
       if (maybeHandleJapamSnoozeResponse(response)) return;
+      if (!navigationRef.isReady()) {
+        const target = startTargetFromNotification(response);
+        if (target) void prepareStartTarget(target).then(prepared => {
+          if (cancelled || !prepared) return;
+          if (navigationRef.isReady()) handleNotificationResponse(response);
+          else setInitialTarget(prepared);
+        });
+        return;
+      }
       handleNotificationResponse(response);
     });
 
@@ -296,10 +308,21 @@ export default function App() {
   // links need an imperative dispatch after the container is already mounted.
   useEffect(() => {
     if (!fontsReady || initialTarget === undefined) return undefined;
+    let cancelled = false;
     const sub = Linking.addEventListener('url', ({ url }) => {
-      if (url.startsWith('vedansh://widget/')) handleWidgetDeepLink(url);
+      if (!url.startsWith('vedansh://widget/')) return;
+      if (!navigationRef.isReady()) {
+        const parsed = parseWidgetDeepLink(url);
+        if (parsed) void prepareStartTarget(widgetStartTarget(parsed)).then(prepared => {
+          if (cancelled || !prepared) return;
+          if (navigationRef.isReady()) handleWidgetDeepLink(url);
+          else setInitialTarget(prepared);
+        });
+        return;
+      }
+      handleWidgetDeepLink(url);
     });
-    return () => sub.remove();
+    return () => { cancelled = true; sub.remove(); };
   }, [fontsReady, initialTarget]);
 
   if (!fontsReady || initialTarget === undefined) {
@@ -353,7 +376,7 @@ export default function App() {
                             asking" flags so prompts can't stack (§54). */}
                         <RatingPromptProvider>
                         <ShareProvider>
-                          <AppReadyGate>
+                          <AppReadyGate targeted={!!initialTarget}>
                           <View style={{ flex: 1 }}>
                             {/* The cold-start destination is the container's
                                 INITIAL STATE, not a tab's initialParams: state
@@ -484,7 +507,7 @@ export default function App() {
  * visible frame is already its final frame and an immediate press cannot be
  * cancelled by preference hydration moving the category grid.
  */
-function AppReadyGate({ children }: { children: React.ReactNode }) {
+function AppReadyGate({ children, targeted }: { children: React.ReactNode; targeted: boolean }) {
   const { isLoading: fontScaleLoading } = useFontScale();
   const { isLoading: languageLoading } = useGitaLanguage();
   const ready = !fontScaleLoading && !languageLoading;
@@ -494,17 +517,13 @@ function AppReadyGate({ children }: { children: React.ReactNode }) {
     SplashScreen.hideAsync().catch(() => undefined);
   }, [ready]);
 
-  useEffect(() => {
-    hideSplash();
-  }, [hideSplash]);
-
   if (!ready) {
     return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={hideSplash}>
-      {children}
+    <View style={{ flex: 1 }}>
+      <BrandLaunchGate targeted={targeted} onReady={hideSplash}>{children}</BrandLaunchGate>
     </View>
   );
 }

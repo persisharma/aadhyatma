@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text } from 'react-native';
+import { Text } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import ShareCardMount from '../ShareCardMount';
@@ -26,10 +26,11 @@ const texts = (tree: TestRenderer.ReactTestRenderer) => tree.root.findAllByType(
 it('adds the brand + download strip and reports height only once the mark has painted', () => {
   const onHeight = jest.fn();
   const tree = mount(card(), onHeight);
-  expect(texts(tree)).toEqual(expect.arrayContaining(['वेदांश', 'vedansh.app/get']));
+  expect(texts(tree)).toEqual(expect.arrayContaining(['vedansh.app/get']));
+  expect(tree.root.findByProps({ testID: 'vedansh-wordmark-hi' })).toBeDefined();
   layout(tree, 900);
   expect(onHeight).not.toHaveBeenCalled();
-  act(() => tree.root.findByProps({ testID: 'share-card-brand-strip' }).findByType(Image).props.onLoad());
+  act(() => tree.root.findByProps({ testID: 'share-card-brand-icon' }).props.onLoad());
   expect(onHeight).toHaveBeenCalledWith(900);
 });
 

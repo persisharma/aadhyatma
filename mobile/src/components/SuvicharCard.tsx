@@ -10,7 +10,7 @@ import { fontFamilies } from '@/theme/typography';
 import { titleFontByLang } from '@/utils/langType';
 import { pick } from '@/utils/localize';
 
-const brandMark = require('@assets/branding/brand-mark.png');
+const brandMark = require('@assets/splash-icon.png');
 
 type Props = {
   deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; lang: Lang; width: number;

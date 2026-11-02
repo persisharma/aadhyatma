@@ -9,9 +9,10 @@ import { SMART_LINK } from '@/data/shareLinks';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { withMarkHeadroom } from '@/utils/markHeadroom';
+import VedanshWordmark from './VedanshWordmark';
 import type { PanchangShareModel, ShareAnga, ShareChoghadiya, ShareVaas } from '@/panchang/panchangShareModel';
 
-const brandMark = require('@assets/branding/brand-mark.png');
+const brandMark = require('@assets/splash-icon.png');
 
 /** The card's layout box (dp). Captured at 2× → 1080×1350, the 4:5 feed/WhatsApp size. */
 export const PANCHANG_SHARE_WIDTH = 540;
@@ -138,9 +139,9 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
           <View style={styles.brand}>
             <Image source={brandMark} onLoad={onIconLoad} style={styles.brandIcon} accessibilityIgnoresInvertColors />
             <View>
-              <Text allowFontScaling={false} style={withMarkHeadroom({ fontFamily: fontFamilies.devanagariBold, fontSize: 16, lineHeight: 18, color: colors.ink })}>वेदांश़</Text>
+              <VedanshWordmark lang={lang} compact showTagline={false} fixedExport />
               <Text allowFontScaling={false} style={fit({ fontFamily: fontFamilies.latinSemiBoldItalic, fontSize: 12, lineHeight: 14, color: colors.saffronDeep })}>
-                Vedansh · <Text allowFontScaling={false} style={en ? undefined : { fontFamily: scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 11.5 }}>{t('पूर्ण पंचांग', 'Full Panchang')}</Text>
+                <Text allowFontScaling={false} style={en ? undefined : { fontFamily: scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 11.5 }}>{t('पूर्ण पंचांग', 'Full Panchang')}</Text>
               </Text>
             </View>
           </View>

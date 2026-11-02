@@ -1299,3 +1299,11 @@ Implemented the selected compact sheet direction, setup-before-tour phase persis
 ## [2026-10-31] ingest | Gita Saar keeps story copy concise
 
 Removed visible painting descriptions and the paragraph explaining source-link behavior. Image descriptions remain as accessibility labels. Source rows retain work/passage citations and chevrons for in-app readers; repeated “Read here” labels are omitted. The concise story labels still identify abridged retellings separately from scripture.
+
+## [2026-11-01] ingest | Draft particle launch boundary and shared branding
+
+Added the bounded intro/navigation invariant and explicit missing-lettering/native-verification gap to overview. See docs/reviews/2026-11-01-particle-logo.md.
+
+## [2026-11-01] ingest | Approved particle renderer replaces reconstruction
+
+Recorded the accepted-source hash, one-renderer app/export contract, splash readiness boundary and shared wordmark paint-barrier integration in overview. Native evidence remains pending.

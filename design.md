@@ -21,6 +21,7 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 
 | Token | Hex | Role |
 | --- | --- | --- |
+| `brandIvory` | `#FFF1D5` | Approved launch background; artwork keeps its copper and vermilion |
 | `parchment` | `#F3E7C9` | Primary background for reader surfaces |
 | `parchment-soft` | `#F8EFD6` | Lighter parchment for inner cards (with a soft `sm` shadow for lift) and flat controls |
 | `parchment-deep` | `#E9D9B1` | Bottom-edge gradient, elevated surfaces |
@@ -70,6 +71,11 @@ Kartikeya's plume, Ganga's waves. These colors stay inside the illustration asse
 badges, chips, borders, states and utility icon tints take their color from `colors.ts`.
 
 ### 2.1 App icon and native launch identity
+
+**Approved particle integration (1 November 2026).** After font/reading-preference hydration, `BrandLaunchGate` mounts the accepted 3,809-particle canvas on ordinary launches. `BrandLaunchReveal` defers the existing WebView module and the composed document until accessibility queries resolve. The exact accepted fragment, SHA-256 `af052692ac2477860ae6c0e69ed7ce6754ed5dcf1400f10bd7e78665c6ad69d5`, is retained in `docs/branding/approved-particle-preview.html`; `scripts/prepare-approved-brand.mjs` embeds it verbatim in a local document and derives the shared wordmark crops. There is one renderer and one source for the app and downloadable exports: original copper/vermilion icon, joined English name, Hindi name and both companion subtitles coalesce together for 3,350ms. Native hosting only centers the existing 720×780 composition, hides the preview replay button and adds readiness/completion messages. It never replaces the type or trajectories. No network resources, new native dependency, font binary or playback service are introduced.
+
+The OS splash remains until the canvas reports ready; navigation and automatic asks mount after completion. Targeted notification/widget starts bypass the introduction. Reduce Motion, screen-reader use, backgrounding, incoming links, native-query errors and rendering/process errors complete immediately; a 7,000ms watchdog bounds stalled startup. Early destinations still prepare the lazy Panchang stack before initial navigation. `ArtworkCaptureContext` now also waits for mounted wordmark images before share capture. Native iOS/Android fidelity, performance and actual exports require device evidence; source-level identity is separate. Confirm Samarkan registration before production use; the project does not bundle its font software.
+
 
 The approved app icon uses enlarged copper relief geometry on warm ivory with a distinct vermilion bindu. The red is part of this approved brand artwork, never a UI status color. Keep the complete approved composition: no new lotus surround, recoloring, baked-in rounded mask, or regenerated geometry during export.
 
@@ -328,7 +334,8 @@ are rendered in IST with `hourCycle: 'h23'` (`widgets/planPayload.ts`). Time inp
 
 ## 5. Iconography & Ornaments
 
-- **Home wordmark (crest lockup).** A single compact row: thin rule · `ॐ` circle · `वेदांश़` · `ॐ` circle · thin rule, with the `Sacred Texts · Daily Reading` tagline beneath. ॐ on **both** sides of the wordmark. Rules 22px, circles 30px (ॐ 19px), title 27px, saffron stroke `1.5px`, row gap 11. The decorative Om marks and brand wordmark retain their optical size (`allowFontScaling={false}`); the centered tagline continues to scale and wrap. Implemented in `HomeWordmark.tsx`. This replaced the older stacked crest + 34px title to reclaim ~50dp of hero height while keeping the centered, altar-like essence.
+- **Home wordmark.** `HomeWordmark.tsx` delegates to `VedanshWordmark.tsx`. The accepted joined English and Hindi lettering is artwork cropped losslessly from the approved composition, without recoloring or substitute fonts. Hindi mode uses the Hindi mark; other modes use the fixed English brand mark. Optional bilingual mode shows both. Full-width marks are 180pt English / 110pt Hindi; compact marks are 86pt / 58pt, capped to their parent width at the source aspect ratio. The localized companion subtitle remains native text at 16/26 (compact 12/20), with script-safe existing fonts and system scaling/wrapping. Fixed share exports disable scaling only for their fixed text. Mark images retain inversion protection and localized accessible brand labels; share captures register their actual native decode with `ArtworkCaptureContext`.
+
 - **Verse divider.** `॥` centered between two 1px horizontal rules, 80px wide, saffron at 60% opacity. Use between verse and meaning on every reader page.
 - **Shared reader back control.** `ReaderHeader` renders Phosphor `ArrowLeft` inside a **44dp** circle with `parchment-soft` fill and `divider` border, centered in a real **48×48dp Pressable**. Bookmark/share keep their **34dp visible circles** and 21/20dp glyphs inside actual 48×48dp targets; their parent rows grow with the target rather than relying on parent-limited hitSlop.
 - **Forward chevron.** Single `›` in saffron on active cards.
@@ -941,12 +948,12 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 ## 18. Screen: Home (Revised)
 
-**Purpose.** Surface available content organized by category type and deity. Replaces the flat LIBRARY list from Section 7. The centered Home wordmark retains its usual lockup; on compact phones it hides the flanking rules to leave room for the 44 pt settings gear on the right.
+**Purpose.** Surface available content organized by category type and deity. Replaces the flat LIBRARY list from Section 7. The centered Home wordmark uses the approved name artwork and localized companion subtitle; compact sizing leaves room for the 44 pt settings gear.
 
 **Structure (top to bottom):**
 
 1. Status bar area (safe region)
-2. Hero block: the **Home wordmark lockup** (Section 5) — `ॐ वेदांश़ ॐ` on one row over the "Sacred Texts · Daily Reading" tagline. (Earlier revisions stacked a crest above a 34px title; the lockup is the compact replacement.)
+2. Hero block: the **Home wordmark lockup** (Section 5) — approved Vedansh name artwork over “Your spiritual companion” / “आपका आध्यात्मिक साथी” (Gujarati/Kannada localized too).
    - **On a catalog festival day only** (the 18 festivals of `notifications/festiveReminders.ts`): the **Festive Toran** (§55) hangs directly below the lockup — a marigold garland with the day's greeting chip. Absent every other day.
 3. **आज · Today strip** (§48) — a one-card daily-panchang glance (vara + tithi headline, one horizontal-scroll row of observance / Abhijit / Rahu Kaal chips). Tap → Panchang tab.
 4. **आज के लिए · For Today recommendations** (§50) — a compact horizontal row of name-only `FeatureCard compact` strips (196×56, the same shell the DISCOVER carousel uses in its taller default form) chosen from today's vaar deity and active festival metadata. This keeps PRD-B's By-Day/By-Festival surfacing on Home without adding another calendar engine. **गीता सार is pinned to the lead** of the row **every day** — a standing door into the themed Gita readings — ahead of the vaar-deity texts and, on a **festival** day, ahead of the festival's own reading too (which then follows at slot 1). The pin lives in `TodayRecommendationsRow` (not `getTodayRecommendationDetails`, which is left untouched so every notification/briefing consumer still reads the same vaar/festival order), dedupes गीता सार if the vaar tier already surfaced it (it is a Krishna text), and the अबूझ card follows whatever is pinned to slot 0. Card tap → the text itself via `navigateToEntryStart` (§38) — single-chapter texts open their reader directly rather than a one-row chapters index; गीता सार opens its themes list.
@@ -1751,7 +1758,7 @@ A 540dp-wide card with a **675dp minimum height**, rendered **off-screen**. Shor
 4. **Meaning** (optional): complete text centred in `ink-soft` at **18/27**, without `numberOfLines` or platform auto-fit. The image grows to fit native wrapping; no excerpt is substituted. Italic applies only to English's real Cormorant italic face; Indic faces stay upright. `meaningByLang` honours verified `meaningGu`/`meaningKn` overrides. The optional Gita Saar theme title (`meaningTitleHi/En`) uses the same 18/27 size in `titleFontByLang`, `saffronDeep`, above the meaning with no extra inter-block margin.
 
    **Readability contract:** keep the verse at 24/40 and meaning at 18/27. A fixed leading and `adjustsFontSizeToFit` must never appear together; the earlier auto-fit path rendered meanings at 7pt. `shareCardFit.test.tsx` guards complete uncapped text and native height reporting in all four languages. `shareVerseTarget.test.tsx` guards capture readiness, density-correct tall output and short-after-long reset.
-5. **Branding footer** (1 px `divider` top rule, 14 above): `वेदांश़` wordmark (reader-title face, 18, `ink`) · `Vedansh — Sacred Texts, Daily Reading` (italic 12, `saffron-deep`) · `NOW AVAILABLE ON IOS & ANDROID` (uppercase 10, `ink-muted`, 2.0 tracking).
+5. **Branding footer** (1 px `divider` top rule, 14 above): shared compact approved `VedanshWordmark` artwork with the companion subtitle in the card language, then the existing download line and `vedansh.app/get`. Full content and measured-height capture remain unchanged.
 
 ### §39.1 Component: Share Target Sheet (`ShareTargetSheet.tsx`)
 
