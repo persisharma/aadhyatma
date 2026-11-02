@@ -21,7 +21,7 @@ concurrency:
 jobs:
   simulator:
     runs-on: macos-15
-    timeout-minutes: 50
+    timeout-minutes: 60
     defaults:
       run:
         working-directory: mobile
@@ -29,10 +29,13 @@ jobs:
     env:
       CI: '1'
       MAESTRO_CLI_NO_ANALYTICS: 'true'
+      MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+      MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          sparse-checkout: mobile
       - uses: actions/setup-node@v4
         with:
           node-version: 22

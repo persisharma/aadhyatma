@@ -48,8 +48,13 @@ PY
 )
 if [[ "$SIMULATOR_STATE" != 'Booted' ]]; then xcrun simctl boot "$SIMULATOR_UDID"; fi
 xcrun simctl bootstatus "$SIMULATOR_UDID" -b
+open -a Simulator --args -CurrentDeviceUDID "$SIMULATOR_UDID"
 xcrun simctl ui "$SIMULATOR_UDID" appearance light
 xcrun simctl status_bar "$SIMULATOR_UDID" override --time '09:41' --batteryState charged --batteryLevel 100
+# Fail before an expensive app compile if XCTest cannot start on this runner.
+mkdir -p e2e-shots
+maestro --device "$SIMULATOR_UDID" test --format junit --output "$BRAND_OUTPUT/driver.xml" \
+  .maestro/brand-driver-check.yaml 2>&1 | tee "$BRAND_OUTPUT/driver.log"
 BRAND_WORKSPACE=$(python3 - <<'PY'
 from pathlib import Path
 print(next(Path('ios').glob('*.xcworkspace')))
@@ -57,7 +62,7 @@ PY
 )
 xcodebuild -workspace "$BRAND_WORKSPACE" -scheme Vedansh -configuration Release \
   -sdk iphonesimulator -destination "id=$SIMULATOR_UDID" \
-  -derivedDataPath "$BRAND_DERIVED" CODE_SIGNING_ALLOWED=NO build \
+  -derivedDataPath "$BRAND_DERIVED" ARCHS="$(uname -m)" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build \
   2>&1 | tee "$BRAND_OUTPUT/native-build.log"
 BRAND_APP=$(python3 - "$BRAND_DERIVED" <<'PY'
 from pathlib import Path
@@ -68,6 +73,8 @@ print(apps[0])
 PY
 )
 xcrun simctl install "$SIMULATOR_UDID" "$BRAND_APP"
+# Preserve a successful compile even when a later UI-driver/flow step fails.
+ditto -c -k --sequesterRsrc --keepParent "$BRAND_APP" "$BRAND_OUTPUT/Vedansh-simulator.zip"
 mkdir -p e2e-shots
 # Complete consent/setup once, then record the actual cold/warm lifecycle flow.
 maestro --device "$SIMULATOR_UDID" test --format junit --output "$BRAND_OUTPUT/setup.xml" \
