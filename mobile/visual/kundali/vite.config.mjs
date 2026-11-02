@@ -4,6 +4,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
+const browserModules = path.join(root, 'visual/kundali/node_modules');
+const webExtensions = ['.web.tsx', '.web.ts', '.web.jsx', '.web.js', '.tsx', '.ts', '.jsx', '.js', '.json'];
 function fontCSS() {
   const base = path.join(root, 'node_modules/@expo-google-fonts');
   const rules = [];
@@ -21,15 +23,17 @@ export default defineConfig({
   root,
   esbuild: { jsx: 'automatic' },
   define: { __DEV__: 'false', global: 'globalThis' },
+  optimizeDeps: { esbuildOptions: { resolveExtensions: webExtensions } },
   resolve: {
     alias: [
-      { find: /^react-native$/, replacement: 'react-native-web' },
+      { find: 'react', replacement: path.join(root, 'node_modules/react') },
+      { find: /^react-native$/, replacement: path.join(browserModules, 'react-native-web/dist/index.js') },
       { find: /^react-native-svg$/, replacement: path.join(root, 'node_modules/react-native-svg/src/ReactNativeSVG.web.ts') },
       { find: /^react-native-safe-area-context$/, replacement: path.join(root, 'visual/kundali/insets.ts') },
       { find: /^@react-native-async-storage\/async-storage$/, replacement: path.join(root, 'visual/kundali/storage.ts') },
       { find: '@', replacement: path.join(root, 'src') },
     ],
-    extensions: ['.web.tsx', '.web.ts', '.web.js', '.tsx', '.ts', '.js', '.json'],
+    extensions: webExtensions,
   },
   plugins: [{
     name: 'native-preview-adapters', enforce: 'pre',

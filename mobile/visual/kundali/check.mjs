@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
 
 const output = path.resolve('visual-output/kundali');
 await fs.mkdir(output, { recursive: true });
-const server = spawn('node', ['node_modules/vite/bin/vite.js', '--config', 'visual/kundali/vite.config.mjs'], { stdio: 'inherit' });
+const server = spawn('node', ['visual/kundali/node_modules/vite/bin/vite.js', '--config', 'visual/kundali/vite.config.mjs'], { stdio: 'inherit' });
 const base = 'http://127.0.0.1:4173/visual/kundali/index.html';
 for (let i = 0; i < 100; i++) {
   try { if ((await fetch(base)).ok) break; } catch {}

@@ -70,7 +70,7 @@ describe.each(['hi', 'en', 'gu', 'kn'] as const)('%s reading layout', lang => {
     for (let rowIndex = 0; rowIndex < 3; rowIndex++) {
       const row = grahas.root.findByProps({ testID: `kundali-graha-row-${rowIndex + 1}` });
       expect(Native.StyleSheet.flatten(row.props.style).flexDirection).toBe('row');
-      const cards = row.findAllByType(Native.Pressable);
+      const cards = row.findAll(node => typeof node.type === 'string' && node.props.accessibilityRole === 'button');
       expect(cards.map(node => node.props.testID)).toEqual(GRAHA_ORDER.slice(rowIndex * 3, rowIndex * 3 + 3).map(graha => `kundali-graha-${graha}`));
     }
     tap(grahas, { testID: 'kundali-graha-saturn' });
