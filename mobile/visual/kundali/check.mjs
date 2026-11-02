@@ -45,10 +45,16 @@ try {
         results.push({ width, lang, size, view, columns: 3, rows: 3, fonts: usedFonts });
       } else {
         const labels = await page.locator('svg text').allTextContents();
+        const paintedLabels = await page.locator('svg text').evaluateAll(elements => elements.map(element => {
+          const box = element.getBBox();
+          return { text: element.textContent, width: box.width, height: box.height, fontSize: getComputedStyle(element).fontSize };
+        }));
+        assert.equal(paintedLabels.length, 36, 'Every house needs house, sign and graha labels');
+        assert.ok(paintedLabels.every(label => label.width > 0 && label.height > 0 && parseFloat(label.fontSize) > 0), 'Chart text exists but is not painted');
         if (lang === 'en') { assert.ok(labels.some(label => label.trim() === 'Su Me')); assert.ok(labels.some(label => label.trim() === 'Mo Ra')); }
         assert.ok(!labels.some(label => /\d+ grahas/.test(label)), 'Count replaced graha abbreviations');
         await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-chart.png`), fullPage: true });
-        results.push({ width, lang, size, view, chartAbbreviations: true, fonts: usedFonts });
+        results.push({ width, lang, size, view, chartAbbreviations: true, paintedLabels, fonts: usedFonts });
       }
     }
     await page.close();
