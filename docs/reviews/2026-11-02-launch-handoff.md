@@ -23,15 +23,27 @@ Branch: `codex/launch-handoff-quick-reopen`.
 | U6 lifecycle/failure | PASS / PENDING | Automated immediate returns, duplicate events/readiness, cancellation during hide, reduced motion, target ordering, native render errors and timeout covered; actual device transitions pending. |
 | U7 assets | PASS | Approved source/derivatives regeneration passes; all original icon outputs unchanged; transparent placeholder has a reproducible manifest entry. No CDN changes. |
 | U8 sibling surfaces | PASS | Legacy and plugin splash config, cold and warm reveal, target channel and automatic launch visibility gate reviewed together. |
-| U9 tests | PASS / PENDING | Typecheck and 3 focused suites / 33 tests pass. Running these new regressions against old implementation yields 6 failures across both affected suites. Full gate/final CI/native E2E recorded below. |
-| U10 compatibility | PENDING | Lazy import path, network-free renderer and watchdog retained; native generation/device performance checks remain. |
+| U9 tests | PASS / FAIL / PENDING | Typecheck and 3 focused suites / 33 tests pass. Running these new regressions against old implementation yields 6 failures across both affected suites. Full gate/final CI/native E2E recorded below. |
+| U10 compatibility | PENDING | Lazy import path, network-free renderer and watchdog retained; iOS/Android native generation and eight referenced splash-bitmap checks pass; installed device performance remains pending. |
 | U11 docs/integration | PASS / PENDING | Design §2.1, RULEBOOK §0.2, branding README, wiki, exporter and generated hashes updated; final-head CI pending. |
-| U12 preservation | PENDING | Record remote checkpoint/PR after publication. No cleanup performed. |
+| U12 preservation | PASS | Draft PR #601; implementation head `6f39a0fc54a698be71f4d820bfe19985a1bb286e`, local/remote tree `800cbb82c12d4169a8ff99526f06415ff00a1cf3` verified exactly. All 21 task files preserved. No cleanup performed. |
 
 C3/C6/C9 apply: native asset, launch arbitration and accessibility checks remain explicit. C10 is limited to explaining native compatibility; no release is performed. C1/C2/C4/C5/C7/C8 are N/A: no reader/story/share/calendar/navigation-state/audio contract changes.
 
 Executed: `npm run typecheck --prefix mobile`; focused Jest suites `BrandLaunchGate`, `ApprovedBrandSource`, `BrandNativeHandoff`; `node scripts/prepare-approved-brand.mjs --check`; `node scripts/verify-agent-instructions.mjs`; `git diff --check`. These checks are source/automated evidence, not native screenshots.
 
-Full `npm test`, scoped ESLint, generated native project inspection and final-head GitHub CI are in progress at this checkpoint. Native iOS/Android full launch recordings and Maestro remain required before ready-for-merge. The known base version mismatch (`APP_TOUR_VERSION` 1.5.5 versus app.json 1.5.6) may fail the existing tour contract independently of this fix.
+Final local verification of the implementation tree:
+- PASS: TypeScript and scoped ESLint, including changed production components and both lifecycle/handoff test files.
+- PASS: 3 focused suites / 33 tests. A final five-suite run including restored artwork fixtures passes 50 tests. The separate Storybook provenance suite passes all 3 tests.
+- PASS: identical widget/engine/data/Ask scripts executed through `node --import tsx`: 46 / 630 / 218 / 49 tests. No skips or weakened assertions. The `npm test` wrapper itself stops at the environment-denied tsx CLI IPC socket (`listen EPERM`), so it is not reported green.
+- All three reader/component shards executed. Shard 1: 109 suites pass, 1 fails (1,081 tests pass, 1 fails). Shard 2: all 110 suites / 1,183 tests pass. Shard 3 initially has two missing-checkout-fixture failures; after restoring the exact repository fixtures, BackgroundArtwork and Storybook suites pass on separate reruns. The other 107 shard-3 suites pass. Devotional art fixtures also pass after restoration.
+- FAIL, inherited from base: `tourContent.jest.test.ts` compares `APP_TOUR_VERSION='1.5.5'` with `expo.version='1.5.6'`. Both values verified at base `5cac85f`; this PR changes neither. This prevents a full green package claim.
+- PASS: `npx expo prebuild --platform all --no-install` generates both native projects. All three referenced iOS splash PNGs are transparent; all five Android splash PNGs are solid matching ivory. The storyboard references only SplashScreenLogo; an unused Expo legacy template asset is not referenced. Native background components match #FFF1D5. This is generated-project inspection, not compilation or installed launch evidence.
+- PASS: asset/source regeneration, instruction policy, whitespace and Maestro YAML parsing.
+- GitHub implementation-head instruction policy passes; browser/full CI still in progress when recorded. The report-only follow-up does not change the tested production code.
+
+Native iOS/Android full launch recordings, actual immediate reopen/target/permission journeys and Maestro remain required before ready-for-merge. All hi/en/gu/kn × Standard/Large, compact and enlarged-system-text native cells are PENDING; unchanged layout/source checks do not certify those cells. Fresh/saved navigation state and cancellation are automated; actual device behavior remains PENDING. No merge/build/release/OTA performed.
+
+PR: https://github.com/persisharma/aadhyatma/pull/601. Remaining action: resolve the separate base tour-version inconsistency, complete final CI and run the native launch flow on new binaries. No task changes remain solely in the local checkout.
 
 Untracked unrelated checkout/download temporary files are excluded from this task checkpoint and left untouched.
