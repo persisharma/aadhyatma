@@ -34,7 +34,10 @@ try {
     const crest = await page.getByTestId('home-wordmark-crest').boundingBox();
     const frame = await page.getByTestId('home-wordmark-artwork-frame').boundingBox();
     const settings = await page.getByTestId('settings-fixture').boundingBox();
-    assert.equal(frame.width, lang === 'hi' ? 97 : 124); assert.equal(frame.height, 36);
+    assert.equal(frame.width, lang === 'hi' ? 97 : 124);
+    // Chromium reports transformed DOMRect heights with float rounding
+    // (e.g. 36.0000019073); keep the 36pt contract within 0.00001pt.
+    assert.ok(Math.abs(frame.height - 36) < 0.00001);
     const kind = lang === 'hi' ? 'hi' : 'en', metrics = manifest.names[kind];
     const artwork = await page.getByTestId(`vedansh-wordmark-${kind}`).boundingBox();
     const om = await page.getByTestId('home-wordmark-om-left').boundingBox();
