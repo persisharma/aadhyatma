@@ -1,48 +1,41 @@
-# Particle logo recovery — 1 November 2026
+# Approved particle integration — 1 November 2026
 
-## Scope and recovery
+PR: https://github.com/persisharma/aadhyatma/pull/587
+Branch: codex/brand-launch-reveal
+Current-main integration base: caa457921a39202a83dc34e5b345a4e1f54cde28
+Previous draft checkpoint: c62ada2e1ceee1c442a5167c09f90d3c55ca5dd3
 
-The previous chat reported a saved implementation, but `codex/brand-launch-reveal` still pointed at unchanged main `3a6e4c6ee6fe8aeee453448a2937f72c92b594e8` and no PR existed for it. This reconstruction starts at current main `bd6e239f09ca558991485507085c72b4bbda14d0`. It preserves the current icon's exact copper/vermilion composition and introduces the companion subtitle, simultaneous reveal and shared live wordmark.
+## Final scope
 
-**Draft design gap:** neither the approved custom English/Hindi lettering asset nor the animation prototype was recoverable. Existing Cormorant/Noto faces are provisional. Do not present this as an exact implementation of the approved reference or merge until custom-lettering fidelity is resolved. No Samarkan font or unverified licence is introduced.
+The owner rejected the earlier generic type / 148-particle reconstruction. That renderer and its approximate export scripts are removed. The owner then accepted the calligraphic 3,809-particle preview and requested integration. `docs/branding/approved-particle-preview.html` (SHA-256 af052692ac2477860ae6c0e69ed7ce6754ed5dcf1400f10bd7e78665c6ad69d5) is now the source of truth for the app and downloads. The native wrapper retains it verbatim, with no changes to any particle, trajectory, colour, lettering or timing expression. Production hosts hide only the review replay button and add the native completion bridge.
 
-## Implemented
+The native OS splash waits until the canvas is ready. Navigation and all automatic launch surfaces wait until the 3,350ms reveal completes. Targeted launches bypass it. Current-main notification consumption / Explore replay fixes are merged; early incoming targets still prepare their destination before the navigator mounts. Backgrounding, incoming links, native process/render failures, accessibility preferences and a 7,000ms watchdog cannot trap startup.
 
-- Bounded 1,500ms native-driver particle introduction after font/preference hydration; full current splash image and bilingual names/subtitle resolve together.
-- Up to 192 deterministic samples from the actual icon, with source SHA-256 and reproducible script; no new bitmap asset or native dependency.
-- Ordinary launch introduction precedes navigation and automatic asks. Notification/widget targets bypass it; early target events update initial navigation rather than losing the tap.
-- Reduce Motion, screen-reader use, backgrounding, incoming link, image error and native-query errors finish early; 2,000ms watchdog; timers/listeners/animation cancel on unmount.
-- Shared localized wordmark: Home, verse/prose footer, common card strip, Panchang share header and Jyotish share header. Existing download links/content/capture readiness are retained. Current icon replaces the stale simplified mark on common-card, Panchang and Suvichar exports.
-- Hindi, English, Gujarati, Kannada subtitles; script-safe type and wrapping. App text uses accessibility scaling, export wordmarks use fixed scaling.
-
-## Sibling audit
-
-Baked Suvichar/DevotionalFrame artwork lettering and native WidgetKit/Android widget snapshot branding are separate asset/platform contracts. They are not silently repainted. Guna Milan's older Om footer remains outside the shared-header conversion. Inspect these against the final lettering before broad brand rollout. Existing native widget views and app-store icon exports are unchanged.
+Home, verse/prose footers and common/Panchang/Jyotish share headers use the approved name crops. Mark images use explicit aspect framing and register their decode with the existing share-paint barrier. Companion subtitles and accessibility labels remain localized for hi/en/gu/kn; native text grows/wraps. Exact launch composition is intentionally bilingual brand artwork, independent of reading size. No native dependency, font binary, version bump, build, OTA or release is added.
 
 ## Acceptance evidence
 
-Applicable: U1–U12; C3, C4, C6, C9. C1/C2/C5/C7/C8/C10 are N/A: no scripture, stories, calendar logic, saved-data schema, playback, or release work.
+Applicable: U1–U12; C3, C4, C6, C9. C1/C2/C5/C7/C8/C10 are N/A: no scripture, story/calendar rules, saved-data schema, playback or release work.
 
-- U1/U2 PASS: current main, root/Claude instructions, shared checklist, design, RULEBOOK, wiki and E2E runbook inspected; reconstruction and design gap recorded.
-- U3 PENDING: original custom lettering/reference absent; native visual fidelity not established.
-- U4 PENDING: component matrix is automated; compact/enlarged system-text/native four-language Standard/Large checks remain.
-- U5/U6 PENDING: gate and lifecycle unit coverage included; actual early notification/widget route delivery and complete fresh/returning launch journeys require device verification.
-- U7 PASS for source integration: same bundled approved icon, source-hashed deterministic particles; no CDN or new font publication. Native visibility/export quality remains pending.
-- U8 PASS for audit: shared rendered surfaces and baked/native exceptions explicitly recorded.
-- U9 PENDING: focused tests/typecheck and full suite results will be recorded after execution; updated shared Maestro launch flow must run on both platforms.
-- U10 PENDING: bounded 148 native particles, one non-interaction animation clock, no per-frame JS state. Actual startup/device performance still unmeasured.
-- U11 PASS for current-main integration/docs at the recorded base; recheck latest main before merge.
-- U12 PASS: draft PR https://github.com/persisharma/aadhyatma/pull/587 and initial remote checkpoint e0fd74c93fdd6bdcb93ccaf69252453f26094e75 verified. No cleanup of task work is allowed before that point.
+| Check | Result | Evidence / remaining work |
+| --- | --- | --- |
+| U1 Source/scope | PASS | Current instructions/wiki/design/RULEBOOK read; main caa4579 and old draft merged; accepted source hash preserved. |
+| U2 Acceptance | PASS | Same renderer, pixel source and timing; native readiness/completion gate; targeted/cancel/error routes; shared wordmark decode. |
+| U3 Native design fidelity | PENDING | Source identity is checked. No native device/simulator exists here to compare actual WKWebView/Android rendering. |
+| U4 Language/size/layout | PENDING | Automated four-language M/L shared-mark matrix included; native compact/system-text/platform cells remain unexecuted. Launch artwork is the fixed accepted bilingual identity. |
+| U5 Reachable journeys | PENDING | Gate/provider and cross-launch regression coverage included; actual ordinary/notification/widget cold starts require both native platforms. |
+| U6 Lifecycle/failure | PASS automated / PENDING native | Reduced motion, screen reader, cancelled/unmounted renderer, malformed bridge, process errors and watchdog covered. |
+| U7 Assets/content | PASS source integration | Approved composition/name crops/native document have hashes and a reproducible verifier; all assets are bundled and no CDN/font publication is required. Samarkan registration confirmation remains a production check. |
+| U8 Sibling surfaces | PASS audit | Shared Wordmark callers updated; capture barrier covers their decoded marks. Baked devotional lettering/native widget branding are separate contracts, not silently repainted. |
+| U9 Verification | PENDING | Focused tests/typecheck/scoped lint, full mobile gates and CI results will be recorded below; native Maestro is authored, not executed here. |
+| U10 Startup/data compatibility | PASS source / PENDING device | Existing WebView is required lazily, no native dependency or saved-data migration; launch graph budget checked separately; device performance unmeasured. |
+| U11 Current-main integration | PASS | Latest checked main launch fixes merged; canonical design/RULEBOOK/wiki updated with the actual source/bridge/paint contract. |
+| U12 Preservation | PENDING until final remote verification | Source, assets, tests, reproducers and handover must all be committed and verified at the PR head before cleanup. |
 
-C3/C4/C6/C9 remain PENDING for native/actual-export evidence. This change is integrated source, not native-verified, merge-ready or released.
+Native C3/C4/C6/C9, actual WhatsApp/system exports, iOS/Android launch timing, compact/enlarged text visual checks and Samarkan registration confirmation remain PENDING. Keep the PR draft until required evidence is supplied. Unit tests and source exports are not native visual proof.
 
-## Executed checks and downloadable export
+## Executed checks
 
-- Focused Jest PASS: 5 suites / 45 tests across BrandLaunchGate, HomeWordmark, ShareCardMount, shareCardFit and SuvicharCard. The launch suite exercises cancellation, reduced motion, screen-reader bypass, watchdog, query failure, and cleanup; typography tests use real language/font-scale/theme providers and cover all four languages at M/L.
-- Typecheck PASS at initial remote e0fd74c; final startup-preload follow-up is being rechecked. Changed-source ESLint PASS; particle regeneration/hash check PASS (148 samples); shared Maestro two-document YAML parses with loadAll; git diff --check PASS.
-- Initial npm test ran during a partial checkout and stopped on missing existing docs/evaluations/mahakaal/sources.json. That file is present after checkout completes; no application fix or test weakening was made. Full npm test has been restarted against the complete checkout.
-- New scripts/export-particle-logo.py reproduces the downloadable review exports. Requires npm ci in mobile, Python Pillow with RAQM, and ffmpeg. Run python scripts/export-particle-logo.py --output /absolute/output/path. No app/native dependency changes.
-- MP4: H.264, 720×900, 3 seconds (1.5-second reveal plus final hold), 111,794 bytes. GIF: 480×600, looping, 326,098 bytes. Source colours/hash validated, poster visually inspected for intact icon, Hindi shaping and uncropped labels; ffprobe confirms codec/size/duration. These are source-based review exports, not native-screen evidence.
-- Native iOS/Android, Maestro execution, exported-card handoff, compact/enlarged system-text visual checks, performance and original custom-lettering fidelity remain PENDING. No simulator/emulator/Maestro runner is available here.
+Results are recorded after the final source and test tree is validated. The host's optional tsx CLI IPC listener is restricted, so Node test groups can use the same installed loader via `node --import tsx --test`, without changing package scripts, tests, assertions, coverage or timeouts. `brand-launch.yaml` and `_launch.yaml` are parsed separately from executed device flows.
 
-Remaining: final full-suite/CI result; native launch and early notification/widget event journeys; replace provisional custom-lettering fallback with the recovered/approved assets before merge.
+No cleanup of required task work before the remote branch and all generated assets are verified.

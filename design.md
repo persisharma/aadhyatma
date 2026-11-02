@@ -72,7 +72,9 @@ badges, chips, borders, states and utility icon tints take their color from `col
 
 ### 2.1 App icon and native launch identity
 
-**Draft particle integration (1 November 2026).** The OS splash stays unchanged. After font/reading-preference hydration, `BrandLaunchGate` shows `BrandLaunchReveal` once per mounted process on ordinary launches, before navigation and automatic asks. The original icon, bilingual names and companion subtitle resolve together on one 1,500ms native animation clock. Up to 192 exact-colour samples come from `splash-icon.png`; the full unmodified icon resolves on the same clock. `export-brand-particles.mjs --check` verifies source hash and samples. Reduce Motion, screen readers, backgrounding, incoming links, image failure and rejected native queries complete immediately; a 2,000ms watchdog bounds stalled queries/animation. Notification/widget cold targets bypass it. Events before navigation mounts set the initial target. Content scrolls for compact/enlarged-text layouts. Custom lettering, reference fidelity and native/export checks remain pending. No native dependency, new font, build, version bump or release is included.
+**Approved particle integration (1 November 2026).** After font/reading-preference hydration, `BrandLaunchGate` mounts the accepted 3,809-particle canvas on ordinary launches. `BrandLaunchReveal` defers the existing WebView module and the composed document until accessibility queries resolve. The exact accepted fragment, SHA-256 `af052692ac2477860ae6c0e69ed7ce6754ed5dcf1400f10bd7e78665c6ad69d5`, is retained in `docs/branding/approved-particle-preview.html`; `scripts/prepare-approved-brand.mjs` embeds it verbatim in a local document and derives the shared wordmark crops. There is one renderer and one source for the app and downloadable exports: original copper/vermilion icon, joined English name, Hindi name and both companion subtitles coalesce together for 3,350ms. Native hosting only centers the existing 720×780 composition, hides the preview replay button and adds readiness/completion messages. It never replaces the type or trajectories. No network resources, new native dependency, font binary or playback service are introduced.
+
+The OS splash remains until the canvas reports ready; navigation and automatic asks mount after completion. Targeted notification/widget starts bypass the introduction. Reduce Motion, screen-reader use, backgrounding, incoming links, native-query errors and rendering/process errors complete immediately; a 7,000ms watchdog bounds stalled startup. Early destinations still prepare the lazy Panchang stack before initial navigation. `ArtworkCaptureContext` now also waits for mounted wordmark images before share capture. Native iOS/Android fidelity, performance and actual exports require device evidence; source-level identity is separate. Confirm Samarkan registration before production use; the project does not bundle its font software.
 
 
 The approved app icon uses enlarged copper relief geometry on warm ivory with a distinct vermilion bindu. The red is part of this approved brand artwork, never a UI status color. Keep the complete approved composition: no new lotus surround, recoloring, baked-in rounded mask, or regenerated geometry during export.
@@ -332,7 +334,7 @@ are rendered in IST with `hourCycle: 'h23'` (`widgets/planPayload.ts`). Time inp
 
 ## 5. Iconography & Ornaments
 
-- **Home wordmark.** `HomeWordmark.tsx` delegates to `VedanshWordmark.tsx`: active-language name at 32/51.2 and companion subtitle at 16/26. Compact uses 18/28.8 and 12/20. Indic names use script-safe serif tokens without tracking; English uses Cormorant semibold. Live text scales and wraps; fixed image exports disable scaling inside the wordmark. **Draft deviation:** the original custom English/Hindi lettering could not be recovered; bundled fonts are provisional, not visual approval.
+- **Home wordmark.** `HomeWordmark.tsx` delegates to `VedanshWordmark.tsx`. The accepted joined English and Hindi lettering is artwork cropped losslessly from the approved composition, without recoloring or substitute fonts. Hindi mode uses the Hindi mark; other modes use the fixed English brand mark. Optional bilingual mode shows both. Full-width marks are 180pt English / 110pt Hindi; compact marks are 86pt / 58pt, capped to their parent width at the source aspect ratio. The localized companion subtitle remains native text at 16/26 (compact 12/20), with script-safe existing fonts and system scaling/wrapping. Fixed share exports disable scaling only for their fixed text. Mark images retain inversion protection and localized accessible brand labels; share captures register their actual native decode with `ArtworkCaptureContext`.
 
 - **Verse divider.** `॥` centered between two 1px horizontal rules, 80px wide, saffron at 60% opacity. Use between verse and meaning on every reader page.
 - **Shared reader back control.** `ReaderHeader` renders Phosphor `ArrowLeft` inside a **44dp** circle with `parchment-soft` fill and `divider` border, centered in a real **48×48dp Pressable**. Bookmark/share keep their **34dp visible circles** and 21/20dp glyphs inside actual 48×48dp targets; their parent rows grow with the target rather than relying on parent-limited hitSlop.
@@ -946,12 +948,12 @@ When building new components, pull tokens from the theme — never hard-code a h
 
 ## 18. Screen: Home (Revised)
 
-**Purpose.** Surface available content organized by category type and deity. Replaces the flat LIBRARY list from Section 7. The centered Home wordmark uses the shared localized name and companion subtitle; compact sizing leaves room for the 44 pt settings gear.
+**Purpose.** Surface available content organized by category type and deity. Replaces the flat LIBRARY list from Section 7. The centered Home wordmark uses the approved name artwork and localized companion subtitle; compact sizing leaves room for the 44 pt settings gear.
 
 **Structure (top to bottom):**
 
 1. Status bar area (safe region)
-2. Hero block: the **Home wordmark lockup** (Section 5) — localized Vedansh name over “Your spiritual companion” / “आपका आध्यात्मिक साथी” (Gujarati/Kannada localized too).
+2. Hero block: the **Home wordmark lockup** (Section 5) — approved Vedansh name artwork over “Your spiritual companion” / “आपका आध्यात्मिक साथी” (Gujarati/Kannada localized too).
    - **On a catalog festival day only** (the 18 festivals of `notifications/festiveReminders.ts`): the **Festive Toran** (§55) hangs directly below the lockup — a marigold garland with the day's greeting chip. Absent every other day.
 3. **आज · Today strip** (§48) — a one-card daily-panchang glance (vara + tithi headline, one horizontal-scroll row of observance / Abhijit / Rahu Kaal chips). Tap → Panchang tab.
 4. **आज के लिए · For Today recommendations** (§50) — a compact horizontal row of name-only `FeatureCard compact` strips (196×56, the same shell the DISCOVER carousel uses in its taller default form) chosen from today's vaar deity and active festival metadata. This keeps PRD-B's By-Day/By-Festival surfacing on Home without adding another calendar engine. **गीता सार is pinned to the lead** of the row **every day** — a standing door into the themed Gita readings — ahead of the vaar-deity texts and, on a **festival** day, ahead of the festival's own reading too (which then follows at slot 1). The pin lives in `TodayRecommendationsRow` (not `getTodayRecommendationDetails`, which is left untouched so every notification/briefing consumer still reads the same vaar/festival order), dedupes गीता सार if the vaar tier already surfaced it (it is a Krishna text), and the अबूझ card follows whatever is pinned to slot 0. Card tap → the text itself via `navigateToEntryStart` (§38) — single-chapter texts open their reader directly rather than a one-row chapters index; गीता सार opens its themes list.
@@ -1756,7 +1758,7 @@ A 540dp-wide card with a **675dp minimum height**, rendered **off-screen**. Shor
 4. **Meaning** (optional): complete text centred in `ink-soft` at **18/27**, without `numberOfLines` or platform auto-fit. The image grows to fit native wrapping; no excerpt is substituted. Italic applies only to English's real Cormorant italic face; Indic faces stay upright. `meaningByLang` honours verified `meaningGu`/`meaningKn` overrides. The optional Gita Saar theme title (`meaningTitleHi/En`) uses the same 18/27 size in `titleFontByLang`, `saffronDeep`, above the meaning with no extra inter-block margin.
 
    **Readability contract:** keep the verse at 24/40 and meaning at 18/27. A fixed leading and `adjustsFontSizeToFit` must never appear together; the earlier auto-fit path rendered meanings at 7pt. `shareCardFit.test.tsx` guards complete uncapped text and native height reporting in all four languages. `shareVerseTarget.test.tsx` guards capture readiness, density-correct tall output and short-after-long reset.
-5. **Branding footer** (1 px `divider` top rule, 14 above): shared compact `VedanshWordmark` in the card language with the companion subtitle, then the existing download line and `vedansh.app/get`. Full content and measured-height capture remain unchanged.
+5. **Branding footer** (1 px `divider` top rule, 14 above): shared compact approved `VedanshWordmark` artwork with the companion subtitle in the card language, then the existing download line and `vedansh.app/get`. Full content and measured-height capture remain unchanged.
 
 ### §39.1 Component: Share Target Sheet (`ShareTargetSheet.tsx`)
 
@@ -4079,3 +4081,63 @@ The approved direction is **Quiet companion throughout**. `QuietCompanionSheet.t
 - Widget pair and Panchang-only recovery share `widgetNudgeStore.ts`, including serialized writes and a process-owned Android pin queue. A launcher that never pauses permits a manual Panchang tap. Dismissal ends the offer; an add-flow stamp does not prove installation. iPhone uses actual widget snapshot previews and manual WidgetKit instructions in the shared Quiet companion shell. Missing snapshot data does not invent a tithi. Widgets remain available from the gallery. If Android pinning is unavailable or fails, `LaunchAskHost` opens `MoreTab` with `moreTabTarget('WidgetGallery')` (`initial: false`), preserving MoreHome beneath the gallery so Back reaches the hub even when More has never mounted.
 
 Implementation: `LaunchAskHost`, `OnboardingSetupSheet`, `QuietReminderBody`, `launchAskStore`, `DailyBhaktiNudge`, `widgetNudgeStore`, `TourContext`, `NotificationPreferencesContext`. Native installed visual review on compact phones, all four scripts at both sizes, iPhone ATT/Modal sequencing and Android launcher behaviour remain required before merge; unit tests do not establish pixel or device acceptance.
+
+## 86. Explore launch sheet — Immersive Story
+
+Approved direction: a 190dp painted scene over a rounded parchment bottom sheet. The
+single-language section eyebrow, script-safe headline and short description lead to
+one useful preview. The close target is 44dp; the body scrolls independently of a
+pinned primary action and Not now. Settings replay also offers Next section. The sheet is capped at 88%
+of the available screen. Theme reading-size tokens and the four-language localization
+helpers govern copy; content must grow rather than truncate. Reduce Motion removes
+the entrance animation. Dragging the handle down, backdrop, Android back and Not now
+share one dismissal path. No arrival haptic, looping animation or explored score.
+
+`data/discovery/sections.ts` is the sixteen-section registry and destination source.
+Gita Saar uses Krishna teaching Arjuna; Sankalp uses Hanuman doing japa. Suvichar
+composes a real Ram Darbar painting with localized greeting and sender text. The
+sender changes only the preview until the primary action hands the draft to the
+Suvichar composer. Other previews open their real section; they never simulate a
+saved ritual, a computed chart, device heading or completed practice.
+
+Artwork is bundled under `assets/explore/`; its separate 1.5MB byte budget, source
+master hashes, Library provenance, crops and shipped hashes are pinned by the
+manifest and asset tests. These are section hero scenes, not additions to the Home
+or More square icon registries. Native visual/device QA is still required before
+merge; a passing renderer test is not evidence of native rendering.
+
+### Eligibility and rollout
+
+The ledger collects silently for the first 24 hours, seeds existing routine,
+sankalp and Pitru records, and observes owned routes from every navigation source.
+This conservative first-release collection window replaces an immediate launch
+promotion; historical routes without persisted evidence cannot be reconstructed.
+No sheet appears on the fresh install's first session or after another automatic
+surface has claimed the launch. Onboarding, reminder consent, What's New, staged
+updates and rating take precedence. Notification, widget and URL entries stand down.
+Warm foreground returns count only after 30 minutes away; navigation away from Home
+cancels the delayed offer. Storage or platform-probe failures suppress suggestions.
+
+At most two shown sheets per phone-local calendar day, six hours apart. A regression
+in the phone clock starts a fresh six-hour wait. Declined sections rest fourteen
+days; two consecutive declines pause all suggestions for seven days, including when
+both declines happen on one day. Visiting a section removes it from the pool. The
+highest-priority eligible section wins; an unvisited previous suggestion is skipped
+when another eligible section exists. No analytics or festival boosts are added in
+this implementation. There is no enable/disable preference in Settings or the sheet. Legacy stored
+`enabled: false` is ignored. Settings → Explore sections opens an explicit replay
+of all sixteen cards, with Next section, Close and their real destination actions.
+Replay bypasses automatic eligibility without changing visit/decline/cadence records
+or consuming the shared automatic prompt budget. Closed replay does not mount.
+Notification responses are read and cleared once per process by `launchResponse.ts`;
+Explore uses the resolved cold-start target rather than rereading historical taps. No native build, release or OTA is
+part of this change.
+
+Files: `components/explore/ExploreLaunch.tsx`, `ExploreSheet.tsx`,
+`data/discovery/{sections,policy,store,artwork}.ts`. This implements the selected
+visual direction from draft PR #575; its earlier prototype disagreements no longer
+define the native layout.
+
+**Shared launch coordination (§86).** Explore waits for `launchAskStore.selectionComplete` and atomically claims the same daily opportunity as reminders, widgets, updates and automatic rating. Its own six-hour/two-per-day policy remains a ceiling; the app-wide cap permits at most one automatic prompt per local day. A stopped reminder is not a pending reminder surface. The host decides reminder eligibility from its current cadence, not the legacy 15-day flag.
+
+A background update staged after Explore has claimed its slot does not dismiss the active sheet; the update offer waits for the next shared opportunity. Already-pending updates retain priority before Explore claims.

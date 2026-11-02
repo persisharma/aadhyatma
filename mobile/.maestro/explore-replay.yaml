@@ -1,0 +1,23 @@
+# Explicit Settings replay works even during the automatic 24-hour quiet window.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element:
+      id: settings-explore
+    direction: DOWN
+- tapOn:
+    id: settings-explore
+- assertVisible:
+    id: explore-heading
+- assertNotVisible:
+    id: explore-disable
+- tapOn:
+    id: explore-next
+- assertVisible:
+    id: explore-heading
+- tapOn:
+    id: explore-not-now
+- assertVisible:
+    id: settings-explore

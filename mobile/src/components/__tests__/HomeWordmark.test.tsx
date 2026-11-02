@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Image, StyleSheet, Text } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GitaLanguageProvider, type Lang } from '@/data/gita/language';
@@ -33,8 +33,10 @@ for (const lang of languages) for (const scale of ['M', 'L']) {
 test('launch lockup includes both approved names and the companion subtitle', () => {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => { tree = TestRenderer.create(<VedanshWordmark lang="en" bilingual />); });
-  const texts = tree.root.findAllByType(Text).map(n => n.props.children);
-  expect(texts).toEqual(['Vedansh', 'वेदांश', 'Your spiritual companion']);
+  expect(tree.root.findAllByType(Image)).toHaveLength(2);
+  expect(tree.root.findByProps({ testID: 'vedansh-wordmark-en' })).toBeDefined();
+  expect(tree.root.findByProps({ testID: 'vedansh-wordmark-hi' })).toBeDefined();
+  expect(tree.root.findAllByType(Text).map(n => n.props.children)).toEqual(['Your spiritual companion']);
   act(() => tree.unmount());
 });
 test.each(languages)('export footer respects card language %s and keeps the download link', lang => {

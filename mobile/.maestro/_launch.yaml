@@ -52,7 +52,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     notVisible:
       id: "brand-launch-reveal"
-    timeout: 5000
+    timeout: 8000
 # clearState resets iOS permission grants, so a fresh launch pops the native
 # "…Would Like to Send You Notifications" alert over Home (the app requests
 # permission on boot for reminders/japam alarms). It's a NATIVE alert that
@@ -147,3 +147,7 @@ appId: com.prashantsharma.vedansh
 - swipe:
     direction: DOWN
 - waitForAnimationToEnd
+
+- tapOn:
+    id: explore-not-now
+    optional: true

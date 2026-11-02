@@ -66,6 +66,8 @@ import BrandLaunchGate from '@/components/BrandLaunchGate';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import WhatsNewModal from '@/components/WhatsNewModal';
+import ExploreLaunch from '@/components/explore/ExploreLaunch';
+import { readLaunchNotificationResponse, clearLaunchNotificationResponse } from '@/notifications/launchResponse';
 import RatingPromptSheet from '@/components/RatingPromptSheet';
 import { TourProvider } from '@/contexts/TourContext';
 import { RatingPromptProvider } from '@/contexts/RatingPromptContext';
@@ -197,7 +199,7 @@ export default function App() {
         return parsed ? widgetStartTarget(parsed) : null;
       })
       .catch(() => null);
-    const notificationTarget = Notifications.getLastNotificationResponseAsync()
+    const notificationTarget = readLaunchNotificationResponse()
       .then((response) =>
         // Snooze taps never navigate (see the cold-start handler below).
         response?.actionIdentifier === JAPAM_SNOOZE_ACTION_ID
@@ -251,7 +253,7 @@ export default function App() {
 
     let cancelled = false;
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
-    Notifications.getLastNotificationResponseAsync()
+    readLaunchNotificationResponse()
       .then((response) => {
         if (cancelled || !response) return;
         // Already consumed as the navigator's initial route — dispatching it
@@ -278,6 +280,7 @@ export default function App() {
       .catch(() => undefined);
 
     const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      void clearLaunchNotificationResponse();
       if (maybeHandleJapamSnoozeResponse(response)) return;
       if (!navigationRef.isReady()) {
         const target = startTargetFromNotification(response);
@@ -407,6 +410,7 @@ export default function App() {
                               <LaunchAskHost targeted={!!initialTarget} />
                               <UpdateReadyModal />
                               <WhatsNewModal suppressed={!!initialTarget} />
+                              <ExploreLaunch targeted={!!initialTarget} />
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
                             <SadhanaCompletionOverlay />
@@ -513,17 +517,14 @@ function AppReadyGate({ children, targeted }: { children: React.ReactNode; targe
     SplashScreen.hideAsync().catch(() => undefined);
   }, [ready]);
 
-  useEffect(() => {
-    hideSplash();
-  }, [hideSplash]);
-
   if (!ready) {
     return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={hideSplash}>
-      <BrandLaunchGate targeted={targeted}>{children}</BrandLaunchGate>
+    <View style={{ flex: 1 }}>
+      <BrandLaunchGate targeted={targeted} onReady={hideSplash}>{children}</BrandLaunchGate>
     </View>
   );
 }
+

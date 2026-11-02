@@ -1,0 +1,59 @@
+{
+  "approvedSourceSha256": "af052692ac2477860ae6c0e69ed7ce6754ed5dcf1400f10bd7e78665c6ad69d5",
+  "approvedPngSha256": "61ab501ea93ef4d026dbc20f15847a841f01ccade216dfebcec13d2146c24213",
+  "canvas": {
+    "width": 720,
+    "height": 780
+  },
+  "particles": 3809,
+  "durationMs": 3350,
+  "names": {
+    "en": {
+      "file": "mobile/assets/branding/wordmarks/english.png",
+      "width": 442,
+      "height": 126,
+      "crop": [
+        139,
+        363,
+        581,
+        489
+      ]
+    },
+    "hi": {
+      "file": "mobile/assets/branding/wordmarks/hindi.png",
+      "width": 166,
+      "height": 75,
+      "crop": [
+        277,
+        502,
+        443,
+        577
+      ]
+    }
+  },
+  "assets": {
+    "mobile/assets/branding/wordmarks/approved-lockup.png": {
+      "sha256": "61ab501ea93ef4d026dbc20f15847a841f01ccade216dfebcec13d2146c24213",
+      "bytes": 126560
+    },
+    "mobile/assets/branding/wordmarks/english.png": {
+      "sha256": "8b016b5ed2b879dcb199b181d37da636e39363de40da77b88566adb5a3700d2a",
+      "bytes": 9960
+    },
+    "mobile/assets/branding/wordmarks/hindi.png": {
+      "sha256": "8490190d5b94e2d61d73901fae31a35cc5216138523f5f8fb86228dab9c07516",
+      "bytes": 3628
+    },
+    "mobile/src/branding/approvedParticleDocument.json": {
+      "sha256": "2b85028a9acf77bfe148b5e2654549cf2e1953b5ec9c09ed13596414be09263f",
+      "bytes": 174247
+    }
+  },
+  "lettering": {
+    "latin": "Samarkan",
+    "hindi": "Yatra One",
+    "subtitle": "Hind",
+    "fontBinariesBundled": false,
+    "samarkanRegistration": "not verified; confirm before production use"
+  }
+}

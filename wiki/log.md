@@ -1303,3 +1303,7 @@ Removed visible painting descriptions and the paragraph explaining source-link b
 ## [2026-11-01] ingest | Draft particle launch boundary and shared branding
 
 Added the bounded intro/navigation invariant and explicit missing-lettering/native-verification gap to overview. See docs/reviews/2026-11-01-particle-logo.md.
+
+## [2026-11-01] ingest | Approved particle renderer replaces reconstruction
+
+Recorded the accepted-source hash, one-renderer app/export contract, splash readiness boundary and shared wordmark paint-barrier integration in overview. Native evidence remains pending.

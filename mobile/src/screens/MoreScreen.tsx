@@ -43,6 +43,8 @@ import type { MoreStackParamList } from '@/navigation/types';
 // Lazy: a sheet that only exists after a tap has no business on the launch
 // graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
 // `TabNavigator` gives the Panchang stack.
+// eslint-disable-next-line @typescript-eslint/no-require-imports -- Evaluate replay only after an explicit Settings tap.
+const ExplorePreview = React.lazy<React.ComponentType<{ onClose: () => void }>>(async () => ({ default: require('@/components/explore/ExplorePreview').default }));
 const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
 
 function formatReminderTimes(times: TimeOfDay[]): string {
@@ -136,6 +138,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
   const { resetTour } = useTour();
+  const [showExplore, setShowExplore] = useState(false);
   const { open: openRatingPrompt } = useRatingPrompt();
   const { alarms: japamAlarms } = useJapamAlarms();
   const { scale } = useFontScale();
@@ -464,6 +467,13 @@ export default function MoreScreen({ navigation }: Props) {
                     accessibilityLabel={`Language, ${currentLang.a11yLabel}`}
                   />
                 </View>
+                <SettingsRow icon="question"
+                  label={pick(lang, { hi: 'नए भाग देखें', en: 'Explore sections', gu: 'નવા વિભાગો જુઓ', kn: 'ವಿಭಾಗಗಳನ್ನು ನೋಡಿ' })}
+                  labelFontFamily={labelFont}
+                  onPress={() => setShowExplore(true)}
+                  accessibilityLabel="Explore sections"
+                  testID="settings-explore"
+                />
                 <View ref={readingSizeRowRef} collapsable={false}>
                   <SettingsRow
                     icon="textSize"
@@ -575,6 +585,7 @@ export default function MoreScreen({ navigation }: Props) {
           </View>
         </ScrollView>
       </SafeAreaView>
+      {showExplore && <React.Suspense fallback={null}><ExplorePreview onClose={() => setShowExplore(false)} /></React.Suspense>}
 
       {langSheet && <LanguagePickerSheet visible onClose={() => setLangSheet(false)} />}
       {sizeSheet && <ReadingSizePickerSheet visible onClose={() => setSizeSheet(false)} />}
@@ -750,3 +761,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+

@@ -26,6 +26,11 @@ Code is canonical, but the docs may never lag it by more than the PR that change
 
 ### 0.2 Bundled icon registries
 
+**Approved brand launch and lettering.** `docs/branding/approved-particle-preview.html` is the accepted particle source, not an approximate effect specification. `scripts/prepare-approved-brand.mjs --check` pins its source hash, native document, exact composition and lossless English/Hindi name crops. The app and animation export script must execute this same source. Keep the existing native splash until the canvas readiness message; navigation and automatic prompts remain below the reveal gate. All failure/cancellation paths release it, with a bounded watchdog. Do not introduce network dependencies or automatically publish a native build/OTA.
+
+The brand name artwork intentionally remains English/Hindi: Hindi is primary in Hindi mode, English in other modes; optional bilingual marks are a fixed brand treatment. Accessibility labels and companion subtitles follow all four app languages and their script fonts. Do not transliterate or replace the approved name image with generic live typography. Actual mounted wordmark decodes participate in the common share-art paint barrier. Preserve source/export hashes and font provenance; Samarkan registration must be confirmed before production use. No font binary is added by this integration.
+
+
 Home's shared outer gutter is supplied by `homeLayout.ts` (16dp). Full-bleed child carousels must cancel/re-pad that same gutter: Home passes `gridPadding` to `TodayRecommendationsRow.horizontalGutter`, and DISCOVER uses it directly. Do not duplicate the previous 24dp inset in a child; enlarged recommendation widths must also respect the supplied gutter. Artwork sizing remains independent from page/tile width.
 
 Home/category artwork is registered in `mobile/src/components/storybookSources.ts`; deity attribute mappings live in `deityArtwork.ts`. More's settings subjects are registered separately in `MoreIcon.tsx`, which combines seventeen painted utility assets with three existing Home subjects. Sixteen utility subjects appear in More; the painted question seal is used by Ask Vedansh in Discover. `FeatureIcon.tsx` maps all nine Discover cards to these existing registries: shared subjects reuse the same image source, with a uniform centered 32dp canvas inside the 36dp feature tile. Do not reintroduce outline glyphs or duplicate paintings for the same feature. Row callers use the registry's typed names; navigation/reader controls retain `AppIcon`.
@@ -1300,3 +1305,24 @@ Setup phase must persist independently of language/upgrader keys. Only explicit 
 Lower-priority automatic surfaces must wait for `launchAskStore.selectionComplete` and atomically claim the shared daily opportunity before opening. Storage hydration is not host selection completion. Automatic rating must wait too.
 
 Keep reminder-rest dates separate from the shared daily prompt date: an intervening widget/discovery prompt must not restart a reminder rest. Legacy records migrate their prior shared date once.
+
+### Explore launch integration contract
+
+The discovery ledger (`data/discovery/policy.ts`, key `@vedansh/explore-sheet-v1`)
+counts a visit from any owned route, not only a launch-sheet CTA. New section
+promotions must register their typed stack destination, route ownership, localized
+copy, preview kind and explicit hero artwork in `sections.ts`/`artwork.ts`. No
+reader corpus or solver is loaded on the launch graph for a preview. Hero scenes
+have a separate 1.5MB bundle budget and hash manifest under `assets/explore/`.
+The Home/More square-icon budgets and registries are unchanged.
+
+Launch surfaces must respect `isExploreSurfaceOpen()` while the sheet is visible;
+Explore itself stands down for onboarding, reminder asks, What's New, pending OTA,
+rating and external launch intents. Preserve the silent collection window,
+fail-closed persistence, count-on-show limit and single-action dismissal guard.
+Changes require policy, surface and asset tests plus the native Maestro fixture
+flow (`explore-sheet.yaml`); see design.md §86 for the current accepted behavior.
+
+Explore participates in the Quiet companion daily gate: wait for host selection, reserve with `claimLaunchAsk`, and preserve its own ownership during the store notification. Keep both the shared claim and Explore visibility checks in automatic rating. Combined launch tests must cover widget/reminder priority, stopped reminders, slow host initialization, concurrent claims and persisted same-day suppression.
+
+Explore has no on/off preference or permanent disable action. Retain the legacy ledger field only for storage compatibility; it does not gate selection. Settings exposes only an explicit replay, which bypasses automatic delays without writing decline/visit/cadence records or consuming the automatic daily slot. The replay uses the same localized sheets and real destinations, including the Suvichar draft handoff. Consume and clear native launch notification responses once through `notifications/launchResponse.ts`, and pass the resolved launch target to Explore; do not independently treat a cached last response as a current launch intent. Cover stale/real intents, legacy Off state and immediate replay in regressions.

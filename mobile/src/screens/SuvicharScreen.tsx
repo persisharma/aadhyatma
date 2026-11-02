@@ -1,3 +1,4 @@
+import type { RouteProp } from '@react-navigation/native';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -30,7 +31,7 @@ import type { HomeStackParamList } from '@/navigation/types';
 const KEY = '@vedansh/suvichar/v1';
 // Serialize writes: a slow earlier save must never replace the latest name.
 let saves: Promise<unknown> = Promise.resolve();
-export default function SuvicharScreen() {
+export default function SuvicharScreen({route}:{route?:RouteProp<HomeStackParamList,'Suvichar'>}={}) {
   const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
   const { lang } = useGitaLanguage();
   const { colors, spacing, radii, typography } = useTheme();
@@ -53,6 +54,15 @@ export default function SuvicharScreen() {
   const scroll = useRef<ScrollView>(null);
   const picking = useRef(false);
   useEffect(() => { let active = true; void saves.then(() => AsyncStorage.getItem(KEY)).then(raw => { if (active) { const parsed = parseSuvicharPreferences(raw); setPrefs(withTodaysVaar(isSuvicharThought(parsed.message) ? { ...parsed, message: '', thoughtId: '' } : parsed, new Date())); setEditingName(!parsed.name); setLoaded(true); } }).catch(() => { if (active) { setPrefs(p => withTodaysVaar(p, new Date())); setEditingName(true); setLoaded(true); } }); return () => { active = false; }; }, []);
+  const appliedExploreDraft = useRef<object | null>(null);
+  useEffect(()=>{
+    const draft=route?.params?.exploreDraft;
+    if(!loaded||!draft||appliedExploreDraft.current===draft)return;
+    appliedExploreDraft.current=draft;
+    setPrefs(p=>({...p,name:cleanSender(draft.name),deity:draft.deity,vaar:false}));
+    setPresetKind('daily');setEditingName(!draft.name.trim());
+    navigation.setParams({exploreDraft:undefined});
+  },[loaded,route?.params?.exploreDraft,navigation]);
   // A new day re-opens on its own card, unless the reader has written their own message.
   const openedDay = useRef(todayKey);
   useEffect(() => {

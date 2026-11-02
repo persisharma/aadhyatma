@@ -1,0 +1,21 @@
+# Installed native evidence still required: this file is not a visual verdict.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- assertNotVisible:
+    id: brand-launch-reveal
+- assertNotVisible:
+    id: brand-particle-webview
+- assertVisible:
+    id: vedansh-wordmark-hi
+- takeScreenshot: e2e-shots/brand-home-approved-lettering
+- stopApp
+- launchApp:
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- extendedWaitUntil:
+    visible:
+      id: vedansh-wordmark-hi
+    timeout: 30000
+- assertNotVisible:
+    id: brand-particle-webview

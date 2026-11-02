@@ -162,6 +162,6 @@ See [[integrations/reading-artwork]] for publishing, caching and QA limits.
 > Personal identifiers (owner email, bundle IDs, EAS project id/URL) live in `mobile/app.json`
 > and `mobile/eas.json` and are intentionally **not** reproduced here — see those files directly.
 
-## Draft particle launch boundary (1 November 2026)
+## Approved particle launch boundary (1 November 2026)
 
-`AppReadyGate` now wraps navigation/launch surfaces in `BrandLaunchGate` after language/size hydration. Ordinary launches wait for a bounded cancellable particle reveal; notification/widget initial targets bypass it. Early live target events update the initial destination. Do not move automatic asks outside this boundary. The original approved custom lettering is missing; existing fonts are provisional. Shared live branding and baked/native-widget exceptions are recorded in `docs/reviews/2026-11-01-particle-logo.md`; native fidelity and actual share exports are still unverified.
+`AppReadyGate` wraps navigation/launch surfaces in `BrandLaunchGate` after language/size hydration. The native splash is released on actual canvas readiness; ordinary navigation and automatic asks wait for completion. The approved 3,809-particle fragment is embedded verbatim and the existing WebView is loaded on demand; no substitute font/motion is used. Targeted launches bypass it, and cancellation/error/watchdog paths fail open. `scripts/prepare-approved-brand.mjs --check` verifies the accepted source and lossless name crops; `scripts/export-approved-particle-logo.mjs` executes the same source for downloads. Shared mark decodes join `ArtworkCaptureContext` before capture. Native fidelity/performance and font-registration confirmation remain separate release checks.

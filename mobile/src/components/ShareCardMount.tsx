@@ -25,7 +25,7 @@ export function ShareCardBrandStrip({ lang, onPainted }: { lang: Lang; onPainted
     <View testID="share-card-brand-strip" style={[styles.strip, { borderTopColor: colors.divider, backgroundColor: colors.parchment }]}>
       <View style={styles.brandRow}>
         {/* A bundled mark that fails to decode still leaves the wordmark, so it never blocks sharing. */}
-        <Image accessible={false} source={brandMark} style={styles.mark} onLoad={onPainted} onError={onPainted} />
+        <Image testID="share-card-brand-icon" accessible={false} source={brandMark} style={styles.mark} onLoad={onPainted} onError={onPainted} />
         {/* Full 1.65 leading: a tighter line box clips the matras on iOS (वेदांश → वदाश). */}
         <VedanshWordmark lang={lang} compact showTagline={false} fixedExport />
       </View>
