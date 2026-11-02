@@ -1,3 +1,4 @@
+import { useBrandLaunchVisible } from '@/navigation/brandLaunchIntent';
 import { useTour } from '@/contexts/TourContext';
 import { useLaunchAsks, claimLaunchAsk } from './launchAskStore';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -59,8 +60,10 @@ export default function UpdateReadyModal() {
 
   const tour = useTour();
   const launch = useLaunchAsks();
+  const brandVisible = useBrandLaunchVisible();
   const [owned, setOwned] = useState(false);
   const eligible =
+    !brandVisible &&
     launch.ready &&
     !launch.taken &&
     !tour.isLoading &&
@@ -74,7 +77,7 @@ export default function UpdateReadyModal() {
   useEffect(() => {
     if (eligible && claimLaunchAsk()) setOwned(true);
   }, [eligible]);
-  const visible = owned && Updates.isEnabled && isUpdatePending && !dismissed;
+  const visible = !brandVisible && owned && Updates.isEnabled && isUpdatePending && !dismissed;
 
   const onLater = useCallback(() => setDismissed(true), []);
 

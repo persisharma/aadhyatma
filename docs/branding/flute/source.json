@@ -3,10 +3,38 @@
   "master": "docs/branding/flute/approved-master.png",
   "masterSha256": "6c49799a3be827159046f82d0bfe0b401b00a677e4b43d5e9bebdf4004d805c6",
   "originalRendererSha256": "af052692ac2477860ae6c0e69ed7ce6754ed5dcf1400f10bd7e78665c6ad69d5",
-  "approvedSourceSha256": "80603c5af3b2095a3092b177de8c8414698869960ec0ef0ecbd52108de3243c9",
-  "approvedPngSha256": "4f8fda58b1399b61026cf97376a6ee893c94b7e3959c69dce5bdaf716ab32421",
-  "particles": 4016,
+  "approvedSourceSha256": "0c1fb6d3b102d25a00fc304d918aafb67ff0efef5b70e6437fb02dadcb66d1ed",
+  "approvedPngSha256": "8bf5eff6723eac00932f898f2f8a8de93615a0b48e5853e4e8fafd76e8544e3e",
+  "particles": 4011,
   "durationMs": 3350,
+  "hindiDotCorrections": {
+    "upper": {
+      "erase": [
+        607,
+        48,
+        70,
+        65
+      ],
+      "center": [
+        641,
+        81
+      ],
+      "radius": 12
+    },
+    "lower": {
+      "erase": [
+        733,
+        358,
+        37,
+        33
+      ],
+      "center": [
+        751,
+        381
+      ],
+      "radius": 7
+    }
+  },
   "names": {
     "en": {
       "crop": [
@@ -18,8 +46,8 @@
       "width": 1565,
       "height": 419,
       "homeFrame": {
-        "width": 98.22222222222223,
-        "height": 28
+        "width": 112,
+        "height": 32
       },
       "launchFrame": {
         "x": 139,
@@ -38,8 +66,8 @@
       "width": 1104,
       "height": 391,
       "homeFrame": {
-        "width": 61.973333333333336,
-        "height": 28
+        "width": 86,
+        "height": 32
       },
       "launchFrame": {
         "x": 277,
@@ -49,5 +77,5 @@
       }
     }
   },
-  "notes": "Owner approved this exact transparent master in chat. Crops preserve original pixels/colours/nukta; no font substitution. Only the composition data changes in the original particle renderer."
+  "notes": "Owner approved this exact transparent master in chat. Crops preserve original pixels/colours except the user-requested round, separated Hindi dots; no font substitution. Only the composition data changes in the original particle renderer."
 }

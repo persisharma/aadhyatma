@@ -34,8 +34,8 @@ for (const lang of languages) for (const scale of ['M', 'L']) {
     expect(image.props.testID).toBe(`vedansh-wordmark-${lang === 'hi' ? 'hi' : 'en'}`);
     expect(imageStyle.tintColor).toBeUndefined();
     const frame = StyleSheet.flatten(tree.root.findByProps({ testID: 'home-wordmark-artwork-frame' }).props.style);
-    expect(frame.height).toBe(28);
-    expect(frame.width).toBeCloseTo(lang === 'hi' ? 61.973333333333336 : 98.22222222222223);
+    expect(frame.height).toBe(32);
+    expect(frame.width).toBeCloseTo(lang === 'hi' ? 86 : 112);
     expect(imageStyle.width).toBeLessThanOrEqual(frame.width);
     expect(imageStyle.width / imageStyle.aspectRatio).toBeLessThanOrEqual(frame.height);
     act(() => tree.unmount());
@@ -76,7 +76,7 @@ test.each([false, true])('keeps the compact Home crest and unmodified flute artw
   }
   const image = tree.root.findByType(Image);
   expect(StyleSheet.flatten(image.props.style).tintColor).toBeUndefined();
-  expect(manifest.lettering.hindiNukta).toBe('baked into approved master');
+  expect(manifest.lettering.hindiNukta).toBe('round separated dot below sh');
   const subtitle = tree.root.findByProps({ testID: 'home-wordmark-tagline' });
   expect(StyleSheet.flatten(subtitle.props.style)).toMatchObject({ fontSize: 14, color: lightColors.inkSoft });
   act(() => tree.unmount());

@@ -1,3 +1,4 @@
+import { signalBrandLaunchTarget } from '@/navigation/brandLaunchIntent';
 import { CommonActions, createNavigationContainerRef } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import { findJapamMantra } from '@/data/japam';
@@ -233,6 +234,7 @@ export function handleNotificationResponse(
 
   const target = resolveNotificationTarget(data);
   if (target) {
+    signalBrandLaunchTarget();
     navigationRef.dispatch(CommonActions.navigate(startTargetToNavigateAction(target)));
     return true;
   }

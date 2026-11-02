@@ -1,11 +1,11 @@
 {
-  "approvedSourceSha256": "80603c5af3b2095a3092b177de8c8414698869960ec0ef0ecbd52108de3243c9",
-  "approvedPngSha256": "4f8fda58b1399b61026cf97376a6ee893c94b7e3959c69dce5bdaf716ab32421",
+  "approvedSourceSha256": "0c1fb6d3b102d25a00fc304d918aafb67ff0efef5b70e6437fb02dadcb66d1ed",
+  "approvedPngSha256": "8bf5eff6723eac00932f898f2f8a8de93615a0b48e5853e4e8fafd76e8544e3e",
   "canvas": {
     "width": 720,
     "height": 780
   },
-  "particles": 4016,
+  "particles": 4011,
   "durationMs": 3350,
   "names": {
     "en": {
@@ -18,8 +18,8 @@
       "width": 1565,
       "height": 419,
       "homeFrame": {
-        "width": 98.22222222222223,
-        "height": 28
+        "width": 112,
+        "height": 32
       },
       "launchFrame": {
         "x": 139,
@@ -39,8 +39,8 @@
       "width": 1104,
       "height": 391,
       "homeFrame": {
-        "width": 61.973333333333336,
-        "height": 28
+        "width": 86,
+        "height": 32
       },
       "launchFrame": {
         "x": 277,
@@ -53,26 +53,54 @@
   },
   "assets": {
     "mobile/assets/branding/wordmarks/approved-lockup.png": {
-      "sha256": "4f8fda58b1399b61026cf97376a6ee893c94b7e3959c69dce5bdaf716ab32421",
-      "bytes": 160113
+      "sha256": "8bf5eff6723eac00932f898f2f8a8de93615a0b48e5853e4e8fafd76e8544e3e",
+      "bytes": 159930
     },
     "mobile/assets/branding/wordmarks/english.png": {
       "sha256": "75a1942786a124f10bd6d3dc150f2820b8dc85228ee95c96545b40b58bdfdcce",
       "bytes": 313880
     },
     "mobile/assets/branding/wordmarks/hindi.png": {
-      "sha256": "5a02f9f73c65dd293d06b1065c972e56df0e836a70846abd79d0a6981497a5bc",
-      "bytes": 217360
+      "sha256": "97bf197c25c025818ab3ac2657e68848bf89284ef089df846df0cd36146702b7",
+      "bytes": 212002
     },
     "mobile/src/branding/approvedParticleDocument.json": {
-      "sha256": "0ef0bd78790331e36276c47b99f9cc35a91b8112ae1c077a6c710c9e87057c2d",
-      "bytes": 218983
+      "sha256": "3584986745879cbe7ea5a2cc3ba8eaf6560d7c9de3ab03abd12ff056fa5b23cf",
+      "bytes": 218739
     }
   },
   "lettering": {
     "masterSha256": "6c49799a3be827159046f82d0bfe0b401b00a677e4b43d5e9bebdf4004d805c6",
     "style": "approved-flute-peacock",
-    "hindiNukta": "baked into approved master",
+    "hindiNukta": "round separated dot below sh",
+    "hindiDotCorrections": {
+      "upper": {
+        "erase": [
+          607,
+          48,
+          70,
+          65
+        ],
+        "center": [
+          641,
+          81
+        ],
+        "radius": 12
+      },
+      "lower": {
+        "erase": [
+          733,
+          358,
+          37,
+          33
+        ],
+        "center": [
+          751,
+          381
+        ],
+        "radius": 7
+      }
+    },
     "fontBinariesBundled": false,
     "samarkanRegistration": "earlier Samarkan-inspired reference registration not verified; confirm before production use"
   }

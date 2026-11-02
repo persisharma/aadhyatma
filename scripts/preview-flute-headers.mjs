@@ -12,7 +12,7 @@ GlobalFonts.registerFromPath(path.join(root,'mobile/node_modules/@expo-google-fo
 const manifest=JSON.parse(fs.readFileSync(path.join(root,'mobile/assets/branding/wordmarks/manifest.json')));
 const canvas=createCanvas(1170,660),ctx=canvas.getContext('2d');ctx.scale(3,3);ctx.fillStyle='#FFF1D5';ctx.fillRect(0,0,390,220);
 for(const [kind,offset]of [['en',20],['hi',125]]){
- const m=manifest.names[kind],frame=m.homeFrame,w=Math.min(frame.width,28*m.width/m.height),h=w*m.height/m.width;
+ const m=manifest.names[kind],frame=m.homeFrame,w=Math.min(frame.width,frame.height*m.width/m.height),h=w*m.height/m.width;
  const image=new Image();image.src=PNG.sync.write(PNG.sync.read(fs.readFileSync(path.join(root,m.file))));await image.decode();
  const rowWidth=frame.width+60+44+44, left=(390-rowWidth)/2,cy=offset+21;
  ctx.fillStyle='#AD571F';ctx.globalAlpha=.6;ctx.fillRect(left,cy,22,1);ctx.fillRect(left+rowWidth-22,cy,22,1);ctx.globalAlpha=1;

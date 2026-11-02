@@ -1,3 +1,4 @@
+import { correctHindiDots, hindiDotCorrections } from './brand-wordmark-corrections.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -22,12 +23,13 @@ for (const [lang, top, bottom] of [['en', 0, 450], ['hi', 450, master.height]]) 
     x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x+1);y1=Math.max(y1,y+1);
   }
   const crop=[Math.max(0,x0-2),Math.max(top,y0-2),Math.min(master.width,x1+2),Math.min(bottom,y1+2)];
-  names[lang]={crop,width:crop[2]-crop[0],height:crop[3]-crop[1],homeFrame:{width:lang==='en'?28*442/126:28*166/75,height:28}};
+  names[lang]={crop,width:crop[2]-crop[0],height:crop[3]-crop[1],homeFrame:{width:lang==='en'?112:86,height:32}};
 }
 const original = Buffer.from(template.match(/data:image\/png;base64,([A-Za-z0-9+/=]+)/)[1], 'base64');
 const canvas=createCanvas(720,780), ctx=canvas.getContext('2d');
 const originalImage=new Image();originalImage.src=original;await originalImage.decode();
-const masterImage=new Image();masterImage.src=PNG.sync.write(master);await masterImage.decode();
+const correctedMaster=correctHindiDots(master,PNG,names.hi.crop);
+const masterImage=new Image();masterImage.src=PNG.sync.write(correctedMaster);await masterImage.decode();
 ctx.drawImage(originalImage,0,0);
 ctx.clearRect(0,350,720,240);
 for(const [lang, x, y, w, h] of [['en',139,363,442,126],['hi',277,502,166,75]]){
@@ -47,6 +49,6 @@ const normalize=s=>s.replace(/data:image\/png;base64,[A-Za-z0-9+/=]+/g,'APPROVED
 const fragment=template.replace(/data:image\/png;base64,[A-Za-z0-9+/=]+/,'data:image/png;base64,'+composition.toString('base64'));
 if(normalize(fragment)!==normalize(template))throw Error('Renderer changed while updating composition');
 fs.writeFileSync(path.join(root,'docs/branding/approved-particle-preview.html'),fragment);
-const provenance={approvedOn:'2026-11-02',master:'docs/branding/flute/approved-master.png',masterSha256:sha(masterBytes),originalRendererSha256:sha(template),approvedSourceSha256:sha(fragment),approvedPngSha256:sha(composition),particles,durationMs:3350,names,notes:'Owner approved this exact transparent master in chat. Crops preserve original pixels/colours/nukta; no font substitution. Only the composition data changes in the original particle renderer.'};
+const provenance={approvedOn:'2026-11-02',master:'docs/branding/flute/approved-master.png',masterSha256:sha(masterBytes),originalRendererSha256:sha(template),approvedSourceSha256:sha(fragment),approvedPngSha256:sha(composition),particles,durationMs:3350,hindiDotCorrections,names,notes:'Owner approved this exact transparent master in chat. Crops preserve original pixels/colours except the user-requested round, separated Hindi dots; no font substitution. Only the composition data changes in the original particle renderer.'};
 fs.writeFileSync(path.join(sourceDir,'source.json'),JSON.stringify(provenance,null,2)+'\n');
 console.log(JSON.stringify(provenance,null,2));

@@ -57,11 +57,12 @@ async function unmount() {
   if (tree) await act(async () => tree!.unmount());
   tree = undefined;
 }
-async function boot({ host = true } = {}) {
+async function boot({ host = true, brand = false } = {}) {
   await unmount();
   jest.resetModules();
   jest.doMock('react', () => mockReact);
   jest.doMock('react-native', () => mockRN);
+  require('@/navigation/brandLaunchIntent').setBrandLaunchVisible(brand);
   const Host = require('../LaunchAskHost').default;
   const Explore = require('../explore/ExploreLaunch').default;
   await act(async () => {
@@ -161,3 +162,18 @@ test('a staged update waits for the next opportunity once Explore owns the curre
   expect((require('../launchAskStore') as typeof import('../launchAskStore')).claimLaunchAsk()).toBe(false);
 });
 
+
+test('branding pauses the host without consuming its daily prompt slot', async () => {
+  await boot({ brand: true });
+  expect(tree!.root.findAllByType('Widgets' as any)).toHaveLength(0);
+  expect(exploreVisible()).toBe(false); expect(launchRecord().lastDay).toBeNull();
+  await act(async () => { require('@/navigation/brandLaunchIntent').setBrandLaunchVisible(false); });
+  await tick(); expect(tree!.root.findAllByType('Widgets' as any)).toHaveLength(1);
+});
+test('Explore waits for branding then keeps its normal eligibility', async () => {
+  mockNudge.widgetDismissedAt = NOW;
+  await boot({ brand: true });
+  expect(exploreVisible()).toBe(false); expect(launchRecord().lastDay).toBeNull();
+  await act(async () => { require('@/navigation/brandLaunchIntent').setBrandLaunchVisible(false); });
+  await tick(); expect(exploreVisible()).toBe(true);
+});

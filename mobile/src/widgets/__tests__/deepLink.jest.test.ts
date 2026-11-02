@@ -1,12 +1,13 @@
+import { handleWidgetDeepLink, parseWidgetDeepLink, retryWidgetDeepLink } from '../deepLink';
+import { navigationRef } from '@/notifications/deepLink';
+import { subscribeBrandLaunchTarget } from '@/navigation/brandLaunchIntent';
+
 jest.mock('@react-navigation/native', () => ({
   CommonActions: {
     navigate: (options: unknown) => ({ type: 'NAVIGATE', payload: options }),
   },
 }));
 jest.mock('@/notifications/deepLink', () => ({ navigationRef: { isReady: jest.fn(() => true), dispatch: jest.fn() } }));
-
-import { handleWidgetDeepLink, parseWidgetDeepLink, retryWidgetDeepLink } from '../deepLink';
-import { navigationRef } from '@/notifications/deepLink';
 
 const mockDispatch = navigationRef.dispatch as jest.Mock;
 const mockIsReady = navigationRef.isReady as jest.Mock;
@@ -51,4 +52,16 @@ describe('widget cold/warm URL routing', () => {
     cancel();
     jest.useRealTimers();
   });
+});
+
+test('a warm widget suppresses branding before dispatching its destination', () => {
+  const order: string[] = [];
+  mockIsReady.mockReturnValue(true);
+  const unsubscribe = subscribeBrandLaunchTarget(() => order.push('brand'));
+  mockDispatch.mockImplementationOnce(() => order.push('navigate'));
+  expect(handleWidgetDeepLink('vedansh://widget/japam')).toBe(true);
+  expect(order).toEqual(['brand', 'navigate']);
+  unsubscribe();
+  handleWidgetDeepLink('vedansh://widget/japam');
+  expect(order).toHaveLength(2);
 });
