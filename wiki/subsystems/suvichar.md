@@ -2,10 +2,18 @@
 title: Suvichar personalized cards
 type: subsystem
 sources: [mobile/src/data/suvicharContent.ts, mobile/src/components/SuvicharThoughtPicker.tsx, scripts/build-suvichar-content.mjs, mobile/src/data/shareLinks.ts, mobile/src/utils/suvicharPhoto.ts, mobile/src/components/SuvicharSenderPhoto.tsx, mobile/modules/suvichar-face, mobile/src/screens/SuvicharScreen.tsx, mobile/src/components/SuvicharCard.tsx, mobile/src/components/SuvicharEntryCard.tsx, mobile/src/components/SuvicharFramePicker.tsx, mobile/src/data/suvichar.ts, mobile/src/data/suvicharVaar.ts, mobile/src/data/suvicharTemplates.ts, scripts/prepare-suvichar.mjs]
-last_verified_date: 2026-10-28
+last_verified_date: 2026-11-02
 confidence: high
 status: current
 ---
+
+## Original daily reflections (2 November 2026)
+
+`mobile/src/data/suvichar-content/originals.json` adds 76 unique user-approved original messages: all 74 numbered daily-life/deity/humility thoughts and two distinct earlier examples. Hindi is preserved; English is an editorial translation and Gujarati/Kannada retain the existing Hindi re-scripting policy. These are app-written reflections, never scripture quotations or words attributed to a deity/saint. They carry the native `वेदांश · मौलिक विचार / Vedansh · Original reflection` label and no source URL.
+
+The paragraphs below describe the preserved 621 referenced entries. The active total is now 697. Daily/weekday cards rotate only the originals eligible for the selected deity. Browse and Another thought put specific originals first, general originals next, then the original scripture-family pool. An empty `deities` array means universal; explicit deity arrays restrict named shrine messages. All 621 legacy IDs and references remain browsable and favorites remain readable. Original `VD-` IDs persist alongside `SV-`/`APP-` IDs. Localized lookup caches are keyed by deity, since shrine originals cannot share the old broad Krishna/Vishnu cache. No new images, CDN objects, permissions or release are needed.
+
+Regression coverage includes all 76 records, every deity, daily/weekday composition, four-script lookup, cross-shrine isolation, original authorship, edited-text attribution removal, real picker search/selection, shared-provider handoff and persisted favorite restoration. `.maestro/suvichar-original-reflections.yaml` covers native browsing, favorite restore and shrine isolation; device execution, compact/Standard/Large and actual WhatsApp exports remain pending in this Linux environment.
 
 ## Summary
 Daily Bhakti opens a separate Home-stack composer for reusable devotional wishes with editable messages and optional names. Eighteen image-based deities (including Mahakaal and Annapurna) and three frames map to 54 published R2 masters; there is no text-only card. The runtime contains 621 deity-family-specific reviewed meanings/story lessons with 364 source locations, replacing the shared 21-thought rotation. Every day the composer opens on a weekday card titled “शुभ रविवार”, “शुभ मंगलवार” and so on.

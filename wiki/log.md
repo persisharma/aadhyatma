@@ -1323,3 +1323,4 @@ Recorded the Home-only size/colour treatment, restored Om circles/rules and reta
 ## [2026-11-02] ingest | Exact-branch native Release compile/install passed; Maestro XCTest startup timed out before assertions. Driver preflight/timeout, single-architecture compile and app checkpoint added; lifecycle rerun pending.
 
 - 2026-11-02: PR #602 native verification retry: Release compile/install, driver and setup passed; cold recording reaches Home, while Maestro retained a stale launch accessibility root. Explicitly load the existing iOS snapshot config without weakening assertions; guarded exact-source binary reuse preserves compiled checkpoint. Native lifecycle result pending retry.
+## [2026-11-02] ingest | Add 76 approved original Suvichar reflections, explicit shrine scope and original daily rotation; preserve 621 referenced entries and stable favorites. Native/export review pending.

@@ -988,6 +988,18 @@ const MAINTAINER_ATTESTED_SINGLE_SOURCE = new Set([
 for (const file of collectJsonFiles()) {
   const data = readJson(file);
   assert.ok(data.source, `${file} should declare source provenance`);
+  // This exact collection is original prose, not scripture requiring collation.
+  // Require honest authorship rather than inventing two external source URLs.
+  if (file === 'suvichar-content/originals.json') {
+    assert.equal(data.source.kind, 'app-written-original-reflections');
+    assert.match(data.source.baseText, /not a scripture collection/i);
+    assert.match(data.source.approvedOn, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(data.source.approval.trim());
+    assert.deepEqual(data.source.referenceUrls, []);
+    assert.equal(data.entries.length, 76);
+    assert.ok(data.entries.every((entry: { sourceId: string }) => entry.sourceId === 'vedansh-original'));
+    continue;
+  }
   if (MAINTAINER_ATTESTED_SINGLE_SOURCE.has(file)) {
     assert.ok(
       data.source.maintainerAttestation?.trim(),

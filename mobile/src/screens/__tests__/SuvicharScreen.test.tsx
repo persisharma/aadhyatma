@@ -253,9 +253,40 @@ it('switches a supplied thought with its deity while preserving custom writing',
   pickDeity('ganesha');
   const card = tree.root.findByType(SuvicharCard).props;
   expect(suvicharThoughtsFor('ganesha').some(t => t.hi === card.message)).toBe(true);
-  expect(card.attribution).toContain('गणपत्यथर्वशीर्ष');
+  expect(card.attribution).toBe('वेदांश · मौलिक विचार');
   act(() => node('suvichar-message').props.onChangeText('मेरी शुभकामना'));
   pickDeity('rama');expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ message: 'मेरी शुभकामना', attribution: undefined });
+});
+
+it('shares and persists an approved humility thought as a Vedansh original and restores its complete favorite', async () => {
+  await mount(); pickDeity('hanuman');
+  act(() => node('suvichar-browse-thoughts').props.onPress());
+  const thought = suvicharThoughtsFor('hanuman').find(t => t.id === 'VD-0055')!;
+  act(() => tree.root.findByType(SuvicharThoughtPicker).props.onSelect(thought));
+  let card = tree.root.findByType(SuvicharCard).props;
+  expect(card).toMatchObject({ deity: 'hanuman', message: thought.hi, attribution: 'वेदांश · मौलिक विचार' });
+  act(() => node('suvichar-favorite').props.onPress());
+  await flush();
+  const writes = jest.mocked(AsyncStorage.setItem).mock.calls;
+  const saved = JSON.parse(writes[writes.length - 1][1]);
+  expect(saved.thoughtId).toBe(thought.id);
+  expect(saved.favorites[0]).toMatchObject({ thoughtId: thought.id, message: thought.hi });
+  act(() => card.onReady(true));
+  await act(async () => node('suvichar-share').props.onPress());
+  expect(sharedCard().text?.('hi')).toContain(thought.hi);
+  expect(sharedCard().text?.('hi')).toContain('वेदांश · मौलिक विचार');
+  expect(sharedCard().text?.('hi')).not.toContain('हनुमान चालीसा');
+  act(() => node('suvichar-message').props.onChangeText('हमारे परिवार की प्रार्थना'));
+  expect(tree.root.findByType(SuvicharCard).props.attribution).toBeUndefined();
+  act(() => node('suvichar-saved-0').props.onPress());
+  card = tree.root.findByType(SuvicharCard).props;
+  expect(card).toMatchObject({ message: thought.hi, attribution: 'वेदांश · मौलिक विचार' });
+  // A cold remount rotates the supplied main message, but keeps the stable favorite.
+  act(() => tree.unmount());
+  jest.mocked(AsyncStorage.getItem).mockResolvedValueOnce(JSON.stringify(saved));
+  await mount();
+  act(() => node('suvichar-saved-0').props.onPress());
+  expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ message: thought.hi, attribution: 'वेदांश · मौलिक विचार' });
 });
 
 it('applies an Explore draft once and clears its route handoff',async()=>{

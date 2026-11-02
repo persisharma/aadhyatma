@@ -1,0 +1,59 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-bhakti" }
+- tapOn: { id: "open-suvichar" }
+- tapOn: { id: "suvichar-mode-custom" }
+# The custom picker is a nested horizontal rail (same gesture as suvichar-mahakaal).
+- swipe: { start: "85%,46%", end: "20%,46%", duration: 350 }
+- waitForAnimationToEnd
+- tapOn: { id: "suvichar-deity-hanuman" }
+- scrollUntilVisible:
+    element: { id: "suvichar-browse-thoughts" }
+    timeout: 30000
+- tapOn: { id: "suvichar-browse-thoughts" }
+- tapOn: { id: "suvichar-thought-search" }
+- inputText: "VD-0055"
+- assertVisible: { id: "suvichar-thought-VD-0055" }
+- tapOn: { id: "suvichar-thought-VD-0055" }
+- scrollUntilVisible:
+    element: { id: "suvichar-card-source" }
+    direction: UP
+- assertVisible: { id: "suvichar-card-message" }
+- assertVisible: { id: "suvichar-card-source" }
+- takeScreenshot: suvichar-original-humility
+- tapOn: { id: "suvichar-favorite" }
+- scrollUntilVisible:
+    element: { id: "suvichar-message" }
+- tapOn: { id: "suvichar-message" }
+- eraseText: 280
+- inputText: "Our family prayer"
+- hideKeyboard
+- scrollUntilVisible:
+    element: { id: "suvichar-saved-0" }
+- tapOn: { id: "suvichar-saved-0" }
+- scrollUntilVisible:
+    element: { id: "suvichar-card-source" }
+    direction: UP
+- assertVisible: { id: "suvichar-card-source" }
+# Verify specific shrine copy cannot leak through the former shared Krishna pool.
+- scrollUntilVisible:
+    element: { id: "suvichar-mode-custom" }
+    direction: UP
+- repeat:
+    times: 12
+    while: { notVisible: { id: "suvichar-deity-jagannath" } }
+    commands:
+      - swipe: { start: "85%,46%", end: "20%,46%", duration: 350 }
+      - waitForAnimationToEnd
+- swipe: { start: "85%,46%", end: "20%,46%", duration: 350 }
+- waitForAnimationToEnd
+- tapOn: { id: "suvichar-deity-jagannath" }
+- scrollUntilVisible:
+    element: { id: "suvichar-browse-thoughts" }
+- tapOn: { id: "suvichar-browse-thoughts" }
+- tapOn: { id: "suvichar-thought-search" }
+- inputText: "VD-0037"
+- assertNotVisible: { id: "suvichar-thought-VD-0037" }
+- tapOn: { id: "suvichar-thoughts-close" }
+# No recipient is chosen and no message is sent.

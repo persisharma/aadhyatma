@@ -16,7 +16,7 @@ type Props = {
   deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; lang: Lang; width: number;
   /** Weekday title (शुभ मंगलवार) shown in place of the “आज का सुविचार” label; the message never names the day. */
   title?: string;
-  /** Reference and editorial-meaning label. Omitted as soon as the message is edited. */
+  /** Scripture reference or original authorship label. Omitted as soon as the message is edited. */
   attribution?: string;
   /** Resolved sender photo URI, drawn round above “सप्रेम — name” and fitted to its faces; it joins the decode gate. */
   photo?: string | null; photoFit?: SuvicharPhotoFit; onPhotoError?: () => void;
