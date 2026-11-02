@@ -34,10 +34,16 @@ for (const lang of languages) for (const scale of ['M', 'L']) {
     expect(image.props.testID).toBe(`vedansh-wordmark-${lang === 'hi' ? 'hi' : 'en'}`);
     expect(imageStyle.tintColor).toBeUndefined();
     const frame = StyleSheet.flatten(tree.root.findByProps({ testID: 'home-wordmark-artwork-frame' }).props.style);
-    expect(frame.height).toBe(32);
-    expect(frame.width).toBeCloseTo(lang === 'hi' ? 86 : 112);
+    expect(frame.height).toBe(36);
+    expect(frame.width).toBeCloseTo(lang === 'hi' ? 97 : 124);
     expect(imageStyle.width).toBeLessThanOrEqual(frame.width);
     expect(imageStyle.width / imageStyle.aspectRatio).toBeLessThanOrEqual(frame.height);
+    const metrics = manifest.names[lang === 'hi' ? 'hi' : 'en'];
+    const ink = metrics.homeFrame;
+    const sourceScale = imageStyle.width / metrics.width;
+    expect((ink.letteringBottom - ink.letteringTop) * sourceScale).toBeCloseTo(30);
+    const imageTop = (42 - metrics.height * sourceScale) / 2 + ink.translateY;
+    expect(imageTop + (ink.letteringTop + ink.letteringBottom) / 2 * sourceScale).toBeCloseTo(21);
     act(() => tree.unmount());
   });
 }
@@ -88,7 +94,7 @@ test.each([320, 360, 375, 390, 393.45, 414, 430, 768])('Home crest leaves the se
   for (const lang of languages) {
     const metrics = manifest.names[lang === 'hi' ? 'hi' : 'en'];
     const name = metrics.homeFrame.width;
-    const width = name + 2 * 30 + (compact ? 2 * 6 : 2 * 22 + 4 * 11);
+    const width = name + 2 * 30 + (compact ? 2 * 6 : 2 * 22 + 4 * 10);
     // A centered crest must finish before the right-aligned 44dp Settings hit target.
     expect((content + width) / 2).toBeLessThanOrEqual(content - 44);
   }

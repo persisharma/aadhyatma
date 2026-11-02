@@ -18,8 +18,13 @@
       "width": 1565,
       "height": 419,
       "homeFrame": {
-        "width": 112,
-        "height": 32
+        "width": 124,
+        "height": 36,
+        "artworkWidth": 123.87862796833774,
+        "translateY": -1.345646437994723,
+        "letteringTop": 37,
+        "letteringBottom": 416,
+        "letteringHeight": 30
       },
       "launchFrame": {
         "x": 139,
@@ -39,8 +44,13 @@
       "width": 1104,
       "height": 391,
       "homeFrame": {
-        "width": 86,
-        "height": 32
+        "width": 97,
+        "height": 36,
+        "artworkWidth": 96.84210526315789,
+        "translateY": -1.8859649122807016,
+        "letteringTop": 46,
+        "letteringBottom": 388,
+        "letteringHeight": 30
       },
       "launchFrame": {
         "x": 277,

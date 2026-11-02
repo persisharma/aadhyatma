@@ -1,3 +1,4 @@
+import { homeWordmarkFrame } from './brand-home-frame.mjs';
 import { correctHindiDots, hindiDotCorrections } from './brand-wordmark-corrections.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,7 +24,8 @@ for (const [lang, top, bottom] of [['en', 0, 450], ['hi', 450, master.height]]) 
     x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x+1);y1=Math.max(y1,y+1);
   }
   const crop=[Math.max(0,x0-2),Math.max(top,y0-2),Math.min(master.width,x1+2),Math.min(bottom,y1+2)];
-  names[lang]={crop,width:crop[2]-crop[0],height:crop[3]-crop[1],homeFrame:{width:lang==='en'?112:86,height:32}};
+  const width=crop[2]-crop[0], height=crop[3]-crop[1];
+  names[lang]={crop,width,height,homeFrame:homeWordmarkFrame(lang,width,height)};
 }
 const original = Buffer.from(template.match(/data:image\/png;base64,([A-Za-z0-9+/=]+)/)[1], 'base64');
 const canvas=createCanvas(720,780), ctx=canvas.getContext('2d');

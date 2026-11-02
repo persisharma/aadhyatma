@@ -8,6 +8,7 @@ await fs.mkdir(output, { recursive: true });
 const server = spawn('node', ['visual/kundali/node_modules/vite/bin/vite.js', '--config', 'visual/brand/vite.config.mjs'], { stdio: 'inherit' });
 let browser;
 const results = [];
+const manifest = JSON.parse(await fs.readFile('assets/branding/wordmarks/manifest.json', 'utf8'));
 try {
   const base = 'http://127.0.0.1:4184/visual/brand/index.html';
   for (let i = 0; i < 100; i++) {
@@ -33,7 +34,15 @@ try {
     const crest = await page.getByTestId('home-wordmark-crest').boundingBox();
     const frame = await page.getByTestId('home-wordmark-artwork-frame').boundingBox();
     const settings = await page.getByTestId('settings-fixture').boundingBox();
-    assert.equal(frame.width, lang === 'hi' ? 86 : 112); assert.equal(frame.height, 32);
+    assert.equal(frame.width, lang === 'hi' ? 97 : 124); assert.equal(frame.height, 36);
+    const kind = lang === 'hi' ? 'hi' : 'en', metrics = manifest.names[kind];
+    const artwork = await page.getByTestId(`vedansh-wordmark-${kind}`).boundingBox();
+    const om = await page.getByTestId('home-wordmark-om-left').boundingBox();
+    const sourceScale = artwork.width / metrics.width;
+    const inkHeight = (metrics.homeFrame.letteringBottom - metrics.homeFrame.letteringTop) * sourceScale;
+    const inkCenter = artwork.y + (metrics.homeFrame.letteringTop + metrics.homeFrame.letteringBottom) / 2 * sourceScale;
+    assert.ok(Math.abs(inkHeight - om.height) < .05, 'Lettering height differs from the Om circle');
+    assert.ok(Math.abs(inkCenter - (om.y + om.height / 2)) < .05, 'Lettering is vertically misaligned');
     assert.equal(crest.height, 42);
     assert.ok(crest.x >= 16 && crest.x + crest.width <= settings.x + .5, 'Branding overlaps Settings or the page gutter');
     const key = `${lang}-${size}-${width}`;
@@ -44,7 +53,7 @@ try {
       assert.ok(tagline.x >= 15.5 && tagline.x + tagline.width <= width - 15.5, 'Companion text overflows');
       assert.ok(tagline.y + tagline.height <= fixture.y + fixture.height + .5, 'Companion text clips vertically');
       if (width === 390 && ['hi', 'en'].includes(lang)) await page.screenshot({ path: path.join(output, `${key}-text${textScale}.png`) });
-      results.push({ width, lang, size, textScale, crest, frame, settings, tagline });
+      results.push({ width, lang, size, textScale, crest, frame, artwork, om, inkHeight, inkCenter, settings, tagline });
     }
     assert.deepEqual(errors, []);
     await page.close();
