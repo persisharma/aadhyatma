@@ -138,7 +138,7 @@ export function suvicharPhotoFit(width: number, height: number, faces: readonly 
 }
 /** `vaar` marks a weekday card: its title is always the current day's, so a saved card never names a past day. */
 export type SuvicharFavorite = { deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; vaar?: true; thoughtId?: string };
-const savedThoughtId = (value: unknown): string => typeof value === 'string' && /^(SV-\d{4}|APP-\d{2})$/.test(value) ? value : '';
+const savedThoughtId = (value: unknown): string => typeof value === 'string' && /^(SV-\d{4}|APP-\d{2}|VD-\d{4})$/.test(value) ? value : '';
 /**
  * `photo` belongs to the sender, like the name, but favorites never store it: removing the photo removes it everywhere.
  * The photo section is opt-in: `photoOn` (off by default) shows it; turning it off hides the photo but keeps the file.

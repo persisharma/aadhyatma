@@ -38,7 +38,7 @@ it('never sends a Krishna teaching into the Ganapati pool and keeps daily change
   const krishna = suvicharThoughtsFor('krishna')[0];
   expect(findSuvicharThought('ganesha', krishna.hi, krishna.id)).toBeUndefined();
   for (const d of suvicharDeities) {
-    const pool = suvicharThoughtsFor(d.id), seen = new Set<string>();
+    const pool = suvicharThoughtsFor(d.id).filter(t => t.id.startsWith('VD-')), seen = new Set<string>();
     for (let day=0;day<pool.length;day++) seen.add(suvicharThoughtForDay(d.id, day).id);
     expect(seen.size).toBe(pool.length);
     expect(suvicharThoughtForDay(d.id, -1)).toBe(pool[pool.length-1]);

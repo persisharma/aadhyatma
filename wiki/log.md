@@ -1313,3 +1313,5 @@ Recorded the accepted-source hash, one-renderer app/export contract, splash read
 Recorded the Home-only size/colour treatment, restored Om circles/rules and retained Hindi brand dot. Launch animation and share/export treatment remain unchanged. Native comparison is pending.
 
 ## [2026-11-02] ingest | Launch placeholder, explicit native-to-particle start handoff and immediate inactive-return replay; native acceptance pending.
+
+## [2026-11-02] ingest | Add 76 approved original Suvichar reflections, explicit shrine scope and original daily rotation; preserve 621 referenced entries and stable favorites. Native/export review pending.
