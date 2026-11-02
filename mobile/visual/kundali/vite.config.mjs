@@ -28,7 +28,8 @@ export default defineConfig({
     alias: [
       { find: 'react', replacement: path.join(root, 'node_modules/react') },
       { find: /^react-native$/, replacement: path.join(browserModules, 'react-native-web/dist/index.js') },
-      { find: /^react-native-svg$/, replacement: path.join(root, 'node_modules/react-native-svg/src/ReactNativeSVG.web.ts') },
+      { find: /^react-native-svg$/, replacement: path.join(root, 'visual/kundali/svg.jsx') },
+      { find: /^react-native-svg-web$/, replacement: path.join(root, 'node_modules/react-native-svg/src/ReactNativeSVG.web.ts') },
       { find: /^react-native-safe-area-context$/, replacement: path.join(root, 'visual/kundali/insets.ts') },
       { find: /^@react-native-async-storage\/async-storage$/, replacement: path.join(root, 'visual/kundali/storage.ts') },
       { find: '@', replacement: path.join(root, 'src') },

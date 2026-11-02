@@ -48,19 +48,35 @@ try {
         await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-grahas.png`), fullPage: true });
         await page.getByTestId('kundali-graha-saturn').click();
         await page.getByRole('button', { name: 'Done with Kundali explanation', exact: true }).waitFor();
+        // Modal is mounted before its slide-in finishes. Measure the settled sheet.
+        await page.waitForFunction(() => {
+          const button = document.querySelector('[aria-label="Done with Kundali explanation"]');
+          if (!button) return false;
+          const box = button.getBoundingClientRect();
+          return box.width > 0 && box.height > 0 && box.x >= 0 && box.y >= 0 && box.right <= innerWidth + 1 && box.bottom <= innerHeight + 1;
+        }).catch(async error => {
+          await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-sheet-failure.png`), fullPage: false });
+          await fs.writeFile(path.join(output, `${lang}-${size}-${width}-failure.html`), await page.content());
+          throw error;
+        });
+        await page.evaluate(() => document.fonts.ready);
         const done = await page.getByRole('button', { name: 'Done with Kundali explanation', exact: true }).boundingBox();
         assert.ok(done && done.x >= 0 && done.y >= 0 && done.x + done.width <= width + 1 && done.y + done.height <= height + 1, 'Sheet Done button is outside the viewport');
-        await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-sheet.png`), fullPage: true });
+        await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-sheet.png`), fullPage: false });
         await page.getByRole('button', { name: 'Done with Kundali explanation', exact: true }).click();
         results.push({ width, height, lang, size, view, columns: 3, rows: 3, fonts: usedFonts });
       } else {
         const labels = await page.locator('svg text').allTextContents();
         const paintedLabels = await page.locator('svg text').evaluateAll(elements => elements.map(element => {
           const box = element.getBBox();
-          return { text: element.textContent, width: box.width, height: box.height, fontSize: getComputedStyle(element).fontSize };
+          const style = getComputedStyle(element);
+          return { text: element.textContent, width: box.width, height: box.height, fontSize: style.fontSize, display: style.display, visibility: style.visibility, outerHTML: element.outerHTML };
         }));
+        await fs.writeFile(path.join(output, `${lang}-${size}-${width}-chart-labels.json`), JSON.stringify(paintedLabels, null, 2));
+        await fs.writeFile(path.join(output, `${lang}-${size}-${width}-chart.html`), await page.content());
+        await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-chart.png`), fullPage: true });
         assert.equal(paintedLabels.length, 36, 'Every house needs house, sign and graha labels');
-        assert.ok(paintedLabels.every(label => label.width > 0 && label.height > 0 && parseFloat(label.fontSize) > 0), 'Chart text exists but is not painted');
+        assert.ok(paintedLabels.every(label => label.width > 0 && label.height > 0 && parseFloat(label.fontSize) > 0), `Chart text exists but is not painted: ${JSON.stringify(paintedLabels.filter(label => !label.width || !label.height || !parseFloat(label.fontSize)))}`);
         if (lang === 'en') { assert.ok(labels.some(label => label.trim() === 'Su Me')); assert.ok(labels.some(label => label.trim() === 'Mo Ra')); }
         assert.ok(!labels.some(label => /\d+ grahas/.test(label)), 'Count replaced graha abbreviations');
         await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-chart.png`), fullPage: true });
