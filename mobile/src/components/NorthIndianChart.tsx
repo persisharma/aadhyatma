@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Svg, { G, Line, Polygon, Rect, Text as SvgText } from 'react-native-svg';
+import Svg, { G, Line, Polygon, Rect, Text as SvgText, TSpan } from 'react-native-svg';
 
 import {
   GRAHA_NAMES_EN,
-  GRAHA_NAMES_HI,
   RASHI_NAMES_EN,
   RASHI_NAMES_HI,
   RASHI_NAMES_WESTERN,
   type KundaliChart,
+  type Graha,
 } from '@/panchang/kundali';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -49,6 +49,16 @@ const GRAHA_ABBREVIATIONS = {
   rahu: 'Ra',
   ketu: 'Ke',
 } as const;
+
+const GRAHA_ABBREVIATIONS_HI: Record<Graha, string> = {
+  sun: 'सू', moon: 'चं', mars: 'मं', mercury: 'बु', jupiter: 'गु',
+  venus: 'शु', saturn: 'श', rahu: 'रा', ketu: 'के',
+};
+
+/** Explicit short forms preserve Indic vowel signs and conjuncts. */
+export function chartGrahaAbbreviation(graha: Graha, lang: Lang): string {
+  return contentByLang(lang, GRAHA_ABBREVIATIONS_HI[graha], GRAHA_ABBREVIATIONS[graha]);
+}
 
 export function buildChartAccessibilityLabel(chart: KundaliChart): string {
   const houses = chart.houses.map((rashiIndex, index) => {
@@ -96,6 +106,8 @@ export default function NorthIndianChart({ chart, size = 300, lang = 'en', onSel
         {chart.houses.map((rashiIndex, index) => {
           const [x, y] = HOUSE_CENTRES[index];
           const occupants = chart.grahas.filter(position => position.house === index + 1);
+          const shortNames = occupants.map(position => onSelectHouse ? chartGrahaAbbreviation(position.graha, lang) : GRAHA_ABBREVIATIONS[position.graha]);
+          const rows = Array.from({ length: Math.ceil(shortNames.length / 3) }, (_, row) => shortNames.slice(row * 3, row * 3 + 3).join(' '));
           const grahas = chart.grahas
             .filter((position) => position.house === index + 1)
             .map((position) => GRAHA_ABBREVIATIONS[position.graha])
@@ -126,10 +138,11 @@ export default function NorthIndianChart({ chart, size = 300, lang = 'en', onSel
                 // with `size`, so unlike the fixed UI chrome covered by the 10pt
                 // floor (design.md §3) they grow with the diagram. The dense
                 // branch keeps a 9-graha house from overrunning its cell.
-                fontSize={grahas.length > 8 ? '8' : '9'}
+                fontSize={onSelectHouse && rows.length > 1 ? '8' : grahas.length > 8 ? '8' : '9'}
                 textAnchor="middle"
+                testID={onSelectHouse ? `kundali-house-grahas-${index + 1}` : undefined}
               >
-                {onSelectHouse ? occupants.length === 1 ? contentByLang(lang, GRAHA_NAMES_HI[occupants[0].graha], GRAHA_NAMES_EN[occupants[0].graha]) : occupants.length > 1 ? contentByLang(lang, `${occupants.length} ग्रह`, `${occupants.length} grahas`) : '—' : grahas}
+                {onSelectHouse ? rows.length ? rows.map((row, rowIndex) => <TSpan key={rowIndex} x={x} dy={rowIndex ? 9 : 0}>{row}</TSpan>) : '—' : grahas}
               </SvgText>
             </G>
           );

@@ -3,6 +3,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 import * as Native from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { GitaLanguageProvider } from '@/data/gita/language';
+import { GRAHA_ORDER } from '@/panchang/kundali';
 import { syntheticLearningChart } from '@/panchang/__tests__/fixtures/learningChart';
 import { KundaliExplorer, KundaliSummary } from '../KundaliLearning';
 
@@ -63,11 +64,26 @@ describe.each(['hi', 'en', 'gu', 'kn'] as const)('%s reading layout', lang => {
     const grahas = render(<KundaliExplorer chart={adult} mode="grahas" onReference={reference} />, lang);
     for (const position of adult.grahas) {
       const tile = grahas.root.findByProps({ testID: `kundali-graha-${position.graha}` });
-      expect(Native.StyleSheet.flatten(tile.props.style).width).toBe('100%');
+      expect(Native.StyleSheet.flatten(tile.props.style).flex).toBe(1);
+      expect(Native.StyleSheet.flatten(tile.props.style).width).toBeUndefined();
+    }
+    for (let rowIndex = 0; rowIndex < 3; rowIndex++) {
+      const row = grahas.root.findByProps({ testID: `kundali-graha-row-${rowIndex + 1}` });
+      expect(Native.StyleSheet.flatten(row.props.style).flexDirection).toBe('row');
+      const cards = row.findAllByType(Native.Pressable);
+      expect(cards.map(node => node.props.testID)).toEqual(GRAHA_ORDER.slice(rowIndex * 3, rowIndex * 3 + 3).map(graha => `kundali-graha-${graha}`));
     }
     tap(grahas, { testID: 'kundali-graha-saturn' });
     expect(grahas.root.findByProps({ accessibilityLabel: 'Done with Kundali explanation' })).toBeTruthy();
     const reading = grahas.root.findByProps({ testID: 'kundali-reading-saturn' });
     expect(reading.findAllByType(Native.Text).every(node => node.props.numberOfLines === undefined)).toBe(true);
   });
+});
+
+test('three-by-three order stays canonical when chart positions arrive in a different order', () => {
+  const root = render(<KundaliExplorer chart={{ ...adult, grahas: [...adult.grahas].reverse() }} mode="grahas" onReference={reference} />);
+  for (let row = 1; row <= 3; row++) {
+    const group = root.root.findByProps({ testID: `kundali-graha-row-${row}` });
+    for (const graha of GRAHA_ORDER.slice((row - 1) * 3, row * 3)) expect(group.findByProps({ testID: `kundali-graha-${graha}` })).toBeTruthy();
+  }
 });

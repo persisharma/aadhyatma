@@ -1,16 +1,10 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 
-import { computeKundali } from '@/panchang/kundali';
-import NorthIndianChart, { buildChartAccessibilityLabel } from '../NorthIndianChart';
+import { syntheticLearningChart } from '@/panchang/__tests__/fixtures/learningChart';
+import NorthIndianChart, { buildChartAccessibilityLabel, chartGrahaAbbreviation } from '../NorthIndianChart';
 
-const chart = computeKundali({
-  date: new Date('1992-08-14T00:12:00.000Z'),
-  latitude: 23.1765,
-  longitude: 75.7885,
-  elevation: 500,
-  timezone: 'Asia/Kolkata',
-});
+const chart = syntheticLearningChart(true);
 
 test('North Indian chart exposes all twelve houses and grahas accessibly', () => {
   const label = buildChartAccessibilityLabel(chart);
@@ -39,3 +33,16 @@ test('every interactive polygon opens its actual fixed house', () => {
   act(() => tree.unmount());
 });
 
+
+test('interactive chart shows every graha short form, including shared houses', () => {
+  const fixture = syntheticLearningChart(true);
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<NorthIndianChart chart={fixture} lang="en" onSelectHouse={jest.fn()} />); });
+  const label = tree.root.findByProps({ testID: 'kundali-house-grahas-3' });
+  expect(label.findAll(node => typeof node.props.children === 'string').map(node => node.props.children)).toContain('Su Me');
+  expect(chartGrahaAbbreviation('mercury', 'en')).toBe('Me');
+  expect(chartGrahaAbbreviation('moon', 'hi')).toBe('चं');
+  expect(chartGrahaAbbreviation('sun', 'gu')).toBe('સૂ');
+  expect(chartGrahaAbbreviation('sun', 'kn')).toBe('ಸೂ');
+  act(() => tree.unmount());
+});
