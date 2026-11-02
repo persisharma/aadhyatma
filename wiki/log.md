@@ -1321,3 +1321,5 @@ Recorded the Home-only size/colour treatment, restored Om circles/rules and reta
 ## [2026-11-02] ingest | PR #602 CI version mismatch repaired; exact-branch unsigned iOS Release simulator launch workflow and cold/warm Maestro recording added. Execution evidence tracked in launch review.
 
 ## [2026-11-02] ingest | Exact-branch native Release compile/install passed; Maestro XCTest startup timed out before assertions. Driver preflight/timeout, single-architecture compile and app checkpoint added; lifecycle rerun pending.
+
+- 2026-11-02: PR #602 native verification retry: Release compile/install, driver and setup passed; cold recording reaches Home, while Maestro retained a stale launch accessibility root. Explicitly load the existing iOS snapshot config without weakening assertions; guarded exact-source binary reuse preserves compiled checkpoint. Native lifecycle result pending retry.

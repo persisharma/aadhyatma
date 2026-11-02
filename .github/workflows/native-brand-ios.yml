@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: native-brand-ios-${{ github.event.pull_request.number || github.ref }}
@@ -55,6 +56,8 @@ jobs:
       - name: Install CocoaPods
         run: pod install --project-directory=ios
       - name: Build and exercise cold versus warm launch
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: bash scripts/native-brand-ios.sh
       - name: Retain native lifecycle evidence
         if: always()
