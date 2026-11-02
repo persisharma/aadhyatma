@@ -115,7 +115,7 @@ function SheetContent({ chart, selection, onClose, onReference }: { chart: Kunda
             <Text style={ui.label}>{pick(ui.lang, { hi: 'इस भाव में ग्रह', en: 'Grahas in this house', gu: 'આ ભાવમાં ગ્રહો', kn: 'ಈ ಭಾವದಲ್ಲಿರುವ ಗ್ರಹಗಳು' })}</Text>
             {house.occupants.length === 0 ? <Text testID="kundali-empty-house" style={ui.body}>{ui.m('जन्म के समय इस भाव में कोई ग्रह नहीं था। खाली भाव सामान्य हैं। इस जीवन-क्षेत्र को इसकी राशि और राशि-स्वामी की स्थिति से पढ़ते हैं।', 'No graha occupied this house at birth. Empty houses are normal. Read this life area through its sign and the placement of its ruler.')}</Text> : house.occupants.map(item => <View key={item.graha} style={styles.block}>
               <Pressable onPress={() => open({ kind: 'graha', graha: item.graha })} accessibilityRole="button" accessibilityLabel={`Learn about ${GRAHA_NAMES_EN[item.graha]}`} style={styles.grahaRow}><KundaliArtwork name={item.graha} size={52} /><View style={styles.flexCopy}><Text style={ui.title}>{ui.name(item.graha)} ›</Text><Text style={ui.body}>{ui.m(GRAHA_REFERENCE[item.graha].signifiesHi, GRAHA_REFERENCE[item.graha].signifiesEn)}</Text></View></Pressable>
-              <Relationship position={item} /><PersonalReading card={cards.find(card => card.graha === item.graha)} />
+              <PersonalReading card={cards.find(card => card.graha === item.graha)} /><Relationship position={item} />
             </View>)}
             <Text style={ui.label}>{pick(ui.lang, { hi: 'भाव का स्वामी कहाँ है?', en: 'Where is this house’s ruler?', gu: 'ભાવનો સ્વામી ક્યાં છે?', kn: 'ಈ ಭಾವದ ಅಧಿಪತಿ ಎಲ್ಲಿದ್ದಾನೆ?' })}</Text>
             <Text style={ui.body}>{ui.m(`${ui.sign(house.rashiIndex)} राशि का स्वामी ${ui.name(house.lord)} है। ${house.lordPosition ? `आपकी कुंडली में वह भाव ${house.lordPosition.house} में है।` : ''} भाव का स्वामी (भावेश) इस जीवन-क्षेत्र को समझने का अगला कदम है।`, `${ui.name(house.lord)} rules ${ui.sign(house.rashiIndex)}. ${house.lordPosition ? `In this chart it occupies house ${house.lordPosition.house}.` : ''} The house ruler, called bhavesh, is the next step in understanding this life area.`)}</Text>
@@ -123,8 +123,12 @@ function SheetContent({ chart, selection, onClose, onReference }: { chart: Kunda
           </>}
           {position && <>
             <Text style={ui.label}>{ui.c(`भाव ${position.house}`, `House ${position.house}`)} · {ui.sign(position.rashiIndex)}</Text>
+            <Text style={ui.label}>{pick(ui.lang, { hi: 'राशि से संबंध', en: 'Relationship with this sign', gu: 'રાશિ સાથેનો સંબંધ', kn: 'ರಾಶಿಯೊಂದಿಗಿನ ಸಂಬಂಧ' })} · {ui.c(PLACEMENT_LABELS[placementKind(position)].hi, PLACEMENT_LABELS[placementKind(position)].en)}</Text>
+            <Text style={ui.body}>{ui.m(GRAHA_REFERENCE[position.graha].signifiesHi, GRAHA_REFERENCE[position.graha].signifiesEn)}</Text>
+            <PersonalReading key={`reading-${position.graha}`} card={cards.find(card => card.graha === position.graha)} />
+            <Relationship key={position.graha} position={position} />
+            <Text style={ui.label}>{pick(ui.lang, { hi: 'ग्रह परिचय', en: 'About this graha', gu: 'ગ્રહ પરિચય', kn: 'ಗ್ರಹದ ಪರಿಚಯ' })}</Text>
             <Text style={ui.body}>{ui.m(GRAHA_REFERENCE[position.graha].natureHi, GRAHA_REFERENCE[position.graha].natureEn)}</Text>
-            <Relationship key={position.graha} position={position} /><PersonalReading key={`reading-${position.graha}`} card={cards.find(card => card.graha === position.graha)} />
             <Pressable onPress={() => open({ kind: 'house', house: position.house })} accessibilityRole="button" style={styles.action}><Text style={ui.label}>{ui.c(`भाव ${position.house} का अर्थ समझें`, `Understand house ${position.house}`)} ›</Text></Pressable>
             <CalculationDetails key={`details-${position.graha}`} position={position} />
             {onReference && <Pressable onPress={() => { onClose(); onReference(position.graha); }} accessibilityRole="button" style={styles.action}><Text style={ui.label}>{pick(ui.lang, { hi: 'ग्रह परिचय और नैसर्गिक मैत्री', en: 'Graha introduction and natural friendships', gu: 'ગ્રહ પરિચય અને નૈસર્ગિક મૈત્રી', kn: 'ಗ್ರಹ ಪರಿಚಯ ಮತ್ತು ನೈಸರ್ಗಿಕ ಮೈತ್ರಿ' })} ›</Text></Pressable>}

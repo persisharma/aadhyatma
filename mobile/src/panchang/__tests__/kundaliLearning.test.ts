@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { computeKundali, type GrahaPosition } from '../kundali';
+import type { GrahaPosition } from '../kundali';
+import { syntheticLearningChart } from './fixtures/learningChart';
 import { houseLesson, learningReadings, placementKind, readingParagraph } from '../kundaliLearning';
 
-const child = computeKundali({ date: new Date('2024-12-09T19:25:00Z'), latitude: 12.9716, longitude: 77.5946, timezone: 'Asia/Kolkata' });
-const adult = computeKundali({ date: new Date('1992-08-14T00:12:00Z'), latitude: 23.1765, longitude: 75.7885, timezone: 'Asia/Kolkata' });
-const at = new Date('2026-11-02T06:00:00Z');
+// Synthetic age offsets measured from the epoch, independent of real people.
+const at = new Date(30 * 365.25 * 86400000);
+const child = syntheticLearningChart(false, at);
+const adult = syntheticLearningChart(true, at);
 
 test('house selection uses the fixed house number, not Virgo’s sign number 6', () => {
   assert.equal(child.lagnaRashiIndex, 5);

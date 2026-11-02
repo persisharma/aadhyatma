@@ -3,13 +3,13 @@ import TestRenderer, { act } from 'react-test-renderer';
 import * as Native from 'react-native';
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { GitaLanguageProvider } from '@/data/gita/language';
-import { computeKundali } from '@/panchang/kundali';
+import { syntheticLearningChart } from '@/panchang/__tests__/fixtures/learningChart';
 import { KundaliExplorer, KundaliSummary } from '../KundaliLearning';
 
 let mockFactor = 1;
 jest.mock('@/contexts/FontScaleContext', () => ({ useFontScale: () => ({ factor: mockFactor, scale: mockFactor > 1 ? 'L' : 'M', isLoading: false, setScale: jest.fn() }) }));
-const child = computeKundali({ date: new Date('2024-12-09T19:25:00Z'), latitude: 12.9716, longitude: 77.5946, timezone: 'Asia/Kolkata' });
-const adult = computeKundali({ date: new Date('1992-08-14T00:12:00Z'), latitude: 23.1765, longitude: 75.7885, timezone: 'Asia/Kolkata' });
+const child = syntheticLearningChart(false);
+const adult = syntheticLearningChart(true);
 const reference = jest.fn();
 const roots: TestRenderer.ReactTestRenderer[] = [];
 afterEach(() => { act(() => roots.splice(0).forEach(root => root.unmount())); jest.restoreAllMocks(); mockFactor = 1; });
@@ -39,6 +39,7 @@ test('adult meaning and its basis are reachable; the same door gives minors an i
   const root = render(<KundaliExplorer chart={adult} mode="grahas" onReference={reference} />);
   tap(root, { testID: 'kundali-graha-saturn' });
   expect(root.root.findByProps({ testID: 'kundali-reading-saturn' })).toBeTruthy();
+  expect(text(root).indexOf('What this placement suggests')).toBeLessThan(text(root).indexOf('About this graha'));
   tap(root, { testID: 'kundali-why-saturn' }); expect(text(root)).toContain('Basis');
   const minor = render(<KundaliExplorer chart={child} mode="grahas" onReference={reference} />);
   tap(minor, { testID: 'kundali-graha-saturn' });
@@ -46,7 +47,7 @@ test('adult meaning and its basis are reachable; the same door gives minors an i
 });
 
 test('all three Saar anchors open explanations', () => {
-  const root = render(<KundaliSummary chart={child} at={new Date('2026-11-02')} onOpenTab={jest.fn()} />);
+  const root = render(<KundaliSummary chart={child} at={new Date()} onOpenTab={jest.fn()} />);
   for (const anchor of ['lagna', 'moon', 'nakshatra']) { tap(root, { testID: `kundali-summary-${anchor}` }); tap(root, { accessibilityLabel: 'Done with Kundali explanation' }); }
   expect(text(root)).toContain('Birth nakshatra');
 });
