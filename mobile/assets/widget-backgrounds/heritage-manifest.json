@@ -19,12 +19,12 @@
     "shiva": {
       "file": "assets/reader-illustrations/shiva.webp",
       "sha256": "7cb9287b40c1bbe01c909389d648fc356a9ee9ad499c09924c024a32de36dfda",
-      "focusX": 0.5
+      "focusX": 0.43
     },
     "hanuman": {
       "file": "assets/reader-illustrations/ram-hanuman.webp",
       "sha256": "85bbc10d3b9545e1eb7abf38023e7b6922ea6948bea8da6950e4e52470f28250",
-      "focusX": 0.7
+      "focusX": 0.42
     },
     "rama": {
       "file": "assets/reader-illustrations/deity-rama-darbar.webp",
@@ -223,8 +223,8 @@
     "vedansh_widget_bg_heritage_shiva_small_day": {
       "width": 256,
       "height": 256,
-      "bytes": 9513,
-      "sha256": "498cc5592dbde8ee33c154de9304ff44cf9e5b8e12b9561c138df3cf14a0b1ed",
+      "bytes": 10006,
+      "sha256": "4f8dab0284654925114e202ab12247c52cef14b4fff87192e4bec522b5339657",
       "subject": "shiva",
       "appearance": "day",
       "textSafeRight": 0.69
@@ -232,8 +232,8 @@
     "vedansh_widget_bg_heritage_shiva_small_night": {
       "width": 256,
       "height": 256,
-      "bytes": 9926,
-      "sha256": "9098cb0c6c3750665f577a36363dab5bb7733f55b6cad4470611ba7a776f16aa",
+      "bytes": 10474,
+      "sha256": "1e8977174fcf5caaaf19ca32fc7da4a3b848d9698be014ef19e00440e0cb15a6",
       "subject": "shiva",
       "appearance": "night",
       "textSafeRight": 0.69
@@ -241,8 +241,8 @@
     "vedansh_widget_bg_heritage_shiva_medium_day": {
       "width": 560,
       "height": 260,
-      "bytes": 18803,
-      "sha256": "cce8211c5e9c4e55c5386280be503ba0a2e20c72c8504a9f6342251b1513ac76",
+      "bytes": 19263,
+      "sha256": "226d5c5d7a1bc0b7c2defdbaafb2ed8a9b1125e164467113d09d261a0ebf174e",
       "subject": "shiva",
       "appearance": "day",
       "textSafeRight": 0.69
@@ -250,8 +250,8 @@
     "vedansh_widget_bg_heritage_shiva_medium_night": {
       "width": 560,
       "height": 260,
-      "bytes": 19516,
-      "sha256": "f83e681371c3b592addbd044bab4746af276dab224eaa3c2265ea905cdc0a35c",
+      "bytes": 19897,
+      "sha256": "a59af0c3316957cf14998aaab257e9080d2eadbc10e591ac39fe454074315f81",
       "subject": "shiva",
       "appearance": "night",
       "textSafeRight": 0.69
@@ -259,8 +259,8 @@
     "vedansh_widget_bg_heritage_shiva_large_day": {
       "width": 560,
       "height": 560,
-      "bytes": 29404,
-      "sha256": "66d3eaa54d9ffc88771f48f715e91dc87f96da68f9f185900b38b9d845305629",
+      "bytes": 31007,
+      "sha256": "7eaf398b1dda5d17ad601dfc5bcb4554bf2e808fc3c4ae8f7bff51f1da8b6a10",
       "subject": "shiva",
       "appearance": "day",
       "textSafeRight": 0.69
@@ -268,8 +268,8 @@
     "vedansh_widget_bg_heritage_shiva_large_night": {
       "width": 560,
       "height": 560,
-      "bytes": 30305,
-      "sha256": "a65618fc6366585dce30331d00669ec3ae186378d1fc552d916bdcaffedb0a6d",
+      "bytes": 32238,
+      "sha256": "2f1f3ed389966242ab3b264ddd039217607d4bf4ef73d2f230037a0788dd4f3b",
       "subject": "shiva",
       "appearance": "night",
       "textSafeRight": 0.69
@@ -277,8 +277,8 @@
     "vedansh_widget_bg_heritage_hanuman_small_day": {
       "width": 256,
       "height": 256,
-      "bytes": 9852,
-      "sha256": "1fc18b0ccb0504c5e43b75d99264e89f5565f664e824fe7eae1e8b1c42b4ed01",
+      "bytes": 8786,
+      "sha256": "c17589196d11bf178d9b02d85de5691d69f4e9ec0e270c5b1b5f3a1d0ff70d18",
       "subject": "hanuman",
       "appearance": "day",
       "textSafeRight": 0.69
@@ -286,8 +286,8 @@
     "vedansh_widget_bg_heritage_hanuman_small_night": {
       "width": 256,
       "height": 256,
-      "bytes": 10271,
-      "sha256": "199d9b0483345b8f1f7f36009145f2dc307250bfd470ed38e0a3bbd5212cd185",
+      "bytes": 9171,
+      "sha256": "a6e7e1c7a80fec456b186a5ba92296aaf5149af395d8c53d74488e4a6341c053",
       "subject": "hanuman",
       "appearance": "night",
       "textSafeRight": 0.69
@@ -295,8 +295,8 @@
     "vedansh_widget_bg_heritage_hanuman_medium_day": {
       "width": 560,
       "height": 260,
-      "bytes": 20561,
-      "sha256": "550bddbe51da8f5a7b76833cb8e0fd26519ad613d76e75809ce666f71d49e851",
+      "bytes": 18561,
+      "sha256": "7591d15b65ed16aba0e4b0fd1bc9e9c304fbaeb7971d0f1dd43fcea662d5b110",
       "subject": "hanuman",
       "appearance": "day",
       "textSafeRight": 0.69
@@ -304,8 +304,8 @@
     "vedansh_widget_bg_heritage_hanuman_medium_night": {
       "width": 560,
       "height": 260,
-      "bytes": 21211,
-      "sha256": "64e5f64e0b7db1ce4c3d7327da7b1fe342d74e784a25aeb6c978e4df0151bd33",
+      "bytes": 19175,
+      "sha256": "6f307c0bd4a94857811f63caaa924d68ae380e9765a9bb7a132298e68ee5d2fd",
       "subject": "hanuman",
       "appearance": "night",
       "textSafeRight": 0.69
@@ -313,8 +313,8 @@
     "vedansh_widget_bg_heritage_hanuman_large_day": {
       "width": 560,
       "height": 560,
-      "bytes": 29732,
-      "sha256": "50d417775ba21e0542b485a70f27036b597272d4f36b21e2355050dc32758157",
+      "bytes": 26220,
+      "sha256": "882ced6814c276edbce2e5297802fdf44de2eba4026bbddc477067394afbb699",
       "subject": "hanuman",
       "appearance": "day",
       "textSafeRight": 0.69
@@ -322,8 +322,8 @@
     "vedansh_widget_bg_heritage_hanuman_large_night": {
       "width": 560,
       "height": 560,
-      "bytes": 30644,
-      "sha256": "db6246cfa563c9bb232dc3cedd7be5ff154526c82201ef3b96a393dd6bd14fdb",
+      "bytes": 27087,
+      "sha256": "52e451196cb24f3ed631d183ba7ced65a636a3c51a1c424bd58d171b886d7544",
       "subject": "hanuman",
       "appearance": "night",
       "textSafeRight": 0.69
