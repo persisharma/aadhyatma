@@ -8,8 +8,10 @@
  * are authored (`grahaReference.ts`); meaning, maitri and weekday are reused
  * from the already-reviewed reading tables.
  */
+import KundaliArtwork from '@/components/KundaliArtwork';
+import { useFontScale } from '@/contexts/FontScaleContext';
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -28,6 +30,7 @@ type Props = NativeStackScreenProps<PanchangStackParamList, 'GrahaReference'>;
 
 export default function GrahaReferenceScreen({ navigation, route }: Props) {
   const { colors, typography, radii } = useTheme();
+  const { factor } = useFontScale();
   const { lang } = useGitaLanguage();
   const focusGraha = route.params?.focusGraha;
   const [open, setOpen] = useState<ReadonlySet<Graha>>(() => (focusGraha ? new Set([focusGraha]) : new Set()));
@@ -50,14 +53,14 @@ export default function GrahaReferenceScreen({ navigation, route }: Props) {
           hitSlop={10}
           style={styles.back}
         >
-          <Text style={{ color: colors.inkSoft, fontSize: 22 }}>‹</Text>
+          <Text style={{ color: colors.inkSoft, fontSize: 22 * factor }}>‹</Text>
         </Pressable>
         <Text
           style={{
             flex: 1,
             color: colors.ink,
             fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-            fontSize: 20,
+            fontSize: 20 * factor,
           }}
         >
           {contentByLang(lang, 'नवग्रह — परिचय', 'Know the nine grahas')}
@@ -69,8 +72,8 @@ export default function GrahaReferenceScreen({ navigation, route }: Props) {
           style={{
             color: colors.inkMuted,
             fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-            fontSize: 12.5,
-            lineHeight: 20,
+            fontSize: 12.5 * factor,
+            lineHeight: 20 * factor,
             marginBottom: 6,
           }}
         >
@@ -100,12 +103,13 @@ export default function GrahaReferenceScreen({ navigation, route }: Props) {
                 accessibilityState={{ expanded }}
                 style={({ pressed }) => [styles.row, pressed && { opacity: 0.7 }]}
               >
+                <KundaliArtwork name={graha} size={56} />
                 <View style={{ flex: 1 }}>
                   <Text
                     style={{
                       color: colors.ink,
                       fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-                      fontSize: 16,
+                      fontSize: 16 * factor,
                     }}
                   >
                     {contentByLang(lang, GRAHA_NAMES_HI[graha], GRAHA_NAMES_EN[graha])}
@@ -114,15 +118,15 @@ export default function GrahaReferenceScreen({ navigation, route }: Props) {
                     style={{
                       color: colors.inkMuted,
                       fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                      fontSize: 11.5,
-                      lineHeight: 17,
+                      fontSize: 11.5 * factor,
+                      lineHeight: 17 * factor,
                       marginTop: 2,
                     }}
                   >
                     {contentByLang(lang, ref.signifiesHi, ref.signifiesEn)}
                   </Text>
                 </View>
-                <Text style={{ color: colors.saffron, fontSize: 14 }}>{expanded ? '▴' : '▾'}</Text>
+                <Text style={{ color: colors.saffron, fontSize: 14 * factor }}>{expanded ? '▴' : '▾'}</Text>
               </Pressable>
 
               {expanded && (
@@ -131,8 +135,8 @@ export default function GrahaReferenceScreen({ navigation, route }: Props) {
                     style={{
                       color: colors.ink,
                       fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                      fontSize: 14,
-                      lineHeight: 23,
+                      fontSize: 14 * factor,
+                      lineHeight: 23 * factor,
                     }}
                   >
                     {contentByLang(lang, ref.natureHi, ref.natureEn)}
@@ -162,23 +166,26 @@ export default function GrahaReferenceScreen({ navigation, route }: Props) {
 
 function Detail({ lang, labelHi, labelEn, hi, en }: { lang: ReturnType<typeof useGitaLanguage>['lang']; labelHi: string; labelEn: string; hi: string; en: string }) {
   const { colors, typography } = useTheme();
+  const { factor } = useFontScale();
+  const { width, fontScale } = useWindowDimensions();
+  const stacked = width < 360 || factor > 1 || fontScale > 1.2;
   return (
-    <View style={styles.detailRow}>
+    <View style={[styles.detailRow, stacked && { flexDirection: 'column' }]}>
       <Text
         style={[
           pillTextStyle(lang, typography.sectionLabel),
-          { width: 96, color: colors.saffronDeep, fontSize: lang === 'en' ? 10 : 12 },
+          { width: stacked ? '100%' : 96, color: colors.saffronDeep, fontSize: (lang === 'en' ? 10 : 12) * factor },
         ]}
       >
         {contentByLang(lang, labelHi, labelEn)}
       </Text>
       <Text
         style={{
-          flex: 1,
+          flex: stacked ? undefined : 1,
           color: colors.inkSoft,
           fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-          fontSize: 12.5,
-          lineHeight: 19,
+          fontSize: 12.5 * factor,
+          lineHeight: 19 * factor,
         }}
       >
         {meaningByLang(lang, hi, en)}
@@ -189,10 +196,11 @@ function Detail({ lang, labelHi, labelEn, hi, en }: { lang: ReturnType<typeof us
 
 const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 10 },
-  back: { width: 32, height: 32, alignItems: 'center', justifyContent: 'center' },
+  back: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   scroll: { paddingHorizontal: 16, paddingBottom: 48, gap: 10 },
   card: { borderWidth: 1, paddingHorizontal: 13, paddingVertical: 4 },
   row: { minHeight: 56, flexDirection: 'row', alignItems: 'center', gap: 8 },
   detail: { paddingBottom: 12, paddingTop: 2, gap: 2 },
   detailRow: { flexDirection: 'row', gap: 8, marginTop: 8 },
 });
+
