@@ -25,7 +25,7 @@ The transparent flute master was produced by built-in imagegen and explicitly ap
 
 ## Repeated opens and size correction — 2 November 2026
 
-The original gate completed once per JS session and did not replay on foreground reopening. It could also start while iOS was still inactive when cached preferences loaded quickly. The gate now mounts a fresh reveal after background → active and keeps the navigator mounted beneath a full-screen Modal; cold startup waits for active. Inactive-only permission/Control Center transitions do not replay it. Warm notification/widget dispatch signals cancellation before navigation. Accessibility, cancellation and watchdog behavior remain tested.
+Cold startup waits for active even when cached preferences load quickly. The owner-approved final lifecycle is cold-process only: a warm return never remounts branding, while fully killing/reopening the process starts the trimmed reveal. This supersedes the earlier background-replay experiment. Targeted cold starts, accessibility, cancellation and watchdog behavior retain their exits.
 
 The old complete-art footprint made visible letters smaller because flute/feather consumed that box. The follow-up alignment uses 124×36pt English and 97×36pt Hindi frames so the actual lettering, including Hindi dots, is exactly 30pt high and centered on the Om circles. The crest remains 42pt and companion text 14/22. Screenshots IMG_9069(1), IMG_9068(1), and the earlier IMG_9032(1) establish the reported mismatch. Browser verification renders the actual production HomeWordmark with real language/theme/size providers; it remains separate from native device verification.
 
