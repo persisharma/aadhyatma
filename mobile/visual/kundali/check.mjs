@@ -15,9 +15,17 @@ for (let i = 0; i < 100; i++) {
 }
 const browser = await chromium.launch();
 const results = [];
+const viewports = [
+  { width: 320, height: 568 },
+  { width: 360, height: 800 },
+  { width: 390, height: 844 },
+  { width: 430, height: 932 },
+  { width: 768, height: 1024 },
+  { width: 844, height: 390 },
+];
 try {
-  for (const width of [320, 390, 430]) for (const lang of ['hi', 'en', 'gu', 'kn']) for (const size of ['M', 'L']) {
-    const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
+  for (const { width, height } of viewports) for (const lang of ['hi', 'en', 'gu', 'kn']) for (const size of ['M', 'L']) {
+    const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     for (const view of ['grahas', 'chart']) {
@@ -40,9 +48,11 @@ try {
         await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-grahas.png`), fullPage: true });
         await page.getByTestId('kundali-graha-saturn').click();
         await page.getByRole('button', { name: 'Done with Kundali explanation', exact: true }).waitFor();
+        const done = await page.getByRole('button', { name: 'Done with Kundali explanation', exact: true }).boundingBox();
+        assert.ok(done && done.x >= 0 && done.y >= 0 && done.x + done.width <= width + 1 && done.y + done.height <= height + 1, 'Sheet Done button is outside the viewport');
         await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-sheet.png`), fullPage: true });
         await page.getByRole('button', { name: 'Done with Kundali explanation', exact: true }).click();
-        results.push({ width, lang, size, view, columns: 3, rows: 3, fonts: usedFonts });
+        results.push({ width, height, lang, size, view, columns: 3, rows: 3, fonts: usedFonts });
       } else {
         const labels = await page.locator('svg text').allTextContents();
         const paintedLabels = await page.locator('svg text').evaluateAll(elements => elements.map(element => {
@@ -54,7 +64,7 @@ try {
         if (lang === 'en') { assert.ok(labels.some(label => label.trim() === 'Su Me')); assert.ok(labels.some(label => label.trim() === 'Mo Ra')); }
         assert.ok(!labels.some(label => /\d+ grahas/.test(label)), 'Count replaced graha abbreviations');
         await page.screenshot({ path: path.join(output, `${lang}-${size}-${width}-chart.png`), fullPage: true });
-        results.push({ width, lang, size, view, chartAbbreviations: true, paintedLabels, fonts: usedFonts });
+        results.push({ width, height, lang, size, view, chartAbbreviations: true, paintedLabels, fonts: usedFonts });
       }
     }
     await page.close();

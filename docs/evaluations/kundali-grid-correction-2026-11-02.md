@@ -6,7 +6,7 @@ Interactive chart cells also retain the short form of every occupant, including 
 
 ## Browser verification without a simulator
 
-`mobile/visual/kundali` renders the actual production KundaliExplorer/NorthIndianChart components through React Native Web. Playwright checks 320/390/430 widths × four languages × Standard/Large for grid and chart (48 browser cases), captures screenshots, checks actual three-column geometry, horizontal overflow, app-font loading, chart short forms and sheet opening. CI uploads the screenshots and results as `kundali-browser-visuals`.
+`mobile/visual/kundali` renders the actual production KundaliExplorer/NorthIndianChart components through React Native Web. Playwright checks six viewports (320×568, 360×800, 390×844, 430×932, 768×1024 and 844×390 landscape) × four languages × Standard/Large for grid and chart (96 browser cases). It captures screenshots and checks actual three-column geometry, horizontal overflow, app-font/artwork loading, visible bounds for all 36 chart labels, short forms, sheet opening and the Done button staying within the viewport. CI uploads the screenshots and results as `kundali-browser-visuals`. These are browser viewport checks, not physical device runs or enlarged OS-font tests.
 
 The browser harness uses the app’s installed font files and shipped paintings. Only environment boundaries are adapted: storage is in-memory, browser safe-area insets are zero and static PNG require calls become browser Image sources. Test-only packages are installed without changing the app dependency lockfile. Native OS text metrics, safe areas and accessibility remain device checks; browser screenshots do establish the requested grid/label structure without a simulator.
 
