@@ -175,38 +175,60 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Kundali result"
     timeout: 60000
-- assertVisible: "Understand your chart first"
+- assertVisible: "Your chart, in simple words"
 - takeScreenshot: e2e-shots/kundali-overview-painted
 - assertVisible: "Overview tab"
 - assertVisible: "Chart tab"
 - assertVisible: "Grahas tab"
 - assertVisible: "Dasha tab"
 
-# The three beginner cards are actionable and route to their promised tabs.
+# All three Saar anchors teach directly in scrollable native sheets.
 - scrollUntilVisible:
-    element:
-      text: "Karka Lagna · Cancer rising. Learn more in chart."
-    direction: DOWN
-    timeout: 10000
-- tapOn: "Karka Lagna · Cancer rising. Learn more in chart."
-- assertVisible: "North Indian chart"
-- assertVisible: "North Indian Kundali.*"
-- tapOn: "Overview tab"
+    element: { id: "kundali-summary-lagna" }
+    centerElement: true
+- tapOn: { id: "kundali-summary-lagna" }
+- assertVisible: ".*sets house 1.*"
+- tapOn: "Done with Kundali explanation"
 - scrollUntilVisible:
-    element:
-      text: "Kumbha Moon · Aquarius. Learn more in grahas."
-    direction: DOWN
-    timeout: 10000
-- tapOn: "Kumbha Moon · Aquarius. Learn more in grahas."
-- assertVisible: "Graha positions"
-- assertVisible: "Dhanishta · Pada 4"
-- tapOn: "Overview tab"
+    element: { id: "kundali-summary-moon" }
+    centerElement: true
+- tapOn: { id: "kundali-summary-moon" }
+- assertVisible: ".*feelings, the mind.*"
+- tapOn: "Done with Kundali explanation"
 - scrollUntilVisible:
-    element:
-      text: "Jupiter Mahadasha. Learn more in dasha."
-    direction: DOWN
-    timeout: 10000
-- tapOn: "Jupiter Mahadasha. Learn more in dasha."
+    element: { id: "kundali-summary-nakshatra" }
+    centerElement: true
+- tapOn: { id: "kundali-summary-nakshatra" }
+- assertVisible: ".*27 sky divisions.*"
+- tapOn: "Done with Kundali explanation"
+- scrollUntilVisible:
+    element: { text: "Chart tab" }
+    direction: UP
+- tapOn: "Chart tab"
+- assertVisible: { id: "kundali-view-picture" }
+- tapOn: { id: "kundali-house-6" }
+- assertVisible: ".*House 6.*"
+- tapOn: "Done with Kundali explanation"
+- tapOn: { id: "kundali-view-topics" }
+- tapOn: "Grahas tab"
+- scrollUntilVisible:
+    element: { id: "kundali-graha-moon" }
+    centerElement: true
+- tapOn: { id: "kundali-graha-moon" }
+- assertVisible: ".*Relationship with this sign.*"
+- scrollUntilVisible:
+    element: { id: "kundali-why-moon" }
+    centerElement: true
+- tapOn: { id: "kundali-why-moon" }
+- assertVisible: ".*Basis.*"
+- tapOn: "Done with Kundali explanation"
+- scrollUntilVisible:
+    element: { text: "Chart tab" }
+    direction: UP
+- tapOn: "Chart tab"
+- assertVisible: { id: "north-indian-chart" }
+- takeScreenshot: e2e-shots/kundali-chart-painted
+- tapOn: "Dasha tab"
 - assertVisible: "Vimshottari Dasha"
 # Both nested periods run at once, so each gets its own labelled dates and
 # progress bar — the Mahadasha and the Antardasha inside it.
@@ -412,3 +434,4 @@ appId: com.prashantsharma.vedansh
 
 - stopApp:
     appId: com.prashantsharma.vedansh
+

@@ -138,46 +138,18 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   );
 
   let text = textOf(tree);
-  assert.ok(text.includes('Understand your chart first'));
-  assert.ok(text.includes('Tap each card to understand its meaning.'));
-  assert.ok(!text.includes('not certain predictions'));
+  assert.ok(text.includes('Your chart, in simple words'));
   assert.ok(text.includes('Aarav'));
-
-  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Overview tab' }));
-  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Chart tab' }));
-  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Grahas tab' }));
-  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Dasha tab' }));
-
-  act(() => {
-    tree.root.findByProps({
-      accessibilityLabel: `${['Mesha', 'Vrishabha', 'Mithuna', 'Karka', 'Simha', 'Kanya', 'Tula', 'Vrischika', 'Dhanu', 'Makara', 'Kumbha', 'Meena'][mockChart.lagnaRashiIndex]} Lagna · ${['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'][mockChart.lagnaRashiIndex]} rising. Learn more in chart.`,
-    }).props.onPress();
-  });
-  assert.equal(
-    tree.root.findByProps({ accessibilityLabel: 'Chart tab' }).props.accessibilityState.selected,
-    true
-  );
-
-  act(() => {
-    tree.root.findByProps({ accessibilityLabel: 'Overview tab' }).props.onPress();
-  });
-  const moon = mockChart.grahas.find((position) => position.graha === 'moon')!;
-  act(() => {
-    tree.root.findByProps({
-      accessibilityLabel: `${['Mesha', 'Vrishabha', 'Mithuna', 'Karka', 'Simha', 'Kanya', 'Tula', 'Vrischika', 'Dhanu', 'Makara', 'Kumbha', 'Meena'][moon.rashiIndex]} Moon · ${['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'][moon.rashiIndex]}. Learn more in grahas.`,
-    }).props.onPress();
-  });
-  assert.equal(
-    tree.root.findByProps({ accessibilityLabel: 'Grahas tab' }).props.accessibilityState.selected,
-    true
-  );
-
-  act(() => {
-    tree.root.findByProps({ accessibilityLabel: 'Grahas tab' }).props.onPress();
-  });
-  text = textOf(tree);
-  assert.ok(text.includes('Graha positions'));
-  assert.ok(text.includes('House'));
+  for (const label of ['Overview tab', 'Chart tab', 'Grahas tab', 'Dasha tab']) assert.ok(tree.root.findByProps({ accessibilityLabel: label }));
+  for (const anchor of ['lagna', 'moon', 'nakshatra']) assert.ok(tree.root.findByProps({ testID: `kundali-summary-${anchor}` }));
+  act(() => tree.root.findByProps({ accessibilityLabel: 'Chart tab' }).props.onPress());
+  assert.equal(tree.root.findByProps({ testID: 'kundali-view-picture' }).props.accessibilityState.selected, true);
+  act(() => tree.root.findByProps({ testID: 'kundali-view-topics' }).props.onPress());
+  act(() => tree.root.findByProps({ accessibilityLabel: 'Grahas tab' }).props.onPress());
+  assert.ok(textOf(tree).includes('Meet your grahas'));
+  for (const position of mockChart.grahas) assert.ok(tree.root.findByProps({ testID: `kundali-graha-${position.graha}` }));
+  act(() => tree.root.findByProps({ accessibilityLabel: 'Chart tab' }).props.onPress());
+  assert.equal(tree.root.findByProps({ testID: 'kundali-view-picture' }).props.accessibilityState.selected, true);
 
   act(() => {
     tree.root.findByProps({ accessibilityLabel: 'Dasha tab' }).props.onPress();
@@ -420,3 +392,4 @@ test('Panchang mode selector stays fixed above contextual controls', () => {
     'on the Panchang sky the mode selector also renders before the contextual controls'
   );
 });
+

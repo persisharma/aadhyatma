@@ -25,3 +25,17 @@ test('North Indian chart exposes all twelve houses and grahas accessibly', () =>
   });
   expect(tree.root.findByProps({ testID: 'north-indian-chart' }).props.accessibilityLabel).toBe(label);
 });
+
+test('every interactive polygon opens its actual fixed house', () => {
+  const select = jest.fn();
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<NorthIndianChart chart={chart} lang="hi" onSelectHouse={select} />); });
+  for (let house = 1; house <= 12; house++) {
+    const cell = tree.root.findByProps({ testID: `kundali-house-${house}` });
+    expect(cell.props.accessibilityLabel).toContain(`Explore house ${house},`);
+    act(() => cell.props.onPress());
+    expect(select).toHaveBeenLastCalledWith(house);
+  }
+  act(() => tree.unmount());
+});
+
