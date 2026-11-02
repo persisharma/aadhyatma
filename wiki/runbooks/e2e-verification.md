@@ -167,3 +167,9 @@ information over the accessibility tree. Rules, in order:
 - `mobile/.maestro/_launch.yaml` — shared boot subflow (onboarding dismissal, Home canary).
 - [[readers]] — multi-instance reader dispatch (chalisas/aartis) the smokes exercise.
 - `RULEBOOK.md` §0 (test gate), §3 (multi-instance readers), §4 (readers serve right content).
+
+## Cold-process brand CI verification
+
+`.github/workflows/native-brand-ios.yml` runs on PRs touching the launch implementation. It builds an unsigned Release iOS Simulator app from the exact PR checkout, completes setup through `_launch.yaml`, and runs `brand-lifecycle.yaml`. The focused journey requires two killed-process starts to show the reveal and three warm returns to keep Home without a reveal/modal. `mobile/scripts/native-brand-ios.sh` retains the tested head, selected simulator, toolchain, build log, JUnit output, screenshots and a lifecycle recording in the workflow artifact. No signing credentials, EAS release, version bump or store upload is used.
+
+A passing workflow is simulator evidence for this journey, not physical-device or Android verification, nor the full language/size/accessibility/targeted-entry matrix. Inspect the recording and screenshots as well as the assertions; late snapshots alone cannot establish that no transient replay occurred.

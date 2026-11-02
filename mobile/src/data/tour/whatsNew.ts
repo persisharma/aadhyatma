@@ -26,13 +26,22 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.5.5';
+export const APP_TOUR_VERSION = '1.5.6';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.5.6': {
+    version: '1.5.6',
+    items: [{
+      titleHi: 'वेदांश का नया स्वागत',
+      titleEn: 'A new Vedansh welcome',
+      bodyHi: 'वेदांश का चिह्न और नाम नए आरंभ में साथ उभरते हैं। ऐप में लौटने पर अपना खुला पृष्ठ वहीं से आगे पढ़ें।',
+      bodyEn: 'Vedansh’s symbol and name appear together in the new opening animation. Return to the app and continue from your open page.',
+    }],
+  },
   '1.5.5': {
     version: '1.5.5',
     items: [{

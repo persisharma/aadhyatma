@@ -1317,3 +1317,5 @@ Recorded the Home-only size/colour treatment, restored Om circles/rules and reta
 ## [2026-11-02] ingest | Native launch skips the first 1,000ms of the unchanged approved renderer; 2,350ms visible playback and exact final frame. Native timing checks pending.
 
 ## [2026-11-02] ingest | Owner correction: particle introduction is cold-process only after kill/reopen; all warm background/inactive returns resume without branding. No persistent seen flag.
+
+## [2026-11-02] ingest | PR #602 CI version mismatch repaired; exact-branch unsigned iOS Release simulator launch workflow and cold/warm Maestro recording added. Execution evidence tracked in launch review.

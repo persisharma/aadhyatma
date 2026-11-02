@@ -2319,6 +2319,9 @@ One enrolled sankalp's card on the Today's Practice ledger (§31) — flat `parc
 
 ### What's New sheet (`mobile/src/components/WhatsNewModal.tsx`)
 
+Release 1.5.6 uses a matching `APP_TOUR_VERSION` and a bilingual welcome-animation entry in `whatsNew.ts`; existing earlier-version entries remain intact. This repairs release-note selection without changing app/native version numbers.
+
+
 `pageSheet` Modal, `parchment` fill. Header: title (`pick`-localized "What's New / नई सुविधाएँ / …", `titleFontByLang`, 20, `ink`) over a `vX.Y.Z` version line (`cardLatin` italic, tracked-uppercase, `ink-muted`); a `saffron` ✕ close. Body: a scroll of items, each a `saffron` bullet dot + title (17) + body (14/24, `ink-soft`). Footer: a solid-`saffron` "Got it" (localized). **Language-correct for all four:** text routes through `contentByLang(lang, hi, en)` (gu/kn re-script the Hindi) and fonts through `titleFontByLang` / `meaningToken` so gu/kn never render as tofu in a Devanagari face — this sheet fires for returning users who already have a reading language set, so it must not use a bare hi/en ternary (wiki `concepts/languages` Gotchas).
 
 ### Gating & persistence (`mobile/src/contexts/TourContext.tsx`)
