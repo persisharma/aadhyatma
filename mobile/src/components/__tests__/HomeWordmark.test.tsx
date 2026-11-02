@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GitaLanguageProvider, type Lang } from '@/data/gita/language';
@@ -8,6 +8,8 @@ import { ThemeProvider } from '@/theme/ThemeContext';
 import HomeWordmark from '../HomeWordmark';
 import VedanshWordmark, { companionTagline } from '../VedanshWordmark';
 import ShareBrandFooter from '../ShareBrandFooter';
+import { lightColors } from '@/theme/colors';
+import manifest from '@assets/branding/wordmarks/manifest.json';
 
 const languages: Lang[] = ['hi', 'en', 'gu', 'kn'];
 for (const lang of languages) for (const scale of ['M', 'L']) {
@@ -21,12 +23,18 @@ for (const lang of languages) for (const scale of ['M', 'L']) {
     });
     const texts = tree.root.findAllByType(Text);
     expect(texts.some(n => n.props.children === companionTagline(lang))).toBe(true);
-    for (const text of texts) {
+    for (const text of texts.filter(n => n.props.testID === 'home-wordmark-tagline')) {
       expect(text.props.allowFontScaling).toBe(true);
       expect(text.props.numberOfLines).toBeUndefined();
       const style = StyleSheet.flatten(text.props.style);
       expect(style.lineHeight / style.fontSize).toBeGreaterThanOrEqual(1.5);
     }
+    const image = tree.root.findByType(Image);
+    const imageStyle = StyleSheet.flatten(image.props.style);
+    expect(image.props.testID).toBe(`vedansh-wordmark-${lang === 'hi' ? 'hi' : 'en'}`);
+    expect(imageStyle.tintColor).toBe(lightColors.ink);
+    expect(imageStyle.width / imageStyle.aspectRatio).toBeCloseTo(28);
+    expect(tree.root.findAllByType(View).filter(n => n.props.testID === 'home-wordmark-nukta')).toHaveLength(lang === 'hi' ? 1 : 0);
     act(() => tree.unmount());
   });
 }
@@ -46,5 +54,48 @@ test.each(languages)('export footer respects card language %s and keeps the down
   expect(texts.some(n => n.props.children === companionTagline(lang))).toBe(true);
   expect(texts.some(n => String(n.props.children).includes('vedansh.app/get'))).toBe(true);
   expect(tree.root.findByType(VedanshWordmark).props.fixedExport).toBe(true);
+  act(() => tree.unmount());
+});
+
+// Source geometry checks protect the actual regressions in the supplied device
+// screenshots: a launch-sized copper heading and the missing side ornaments.
+test.each([false, true])('restores the compact Home crest, ink and nukta (compact=%s)', async compact => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => { tree = TestRenderer.create(<ThemeProvider><GitaLanguageProvider initialLang="hi"><HomeWordmark compact={compact} /></GitaLanguageProvider></ThemeProvider>); });
+  const crest = tree.root.findByProps({ testID: 'home-wordmark-crest' });
+  expect(StyleSheet.flatten(crest.props.style).height).toBe(42);
+  expect(crest.props.accessibilityLabel).toBe('वेदांश़');
+  for (const side of ['left', 'right']) {
+    const om = tree.root.findByProps({ testID: `home-wordmark-om-${side}` });
+    expect(StyleSheet.flatten(om.props.style)).toMatchObject({ width: 30, height: 30, borderColor: lightColors.iconAccent });
+    expect(om.findByType(Text).props.children).toBe('ॐ');
+    expect(tree.root.findAllByType(View).filter(n => n.props.testID === `home-wordmark-rule-${side}`)).toHaveLength(compact ? 0 : 1);
+  }
+  const image = tree.root.findByType(Image);
+  expect(StyleSheet.flatten(image.props.style)).toMatchObject({ tintColor: lightColors.ink });
+  const nukta = tree.root.findByProps({ testID: 'home-wordmark-nukta' });
+  expect(StyleSheet.flatten(nukta.props.style)).toMatchObject({ backgroundColor: lightColors.ink, left: '80%', bottom: -0.4 });
+  const subtitle = tree.root.findByProps({ testID: 'home-wordmark-tagline' });
+  expect(StyleSheet.flatten(subtitle.props.style)).toMatchObject({ fontSize: 14, color: lightColors.inkSoft });
+  act(() => tree.unmount());
+});
+
+test.each([320, 360, 375, 390, 393.45, 414, 430, 768])('Home crest leaves the settings target clear at %sdp', viewport => {
+  const content = viewport - 32; // Home's shared 16dp gutters
+  const compact = content < 350;
+  for (const lang of languages) {
+    const metrics = manifest.names[lang === 'hi' ? 'hi' : 'en'];
+    const name = 28 * metrics.width / metrics.height;
+    const width = name + 2 * 30 + (compact ? 2 * 6 : 2 * 22 + 4 * 11);
+    // A centered crest must finish before the right-aligned 44dp Settings hit target.
+    expect((content + width) / 2).toBeLessThanOrEqual(content - 44);
+  }
+});
+
+test('Home can omit its subtitle without losing the crest', async () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => { tree = TestRenderer.create(<ThemeProvider><GitaLanguageProvider initialLang="hi"><HomeWordmark showTagline={false} /></GitaLanguageProvider></ThemeProvider>); });
+  expect(tree.root.findAllByProps({ testID: 'home-wordmark-tagline' })).toHaveLength(0);
+  expect(tree.root.findByProps({ testID: 'home-wordmark-crest' })).toBeDefined();
   act(() => tree.unmount());
 });

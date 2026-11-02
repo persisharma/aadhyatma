@@ -1307,3 +1307,7 @@ Added the bounded intro/navigation invariant and explicit missing-lettering/nati
 ## [2026-11-01] ingest | Approved particle renderer replaces reconstruction
 
 Recorded the accepted-source hash, one-renderer app/export contract, splash readiness boundary and shared wordmark paint-barrier integration in overview. Native evidence remains pending.
+
+## [2026-11-02] ingest | Restore the compact Home crest
+
+Recorded the Home-only size/colour treatment, restored Om circles/rules and retained Hindi brand dot. Launch animation and share/export treatment remain unchanged. Native comparison is pending.

@@ -30,6 +30,8 @@ Code is canonical, but the docs may never lag it by more than the PR that change
 
 The brand name artwork intentionally remains English/Hindi: Hindi is primary in Hindi mode, English in other modes; optional bilingual marks are a fixed brand treatment. Accessibility labels and companion subtitles follow all four app languages and their script fonts. Do not transliterate or replace the approved name image with generic live typography. Actual mounted wordmark decodes participate in the common share-art paint barrier. Preserve source/export hashes and font provenance; Samarkan registration must be confirmed before production use. No font binary is added by this integration.
 
+**Home header exception.** Use the accepted lettering geometry within Home's existing 42pt Om-flanked crest, at a 28pt image height in `colors.ink`. Preserve both 30pt saffron Om circles, responsive side rules and the Hindi dot below श. The companion subtitle retains 14pt / `inkSoft`, script-aware fonts and wrapping. This user-approved monochrome Home treatment must not recolour or resize the accepted particle composition or shared/export lockups. See design.md §§5/18; regression coverage is in `HomeWordmark.test.tsx`.
+
 
 Home's shared outer gutter is supplied by `homeLayout.ts` (16dp). Full-bleed child carousels must cancel/re-pad that same gutter: Home passes `gridPadding` to `TodayRecommendationsRow.horizontalGutter`, and DISCOVER uses it directly. Do not duplicate the previous 24dp inset in a child; enlarged recommendation widths must also respect the supplied gutter. Artwork sizing remains independent from page/tile width.
 
