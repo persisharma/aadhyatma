@@ -23,7 +23,8 @@ const sandbox={document:{getElementById:()=>root,createElement:()=>createCanvas(
 vm.runInNewContext(script,sandbox,{filename:'approved-preview.js'});
 for(let i=0;i<200&&!root.vpAnimation?.ready;i++)await new Promise(resolve=>setTimeout(resolve,10));
 if(!root.vpAnimation?.ready)throw Error('Original preview image failed to decode');
-if(root.dataset.particles!=='3809')throw Error('Particle set differs from approved preview');
+const brandManifest=JSON.parse(await fs.readFile(path.join(rootDir,'mobile/assets/branding/wordmarks/manifest.json'),'utf8'));
+if(Number(root.dataset.particles)!==brandManifest.particles)throw Error('Particle set differs from approved preview');
 
 for(const t of [750,1700,2600,3350]){
   root.vpAnimation.renderAt(t);

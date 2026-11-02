@@ -16,9 +16,10 @@ export default function HomeWordmark({ compact = false, showTagline = true }: {
   const { colors, typography } = useTheme();
   const kind = lang === 'hi' ? 'hi' : 'en';
   const metrics = manifest.names[kind];
-  // Fit the approved glyphs to the old 27pt title's visible height, not the
-  // larger launch/share lockup. The extra row space preserves Indic marks.
-  const width = 28 * metrics.width / metrics.height;
+  // Keep the previous complete name footprint. The feather fits inside it;
+  // never tint the master, which would erase its copper/green accents.
+  const frame = metrics.homeFrame;
+  const width = Math.min(frame.width, frame.height * metrics.width / metrics.height);
   const mark = (side: 'left' | 'right') => (
     <View testID={`home-wordmark-om-${side}`} style={[styles.mark, { borderColor: colors.iconAccent }]}>
       <Text accessible={false} allowFontScaling={false} style={[styles.markText,
@@ -31,10 +32,8 @@ export default function HomeWordmark({ compact = false, showTagline = true }: {
       style={[styles.lockup, compact && styles.compact]}>
       {!compact && <View testID="home-wordmark-rule-left" style={[styles.rule, { backgroundColor: colors.iconAccent }]} />}
       {mark('left')}
-      <View style={{ width, position: 'relative' }}>
-        <WordmarkArtwork kind={kind} width={width} tintColor={colors.ink} />
-        {kind === 'hi' && <View testID="home-wordmark-nukta" accessible={false}
-          style={[styles.nukta, { backgroundColor: colors.ink }]} />}
+      <View testID="home-wordmark-artwork-frame" style={{ width: frame.width, height: frame.height, alignItems: 'center', justifyContent: 'center' }}>
+        <WordmarkArtwork kind={kind} width={width} />
       </View>
       {mark('right')}
       {!compact && <View testID="home-wordmark-rule-right" style={[styles.rule, { backgroundColor: colors.iconAccent }]} />}
@@ -53,8 +52,5 @@ const styles = StyleSheet.create({
   rule: { width: 22, height: 1, opacity: 0.6 },
   mark: { width: 30, height: 30, borderRadius: 15, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
   markText: { fontSize: 19, lineHeight: 30, includeFontPadding: false, textAlign: 'center', transform: [{ translateY: 1.5 }] },
-  // The source crop has no nukta. This small brand detail sits below श, clear
-  // of its baseline; the original approved animation and bitmap stay intact.
-  nukta: { position: 'absolute', width: 1.6, height: 1.6, borderRadius: 0.8, left: '80%', bottom: -0.4 },
   subtitle: { marginTop: 5, textAlign: 'center', fontSize: 14, lineHeight: 22, includeFontPadding: false },
 });
