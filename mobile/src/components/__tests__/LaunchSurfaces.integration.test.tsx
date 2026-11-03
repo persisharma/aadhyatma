@@ -34,6 +34,7 @@ jest.mock('react-native/Libraries/Linking/Linking', () => ({ __esModule: true, d
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'en' }) }));
 jest.mock('@/utils/useReducedMotion', () => ({ useReducedMotion: () => true }));
 jest.mock('@/components/AppIcon', () => 'AppIcon');
+jest.mock('../StoreUpdateSheet', () => 'StoreUpdateSheet');
 jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: require('react-native').View }));
 jest.mock('@/components/OnboardingSetupSheet', () => function MockSetup() { return null; });
 jest.mock('@/components/ReminderOptInModal', () => function MockReminder() { return require('react').createElement('Reminder'); });
@@ -177,3 +178,4 @@ test('Explore waits for branding then keeps its normal eligibility', async () =>
   await act(async () => { require('@/navigation/brandLaunchIntent').setBrandLaunchVisible(false); });
   await tick(); expect(exploreVisible()).toBe(true);
 });
+

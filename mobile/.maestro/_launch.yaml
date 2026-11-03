@@ -127,6 +127,9 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 # Rating can qualify from an early share/save; never leave a stray ask blocking a flow.
 - tapOn:
+    id: store-update-later
+    optional: true
+- tapOn:
     text: "Maybe later"
     optional: true
 # The Home "Today's Panchang" card is now a tappable launcher (PRD-C), so its
@@ -155,3 +158,4 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     id: explore-not-now
     optional: true
+
