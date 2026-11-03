@@ -1,7 +1,17 @@
 import { EXPLORE_SECTIONS, sectionForRoute } from '@/data/discovery/sections';
-import { HOUR, initialExploreState, parseExploreState, pickExplore, recordDecline, recordShown, recordVisit } from '@/data/discovery/policy';
+import { HOUR, initialExploreState, parseExploreState, pickExplore, recordDecline, recordShown, recordVisit, resetExploreState } from '@/data/discovery/policy';
 const start = new Date(2026, 9, 25, 8).getTime(), now = start + 48 * HOUR;
 const fresh = () => initialExploreState(start);
+it('explicit reset removes visits and all Explore cooldowns without restarting the collection wait', () => {
+    const reset = parseExploreState(JSON.stringify(resetExploreState(now)), now);
+    expect(reset.visited).toEqual([]);
+    expect(reset.shown).toEqual([]);
+    expect(reset.declined).toEqual({});
+    expect(reset.streak).toBe(0);
+    expect(reset.sleepUntil).toBe(0);
+    expect(reset.last).toBeUndefined();
+    expect(pickExplore(reset, now)?.id).toBe('routine');
+});
 it('silently collects first, removes visited sections and stops on exhaustion', () => {
     expect(pickExplore(fresh(), start)).toBeUndefined();
     expect(pickExplore(recordVisit(fresh(), 'routine'), now)?.id).toBe('japam');
@@ -40,3 +50,4 @@ it('validates the ledger and recognizes every route into a section', () => {
     expect(sectionForRoute('GharVastuCapture')).toBe('vastu');
     expect(recordVisit(recordVisit(fresh(), 'routine'), 'routine').visited).toEqual(['routine']);
 });
+

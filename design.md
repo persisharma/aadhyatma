@@ -4166,3 +4166,6 @@ define the native layout.
 
 A background update staged after Explore has claimed its slot does not dismiss the active sheet; the update offer waits for the next shared opportunity. Already-pending updates retain priority before Explore claims.
 
+**Explore replay reset.** Settings → Explore sections retains immediate replay and adds a secondary “Reset visit history” action inside the scrolling body, with a 44pt target, script-aware theme text and all four UI languages. It is absent from automatic sheets. A native confirmation explains that visits, dismissal history and Explore cooldowns (including initial collection wait) are cleared; Cancel changes nothing. While saving, disable the reset action and guard duplicate confirmations. Report success only after persistence, using an inline live status with cold-launch/Home instructions and the shared daily-limit caveat. Failed persistence reports failure. Existing practices, saved progress, reminders and the shared launch gate remain untouched. The next ordinary eligible cold launch uses normal selection; reset neither forces a modal immediately nor guarantees today's slot. Keep the valid aged ledger so a cold restart cannot re-seed old routine/Sankalp/Pitru visits. Confirmations from an unmounted replay do nothing.
+
+

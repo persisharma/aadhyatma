@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { EXPLORE_KEY, initialExploreState, parseExploreState, recordVisit, type ExploreState } from './policy';
+import { EXPLORE_KEY, initialExploreState, parseExploreState, recordVisit, resetExploreState, type ExploreState } from './policy';
 let snapshot = { ready: false, firstCollectionSession: false, state: initialExploreState(Date.now()), visible: false };
 const listeners = new Set<() => void>();
 let queue = Promise.resolve();
@@ -42,3 +42,11 @@ catch {
     snapshot = { ...snapshot, ready: false };
     emit();
 } })(); return loading; }
+
+/** Keep a valid persisted ledger so cold launches cannot re-seed old visits.
+ * Serialize with route writes and never modify any other feature's storage. */
+export async function resetExploreHistory(now = Date.now()): Promise<boolean> {
+    await loadExplore();
+    return updateExplore(() => resetExploreState(now));
+}
+

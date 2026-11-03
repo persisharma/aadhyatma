@@ -9,7 +9,7 @@ import * as Notifications from 'expo-notifications';
 jest.mock('@/components/launchAskStore', () => ({ useLaunchAsks: () => ({ ready: true, selectionComplete: true, taken: false, record: { lastDay: null } }), localDay: () => '2026-10-25', claimLaunchAsk: () => true }));
 import { EXPLORE_SECTIONS } from '@/data/discovery/sections';
 import { EXPLORE_KEY, HOUR, initialExploreState } from '@/data/discovery/policy';
-import { exploreSnapshot, updateExplore } from '@/data/discovery/store';
+import { exploreSnapshot, resetExploreHistory, updateExplore } from '@/data/discovery/store';
 const mockNow = new Date(2026, 9, 25, 8).getTime();
 let mockHigher = false, mockUrl: string | null = null, mockRoute = { name: 'Home', params: undefined as object | undefined };
 let mockRouteListener: (() => void) | undefined;
@@ -128,10 +128,17 @@ it('integrates launch arbitration, persistence, navigation, six-hour/daily limit
     press('explore-open');
     await flush();
     expect(mockDispatch.mock.calls.at(-1)?.[0].payload.params).toMatchObject({ screen: 'Suvichar', params: { exploreDraft: { name: 'Prashant', deity: 'ram-darbar' } }, initial: false });
+    unmount();
+    await resetExploreHistory(Date.now());
+    expect(exploreSnapshot().state.visited).toEqual([]);
+    await mount();
+    expect(visible()).toBe(true);
+    expect(exploreSnapshot().state.last).toBe('routine');
     jest.mocked(AsyncStorage.setItem).mockRejectedValueOnce(new Error('disk full'));
     let saved = true;
     await act(async () => { saved = await updateExplore(s => ({ ...s, enabled: false })); });
     expect(saved).toBe(false);
     expect(exploreSnapshot().ready).toBe(false);
 });
+
 
