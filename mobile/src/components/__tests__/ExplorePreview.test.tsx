@@ -80,12 +80,16 @@ test('confirmed reset waits for persistence, prevents double writes and explains
 });
 
 test('failed persistence reports failure instead of success', async () => {
-  jest.spyOn(exploreStore, 'resetExploreHistory').mockResolvedValue(false);
+  jest.spyOn(exploreStore, 'resetExploreHistory').mockImplementation(async () => {
+    exploreStore.setExploreVisible(false); // Store failure closes automatic discovery.
+    return false;
+  });
   const alert = jest.spyOn(Alert, 'alert');
   act(() => { tree = TestRenderer.create(<ExplorePreview onClose={jest.fn()} />); });
   act(() => tree.root.findByType('Sheet' as never).props.onReset());
   await act(async () => { await alert.mock.calls[0][2]!.find(b => b.style === 'destructive')!.onPress!(); });
   expect(tree.root.findByType('Sheet' as never).props.resetMessage).toContain('Could not reset');
+  expect(exploreSnapshot().visible).toBe(true);
 });
 
 test('confirming an obsolete dialog after replay closes cannot reset history', async () => {

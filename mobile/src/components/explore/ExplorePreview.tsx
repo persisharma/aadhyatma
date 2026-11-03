@@ -47,6 +47,9 @@ export default function ExplorePreview({ onClose }: { onClose: () => void }) {
           } catch {
             if (mounted.current) setResetStatus('error');
           } finally {
+            // A failed store write fails automatic discovery closed, but this
+            // explicit replay is still mounted and must block other prompts.
+            if (mounted.current) setExploreVisible(true);
             resetInFlight.current = false;
           }
         } },
