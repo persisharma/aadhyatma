@@ -354,3 +354,7 @@ The palette follow-up measures every unique painting as well as its identity: HS
 
 Upcoming now settles at card boundaries; measured rail width and trailing padding keep the final group complete. The middle ledger uses the shared cream frame, top-aligned icons, centered14/22 labels and bottom-aligned status lines with intrinsic height. Native Hindi/English/XXXL content and strip evidence is in `docs/evaluations/vrat-strip-content-2026-10-27/`.
 
+
+
+
+**Panchang share header sizing (3 November 2026).** The exported card uses the shared `WordmarkArtwork`. Its bundled image must explicitly override both source dimensions; width plus aspect ratio leaves React Native’s intrinsic 391dp Hindi image height in the flex layout. The resulting 405dp brand row pushes the icon/place below the 144dp sky clip and exposes only lettering/peacock fragments at the horizon. The shared explicit-height fix preserves the approved artwork, 540×675dp card, day data and capture readiness. See `docs/reviews/2026-11-03-panchang-share-wordmark.md` for the Yoga reproduction, focused regression results and pending native-export checks.
