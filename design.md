@@ -2805,11 +2805,11 @@ Tests: `src/screens/__tests__/ValmikiRamayanReaderScreen.test.tsx` (per-kāṇ�
 
 ## 54. App Rating Prompt (रेटिंग)
 
-**Purpose.** Ask engaged users for a store rating, without ever becoming a nag. Two surfaces over
-one piece of state: a **moment-triggered card** that opens only right after the user has finished
-something and has to earn its way past a conservative gate, and a **permanent More row** the user
-can reach whenever they feel like it (§37). There is deliberately **no Home section and no
-cold-start ask** (product decision, Sept 2026: "keep a pop-up, ask at the moments").
+**Purpose.** Ask after **two cold launches OR activity on two distinct days OR a
+completed share/save/practice action** (product decision, 3 Nov 2026). These are
+independent ways to earn the ask; no verse-read minimum remains. Usage asks wait
+for hydration and launch-prompt selection, then the same 1200 ms settle delay.
+The permanent More row remains available manually (§37). No Home section is added.
 
 **Bundle-only, by constraint.** No `expo-store-review`, no `SKStoreReviewController`, no Play
 In-App Review. Every one of those is a native module, so a rating nudge behind one could only ship
@@ -2861,17 +2861,16 @@ home if one is added — see RULEBOOK §6.2 for the risk posture and the mitigat
 All four languages are hand-authored via `pick` (this is UI chrome, not content, so nothing is
 transliterated), and Indic labels drop Latin tracking/uppercase per §3.
 
-**Trigger — when the card may open** (`contexts/ratingAsk.ts` + the host). The card never
-opens on its own. A surface where the user has just finished something calls
-`requestAsk('<moment>')`; the gate below then decides. Four moments ship — `routine-complete`
-shipped first (Sept 2026: "ask when a routine is completed"); `verse-shared` and `mala-complete`
-were added because that single moment reaches only routine users and ratings were coming in too low,
-so the two moments that had been cut only to keep one are back, reaching readers and japa users who
-never build a routine; `prose-shared` (Oct 2026) extends the share moment from verse cards to every
-share card, since katha, Theerth, kids-story, listing and Ask shares dispatched without asking:
+**Triggers** (`contexts/ratingAsk.ts` + the hosts). Usage may report `app-engaged`
+without another action. Completed actions qualify even on a first visit, without
+reading history. All share cards (including Panchang/calendar, Suvichar and Jyotish)
+use the shared provider; direct text/CSV hand-offs use `useRatingShare`.
 
 | Trigger | Reported by | Exactly when | Why here |
 |---|---|---|---|
+| `app-engaged` | `RatingPromptContext` | After hydration and launch selection, when launches ≥2 OR active days ≥2 | Either return-usage condition is sufficient |
+| `bookmark-saved` | `BookmarksContext` via the lightweight reporting bridge | A new wishlist verse is saved, not hydration, replacement or removal | Saves independently earn the ask |
+| `content-shared` | `useRatingShare` | After a successful direct text/CSV share (`sharedAction`); cancellation/failure reports nothing | App, Samagri, Kundali/Vastu text and ledger exports use the same policy |
 | `routine-complete` | `components/RoutineCelebrationOverlay.tsx` | The pushpa-varsha's `onDone`, i.e. after the petals and caption have faded — **not** on completion itself | Today's practice is done; the best moment in the app. Riding on `onDone` keeps the card off the shower (§11) |
 | `verse-shared` | `utils/shareVerse.tsx` | After the OS/Instagram share sheet the `run()` dispatched has closed (the `Share`/`Sharing` await resolved) — **not** the Instagram-without-image error path. Devotional prose pages (Daily Bhakti) report this moment too | The user just endorsed the app to someone; a warm moment, and it reaches every reader/Daily-Bhakti screen with a share button, not only routine users |
 | `prose-shared` | `utils/shareVerse.tsx` (`proseShareMoment`) | After any non-devotional prose card is dispatched: single-page row (`runProsePage`), all pages (`runSeries`), the carousel's **Continue** (`continueCarousel` — not the hand-off pause), and Send as text on `sharedAction`. The image paths fire when the OS sheet **closes**, sent or not (`expo-sharing` and `react-native-share` with `failOnCancel: false` do not report a dismissal); only Send as text can tell a dismissal apart. A failed capture or a missing multi-image module reports nothing | Same warm moment as a verse share, from the katha/Theerth/story/listing/Ask cards; kept a separate literal so `asksByTrigger` shows which share surface earns the rating |
@@ -2898,16 +2897,14 @@ when **all** hold:
 |---|---|---|
 | Outcome still `pending` | — | `rated` and `declined` are terminal. Only `rated` is reachable from the sheet; `declined` is honoured for back-compat (see below) |
 | Auto-opens so far | `< MAX_ASKS` (**`null` — no ceiling**) | Uncapped by product decision: keep asking until the user rates or opts out |
-| Cold starts | `≥ MIN_APP_OPENS` (5) | Earn the ask — a rating nudge waits for real return visits (the reminder opt-in no longer gates on this; see §38) |
-| Distinct active days | `≥ MIN_ACTIVE_DAYS` (3) | A habit, not a visit |
-| Lifetime verse reads | `≥ MIN_VERSE_READS` (20) | Filters users who opened but never read |
+| Earned ask (OR) | Cold starts ≥2 **OR** active days ≥2 **OR** completed share/save/practice action | Each independently qualifies; no verse-read requirement |
 | Since the last ask | `≥ REASK_COOLDOWN_DAYS` (5) | The quiet period, and now the **only** thing spacing asks out — with no lifetime ceiling it is load-bearing, not a scheduling detail |
 | Since a 1–3★ tap | `≥ LOW_RATING_COOLDOWN_DAYS` (90) | Time to fix what an unhappy user disliked before asking them again (product decision, Oct 2026) |
 | No other surface asking | — | Tour, onboarding setup, What's New, reminder opt-in (§47/§38) |
 
 Engagement numbers come from `UserActivityContext.lifetimeTotals()`; the cold-start count is read
 from the **notification meta's** `appOpenCount` rather than a second counter — one "how many times
-have they come back" number, already incremented once per cold start, serving both asks (the rating's earned 5-open gate and the opt-in's first-open gate).
+have they come back" number, already incremented once per cold start, serving both asks (rating usage eligibility and the opt-in's first-open gate).
 
 **Persistence & lifecycle** (`contexts/RatingPromptContext.tsx`). One AsyncStorage blob,
 `@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome, asksByTrigger, lowRatedAt }`, defensively parsed
@@ -2919,9 +2916,9 @@ only way, with no analytics backend, to learn which moment actually earns the ra
   moment's own feedback (success haptic, last petals) finishes first — a card on the same frame as
   the thing it is thanking the user for reads as an ad. If a first-run
   surface claims the screen during the delay, the open is abandoned and nothing is recorded.
-- The gate is evaluated **at the moment**, against the engagement counters as they stand then,
+- The gate is evaluated **at the moment and again before opening**, against the latest state,
   read through refs (not effect dependencies) so a user paging through a reader cannot defer a
-  pending open. At most **one** auto-open per app session.
+  pending open. At most **one** auto-open per app session. Opening is refused in the background or during an active share flow; manual opening cancels a pending automatic ask.
 - **Opening consumes an ask slot, starts the cooldown, and credits the trigger** (`afterAsked`).
   A swipe-away still counts as "we asked" — the cooldown, not the outcome, is what silences the
   second ask.
@@ -4165,4 +4162,3 @@ define the native layout.
 **Shared launch coordination (§86).** Explore waits for `launchAskStore.selectionComplete` and atomically claims the same daily opportunity as reminders, widgets, updates and automatic rating. Its own six-hour/two-per-day policy remains a ceiling; the app-wide cap permits at most one automatic prompt per local day. A stopped reminder is not a pending reminder surface. The host decides reminder eligibility from its current cadence, not the legacy 15-day flag.
 
 A background update staged after Explore has claimed its slot does not dismiss the active sheet; the update offer waits for the next shared opportunity. Already-pending updates retain priority before Explore claims.
-

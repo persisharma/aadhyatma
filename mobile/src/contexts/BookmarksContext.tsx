@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { canonicalBookmarkId, canonicalSourceId } from '@/data/sourceIdMigration';
+import { reportRatingAsk } from '@/contexts/ratingAsk';
 
 const STORAGE_KEY = '@vedansh/bookmarks';
 
@@ -95,6 +96,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
     (ref: BookmarkRef) => {
       if (isLoading) return;
       persist([ref, ...bookmarks.filter((b) => b.id !== ref.id)]);
+      if (!bookmarks.some((b) => b.id === ref.id)) reportRatingAsk('bookmark-saved');
     },
     [isLoading, bookmarks, persist]
   );

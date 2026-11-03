@@ -34,30 +34,17 @@ export const RATING_PROMPT_STORAGE_KEY = '@vedansh/rating-prompt';
 export type RatingPromptOutcome = 'pending' | 'rated' | 'declined';
 
 /**
- * The moments that may open the sheet (design.md §54 "Triggers"). The ask does
- * not fire on a cold start: a moment is a point where the user has just
- * finished something and is likely to feel good about the app, which is when a
- * rating request reads as a fair question rather than an interruption.
- *
- *  - `routine-complete` — the pushpa-varsha for today's routine has finished.
- *  - `verse-shared` — a verse share was dispatched to the OS/Instagram sheet.
- *  - `prose-shared` — a katha / Theerth / story / listing / Ask card (any
- *    non-devotional prose share) was dispatched. Kept apart from `verse-shared`
- *    so `asksByTrigger` can tell which share surface earns the rating.
- *  - `mala-complete` — the japam counter screen was left after ≥1 round this visit.
- *
- * Four moments ship (product decision, Sept 2026: routine completion was the
- * first; share + mala added to widen reach to users who never build a routine,
- * since ratings were coming in too low; Oct 2026: prose share cards added so
- * every share card can ask, not only verses). The type stays a union so a further
- * moment is a one-literal change here plus a `requestAsk` call at the host — see
- * RULEBOOK §6.2. Each moment fires only once its own feedback has finished (a
- * share sheet closed, the japam screen left) — never mid-interaction and never
- * over a celebration; the gate and the once-per-session guard still apply.
+ * Usage (two cold starts OR two active days), or a completed share/save/practice
+ * action, can independently earn the ask. Actions do not require a usage floor.
+ * All routes retain outcome, cooldown, foreground and shared-surface guards.
+ * Existing trigger IDs stay stable so stored per-moment counts survive upgrades.
  */
-export type RatingAskTrigger = 'routine-complete' | 'verse-shared' | 'prose-shared' | 'mala-complete';
+export type RatingAskTrigger = 'app-engaged' | 'bookmark-saved' | 'content-shared' | 'routine-complete' | 'verse-shared' | 'prose-shared' | 'mala-complete';
 
 export const RATING_ASK_TRIGGERS: readonly RatingAskTrigger[] = [
+  'app-engaged',
+  'bookmark-saved',
+  'content-shared',
   'routine-complete',
   'verse-shared',
   'prose-shared',
@@ -92,12 +79,10 @@ export const RATING_PROMPT_DEFAULTS: RatingPromptState = {
   lowRatedAt: null,
 };
 
-/** Cold starts before we're willing to ask — mirrors the opt-in sheet's "earn the ask". */
-export const MIN_APP_OPENS = 5;
+/** Either usage threshold earns an automatic ask after launch selection settles. */
+export const MIN_APP_OPENS = 2;
 /** Distinct days with logged reading/japa activity. */
-export const MIN_ACTIVE_DAYS = 3;
-/** Lifetime verse advances — filters users who opened the app but never read. */
-export const MIN_VERSE_READS = 20;
+export const MIN_ACTIVE_DAYS = 2;
 /**
  * Quiet period between asks (product decision, Aug 2026: "ask every 5 days if
  * not given"). With no lifetime ceiling this is now the ONLY thing spacing the
@@ -185,8 +170,8 @@ export type RatingEligibilityInput = {
   appOpens: number;
   /** `UserActivity.lifetimeTotals().activeDays`. */
   activeDays: number;
-  /** `UserActivity.lifetimeTotals().totalReads`. */
-  totalReads: number;
+  /** Shares and completed actions can earn the ask before the usage thresholds. */
+  trigger?: RatingAskTrigger;
   /** `Date.now()` at the call site — passed in so tests stay deterministic. */
   now: number;
   /**
@@ -202,13 +187,12 @@ export type RatingEligibilityInput = {
  * ask; the ask has to earn its way past all of them.
  */
 export function isEligibleForRatingPrompt(input: RatingEligibilityInput): boolean {
-  const { state, appOpens, activeDays, totalReads, now, blockedBySurface } = input;
+  const { state, appOpens, activeDays, trigger, now, blockedBySurface } = input;
   if (state.outcome !== 'pending') return false;
   if (MAX_ASKS !== null && state.askCount >= MAX_ASKS) return false;
   if (blockedBySurface) return false;
-  if (appOpens < MIN_APP_OPENS) return false;
-  if (activeDays < MIN_ACTIVE_DAYS) return false;
-  if (totalReads < MIN_VERSE_READS) return false;
+  const completedAction = trigger !== undefined && trigger !== 'app-engaged';
+  if (appOpens < MIN_APP_OPENS && activeDays < MIN_ACTIVE_DAYS && !completedAction) return false;
   if (state.lastAskedAt !== null && now - state.lastAskedAt < REASK_COOLDOWN_DAYS * DAY_MS) return false;
   if (state.lowRatedAt !== null && now - state.lowRatedAt < LOW_RATING_COOLDOWN_DAYS * DAY_MS) return false;
   return true;

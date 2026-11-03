@@ -1,5 +1,6 @@
+import { useRatingShare } from '@/utils/useRatingShare';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useFocusEffect, useNavigation, type NavigationProp } from '@react-navigation/native';
@@ -59,6 +60,7 @@ function stepRefIsAarti(step: VidhiStep): boolean {
  * remain review-only data and never render.
  */
 export default function VidhiDetailScreen({ navigation, route }: Props) {
+  const shareWithRating = useRatingShare();
   const { colors, typography, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<NavigationProp<TabParamList>>();
@@ -139,7 +141,7 @@ export default function VidhiDetailScreen({ navigation, route }: Props) {
     const heading = contentByLang(lang, 'सामग्री सूची', 'Samagri list');
     const groceryHeading = contentByLang(lang, 'भोग और रसोई', 'Bhog & kitchen');
     const grocerySection = groceryLines.length > 0 ? `\n\n${groceryHeading}\n${groceryLines.join('\n')}` : '';
-    void Share.share(
+    void shareWithRating(
       { message: withShareLinks(`${title} — ${heading}\n\n${lines.join('\n')}${grocerySection}`, lang) },
       { dialogTitle: heading }
     ).catch(() => undefined);

@@ -1,9 +1,11 @@
+import { beginRatingInteraction } from '@/contexts/ratingInteraction';
 import ScaledShareCard from '@/components/ScaledShareCard';
 import type { BackgroundImage } from '@/data/backgroundAsset';
 import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -470,6 +472,10 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     cardLang: Lang;
   } | null>(null);
   const [busy, setBusy] = useState(false);
+  const interactionActive = !!chooser || !!prose || !!cardChooser || busy;
+  useEffect(() => {
+    if (interactionActive) return beginRatingInteraction();
+  }, [interactionActive]);
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
   const imageReady = useRef<{ id: number; resolve: (ready: boolean) => void } | null>(null);

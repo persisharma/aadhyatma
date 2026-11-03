@@ -1,3 +1,4 @@
+import { isRatingInteractionActive } from '@/contexts/ratingInteraction';
 import { isBrandLaunchVisible, useBrandLaunchVisible } from '@/navigation/brandLaunchIntent';
 import { useLaunchAsks, claimLaunchAsk } from '@/components/launchAskStore';
 import { isExploreSurfaceOpen } from '@/data/discovery/store';
@@ -10,7 +11,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Linking, Platform } from 'react-native';
+import { AppState, Linking, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   RATING_PROMPT_DEFAULTS,
@@ -30,24 +31,23 @@ import {
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useTour } from '@/contexts/TourContext';
-import { RatingAskContext } from '@/contexts/ratingAsk';
+import { RatingAskContext, subscribeRatingAsks } from '@/contexts/ratingAsk';
 
 /**
  * Owns the app-rating ask: when it may open, what the buttons do, and the
  * persisted outcome. Rendering lives in `components/RatingPromptSheet`; the
  * gate itself is pure (`data/ratingPrompt.ts`).
  *
- * Two entry points:
+ * Entry points:
+ *  - Usage — two cold starts OR two active days, after launch selection settles.
  *  - Moment-triggered — a surface where the user has just finished something
  *    (routine celebration done, a mala completed, a verse shared) calls
  *    `requestAsk(trigger)`. The request is honoured at most once per app
  *    session, only on a `REASK_COOLDOWN_DAYS` cadence with no lifetime ceiling,
- *    only for users with real practice history, and never on top of another
+ *    including first-visit shares/saves, and never on top of another
  *    first-run/post-update surface. Opening records the ask and restarts the
  *    cooldown, so a swipe-away still counts as "we asked". Rating is the only
- *    outcome the sheet can reach that ends the cadence. There is deliberately
- *    NO cold-start trigger any more (Sept 2026): a prompt on launch interrupts
- *    whatever the user opened the app to do.
+ *    outcome the sheet can reach that ends the cadence.
  *  - Manual — the "Rate the App" row in More (§37) calls `open()`, which
  *    bypasses the gate and does NOT spend an ask slot. A user who goes looking
  *    for it has already opted in.
@@ -155,7 +155,7 @@ export function RatingPromptProvider({
     );
   }, []);
 
-  const { activeDays, totalReads } = lifetimeTotals();
+  const { activeDays } = lifetimeTotals();
 
   /**
    * Everything the gate reads goes through refs, not the dependency array of an
@@ -164,11 +164,10 @@ export function RatingPromptProvider({
    * counters and flags without being re-created on every render — a re-created
    * callback would churn every consumer's effects while the user reads.
    */
-  const engagementRef = useRef({ appOpens: 0, activeDays: 0, totalReads: 0 });
+  const engagementRef = useRef({ appOpens: 0, activeDays: 0 });
   engagementRef.current = {
     appOpens: meta.appOpenCount,
     activeDays,
-    totalReads,
   };
 
   const blockedBySurface =
@@ -185,6 +184,8 @@ export function RatingPromptProvider({
   const readyRef = useRef(false);
   readyRef.current =
     hydrated && !notifLoading && !activityLoading && !tourLoading;
+  const visibleRef = useRef(visible);
+  visibleRef.current = visible;
 
   /** The one pending open, so two moments in quick succession queue one card, not two. */
   const pendingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -197,13 +198,14 @@ export function RatingPromptProvider({
 
   const requestAsk = useCallback(
     (trigger: RatingAskTrigger) => {
-      if (askedThisSessionRef.current || pendingRef.current) return;
+      if (askedThisSessionRef.current || pendingRef.current || visibleRef.current) return;
       // Still loading: the moment passes rather than being queued. Asking a few
       // seconds after the moment, once storage catches up, is the launch-frame
       // ambush this design exists to avoid.
       if (!readyRef.current) return;
 
       const eligible = isEligibleForRatingPrompt({
+        trigger,
         state: stateRef.current,
         ...engagementRef.current,
         now: Date.now(),
@@ -214,7 +216,17 @@ export function RatingPromptProvider({
       pendingRef.current = setTimeout(() => {
         pendingRef.current = null;
         // A first-run surface may have claimed the screen during the delay.
-        if (blockedRef.current || isBrandLaunchVisible() || askedThisSessionRef.current || isExploreSurfaceOpen()) return;
+        if (!readyRef.current || visibleRef.current || blockedRef.current || isBrandLaunchVisible() || askedThisSessionRef.current || isExploreSurfaceOpen()) return;
+        if (AppState.currentState === 'background' || AppState.currentState === 'inactive') return;
+        if (isRatingInteractionActive()) return;
+        // Manual rating/feedback may have changed the persisted outcome during the delay.
+        if (!isEligibleForRatingPrompt({
+          state: stateRef.current,
+          ...engagementRef.current,
+          trigger,
+          now: Date.now(),
+          blockedBySurface: blockedRef.current,
+        })) return;
         if (!claimLaunchAsk()) return;
         askedThisSessionRef.current = true;
         persist(afterAsked(stateRef.current, Date.now(), trigger));
@@ -224,7 +236,20 @@ export function RatingPromptProvider({
     [persist],
   );
 
-  const open = useCallback(() => setVisible(true), []);
+  useEffect(() => subscribeRatingAsks(requestAsk), [requestAsk]);
+
+  useEffect(() => {
+    if (hydrated && !notifLoading && !activityLoading && !tourLoading && !blockedBySurface) {
+      requestAsk('app-engaged');
+    }
+  }, [hydrated, notifLoading, activityLoading, tourLoading, blockedBySurface,
+    meta.appOpenCount, activeDays, requestAsk]);
+
+  const open = useCallback(() => {
+    if (pendingRef.current) clearTimeout(pendingRef.current);
+    pendingRef.current = null;
+    setVisible(true);
+  }, []);
 
   const dismiss = useCallback(() => setVisible(false), []);
 

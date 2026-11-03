@@ -10,7 +10,6 @@ import {
   MAX_ASKS,
   MIN_ACTIVE_DAYS,
   MIN_APP_OPENS,
-  MIN_VERSE_READS,
   RATING_PROMPT_DEFAULTS,
   REASK_COOLDOWN_DAYS,
   STORE_MIN_STARS,
@@ -37,7 +36,6 @@ function eligibleInput(overrides: Partial<RatingEligibilityInput> = {}): RatingE
     state: RATING_PROMPT_DEFAULTS,
     appOpens: MIN_APP_OPENS,
     activeDays: MIN_ACTIVE_DAYS,
-    totalReads: MIN_VERSE_READS,
     now: NOW,
     blockedBySurface: false,
     ...overrides,
@@ -52,9 +50,8 @@ describe('thresholds', () => {
    * product decision the rule asks for.
    */
   it('are the values design.md §54 documents', () => {
-    expect(MIN_APP_OPENS).toBe(5);
-    expect(MIN_ACTIVE_DAYS).toBe(3);
-    expect(MIN_VERSE_READS).toBe(20);
+    expect(MIN_APP_OPENS).toBe(2);
+    expect(MIN_ACTIVE_DAYS).toBe(2);
     expect(REASK_COOLDOWN_DAYS).toBe(5);
     // null = no lifetime ceiling: keep asking until the user rates or opts out.
     expect(MAX_ASKS).toBeNull();
@@ -83,10 +80,23 @@ describe('isEligibleForRatingPrompt', () => {
     expect(isEligibleForRatingPrompt(eligibleInput({ blockedBySurface: true }))).toBe(false);
   });
 
-  it('requires app opens, active days, and real reading', () => {
-    expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: MIN_APP_OPENS - 1 }))).toBe(false);
-    expect(isEligibleForRatingPrompt(eligibleInput({ activeDays: MIN_ACTIVE_DAYS - 1 }))).toBe(false);
-    expect(isEligibleForRatingPrompt(eligibleInput({ totalReads: MIN_VERSE_READS - 1 }))).toBe(false);
+  it('accepts either two launches or two active days independently', () => {
+    expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 2, activeDays: 0 }))).toBe(true);
+    expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 0, activeDays: 2 }))).toBe(true);
+    expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 1 }))).toBe(false);
+  });
+
+  it.each(['verse-shared', 'prose-shared', 'content-shared', 'bookmark-saved', 'routine-complete', 'mala-complete'] as const)(
+    '%s independently earns the ask on a first visit without reading', (trigger) => {
+      expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 0, trigger }))).toBe(true);
+      expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 0, trigger,
+        state: afterRated(RATING_PROMPT_DEFAULTS, NOW) }))).toBe(false);
+      expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 0, trigger,
+        state: afterAsked(RATING_PROMPT_DEFAULTS, NOW, trigger) }))).toBe(false);
+      expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 0, trigger,
+        state: afterLowRating(RATING_PROMPT_DEFAULTS, NOW) }))).toBe(false);
+      expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 0, trigger,
+        blockedBySurface: true }))).toBe(false);
   });
 
   it('honours the cooldown, then re-asks once it lapses', () => {
@@ -236,7 +246,7 @@ describe('parseRatingPromptState', () => {
         askCount: 3,
         lastAskedAt: NOW,
         outcome: 'pending',
-        asksByTrigger: { 'routine-complete': 1, 'verse-shared': 1, 'prose-shared': 1, 'mala-complete': 1 },
+        asksByTrigger: { 'routine-complete': 1, 'verse-shared': 1, 'prose-shared': 1, 'mala-complete': 1, 'app-engaged': 1, 'bookmark-saved': 1, 'content-shared': 1 },
       })
     );
     expect(parsed.asksByTrigger).toEqual({
@@ -244,6 +254,9 @@ describe('parseRatingPromptState', () => {
       'verse-shared': 1,
       'prose-shared': 1,
       'mala-complete': 1,
+      'app-engaged': 1,
+      'bookmark-saved': 1,
+      'content-shared': 1,
     });
   });
 

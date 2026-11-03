@@ -1,3 +1,4 @@
+import { useRatingShare } from '@/utils/useRatingShare';
 /**
  * दान-पुण्य खाता (PRD-26 §5, design.md §73) — the smaran register. Entries
  * grouped by civil month, each carrying its panchang tithi stamp. NO totals,
@@ -6,7 +7,7 @@
  * entries render as date + "गुप्त दान" only (their detail was never stored).
  */
 import React, { useMemo } from 'react';
-import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -34,6 +35,7 @@ function monthLabel(isoMonth: string, lang: Lang): string {
 }
 
 export default function DaanLedgerScreen({ navigation }: Props) {
+  const shareWithRating = useRatingShare();
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const { entries, removeEntry } = useDaanLedger();
@@ -56,7 +58,7 @@ export default function DaanLedgerScreen({ navigation }: Props) {
 
   const onExport = () => {
     // Device-only: the CSV goes wherever the user's own share sheet sends it.
-    Share.share({ message: buildLedgerCsv(entries) }).catch(() => undefined);
+    shareWithRating({ message: buildLedgerCsv(entries) }).catch(() => undefined);
   };
 
   const sectionLabelStyle = {

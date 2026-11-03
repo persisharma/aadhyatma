@@ -9,11 +9,9 @@
 #   - COVERS the sheet: it opens from More, shows its copy and five stars,
 #     "Maybe later" dismisses it, it reopens on demand, and a 2★ tap moves to the
 #     thank-you step, which keeps the store link and closes with "Close".
-#   - OMITS the AUTO-open path. That gate needs 5 cold starts, 3 active days,
-#     and 20 verse reads (data/ratingPrompt.ts) — `_launch.yaml` runs with
-#     clearState:true, so a Maestro run can never satisfy it. The gate is
-#     unit-tested instead (components/__tests__/RatingPromptSheet.test.tsx
-#     drives every clause, the delay, and the persisted outcomes).
+#   - Auto eligibility is 2 launches OR 2 active days OR a completed share/save.
+#     wishlist-smoke.yaml covers saving and dismissal on the native journey. The
+#     provider integration suites cover independent thresholds and shared daily guards.
 #   - OMITS 4★/5★ and the store link. They hand off to the App Store / Play
 #     listing via Linking, and the flow could not come back from that — the
 #     same reason more-smoke.yaml never taps the Instagram row.
