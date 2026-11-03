@@ -15,6 +15,9 @@ export type ExploreState = {
     last?: string;
 };
 export function initialExploreState(now: number): ExploreState { return { version: 1, enabled: true, createdAt: now, visited: [], shown: [], declined: {}, streak: 0, sleepUntil: 0 }; }
+/** Explicit replay reset: eligible immediately under Explore's own policy.
+ * The shared daily launch budget and higher-priority surfaces still apply. */
+export function resetExploreState(now: number): ExploreState { return initialExploreState(now - DAY); }
 export function parseExploreState(raw: string | null, now: number): ExploreState {
     if (!raw)
         return initialExploreState(now);
@@ -40,3 +43,4 @@ export function pickExplore(s: ExploreState, now: number, unavailable: readonly 
 export function recordShown(s: ExploreState, id: string, now: number): ExploreState { return { ...s, last: id, shown: [...s.shown.filter(t => now - t < 2 * DAY), now] }; }
 export function recordDecline(s: ExploreState, id: string, now: number): ExploreState { const streak = s.streak + 1; return { ...s, streak, declined: { ...s.declined, [id]: now }, sleepUntil: streak >= 2 ? now + 7 * DAY : s.sleepUntil }; }
 export function recordVisit(s: ExploreState, id: string): ExploreState { return s.visited.includes(id) ? s : { ...s, visited: [...s.visited, id] }; }
+
