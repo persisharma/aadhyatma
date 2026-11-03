@@ -26,7 +26,7 @@ import {
   type RatingAskTrigger,
 } from '@/data/ratingPrompt';
 
-jest.mock('@/components/launchAskStore',()=>({useLaunchAsks:()=>({ready:true,selectionComplete:true,taken:mockOptInShowing}),claimLaunchAsk:()=>true}));
+jest.mock('@/components/launchAskStore',()=>({useLaunchAsks:()=>({ready:true,selectionComplete:true,taken:mockOptInShowing}),claimRatingAsk:()=>true}));
 
 // ── In-memory AsyncStorage so we can assert what the provider persisted ──
 const mockStore = new Map<string, string>();
@@ -253,7 +253,7 @@ describe('moment-triggered ask', () => {
     expect(saved.asksByTrigger).toEqual({ 'routine-complete': 1 });
   });
 
-  test('asks at most once per session, however many moments follow', async () => {
+  test('dismissal permits the next completed action in the same session', async () => {
     const tree = await renderAndSettle();
     expect(modalVisible(tree)).toBe(true);
     act(() => {
@@ -262,8 +262,8 @@ describe('moment-triggered ask', () => {
     expect(modalVisible(tree)).toBe(false);
 
     await fireMoment();
-    expect(modalVisible(tree)).toBe(false);
-    expect(savedState().askCount).toBe(1);
+    expect(modalVisible(tree)).toBe(true);
+    expect(savedState().askCount).toBe(2);
   });
 
   test('two moments in quick succession queue one card, not two', async () => {
@@ -339,12 +339,12 @@ describe('moment-triggered ask', () => {
   test('never re-opens for a user who already rated', async () => {
     mockStore.set(
       RATING_PROMPT_STORAGE_KEY,
-      JSON.stringify({ askCount: 1, lastAskedAt: 1, outcome: 'rated' })
+      JSON.stringify({ askCount: 1, lastAskedAt: 1, outcome: 'rated', storeHandoffCount: 2 })
     );
     expect(modalVisible(await renderAndSettle())).toBe(false);
   });
 
-  test('stays shut within 90 days of a 1–3★ tap', async () => {
+  test('stays shut within 30 days of a 1–3★ tap', async () => {
     mockStore.set(
       RATING_PROMPT_STORAGE_KEY,
       JSON.stringify({ askCount: 1, lastAskedAt: 1, outcome: 'pending', lowRatedAt: Date.now() })
@@ -373,7 +373,7 @@ describe('stars and buttons', () => {
     expect(openURL).toHaveBeenCalledTimes(1);
     expect(openURL.mock.calls[0][0]).toMatch(/apps\.apple\.com|play\.google\.com/);
     expect(modalVisible(tree)).toBe(false);
-    expect(savedState().outcome).toBe('rated');
+    expect(savedState().outcome).toBe('pending');
   });
 
   test.each([1, 2, 3])('%i★ stays on the card, thanks the user and keeps the store link', async (stars) => {
@@ -390,7 +390,7 @@ describe('stars and buttons', () => {
     expect(saved.lowRatedAt).not.toBeNull();
   });
 
-  test('the store link on the thank-you step hands off and stops asking', async () => {
+  test('the low-star store link hands off and preserves the month pause', async () => {
     const tree = await renderAndSettle();
     await tapStars(tree, 2);
     await act(async () => {
@@ -400,7 +400,7 @@ describe('stars and buttons', () => {
     expect(openURL).toHaveBeenCalledTimes(1);
     expect(openURL.mock.calls[0][0]).toMatch(/apps\.apple\.com|play\.google\.com/);
     expect(modalVisible(tree)).toBe(false);
-    expect(savedState().outcome).toBe('rated');
+    expect(savedState().outcome).toBe('pending');
   });
 
   test('without a feedback inbox, the thank-you step has no email button', async () => {
@@ -438,7 +438,7 @@ describe('stars and buttons', () => {
       expect(url).toMatch(/^mailto:help@example\.test\?/);
       expect(decodeURIComponent(url)).toContain('Rating: 2/5');
       expect(modalVisible(tree)).toBe(false);
-      // Writing to us is not a store rating — the 90-day pause still applies.
+      // Writing to us is not a store rating — the 30-day pause still applies.
       expect(savedState().outcome).toBe('pending');
     } finally {
       inbox.mockRestore();
@@ -540,7 +540,7 @@ describe('stars and buttons', () => {
     expect(openURL.mock.calls[1][0]).not.toContain('write-review');
     // Still counted as rated — we did our part; nagging after a hand-off is the
     // behaviour this feature exists to avoid.
-    expect(savedState().outcome).toBe('rated');
+    expect(savedState().outcome).toBe('pending');
   });
 });
 

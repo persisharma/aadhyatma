@@ -2851,91 +2851,45 @@ pageSheet modals: this is a short interruption, not a screen to work in. Max wid
    ratings policy and the US FTC treat as deceptive. It is smaller than the primary, not absent.
 5. **`बंद करें` / Close** — the secondary treatment, a11y `"Close"`.
 
-**No permanent opt-out** (product decision, Aug 2026: "only now and later"). The
-earlier third button — `फिर न पूछें` / Don't ask again — is **removed**. Consequence, stated
-plainly: with `MAX_ASKS` at `null` there is now no state a user can reach from this card that stops
-the 5-day cadence except rating. `outcome: 'declined'` and `afterDeclined` survive in the model so
-the gate still honours a state written by an earlier build, and so a Settings-side opt-out has a
-home if one is added — see RULEBOOK §6.2 for the risk posture and the mitigations on the table.
+**Initial eligibility (OR).** Two cold launches OR two distinct active days OR a completed
+share/save/practice action. No verse-read minimum. Usage alone may request after hydration
+and launch selection settle. `app-engaged` reports usage; existing `routine-complete`,
+`mala-complete`, `verse-shared` and `prose-shared` remain. New `bookmark-saved` reports only a
+new wishlist verse, never hydration/replacement/removal. `content-shared` covers direct app,
+Samagri, Kundali/Vastu text, Daan CSV and Kul Parampara JSON exports. All provider cards,
+including calendar/Panchang and Suvichar, already report their share moment.
 
-All four languages are hand-authored via `pick` (this is UI chrome, not content, so nothing is
-transliterated), and Indic labels drop Latin tracking/uppercase per §3.
+**Response-specific repeats (product decision, 3 Nov 2026).**
 
-**Triggers** (`contexts/ratingAsk.ts` + the hosts). Usage may report `app-engaged`
-without another action. Completed actions qualify even on a first visit, without
-reading history. All share cards (including Panchang/calendar, Suvichar and Jyotish)
-use the shared provider; direct text/CSV hand-offs use `useRatingShare`.
+| Response | Next automatic ask |
+|---|---|
+| Close / Maybe later / app killed while ask is open | After 2 days OR the next completed action, whichever is earlier; a launch before 2 days alone does not qualify |
+| 1–3 stars | After a full 30-day pause; actions cannot shorten it; closing the thank-you step, email and its store link preserve this pause |
+| First 4–5 stars | Open the store rating page immediately; wait for BOTH 2 days and the first subsequent completed action; remember an early action and wait until day 2, or show after a later action; a launch alone without an action does not qualify |
+| Second 4–5-star store hand-off | Stop automatic asks; the manual More row remains available |
 
-| Trigger | Reported by | Exactly when | Why here |
-|---|---|---|---|
-| `app-engaged` | `RatingPromptContext` | After hydration and launch selection, when launches ≥2 OR active days ≥2 | Either return-usage condition is sufficient |
-| `bookmark-saved` | `BookmarksContext` via the lightweight reporting bridge | A new wishlist verse is saved, not hydration, replacement or removal | Saves independently earn the ask |
-| `content-shared` | `useRatingShare` | After a successful direct text/CSV share (`sharedAction`); cancellation/failure reports nothing | App, Samagri, Kundali/Vastu text and ledger exports use the same policy |
-| `routine-complete` | `components/RoutineCelebrationOverlay.tsx` | The pushpa-varsha's `onDone`, i.e. after the petals and caption have faded — **not** on completion itself | Today's practice is done; the best moment in the app. Riding on `onDone` keeps the card off the shower (§11) |
-| `verse-shared` | `utils/shareVerse.tsx` | After the OS/Instagram share sheet the `run()` dispatched has closed (the `Share`/`Sharing` await resolved) — **not** the Instagram-without-image error path. Devotional prose pages (Daily Bhakti) report this moment too | The user just endorsed the app to someone; a warm moment, and it reaches every reader/Daily-Bhakti screen with a share button, not only routine users |
-| `prose-shared` | `utils/shareVerse.tsx` (`proseShareMoment`) | After any non-devotional prose card is dispatched: single-page row (`runProsePage`), all pages (`runSeries`), the carousel's **Continue** (`continueCarousel` — not the hand-off pause), and Send as text on `sharedAction`. The image paths fire when the OS sheet **closes**, sent or not (`expo-sharing` and `react-native-share` with `failOnCancel: false` do not report a dismissal); only Send as text can tell a dismissal apart. A failed capture or a missing multi-image module reports nothing | Same warm moment as a verse share, from the katha/Theerth/story/listing/Ask cards; kept a separate literal so `asksByTrigger` shows which share surface earns the rating |
-| `mala-complete` | `screens/JapamCounterScreen.tsx` | On screen **blur** (`useFocusEffect` cleanup), and only if ≥1 full round was completed during the visit — **never** a card over the beads mid-japa | Leaving the counter after finishing a mala is the settle point; a card during japa would break the count (the reason this was cut before) |
+A follow-up's own response follows this same table. Thus dismissals have no lifetime cap,
+while two positive hand-offs end asking. Store hand-off is observable; submitting a store
+review is not. Legacy `rated` records represented one hand-off and migrate to one required
+follow-up; explicitly stored `declined` is still respected.
 
-Considered and **not** shipped, so nobody re-proposes them by accident: chapter completion
-(the readers' auto-advance carries the user straight into the next chapter with no pause to ask
-in), and streak milestones (covered in practice by `routine-complete`). `RatingAskTrigger` stays a
-union so adding one back is a one-literal change plus a `requestAsk` call — see RULEBOOK §6.2.
-(The mala and share moments, once on this "not shipped" list, now ship — see the table above.)
+**Coordination.** Every eligible request waits 1200 ms, then rechecks state, foreground,
+launch/tour/onboarding/What's New and Explore visibility. Active share pickers/capture/native
+sheets prevent overlap. `claimRatingAsk` preserves priority of another launch owner but lets
+rating-owned response repeats bypass the old one-per-session/day cap. Closing a card cannot
+cause an immediate automatic reopen: only the next distinct action or the elapsed deadline
+qualifies. Foregrounding checks time-based eligibility; it never counts as the required
+post-store action. The manual More row cancels pending automatic opens.
 
-`requestAsk` is safe to call freely: every refusal is silent and the moment simply passes. It
-refuses when the state is still hydrating (it does **not** queue — asking a few seconds after the
-moment, once storage catches up, is the launch-frame ambush this design exists to avoid), when the
-card already opened this session, when another open is already pending (two moments in quick
-succession queue **one** card), and whenever the gate says no. The reporting surface imports
-`useRatingAsk()` from the light `contexts/ratingAsk.ts` module, never from `RatingPromptContext`
-— see the Placement note below.
-
-**The gate** (`data/ratingPrompt.ts`, pure). Once a moment is reported, the sheet may open only
-when **all** hold:
-
-| Condition | Threshold | Why |
-|---|---|---|
-| Outcome still `pending` | — | `rated` and `declined` are terminal. Only `rated` is reachable from the sheet; `declined` is honoured for back-compat (see below) |
-| Auto-opens so far | `< MAX_ASKS` (**`null` — no ceiling**) | Uncapped by product decision: keep asking until the user rates or opts out |
-| Earned ask (OR) | Cold starts ≥2 **OR** active days ≥2 **OR** completed share/save/practice action | Each independently qualifies; no verse-read requirement |
-| Since the last ask | `≥ REASK_COOLDOWN_DAYS` (5) | The quiet period, and now the **only** thing spacing asks out — with no lifetime ceiling it is load-bearing, not a scheduling detail |
-| Since a 1–3★ tap | `≥ LOW_RATING_COOLDOWN_DAYS` (90) | Time to fix what an unhappy user disliked before asking them again (product decision, Oct 2026) |
-| No other surface asking | — | Tour, onboarding setup, What's New, reminder opt-in (§47/§38) |
-
-Engagement numbers come from `UserActivityContext.lifetimeTotals()`; the cold-start count is read
-from the **notification meta's** `appOpenCount` rather than a second counter — one "how many times
-have they come back" number, already incremented once per cold start, serving both asks (rating usage eligibility and the opt-in's first-open gate).
-
-**Persistence & lifecycle** (`contexts/RatingPromptContext.tsx`). One AsyncStorage blob,
-`@vedansh/rating-prompt`: `{ askCount, lastAskedAt, outcome, asksByTrigger, lowRatedAt }`, defensively parsed
-(junk fields fall back to defaults, never crash; a blob from the cold-start build without
-`asksByTrigger` parses with `{}`). `asksByTrigger` counts auto-opens per `RatingAskTrigger` — the
-only way, with no analytics backend, to learn which moment actually earns the rating. Behaviour:
-
-- A reported, eligible moment opens the sheet after **`RATING_PROMPT_DELAY_MS` = 1200 ms**, so the
-  moment's own feedback (success haptic, last petals) finishes first — a card on the same frame as
-  the thing it is thanking the user for reads as an ad. If a first-run
-  surface claims the screen during the delay, the open is abandoned and nothing is recorded.
-- The gate is evaluated **at the moment and again before opening**, against the latest state,
-  read through refs (not effect dependencies) so a user paging through a reader cannot defer a
-  pending open. At most **one** auto-open per app session. Opening is refused in the background or during an active share flow; manual opening cancels a pending automatic ask.
-- **Opening consumes an ask slot, starts the cooldown, and credits the trigger** (`afterAsked`).
-  A swipe-away still counts as "we asked" — the cooldown, not the outcome, is what silences the
-  second ask.
-- **4–5★, or the thank-you step's store link** → `afterRated` (terminal) + `Linking.openURL(storeReviewUrl(Platform.OS))`. iOS gets
-  `…?action=write-review` (the App Store review composer); Play has no listing equivalent, so
-  Android lands on the listing, whose rating stars are the first thing on the page. If the OS
-  refuses the deep link, it falls back to the plain listing, then fails **silently** — a broken
-  hand-off must not throw an error at a user who just tried to do us a favour. "Rated" records the
-  *hand-off*, not a review the app cannot observe.
-- **1–3★** → `afterLowRating` records `lowRatedAt` (outcome stays `pending`) and the card moves to
-  its thank-you step. "Write to us" and Close both close it; the auto-ask then stays away for 90
-  days. The in-app stars themselves go nowhere: the store needs its own rating.
-- **Maybe later** → close only; the same card returns after the 5-day cooldown, indefinitely. The
-  `Modal`'s `onRequestClose` (Android back) maps to it too — so a back press is a "later", never an
-  opt-out.
-- The **More row** calls `open()`, which bypasses the gate and spends **no** ask slot — a user who
-  went looking has opted in. It keeps working after `declined`; opting out silences the auto-ask.
+**Persistence.** `@vedansh/rating-prompt` retains existing counters/outcomes and adds
+`response`, `respondedAt`, `storeHandoffCount`, `followupActionAt`. `afterAsked` credits the moment and resets the
+response; dismissals and low/high-star responses persist their own time. Corrupt/old records
+parse defensively. New trigger IDs are additive. No native dependency or server tracking.
+Bookmarked saves use the lightweight reporting bridge because their provider is above rating.
+Direct text/CSV shares require `Share.sharedAction`; unsupported/failed hand-offs do not ask.
+Expo/multi-file image sharing retains its existing dispatched-sheet semantics when cancellation
+is unavailable. No permanent opt-out control is added. All four hand-authored UI languages,
+fonts, layout, stars, feedback link and manual entry remain unchanged.
 
 **Placement.** `<RatingPromptSheet />` mounts last in `App.tsx`, inside `RatingPromptProvider`
 (itself inside `TourProvider` + `NotificationPreferencesProvider`, whose flags the gate reads).
@@ -2955,15 +2909,13 @@ provider: importing `RatingPromptContext` directly would drag `NotificationPrefe
 Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, both cooldown boundaries,
 per-trigger credit, defensive parse incl. the pre-trigger blob, URL and mailto shapes),
 `src/components/__tests__/RatingPromptSheet.test.tsx` (silent cold start, the moment opens after
-the delay and is credited, once per session, one card for two moments, a surface claiming the
+the delay and is credited, response-specific repeat boundaries, one card for two simultaneous moments, a surface claiming the
 screen mid-delay, 4–5★ to the store, 1–3★ to the thank-you step with its store link, "Write to us"
 with and without an inbox, persisted outcomes, no opt-out, both steps in all four languages,
 a11y-hidden echoed stars, the no-op hook outside the provider), `src/components/__tests__/RoutineCelebrationOverlay.test.tsx`
 (the moment is reported on `onDone`, not on completion),
 `src/screens/__tests__/MoreScreen.test.tsx` (the row opens the sheet instead of leaving the app).
-E2E: `.maestro/rating-prompt-smoke.yaml` — the manual path only (open, stars present, Maybe later,
-2★ to the thank-you step and Close); the auto path's thresholds are unreachable under `clearState`,
-so the gate is unit-tested instead.
+E2E: `.maestro/rating-prompt-smoke.yaml` and `wishlist-smoke.yaml`; automatic time/action combinations and legacy migration are provider integration tests. Installed native timing/exports remain separate acceptance evidence.
 
 ---
 
@@ -4159,6 +4111,10 @@ Files: `components/explore/ExploreLaunch.tsx`, `ExploreSheet.tsx`,
 visual direction from draft PR #575; its earlier prototype disagreements no longer
 define the native layout.
 
-**Shared launch coordination (§86).** Explore waits for `launchAskStore.selectionComplete` and atomically claims the same daily opportunity as reminders, widgets, updates and automatic rating. Its own six-hour/two-per-day policy remains a ceiling; the app-wide cap permits at most one automatic prompt per local day. A stopped reminder is not a pending reminder surface. The host decides reminder eligibility from its current cadence, not the legacy 15-day flag.
+**Shared launch coordination (§86).** Explore waits for `launchAskStore.selectionComplete` and atomically claims the same daily opportunity as reminders, widgets, updates and automatic rating. Its own six-hour/two-per-day policy remains a ceiling; the shared cap permits one initial automatic opportunity per local day; rating-owned response repeats use the explicit §54 exception. A stopped reminder is not a pending reminder surface. The host decides reminder eligibility from its current cadence, not the legacy 15-day flag.
 
 A background update staged after Explore has claimed its slot does not dismiss the active sheet; the update offer waits for the next shared opportunity. Already-pending updates retain priority before Explore claims.
+
+**Explore replay reset.** Settings → Explore sections retains immediate replay and adds a secondary “Reset visit history” action inside the scrolling body, with a 44pt target, script-aware theme text and all four UI languages. It is absent from automatic sheets. A native confirmation explains that visits, dismissal history and Explore cooldowns (including initial collection wait) are cleared; Cancel changes nothing. While saving, disable the reset action and guard duplicate confirmations. Report success only after persistence, using an inline live status with cold-launch/Home instructions and the shared daily-limit caveat. Failed persistence reports failure. Existing practices, saved progress, reminders and the shared launch gate remain untouched. The next ordinary eligible cold launch uses normal selection; reset neither forces a modal immediately nor guarantees today's slot. Keep the valid aged ledger so a cold restart cannot re-seed old routine/Sankalp/Pitru visits. Confirmations from an unmounted replay do nothing.
+
+

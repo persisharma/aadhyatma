@@ -14,9 +14,12 @@ import {
   REASK_COOLDOWN_DAYS,
   STORE_MIN_STARS,
   afterAsked,
+  afterDismissed,
   afterDeclined,
   afterLowRating,
   afterRated,
+  afterStoreFollowupAction,
+  timeBasedRatingAskAt,
   feedbackEmail,
   feedbackMailto,
   isEligibleForRatingPrompt,
@@ -52,7 +55,7 @@ describe('thresholds', () => {
   it('are the values design.md §54 documents', () => {
     expect(MIN_APP_OPENS).toBe(2);
     expect(MIN_ACTIVE_DAYS).toBe(2);
-    expect(REASK_COOLDOWN_DAYS).toBe(5);
+    expect(REASK_COOLDOWN_DAYS).toBe(2);
     // null = no lifetime ceiling: keep asking until the user rates or opts out.
     expect(MAX_ASKS).toBeNull();
   });
@@ -90,9 +93,9 @@ describe('isEligibleForRatingPrompt', () => {
     '%s independently earns the ask on a first visit without reading', (trigger) => {
       expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 0, trigger }))).toBe(true);
       expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 0, trigger,
-        state: afterRated(RATING_PROMPT_DEFAULTS, NOW) }))).toBe(false);
+        state: afterRated(afterRated(RATING_PROMPT_DEFAULTS, NOW), NOW) }))).toBe(false);
       expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 0, trigger,
-        state: afterAsked(RATING_PROMPT_DEFAULTS, NOW, trigger) }))).toBe(false);
+        state: afterDismissed(afterAsked(RATING_PROMPT_DEFAULTS, NOW, trigger), NOW) }))).toBe(true);
       expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 0, trigger,
         state: afterLowRating(RATING_PROMPT_DEFAULTS, NOW) }))).toBe(false);
       expect(isEligibleForRatingPrompt(eligibleInput({ appOpens: 1, activeDays: 0, trigger,
@@ -136,6 +139,7 @@ describe('state transitions', () => {
   it('afterAsked spends a slot, starts the cooldown, and credits the moment', () => {
     const once = afterAsked(RATING_PROMPT_DEFAULTS, NOW, 'routine-complete');
     expect(once).toEqual({
+      ...RATING_PROMPT_DEFAULTS,
       askCount: 1,
       lastAskedAt: NOW,
       outcome: 'pending',
@@ -156,9 +160,9 @@ describe('state transitions', () => {
   });
 
   it('afterRated and afterDeclined are both terminal', () => {
-    expect(afterRated(RATING_PROMPT_DEFAULTS, NOW).outcome).toBe('rated');
+    expect(afterRated(afterRated(RATING_PROMPT_DEFAULTS, NOW), NOW).outcome).toBe('rated');
     expect(afterDeclined(RATING_PROMPT_DEFAULTS, NOW).outcome).toBe('declined');
-    expect(isEligibleForRatingPrompt(eligibleInput({ state: afterRated(RATING_PROMPT_DEFAULTS, NOW) }))).toBe(
+    expect(isEligibleForRatingPrompt(eligibleInput({ state: afterRated(afterRated(RATING_PROMPT_DEFAULTS, NOW), NOW) }))).toBe(
       false
     );
     expect(
@@ -210,11 +214,14 @@ describe('parseRatingPromptState', () => {
 
   it('round-trips a valid state', () => {
     const state: RatingPromptState = {
+      ...RATING_PROMPT_DEFAULTS,
       askCount: 1,
       lastAskedAt: NOW,
       outcome: 'pending',
       asksByTrigger: { 'routine-complete': 1 },
       lowRatedAt: NOW,
+      response: 'low',
+      respondedAt: NOW,
     };
     expect(parseRatingPromptState(JSON.stringify(state))).toEqual(state);
   });
@@ -224,7 +231,7 @@ describe('parseRatingPromptState', () => {
     const parsed = parseRatingPromptState(
       JSON.stringify({ askCount: 2, lastAskedAt: NOW, outcome: 'pending' })
     );
-    expect(parsed).toEqual({ askCount: 2, lastAskedAt: NOW, outcome: 'pending', asksByTrigger: {}, lowRatedAt: null });
+    expect(parsed).toEqual({ ...RATING_PROMPT_DEFAULTS, askCount: 2, lastAskedAt: NOW, outcome: 'pending', asksByTrigger: {}, lowRatedAt: null });
   });
 
   it('keeps only known moments with sane counts', () => {
@@ -269,7 +276,7 @@ describe('parseRatingPromptState', () => {
 
   it('floors a fractional askCount and rejects a non-positive timestamp', () => {
     const parsed = parseRatingPromptState(JSON.stringify({ askCount: 1.8, lastAskedAt: 0, outcome: 'rated' }));
-    expect(parsed).toEqual({ askCount: 1, lastAskedAt: null, outcome: 'rated', asksByTrigger: {}, lowRatedAt: null });
+    expect(parsed).toMatchObject({ askCount: 1, lastAskedAt: null, outcome: 'pending', response: 'store', storeHandoffCount: 1 });
   });
 
   it('rejects a junk lowRatedAt', () => {
@@ -281,7 +288,7 @@ describe('parseRatingPromptState', () => {
 describe('in-app stars', () => {
   it('sends 4★ and 5★ to the store, and keeps 1–3★ on the card', () => {
     expect(STORE_MIN_STARS).toBe(4);
-    expect(LOW_RATING_COOLDOWN_DAYS).toBe(90);
+    expect(LOW_RATING_COOLDOWN_DAYS).toBe(30);
   });
 
   it('ships with the Vedansh support inbox', () => {
@@ -310,4 +317,54 @@ describe('store URLs', () => {
   it('falls back to the Play listing for any non-iOS platform', () => {
     expect(storeReviewUrl('web')).toBe(storeListingUrl('android'));
   });
+});
+
+
+describe('response-specific repeat policy', () => {
+  const asked = afterAsked(RATING_PROMPT_DEFAULTS, NOW, 'verse-shared');
+  it('dismissal: next action can repeat immediately, usage waits exactly two days', () => {
+    const state = afterDismissed(asked, NOW);
+    expect(isEligibleForRatingPrompt(eligibleInput({ state, now: NOW + 1, trigger: 'bookmark-saved' }))).toBe(true);
+    expect(isEligibleForRatingPrompt(eligibleInput({ state, now: NOW + 2 * DAY_MS - 1 }))).toBe(false);
+    expect(isEligibleForRatingPrompt(eligibleInput({ state, now: NOW + 2 * DAY_MS }))).toBe(true);
+  });
+  it('1–3 stars: every action waits a full 30 days', () => {
+    const state = afterLowRating(asked, NOW);
+    expect(isEligibleForRatingPrompt(eligibleInput({ state, now: NOW + 30 * DAY_MS - 1, trigger: 'verse-shared' }))).toBe(false);
+    expect(isEligibleForRatingPrompt(eligibleInput({ state, now: NOW + 30 * DAY_MS, trigger: 'verse-shared' }))).toBe(true);
+  });
+  it('first positive hand-off: two days AND an action; second hand-off stops', () => {
+    const first = afterRated(asked, NOW, 4);
+    expect(first.outcome).toBe('pending');
+    expect(isEligibleForRatingPrompt(eligibleInput({ state: first, now: NOW + 1, trigger: 'verse-shared' }))).toBe(false);
+    expect(isEligibleForRatingPrompt(eligibleInput({ state: first, now: NOW + 2 * DAY_MS }))).toBe(false);
+    expect(isEligibleForRatingPrompt(eligibleInput({ state: first, now: NOW + 2 * DAY_MS, trigger: 'verse-shared' }))).toBe(true);
+    const second = afterRated(afterAsked(first, NOW + 2 * DAY_MS, 'verse-shared'), NOW + 2 * DAY_MS, 5);
+    expect(second.storeHandoffCount).toBe(2);
+    expect(second.outcome).toBe('rated');
+    expect(isEligibleForRatingPrompt(eligibleInput({ state: second, now: NOW + 100 * DAY_MS, trigger: 'verse-shared' }))).toBe(false);
+  });
+  it('migrates legacy store hand-offs into one required follow-up without resurrecting opt-outs', () => {
+    const state = parseRatingPromptState(JSON.stringify({ outcome: 'rated', lastAskedAt: NOW }));
+    expect(state).toMatchObject({ outcome: 'pending', response: 'store', storeHandoffCount: 1 });
+    expect(isEligibleForRatingPrompt(eligibleInput({ state, now: NOW + 2 * DAY_MS, trigger: 'verse-shared' }))).toBe(true);
+    expect(parseRatingPromptState(JSON.stringify({ outcome: 'declined' })).outcome).toBe('declined');
+  });
+  it('the low-star store link retains the month-long pause and does not count as a positive hand-off', () => {
+    const state = afterRated(afterLowRating(asked, NOW), NOW, 2);
+    expect(state).toMatchObject({ response: 'low', storeHandoffCount: 0 });
+  });
+});
+
+
+it('positive follow-up uses the later of day two and the first subsequent action', () => {
+  const first = afterRated(RATING_PROMPT_DEFAULTS, NOW, 5);
+  const early = afterStoreFollowupAction(first, NOW + DAY_MS);
+  expect(timeBasedRatingAskAt(first)).toBeNull();
+  expect(timeBasedRatingAskAt(early)).toBe(NOW + 2 * DAY_MS);
+  expect(isEligibleForRatingPrompt(eligibleInput({ state: early, now: NOW + 2 * DAY_MS - 1 }))).toBe(false);
+  expect(isEligibleForRatingPrompt(eligibleInput({ state: early, now: NOW + 2 * DAY_MS }))).toBe(true);
+  const late = afterStoreFollowupAction(first, NOW + 4 * DAY_MS);
+  expect(timeBasedRatingAskAt(late)).toBe(NOW + 4 * DAY_MS);
+  expect(parseRatingPromptState(JSON.stringify(early)).followupActionAt).toBe(NOW + DAY_MS);
 });

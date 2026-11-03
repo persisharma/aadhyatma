@@ -80,7 +80,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Rate the App"
 
 # ── Step 6: Reopens on demand — dismissing is never permanent ──
-# "Maybe later" only closes the card; the 5-day cadence brings it back and the
+# "Maybe later" only closes the card; the two-day-or-next-action rule brings it back and the
 # More row reopens it immediately. There is no state a user can reach from this
 # sheet that makes it unavailable.
 - tapOn: "Rate the app"

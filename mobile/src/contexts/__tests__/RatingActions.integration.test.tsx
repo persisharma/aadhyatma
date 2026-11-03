@@ -9,6 +9,7 @@ import { RATING_PROMPT_STORAGE_KEY } from '@/data/ratingPrompt';
 
 const mockStore = new Map<string, string>();
 let mockTaken = false;
+let mockRatingOwned = false;
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: (key: string) => Promise.resolve(mockStore.get(key) ?? null),
   setItem: (key: string, value: string) => { mockStore.set(key, value); return Promise.resolve(); },
@@ -23,8 +24,8 @@ jest.mock('@/contexts/TourContext', () => ({
   useTour: () => ({ isLoading: false }),
 }));
 jest.mock('@/components/launchAskStore', () => ({
-  useLaunchAsks: () => ({ ready: true, selectionComplete: true, taken: mockTaken }),
-  claimLaunchAsk: () => { if (mockTaken) return false; mockTaken = true; return true; },
+  useLaunchAsks: () => ({ ready: true, selectionComplete: true, taken: mockTaken, ratingOwned: mockRatingOwned }),
+  claimRatingAsk: () => { if (mockTaken && !mockRatingOwned) return false; mockTaken = true; mockRatingOwned = true; return true; },
 }));
 
 let bookmarks: ReturnType<typeof useBookmarks>;
@@ -45,7 +46,7 @@ const saved: BookmarkRef = { id: 'gita-1-0', sourceId: 'gita', chapter: 1, verse
   savedAt: 1000, previewHi: 'श्लोक', previewEn: 'Verse' };
 async function settle() { await act(async () => { jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS); }); }
 
-beforeEach(() => { jest.useFakeTimers(); mockStore.clear(); mockTaken = false; });
+beforeEach(() => { jest.useFakeTimers(); mockStore.clear(); mockTaken = false; mockRatingOwned = false; });
 afterEach(() => {
   if (tree) act(() => tree.unmount());
   jest.restoreAllMocks(); jest.useRealTimers();
@@ -92,10 +93,10 @@ it('does not ask on a failed hand-off and releases the interaction guard', async
   expect(isRatingInteractionActive()).toBe(false);
 });
 
-it.each(['rated', 'cooldown', 'low-rating', 'daily-budget'])('actions honour %s suppression', async (reason) => {
+it.each(['rated', 'low-rating', 'daily-budget'])('actions honour %s suppression', async (reason) => {
   if (reason === 'daily-budget') mockTaken = true;
   else mockStore.set(RATING_PROMPT_STORAGE_KEY, JSON.stringify({
-    outcome: reason === 'rated' ? 'rated' : 'pending',
+    outcome: reason === 'rated' ? 'rated' : 'pending', storeHandoffCount: reason === 'rated' ? 2 : 0,
     lastAskedAt: reason === 'cooldown' ? Date.now() : 1,
     lowRatedAt: reason === 'low-rating' ? Date.now() : null,
   }));
@@ -133,6 +134,83 @@ it('manual rating cancels a pending action ask', async () => {
   jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction });
   await settle();
   expect(rating.visible).toBe(false);
-  expect(rating.state.outcome).toBe('rated');
+  expect(rating.state.outcome).toBe('pending');
+  expect(rating.state.response).toBe('store');
   expect(rating.state.askCount).toBe(0);
+});
+
+
+it('repeats on the next completed action after dismissal, within the same session/day', async () => {
+  await mount();
+  act(() => bookmarks.addBookmark(saved)); await settle();
+  expect(rating.visible).toBe(true);
+  act(() => rating.dismiss());
+  jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction });
+  await act(async () => { await share({ message: 'Next action' }); }); await settle();
+  expect(rating.visible).toBe(true);
+  expect(rating.state.askCount).toBe(2);
+});
+
+it('a low-star Close cannot remove the 30-day pause', async () => {
+  await mount();
+  act(() => bookmarks.addBookmark(saved)); await settle();
+  act(() => rating.recordLowRating());
+  act(() => rating.dismiss());
+  jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction });
+  await act(async () => { await share({ message: 'Next action' }); }); await settle();
+  expect(rating.visible).toBe(false);
+  expect(rating.state.response).toBe('low');
+});
+
+it('first positive hand-off waits for both two days and an action; second hand-off stops', async () => {
+  jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+  jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction });
+  await mount(); act(() => bookmarks.addBookmark(saved)); await settle();
+  act(() => rating.rate(5));
+  const ratedAt = Date.now();
+  jest.setSystemTime(ratedAt + 2 * 86400000);
+  act(() => rating.requestAsk('app-engaged')); await settle();
+  expect(rating.visible).toBe(false);
+  await act(async () => { await share({ message: 'After two days' }); }); await settle();
+  expect(rating.visible).toBe(true);
+  act(() => rating.rate(4));
+  expect(rating.state.outcome).toBe('rated');
+  jest.setSystemTime(ratedAt + 90 * 86400000);
+  await act(async () => { await share({ message: 'Already handed off twice' }); }); await settle();
+  expect(rating.visible).toBe(false);
+});
+
+it('dismissal can return on time alone after exactly two days', async () => {
+  await mount(); act(() => bookmarks.addBookmark(saved)); await settle();
+  act(() => rating.dismiss());
+  await act(async () => { jest.advanceTimersByTime(2 * 86400000); });
+  await settle();
+  expect(rating.visible).toBe(true);
+});
+
+
+it('cold reload preserves the required follow-up for legacy one-handoff users', async () => {
+  mockStore.set(RATING_PROMPT_STORAGE_KEY, JSON.stringify({ outcome: 'rated', lastAskedAt: Date.now() - 2 * 86400000 }));
+  jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction });
+  await mount(); await settle();
+  expect(rating.visible).toBe(false);
+  await act(async () => { await share({ message: 'After cold reload' }); }); await settle();
+  expect(rating.visible).toBe(true);
+  expect(rating.state.storeHandoffCount).toBe(1);
+});
+
+
+it('an early post-store action is remembered until the two-day deadline', async () => {
+  jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+  jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction });
+  await mount(); act(() => bookmarks.addBookmark(saved)); await settle();
+  act(() => rating.rate(5));
+  const ratedAt = Date.now();
+  jest.setSystemTime(ratedAt + 86400000);
+  await act(async () => { await share({ message: 'Action on day one' }); }); await settle();
+  expect(rating.visible).toBe(false);
+  expect(rating.state.followupActionAt).not.toBeNull();
+  jest.setSystemTime(ratedAt + 2 * 86400000);
+  act(() => rating.requestAsk('app-engaged')); await settle();
+  expect(rating.visible).toBe(true);
 });

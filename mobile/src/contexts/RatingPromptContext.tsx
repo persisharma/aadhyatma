@@ -1,6 +1,6 @@
 import { isRatingInteractionActive } from '@/contexts/ratingInteraction';
 import { isBrandLaunchVisible, useBrandLaunchVisible } from '@/navigation/brandLaunchIntent';
-import { useLaunchAsks, claimLaunchAsk } from '@/components/launchAskStore';
+import { useLaunchAsks, claimRatingAsk } from '@/components/launchAskStore';
 import { isExploreSurfaceOpen } from '@/data/discovery/store';
 import React, {
   createContext,
@@ -17,14 +17,17 @@ import {
   RATING_PROMPT_DEFAULTS,
   RATING_PROMPT_STORAGE_KEY,
   afterAsked,
+  afterDismissed,
   afterLowRating,
   afterRated,
+  afterStoreFollowupAction,
   feedbackEmail,
   feedbackMailto,
   isEligibleForRatingPrompt,
   parseRatingPromptState,
   storeListingUrl,
   storeReviewUrl,
+  timeBasedRatingAskAt,
   type RatingAskTrigger,
   type RatingPromptState,
 } from '@/data/ratingPrompt';
@@ -42,12 +45,9 @@ import { RatingAskContext, subscribeRatingAsks } from '@/contexts/ratingAsk';
  *  - Usage — two cold starts OR two active days, after launch selection settles.
  *  - Moment-triggered — a surface where the user has just finished something
  *    (routine celebration done, a mala completed, a verse shared) calls
- *    `requestAsk(trigger)`. The request is honoured at most once per app
- *    session, only on a `REASK_COOLDOWN_DAYS` cadence with no lifetime ceiling,
+ *    `requestAsk(trigger)`. The request is honoured on its persisted response-specific time/action cadence,
  *    including first-visit shares/saves, and never on top of another
- *    first-run/post-update surface. Opening records the ask and restarts the
- *    cooldown, so a swipe-away still counts as "we asked". Rating is the only
- *    outcome the sheet can reach that ends the cadence.
+ *    first-run/post-update surface. Opening records the ask; the next response selects its repeat rule. Two positive store hand-offs stop automatic asks.
  *  - Manual — the "Rate the App" row in More (§37) calls `open()`, which
  *    bypasses the gate and does NOT spend an ask slot. A user who goes looking
  *    for it has already opted in.
@@ -65,13 +65,13 @@ type RatingPromptContextValue = {
   /** Open the sheet from a user action (More row) — ignores the gate. */
   open: () => void;
   /**
-   * "Maybe later": close. The 5-day cadence brings the card back — there is no
+   * "Maybe later": close. The two-day-or-next-action rule brings the card back — there is no
    * permanent opt-out on the sheet (design.md §54, RULEBOOK §6.2).
    */
   dismiss: () => void;
-  /** A 4–5★ tap, or the low-star step's store link: hand off to the store and stop asking. */
-  rate: () => void;
-  /** A 1–3★ tap: the card stays up on its thank-you step and stays away for 90 days after. */
+  /** A 4–5★ tap, or the low-star step's store link: hand off to the store and update the required follow-up. */
+  rate: (stars?: number) => void;
+  /** A 1–3★ tap: the card stays up on its thank-you step and stays away for 30 days after. */
   recordLowRating: () => void;
   /** "Write to us": close and open a pre-filled email. Offered only when `feedbackEmail()` is set. */
   writeToUs: (stars: number) => void;
@@ -124,9 +124,8 @@ export function RatingPromptProvider({
   const [state, setState] = useState<RatingPromptState>(RATING_PROMPT_DEFAULTS);
   const [hydrated, setHydrated] = useState(false);
   const [visible, setVisible] = useState(false);
-  /** One auto-open per app session, even if eligibility recomputes. */
-  const askedThisSessionRef = useRef(false);
-  /** Mirror of the latest state so button handlers never write from a stale closure. */
+  const [clockTick, setClockTick] = useState(0);
+    /** Mirror of the latest state so button handlers never write from a stale closure. */
   const stateRef = useRef<RatingPromptState>(RATING_PROMPT_DEFAULTS);
 
   useEffect(() => {
@@ -172,7 +171,7 @@ export function RatingPromptProvider({
 
   const blockedBySurface =
     brandVisible ||
-    launch.taken ||
+    (launch.taken && !launch.ratingOwned) ||
     !launch.ready ||
     !launch.selectionComplete ||
     shouldShowFirstLaunchTour ||
@@ -191,6 +190,7 @@ export function RatingPromptProvider({
   const pendingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(
     () => () => {
+      readyRef.current = false;
       if (pendingRef.current) clearTimeout(pendingRef.current);
     },
     [],
@@ -198,11 +198,16 @@ export function RatingPromptProvider({
 
   const requestAsk = useCallback(
     (trigger: RatingAskTrigger) => {
-      if (askedThisSessionRef.current || pendingRef.current || visibleRef.current) return;
+      if (pendingRef.current || visibleRef.current) return;
       // Still loading: the moment passes rather than being queued. Asking a few
       // seconds after the moment, once storage catches up, is the launch-frame
       // ambush this design exists to avoid.
       if (!readyRef.current) return;
+
+      if (trigger !== 'app-engaged') {
+        const next = afterStoreFollowupAction(stateRef.current, Date.now());
+        if (next !== stateRef.current) persist(next);
+      }
 
       const eligible = isEligibleForRatingPrompt({
         trigger,
@@ -216,7 +221,7 @@ export function RatingPromptProvider({
       pendingRef.current = setTimeout(() => {
         pendingRef.current = null;
         // A first-run surface may have claimed the screen during the delay.
-        if (!readyRef.current || visibleRef.current || blockedRef.current || isBrandLaunchVisible() || askedThisSessionRef.current || isExploreSurfaceOpen()) return;
+        if (!readyRef.current || visibleRef.current || blockedRef.current || isBrandLaunchVisible() || isExploreSurfaceOpen()) return;
         if (AppState.currentState === 'background' || AppState.currentState === 'inactive') return;
         if (isRatingInteractionActive()) return;
         // Manual rating/feedback may have changed the persisted outcome during the delay.
@@ -227,8 +232,8 @@ export function RatingPromptProvider({
           now: Date.now(),
           blockedBySurface: blockedRef.current,
         })) return;
-        if (!claimLaunchAsk()) return;
-        askedThisSessionRef.current = true;
+        const repeat = stateRef.current.lastAskedAt !== null || stateRef.current.respondedAt !== null;
+        if (!claimRatingAsk(repeat)) return;
         persist(afterAsked(stateRef.current, Date.now(), trigger));
         setVisible(true);
       }, RATING_PROMPT_DELAY_MS);
@@ -242,8 +247,21 @@ export function RatingPromptProvider({
     if (hydrated && !notifLoading && !activityLoading && !tourLoading && !blockedBySurface) {
       requestAsk('app-engaged');
     }
+    if (!hydrated || visible || blockedBySurface) return;
+    const deadline = timeBasedRatingAskAt(state);
+    if (deadline === null || deadline <= Date.now()) return;
+    // Bound waits below the platform timeout maximum, including the 30-day rest.
+    const timer = setTimeout(() => setClockTick((n) => n + 1), Math.min(deadline - Date.now(), 86400000));
+    return () => clearTimeout(timer);
   }, [hydrated, notifLoading, activityLoading, tourLoading, blockedBySurface,
-    meta.appOpenCount, activeDays, requestAsk]);
+    meta.appOpenCount, activeDays, requestAsk, state, visible, clockTick]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (next) => {
+      if (next === 'active') requestAsk('app-engaged');
+    });
+    return () => subscription.remove();
+  }, [requestAsk]);
 
   const open = useCallback(() => {
     if (pendingRef.current) clearTimeout(pendingRef.current);
@@ -251,11 +269,17 @@ export function RatingPromptProvider({
     setVisible(true);
   }, []);
 
-  const dismiss = useCallback(() => setVisible(false), []);
-
-  const rate = useCallback(() => {
+  const dismiss = useCallback(() => {
     setVisible(false);
-    persist(afterRated(stateRef.current, Date.now()));
+    // Closing the thank-you step must preserve its 30-day pause.
+    if (stateRef.current.response !== 'low' && stateRef.current.response !== 'store') {
+      persist(afterDismissed(stateRef.current, Date.now()));
+    }
+  }, [persist]);
+
+  const rate = useCallback((stars = 5) => {
+    setVisible(false);
+    persist(afterRated(stateRef.current, Date.now(), stars));
     // The review deep link is the preferred target; if the OS refuses it (older
     // iOS, no App Store app, web) fall back to the plain listing, then give up
     // silently — a failed hand-off must never surface an error to a user who

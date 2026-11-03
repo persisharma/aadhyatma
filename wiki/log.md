@@ -1326,3 +1326,7 @@ Recorded the Home-only size/colour treatment, restored Om circles/rules and reta
 ## [2026-11-02] ingest | Add 76 approved original Suvichar reflections, explicit shrine scope and original daily rotation; preserve 621 referenced entries and stable favorites. Native/export review pending.
 
 ## [2026-11-02] ingest | Add eight Khatu Shyam-only Hare Ka Sahara original reflections after merged #603; preserve earlier 76 IDs and expand late-ID/theme-search coverage. Native/export review pending.
+
+## [2026-11-03] ingest | Explore replay visit-history reset
+Added the confirmed replay-only history reset, persistence/no-reseeding contract, next-eligible-launch timing and shared-budget preservation to [[subsystems/explore-sheet]]. Native visual/Maestro evidence remains pending.
+
