@@ -110,6 +110,9 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Card language: Hindi"
 - waitForAnimationToEnd
 - takeScreenshot: e2e-shots/panchang-share-wordmark-hi
+# Alignment follow-up: inspect wordmark/subtitle separation, optical location
+# centering and both scripts centered in the Download pill.
+- takeScreenshot: e2e-shots/panchang-share-chrome-alignment-hi
 - tapOn: "Cancel"
 - assertVisible: "Share panchang"
 - assertVisible: "Purnimant calendar system"

@@ -20,6 +20,16 @@ export const PANCHANG_SHARE_HEIGHT = 675;
 
 const SKY_HEIGHT = 144;
 
+// Optical centers measured in the shipped font faces (em). Noto's deep
+// descender reserve makes visible Indic labels sit high in centered line boxes.
+// Keep this local to fixed-image chrome; reader headroom/scaling is unchanged.
+const chromeOpticalOffsets = {
+  hi: { place: 0.295, download: 0.285 },
+  gu: { place: 0.17, download: 0.175 },
+  kn: { place: 0.26, download: 0.275 },
+  en: { place: 0.04, download: -0.01 },
+} as const;
+
 /**
  * पूर्ण पंचांग share card (design.md §33a): one day, everything the day panel
  * shows, in one 4:5 image — a day-sky header (brand, city, date, sun and moon
@@ -138,16 +148,22 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
         <View style={styles.brandRow}>
           <View style={styles.brand}>
             <Image source={brandMark} onLoad={onIconLoad} style={styles.brandIcon} accessibilityIgnoresInvertColors />
-            <View>
+            <View style={styles.brandCopy}>
               <VedanshWordmark lang={lang} compact showTagline={false} fixedExport />
-              <Text allowFontScaling={false} style={fit({ fontFamily: fontFamilies.latinSemiBoldItalic, fontSize: 12, lineHeight: 14, color: colors.saffronDeep })}>
-                <Text allowFontScaling={false} style={en ? undefined : { fontFamily: scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 11.5 }}>{t('पूर्ण पंचांग', 'Full Panchang')}</Text>
+              {/* Chrome reserves its own full line box. Reader headroom's negative
+                  margin would pull this subtitle into the wordmark above it. */}
+              <Text testID="panchang-share-subtitle" allowFontScaling={false} style={{
+                fontFamily: en ? fontFamilies.latinSemiBoldItalic : scriptTitleFont(lang, fontFamilies.devanagariBold),
+                fontSize: en ? 12 : 11.5, lineHeight: en ? 18 : 19,
+                includeFontPadding: false, color: colors.saffronDeep,
+              }}>
+                {t('पूर्ण पंचांग', 'Full Panchang')}
               </Text>
             </View>
           </View>
-          <View style={[styles.cityChip, { backgroundColor: colors.dayGlass, borderColor: colors.dayGlassBorder }]}>
+          <View testID="panchang-share-location-chip" style={[styles.cityChip, { backgroundColor: colors.dayGlass, borderColor: colors.dayGlassBorder }]}>
             <View style={[styles.pin, { backgroundColor: colors.saffron }]} />
-            <Text allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[fit({ fontFamily: en ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: en ? 14 : 13, lineHeight: 17, color: colors.ink }), styles.shrink]}>
+            <Text testID="panchang-share-location" allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[{ fontFamily: en ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: en ? 14 : 13, includeFontPadding: false, textAlignVertical: 'center', color: colors.ink, transform: [{ translateY: (en ? 14 : 13) * chromeOpticalOffsets[lang].place }] }, styles.shrink]}>
               {model.place}
             </Text>
           </View>
@@ -237,13 +253,13 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
             {t('मुहूर्त · चौघड़िया · व्रत-त्योहार · कुंडली · पाठ', 'Muhurat · Choghadiya · Festivals · Kundali')}
           </One>
         </View>
-        {/* One Text with the link as a span, so the two share a baseline: as sibling
-            Texts their boxes centre, and Devanagari sits high in its box. */}
-        <View style={[styles.pill, { backgroundColor: colors.nightGold }]}>
-          <Text allowFontScaling={false} style={fit({ fontFamily: en ? fontFamilies.interSemiBold : scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 12, lineHeight: 15, color: colors.ink })}>
-            {t('डाउनलोड', 'Download')}{'  '}
-            <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.interSemiBold }}>{SMART_LINK.replace(/^https:\/\//, '')}</Text>
+        {/* Center each script's natural line box instead of sharing a baseline
+            and pulling the whole label upward with reader mark headroom. */}
+        <View testID="panchang-share-download-pill" style={[styles.pill, { backgroundColor: colors.nightGold }]}>
+          <Text testID="panchang-share-download-label" allowFontScaling={false} style={{ fontFamily: en ? fontFamilies.interSemiBold : scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: 12, includeFontPadding: false, textAlignVertical: 'center', color: colors.ink, transform: [{ translateY: 12 * chromeOpticalOffsets[lang].download }] }}>
+            {t('डाउनलोड', 'Download')}
           </Text>
+          <Text testID="panchang-share-download-link" allowFontScaling={false} style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, includeFontPadding: false, textAlignVertical: 'center', color: colors.ink, transform: [{ translateY: -12 * 0.09 }] }}>{SMART_LINK.replace(/^https:\/\//, '')}</Text>
         </View>
       </LinearGradient>
     </View>
@@ -255,6 +271,7 @@ const styles = StyleSheet.create({
   sky: { height: SKY_HEIGHT, borderBottomLeftRadius: 22, borderBottomRightRadius: 22, overflow: 'hidden' },
   brandRow: { position: 'absolute', left: 14, right: 14, top: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 10 },
   brand: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  brandCopy: { gap: 3, alignItems: 'flex-start' },
   brandIcon: { width: 32, height: 32, borderRadius: 8 },
   cityChip: { flexShrink: 1, flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 11, paddingVertical: 4, borderRadius: 14, borderWidth: 1 },
   pin: { width: 9, height: 9, borderTopLeftRadius: 5, borderTopRightRadius: 5, borderBottomRightRadius: 5, transform: [{ rotate: '-45deg' }] },
@@ -285,5 +302,6 @@ const styles = StyleSheet.create({
   footer: { height: 50, marginTop: 6, paddingHorizontal: 14, flexDirection: 'row', alignItems: 'center', gap: 10 },
   footerIcon: { width: 36, height: 36, borderRadius: 9, borderWidth: 1 },
   footerText: { flex: 1, minWidth: 0 },
-  pill: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 12, marginLeft: 'auto' },
+  pill: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 10, paddingVertical: 5, borderRadius: 12, marginLeft: 'auto' },
 });
+
