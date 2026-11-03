@@ -3929,6 +3929,17 @@ Files: `mobile/src/components/ListingCard.tsx` (card, `ListingSectionHeader`, `L
 
 ## 83. "A fresh update is ready" prompt (`UpdateReadyModal`)
 
+### Optional store-update nudge (3 November 2026)
+
+`LaunchAskHost` selects `StoreUpdateSheet` for an installed native appVersion runtime below 1.5.4. This store-listing handoff is separate from staged-OTA reload. Unknown/non-semver runtimes, development, Expo Go, web, storage failures and 1.5.4+ remain silent. Never use the OTA manifest version for eligibility.
+
+After branding, setup/tour/What's New, iOS measurement consent and pending OTA selection, the nudge precedes reminder/widget/discovery/rating asks. It atomically claims the existing daily opportunity. Targeted notification/widget launches remain silent. A successful timestamp write precedes display; close, Later and store handoff all rest for 72 hours across restarts. Future timestamps remain in cooldown until elapsed; corrupt storage fails closed.
+
+The existing parchment page-sheet shell uses safe areas, script-aware scaled title/body, scrolling content and a fixed reachable footer. Show only the 1.5.4 release highlight: Suvichar deity/weekday message cards and optional sender photo. All four UI languages are authored. Update now opens the existing platform HTTPS listing, without a review query. Later and Android Back dismiss immediately. Link failure leaves a localized retry message and Later reachable; duplicate handoffs are latched. No navigation gate, native dependency, version bump or automatic publication. Native compact/Large/system-text and both-platform review remain required.
+
+Files: `data/storeUpdate.ts`, `components/storeUpdateNudge.ts`, `components/StoreUpdateSheet.tsx`, `LaunchAskHost.tsx`; automated coverage: `StoreUpdateNudge.integration.test.tsx`, `storeUpdate.jest.test.ts`; device flow: `.maestro/store-update-smoke.yaml`, on an older installed release receiving this compatible bundle.
+
+
 **Purpose.** expo-updates downloads a new OTA bundle in the background and, by default, applies it only on the *next* cold start — so users see new content only after they happen to relaunch. This modal closes that gap: when `Updates.useUpdates().isUpdatePending` flips true (a background download has finished and is staged), it offers a one-tap apply without blocking startup. Mounted once, app-wide, in `App.tsx`.
 
 **Structure.** Centred parchment card over `colors.modalBackdrop` (same frame as `RatingPromptSheet`), `radii.lg`, `spacing.xxl` padding, `maxWidth` 360. Title `नया अपडेट तैयार है` (readerTitle face / script-serif in gu·kn). Body: new content has downloaded; apply now or it applies automatically next launch. **A single CTA** — `अभी अपडेट करें` / "Update now", `saffron` fill — calls `Updates.reloadAsync()` to apply the staged bundle immediately (busy-latched, dims to 0.6 while reloading).

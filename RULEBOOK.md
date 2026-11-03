@@ -255,6 +255,9 @@ The slash command runs the first three; the human PR author runs the rest.
 
 ## 6. Navigation architecture
 
+**Optional store update campaign (1.5.4).** `LaunchAskHost` owns the dismissible store nudge through the shared daily claim; no blocking gate or independent scheduler. Read installed `Updates.runtimeVersion` only while the native policy is `appVersion`, never OTA `expoConfig.version`; unknown/development/Expo Go/web fail closed. `data/storeUpdate.ts` owns the 1.5.4 cutoff and 72-hour rest, with campaign-scoped persisted shown time. Corrupt/unreadable storage suppresses the nudge and successful persistence precedes display. Branding, targeted entries, setup/tour/What's New, ATT and staged OTA retain priority. Reminder/widget/Explore/rating cannot stack over its owned slot. Later/Back continue normal use; store-link failure permits retry/dismissal. The highlight is checked 1.5.4 Suvichar content, not current main's later features. No native dependency or release is implied; older runtimes need separately verified compatible OTA delivery. Changing runtime policy requires revisiting installed-version detection. See design.md §83.
+
+
 The app uses a bottom tab bar with **five tabs** (`mobile/src/navigation/TabNavigator.tsx`): Home, Bhakti (Daily Bhakti), Panchang, Bhajan (Audio), and More. There is no Bookmarks tab — saved verses live at More → Wishlist (design.md §24). The tab bar **stays visible inside readers**; only the routes listed in `IMMERSIVE_HOME_ROUTES` (currently `VratKathaReader`) hide it. See design.md §17 for the full bar spec.
 
 New sections are registered in `mobile/src/navigation/HomeStackNavigator.tsx` (not the old `RootNavigator.tsx`). The Home screen dynamically renders categories from `mobile/src/data/categories.ts` and deities from `mobile/src/data/deities.ts` — adding a new section only requires:
