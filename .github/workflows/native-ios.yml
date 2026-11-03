@@ -1,0 +1,70 @@
+name: Native iOS build and launch
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'mobile/plugins/**'
+      - 'mobile/modules/**'
+      - 'mobile/src/widgets/**'
+      - 'mobile/assets/widget-backgrounds/**'
+      - 'mobile/app.json'
+      - 'mobile/package-lock.json'
+      - 'mobile/scripts/native-ios-smoke.sh'
+      - '.github/workflows/native-ios.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-ios-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  simulator:
+    runs-on: macos-15
+    timeout-minutes: 50
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    env:
+      CI: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Record native toolchain
+        run: |
+          xcodebuild -version
+          pod --version
+          mkdir -p "$GITHUB_WORKSPACE/native-output"
+      - name: Generate native app and widget target
+        run: npx expo prebuild --platform ios --clean --no-install
+      - name: Install CocoaPods
+        run: pod install --project-directory=ios
+      - name: Build, install and launch on iOS Simulator
+        run: bash scripts/native-ios-smoke.sh
+      - name: Retain native build and launch evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-ios-${{ github.run_id }}
+          path: |
+            native-output/*.log
+            native-output/*.png
+            native-output/*.json
+            native-output/*.zip
+            native-output/*.ips
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Stop simulator
+        if: always() && env.SIMULATOR_UDID != ''
+        run: xcrun simctl shutdown "$SIMULATOR_UDID"
