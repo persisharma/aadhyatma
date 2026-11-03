@@ -36,7 +36,11 @@ export function WordmarkArtwork({ kind, width, tintColor }: {
   const metrics = manifest.names[kind];
   return <Image testID={`vedansh-wordmark-${kind}`} source={marks[kind]} accessible={false}
     accessibilityIgnoresInvertColors resizeMode="contain" onLoad={finish} onError={finish}
-    style={{ width, maxWidth: '100%', aspectRatio: metrics.width / metrics.height, tintColor }} />;
+    // RN supplies the bundled PNG's intrinsic height before applying this style.
+    // Width + aspectRatio alone leaves that height in place (391dp for Hindi),
+    // inflating centered rows and clipping the lettering at the share sky edge.
+    style={{ width, height: width * metrics.height / metrics.width,
+      maxWidth: '100%', aspectRatio: metrics.width / metrics.height, tintColor }} />;
 }
 
 /** Approved lettering is artwork, independent of app-language script selection. */
@@ -61,3 +65,4 @@ export default function VedanshWordmark({ lang = 'hi', compact = false,
 }
 
 const styles = StyleSheet.create({ wrap: { alignItems: 'center', flexShrink: 1, maxWidth: '100%', gap: 3 } });
+
