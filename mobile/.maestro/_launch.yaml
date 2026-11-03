@@ -125,6 +125,10 @@ appId: com.prashantsharma.vedansh
     text: "Begin"
     optional: true
 - waitForAnimationToEnd
+# Rating can qualify from an early share/save; never leave a stray ask blocking a flow.
+- tapOn:
+    text: "Maybe later"
+    optional: true
 # The Home "Today's Panchang" card is now a tappable launcher (PRD-C), so its
 # text is one merged accessibility label — "Today's Panchang. <weekday>,
 # <tithi>. … Tap to open." — exposed in English regardless of display language.

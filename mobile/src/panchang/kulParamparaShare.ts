@@ -1,3 +1,5 @@
+import { beginRatingInteraction } from '@/contexts/ratingInteraction';
+import { reportRatingAsk } from '@/contexts/ratingAsk';
 /**
  * The device-controlled hand-off for the कुल परम्परा export (PRD-29 §3.7):
  * write the envelope to a cache file, open the OS share sheet, done. No cloud,
@@ -23,10 +25,16 @@ export async function shareKulParamparaFile(json: string, filename: string): Pro
   if (!canShare) return false;
   const file = new File(Paths.cache, filename);
   file.write(json);
-  await Sharing.shareAsync(file.uri, {
-    mimeType: 'application/json',
-    UTI: 'public.json',
-    dialogTitle: 'Kul Parampara',
-  });
+  const finish = beginRatingInteraction();
+  try {
+    await Sharing.shareAsync(file.uri, {
+      mimeType: 'application/json',
+      UTI: 'public.json',
+      dialogTitle: 'Kul Parampara',
+    });
+  } finally {
+    finish();
+  }
+  reportRatingAsk('content-shared');
   return true;
 }

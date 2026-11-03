@@ -17,7 +17,7 @@ const STAR_VALUES = [1, 2, 3, 4, 5] as const;
  * wave off, not a screen to work in.
  *
  * Two steps. The asking step offers five stars and "Maybe later". A 4–5★ tap
- * hands straight off to the store's review page. A 1–3★ tap stays on the card's
+ * hands straight off to the store's review page and schedules the required follow-up. A 1–3★ tap stays on the card's
  * thank-you step, which offers "Write to us" (when a feedback inbox is set), a
  * smaller store link, and Close. The store link is deliberate: hiding the store
  * from unhappy users is review gating (product decision, Oct 2026).
@@ -49,7 +49,7 @@ export default function RatingPromptSheet() {
 
   const chooseStars = (stars: number) => {
     if (stars >= STORE_MIN_STARS) {
-      rate();
+      rate(stars);
       return;
     }
     setLowStars(stars);
@@ -171,7 +171,7 @@ export default function RatingPromptSheet() {
       ) : null}
 
       <Pressable
-        onPress={rate}
+        onPress={() => rate(lowStars)}
         accessibilityRole="button"
         accessibilityLabel="Rate Vedansh on the store"
         style={({ pressed }) => [styles.storeLink, { opacity: pressed ? 0.6 : 1 }]}

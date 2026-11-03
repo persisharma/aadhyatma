@@ -26,10 +26,11 @@ export function reminderDue(
     86400000;
   return since >= days;
 }
-let snapshot: { ready: boolean; selectionComplete: boolean; taken: boolean; record: LaunchAskRecord } = {
+let snapshot: { ready: boolean; selectionComplete: boolean; taken: boolean; ratingOwned: boolean; record: LaunchAskRecord } = {
   ready: false,
   selectionComplete: false,
   taken: false,
+  ratingOwned: false,
   record: { firstDay: localDay(), lastDay: null, lastReminderDay: null, declines: 0, stopped: false },
 };
 let writes = Promise.resolve();
@@ -80,7 +81,7 @@ export function hydrateLaunchAsks() {
     }));
 }
 export function suppressLaunchAsks() {
-  snapshot = { ...snapshot, selectionComplete: true, taken: true };
+  snapshot = { ...snapshot, selectionComplete: true, taken: true, ratingOwned: false };
   emit();
 }
 /** Lower-priority surfaces wait until the host has selected a prompt or passed. */
@@ -100,10 +101,21 @@ export function claimLaunchAsk(resumeSetup = false, kind: 'reminder' | 'other' =
     ...snapshot,
     selectionComplete: true,
     taken: true,
+    ratingOwned: false,
     record: { ...snapshot.record, lastDay: localDay(), ...(kind === 'reminder' ? { lastReminderDay: localDay() } : {}) },
   };
   emit();
   persistRecord();
+  return true;
+}
+/** Rating response cadence may repeat in the same day/session; other launch asks keep priority. */
+export function claimRatingAsk(repeat: boolean) {
+  if (!snapshot.ready || !snapshot.selectionComplete ||
+      (snapshot.taken && !snapshot.ratingOwned) ||
+      (!repeat && (snapshot.taken || snapshot.record.lastDay === localDay()))) return false;
+  snapshot = { ...snapshot, taken: true, ratingOwned: true,
+    record: { ...snapshot.record, lastDay: localDay() } };
+  emit(); persistRecord();
   return true;
 }
 export function declineLaunchReminder(stopped = false) {

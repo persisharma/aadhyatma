@@ -1,6 +1,7 @@
+import { useRatingShare } from '@/utils/useRatingShare';
 import AppIcon from '@/components/AppIcon';
 import React, { useMemo, useState } from 'react';
-import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -63,6 +64,7 @@ function birthTimeLabel(time: string | undefined): string | null {
 }
 
 export default function KundaliReportScreen({ navigation, route }: Props) {
+  const shareWithRating = useRatingShare();
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const rootNav = useNavigation<any>();
@@ -111,7 +113,7 @@ export default function KundaliReportScreen({ navigation, route }: Props) {
   // birth details both actions carry; the app itself never contacts a service.
   const shareFullText = () => {
     if (!chart || !report) return;
-    void Share.share({ message: withShareLinks(buildKundaliHandoffText(chart, report, questionReading), lang) });
+    void shareWithRating({ message: withShareLinks(buildKundaliHandoffText(chart, report, questionReading), lang) });
   };
 
   const disclaimer = report && (

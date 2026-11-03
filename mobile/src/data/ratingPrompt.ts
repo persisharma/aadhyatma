@@ -24,7 +24,7 @@ export const RATING_PROMPT_STORAGE_KEY = '@vedansh/rating-prompt';
 
 /**
  * `pending`  — never answered; still askable (subject to the gate).
- * `rated`    — the user tapped through to the store. Never ask again.
+ * `rated`    — two positive store hand-offs. Automatic asking has ended.
  * `declined` — the user tapped "Don't ask again". Never ask again.
  *
  * Note "rated" records that we *handed off* to the store, not that a review was
@@ -34,30 +34,17 @@ export const RATING_PROMPT_STORAGE_KEY = '@vedansh/rating-prompt';
 export type RatingPromptOutcome = 'pending' | 'rated' | 'declined';
 
 /**
- * The moments that may open the sheet (design.md §54 "Triggers"). The ask does
- * not fire on a cold start: a moment is a point where the user has just
- * finished something and is likely to feel good about the app, which is when a
- * rating request reads as a fair question rather than an interruption.
- *
- *  - `routine-complete` — the pushpa-varsha for today's routine has finished.
- *  - `verse-shared` — a verse share was dispatched to the OS/Instagram sheet.
- *  - `prose-shared` — a katha / Theerth / story / listing / Ask card (any
- *    non-devotional prose share) was dispatched. Kept apart from `verse-shared`
- *    so `asksByTrigger` can tell which share surface earns the rating.
- *  - `mala-complete` — the japam counter screen was left after ≥1 round this visit.
- *
- * Four moments ship (product decision, Sept 2026: routine completion was the
- * first; share + mala added to widen reach to users who never build a routine,
- * since ratings were coming in too low; Oct 2026: prose share cards added so
- * every share card can ask, not only verses). The type stays a union so a further
- * moment is a one-literal change here plus a `requestAsk` call at the host — see
- * RULEBOOK §6.2. Each moment fires only once its own feedback has finished (a
- * share sheet closed, the japam screen left) — never mid-interaction and never
- * over a celebration; the gate and the once-per-session guard still apply.
+ * Usage (two cold starts OR two active days), or a completed share/save/practice
+ * action, can independently earn the ask. Actions do not require a usage floor.
+ * All routes retain outcome, cooldown, foreground and shared-surface guards.
+ * Existing trigger IDs stay stable so stored per-moment counts survive upgrades.
  */
-export type RatingAskTrigger = 'routine-complete' | 'verse-shared' | 'prose-shared' | 'mala-complete';
+export type RatingAskTrigger = 'app-engaged' | 'bookmark-saved' | 'content-shared' | 'routine-complete' | 'verse-shared' | 'prose-shared' | 'mala-complete';
 
 export const RATING_ASK_TRIGGERS: readonly RatingAskTrigger[] = [
+  'app-engaged',
+  'bookmark-saved',
+  'content-shared',
   'routine-complete',
   'verse-shared',
   'prose-shared',
@@ -82,6 +69,13 @@ export type RatingPromptState = {
    * `LOW_RATING_COOLDOWN_DAYS` so what they disliked can be fixed first.
    */
   lowRatedAt: number | null;
+  /** Last explicit response; none also covers killing the app while the ask is open. */
+  response: 'none' | 'dismissed' | 'low' | 'store';
+  respondedAt: number | null;
+  /** Two positive store hand-offs end automatic asking. */
+  storeHandoffCount: number;
+  /** The next action after the first positive hand-off, even if it precedes day two. */
+  followupActionAt: number | null;
 };
 
 export const RATING_PROMPT_DEFAULTS: RatingPromptState = {
@@ -90,29 +84,19 @@ export const RATING_PROMPT_DEFAULTS: RatingPromptState = {
   outcome: 'pending',
   asksByTrigger: {},
   lowRatedAt: null,
+  response: 'none',
+  respondedAt: null,
+  storeHandoffCount: 0,
+  followupActionAt: null,
 };
 
-/** Cold starts before we're willing to ask — mirrors the opt-in sheet's "earn the ask". */
-export const MIN_APP_OPENS = 5;
+/** Either usage threshold earns an automatic ask after launch selection settles. */
+export const MIN_APP_OPENS = 2;
 /** Distinct days with logged reading/japa activity. */
-export const MIN_ACTIVE_DAYS = 3;
-/** Lifetime verse advances — filters users who opened the app but never read. */
-export const MIN_VERSE_READS = 20;
-/**
- * Quiet period between asks (product decision, Aug 2026: "ask every 5 days if
- * not given"). With no lifetime ceiling this is now the ONLY thing spacing the
- * asks out, so it is load-bearing in a way it wasn't when `MAX_ASKS` was 2.
- */
-export const REASK_COOLDOWN_DAYS = 5;
-/**
- * Lifetime ceiling on auto-opens — `null` means no ceiling: keep asking every
- * `REASK_COOLDOWN_DAYS` until the user either rates or opts out.
- *
- * Deliberate product decision, and the reason "Don't ask again" is now the
- * user's ONLY permanent escape rather than a convenience. Do not remove or
- * de-emphasise that button while this is null — it is what keeps an unbounded
- * ask from being unbounded nagging (RULEBOOK §6.2).
- */
+export const MIN_ACTIVE_DAYS = 2;
+/** Close: time-only repeat after two days; an action can qualify earlier. */
+export const REASK_COOLDOWN_DAYS = 2;
+/** No dismissal-count ceiling; two positive store hand-offs are terminal. */
 export const MAX_ASKS: number | null = null;
 /**
  * In-app stars at or above this hand off to the store's review page; below it the
@@ -123,7 +107,7 @@ export const MAX_ASKS: number | null = null;
  */
 export const STORE_MIN_STARS = 4;
 /** Quiet period after a 1–3★ tap (product decision, Oct 2026). */
-export const LOW_RATING_COOLDOWN_DAYS = 90;
+export const LOW_RATING_COOLDOWN_DAYS = 30;
 /**
  * Inbox the low-star step's "Write to us" opens a pre-filled email to. `null`
  * hides that button, leaving the store link and Close. Use a support inbox, not
@@ -143,6 +127,14 @@ export function parseRatingPromptState(raw: string | null): RatingPromptState {
   try {
     const parsed = JSON.parse(raw) as Partial<RatingPromptState>;
     if (!parsed || typeof parsed !== 'object') return RATING_PROMPT_DEFAULTS;
+    const positiveTime = (value: unknown): number | null =>
+      typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null;
+    const lastAskedAt = positiveTime(parsed.lastAskedAt);
+    const lowRatedAt = positiveTime(parsed.lowRatedAt);
+    const count = typeof parsed.storeHandoffCount === 'number' && Number.isSafeInteger(parsed.storeHandoffCount) && parsed.storeHandoffCount >= 0
+      ? parsed.storeHandoffCount : parsed.outcome === 'rated' ? 1 : 0;
+    // Legacy rated meant ONE store hand-off. It now receives the required follow-up.
+    const legacyFollowup = parsed.outcome === 'rated' && count < 2;
     return {
       askCount:
         typeof parsed.askCount === 'number' && Number.isFinite(parsed.askCount) && parsed.askCount >= 0
@@ -152,10 +144,14 @@ export function parseRatingPromptState(raw: string | null): RatingPromptState {
         typeof parsed.lastAskedAt === 'number' && Number.isFinite(parsed.lastAskedAt) && parsed.lastAskedAt > 0
           ? parsed.lastAskedAt
           : RATING_PROMPT_DEFAULTS.lastAskedAt,
-      outcome:
-        parsed.outcome === 'rated' || parsed.outcome === 'declined' || parsed.outcome === 'pending'
-          ? parsed.outcome
-          : RATING_PROMPT_DEFAULTS.outcome,
+      outcome: parsed.outcome === 'declined' ? 'declined'
+        : parsed.outcome === 'rated' && !legacyFollowup ? 'rated' : 'pending',
+      response: legacyFollowup ? 'store'
+        : ['none', 'dismissed', 'low', 'store'].includes(parsed.response ?? '') ? parsed.response!
+        : lowRatedAt !== null ? 'low' : 'none',
+      respondedAt: positiveTime(parsed.respondedAt) ?? (legacyFollowup ? (lastAskedAt ?? 1) : lowRatedAt),
+      storeHandoffCount: count,
+      followupActionAt: positiveTime(parsed.followupActionAt),
       asksByTrigger: parseAsksByTrigger(parsed.asksByTrigger),
       lowRatedAt:
         typeof parsed.lowRatedAt === 'number' && Number.isFinite(parsed.lowRatedAt) && parsed.lowRatedAt > 0
@@ -185,8 +181,8 @@ export type RatingEligibilityInput = {
   appOpens: number;
   /** `UserActivity.lifetimeTotals().activeDays`. */
   activeDays: number;
-  /** `UserActivity.lifetimeTotals().totalReads`. */
-  totalReads: number;
+  /** Shares and completed actions can earn the ask before the usage thresholds. */
+  trigger?: RatingAskTrigger;
   /** `Date.now()` at the call site — passed in so tests stay deterministic. */
   now: number;
   /**
@@ -197,21 +193,42 @@ export type RatingEligibilityInput = {
   blockedBySurface: boolean;
 };
 
+/** A store follow-up requires an action, so it never has a time-only deadline. */
+export function timeBasedRatingAskAt(state: RatingPromptState): number | null {
+  if (state.outcome !== 'pending') return null;
+  if (state.response === 'store') {
+    if (state.followupActionAt === null) return null;
+    return Math.max((state.respondedAt ?? state.lastAskedAt ?? 1) + REASK_COOLDOWN_DAYS * DAY_MS, state.followupActionAt);
+  }
+  const at = state.response === 'low' ? state.lowRatedAt ?? state.respondedAt
+    : state.respondedAt ?? state.lastAskedAt;
+  if (at === null) return null;
+  return at + (state.response === 'low' ? LOW_RATING_COOLDOWN_DAYS : REASK_COOLDOWN_DAYS) * DAY_MS;
+}
+
 /**
  * Whether the sheet may auto-open right now. Every clause is a reason NOT to
  * ask; the ask has to earn its way past all of them.
  */
 export function isEligibleForRatingPrompt(input: RatingEligibilityInput): boolean {
-  const { state, appOpens, activeDays, totalReads, now, blockedBySurface } = input;
+  const { state, appOpens, activeDays, trigger, now, blockedBySurface } = input;
   if (state.outcome !== 'pending') return false;
   if (MAX_ASKS !== null && state.askCount >= MAX_ASKS) return false;
   if (blockedBySurface) return false;
-  if (appOpens < MIN_APP_OPENS) return false;
-  if (activeDays < MIN_ACTIVE_DAYS) return false;
-  if (totalReads < MIN_VERSE_READS) return false;
-  if (state.lastAskedAt !== null && now - state.lastAskedAt < REASK_COOLDOWN_DAYS * DAY_MS) return false;
-  if (state.lowRatedAt !== null && now - state.lowRatedAt < LOW_RATING_COOLDOWN_DAYS * DAY_MS) return false;
-  return true;
+  const completedAction = trigger !== undefined && trigger !== 'app-engaged';
+  const responseAt = state.respondedAt ?? state.lastAskedAt;
+  if (state.response === 'store') {
+    // "Whichever is later": at least two days AND a subsequent completed action.
+    return (completedAction || state.followupActionAt !== null) && responseAt !== null && now - responseAt >= REASK_COOLDOWN_DAYS * DAY_MS;
+  }
+  if (state.response === 'low' || state.lowRatedAt !== null) {
+    return now - (state.lowRatedAt ?? responseAt ?? now) >= LOW_RATING_COOLDOWN_DAYS * DAY_MS;
+  }
+  if (responseAt !== null) {
+    // Dismissed or killed while open: two days OR the next completed action.
+    return completedAction || now - responseAt >= REASK_COOLDOWN_DAYS * DAY_MS;
+  }
+  return appOpens >= MIN_APP_OPENS || activeDays >= MIN_ACTIVE_DAYS || completedAction;
 }
 
 /**
@@ -227,6 +244,10 @@ export function afterAsked(
     ...state,
     askCount: state.askCount + 1,
     lastAskedAt: now,
+    response: 'none',
+    respondedAt: null,
+    followupActionAt: null,
+    lowRatedAt: null,
     asksByTrigger: {
       ...state.asksByTrigger,
       [trigger]: (state.asksByTrigger[trigger] ?? 0) + 1,
@@ -234,14 +255,28 @@ export function afterAsked(
   };
 }
 
-/** State after the user taps through to the store — terminal. */
-export function afterRated(state: RatingPromptState, now: number): RatingPromptState {
-  return { ...state, outcome: 'rated', lastAskedAt: now };
+/** Record the first subsequent action even before day two; it must not be lost. */
+export function afterStoreFollowupAction(state: RatingPromptState, now: number): RatingPromptState {
+  if (state.outcome !== 'pending' || state.response !== 'store' || state.followupActionAt !== null) return state;
+  return { ...state, followupActionAt: now };
 }
 
-/** State after a 1–3★ tap: still askable, once `LOW_RATING_COOLDOWN_DAYS` pass. */
+/** Close/Maybe later: two days or a new completed action, whichever comes first. */
+export function afterDismissed(state: RatingPromptState, now: number): RatingPromptState {
+  return { ...state, response: 'dismissed', respondedAt: now, lowRatedAt: null, followupActionAt: null };
+}
+
+/** First 4–5★ hand-off schedules one follow-up; the second positive hand-off is terminal. */
+export function afterRated(state: RatingPromptState, now: number, stars = 5): RatingPromptState {
+  if (stars < STORE_MIN_STARS) return afterLowRating(state, now);
+  const storeHandoffCount = state.storeHandoffCount + 1;
+  return { ...state, outcome: storeHandoffCount >= 2 ? 'rated' : 'pending',
+    response: 'store', respondedAt: now, lowRatedAt: null, followupActionAt: null, storeHandoffCount };
+}
+
+/** 1–3★ always gets a 30-day pause, including the thank-you step's store link. */
 export function afterLowRating(state: RatingPromptState, now: number): RatingPromptState {
-  return { ...state, lowRatedAt: now };
+  return { ...state, outcome: 'pending', lowRatedAt: now, response: 'low', respondedAt: now, followupActionAt: null };
 }
 
 /**

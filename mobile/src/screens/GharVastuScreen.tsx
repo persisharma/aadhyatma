@@ -1,3 +1,4 @@
+import { useRatingShare } from '@/utils/useRatingShare';
 /**
  * मेरा घर — the assessment (PRD-24 Phase 2 §C3, design.md §66.5). ONE reading:
  * the mandala grid (UX decision 2026-09-05 — the ledger variant was dropped),
@@ -11,7 +12,7 @@
  * finding is "the texts say X about this placement", never "your home is bad".
  */
 import React from 'react';
-import { Alert, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ReaderHeader from '@/components/ReaderHeader';
@@ -44,6 +45,7 @@ type Navigation = {
 type Route = { params: { homeId: string } };
 
 export default function GharVastuScreen({ navigation, route }: { navigation: Navigation; route: Route }) {
+  const shareWithRating = useRatingShare();
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
@@ -223,7 +225,7 @@ export default function GharVastuScreen({ navigation, route }: { navigation: Nav
             onPress={() => {
               // Text-only today; when R3 adds record.plan, this switches to the
               // expo-sharing multi-item sheet with the plan image attached.
-              void Share.share({ message: withShareLinks(buildHomeHandoffText(home, model), lang) });
+              void shareWithRating({ message: withShareLinks(buildHomeHandoffText(home, model), lang) });
             }}
             style={[styles.action, { borderColor: colors.cardActiveBorder, borderRadius: radii.pill }]}
           >

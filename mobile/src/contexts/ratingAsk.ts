@@ -15,6 +15,17 @@ import type { RatingAskTrigger } from '@/data/ratingPrompt';
  */
 export type RequestRatingAsk = (trigger: RatingAskTrigger) => void;
 
+// Some stores (notably BookmarksProvider) sit above RatingPromptProvider.
+// Report their completed actions without moving providers or importing native APIs.
+const listeners = new Set<RequestRatingAsk>();
+export function reportRatingAsk(trigger: RatingAskTrigger): void {
+  listeners.forEach((listener) => listener(trigger));
+}
+export function subscribeRatingAsks(listener: RequestRatingAsk): () => void {
+  listeners.add(listener);
+  return () => { listeners.delete(listener); };
+}
+
 export const RatingAskContext = createContext<RequestRatingAsk | null>(null);
 
 const NOOP_REQUEST_ASK: RequestRatingAsk = () => undefined;

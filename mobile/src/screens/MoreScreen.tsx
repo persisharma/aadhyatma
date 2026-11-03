@@ -1,5 +1,6 @@
+import { useRatingShare } from '@/utils/useRatingShare';
 import React, { useState } from 'react';
-import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -130,6 +131,7 @@ function SettingsRow({
 type Props = NativeStackScreenProps<MoreStackParamList, 'MoreHome'>;
 
 export default function MoreScreen({ navigation }: Props) {
+  const shareWithRating = useRatingShare();
   const { colors, typography, spacing, radii } = useTheme();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale > 1.2;
@@ -217,7 +219,7 @@ export default function MoreScreen({ navigation }: Props) {
   const currentLang = LANGUAGES.find((l) => l.value === lang) ?? LANGUAGES[0];
 
   const shareApp = () => {
-    Share.share(
+    shareWithRating(
       { message: buildAppShareMessage(lang) },
       { dialogTitle: pick(lang, { hi: 'Vedansh साझा करें', en: 'Share Vedansh', gu: 'Vedansh શેર કરો', kn: 'Vedansh ಹಂಚಿಕೊಳ್ಳಿ' }) }
     ).catch(() => {
@@ -761,4 +763,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-

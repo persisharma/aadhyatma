@@ -7,7 +7,8 @@ import { ShareProvider, useShare, type ShareableCard } from '../shareVerse';
 const mockCapture = jest.fn((..._args: unknown[]) => Promise.resolve('file:///card.png'));
 jest.mock('react-native-view-shot', () => ({ captureRef: (...args: unknown[]) => mockCapture(...args) }));
 jest.mock('expo-sharing', () => ({ isAvailableAsync: async () => true, shareAsync: async () => {} }));
-jest.mock('@/contexts/ratingAsk', () => ({ useRatingAsk: () => () => {} }));
+const mockRatingAsk = jest.fn();
+jest.mock('@/contexts/ratingAsk', () => ({ useRatingAsk: () => mockRatingAsk }));
 jest.mock('@/components/ShareTargetSheet', () => 'ShareTargetSheet');
 jest.mock('@/components/ShareCardMount', () => ({ __esModule: true, default: 'ShareCardMount', ShareCardPreview: 'ShareCardPreview' }));
 jest.mock('@/components/ShareFitFrame', () => ({ __esModule: true, default: 'ShareFitFrame' }));
@@ -36,7 +37,7 @@ const pause = async () => { await act(async () => { await new Promise(r => setTi
 const sheet = () => tree.root.findByType('ShareTargetSheet' as React.ElementType);
 const mounts = () => tree.root.findAllByType('ShareCardMount' as React.ElementType);
 let shareSpy: jest.SpyInstance;
-beforeEach(() => { mockCapture.mockClear(); onClose.mockClear(); content = card(); shareSpy = jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction }); });
+beforeEach(() => { mockRatingAsk.mockClear(); mockCapture.mockClear(); onClose.mockClear(); content = card(); shareSpy = jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction }); });
 afterEach(() => { if (tree) act(() => tree.unmount()); jest.restoreAllMocks(); });
 async function open() {
   await act(async () => { tree = TestRenderer.create(<ThemeProvider><ShareProvider><Trigger /></ShareProvider></ThemeProvider>); });
@@ -49,6 +50,7 @@ it('opens the Daily Bhakti picker: whole-card rows, preview, card-language chips
   expect(props).toMatchObject({ wholeCard: true, title: 'पंचांग साझा करें', cardLang: 'hi' });
   expect(typeof props.onCardLang).toBe('function');
   expect(typeof props.onShareText).toBe('function');
+  expect(mockRatingAsk).not.toHaveBeenCalled();
   expect(props.singleCardPreview.props).toMatchObject({ content, lang: 'hi' });
 });
 
@@ -63,6 +65,7 @@ it('system share exports the whole card 1080 px wide and captions it with the do
   expect(mockCapture.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: Math.round(1000 * 1080 / 340) / PixelRatio.get() });
   const [payload] = shareSpy.mock.calls[0];
   expect(payload.url).toBe('file:///card.png');
+  expect(mockRatingAsk).toHaveBeenCalledWith('prose-shared');
   expect(payload.message).toContain('आज का पंचांग · सोमवार, 26 अक्तूबर 2026');
   expect(payload.message).toContain(SMART_LINK);
   expect(onClose).toHaveBeenCalledTimes(1);
@@ -90,6 +93,7 @@ it('a failed capture alerts and hands nothing off', async () => {
   act(() => mounts()[0].props.onHeight(900));
   await pause(); await pause();
   expect(alert).toHaveBeenCalled();
+  expect(mockRatingAsk).not.toHaveBeenCalled();
   expect(shareSpy).not.toHaveBeenCalled();
   expect(onClose).toHaveBeenCalledTimes(1);
 });
@@ -110,6 +114,7 @@ it('send as text appends the download lines after the sheet closes', async () =>
   await act(async () => { await new Promise(r => setTimeout(r, 400)); });
   const message = shareSpy.mock.calls[0][0].message as string;
   expect(message.startsWith('तिथि: पूर्णिमा')).toBe(true);
+  expect(mockRatingAsk).toHaveBeenCalledWith('prose-shared');
   expect(message).toContain(SMART_LINK);
   expect(onClose).toHaveBeenCalledTimes(1);
 });
@@ -117,6 +122,7 @@ it('send as text appends the download lines after the sheet closes', async () =>
 it('cancel closes the picker and reports the end of the flow', async () => {
   await open();
   act(() => sheet().props.onClose());
+  expect(mockRatingAsk).not.toHaveBeenCalled();
   expect(tree.root.findAllByType('ShareTargetSheet' as React.ElementType)).toHaveLength(0);
   expect(onClose).toHaveBeenCalledTimes(1);
 });

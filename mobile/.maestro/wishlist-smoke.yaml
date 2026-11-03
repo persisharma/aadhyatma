@@ -72,6 +72,10 @@ appId: com.prashantsharma.vedansh
     optional: true
 - waitForAnimationToEnd
 - assertVisible: "Remove bookmark"
+# A new save qualifies for rating when the shared daily opportunity is available.
+- tapOn:
+    text: "Maybe later"
+    optional: true
 
 # Add a second source so automatic filters become useful.
 - tapOn: { id: "tab-home" }
@@ -92,6 +96,10 @@ appId: com.prashantsharma.vedansh
     text: "Add bookmark"
     optional: true
 - assertVisible: "Remove bookmark"
+# A new save qualifies for rating when the shared daily opportunity is available.
+- tapOn:
+    text: "Maybe later"
+    optional: true
 
 # ── Step 5: Open the Wishlist (More tab → Wishlist) ──
 # The More card's a11y label is composed ("Wishlist, N verses saved"), and
@@ -126,6 +134,10 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "Verse 1\\.1.*"
 - assertVisible: "Remove bookmark"
+# A new save qualifies for rating when the shared daily opportunity is available.
+- tapOn:
+    text: "Maybe later"
+    optional: true
 - runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element: { text: "Wishlist.*" }

@@ -1,4 +1,3 @@
-jest.mock('@/components/launchAskStore',()=>({useLaunchAsks:()=>({ready:true,selectionComplete:true,taken:mockOptInShowing}),claimLaunchAsk:()=>true}));
 /**
  * Rating prompt (design.md §54) — sheet rendering plus the provider wiring
  * behind it: the moment-triggered open and its settle delay, what each star and
@@ -17,16 +16,17 @@ import {
   RATING_PROMPT_DELAY_MS,
   useRatingPrompt,
 } from '@/contexts/RatingPromptContext';
-import { useRatingAsk } from '@/contexts/ratingAsk';
+import { reportRatingAsk, useRatingAsk } from '@/contexts/ratingAsk';
 import * as ratingPrompt from '@/data/ratingPrompt';
 import {
   MIN_ACTIVE_DAYS,
   MIN_APP_OPENS,
-  MIN_VERSE_READS,
   RATING_PROMPT_STORAGE_KEY,
   parseRatingPromptState,
   type RatingAskTrigger,
 } from '@/data/ratingPrompt';
+
+jest.mock('@/components/launchAskStore',()=>({useLaunchAsks:()=>({ready:true,selectionComplete:true,taken:mockOptInShowing}),claimRatingAsk:()=>true}));
 
 // ── In-memory AsyncStorage so we can assert what the provider persisted ──
 const mockStore = new Map<string, string>();
@@ -46,7 +46,7 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 let mockAppOpens = MIN_APP_OPENS;
 let mockOptInShowing = false;
 let mockActiveDays = MIN_ACTIVE_DAYS;
-let mockTotalReads = MIN_VERSE_READS;
+let mockTotalReads = 0;
 let mockTourFlags = {
   isLoading: false,
   shouldShowFirstLaunchTour: false,
@@ -103,11 +103,14 @@ function tree_(): React.ReactElement {
   );
 }
 
+const mounted: TestRenderer.ReactTestRenderer[] = [];
+
 function render(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(tree_());
   });
+  mounted.push(tree);
   return tree;
 }
 
@@ -181,10 +184,10 @@ beforeEach(() => {
   jest.useFakeTimers();
   requestAsk = null;
   mockStore.clear();
-  mockAppOpens = MIN_APP_OPENS;
+  mockAppOpens = 1;
   mockOptInShowing = false;
-  mockActiveDays = MIN_ACTIVE_DAYS;
-  mockTotalReads = MIN_VERSE_READS;
+  mockActiveDays = 0;
+  mockTotalReads = 0;
   mockTourFlags = {
     isLoading: false,
     shouldShowFirstLaunchTour: false,
@@ -195,6 +198,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  act(() => { mounted.splice(0).forEach((tree) => tree.unmount()); });
   openURL.mockRestore();
   jest.useRealTimers();
 });
@@ -207,6 +211,24 @@ describe('moment-triggered ask', () => {
     });
     expect(modalVisible(tree)).toBe(false);
     expect(mockStore.has(RATING_PROMPT_STORAGE_KEY)).toBe(false);
+  });
+
+  test.each([[2, 0], [1, 2]])('opens automatically with %i launches and %i active days', async (opens, days) => {
+    mockAppOpens = opens;
+    mockActiveDays = days;
+    const tree = await renderHydrated();
+    expect(modalVisible(tree)).toBe(false);
+    await act(async () => { jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS); });
+    expect(modalVisible(tree)).toBe(true);
+    expect(savedState().asksByTrigger).toEqual({ 'app-engaged': 1 });
+  });
+
+  test('receives wishlist moments from a store above the provider', async () => {
+    const tree = await renderHydrated();
+    act(() => { reportRatingAsk('bookmark-saved'); });
+    await act(async () => { jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS); });
+    expect(modalVisible(tree)).toBe(true);
+    expect(savedState().asksByTrigger).toEqual({ 'bookmark-saved': 1 });
   });
 
   test('opens after the settle delay once a moment is reported, and records which one', async () => {
@@ -231,7 +253,7 @@ describe('moment-triggered ask', () => {
     expect(saved.asksByTrigger).toEqual({ 'routine-complete': 1 });
   });
 
-  test('asks at most once per session, however many moments follow', async () => {
+  test('dismissal permits the next completed action in the same session', async () => {
     const tree = await renderAndSettle();
     expect(modalVisible(tree)).toBe(true);
     act(() => {
@@ -240,8 +262,8 @@ describe('moment-triggered ask', () => {
     expect(modalVisible(tree)).toBe(false);
 
     await fireMoment();
-    expect(modalVisible(tree)).toBe(false);
-    expect(savedState().askCount).toBe(1);
+    expect(modalVisible(tree)).toBe(true);
+    expect(savedState().askCount).toBe(2);
   });
 
   test('two moments in quick succession queue one card, not two', async () => {
@@ -257,11 +279,11 @@ describe('moment-triggered ask', () => {
     expect(savedState()).toMatchObject({ askCount: 1, asksByTrigger: { 'routine-complete': 1 } });
   });
 
-  test('stays shut for a user who has not earned the ask yet', async () => {
+  test('a completed action earns the ask even on the first visit', async () => {
     mockAppOpens = MIN_APP_OPENS - 1;
     const tree = await renderAndSettle();
-    expect(modalVisible(tree)).toBe(false);
-    expect(mockStore.has(RATING_PROMPT_STORAGE_KEY)).toBe(false);
+    expect(modalVisible(tree)).toBe(true);
+    expect(savedState().askCount).toBe(1);
   });
 
   test('stands down while another surface wants the screen', async () => {
@@ -303,7 +325,7 @@ describe('moment-triggered ask', () => {
     });
 
     // A verse advance lands mid-delay and re-renders the provider.
-    mockTotalReads = MIN_VERSE_READS + 5;
+    mockTotalReads = 0 + 5;
     act(() => {
       tree.update(tree_());
     });
@@ -317,12 +339,12 @@ describe('moment-triggered ask', () => {
   test('never re-opens for a user who already rated', async () => {
     mockStore.set(
       RATING_PROMPT_STORAGE_KEY,
-      JSON.stringify({ askCount: 1, lastAskedAt: 1, outcome: 'rated' })
+      JSON.stringify({ askCount: 1, lastAskedAt: 1, outcome: 'rated', storeHandoffCount: 2 })
     );
     expect(modalVisible(await renderAndSettle())).toBe(false);
   });
 
-  test('stays shut within 90 days of a 1–3★ tap', async () => {
+  test('stays shut within 30 days of a 1–3★ tap', async () => {
     mockStore.set(
       RATING_PROMPT_STORAGE_KEY,
       JSON.stringify({ askCount: 1, lastAskedAt: 1, outcome: 'pending', lowRatedAt: Date.now() })
@@ -351,7 +373,7 @@ describe('stars and buttons', () => {
     expect(openURL).toHaveBeenCalledTimes(1);
     expect(openURL.mock.calls[0][0]).toMatch(/apps\.apple\.com|play\.google\.com/);
     expect(modalVisible(tree)).toBe(false);
-    expect(savedState().outcome).toBe('rated');
+    expect(savedState().outcome).toBe('pending');
   });
 
   test.each([1, 2, 3])('%i★ stays on the card, thanks the user and keeps the store link', async (stars) => {
@@ -368,7 +390,7 @@ describe('stars and buttons', () => {
     expect(saved.lowRatedAt).not.toBeNull();
   });
 
-  test('the store link on the thank-you step hands off and stops asking', async () => {
+  test('the low-star store link hands off and preserves the month pause', async () => {
     const tree = await renderAndSettle();
     await tapStars(tree, 2);
     await act(async () => {
@@ -378,7 +400,7 @@ describe('stars and buttons', () => {
     expect(openURL).toHaveBeenCalledTimes(1);
     expect(openURL.mock.calls[0][0]).toMatch(/apps\.apple\.com|play\.google\.com/);
     expect(modalVisible(tree)).toBe(false);
-    expect(savedState().outcome).toBe('rated');
+    expect(savedState().outcome).toBe('pending');
   });
 
   test('without a feedback inbox, the thank-you step has no email button', async () => {
@@ -416,7 +438,7 @@ describe('stars and buttons', () => {
       expect(url).toMatch(/^mailto:help@example\.test\?/);
       expect(decodeURIComponent(url)).toContain('Rating: 2/5');
       expect(modalVisible(tree)).toBe(false);
-      // Writing to us is not a store rating — the 90-day pause still applies.
+      // Writing to us is not a store rating — the 30-day pause still applies.
       expect(savedState().outcome).toBe('pending');
     } finally {
       inbox.mockRestore();
@@ -518,7 +540,7 @@ describe('stars and buttons', () => {
     expect(openURL.mock.calls[1][0]).not.toContain('write-review');
     // Still counted as rated — we did our part; nagging after a hand-off is the
     // behaviour this feature exists to avoid.
-    expect(savedState().outcome).toBe('rated');
+    expect(savedState().outcome).toBe('pending');
   });
 });
 
