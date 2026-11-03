@@ -36,6 +36,31 @@ appId: com.prashantsharma.vedansh
     element: { id: "suvichar-card-source" }
     direction: UP
 - assertVisible: { id: "suvichar-card-source" }
+# Open the new Khatu Shyam series and select its final entry, not just the first.
+- scrollUntilVisible:
+    element: { id: "suvichar-mode-custom" }
+    direction: UP
+- repeat:
+    times: 12
+    while: { notVisible: { id: "suvichar-deity-khatu-shyam" } }
+    commands:
+      - swipe: { start: "85%,46%", end: "20%,46%", duration: 350 }
+      - waitForAnimationToEnd
+- swipe: { start: "85%,46%", end: "20%,46%", duration: 350 }
+- waitForAnimationToEnd
+- tapOn: { id: "suvichar-deity-khatu-shyam" }
+- scrollUntilVisible:
+    element: { id: "suvichar-browse-thoughts" }
+- tapOn: { id: "suvichar-browse-thoughts" }
+- tapOn: { id: "suvichar-thought-search" }
+- inputText: "VD-0084"
+- assertVisible: { id: "suvichar-thought-VD-0084" }
+- tapOn: { id: "suvichar-thought-VD-0084" }
+- scrollUntilVisible:
+    element: { id: "suvichar-card-source" }
+    direction: UP
+- assertVisible: { id: "suvichar-card-message" }
+- takeScreenshot: suvichar-khatu-hare-ka-sahara
 # Verify specific shrine copy cannot leak through the former shared Krishna pool.
 - scrollUntilVisible:
     element: { id: "suvichar-mode-custom" }
@@ -55,5 +80,9 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "suvichar-thought-search" }
 - inputText: "VD-0037"
 - assertNotVisible: { id: "suvichar-thought-VD-0037" }
+- tapOn: { id: "suvichar-thought-search" }
+- eraseText: 20
+- inputText: "VD-0084"
+- assertNotVisible: { id: "suvichar-thought-VD-0084" }
 - tapOn: { id: "suvichar-thoughts-close" }
 # No recipient is chosen and no message is sent.

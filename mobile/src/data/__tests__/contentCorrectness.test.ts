@@ -996,7 +996,7 @@ for (const file of collectJsonFiles()) {
     assert.match(data.source.approvedOn, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(data.source.approval.trim());
     assert.deepEqual(data.source.referenceUrls, []);
-    assert.equal(data.entries.length, 76);
+    assert.equal(data.entries.length, 84);
     assert.ok(data.entries.every((entry: { sourceId: string }) => entry.sourceId === 'vedansh-original'));
     continue;
   }

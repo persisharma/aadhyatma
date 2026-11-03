@@ -4,10 +4,11 @@ import { findSuvicharThought, isSourcedSuvicharMessage, nextSuvicharThought, sou
 import { isSuvicharThought, suvicharTemplatesFor } from '../suvicharTemplates';
 import { contentByLang } from '@/utils/localize';
 
-it('ships all 74 approved numbered thoughts and two distinct earlier examples with complete bilingual copy', () => {
-  expect(originals.entries).toHaveLength(76);
-  expect(new Set(originals.entries.map(t => t.id)).size).toBe(76);
-  expect(new Set(originals.entries.map(t => t.hi)).size).toBe(76);
+it('preserves the original 76 thoughts and adds eight Hare Ka Sahara reflections with complete bilingual copy', () => {
+  expect(originals.entries).toHaveLength(84);
+  expect(new Set(originals.entries.map(t => t.id)).size).toBe(84);
+  expect(new Set(originals.entries.map(t => t.hi)).size).toBe(84);
+  expect(originals.entries.slice(0, 76).map(t => t.id)).toEqual(Array.from({ length: 76 }, (_, i) => `VD-${String(i + 1).padStart(4, '0')}`));
   expect(originals.source.kind).toBe('app-written-original-reflections');
   expect(originals.source.referenceUrls).toEqual([]);
   const deities = new Set<string>(suvicharDeityCatalog.map(d => d.id));
@@ -18,6 +19,23 @@ it('ships all 74 approved numbered thoughts and two distinct earlier examples wi
     expect(t.hi.length).toBeLessThanOrEqual(MESSAGE_LIMIT);
     expect(t.en.length).toBeLessThanOrEqual(MESSAGE_LIMIT);
     for (const deity of t.deities) expect(deities.has(deity)).toBe(true);
+  }
+});
+
+it.each(Array.from({ length: 8 }, (_, i) => `VD-${String(i + 77).padStart(4, '0')}`))('offers Hare Ka Sahara thought %s only for Khatu Shyam, with persistent IDs in every script', id => {
+  const thought = suvicharThoughtsFor('khatu-shyam').find(t => t.id === id)!;
+  expect(thought).toBeDefined();
+  expect(thought.categoryHi).toBe('हारे का सहारा');
+  expect(originals.entries.find(t => t.id === id)!.deities).toEqual(['khatu-shyam']);
+  for (const deity of suvicharDeityCatalog.filter(d => d.id !== 'khatu-shyam')) {
+    expect(suvicharThoughtsFor(deity.id).some(t => t.id === id)).toBe(false);
+  }
+  for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+    const message = contentByLang(lang, thought.hi, thought.en);
+    expect(findSuvicharThought('khatu-shyam', message, id)?.id).toBe(id);
+    expect(suvicharSourceLabel(thought, lang)).not.toMatch(/चालीसा|Chalisa|गीता|Gita/);
+    const favorite = { deity: 'khatu-shyam', frame: 'mandir-jharokha', name: 'परिवार', message, thoughtId: id };
+    expect(parseSuvicharPreferences(JSON.stringify({ favorites: [favorite] })).favorites[0]).toEqual(favorite);
   }
 });
 

@@ -1324,3 +1324,5 @@ Recorded the Home-only size/colour treatment, restored Om circles/rules and reta
 
 - 2026-11-02: PR #602 native verification retry: Release compile/install, driver and setup passed; cold recording reaches Home, while Maestro retained a stale launch accessibility root. Explicitly load the existing iOS snapshot config without weakening assertions; guarded exact-source binary reuse preserves compiled checkpoint. Native lifecycle result pending retry.
 ## [2026-11-02] ingest | Add 76 approved original Suvichar reflections, explicit shrine scope and original daily rotation; preserve 621 referenced entries and stable favorites. Native/export review pending.
+
+## [2026-11-02] ingest | Add eight Khatu Shyam-only Hare Ka Sahara original reflections after merged #603; preserve earlier 76 IDs and expand late-ID/theme-search coverage. Native/export review pending.

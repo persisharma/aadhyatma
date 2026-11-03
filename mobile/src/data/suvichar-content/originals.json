@@ -5,9 +5,27 @@
     "kind": "app-written-original-reflections",
     "approvedOn": "2026-11-02",
     "approval": "User approved the daily-life, deity-specific and humility lists and requested all thoughts above be added.",
-    "scope": "All 74 numbered thoughts plus the two distinct earlier examples; three exact repeated examples occur only once.",
+    "scope": "All 74 numbered thoughts plus the two distinct earlier examples; three exact repeated examples occur only once. Eight new Khatu Shyam Hare Ka Sahara reflections follow as VD-0077 through VD-0084 (84 originals total).",
     "languagePolicy": "Hindi copy preserved from the approved conversation. English is an editorial translation; Gujarati/Kannada use the existing runtime Hindi re-scripting policy.",
-    "attribution": "Vedansh original reflections; not scripture quotations, translations or words attributed to a deity or saint."
+    "attribution": "Vedansh original reflections; not scripture quotations, translations or words attributed to a deity or saint.",
+    "additions": [
+      {
+        "requestedOn": "2026-11-02",
+        "themeHi": "हारे का सहारा",
+        "deity": "khatu-shyam",
+        "ids": [
+          "VD-0077",
+          "VD-0078",
+          "VD-0079",
+          "VD-0080",
+          "VD-0081",
+          "VD-0082",
+          "VD-0083",
+          "VD-0084"
+        ],
+        "authorship": "App-written in response to the user request after PR #603 was merged; not an attributed scripture quotation."
+      }
+    ]
   },
   "entries": [
     {
@@ -833,6 +851,94 @@
       "deities": [
         "rama",
         "ram-darbar"
+      ]
+    },
+    {
+      "id": "VD-0077",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "हारे का सहारा बाबा श्याम हैं। एक हार को अपने पूरे जीवन की पहचान मत बनने दीजिए।",
+      "en": "Baba Shyam is the support of the defeated. Do not let one setback define your whole life.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0078",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "जब मन कहे “अब मुझसे नहीं होगा”, श्याम का नाम लेकर थोड़ा ठहरिए। फिर जितना हो सके, उतना आगे बढ़िए।",
+      "en": "When your heart says, “I cannot go on,” take Shyam’s name and pause. Then move forward as much as you can.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0079",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "बाबा के सामने अपनी हार कहने में संकोच कैसा? प्रार्थना में जीत की कहानी सुनाना ज़रूरी नहीं।",
+      "en": "Why hesitate to tell Baba about a defeat? You do not need a story of success to offer a prayer.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0080",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "श्याम से हिम्मत माँगिए, हर बार जीत नहीं। कभी हार के बाद फिर उठना भी बड़ी जीत होती है।",
+      "en": "Ask Shyam for courage, rather than a win every time. Sometimes rising after a defeat is a great victory too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0081",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "हारे का सहारा कहते हैं जिन्हें, उनके नाम पर किसी निराश मन का सहारा भी बनिए।",
+      "en": "In the name of the one you call the support of the defeated, offer support to someone who feels discouraged too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0082",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "श्याम के दरबार में मन हल्का कीजिए। एक कठिन दिन आपके सारे अच्छे दिनों को मिटा नहीं देता।",
+      "en": "Lighten your heart in Shyam’s darbar. One difficult day does not erase all your good days.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0083",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "बाबा का नाम लेकर मदद माँग लीजिए। हर मुश्किल अकेले सहना साहस की शर्त नहीं है।",
+      "en": "Take Baba’s name and ask for help. Courage does not require facing every difficulty alone.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0084",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "श्याम पर भरोसा रखिए और अपने प्रयास का सम्मान कीजिए। देर लगने से आपकी मेहनत व्यर्थ नहीं हो जाती।",
+      "en": "Keep faith in Shyam and respect your own effort. Taking longer does not make your hard work worthless.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
       ]
     }
   ]
