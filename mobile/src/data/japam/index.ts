@@ -95,7 +95,7 @@ list.forEach((m, i) => assertMantra(m, i));
 export const japamMantras: readonly JapamMantra[] = list as JapamMantra[];
 
 export const japamTitleHi = 'जप';
-export const japamTitleEn = 'Japa & Mantras';
+export const japamTitleEn = 'JapMala';
 
 export function getJapamMantra(id: string): JapamMantra {
   const found = findJapamMantra(id);
