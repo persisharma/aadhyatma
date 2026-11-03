@@ -36,7 +36,7 @@ RULEBOOK §3 "Every stotram shloka is startable as japa".
   reader's `currentIndex` as `verseIndex`; the id is resolved on press.
 - **Shloka = list mantra.** `LIST_MANTRA` in `sloka.ts` maps a sloka id to a `japam.json` mantra with the
   same text (today `sloka.shiva-strotam.3.1` → `mahamrityunjaya-mantra`); `slokaJapaId` returns the
-  mantra id, so the reader pill and the Jap Mala tile share one count. The sloka id still resolves.
+  mantra id, so the reader pill and the JapMala tile share one count. The sloka id still resolves.
 - **Counter** for a sloka: the §35 counter, with the name as the caption under the lines (naam japa's
   caption), `हर श्लोक एक मनका` hint, `आज N श्लोक` tally, the section's sketch as background.
 

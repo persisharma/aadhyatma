@@ -22,8 +22,8 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # Open Japam category
-- assertVisible: "Japa & Mantras. Tap to open."
-- tapOn: "Japa & Mantras. Tap to open."
+- assertVisible: "JapMala. Tap to open."
+- tapOn: "JapMala. Tap to open."
 - waitForAnimationToEnd
 
 # Verify the existing mantra cards and the new Saraswati counter

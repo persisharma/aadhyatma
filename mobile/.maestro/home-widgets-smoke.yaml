@@ -54,7 +54,7 @@ appId: com.prashantsharma.vedansh
 - openLink: "vedansh://widget/japam"
 - tapOn: { text: "Open", optional: true }
 - extendedWaitUntil:
-    visible: "Japa & Mantras|जप"
+    visible: "JapMala|जप"
     timeout: 15000
 - stopApp:
     appId: com.prashantsharma.vedansh
