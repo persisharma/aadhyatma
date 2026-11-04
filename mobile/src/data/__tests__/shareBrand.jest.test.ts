@@ -20,11 +20,11 @@ describe('Panchang co-branding fallbacks (design.md §33a)', () => {
     expect(resolveShareBrand(nameless)).toBeNull();
   });
 
-  it('a name alone adds only the header chip', () => {
+  it('a name alone resolves with no title · contact line', () => {
     expect(resolveShareBrand(brand({ name: '  पं.  रमेश   शर्मा ' }))).toEqual({ name: 'पं. रमेश शर्मा', line: null });
   });
 
-  it('title and/or contact replace the footer feature line', () => {
+  it('title and/or contact follow the name on the footer line', () => {
     expect(resolveShareBrand(brand({ name: 'पं. रमेश', title: 'ज्योतिषाचार्य' }))?.line).toBe('ज्योतिषाचार्य');
     expect(resolveShareBrand(brand({ name: 'पं. रमेश', contact: '98290 12345' }))?.line).toBe('98290 12345');
     expect(resolveShareBrand(brand({ name: 'पं. रमेश', title: 'ज्योतिषाचार्य', contact: '98290 12345' }))?.line)
@@ -52,9 +52,11 @@ describe('Panchang co-branding fallbacks (design.md §33a)', () => {
     expect(brandTextLang('Pt. Ramesh')).toBe('en');
   });
 
-  it('Send as text signs off with the same profile', () => {
+  it('the footer line and Send as text print the same profile', () => {
     expect(shareBrandTextLine(null)).toBeNull();
     expect(shareBrandTextLine({ name: 'पं. रमेश', line: null })).toBe('पं. रमेश');
     expect(shareBrandTextLine({ name: 'पं. रमेश', line: 'ज्योतिषाचार्य' })).toBe('पं. रमेश · ज्योतिषाचार्य');
+    expect(shareBrandTextLine(resolveShareBrand(brand({ name: 'पं. रमेश', title: 'ज्योतिषाचार्य', contact: '98290 12345' }))))
+      .toBe('पं. रमेश · ज्योतिषाचार्य · 98290 12345');
   });
 });

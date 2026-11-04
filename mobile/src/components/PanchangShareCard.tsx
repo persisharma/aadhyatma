@@ -11,7 +11,7 @@ import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { withMarkHeadroom } from '@/utils/markHeadroom';
 import VedanshWordmark from './VedanshWordmark';
 import type { PanchangShareModel, ShareAnga, ShareChoghadiya, ShareVaas } from '@/panchang/panchangShareModel';
-import { brandTextLang, type ResolvedShareBrand } from '@/data/shareBrand';
+import { brandTextLang, shareBrandTextLine, type ResolvedShareBrand } from '@/data/shareBrand';
 
 const brandMark = require('@assets/splash-icon.png');
 
@@ -38,9 +38,10 @@ const chromeOpticalOffsets = {
  * चौघड़िया with start times, the four kaal windows, the four वास tiles, and a
  * dark footer with the app icon and the download link.
  *
- * `brand` (the sharer's co-branding, §33a *Co-branding*) adds a name chip beside the
- * city and, with a title or contact, replaces the footer's feature line. Without it
- * the card is unchanged; the Vedansh icon, wordmark and download pill never move.
+ * `brand` (the sharer's co-branding, §33a *Co-branding*) replaces the footer's
+ * feature line with `<name>` or `<name> · <title> · <contact>`; the header is never
+ * touched. Without it the card is unchanged; the Vedansh icon, wordmark and
+ * download pill never move.
  *
  * Every line is a fixed size that was fit-tested against the longest strings
  * (long city, अधिक मास, a क्षय tithi, the longest nakshatra/yoga/karana, a long
@@ -81,9 +82,9 @@ export default function PanchangShareCard({ model, lang, onIconLoad, brand = nul
       transform: [{ translateY: size * chromeOpticalOffsets[l].place }],
     };
   };
-  // The sharer typed the name/line in any script; draw each in a face that has its glyphs.
-  const brandNameLang = brand ? brandTextLang(brand.name) : lang;
-  const brandLineLang = brand?.line ? brandTextLang(brand.line) : lang;
+  // The sharer typed the name/line in any script; draw it in a face that has its glyphs.
+  const brandLine = shareBrandTextLine(brand);
+  const brandLineLang = brandLine ? brandTextLang(brandLine) : lang;
 
   const One = ({ style, children }: { style: StyleProp<TextStyle>; children: React.ReactNode }) => (
     <Text allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85} style={fit(style)}>
@@ -179,13 +180,6 @@ export default function PanchangShareCard({ model, lang, onIconLoad, brand = nul
             </View>
           </View>
           <View style={styles.chips}>
-            {brand ? (
-              <View testID="panchang-share-brand-chip" style={[styles.brandChip, { backgroundColor: colors.dayGlass, borderColor: colors.dayGlassBorder }]}>
-                <Text testID="panchang-share-brand-name" allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[chipText(brandNameLang), styles.shrink]}>
-                  {brand.name}
-                </Text>
-              </View>
-            ) : null}
             <View testID="panchang-share-location-chip" style={[styles.cityChip, { backgroundColor: colors.dayGlass, borderColor: colors.dayGlassBorder }]}>
               <View style={[styles.pin, { backgroundColor: colors.saffron }]} />
               <Text testID="panchang-share-location" allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[chipText(lang), styles.shrink]}>
@@ -275,13 +269,13 @@ export default function PanchangShareCard({ model, lang, onIconLoad, brand = nul
           <One style={{ fontFamily: en ? fontFamilies.latinBold : titleFace, fontSize: en ? 16 : 14, lineHeight: en ? 19 : 17.5, color: colors.nightInk }}>
             {t('रोज़ का पूरा पंचांग — वेदांश़ ऐप', 'Full panchang daily — Vedansh app')}
           </One>
-          {brand?.line ? (
-            // The sharer's title · contact replaces the feature line; the pill keeps the link.
-            <Text testID="panchang-share-brand-line" allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}
+          {brandLine ? (
+            // The sharer's name (· title · contact) replaces the feature line; the pill keeps the link.
+            <Text testID="panchang-share-brand-line" allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75}
               style={brandLineLang === 'en'
                 ? { fontFamily: fontFamilies.latinBold, fontSize: 13, lineHeight: 15.5, color: colors.nightGold }
                 : withMarkHeadroom({ fontFamily: scriptTitleFont(brandLineLang, fontFamilies.devanagariBold), fontSize: 12, lineHeight: 15.5, color: colors.nightGold })}>
-              {brand.line}
+              {brandLine}
             </Text>
           ) : (
             <One style={{ fontFamily: en ? fontFamilies.latinSemiBold : bodyFace, fontSize: en ? 13 : 12, lineHeight: 15.5, color: colors.nightInkSoft }}>
@@ -310,7 +304,6 @@ const styles = StyleSheet.create({
   brandCopy: { gap: 3, alignItems: 'flex-start' },
   brandIcon: { width: 32, height: 32, borderRadius: 8 },
   chips: { flexShrink: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', gap: 6 },
-  brandChip: { flexShrink: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 11, paddingVertical: 4, borderRadius: 14, borderWidth: 1 },
   cityChip: { flexShrink: 1, flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 11, paddingVertical: 4, borderRadius: 14, borderWidth: 1 },
   pin: { width: 9, height: 9, borderTopLeftRadius: 5, borderTopRightRadius: 5, borderBottomRightRadius: 5, transform: [{ rotate: '-45deg' }] },
   dateBlock: { position: 'absolute', left: 14, right: 14, top: 42 },
