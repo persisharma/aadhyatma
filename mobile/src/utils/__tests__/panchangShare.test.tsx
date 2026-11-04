@@ -168,5 +168,14 @@ test('co-branding off: the captured card is the plain one', async () => {
   await act(async () => { tree.root.findAll((n) => n.props.accessibilityLabel === 'trigger' && typeof n.props.onPress === 'function')[0].props.onPress(); });
   act(() => { sheet().props.onShareSystem(); });
   await settle();
-  expect(tree.root.findByType(PanchangShareCard).props.brand).toBeNull();
+  const card = tree.root.findByType(PanchangShareCard);
+  expect(card.props.brand).toBeNull();
+  // Finish the capture, so no share is still waiting when the test environment closes.
+  act(() => tree.root.findByProps({ testID: 'share-card-mount' }).props.onLayout({ nativeEvent: { layout: { height: 675 } } }));
+  act(() => card.props.onIconLoad());
+  act(() => tree.root.findByType(PanchangShareCard).findAllByType(Image)
+    .filter(n => n.props.testID === 'vedansh-wordmark-hi').forEach(image => image.props.onLoad()));
+  await settle(); await settle();
+  expect(mockCapture).toHaveBeenCalledTimes(1);
+  expect(tree.root.findAllByType(PanchangShareCard)).toHaveLength(0);
 });
