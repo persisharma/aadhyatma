@@ -158,6 +158,12 @@ export type ShareableCard = {
   note?: string;
   /** The renderer honours `lang`, so the sheet offers card-language chips. */
   languages?: boolean;
+  /**
+   * Settings under the preview that change what the card prints (Panchang co-branding).
+   * They write state the card's renderer reads, so preview and capture always agree;
+   * `busy` disables them while an image is being captured.
+   */
+  controls?: (p: { lang: Lang; busy: boolean }) => React.ReactNode;
   /** Caption heading, label and quoted line in the card language. */
   caption: (lang: Lang) => { sectionName: string; label: string; firstLine: string };
   /** What the hashtags name. */
@@ -1206,6 +1212,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           lang={cardChooser.lang}
           title={pick(cardChooser.lang, cardChooser.content.title)}
           note={cardChooser.content.note}
+          controls={cardChooser.content.controls?.({ lang: cardChooser.lang, busy })}
           hashtagPreview={hashtagPreview}
           busy={busy}
           onShareSystem={() => void runCard('system', 'post')}

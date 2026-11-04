@@ -1330,3 +1330,5 @@ Recorded the Home-only size/colour treatment, restored Om circles/rules and reta
 ## [2026-11-03] ingest | Explore replay visit-history reset
 Added the confirmed replay-only history reset, persistence/no-reseeding contract, next-eligible-launch timing and shared-budget preservation to [[subsystems/explore-sheet]]. Native visual/Maestro evidence remains pending.
 
+## [2026-11-04] ingest | Panchang share co-branding
+Added the opt-in pandit profile (name chip, title · contact footer line, Vedansh pill unchanged), the generic `ShareableCard.controls` sheet slot and the hydrate-before-open gotcha to [[subsystems/share]]. Native visual/WhatsApp evidence pending.
