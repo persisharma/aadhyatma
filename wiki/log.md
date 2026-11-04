@@ -1330,3 +1330,6 @@ Recorded the Home-only size/colour treatment, restored Om circles/rules and reta
 ## [2026-11-03] ingest | Explore replay visit-history reset
 Added the confirmed replay-only history reset, persistence/no-reseeding contract, next-eligible-launch timing and shared-budget preservation to [[subsystems/explore-sheet]]. Native visual/Maestro evidence remains pending.
 
+
+## [2026-11-04] ingest | Meta feature-tour video kit
+Added the 43.5 s Hindi/English all-features ad builder (9:16 + 4:5, deterministic Chromium frames, synthesised tanpura, store-copy claims only) to [[runbooks/store-submission]]. No voice-over (edge-tts blocked in cloud). Nothing uploaded to Meta.

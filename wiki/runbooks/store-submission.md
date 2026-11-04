@@ -2,7 +2,7 @@
 title: Store listing preparation
 type: runbook
 sources: [mobile/app.json, mobile/eas.json, mobile/app.config.js, mobile/src/notifications/pushTokenPure.ts, mobile/src/utils/assetCache.ts]
-last_verified_date: 2026-10-12
+last_verified_date: 2026-11-04
 confidence: high
 status: current
 ---
@@ -56,3 +56,7 @@ Generated universal APK directly from the submitted vc12 AAB using bundletool 1.
 The 1.5.0 release record and compact test evidence are committed under `docs/releases/1.5.0/`. `marketing/reels/showcases/latest-1.5.0/` holds locale-matched screen sources, benefit-focused narration, preset neural TTS generation and a reproducible 1080×1920 renderer. Hindi and English local MP4s run about 39 seconds, with SRT narration files and media/hash/volume validation; they have not been posted. The captures show current UI in a compatible capture shell, distinct from exact-release native test evidence.
 
 The user subsequently requested separate carousels reusing finished listing assets. `marketing/reels/showcases/listing-carousels/` contains the copy, renderer, source hashes and reviewed contact sheets for 10 features × Hindi/English × 3 slides (60 PNGs, 1080×1350). The user then requested Instagram marketing design rather than resized listing images. V3 uses a light cream three-step marketing journey: choose or enter details → begin → explore the result. The first card is an editorial diagram, the second uses a whole real phone screen, and the third highlights a feature-specific crop from a real capture with a light CTA. Kundali and Guna Milan explain the required birth details, chart generation and result. Locale-matched UI pixels, chart geometry and matching scores are unchanged; store metadata is unchanged. Latest local PNGs, captions, ZIPs and filtered review gallery are under `marketing/reels/out/instagram-journeys-v3/`; nothing was posted.
+
+## Meta feature-tour video (4 November 2026)
+
+`marketing/reels/showcases/feature-tour/` renders a 43.5-second, all-features ad in Hindi and English. Formats: 9:16 for Reels/Stories and a 4:5 centre crop for Feed. Frames are deterministic Chromium renders of committed native captures and are piped to ffmpeg. The music bed is an original synthesised tanpura. All copy is limited to the 1.5.0 store claims. Gotchas: the cloud container blocks the edge-tts endpoint, so the cut has no voice-over and is designed to work with the sound off. Source captures span 6–27 October and mix pre- and post-Vrat-tab UI. Keep text within y 300–1250 so it survives both the Reels overlays and the 4:5 crop. The outputs are local only; nothing has been uploaded to Meta.
