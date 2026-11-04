@@ -1332,3 +1332,6 @@ Added the confirmed replay-only history reset, persistence/no-reseeding contract
 
 ## [2026-11-04] ingest | Panchang share co-branding
 Added the opt-in pandit profile (name chip, title · contact footer line, Vedansh pill unchanged), the generic `ShareableCard.controls` sheet slot and the hydrate-before-open gotcha to [[subsystems/share]]. Native visual/WhatsApp evidence pending.
+
+## [2026-11-04] ingest | Panchang co-branding moves to the footer line
+The sharer's name no longer prints as a header chip; [[subsystems/share]] now records `<name> · <title> · <contact>` replacing the footer feature line (min scale 0.75), header untouched. Native visual/WhatsApp evidence pending.

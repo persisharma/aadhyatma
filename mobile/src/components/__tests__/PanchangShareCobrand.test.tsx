@@ -39,39 +39,48 @@ describe.each(['hi', 'en', 'gu', 'kn'] as Lang[])('%s co-branding', lang => {
     act(() => tree.unmount());
   });
 
-  it('a name alone adds the header chip beside the city and keeps the feature line', () => {
+  it('a name alone replaces the feature line in the footer; the header gets no chip', () => {
     const tree = render(lang, { name: 'पं. रमेश शर्मा', line: null });
-    const chip = tree.root.findByProps({ testID: 'panchang-share-brand-chip' });
-    const city = tree.root.findByProps({ testID: 'panchang-share-location-chip' });
-    expect(chip.parent).toBe(city.parent);
-    const name = tree.root.findByProps({ testID: 'panchang-share-brand-name' });
-    expect(name.props.children).toBe('पं. रमेश शर्मा');
+    expect(tree.root.findAllByProps({ testID: 'panchang-share-brand-chip' })).toHaveLength(0);
+    expect(tree.root.findAllByProps({ testID: 'panchang-share-brand-name' })).toHaveLength(0);
+    const line = tree.root.findByProps({ testID: 'panchang-share-brand-line' });
+    expect(line.props.children).toBe('पं. रमेश शर्मा');
     // Fixed image text: never scaled by system settings, shrinks only as a last resort.
-    expect(name.props.allowFontScaling).toBe(false);
-    expect(name.props.numberOfLines).toBe(1);
-    expect(name.props.adjustsFontSizeToFit).toBe(true);
-    expect(texts(tree)).toContain(features(lang));
-    expect(tree.root.findAllByProps({ testID: 'panchang-share-brand-line' })).toHaveLength(0);
+    expect(line.props.allowFontScaling).toBe(false);
+    expect(line.props.numberOfLines).toBe(1);
+    expect(line.props.adjustsFontSizeToFit).toBe(true);
+    expect(texts(tree)).not.toContain(features(lang));
+    // The city chip is alone in the header row, exactly as on the plain card.
+    const city = tree.root.findByProps({ testID: 'panchang-share-location-chip' });
+    expect(city.parent!.children).toHaveLength(1);
     act(() => tree.unmount());
   });
 
-  it('title · contact replaces the feature line; the Vedansh pill stays', () => {
+  it('name · title · contact share the footer line; the Vedansh pill stays', () => {
     const tree = render(lang, { name: 'पं. रमेश शर्मा', line: 'ज्योतिषाचार्य · 98290 12345' });
     const line = tree.root.findByProps({ testID: 'panchang-share-brand-line' });
-    expect(line.props.children).toBe('ज्योतिषाचार्य · 98290 12345');
+    expect(line.props.children).toBe('पं. रमेश शर्मा · ज्योतिषाचार्य · 98290 12345');
     expect(line.props.allowFontScaling).toBe(false);
     // Devanagari line on any card language: Noto face with mark headroom.
     expect(StyleSheet.flatten(line.props.style).fontFamily).toMatch(/Devanagari/);
     expect(texts(tree)).not.toContain(features(lang));
+    expect(tree.root.findAllByProps({ testID: 'panchang-share-brand-chip' })).toHaveLength(0);
     expect(tree.root.findByProps({ testID: 'panchang-share-download-pill' })).toBeTruthy();
     expect(tree.root.findByProps({ testID: 'panchang-share-download-link' }).props.children).toBe('vedansh.app/get');
     act(() => tree.unmount());
   });
 });
 
-it('a Latin name or line is drawn in the Latin face on an Indic card', () => {
+it('a Latin line is drawn in the Latin face on an Indic card', () => {
   const tree = render('hi', { name: 'Pt. Ramesh Sharma', line: 'Jyotishacharya' });
-  expect(StyleSheet.flatten(tree.root.findByProps({ testID: 'panchang-share-brand-name' }).props.style).fontFamily).toMatch(/Cormorant/);
-  expect(StyleSheet.flatten(tree.root.findByProps({ testID: 'panchang-share-brand-line' }).props.style).fontFamily).toMatch(/Cormorant/);
+  const line = tree.root.findByProps({ testID: 'panchang-share-brand-line' });
+  expect(line.props.children).toBe('Pt. Ramesh Sharma · Jyotishacharya');
+  expect(StyleSheet.flatten(line.props.style).fontFamily).toMatch(/Cormorant/);
+  act(() => tree.unmount());
+});
+
+it('a Latin name with a Devanagari title takes the Devanagari face, which also has Latin', () => {
+  const tree = render('en', { name: 'Ramesh Sharma', line: 'ज्योतिषाचार्य' });
+  expect(StyleSheet.flatten(tree.root.findByProps({ testID: 'panchang-share-brand-line' }).props.style).fontFamily).toMatch(/Devanagari/);
   act(() => tree.unmount());
 });
