@@ -49,16 +49,24 @@ def fixed(ph):
 
 
 def phonemes(line, lang):
-    if lang == "hi":
-        return kokoro.tokenizer.phonemize(line, "hi")
+    """Plain text uses the line's language; {display|spoken} spans are always spoken as Hindi."""
+    base = "hi" if lang == "hi" else "en-us"
     parts, at = [], 0
+
+    def plain(seg):
+        # espeak reads a segment-initial danda aloud ("purna viram"); move leading punctuation onto the previous part.
+        lead = re.match(r"\s*([।.,?!]+)", seg)
+        if lead and parts:
+            parts[-1] += "," if lead.group(1).startswith(",") else "."
+            seg = seg[lead.end():]
+        if seg.strip():
+            parts.append(kokoro.tokenizer.phonemize(seg, base))
+
     for m in SPAN.finditer(line):
-        if line[at:m.start()].strip():
-            parts.append(kokoro.tokenizer.phonemize(line[at:m.start()], "en-us"))
+        plain(line[at:m.start()])
         parts.append(kokoro.tokenizer.phonemize(m.group(2), "hi"))
         at = m.end()
-    if line[at:].strip():
-        parts.append(kokoro.tokenizer.phonemize(line[at:], "en-us"))
+    plain(line[at:])
     return re.sub(r"\s+([,.?!])", r"\1", " ".join(p.strip() for p in parts))
 
 
