@@ -1,6 +1,6 @@
 import AppIcon, { type AppIconName } from './AppIcon';
 import React from 'react';
-import { Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { LANGUAGES, type Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
@@ -92,6 +92,8 @@ type Props = {
   wholeCard?: boolean;
   /** One muted line under the preview (a privacy statement), already localized. */
   note?: string;
+  /** Card settings under the preview (Panchang co-branding); single cards only. */
+  controls?: React.ReactNode;
   /** Text-row overrides, already localized (a caller-owned hand-off such as the Kundali report text). */
   textTitle?: string;
   textSub?: string;
@@ -174,6 +176,7 @@ export default function ShareTargetSheet({
   singleCardPreview,
   wholeCard,
   note,
+  controls,
   textTitle,
   textSub,
   textA11y,
@@ -498,6 +501,8 @@ export default function ShareTargetSheet({
 
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
+      {/* Card settings can hold text fields (co-branding): keep them above the iOS keyboard. */}
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.keyboard}>
       <Pressable
         accessible={false}
         style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}
@@ -515,12 +520,13 @@ export default function ShareTargetSheet({
           {multi?.view === 'preview' ? null : heading}
           {/* Always scrollable: the language chips and text row make even the verse
               sheet taller than a small phone's 92 %. */}
-          <ScrollView style={styles.body} bounces={false} showsVerticalScrollIndicator={false}>
+          <ScrollView style={styles.body} bounces={false} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             {!multi || multi.view === 'targets' ? langChips : null}
             {!multi && singleCardPreview ? <View style={{ alignItems: 'center', marginVertical: 12 }}>{singleCardPreview}</View> : null}
             {!multi && note ? (
               <Text testID="share-sheet-note" style={[subLabel, { color: colors.inkMuted, textAlign: 'center', marginBottom: spacing.sm }]}>✓ {note}</Text>
             ) : null}
+            {!multi && controls ? <View testID="share-sheet-controls" style={{ marginBottom: spacing.md }}>{controls}</View> : null}
             {body}
           </ScrollView>
           {showCancel ? (
@@ -537,11 +543,13 @@ export default function ShareTargetSheet({
           ) : null}
         </Pressable>
       </Pressable>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
+  keyboard: { flex: 1 },
   backdrop: { flex: 1, justifyContent: 'flex-end' },
   sheet: { borderTopLeftRadius: 22, borderTopRightRadius: 22, paddingTop: 10, paddingBottom: 28, maxHeight: '92%' },
   grabber: { width: 40, height: 4, borderRadius: 2, alignSelf: 'center', marginBottom: 12 },
