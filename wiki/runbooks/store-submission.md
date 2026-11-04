@@ -59,4 +59,14 @@ The user subsequently requested separate carousels reusing finished listing asse
 
 ## Meta feature-tour video (4 November 2026)
 
-`marketing/reels/showcases/feature-tour/` renders a 43.5-second, all-features ad in Hindi and English. Formats: 9:16 for Reels/Stories and a 4:5 centre crop for Feed. Frames are deterministic Chromium renders of committed native captures and are piped to ffmpeg. The music bed is an original synthesised tanpura. All copy is limited to the 1.5.0 store claims. Gotchas: the cloud container blocks the edge-tts endpoint, so the cut has no voice-over and is designed to work with the sound off. Source captures span 6–27 October and mix pre- and post-Vrat-tab UI. Keep text within y 300–1250 so it survives both the Reels overlays and the 4:5 crop. The outputs are local only; nothing has been uploaded to Meta.
+`marketing/reels/showcases/feature-tour/` renders a roughly 50-second all-features ad in Hindi and English. Formats: 9:16 for Reels/Stories and a 4:5 centre crop for Feed. Frames are deterministic Chromium renders of committed native captures and are piped to ffmpeg. The tanpura bed is synthesised and side-chain ducked under the voice. All copy is limited to the 1.5.0 store claims.
+
+Voice-over uses Kokoro-82M (Apache-2.0), voice `hf_alpha`, through `narrate.py`. English lines use `{Term|देवनागरी}` spans so Indic words get Hindi phonemes. `whisper_check.py` round-trips every clip through Whisper turbo.
+
+Gotchas:
+- The cloud container blocks edge-tts and Hugging Face. Kokoro and Whisper models download from GitHub releases instead.
+- Piper hi_IN voices are trained on CC BY-NC-SA data, so they are not usable in ads.
+- sherpa-onnx's Kokoro build cannot phonemise Hindi without a lexicon (use kokoro-onnx), and its Whisper recogniser truncates Devanagari.
+- espeak drops the schwa in एकादशी; see `phonemeFixes`.
+
+Source captures span 6–27 October and mix pre- and post-Vrat-tab UI. Keep text within y 300–1250 so it survives both the Reels overlays and the 4:5 crop. No native-speaker listening review has been done yet. The outputs are local only; nothing has been uploaded to Meta.

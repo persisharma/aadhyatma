@@ -2,8 +2,11 @@
 // Frames are rendered deterministically in headless Chromium (renderAt(t) per frame), piped to ffmpeg,
 // then muxed with an original synthesised tanpura bed (music.py). Nothing is uploaded or posted.
 //
-// Usage: node build.mjs [--lang en|hi|all] [--out <dir>] [--preview]
+// Usage: python narrate.py --models <dir>   (voice-over clips + vo.json into the out dir; see narrate.py)
+//        node build.mjs [--lang en|hi|all] [--out <dir>] [--preview] [--no-vo]
 //   --preview renders review stills only (no video), for fast layout iteration.
+//   --no-vo   music-only cut (scene lengths from storyboard.json).
+// With voice-over, each scene stretches to fit its narration, and music ducks under the voice.
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -33,9 +36,33 @@ const br = s => esc(s).replaceAll('\n', '<br>');
 const fileUrl = rel => pathToFileURL(path.join(root, rel)).href;
 const screensFor = (scene, lang) => Array.isArray(scene.screens) ? scene.screens : scene.screens[lang];
 
-let at = 0;
-const timed = board.scenes.map(s => { const r = {...s, start: at}; at += s.duration; return r; });
-const total = at;
+const noVo = process.argv.includes('--no-vo');
+const stripSpans = s => s.replace(/\{([^|}]+)\|[^}]+\}/g, '$1');
+function voFor(lang) {
+  if (noVo) return null;
+  const file = path.join(out, 'vo.json');
+  if (!fs.existsSync(file)) throw Error(`No ${file}: run narrate.py first, or pass --no-vo`);
+  const rows = JSON.parse(fs.readFileSync(file, 'utf8')).lines.filter(r => r.lang === lang);
+  return board.scenes.map(s => {
+    const r = rows.find(x => x.scene === s.id);
+    if (!r || r.text !== stripSpans(s[lang].vo)) throw Error(`Missing or stale ${lang} voice-over for ${s.id}: rerun narrate.py`);
+    return r;
+  });
+}
+function timeline(lang) {
+  const vo = voFor(lang);
+  let at = 0;
+  const timed = board.scenes.map((s, i) => {
+    const lead = i === 0 ? 0.15 : 0.3, last = i === board.scenes.length - 1;
+    const need = vo ? lead + vo[i].seconds + (last ? 1.4 : 0.4) : 0;
+    const duration = Math.ceil(Math.max(s.duration, need) * fps) / fps;
+    const r = {...s, duration, start: at, voStart: at + lead, vo: vo?.[i]};
+    at += duration;
+    return r;
+  });
+  return {timed, total: at};
+}
+const srtTime = t => new Date(Math.round(t * 1000)).toISOString().slice(11, 23).replace('.', ',');
 
 function sceneHtml(scene, lang, i) {
   const c = scene[lang];
@@ -62,7 +89,7 @@ function sceneHtml(scene, lang, i) {
     ${phones}${callout}</section>`;
 }
 
-function pageHtml(lang) {
+function pageHtml(lang, timed) {
   const dev = lang === 'hi';
   return `<!doctype html><html lang="${lang}"><head><meta charset="utf-8">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@500;600&family=Noto+Serif+Devanagari:wght@500;600;700&family=Noto+Sans+Gujarati:wght@500&family=Noto+Sans+Kannada:wght@500&display=block">
@@ -159,16 +186,14 @@ function run(bin, args, opts = {}) {
 }
 
 const browser = await chromium.launch();
-const manifest = {generated: new Date().toISOString(), durationSeconds: total, format: board.format, outputs: [], sources: {}};
+const manifest = {generated: new Date().toISOString(), format: board.format, voiceOver: noVo ? null : board.voice, outputs: [], sources: {}};
 try {
-  const music = path.join(out, 'music.wav');
-  if (!preview) {
-    const ctaStart = timed.at(-1).start;
-    run('python3', [path.join(here, 'music.py'), music, String(total), String(ctaStart)]);
-  }
   for (const lang of langs) {
+    const {timed, total} = timeline(lang);
+    const music = path.join(out, `music-${lang}.wav`);
+    if (!preview) run('python3', [path.join(here, 'music.py'), music, String(total), String(timed.at(-1).start)]);
     const htmlFile = path.join(out, `page-${lang}.html`);
-    fs.writeFileSync(htmlFile, pageHtml(lang));
+    fs.writeFileSync(htmlFile, pageHtml(lang, timed));
     const page = await browser.newPage({viewport: {width: W, height: H}, deviceScaleFactor: 1});
     await page.goto(pathToFileURL(htmlFile).href, {waitUntil: 'networkidle'});
     await page.evaluate(async () => {
@@ -213,10 +238,23 @@ try {
     if (preview) continue;
     ff.stdin.end();
     await ffDone;
-    const final = path.join(out, `vedansh-feature-tour-${lang}-9x16.mp4`);
-    run('ffmpeg', ['-y', '-loglevel', 'error', '-i', video, '-i', music, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
-      '-af', 'loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', final]);
-    const feed = path.join(out, `vedansh-feature-tour-${lang}-4x5.mp4`);
+    const tag = noVo ? `${lang}-music` : lang;
+    const final = path.join(out, `vedansh-feature-tour-${tag}-9x16.mp4`);
+    const inputs = ['-i', video, '-i', music];
+    let graph = '[1:a]loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000[a]';
+    if (!noVo) {
+      // Each clip is delayed to its scene; the tanpura is side-chain ducked under the voice, then the mix is normalised.
+      const voices = timed.map((s, i) => { inputs.push('-i', path.join(out, s.vo.file));
+        return `[${i + 2}:a]aresample=48000,aformat=channel_layouts=stereo,adelay=${Math.round(s.voStart * 1000)}:all=1,apad[v${i}]`; });
+      graph = `${voices.join(';')};${timed.map((_, i) => `[v${i}]`).join('')}amix=inputs=${timed.length}:normalize=0:duration=longest,volume=1.6,asplit[vo][key];` +
+        `[1:a]volume=0.55[bed];[bed][key]sidechaincompress=threshold=0.02:ratio=6:attack=15:release=450[duck];` +
+        `[duck][vo]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000[a]`;
+      fs.writeFileSync(path.join(out, `vedansh-feature-tour-${lang}.srt`), timed.map((s, i) =>
+        `${i + 1}\n${srtTime(s.voStart)} --> ${srtTime(s.voStart + s.vo.seconds)}\n${s.vo.text}\n`).join('\n'));
+    }
+    run('ffmpeg', ['-y', '-loglevel', 'error', ...inputs, '-filter_complex', graph, '-map', '0:v', '-map', '[a]', '-c:v', 'copy',
+      '-c:a', 'aac', '-b:a', '192k', '-t', String(total), '-movflags', '+faststart', final]);
+    const feed = path.join(out, `vedansh-feature-tour-${tag}-4x5.mp4`);
     run('ffmpeg', ['-y', '-loglevel', 'error', '-i', final, '-vf', 'crop=1080:1350:0:285', '-c:v', 'libx264', '-preset', 'slow', '-crf', '17',
       '-pix_fmt', 'yuv420p', '-c:a', 'copy', '-movflags', '+faststart', feed]);
     fs.rmSync(video);

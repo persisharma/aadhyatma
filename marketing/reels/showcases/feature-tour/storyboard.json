@@ -27,12 +27,14 @@
       "en": {
         "kicker": "VEDANSH",
         "title": "Your daily devotion.\nAll in one app.",
-        "sub": "Panchang · Gita · Kundali · Japa · Stories"
+        "sub": "Panchang · Gita · Kundali · Japa · Stories",
+        "vo": "Your whole day of devotion. In one app."
       },
       "hi": {
         "kicker": "वेदांश",
         "title": "आपकी पूरी भक्ति,\nएक ही ऐप में",
-        "sub": "पंचांग · गीता · कुंडली · जप · कथाएँ"
+        "sub": "पंचांग · गीता · कुंडली · जप · कथाएँ",
+        "vo": "आपकी पूरी भक्ति, अब एक ही ऐप में।"
       }
     },
     {
@@ -46,12 +48,14 @@
       "en": {
         "kicker": "READ",
         "title": "Chalisa, Gita & kathas",
-        "sub": "With Hindi and English meaning"
+        "sub": "With Hindi and English meaning",
+        "vo": "Read the {Chalisa|चालीसा}, the {Gita|गीता}, and {kathas|कथास}, with meaning."
       },
       "hi": {
         "kicker": "पढ़ें",
         "title": "चालीसा, गीता और कथाएँ",
-        "sub": "हिंदी और अंग्रेज़ी अर्थ के साथ"
+        "sub": "हिंदी और अंग्रेज़ी अर्थ के साथ",
+        "vo": "चालीसा, गीता और कथायें पढ़ें, अर्थ के साथ।"
       }
     },
     {
@@ -69,12 +73,14 @@
       "en": {
         "kicker": "GITA SAAR",
         "title": "The Gita, one teaching\nat a time",
-        "sub": "Life's questions, the Gita's answers"
+        "sub": "Life's questions, the Gita's answers",
+        "vo": "Find answers to life's questions, in {Gita Saar|गीता सार}."
       },
       "hi": {
         "kicker": "गीता सार",
         "title": "हर उलझन में,\nथोड़ा-सा उजाला",
-        "sub": "जीवन के प्रश्न, गीता के उत्तर"
+        "sub": "जीवन के प्रश्न, गीता के उत्तर",
+        "vo": "जीवन के हर प्रश्न का उत्तर, गीता सार में।"
       }
     },
     {
@@ -87,12 +93,14 @@
       "en": {
         "kicker": "LISTEN",
         "title": "Bhajans, mantras\n& aartis",
-        "sub": "Keep listening in the background"
+        "sub": "Keep listening in the background",
+        "vo": "Listen to {bhajans|भजन्स}, mantras and {aartis|आरतीस}."
       },
       "hi": {
         "kicker": "सुनें",
         "title": "भजन, मंत्र और आरती",
-        "sub": "बैकग्राउंड में भी सुनते रहें"
+        "sub": "बैकग्राउंड में भी सुनते रहें",
+        "vo": "भजन, मंत्र और आरती सुनें।"
       }
     },
     {
@@ -114,12 +122,14 @@
       "en": {
         "kicker": "PANCHANG",
         "title": "Today's Panchang\nfor your city",
-        "sub": "Tithi · Nakshatra · Rahu Kaal · Choghadiya"
+        "sub": "Tithi · Nakshatra · Rahu Kaal · Choghadiya",
+        "vo": "The {Panchang|पंचांग} for your city, with {Rahu Kaal|राहु काल} and {Choghadiya|चौघड़िया}."
       },
       "hi": {
         "kicker": "पंचांग",
         "title": "आपके शहर का\nआज का पंचांग",
-        "sub": "तिथि · नक्षत्र · राहु काल · चौघड़िया"
+        "sub": "तिथि · नक्षत्र · राहु काल · चौघड़िया",
+        "vo": "अपने शहर का पंचांग, राहु काल और चौघड़िया देखें।"
       }
     },
     {
@@ -133,12 +143,14 @@
       "en": {
         "kicker": "VRAT & FESTIVALS",
         "title": "Never miss a vrat",
-        "sub": "Kathas, puja guidance and reminders"
+        "sub": "Kathas, puja guidance and reminders",
+        "vo": "Every {vrat|व्रत} and festival, with {kathas|कथास} and reminders."
       },
       "hi": {
         "kicker": "व्रत और त्योहार",
         "title": "कोई व्रत न छूटे",
-        "sub": "कथा, पूजा विधि और रिमाइंडर"
+        "sub": "कथा, पूजा विधि और रिमाइंडर",
+        "vo": "कोई व्रत न छूटे, कथा और रिमाइंडर के साथ।"
       }
     },
     {
@@ -152,12 +164,14 @@
       "en": {
         "kicker": "PUJA VIDHI",
         "title": "Puja, step by step",
-        "sub": "Illustrated guidance for every step"
+        "sub": "Illustrated guidance for every step",
+        "vo": "Follow every {puja|पूजा}, step by step."
       },
       "hi": {
         "kicker": "पूजा विधि",
         "title": "पूजा, चरण-दर-चरण",
-        "sub": "हर चरण चित्रों के साथ"
+        "sub": "हर चरण चित्रों के साथ",
+        "vo": "हर पूजा की विधि, आसान चरणों में।"
       }
     },
     {
@@ -177,12 +191,14 @@
       "en": {
         "kicker": "JYOTISH",
         "title": "Kundali, Rashifal\n& Guna Milan",
-        "sub": "Your birth chart, explained simply"
+        "sub": "Your birth chart, explained simply",
+        "vo": "Explore your {Kundali|कुंडली}, {Rashifal|राशिफल}, and {Guna Milan|गुण मिलान}."
       },
       "hi": {
         "kicker": "ज्योतिष",
         "title": "कुंडली, राशिफल\nऔर गुण मिलान",
-        "sub": "अपनी जन्म कुंडली, सरल भाषा में"
+        "sub": "अपनी जन्म कुंडली, सरल भाषा में",
+        "vo": "अपनी कुंडली, राशिफ़ल और गुण मिलान देखें।"
       }
     },
     {
@@ -202,12 +218,14 @@
       "en": {
         "kicker": "DAILY PRACTICE",
         "title": "Jap Mala & Sankalp",
-        "sub": "Count 108 beads. Build a daily habit."
+        "sub": "Count 108 beads. Build a daily habit.",
+        "vo": "Count your {japa|जप}, and keep your {Sankalp|संकल्प}, every day."
       },
       "hi": {
         "kicker": "नित्य साधना",
         "title": "जप माला और संकल्प",
-        "sub": "108 मनके गिनें, रोज़ का नियम बनाएँ"
+        "sub": "108 मनके गिनें, रोज़ का नियम बनाएँ",
+        "vo": "माला पर जाप करें, और रोज़ अपना संकल्प निभाएँ।"
       }
     },
     {
@@ -227,12 +245,14 @@
       "en": {
         "kicker": "FOR KIDS",
         "title": "Illustrated stories\nfor the family",
-        "sub": "Krishna, Ganesha, Hanuman & Maa Durga"
+        "sub": "Krishna, Ganesha, Hanuman & Maa Durga",
+        "vo": "Share illustrated stories with your children."
       },
       "hi": {
         "kicker": "बच्चों के लिए",
         "title": "पूरे परिवार के लिए\nचित्र-कथाएँ",
-        "sub": "कृष्ण, गणेश, हनुमान और माँ दुर्गा"
+        "sub": "कृष्ण, गणेश, हनुमान और माँ दुर्गा",
+        "vo": "बच्चों के साथ पढ़ें, सुंदर चित्र वाली कहानियाँ।"
       }
     },
     {
@@ -256,12 +276,14 @@
       "en": {
         "kicker": "ASK VEDANSH",
         "title": "“When is Ekadashi?”",
-        "sub": "Ask, and get answers from the calendar"
+        "sub": "Ask, and get answers from the calendar",
+        "vo": "Just ask: when is {Ekadashi|एकादशी}?"
       },
       "hi": {
         "kicker": "वेदांश से पूछें",
         "title": "“एकादशी कब है?”",
-        "sub": "पूछें, और पंचांग से जवाब पाएँ"
+        "sub": "पूछें, और पंचांग से जवाब पाएँ",
+        "vo": "बस पूछिए, एकादशी कब है?"
       }
     },
     {
@@ -275,12 +297,14 @@
       "en": {
         "kicker": "SHARE",
         "title": "Share bhakti cards",
-        "sub": "On WhatsApp, Instagram and more"
+        "sub": "On WhatsApp, Instagram and more",
+        "vo": "Send beautiful {bhakti|भक्ति} cards on WhatsApp."
       },
       "hi": {
         "kicker": "साझा करें",
         "title": "भक्ति कार्ड भेजें",
-        "sub": "WhatsApp, Instagram और भी"
+        "sub": "WhatsApp, Instagram और भी",
+        "vo": "भक्ति कार्ड बनाएँ, और अपनों को भेजें।"
       }
     },
     {
@@ -302,7 +326,8 @@
           "Namkaran",
           "Widgets",
           "Japa alarms"
-        ]
+        ],
+        "vo": "And so much more."
       },
       "hi": {
         "kicker": "और भी",
@@ -316,7 +341,8 @@
           "नामकरण",
           "होम विजेट",
           "जप अलार्म"
-        ]
+        ],
+        "vo": "और भी बहुत कुछ।"
       }
     },
     {
@@ -329,15 +355,29 @@
         "scripts": "हिंदी · English · ગુજરાતી · ಕನ್ನಡ",
         "trust": "No login. No in-app ads.",
         "button": "Download Vedansh",
-        "stores": "App Store · Google Play"
+        "stores": "App Store · Google Play",
+        "vo": "{Vedansh|वेदान्श}. Your spiritual companion. Download now."
       },
       "hi": {
         "title": "आपका आध्यात्मिक साथी",
         "scripts": "हिंदी · English · ગુજરાતી · ಕನ್ನಡ",
         "trust": "बिना लॉगिन · ऐप में कोई विज्ञापन नहीं",
         "button": "वेदांश डाउनलोड करें",
-        "stores": "App Store · Google Play"
+        "stores": "App Store · Google Play",
+        "vo": "वेदान्श। आपका आध्यात्मिक साथी। आज ही डाउनलोड करें।"
       }
     }
-  ]
+  ],
+  "voice": {
+    "engine": "Kokoro-82M v1.0 (Apache-2.0) via kokoro-onnx",
+    "voices": {
+      "en": "hf_alpha",
+      "hi": "hf_alpha"
+    },
+    "speed": 1.05,
+    "note": "English {word|देवनागरी} spans are spoken with Hindi phonemes so Indic terms keep Indian pronunciation.",
+    "phonemeFixes": {
+      "eːkˈaːdʃˌi": "eːkˈaːdəʃˌiː"
+    }
+  }
 }
