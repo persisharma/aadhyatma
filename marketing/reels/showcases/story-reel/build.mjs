@@ -1,6 +1,7 @@
-// "Hanuman and the Sun" story reel in three styles (Tholu Bommalata puppets, Pattachitra, the app's painted art),
-// with Hindi narration (voice.py) and subtitles. Scenes follow the app's sourced story (hanuman-sun.json).
-// Usage: node build.mjs [--style puppet|patta|painted|all] [--out <dir>] [--preview]
+// Story reels from the app's sourced content, with Hindi narration (voice.py) and subtitles.
+// Styles: Tholu Bommalata puppets (code-drawn), Pattachitra, or the app's painted art (illustrated stories only).
+// Each story lives in stories/<id>/ (script.json + scenes.mjs). See README for the style rule.
+// Usage: node build.mjs [--story hanuman-surya|dhanteras] [--style puppet|patta|painted|all] [--out <dir>] [--preview] [--bed none|tanpura] [--remux]
 import fs from 'node:fs';
 import path from 'node:path';
 import {spawn, execFileSync} from 'node:child_process';
@@ -18,13 +19,15 @@ const preview = process.argv.includes('--preview');
 // --bed none (default): narration only, so music can be added in Instagram/Meta at upload. --bed tanpura: synthesised drone.
 // --remux: keep the already-rendered picture and only rebuild the audio (fast).
 const bed = arg('bed', 'none'), remux = process.argv.includes('--remux');
-const out = path.resolve(arg('out', path.join(root, 'marketing/reels/out/story-reel')));
+const story = arg('story', 'hanuman-surya');
+const out = path.resolve(arg('out', path.join(root, 'marketing/reels/out/story-reel', story)));
+const {FOLK} = await import(`./stories/${story}/scenes.mjs`);
 const styles = arg('style', 'all') === 'all' ? ['puppet', 'patta', 'painted'] : [arg('style')];
 const W = 1080, H = 1920, FPS = 30, T = 0.3;
 const url = rel => pathToFileURL(path.join(root, rel)).href;
 const esc = t => String(t).replaceAll('&', '&amp;').replaceAll('<', '&lt;');
 const run = (bin, args) => execFileSync(bin, args, {stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 1 << 26}).toString();
-const script = JSON.parse(fs.readFileSync(path.join(here, 'script.json'), 'utf8'));
+const script = JSON.parse(fs.readFileSync(path.join(here, 'stories', story, 'script.json'), 'utf8'));
 const vo = JSON.parse(fs.readFileSync(path.join(out, 'vo.json'), 'utf8'));
 const strip = t => t.replace(/\{([^|}]+)\|[^}]+\}/g, '$1');
 
@@ -39,18 +42,6 @@ const scenes = script.scenes.map((sc, i) => {
 });
 const TOTAL = at;
 
-// Folk-style choreography: [character, x, y, scale, rotate, flip, motion]
-const FOLK = {
-  hook: {bg: 'sky', cast: [['surya', 800, 780, 1.5, 0, 1, 'sunPulse'], ['hanuman', 0, 0, 1.7, -28, 1, 'flyIn']]},
-  anjana: {bg: 'forest', cast: [['anjana', 430, 1330, 1.35, 0, -1, 'walkLeft'], ['hanuman', 770, 1430, 1.0, 0, 1, 'hungry']]},
-  sunrise: {bg: 'sky', cast: [['surya', 720, 0, 1.6, 0, 1, 'sunRise'], ['hanuman', 300, 1430, 1.15, 0, 1, 'reach']]},
-  leap: {bg: 'sky', fx: ['wind'], cast: [['surya', 840, 700, 1.15, 0, 1, 'sunPulse'], ['vayu', 0, 0, 1.0, -15, 1, 'follow'], ['hanuman', 0, 0, 1.55, -30, 1, 'flyIn2']]},
-  rahu: {bg: 'sky', cast: [['surya', 760, 760, 1.3, 0, 1, 'sunPulse'], ['rahu', 0, 0, 1.2, 0, 1, 'rahuPass'], ['indra', 240, 1330, 1.2, 0, 1, 'appearLate']]},
-  vajra: {bg: 'heaven', fx: ['flash'], cast: [['airavata', 650, 1390, 1.0, 0, 1, 'idle'], ['indra', 600, 1150, 0.95, 0, 1, 'idle'], ['hanuman', 0, 0, 1.3, -25, 1, 'fall']]},
-  vayu: {bg: 'cave', fx: ['dim'], cast: [['vayu', 400, 1330, 1.3, 0, 1, 'grieve'], ['hanuman', 520, 1270, 0.9, 82, 1, 'grieve'], ['brahma', 840, 1330, 1.15, 0, -1, 'appearLate']]},
-  blessing: {bg: 'heaven', fx: ['petals'], cast: [['surya', 820, 760, 0.95, 0, 1, 'sunPulse'], ['brahma', 280, 1330, 1.15, 0, 1, 'idle'], ['hanuman', 560, 1440, 1.05, 0, 1, 'revive'], ['indraBless', 840, 1330, 1.1, 0, -1, 'idle']]},
-  cta: {bg: 'sky', cast: [['surya', 790, 1000, 1.25, 0, 1, 'sunPulse'], ['hanuman', 300, 1480, 1.45, -28, 1, 'hover']]},
-};
 
 function puppetBase(type, k) {
   const pal = PALETTES.puppet;
@@ -61,6 +52,11 @@ function puppetBase(type, k) {
   if (type === 'forest') for (const [x, h] of [[110, 820], [980, 760], [640, 980]]) o += shape(`M${x - 22},1650 L${x - 22},${h + 160} L${x + 22},${h + 160} L${x + 22},1650Z`, '#5A2A12') + [[0, 0, 120], [-80, 90, 90], [80, 90, 90]].map(([dx, dy, r]) => shape(`M${x + dx - r},${h + dy}a${r},${r * 0.8} 0 1,0 ${2 * r},0a${r},${r * 0.8} 0 1,0 ${-2 * r},0Z`, '#2F6B2E')).join('');
   if (type === 'heaven') for (const x of [60, 930]) o += shape(`M${x},1640 L${x},700 L${x + 90},700 L${x + 90},1640Z`, '#4A1C0C') + `<path d="M${x - 20},700 L${x + 110},700 L${x + 95},660 L${x - 5},660Z" fill="${pal.gold}" stroke="#170904" stroke-width="6"/>`;
   if (type === 'cave') o += shape('M120,1650 L120,980 Q120,640 540,600 Q960,640 960,980 L960,1650Z', '#1E0A04');
+  if (type === 'ocean') o += `<rect x="0" y="1330" width="${W}" height="320" fill="#1D4F66"/>${dot(`M30,1340 L${W - 30},1340`)}`;
+  if (type === 'night') { let seed = 3; const r = () => ((seed = (seed * 16807) % 2147483647) / 2147483647); o += Array.from({length: 70}, () => `<circle cx="${(60 + r() * 960) | 0}" cy="${(600 + r() * 900) | 0}" r="${(2 + r() * 3).toFixed(1)}" fill="#FFE9B8" opacity=".85"/>`).join(''); }
+  if (type === 'home') o += shape('M250,1640 L250,880 Q250,700 540,680 Q830,700 830,880 L830,1640Z', '#5A2210') + shape('M300,1640 L300,900 Q300,750 540,735 Q780,750 780,900 L780,1640Z', '#2B0E06')
+    + Array.from({length: 9}, (_, k) => shape(`M${290 + k * 56},860 L${318 + k * 56},930 L${346 + k * 56},860Z`, '#2F8A3B')).join('')
+    + [[0, '#E2A62B'], [1, '#B8261B'], [2, '#2F8A3B']].map(([k, c]) => shape(`M${540 - 150 + k * 40},1700 a${150 - k * 40},${50 - k * 13} 0 1,0 ${2 * (150 - k * 40)},0 a${150 - k * 40},${50 - k * 13} 0 1,0 ${-2 * (150 - k * 40)},0Z`, c)).join('');
   o += shape(`M0,1640 L${W},1640 L${W},${H} L0,${H}Z`, '#3A1508');
   return o;
 }
@@ -97,7 +93,8 @@ function page(style) {
     patta: 'background:#FFF4D8;border:8px double #120B06;box-shadow:0 0 0 6px #F0B53C;color:#120B06',
     painted: 'background:#7A1D0C;border:3px solid #E7B864;color:#FFF4DF;border-radius:20px'}[style];
   const folk = style !== 'painted';
-  const casts = scenes.map(sc => folk ? FOLK[sc.id].cast.map(([name, x, y, s, rot, flip, m]) => ({x, y, s, rot, flip, m, parts: CHARACTERS[name].map(({shapes, ...p}) => p)})) : []);
+  if (!folk && scenes.some(sc => !sc.pages)) throw Error(`${story} has no painted pages: use --style puppet (style rule: unillustrated stories use puppets)`);
+  const casts = scenes.map(sc => folk ? FOLK[sc.id].cast.map(([name, x, y, s, rot, flip, m, o]) => ({x, y, s, rot, flip, m, o: o || {}, parts: CHARACTERS[name].map(({shapes, ...p}) => p)})) : []);
   const painted = folk ? '' : scenes.map((sc, i) => `<div class="pscene" data-i="${i}">${sc.pages.map((p, k) => { const f = `mobile/assets/kids-stories/${p.slice(0, 2)}-${p.slice(2)}.webp`; return `<div class="pp" data-k="${k}"><img class="pbg" src="${url(f)}"><img class="part" src="${url(f)}"></div>`; }).join('')}</div>`).join('');
   return `<!doctype html><html lang="hi"><head><meta charset="utf-8">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@600;700&family=Mukta:wght@600;800&display=block">
@@ -119,10 +116,10 @@ svg{position:absolute;inset:0}.pscene,.pp{position:absolute;inset:0;opacity:0}
 ${folk ? scenes.map((sc, i) => folkScene(style, sc, i)).join('') : ''}
 ${style === 'puppet' ? `<g>${zig()}</g>` : ''}</svg>
 <div class="flash"></div>
-<div class="head"><span class="pill">हनुमान और सूर्य · वेदांश कथा</span>${scenes.map((sc, i) => `<div class="sub" data-i="${i}">${esc(sc.text)}</div>`).join('')}</div>
-<div class="cta"><div class="row"><img class="icon" src="${url('mobile/assets/icon.png')}"><img class="mark" src="${url('mobile/assets/branding/wordmarks/hindi.png')}"></div><div class="t">पूरी कथा, चित्रों के साथ</div><div class="b">अभी डाउनलोड करें</div></div>
+<div class="head"><span class="pill">${esc(script.title)}</span>${scenes.map((sc, i) => `<div class="sub" data-i="${i}">${esc(sc.text)}</div>`).join('')}</div>
+<div class="cta"><div class="row"><img class="icon" src="${url('mobile/assets/icon.png')}"><img class="mark" src="${url('mobile/assets/branding/wordmarks/hindi.png')}"></div><div class="t">${esc(script.cta.line)}</div><div class="b">${esc(script.cta.button)}</div></div>
 <script>
-const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages.length})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
+const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 0})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
 const clamp=x=>Math.max(0,Math.min(1,x)),eo=x=>1-Math.pow(1-clamp(x),3),eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2},lerp=(a,b,p)=>a+(b-a)*p;
 const back=x=>{x=clamp(x);const c=1.5;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
 const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
@@ -136,7 +133,11 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
  appearLate:(c,u,d)=>{const p=clamp((u-.5*d)/(.35*d));return{op:p,y:c.y+(1-eo(p))*60}},
  fall:(c,u,d)=>{if(u<.56*d){const q=eo(u/(.56*d));return{x:lerp(60,430,q),y:lerp(1260,1060,q)}}const f=u-.56*d;return{x:430+f*110,y:1060+f*f*130,rot:-25+Math.min(f,1.1)*190}},
  grieve:(c,u)=>({y:c.y+Math.sin(u*1.5)*4}),revive:(c,u,d)=>{const p=clamp((u-.12*d)/.6);return{s:c.s*(.45+.55*back(p)),op:clamp(p*2.5)}},
- hover:(c,u)=>({y:c.y+Math.sin(u*2)*12})};
+ hover:(c,u)=>({y:c.y+Math.sin(u*2)*12}),
+ emerge:(c,u,d)=>({y:lerp(1850,c.y,eo(u/(d*.45)))}),emergeFast:(c,u,d)=>({y:lerp(1480,c.y,eo(u/.8))}),
+ churn:(c,u)=>({rot:c.rot+Math.sin(u*2.4)*5}),tug:(c,u)=>({x:c.x-Math.sin(u*2.4)*14,rot:c.rot-Math.sin(u*2.4)*4*c.flip}),
+ popAt:(c,u,d)=>{const p=clamp((u-(c.o.t0||0)*d)/.55);return{s:c.s*(.3+.7*back(p)),op:clamp(p*3),y:c.y-(1-eo(p))*-120}},
+ drift:(c,u)=>({x:c.x+Math.sin(u*.9+(c.o.phase||0))*34})};
 const vis=(i,t)=>{const s=SC[i],u=t-s.start,last=i===SC.length-1;if(u<0||(!last&&u>s.dur+T))return 0;return Math.min(i===0?1:clamp(u/T),last?1:1-clamp((u-s.dur)/T));};
 window.renderAt=t=>{
   document.querySelectorAll('.scene').forEach((g,i)=>{const o=vis(i,t);g.setAttribute('opacity',o);g.style.display=o>0?'':'none';if(!o)return;
@@ -174,7 +175,7 @@ if (!preview && bed === 'tanpura' && !fs.existsSync(music)) run('python3', [path
 const browser = await chromium.launch();
 try {
   for (const style of styles) {
-    if (remux) { mixAudio(path.join(out, `hanuman-surya-${style}.mp4`), path.join(out, `hanuman-surya-${style}-${bed === 'none' ? 'voice' : bed}.mp4`)); continue; }
+    if (remux) { mixAudio(path.join(out, `${story}-${style}.mp4`), path.join(out, `${story}-${style}-${bed === 'none' ? 'voice' : bed}.mp4`)); continue; }
     const html = path.join(out, `${style}.html`); fs.writeFileSync(html, page(style));
     const pg = await browser.newPage({viewport: {width: W, height: H}});
     await pg.goto(pathToFileURL(html).href, {waitUntil: 'networkidle'});
@@ -195,7 +196,7 @@ try {
     run('ffmpeg', ['-y', '-loglevel', 'error', '-pattern_type', 'glob', '-i', path.join(stills, '*.jpg'), '-vf', 'scale=240:426,tile=9x1:padding=4:color=white', '-frames:v', '1', path.join(out, `review-${style}.jpg`)]);
     if (preview) { console.log(style, 'stills'); continue; }
     ff.stdin.end(); await done;
-    const final = path.join(out, `hanuman-surya-${style}.mp4`);
+    const final = path.join(out, `${story}-${style}.mp4`);
     mixAudio(video, final);
     fs.rmSync(video); console.log(final);
   }

@@ -12,9 +12,20 @@ This kit renders one story from the app in three art styles: Tholu Bommalata pup
 - **Voice:** Kokoro-82M (Apache-2.0), voice `hf_alpha`, via `voice.py`. It was checked with a Whisper round trip at speed 0.95; the current speed is 1.0. It has a warm EQ and a light room echo, and the original synthesised tanpura ducks under it. It is still a synthetic voice: get a native-speaker listen, or a human recording, before paid use.
 - **Figures:** `../story-styles/characters.mjs` plus `cast.mjs`, which adds Anjana, Vayu, Indra, Brahma, Rahu and Airavata. All are original SVG. The painted version uses the app's reviewed `hs-*.webp` pages.
 
+## Stories
+
+Each story lives in `stories/<id>/`: `script.json` holds the narration, title, call to action and voice settings, and `scenes.mjs` holds the puppet choreography.
+
+| Story | Source in the app | Style |
+| --- | --- | --- |
+| `hanuman-surya` | `kidsStories/hanuman-sun.json` (fully illustrated) | painted (style 3); puppet also available |
+| `dhanteras` | `panchang/kathaContent/entries/dhanteras-legends.ts` (samudra-manthan, dhanvantari-amrit, dhanteras-blessing) | puppet (style 1): the katha has no illustrations |
+
+`phonemeFixes` in a story's voice settings correct espeak pronunciations. For example, `-दशी` words lose their schwa, and धन्वंतरि gets first-syllable stress.
+
 ```sh
-python marketing/reels/showcases/story-reel/voice.py --models <kokoro dir> [--whisper <whisper-turbo dir>]
-node marketing/reels/showcases/story-reel/build.mjs [--style puppet|patta|painted]   # ~6–7 min per style
+python marketing/reels/showcases/story-reel/voice.py --story dhanteras --models <kokoro dir> [--whisper <whisper-turbo dir>]
+node marketing/reels/showcases/story-reel/build.mjs --story dhanteras --style puppet   # ~6–7 min
 ```
 
-Outputs go to the git-ignored folder `marketing/reels/out/story-reel/hanuman-surya-{puppet,patta,painted}.mp4`. RULEBOOK §29 editorial review of the condensed narration is still pending, as are native-speaker listening and a decision on music.
+Outputs go to the git-ignored folder `marketing/reels/out/story-reel/<story>/<story>-<style>.mp4`. RULEBOOK §29 editorial review of the condensed narration is still pending, as are native-speaker listening and a decision on music.
