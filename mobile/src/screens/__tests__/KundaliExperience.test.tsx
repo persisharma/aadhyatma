@@ -4,7 +4,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text, View as mockView } from 'react-native';
+import { Modal, StyleSheet, Text, View as mockView } from 'react-native';
+import TextField from '@/components/TextField';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { library } from '@/data/texts';
@@ -120,6 +121,21 @@ function periodDate(date: Date): string {
     year: 'numeric',
   }).format(date);
 }
+
+test('city search stays inside a padded host and still filters, selects and dismisses', () => {
+  const tree = render(<KundaliScreen navigation={mockNavigation as any} route={{ key: 'city-layout', name: 'Kundali', params: { editing: true } } as any} />);
+  act(() => tree.root.findByProps({ testID: 'kundali-city-button' }).props.onPress());
+  const input = tree.root.findAllByType(TextField).find(node => node.props.testID === 'kundali-city-search')!;
+  // Search geometry belongs to a host; a 100%-wide TextField must not carry
+  // extra outer margins (which clipped its trailing edge in the native sheet).
+  expect(StyleSheet.flatten(input.props.style).marginHorizontal).toBeUndefined();
+  expect(StyleSheet.flatten(input.parent!.props.style).paddingHorizontal).toBe(24);
+  act(() => input.props.onChangeText('Ujjain'));
+  const result = tree.root.findByProps({ accessibilityLabel: 'Select Ujjain birth city' });
+  act(() => result.props.onPress());
+  expect(tree.root.findAllByType(Modal).some(node => node.props.visible && node.props.accessibilityViewIsModal)).toBe(false);
+  expect(tree.root.findByProps({ testID: 'kundali-city-button' }).props.accessibilityLabel).toContain('Ujjain');
+});
 
 function textOf(tree: TestRenderer.ReactTestRenderer): string {
   return tree.root

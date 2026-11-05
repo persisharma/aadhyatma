@@ -1335,3 +1335,8 @@ Added the opt-in pandit profile (name chip, title · contact footer line, Vedans
 
 ## [2026-11-04] ingest | Panchang co-branding moves to the footer line
 The sharer's name no longer prints as a header chip; [[subsystems/share]] now records `<name> · <title> · <contact>` replacing the footer feature line (min scale 0.75), header untouched. Native visual/WhatsApp evidence pending.
+
+
+## [2026-11-05] ingest | screen-clipping fixes
+
+Updated readers, audio and Panchang notes for complete header titles, contained city-search width and scrollable Now Playing controls. No native execution claim; see docs/reviews/2026-11-05-screen-clipping.md.
