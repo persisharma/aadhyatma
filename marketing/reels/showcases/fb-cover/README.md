@@ -15,3 +15,5 @@ All claims come from the 1.5.0 store copy, and the screens are the same committe
 ## Profile picture
 
 `python marketing/reels/showcases/fb-cover/profile.py` writes `vedansh-fb-profile-1080.png`. It is the approved app icon (yantra) scaled to 86% on a matching parchment field. Facebook crops profile pictures to a circle (176 px on desktop, 196 px on phones), and at full size the icon's outer ring touches the crop and would be clipped. `preview-profile-circle.png` shows both crop sizes.
+
+`python marketing/reels/showcases/fb-cover/profile_named.py` writes `vedansh-fb-profile-hindi-1080.png`, the yantra above the Hindi wordmark वेदांश. Only the yantra's linework is lifted from the icon, so no lighter square shows behind it. The build asserts that the wordmark stays inside the circle crop. `preview-profile-hindi-circle.png` shows the name still reads at 176 px.
