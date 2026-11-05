@@ -1344,3 +1344,7 @@ Added a 28 s beat-cut reel (app's recorded Govind Bolo, full-bleed real screens,
 
 ## [2026-11-05] decision | Story-reel styles
 The user chose app painted art for illustrated stories and Tholu Bommalata puppets for unillustrated stories (vrat kathas). Pattachitra was dropped; narration-only audio is now the default. Recorded in [[runbooks/store-submission]].
+
+## [2026-11-06] ingest | Covered animation-to-Home handoff
+
+PR #621 retains the completed approved canvas while Home mounts, waits for native content layout and two animation frames, then fades the cover for 180ms on the native driver. Shared brand visibility suppresses automatic asks through the fade. Targets, accessibility, interruptions and errors fail open; a separate 1,200ms deadline bounds the handoff. See design.md §§2.1/64 and docs/reviews/2026-11-06-launch-home-handoff.md. Native smoothness/full acceptance remain pending.
