@@ -45,7 +45,7 @@
     "voice": "hf_alpha",
     "speed": 1.05,
     "phonemeFixes": {
-      "lˈoːkəktʰaː": "lˈoːk kˈʌtʰaː"
+      "lˈoːkəktʰaː": "lˈoːkʰ kˈʌtʰaː"
     }
   },
   "scenes": [
