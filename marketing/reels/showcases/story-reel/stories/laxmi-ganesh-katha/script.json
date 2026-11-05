@@ -13,7 +13,9 @@
     "engine": "Kokoro-82M v1.0 (Apache-2.0)",
     "voice": "hf_alpha",
     "speed": 1.05,
-    "phonemeFixes": {}
+    "phonemeFixes": {
+      "lˈoːkəktʰaː": "lˈoːk kˈʌtʰaː"
+    }
   },
   "story": "laxmi-ganesh-katha",
   "title": "दिवाली · लक्ष्मी-गणेश पूजन क्यों?",
