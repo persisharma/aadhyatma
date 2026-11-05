@@ -195,3 +195,21 @@ test('a cold restart at city never automatically repeats a widget request', asyn
   expect(sheet().props.step).toBe(2);
   expect(mockPin).not.toHaveBeenCalled();
 });
+
+test('failed progress persistence continues city without opening an unresumable system dialog', async () => {
+  await mount();
+  (AsyncStorage.setItem as jest.Mock).mockRejectedValueOnce(new Error('disk unavailable'));
+  await act(async () => sheet().props.onPrimary());
+  expect(sheet().props.step).toBe(2);
+  expect(mockPin).not.toHaveBeenCalled();
+});
+
+test('unmount while widget bookkeeping loads never starts a late pin request', async () => {
+  await mount();
+  let resolve!: (value: string | null) => void;
+  (AsyncStorage.getItem as jest.Mock).mockImplementationOnce(() => new Promise(done => { resolve = done; }));
+  await act(async () => { sheet().props.onPrimary(); });
+  await act(async () => { tree.unmount(); });
+  await act(async () => { resolve(null); });
+  expect(mockPin).not.toHaveBeenCalled();
+});

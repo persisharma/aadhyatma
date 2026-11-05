@@ -82,7 +82,7 @@ export default function OnboardingSetupSheet() {
   const go = (n: SetupStep) => {
     setStep(n);
     setError('');
-    return AsyncStorage.setItem(STEP_KEY, String(n)).catch(() => undefined);
+    return AsyncStorage.setItem(STEP_KEY, String(n)).then(() => true).catch(() => false);
   };
   const finish = () => {
     completeRef.current = true;
@@ -114,8 +114,8 @@ export default function OnboardingSetupSheet() {
             await go('widgets');
           } else {
             // Save city as the resume point before handing control to the launcher.
-            await go(2);
-            if (mounted.current) await startWidgetPinFlow(widgets);
+            const saved = await go(2);
+            if (saved && mounted.current) await startWidgetPinFlow(widgets);
           }
         } else {
           await go(2);
@@ -147,16 +147,22 @@ export default function OnboardingSetupSheet() {
     }
   }
   async function skip() {
-    if (busy) return;
+    if (busy || nextPending.current) return;
+    nextPending.current = true;
     setBusy(true);
-    if (step === 'widgets') {
-      await updateNudge({ widgetDismissedAt: Date.now() });
-      if (mounted.current) { await go(2); setBusy(false); }
-      return;
+    try {
+      if (step === 'widgets') {
+        await updateNudge({ widgetDismissedAt: Date.now() });
+        if (mounted.current) await go(2);
+        return;
+      }
+      await declineReminders();
+      declineLaunchReminder();
+      if (mounted.current) finish();
+    } finally {
+      nextPending.current = false;
+      if (mounted.current) setBusy(false);
     }
-    await declineReminders();
-    declineLaunchReminder();
-    finish();
   }
   const body = scriptBodyFont(lang, typography.cardHindi.fontFamily),
     factor = scale === 'L' ? 1.15 : 1;
