@@ -36,7 +36,7 @@ const ig = script.format === 'ig';
 if (ig) T = 0.08;
 
 // Split narration into short phrases (punctuation, then <= 4 words) timed by character share of the clip.
-function captionChunks(text, t0, secs) {
+function captionChunks(text, t0, secs, manual) {
   // Keep a phrase whole (one screen, up to two lines) when it is <= 7 words or <= 34 characters. Otherwise split it
   // near the middle at a natural Hindi break: after से/पर/में/ने/को, before और; never after का/के/की or before a
   // postposition. "?" and "!" stay visible on their phrase.
@@ -47,7 +47,7 @@ function captionChunks(text, t0, secs) {
       const sc = -Math.abs(k - mid) + (GOOD_END.has(w[k - 1]) ? 2 : 0) + (w[k] === 'और' ? 1.5 : 0) - (['का', 'के', 'की', 'और'].includes(w[k - 1]) ? 4 : 0) - (POST.has(w[k]) ? 4 : 0) - (['है', 'हैं', 'था', 'थे', 'हुआ', 'हुए'].includes(w[k]) ? 4 : 0);
       if (sc > score) { score = sc; best = k; } }
     return [...split(w.slice(0, best).join(' ')), ...split(w.slice(best).join(' '))]; };
-  const phrases = text.replace(/([?!])/g, '$1|').split(/[|,।—…]+/).map(x => x.trim()).filter(Boolean).flatMap(split);
+  const phrases = manual ? manual : text.replace(/([?!])/g, '$1|').split(/[|,।—…]+/).map(x => x.trim()).filter(Boolean).flatMap(split);
   const weight = phrases.map(p => p.replace(/\s/g, '').length + 3), total = weight.reduce((a, b) => a + b, 0);
   let acc = 0;
   return phrases.map((p, k) => { const s = k === 0 && t0 === 0 ? -0.3 : t0 + secs * acc / total; /* opening phrase already on the first frame */ acc += weight[k]; return {text: p, s, e: k === phrases.length - 1 ? t0 + secs + 0.1 : t0 + secs * acc / total}; });
@@ -61,7 +61,7 @@ const scenes = script.scenes.map((sc, i) => {
   if (!v || v.text !== strip(sc.vo)) throw Error(`Stale narration for ${sc.id}: rerun voice.py`);
   const lead = ig ? (i === 0 ? 0 : 0.08) : (i === 0 ? 0.2 : 0.35), tail = i === script.scenes.length - 1 ? (script.ctaAfterVo ? 2.6 : ig ? 1.0 : 1.4) : (ig ? 0.18 : 0.45);
   const dur = Math.ceil((lead + v.seconds + tail) * FPS) / FPS;
-  const r = {...sc, start: at, dur, voAt: at + lead, voFile: path.join(out, v.file), voSecs: v.seconds, text: v.text, caps: captionChunks(v.text, at + lead, v.seconds)};
+  const r = {...sc, start: at, dur, voAt: at + lead, voFile: path.join(out, v.file), voSecs: v.seconds, text: v.text, caps: sc.caps ? captionChunks(v.text, at + lead, v.seconds, sc.caps) : captionChunks(v.text, at + lead, v.seconds)};
   at += dur; return r;
 });
 const TOTAL = at;
@@ -187,6 +187,10 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
  churn:(c,u)=>({rot:c.rot+Math.sin(u*2.4)*5}),tug:(c,u)=>({x:c.x-Math.sin(u*2.4)*14,rot:c.rot-Math.sin(u*2.4)*4*c.flip}),
  popAt:(c,u,d)=>{const p=clamp((u-(c.o.t0||0)*d)/.55);return{s:c.s*(.3+.7*back(p)),op:clamp(p*3),y:c.y-(1-eo(p))*-120}},
  drift:(c,u)=>({x:c.x+Math.sin(u*.9+(c.o.phase||0))*34}),
+ wander:(c,u,d)=>({x:lerp(160,920,eio(u/d)),y:c.y-Math.abs(Math.sin(u*5))*8,flip:Math.cos(u*0.9)>-0.2?1:-1}),
+ blink:(c,u,d)=>{const q=u-(c.o.t0||0)*d;return{op:q<0?0:q<.5?q/.5:Math.max(0,1-(q-.9)/.4),s:c.s*(q<0?.5:1)}},
+ sigh:(c,u)=>({y:c.y+Math.sin(u*1.2)*6,rot:Math.sin(u*0.8)*2}),
+ play:(c,u)=>({y:c.y-Math.abs(Math.sin(u*3.2))*26,rot:Math.sin(u*3.2)*6}),
  walkTo:(c,u,d)=>({x:lerp(-220,c.o.x,eo(u/(d*.45))),y:c.y-(u<d*.45?Math.abs(Math.sin(u*6))*8:0)}),
  slideTo:(c,u,d)=>{const p=eio((u-(c.o.t0||0)*d)/(d*.35));return{x:lerp(c.x,c.o.x,p),y:c.y-Math.abs(Math.sin(p*Math.PI))*40}},
  walkIn:(c,u,d)=>({x:lerp(-220,c.x,eo(u/(d*.42))),y:c.y-(u<d*.42?Math.abs(Math.sin(u*6))*8:0)}),
@@ -199,7 +203,7 @@ window.renderAt=t=>{
       g.setAttribute('transform','translate('+(540+sx)+','+(960+sy)+') scale('+k+') translate(-540,-960)');}
     const u=t-SC[i].start,d=SC[i].dur;
     CASTS[i].forEach((c,n)=>{const r={x:c.x,y:c.y,rot:c.rot,s:c.s,op:1,...MO[c.m](c,u,d)};
-      const M=new DOMMatrix().translate(r.x,r.y).rotate(r.rot).scale(r.s*c.flip,r.s),by={},cache={};c.parts.forEach(p=>by[p.id]=p);
+      const M=new DOMMatrix().translate(r.x,r.y).rotate(r.rot).scale(r.s*(r.flip??c.flip),r.s),by={},cache={};c.parts.forEach(p=>by[p.id]=p);
       const world=id=>{if(cache[id])return cache[id];const p=by[id],pm=p.parent?world(p.parent):M;const a=(p.base||0)+(p.amp||0)*Math.sin(2*Math.PI*(p.freq||1)*t+(p.phase||0))+(p.spin||0)*t;return cache[id]=pm.translate(p.at[0],p.at[1]).rotate(a);};
       c.parts.forEach(p=>{const m=world(p.id),el=document.getElementById('s'+i+'c'+n+'-'+p.id);el.setAttribute('transform','matrix('+[m.a,m.b,m.c,m.d,m.e,m.f].join(',')+')');el.setAttribute('opacity',r.op);});});
     g.querySelectorAll('.glow').forEach(e=>e.setAttribute('opacity',(.82+.07*Math.sin(t*13)+.05*Math.sin(t*7.3)).toFixed(3)));
