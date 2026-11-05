@@ -61,7 +61,7 @@ const scenes = script.scenes.map((sc, i) => {
   if (!v || v.text !== strip(sc.vo)) throw Error(`Stale narration for ${sc.id}: rerun voice.py`);
   const lead = ig ? (i === 0 ? 0 : 0.08) : (i === 0 ? 0.2 : 0.35), tail = i === script.scenes.length - 1 ? (script.ctaAfterVo ? 2.6 : ig ? 1.0 : 1.4) : (ig ? 0.18 : 0.45);
   const dur = Math.ceil((lead + v.seconds + tail) * FPS) / FPS;
-  const r = {...sc, start: at, dur, voAt: at + lead, voFile: path.join(out, v.file), text: v.text, caps: captionChunks(v.text, at + lead, v.seconds)};
+  const r = {...sc, start: at, dur, voAt: at + lead, voFile: path.join(out, v.file), voSecs: v.seconds, text: v.text, caps: captionChunks(v.text, at + lead, v.seconds)};
   at += dur; return r;
 });
 const TOTAL = at;
@@ -166,7 +166,7 @@ ${script.brand ? `<div class="brand"><span><img src="${url('mobile/assets/icon.p
   : `<div class="head"><span class="pill">${esc(script.title)}</span>${scenes.map((sc, i) => `<div class="sub" data-i="${i}">${esc(sc.text)}</div>`).join('')}</div>`}
 <div class="cta"><div class="row"><img class="icon" src="${url('mobile/assets/icon.png')}"><img class="mark" src="${url('mobile/assets/branding/wordmarks/hindi.png')}"></div><div class="t">${esc(script.cta.line)}</div><div class="b">${esc(script.cta.button)}</div>${script.brand ? `<div class="h">फ़ॉलो करें ${esc(script.brand.handle)}</div>` : ''}</div>
 <script>
-const CTA_AT=${script.ctaAfterVo ? (scenes.at(-1).voAt + scenes.at(-1).vo.seconds + 0.15).toFixed(3) : 'null'};
+const CTA_AT=${script.ctaAfterVo ? (scenes.at(-1).voAt + scenes.at(-1).voSecs + 0.15).toFixed(3) : 'null'};
 const CTR=${JSON.stringify(counter ? counter.at : null)},IG=${ig},SHK=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].shake) || []))};
 const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 0})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
 const clamp=x=>Math.max(0,Math.min(1,x)),eo=x=>1-Math.pow(1-clamp(x),3),eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2},lerp=(a,b,p)=>a+(b-a)*p;
@@ -203,7 +203,7 @@ window.renderAt=t=>{
       const world=id=>{if(cache[id])return cache[id];const p=by[id],pm=p.parent?world(p.parent):M;const a=(p.base||0)+(p.amp||0)*Math.sin(2*Math.PI*(p.freq||1)*t+(p.phase||0))+(p.spin||0)*t;return cache[id]=pm.translate(p.at[0],p.at[1]).rotate(a);};
       c.parts.forEach(p=>{const m=world(p.id),el=document.getElementById('s'+i+'c'+n+'-'+p.id);el.setAttribute('transform','matrix('+[m.a,m.b,m.c,m.d,m.e,m.f].join(',')+')');el.setAttribute('opacity',r.op);});});
     g.querySelectorAll('.glow').forEach(e=>e.setAttribute('opacity',(.82+.07*Math.sin(t*13)+.05*Math.sin(t*7.3)).toFixed(3)));
-    g.querySelectorAll('.lbl').forEach(e=>{const p=clamp((u-(+e.dataset.t0)*d)/.4);e.setAttribute('opacity',p);});
+    g.querySelectorAll('.lbl').forEach(e=>{const p=(i===0&&+e.dataset.t0<=0)?1:clamp((u-(+e.dataset.t0)*d)/.4); /* hook label on the first frame */e.setAttribute('opacity',p);});
     g.querySelectorAll('.rain').forEach((e,k)=>{const y=((u*900+k*137)%1100);e.setAttribute('transform','translate(0,'+(y-550).toFixed(0)+')');e.setAttribute('opacity',(.75*(1-clamp((u-.8*d)/(.15*d)))).toFixed(2));});
     g.querySelectorAll('.wind').forEach((e,k)=>e.setAttribute('stroke-dashoffset',(-(u*900+k*260)%1560).toFixed(0)));
     g.querySelectorAll('.petal').forEach(e=>{const x=+e.dataset.x+Math.sin(u*1.6+ +e.dataset.p)*40,y=520+((u*+e.dataset.v+ +e.dataset.p*200)%1300);e.setAttribute('cx',x.toFixed(1));e.setAttribute('cy',y.toFixed(1));e.setAttribute('opacity',clamp(u/1.2));});
