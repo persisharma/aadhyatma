@@ -37,10 +37,17 @@ if (ig) T = 0.08;
 
 // Split narration into short phrases (punctuation, then <= 4 words) timed by character share of the clip.
 function captionChunks(text, t0, secs) {
-  const phrases = text.split(/[,।?!—]+/).map(x => x.trim()).filter(Boolean).flatMap(p => {
-    const w = p.split(/\s+/); if (w.length <= 4) return [p];
-    const out = []; for (let k = 0; k < w.length; k += Math.ceil(w.length / Math.ceil(w.length / 4))) out.push(w.slice(k, k + Math.ceil(w.length / Math.ceil(w.length / 4))).join(' '));
-    return out; });
+  // Keep a phrase whole (one screen, up to two lines) when it is <= 7 words or <= 34 characters. Otherwise split it
+  // near the middle at a natural Hindi break: after से/पर/में/ने/को, before और; never after का/के/की or before a
+  // postposition. "?" and "!" stay visible on their phrase.
+  const POST = new Set(['का', 'के', 'की', 'से', 'पर', 'में', 'ने', 'को']), GOOD_END = new Set(['से', 'पर', 'में', 'ने', 'को']);
+  const split = p => { const w = p.split(/\s+/); if (w.length <= 7 || p.length <= 34) return [p];
+    const mid = w.length / 2; let best = Math.round(mid), score = -1e9;
+    for (let k = 2; k <= w.length - 2; k++) {
+      const sc = -Math.abs(k - mid) + (GOOD_END.has(w[k - 1]) ? 2 : 0) + (w[k] === 'और' ? 1.5 : 0) - (['का', 'के', 'की', 'और'].includes(w[k - 1]) ? 4 : 0) - (POST.has(w[k]) ? 4 : 0) - (['है', 'हैं', 'था', 'थे', 'हुआ', 'हुए'].includes(w[k]) ? 4 : 0);
+      if (sc > score) { score = sc; best = k; } }
+    return [...split(w.slice(0, best).join(' ')), ...split(w.slice(best).join(' '))]; };
+  const phrases = text.replace(/([?!])/g, '$1|').split(/[|,।—]+/).map(x => x.trim()).filter(Boolean).flatMap(split);
   const weight = phrases.map(p => p.replace(/\s/g, '').length + 3), total = weight.reduce((a, b) => a + b, 0);
   let acc = 0;
   return phrases.map((p, k) => { const s = k === 0 && t0 === 0 ? -0.3 : t0 + secs * acc / total; /* opening phrase already on the first frame */ acc += weight[k]; return {text: p, s, e: k === phrases.length - 1 ? t0 + secs + 0.1 : t0 + secs * acc / total}; });
