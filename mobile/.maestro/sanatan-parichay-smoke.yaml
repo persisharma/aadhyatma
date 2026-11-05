@@ -1,0 +1,60 @@
+# Requires a native build of this branch. Source credits must stay inside the app.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element: { id: home-sanatan-card }
+    direction: DOWN
+- tapOn: { id: home-sanatan-card }
+- tapOn: { id: lang-toggle-en }
+- assertVisible: "Every tradition has a story to tell."
+- tapOn: { id: sanatan-search }
+- inputText: "33 koti devta"
+- hideKeyboard
+- scrollUntilVisible:
+    element: { text: "Thirty-three devata" }
+    direction: DOWN
+- tapOn: "Thirty-three devata"
+- tapOn: { id: sanatan-start }
+- scrollUntilVisible:
+    element: { text: "Save for later" }
+    direction: DOWN
+- tapOn: "Save for later"
+- scrollUntilVisible:
+    element: { id: sanatan-next }
+    direction: DOWN
+- tapOn: { id: sanatan-next }
+- assertVisible: "2/3"
+- scrollUntilVisible:
+    element: { text: "11 · Rudras" }
+    direction: DOWN
+- tapOn: "11 · Rudras"
+- scrollUntilVisible:
+    element: { text: "Ten pranas and atman.*" }
+    direction: DOWN
+- takeScreenshot: e2e-shots/sanatan-thirty-three-en
+- scrollUntilVisible:
+    element: { text: "Sources & context" }
+    direction: DOWN
+- tapOn: "Sources & context"
+- assertVisible: "This is a short editorial introduction.*"
+- assertNotVisible: "https?://.*"
+- tapOn: Back
+- tapOn: Back
+- tapOn: Back
+- assertVisible: "33 koti devta"
+# Relaunch without clearing AsyncStorage: resume must restore the exact second page.
+- stopApp
+- launchApp:
+    clearState: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- extendedWaitUntil:
+    visible: { id: tab-home }
+    timeout: 90000
+- scrollUntilVisible:
+    element: { id: home-sanatan-card }
+    direction: DOWN
+- tapOn: { id: home-sanatan-card }
+- tapOn: { id: sanatan-resume }
+- assertVisible: "2/3"

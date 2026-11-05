@@ -3,7 +3,15 @@ import { normalize } from '@/data/searchNormalize';
 export type Pair = readonly [string,string];
 export type SanatanTopic = { id:string; name:Pair; title:Pair; question:Pair; group:Pair; pages:readonly Pair[]; refs:readonly string[]; kind:string; aliases:readonly string[]; status:'published'|'draft' };
 export type SanatanSource = {title:string;edition:string;location:string};
-const topics:readonly SanatanTopic[]=content.topics as SanatanTopic[];
+function pair(value: string[]): Pair {
+ if (value.length !== 2) throw Error('Expected Hindi and English content');
+ return [value[0], value[1]];
+}
+const topics: readonly SanatanTopic[] = content.topics.map(topic => ({
+ ...topic, name: pair(topic.name), title: pair(topic.title), question: pair(topic.question),
+ group: pair(topic.group), pages: topic.pages.map(pair),
+ status: topic.status === 'published' ? 'published' : 'draft',
+}));
 export const sanatanSources:Readonly<Record<string,SanatanSource>>=content.sources;
 export const SANATAN_PAGE_TITLES:readonly Pair[]=[['पहचान','Introduction'],['चित्र से समझें','Explore visually'],['संदर्भ और भिन्नता','Context & variations']];
 export const getSanatanTopics=()=>topics.filter(t=>t.status==='published');

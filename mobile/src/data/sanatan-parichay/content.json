@@ -684,5 +684,12 @@
       "edition": "Madhavananda with Shankara commentary",
       "location": "Brihadaranyaka 2.4.1–5"
     }
+  },
+  "source": {
+    "kind": "app-written-editorial-introductions",
+    "baseText": "Original introductory prose based on the credited works; not a scripture collection or ritual manual.",
+    "approvedOn": "2026-11-05",
+    "approval": "Approved Sanatan Parichay design review: e4a01fe0fac7b9637fa71e536d76612fa0c39c1c; request: Looks good build it.",
+    "referenceUrls": []
   }
 }

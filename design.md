@@ -74,7 +74,7 @@ badges, chips, borders, states and utility icon tints take their color from `col
 
 **Approved particle integration (1 November 2026).** After font/reading-preference hydration, `BrandLaunchGate` mounts the accepted 4,012-particle canvas on ordinary launches. `BrandLaunchReveal` defers the existing WebView module and the composed document until accessibility queries resolve. The exact accepted fragment, SHA-256 `437c1c12f44d42b61453ffbfd9c17fdf63254a4fd55ecc821c6fae93de443788`, is retained in `docs/branding/approved-particle-preview.html`; `scripts/prepare-approved-brand.mjs` embeds it verbatim in a local document and derives the shared wordmark crops. There is one renderer and one source for the app and downloadable exports: original copper/vermilion icon, flute-and-peacock English name, Hindi name (retaining the dot below श) and both companion subtitles coalesce together for 3,350ms. Native hosting only centers the existing 720×780 composition, hides the preview replay button and adds readiness/completion messages. It never replaces the type or trajectories. No network resources, new native dependency, font binary or playback service are introduced.
 
-The OS splash is plain `#FFF1D5` using an explicit transparent placeholder (`splash-blank.png`), so no static emblem precedes the particle formation. The native wrapper hides its canvas and holds frame zero after decode, reports ready, then starts the preserved renderer at its 1,000ms timeline position only after `SplashScreen.hideAsync()` resolves. The initial second is cut: particles are already visible on the first shown canvas frame, the exact final 3,350ms frame remains, and visible playback lasts 2,350ms; navigation and automatic asks mount after completion. Targeted notification/widget starts bypass the introduction. Reduce Motion, screen-reader use, backgrounding, incoming links, native-query errors and rendering/process errors complete immediately; a 7,000ms watchdog bounds stalled startup. Early destinations still prepare the lazy Panchang stack before initial navigation. `ArtworkCaptureContext` now also waits for mounted wordmark images before share capture. The introduction runs only on a new JS process after the app was killed. Completion or cancellation stays in memory; the gate never subscribes to AppState or shows a resume modal. Background/foreground, quick inactive returns and Control Center/notification interruptions resume the existing navigator without another animation. A cancelled cold reveal also stays complete until a new process. Initial inactive cold startup still waits for active inside BrandLaunchReveal. Targeted cold starts bypass it. Native iOS/Android fidelity, performance and actual exports require device evidence; source-level identity is separate. Confirm Samarkan registration before production use; the project does not bundle its font software.
+The OS splash is plain `#FFF1D5` using an explicit transparent placeholder (`splash-blank.png`), so no static emblem precedes the particle formation. The native wrapper hides its canvas and holds frame zero after decode, reports ready, then starts the preserved renderer at its 1,000ms timeline position only after `SplashScreen.hideAsync()` resolves. The initial second is cut: particles are already visible on the first shown canvas frame, the exact final 3,350ms frame remains, and visible playback lasts 2,350ms; navigation mounts after normal formation underneath the retained final canvas. The content wrapper's native layout and two animation frames precede a 180ms native opacity fade. Interaction/accessibility and automatic asks remain blocked through the fade; a separate 1,200ms watchdog bounds the handoff. Targets, interruption, accessibility changes and errors exit immediately. Targeted notification/widget starts bypass the introduction. Reduce Motion, screen-reader use, backgrounding, incoming links, native-query errors and rendering/process errors complete immediately; a 7,000ms watchdog bounds stalled startup. Early destinations still prepare the lazy Panchang stack before initial navigation. `ArtworkCaptureContext` now also waits for mounted wordmark images before share capture. The introduction runs only on a new JS process after the app was killed. Completion or cancellation stays in memory; the gate never replays on AppState changes or shows a resume modal; a temporary handoff-only listener cancels the outgoing cover. Background/foreground, quick inactive returns and Control Center/notification interruptions resume the existing navigator without another animation. A cancelled cold reveal also stays complete until a new process. Initial inactive cold startup still waits for active inside BrandLaunchReveal. Targeted cold starts bypass it. Native iOS/Android fidelity, performance and actual exports require device evidence; source-level identity is separate. Confirm Samarkan registration before production use; the project does not bundle its font software.
 
 
 The approved app icon uses enlarged copper relief geometry on warm ivory with a distinct vermilion bindu. The red is part of this approved brand artwork, never a UI status color. Keep the complete approved composition: no new lotus surround, recoloring, baked-in rounded mask, or regenerated geometry during export.
@@ -626,15 +626,16 @@ fixed the drift and, as a side effect, VratKathaReader's undersized back button.
 - Row: `spacing.readingGutter` (22) horizontal · `8` top · `12` bottom · `space-between`.
 - **Back control**: 44×44 circle, `radii.xl`, `parchmentSoft` fill, `divider` border, `‹` at
   22 in `ink-soft`, `hitSlop={16}`, `opacity 0.7` while pressed.
-- **Title**: `flex: 1`, centred, `numberOfLines={1}`, `titleFontByLang(lang)`, italic for
+- **Title**: `flex: 1`, centred, unrestricted wrapping, `titleFontByLang(lang)`, italic for
   English only. Two named scales via `variant` — **`reader`** (default) at
   `typography.readerTitle.fontSize` (16), and **`index`** at 22 (20 for Latin, whose smaller
   x-height needs less nominal size) for chapters/index landing screens. Two names rather than
   a loose number so the hierarchy stays a decision.
-- **Side columns**: two balancing spacers of equal `sideWidth` keep the title optically
-  centred; both must clear the wider side's content. Defaults to **120** when a `right` slot
-  is present (counter + optional audio button) and **44** when it is not. Screens with a
-  narrow trailing slot may pass a smaller value (GitaReader passes 60).
+- **Side columns**: the trailing column takes its intrinsic width, with a **48dp** minimum
+  (or the caller's explicit `sideWidth` minimum). Its measured width balances the back column,
+  so a bare counter no longer reserves 120dp on both sides. Side targets never shrink; complete
+  titles wrap and the row grows. The existing 1.25 chrome multiplier cap remains unchanged;
+  Android keeps its natural title font padding. Branded `titleContent` remains supported.
 - **`right`** slot carries the page counter, the `▶` audio affordance, and any actions.
 
 **Accessibility label.** The back control is labelled `"Back"` — deliberately English and
@@ -1544,9 +1545,10 @@ The list is **two browsable tiers**, rendered as one `FlatList` under group head
 
 **Now Playing** (`screens/audio/NowPlayingScreen.tsx`) — a full-screen `parchment` overlay (absolute-fill, mounted app-wide in `App.tsx`; no navigation plumbing), shown when `nowPlayingOpen`:
 
-- Header: ⌄ minimise circle · uppercase `Now Playing` label (swipe-hint face) · spacer.
+- Header: ⌄ minimise circle · uppercase `Now Playing` label (swipe-hint face) · spacer. It stays outside the scrolling body so minimise remains reachable.
 - Artwork: a 220 px `parchment-soft` framed square with the deity art at 150 (the painted `deity` seal when a track has no deity).
-- Title at 26 centred (reader-title face), subtitle `<artist/kind> · <deity>` in Cormorant italic `ink-muted`.
+- Artwork through repeat control forms a vertical `ScrollView` with 24dp bottom clearance. Compact screens and enlarged text can scroll to every control.
+- Title at 26 centred (reader-title face), complete and wrapping without a line cap; subtitle `<artist/kind> · <deity>` in Cormorant italic `ink-muted`.
 - Seek bar: 4 px `saffron` fill on `divider` track, tap-to-seek; lining time labels either side (Cormorant SemiBold 15).
 - Transport row: `−15 · ◀◀ · [▶/❚❚] · ▶▶ · +15`; the play button is a 72 px `saffron` disc with `saffron-deep` rim and `on-primary` glyph.
 - Secondary row: a 44 px ⟳ loop toggle (kept for mantra japa) — outline at rest, filled `saffron` when looping. It doubles as the **repeat-one** control: while it is on, a finished track restarts instead of auto-advancing to the next one.
@@ -3432,7 +3434,7 @@ Full-screen, one step per page, a horizontal paged `FlatList` exactly like the r
 **The reveal pipeline (`mobile/App.tsx`).**
 1. `SplashScreen.preventAutoHideAsync()` at module scope; the derived-cache reset and `prefetchTodayPanchang()` start beside it (§60) so storage is already in flight before React renders anything.
 2. The five font families gate the provider tree (`fontsReady`) — an unloaded family silently falls back to the system font (§3), so no text renders before the real faces exist.
-3. **`AppReadyGate`** holds the splash until the two **layout-critical** preferences have hydrated — font scale and reading language — because both change Home geometry. The splash hides via the gate's `useEffect` + a belt-and-braces `onLayout` on the mounted tree.
+3. **`AppReadyGate`** holds the splash until the two **layout-critical** preferences have hydrated — font scale and reading language — because both change Home geometry. The native splash hides on particle-canvas readiness after hydration; bypasses release it immediately. Normal formation retains the final canvas over the app's first mount; native content layout, two animation frames and a 180ms native cover fade complete the handoff (§2.1), without remounting navigation.
 4. **Safe-area insets are seeded, not awaited**: the root `SafeAreaProvider` receives `initialMetrics={initialWindowMetrics}`. Without it the provider renders nothing until the first native inset event crosses the launch-busy JS thread, and the tree then mounts on whatever that event carried — on Android cold starts under `edgeToEdgeEnabled` that can be a pre-attach zero, so Home painted flush under the status bar, sat unresponsive behind the mount burst, and lurched down by the status-bar height when the corrected insets applied (the August 2026 "launch jerk" report). With the seed, the first committed frame carries its final insets and any later inset event is a no-op.
 
 **Geometry that must stay reserved.** Surfaces that hydrate after the reveal must occupy their final space from the first frame — never insert or grow later: the Today strip reserves its 24 pt chip row before the deferred Panchang solve lands (§48); `RoutineBanner`'s three states share one height (`minHeight 57` = the progress variant's natural height) so the nudge → progress flip on routine hydration cannot move the CATEGORIES grid (§31); `FestiveToran` is a fixed `TORAN_HEIGHT` box resolved synchronously from the bundled catalog (§55). Anything new above the Home grid inherits this rule.
@@ -4130,3 +4132,12 @@ A background update staged after Explore has claimed its slot does not dismiss t
 **Explore replay reset.** Settings → Explore sections retains immediate replay and adds a secondary “Reset visit history” action inside the scrolling body, with a 44pt target, script-aware theme text and all four UI languages. It is absent from automatic sheets. A native confirmation explains that visits, dismissal history and Explore cooldowns (including initial collection wait) are cleared; Cancel changes nothing. While saving, disable the reset action and guard duplicate confirmations. Report success only after persistence, using an inline live status with cold-launch/Home instructions and the shared daily-limit caveat. Failed persistence reports failure. Existing practices, saved progress, reminders and the shared launch gate remain untouched. The next ordinary eligible cold launch uses normal selection; reset neither forces a modal immediately nor guarantees today's slot. Keep the valid aged ledger so a cold restart cannot re-seed old routine/Sankalp/Pitru visits. Confirmations from an unmounted replay do nothing.
 
 
+
+
+### Kundali city-picker field containment (5 November 2026)
+
+`KundaliScreen` places the shared 100%-width `TextField` inside a wrapper with
+`spacing.xxl` horizontal padding, rather than adding outside margins to its full width.
+The field remains 24dp inside both sides of the clipping modal. The modal heading wraps
+beside Close. Filtering, selected city, dismissal and the existing birth-profile rules are
+unchanged. `docs/reviews/2026-11-05-screen-clipping.md` records regression and visual evidence.
