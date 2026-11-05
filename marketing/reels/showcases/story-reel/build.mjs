@@ -23,21 +23,38 @@ const story = arg('story', 'hanuman-surya');
 const out = path.resolve(arg('out', path.join(root, 'marketing/reels/out/story-reel', story)));
 const {FOLK} = await import(`./stories/${story}/scenes.mjs`);
 const styles = arg('style', 'all') === 'all' ? ['puppet', 'patta', 'painted'] : [arg('style')];
-const W = 1080, H = 1920, FPS = 30, T = 0.3;
+const W = 1080, H = 1920, FPS = 30;
+let T = 0.3;
 const url = rel => pathToFileURL(path.join(root, rel)).href;
 const esc = t => String(t).replaceAll('&', '&amp;').replaceAll('<', '&lt;');
 const run = (bin, args) => execFileSync(bin, args, {stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 1 << 26}).toString();
 const script = JSON.parse(fs.readFileSync(path.join(here, 'stories', story, 'script.json'), 'utf8'));
 const vo = JSON.parse(fs.readFileSync(path.join(out, 'vo.json'), 'utf8'));
 const strip = t => t.replace(/\{([^|}]+)\|[^}]+\}/g, '$1');
+// format "ig": curiosity hook, hard cuts with a zoom punch, day chip and big kinetic captions synced to the voice.
+const ig = script.format === 'ig';
+if (ig) T = 0.08;
+
+// Split narration into short phrases (punctuation, then <= 4 words) timed by character share of the clip.
+function captionChunks(text, t0, secs) {
+  const phrases = text.split(/[,।?!—]+/).map(x => x.trim()).filter(Boolean).flatMap(p => {
+    const w = p.split(/\s+/); if (w.length <= 4) return [p];
+    const out = []; for (let k = 0; k < w.length; k += Math.ceil(w.length / Math.ceil(w.length / 4))) out.push(w.slice(k, k + Math.ceil(w.length / Math.ceil(w.length / 4))).join(' '));
+    return out; });
+  const weight = phrases.map(p => p.replace(/\s/g, '').length + 3), total = weight.reduce((a, b) => a + b, 0);
+  let acc = 0;
+  return phrases.map((p, k) => { const s = k === 0 && t0 === 0 ? -0.3 : t0 + secs * acc / total; // opening phrase already on the first frame acc += weight[k]; return {text: p, s, e: k === phrases.length - 1 ? t0 + secs + 0.25 : t0 + secs * acc / total}; });
+}
+const HL = new Set(script.highlight || []);
+const hl = t => t.split(/\s+/).map(w => HL.has(w.replace(/[,।?!]/g, '')) ? `<b>${esc(w)}</b>` : esc(w)).join(' ');
 
 let at = 0;
 const scenes = script.scenes.map((sc, i) => {
   const v = vo[i];
   if (!v || v.text !== strip(sc.vo)) throw Error(`Stale narration for ${sc.id}: rerun voice.py`);
-  const lead = i === 0 ? 0.2 : 0.35, tail = i === script.scenes.length - 1 ? 1.4 : 0.45;
+  const lead = ig ? (i === 0 ? 0 : 0.08) : (i === 0 ? 0.2 : 0.35), tail = i === script.scenes.length - 1 ? (ig ? 1.0 : 1.4) : (ig ? 0.18 : 0.45);
   const dur = Math.ceil((lead + v.seconds + tail) * FPS) / FPS;
-  const r = {...sc, start: at, dur, voAt: at + lead, voFile: path.join(out, v.file), text: v.text};
+  const r = {...sc, start: at, dur, voAt: at + lead, voFile: path.join(out, v.file), text: v.text, caps: captionChunks(v.text, at + lead, v.seconds)};
   at += dur; return r;
 });
 const TOTAL = at;
@@ -111,6 +128,10 @@ svg{position:absolute;inset:0}.pscene,.pp{position:absolute;inset:0;opacity:0}
 .head{position:absolute;left:0;right:0;top:290px;text-align:center;z-index:5}
 .pill{display:inline-block;padding:4px 24px 0;font:700 32px/1.5 ${dev};color:${style === 'puppet' ? '#F3DFAE' : style === 'patta' ? '#120B06' : '#5A1A08'};background:${style === 'puppet' ? '#6E1A10' : style === 'patta' ? '#F0B53C' : '#FFF4DF'};border-radius:${style === 'patta' ? 6 : 30}px;border:${style === 'patta' ? '3px solid #120B06' : style === 'puppet' ? '3px solid #E2A62B' : '0'}}
 .sub{position:absolute;left:60px;width:960px;top:62px;padding:12px 26px 10px;font:700 46px/1.42 ${dev};opacity:0;${card}}
+.chip{position:absolute;left:0;right:0;top:300px;text-align:center;opacity:0;z-index:6}
+.chip span{display:inline-block;padding:8px 28px 2px;border-radius:999px;background:#FFC94A;color:#2B0E06;font:800 38px/1.4 'Mukta';box-shadow:0 8px 20px rgba(0,0,0,.35);transform:rotate(-2deg)}
+.cap{position:absolute;left:50px;width:980px;top:470px;text-align:center;font:800 84px/1.18 'Mukta';color:#FFFFFF;-webkit-text-stroke:0;paint-order:stroke;text-shadow:0 0 2px #000,0 4px 0 #000,0 6px 18px rgba(0,0,0,.7);opacity:0;z-index:6}
+.cap b{color:#FFC94A}
 .cta{position:absolute;left:110px;width:860px;top:690px;padding:30px 30px 26px;border-radius:30px;background:#FFF1D5;border:4px solid #E2A62B;box-shadow:0 26px 60px rgba(0,0,0,.45);text-align:center;opacity:0;z-index:6}
 .cta .row{display:flex;justify-content:center;align-items:center;gap:22px}.cta .icon{width:110px;height:110px;border-radius:26px}.cta .mark{height:96px}
 .cta .t{margin-top:10px;font:700 40px/1.4 'Noto Serif Devanagari';color:#5A3A1E}
@@ -122,9 +143,11 @@ svg{position:absolute;inset:0}.pscene,.pp{position:absolute;inset:0;opacity:0}
 ${folk ? scenes.map((sc, i) => folkScene(style, sc, i)).join('') : ''}
 ${style === 'puppet' ? `<g>${zig()}</g>` : ''}</svg>
 <div class="flash"></div>
-<div class="head"><span class="pill">${esc(script.title)}</span>${scenes.map((sc, i) => `<div class="sub" data-i="${i}">${esc(sc.text)}</div>`).join('')}</div>
+${ig ? scenes.map((sc, i) => `<div class="chip" data-i="${i}"><span>${esc(sc.chip || script.title)}</span></div>` + sc.caps.map(c => `<div class="cap" data-s="${c.s.toFixed(3)}" data-e="${c.e.toFixed(3)}">${hl(c.text)}</div>`).join('')).join('')
+  : `<div class="head"><span class="pill">${esc(script.title)}</span>${scenes.map((sc, i) => `<div class="sub" data-i="${i}">${esc(sc.text)}</div>`).join('')}</div>`}
 <div class="cta"><div class="row"><img class="icon" src="${url('mobile/assets/icon.png')}"><img class="mark" src="${url('mobile/assets/branding/wordmarks/hindi.png')}"></div><div class="t">${esc(script.cta.line)}</div><div class="b">${esc(script.cta.button)}</div></div>
 <script>
+const IG=${ig},SHK=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].shake) || []))};
 const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 0})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
 const clamp=x=>Math.max(0,Math.min(1,x)),eo=x=>1-Math.pow(1-clamp(x),3),eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2},lerp=(a,b,p)=>a+(b-a)*p;
 const back=x=>{x=clamp(x);const c=1.5;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
@@ -150,6 +173,8 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
 const vis=(i,t)=>{const s=SC[i],u=t-s.start,last=i===SC.length-1;if(u<0||(!last&&u>s.dur+T))return 0;return Math.min(i===0?1:clamp(u/T),last?1:1-clamp((u-s.dur)/T));};
 window.renderAt=t=>{
   document.querySelectorAll('.scene').forEach((g,i)=>{const o=vis(i,t);g.setAttribute('opacity',o);g.style.display=o>0?'':'none';if(!o)return;
+    if(IG){const u0=t-SC[i].start,k=1+.07*(1-eo(u0/.35));let sx=0,sy=0;for(const f of SHK[i]){const q=u0-f*SC[i].dur;if(q>0&&q<.35){const a=(1-q/.35)*12;sx=Math.sin(q*90)*a;sy=Math.cos(q*77)*a;}}
+      g.setAttribute('transform','translate('+(540+sx)+','+(960+sy)+') scale('+k+') translate(-540,-960)');}
     const u=t-SC[i].start,d=SC[i].dur;
     CASTS[i].forEach((c,n)=>{const r={x:c.x,y:c.y,rot:c.rot,s:c.s,op:1,...MO[c.m](c,u,d)};
       const M=new DOMMatrix().translate(r.x,r.y).rotate(r.rot).scale(r.s*c.flip,r.s),by={},cache={};c.parts.forEach(p=>by[p.id]=p);
@@ -167,6 +192,8 @@ window.renderAt=t=>{
   document.querySelectorAll('.sub').forEach((e,i)=>{const s=SC[i],u=t-s.start;const o=Math.min(clamp((u-.05)/.25),vis(i,t)?1:0)*(u<s.dur?1:1-clamp((u-s.dur)/T));e.style.opacity=o;});
   const vi=SC.findIndex(s=>s.id==='vajra'),fl=document.querySelector('.flash');
   if(vi>=0&&FX[vi].includes('flash')){const u=t-SC[vi].start-.56*SC[vi].dur;fl.style.opacity=u<0||u>.6?0:(u<.06?u/.06:1-(u-.06)/.54)*.9;}else fl.style.opacity=0;
+  if(IG){document.querySelectorAll('.chip').forEach((e,i)=>{const s=SC[i],u=t-s.start;const on=u>=0&&u<s.dur+(i===SC.length-1?99:0);e.style.opacity=on?clamp(u/.12):0;e.style.transform='scale('+(on?(.7+.3*back(u/.3)):1)+')';});
+    document.querySelectorAll('.cap').forEach(e=>{const s=+e.dataset.s,en=+e.dataset.e,u=t-s;const on=t>=s&&t<en;e.style.opacity=on?clamp(u/.06):0;e.style.transform='scale('+(on?(.82+.18*back(u/.18)):1)+')';});}
   const L=SC[SC.length-1],cu=t-L.start-.4,cta=document.querySelector('.cta');cta.style.opacity=clamp(cu/.3);cta.style.transform='translateY('+(1-back(cu/.5))*80+'px)';
 };
 </script></body></html>`;

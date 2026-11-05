@@ -12,6 +12,17 @@ This kit renders one story from the app in three art styles: Tholu Bommalata pup
 - **Voice:** Kokoro-82M (Apache-2.0), voice `hf_alpha`, via `voice.py`. It was checked with a Whisper round trip at speed 0.95; the current speed is 1.0. It has a warm EQ and a light room echo, and the original synthesised tanpura ducks under it. It is still a synthetic voice: get a native-speaker listen, or a human recording, before paid use.
 - **Figures:** `../story-styles/characters.mjs` plus `cast.mjs`, which adds Anjana, Vayu, Indra, Brahma, Rahu and Airavata. All are original SVG. The painted version uses the app's reviewed `hs-*.webp` pages.
 
+## Instagram format (`"format": "ig"` in a story's script.json)
+
+The user asked for reels that make people curious instead of reading like information. The `ig` format changes:
+- **Hook:** the first frame already shows the hook figures and its first caption phrase.
+- **Captions:** big kinetic captions replace the subtitle card. The narration is split into phrases of up to four words, timed by each phrase's share of the clip. Names listed in `highlight` are shown in gold.
+- **Day chip:** a yellow chip per scene, e.g. "दिन 2/5 · नरक चतुर्दशी".
+- **Cuts:** hard cuts (0.08 s) with a zoom punch, an optional `shake` at chosen moments, and tighter pauses between lines.
+- **Ending:** a save/share line ("सेव कीजिए…").
+
+Write the script as a curiosity gap first, with the answer afterwards. Example: `diwali-ig` opens with "दीपावली में यमराज, नरकासुर और इंद्र?"
+
 ## Stories
 
 Each story lives in `stories/<id>/`: `script.json` holds the narration, title, call to action and voice settings, and `scenes.mjs` holds the puppet choreography.
@@ -20,6 +31,7 @@ Each story lives in `stories/<id>/`: `script.json` holds the narration, title, c
 | --- | --- | --- |
 | `hanuman-surya` | `kidsStories/hanuman-sun.json` (fully illustrated) | painted (style 3); puppet also available |
 | `dhanteras` | `panchang/kathaContent/entries/dhanteras-legends.ts` (samudra-manthan, dhanvantari-amrit, dhanteras-blessing) | puppet (style 1): the katha has no illustrations |
+| `diwali-ig` | Same sources as `diwali` | puppet, Instagram format (~40 s) |
 | `diwali` | Five-day arc from `panchang/arcs.ts` (deepavali), with `dhanteras-legends`, `narak-chaturdashi-katha`, `diwali-legends`, `govardhan-puja-katha` and `bhai-dooj-katha` | puppet (style 1); dates are deliberately left out of the video and added in the post caption |
 
 `phonemeFixes` in a story's voice settings correct espeak pronunciations. For example, `-दशी` words lose their schwa, and धन्वंतरि gets first-syllable stress.
