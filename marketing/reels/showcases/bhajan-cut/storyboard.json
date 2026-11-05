@@ -1,0 +1,46 @@
+{
+  "name": "Vedansh bhajan cut",
+  "format": {"width": 1080, "height": 1920, "fps": 30},
+  "audio": {"file": "mobile/assets/audio-library/govind-bolo.mp3", "start": 16.14, "fadeOut": 1.6},
+  "claimsSource": "docs/releases/1.5.0/listing/google-play (en-GB, hi-IN)",
+  "shots": [
+    {"id": "hook-krishna", "beats": 2, "screen": "docs/evaluations/daily-bhakti-compression/native/daily-compressed-krishna.jpg", "zoom": 1.2, "y": [0.2, 0.26], "caption": "hook1", "flash": true},
+    {"id": "hook-ganesha", "beats": 2, "screen": "docs/evaluations/daily-bhakti-compression/native/daily-compressed-ganesha.jpg", "zoom": 1.2, "y": [0.24, 0.3], "caption": "hook1"},
+    {"id": "hook-hanuman", "beats": 2, "screen": "docs/evaluations/daily-bhakti-compression/native/daily-compressed-hanuman.jpg", "zoom": 1.2, "y": [0.2, 0.26], "caption": "hook2"},
+    {"id": "hook-durga", "beats": 2, "screen": "docs/evaluations/daily-bhakti-compression/native/daily-compressed-durga.jpg", "zoom": 1.2, "y": [0.24, 0.3], "caption": "hook2"},
+    {"id": "panchang", "beats": 4, "screen": "docs/evaluations/celestial-chakra-2026-10-06/native/panchang.png", "y": [0, 0.55], "caption": "panchang"},
+    {"id": "vrat", "beats": 4, "screen": "docs/evaluations/vrat-reminder-action-2026-10-27/native-bells.png", "y": [0, 0.6], "caption": "vrat"},
+    {"id": "puja", "beats": 4, "screen": "docs/evaluations/puja-visual-guide-2026-10-20/diwali-standard-content.png", "y": [0, 1], "caption": "puja"},
+    {"id": "chalisa", "beats": 4, "screen": "docs/evaluations/storybook-icons-2026-10-06/post-change/03-reader.png", "y": [0, 0.5], "caption": "chalisa"},
+    {"id": "katha", "beats": 4, "screen": "docs/evaluations/reading-visuals-2026-10-12/reading-katha-opening-revisit.png", "y": [0.05, 0.7], "caption": "katha"},
+    {"id": "bhajan", "beats": 4, "screen": "docs/evaluations/storybook-icons-2026-10-06/screenshots/audio-native.png", "y": [0, 0.35], "caption": "bhajan", "tap": [0.86, 0.405, 1.0]},
+    {"id": "gita", "beats": 4, "screen": {"hi": "docs/evaluations/gita-saar-revamp-2026-10-26/ios/index-hi.jpg", "en": "docs/evaluations/gita-saar-revamp-2026-10-26/ios/reader-en.jpg"}, "y": [0, 0.6], "caption": "gita"},
+    {"id": "japa", "beats": 4, "screen": {"hi": "marketing/reels/showcases/latest-1.5.0/screens/hi/07-japam.png", "en": "marketing/reels/showcases/latest-1.5.0/screens/en/07-japam.png"}, "zoom": 1.08, "y": [0.5, 0.5], "caption": "japa", "tap": [0.5, 0.5, 0.7]},
+    {"id": "kundali", "beats": 4, "screen": {"hi": "marketing/reels/showcases/latest-1.5.0/screens/hi/03-kundali.png", "en": "marketing/reels/showcases/latest-1.5.0/screens/en/03-kundali.png"}, "zoom": 1.08, "y": [0.4, 0.6], "caption": "kundali"},
+    {"id": "kids", "beats": 4, "screen": {"hi": "docs/content-parity/kids-story-pacing/screenshots/kids-hanuman-sun-hi-large-hs07.png", "en": "docs/content-parity/kids-story-pacing/screenshots/kids-hanuman-sun-en-large-hs09-art.png"}, "y": [0.05, 0.45], "caption": "kids"},
+    {"id": "ask-q", "beats": 2, "screen": "docs/evaluations/storybook-icons-2026-10-06/screenshots/search-native.png", "y": [0, 0.05], "caption": "ask"},
+    {"id": "ask-a", "beats": 2, "screen": "docs/evaluations/home-gutter-2026-10-06/native/ask-route.png", "y": [0, 0.25], "caption": "ask"},
+    {"id": "more", "beats": 4, "screen": "docs/evaluations/storybook-icons-2026-10-06/more-alignment/after-english-top.png", "y": [0, 0.6], "caption": "more"},
+    {"id": "cta", "beats": 10, "cta": true, "flash": true}
+  ],
+  "captions": {
+    "hook1": {"hi": ["हर दिन की भक्ति"], "en": ["Your daily bhakti"]},
+    "hook2": {"hi": ["अब एक ही ऐप में 🙏"], "en": ["Now in one app 🙏"]},
+    "panchang": {"hi": ["आज का पंचांग", "तिथि · नक्षत्र · राहु काल"], "en": ["Today's Panchang", "Tithi · Nakshatra · Rahu Kaal"]},
+    "vrat": {"hi": ["हर व्रत की याद", "कथा और रिमाइंडर के साथ"], "en": ["Never miss a vrat", "Kathas and reminders"]},
+    "puja": {"hi": ["पूजा विधि", "चरण-दर-चरण"], "en": ["Puja vidhi", "Step by step"]},
+    "chalisa": {"hi": ["चालीसा, आरती, गीता", "अर्थ सहित"], "en": ["Chalisa, aarti, Gita", "With meaning"]},
+    "katha": {"hi": ["व्रत कथाएँ", "चित्रों के साथ"], "en": ["Vrat kathas", "Beautifully illustrated"]},
+    "bhajan": {"hi": ["भजन और मंत्र सुनें"], "en": ["Listen to bhajans"]},
+    "gita": {"hi": ["गीता सार", "हर उलझन में उजाला"], "en": ["Gita Saar", "Wisdom for every day"]},
+    "japa": {"hi": ["जप माला", "108 मनके"], "en": ["Jap Mala", "108 beads"]},
+    "kundali": {"hi": ["कुंडली और राशिफल", "गुण मिलान भी"], "en": ["Kundali & Rashifal", "Guna Milan too"]},
+    "kids": {"hi": ["बच्चों के लिए चित्र-कथाएँ"], "en": ["Picture stories for kids"]},
+    "ask": {"hi": ["पूछिए: एकादशी कब है?"], "en": ["Ask: when is Ekadashi?"]},
+    "more": {"hi": ["और भी बहुत कुछ", "पितृ स्मरण · वास्तु · दान-पुण्य · तीर्थ"], "en": ["And much more", "Pitru Smaran · Vastu · Daan · Theerth"]},
+    "cta": {
+      "hi": {"tagline": "आपका आध्यात्मिक साथी", "button": "अभी डाउनलोड करें", "trust": "बिना लॉगिन · ऐप में कोई विज्ञापन नहीं"},
+      "en": {"tagline": "Your spiritual companion", "button": "Download now", "trust": "No login · No in-app ads"}
+    }
+  }
+}

@@ -1333,3 +1333,6 @@ Added the confirmed replay-only history reset, persistence/no-reseeding contract
 
 ## [2026-11-04] ingest | Meta feature-tour video kit
 Added the 43.5 s Hindi/English all-features ad builder (9:16 + 4:5, deterministic Chromium frames, synthesised tanpura, store-copy claims only) to [[runbooks/store-submission]]. Voice-over added the same day with Kokoro hf_alpha, Whisper-checked; native listening review pending. Nothing uploaded to Meta.
+
+## [2026-11-05] ingest | Bhajan-cut Meta reel
+Added a 28 s beat-cut reel (app's recorded Govind Bolo, full-bleed real screens, no TTS) after the voiced tour was judged slow and AI-like. Logged in [[runbooks/store-submission]]. Ad-use licence of the recording is unverified.

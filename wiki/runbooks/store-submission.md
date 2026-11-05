@@ -70,3 +70,8 @@ Gotchas:
 - espeak drops the schwa in एकादशी; see `phonemeFixes`.
 
 Source captures span 6–27 October and mix pre- and post-Vrat-tab UI. Keep text within y 300–1250 so it survives both the Reels overlays and the 4:5 crop. No native-speaker listening review has been done yet. The outputs are local only; nothing has been uploaded to Meta.
+
+**Bhajan cut (5 November 2026).** The user found the voiced feature tour too slow and too AI-sounding. `marketing/reels/showcases/bhajan-cut/` is the replacement: 28 s and cut on tracked beats.
+- It uses the app's own recorded "Govind Bolo" from 16.14 s and has no synthetic voice.
+- Real screens are shown full-bleed in screen-recording style, with short Hindi-first captions.
+- Gotchas: the stock-footage hosts (Pexels, Pixabay, Mixkit, Wikimedia) are blocked from the cloud container. The licence for using the bhajan recording in ads is unverified.
