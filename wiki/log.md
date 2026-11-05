@@ -1335,3 +1335,12 @@ Added the opt-in pandit profile (name chip, title · contact footer line, Vedans
 
 ## [2026-11-04] ingest | Panchang co-branding moves to the footer line
 The sharer's name no longer prints as a header chip; [[subsystems/share]] now records `<name> · <title> · <contact>` replacing the footer feature line (min scale 0.75), header untouched. Native visual/WhatsApp evidence pending.
+
+## [2026-11-04] ingest | Meta feature-tour video kit
+Added the 43.5 s Hindi/English all-features ad builder (9:16 + 4:5, deterministic Chromium frames, synthesised tanpura, store-copy claims only) to [[runbooks/store-submission]]. Voice-over added the same day with Kokoro hf_alpha, Whisper-checked; native listening review pending. Nothing uploaded to Meta.
+
+## [2026-11-05] ingest | Bhajan-cut Meta reel
+Added a 28 s beat-cut reel (app's recorded Govind Bolo, full-bleed real screens, no TTS) after the voiced tour was judged slow and AI-like. Logged in [[runbooks/store-submission]]. Ad-use licence of the recording is unverified.
+
+## [2026-11-05] decision | Story-reel styles
+The user chose app painted art for illustrated stories and Tholu Bommalata puppets for unillustrated stories (vrat kathas). Pattachitra was dropped; narration-only audio is now the default. Recorded in [[runbooks/store-submission]].

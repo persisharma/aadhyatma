@@ -48,3 +48,7 @@ tmp/
 
 # Cloudflare Wrangler local cache (account metadata — never commit)
 .wrangler/
+
+# Python bytecode caches (marketing builder scripts)
+__pycache__/
+*.pyc

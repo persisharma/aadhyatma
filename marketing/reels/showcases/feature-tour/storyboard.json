@@ -1,0 +1,383 @@
+{
+  "name": "Vedansh feature tour",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "transition": 0.42,
+  "claimsSource": "docs/releases/1.5.0/listing/google-play/en-GB/fullDescription.txt (and hi-IN)",
+  "scenes": [
+    {
+      "id": "hook",
+      "layout": "fan",
+      "duration": 3.3,
+      "screens": {
+        "en": [
+          "docs/content-parity/kids-story-pacing/screenshots/kids-hanuman-sun-en-large-hs09-art.png",
+          "docs/evaluations/daily-bhakti-compression/native/daily-compressed-krishna.jpg",
+          "marketing/reels/showcases/latest-1.5.0/screens/en/03-kundali.png"
+        ],
+        "hi": [
+          "docs/content-parity/kids-story-pacing/screenshots/kids-hanuman-sun-hi-large-hs07.png",
+          "docs/evaluations/daily-bhakti-compression/native/daily-compressed-krishna.jpg",
+          "marketing/reels/showcases/latest-1.5.0/screens/hi/03-kundali.png"
+        ]
+      },
+      "en": {
+        "kicker": "VEDANSH",
+        "title": "Your daily devotion.\nAll in one app.",
+        "sub": "Panchang · Gita · Kundali · Japa · Stories",
+        "vo": "Your whole day of devotion. In one app."
+      },
+      "hi": {
+        "kicker": "वेदांश",
+        "title": "आपकी पूरी भक्ति,\nएक ही ऐप में",
+        "sub": "पंचांग · गीता · कुंडली · जप · कथाएँ",
+        "vo": "आपकी पूरी भक्ति, अब एक ही ऐप में।"
+      }
+    },
+    {
+      "id": "read",
+      "layout": "pair",
+      "duration": 2.9,
+      "screens": [
+        "docs/evaluations/reading-visuals-2026-10-12/reading-katha-opening-revisit.png",
+        "docs/evaluations/storybook-icons-2026-10-06/post-change/03-reader.png"
+      ],
+      "en": {
+        "kicker": "READ",
+        "title": "Chalisa, Gita & kathas",
+        "sub": "With Hindi and English meaning",
+        "vo": "Read the {Chalisa|चालीसा}, the {Gita|गीता}, and {kathas|कथास}, with meaning."
+      },
+      "hi": {
+        "kicker": "पढ़ें",
+        "title": "चालीसा, गीता और कथाएँ",
+        "sub": "हिंदी और अंग्रेज़ी अर्थ के साथ",
+        "vo": "चालीसा, गीता और कथायें पढ़ें, अर्थ के साथ।"
+      }
+    },
+    {
+      "id": "gita-saar",
+      "layout": "single",
+      "duration": 2.9,
+      "screens": {
+        "en": [
+          "docs/evaluations/gita-saar-revamp-2026-10-26/ios/reader-en.jpg"
+        ],
+        "hi": [
+          "docs/evaluations/gita-saar-revamp-2026-10-26/ios/index-hi.jpg"
+        ]
+      },
+      "en": {
+        "kicker": "GITA SAAR",
+        "title": "The Gita, one teaching\nat a time",
+        "sub": "Life's questions, the Gita's answers",
+        "vo": "Find answers to life's questions, in {Gita Saar|गीता सार}."
+      },
+      "hi": {
+        "kicker": "गीता सार",
+        "title": "हर उलझन में,\nथोड़ा-सा उजाला",
+        "sub": "जीवन के प्रश्न, गीता के उत्तर",
+        "vo": "जीवन के हर प्रश्न का उत्तर, गीता सार में।"
+      }
+    },
+    {
+      "id": "listen",
+      "layout": "single",
+      "duration": 2.9,
+      "screens": [
+        "docs/evaluations/storybook-icons-2026-10-06/screenshots/audio-native.png"
+      ],
+      "en": {
+        "kicker": "LISTEN",
+        "title": "Bhajans, mantras\n& aartis",
+        "sub": "Keep listening in the background",
+        "vo": "Listen to {bhajans|भजन्स}, mantras and {aartis|आरतीस}."
+      },
+      "hi": {
+        "kicker": "सुनें",
+        "title": "भजन, मंत्र और आरती",
+        "sub": "बैकग्राउंड में भी सुनते रहें",
+        "vo": "भजन, मंत्र और आरती सुनें।"
+      }
+    },
+    {
+      "id": "panchang",
+      "layout": "single",
+      "duration": 3.1,
+      "screens": [
+        "docs/evaluations/celestial-chakra-2026-10-06/native/panchang.png"
+      ],
+      "callout": {
+        "crop": [
+          0.03,
+          0.355,
+          0.94,
+          0.232
+        ],
+        "y": 1150
+      },
+      "en": {
+        "kicker": "PANCHANG",
+        "title": "Today's Panchang\nfor your city",
+        "sub": "Tithi · Nakshatra · Rahu Kaal · Choghadiya",
+        "vo": "The {Panchang|पंचांग} for your city, with {Rahu Kaal|राहु काल} and {Choghadiya|चौघड़िया}."
+      },
+      "hi": {
+        "kicker": "पंचांग",
+        "title": "आपके शहर का\nआज का पंचांग",
+        "sub": "तिथि · नक्षत्र · राहु काल · चौघड़िया",
+        "vo": "अपने शहर का पंचांग, राहु काल और चौघड़िया देखें।"
+      }
+    },
+    {
+      "id": "vrat",
+      "layout": "pair",
+      "duration": 2.9,
+      "screens": [
+        "docs/evaluations/vrat-reminder-action-2026-10-27/native-bells.png",
+        "docs/evaluations/vrat-reminder-action-2026-10-27/native-first-setup.png"
+      ],
+      "en": {
+        "kicker": "VRAT & FESTIVALS",
+        "title": "Never miss a vrat",
+        "sub": "Kathas, puja guidance and reminders",
+        "vo": "Every {vrat|व्रत} and festival, with {kathas|कथास} and reminders."
+      },
+      "hi": {
+        "kicker": "व्रत और त्योहार",
+        "title": "कोई व्रत न छूटे",
+        "sub": "कथा, पूजा विधि और रिमाइंडर",
+        "vo": "कोई व्रत न छूटे, कथा और रिमाइंडर के साथ।"
+      }
+    },
+    {
+      "id": "puja",
+      "layout": "single",
+      "duration": 2.9,
+      "screens": [
+        "docs/evaluations/puja-visual-guide-2026-10-20/diwali-standard-content.png"
+      ],
+      "fit": "top",
+      "en": {
+        "kicker": "PUJA VIDHI",
+        "title": "Puja, step by step",
+        "sub": "Illustrated guidance for every step",
+        "vo": "Follow every {puja|पूजा}, step by step."
+      },
+      "hi": {
+        "kicker": "पूजा विधि",
+        "title": "पूजा, चरण-दर-चरण",
+        "sub": "हर चरण चित्रों के साथ",
+        "vo": "हर पूजा की विधि, आसान चरणों में।"
+      }
+    },
+    {
+      "id": "jyotish",
+      "layout": "pair",
+      "duration": 3.0,
+      "screens": {
+        "en": [
+          "docs/evaluations/celestial-chakra-2026-10-06/native/jyotish.png",
+          "marketing/reels/showcases/latest-1.5.0/screens/en/03-kundali.png"
+        ],
+        "hi": [
+          "docs/evaluations/celestial-chakra-2026-10-06/native/jyotish.png",
+          "marketing/reels/showcases/latest-1.5.0/screens/hi/03-kundali.png"
+        ]
+      },
+      "en": {
+        "kicker": "JYOTISH",
+        "title": "Kundali, Rashifal\n& Guna Milan",
+        "sub": "Your birth chart, explained simply",
+        "vo": "Explore your {Kundali|कुंडली}, {Rashifal|राशिफल}, and {Guna Milan|गुण मिलान}."
+      },
+      "hi": {
+        "kicker": "ज्योतिष",
+        "title": "कुंडली, राशिफल\nऔर गुण मिलान",
+        "sub": "अपनी जन्म कुंडली, सरल भाषा में",
+        "vo": "अपनी कुंडली, राशिफ़ल और गुण मिलान देखें।"
+      }
+    },
+    {
+      "id": "practice",
+      "layout": "pair",
+      "duration": 2.9,
+      "screens": {
+        "en": [
+          "marketing/reels/showcases/latest-1.5.0/screens/en/08-sankalp.png",
+          "marketing/reels/showcases/latest-1.5.0/screens/en/07-japam.png"
+        ],
+        "hi": [
+          "marketing/reels/showcases/latest-1.5.0/screens/hi/08-sankalp.png",
+          "marketing/reels/showcases/latest-1.5.0/screens/hi/07-japam.png"
+        ]
+      },
+      "en": {
+        "kicker": "DAILY PRACTICE",
+        "title": "Jap Mala & Sankalp",
+        "sub": "Count 108 beads. Build a daily habit.",
+        "vo": "Count your {japa|जप}, and keep your {Sankalp|संकल्प}, every day."
+      },
+      "hi": {
+        "kicker": "नित्य साधना",
+        "title": "जप माला और संकल्प",
+        "sub": "108 मनके गिनें, रोज़ का नियम बनाएँ",
+        "vo": "माला पर जाप करें, और रोज़ अपना संकल्प निभाएँ।"
+      }
+    },
+    {
+      "id": "kids",
+      "layout": "pair",
+      "duration": 2.9,
+      "screens": {
+        "en": [
+          "marketing/reels/showcases/latest-1.5.0/screens/en/04-kids-stories.png",
+          "docs/content-parity/kids-story-pacing/screenshots/kids-hanuman-sun-en-large-hs09-art.png"
+        ],
+        "hi": [
+          "marketing/reels/showcases/latest-1.5.0/screens/hi/04-kids-stories.png",
+          "docs/content-parity/kids-story-pacing/screenshots/kids-hanuman-sun-hi-large-hs08.png"
+        ]
+      },
+      "en": {
+        "kicker": "FOR KIDS",
+        "title": "Illustrated stories\nfor the family",
+        "sub": "Krishna, Ganesha, Hanuman & Maa Durga",
+        "vo": "Share illustrated stories with your children."
+      },
+      "hi": {
+        "kicker": "बच्चों के लिए",
+        "title": "पूरे परिवार के लिए\nचित्र-कथाएँ",
+        "sub": "कृष्ण, गणेश, हनुमान और माँ दुर्गा",
+        "vo": "बच्चों के साथ पढ़ें, सुंदर चित्र वाली कहानियाँ।"
+      }
+    },
+    {
+      "id": "ask",
+      "layout": "pair",
+      "duration": 3.1,
+      "screens": [
+        "docs/evaluations/home-gutter-2026-10-06/native/ask-route.png",
+        "docs/evaluations/storybook-icons-2026-10-06/screenshots/search-native.png"
+      ],
+      "callout": {
+        "crop": [
+          0.02,
+          0.072,
+          0.96,
+          0.062
+        ],
+        "y": 1080,
+        "from": 1
+      },
+      "en": {
+        "kicker": "ASK VEDANSH",
+        "title": "“When is Ekadashi?”",
+        "sub": "Ask, and get answers from the calendar",
+        "vo": "Just ask: when is {Ekadashi|एकादशी}?"
+      },
+      "hi": {
+        "kicker": "वेदांश से पूछें",
+        "title": "“एकादशी कब है?”",
+        "sub": "पूछें, और पंचांग से जवाब पाएँ",
+        "vo": "बस पूछिए, एकादशी कब है?"
+      }
+    },
+    {
+      "id": "share",
+      "layout": "pair",
+      "duration": 2.9,
+      "screens": [
+        "docs/evaluations/daily-bhakti-compression/native/daily-compressed-ganesha.jpg",
+        "docs/evaluations/daily-bhakti-compression/native/daily-compressed-ganesha-preview.jpg"
+      ],
+      "en": {
+        "kicker": "SHARE",
+        "title": "Share bhakti cards",
+        "sub": "On WhatsApp, Instagram and more",
+        "vo": "Send beautiful {bhakti|भक्ति} cards on WhatsApp."
+      },
+      "hi": {
+        "kicker": "साझा करें",
+        "title": "भक्ति कार्ड भेजें",
+        "sub": "WhatsApp, Instagram और भी",
+        "vo": "भक्ति कार्ड बनाएँ, और अपनों को भेजें।"
+      }
+    },
+    {
+      "id": "more",
+      "layout": "chips",
+      "duration": 3.4,
+      "screens": [
+        "docs/evaluations/storybook-icons-2026-10-06/more-alignment/after-english-top.png"
+      ],
+      "en": {
+        "kicker": "AND MORE",
+        "title": "So much more",
+        "chips": [
+          "Pitru Smaran",
+          "Vastu Disha",
+          "Daan Punya",
+          "Theerth",
+          "Muhurat",
+          "Namkaran",
+          "Widgets",
+          "Japa alarms"
+        ],
+        "vo": "And so much more."
+      },
+      "hi": {
+        "kicker": "और भी",
+        "title": "और भी बहुत कुछ",
+        "chips": [
+          "पितृ स्मरण",
+          "वास्तु दिशा",
+          "दान-पुण्य",
+          "तीर्थ",
+          "मुहूर्त",
+          "नामकरण",
+          "होम विजेट",
+          "जप अलार्म"
+        ],
+        "vo": "और भी बहुत कुछ।"
+      }
+    },
+    {
+      "id": "cta",
+      "layout": "cta",
+      "duration": 4.4,
+      "screens": [],
+      "en": {
+        "title": "Your spiritual companion",
+        "scripts": "हिंदी · English · ગુજરાતી · ಕನ್ನಡ",
+        "trust": "No login. No in-app ads.",
+        "button": "Download Vedansh",
+        "stores": "App Store · Google Play",
+        "vo": "{Vedansh|वेदान्श}. Your spiritual companion. Download now."
+      },
+      "hi": {
+        "title": "आपका आध्यात्मिक साथी",
+        "scripts": "हिंदी · English · ગુજરાતી · ಕನ್ನಡ",
+        "trust": "बिना लॉगिन · ऐप में कोई विज्ञापन नहीं",
+        "button": "वेदांश डाउनलोड करें",
+        "stores": "App Store · Google Play",
+        "vo": "{वेदांश|वेदान्श}। आपका आध्यात्मिक साथी। आज ही डाउनलोड करें।"
+      }
+    }
+  ],
+  "voice": {
+    "engine": "Kokoro-82M v1.0 (Apache-2.0) via kokoro-onnx",
+    "voices": {
+      "en": "hf_alpha",
+      "hi": "hf_alpha"
+    },
+    "speed": 1.05,
+    "note": "English {word|देवनागरी} spans are spoken with Hindi phonemes so Indic terms keep Indian pronunciation.",
+    "phonemeFixes": {
+      "eːkˈaːdʃˌi": "eːkˈaːdəʃˌiː"
+    }
+  }
+}
