@@ -14,7 +14,7 @@
       "https://www.hindwi.org/dohe/chah-gai-chinta-miti-rahim-dohe",
       "https://www.hindisamay.com/content/2362/1/रहीम-कविताएँ-रहीम-ग्रंथावलीभग-1.cspx"
     ],
-    "notes": "A curated selection of four complete couplets, not the poet's complete dohavali. Original couplets retain one identified edition per verse; variants are documented, never blended. Gujarati/Kannada use the existing app re-scripting policy."
+    "notes": "A curated selection of four complete couplets, not the poet's complete dohavali. Original couplets retain one identified edition per verse; variants are documented, never blended. Gujarati/Kannada use the existing app re-scripting policy. Curation scope: bhakti or suvichar only. Each couplet has explicit themes and an editorial reason; a poet name alone does not qualify unrelated verse."
   },
   "verses": [
     {
@@ -39,7 +39,11 @@
           "https://hi.wikisource.org/wiki/रहीम-कवितावली/दोहे"
         ],
         "retrievedOn": "2026-11-05"
-      }
+      },
+      "themes": [
+        "bhakti"
+      ],
+      "themeReasonHi": "मन में अहंकार के स्थान पर हरि के लिए स्थान बनाना।"
     },
     {
       "id": "rahim-doha-daan",
@@ -63,7 +67,12 @@
           "https://bharatdiscovery.org/india/रहीम_के_दोहे"
         ],
         "retrievedOn": "2026-11-05"
-      }
+      },
+      "themes": [
+        "bhakti",
+        "suvichar"
+      ],
+      "themeReasonHi": "ईश्वर को दाता मानते हुए दान में विनम्रता रखना।"
     },
     {
       "id": "rahim-doha-santosh",
@@ -87,7 +96,11 @@
           "https://bharatdiscovery.org/india/रहीम_के_दोहे"
         ],
         "retrievedOn": "2026-11-05"
-      }
+      },
+      "themes": [
+        "suvichar"
+      ],
+      "themeReasonHi": "अनावश्यक लालसा छोड़कर संतोष और मन की स्वतंत्रता।"
     },
     {
       "id": "rahim-doha-sharan",
@@ -111,7 +124,11 @@
           "https://hi.wikisource.org/wiki/रहीम-कवितावली/दोहे"
         ],
         "retrievedOn": "2026-11-05"
-      }
+      },
+      "themes": [
+        "bhakti"
+      ],
+      "themeReasonHi": "राम की शरण और प्रभु के प्रति समर्पण।"
     }
   ]
 }

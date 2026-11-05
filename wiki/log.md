@@ -1349,3 +1349,8 @@ The user chose app painted art for illustrated stories and Tholu Bommalata puppe
 ## [2026-11-05] ingest | Selected devotional dohas
 
 Added the Kabir/Rahim doha integration to `wiki/subsystems/readers.md`: lazy payloads, shared flat-reader dispatch, Granth/no-deity metadata, per-verse edition provenance and append-only pool integration. Source/content/pool checks pass; native reader and exported-share acceptance remain pending and are tracked in `docs/reviews/bhakti-dohe.md`. No merge or release performed.
+
+
+## [2026-11-06] ingest | Bhakti or Suvichar only in the doha collection
+
+Recorded explicit per-verse theme/rationale metadata, the curation validator and registry-wide test gate, and updated the two listing subtitles to name both themes. No original verse or count changed. The broader 60 opening lines remain research candidates pending full-text/source verification. Native visual/size/export evidence remains pending.

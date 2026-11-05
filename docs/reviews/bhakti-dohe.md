@@ -46,3 +46,10 @@ Remote handover: https://github.com/persisharma/aadhyatma/pull/618, branch codex
 Follow-up validation: the full compiled `entryRoutes.test.ts` assertion suite passes, including both doha start/resume/bookmark routes and four existing flat-reader sibling bookmark targets. The new doha bookmark assertion failed before the shared dispatch fix (returned null), then passed after. CI caught an excess updatedAt property in the new progress-target fixture; it was removed without loosening the helper type.
 
 Sharing follow-up: both collections explicitly register the existing neutral prayer master in devotionalSourceArt. Two additional focused tests exercise all eight real pooled dohas through dailyBhaktiShareable in all four languages (32 prepared cards): one complete page, exact full verse and meaning, correct poet titles, neutral art. All 13 focused doha tests and 3 count tests pass; real native image capture and handoff are still pending.
+
+
+## Theme-only selection refinement — 6 November 2026
+
+User scope: add bhaktimay or Suvichar-themed dohas only. Every one of the eight currently integrated verses has explicit `themes` and `themeReasonHi`. A pure validator permits only nonempty, unique `bhakti`/`suvichar` labels; registry-wide tests require labels and a meaningful editorial rationale for every authored verse. Unrelated author works do not qualify. Devotional longing is included; unrelated secular romance, ridicule and partisan verse is excluded. Both listing subtitles now say devotion and reflection. Original poem text, meanings, counts, IDs, saved positions and artwork remain unchanged. The 60-item conversation list is a research shortlist; this refinement does not falsely activate uncollated content.
+
+PASS: 16 doha/content/script/pool/prepared-share/curation checks and 3 generated-count checks. PENDING: CI on this refinement and installed iOS/Android language/Standard-Large/compact/system-text/native share validation. The inherited onboarding CI failures documented above remain distinct from this task. No build, merge or release performed.

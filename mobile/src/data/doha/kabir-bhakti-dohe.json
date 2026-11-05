@@ -14,7 +14,7 @@
       "https://bharatdiscovery.org/india/कबीर_की_साखियाँ_-कबीर",
       "https://www.hindwi.org/dohe/kabir-ki-sakhiyan-en-si-ii-aar-tee-kabir-dohe"
     ],
-    "notes": "A curated selection of four complete couplets, not the poet's complete dohavali. Original couplets retain one identified edition per verse; variants are documented, never blended. Gujarati/Kannada use the existing app re-scripting policy."
+    "notes": "A curated selection of four complete couplets, not the poet's complete dohavali. Original couplets retain one identified edition per verse; variants are documented, never blended. Gujarati/Kannada use the existing app re-scripting policy. Curation scope: bhakti or suvichar only. Each couplet has explicit themes and an editorial reason; a poet name alone does not qualify unrelated verse."
   },
   "verses": [
     {
@@ -39,7 +39,11 @@
           "https://cdnbbsr.s3waas.gov.in/s323d2e1578544b172cca332ff74bddf5f/uploads/2022/09/2022091374.pdf"
         ],
         "retrievedOn": "2026-11-05"
-      }
+      },
+      "themes": [
+        "bhakti"
+      ],
+      "themeReasonHi": "सुख-दुख दोनों में ईश्वर का स्मरण बनाए रखने की सीख।"
     },
     {
       "id": "kabir-doha-santosh",
@@ -63,7 +67,12 @@
           "https://cdnbbsr.s3waas.gov.in/s323d2e1578544b172cca332ff74bddf5f/uploads/2022/09/2022091374.pdf"
         ],
         "retrievedOn": "2026-11-05"
-      }
+      },
+      "themes": [
+        "bhakti",
+        "suvichar"
+      ],
+      "themeReasonHi": "प्रभु से पर्याप्त साधन, संतोष और अतिथि को भोजन देने की प्रार्थना।"
     },
     {
       "id": "kabir-doha-man",
@@ -87,7 +96,12 @@
           "https://bharatdiscovery.org/india/कबीर_की_साखियाँ_-कबीर"
         ],
         "retrievedOn": "2026-11-05"
-      }
+      },
+      "themes": [
+        "bhakti",
+        "suvichar"
+      ],
+      "themeReasonHi": "बाहरी साधना के साथ मन का परिवर्तन और आत्मचिंतन।"
     },
     {
       "id": "kabir-doha-daya",
@@ -111,7 +125,11 @@
           "https://kavitakosh.org/kk/कबीर_दोहावली_/_पृष्ठ_१"
         ],
         "retrievedOn": "2026-11-05"
-      }
+      },
+      "themes": [
+        "suvichar"
+      ],
+      "themeReasonHi": "अहंकार छोड़कर मन की शांति और दया का भाव।"
     }
   ]
 }

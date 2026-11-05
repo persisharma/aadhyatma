@@ -7,6 +7,24 @@ import rahim from '../doha/rahim-bhakti-dohe.json';
 import { flatPoolSegments } from '../versePoolFlat';
 import { devotionalSourceArt } from '../devotionalShareArt';
 import { dailyBhaktiShareable } from '../../utils/dailyBhaktiShare';
+import { hasAllowedDohaThemes } from '../doha/curation';
+
+test.each(dohaIds)('%s includes only explicitly curated bhakti or suvichar dohas', id => {
+  const payload = getDoha(id);
+  for (const verse of payload.verses) {
+    expect('themes' in verse && hasAllowedDohaThemes(verse.themes)).toBe(true);
+    expect('themeReasonHi' in verse && typeof verse.themeReasonHi === 'string' && verse.themeReasonHi.trim().length > 10).toBe(true);
+  }
+});
+
+test('the editorial gate rejects missing, unrelated, mixed and duplicate theme labels', () => {
+  for (const invalid of [undefined, null, [], 'bhakti', ['romance'], ['satire'], ['bhakti', 'unrelated'], ['suvichar', 'suvichar']]) {
+    expect(hasAllowedDohaThemes(invalid)).toBe(false);
+  }
+  expect(hasAllowedDohaThemes(['bhakti'])).toBe(true);
+  expect(hasAllowedDohaThemes(['suvichar'])).toBe(true);
+  expect(hasAllowedDohaThemes(['bhakti', 'suvichar'])).toBe(true);
+});
 
 test.each([kabir, rahim])('$id preserves complete sourced couplets with honest selection metadata', payload => {
   expect(payload.source.notes).toMatch(/selection.*not.*complete/i);
