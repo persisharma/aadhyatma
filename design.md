@@ -4141,3 +4141,34 @@ A background update staged after Explore has claimed its slot does not dismiss t
 The field remains 24dp inside both sides of the clipping modal. The modal heading wraps
 beside Close. Filtering, selected city, dismissal and the existing birth-profile rules are
 unchanged. `docs/reviews/2026-11-05-screen-clipping.md` records regression and visual evidence.
+
+
+## 87. Sanatan Parichay — one painted family, question-led learning
+
+Approved Site: `appgprj_6ae948c65bdc81918c94293b69719cba`, reference
+`e4a01fe0fac7b9637fa71e536d76612fa0c39c1c`. Home has one landscape painting card.
+The hub leads with the question-led heading, search, an optional resume card, the
+Swastika feature and two “Ever wondered?” cards. Saved and collection filters lead
+to thirteen collection rows; use the same painting for a collection's thumbnail,
+overview and reader opening. Keep the full 3:2 crop. Do not reintroduce isolated
+gold glyphs, emoji or another icon style among these paintings.
+
+Collection overview: title, full painting, question, authored introduction,
+Read introduction, save, three page doors and Sources & context. Reader: shared
+ReaderHeader and 1-based progress, language/audio/auto-slide, horizontally paged
+prose with vertical scrolling, first-page painting, second-page source-specific
+schematic, context on the last page, save/share/source and previous/next/Finish.
+All source credits remain plain text; provenance URLs never appear on screen.
+
+Use theme colours, script-aware text, ProseParagraph and ProseReadingCard. All
+interactive controls have at least a 48pt height. Content scrolls rather than being
+ellipsized. Diagram facts have equivalent text controls/captions. On narrow screens
+the playback controls wrap below the language toggle. The exact compass and
+Swastika geometry remain SVG; the paintings provide the approved rich imagery.
+
+Assets are the existing approved 960×640 WebP exports (3,043,518 bytes total),
+locally bundled like the Jyotish landing paintings. Only one image belongs to the
+Home card; the complete registry lives behind learning/Search. No remote-image
+publication is claimed. Source masters remain in the approved Site. Native
+appearance has not yet been established by device screenshots; see the acceptance
+matrix in `docs/content-parity/sanatan-parichay/native-verification.md`.

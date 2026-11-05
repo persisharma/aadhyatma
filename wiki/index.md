@@ -13,6 +13,7 @@
 - [`docs/content-parity/other-content-existing-deities.md`](../docs/content-parity/other-content-existing-deities.md) — full non-Chalisa/Aarti parity benchmark and acquisition waves for the existing deity taxonomy.
 
 ## Subsystems
+- [[subsystems/sanatan-parichay]] — question-led introductory learning, uniform painted collections, source credits and serialized progress.
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.
 - [[kids-stories]] — lazy four-deity library, nineteen readings including Durga/Navaratri, 143 reviewed illustrations, four-language causal review, reviewed frames, multi-card sharing and hashed R2 delivery; native/editorial/CDN evidence remains explicit.
 - [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, per-routine reminders, home banner + celebration.

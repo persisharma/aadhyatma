@@ -594,6 +594,8 @@ devotional reader that can read as disrespectful rather than merely imperfect. S
 ### 11.16 No external links in the UI — sources are credited, never tappable out of the app
 A content screen may **credit** its source — name the text, edition, shrine or website as plain, non-interactive copy — but must **never render a tappable control that opens an external site** for that source. Source/citation URLs stay review-only data (§11.2) and do not reach the render tree, the same stance already pinned for vidhi (`sourceUrl` stripped before render), observances and katha. This now holds app-wide, and was retrofitted on three surfaces that still shipped a source link:
 
+- **Sanatan Parichay** shows the cited work, edition and passage as plain credits. Full research URLs remain under `docs/content-parity/sanatan-parichay/`, outside the mobile content and render tree. No source opens a browser.
+
 - **Daily Bhakti / Suvichar** credits the source on the card (`suvichar-card-source`); the composer no longer carries a `suvichar-source-link` row that opened the source site.
 - **Gita Saar** opens Gita connections and Gita story-sources **in the app** (`GitaReader`); every other cited text (`Katha Upanishad`, a Purāṇa, etc.) is a plain citation row — `· Reference` / `· संदर्भ` — not a browser link.
 - **Garud Puran** shows its Sanskrit references and the context note as selectable text; the "Open Sanskrit/Hindi source" links are gone.
@@ -1353,3 +1355,28 @@ Explore has no on/off preference or permanent disable action. Retain the legacy 
 Explore history reset is an explicit, confirmed replay-only action. Serialize `resetExploreHistory` through the existing hydrated discovery store; persist a valid empty ledger aged by 24 hours rather than deleting the key. Clear visits, shown timestamps, last suggestion, declines, decline streak and sleep deadline together. Never clear unrelated storage, shared daily launch state or reminder preferences. Replay without confirmation remains write-free. A failed read/write must not report success or enable automatic discovery. Cover cancellation, duplicate/unmounted confirmation, cold reload/no reseeding, initial collection, queued route writes, storage failure, and normal automatic selection after reset. Native all-language/size acceptance and the replay Maestro flow remain required.
 
 
+
+
+## 32. Sanatan Parichay — illustrated introductory learning
+
+The approved native scope is thirteen introductions, each with three authored
+Hindi/English prose pages, a topic-specific visual explanation and plain source
+credits. It is not the complete 201-topic research catalogue (#605), a scripture
+collection or a ritual manual. Keep unreviewed research seeds out of app discovery.
+See `docs/content-parity/sanatan-parichay/native-scope.md` and design.md §87.
+
+Use one lazy Home door and Home-stack hub/collection/reader routes; no new tab.
+Global Search resolves known IDs. Preserve the hub query/filter on Back. Unknown
+IDs must show an unavailable state, never a substitute deity. The selected
+Kamika Agama direction list and the two Dashavatara lists retain their own source
+context; do not merge their variants into one canonical roster.
+
+Use the approved uniform 3:2 painted scene family for all thirteen collection
+thumbnails and banners, shared script/font tokens and the existing prose, audio,
+auto-slide and branded share components. Keep research links out of UI (§11.16).
+The versioned learning store hydrates before serialized writes; storage failures
+cannot discard prior saved items. Opening records resume only, forward turns
+record pages left, and Finish clears resume after recording the final page.
+Device rendering, four scripts × Standard/Large, native playback and real share
+exports remain required acceptance checks; written Maestro flows do not establish
+those checks passed.
