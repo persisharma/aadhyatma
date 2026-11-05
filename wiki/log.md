@@ -1330,6 +1330,11 @@ Recorded the Home-only size/colour treatment, restored Om circles/rules and reta
 ## [2026-11-03] ingest | Explore replay visit-history reset
 Added the confirmed replay-only history reset, persistence/no-reseeding contract, next-eligible-launch timing and shared-budget preservation to [[subsystems/explore-sheet]]. Native visual/Maestro evidence remains pending.
 
+## [2026-11-04] ingest | Panchang share co-branding
+Added the opt-in pandit profile (name chip, title · contact footer line, Vedansh pill unchanged), the generic `ShareableCard.controls` sheet slot and the hydrate-before-open gotcha to [[subsystems/share]]. Native visual/WhatsApp evidence pending.
+
+## [2026-11-04] ingest | Panchang co-branding moves to the footer line
+The sharer's name no longer prints as a header chip; [[subsystems/share]] now records `<name> · <title> · <contact>` replacing the footer feature line (min scale 0.75), header untouched. Native visual/WhatsApp evidence pending.
 
 ## [2026-11-04] ingest | Meta feature-tour video kit
 Added the 43.5 s Hindi/English all-features ad builder (9:16 + 4:5, deterministic Chromium frames, synthesised tanpura, store-copy claims only) to [[runbooks/store-submission]]. Voice-over added the same day with Kokoro hf_alpha, Whisper-checked; native listening review pending. Nothing uploaded to Meta.
