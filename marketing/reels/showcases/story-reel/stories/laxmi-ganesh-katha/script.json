@@ -14,7 +14,7 @@
     "voice": "hf_alpha",
     "speed": 1.05,
     "phonemeFixes": {
-      "lˈoːkəktʰaː": "lˈoːkʰ kˈʌtʰaː"
+      "lˈoːkəktʰaː": "lˈoːkʰ, kˈʌtʰaː"
     }
   },
   "story": "laxmi-ganesh-katha",
